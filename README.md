@@ -28,7 +28,7 @@ LiteIDE
     MacOS X10.6
 
 ### Home
-  * http://github/visualfc/liteide
+  * <https://github/visualfc/liteide>
 
 ### Group
-  * http://groups.google.com/group/liteide-dev
+  * <https://groups.google.com/group/liteide-dev>
