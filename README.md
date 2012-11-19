@@ -27,8 +27,6 @@ LiteIDE
     Linux 32  Linux 64
     MacOS X10.6
 
-### Home
-  * <https://github/visualfc/liteide>
-
-### Group
-  * <https://groups.google.com/group/liteide-dev>
+### Website
+ * Home <https://github.com/visualfc/liteide>
+ * Group <https://groups.google.com/group/liteide-dev>
