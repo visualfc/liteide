@@ -1,0 +1,5 @@
+LiteIDE is distributed under the terms of the LGPLv2.1 license with an exception:
+
+License exception:
+In addition, as a special exception,  that plugins developed for LiteIDE,
+are allowed to remain closed sourced and can be distributed under any license .

@@ -1,0 +1,1 @@
+Not support leak check for QIcon

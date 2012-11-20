@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/golangast">
+        <file>images/const.png</file>
+        <file>images/const_p.png</file>
+        <file>images/consts.png</file>
+        <file>images/file.png</file>
+        <file>images/func.png</file>
+        <file>images/func_p.png</file>
+        <file>images/funcs.png</file>
+        <file>images/gofile.png</file>
+        <file>images/interface.png</file>
+        <file>images/interface_p.png</file>
+        <file>images/makefile.png</file>
+        <file>images/package.png</file>
+        <file>images/project.png</file>
+        <file>images/struct.png</file>
+        <file>images/struct_p.png</file>
+        <file>images/type.png</file>
+        <file>images/type_p.png</file>
+        <file>images/var.png</file>
+        <file>images/var_p.png</file>
+        <file>images/vars.png</file>
+        <file>images/type_method.png</file>
+        <file>images/type_method_p.png</file>
+        <file>images/type_var_p.png</file>
+        <file>images/type_var.png</file>
+        <file>images/type_factor.png</file>
+        <file>images/type_factor_p.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,13 @@
+append(slice []Type, elems ...Type) []Type
+copy(dst, src []Type) int
+delete(m map[Type]Type1, key Type)
+len(v Type) int
+cap(v Type) int
+make(Type, size IntegerType) Type
+new(Type) *Type
+complex(r, i FloatType) ComplexType
+real(c ComplexType) FloatType
+imag(c ComplexType) FloatType
+close(c chan<- Type)
+panic(v interface{})
+recover() interface{}

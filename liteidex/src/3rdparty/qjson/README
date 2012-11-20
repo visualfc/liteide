@@ -1,0 +1,27 @@
+QJson
+-------------------------------------------------
+Website: http://qjson.sourceforge.net/
+Mailing List: https://lists.sourceforge.net/mailman/listinfo/qjson-devel
+
+Project Lead/Maintainer (2008-current):
+  Flavio Castelli <flavio@castelli.name>
+
+Install
+-------
+  For installation or compiling instructions, see the INSTALL file.
+
+License
+-------
+  This library is licensed under the Lesser GNU General Public License version 2.1.
+  See the COPYING.lib file for more information.
+
+Description
+-----------
+  JSON (JavaScript Object Notation) is a lightweight data-interchange format.
+  It can represents integer, real number, string, an ordered sequence of value, and a collection of name/value pairs.
+
+  QJson is a qt-based library that maps JSON data to QVariant objects.
+  JSON arrays will be mapped to QVariantList instances, while JSON's objects will be mapped to QVariantMap.
+
+Happy hacking
+Flavio

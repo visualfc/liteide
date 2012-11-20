@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Default">
+  <!-- Empty scheme, relying entirely on built-in defaults. -->
+  <style name="Extra" foreground="#008B8B"/>
+  <style name="DataType" foreground="#000080" /> 
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Comment" foreground="#008000"/>
+  <style name="Keyword" foreground="#000080" bold="true"/>
+  <style name="Function" foreground="#0000ff"/>
+  <style name="Number" foreground="#800080"/>
+  <style name="String" foreground="#008000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Text" foreground="#000000" background="#ffffff"/>
+  <style name="Selection" foreground="#ffffff"/>
+  <style name="InactiveSelection" foreground="#000000" background="#bbbbbb"/>
+</style-scheme>

@@ -1,0 +1,4 @@
+LIBS *= -l$$qtLibraryName(golangastapi)
+
+
+

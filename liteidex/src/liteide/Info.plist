@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSHumanReadableCopyright</key>
+        <string>(C) 2011 visualfc@gmail.com</string>
+	<key>CFBundleIconFile</key>
+        <string>liteide.icns</string>
+	<key>CFBundlePackageType</key>
+		<string>APPL</string>
+	<key>CFBundleSignature</key>
+        <string>????</string>
+	<key>CFBundleExecutable</key>
+        <string>LiteIDE</string>
+	<key>CFBundleIdentifier</key>
+		<string>com.visualfc.liteide</string>
+	<key>CFBundleVersion</key>
+		<string>liteide x version</string>
+	<key>CFBundleShortVersionString</key>
+		<string>liteidex</string>
+</dict>
+</plist>

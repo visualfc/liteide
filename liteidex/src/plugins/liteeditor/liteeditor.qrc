@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/liteeditor">
+        <file>images/redo.png</file>
+        <file>images/undo.png</file>
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/paste.png</file>
+        <file>images/exportpdf.png</file>
+        <file>images/fileprint.png</file>
+        <file>images/fileprintpreview.png</file>
+        <file>images/lock.png</file>
+        <file>images/unlock.png</file>
+        <file>images/exporthtml.png</file>
+        <file>images/findword.png</file>
+        <file>images/keyword.png</file>
+        <file>images/func.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Railscast">
+  <!--
+  Based on the railscast theme for emacs/vim
+  Improvements are welcome
+  Public Domain, Alexander Rødseth, 2012
+  -->
+  <style name="Extra" foreground="#008B8B" background="#232323"/>
+  <style name="Text" foreground="#bbbbbb" background="#232323"/>
+  <style name="Comment" foreground="#bc9458"/>
+  <style name="Function" foreground="#ffc66d"/>
+  <style name="Selection" foreground="#000000" background="#555577"/>
+  <style name="Keyword" foreground="#cc7833"/>
+  <style name="String" foreground="#a5c261"/>
+  <style name="Number" foreground="#6d9cbe"/>
+  <style name="InactiveSelection" foreground="#000000" background="darkslateblue"/>
+  <style name="DataType" foreground="white" /> 
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="CurrentLine" background="#000000"/>
+</style-scheme>

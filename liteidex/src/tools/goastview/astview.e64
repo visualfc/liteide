@@ -1,0 +1,9 @@
+TARGET=goastview
+
+DESTDIR=../../liteide/bin
+
+GOFILES = \
+	astview.go \
+	packageview.go \
+	doc/doc.go \
+	doc/comment.go

@@ -1,0 +1,14 @@
+# godocview project file
+
+TARGET = godocview
+DESTDIR = ../../liteide/bin
+
+GCOPT =
+GLOPT =
+
+GOFILES = \
+	filesystem.go \
+	dirtrees.go \
+	godocdir.go \
+	template.go \
+	main.go \

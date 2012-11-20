@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/welcome">
+        <file>images/home.png</file>
+    </qresource>
+</RCC>

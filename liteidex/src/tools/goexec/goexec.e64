@@ -1,0 +1,5 @@
+TARGET = goexec
+
+DESTDIR = ../../liteide/bin
+
+GOFILES = goexec.go

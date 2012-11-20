@@ -1,0 +1,7 @@
+[SETUP]
+NAME = "Text Source File"
+AUTHOR = visualfc
+INFO = make new text source file
+TYPE = file
+FILES = root
+OPEN = root

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/litebuild">
+        <file>images/stopaction.png</file>
+        <file>images/config.png</file>
+    </qresource>
+</RCC>

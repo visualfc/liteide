@@ -1,0 +1,8 @@
+[SETUP]
+NAME = "Go1 Command Project (Not Use GOPATH)"
+AUTHOR = visualfc
+INFO = new golang go1 command project
+TYPE = project
+FILES = main.go doc.go
+OPEN = main.go
+SCHEME=folder

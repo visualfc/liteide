@@ -1,0 +1,39 @@
+<!-- Install -->
+
+<h2>Install golang</h2>
+<p>http://golang.org/doc/install.html</p>
+
+<h2>Install LiteIDE</h2>
+<p>http://code.google.com/p/golangide/downloads/list</p>
+
+<h2>Install Gocode</h2>
+<p>http://github.com/nsf/gocode</p>
+<pre>$ export GOROOT=$HOME/go
+$ export PATH=$HOME/go/bin:$PATH
+$ go get -u github.com/nsf/gocode 
+</pre>
+
+<h2>Build LiteIDE Source</h2>
+<p>http://code.google.com/p/liteide/</p>
+
+<h3>Windows</h3>
+<pre>> hg clone http://code.google.com/p/liteide/ 
+> set QTDIR=c:\Qt\Qt474
+> set MINGWDIR=c:\Qt\MinGW
+> cd liteide/build
+> build_mingw.cmd
+</pre>
+
+<h3>Linux</h3>
+<pre>$ hg clone http://code.google.com/p/liteide/ 
+$ export QTDIR=$HOME/QtSDK/Desktop/Qt/474/gcc
+$ cd liteide/build
+$ ./build_linux.sh
+</pre>
+
+<h3>MacOSX</h3>
+<pre>$ hg clone http://code.google.com/p/liteide/ 
+$ export QTDIR=$HOME/QtSDK/Desktop/Qt/474/gcc
+$ cd liteide/build
+$ ./build_osx.sh
+</pre>

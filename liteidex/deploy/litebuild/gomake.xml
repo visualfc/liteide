@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-gomake" id="gomake" work="$(PROJECT_DIR)">
+		<config id="Make" name="MAKE" value="$(LITEIDE_MAKE)"/>
+		<config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>
+		<config id="ErrRegex" name="ERRREGEX" value="([\w\d_\\/\.]+):(\d+):"/>		
+		<custom id="TargetArgs" name="TARGETARGS" value=""/>
+		<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(MAKE)" args="-f $(PROJECT_NAME) all" save="project" output="true" codec="" regex="$(ERRREGEX)"/>
+		<action id="Rebuild" img="blue/rebuild.png" key="" cmd="$(MAKE)" args="-B -f $(PROJECT_NAME) all" save="project" output="true" codec="" regex="$(ERRREGEX)"/>
+		<action id="Clean" img="blue/clean.png" cmd="$(MAKE)" args="-f $(PROJECT_NAME) clean" save="project" output="true"/>
+		<action id="Nuke" img="blue/cleanall.png" cmd="$(MAKE)" args="-f $(PROJECT_NAME) nuke" save="project" output="true"/>
+		<action id="Install" img="blue/install.png" cmd="$(MAKE)" args="-f $(PROJECT_NAME) install" save="project" output="true"/>
+		<action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="gotest" args="-f $(PROJECT_NAME)" save="project" output="true" codec="utf-8"/>
+		<action id="Exec" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(TARGETNAME) $(TARGETARGS)" output="false" readline="true"/>
+		<action id="Run" img="blue/run.png" key="Ctrl+R;Ctrl+F5" cmd="$(TARGETPATH)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
+		<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+F7" task="Build;Run"/>
+	</mime-type>
+</mime-info>

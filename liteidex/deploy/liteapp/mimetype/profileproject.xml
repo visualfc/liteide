@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="text/x-gopro">
+    <sub-class-of type="text/plain"/>	
+    <comment>LiteIDE Go Project File</comment>
+    <glob pattern="*.e64"/>
+  </mime-type>
+  <mime-type type="text/x-profile">
+    <sub-class-of type="text/plain"/>
+    <comment>Project File</comment>
+    <glob pattern="*.pro"/>
+  </mime-type>
+</mime-info>

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/liteenv">
+        <file>images/setenv.png</file>
+    </qresource>
+</RCC>

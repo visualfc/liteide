@@ -1,0 +1,556 @@
+<!--
+        Copyright (c) 2001 Joseph Wenninger <jowenn@kde.org>
+        modified (c) 2002 Anders Lund <anders@alweb.dk>
+        modified (c) 2003 Simon Huerlimann <simon.huerlimann@access.unizh.ch>
+        modified (c) 2005 Dominik Haumann <dhdev@gmx.de>
+        modified (c) 2008 Wilbert Berendsen <info@wilbertberendsen.nl>
+
+        This file describes the XML format used for syntax highlight descriptions
+        for the Kate text editor (http://kate.kde.org), which is part of the KDE
+        desktop environment (http://www.kde.org).
+        You'll find the "Writing a Kate Highlighting XML File HOWTO" at
+        http://kate.kde.org/doc/hlhowto.php
+
+        This format is identified using the SYSTEM identifier
+        SYSTEM "language.dtd"
+
+        Files using this format should include a DOCTYPE declaration like this:
+        <!DOCTYPE language SYSTEM "language.dtd">
+
+        You can validate your syntax files using checkXML from the development
+        package of kdelibs:
+         checkXML yourSyntax.xml
+        If you see any 'validity error' lines, you should fix them. If you get
+        a lot of 'No template matches' lines, everything's just fine. You've
+        produced a valid syntax file!
+
+        It's also possible to use the (much faster) xmllint which comes with the
+        GNOME (oops:-) XML Library libxml2:
+
+         xmllint - -dtdvalid language.dtd yourSyntax.xml
+	 (don't use a space between the two - That's just because XML
+         comments don't allow that:-(
+
+        To use your syntax file, copy it to .kde/share/apps/katepart/syntax/ in
+        your home directory. You have to open a new instance of kwrite/kate to use
+        the new syntax file.
+
+TODO
+  - find a more readable way for the - -dtdvalid stuff, it's just annoying
+    xml comments don't allow it.
+-->
+
+<!-- Entity declarations
+  You can use '&per;' instead of '.'. This seems to be useful in <item> elements.
+
+TODO
+  - Are there any more such pre-defined entities?
+-->
+<!ENTITY per "." >
+
+<!-- Boolean type
+  Attributes that are of type boolean allow the following values:
+  'true', 'TRUE' and '1' all meaning true,
+  'false', FALSE' and '0' all meaning false.
+
+  It is encouraged to use 'true' and 'false' instead of the alternatives.
+-->
+<!ENTITY % boolean "true|false|TRUE|FALSE|0|1">
+
+<!-- Default Styles
+  Allowed predefined default styles for itemData, available are:
+    - dsNormal,   used for normal text
+    - dsKeyword,  used for keywords
+    - dsDataType, used for data types
+    - dsDecVal,   used for decimal values
+    - dsBaseN,    used for values with a base other than 10
+    - dsFloat,    used for float values
+    - dsChar,     used for a character
+    - dsString,   used for strings
+    - dsComment,  used for comments
+    - dsOthers,   used for 'other' things
+    - dsAlert,    used for warning messages
+    - dsFunction, used for function calls
+    - dsRegionMarker, used for region markers
+    - dsError,    used for error highlighting.
+-->
+<!ENTITY % defStyles "dsNormal|dsKeyword|dsDataType|dsDecVal|dsBaseN|dsFloat|dsChar|dsString|dsComment|dsOthers|dsAlert|dsFunction|dsRegionMarker|dsError">
+
+<!-- Language specification
+  name:        The name of this syntax description. Used in the Highlightning Mode menu
+  section:     The logical group to which this syntax description belongs. Used for sub menus
+  extensions:  A file glob or pattern to decide for which documents to use this syntax description
+  style:       Attribute style that this highlighter provides to kate scripts [optional]
+  mimetype:    A list of mimetypes to decide for which documents to use this syntax description [optional]
+  version:     Version number of this syntax description [optional]
+  kateversion: Kate version required for using this file [optional]
+  casesensitive: Whether text is matched case sensitive. [boolean, optional, default=true] FIXME: This is not implemented yet
+  priority:    Priority of this language, if more than one are usable for the file [optional]
+  author:      Name of author of this hl file [optional]
+  license:     License for this hl file [optional]
+  indenter:    Name of the Indenter to use for this highlighting mode per default, like "cstyle" [optional]
+  hidden:      Should it be hidden in menu [boolean, optional, default=false]
+
+TODO
+  - Which matches are affected by casesensitive? keyword, RegExpr, StringDetect, WordDetect...?
+
+WARNING: due to helper scripts, the language opening tag must be on a
+*single line* and *cannot* be split in multiple lines.
+
+-->
+<!ELEMENT language (highlighting, general?, spellchecking?)>
+<!ATTLIST language
+  name          CDATA       #REQUIRED
+  section       NMTOKEN     #REQUIRED
+  extensions    CDATA       #REQUIRED
+  version       CDATA       #REQUIRED
+  kateversion   CDATA       #REQUIRED
+  style         CDATA       #IMPLIED
+  mimetype      CDATA       #IMPLIED
+  casesensitive (%boolean;) #IMPLIED
+  priority      CDATA       #IMPLIED
+  author        CDATA       #IMPLIED
+  license       CDATA       #IMPLIED
+  indenter      CDATA       #IMPLIED
+  hidden        (%boolean;) #IMPLIED
+>
+
+<!-- General options -->
+<!ELEMENT general (folding|comments|keywords|indentation|emptyLines)*>
+
+<!-- List of folding
+  indentationsensitive: If true, the code folding is indentation based.
+-->
+<!ELEMENT folding EMPTY>
+<!ATTLIST folding
+  indentationsensitive (%boolean;) #IMPLIED
+>
+
+<!-- List of comments -->
+<!ELEMENT comments (comment)+>
+
+<!-- Comment specification
+  name:         Type of this comment. Allowed are 'singleLine' and 'multiLine'
+  start:        The comment starts with this string
+  end:          The comment ends with this string [optional]
+  region:       The region name of the foldable multiline comment. If you have
+                beginRegion="Comment" ... endRegion="Comment" you should use
+                region="Comment". This way uncomment works even if you do not
+                select all the text of the multiline comment.
+  position:     only availalbe for type singleLine. Default is column0, to insert
+                the single line comment characters after the whitespaces
+                (= before the first non space) set position to "afterwhitespace"
+-->
+<!ELEMENT comment EMPTY>
+<!ATTLIST comment
+  name      (singleLine|multiLine)  #REQUIRED
+  start     CDATA                   #REQUIRED
+  end       CDATA                   #IMPLIED
+  region    CDATA                   #IMPLIED
+  position  (afterwhitespace)       #IMPLIED
+>
+
+<!-- Keyword options
+  casesensitive:        Whether keywords are matched case sensitive. [boolean, optional, default=true]
+  weakDeliminator:      Add weak deliminators [optional, default: ""]
+  additionalDeliminator: Add deliminators [optional]
+  wordWrapDeliminator:  characters that are used to wrap long lines [optional]
+
+-->
+<!ELEMENT keywords EMPTY>
+<!ATTLIST keywords
+  casesensitive         (%boolean;) #IMPLIED
+  weakDeliminator       CDATA       #IMPLIED
+  additionalDeliminator CDATA       #IMPLIED
+  wordWrapDeliminator   CDATA       #IMPLIED
+>
+
+<!-- Indentation options
+  mode:        indentation mode to use
+
+TODO
+  - Explain (weak) deliminators
+-->
+<!ELEMENT indentation EMPTY>
+<!ATTLIST indentation
+  mode         CDATA   #IMPLIED
+>
+
+<!-- Treat lines that match a given regular expression as empty line. This is
+  needed for example in Python for comments (#...), as then the indentation
+  based folding should ignore the line.
+  This is only implemented for indentation based folding. If the folding
+  is not indentation based, the emptyLines are not used.
+-->
+<!ELEMENT emptyLines (emptyLine*)>
+
+<!-- One empty line regular expression.
+  regexpr:       The regular expression, example from python: ^\s*#.*$
+  casesensitive: Sets, whether the regular expression match is performed case sesitive
+-->
+<!ELEMENT emptyLine EMPTY>
+<!ATTLIST emptyLine
+  regexpr       CDATA       #REQUIRED
+  casesensitive (%boolean;) #IMPLIED
+>
+
+
+<!-- Highlighting specification -->
+<!ELEMENT highlighting (list*, contexts, itemDatas)>
+<!ATTLIST highlighting
+>
+
+<!-- List of items
+  name:     Name of this list
+-->
+<!ELEMENT list (item)*>
+<!ATTLIST list
+  name  CDATA   #REQUIRED
+>
+
+<!-- List item
+  contains string used in <keyword>
+-->
+<!ELEMENT item (#PCDATA)>
+
+<!-- List of contexts -->
+<!ELEMENT contexts (context)+>
+
+<!-- context specification
+  name:             The name of this context specification. Used in '*Context' attributes [optional]
+  attribute:        The name of the ItemData to be used for matching text
+  lineEndContext:   Next context if end of line is encountered
+  lineBeginContext: Next context if begin of line is encountered [optional]
+  fallthrough:      Use a fallthrough context [optional]
+  fallthroughContext: Fall through to this context [optional]
+  dynamic:          Dynamic context [boolean, optional]
+  noIndentationBasedFolding: Python uses indentation based folding. However, Python has parts where
+                    it does not use indentation based folding (e.g. for """ strings). In this case
+		    switch to an own context and set this attribute to true. Then the indentation
+		    based folding will ignore this parts and not change folding markers. [optional]
+
+TODO:
+  - Explain fallthrough.
+  - Do we need fallthrough at all? It could be true, if fallthroughContext is set, false otherwise.
+  - Make lineEndContext optional, defaults to '#stay'. Reasonable?
+-->
+<!ELEMENT context (keyword | Float | HlCOct | HlCHex | HlCFloat | Int | DetectChar | Detect2Chars | AnyChar | StringDetect | WordDetect | RegExpr | LineContinue | HlCStringChar | RangeDetect | HlCChar | IncludeRules | DetectSpaces | DetectIdentifier)*>
+<!ATTLIST context
+  name              CDATA       #IMPLIED
+  attribute         CDATA       #REQUIRED
+  lineEndContext    CDATA       #REQUIRED
+  lineBeginContext  CDATA       #IMPLIED
+  fallthrough       (%boolean;) #IMPLIED
+  fallthroughContext CDATA      #IMPLIED
+  dynamic           (%boolean;) #IMPLIED
+  noIndentationBasedFolding (%boolean;) #IMPLIED
+>
+
+<!-- Common attributes
+  attribute:    The name of the ItemData to be used for matching text
+  context:      The name of the context to go to when this rule matches
+  beginRegion:  Begin a region of type beginRegion [optional]
+  endRegion:    End a region of type endRegion [optional]
+  firstNonSpace: should this rule only match at first non-space char in line?
+  column: should this rule only match at given column in line (column == count of chars in front)
+-->
+<!ENTITY % commonAttributes
+ "attribute     CDATA       #IMPLIED
+  context       CDATA       #IMPLIED
+  beginRegion   CDATA       #IMPLIED
+  endRegion     CDATA       #IMPLIED
+  lookAhead     (%boolean;) #IMPLIED
+  firstNonSpace (%boolean;) #IMPLIED
+  column        CDATA       #IMPLIED"
+>
+
+<!-- Detect members of a keyword list
+  commonAttributes: Common attributes
+  insensitive:      Is this list case-insensitive? [boolean, optional, see note]
+  String:           Name of the list
+  weakDelimiter:    Use weak deliminator
+
+  By default, case sensitivity is determined from <keywords casesensitive> in
+  <general> (default=true), but can be overridden per-list with 'insensitive'.
+
+TODO:
+  - Should be weakDeliminator
+  - Explain deliminator
+  - Doesn't seem to be supported in highligh.cpp
+-->
+<!ELEMENT keyword EMPTY>
+<!ATTLIST keyword
+  %commonAttributes;
+  insensitive   CDATA #IMPLIED
+  String        CDATA #REQUIRED
+  weakDelimiter CDATA #IMPLIED
+>
+
+<!-- Detect a floating point number
+  commonAttributes: Common attributes
+  AnyChar is allowed as a child rule. TODO: The source code allows
+  *all* rules to be child rules, shall we change the DTD in some way?
+-->
+<!ELEMENT Float (AnyChar)*>
+<!ATTLIST Float
+  %commonAttributes;
+>
+
+<!-- Detect an octal number
+  commonAttributes: Common attributes
+-->
+<!ELEMENT HlCOct EMPTY>
+<!ATTLIST HlCOct
+  %commonAttributes;
+>
+
+<!-- Detect a hexadecimal number
+  commonAttributes: Common attributes
+-->
+<!ELEMENT HlCHex EMPTY>
+<!ATTLIST HlCHex
+  %commonAttributes;
+>
+
+<!-- Detect a C-style floating point number
+  commonAttributes: Common attributes
+-->
+<!ELEMENT HlCFloat EMPTY>
+<!ATTLIST HlCFloat
+  %commonAttributes;
+>
+
+<!-- Detect C-style character
+  commonAttributes: Common attributes
+
+TODO
+  - Did I get this right?
+-->
+<!ELEMENT HlCChar EMPTY>
+<!ATTLIST HlCChar
+  %commonAttributes;
+>
+
+<!-- Detect an integer number
+  commonAttributes: Common attributes
+  StringDetect is allowed as a child rule. TODO: The source code allows
+  *all* rules to be child rules, shall we change the DTD in some way?
+-->
+<!ELEMENT Int (StringDetect)*>
+<!ATTLIST Int
+  %commonAttributes;
+>
+
+<!-- Detect a single character
+  commonAttributes: Common attributes
+  char:             The character to look for
+  dynamic:          Uses 0 ... 9 as placeholders for dynamic arguments (in fact, first char of arg...) [boolean, optional, default=false]
+-->
+<!ELEMENT DetectChar EMPTY>
+<!ATTLIST DetectChar
+  %commonAttributes;
+  char          CDATA   #REQUIRED
+  dynamic       (%boolean;) #IMPLIED
+>
+
+<!-- Detect two characters
+  commonAttributes: Common attributes
+  char:             The first character
+  char1:            The second character
+  dynamic:          Uses 0 ... 9 as placeholders for dynamic arguments (in fact, first char of arg...) [boolean, optional, default=false]
+-->
+<!ELEMENT Detect2Chars EMPTY>
+<!ATTLIST Detect2Chars
+  %commonAttributes;
+  char          CDATA   #REQUIRED
+  char1         CDATA   #REQUIRED
+  dynamic       (%boolean;) #IMPLIED
+>
+
+<!-- Detect any group of characters
+  commonAttributes: Common attributes
+  String:           A string representing the characters to look for
+
+TODO
+  - Description is not descriptive enough, I'm not sure what it exactly does:-(
+-->
+<!ELEMENT AnyChar EMPTY>
+<!ATTLIST AnyChar
+  %commonAttributes;
+  String        CDATA   #REQUIRED
+>
+
+<!-- Detect a string
+  commonAttributes: Common attributes
+  String:           The string to look for
+  insensitive:      Whether the string is matched case INsensitive. [boolean, optional, default=false]
+  dynamic:          Uses %0 ... %9 as placeholders for dynamic arguments [boolean, optional, default=false]
+
+TODO
+  - What's default of insensitive? I'm not sure...
+-->
+<!ELEMENT StringDetect EMPTY>
+<!ATTLIST StringDetect
+  %commonAttributes;
+  String        CDATA       #REQUIRED
+  insensitive   (%boolean;)  #IMPLIED
+  dynamic       (%boolean;) #IMPLIED
+>
+
+<!-- Detect a word, i.e. a string at word boundaries
+  commonAttributes: Common attributes
+  String:           The string to look for
+  insensitive:      Whether the string is matched case INsensitive. [boolean, optional, default=false]
+  dynamic:          Uses %0 ... %9 as placeholders for dynamic arguments [boolean, optional, default=false]
+
+TODO
+  - What's default of insensitive? I'm not sure...
+-->
+<!ELEMENT WordDetect EMPTY>
+<!ATTLIST WordDetect
+  %commonAttributes;
+  String        CDATA       #REQUIRED
+  insensitive   (%boolean;)  #IMPLIED
+  dynamic       (%boolean;) #IMPLIED
+>
+
+<!-- Detect a match of a regular expression
+  commonAttributes: Common attributes
+  String:           The regular expression pattern
+  insensitive:      Whether the text is matched case INsensitive. [boolean, optional, default=false]
+  minimal:          Wheather to use minimal matching for wild cards in the pattern [boolean, optional, default='false']
+  dynamic:          Uses %0 ... %9 as placeholders for dynamic arguments [boolean, optional, default=false]
+-->
+<!ELEMENT RegExpr EMPTY>
+<!ATTLIST RegExpr
+  %commonAttributes;
+  String        CDATA       #REQUIRED
+  insensitive   (%boolean;) #IMPLIED
+  minimal       (%boolean;) #IMPLIED
+  dynamic       (%boolean;) #IMPLIED
+>
+
+<!-- Detect a line continuation
+  commonAttributes: Common attributes
+-->
+<!ELEMENT LineContinue EMPTY>
+<!ATTLIST LineContinue
+  %commonAttributes;
+>
+
+<!-- Detect a C-style escaped character
+  commonAttributes: Common attributes
+
+TODO:
+  - Did I get this right? Only one character, or a string?
+-->
+<!ELEMENT HlCStringChar EMPTY>
+<!ATTLIST HlCStringChar
+  %commonAttributes;
+>
+
+<!-- Detect a range of characters
+  commonAttributes: Common attributes
+  char:             The character starting the range
+  char1:            The character terminating the range
+-->
+<!ELEMENT RangeDetect EMPTY>
+<!ATTLIST RangeDetect
+  %commonAttributes;
+  char          CDATA   #REQUIRED
+  char1         CDATA   #REQUIRED
+>
+
+<!-- Include Rules of another context
+  context:             The name of the context to include
+  includeAttrib:       If this is true, the host context of the IncludeRules
+                       will be given the attribute of the source context
+-->
+<!ELEMENT IncludeRules EMPTY>
+<!ATTLIST IncludeRules
+  context       CDATA   #REQUIRED
+  includeAttrib (%boolean;) #IMPLIED
+>
+
+<!-- Detect all following Spaces
+-->
+<!ELEMENT DetectSpaces EMPTY>
+<!ATTLIST DetectSpaces
+          %commonAttributes;
+>
+
+<!-- Detect an Identifier ( == LETTER(LETTER|NUMBER|_)*)
+     -->
+<!ELEMENT DetectIdentifier EMPTY>
+<!ATTLIST DetectIdentifier
+          %commonAttributes;
+>
+
+<!-- List of attributes -->
+<!ELEMENT itemDatas (itemData)+>
+<!ATTLIST itemDatas
+>
+
+<!-- Attribute specification
+  name          CDATA   #REQUIRED       The name of this attribute
+  defStyleNum   CDATA   #REQUIRED       The index of the default style to use
+  color         CDATA   #IMPLIED        Color for this style, either a hex triplet, a name or some other format recognized by Qt [optional]
+  selColor      CDATA   #IMPLIED        The color for this style when text is selected [optional]
+  italic        CDATA   #IMPLIED        Whether this attribute should be rendered using an italic typeface [optional, boolean, default=false]
+  bold          CDATA   #IMPLIED        Whether this attribute should be renederd using a bold typeface [optional, boolean, default=false]
+  underline     CDATA   #IMPLIED        Whether this attribute should be underlined [optional, boolean, default=false]
+  strikeOut     CDATA   #IMPLIED        Whether this attribute should be striked out [optional, boolean, default=false]
+  backgroundColor    CDATA #IMPLIED     The background color for this style [optional]
+  selBackgroundColor CDATA #IMPLIED     The background color for this style when text is selected [optional]
+  spellChecking      CDATA #IMPLIED     Whether this attribute should be spell checked [optional, boolean, default=true]
+-->
+<!ELEMENT itemData EMPTY>
+<!ATTLIST itemData
+  name          CDATA   #REQUIRED
+  defStyleNum   (%defStyles;) #REQUIRED
+  color         CDATA   #IMPLIED
+  selColor      CDATA   #IMPLIED
+  italic        (%boolean;) #IMPLIED
+  bold          (%boolean;) #IMPLIED
+  underline     (%boolean;) #IMPLIED
+  strikeOut     (%boolean;) #IMPLIED
+  backgroundColor    CDATA  #IMPLIED
+  selBackgroundColor CDATA  #IMPLIED
+  spellChecking (%boolean;) #IMPLIED
+>
+
+<!-- encodingPolicy type
+  Attributes that are of type 'encodingPolicy' allow the following values:
+  'EncodeAlways', 'EncodeWhenPresent' and 'EncodeNever'
+-->
+<!ENTITY % encodingPolicy "EncodeAlways|EncodeWhenPresent|EncodeNever">
+
+<!-- Spellchecking specification -->
+<!ELEMENT spellchecking (configuration?, encodings?)>
+<!ATTLIST spellchecking
+>
+
+<!-- List of character encodings -->
+<!ELEMENT encodings (encoding)+>
+<!ATTLIST encodings
+>
+
+<!-- Encoding specification
+  sequence       CDATA        #REQUIRED  Character sequence of the encoding; must not contain new-line characters, i.e. \n or \r
+  character      CDATA        #IMPLIED   Encoded character; must be of length 1
+  ignored        (%boolean;)  #IMPLIED   If true, then the encoding sequence is ignored for spellchecking
+-->
+<!ELEMENT encoding EMPTY>
+<!ATTLIST encoding
+  string         CDATA        #REQUIRED
+  char           CDATA        #IMPLIED
+  ignored        (%boolean;)  #IMPLIED
+>
+
+<!-- Spellchecking configuration
+  encodingReplacementPolicy       (%encodingPolicy;)     #IMPLIED  Policy for replacing encoded characters in replacements for misspelled words
+-->
+<!ELEMENT configuration EMPTY>
+<!ATTLIST configuration
+  encodingReplacementPolicy   (%encodingPolicy;)   #IMPLIED
+>

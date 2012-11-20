@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="text/x-lua">
+    <sub-class-of type="text/plain"/>
+	<glob apifile="lua/luabase.api"/>
+    <glob apifile="lua/lualib5_annot.api"/>
+  </mime-type>
+</mime-info>

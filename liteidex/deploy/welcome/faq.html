@@ -1,0 +1,153 @@
+<!-- FAQ -->
+
+<h2 id="liteenv">LiteEnv Plugin</h2>
+<p>LiteIDE environment setup plugin</p>
+
+<h3>Select Environment</h3>
+<p>Select current use environment, default system</p>
+<img src="images/envselect.png"></img>
+<ul>
+<li>Windows - win64 or win32</li>
+<li>Linux - linux64 or linux32</li>
+<li>MacOSX - darwin64 or darwin32</li>
+</ul>
+
+<h3 id="liteenv_edit">Configure Environment</h3>
+<p>Menu: View -> Options -> LiteEnv or Welcome: Options -> LiteEnv</p>
+<p>Double clicked *.env file to editor</p>
+<p>Example win32.env</p>
+<pre>
+#win32 environment
+
+GOROOT=c:\go
+GOARCH=386
+GOOS=windows
+
+PATH=%GOROOT%\bin;%PATH%
+
+LITEIDE_GDB=gdb
+LITEIDE_MAKE=mingw32-make
+LITEIDE_TERM=%COMSPEC%
+LITEIDE_TERMARGS=
+LITEIDE_EXEC=%COMSPEC%
+LITEIDE_EXECOPT=/k
+</pre>
+
+<p>Example linux32.env</p>
+<pre>
+#linux32 environment
+
+GOROOT=$HOME/go
+GOARCH=386
+GOOS=linux
+
+PATH=$GOROOT/bin:$PATH
+
+LITEIDE_GDB=gdb
+LITEIDE_MAKE=make
+LITEIDE_TERM=/usr/bin/gnome-terminal
+LITEIDE_TERMARGS=
+LITEIDE_EXEC=/usr/bin/xterm
+LITEIDE_EXECOPT=-e
+</pre>
+
+<h2 id="litebuild">LiteBuild Plugin</h2>
+<p>LiteIDE build system, build project or file, if file belong a project</p>
+
+<h3 id="litebuild_edit">Configure Build</h3>
+<p>Menu: View -> Options -> LiteBuild or Welcome: Options -> LiteBuild</p>
+<p>Double clicked *.xml file to editor</p>
+<p>Example linux gopackage.xml</p>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'&gt;
+    &lt;mime-type type="text/x-gopackage" id="go-package" work="$(PROJECT_DIR)"&gt;
+        &lt;config id="Go" name="GO" value="$(GOROOT)/bin/go"/&gt;
+        &lt;config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/&gt;
+        &lt;config id="ErrRegex" name="ERRREGEX" value="([\w\d_\\/\.]+):(\d+):"/&gt;
+        &lt;custom id="TargetArgs" name="TARGETARGS" value=""/&gt;
+        &lt;custom id="BuildArgs" name="BUILDARGS" value=""/&gt;
+        &lt;custom id="InstallArgs" name="INSTALLARGS" value=""/&gt;
+        &lt;action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="" regex="$(ERRREGEX)" /&gt;
+        &lt;action id="Install" img="blue/install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true"/&gt;
+        &lt;action id="Clean" img="blue/clean.png" cmd="$(GO)" args="clean" save="all" output="true"/&gt;
+        &lt;action id="CleanAll" img="blue/cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/&gt;
+        &lt;action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="$(GO)" args="test" save="all" output="true" codec="utf-8"/&gt;
+        &lt;action id="RunTerm" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOEXEC) $(TARGETNAME) $(TARGETARGS)" output="false" readline="true"/&gt;
+        &lt;action id="Run" img="blue/run.png" key="Ctrl+F5" cmd="$(TARGETPATH)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/&gt;
+        &lt;action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run"/&gt;
+        &lt;action id="GoFmt" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)"/&gt;
+    &lt;/mime-type&gt;    
+&lt;/mime-info&gt;</pre>
+<ul>
+<li>lookup mime-type: if no project, load example.go first lookup Makefile or *.e64 to use build toolbar</li>
+<li>action task: order execution defined action id list</li>
+</ul>
+
+<h2 id="gocode">GolangCode Plugin</h2>
+<p>Use gocode word complete, example <code>fmt.</code></p>
+<h3>Install gocode</h3>
+<pre>
+$ export GOROOT=$HOME/go
+$ export PATH=$HOME/go/bin:$PATH
+$ go get -u github.com/nsf/gocode
+</pre>
+
+<h3 id="gocode_load">Load gocode incorrect</h3>
+<p>Test gocode status (my = my computer name)</p>
+<pre>
+$ gocode status
+dial unix /tmp/acrserver.my: dial unix /tmp/acrserver.my: connection refused
+$ rm /tmp/acrserver.my 
+</pre>
+<p>Reload LiteIDE</p>
+
+<h2 id="golangcode">GolangDoc Plugin</h2>
+<p>Golang doc browser and search</p>
+
+<h3>Find package</h3>
+<p>example input "zip"</p>
+<pre>
+archive/zip
+compress/bzip2
+compress/gzip
+</pre>
+<p>The result best matche is archive/zip, auto open zip package document.</p>
+
+<h2>CodeSearch Plugin</h2>
+<p>Editor code search and replace</p>
+<h3>Regex</h3>
+<p>(Colo)(u)(r) -> \1\3</p>
+
+<h2 id="litedebug">LiteDebug Plugin</h2>
+<p>LiteIDE debug plugin</p>
+<h3>Gdb version >= 7.1</h3>
+<p>Golang debug request gdb version 7.1 or high </p>
+<h3>Source path</h3>
+<p>The file or project source path cannot include outsite space or latin1 char</p>
+<h3>Environment LITEIDE_GDB</h3>
+<p>example LiteEnv -> win64.env</p>
+<pre>
+PATH=c:/go-w64/bin;%PATH%
+GOROOT=c:/go-w64
+GOBIN=c:/go-w64/bin
+GOARCH=amd64
+GOOS=windows
+LITEIDE_GDB=gdb64
+</pre>
+<h3>WIN32 and WIN64</h3>
+<p>WIN32 request gdb.exe,WIN64 request gdb64.exe.</p>
+
+<h2 id="golangfmt">GolangFmt Plugin</h2>
+<p>Golang gofmt plugin</p>
+
+<h3>Gofmt Setup</h3>
+
+<p>Menu -> View -> Options -> GolangFmt </p>
+<ul>
+<li>Use diff : use gofmt -d or not,need lookup gnu diff in PATH</li>
+<li>When the editor is saved auto fmt: need for gofmt -d</li>
+</ul>
+
+<h2>Other</h2>
+<h3>Problems with window resizing under linux</h3>
+<p>This is a dock bug. drag any dock view (example golang package browser) to liteide right side and dock, and restart liteide.</p>

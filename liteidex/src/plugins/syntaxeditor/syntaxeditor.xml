@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="text/x-gosrc">
+    <sub-class-of type="text/plain"/>
+    <comment>Golang Source File</comment>
+    <glob pattern="*.go"/>
+  </mime-type>
+  <mime-type type="text/x-profile">
+    <sub-class-of type="text/plain"/>
+    <comment>Project File</comment>
+    <glob pattern="*.pro"/>
+  </mime-type>
+  <mime-type type="text/x-gopro">
+    <sub-class-of type="text/plain"/>
+    <comment>Golang Project File</comment>
+    <glob pattern="*.gopro"/>
+  </mime-type>
+</mime-info>

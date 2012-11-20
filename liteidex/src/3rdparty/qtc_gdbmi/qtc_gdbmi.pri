@@ -1,0 +1,1 @@
+LIBS *= -l$$qtLibraryName(qtcgdbmi)

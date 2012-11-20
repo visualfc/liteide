@@ -1,0 +1,7 @@
+[SETUP]
+NAME = "Go Source File (Empty)"
+AUTHOR = visualfc
+INFO = make new golang soruce(*.go)
+TYPE = file
+FILES = root.go
+OPEN = root.go
