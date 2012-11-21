@@ -120,45 +120,41 @@ install_name_tool -change \
   liteide/LiteIDE.app/Contents/PlugIns/$1   
 }
 
-export deploy_file=libgolangast.dylib
-process_file
+function deploy_m2()
+{
+  echo "install_name_tool" $1
+install_name_tool -change \
+ $QTLIBPATH/QtCore.framework/Versions/4/QtCore \
+ @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \
+ liteide/LiteIDE.app/Contents/MacOS/$1  
 
-export deploy_file=libgolangfmt.dylib
-process_file
+install_name_tool -change \
+ $QTLIBPATH/QtGui.framework/Versions/4/QtGui \
+ @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \
+  liteide/LiteIDE.app/Contents/MacOS/$1   
+  
+install_name_tool -change \
+ $QTLIBPATH/QtXml.framework/Versions/4/QtXml \
+ @executable_path/../Frameworks/QtXml.framework/Versions/4/QtXml \
+  liteide/LiteIDE.app/Contents/MacOS/$1   
+}
 
-export deploy_file=liblitebuild.dylib
-process_file
+deploy_m2 libliteapp.dylib
+deploy_m2 LiteIDE
 
-export deploy_file=libliteeditor.dylib
-process_file2
-
-export deploy_file=libwelcome.dylib
-process_file2
-
-export deploy_file=libgolangcode.dylib
-process_file
-
-export deploy_file=libfilebrowser.dylib
-process_file
-
-export deploy_file=liblitefind.dylib
-process_file
-
-export deploy_file=libgolangdoc.dylib
-process_file2
-
-export deploy_file=libliteenv.dylib
-process_file
-
-export deploy_file=liblitedebug.dylib
-process_file
-
-export deploy_file=libgdbdebugger.dylib
-process_file
-
-export deploy_file=libgolangplay.dylib
-process_file
-
-export deploy_file=libgolangpackage.dylib
-process_file
+deploy_p1 libgolangast.dylib
+deploy_p1 libgolangfmt.dylib
+deploy_p1 liblitebuild.dylib
+deploy_p2 libliteeditor.dylib
+deploy_p2 libwelcome.dylib
+deploy_p1 libgolangcode.dylib
+deploy_p1 libfilebrowser.dylib
+deploy_p1 liblitefind.dylib
+deploy_p2 libgolangdoc.dylib
+deploy_p1 libliteenv.dylib
+deploy_p1 liblitedebug.dylib
+deploy_p1 libgdbdebugger.dylib
+deploy_p1 libgolangplay.dylib
+deploy_p1 libgolangpackage.dylib
+deploy_p1 litemarkdown.dylib
 
