@@ -28,6 +28,7 @@
 #include <QTextBrowser>
 #include <QScrollBar>
 #include <QAction>
+#include <QFileInfo>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -43,11 +44,12 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_liteApp(app)
 {
     m_browser = new QTextBrowser;
+
     m_curEditor = 0;
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_browser,
-                                                  QString("MarkdownView"),
-                                                  QString(tr("Markdown View")),
+                                                  QString("HtmlPreview"),
+                                                  QString(tr("Html Preview")),
                                                   true);
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
@@ -62,18 +64,41 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
     if (m_curEditor != 0) {
         m_curEditor->disconnect(this);
     }
-    if (editor && editor->mimeType() == "text/x-markdown") {
+    if (editor &&
+        ( (editor->mimeType() == "text/x-markdown") ||
+            (editor->mimeType() == "text/html")) )  {
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
+            QStringList paths;
+            QFileInfo info(ed->filePath());
+            paths << info.path();
+            if (editor->mimeType() == "text/x-markdown") {
+                paths << m_liteApp->resourcePath()+"/markdown";
+            }
+            m_browser->setSearchPaths(paths);
             m_curEditor = ed;
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(editorHtmlPrivew()));
             editorHtmlPrivew();
         }
     } else {
         m_curEditor = 0;
+        m_lastData.clear();
         m_browser->clear();
     }
 }
+
+static QByteArray head = ""
+"<html>"
+"<head>"
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"
+"<link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" media=\"all\" charset=\"utf-8\"/>"
+"</css>"
+"</head>"
+"<body>";
+
+static QByteArray end = ""
+"</body>"
+"</html>";
 
 void HtmlPreview::editorHtmlPrivew()
 {
@@ -87,11 +112,16 @@ void HtmlPreview::editorHtmlPrivew()
     }
     m_lastData = data;
 
-    QByteArray html = mdtohtml(m_lastData);
+    QByteArray html;
+    if (m_curEditor->mimeType() == "text/html") {
+        html = m_lastData;
+    } else {
+        html = mdtohtml(m_lastData);
+    }
 
     int v = m_browser->verticalScrollBar()->value();
 
-    m_browser->setHtml(html);
+    m_browser->setHtml(head+html+end);
 
     m_browser->verticalScrollBar()->setValue(v);
 }
@@ -101,6 +131,7 @@ void HtmlPreview::triggered(bool b)
     if (b) {
         currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     } else if (m_curEditor){
+        m_lastData.clear();
         m_curEditor->disconnect(this);
     }
 }
