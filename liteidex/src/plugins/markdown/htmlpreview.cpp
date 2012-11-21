@@ -29,6 +29,7 @@
 #include <QScrollBar>
 #include <QAction>
 #include <QFileInfo>
+#include <QTextCodec>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -44,6 +45,8 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_liteApp(app)
 {
     m_browser = new QTextBrowser;
+    m_browser->setOpenExternalLinks(false);
+    m_browser->setOpenLinks(false);
 
     m_curEditor = 0;
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
@@ -112,11 +115,12 @@ void HtmlPreview::editorHtmlPrivew()
     }
     m_lastData = data;
 
-    QByteArray html;
+    QString html;
     if (m_curEditor->mimeType() == "text/html") {
-        html = m_lastData;
+        QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
+        html = codec->toUnicode(data);
     } else {
-        html = mdtohtml(m_lastData);
+        html = QString::fromUtf8(mdtohtml(data));
     }
 
     int v = m_browser->verticalScrollBar()->value();
