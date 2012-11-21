@@ -60,8 +60,8 @@
 				<RegExpr attribute="emphasis" String="&emphasisregex;" />
 				<RegExpr attribute="strongemphasis" String="&strongemphasisregex;" />
 				<RegExpr attribute="code" String="^([\s]{4,}|\t+).*$" />
-				<RegExpr context="bullet" String="^[\*\+\-]\s" />
-				<RegExpr context="numlist" String="^[\d]+\.\s" />
+				<RegExpr context="bullet" String="^([\s]{0,3})[\*\+\-]\s" />
+				<RegExpr context="numlist" String="^([\s]{0,3})[\d]+\.\s" />
 				<RegExpr attribute="meta" String="^(Title|Author|Date|Copyright|Revision|CSS|LaTeX\ XSLT|Categories|Tags|BaseName|Excerpt):(.*)+$" />
 				<IncludeRules context="inc" />
 
