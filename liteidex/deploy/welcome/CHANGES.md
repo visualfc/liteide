@@ -1,7 +1,8 @@
-Changes
-===========
+<!-- Changes -->
 
-#### 2012.11.15 Ver x14.1
+## LiteIDE X Version
+
+### 2012.11.15 Ver x14.1
 * LiteIDE : quick start
 * LiteApp : multi instance support
 * GolangDoc: deply load mode
@@ -10,7 +11,7 @@ Changes
 * LiteEditor: fix if/else fold
 * GolangDoc : goapi enable _test
 
-#### 2012.11.6 Ver x14.0
+### 2012.11.6 Ver x14.0
 * tools/goapi : new goapi tool
 * GolangDoc: View Expression Information (F1)
 * GolangDoc: Jump to Declaration (F2)
@@ -28,7 +29,7 @@ Changes
 	example -ldflags "-s" for release
 * remove: Makefile plugin , Profile plugin, x64 Project
 
-#### 2012.10.10 Ver x13.2
+### 2012.10.10 Ver x13.2
 * GolangCode : the best support for gocode
 * LiteApp : add editor tab context menu
 * LiteApp : update view menu
@@ -50,7 +51,7 @@ Changes
 * FileSystem : fix execute find path
 * LiteFind : fix current directory 
 
-#### 2012.9.24 Ver x13.1
+### 2012.9.24 Ver x13.1
 * LiteBuild : fix build load crash.
 * LiteApp : fix double click error output regexp
 * LiteApp : fix folder drop to liteide
@@ -62,7 +63,7 @@ Changes
 * LiteEditor : enable drop text
 * GolangPlay : enable gofmt
 
-#### 2012.9.21 Ver x13
+### 2012.9.21 Ver x13
 * LiteApp : any folder, any file to build
 * LiteApp : update window style, add editor toolbar and status
 * LiteEditor : remove editor toolbar 
@@ -79,7 +80,7 @@ Changes
 * FileSystem : double click execute file and execute on build output
 * Windows : include diff bin
 
-#### 2012.9.14 Ver x12.5
+### 2012.9.14 Ver x12.5
 * LiteApp : move dock style, change to idea style tool windows.
 * LiteApp : double click editor and maximized or restore editor
 * LiteApp : esc key to hide bottom tool windows
@@ -88,7 +89,7 @@ Changes
 * LiteEditor : extra use color scheme
 * GolangFmt : show error log and goto line
 
-#### 2012.7.12 Ver X12.2
+### 2012.7.12 Ver X12.2
 * GolangFmt : fix fold error diff bug
 * LiteDebug : add var watch, example main.var os.Stdout
 * Welcome : add load last selection
@@ -99,11 +100,11 @@ Changes
 * LiteEnv : fix windows env LITEIEDE_EXECOPT=/C
 * LiteApp : fix icon on windows xp unable show
 
-#### 2012.6.28 Ver X12.1.1
+### 2012.6.28 Ver X12.1.1
 * LiteEditor : fix fold bug - line include "head{}end"
 * LiteEditor : kate go.xml breace match add "[]"
 
-#### 2012.6.27 Ver X12.1
+### 2012.6.27 Ver X12.1
 * LiteIDE : LiteIDE use new logo
 * LiteEditor : fold / unfold
 * LiteEditor : color scheme custom selection 
@@ -114,7 +115,7 @@ Changes
 * LiteIDE : update faq document
 * LiteIDE : add install document
 
-#### 2012.6.13 Ver X12 1.875
+### 2012.6.13 Ver X12 1.875
 * LiteIDE : reset resource directory
 * LiteEditor : goto next/prev block
 * LiteEditor : code comment
@@ -128,13 +129,13 @@ Changes
 * LiteFind: add file search
 * PackageBrowser: fast load
 
-#### 2012.5.16 Ver X11 1.71875 beta4.1
+### 2012.5.16 Ver X11 1.71875 beta4.1
 * LiteBuild: fix execute args for gosrc/gopro/makefile
 * LiteApp: add option - when close project auto close project editors
 * PackageBrowser : double click pkg and load project
 * LiteEditor: add option - compelter case sensitive
 
-#### 2012.5.15 Ver X11 1.71875 beta4
+### 2012.5.15 Ver X11 1.71875 beta4
 * GolangPackage : enable local package
 * GolangDoc : golang api fmt#Println -> fmt.Println
 * LiteBuild : fix regexp error
@@ -142,7 +143,7 @@ Changes
 * PackageProject : remove auto reload timer
 * LiteEditor: (linux) redo enable CTRL+Y
 
-#### 2012.5.2 Ver X11 1.71875 beta3
+### 2012.5.2 Ver X11 1.71875 beta3
 * GolangPackage : new golang package plugin for GO1
 * GolangPackage : PackageBrowser and PackageProject for GO1
 * GolangTool : remove the plugin
@@ -155,17 +156,17 @@ Changes
 * Welcome : new recent page
 * gopromake : update pkg depend
 
-#### 2012.3.9 Ver X11 1.71875 beta2
+### 2012.3.9 Ver X11 1.71875 beta2
 * GolangPlay : new go playground plugin
 * GolangTool : sync editor, sync project
 
-#### 2012.3.1 Ver X11 1.71875 beta1
+### 2012.3.1 Ver X11 1.71875 beta1
 * GolangTool : new golang plugin for GO1, import GOPATH project
 * GolangDoc : update to GO1
 * LiteBuild : update to GO1
 * tools : udpate all tools for GO1
 
-#### 2011.9.26 Ver X10 1.5625
+### 2011.9.26 Ver X10 1.5625
 * LiteEditor : add line mark api
 * LiteDebug : new debug toolbar
 * LiteDebug : insert/remove break
@@ -176,13 +177,13 @@ Changes
 * GdbDebugger : load library view
 * TerminalEdit : provided to LiteBuild and LiteDebug 
 
-#### 2011.9.14 Ver X9 1.40625
+### 2011.9.14 Ver X9 1.40625
 * LiteDebug : new debug manager plugin
 * GdbDebugger : new gdb debugger plugin
 * LiteBuild : add build config and custom
 * LiteFind : fix regexp use match case
 
-#### 2011.9.1 Ver X8 1.25
+### 2011.9.1 Ver X8 1.25
 * LiteFind : new find and replace plugin, remove CodeSearch plugin
 * LiteEditor : fix word api complete three parts error
 * LiteEditor : fix word api complete sorted
@@ -191,7 +192,7 @@ Changes
 * LiteBuild : add build option, example execute arguments
 * FileBrowser : add new file wizard
 
-#### 2011.8.12 Ver X7 1.09375
+### 2011.8.12 Ver X7 1.09375
 * Welcome : new html page, quick link, session, recent projects and files
 * GolangDoc : generic document nav
 * GolangDoc : scheme entry [file|list|find|pdoc]
@@ -202,7 +203,7 @@ Changes
 * GolangAst : show type struct field
 * GolangAst : editor state keep self
 
-#### 2011.7.28 Ver X6 0.9375
+### 2011.7.28 Ver X6 0.9375
 * LiteEnv : new plugin, liteide enviroment setup
 * Welcome : add LiteIDE document browser
 * GolangDoc : add package find, example input "zip" and find
@@ -222,7 +223,7 @@ Changes
 * LiteBuild : fix output append \n->next append
 * LiteBuild : fix enviroment depend of LiteBuild
 
-#### 2011.7.7 X5 v0.78125
+### 2011.7.7 X5 v0.78125
 * add CodeSearch plugin : Editor Search and Replace
 * add GolangDoc plugin : Golang Package Find
 * add Search and Replace Regex: (Colo)(u)(r) -> \1\3
@@ -241,7 +242,7 @@ Changes
 * fix Editor Close Ask BUG ret==SaveAll
 * fix Editor word writed ,compelter only one match auto hide
 
-#### 2011.6.30 X4 v0.625
+### 2011.6.30 X4 v0.625
 * add interface zh_cn
 * add filebrowser pluing add/change/remove 
 * add editor color style scheme setup
@@ -252,24 +253,26 @@ Changes
 * kate go.xml support "number" style
 * liteapp last session save/load
 
-#### 2011.6.21 X3 v0.46875
+### 2011.6.21 X3 v0.46875
 * add file browser plugin
 * source editor pre link project build
 * source editor outside modify/remove watcher
 
-#### 2011.5.20 X2 v0.3125
+### 2011.5.20 X2 v0.3125
 * add gocode plugin
 * add build/makefile
 * add build/lua stdoutput:setvbuf("no")
 * fix build task stop on error
 * fix build process write \n
 
-#### 2011.5.12 X1 v0.15625
+### 2011.5.12 X1 v0.15625
 * New LiteIDE X version
 
-### LiteIDE Old version
+------
 
-#### 2011.2.25  v0.2.1
+## LiteIDE Old version
+
+### 2011.2.25  v0.2.1
 * add build on MacOSX10.6
 * support Makefile and .pro project
 * project support GCOPT and GLOPT
@@ -284,17 +287,17 @@ Changes
 * new project wizard : .pro/package/Makefile
 * new example goinfo, how to use local or search package
 
-#### 2011.1.25 v0.1.8
+### 2011.1.25 v0.1.8
 * goastview plugin
 
-#### 2011.1.18 v0.1.6
+### 2011.1.18 v0.1.6
 * add build on Linux64
 
-#### 2011.1.12 v0.1.5
+### 2011.1.12 v0.1.5
 * build error and jump to source line
 
-#### 2011.1.11 v0.1.2
+### 2011.1.11 v0.1.2
 * gopromake use goroutines
 
-#### 2011.1.10 v0.1
+### 2011.1.10 v0.1
 * init version 

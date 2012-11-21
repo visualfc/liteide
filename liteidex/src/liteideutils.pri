@@ -10,6 +10,8 @@ LIBS += -L$$IDE_PLUGIN_PATH
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/api
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/api/liteapi
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/utils
+INCLUDEPATH += $$IDE_SOURCE_TREE/src/3rdparty
+
 
 isEmpty(TARGET) {
     error("liteideutils.pri: You must provide a TARGET")

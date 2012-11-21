@@ -26,6 +26,7 @@
 #include "litedoc.h"
 #include "documentbrowser/documentbrowser.h"
 #include "htmlutil/htmlutil.h"
+#include "sundown/mdtohtml.h"
 
 #include <QAction>
 #include <QMenu>
@@ -135,6 +136,12 @@ void LiteDoc::openUrlFile(const QUrl &url)
             } else {
                 updateHtmlDoc(url,ba);
             }
+        }
+    } else if (ext == "md") {
+        QFile file(info.filePath());
+        if (file.open(QIODevice::ReadOnly)) {
+            QByteArray ba = mdtohtml(file.readAll());
+            updateHtmlDoc(url,ba);
         }
     } else if (ext == "go") {
         LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());

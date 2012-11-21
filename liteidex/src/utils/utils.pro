@@ -17,6 +17,6 @@ SUBDIRS = \
     documentbrowser \
     htmlutil \
     golangapi \
-    filesystem
+    filesystem \
 
 

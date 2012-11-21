@@ -3,9 +3,10 @@ TEMPLATE = lib
 
 QT += xml
 
-include(../../liteideplugin.pri)
-include(../../utils/documentbrowser/documentbrowser.pri)
-include(../../utils/htmlutil/htmlutil.pri)
+include (../../liteideplugin.pri)
+include (../../utils/documentbrowser/documentbrowser.pri)
+include (../../utils/htmlutil/htmlutil.pri)
+include (../../3rdparty/sundown/sundown.pri)
 
 DEFINES += WELCOME_LIBRARY
 

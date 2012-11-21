@@ -10,4 +10,5 @@ SUBDIRS = \
     qtc_editutil \
     qjson \
     elidedlabel \
+    sundown \
 
