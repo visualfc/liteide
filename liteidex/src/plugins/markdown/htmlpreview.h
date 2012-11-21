@@ -39,6 +39,7 @@ public:
 signals:
     
 public slots:
+    void loadHeadData(const QString &css);
     void currentEditorChanged(LiteApi::IEditor*);
     void editorHtmlPrivew();
     void triggered(bool);
@@ -48,6 +49,7 @@ protected:
     QAction      *m_toolAct;
     QPointer<LiteApi::ITextEditor> m_curEditor;
     QByteArray  m_lastData;
+    QByteArray  m_head;
 };
 
 #endif // HTMLPREVIEW_H

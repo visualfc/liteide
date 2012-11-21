@@ -30,6 +30,7 @@
 #include <QAction>
 #include <QFileInfo>
 #include <QTextCodec>
+#include <QFile>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -54,8 +55,34 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
                                                   true);
+    loadHeadData(m_liteApp->resourcePath()+"/markdown/style.css");
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
+}
+
+static QByteArray head1 =
+"<html>"
+"<head>"
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"
+"<style type=\"text/css\">";
+
+static QByteArray head2 =
+"</style>"
+"</head>"
+"<body>";
+
+static QByteArray end =
+"</body>"
+"</html>";
+
+void HtmlPreview::loadHeadData(const QString &css)
+{
+    QFile f(css);
+    if (!f.open(QFile::ReadOnly)) {
+        m_head = head1+head2;
+        return;
+    }
+    m_head = head1+f.readAll()+head2;
 }
 
 void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
@@ -75,9 +102,6 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
             QStringList paths;
             QFileInfo info(ed->filePath());
             paths << info.path();
-            if (editor->mimeType() == "text/x-markdown") {
-                paths << m_liteApp->resourcePath()+"/markdown";
-            }
             m_browser->setSearchPaths(paths);
             m_curEditor = ed;
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(editorHtmlPrivew()));
@@ -89,19 +113,6 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
         m_browser->clear();
     }
 }
-
-static QByteArray head = ""
-"<html>"
-"<head>"
-"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"
-"<link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" media=\"all\" charset=\"utf-8\"/>"
-"</css>"
-"</head>"
-"<body>";
-
-static QByteArray end = ""
-"</body>"
-"</html>";
 
 void HtmlPreview::editorHtmlPrivew()
 {
@@ -115,17 +126,15 @@ void HtmlPreview::editorHtmlPrivew()
     }
     m_lastData = data;
 
-    QString html;
-    if (m_curEditor->mimeType() == "text/html") {
-        QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
-        html = codec->toUnicode(data);
-    } else {
-        html = QString::fromUtf8(mdtohtml(data));
-    }
-
     int v = m_browser->verticalScrollBar()->value();
 
-    m_browser->setHtml(head+html+end);
+    if (m_curEditor->mimeType() == "text/html") {
+        QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
+        m_browser->setHtml(codec->toUnicode(data));
+    } else {
+        QString html = QString::fromUtf8(mdtohtml(data));
+        m_browser->setHtml(m_head+html+end);
+    }
 
     m_browser->verticalScrollBar()->setValue(v);
 }
