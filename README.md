@@ -1,8 +1,8 @@
-LiteIDE
+LiteIDE X
 =========
 
 ### Introduction
-    LiteIDE is a simple, open source, cross-platform Go IDE.
+	LiteIDE is a simple, open source, cross-platform Go IDE.
 
 ### Base Features
 * Mime type basis system
@@ -32,7 +32,7 @@ LiteIDE
 
 ### GoogleCode
 * Source <http://code.google.com/p/liteide>
-* Downloads <http://code.google.com/p/golangide>
+* Download <http://code.google.com/p/golangide>
 * Group <https://groups.google.com/group/liteide-dev>
 
 ### Developer

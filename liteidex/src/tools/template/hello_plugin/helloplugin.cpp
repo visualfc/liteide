@@ -1,4 +1,5 @@
 #include "helloplugin.h"
+#include <QtPlugin>
 
 HelloPlugin::HelloPlugin()
 {
@@ -16,4 +17,4 @@ bool HelloPlugin::initWithApp(LiteApi::IApplication *app)
     return true;
 }
 
-Q_EXPORT_PLUGIN(HelloPlugin)
+Q_EXPORT_PLUGIN(PluginFactory)

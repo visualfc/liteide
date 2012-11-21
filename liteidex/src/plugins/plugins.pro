@@ -21,3 +21,4 @@ SUBDIRS = \
     golangplay \
     golangpackage \
     gdbdebugger \
+    markdown \

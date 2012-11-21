@@ -3,15 +3,19 @@
 
 #include "hello_global.h"
 #include "liteapi/liteapi.h"
-#include <QtPlugin>
 
 class HelloPlugin : public LiteApi::IPlugin
 {
-    Q_OBJECT
-    Q_INTERFACES(LiteApi::IPlugin)
 public:
     HelloPlugin();
     virtual bool initWithApp(LiteApi::IApplication *app);
 };
+
+class PluginFactory : public LiteApi::PluginFactory<HelloPlugin>
+{
+    Q_OBJECT
+    Q_INTERFACES(LiteApi::IPluginFactory)
+};
+
 
 #endif // HELLOPLUGIN_H

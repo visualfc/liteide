@@ -38,7 +38,7 @@
 
 <language name="Markdown" version="1.2" section="Markup"
 		extensions="*.text;*.md;*.mmd:*.markdown" 
-		mimetype="text/markdown"
+		mimetype="text/x-markdown"
 		priority="15"
 		author="Darrin Yeager, Claes Holmerson"
 		license="GPL,BSD" >
