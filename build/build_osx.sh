@@ -83,41 +83,41 @@ macdeployqt liteide/LiteIDE.app -no-plugins
 export QTLIBPATH=$QTDIR/lib
 echo QTLIBPATH=$QTLIBPATH
 
-function process_file()
+function deploy_p1()
 {
- echo "install_name_tool" $deploy_file
+ echo "install_name_tool" $1
 install_name_tool -change \
  $QTLIBPATH/QtCore.framework/Versions/4/QtCore \
  @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \
- liteide/LiteIDE.app/Contents/PlugIns/$deploy_file  
+ liteide/LiteIDE.app/Contents/PlugIns/$1  
 
 install_name_tool -change \
  $QTLIBPATH/QtGui.framework/Versions/4/QtGui \
  @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \
-  liteide/LiteIDE.app/Contents/PlugIns/$deploy_file   
+  liteide/LiteIDE.app/Contents/PlugIns/$1   
 if [ $? -ge 1 ]; then
 	echo 'error, not deploy'
 	exit 1
 fi
 }
 
-function process_file2()
+function deploy_p2()
 {
-  echo "install_name_tool" $deploy_file
+  echo "install_name_tool" $1
 install_name_tool -change \
  $QTLIBPATH/QtCore.framework/Versions/4/QtCore \
  @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \
- liteide/LiteIDE.app/Contents/PlugIns/$deploy_file  
+ liteide/LiteIDE.app/Contents/PlugIns/$1  
 
 install_name_tool -change \
  $QTLIBPATH/QtGui.framework/Versions/4/QtGui \
  @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \
-  liteide/LiteIDE.app/Contents/PlugIns/$deploy_file   
+  liteide/LiteIDE.app/Contents/PlugIns/$1   
   
 install_name_tool -change \
  $QTLIBPATH/QtXml.framework/Versions/4/QtXml \
  @executable_path/../Frameworks/QtXml.framework/Versions/4/QtXml \
-  liteide/LiteIDE.app/Contents/PlugIns/$deploy_file   
+  liteide/LiteIDE.app/Contents/PlugIns/$1   
 }
 
 export deploy_file=libgolangast.dylib

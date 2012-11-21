@@ -196,6 +196,8 @@ void ActionToolBar::dock1Visible(bool b)
     QAction *action = dock1->checkedAction();
     if (action) {
         action->setChecked(dock1->isVisible());
+    } else if (b && !dock1->actions().isEmpty()) {
+        dock1->actions().first()->setChecked(true);
     }
 }
 
@@ -204,6 +206,8 @@ void ActionToolBar::dock2Visible(bool b)
     QAction *action = dock2->checkedAction();
     if (action) {
         action->setChecked(dock2->isVisible());
+    } else if (b && !dock2->actions().isEmpty()) {
+        dock2->actions().first()->setChecked(true);
     }
 }
 
@@ -362,7 +366,6 @@ QAction *ToolMainWindow::addToolWindow(Qt::DockWidgetArea area, QWidget *widget,
     m_actStateMap.insert(action,state);
 
     connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledAction(bool)));
-    //action->setChecked(true);
     return action;
 }
 
