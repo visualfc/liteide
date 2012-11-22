@@ -28,6 +28,7 @@
 
 #include <QWidget>
 #include <QUrl>
+#include <QTextDocument>
 
 namespace LiteApi {
 
@@ -38,8 +39,9 @@ public:
     IHtmlWidget(QObject *parent) :QObject(parent){}
     virtual ~IHtmlWidget() {}
 public:
-    virtual QWidget *widget() = 0;
+    virtual QWidget *widget() const = 0;
     virtual QString className() const = 0;
+    virtual void setSerachPaths(const QStringList &paths) = 0;
     virtual void setHtml(const QString &html, const QUrl &url) = 0;
     virtual void setMarkdown(const QByteArray &data, const QUrl &url) = 0;
     virtual void setText(const QString &text, const QUrl &url) = 0;
@@ -47,6 +49,8 @@ public:
     virtual void scroolToAnchor(const QString &anchor) = 0;
     virtual QPoint scrollPos() const = 0;
     virtual void setScrollPos(const QPoint &pos) = 0;
+    virtual QString selectedText() const = 0;
+    virtual bool findText(const QString & exp, QTextDocument::FindFlags options = 0 ) = 0;
 signals:
     void linkClicked(const QUrl & url);
     void linkHovered(const QUrl & url);

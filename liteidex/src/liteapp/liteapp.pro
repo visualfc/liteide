@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     folderproject.cpp \
     folderprojectfactory.cpp \
     goproxy.cpp \
-    htmlwidgetmanager.cpp
+    htmlwidgetmanager.cpp \
+    textbrowserhtmlwidget.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -88,7 +89,8 @@ HEADERS  += mainwindow.h \
     folderprojectfactory.h \
     goproxy.h \
     cdrv.h \
-    htmlwidgetmanager.h
+    htmlwidgetmanager.h \
+    textbrowserhtmlwidget.h
 
 FORMS += \
     aboutdialog.ui \

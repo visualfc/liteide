@@ -24,6 +24,7 @@
 #include <QPointer>
 #include <QScopedPointer>
 #include <QSharedPointer>
+#include <QUrl>
 #include <QDebug>
 
 #include <stdlib.h>

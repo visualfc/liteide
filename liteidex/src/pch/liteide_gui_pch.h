@@ -22,5 +22,11 @@
 #include <QPlainTextEdit>
 #include <QTextDocument>
 #include <QTextBrowser>
+#include <QTextCursor>
+#include <QTextBlock>
+#include <QTreeView>
+#include <QModelIndex>
+#include <QStandardItemModel>
+#include <QStandardItem>
 
 #endif

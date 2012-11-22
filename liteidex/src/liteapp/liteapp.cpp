@@ -28,7 +28,6 @@
 #include "editormanager.h"
 #include "projectmanager.h"
 #include "pluginmanager.h"
-#include "dockmanager.h"
 #include "outputmanager.h"
 #include "actionmanager.h"
 #include "mimetypemanager.h"
@@ -38,6 +37,7 @@
 #include "mainwindow.h"
 #include "liteappoptionfactory.h"
 #include "folderprojectfactory.h"
+#include "textbrowserhtmlwidget.h"
 
 #include <QApplication>
 #include <QSplashScreen>
@@ -137,6 +137,8 @@ LiteApp::LiteApp()
     m_mainwindow->splitter()->setStretchFactor(0,50);
     //m_mainwindow->setStatusBar(m_outputManager->statusBar());
 
+    m_htmlWidgetManager->addFactory(new TextBrowserHtmlWidgetFactory(this));
+
     m_extension->addObject("LiteApi.IMimeTypeManager",m_mimeTypeManager);
     m_extension->addObject("LiteApi.IPluginManager",m_pluginManager);
     m_extension->addObject("LiteApi.IProjectManager",m_projectManager);
@@ -145,6 +147,7 @@ LiteApp::LiteApp()
     m_extension->addObject("LiteApi.IToolWindowManager",m_toolWindowManager);
     m_extension->addObject("LiteApi.QMainWindow",m_mainwindow);
     m_extension->addObject("LiteApi.QMainWindow.QSplitter",m_mainwindow->splitter());
+    m_extension->addObject("LiteApi.IHtmlWidgetManager",m_htmlWidgetManager);
 
     //add actions
     connect(m_projectManager,SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
