@@ -25,12 +25,21 @@
 
 #include "htmlpreview.h"
 #include "sundown/mdtohtml.h"
-#include <QTextBrowser>
 #include <QScrollBar>
 #include <QAction>
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QFile>
+#include <QUrl>
+
+#ifdef LITEIDE_WEBKIT
+    #include <QWebView>
+    #include <QWebPage>
+    #include <QWebFrame>
+#else
+    #include <QTextBrowser>
+#endif
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -45,10 +54,13 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app)
 {
-    m_browser = new QTextBrowser;
+#ifdef LITEIDE_WEBKIT
+    m_browser = new QWebView;
+#else
+    m_browser = new QTextBrowser;    
     m_browser->setOpenExternalLinks(false);
     m_browser->setOpenLinks(false);
-
+#endif
     m_curEditor = 0;
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_browser,
@@ -99,18 +111,24 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
             (editor->mimeType() == "text/html")) )  {
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
+#ifndef LITEIDE_WEBKIT
             QStringList paths;
             QFileInfo info(ed->filePath());
             paths << info.path();
             m_browser->setSearchPaths(paths);
+#endif
             m_curEditor = ed;
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(editorHtmlPrivew()));
             editorHtmlPrivew();
         }
+        QPlainTextEdit *pte = LiteApi::getPlainTextEdit(editor);
+        if (pte) {
+            pte->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+        }
     } else {
         m_curEditor = 0;
         m_lastData.clear();
-        m_browser->clear();
+        m_browser->setHtml("");
     }
 }
 
@@ -126,17 +144,17 @@ void HtmlPreview::editorHtmlPrivew()
     }
     m_lastData = data;
 
-    int v = m_browser->verticalScrollBar()->value();
-
+    //int v = m_browser->verticalScrollBar()->value();
+    int v = m_browser->page()->mainFrame()->scrollBarValue(Qt::Vertical);
     if (m_curEditor->mimeType() == "text/html") {
         QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
-        m_browser->setHtml(codec->toUnicode(data));
+        m_browser->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
     } else {
         QString html = QString::fromUtf8(mdtohtml(data));
-        m_browser->setHtml(m_head+html+end);
+        m_browser->setHtml(m_head+html+end,QUrl::fromLocalFile(m_curEditor->filePath()));
     }
-
-    m_browser->verticalScrollBar()->setValue(v);
+    m_browser->page()->mainFrame()->setScrollBarValue(Qt::Vertical,v);
+    //m_browser->verticalScrollBar()->setValue(v);
 }
 
 void HtmlPreview::triggered(bool b)

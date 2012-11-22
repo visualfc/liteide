@@ -1,6 +1,12 @@
 TARGET = markdown
 TEMPLATE = lib
 
+DEFINES += LITEIDE_WEBKIT
+
+contains(DEFINES, LITEIDE_WEBKIT) {
+    QT += webkit
+}
+
 include (../../liteideplugin.pri)
 include (../../3rdparty/sundown/sundown.pri)
 

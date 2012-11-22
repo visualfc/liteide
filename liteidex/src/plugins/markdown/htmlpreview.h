@@ -30,6 +30,9 @@
 #include <QPointer>
 
 class QTextBrowser;
+#ifdef LITEIDE_WEBKIT
+    class QWebView;
+#endif
 class HtmlPreview : public QObject
 {
     Q_OBJECT
@@ -45,7 +48,11 @@ public slots:
     void triggered(bool);
 protected:
     LiteApi::IApplication *m_liteApp;
+#ifdef LITEIDE_WEBKIT
+    QWebView     *m_browser;
+#else
     QTextBrowser *m_browser;
+#endif
     QAction      *m_toolAct;
     QPointer<LiteApi::ITextEditor> m_curEditor;
     QByteArray  m_lastData;
