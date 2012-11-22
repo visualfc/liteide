@@ -67,7 +67,11 @@ void HtmlPreview::appLoaded()
     layout->setMargin(0);
     layout->addWidget(m_htmlWidget->widget());
     m_widget->setLayout(layout);
-    loadHeadData(m_liteApp->resourcePath()+"/markdown/style.css");
+    if (m_htmlWidget->className() == "QWebView") {
+        loadHeadData(m_liteApp->resourcePath()+"/markdown/style-github.css");
+    } else {
+        loadHeadData(m_liteApp->resourcePath()+"/markdown/style.css");
+    }
 }
 
 static QByteArray head1 =
