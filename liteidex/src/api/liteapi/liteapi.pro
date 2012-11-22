@@ -8,4 +8,5 @@ include (../../liteideapi.pri)
 DEFINES += LITEAPI_LIBRARY
 
 HEADERS += liteobj.h \
-           liteapi.h
+           liteapi.h \
+    litehtml.h

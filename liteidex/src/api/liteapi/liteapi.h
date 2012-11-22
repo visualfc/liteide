@@ -27,6 +27,7 @@
 #define __LITEAPI_H__
 
 #include "liteobj.h"
+#include "litehtml.h"
 
 #include <QWidget>
 #include <QPlainTextEdit>
@@ -537,6 +538,7 @@ public:
     virtual IMimeTypeManager *mimeTypeManager() = 0;
     virtual IOptionManager  *optionManager() = 0;
     virtual IToolWindowManager *toolWindowManager() = 0;
+    virtual IHtmlWidgetManager *htmlWidgetManager() = 0;
 
     virtual QMainWindow *mainWindow() const = 0;
     virtual QSettings *settings() = 0;
