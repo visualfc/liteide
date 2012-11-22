@@ -44,6 +44,7 @@ class ActionManager;
 class MimeTypeManager;
 class OptionManager;
 class ToolWindowManager;
+class HtmlWidgetManager;
 class QSettings;
 class QSplitter;
 class LiteAppOptionFactory;
@@ -73,6 +74,7 @@ public:
     virtual IMimeTypeManager *mimeTypeManager();
     virtual IOptionManager  *optionManager();
     virtual IToolWindowManager *toolWindowManager();
+    virtual IHtmlWidgetManager *htmlWidgetManager();
 
     virtual QMainWindow *mainWindow() const;
     virtual QSettings *settings();
@@ -126,6 +128,7 @@ protected:
     FileManager    *m_fileManager;
     DockManager    *m_dockManager;
     MimeTypeManager *m_mimeTypeManager;
+    HtmlWidgetManager *m_htmlWidgetManager;
     OptionManager   *m_optionManager;
     TextOutput    *m_logOutput;
     QAction       *m_logAct;

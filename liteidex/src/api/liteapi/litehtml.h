@@ -69,7 +69,11 @@ public:
     IHtmlWidgetManager(QObject *parent = 0) : QObject(parent) {}
     virtual QStringList classNameList() const = 0;
     virtual void addFactory(IHtmlWidgetFactory *factory) = 0;
-    virtual IHtmlWidget *create(QObject *parent, const QString &className = "") = 0;
+    virtual QList<IHtmlWidgetFactory*> factoryList() const = 0;
+    virtual bool setDefaultClassName(const QString &className) = 0;
+    virtual QString defaultClassName() const = 0;
+    virtual IHtmlWidget *create(QObject *parent) = 0;
+    virtual IHtmlWidget *createByName(QObject *parent, const QString &className) = 0;
 };
 
 } //namespace LiteApi

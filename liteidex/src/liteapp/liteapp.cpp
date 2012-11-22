@@ -34,6 +34,7 @@
 #include "mimetypemanager.h"
 #include "optionmanager.h"
 #include "toolwindowmanager.h"
+#include "htmlwidgetmanager.h"
 #include "mainwindow.h"
 #include "liteappoptionfactory.h"
 #include "folderprojectfactory.h"
@@ -111,13 +112,13 @@ LiteApp::LiteApp()
       m_extension(new Extension),
       m_mainwindow(new MainWindow(this)),
       m_toolWindowManager(new ToolWindowManager),
+      m_htmlWidgetManager(new HtmlWidgetManager),
       m_actionManager(new ActionManager),
       m_pluginManager(new PluginManager),
       m_projectManager(new ProjectManager),
       m_editorManager(new EditorManager),
       m_fileManager(new FileManager),
       m_dockManager(new DockManager),
-      //m_outputManager(new OutputManager),
       m_mimeTypeManager(new MimeTypeManager),
       m_optionManager(new OptionManager)
 {    
@@ -313,6 +314,11 @@ IOptionManager  *LiteApp::optionManager()
 IToolWindowManager *LiteApp::toolWindowManager()
 {
     return m_toolWindowManager;
+}
+
+IHtmlWidgetManager *LiteApp::htmlWidgetManager()
+{
+    return m_htmlWidgetManager;
 }
 
 QMainWindow *LiteApp::mainWindow() const
