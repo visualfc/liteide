@@ -44,7 +44,7 @@ protected:
     GolangDoc *m_golangDoc;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<GolangDocPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GolangDocPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

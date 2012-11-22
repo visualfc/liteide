@@ -48,7 +48,7 @@ protected:
     GolangCode *m_code;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<GolangCodePlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GolangCodePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

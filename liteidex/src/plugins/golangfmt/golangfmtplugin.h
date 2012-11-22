@@ -51,7 +51,7 @@ protected:
     GolangFmt *m_fmt;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<GolangFmtPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GolangFmtPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

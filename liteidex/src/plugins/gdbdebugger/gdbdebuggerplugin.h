@@ -38,7 +38,7 @@ public:
     virtual QStringList dependPluginList() const;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<GdbDebuggerPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GdbDebuggerPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

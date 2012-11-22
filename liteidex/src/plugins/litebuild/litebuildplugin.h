@@ -41,7 +41,7 @@ protected:
     LiteBuild *m_build;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<LiteBuildPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<LiteBuildPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

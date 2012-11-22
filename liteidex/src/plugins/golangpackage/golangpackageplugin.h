@@ -37,7 +37,7 @@ public:
     virtual bool initWithApp(LiteApi::IApplication *app);
 };
 
-class PluginFactory : public LiteApi::PluginFactory<GolangPackagePlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GolangPackagePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

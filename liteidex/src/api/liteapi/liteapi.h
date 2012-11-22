@@ -629,7 +629,7 @@ public:
 };
 
 template <typename T>
-class PluginFactory : public IPluginFactory
+class PluginFactoryT : public IPluginFactory
 {
 public:
     virtual IPlugin *createPlugin()

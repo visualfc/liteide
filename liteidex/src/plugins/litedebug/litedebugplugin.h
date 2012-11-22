@@ -43,7 +43,7 @@ protected:
     QAction   *m_viewDebug;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<LiteDebugPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<LiteDebugPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

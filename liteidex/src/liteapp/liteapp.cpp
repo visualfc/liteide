@@ -222,8 +222,11 @@ void LiteApp::load(bool bUseSession)
     m_mainwindow->raise();
     splash.finish(m_mainwindow);
 
+    this->appendLog("HtmlWidgetFactory",m_htmlWidgetManager->classNameList().join(" "));
+    this->appendLog("DefaultHtmlWidgetFactory",m_htmlWidgetManager->defaultClassName());
+
     m_goProxy->call("version");
-    m_goProxy->call("cmdlist");
+    m_goProxy->call("cmdlist");    
 }
 
 LiteApp::~LiteApp()

@@ -38,7 +38,7 @@ public:
     virtual QStringList dependPluginList() const;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<GolangPlayPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GolangPlayPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

@@ -58,7 +58,7 @@ protected:
     QAction *m_fileSearchAct;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<LiteFindPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<LiteFindPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

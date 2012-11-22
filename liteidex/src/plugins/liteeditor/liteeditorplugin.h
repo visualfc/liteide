@@ -38,7 +38,7 @@ public:
     virtual QStringList dependPluginList() const;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<LiteEditorPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<LiteEditorPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

@@ -40,7 +40,7 @@ protected:
     EnvManager *m_envManager;    
 };
 
-class PluginFactory : public LiteApi::PluginFactory<LiteEnvPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<LiteEnvPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

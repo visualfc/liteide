@@ -40,7 +40,7 @@ protected:
     FileBrowser *m_browser;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<FileBrowserPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<FileBrowserPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)

@@ -18,29 +18,29 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: markdownplugin.h
+// Module: webkithtmlwidgetplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: markdownplugin.h,v 1.0 2012-11-21 visualfc Exp $
+// date: 2012-11-22
+// $Id: webkithtmlwidgetplugin.h,v 1.0 2012-11-22 visualfc Exp $
 
-#ifndef MARKDOWNPLUGIN_H
-#define MARKDOWNPLUGIN_H
+#ifndef WEBKITHTMLWIDGETPLUGIN_H
+#define WEBKITHTMLWIDGETPLUGIN_H
 
-#include "markdown_global.h"
+#include "webkithtmlwidget_global.h"
 #include "liteapi/liteapi.h"
 
-class MarkdownPlugin : public LiteApi::IPlugin
+class WebKitHtmlWidgetPlugin : public LiteApi::IPlugin
 {
 public:
-    MarkdownPlugin();
+    WebKitHtmlWidgetPlugin();
     virtual bool initWithApp(LiteApi::IApplication *app);
 };
 
-class PluginFactory : public LiteApi::PluginFactoryT<MarkdownPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<WebKitHtmlWidgetPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
 };
 
 
-#endif // MARKDOWNPLUGIN_H
+#endif // WEBKITHTMLWIDGETPLUGIN_H

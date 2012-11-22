@@ -47,7 +47,7 @@ protected:
     QAction *m_homeAct;
 };
 
-class PluginFactory : public LiteApi::PluginFactory<WelcomePlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<WelcomePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
