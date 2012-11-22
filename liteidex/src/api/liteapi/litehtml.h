@@ -43,8 +43,7 @@ public:
     virtual QString className() const = 0;
     virtual void setSerachPaths(const QStringList &paths) = 0;
     virtual void setHtml(const QString &html, const QUrl &url) = 0;
-    virtual void setMarkdown(const QByteArray &data, const QUrl &url) = 0;
-    virtual void setText(const QString &text, const QUrl &url) = 0;
+    virtual QUrl url() const = 0;
     virtual void clear() = 0;
     virtual void scroolToAnchor(const QString &anchor) = 0;
     virtual QPoint scrollPos() const = 0;

@@ -31,14 +31,7 @@
 #include <QTextCodec>
 #include <QFile>
 #include <QUrl>
-
-#ifdef LITEIDE_WEBKIT
-    #include <QWebView>
-    #include <QWebPage>
-    #include <QWebFrame>
-#else
-    #include <QTextBrowser>
-#endif
+#include <QVBoxLayout>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -54,22 +47,27 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app)
 {
-#ifdef LITEIDE_WEBKIT
-    m_browser = new QWebView;
-#else
-    m_browser = new QTextBrowser;    
-    m_browser->setOpenExternalLinks(false);
-    m_browser->setOpenLinks(false);
-#endif
     m_curEditor = 0;
+    m_widget = new QWidget;
+    m_htmlWidget = 0;
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
-                                                  m_browser,
+                                                  m_widget,
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
                                                   true);
-    loadHeadData(m_liteApp->resourcePath()+"/markdown/style.css");
+    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
+}
+
+void HtmlPreview::appLoaded()
+{
+    m_htmlWidget = m_liteApp->htmlWidgetManager()->create(this);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(0);
+    layout->addWidget(m_htmlWidget->widget());
+    m_widget->setLayout(layout);
+    loadHeadData(m_liteApp->resourcePath()+"/markdown/style.css");
 }
 
 static QByteArray head1 =
@@ -111,12 +109,6 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
             (editor->mimeType() == "text/html")) )  {
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
-#ifndef LITEIDE_WEBKIT
-            QStringList paths;
-            QFileInfo info(ed->filePath());
-            paths << info.path();
-            m_browser->setSearchPaths(paths);
-#endif
             m_curEditor = ed;
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(editorHtmlPrivew()));
             editorHtmlPrivew();
@@ -128,13 +120,15 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
     } else {
         m_curEditor = 0;
         m_lastData.clear();
-        m_browser->setHtml("");
+        if (m_htmlWidget) {
+            m_htmlWidget->clear();
+        }
     }
 }
 
 void HtmlPreview::editorHtmlPrivew()
 {
-    if (!m_curEditor) {
+    if (!m_curEditor || !m_htmlWidget) {
         return;
     }
 
@@ -144,17 +138,15 @@ void HtmlPreview::editorHtmlPrivew()
     }
     m_lastData = data;
 
-    //int v = m_browser->verticalScrollBar()->value();
-    int v = m_browser->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+    QPoint pos = m_htmlWidget->scrollPos();
     if (m_curEditor->mimeType() == "text/html") {
         QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
-        m_browser->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
+        m_htmlWidget->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
     } else {
         QString html = QString::fromUtf8(mdtohtml(data));
-        m_browser->setHtml(m_head+html+end,QUrl::fromLocalFile(m_curEditor->filePath()));
+        m_htmlWidget->setHtml(m_head+html+end,QUrl::fromLocalFile(m_curEditor->filePath()));
     }
-    m_browser->page()->mainFrame()->setScrollBarValue(Qt::Vertical,v);
-    //m_browser->verticalScrollBar()->setValue(v);
+    m_htmlWidget->setScrollPos(pos);
 }
 
 void HtmlPreview::triggered(bool b)

@@ -42,8 +42,7 @@ public:
     virtual QString className() const;
     virtual void setSerachPaths(const QStringList &paths);
     virtual void setHtml(const QString &html, const QUrl &url);
-    virtual void setMarkdown(const QByteArray &data, const QUrl &url);
-    virtual void setText(const QString &text, const QUrl &url);
+    virtual QUrl url() const;
     virtual void clear();
     virtual void scroolToAnchor(const QString &anchor);
     virtual QPoint scrollPos() const;
@@ -55,6 +54,7 @@ signals:
     void linkHovered(const QUrl & url);
 protected:
     QTextBrowser *m_widget;
+    QUrl          m_url;
 };
 
 class TextBrowserHtmlWidgetFactory : public IHtmlWidgetFactory

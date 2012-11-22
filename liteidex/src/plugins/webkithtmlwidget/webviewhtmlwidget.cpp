@@ -65,13 +65,9 @@ void WebViewHtmlWidget::setHtml(const QString &html, const QUrl &url)
     m_widget->setHtml(html,url);
 }
 
-void WebViewHtmlWidget::setMarkdown(const QByteArray &data, const QUrl &url)
+QUrl WebViewHtmlWidget::url() const
 {
-}
-
-void WebViewHtmlWidget::setText(const QString &text, const QUrl &url)
-{
-
+    return m_widget->url();
 }
 
 void WebViewHtmlWidget::clear()

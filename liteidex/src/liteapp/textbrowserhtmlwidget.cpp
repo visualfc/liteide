@@ -26,6 +26,8 @@
 #include "textbrowserhtmlwidget.h"
 #include <QTextBrowser>
 #include <QScrollBar>
+#include <QFileInfo>
+#include <QFile>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -64,15 +66,22 @@ void TextBrowserHtmlWidget::setSerachPaths(const QStringList &paths)
 void TextBrowserHtmlWidget::setHtml(const QString &html, const QUrl &url)
 {
     m_widget->setHtml(html);
+    m_url = url;
+    if (!url.isEmpty()) {
+        QString file = url.toLocalFile();
+        if (!file.isEmpty()) {
+            QFileInfo info(file);
+            QStringList paths = m_widget->searchPaths();
+            paths.append(info.path());
+            paths.removeDuplicates();
+            m_widget->setSearchPaths(paths);
+        }
+    }
 }
 
-void TextBrowserHtmlWidget::setMarkdown(const QByteArray &data, const QUrl &url)
+QUrl TextBrowserHtmlWidget::url() const
 {
-}
-
-void TextBrowserHtmlWidget::setText(const QString &text, const QUrl &url)
-{
-    m_widget->setText(text);
+    return m_url;
 }
 
 void TextBrowserHtmlWidget::clear()

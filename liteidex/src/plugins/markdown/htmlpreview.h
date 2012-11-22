@@ -27,12 +27,9 @@
 #define HTMLPREVIEW_H
 
 #include <liteapi/liteapi.h>
+
 #include <QPointer>
 
-class QTextBrowser;
-#ifdef LITEIDE_WEBKIT
-    class QWebView;
-#endif
 class HtmlPreview : public QObject
 {
     Q_OBJECT
@@ -42,17 +39,15 @@ public:
 signals:
     
 public slots:
+    void appLoaded();
     void loadHeadData(const QString &css);
     void currentEditorChanged(LiteApi::IEditor*);
     void editorHtmlPrivew();
     void triggered(bool);
 protected:
     LiteApi::IApplication *m_liteApp;
-#ifdef LITEIDE_WEBKIT
-    QWebView     *m_browser;
-#else
-    QTextBrowser *m_browser;
-#endif
+    QWidget               *m_widget;
+    LiteApi::IHtmlWidget  *m_htmlWidget;
     QAction      *m_toolAct;
     QPointer<LiteApi::ITextEditor> m_curEditor;
     QByteArray  m_lastData;
