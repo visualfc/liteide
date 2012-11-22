@@ -533,7 +533,6 @@ public:
     virtual IEditorManager  *editorManager() = 0;
     virtual IFileManager    *fileManager() = 0;
     virtual IActionManager  *actionManager() = 0;
-    virtual IDockManager    *dockManager() = 0;
     virtual IOutputManager  *outputManager() = 0;
     virtual IMimeTypeManager *mimeTypeManager() = 0;
     virtual IOptionManager  *optionManager() = 0;

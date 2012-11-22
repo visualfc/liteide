@@ -43,7 +43,6 @@ SOURCES += main.cpp\
     editormanager.cpp \
     projectmanager.cpp \
     pluginmanager.cpp \
-    dockmanager.cpp \
     outputmanager.cpp \
     actionmanager.cpp \
     aboutdialog.cpp \
@@ -70,7 +69,6 @@ HEADERS  += mainwindow.h \
     editormanager.h \
     projectmanager.h \
     pluginmanager.h \
-    dockmanager.h \
     outputmanager.h \
     actionmanager.h \
     aboutdialog.h \

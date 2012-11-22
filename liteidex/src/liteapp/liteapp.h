@@ -69,7 +69,6 @@ public:
     virtual IEditorManager  *editorManager();
     virtual IFileManager    *fileManager();
     virtual IActionManager  *actionManager();
-    virtual IDockManager    *dockManager();
     virtual IOutputManager  *outputManager();
     virtual IMimeTypeManager *mimeTypeManager();
     virtual IOptionManager  *optionManager();
@@ -126,7 +125,6 @@ protected:
     ProjectManager *m_projectManager;
     EditorManager   *m_editorManager;
     FileManager    *m_fileManager;
-    DockManager    *m_dockManager;
     MimeTypeManager *m_mimeTypeManager;
     HtmlWidgetManager *m_htmlWidgetManager;
     OptionManager   *m_optionManager;

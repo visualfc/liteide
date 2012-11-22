@@ -118,15 +118,12 @@ LiteApp::LiteApp()
       m_projectManager(new ProjectManager),
       m_editorManager(new EditorManager),
       m_fileManager(new FileManager),
-      m_dockManager(new DockManager),
       m_mimeTypeManager(new MimeTypeManager),
       m_optionManager(new OptionManager)
 {    
     m_goProxy = new GoProxy(this);
     m_actionManager->initWithApp(this);
     m_toolWindowManager->initWithApp(this);
-    m_dockManager->initWithApp(this);
-    //m_outputManager->initWithApp(this);
     m_mimeTypeManager->initWithApp(this);
     m_pluginManager->initWithApp(this);
     m_projectManager->initWithApp(this);
@@ -144,8 +141,6 @@ LiteApp::LiteApp()
     m_extension->addObject("LiteApi.IPluginManager",m_pluginManager);
     m_extension->addObject("LiteApi.IProjectManager",m_projectManager);
     m_extension->addObject("LiteApi.IEditManager",m_editorManager);
-    m_extension->addObject("LiteApi.IDockManager",m_dockManager);
-    //m_extension->addObject("LiteApi.IOutputManager",m_outputManager);
     m_extension->addObject("LiteApi.IOptoinManager",m_optionManager);
     m_extension->addObject("LiteApi.IToolWindowManager",m_toolWindowManager);
     m_extension->addObject("LiteApi.QMainWindow",m_mainwindow);
@@ -246,7 +241,6 @@ void LiteApp::cleanup()
     delete m_fileManager;
     delete m_pluginManager;
     delete m_actionManager;
-    delete m_dockManager;
     delete m_mimeTypeManager;
     delete m_optionManager;
     delete m_extension;
@@ -284,11 +278,6 @@ IFileManager *LiteApp::fileManager()
 IProjectManager *LiteApp::projectManager()
 {
     return m_projectManager;
-}
-
-IDockManager *LiteApp::dockManager()
-{
-    return m_dockManager;
 }
 
 IOutputManager  *LiteApp::outputManager()
