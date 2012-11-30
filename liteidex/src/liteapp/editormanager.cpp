@@ -77,14 +77,22 @@ bool EditorManager::initWithApp(IApplication *app)
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(1);
-    mainLayout->addWidget(m_editorTabWidget);
+    mainLayout->setSpacing(1);
+
+    QToolBar *bar = m_liteApp->mainWindow()->addToolBar("TabBar");
+    bar->setObjectName("toolbar.editor.tab");
+    bar->setFloatable(false);
+    bar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
+    bar->addWidget(m_editorTabWidget->headerWidget());
+
+    mainLayout->addWidget(m_editorTabWidget->stackedWidget());
     m_widget->setLayout(mainLayout);
 
     connect(m_editorTabWidget,SIGNAL(currentChanged(int)),this,SLOT(editorTabChanged(int)));
     connect(m_editorTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(editorTabCloseRequested(int)));
     connect(m_editorTabWidget,SIGNAL(tabAddRequest()),this,SIGNAL(tabAddRequest()));
 
-    m_editorTabWidget->installEventFilter(this);
+    m_editorTabWidget->stackedWidget()->installEventFilter(this);
     m_editorTabWidget->tabBar()->installEventFilter(this);
 
     m_tabContextMenu = new QMenu;
@@ -367,7 +375,7 @@ bool EditorManager::closeEditor(IEditor *editor)
 
     if (cur->isModified() && !cur->isReadOnly()) {
         QString text = QString(tr("%1 is modified.")).arg(cur->filePath());
-        int ret = QMessageBox::question(m_editorTabWidget,tr("Save Modify"),text,QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+        int ret = QMessageBox::question(m_widget,tr("Save Modify"),text,QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
         if (ret == QMessageBox::Cancel) {
             return false;
         } else if (ret == QMessageBox::Save) {

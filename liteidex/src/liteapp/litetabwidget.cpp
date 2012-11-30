@@ -21,7 +21,7 @@
 // Module: litetabwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 // date: 2011-3-26
-// $Id: litetabwidget.cpp,v 1.0 2011-5-12 visualfc Exp $
+// $Id: litetabwidget.cpp,v 1.0 2012-11-30 visualfc Exp $
 
 #include "litetabwidget.h"
 
@@ -48,21 +48,21 @@
 //lite_memory_check_end
 
 
-LiteTabWidget::LiteTabWidget(QWidget *parent) :
-    QWidget(parent)
+LiteTabWidget::LiteTabWidget(QObject *parent) :
+    QObject(parent)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    m_headerWidget = new QWidget;
 
     m_headLayout = new QHBoxLayout;
     m_headLayout->setMargin(0);
 
-    m_tabBar = new QTabBar(this);
+    m_tabBar = new QTabBar;
     m_tabBar->setExpanding(false);
     m_tabBar->setDocumentMode(true);
     m_tabBar->setDrawBase(false);
     m_tabBar->setUsesScrollButtons(true);
 
-    m_headerToolBar = new QToolBar(this);
+    m_headerToolBar = new QToolBar;
     m_headerToolBar->setStyleSheet("QToolBar {border:0}");
     m_headerToolBar->setIconSize(QSize(15,16));
 
@@ -72,7 +72,7 @@ LiteTabWidget::LiteTabWidget(QWidget *parent) :
     m_listButton->setIcon(QIcon("icon:images/listpage.png"));
     m_addTabAct = new QAction(QIcon("icon:images/addpage.png"),tr("Add Page"),this);
 
-    m_listActMenu = new QMenu(this);
+    m_listActMenu = new QMenu;
     m_listActGroup = new QActionGroup(this);
     m_listButton->setMenu(m_listActMenu);
     m_listButton->setPopupMode(QToolButton::InstantPopup);
@@ -83,19 +83,12 @@ LiteTabWidget::LiteTabWidget(QWidget *parent) :
     m_headerToolBar->addSeparator();
     m_headerToolBar->addAction(m_closeTabAct);
 
-    m_stackLayout = new QStackedLayout;
-    m_stackLayout->setMargin(0);
-    m_stackLayout->setSpacing(0);
+    m_stackedWidget = new QStackedWidget;
 
     m_headLayout->addWidget(m_tabBar,1);
     m_headLayout->addWidget(m_headerToolBar);
 
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(0);
-    mainLayout->addLayout(m_headLayout);
-    mainLayout->addLayout(m_stackLayout);
-
-    this->setLayout(mainLayout);
+    m_headerWidget->setLayout(m_headLayout);
 
     connect(m_tabBar,SIGNAL(currentChanged(int)),this,SLOT(tabCurrentChanged(int)));
     connect(m_tabBar,SIGNAL(tabCloseRequested(int)),this,SIGNAL(tabCloseRequested(int)));
@@ -147,7 +140,7 @@ int LiteTabWidget::addTab(QWidget *w,const QIcon & icon, const QString & label, 
     if (!tip.isEmpty()) {
         m_tabBar->setTabToolTip(index,tip);
     }
-    m_stackLayout->addWidget(w);
+    m_stackedWidget->addWidget(w);
     m_widgetList.append(w);
 
     return index;
@@ -159,7 +152,7 @@ void LiteTabWidget::removeTab(int index)
         return;
     QWidget *w = widget(index);
     if (w) {
-        m_stackLayout->removeWidget(w);
+        m_stackedWidget->removeWidget(w);
         m_widgetList.removeAt(index);
     }
 
@@ -177,7 +170,7 @@ void LiteTabWidget::removeTab(int index)
 
 QWidget *LiteTabWidget::currentWidget()
 {
-    return m_stackLayout->currentWidget();
+    return m_stackedWidget->currentWidget();
 }
 
 QTabBar *LiteTabWidget::tabBar()
@@ -188,6 +181,16 @@ QTabBar *LiteTabWidget::tabBar()
 QList<QWidget*> LiteTabWidget::widgetList() const
 {
     return m_widgetList;
+}
+
+QWidget *LiteTabWidget::headerWidget()
+{
+    return m_headerWidget;
+}
+
+QWidget *LiteTabWidget::stackedWidget()
+{
+    return m_stackedWidget;
 }
 
 void LiteTabWidget::setTabText(int index, const QString & text)
@@ -221,7 +224,7 @@ void LiteTabWidget::tabCurrentChanged(int index)
 {
     QWidget *w = m_widgetList.value(index);
     if (w) {
-        m_stackLayout->setCurrentWidget(w);
+        m_stackedWidget->setCurrentWidget(w);
     }
 
     QAction *act = m_listActGroup->actions().value(index);

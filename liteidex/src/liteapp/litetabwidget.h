@@ -21,7 +21,7 @@
 // Module: litetabwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 // date: 2011-3-26
-// $Id: litetabwidget.h,v 1.0 2011-5-12 visualfc Exp $
+// $Id: litetabwidget.h,v 1.0 2012-11-30 visualfc Exp $
 
 #ifndef LITETABWIDGET_H
 #define LITETABWIDGET_H
@@ -40,12 +40,13 @@ class QToolBar;
 class QAction;
 class QActionGroup;
 
-//Partially compatible of QTabWidget
-class LiteTabWidget : public QWidget
+//header : headerWidget
+//body: stackedWidget
+class LiteTabWidget : public QObject
 {
     Q_OBJECT
 public:
-    explicit LiteTabWidget(QWidget *parent = 0);
+    explicit LiteTabWidget(QObject *parent = 0);
 
     int addTab(QWidget *w,const QString & label, const QString &tip);
     int addTab(QWidget *w,const QIcon & icon, const QString & label,const QString &tip);
@@ -56,6 +57,8 @@ public:
     QTabBar *tabBar();
     void setTabText(int index, const QString & text);
     QList<QWidget*> widgetList() const;
+    QWidget *headerWidget();
+    QWidget *stackedWidget();
 signals:
     void currentChanged(int index);
     void tabCloseRequested(int index);
@@ -72,7 +75,8 @@ protected:
     QTabBar         *m_tabBar;
     QToolButton     *m_listButton;
     QHBoxLayout     *m_headLayout;
-    QStackedLayout  *m_stackLayout;
+    QWidget         *m_headerWidget;
+    QStackedWidget  *m_stackedWidget;
     QList<QWidget*>  m_widgetList;
     QAction         *m_closeTabAct;
     QAction         *m_addTabAct;
