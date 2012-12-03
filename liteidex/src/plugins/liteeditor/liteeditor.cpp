@@ -104,9 +104,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
     m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
-    m_spacerWidget = new QWidget;
-    m_spacerWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_toolBar->addWidget(m_spacerWidget);
+    QWidget  *spacerWidget = new QWidget;
+    spacerWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_spacerAct = m_toolBar->addWidget(spacerWidget);
     m_lineInfo = new QLabelEx("000:000");
     m_toolBar->addSeparator();
     m_toolBar->addWidget(m_lineInfo);
@@ -125,7 +125,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
     m_extension->addObject("LiteApi.ITextEditor",this);
     m_extension->addObject("LiteApi.QToolBar",m_toolBar);
-    m_extension->addObject("LiteApi.QToolBar.Spacer",m_spacerWidget);
+    m_extension->addObject("LiteApi.QToolBar.Spacer",m_spacerAct);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
 

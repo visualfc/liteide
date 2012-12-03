@@ -161,7 +161,7 @@ public:
     QPalette m_defPalette;
     bool       m_bReadOnly;
     QLabelEx  *m_lineInfo;
-    QWidget *m_spacerWidget;
+    QAction *m_spacerAct;
 };
 
 #endif //LITEEDITOR_H

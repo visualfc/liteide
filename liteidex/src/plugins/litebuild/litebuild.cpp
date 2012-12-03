@@ -837,6 +837,7 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     if (!toolBar) {
         return;
     }
+    QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
     QList<QAction*> actionList;
     foreach(LiteApi::BuildAction *ba,build->actionList()) {
         QAction *act = new QAction(ba->id(),this);
@@ -860,8 +861,8 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
         connect(act,SIGNAL(triggered()),this,SLOT(buildAction()));
         actionList.append(act);
     }
-    toolBar->addSeparator();
-    toolBar->addActions(actionList);
+    toolBar->insertSeparator(spacer);
+    toolBar->insertActions(spacer,actionList);
 }
 
 void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
