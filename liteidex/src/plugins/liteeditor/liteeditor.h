@@ -86,7 +86,6 @@ public:
     virtual QMenu *contextMenu() const;
     virtual QByteArray saveState() const;
     virtual bool restoreState(const QByteArray &state);
-    virtual void executeAction(const QString &id, QAction *action);
     virtual void onActive();
 
     const ColorStyleScheme *colorStyleScheme() const;
@@ -109,9 +108,6 @@ public slots:
     void editPositionChanged();
     void navigationStateChanged(const QByteArray &state);
     void gotoLine();
-    void undoAvailable(bool);
-    void redoAvailable(bool);
-    void copyAvailable(bool);
     void selectNextParam();
 public:
     void findCodecs();
@@ -120,7 +116,7 @@ public:
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;
     QWidget *m_widget;
-    //QToolBar *m_toolBar;
+    QToolBar *m_toolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteCompleter   *m_completer;
     QAction *m_undoAct;

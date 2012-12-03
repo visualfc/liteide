@@ -100,8 +100,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     toolLayout->setMargin(0);
     toolLayout->setSpacing(0);
 
-    //m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    //toolLayout->addWidget(m_toolBar);
+    m_toolBar->setStyleSheet("QToolBar {border:1 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #EEEEEE, stop: 1 #ababab); color : #EEEEEE}");
+    m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    toolLayout->addWidget(m_toolBar);
     //toolLayout->addWidget(m_rightToolBar);
 
     layout->addLayout(toolLayout);
@@ -113,10 +114,6 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
-
-    connect(m_editorWidget,SIGNAL(undoAvailable(bool)),this,SLOT(undoAvailable(bool)));
-    connect(m_editorWidget,SIGNAL(redoAvailable(bool)),this,SLOT(redoAvailable(bool)));
-    connect(m_editorWidget,SIGNAL(copyAvailable(bool)),this,SLOT(copyAvailable(bool)));
 
     //applyOption("option/liteeditor");
 
@@ -183,20 +180,31 @@ void LiteEditor::clipbordDataChanged()
     QClipboard *clipboard = QApplication::clipboard();
     if (clipboard->mimeData()->hasText() ||
             clipboard->mimeData()->hasHtml()) {
-        m_liteApp->editorManager()->setActionEnable(this,"paste",true);
+        m_pasteAct->setEnabled(true);
     } else {
-        m_liteApp->editorManager()->setActionEnable(this,"paste",false);
+        m_pasteAct->setEnabled(false);
     }
 }
 
 void LiteEditor::createActions()
 {
-    m_undoAct = m_liteApp->editorManager()->editAction(EA_UNDO);
-    m_redoAct = m_liteApp->editorManager()->editAction(EA_REDO);
-    m_cutAct = m_liteApp->editorManager()->editAction(EA_CUT);
-    m_copyAct = m_liteApp->editorManager()->editAction(EA_COPY);
-    m_pasteAct = m_liteApp->editorManager()->editAction(EA_PASTE);
-    m_selectAllAct = m_liteApp->editorManager()->editAction(EA_SELECTALL);
+    m_undoAct = new QAction(QIcon("icon:liteeditor/images/undo.png"),tr("Undo"),this);
+    m_undoAct->setShortcut(QKeySequence::Undo);
+
+    m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
+    m_redoAct->setShortcut(QKeySequence::Redo);
+
+    m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
+    m_redoAct->setShortcut(QKeySequence::Cut);
+
+    m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
+    m_copyAct->setShortcut(QKeySequence::Copy);
+
+    m_pasteAct = new QAction(QIcon("icon:liteeditor/images/paste.png"),tr("Paste"),this);
+    m_pasteAct->setShortcut(QKeySequence::Paste);
+
+    m_selectAllAct = new QAction(tr("Select All"),this);
+    m_selectAllAct->setShortcut(QKeySequence::SelectAll);
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML"),this);
 #ifndef QT_NO_PRINTER
@@ -232,7 +240,8 @@ void LiteEditor::createActions()
     connect(m_foldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(foldAll()));
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
-    m_gotoLineAct = m_liteApp->editorManager()->editAction(EA_GOTOLINE);
+    m_gotoLineAct = new QAction(tr("Goto Line"),this);
+    m_gotoLineAct->setShortcut(QKeySequence("Ctrl+G"));
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
     m_duplicateAct->setShortcut(QKeySequence("Ctrl+D"));
@@ -257,12 +266,12 @@ void LiteEditor::createActions()
     connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_cutAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_copyAct,SLOT(setEnabled(bool)));
 
-    //connect(m_undoAct,SIGNAL(triggered()),m_editorWidget,SLOT(undo()));
-    //connect(m_redoAct,SIGNAL(triggered()),m_editorWidget,SLOT(redo()));
-    //connect(m_cutAct,SIGNAL(triggered()),m_editorWidget,SLOT(cut()));
-    //connect(m_copyAct,SIGNAL(triggered()),m_editorWidget,SLOT(copy()));
-    //connect(m_pasteAct,SIGNAL(triggered()),m_editorWidget,SLOT(paste()));
-    //connect(m_selectAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(selectAll()));
+    connect(m_undoAct,SIGNAL(triggered()),m_editorWidget,SLOT(undo()));
+    connect(m_redoAct,SIGNAL(triggered()),m_editorWidget,SLOT(redo()));
+    connect(m_cutAct,SIGNAL(triggered()),m_editorWidget,SLOT(cut()));
+    connect(m_copyAct,SIGNAL(triggered()),m_editorWidget,SLOT(copy()));
+    connect(m_pasteAct,SIGNAL(triggered()),m_editorWidget,SLOT(paste()));
+    connect(m_selectAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(selectAll()));
     connect(m_selectBlockAct,SIGNAL(triggered()),m_editorWidget,SLOT(selectBlock()));
 
     connect(m_exportHtmlAct,SIGNAL(triggered()),this,SLOT(exportHtml()));
@@ -274,7 +283,7 @@ void LiteEditor::createActions()
     connect(m_gotoPrevBlockAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPrevBlock()));
     connect(m_gotoNextBlockAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextBlock()));
     connect(m_gotoMatchBraceAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoMatchBrace()));
-    //connect(m_gotoLineAct,SIGNAL(triggered()),this,SLOT(gotoLine()));
+    connect(m_gotoLineAct,SIGNAL(triggered()),this,SLOT(gotoLine()));
 
     QClipboard *clipboard = QApplication::clipboard();
     connect(clipboard,SIGNAL(dataChanged()),this,SLOT(clipbordDataChanged()));
@@ -314,32 +323,32 @@ void LiteEditor::findCodecs()
 
 void LiteEditor::createToolBars()
 {
-//    m_toolBar = new QToolBar(tr("editor"),m_widget);
-//    m_toolBar->setIconSize(QSize(16,16));
+    m_toolBar = new QToolBar(tr("editor"),m_widget);
+    m_toolBar->setIconSize(QSize(16,15));
 
-//    m_toolBar->addAction(m_cutAct);
-//    m_toolBar->addAction(m_copyAct);
-//    m_toolBar->addAction(m_pasteAct);
-//    m_toolBar->addSeparator();
-//    m_toolBar->addAction(m_undoAct);
-//    m_toolBar->addAction(m_redoAct);
-//    m_toolBar->addSeparator();
-//    m_toolBar->addAction(m_exportHtmlAct);
-//#ifndef QT_NO_PRINTER
-//    m_toolBar->addAction(m_exportPdfAct);
-//    m_toolBar->addAction(m_filePrintPreviewAct);
-//    m_toolBar->addAction(m_filePrintAct);
-//#endif
+    m_toolBar->addAction(m_cutAct);
+    m_toolBar->addAction(m_copyAct);
+    m_toolBar->addAction(m_pasteAct);
+    m_toolBar->addSeparator();
+    m_toolBar->addAction(m_undoAct);
+    m_toolBar->addAction(m_redoAct);
+    m_toolBar->addSeparator();
+    m_toolBar->addAction(m_exportHtmlAct);
+#ifndef QT_NO_PRINTER
+    m_toolBar->addAction(m_exportPdfAct);
+    m_toolBar->addAction(m_filePrintPreviewAct);
+    m_toolBar->addAction(m_filePrintAct);
+#endif
 
-//#ifdef LITEEDITOR_FIND
-//    m_findComboBox = new QComboBox(m_widget);
-//    m_findComboBox->setEditable(true);
-//    m_findComboBox->setMinimumWidth(120);
-//    m_findComboBox->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-//    m_toolBar->addWidget(m_findComboBox);
-//    m_toolBar->addSeparator();
-//    connect(m_findComboBox->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findNextText()));
-//#endif
+#ifdef LITEEDITOR_FIND
+    m_findComboBox = new QComboBox(m_widget);
+    m_findComboBox->setEditable(true);
+    m_findComboBox->setMinimumWidth(120);
+    m_findComboBox->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    m_toolBar->addWidget(m_findComboBox);
+    m_toolBar->addSeparator();
+    connect(m_findComboBox->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findNextText()));
+#endif
 }
 
 void LiteEditor::createContextMenu()
@@ -744,7 +753,7 @@ void LiteEditor::editPositionChanged()
         offset = cur.blockNumber();
      }
 
-     m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
+     //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
 }
 
 void LiteEditor::gotoLine()
@@ -795,56 +804,11 @@ void LiteEditor::navigationStateChanged(const QByteArray &state)
     m_liteApp->editorManager()->addNavigationHistory(this,state);
 }
 
-void LiteEditor::executeAction(const QString &id, QAction*)
-{
-    if (id == EA_COPY) {
-        m_editorWidget->copy();
-    } else if (id == EA_CUT) {
-        m_editorWidget->cut();
-    } else if (id == EA_PASTE) {
-        m_editorWidget->paste();
-    } else if (id == EA_REDO) {
-        m_editorWidget->redo();
-    } else if (id == EA_UNDO) {
-        m_editorWidget->undo();
-    } else if (id == EA_SELECTALL) {
-        m_editorWidget->selectAll();
-    } else if (id == EA_GOTOLINE) {
-        gotoLine();
-    } else {
-        m_liteApp->appendLog("LiteEditor",QString("undefine action %1").arg(id),true);
-    }
-}
-
 void LiteEditor::onActive()
 {
     clipbordDataChanged();
-    undoAvailable(m_undoAvailable);
-    redoAvailable(m_redoAvailable);
-    copyAvailable(m_copyAvailable);
-    m_liteApp->editorManager()->setActionEnable(this,EA_SELECTALL,true);
-    m_liteApp->editorManager()->setActionEnable(this,EA_GOTOLINE,true);
-    m_liteApp->editorManager()->setActionEnable(this,EA_SELECTCODEC,true);
+
     editPositionChanged();
-}
-
-void LiteEditor::undoAvailable(bool b)
-{
-    m_undoAvailable = b;
-    m_liteApp->editorManager()->setActionEnable(this,EA_UNDO,b);
-}
-
-void LiteEditor::redoAvailable(bool b)
-{
-    m_redoAvailable = b;
-    m_liteApp->editorManager()->setActionEnable(this,EA_REDO,b);
-}
-
-void LiteEditor::copyAvailable(bool b)
-{
-    m_copyAvailable = b;
-    m_liteApp->editorManager()->setActionEnable(this,EA_COPY,b);
-    m_liteApp->editorManager()->setActionEnable(this,EA_CUT,b);
 }
 
 void LiteEditor::selectNextParam()

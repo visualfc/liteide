@@ -38,17 +38,6 @@
 #include <QUrl>
 #include <QDesktopServices>
 
-#define EA_COPY "copy"
-#define EA_SAVE "save"
-#define EA_PASTE "paste"
-#define EA_CUT "cut"
-#define EA_UNDO "undo"
-#define EA_REDO "redo"
-#define EA_SELECTALL "selectAll"
-#define EA_SEPARATOR "separator"
-#define EA_GOTOLINE  "gotoLine"
-#define EA_SELECTCODEC  "selectCodec"
-
 namespace LiteApi {
 
 class IApplication;
@@ -250,7 +239,6 @@ public:
     virtual QString mimeType() const = 0;
     virtual QByteArray saveState() const = 0;
     virtual bool restoreState(const QByteArray &array) = 0;
-    virtual void executeAction(const QString &id, QAction *action) = 0;
     virtual void onActive() = 0;
 signals:
     void modificationChanged(bool);
@@ -307,16 +295,12 @@ public:
     virtual void activeBrowser(IEditor *editor) = 0;
     virtual void addNavigationHistory(IEditor *editor = 0,const QByteArray &saveState = QByteArray()) = 0;
     virtual void cutForwardNavigationHistory() = 0;
-    virtual void addAction(const QString &id, QAction *action) = 0;
-    virtual QAction *editAction(const QString &id) = 0;
-    virtual void setActionEnable(IEditor *editor, const QString &id, bool b) = 0;
 public slots:
     virtual bool saveEditor(IEditor *editor = 0, bool emitAboutSave = true) = 0;
     virtual bool saveEditorAs(IEditor *editor = 0) = 0;
     virtual bool saveAllEditors() = 0;
     virtual bool closeEditor(IEditor *editor = 0) = 0;
     virtual bool closeAllEditors(bool autoSaveAll = false) = 0;
-    virtual void updateLine(IEditor *editor,int line, int col, int pos) = 0;
 signals:
     void currentEditorChanged(LiteApi::IEditor *editor);
     void editorCreated(LiteApi::IEditor *editor);

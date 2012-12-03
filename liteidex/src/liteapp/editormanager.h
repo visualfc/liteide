@@ -63,10 +63,6 @@ public:
     virtual void activeBrowser(IEditor *editor);
     virtual void addNavigationHistory(IEditor *editor,const QByteArray &saveState);
     virtual void cutForwardNavigationHistory();
-    virtual void addAction(const QString &id, QAction *action);
-    virtual QAction *editAction(const QString &id);
-    virtual void setActionEnable(IEditor *editor, const QString &id, bool b);
-    virtual void updateLine(IEditor *editor, int line, int col,int pos);
 protected:
     void addEditor(IEditor *editor);
     bool eventFilter(QObject *target, QEvent *event);
@@ -85,7 +81,6 @@ public slots:
     void goForward();
     void updateNavigatorActions();
     void updateCurrentPositionInNavigationHistory();
-    void executeEditAction(QAction* action);
     void moveToNewWindow();
 signals:
     void tabAddRequest();
@@ -109,10 +104,6 @@ protected:
     QMenu       *m_editMenu;
     QMenu       *m_tabContextMenu;
     int          m_tabContextIndex;
-    QMap<QString,QAction*> m_idActionMap;
-    QToolButton *m_lineInfo;
-    QToolButton *m_codecInfo;
-    QAction     *m_lockAct;
 };
 
 #endif // EDITORMANAGER_H

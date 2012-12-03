@@ -148,53 +148,12 @@ static QList<QTextCodec*> textCodecList()
 
 void EditorManager::createActions()
 {
-    QAction *undo = new QAction(QIcon("icon:images/undo.png"),tr("Undo"),this);
-    undo->setShortcut(QKeySequence::Undo);
-
-    QAction *redo = new QAction(QIcon("icon:images/redo.png"),tr("Redo"),this);
-    redo->setShortcuts(QList<QKeySequence>() << QKeySequence("CTRL+Y") << QKeySequence("CTRL+SHIFT+Z"));
-
-    QAction *cut = new QAction(QIcon("icon:images/cut.png"),tr("Cut"),this);
-    cut->setShortcut(QKeySequence::Cut);
-
-    QAction *copy = new QAction(QIcon("icon:images/copy.png"),tr("Copy"),this);
-    copy->setShortcut(QKeySequence::Copy);
-
-    QAction *paste = new QAction(QIcon("icon:images/paste.png"),tr("Paste"),this);
-    paste->setShortcut(QKeySequence::Paste);
-
-    QAction *selectAll = new QAction(tr("Select All"),this);
-    selectAll->setShortcut(QKeySequence::SelectAll);
-
-    QAction *gotoLine = new QAction(tr("Goto Line"),this);
-    gotoLine->setShortcut(QKeySequence("Ctrl+G"));
-
-    QAction *selectCodec = new QAction(this);//tr("Select Codec"),this);
-
     m_editMenu = m_liteApp->actionManager()->loadMenu("menu/edit");
     if (!m_editMenu) {
         m_editMenu = m_liteApp->actionManager()->insertMenu("menu/edit",tr("&Edit"));
     }
 
-    addAction(EA_UNDO,undo);
-    addAction(EA_REDO,redo);
-    addAction(EA_SEPARATOR,0);
-    addAction(EA_CUT,cut);
-    addAction(EA_COPY,copy);
-    addAction(EA_PASTE,paste);
-    addAction(EA_SEPARATOR,0);
-    addAction(EA_SELECTALL,selectAll);
-    addAction(EA_GOTOLINE,gotoLine);
-    //addAction(EA_SELECTCODEC,selectCodec);
-
     QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
-    toolBar->addSeparator();
-    toolBar->addAction(undo);
-    toolBar->addAction(redo);
-    toolBar->addSeparator();
-    toolBar->addAction(cut);
-    toolBar->addAction(copy);
-    toolBar->addAction(paste);
 
     m_goBackAct = new QAction(tr("GoBack"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
@@ -212,43 +171,6 @@ void EditorManager::createActions()
 
     connect(m_goBackAct,SIGNAL(triggered()),this,SLOT(goBack()));
     connect(m_goForwardAct,SIGNAL(triggered()),this,SLOT(goForward()));
-
-    QStatusBar *statusBar = m_liteApp->mainWindow()->statusBar();
-
-    QToolBar *right = new QToolBar;
-    right->setIconSize(QSize(16,16));
-
-    m_lineInfo = new QToolButton;
-    m_lineInfo->setDefaultAction(gotoLine);
-    m_lineInfo->setText("000:000[000000]");
-    right->addWidget(m_lineInfo);
-    right->setStyleSheet("QToolBar {border:0}");
-    m_lineInfo->setFixedWidth(m_lineInfo->sizeHint().width());
-    m_lineInfo->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
-
-    m_codecInfo = new QToolButton;
-    m_codecInfo->setDefaultAction(selectCodec);
-    m_codecInfo->setText("UTF-8");
-    selectCodec->setEnabled(false);
-    right->addSeparator();
-    right->addWidget(m_codecInfo);
-
-    m_lockAct = new QAction(QIcon("icon:images/unlock.png"),tr("File is writable"),this);
-    right->addSeparator();
-    right->addAction(m_lockAct);
-    m_lockAct->setEnabled(false);
-
-    statusBar->addPermanentWidget(right);
-
-    connect(m_editMenu,SIGNAL(triggered(QAction*)),this,SLOT(executeEditAction(QAction*)));
-}
-
-void EditorManager::executeEditAction(QAction *action)
-{
-    QString id = action->data().toString();
-    if (!id.isEmpty() && m_currentEditor) {
-        m_currentEditor->executeAction(id,action);
-    }
 }
 
 QWidget *EditorManager::widget()
@@ -508,26 +430,11 @@ void EditorManager::setCurrentEditor(IEditor *editor)
     if (m_currentEditor == editor) {
         return;
     }
-    foreach(QAction *act, m_idActionMap.values()) {
-        act->setEnabled(false);
-    }
-    m_lineInfo->setText("0:0");
-    m_codecInfo->setText("UTF-8");
+
     m_currentEditor = editor;
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
-        if (editor->isReadOnly()) {
-            m_lockAct->setIcon(QIcon("icon:liteeditor/images/lock.png"));
-            m_lockAct->setText(tr("File Is ReadOnly"));
-        } else {
-            m_lockAct->setIcon(QIcon("icon:liteeditor/images/unlock.png"));
-            m_lockAct->setText(tr("File Is Writable"));
-        }
-        ITextEditor *textEditor = getTextEditor(editor);
-        if (textEditor) {
-            m_codecInfo->setText(textEditor->textCodec());
-        }
     }
 
     emit currentEditorChanged(editor);
@@ -746,44 +653,6 @@ void EditorManager::updateCurrentPositionInNavigationHistory()
     }
     location->filePath = filePath;
     location->state = editor->saveState();
-}
-
-void EditorManager::addAction(const QString &id, QAction *action)
-{
-    if (action) {
-        if (m_idActionMap.find(id) != m_idActionMap.end()) {
-            m_liteApp->appendLog("liteapp",QString("edit action already defined %1").arg(id),true);
-            return;
-        }
-        action->setData(id);
-        m_editMenu->addAction(action);
-        m_idActionMap.insert(id,action);
-    } else {
-        m_editMenu->addSeparator();
-    }
-}
-
-QAction *EditorManager::editAction(const QString &id)
-{
-    return m_idActionMap.value(id);
-}
-
-void EditorManager::setActionEnable(IEditor *editor, const QString &id, bool b)
-{
-    if (editor != m_currentEditor) {
-        return;
-    }
-    QAction *action = m_idActionMap.value(id);
-    if (action) {
-        action->setEnabled(b);
-    }
-}
-
-void EditorManager::updateLine(IEditor *editor, int line, int col, int pos)
-{
-    if (m_currentEditor == editor) {
-        m_lineInfo->setText(QString("%1:%2[%3]").arg(line).arg(col).arg(pos));
-    }
 }
 
 void EditorManager::tabContextClose()
