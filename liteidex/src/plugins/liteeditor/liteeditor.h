@@ -34,6 +34,7 @@
 #include <QHash>
 #include <QStack>
 #include <QTextBlock>
+#include <QLabel>
 
 //#define LITEEDITOR_FIND
 
@@ -48,6 +49,17 @@ class QLabel;
 class QToolButton;
 class LiteCompleter;
 class ColorStyleScheme;
+
+class QLabelEx : public QLabel
+{
+    Q_OBJECT
+public:
+    QLabelEx(const QString &text, QWidget *parent = 0);
+signals:
+    void doubleClickEvent();
+protected:
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+};
 
 class LiteEditor : public LiteApi::ITextEditor
 {
@@ -148,9 +160,8 @@ public:
     QString  m_colorStyle;
     QPalette m_defPalette;
     bool       m_bReadOnly;
-    bool    m_copyAvailable;
-    bool    m_undoAvailable;
-    bool    m_redoAvailable;
+    QLabelEx  *m_lineInfo;
+    QWidget *m_spacerWidget;
 };
 
 #endif //LITEEDITOR_H

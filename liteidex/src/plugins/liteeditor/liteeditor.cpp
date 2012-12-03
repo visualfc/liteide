@@ -96,20 +96,22 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    QHBoxLayout *toolLayout = new QHBoxLayout;
-    toolLayout->setMargin(0);
-    toolLayout->setSpacing(0);
-
     m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
                              "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
                              "QToolBar QToolButton::hover { background-color: #ababab;}"\
                              "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
 
-    m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    toolLayout->addWidget(m_toolBar);
-    //toolLayout->addWidget(m_rightToolBar);
 
-    layout->addLayout(toolLayout);
+    m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+
+    m_spacerWidget = new QWidget;
+    m_spacerWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_toolBar->addWidget(m_spacerWidget);
+    m_lineInfo = new QLabelEx("000:000");
+    m_toolBar->addSeparator();
+    m_toolBar->addWidget(m_lineInfo);
+
+    layout->addWidget(m_toolBar);
     layout->addWidget(m_editorWidget);
     m_widget->setLayout(layout);
     m_file = new LiteEditorFile(m_liteApp,this);
@@ -122,14 +124,15 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     //applyOption("option/liteeditor");
 
     m_extension->addObject("LiteApi.ITextEditor",this);
-   //m_extension->addObject("LiteApi.QToolBar",m_toolBar);
-   //m_extension->addObject("LiteApi.LiteEditorWidget",m_editorWidget);
+    m_extension->addObject("LiteApi.QToolBar",m_toolBar);
+    m_extension->addObject("LiteApi.QToolBar.Spacer",m_spacerWidget);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
 
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
+    connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
 }
 
 LiteEditor::~LiteEditor()
@@ -247,6 +250,8 @@ void LiteEditor::createActions()
     m_gotoLineAct = new QAction(tr("Goto Line"),this);
     m_gotoLineAct->setShortcut(QKeySequence("Ctrl+G"));
 
+    m_lineInfoAct = new QAction(tr("000:000"),this);
+
     m_duplicateAct = new QAction(tr("Duplicate"),this);
     m_duplicateAct->setShortcut(QKeySequence("Ctrl+D"));
     m_widget->addAction(m_duplicateAct);
@@ -260,10 +265,6 @@ void LiteEditor::createActions()
     m_widget->addAction(m_gotoNextBlockAct);
     m_widget->addAction(m_selectBlockAct);
     m_widget->addAction(m_gotoMatchBraceAct);
-
-    m_copyAvailable = false;
-    m_redoAvailable = false;
-    m_undoAvailable = false;
 
     connect(m_editorWidget,SIGNAL(undoAvailable(bool)),m_undoAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(redoAvailable(bool)),m_redoAct,SLOT(setEnabled(bool)));
@@ -330,7 +331,6 @@ void LiteEditor::createToolBars()
     m_toolBar = new QToolBar(tr("editor"),m_widget);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
     m_toolBar->setIconSize(QSize(16,16));
-    //m_toolBar->setFixedHeight(24);
 
     m_toolBar->addAction(m_cutAct);
     m_toolBar->addAction(m_copyAct);
@@ -752,14 +752,15 @@ void LiteEditor::codecComboBoxChanged(QString codec)
 void LiteEditor::editPositionChanged()
 {
      QTextCursor cur = m_editorWidget->textCursor();
-
+/*
      QString src = cur.document()->toPlainText().left(cur.position());
      int offset = 0;
      if (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator) {
         offset = cur.blockNumber();
      }
-
+*/
      //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
+     m_lineInfo->setText(QString("%1:%2 ").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
 }
 
 void LiteEditor::gotoLine()
@@ -834,5 +835,18 @@ void LiteEditor::selectNextParam()
         cur.setPosition(start);
         cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,reg.cap(2).length());
         m_editorWidget->setTextCursor(cur);
+    }
+}
+
+
+QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
+    QLabel(text,parent)
+{
+}
+
+void QLabelEx::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        emit doubleClickEvent();
     }
 }
