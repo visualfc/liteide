@@ -59,7 +59,7 @@ protected slots:
     void activeComboBoxIndex(int);
 protected:
     Qt::DockWidgetArea area;
-    QToolBar *m_toolbar;
+    QToolBar *m_toolBar;
     QLabel   *m_titleLabel;
     QComboBox *m_comboBox;
     QAction  *m_spacerAct;

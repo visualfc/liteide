@@ -100,7 +100,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     toolLayout->setMargin(0);
     toolLayout->setSpacing(0);
 
-    m_toolBar->setStyleSheet("QToolBar {border:1 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #EEEEEE, stop: 1 #ababab); color : #EEEEEE}");
+    m_toolBar->setStyleSheet("QToolBar {border:none ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
+                             "QToolBar::separator {width:2; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
+
     m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     toolLayout->addWidget(m_toolBar);
     //toolLayout->addWidget(m_rightToolBar);
@@ -324,7 +326,9 @@ void LiteEditor::findCodecs()
 void LiteEditor::createToolBars()
 {
     m_toolBar = new QToolBar(tr("editor"),m_widget);
+    m_toolBar->setContentsMargins(0, 0, 0, 0);
     m_toolBar->setIconSize(QSize(16,15));
+    //m_toolBar->setFixedHeight(24);
 
     m_toolBar->addAction(m_cutAct);
     m_toolBar->addAction(m_copyAct);

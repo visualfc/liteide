@@ -49,27 +49,28 @@ ToolDockWidget::ToolDockWidget(QWidget *parent) :
     m_comboBox->setMinimumContentsLength(4);
     m_comboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
-    m_toolbar = new QToolBar(this);
-    m_toolbar->setContentsMargins(0, 0, 0, 0);
-    m_toolbar->setIconSize(QSize(15,16));
-    m_toolbar->addWidget(m_comboBox);
+    m_toolBar = new QToolBar(this);
+    m_toolBar->setContentsMargins(0, 0, 0, 0);
+    m_toolBar->setIconSize(QSize(16,16));
+    //m_toolBar->setFixedHeight(24);
+    m_toolBar->addWidget(m_comboBox);
 
     QWidget *spacer = new QWidget;
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    m_toolbar->addSeparator();
-    m_spacerAct = m_toolbar->addWidget(spacer);
+    m_toolBar->addSeparator();
+    m_spacerAct = m_toolBar->addWidget(spacer);
 
-    m_closeAct = new QAction(tr("Hide"), m_toolbar);
+    m_closeAct = new QAction(tr("Hide"), m_toolBar);
     m_closeAct->setToolTip(tr("Hide Tool Window"));
     m_closeAct->setIcon(QIcon("icon:images/closetool.png"));
-    m_toolbar->addAction(m_closeAct);
+    m_toolBar->addAction(m_closeAct);
     connect(m_closeAct,SIGNAL(triggered()),this,SLOT(close()));
     connect(m_comboBox,SIGNAL(activated(int)),this,SLOT(activeComboBoxIndex(int)));
 
-    this->setTitleBarWidget(m_toolbar);
+    this->setTitleBarWidget(m_toolBar);
 
-    m_toolbar->setStyleSheet("QToolBar {border:1 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #EEEEEE, stop: 1 #ababab); color : #EEEEEE}");
-                             //"QToolBar::separator {background-color: gray}");
+    m_toolBar->setStyleSheet("QToolBar {border:0 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
+                             "QToolBar::separator {width:2; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
 }
 
 void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
@@ -130,14 +131,14 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     }
     menu->addAction(moveMenu->menuAction());
 
-    QToolButton *btn = new QToolButton(m_toolbar);
+    QToolButton *btn = new QToolButton(m_toolBar);
     btn->setPopupMode(QToolButton::InstantPopup);
     btn->setIcon(QIcon("icon:images/movemenu.png"));
     btn->setMenu(menu);
     btn->setText(tr("Move To"));
     btn->setToolTip(tr("Move To"));
     btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
-    m_toolbar->insertWidget(m_closeAct,btn);
+    m_toolBar->insertWidget(m_closeAct,btn);
 }
 
 void ToolDockWidget::moveAction()
@@ -188,7 +189,7 @@ void ToolDockWidget::setWindowTitle(const QString &text)
 
 QAction *ToolDockWidget::addWidget(QWidget *widget)
 {
-   return m_toolbar->insertWidget(m_closeAct,widget);
+   return m_toolBar->insertWidget(m_closeAct,widget);
 }
 
 void ToolDockWidget::setToolMenu(QMenu *menu)
@@ -197,18 +198,18 @@ void ToolDockWidget::setToolMenu(QMenu *menu)
     btn->setPopupMode(QToolButton::InstantPopup);
     btn->setMenu(menu);
 
-    m_toolbar->insertWidget(m_closeAct,btn);
+    m_toolBar->insertWidget(m_closeAct,btn);
 }
 
 void ToolDockWidget::setWidgetActions(QList<QAction*> actions)
 {
     foreach(QAction *action, m_widgetActions) {
-        m_toolbar->removeAction(action);
+        m_toolBar->removeAction(action);
     }
     m_widgetActions = actions;
     m_spacerAct->setVisible(!m_widgetActions.isEmpty());
     foreach(QAction *action, m_widgetActions) {
-        m_toolbar->insertAction(m_spacerAct,action);
+        m_toolBar->insertAction(m_spacerAct,action);
     }
 }
 
