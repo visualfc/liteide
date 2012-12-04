@@ -202,7 +202,7 @@ void LiteEditor::createActions()
     m_redoAct->setShortcut(QKeySequence::Redo);
 
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
-    m_redoAct->setShortcut(QKeySequence::Cut);
+    m_cutAct->setShortcut(QKeySequence::Cut);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
     m_copyAct->setShortcut(QKeySequence::Copy);
@@ -791,7 +791,7 @@ void LiteEditor::setTextCodec(const QString &codec)
     }
 }
 
-QMenu *LiteEditor::contextMenu() const
+QMenu *LiteEditor::editMenu() const
 {
     return m_contextMenu;
 }
@@ -813,9 +813,8 @@ void LiteEditor::navigationStateChanged(const QByteArray &state)
 
 void LiteEditor::onActive()
 {
-    clipbordDataChanged();
-
-    editPositionChanged();
+    //clipbordDataChanged();
+    //editPositionChanged();
 }
 
 void LiteEditor::selectNextParam()

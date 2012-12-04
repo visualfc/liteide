@@ -839,6 +839,10 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     }
     QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
     QList<QAction*> actionList;
+    actionList.append(m_configAct);
+    QAction *sep = new QAction(this);
+    sep->setSeparator(true);
+    actionList.append(sep);
     foreach(LiteApi::BuildAction *ba,build->actionList()) {
         QAction *act = new QAction(ba->id(),this);
         act->setProperty("mimetype",build->mimeType());

@@ -79,9 +79,8 @@ bool EditorManager::initWithApp(IApplication *app)
     mainLayout->setMargin(1);
     mainLayout->setSpacing(1);
 
-    QToolBar *bar = m_liteApp->mainWindow()->addToolBar("TabBar");
-    bar->setObjectName("toolbar.editor.tab");
-    bar->setFloatable(false);
+    QToolBar *bar = m_liteApp->actionManager()->insertToolBar("toolbar/tabs",tr("TabsBar"));
+    //bar->setStyleSheet("QToolBar {border:none}");
     bar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
     bar->addWidget(m_editorTabWidget->headerWidget());
 
@@ -430,11 +429,13 @@ void EditorManager::setCurrentEditor(IEditor *editor)
     if (m_currentEditor == editor) {
         return;
     }
-
     m_currentEditor = editor;
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
+        m_editMenu->menuAction()->setMenu(editor->editMenu());
+    } else {
+        m_editMenu->menuAction()->setMenu(0);
     }
 
     emit currentEditorChanged(editor);

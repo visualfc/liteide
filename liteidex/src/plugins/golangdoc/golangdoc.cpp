@@ -276,7 +276,7 @@ void GolangDoc::editorCreated(LiteApi::IEditor *editor)
     if (!textEditor) {
         return;
     }
-    QMenu *menu = textEditor->contextMenu();
+    QMenu *menu = textEditor->editMenu();
     if (!menu) {
         return;
     }

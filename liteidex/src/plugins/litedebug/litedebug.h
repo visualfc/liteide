@@ -86,7 +86,7 @@ protected:
     DebugManager *m_manager;
     QWidget      *m_widget;
     DebugWidget  *m_dbgWidget;
-    QToolBar     *m_toolBar;
+    //QToolBar     *m_toolBar;
     TextOutput   *m_output;
     QAction      *m_outputAct;
     QAction *m_startDebugAct;

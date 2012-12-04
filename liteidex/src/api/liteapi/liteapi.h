@@ -239,6 +239,7 @@ public:
     virtual QString mimeType() const = 0;
     virtual QByteArray saveState() const = 0;
     virtual bool restoreState(const QByteArray &array) = 0;
+    virtual QMenu *editMenu() const = 0;
     virtual void onActive() = 0;
 signals:
     void modificationChanged(bool);
@@ -256,9 +257,6 @@ public:
     virtual int utf8Position() const = 0;
     virtual QByteArray utf8Data() const = 0;
     virtual void gotoLine(int line, int column, bool center = false) = 0;
-    virtual QString textCodec() const = 0;
-    virtual void setTextCodec(const QString &codec) = 0;
-    virtual QMenu *contextMenu() const = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)
@@ -326,7 +324,7 @@ public:
     virtual QMap<QString,QString> targetInfo() const { return QMap<QString,QString>(); }
     virtual QByteArray saveState() const {return QByteArray(); }
     virtual bool restoreState(const QByteArray &) { return false; }
-    virtual void executeAction(const QString&,QAction*) {}
+    virtual QMenu *editMenu() const { return 0; }
     virtual void onActive(){}
 };
 

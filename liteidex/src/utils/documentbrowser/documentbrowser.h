@@ -50,7 +50,7 @@ public:
     virtual QString name() const;
     virtual QString filePath() const;
     virtual QString mimeType() const;
-    virtual void executeAction(const QString &id, QAction *action);
+    virtual QMenu * editMenu() const;
     virtual void onActive();
     void setName(const QString &t);
     QUrl resolveUrl(const QUrl &url) const;

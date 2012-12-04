@@ -62,12 +62,12 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 {
     m_manager->initWithApp(app);
 
-    m_toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/build");
-    if (!m_toolBar) {
-        m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Debug ToolBar"),"toolbar/nav");
-    }
+//    m_toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/build");
+//    if (!m_toolBar) {
+//        m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Debug ToolBar"),"toolbar/nav");
+//    }
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
+//    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     m_output = new TextOutput;
     m_output->setReadOnly(true);
@@ -119,9 +119,9 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_removeAllBreakAct = new QAction(tr("Remove All Break Points"),this);
 
-    m_toolBar->addSeparator();
-    m_toolBar->addAction(m_startDebugAct);
-    m_toolBar->addAction(m_insertBreakAct);
+//    m_toolBar->addSeparator();
+//    m_toolBar->addAction(m_startDebugAct);
+//    m_toolBar->addAction(m_insertBreakAct);
 
     widgetToolBar->addAction(m_startDebugAct);
     widgetToolBar->addAction(m_stopDebugAct);
@@ -201,6 +201,10 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
         return;
     }
 
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
+
     LiteApi::IEditorMark *editorMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
     if (!editorMark) {
         return;
@@ -225,6 +229,14 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
     }
     if (m_lastLine.fileName == filePath) {
         editorMark->addMark(m_lastLine.line,LiteApi::CurrentLineMark);
+    }
+
+    QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
+    if (toolBar) {
+        QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
+        toolBar->insertSeparator(spacer);
+        toolBar->insertAction(spacer,m_insertBreakAct);
+        toolBar->insertAction(spacer,m_startDebugAct);
     }
 }
 

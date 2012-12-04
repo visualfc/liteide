@@ -178,9 +178,9 @@ QString DocumentBrowser::mimeType() const
     return m_mimeType;
 }
 
-void DocumentBrowser::executeAction(const QString &id, QAction *action)
+QMenu *DocumentBrowser::editMenu() const
 {
-
+    return 0;
 }
 
 void DocumentBrowser::onActive()
