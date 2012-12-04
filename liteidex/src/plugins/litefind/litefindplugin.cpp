@@ -101,7 +101,7 @@ bool LiteFindPlugin::initWithApp(LiteApi::IApplication *app)
     m_replaceAct->setShortcut(QKeySequence::Replace);
     //m_replaceAct->setCheckable(true);
 
-    m_fileSearchAct = new QAction(tr("File Serach"),this);
+    m_fileSearchAct = new QAction(tr("File Search"),this);
     m_fileSearchAct->setShortcut(QKeySequence("CTRL+SHIFT+F"));
    // m_fileSearchAct->setCheckable(true);
 

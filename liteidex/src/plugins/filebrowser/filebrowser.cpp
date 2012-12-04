@@ -419,7 +419,7 @@ void FileBrowser::newFile()
         QString filePath = QFileInfo(dir,fileName).filePath();
         if (QFile::exists(filePath)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Create File"),
-                                     tr("The filename is exists!"));
+                                     tr("The file already exists!"));
         } else {
             QFile file(filePath);
             if (file.open(QIODevice::WriteOnly)) {

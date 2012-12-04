@@ -124,7 +124,7 @@ QString FileManager::openAllTypeFilter() const
     types.removeDuplicates();
     filter.removeDuplicates();
     if (!types.isEmpty()) {
-        QString all = QString(tr("All Support File (%1)")).arg(types.join(" "));
+        QString all = QString(tr("All Support Files (%1)")).arg(types.join(" "));
         filter.insert(0,all);
     }
     filter.append(tr("All Files (*)"));
@@ -145,7 +145,7 @@ QString FileManager::openProjectTypeFilter() const
     types.removeDuplicates();
     filter.removeDuplicates();
     if (!types.isEmpty()) {
-        QString all = QString(tr("All Support File (%1)")).arg(types.join(" "));
+        QString all = QString(tr("All Support Files (%1)")).arg(types.join(" "));
         filter.insert(0,all);
     }
     filter.append(tr("All Files (*)"));
@@ -166,7 +166,7 @@ QString FileManager::openEditorTypeFilter() const
     types.removeDuplicates();
     filter.removeDuplicates();
     if (!types.isEmpty()) {
-        QString all = QString(tr("All Support File (%1)")).arg(types.join(" "));
+        QString all = QString(tr("All Support Files (%1)")).arg(types.join(" "));
         filter.insert(0,all);
     }
     filter.append(tr("All Files (*)"));

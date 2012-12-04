@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>563</width>
-    <height>459</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -240,7 +240,7 @@
       <item>
        <widget class="QCheckBox" name="lineNumberVisibleCheckBox">
         <property name="text">
-         <string>Disply line numbers</string>
+         <string>Display line numbers</string>
         </property>
        </widget>
       </item>
@@ -249,7 +249,7 @@
         <item>
          <widget class="QCheckBox" name="rightLineVisibleCheckBox">
           <property name="text">
-           <string>Dislay right margin at column</string>
+           <string>Display right margin at column</string>
           </property>
          </widget>
         </item>

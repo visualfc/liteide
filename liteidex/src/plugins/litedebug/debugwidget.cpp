@@ -96,7 +96,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_addWatchAct = new QAction(tr("Add Global Watch"),this);
     m_addLocalWatchAct = new QAction(tr("Add Local Watch"),this);
     m_removeWatchAct = new QAction(tr("Remove Watch"),this);
-    m_removeAllWatchAct = new QAction(tr("Remove All Watch"),this);
+    m_removeAllWatchAct = new QAction(tr("Remove All Watches"),this);
     m_watchMenu->addAction(m_addWatchAct);
     m_watchMenu->addAction(m_addLocalWatchAct);
     m_watchMenu->addSeparator();
