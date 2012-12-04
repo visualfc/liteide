@@ -522,7 +522,7 @@ void LiteEditorWidgetBase::extraAreaMouseEvent(QMouseEvent *e)
             int boxWidth = foldBoxWidth(fontMetrics());
             QTextBlock block = cursor.block();
             bool canFold = TextEditor::BaseTextDocumentLayout::canFold(block);
-            if (m_codeFoldingVisible && canFold && e->pos().x() > extraAreaWidth() - boxWidth) {
+            if (m_codeFoldingVisible && canFold && e->pos().x() >= extraAreaWidth() - boxWidth-4) {
                 if (!cursor.block().next().isVisible()) {
                     toggleBlockVisible(cursor.block());
                     //moveCursorVisible(false);

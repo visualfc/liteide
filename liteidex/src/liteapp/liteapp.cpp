@@ -636,6 +636,8 @@ void LiteApp::loadSession(const QString &name)
     }
     if (!editorName.isEmpty()) {
         m_fileManager->openEditor(editorName,true);
+    } else if (!fileList.isEmpty()){
+        m_fileManager->openEditor(fileList.last(),true);
     }
 }
 
