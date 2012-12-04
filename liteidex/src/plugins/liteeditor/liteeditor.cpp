@@ -109,6 +109,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_spacerAct = m_toolBar->addWidget(spacerWidget);
     m_lineInfo = new QLabelEx("000:000");
     m_toolBar->addSeparator();
+    QLabel *overInfo = new QLabel("[Over] ");
+    QAction *overInfoAct = m_toolBar->addWidget(overInfo);
+    overInfoAct->setVisible(false);
     m_toolBar->addWidget(m_lineInfo);
 
     layout->addWidget(m_toolBar);
@@ -132,6 +135,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
+    connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),overInfoAct,SLOT(setVisible(bool)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
 }
 
@@ -848,3 +852,4 @@ void QLabelEx::mouseDoubleClickEvent(QMouseEvent *event)
         emit doubleClickEvent();
     }
 }
+

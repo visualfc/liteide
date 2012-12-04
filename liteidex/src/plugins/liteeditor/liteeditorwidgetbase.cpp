@@ -996,6 +996,11 @@ bool LiteEditorWidgetBase::event(QEvent *e)
 
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
+    if (e->key() == Qt::Key_Insert) {
+        this->setOverwriteMode(!this->overwriteMode());
+        emit overwriteModeChanged(this->overwriteMode());
+        return;
+    }
     bool ro = isReadOnly();
     if (m_bLastBraces == true && e->key() == m_lastBraces) {
         QTextCursor cursor = textCursor();
@@ -1004,6 +1009,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         m_bLastBraces = false;
         return;
     }
+
     m_lastBraces = false;
     QChar mr;
     QString mrList = " ";

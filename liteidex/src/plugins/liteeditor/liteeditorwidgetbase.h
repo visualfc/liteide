@@ -52,6 +52,7 @@ public:
     void hideToolTip();
 signals:
     void navigationStateChanged(const QByteArray &array);
+    void overwriteModeChanged(bool);
 public:
     bool restoreState(const QByteArray &state);
     QByteArray saveState() const;
