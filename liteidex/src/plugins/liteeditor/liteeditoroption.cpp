@@ -25,6 +25,7 @@
 
 #include "liteeditoroption.h"
 #include "ui_liteeditoroption.h"
+#include "liteeditor_global.h"
 #include <QFontDatabase>
 #include <QDir>
 #include <QFileInfo>
@@ -50,10 +51,10 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     const QStringList families = db.families();
     ui->familyComboBox->addItems(families);
 
-    m_fontFamily = m_liteApp->settings()->value("editor/family","Courier").toString();
-    m_fontSize = m_liteApp->settings()->value("editor/fontsize",12).toInt();
+    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
+    m_fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
 
-    bool antialias = m_liteApp->settings()->value("editor/antialias",true).toBool();
+    bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
     ui->antialiasCheckBox->setChecked(antialias);
 
     const int idx = families.indexOf(m_fontFamily);
@@ -61,7 +62,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
 
     updatePointSizes();
 
-    QString styleName = m_liteApp->settings()->value("editor/style","default.xml").toString();
+    QString styleName = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
     QString stylePath = m_liteApp->resourcePath()+"/liteeditor/color";
     QDir dir(stylePath);
     int index = -1;
@@ -74,17 +75,19 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     if (index >= 0 && index < ui->styleComboBox->count()) {
         ui->styleComboBox->setCurrentIndex(index);
     }
-    bool noprintCheck = m_liteApp->settings()->value("editor/noprintcheck",true).toBool();
-    bool autoIndent = m_liteApp->settings()->value("editor/autoindent",true).toBool();
-    bool autoBraces0 = m_liteApp->settings()->value("editor/autobraces0",true).toBool();
-    bool autoBraces1 = m_liteApp->settings()->value("editor/autobraces1",true).toBool();
-    bool autoBraces2 = m_liteApp->settings()->value("editor/autobraces2",true).toBool();
-    bool autoBraces3 = m_liteApp->settings()->value("editor/autobraces3",true).toBool();
-    bool autoBraces4 = m_liteApp->settings()->value("editor/autobraces4",true).toBool();
-    bool caseSensitive = m_liteApp->settings()->value("editor/ComplererCaseSensitive",true).toBool();
-    bool lineNumberVisible = m_liteApp->settings()->value("editor/linenumbervisible",true).toBool();
+    bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
+    bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
+    bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
+    bool autoBraces1 = m_liteApp->settings()->value(EDITOR_AUTOBRACE1,true).toBool();
+    bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
+    bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
+    bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
+    bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
+    bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
-    int min = m_liteApp->settings()->value("editor/prefixlength",1).toInt();
+    int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
 
     ui->noprintCheckBox->setChecked(noprintCheck);;
     ui->autoIndentCheckBox->setChecked(autoIndent);
@@ -96,8 +99,11 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->lineNumberVisibleCheckBox->setChecked(lineNumberVisible);
     ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
     ui->preMinLineEdit->setText(QString("%1").arg(min));
+    ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
+    ui->rightLineWidthSpinBox->setValue(rightLineWidth);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
+    connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
 }
 
 QWidget *LiteEditorOption::widget()
@@ -112,7 +118,7 @@ QString LiteEditorOption::name() const
 
 QString LiteEditorOption::mimeType() const
 {
-    return "option/liteeditor";
+    return OPTION_LITEEDITOR;
 }
 
 void LiteEditorOption::apply()
@@ -137,25 +143,31 @@ void LiteEditorOption::apply()
     bool lineNumberVisible = ui->lineNumberVisibleCheckBox->isChecked();
     bool caseSensitive = ui->completerCaseSensitiveCheckBox->isChecked();
     bool antialias = ui->antialiasCheckBox->isChecked();
+    bool rightLineVisible = ui->rightLineVisibleCheckBox->isChecked();
+    int rightLineWidth = ui->rightLineWidthSpinBox->value();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
         min = 1;
     }
 
-    m_liteApp->settings()->setValue("editor/noprintcheck",noprintCheck);
-    m_liteApp->settings()->setValue("editor/family",m_fontFamily);
-    m_liteApp->settings()->setValue("editor/fontsize",m_fontSize);
-    m_liteApp->settings()->setValue("editor/antialias",antialias);
-    m_liteApp->settings()->setValue("editor/style",style);
-    m_liteApp->settings()->setValue("editor/autoindent",autoIndent);
-    m_liteApp->settings()->setValue("editor/autobraces0",autoBraces0);
-    m_liteApp->settings()->setValue("editor/autobraces1",autoBraces1);
-    m_liteApp->settings()->setValue("editor/autobraces2",autoBraces2);
-    m_liteApp->settings()->setValue("editor/autobraces3",autoBraces3);
-    m_liteApp->settings()->setValue("editor/autobraces4",autoBraces4);
-    m_liteApp->settings()->setValue("editor/linenumbervisible",lineNumberVisible);
-    m_liteApp->settings()->setValue("editor/ComplererCaseSensitive",caseSensitive);
-    m_liteApp->settings()->setValue("editor/prefixlength",min);
+    m_liteApp->settings()->setValue(EDITOR_NOPRINTCHECK,noprintCheck);
+    m_liteApp->settings()->setValue(EDITOR_FAMILY,m_fontFamily);
+    m_liteApp->settings()->setValue(EDITOR_FONTSIZE,m_fontSize);
+    m_liteApp->settings()->setValue(EDITOR_ANTIALIAS,antialias);
+    m_liteApp->settings()->setValue(EDITOR_STYLE,style);
+    m_liteApp->settings()->setValue(EDITOR_AUTOINDENT,autoIndent);
+    m_liteApp->settings()->setValue(EDITOR_AUTOBRACE0,autoBraces0);
+    m_liteApp->settings()->setValue(EDITOR_AUTOBRACE1,autoBraces1);
+    m_liteApp->settings()->setValue(EDITOR_AUTOBRACE2,autoBraces2);
+    m_liteApp->settings()->setValue(EDITOR_AUTOBRACE3,autoBraces3);
+    m_liteApp->settings()->setValue(EDITOR_AUTOBRACE4,autoBraces4);
+    m_liteApp->settings()->setValue(EDITOR_LINENUMBERVISIBLE,lineNumberVisible);
+    m_liteApp->settings()->setValue(EDITOR_COMPLETER_CASESENSITIVE,caseSensitive);
+    m_liteApp->settings()->setValue(EDITOR_PREFIXLENGTH,min);
+    m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);
+    if (rightLineVisible) {
+        m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
+    }
 }
 
 LiteEditorOption::~LiteEditorOption()

@@ -97,6 +97,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_lineNumbersVisible = true;
     m_marksVisible = true;
     m_codeFoldingVisible = true;
+    m_rightLineVisible = true;
+    m_rightLineWidth = 80;
     m_lastSaveRevision = 0;
     m_extraAreaSelectionNumber = -1;
     m_autoIndent = true;
@@ -328,16 +330,6 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &
                                        const QRect &rect,
                                        bool expanded) const
 {
-    //painter->setPen(QPen(m_extraForeground,1,Qt::DotLine));
-    //painter->drawRect(rect);
-//    QRect rc = rect.adjusted(2,2,-2,-2);
-//    painter->setPen(QPen(m_extraForeground,1));
-//    painter->drawRect(rc);
-//    QPoint c = rc.center();
-//    painter->drawLine(rc.left(),c.y(),rc.right(),c.y());
-//    if (!expanded) {
-//        painter->drawLine(c.x(),rc.top(),c.x(),rc.bottom());
-//    }
     painter->save();
     painter->setPen(Qt::NoPen);
     int size = rect.size().width();
@@ -1443,12 +1435,14 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     qreal top = blockBoundingGeometry(block).translated(offset).top();
     qreal bottom = top + blockBoundingRect(block).height();
 
-    const QFontMetricsF fm(this->font());
-    int xoff = this->document()->documentMargin()+fm.averageCharWidth()*80;
-    painter.save();
-    painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
-    painter.drawLine(xoff,0,xoff,rect().width());
-    painter.restore();
+    if (m_rightLineVisible) {
+        const QFontMetrics fm(this->font());
+        int xoff = this->document()->documentMargin()+fm.averageCharWidth()*m_rightLineWidth;
+        painter.save();
+        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        painter.drawLine(xoff,0,xoff,rect().width());
+        painter.restore();
+    }
 
     while (block.isValid() && top <= e->rect().bottom()) {
         QTextBlock nextBlock = block.next();

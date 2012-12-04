@@ -24,6 +24,7 @@
 // $Id: liteeditorfile.cpp,v 1.0 2011-6-28 visualfc Exp $
 
 #include "liteeditorfile.h"
+#include "liteeditor_global.h"
 #include <QFile>
 #include <QTextDocument>
 #include <QTextCodec>
@@ -205,7 +206,7 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
             m_lineTerminatorMode = CRLFLineTerminator;
         }
     }
-    bool noprintCheck = m_liteApp->settings()->value("editor/noprintcheck",true).toBool();
+    bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
     if (noprintCheck) {
         for (int i = 0; i < text.length(); i++) {
             if (!text[i].isPrint() && !text[i].isSpace() && text[i] != '\r' && text[i] != '\n') {

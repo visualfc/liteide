@@ -30,6 +30,7 @@
 #include "litewordcompleter.h"
 #include "wordapimanager.h"
 #include "liteeditormark.h"
+#include "liteeditor_global.h"
 #include <QDir>
 #include <QFileInfo>
 #include "mimetype/mimetype.h"
@@ -155,6 +156,6 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
             wordCompleter->completer()->model()->sort(0);
         }
     }
-    editor->applyOption("option/liteeditor");
+    editor->applyOption(OPTION_LITEEDITOR);
     return editor;
 }

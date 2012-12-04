@@ -27,6 +27,7 @@
 #include "liteeditorwidget.h"
 #include "liteeditorfile.h"
 #include "litecompleter.h"
+#include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
 
@@ -528,19 +529,21 @@ void LiteEditor::gotoLine(int line, int column, bool center)
 
 void LiteEditor::applyOption(QString id)
 {
-    if (id != "option/liteeditor") {
+    if (id != OPTION_LITEEDITOR) {
         return;
     }
 
-    bool autoIndent = m_liteApp->settings()->value("editor/autoindent",true).toBool();
-    bool autoBraces0 = m_liteApp->settings()->value("editor/autobraces0",true).toBool();
-    bool autoBraces1 = m_liteApp->settings()->value("editor/autobraces1",true).toBool();
-    bool autoBraces2 = m_liteApp->settings()->value("editor/autobraces2",true).toBool();
-    bool autoBraces3 = m_liteApp->settings()->value("editor/autobraces3",true).toBool();
-    bool autoBraces4 = m_liteApp->settings()->value("editor/autobraces4",true).toBool();
-    bool caseSensitive = m_liteApp->settings()->value("editor/ComplererCaseSensitive",true).toBool();
-    bool lineNumberVisible = m_liteApp->settings()->value("editor/linenumbervisible",true).toBool();
-    int min = m_liteApp->settings()->value("editor/prefixlength",1).toInt();
+    bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
+    bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
+    bool autoBraces1 = m_liteApp->settings()->value(EDITOR_AUTOBRACE1,true).toBool();
+    bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
+    bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
+    bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
+    bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
+    bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
+    int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
 
     m_editorWidget->setAutoIndent(autoIndent);
@@ -550,20 +553,22 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setAutoBraces3(autoBraces3);
     m_editorWidget->setAutoBraces4(autoBraces4);
     m_editorWidget->setLineNumberVisible(lineNumberVisible);
+    m_editorWidget->setRightLineVisible(rightLineVisible);
+    m_editorWidget->setRightLineWidth(rightLineWidth);
 
     if (m_completer) {
         m_completer->completer()->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
     }
 
 #if defined(Q_OS_WIN)
-    QString fontFamily = m_liteApp->settings()->value("editor/family","Courier").toString();
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
 #elif defined(Q_OS_LINUX)
-    QString fontFamily = m_liteApp->settings()->value("editor/family","Monospace").toString();
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #elif defined(Q_OS_MAC)
-    QString fontFamily = m_liteApp->settings()->value("editor/family","Menlo").toString();
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
 #endif
-    int fontSize = m_liteApp->settings()->value("editor/fontsize",12).toInt();
-    bool antialias = m_liteApp->settings()->value("editor/antialias",true).toBool();
+    int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
+    bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
     QFont font = m_editorWidget->font();
     font.setFamily(fontFamily);
     font.setPointSize(fontSize);
@@ -576,7 +581,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->extraArea()->setFont(font);
     m_editorWidget->setTabWidth(4);
 
-    QString style = m_liteApp->settings()->value("editor/style","default.xml").toString();
+    QString style = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
     if (style != m_colorStyle) {
         m_colorStyle = style;
         m_colorStyleScheme->clear();

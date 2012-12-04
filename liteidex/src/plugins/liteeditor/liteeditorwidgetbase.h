@@ -122,15 +122,28 @@ public:
         m_marksVisible = b;
         slotUpdateExtraAreaWidth();
     }
-    bool autoIndent() {
+    bool autoIndent() const {
         return m_autoIndent;
     }
-    bool lineNumberVisible() {
+    bool lineNumberVisible() const {
         return m_lineNumbersVisible;
     }
-    bool marksVisiable() {
+    bool marksVisiable() const {
         return m_marksVisible;
     }
+    void setRightLineVisible(bool b) {
+        m_rightLineVisible = b;
+    }
+    bool rightLineVisible() const {
+        return m_rightLineVisible;
+    }
+    void setRightLineWidth(int w) {
+        m_rightLineWidth = w;
+    }
+    int rightLineWidth() const {
+        return m_rightLineWidth;
+    }
+
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -157,6 +170,8 @@ protected:
     bool m_lineNumbersVisible;
     bool m_marksVisible;
     bool m_codeFoldingVisible;
+    bool m_rightLineVisible;
+    int  m_rightLineWidth;
     bool m_autoIndent;
     bool m_autoBraces0; //{
     bool m_autoBraces1; //(
