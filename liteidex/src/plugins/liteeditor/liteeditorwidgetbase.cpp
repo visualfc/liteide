@@ -344,7 +344,7 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &
     int sqsize = 2*(size/2);
 
     QColor textColor = m_extraForeground; //pal.buttonText().color();
-    QColor brushColor = textColor;
+    QColor brushColor = m_extraBackground;
 
     textColor.setAlpha(100);
     brushColor.setAlpha(100);
@@ -352,17 +352,21 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &
     QPolygon a;
     if (expanded) {
         // down arrow
-        a.setPoints(3, 0, sqsize/3,  sqsize/2, sqsize  - sqsize/3,  sqsize, sqsize/3);
+        //a.setPoints(3, 0, sqsize/3,  sqsize/2, sqsize  - sqsize/3,  sqsize, sqsize/3);
+        a.setPoints(3, 1, sqsize/2+sqsize/3,  sqsize/2+sqsize/3, sqsize/2+sqsize/3,sqsize/2+sqsize/3,1);
     } else {
         // right arrow
         a.setPoints(3, sqsize - sqsize/3, sqsize/2,  sqsize/2 - sqsize/3, 0,  sqsize/2 - sqsize/3, sqsize);
-        painter->setBrush(brushColor);
     }
     painter->translate(0.5, 0.5);
     painter->setRenderHint(QPainter::Antialiasing);
     painter->translate(rect.topLeft());
     painter->setPen(textColor);
-    painter->setBrush(textColor);
+    if (expanded) {
+        painter->setBrush(textColor);
+    } else {
+        painter->setBrush(brushColor);
+    }
     painter->drawPolygon(a);
     painter->restore();
 
