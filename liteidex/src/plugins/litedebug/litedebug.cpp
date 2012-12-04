@@ -62,6 +62,8 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 {
     m_manager->initWithApp(app);
 
+    m_debugMimeTypes << "text/x-gosrc" << "text/x-csrc" << "text/x-chdr" << "text/x-c++src";
+
 //    m_toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/build");
 //    if (!m_toolBar) {
 //        m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Debug ToolBar"),"toolbar/nav");
@@ -133,16 +135,18 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     widgetToolBar->addAction(m_stepOutAct);
     widgetToolBar->addAction(m_runToLineAct);
 
-    QMenu *menu = m_liteApp->actionManager()->insertMenu("menu/debug",tr("&Debug"),"menu/help");
-    if (menu) {
-        menu->addAction(m_startDebugAct);
-        menu->addAction(m_stopDebugAct);
-        menu->addSeparator();
-        menu->addAction(m_showLineAct);
-        menu->addAction(m_stepIntoAct);
-        menu->addAction(m_stepOverAct);
-        menu->addAction(m_stepOutAct);
-        menu->addAction(m_runToLineAct);
+    m_debugMenu = m_liteApp->actionManager()->insertMenu("menu/debug",tr("&Debug"),"menu/help");
+
+    m_gdbMenu = new QMenu("Debug");
+    if (m_gdbMenu) {
+        m_gdbMenu->addAction(m_startDebugAct);
+        m_gdbMenu->addAction(m_stopDebugAct);
+        m_gdbMenu->addSeparator();
+        m_gdbMenu->addAction(m_showLineAct);
+        m_gdbMenu->addAction(m_stepIntoAct);
+        m_gdbMenu->addAction(m_stepOverAct);
+        m_gdbMenu->addAction(m_stepOutAct);
+        m_gdbMenu->addAction(m_runToLineAct);
     }
 
     connect(m_manager,SIGNAL(currentDebuggerChanged(LiteApi::IDebugger*)),this,SLOT(setDebugger(LiteApi::IDebugger*)));
@@ -159,6 +163,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_showLineAct,SIGNAL(triggered()),this,SLOT(showLine()));
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
+    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterAppInputText(QString)));
 
     m_liteApp->extension()->addObject("LiteApi.IDebugManager",m_manager);
@@ -197,11 +202,7 @@ void LiteDebug::appLoaded()
 
 void LiteDebug::editorCreated(LiteApi::IEditor *editor)
 {
-    if (!editor) {
-        return;
-    }
-
-    if (editor->mimeType() != "text/x-gosrc") {
+    if (!canDebug(editor)) {
         return;
     }
 
@@ -242,9 +243,10 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
 
 void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
 {
-    if (!editor) {
+    if (!canDebug(editor)) {
         return;
     }
+
     LiteApi::IEditorMark *editorMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
     if (!editorMark) {
         return;
@@ -257,9 +259,26 @@ void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
     m_liteApp->settings()->setValue(QString("bp_%1").arg(editor->filePath()),save);
 }
 
+void LiteDebug::currentEditorChanged(IEditor *editor)
+{
+    if (canDebug(editor)) {
+        m_debugMenu->menuAction()->setMenu(m_gdbMenu);
+    } else {
+        m_debugMenu->menuAction()->setMenu(0);
+    }
+}
+
 QWidget *LiteDebug::widget()
 {
     return m_widget;
+}
+
+bool LiteDebug::canDebug(IEditor *editor) const
+{
+    if (editor && m_debugMimeTypes.contains(editor->mimeType())) {
+        return true;
+    }
+    return false;
 }
 
 void LiteDebug::setDebugger(LiteApi::IDebugger *debug)

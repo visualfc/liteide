@@ -53,12 +53,14 @@ public:
     explicit LiteDebug(LiteApi::IApplication *app, QObject *parent = 0);
     virtual ~LiteDebug();
     QWidget *widget();
+    bool canDebug(LiteApi::IEditor *editor) const;
 signals:
     void debugVisible(bool);
 public slots:
     void appLoaded();
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);
+    void currentEditorChanged(LiteApi::IEditor*);
     void startDebug();
     void continueRun();
     void runToLine();
@@ -86,7 +88,8 @@ protected:
     DebugManager *m_manager;
     QWidget      *m_widget;
     DebugWidget  *m_dbgWidget;
-    //QToolBar     *m_toolBar;
+    QMenu        *m_debugMenu;
+    QMenu        *m_gdbMenu;
     TextOutput   *m_output;
     QAction      *m_outputAct;
     QAction *m_startDebugAct;
@@ -98,6 +101,7 @@ protected:
     QAction *m_runToLineAct;
     QAction *m_insertBreakAct;
     QAction *m_removeAllBreakAct;
+    QStringList m_debugMimeTypes;
     QString  m_debugInfoId;
     CurrentLine m_lastLine;
     QMultiMap<QString,int> m_fileBpMap;

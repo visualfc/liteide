@@ -96,10 +96,10 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
-                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
-                             "QToolBar QToolButton::hover { background-color: #ababab;}"\
-                             "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
+//    m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
+//                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
+//                             "QToolBar QToolButton::hover { background-color: #ababab;}"\
+//                             "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
 
 
     m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
