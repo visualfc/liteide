@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>488</width>
-    <height>286</height>
+    <width>508</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -131,13 +131,27 @@
    <item>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="title">
-      <string>Session</string>
+      <string>Start</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QCheckBox" name="autoLoadLastSessionCheckBox">
         <property name="text">
          <string>Auto load last session</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="splashVisibleCheckBox">
+        <property name="text">
+         <string>Show splash screen</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="welcomeVisibleCheckBox">
+        <property name="text">
+         <string>Show welcome page</string>
         </property>
        </widget>
       </item>

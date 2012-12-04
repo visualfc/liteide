@@ -24,6 +24,7 @@
 // $Id: welcomeplugin.cpp,v 1.0 2011-7-6 visualfc Exp $
 
 #include "welcomeplugin.h"
+#include "../../liteapp/liteapp_global.h"
 #include <QAction>
 #include <QMenu>
 #include <QToolBar>
@@ -61,7 +62,10 @@ bool WelcomePlugin::initWithApp(LiteApi::IApplication *app)
     m_welcome = new WelcomeBrowser(app,this);
     m_welcomeAct = m_liteApp->editorManager()->registerBrowser(m_welcome);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_welcomeAct);
-    m_welcomeAct->toggle();
+
+    if (m_liteApp->settings()->value(LITEAPP_WELCOMEPAGEVISIBLE,true).toBool()) {
+        m_welcomeAct->toggle();
+    }
 
     QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
     if (toolBar) {

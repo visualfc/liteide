@@ -24,7 +24,7 @@
 // $Id: projectmanager.cpp,v 1.0 2011-5-12 visualfc Exp $
 
 #include "projectmanager.h"
-
+#include "liteapp_global.h"
 #include <QFileInfo>
 #include <QComboBox>
 #include <QVBoxLayout>
@@ -83,7 +83,7 @@ bool ProjectManager::initWithApp(IApplication *app)
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 
-    m_bAutoCloseProjectEditors = m_liteApp->settings()->value("LiteApp/AutoCloseProjectEditors",true).toBool();
+    m_bAutoCloseProjectEditors = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
 
     return true;
 }
@@ -318,8 +318,8 @@ void ProjectManager::closeProject(IProject *project)
 
 void ProjectManager::applyOption(QString id)
 {
-    if (id != "option/liteapp") {
+    if (id != OPTION_LITEAPP) {
         return;
     }
-    m_bAutoCloseProjectEditors = m_liteApp->settings()->value("LiteApp/AutoCloseProjectEditors",false).toBool();
+    m_bAutoCloseProjectEditors = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,false).toBool();
 }

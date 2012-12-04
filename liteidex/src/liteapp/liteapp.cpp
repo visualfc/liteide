@@ -38,6 +38,7 @@
 #include "liteappoptionfactory.h"
 #include "folderprojectfactory.h"
 #include "textbrowserhtmlwidget.h"
+#include "liteapp_global.h"
 
 #include <QApplication>
 #include <QSplashScreen>
@@ -191,18 +192,35 @@ LiteApp::LiteApp()
 void LiteApp::load(bool bUseSession)
 {
     QPixmap pixmap("icon:/images/splash.png");
-    QSplashScreen splash(pixmap,Qt::WindowStaysOnTopHint);
-    splash.show();
 
-    splash.showMessage("liteide scan plugins ...",Qt::AlignCenter);
+    QSplashScreen *splash = 0;
+    if (m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool()) {
+        splash = new QSplashScreen(pixmap,Qt::WindowStaysOnTopHint);
+    }
+    if (splash) {
+        splash->show();
+    }
+
+    if (splash) {
+        splash->showMessage("liteide scan plugins ...",Qt::AlignCenter);
+    }
+
     qApp->processEvents();
+
     loadMimeType();
     loadPlugins();
-    splash.showMessage("liteide load plugins ...",Qt::AlignCenter);
+
+    if (splash) {
+        splash->showMessage("liteide load plugins ...",Qt::AlignCenter);
+    }
+
     qApp->processEvents();
     initPlugins();
 
-    splash.showMessage("liteide load state ...",Qt::AlignCenter);
+    if (splash) {
+        splash->showMessage("liteide load state ...",Qt::AlignCenter);
+    }
+
     qApp->processEvents();
 
     loadState();
@@ -211,16 +229,23 @@ void LiteApp::load(bool bUseSession)
     emit loaded();
     m_projectManager->setCurrentProject(0);
 
-    splash.showMessage("liteide load session ...",Qt::AlignCenter);
+    if (splash) {
+        splash->showMessage("liteide load session ...",Qt::AlignCenter);
+    }
+
     qApp->processEvents();
 
     appendLog("LiteApp","loaded");
-    bool b = m_settings->value("LiteApp/AutoLoadLastSession",true).toBool();
+    bool b = m_settings->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
     if (b && bUseSession) {
         loadSession("default");
     }
-    m_mainwindow->raise();
-    splash.finish(m_mainwindow);
+
+    if (splash) {
+        m_mainwindow->raise();
+        splash->finish(m_mainwindow);
+        splash->deleteLater();
+    }
 
     this->appendLog("HtmlWidgetFactory",m_htmlWidgetManager->classNameList().join(" "));
     this->appendLog("DefaultHtmlWidgetFactory",m_htmlWidgetManager->defaultClassName());

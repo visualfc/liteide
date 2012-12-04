@@ -18,39 +18,29 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteappoptionfactory.cpp
+// Module: liteapp_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-6-27
-// $Id: liteappoptionfactory.cpp,v 1.0 2011-6-27 visualfc Exp $
+// date: 2012-12-4
+// $Id: liteapp_global.h,v 1.0 2012-12-4 visualfc Exp $
 
-#include "liteappoption.h"
-#include "liteappoptionfactory.h"
-#include "liteapp_global.h"
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
+#ifndef LITEAPP_GLOBAL_H
+#define LITEAPP_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LITEAPP_LIBRARY)
+#  define LITEIDESHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define LITEIDESHARED_EXPORT Q_DECL_IMPORT
 #endif
-//lite_memory_check_end
 
-LiteAppOptionFactory::LiteAppOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
-      m_liteApp(app)
-{
-}
+#define OPTION_LITEAPP "option/liteapp"
 
-QStringList LiteAppOptionFactory::mimeTypes() const
-{
-    return QStringList() << OPTION_LITEAPP;
-}
+#define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFiles"
+#define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
+#define LITEAPP_AUTOLOADLASTSESSION "LiteApp/AutoLoadLastSession"
+#define LITEAPP_LANGUAGE "General/Language"
+#define LITEAPP_SPLASHVISIBLE "LiteApp/SplashVisible"
+#define LITEAPP_WELCOMEPAGEVISIBLE "General/WelcomePageVisible"
 
-LiteApi::IOption *LiteAppOptionFactory::create(const QString &mimeType)
-{
-    if (mimeType == OPTION_LITEAPP) {
-        return new LiteAppOption(m_liteApp,this);
-    }
-    return 0;
-}
+#endif // LITEAPP_GLOBAL_H

@@ -27,6 +27,7 @@
 #include "newfiledialog.h"
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
+#include "liteapp_global.h"
 
 #include <QMenu>
 #include <QAction>
@@ -435,10 +436,10 @@ void FileManager::cleanRecent()
 
 void FileManager::applyOption(QString id)
 {
-    if (id != "option/liteapp") {
+    if (id != OPTION_LITEAPP) {
         return;
     }
-    m_maxRecentFiles = m_liteApp->settings()->value("LiteApp/MaxRecentFiles",16).toInt();
+    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
 
     foreach (QString scheme, this->schemeList()) {
         QString key = schemeKey(scheme);

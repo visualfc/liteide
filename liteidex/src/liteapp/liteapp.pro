@@ -66,6 +66,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     liteapp.h \
+    liteapp_global.h \
     filemanager.h \
     editormanager.h \
     projectmanager.h \

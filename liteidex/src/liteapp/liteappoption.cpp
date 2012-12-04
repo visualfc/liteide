@@ -24,6 +24,7 @@
 // $Id: liteappoption.cpp,v 1.0 2011-6-27 visualfc Exp $
 
 #include "liteappoption.h"
+#include "liteapp_global.h"
 #include "ui_liteappoption.h"
 #include <QDir>
 #include <QFileInfo>
@@ -64,7 +65,7 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         }
     }
     QString locale = QLocale::system().name();
-    locale = m_liteApp->settings()->value("General/Language",locale).toString();
+    locale = m_liteApp->settings()->value(LITEAPP_LANGUAGE,locale).toString();
     if (!locale.isEmpty()) {
         for (int i = 0; i < ui->langComboBox->count(); i++) {
             if (locale == ui->langComboBox->itemData(i).toString()) {
@@ -73,12 +74,16 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
             }
         }
     }
-    int max = m_liteApp->settings()->value("LiteApp/MaxRecentFiles",16).toInt();
+    int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
     ui->maxRecentLineEdit->setText(QString("%1").arg(max));
-    bool b = m_liteApp->settings()->value("LiteApp/AutoCloseProjectEditors",true).toBool();
+    bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
     ui->autoCloseProjecEditorsCheckBox->setChecked(b);
-    bool b1 = m_liteApp->settings()->value("LiteApp/AutoLoadLastSession",false).toBool();
+    bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,false).toBool();
     ui->autoLoadLastSessionCheckBox->setChecked(b1);
+    bool b2 = m_liteApp->settings()->value(LITEAPP_SPLASHVISIBLE,true).toBool();
+    ui->splashVisibleCheckBox->setChecked(b2);
+    bool b3 = m_liteApp->settings()->value(LITEAPP_WELCOMEPAGEVISIBLE,true).toBool();
+    ui->welcomeVisibleCheckBox->setChecked(b3);
 }
 
 LiteAppOption::~LiteAppOption()
@@ -99,7 +104,7 @@ QString LiteAppOption::name() const
 
 QString LiteAppOption::mimeType() const
 {
-    return "option/liteapp";
+    return OPTION_LITEAPP;
 }
 void LiteAppOption::apply()
 {
@@ -108,11 +113,15 @@ void LiteAppOption::apply()
         return;
     }
     QString lc = ui->langComboBox->itemData(index).toString();
-    m_liteApp->settings()->setValue("General/Language",lc);
+    m_liteApp->settings()->setValue(LITEAPP_LANGUAGE,lc);
     QString max = ui->maxRecentLineEdit->text();
-    m_liteApp->settings()->setValue("LiteApp/MaxRecentFiles",max);
+    m_liteApp->settings()->setValue(LITEAPP_MAXRECENTFILES,max);
     bool b = ui->autoCloseProjecEditorsCheckBox->isChecked();
-    m_liteApp->settings()->setValue("LiteApp/AutoCloseProjectEditors",b);
+    m_liteApp->settings()->setValue(LITEAPP_AUTOCLOSEPROEJCTFILES,b);
     bool b1 = ui->autoLoadLastSessionCheckBox->isChecked();
-    m_liteApp->settings()->setValue("LiteApp/AutoLoadLastSession",b1);
+    m_liteApp->settings()->setValue(LITEAPP_AUTOLOADLASTSESSION,b1);
+    bool b2 = ui->splashVisibleCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_SPLASHVISIBLE,b2);
+    bool b3 = ui->welcomeVisibleCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,b3);
 }
