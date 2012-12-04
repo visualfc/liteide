@@ -323,14 +323,13 @@ void LiteEditor::findCodecs()
          codecMap.insert(sortKey, codec);
      }
      m_codecs = codecMap.values();
- }
-
+}
 
 void LiteEditor::createToolBars()
 {
     m_toolBar = new QToolBar(tr("editor"),m_widget);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
-    m_toolBar->setIconSize(QSize(16,16));
+    m_toolBar->setIconSize(QSize(18,18));
 
     m_toolBar->addAction(m_cutAct);
     m_toolBar->addAction(m_copyAct);

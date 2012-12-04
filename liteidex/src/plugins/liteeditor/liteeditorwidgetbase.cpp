@@ -328,14 +328,44 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &
                                        const QRect &rect,
                                        bool expanded) const
 {
-    painter->setPen(QPen(m_extraForeground,1,Qt::DotLine));
-    painter->drawRect(rect);
-    painter->setPen(QPen(m_extraForeground,1));
-    QPoint c = rect.center();
-    painter->drawLine(rect.left(),c.y(),rect.right(),c.y());
-    if (!expanded) {
-        painter->drawLine(c.x(),rect.top(),c.x(),rect.bottom());
+    //painter->setPen(QPen(m_extraForeground,1,Qt::DotLine));
+    //painter->drawRect(rect);
+//    QRect rc = rect.adjusted(2,2,-2,-2);
+//    painter->setPen(QPen(m_extraForeground,1));
+//    painter->drawRect(rc);
+//    QPoint c = rc.center();
+//    painter->drawLine(rc.left(),c.y(),rc.right(),c.y());
+//    if (!expanded) {
+//        painter->drawLine(c.x(),rc.top(),c.x(),rc.bottom());
+//    }
+    painter->save();
+    painter->setPen(Qt::NoPen);
+    int size = rect.size().width();
+    int sqsize = 2*(size/2);
+
+    QColor textColor = m_extraForeground; //pal.buttonText().color();
+    QColor brushColor = textColor;
+
+    textColor.setAlpha(100);
+    brushColor.setAlpha(100);
+
+    QPolygon a;
+    if (expanded) {
+        // down arrow
+        a.setPoints(3, 0, sqsize/3,  sqsize/2, sqsize  - sqsize/3,  sqsize, sqsize/3);
+    } else {
+        // right arrow
+        a.setPoints(3, sqsize - sqsize/3, sqsize/2,  sqsize/2 - sqsize/3, 0,  sqsize/2 - sqsize/3, sqsize);
+        painter->setBrush(brushColor);
     }
+    painter->translate(0.5, 0.5);
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->translate(rect.topLeft());
+    painter->setPen(textColor);
+    painter->setBrush(textColor);
+    painter->drawPolygon(a);
+    painter->restore();
+
 }
 
 void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
@@ -439,14 +469,7 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
                 if (drawBox) {
                     bool expanded = nextBlock.isVisible();
                     QRect box(extraAreaWidth-2, top + (fm.lineSpacing()-boxWidth)/2,
-                              boxWidth,boxWidth);
-                    /*
-                    if (!expanded) {
-                        painter.setPen(Qt::black);
-                    } else {
-                        painter.setPen(Qt::gray);
-                    }
-                    */
+                              boxWidth-1,boxWidth-1);
                     drawFoldingMarker(&painter, pal, box, expanded);
                 }
             }
@@ -1396,6 +1419,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {
     QPlainTextEdit::paintEvent(e);
 
+
     QTextDocument *doc = this->document();
     QPainter painter(viewport());
 
@@ -1408,6 +1432,13 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     QPointF offset = contentOffset();
     qreal top = blockBoundingGeometry(block).translated(offset).top();
     qreal bottom = top + blockBoundingRect(block).height();
+
+    const QFontMetricsF fm(this->font());
+    int xoff = this->document()->documentMargin()+fm.averageCharWidth()*80;
+    painter.save();
+    painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+    painter.drawLine(xoff,0,xoff,rect().width());
+    painter.restore();
 
     while (block.isValid() && top <= e->rect().bottom()) {
         QTextBlock nextBlock = block.next();
@@ -1484,5 +1515,4 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         top = bottom;
         bottom = top + blockBoundingRect(block).height();
     }
-
 }

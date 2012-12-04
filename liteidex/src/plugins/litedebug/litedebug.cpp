@@ -82,6 +82,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     QVBoxLayout *layout = new QVBoxLayout;    
     QToolBar *widgetToolBar = new QToolBar;
+    widgetToolBar->setIconSize(QSize(18,18));
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(widgetToolBar);
@@ -115,7 +116,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_runToLineAct->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_F10));
     m_runToLineAct->setToolTip(tr("Run to Line (Ctrl+F10)"));
 
-    m_insertBreakAct = new QAction(QIcon("icon:litedebug/images/insertbreak.png"),tr("Insert/Remove BreakPoint"),this);
+    m_insertBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove BreakPoint"),this);
     m_insertBreakAct->setShortcut(QKeySequence(Qt::Key_F9));
     m_insertBreakAct->setToolTip(tr("Insert/Remove Breakpoint (F9)"));
 

@@ -66,7 +66,7 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_textBrowser->setOpenLinks(false);
 
     m_toolBar = new QToolBar;
-    m_toolBar->setIconSize(QSize(16,16));
+    m_toolBar->setIconSize(QSize(18,18));
 
     m_backwardAct = new QAction(QIcon("icon:images/backward.png"),tr("Backward"),this);
     m_forwardAct = new QAction(QIcon("icon:images/forward.png"),tr("Forward"),this);

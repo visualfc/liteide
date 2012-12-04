@@ -64,7 +64,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
 
     m_headerToolBar = new QToolBar;
     m_headerToolBar->setStyleSheet("QToolBar {border:0}");
-    m_headerToolBar->setIconSize(QSize(15,16));
+    m_headerToolBar->setIconSize(QSize(18,18));
 
     m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close Page"),this);
     m_listButton = new QToolButton(m_headerToolBar);

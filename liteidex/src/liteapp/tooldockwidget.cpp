@@ -51,7 +51,7 @@ ToolDockWidget::ToolDockWidget(QWidget *parent) :
 
     m_toolBar = new QToolBar(this);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
-    m_toolBar->setIconSize(QSize(16,16));
+    m_toolBar->setIconSize(QSize(18,18));
     //m_toolBar->setFixedHeight(24);
     m_toolBar->addWidget(m_comboBox);
 
