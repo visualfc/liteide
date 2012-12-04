@@ -24,6 +24,7 @@
 // $Id: tooldockwidget.cpp,v 1.0 2012-9-12 visualfc Exp $
 
 #include "tooldockwidget.h"
+#include "liteapi/liteapi.h"
 #include <QAction>
 #include <QIcon>
 #include <QLabel>
@@ -51,7 +52,7 @@ ToolDockWidget::ToolDockWidget(QWidget *parent) :
 
     m_toolBar = new QToolBar(this);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
-    m_toolBar->setIconSize(QSize(18,18));
+    m_toolBar->setIconSize(LiteApi::getToolBarIconSize());
     //m_toolBar->setFixedHeight(24);
     m_toolBar->addWidget(m_comboBox);
 

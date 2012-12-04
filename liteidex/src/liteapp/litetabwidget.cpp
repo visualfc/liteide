@@ -24,7 +24,7 @@
 // $Id: litetabwidget.cpp,v 1.0 2012-11-30 visualfc Exp $
 
 #include "litetabwidget.h"
-
+#include "liteapi/liteapi.h"
 #include <QTabBar>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -64,7 +64,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
 
     m_headerToolBar = new QToolBar;
     m_headerToolBar->setStyleSheet("QToolBar {border:0}");
-    m_headerToolBar->setIconSize(QSize(18,18));
+    m_headerToolBar->setIconSize(LiteApi::getToolBarIconSize());
 
     m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close Page"),this);
     m_listButton = new QToolButton(m_headerToolBar);

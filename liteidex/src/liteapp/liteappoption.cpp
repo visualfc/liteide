@@ -84,6 +84,11 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     ui->splashVisibleCheckBox->setChecked(b2);
     bool b3 = m_liteApp->settings()->value(LITEAPP_WELCOMEPAGEVISIBLE,true).toBool();
     ui->welcomeVisibleCheckBox->setChecked(b3);
+
+    int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,TOOLBAR_ICONSIZE_18).toInt();
+    if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
+        ui->buttonGroup->buttons().at(id)->setChecked(true);
+    }
 }
 
 LiteAppOption::~LiteAppOption()
@@ -124,4 +129,12 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_SPLASHVISIBLE,b2);
     bool b3 = ui->welcomeVisibleCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,b3);
+
+    int size = ui->buttonGroup->buttons().size();
+    for (int i = 0; i < size; i++) {
+        if (ui->buttonGroup->buttons().at(i)->isChecked()) {
+            m_liteApp->settings()->setValue(LITEAPP_TOOLBARICONSIZE,i);
+            break;
+        }
+    }
 }

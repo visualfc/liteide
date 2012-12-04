@@ -124,7 +124,7 @@ QToolBar *ActionManager::insertToolBar(const QString &id, const QString &title, 
     }
     toolBar = new QToolBar(title, m_liteApp->mainWindow());
     toolBar->setObjectName(id);
-    toolBar->setIconSize(QSize(18,18));
+    toolBar->setIconSize(LiteApi::getToolBarIconSize());
 //    toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
 //                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
 //                             "QToolBar QToolButton[popupMode=\"1\"] { padding-right: 10px; }"\

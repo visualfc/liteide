@@ -82,7 +82,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     QVBoxLayout *layout = new QVBoxLayout;    
     QToolBar *widgetToolBar = new QToolBar;
-    widgetToolBar->setIconSize(QSize(18,18));
+    widgetToolBar->setIconSize(LiteApi::getToolBarIconSize());
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(widgetToolBar);

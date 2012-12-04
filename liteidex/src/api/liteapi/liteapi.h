@@ -629,6 +629,24 @@ inline void gotoLine(IApplication *app, const QString &fileName, int line, int c
     }
 }
 
+inline QSize getToolBarIconSize() {
+    const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
+    int v = settings.value("General/ToolBarIconSize",1).toInt();
+    switch (v) {
+    case 0:
+        return QSize(16,16);
+    case 1:
+        return QSize(18,18);
+    case 2:
+        return QSize(20,20);
+    case 3:
+        return QSize(22,22);
+    case 4:
+        return QSize(24,24);
+    }
+    return QSize(16,16);
+}
+
 } //namespace LiteApi
 
 Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/x15.0")
