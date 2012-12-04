@@ -343,7 +343,7 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &
     int size = rect.size().width();
     int sqsize = 2*(size/2);
 
-    QColor textColor = m_extraForeground; //pal.buttonText().color();
+    QColor textColor = m_extraForeground;
     QColor brushColor = m_extraBackground;
 
     textColor.setAlpha(100);
