@@ -47,6 +47,7 @@ public:
     virtual BuildAction *findAction(const QString &id);
     virtual QList<QAction*> actions();
     void make();
+    QAction *makeAction(BuildAction *ba);
 protected slots:
     void slotBuildAction();
 public:
@@ -65,6 +66,7 @@ protected:
     QString m_mimeType;
     QString m_id;
     QString m_work;
+    QMap<QString,QMenu*> m_idMenuMap;
     QList<QAction*> m_actions;
     QList<BuildAction*> m_actionList;
     QList<BuildLookup*> m_lookupList;

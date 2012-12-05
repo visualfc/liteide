@@ -559,6 +559,7 @@ void LiteBuild::setBuildConfig(IBuild *build)
 
 void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
 {
+    return;
     //update buildconfig
     if (m_build == build) {
          return;

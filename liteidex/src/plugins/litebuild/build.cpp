@@ -29,6 +29,7 @@
 #include <QXmlStreamReader>
 #include <QFileInfo>
 #include <QDir>
+#include <QMenu>
 #include <QAction>
 #include <QDebug>
 //lite_memory_check_begin
@@ -54,6 +55,7 @@ Build::~Build()
     qDeleteAll(m_configList);
     qDeleteAll(m_customList);
     qDeleteAll(m_debugList);
+    qDeleteAll(m_idMenuMap);
 }
 
 QString Build::mimeType() const
@@ -116,26 +118,69 @@ QList<QAction*> Build::actions()
 
 void Build::make()
 {
-    foreach(LiteApi::BuildAction *ba,m_actionList) {
-        QAction *act = new QAction(ba->id(),this);
-        act->setObjectName(ba->id());
-        if (ba->isSeparator()) {
-            act->setSeparator(true);
-        } else {
-            if (!ba->key().isEmpty()) {
-                act->setShortcut(QKeySequence(ba->key()));
-                act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
-            }
-            if (!ba->img().isEmpty()) {
-                QIcon icon(ba->img());
-                if (!icon.isNull()) {
-                    act->setIcon(icon);
-                }
+    foreach(LiteApi::BuildAction *ba, m_actionList) {
+        QString id = ba->menu();
+        if (!id.isEmpty()) {
+            QMenu *menu = m_idMenuMap.value(id);
+            if (!menu) {
+                menu = new QMenu;
+                m_idMenuMap.insert(id,menu);
             }
         }
-        connect(act,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
-        m_actions.append(act);
     }
+
+    foreach(LiteApi::BuildAction *ba,m_actionList) {
+        QAction *act = this->makeAction(ba);
+        QString idMenu = ba->menu();
+        if (idMenu.isEmpty()) {
+            QMenu *menu = m_idMenuMap.value(ba->id());
+            if (menu) {
+                QAction *menuAction = menu->menuAction();
+                menuAction->setObjectName(act->objectName());
+                menuAction->setText(act->text());
+                menuAction->setToolTip(act->toolTip());
+                menuAction->setIcon(act->icon());
+                connect(menuAction,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
+                menu->addAction(act);
+                m_actions.append(menuAction);
+            } else {
+                m_actions.append(act);
+            }
+        } else {
+            QMenu *menu = m_idMenuMap.value(idMenu);
+            if (menu) {
+                menu->addAction(act);
+            } else {
+                m_actions.append(act);
+            }
+        }
+   }
+}
+
+QAction *Build::makeAction(BuildAction *ba)
+{
+    QAction *act = new QAction(ba->id(),this);
+    act->setObjectName(ba->id());
+    if (ba->isSeparator()) {
+        act->setSeparator(true);
+    } else {
+        if (!ba->key().isEmpty()) {
+            QList<QKeySequence> list;
+            foreach(QString key, ba->key().split(";")) {
+                list.append(QKeySequence(key));
+            }
+            act->setShortcuts(list);
+            act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
+        }
+        if (!ba->img().isEmpty()) {
+            QIcon icon(ba->img());
+            if (!icon.isNull()) {
+                act->setIcon(icon);
+            }
+        }
+    }
+    connect(act,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
+    return act;
 }
 
 void Build::slotBuildAction()
