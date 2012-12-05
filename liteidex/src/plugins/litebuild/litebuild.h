@@ -71,6 +71,7 @@ public slots:
     void editorCreated(LiteApi::IEditor *editor);
     void currentEditorChanged(LiteApi::IEditor*);
     void buildAction();
+    void buildAction(LiteApi::IBuild*,LiteApi::BuildAction*);
     void execAction(const QString &mime,const QString &id);
     void extOutput(const QByteArray &output,bool bError);
     void extFinish(bool error,int exitCode, QString msg);

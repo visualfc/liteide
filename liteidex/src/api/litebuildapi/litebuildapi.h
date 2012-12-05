@@ -205,6 +205,9 @@ public:
     virtual QList<BuildCustom*> customList() const = 0;
     virtual QList<BuildDebug*>  debugList() const = 0;
     virtual BuildAction *findAction(const QString &name) = 0;
+    virtual QList<QAction*> actions() = 0;
+signals:
+    void buildAction(LiteApi::IBuild *build, LiteApi::BuildAction *act);
 };
 
 class IBuildManager : public IManager

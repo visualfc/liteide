@@ -143,6 +143,10 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_liteAppInfo.insert("LITEAPPDIR",m_liteApp->applicationPath());
 
     m_liteApp->extension()->addObject("LiteApi.ILiteBuild",this);
+
+    foreach(LiteApi::IBuild *build, m_manager->buildList()) {
+        connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
+    }
 }
 
 LiteBuild::~LiteBuild()
@@ -837,34 +841,37 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     if (!toolBar) {
         return;
     }
+    //connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
     QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
-    QList<QAction*> actionList;
-    actionList.append(m_configAct);
-    QAction *sep = new QAction(this);
-    sep->setSeparator(true);
-    actionList.append(sep);
-    foreach(LiteApi::BuildAction *ba,build->actionList()) {
-        QAction *act = new QAction(ba->id(),this);
-        act->setProperty("mimetype",build->mimeType());
-        act->setProperty("id",ba->id());
-        act->setProperty("editor",editor->filePath());
-        if (ba->isSeparator()) {
-            act->setSeparator(true);
-        } else {
-            if (!ba->key().isEmpty()) {
-                act->setShortcut(QKeySequence(ba->key()));
-                act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
-            }
-            if (!ba->img().isEmpty()) {
-                QIcon icon(ba->img());
-                if (!icon.isNull()) {
-                    act->setIcon(icon);
-                }
-            }
-        }
-        connect(act,SIGNAL(triggered()),this,SLOT(buildAction()));
-        actionList.append(act);
-    }
+    QList<QAction*> actionList = build->actions();
+    toolBar->insertSeparator(spacer);
+    toolBar->insertAction(spacer,m_configAct);
+//    actionList.append(m_configAct);
+//    QAction *sep = new QAction(this);
+//    sep->setSeparator(true);
+//    actionList.append(sep);
+//    foreach(LiteApi::BuildAction *ba,build->actionList()) {
+//        QAction *act = new QAction(ba->id(),this);
+//        act->setProperty("mimetype",build->mimeType());
+//        act->setProperty("id",ba->id());
+//        act->setProperty("editor",editor->filePath());
+//        if (ba->isSeparator()) {
+//            act->setSeparator(true);
+//        } else {
+//            if (!ba->key().isEmpty()) {
+//                act->setShortcut(QKeySequence(ba->key()));
+//                act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
+//            }
+//            if (!ba->img().isEmpty()) {
+//                QIcon icon(ba->img());
+//                if (!icon.isNull()) {
+//                    act->setIcon(icon);
+//                }
+//            }
+//        }
+//        connect(act,SIGNAL(triggered()),this,SLOT(buildAction()));
+//        actionList.append(act);
+//    }
     toolBar->insertSeparator(spacer);
     toolBar->insertActions(spacer,actionList);
 }
@@ -997,6 +1004,35 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
 #else
     m_process->start(cmd+" "+args);
 #endif
+}
+
+void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
+{
+    m_outputAct->setChecked(true);
+    if (m_process->isRuning()) {
+        m_output->append("\nError,action process is runing, stop action first!\n",Qt::red);
+        return;
+    }
+
+    QString mime = build->mimeType();
+    QString id = ba->id();
+    QString editor;
+    LiteApi::IEditor *ed = m_liteApp->editorManager()->currentEditor();
+    if (ed) {
+        editor = ed->filePath();
+    }
+
+    m_output->updateExistsTextColor();
+    m_process->setUserData(ID_MIMETYPE,mime);
+    m_process->setUserData(ID_EDITOR,editor);
+    if (ba->task().isEmpty()) {
+        execAction(mime,id);
+    } else {
+        QStringList task = ba->task();
+        QString id = task.takeFirst();
+        m_process->setUserData(ID_TASKLIST,task);
+        execAction(mime,id);
+    }
 }
 
 void LiteBuild::buildAction()

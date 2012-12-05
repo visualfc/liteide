@@ -32,6 +32,7 @@
 using namespace LiteApi;
 class Build : public LiteApi::IBuild
 {
+    Q_OBJECT
 public:
     Build(QObject *parent = 0);
     ~Build();
@@ -44,6 +45,10 @@ public:
     virtual QList<BuildCustom*> customList() const;
     virtual QList<BuildDebug*>  debugList() const;
     virtual BuildAction *findAction(const QString &id);
+    virtual QList<QAction*> actions();
+    void make();
+protected slots:
+    void slotBuildAction();
 public:
     void setType(const QString &mimeType);
     void setId(const QString &id);
@@ -60,11 +65,12 @@ protected:
     QString m_mimeType;
     QString m_id;
     QString m_work;
+    QList<QAction*> m_actions;
     QList<BuildAction*> m_actionList;
     QList<BuildLookup*> m_lookupList;
     QList<BuildConfig*> m_configList;
     QList<BuildCustom*> m_customList;
-    QList<BuildDebug*> m_debugList;
+    QList<BuildDebug*> m_debugList;    
     QMap<BuildAction*,QString> m_actionCmdMap;
     QMap<BuildAction*,QString> m_actionArgMap;
 };

@@ -49,7 +49,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Build File</string>
+         <string>Build Path</string>
         </property>
        </widget>
       </item>

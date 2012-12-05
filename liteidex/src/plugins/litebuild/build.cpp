@@ -29,6 +29,7 @@
 #include <QXmlStreamReader>
 #include <QFileInfo>
 #include <QDir>
+#include <QAction>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -103,6 +104,49 @@ BuildAction *Build::findAction(const QString &id)
         }
     }
     return 0;
+}
+
+QList<QAction*> Build::actions()
+{
+    if (m_actions.isEmpty()) {
+        this->make();
+    }
+    return m_actions;
+}
+
+void Build::make()
+{
+    foreach(LiteApi::BuildAction *ba,m_actionList) {
+        QAction *act = new QAction(ba->id(),this);
+        act->setObjectName(ba->id());
+        if (ba->isSeparator()) {
+            act->setSeparator(true);
+        } else {
+            if (!ba->key().isEmpty()) {
+                act->setShortcut(QKeySequence(ba->key()));
+                act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
+            }
+            if (!ba->img().isEmpty()) {
+                QIcon icon(ba->img());
+                if (!icon.isNull()) {
+                    act->setIcon(icon);
+                }
+            }
+        }
+        connect(act,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
+        m_actions.append(act);
+    }
+}
+
+void Build::slotBuildAction()
+{
+    QAction *act = (QAction*)sender();
+    if (act) {
+        BuildAction *ba = this->findAction(act->objectName());
+        if (ba) {
+            emit buildAction(this,ba);
+        }
+    }
 }
 
 void Build::setType(const QString &mimeType)
