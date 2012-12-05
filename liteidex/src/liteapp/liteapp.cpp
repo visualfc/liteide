@@ -280,6 +280,15 @@ void LiteApp::cleanup()
     delete m_settings;
 }
 
+void LiteApp::fullScreen(bool b)
+{
+    if (b) {
+        m_mainwindow->showFullScreen();
+    } else {
+        m_mainwindow->showNormal();
+    }
+}
+
 bool LiteApp::hasGoProxy() const
 {
     return GoProxy::hasProxy();
@@ -478,6 +487,10 @@ void LiteApp::createActions()
     m_exitAct = new QAction(tr("Exit"),m_mainwindow);
     m_exitAct->setShortcut(QKeySequence::Quit);
 
+    m_fullScreent = new QAction(tr("Full Screen"),m_mainwindow);
+    m_fullScreent->setCheckable(true);
+    m_fullScreent->setShortcut(QKeySequence("Ctrl+Shift+F11"));
+
     m_aboutAct = new QAction(tr("About LiteIDE..."),m_mainwindow);
     m_aboutPluginsAct = new QAction(tr("About Plugins..."),m_mainwindow);
 
@@ -497,6 +510,7 @@ void LiteApp::createActions()
     connect(m_exitAct,SIGNAL(triggered()),m_mainwindow,SLOT(close()));
     connect(m_aboutAct,SIGNAL(triggered()),m_mainwindow,SLOT(about()));
     connect(m_aboutPluginsAct,SIGNAL(triggered()),m_pluginManager,SLOT(aboutPlugins()));
+    connect(m_fullScreent,SIGNAL(toggled(bool)),this,SLOT(fullScreen(bool)));
 }
 
 void LiteApp::createMenus()
@@ -523,6 +537,9 @@ void LiteApp::createMenus()
     //m_fileMenu->addAction(m_saveProjectAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_exitAct);
+
+    m_viewMenu->addAction(m_fullScreent);
+    m_viewMenu->addSeparator();
 
     m_helpMenu->addAction(m_aboutAct);
     m_helpMenu->addAction(m_aboutPluginsAct);
