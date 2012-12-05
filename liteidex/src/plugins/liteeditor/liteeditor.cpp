@@ -115,6 +115,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     overInfoAct->setVisible(false);
     m_toolBar->addWidget(m_lineInfo);
 
+    m_closeEditor = new QAction(QIcon("icon:images/closetool.png"),tr("Close Document"),this);
+    m_toolBar->addAction(m_closeEditor);
+
     layout->addWidget(m_toolBar);
     layout->addWidget(m_editorWidget);
     m_widget->setLayout(layout);
@@ -138,6 +141,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
     connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),overInfoAct,SLOT(setVisible(bool)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
+    connect(m_closeEditor,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 }
 
 LiteEditor::~LiteEditor()

@@ -162,6 +162,7 @@ public:
     bool       m_bReadOnly;
     QLabelEx  *m_lineInfo;
     QAction *m_spacerAct;
+    QAction *m_closeEditor;
 };
 
 #endif //LITEEDITOR_H

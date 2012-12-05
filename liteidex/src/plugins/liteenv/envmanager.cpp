@@ -226,6 +226,9 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     m_envCmb = new QComboBox;
+    m_envCmb->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    m_envCmb->setMinimumContentsLength(6);
+    m_envCmb->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
     m_envCmb->setToolTip(tr("Environment"));
 
     m_toolBar->addWidget(m_envCmb);

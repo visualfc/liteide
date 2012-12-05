@@ -5,6 +5,7 @@ QT += xml
 
 include (../../liteideplugin.pri)
 include (../../3rdparty/sundown/sundown.pri)
+include (../../3rdparty/elidedlabel/elidedlabel.pri)
 include (../../utils/documentbrowser/documentbrowser.pri)
 include (../../utils/htmlutil/htmlutil.pri)
 

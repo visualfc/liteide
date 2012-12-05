@@ -41,7 +41,7 @@
 #ifndef ELIDEDLABEL_H
 #define ELIDEDLABEL_H
 
-#include <QFrame>
+#include <QLabel>
 #include <QRect>
 #include <QResizeEvent>
 #include <QString>
@@ -55,6 +55,7 @@ class ElidedLabel : public QFrame
     Q_PROPERTY(bool isElided READ isElided)
 
 public:
+    ElidedLabel(QWidget *parent = 0);
     ElidedLabel(const QString &text = QString(), QWidget *parent = 0);
 
     void setText(const QString &text);
