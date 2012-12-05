@@ -57,7 +57,7 @@ public:
     QTabBar *tabBar();
     void setTabText(int index, const QString & text);
     QList<QWidget*> widgetList() const;
-    QWidget *headerWidget();
+    QToolBar *headerToolBar();
     QWidget *stackedWidget();
 signals:
     void currentChanged(int index);
@@ -74,8 +74,6 @@ protected:
     QToolBar        *m_headerToolBar;
     QTabBar         *m_tabBar;
     QToolButton     *m_listButton;
-    QHBoxLayout     *m_headLayout;
-    QWidget         *m_headerWidget;
     QStackedWidget  *m_stackedWidget;
     QList<QWidget*>  m_widgetList;
     QAction         *m_closeTabAct;

@@ -85,6 +85,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b3 = m_liteApp->settings()->value(LITEAPP_WELCOMEPAGEVISIBLE,true).toBool();
     ui->welcomeVisibleCheckBox->setChecked(b3);
 
+    bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
+    ui->editorTabsClosableCheckBox->setChecked(b4);
+
     int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,TOOLBAR_ICONSIZE_18).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
         ui->buttonGroup->buttons().at(id)->setChecked(true);
@@ -129,6 +132,8 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_SPLASHVISIBLE,b2);
     bool b3 = ui->welcomeVisibleCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,b3);
+    bool b4 = ui->editorTabsClosableCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_EDITTABSCLOSABLE,b4);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {

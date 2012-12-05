@@ -24,7 +24,7 @@
 // $Id: editormanager.cpp,v 1.0 2011-5-12 visualfc Exp $
 
 #include "editormanager.h"
-
+#include "liteapp_global.h"
 #include <QFileInfo>
 #include <QTabWidget>
 #include <QMessageBox>
@@ -73,16 +73,19 @@ bool EditorManager::initWithApp(IApplication *app)
     m_currentNavigationHistoryPosition = 0;
     m_widget = new QWidget;
     m_editorTabWidget = new LiteTabWidget;
-    m_editorTabWidget->tabBar()->setTabsClosable(true);
+
+    m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
+
+    //m_editorTabWidget->tabBar()->setIconSize(LiteApi::getToolBarIconSize());
+//    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border:1px solid} QTabBar::close-button {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}"
+//                                               );
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(1);
     mainLayout->setSpacing(1);
 
-    QToolBar *bar = m_liteApp->actionManager()->insertToolBar("toolbar/tabs",tr("TabsBar"));
-    //bar->setStyleSheet("QToolBar {border:none}");
-    bar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
-    bar->addWidget(m_editorTabWidget->headerWidget());
+    m_liteApp->mainWindow()->addToolBar(m_editorTabWidget->headerToolBar());
+    m_editorTabWidget->headerToolBar()->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
 
     mainLayout->addWidget(m_editorTabWidget->stackedWidget());
     m_widget->setLayout(mainLayout);
@@ -97,6 +100,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextMenu = new QMenu;
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
+    closeAct->setShortcut(QKeySequence("Ctrl+W"));
     QAction *closeOthersAct = new QAction(tr("Close Others"),this);
     QAction *closeAllAct = new QAction(tr("Close All"),this);
     QAction *moveToAct = new QAction(tr("Move To New Window"),this);

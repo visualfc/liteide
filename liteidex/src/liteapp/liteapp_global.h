@@ -43,6 +43,7 @@
 #define LITEAPP_SPLASHVISIBLE "LiteApp/SplashVisible"
 #define LITEAPP_WELCOMEPAGEVISIBLE "General/WelcomePageVisible"
 #define LITEAPP_TOOLBARICONSIZE "General/ToolBarIconSize"
+#define LITEAPP_EDITTABSCLOSABLE "LiteApp/EditTabsClosable"
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,

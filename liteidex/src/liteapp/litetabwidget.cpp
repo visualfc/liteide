@@ -51,11 +51,6 @@
 LiteTabWidget::LiteTabWidget(QObject *parent) :
     QObject(parent)
 {
-    m_headerWidget = new QWidget;
-
-    m_headLayout = new QHBoxLayout;
-    m_headLayout->setMargin(0);
-
     m_tabBar = new QTabBar;
     m_tabBar->setExpanding(false);
     m_tabBar->setDocumentMode(true);
@@ -63,7 +58,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_tabBar->setUsesScrollButtons(true);
 
     m_headerToolBar = new QToolBar;
-    m_headerToolBar->setStyleSheet("QToolBar {border:0}");
+    m_headerToolBar->setObjectName("toolbar.tabs");
     m_headerToolBar->setIconSize(LiteApi::getToolBarIconSize());
 
     m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close Page"),this);
@@ -77,6 +72,12 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_listButton->setMenu(m_listActMenu);
     m_listButton->setPopupMode(QToolButton::InstantPopup);
 
+    m_headerToolBar->addWidget(m_tabBar);
+
+    QWidget *spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+
+    m_headerToolBar->addWidget(spacer);
     m_headerToolBar->addWidget(m_listButton);
     m_headerToolBar->addSeparator();
     m_headerToolBar->addAction(m_addTabAct);
@@ -84,11 +85,6 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_headerToolBar->addAction(m_closeTabAct);
 
     m_stackedWidget = new QStackedWidget;
-
-    m_headLayout->addWidget(m_tabBar,1);
-    m_headLayout->addWidget(m_headerToolBar);
-
-    m_headerWidget->setLayout(m_headLayout);
 
     connect(m_tabBar,SIGNAL(currentChanged(int)),this,SLOT(tabCurrentChanged(int)));
     connect(m_tabBar,SIGNAL(tabCloseRequested(int)),this,SIGNAL(tabCloseRequested(int)));
@@ -183,9 +179,9 @@ QList<QWidget*> LiteTabWidget::widgetList() const
     return m_widgetList;
 }
 
-QWidget *LiteTabWidget::headerWidget()
+QToolBar *LiteTabWidget::headerToolBar()
 {
-    return m_headerWidget;
+    return m_headerToolBar;
 }
 
 QWidget *LiteTabWidget::stackedWidget()
