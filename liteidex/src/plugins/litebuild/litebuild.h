@@ -58,9 +58,10 @@ public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void initAction(QAction *act, LiteApi::IBuild *build, LiteApi::BuildAction *ba);
     void setCurrentBuild(LiteApi::IBuild *build);
-    void setBuildConfig(LiteApi::IBuild *build);
+    void updateBuildConfig(LiteApi::IBuild *build);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
+    void loadTargetInfo(LiteApi::IBuild *build);
     LiteApi::IBuild *findProjectBuildByEditor(LiteApi::IEditor *editor);
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
 public slots:
@@ -81,24 +82,19 @@ public slots:
     void config();
 protected:
     LiteApi::IApplication   *m_liteApp;
-    BuildManager    *m_manager;
+    BuildManager    *m_buildManager;
     LiteApi::IBuild *m_build;
     LiteApi::IEnvManager *m_envManager;
-    QToolBar    *m_toolBar;
+    //QToolBar    *m_toolBar;
     QMenu       *m_buildMenu;
-    QList<QAction*> m_buildMenuActions;
-    QAction     *m_configAct;
     QStandardItemModel *m_liteideModel;
     QStandardItemModel *m_configModel;
     QStandardItemModel *m_customModel;
-    QList<QAction*> m_actions;
-    QMap<QString,QMenu*> m_idMenuMap;
     QMap<QString,QString> m_liteAppInfo;
-    //QMap<QString,QString> m_configMap;
-    //QMap<QString,QString> m_customMap;
     QString m_workDir;
     ProcessEx *m_process;
     TextOutput *m_output;
+    QAction     *m_configAct;
     QAction    *m_outputAct;
     QString     m_outputRegex;
     QString     m_buildFilePath;

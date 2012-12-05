@@ -28,7 +28,6 @@
 #include "editormanager.h"
 #include "projectmanager.h"
 #include "pluginmanager.h"
-#include "outputmanager.h"
 #include "actionmanager.h"
 #include "mimetypemanager.h"
 #include "optionmanager.h"
@@ -309,11 +308,6 @@ IFileManager *LiteApp::fileManager()
 IProjectManager *LiteApp::projectManager()
 {
     return m_projectManager;
-}
-
-IOutputManager  *LiteApp::outputManager()
-{
-    return 0;
 }
 
 IActionManager  *LiteApp::actionManager()

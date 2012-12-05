@@ -78,7 +78,7 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     ui->maxRecentLineEdit->setText(QString("%1").arg(max));
     bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
     ui->autoCloseProjecEditorsCheckBox->setChecked(b);
-    bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,false).toBool();
+    bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
     ui->autoLoadLastSessionCheckBox->setChecked(b1);
     bool b2 = m_liteApp->settings()->value(LITEAPP_SPLASHVISIBLE,true).toBool();
     ui->splashVisibleCheckBox->setChecked(b2);

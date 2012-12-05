@@ -38,7 +38,6 @@ class PluginManager;
 class EditorManager;
 class FileManager;
 class ProjectManager;
-class OutputManager;
 class ActionManager;
 class MimeTypeManager;
 class OptionManager;
@@ -68,7 +67,6 @@ public:
     virtual IEditorManager  *editorManager();
     virtual IFileManager    *fileManager();
     virtual IActionManager  *actionManager();
-    virtual IOutputManager  *outputManager();
     virtual IMimeTypeManager *mimeTypeManager();
     virtual IOptionManager  *optionManager();
     virtual IToolWindowManager *toolWindowManager();

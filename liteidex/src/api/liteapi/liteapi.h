@@ -445,26 +445,6 @@ public:
     virtual QDockWidget *dockWidget(QWidget *widget) = 0;
 };
 
-class IOutputManager : public IManager
-{
-    Q_OBJECT
-public:
-    IOutputManager(QObject *parent = 0) : IManager(parent) {}
-    virtual QWidget *widget() = 0;
-    virtual QStatusBar *statusBar() = 0;
-    virtual void addOutuput(QWidget *w, const QString &label) = 0;
-    virtual void addOutuput(QWidget *w, const QIcon &icon, const QString &label) = 0;
-    virtual void showOutput(QWidget *w) = 0;
-    virtual void hideOutput(QWidget *w) = 0;
-    virtual void removeOutput(QWidget *w) = 0;
-    virtual QWidget *currentOutput() = 0;
-    virtual void setStatusInfo(const QString &info) = 0;
-public slots:
-    virtual void setCurrentOutput(QWidget *w = 0) = 0;
-signals:
-    void currentOutputChanged(QWidget *w);
-};
-
 enum VIEWMENU_ACTION_POS
 {
     ViewMenuToolBarPos = 1,
@@ -483,6 +463,7 @@ public:
     virtual void removeMenu(QMenu *menu) = 0;
     virtual QList<QString>  menuList() const = 0;
     virtual QToolBar *insertToolBar(const QString &id, const QString &title, const QString &before = QString()) = 0;
+    virtual void insertToolBar(QToolBar *toolBar,const QString &before = QString()) = 0;
     virtual QToolBar *loadToolBar(const QString &id) = 0;
     virtual void removeToolBar(QToolBar* toolBar) = 0;
     virtual QList<QString> toolBarList() const = 0;
@@ -515,7 +496,6 @@ public:
     virtual IEditorManager  *editorManager() = 0;
     virtual IFileManager    *fileManager() = 0;
     virtual IActionManager  *actionManager() = 0;
-    virtual IOutputManager  *outputManager() = 0;
     virtual IMimeTypeManager *mimeTypeManager() = 0;
     virtual IOptionManager  *optionManager() = 0;
     virtual IToolWindowManager *toolWindowManager() = 0;

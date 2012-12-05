@@ -42,6 +42,7 @@ public:
     virtual void removeMenu(QMenu *menu);
     virtual QList<QString>  menuList() const;
     virtual QToolBar *insertToolBar(const QString &id, const QString &title, const QString &before = QString());
+    virtual void insertToolBar(QToolBar *toolBar,const QString &before = QString());
     virtual QToolBar *loadToolBar(const QString &id);
     virtual void removeToolBar(QToolBar* toolBar);
     virtual QList<QString> toolBarList() const;

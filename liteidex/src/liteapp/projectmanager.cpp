@@ -321,5 +321,5 @@ void ProjectManager::applyOption(QString id)
     if (id != OPTION_LITEAPP) {
         return;
     }
-    m_bAutoCloseProjectEditors = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,false).toBool();
+    m_bAutoCloseProjectEditors = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
 }

@@ -35,7 +35,7 @@ class Build : public LiteApi::IBuild
     Q_OBJECT
 public:
     Build(QObject *parent = 0);
-    ~Build();
+    virtual ~Build();
     virtual QString mimeType() const;
     virtual QString id() const;
     virtual QString work() const;
@@ -46,6 +46,7 @@ public:
     virtual QList<BuildDebug*>  debugList() const;
     virtual BuildAction *findAction(const QString &id);
     virtual QList<QAction*> actions();
+protected:
     void make();
     QAction *makeAction(BuildAction *ba);
 protected slots:

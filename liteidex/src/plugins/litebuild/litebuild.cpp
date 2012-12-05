@@ -68,25 +68,25 @@ enum {
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::ILiteBuild(parent),
     m_liteApp(app),
-    m_manager(new BuildManager(this)),
+    m_buildManager(new BuildManager(this)),
     m_build(0),
     m_envManager(0)
 {
-    if (m_manager->initWithApp(m_liteApp)) {
-        m_manager->load(m_liteApp->resourcePath()+"/litebuild");
-        m_liteApp->extension()->addObject("LiteApi.IBuildManager",m_manager);
+    if (m_buildManager->initWithApp(m_liteApp)) {
+        m_buildManager->load(m_liteApp->resourcePath()+"/litebuild");
+        m_liteApp->extension()->addObject("LiteApi.IBuildManager",m_buildManager);
     }    
     m_bProjectBuild = false;
-    m_toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/build");
-    if (!m_toolBar) {
-        m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Build ToolBar"));
-    }
+//    m_toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/build");
+//    if (!m_toolBar) {
+//        m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Build ToolBar"));
+//    }
     m_buildMenu = m_liteApp->actionManager()->loadMenu("menu/build");
     if (!m_buildMenu) {
         m_buildMenu = m_liteApp->actionManager()->insertMenu("menu/build",tr("&Build"),"menu/help");
     }
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
+    //m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     m_liteideModel = new QStandardItemModel(0,2,this);
     m_liteideModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
@@ -102,8 +102,8 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Config"),this);
     m_configAct->setToolTip(tr("Build Config"));
-    m_toolBar->addSeparator();
-    m_toolBar->addAction(m_configAct);
+    //m_toolBar->addSeparator();
+    //m_toolBar->addAction(m_configAct);
 
     m_process = new ProcessEx(this);
     m_output = new TextOutput;
@@ -131,7 +131,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
                                                                 QList<QAction*>() << stopAct << clearAct);
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
-    connect(m_liteApp->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
+    //connect(m_liteApp->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
@@ -144,32 +144,14 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_liteApp->extension()->addObject("LiteApi.ILiteBuild",this);
 
-    foreach(LiteApi::IBuild *build, m_manager->buildList()) {
+    foreach(LiteApi::IBuild *build, m_buildManager->buildList()) {
         connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
     }
 }
 
 LiteBuild::~LiteBuild()
 {
-    foreach(QMenu *menu , m_idMenuMap.values()) {
-        delete menu;
-    }
-    m_idMenuMap.clear();
-
-    foreach(QAction *act, m_actions) {
-        m_toolBar->removeAction(act);
-        if (act->menu()) {
-            delete act;
-        }
-    }
-    m_actions.clear();
-    foreach(QAction *act, m_buildMenuActions) {
-        m_buildMenu->removeAction(act);
-        delete act;
-    }
-    m_buildMenuActions.clear();
-
-    m_liteApp->actionManager()->removeToolBar(m_toolBar);
+    //m_liteApp->actionManager()->removeToolBar(m_toolBar);
     delete m_output;
 }
 
@@ -231,7 +213,7 @@ QString LiteBuild::targetFilePath() const
 
 LiteApi::IBuildManager *LiteBuild::buildManager() const
 {
-    return m_manager;
+    return m_buildManager;
 }
 
 void LiteBuild::appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor)
@@ -260,7 +242,7 @@ void LiteBuild::config()
     if (!m_build) {
         return;
     }
-    setBuildConfig(m_build);
+
     BuildConfigDialog dlg;
     dlg.setBuild(m_build->id(),m_buildFilePath);
     dlg.setModel(m_liteideModel,m_configModel,m_customModel);
@@ -341,7 +323,7 @@ LiteApi::IBuild *LiteBuild::findProjectBuild(LiteApi::IProject *project)
     if (!project) {
         return 0;
     }
-    LiteApi::IBuild *build = m_manager->findBuild(project->mimeType());
+    LiteApi::IBuild *build = m_buildManager->findBuild(project->mimeType());
     return build;
 }
 
@@ -356,6 +338,7 @@ void LiteBuild::reloadProject()
 
 void LiteBuild::currentProjectChanged(LiteApi::IProject *project)
 {
+    return;
     m_buildFilePath.clear();
     m_projectInfo.clear();
     m_targetInfo.clear();
@@ -524,8 +507,16 @@ void LiteBuild::initAction(QAction *act, LiteApi::IBuild *build, LiteApi::BuildA
     connect(act,SIGNAL(triggered()),this,SLOT(buildAction()));
 }
 
-void LiteBuild::setBuildConfig(IBuild *build)
+void LiteBuild::updateBuildConfig(IBuild *build)
 {
+    m_liteideModel->removeRows(0,m_liteideModel->rowCount());
+    QMapIterator<QString,QString> i(this->liteideEnvMap());
+    while (i.hasNext()) {
+        i.next();
+        m_liteideModel->appendRow(QList<QStandardItem*>()
+                                 << new QStandardItem(i.key())
+                                 << new QStandardItem(i.value()));
+    }
     if (build) {
         m_configModel->removeRows(0,m_configModel->rowCount());
         m_customModel->removeRows(0,m_customModel->rowCount());
@@ -559,191 +550,17 @@ void LiteBuild::setBuildConfig(IBuild *build)
 
 void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
 {
-    return;
     //update buildconfig
     if (m_build == build) {
          return;
     }
 
     m_build = build;
-    m_manager->setCurrentBuild(build);
+    m_buildManager->setCurrentBuild(build);
 
     m_outputRegex.clear();
 
-    foreach(QMenu *menu , m_idMenuMap.values()) {
-        delete menu;
-    }
-    m_idMenuMap.clear();
-
-    foreach(QAction *act, m_actions) {
-        m_toolBar->removeAction(act);
-        if (act->menu()) {
-            delete act;
-        }
-    }
-    m_actions.clear();
-    foreach(QAction *act, m_buildMenuActions) {
-        m_buildMenu->removeAction(act);
-        delete act;
-    }
-    m_buildMenuActions.clear();
-
-    if (!m_build) {
-        return;
-    }
-
-    m_liteideModel->removeRows(0,m_liteideModel->rowCount());
-    QMapIterator<QString,QString> i(this->liteideEnvMap());
-    while (i.hasNext()) {
-        i.next();
-        m_liteideModel->appendRow(QList<QStandardItem*>()
-                                 << new QStandardItem(i.key())
-                                 << new QStandardItem(i.value()));
-    }
-
-    QMap<QString,QAction*> idActionMap;
-    foreach(LiteApi::BuildAction *ba,m_build->actionList()) {
-        QAction *act = 0;
-        if (ba->isSeparator()) {
-            act = m_buildMenu->addSeparator();
-        } else {
-            act = m_buildMenu->addAction(ba->id());
-            initAction(act,build,ba);
-        }
-        idActionMap.insert(ba->id(),act);
-        m_buildMenuActions.append(act);
-        if (!ba->menu().isEmpty()) {
-            QMenu *menu = m_idMenuMap.value(ba->menu());
-            if (!menu) {
-                menu = new QMenu;
-                m_idMenuMap.insert(ba->menu(),menu);
-                QAction *idAct = idActionMap.value(ba->menu());
-                if (idAct) {
-                    menu->addAction(idAct);
-                }
-            }
-            menu->addAction(act);
-        }
-    }
-    foreach(LiteApi::BuildAction *ba,m_build->actionList()) {
-        if (ba->isSeparator()) {
-            m_actions.append(m_toolBar->addSeparator());
-        }
-        if (!ba->menu().isEmpty()) {
-            continue;
-        }
-        QMenu *menu = m_idMenuMap.value(ba->id());
-        if (menu) {
-            m_actions.append(m_toolBar->addSeparator());
-            QAction *self = idActionMap.value(ba->id());
-            QToolButton *btn = new QToolButton;
-            btn->setMenu(menu);
-            btn->setPopupMode(QToolButton::MenuButtonPopup);
-            QAction *act = m_toolBar->addWidget(btn);
-            btn->setDefaultAction(self);
-            m_actions.append(act);
-        } else {
-            m_toolBar->addAction(idActionMap.value(ba->id()));
-            m_actions.append(idActionMap.value(ba->id()));
-        }
-    }
-    /*
-        if (ba->isSeparator()) {
-            m_actions.append(m_toolBar->addSeparator());
-            continue;
-        }
-        if (!ba->menu().isEmpty()) {
-            continue;
-        }
-        QAction *act = 0;
-        QMenu *menu = m_idMenuMap.value(ba->id());
-        if (menu) {
-            m_actions.append(m_toolBar->addSeparator());
-            QAction *self = menu->addAction(ba->id());
-            initAction(self,build,ba);
-            menu->insertAction(menu->actions().first(),self);
-            QToolButton *btn = new QToolButton;
-            btn->setMenu(menu);
-            btn->setPopupMode(QToolButton::MenuButtonPopup);
-            act = m_toolBar->addWidget(btn);
-            btn->setDefaultAction(act);
-            act->setText(ba->id());
-        } else {
-            act = m_toolBar->addAction(ba->id());
-        }
-        initAction(act,build,ba);
-        m_actions.append(act);
-    }
-    */
-    /*
-        if (ba->isSeparator()) {
-            m_buildMenuActions.append(m_buildMenu->addSeparator());
-        } else {
-            //QAction *act = m_buildMenu->addAction(ba->id());
-            //initAction(act,build,ba);
-            //m_buildMenuActions.append(act);
-        }
-        if (ba->menu().isEmpty()) {
-            continue;
-        }
-        QMenu *menu = m_idMenuMap.value(ba->menu());
-        if (!menu) {
-            menu = new QMenu;
-            m_idMenuMap.insert(ba->menu(),menu);
-        }
-        QAction *act = menu->addAction(ba->id());
-        initAction(act,build,ba);
-    }
-    */
-    /*
-    foreach(LiteApi::BuildAction *ba,m_build->actionList()) {
-        if (ba->isSeparator()) {
-            m_buildMenuActions.append(m_buildMenu->addSeparator());
-        } else {
-            //QAction *act = m_buildMenu->addAction(ba->id());
-            //initAction(act,build,ba);
-            //m_buildMenuActions.append(act);
-        }
-        if (ba->menu().isEmpty()) {
-            continue;
-        }
-        QMenu *menu = m_idMenuMap.value(ba->menu());
-        if (!menu) {
-            menu = new QMenu;
-            m_idMenuMap.insert(ba->menu(),menu);
-        }
-        QAction *act = menu->addAction(ba->id());
-        initAction(act,build,ba);
-    }
-
-    foreach(LiteApi::BuildAction *ba,m_build->actionList()) {
-        if (ba->isSeparator()) {
-            m_actions.append(m_toolBar->addSeparator());
-            continue;
-        }
-        if (!ba->menu().isEmpty()) {
-            continue;
-        }
-        QAction *act = 0;
-        QMenu *menu = m_idMenuMap.value(ba->id());
-        if (menu) {
-            m_actions.append(m_toolBar->addSeparator());
-            QAction *self = menu->addAction(ba->id());
-            initAction(self,build,ba);
-            menu->insertAction(menu->actions().first(),self);
-            QToolButton *btn = new QToolButton;
-            btn->setMenu(menu);
-            btn->setPopupMode(QToolButton::MenuButtonPopup);
-            act = m_toolBar->addWidget(btn);
-            btn->setDefaultAction(act);
-            act->setText(ba->id());
-        } else {
-            act = m_toolBar->addAction(ba->id());
-        }
-        initAction(act,build,ba);
-        m_actions.append(act);
-    }
-    */
+    updateBuildConfig(build);
 }
 
 void LiteBuild::loadEditorInfo(const QString &filePath)
@@ -764,6 +581,7 @@ EDITOR_DIRNAME
 EDITOR_TARGETNAME
 EDITOR_TARGETATH
     */
+    m_buildFilePath = info.path();
     m_editorInfo.insert("EDITOR_BASENAME",info.baseName());
     m_editorInfo.insert("EDITOR_NAME",info.fileName());
     m_editorInfo.insert("EDITOR_SUFFIX",info.suffix());
@@ -784,6 +602,24 @@ EDITOR_TARGETATH
 #endif
 }
 
+void LiteBuild::loadTargetInfo(LiteApi::IBuild *build)
+{
+    m_targetInfo.clear();
+    if (!build) {
+        return;
+    }
+    QList<BuildDebug*> debugs = build->debugList();
+    if (!debugs.isEmpty()) {
+        BuildDebug *debug = debugs.first();
+        QString targetName = this->envValue(build,debug->cmd());
+        QString workDir = this->envValue(build,debug->work());
+        m_targetInfo.insert("TARGETNAME",targetName);
+        m_targetInfo.insert("TARGETPATH",QFileInfo(QDir(workDir),targetName).filePath());
+        m_targetInfo.insert("TARGETDIR",workDir);
+        m_targetInfo.insert("WORKDIR",workDir);
+    }
+}
+
 LiteApi::IBuild *LiteBuild::findProjectBuildByEditor(IEditor *editor)
 {
     m_buildFilePath.clear();
@@ -798,7 +634,7 @@ LiteApi::IBuild *LiteBuild::findProjectBuildByEditor(IEditor *editor)
         return 0;
     }
     QString workDir = QFileInfo(filePath).path();
-    LiteApi::IBuild *build = m_manager->findBuild(editor->mimeType());
+    LiteApi::IBuild *build = m_buildManager->findBuild(editor->mimeType());
     LiteApi::IBuild *projectBuild = 0;
     QString projectPath;
     if (build != 0) {
@@ -807,7 +643,7 @@ LiteApi::IBuild *LiteBuild::findProjectBuildByEditor(IEditor *editor)
             for (int i = 0; i <= lookup->top(); i++) {
                 QFileInfoList infos = dir.entryInfoList(QStringList() << lookup->file(),QDir::Files);
                 if (infos.size() >= 1) {
-                    projectBuild = m_manager->findBuild(lookup->mimeType());
+                    projectBuild = m_buildManager->findBuild(lookup->mimeType());
                     if (projectBuild != 0) {
                         projectPath = infos.at(0).filePath();
                         m_buildFilePath = projectPath;
@@ -834,7 +670,7 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     if (!editor) {
         return;
     }
-    IBuild *build = m_manager->findBuild(editor->mimeType());
+    IBuild *build = m_buildManager->findBuild(editor->mimeType());
     if (!build) {
         return;
     }
@@ -842,79 +678,44 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     if (!toolBar) {
         return;
     }
-    //connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
     QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
-    QList<QAction*> actionList = build->actions();
+    QList<QAction*> actions = build->actions();
     toolBar->insertSeparator(spacer);
     toolBar->insertAction(spacer,m_configAct);
-//    actionList.append(m_configAct);
-//    QAction *sep = new QAction(this);
-//    sep->setSeparator(true);
-//    actionList.append(sep);
-//    foreach(LiteApi::BuildAction *ba,build->actionList()) {
-//        QAction *act = new QAction(ba->id(),this);
-//        act->setProperty("mimetype",build->mimeType());
-//        act->setProperty("id",ba->id());
-//        act->setProperty("editor",editor->filePath());
-//        if (ba->isSeparator()) {
-//            act->setSeparator(true);
-//        } else {
-//            if (!ba->key().isEmpty()) {
-//                act->setShortcut(QKeySequence(ba->key()));
-//                act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
-//            }
-//            if (!ba->img().isEmpty()) {
-//                QIcon icon(ba->img());
-//                if (!icon.isNull()) {
-//                    act->setIcon(icon);
-//                }
-//            }
-//        }
-//        connect(act,SIGNAL(triggered()),this,SLOT(buildAction()));
-//        actionList.append(act);
-//    }
     toolBar->insertSeparator(spacer);
-    toolBar->insertActions(spacer,actionList);
+    toolBar->insertActions(spacer,actions);
+
+    QMenu *menu = new QMenu(editor->widget());
+    foreach (QAction *act, actions) {
+        QMenu *subMenu = act->menu();
+        if (subMenu) {
+            if (!menu->isEmpty())
+                menu->addSeparator();
+            menu->addActions(subMenu->actions());
+        } else {
+            menu->addAction(act);
+        }
+    }
+
+    editor->extension()->addObject("LiteApi.IBuild",build);
+    editor->extension()->addObject("LiteApi.Menu.Build",menu);
 }
 
 void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
 {
-    m_editorInfo.clear();
     if (!editor) {
+        setCurrentBuild(0);
         return;
     }
+    LiteApi::IBuild *build = LiteApi::findExtensionObject<LiteApi::IBuild*>(editor,"LiteApi.IBuild");
+    QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Build");
+    m_buildMenu->menuAction()->setMenu(menu);
+    m_buildManager->setCurrentBuild(m_build);
+
     loadEditorInfo(editor->filePath());
-    if (!m_bProjectBuild) {
-        IBuild *build = m_manager->findBuild(editor->mimeType());
-        setCurrentBuild(build);
-        if (build) {
-            /*
-            m.insert("TARGETNAME",target);
-            m.insert("TARGETPATH",QFileInfo(QDir(info.path()),target).filePath());
-            m.insert("TARGETDIR",info.path());
-            m.insert("WORKDIR",info.path());
-            */
-            QFileInfo info(editor->filePath());
-            m_buildFilePath = info.path();
-            m_targetInfo.clear();;
-            QList<BuildDebug*> debugs = build->debugList();
-            if (!debugs.isEmpty()) {
-                BuildDebug *debug = debugs.first();
-                QString targetName = this->envValue(build,debug->cmd());
-                QString workDir = this->envValue(build,debug->work());
-                m_targetInfo.insert("TARGETNAME",targetName);
-                m_targetInfo.insert("TARGETPATH",QFileInfo(QDir(workDir),targetName).filePath());
-                m_targetInfo.insert("TARGETDIR",workDir);
-                m_targetInfo.insert("WORKDIR",workDir);
-            }
-        }
-    }
-    /*
-    if (!m_liteApp->projectManager()->currentProject()) {
-        LiteApi::IBuild *build = findProjectBuildByEditor(editor);
-        setProjectBuild(build);
-    }
-    */
+    loadTargetInfo(build);
+
+    setCurrentBuild(build);
 }
 
 void LiteBuild::extOutput(const QByteArray &data, bool /*bError*/)
@@ -1052,7 +853,7 @@ void LiteBuild::buildAction()
     QString id = act->property("id").toString();
     QString editor = act->property("editor").toString();
 
-    LiteApi::IBuild *build = m_manager->findBuild(mime);
+    LiteApi::IBuild *build = m_buildManager->findBuild(mime);
     if (!build) {
         return;
     }
@@ -1081,7 +882,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         return;
     }
 
-    LiteApi::IBuild *build = m_manager->findBuild(mime);
+    LiteApi::IBuild *build = m_buildManager->findBuild(mime);
     if (!build) {
         return;
     }

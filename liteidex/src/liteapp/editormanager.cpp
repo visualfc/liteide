@@ -84,7 +84,9 @@ bool EditorManager::initWithApp(IApplication *app)
     mainLayout->setMargin(1);
     mainLayout->setSpacing(1);
 
-    m_liteApp->mainWindow()->addToolBar(m_editorTabWidget->headerToolBar());
+    QToolBar *toolBar = m_editorTabWidget->headerToolBar();
+    toolBar->setObjectName("toolbar/tabs");
+    m_liteApp->actionManager()->insertToolBar(toolBar);
     m_editorTabWidget->headerToolBar()->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
 
     mainLayout->addWidget(m_editorTabWidget->stackedWidget());

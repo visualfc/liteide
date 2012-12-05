@@ -125,12 +125,6 @@ QToolBar *ActionManager::insertToolBar(const QString &id, const QString &title, 
     toolBar = new QToolBar(title, m_liteApp->mainWindow());
     toolBar->setObjectName(id);
     toolBar->setIconSize(LiteApi::getToolBarIconSize());
-//    toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
-//                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
-//                             "QToolBar QToolButton[popupMode=\"1\"] { padding-right: 10px; }"\
-//                             "QToolBar QToolButton::hover { background-color: #ababab;}"\
-//                             "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
-
 
     QToolBar *m = 0;
     if (!idBefore.isEmpty()) {
@@ -144,6 +138,24 @@ QToolBar *ActionManager::insertToolBar(const QString &id, const QString &title, 
     m_idToolBarMap.insert(id,toolBar);
 
     return toolBar;
+}
+
+void ActionManager::insertToolBar(QToolBar *toolBar, const QString &idBefore)
+{
+    QString id = toolBar->objectName();
+
+    toolBar->setIconSize(LiteApi::getToolBarIconSize());
+
+    QToolBar *m = 0;
+    if (!idBefore.isEmpty()) {
+        m = m_idToolBarMap.value(idBefore);
+    }
+    if (m) {
+        m_liteApp->mainWindow()->insertToolBar(m,toolBar);
+    } else {
+        m_liteApp->mainWindow()->addToolBar(toolBar);
+    }
+    m_idToolBarMap.insert(id,toolBar);
 }
 
 QToolBar *ActionManager::loadToolBar(const QString &id)
