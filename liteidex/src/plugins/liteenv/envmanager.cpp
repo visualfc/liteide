@@ -131,7 +131,7 @@ void Env::loadEnv(EnvManager *manager, const QString &filePath)
 
     Env *env = new Env(manager);
     env->m_filePath = filePath;
-    env->m_id = QFileInfo(filePath).baseName();
+    env->m_id = QFileInfo(filePath).baseName().toUpper();
     env->loadEnvFile(&f);
     f.close();
     manager->addEnv(env);
