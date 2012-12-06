@@ -71,7 +71,7 @@ public:
     void setEditorMark(LiteApi::IEditorMark *mark);
     void createActions();
     void createToolBars();
-    void createContextMenu();
+    void createMenu();
     virtual LiteApi::IExtension *extension();
     virtual QWidget *widget();
     virtual QString name() const;
@@ -156,7 +156,7 @@ public:
     QAction *m_foldAllAct;
     QAction *m_unfoldAllAct;
     LiteEditorFile *m_file;
-    QMenu   *m_contextMenu;
+    QMenu   *m_editMenu;
     QString  m_colorStyle;
     QPalette m_defPalette;
     bool       m_bReadOnly;

@@ -89,9 +89,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
     createActions();
     createToolBars();
-    createContextMenu();
+    createMenu();
 
-    m_editorWidget->setContextMenu(m_contextMenu);
+    m_editorWidget->setContextMenu(m_editMenu);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -134,7 +134,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_extension->addObject("LiteApi.QToolBar",m_toolBar);
     m_extension->addObject("LiteApi.QToolBar.Spacer",m_spacerAct);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
-    m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
+    m_extension->addObject("LiteApi.ContextMenu",m_editMenu);
+    m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
 
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
@@ -346,14 +347,6 @@ void LiteEditor::createToolBars()
     m_toolBar->addSeparator();
     m_toolBar->addAction(m_undoAct);
     m_toolBar->addAction(m_redoAct);
-    m_toolBar->addSeparator();
-    m_toolBar->addAction(m_exportHtmlAct);
-#ifndef QT_NO_PRINTER
-    m_toolBar->addAction(m_exportPdfAct);
-    m_toolBar->addAction(m_filePrintPreviewAct);
-    m_toolBar->addAction(m_filePrintAct);
-#endif
-
 #ifdef LITEEDITOR_FIND
     m_findComboBox = new QComboBox(m_widget);
     m_findComboBox->setEditable(true);
@@ -365,24 +358,33 @@ void LiteEditor::createToolBars()
 #endif
 }
 
-void LiteEditor::createContextMenu()
+void LiteEditor::createMenu()
 {
-    m_contextMenu = new QMenu(m_editorWidget);
-    m_contextMenu->addAction(m_cutAct);
-    m_contextMenu->addAction(m_copyAct);
-    m_contextMenu->addAction(m_pasteAct);
-    m_contextMenu->addAction(m_duplicateAct);
-    m_contextMenu->addSeparator();
-    m_contextMenu->addAction(m_foldAct);
-    m_contextMenu->addAction(m_unfoldAct);
-    m_contextMenu->addAction(m_foldAllAct);
-    m_contextMenu->addAction(m_unfoldAllAct);
-    m_contextMenu->addSeparator();
-    m_contextMenu->addAction(m_selectAllAct);
-    m_contextMenu->addAction(m_selectBlockAct);
-    m_contextMenu->addAction(m_gotoMatchBraceAct);
-    m_contextMenu->addAction(m_gotoPrevBlockAct);
-    m_contextMenu->addAction(m_gotoNextBlockAct);
+    m_editMenu = new QMenu(m_editorWidget);
+    m_editMenu->addAction(m_cutAct);
+    m_editMenu->addAction(m_copyAct);
+    m_editMenu->addAction(m_pasteAct);
+    m_editMenu->addAction(m_duplicateAct);
+    m_editMenu->addSeparator();
+    QMenu *expMenu = m_editMenu->addMenu(tr("Export"));
+    expMenu->addAction(m_exportHtmlAct);
+#ifndef QT_NO_PRINTER
+    expMenu->addAction(m_exportPdfAct);
+    expMenu->addSeparator();
+    expMenu->addAction(m_filePrintPreviewAct);
+    expMenu->addAction(m_filePrintAct);
+#endif
+    m_editMenu->addSeparator();
+    m_editMenu->addAction(m_foldAct);
+    m_editMenu->addAction(m_unfoldAct);
+    m_editMenu->addAction(m_foldAllAct);
+    m_editMenu->addAction(m_unfoldAllAct);
+    m_editMenu->addSeparator();
+    m_editMenu->addAction(m_selectAllAct);
+    m_editMenu->addAction(m_selectBlockAct);
+    m_editMenu->addAction(m_gotoMatchBraceAct);
+    m_editMenu->addAction(m_gotoPrevBlockAct);
+    m_editMenu->addAction(m_gotoNextBlockAct);
 }
 
 #ifdef LITEEDITOR_FIND
@@ -805,7 +807,7 @@ void LiteEditor::setTextCodec(const QString &codec)
 
 QMenu *LiteEditor::editMenu() const
 {
-    return m_contextMenu;
+    return m_editMenu;
 }
 
 QByteArray LiteEditor::saveState() const
