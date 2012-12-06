@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>NSHumanReadableCopyright</key>
-        <string>(C) 2011 visualfc@gmail.com</string>
+        <string>(C) 2011-2012 visualfc@gmail.com</string>
 	<key>CFBundleIconFile</key>
         <string>liteide.icns</string>
 	<key>CFBundlePackageType</key>
