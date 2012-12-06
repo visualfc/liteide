@@ -101,23 +101,6 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 //                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
 //                             "QToolBar QToolButton::hover { background-color: #ababab;}"\
 //                             "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
-
-
-    m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-
-    QWidget  *spacerWidget = new QWidget;
-    spacerWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_spacerAct = m_toolBar->addWidget(spacerWidget);
-    m_lineInfo = new QLabelEx("000:000");
-    m_toolBar->addSeparator();
-    QLabel *overInfo = new QLabel("[Over] ");
-    QAction *overInfoAct = m_toolBar->addWidget(overInfo);
-    overInfoAct->setVisible(false);
-    m_toolBar->addWidget(m_lineInfo);
-
-    m_closeEditor = new QAction(QIcon("icon:images/closetool.png"),tr("Close Document"),this);
-    m_toolBar->addAction(m_closeEditor);
-
     layout->addWidget(m_toolBar);
     layout->addWidget(m_editorWidget);
     m_widget->setLayout(layout);
@@ -140,7 +123,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
-    connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),overInfoAct,SLOT(setVisible(bool)));
+    connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     connect(m_closeEditor,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 }
@@ -262,6 +245,9 @@ void LiteEditor::createActions()
 
     m_lineInfoAct = new QAction(tr("000:000"),this);
 
+    m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
+    m_lockAct->setEnabled(false);
+
     m_duplicateAct = new QAction(tr("Duplicate"),this);
     m_duplicateAct->setShortcut(QKeySequence("Ctrl+D"));
     m_widget->addAction(m_duplicateAct);
@@ -356,6 +342,32 @@ void LiteEditor::createToolBars()
     m_toolBar->addSeparator();
     connect(m_findComboBox->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findNextText()));
 #endif
+
+    m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+
+    //add spacer
+    QWidget  *spacerWidget = new QWidget;
+    spacerWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_spacerAct = m_toolBar->addWidget(spacerWidget);
+
+    //add sep
+    m_toolBar->addSeparator();
+
+    //add lock info
+    m_toolBar->addAction(m_lockAct);
+
+    //add over info
+    QLabel *overInfo = new QLabel("[Over]");
+    m_overInfoAct = m_toolBar->addWidget(overInfo);
+    m_overInfoAct->setVisible(false);
+
+    //add line info
+    m_lineInfo = new QLabelEx("000:000");
+    m_toolBar->addWidget(m_lineInfo);
+
+    //add close
+    m_closeEditor = new QAction(QIcon("icon:images/closetool.png"),tr("Close Document"),this);
+    m_toolBar->addAction(m_closeEditor);
 }
 
 void LiteEditor::createMenu()
@@ -462,6 +474,7 @@ bool LiteEditor::saveAs(const QString &fileName)
 
 void LiteEditor::setReadOnly(bool b)
 {
+    m_lockAct->setVisible(b);
     m_bReadOnly = b;
 }
 
@@ -657,6 +670,7 @@ void LiteEditor::filePrintPreview()
 #ifndef QT_NO_PRINTER
     QPrinter printer(QPrinter::HighResolution);
     QPrintPreviewDialog preview(&printer, m_widget);
+    preview.resize(this->m_editorWidget->size());
     connect(&preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printPreview(QPrinter*)));
     preview.exec();
 #endif

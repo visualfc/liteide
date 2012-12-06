@@ -155,12 +155,14 @@ public:
     QAction *m_unfoldAct;
     QAction *m_foldAllAct;
     QAction *m_unfoldAllAct;
+    QAction *m_lockAct;
     LiteEditorFile *m_file;
     QMenu   *m_editMenu;
     QString  m_colorStyle;
     QPalette m_defPalette;
     bool       m_bReadOnly;
     QLabelEx  *m_lineInfo;
+    QAction *m_overInfoAct;
     QAction *m_spacerAct;
     QAction *m_closeEditor;
 };
