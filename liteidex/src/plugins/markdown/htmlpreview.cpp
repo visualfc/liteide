@@ -57,7 +57,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
                                                   true);
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
+    //connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
 }
 
 void HtmlPreview::appLoaded()
@@ -101,16 +101,13 @@ void HtmlPreview::loadHeadData(const QString &css)
 
 void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
 {
-    if (!m_toolAct->isChecked()) {
-        return;
-    }
-
     if (m_curEditor != 0) {
         m_curEditor->disconnect(this);
     }
     if (editor &&
         ( (editor->mimeType() == "text/x-markdown") ||
             (editor->mimeType() == "text/html")) )  {
+        m_toolAct->setChecked(true);
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
             m_curEditor = ed;
@@ -118,6 +115,7 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
             editorHtmlPrivew();
         }
     } else {
+        m_toolAct->setChecked(false);
         m_curEditor = 0;
         m_lastData.clear();
         if (m_htmlWidget) {
@@ -151,6 +149,7 @@ void HtmlPreview::editorHtmlPrivew()
 
 void HtmlPreview::triggered(bool b)
 {
+    return;
     if (b) {
         currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     } else if (m_curEditor){

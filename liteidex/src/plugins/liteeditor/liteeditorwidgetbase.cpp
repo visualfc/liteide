@@ -1438,6 +1438,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     if (m_rightLineVisible) {
         const QFontMetrics fm(this->font());
         int xoff = this->document()->documentMargin()+fm.averageCharWidth()*m_rightLineWidth;
+        xoff -= this->horizontalScrollBar()->value();
         painter.save();
         painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
         painter.drawLine(xoff,0,xoff,rect().width());
