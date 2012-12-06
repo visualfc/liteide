@@ -117,10 +117,6 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(editorHtmlPrivew()));
             editorHtmlPrivew();
         }
-        QPlainTextEdit *pte = LiteApi::getPlainTextEdit(editor);
-        if (pte) {
-            pte->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-        }
     } else {
         m_curEditor = 0;
         m_lastData.clear();

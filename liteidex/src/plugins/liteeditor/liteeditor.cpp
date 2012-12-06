@@ -243,8 +243,6 @@ void LiteEditor::createActions()
     m_gotoLineAct = new QAction(tr("Goto Line"),this);
     m_gotoLineAct->setShortcut(QKeySequence("Ctrl+G"));
 
-    m_lineInfoAct = new QAction(tr("000:000"),this);
-
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);
 
@@ -394,6 +392,7 @@ void LiteEditor::createMenu()
     m_editMenu->addSeparator();
     m_editMenu->addAction(m_selectAllAct);
     m_editMenu->addAction(m_selectBlockAct);
+    m_editMenu->addAction(m_gotoLineAct);
     m_editMenu->addAction(m_gotoMatchBraceAct);
     m_editMenu->addAction(m_gotoPrevBlockAct);
     m_editMenu->addAction(m_gotoNextBlockAct);

@@ -7,8 +7,10 @@ include (../../3rdparty/sundown/sundown.pri)
 DEFINES += MARKDOWN_LIBRARY
 
 SOURCES += markdownplugin.cpp \
-    htmlpreview.cpp
+    htmlpreview.cpp \
+    markdownedit.cpp
 
 HEADERS += markdownplugin.h\
         markdown_global.h \
-    htmlpreview.h
+    htmlpreview.h \
+    markdownedit.h

@@ -18,32 +18,38 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: markdownplugin.h
+// Module: markdownedit.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: markdownplugin.h,v 1.0 2012-11-21 visualfc Exp $
+// date: 2012-12-06
+// $Id: markdownedit.h,v 1.0 2012-12-06 visualfc Exp $
 
-#ifndef MARKDOWNPLUGIN_H
-#define MARKDOWNPLUGIN_H
+#ifndef MARKDOWNEDIT_H
+#define MARKDOWNEDIT_H
 
-#include "markdown_global.h"
 #include "liteapi/liteapi.h"
 
-class MarkdownPlugin : public LiteApi::IPlugin
+class MarkdownEdit : public QObject
 {
     Q_OBJECT
 public:
-    MarkdownPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
-protected slots:
-    void editorCreated(LiteApi::IEditor*);
+    explicit MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
+    virtual ~MarkdownEdit();
+signals:
+    
+public slots:
+    void insert_head(const QString &tag);
+    void mark_selection(const QString &mark);
+    void h1();
+    void h2();
+    void h3();
+    void bold();
+    void italic();
+    void code();
+    void gotoLine(int line, int col);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    LiteApi::ITextEditor  *m_editor;
+    QPlainTextEdit        *m_ed;
 };
 
-class PluginFactory : public LiteApi::PluginFactoryT<MarkdownPlugin>
-{
-    Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-};
-
-
-#endif // MARKDOWNPLUGIN_H
+#endif // MARKDOWNEDIT_H

@@ -149,7 +149,6 @@ public:
     QAction *m_gotoMatchBraceAct;
     QAction *m_selectBlockAct;
     QAction *m_gotoLineAct;
-    QAction *m_lineInfoAct;
     QAction *m_duplicateAct;
     QAction *m_foldAct;
     QAction *m_unfoldAct;

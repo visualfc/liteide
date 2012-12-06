@@ -25,6 +25,7 @@
 
 #include "markdownplugin.h"
 #include "htmlpreview.h"
+#include "markdownedit.h"
 #include <QtPlugin>
 #include <QDebug>
 //lite_memory_check_begin
@@ -52,9 +53,19 @@ bool MarkdownPlugin::initWithApp(LiteApi::IApplication *app)
         return false;
     }
 
+    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+
     new HtmlPreview(m_liteApp,this);
 
     return true;
+}
+
+void MarkdownPlugin::editorCreated(LiteApi::IEditor *editor)
+{
+    if (!editor || editor->mimeType() != "text/x-markdown") {
+        return;
+    }
+    new MarkdownEdit(m_liteApp,editor,this);
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)
