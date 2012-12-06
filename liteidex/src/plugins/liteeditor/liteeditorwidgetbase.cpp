@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteeditorwidgetbase.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteeditorwidgetbase.cpp,v 1.0 2011-7-26 visualfc Exp $
+
+
 
 #include "liteeditorwidgetbase.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"

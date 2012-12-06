@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: mimetype.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: mimetype.h,v 1.0 2011-6-28 visualfc Exp $
+
+
 
 #ifndef LITEAPI_MIMETYPE_H
 #define LITEAPI_MIMETYPE_H

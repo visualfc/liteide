@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: welcomebrowser.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: welcomebrowser.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef WELCOMEBROWSER_H
 #define WELCOMEBROWSER_H

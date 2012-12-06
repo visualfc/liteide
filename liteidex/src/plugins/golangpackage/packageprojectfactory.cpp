@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: packageprojectfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-24
-// $Id: packageprojectfactory.cpp,v 1.0 2012-4-24 visualfc Exp $
+
+
 
 #include "packageprojectfactory.h"
 #include <packageproject.h>

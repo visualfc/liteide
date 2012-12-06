@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteenv_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteenv_global.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef LITEENV_GLOBAL_H
 #define LITEENV_GLOBAL_H

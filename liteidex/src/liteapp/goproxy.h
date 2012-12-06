@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: goproxy.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-17
-// $Id: goproxy.h,v 1.0 2012-11-17 visualfc Exp $
+
+
 
 #ifndef GOPROXY_H
 #define GOPROXY_H

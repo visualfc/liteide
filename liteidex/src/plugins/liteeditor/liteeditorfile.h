@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteeditorfile.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteeditorfile.h,v 1.0 2011-6-28 visualfc Exp $
+
+
 
 #ifndef LITEEDITORFILE_H
 #define LITEEDITORFILE_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litedebug.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: litedebug.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "litedebug.h"
 #include "debugmanager.h"

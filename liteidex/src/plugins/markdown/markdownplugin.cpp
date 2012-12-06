@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: markdownplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: markdownplugin.cpp,v 1.0 2012-11-21 visualfc Exp $
+
+
 
 #include "markdownplugin.h"
 #include "htmlpreview.h"

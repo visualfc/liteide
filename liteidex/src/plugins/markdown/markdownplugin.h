@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: markdownplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: markdownplugin.h,v 1.0 2012-11-21 visualfc Exp $
+
+
 
 #ifndef MARKDOWNPLUGIN_H
 #define MARKDOWNPLUGIN_H

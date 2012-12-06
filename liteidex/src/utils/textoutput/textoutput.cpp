@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: textoutput.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: textoutput.cpp,v 1.0 2011-9-12 visualfc Exp $
+
+
 
 #include "textoutput.h"
 

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: webviewhtmlwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: webviewhtmlwidget.cpp,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #include "webviewhtmlwidget.h"
 

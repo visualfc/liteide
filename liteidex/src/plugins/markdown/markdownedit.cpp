@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: markdownedit.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-12-06
-// $Id: markdownedit.cpp,v 1.0 2012-12-06 visualfc Exp $
+
+
 
 #include "markdownedit.h"
 #include <QMenu>

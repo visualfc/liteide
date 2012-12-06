@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteeditorwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteeditorwidget.cpp,v 1.0 2011-7-7 visualfc Exp $
+
+
 
 #include "liteeditorwidget.h"
 

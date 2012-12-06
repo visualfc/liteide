@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangdocapi.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-11
-// $Id: golangdocapi.h,v 1.0 2011-8-1 visualfc Exp $
+
+
 
 #ifndef __GOLANGDOCAPI_H__
 #define __GOLANGDOCAPI_H__

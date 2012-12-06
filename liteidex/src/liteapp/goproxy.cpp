@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: goproxy.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-17
-// $Id: goproxy.cpp,v 1.0 2012-11-17 visualfc Exp $
+
+
 
 #include "goproxy.h"
 #include "cdrv.h"

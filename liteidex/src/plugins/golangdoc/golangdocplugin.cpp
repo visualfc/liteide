@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangdocplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-7
-// $Id: golangdocplugin.cpp,v 1.0 2011-7-7 visualfc Exp $
+
+
 
 #include "golangdocplugin.h"
 #include "golangdoc.h"

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: wordapimanager.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: wordapimanager.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef WORDAPIMANAGER_H
 #define WORDAPIMANAGER_H

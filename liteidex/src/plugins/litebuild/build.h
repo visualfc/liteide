@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: build.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: build.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef BUILD_H
 #define BUILD_H

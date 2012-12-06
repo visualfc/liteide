@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litefindplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: litefindplugin.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef LITEFINDPLUGIN_H
 #define LITEFINDPLUGIN_H

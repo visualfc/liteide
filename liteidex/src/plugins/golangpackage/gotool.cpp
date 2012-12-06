@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: gotool.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: gotool.cpp,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #include "gotool.h"
 #include "liteenvapi/liteenvapi.h"

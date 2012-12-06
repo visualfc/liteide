@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangdocoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-15
-// $Id: golangdocoption.cpp,v 1.0 2012-11-15 visualfc Exp $
+
+
 
 #include "golangdocoption.h"
 #include "ui_golangdocoption.h"

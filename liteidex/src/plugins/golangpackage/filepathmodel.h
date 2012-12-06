@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filepathmodel.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: filepathmodel.h,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #ifndef FILEPATHMODEL_H
 #define FILEPATHMODEL_H

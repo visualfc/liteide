@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litecompleter.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: litecompleter.cpp,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #include "litecompleter.h"
 #include "treemodelcompleter/treemodelcompleter.h"

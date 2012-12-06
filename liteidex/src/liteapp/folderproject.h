@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: folderproject.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-9-17
-// $Id: folderproject.h,v 1.0 2012-9-17 visualfc Exp $
+
+
 
 #ifndef FOLDERPROJECT_H
 #define FOLDERPROJECT_H

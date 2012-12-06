@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: createfiledialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: createfiledialog.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "createfiledialog.h"
 #include "ui_createfiledialog.h"

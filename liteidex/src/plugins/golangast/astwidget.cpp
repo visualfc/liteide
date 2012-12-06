@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: astwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-3
-// $Id: astwidget.cpp,v 1.0 2012-4-26 visualfc Exp $
+
+
 
 #include "astwidget.h"
 #include "golangastitem.h"

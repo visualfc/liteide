@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: setupgopathdialog.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: setupgopathdialog.h,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #ifndef SETUPGOPATHDIALOG_H
 #define SETUPGOPATHDIALOG_H

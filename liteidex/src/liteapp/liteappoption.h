@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteappoption.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-6-27
-// $Id: liteappoption.h,v 1.0 2011-6-27 visualfc Exp $
+
+
 
 #ifndef LITEAPPOPTION_H
 #define LITEAPPOPTION_H

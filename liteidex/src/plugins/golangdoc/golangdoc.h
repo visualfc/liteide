@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangdoc.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-7
-// $Id: golangdoc.h,v 1.0 2011-7-7 visualfc Exp $
+
+
 
 #ifndef GOLANGDOC_H
 #define GOLANGDOC_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: debugwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: debugwidget.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef DEBUGWIDGET_H
 #define DEBUGWIDGET_H

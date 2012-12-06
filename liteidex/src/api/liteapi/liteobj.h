@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteobj.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteobj.h,v 1.0 2011-4-22 visualfc Exp $
+
+
 
 #ifndef __LITEOBJ_H__
 #define __LITEOBJ_H__

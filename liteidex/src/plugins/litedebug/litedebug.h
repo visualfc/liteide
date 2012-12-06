@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litedebug.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: litedebug.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef LITEDEBUG_H
 #define LITEDEBUG_H

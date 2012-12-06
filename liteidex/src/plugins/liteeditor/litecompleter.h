@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litecompleter.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: litecompleter.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef LITECOMPLETER_H
 #define LITECOMPLETER_H

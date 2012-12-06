@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filebrowserplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-6-21
-// $Id: filebrowserplugin.h,v 1.0 2011-6-21 visualfc Exp $
+
+
 
 #ifndef FILEBROWSERPLUGIN_H
 #define FILEBROWSERPLUGIN_H

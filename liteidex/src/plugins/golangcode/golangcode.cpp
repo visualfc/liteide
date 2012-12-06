@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangcode.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-5-19
-// $Id: golangcode.cpp,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #include "golangcode.h"
 #include "fileutil/fileutil.h"

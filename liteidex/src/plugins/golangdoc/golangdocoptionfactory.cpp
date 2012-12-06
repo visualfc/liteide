@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangdocoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-15
-// $Id: golangdocoptionfactory.cpp,v 1.0 2012-11-15 visualfc Exp $
+
+
 
 #include "golangdocoption.h"
 #include "golangdocoptionfactory.h"

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: webkithtmlwidget_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: webkithtmlwidget_global.h,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #ifndef WEBKITHTMLWIDGET_GLOBAL_H
 #define WEBKITHTMLWIDGET_GLOBAL_H

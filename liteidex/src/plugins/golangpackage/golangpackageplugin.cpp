@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangpackageplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: golangpackageplugin.cpp,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #include "golangpackageplugin.h"
 #include "packagebrowser.h"

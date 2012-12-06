@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteenvapi.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: liteenvapi.h,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #ifndef __GOLANGASTAPI_H__
 #define __GOLANGASTAPI_H__

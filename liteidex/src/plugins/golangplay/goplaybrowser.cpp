@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: goplaybrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-3-8
-// $Id: goplaybrowser.cpp,v 1.0 2012-3-8 visualfc Exp $
+
+
 
 #include "goplaybrowser.h"
 #include "liteenvapi/liteenvapi.h"

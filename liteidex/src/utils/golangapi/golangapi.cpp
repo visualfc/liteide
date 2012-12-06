@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangapi.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-24
-// $Id: golangapi.cpp,v 1.0 2012-4-24 visualfc Exp $
+
+
 
 #include "golangapi.h"
 #include <QFile>

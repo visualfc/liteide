@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteenvoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: liteenvoptionfactory.cpp,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #ifndef LITEENVOPTIONFACTORY_H
 #define LITEENVOPTIONFACTORY_H

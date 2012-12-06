@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: packagebrowser.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: packagebrowser.h,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #ifndef PACKAGEBROWSER_H
 #define PACKAGEBROWSER_H

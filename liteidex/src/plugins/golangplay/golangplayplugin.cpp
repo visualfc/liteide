@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangplayplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-3-8
-// $Id: golangplayplugin.cpp,v 1.0 2012-3-8 visualfc Exp $
+
+
 
 #include "golangplayplugin.h"
 #include "goplaybrowser.h"

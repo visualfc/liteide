@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangfmtoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-6-13
-// $Id: golangfmtoptionfactory.h,v 1.0 2012-6-13 visualfc Exp $
+
+
 
 #ifndef GOLANGFMTOPTIONFACTORY_H
 #define GOLANGFMTOPTIONFACTORY_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: goplaybrowser.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-3-8
-// $Id: goplaybrowser.h,v 1.0 2012-3-8 visualfc Exp $
+
+
 
 #ifndef GOPLAYBROWSER_H
 #define GOPLAYBROWSER_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: main.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-19
-// $Id: main.cpp,v 1.0 2012-11-19 visualfc Exp $
+
+
 
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC

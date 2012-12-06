@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteapp_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-12-4
-// $Id: liteapp_global.h,v 1.0 2012-12-4 visualfc Exp $
+
+
 
 #ifndef LITEAPP_GLOBAL_H
 #define LITEAPP_GLOBAL_H

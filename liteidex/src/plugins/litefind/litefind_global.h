@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litefind_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: litefind_global.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef LITEFIND_GLOBAL_H
 #define LITEFIND_GLOBAL_H

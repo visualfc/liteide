@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangcode_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: golangcode_global.h,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #ifndef GOLANGCODE_GLOBAL_H
 #define GOLANGCODE_GLOBAL_H

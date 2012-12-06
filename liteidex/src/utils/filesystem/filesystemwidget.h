@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filesystemwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-26
-// $Id: filesystemwidget.h,v 1.0 2012-4-26 visualfc Exp $
+
+
 
 #ifndef FILESYSTEMWIDGET_H
 #define FILESYSTEMWIDGET_H

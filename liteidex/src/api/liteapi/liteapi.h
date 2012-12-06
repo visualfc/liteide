@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteapi.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteapi.h,v 1.0 2011-7-27 visualfc Exp $
+
+
 
 #ifndef __LITEAPI_H__
 #define __LITEAPI_H__

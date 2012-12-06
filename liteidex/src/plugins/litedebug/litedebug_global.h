@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litedebug_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: litedebug_global.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef LITEDEBUG_GLOBAL_H
 #define LITEDEBUG_GLOBAL_H

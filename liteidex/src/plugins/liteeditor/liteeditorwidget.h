@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteeditorwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteeditorwidget.h,v 1.0 2011-7-4 visualfc Exp $
+
+
 
 #ifndef LITEEDITORWIDGET_H
 #define LITEEDITORWIDGET_H

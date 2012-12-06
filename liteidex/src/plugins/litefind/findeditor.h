@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: findeditor.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: findeditor.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef FINDEDITOR_H
 #define FINDEDITOR_H

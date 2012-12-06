@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litetabwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: litetabwidget.h,v 1.0 2012-11-30 visualfc Exp $
+
+
 
 #ifndef LITETABWIDGET_H
 #define LITETABWIDGET_H

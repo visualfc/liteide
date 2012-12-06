@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: documentbrowserfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: documentbrowserfactory.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "documentbrowserfactory.h"
 #include "documentbrowser.h"

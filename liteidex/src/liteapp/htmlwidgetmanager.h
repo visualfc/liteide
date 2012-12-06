@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: htmlwidgetmanager.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: htmlwidgetmanager.h,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #ifndef HTMLWIDGETMANAGER_H
 #define HTMLWIDGETMANAGER_H

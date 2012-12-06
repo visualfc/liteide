@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: packagetree.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: packagetree.h,v 1.0 2012-4-20 visualfc Exp $
+
+
 
 #ifndef PACKAGETREE_H
 #define PACKAGETREE_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangast_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: golangast_global.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef GOLANGAST_GLOBAL_H
 #define GOLANGAST_GLOBAL_H

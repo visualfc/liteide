@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: pluginsdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: pluginsdialog.cpp,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #include "pluginsdialog.h"
 #include "ui_pluginsdialog.h"

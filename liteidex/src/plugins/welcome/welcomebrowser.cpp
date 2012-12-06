@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: welcomebrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: welcomebrowser.cpp,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #include "welcomebrowser.h"
 #include "ui_welcomewidget.h"

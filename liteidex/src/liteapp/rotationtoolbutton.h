@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: rotationtoolbutton.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-9-12
-// $Id: rotationtoolbutton.h,v 1.0 2012-9-12 visualfc Exp $
+
+
 
 #ifndef ROTATIONTOOLBUTTON_H
 #define ROTATIONTOOLBUTTON_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litedoc.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: litedoc.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "litedoc.h"
 #include "documentbrowser/documentbrowser.h"

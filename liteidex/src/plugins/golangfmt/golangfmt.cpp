@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangfmt.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: golangfmt.cpp,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #include "golangfmt.h"
 #include "fileutil/fileutil.h"

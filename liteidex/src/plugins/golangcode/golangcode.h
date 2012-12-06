@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangcode.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-5-19
-// $Id: golangcode.h,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #ifndef GOLANGCODE_H
 #define GOLANGCODE_H

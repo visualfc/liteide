@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: envmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: envmanager.cpp,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #include "envmanager.h"
 #include <QDir>

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: tooldockwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-9-12
-// $Id: tooldockwidget.cpp,v 1.0 2012-9-12 visualfc Exp $
+
+
 
 #include "tooldockwidget.h"
 #include "liteapi/liteapi.h"

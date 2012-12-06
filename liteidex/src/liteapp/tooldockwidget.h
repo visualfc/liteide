@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: tooldockwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-9-12
-// $Id: tooldockwidget.h,v 1.0 2012-9-12 visualfc Exp $
+
+
 
 #ifndef TOOLDOCKWIDGET_H
 #define TOOLDOCKWIDGET_H

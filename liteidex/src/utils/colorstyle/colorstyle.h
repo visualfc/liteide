@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: colorstyle.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-6-29
-// $Id: colorstyle.h 1.0 2011-6-29 visualfc Exp $
+
+
 
 #ifndef COLORSTYLE_H
 #define COLORSTYLE_H

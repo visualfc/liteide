@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filebrowseroptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-6-29
-// $Id: filebrowseroptionfactory.cpp,v 1.0 2011-6-29 visualfc Exp $
+
+
 
 #ifndef FILEBROWSEROPTIONFACTORY_H
 #define FILEBROWSEROPTIONFACTORY_H

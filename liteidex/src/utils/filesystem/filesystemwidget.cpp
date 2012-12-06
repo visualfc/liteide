@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filesystemwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-26
-// $Id: filesystemwidget.cpp,v 1.0 2012-4-26 visualfc Exp $
+
+
 
 #include "filesystemwidget.h"
 #include "liteenvapi/liteenvapi.h"

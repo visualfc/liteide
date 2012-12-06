@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: debugmanager.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: debugmanager.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef DEBUGMANAGER_H
 #define DEBUGMANAGER_H

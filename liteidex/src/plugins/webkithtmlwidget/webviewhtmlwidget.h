@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: webviewhtmlwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: webviewhtmlwidget.h,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #ifndef WEBVIEWHTMLWIDGET_H
 #define WEBVIEWHTMLWIDGET_H

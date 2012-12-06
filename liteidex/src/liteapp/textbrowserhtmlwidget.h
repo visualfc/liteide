@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: textbrowserhtmlwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: textbrowserhtmlwidget.h,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #ifndef TEXTBROWSERHTMLWIDGET_H
 #define TEXTBROWSERHTMLWIDGET_H

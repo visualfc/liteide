@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: colorstyle.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-6-29
-// $Id: colorstyle.cpp, v 1.0 2011-6-29 visualfc Exp $
+
+
 
 #include "colorstyle.h"
 #include <QFile>

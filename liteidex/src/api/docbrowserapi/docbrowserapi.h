@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: docbrowserapi.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-28
-// $Id: docbrowserapi.h,v 1.0 2011-7-28 visualfc Exp $
+
+
 
 #ifndef __LITEDOCBROWSERAPI_H__
 #define __LITEDOCBROWSERAPI_H__

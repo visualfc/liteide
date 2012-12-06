@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litebuildoption.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: litebuildoption.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef LITEBUILDOPTION_H
 #define LITEBUILDOPTION_H

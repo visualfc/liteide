@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: createdirdialog.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: createdirdialog.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef CREATEDIRDIALOG_H
 #define CREATEDIRDIALOG_H

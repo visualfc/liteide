@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filesearch.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-5-21
-// $Id: filesearch.h,v 1.0 2012-5-21 visualfc Exp $
+
+
 
 #ifndef FILESEARCH_H
 #define FILESEARCH_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: cdrv.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-20
-// $Id: cdrv.h,v 1.0 2012-11-20 visualfc Exp $
+
+
 
 #ifndef CDRV_H
 #define CDRV_H

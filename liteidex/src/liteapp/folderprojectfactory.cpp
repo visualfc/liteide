@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: folderprojectfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-09-19
-// $Id: folderprojectfactory.cpp,v 1.0 2012-09-19 visualfc Exp $
+
+
 
 #include "folderprojectfactory.h"
 //lite_memory_check_begin

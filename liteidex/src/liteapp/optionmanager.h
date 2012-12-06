@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: optionmanager.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: optionmanager.h,v 1.0 2011-6-27 visualfc Exp $
+
+
 
 #ifndef OPTIONMANAGER_H
 #define OPTIONMANAGER_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangapi.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-24
-// $Id: golangapi.h,v 1.0 2012-4-24 visualfc Exp $
+
+
 
 #ifndef GOLANGAPI_H
 #define GOLANGAPI_H

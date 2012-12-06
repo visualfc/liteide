@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litebuild_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: litebuild_global.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef LITEBUILD_GLOBAL_H
 #define LITEBUILD_GLOBAL_H

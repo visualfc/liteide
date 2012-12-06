@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litetabwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: litetabwidget.cpp,v 1.0 2012-11-30 visualfc Exp $
+
+
 
 #include "litetabwidget.h"
 #include "liteapi/liteapi.h"

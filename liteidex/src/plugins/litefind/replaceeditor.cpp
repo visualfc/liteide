@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: replaceeditor.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: replaceeditor.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "replaceeditor.h"
 #include <QGridLayout>

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteeditormark.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: liteeditormark.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "liteeditormark.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"

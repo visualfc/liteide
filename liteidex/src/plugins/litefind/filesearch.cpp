@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filesearch.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-5-21
-// $Id: filesearch.cpp,v 1.0 2012-5-21 visualfc Exp $
+
+
 
 #include "filesearch.h"
 #include <QFile>

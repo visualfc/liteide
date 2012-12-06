@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: buildconfigdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: buildconfigdialog.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "buildconfigdialog.h"
 #include "ui_buildconfigdialog.h"

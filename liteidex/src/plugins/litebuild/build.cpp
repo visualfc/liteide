@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: build.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: build.cpp,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #include "build.h"
 #include "fileutil/fileutil.h"

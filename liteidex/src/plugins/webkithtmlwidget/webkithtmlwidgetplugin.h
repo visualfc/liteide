@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: webkithtmlwidgetplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: webkithtmlwidgetplugin.h,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #ifndef WEBKITHTMLWIDGETPLUGIN_H
 #define WEBKITHTMLWIDGETPLUGIN_H

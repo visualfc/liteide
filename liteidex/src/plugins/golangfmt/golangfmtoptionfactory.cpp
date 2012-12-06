@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangfmtoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-6-13
-// $Id: golangfmtoptionfactory.cpp,v 1.0 2012-6-13 visualfc Exp $
+
+
 
 #include "golangfmtoption.h"
 #include "golangfmtoptionfactory.h"

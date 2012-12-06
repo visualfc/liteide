@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: welcomeplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: welcomeplugin.cpp,v 1.0 2011-7-6 visualfc Exp $
+
+
 
 #include "welcomeplugin.h"
 #include "../../liteapp/liteapp_global.h"

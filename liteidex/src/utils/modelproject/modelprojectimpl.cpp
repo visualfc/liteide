@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: modelprojectimpl.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: modelprojectimpl.cpp,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #include "modelprojectimpl.h"
 #include "modelfileimpl.h"

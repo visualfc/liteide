@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangdoc.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-7
-// $Id: golangdoc.cpp,v 1.0 2011-7-7 visualfc Exp $
+
+
 
 #include "golangdoc.h"
 #include "litebuildapi/litebuildapi.h"

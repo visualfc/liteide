@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: markdownedit.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-12-06
-// $Id: markdownedit.h,v 1.0 2012-12-06 visualfc Exp $
+
+
 
 #ifndef MARKDOWNEDIT_H
 #define MARKDOWNEDIT_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: documentbrowser.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-7
-// $Id: documentbrowser.h,v 1.0 2011-7-26 visualfc Exp $
+
+
 
 #ifndef DOCUMENTBROWSER_H
 #define DOCUMENTBROWSER_H

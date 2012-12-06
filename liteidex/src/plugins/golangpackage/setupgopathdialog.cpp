@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: setupgopathdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: setupgopathdialog.cpp,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #include "setupgopathdialog.h"
 #include "ui_setupgopathdialog.h"

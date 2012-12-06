@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: astwidget.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-3
-// $Id: astwidget.h,v 1.0 2012-4-26 visualfc Exp $
+
+
 
 #ifndef ASTWIDGET_H
 #define ASTWIDGET_H

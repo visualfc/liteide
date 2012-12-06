@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: markdown_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: markdown_global.h,v 1.0 2012-11-21 visualfc Exp $
+
+
 
 #ifndef MARKDOWN_GLOBAL_H
 #define MARKDOWN_GLOBAL_H

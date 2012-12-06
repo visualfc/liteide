@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangastitem.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-3
-// $Id: golangastitem.h,v 1.0 2011-8-3 visualfc Exp $
+
+
 
 #ifndef GOLANGASTITEM_H
 #define GOLANGASTITEM_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: welcome_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: welcome_global.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef WELCOME_GLOBAL_H
 #define WELCOME_GLOBAL_H

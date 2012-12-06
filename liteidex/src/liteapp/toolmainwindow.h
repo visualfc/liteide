@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: toolmainwindow.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-9-12
-// $Id: toolmainwindow.h,v 1.0 2012-9-12 visualfc Exp $
+
+
 
 #ifndef TOOLMAINWINDOW_H
 #define TOOLMAINWINDOW_H

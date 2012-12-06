@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: packagebrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: packagebrowser.cpp,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #include "packagebrowser.h"
 #include "setupgopathdialog.h"

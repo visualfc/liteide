@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filebrowser_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: filebrowser_global.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef FILEBROWSER_GLOBAL_H
 #define FILEBROWSER_GLOBAL_H

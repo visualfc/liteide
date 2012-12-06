@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: debugmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: debugmanager.cpp,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #include "debugmanager.h"
 //lite_memory_check_begin

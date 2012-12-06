@@ -31,8 +31,6 @@ local license = [[
 local info = [[
 // Module: $FILENAME
 // Creator: $ANCHOR $EMAIL
-// date: $DATE
-// $Id: $FILENAME,v 1.0 $UPDATE $ANCHOR Exp $
 
 ]]
 

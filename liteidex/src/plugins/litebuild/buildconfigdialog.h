@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: buildconfigdialog.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: buildconfigdialog.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef BUILDCONFIGDIALOG_H
 #define BUILDCONFIGDIALOG_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangplay_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-3-8
-// $Id: golangplay_global.h,v 1.0 2012-3-8 visualfc Exp $
+
+
 
 #ifndef GOLANGPLAY_GLOBAL_H
 #define GOLANGPLAY_GLOBAL_H

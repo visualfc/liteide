@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: litehtml.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: litehtml.h,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #ifndef LITEHTML_H
 #define LITEHTML_H

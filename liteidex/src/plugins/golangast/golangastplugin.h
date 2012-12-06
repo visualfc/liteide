@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangastplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: golangastplugin.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef GOLANGASTPLUGIN_H
 #define GOLANGASTPLUGIN_H

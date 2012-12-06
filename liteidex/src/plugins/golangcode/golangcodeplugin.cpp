@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangcodeplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-5-19
-// $Id: golangcodeplugin.cpp,v 1.0 2011-7-25 visualfc Exp $
+
+
 
 #include "golangcodeplugin.h"
 #include "liteeditorapi/liteeditorapi.h"

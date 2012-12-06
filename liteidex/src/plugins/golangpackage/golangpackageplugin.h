@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: golangpackageplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: golangpackageplugin.h,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #ifndef GOLANGPACKAGEPLUGIN_H
 #define GOLANGPACKAGEPLUGIN_H

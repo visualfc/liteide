@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filepathmodel.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: filepathmodel.cpp,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #include "filepathmodel.h"
 

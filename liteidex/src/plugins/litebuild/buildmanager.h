@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: buildmanager.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: buildmanager.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef BUILDMANAGER_H
 #define BUILDMANAGER_H

@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: htmlpreview.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: htmlpreview.h,v 1.0 2012-11-21 visualfc Exp $
+
+
 
 #ifndef HTMLPREVIEW_H
 #define HTMLPREVIEW_H

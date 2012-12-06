@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: webkithtmlwidgetplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-22
-// $Id: webkithtmlwidgetplugin.cpp,v 1.0 2012-11-22 visualfc Exp $
+
+
 
 #include "webkithtmlwidgetplugin.h"
 #include "webviewhtmlwidget.h"

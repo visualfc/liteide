@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: filesystemmodel.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: filesystemmodel.h,v 1.0 2012-4-19 visualfc Exp $
+
+
 
 #ifndef FILESYSTEMMODEL_H
 #define FILESYSTEMMODEL_H

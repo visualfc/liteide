@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: packagetree.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-19
-// $Id: packagetree.cpp,v 1.0 2012-4-20 visualfc Exp $
+
+
 
 #include "packagetree.h"
 

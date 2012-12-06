@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: gdbdebugger.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-8-12
-// $Id: gdbdebugger.h,v 1.0 2011-8-12 visualfc Exp $
+
+
 
 #ifndef GDBDEBUGGER_H
 #define GDBDEBUGGER_H

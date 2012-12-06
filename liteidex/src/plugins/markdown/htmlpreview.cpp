@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: htmlpreview.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-11-21
-// $Id: htmlpreview.cpp,v 1.0 2012-11-21 visualfc Exp $
+
+
 
 #include "htmlpreview.h"
 #include "sundown/mdtohtml.h"

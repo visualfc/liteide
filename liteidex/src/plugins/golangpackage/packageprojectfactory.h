@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: packageprojectfactory.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-4-24
-// $Id: packageprojectfactory.h,v 1.0 2012-4-24 visualfc Exp $
+
+
 
 #ifndef PACKAGEPROJECTFACTORY_H
 #define PACKAGEPROJECTFACTORY_H

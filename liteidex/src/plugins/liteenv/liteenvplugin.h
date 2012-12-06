@@ -20,8 +20,8 @@
 **************************************************************************/
 // Module: liteenvplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: liteenvplugin.h,v 1.0 2011-5-12 visualfc Exp $
+
+
 
 #ifndef LITEENVPLUGIN_H
 #define LITEENVPLUGIN_H
