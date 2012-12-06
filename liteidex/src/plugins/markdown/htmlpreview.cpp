@@ -115,7 +115,7 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
         QPlainTextEdit *textEdit = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
         if (textEdit) {
             m_curTextEditor = textEdit;
-            connect(m_curTextEditor->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(editorVerticalScrollBarValueChanged()));
+            connect(m_curTextEditor->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(syncScrollValue()));
         }
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
@@ -123,7 +123,7 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(contentsChanged()));
         }
         editorHtmlPrivew();
-        editorVerticalScrollBarValueChanged();
+        syncScrollValue();
     } else {
         m_toolAct->setChecked(false);
         m_curEditor = 0;
@@ -140,7 +140,7 @@ void HtmlPreview::contentsChanged()
     editorHtmlPrivew();
 }
 
-void HtmlPreview::editorVerticalScrollBarValueChanged()
+void HtmlPreview::syncScrollValue()
 {
     if (!m_curTextEditor) {
         return;
@@ -148,9 +148,12 @@ void HtmlPreview::editorVerticalScrollBarValueChanged()
     int max0 = m_curTextEditor->verticalScrollBar()->maximum();
     int min0 = m_curTextEditor->verticalScrollBar()->minimum();
     int value0 = m_curTextEditor->verticalScrollBar()->value();
+    if ((max0-min0) == 0) {
+        return;
+    }
     int max1 = m_htmlWidget->scrollBarMaximum(Qt::Vertical);
     int min1 = m_htmlWidget->scrollBarMinimum(Qt::Vertical);
-    int value1 = (max1-min1)*value0/(max0-min0);
+    int value1 = 1.0*value0*(max1-min1)/(max0-min0);
     m_htmlWidget->setScrollBarValue(Qt::Vertical,value1);
 }
 

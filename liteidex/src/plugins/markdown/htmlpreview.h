@@ -43,7 +43,7 @@ public slots:
     void loadHeadData(const QString &css);
     void currentEditorChanged(LiteApi::IEditor*);
     void contentsChanged();
-    void editorVerticalScrollBarValueChanged();
+    void syncScrollValue();
     void editorHtmlPrivew();
     void triggered(bool);
 protected:
