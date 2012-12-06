@@ -65,12 +65,18 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     }
     m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
-    QAction *h1 = new QAction("h1",this);
-    QAction *h2 = new QAction("h2",this);
-    QAction *h3 = new QAction("h3",this);
-    QAction *bold = new QAction("b",this);
-    QAction *italic = new QAction("i",this);
-    QAction *code = new QAction("k",this);
+    QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),"H1",this);
+    h1->setShortcut(QKeySequence("Ctrl+1"));
+    QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),"H2",this);
+    h2->setShortcut(QKeySequence("Ctrl+2"));
+    QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),"H3",this);
+    h3->setShortcut(QKeySequence("Ctrl+3"));
+    QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),"Bold",this);
+    bold->setShortcut(QKeySequence::Bold);
+    QAction *italic = new QAction(QIcon("icon:markdown/images/italic.png"),"Italic",this);
+    italic->setShortcut(QKeySequence::Italic);
+    QAction *code = new QAction(QIcon("icon:markdown/images/code.png"),"Inline Code",this);
+    code->setShortcut(QKeySequence("Ctrl+K"));
 
     QList<QAction*> actions;
     actions << new Separator(this);

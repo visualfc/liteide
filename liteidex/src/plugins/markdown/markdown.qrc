@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/markdown">
+        <file>images/bold.png</file>
+        <file>images/code.png</file>
+        <file>images/h1.png</file>
+        <file>images/h2.png</file>
+        <file>images/h3.png</file>
+        <file>images/hr.png</file>
+        <file>images/image.png</file>
+        <file>images/italic.png</file>
+        <file>images/link.png</file>
+        <file>images/lista.png</file>
+        <file>images/listb.png</file>
+        <file>images/quote.png</file>
+    </qresource>
+</RCC>

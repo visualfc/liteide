@@ -14,3 +14,6 @@ HEADERS += markdownplugin.h\
         markdown_global.h \
     htmlpreview.h \
     markdownedit.h
+
+RESOURCES += \
+    markdown.qrc
