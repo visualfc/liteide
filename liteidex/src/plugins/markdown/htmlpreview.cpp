@@ -48,6 +48,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_liteApp(app)
 {
     m_curEditor = 0;
+    m_curTextEditor = 0;
     m_widget = new QWidget;
     m_htmlWidget = 0;
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
@@ -57,7 +58,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
                                                   true);
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    //connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
+    connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
 }
 
 void HtmlPreview::appLoaded()
@@ -104,24 +105,53 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
     if (m_curEditor != 0) {
         m_curEditor->disconnect(this);
     }
+    if (m_curTextEditor != 0) {
+        m_curTextEditor->verticalScrollBar()->disconnect(this);
+    }
     if (editor &&
         ( (editor->mimeType() == "text/x-markdown") ||
             (editor->mimeType() == "text/html")) )  {
         m_toolAct->setChecked(true);
+        QPlainTextEdit *textEdit = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+        if (textEdit) {
+            m_curTextEditor = textEdit;
+            connect(m_curTextEditor->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(editorVerticalScrollBarValueChanged()));
+        }
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
             m_curEditor = ed;
-            connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(editorHtmlPrivew()));
-            editorHtmlPrivew();
+            connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(contentsChanged()));
         }
+        editorHtmlPrivew();
+        editorVerticalScrollBarValueChanged();
     } else {
         m_toolAct->setChecked(false);
         m_curEditor = 0;
+        m_curTextEditor = 0;
         m_lastData.clear();
         if (m_htmlWidget) {
             m_htmlWidget->clear();
         }
     }
+}
+
+void HtmlPreview::contentsChanged()
+{
+    editorHtmlPrivew();
+}
+
+void HtmlPreview::editorVerticalScrollBarValueChanged()
+{
+    if (!m_curTextEditor) {
+        return;
+    }
+    int max0 = m_curTextEditor->verticalScrollBar()->maximum();
+    int min0 = m_curTextEditor->verticalScrollBar()->minimum();
+    int value0 = m_curTextEditor->verticalScrollBar()->value();
+    int max1 = m_htmlWidget->scrollBarMaximum(Qt::Vertical);
+    int min1 = m_htmlWidget->scrollBarMinimum(Qt::Vertical);
+    int value1 = (max1-min1)*value0/(max0-min0);
+    m_htmlWidget->setScrollBarValue(Qt::Vertical,value1);
 }
 
 void HtmlPreview::editorHtmlPrivew()
@@ -136,7 +166,8 @@ void HtmlPreview::editorHtmlPrivew()
     }
     m_lastData = data;
 
-    QPoint pos = m_htmlWidget->scrollPos();
+    int h = m_htmlWidget->scrollBarValue(Qt::Horizontal);
+    int v = m_htmlWidget->scrollBarValue(Qt::Vertical);
     if (m_curEditor->mimeType() == "text/html") {
         QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
         m_htmlWidget->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
@@ -144,7 +175,8 @@ void HtmlPreview::editorHtmlPrivew()
         QString html = QString::fromUtf8(mdtohtml(data));
         m_htmlWidget->setHtml(m_head+html+end,QUrl::fromLocalFile(m_curEditor->filePath()));
     }
-    m_htmlWidget->setScrollPos(pos);
+    m_htmlWidget->setScrollBarValue(Qt::Horizontal,h);
+    m_htmlWidget->setScrollBarValue(Qt::Vertical,v);
 }
 
 void HtmlPreview::triggered(bool b)

@@ -46,8 +46,10 @@ public:
     virtual QUrl url() const = 0;
     virtual void clear() = 0;
     virtual void scroolToAnchor(const QString &anchor) = 0;
-    virtual QPoint scrollPos() const = 0;
-    virtual void setScrollPos(const QPoint &pos) = 0;
+    virtual void setScrollBarValue(Qt::Orientation orientation, int value) = 0;
+    virtual int scrollBarValue(Qt::Orientation orientation) const = 0;
+    virtual int scrollBarMinimum(Qt::Orientation orientation) const = 0;
+    virtual int scrollBarMaximum(Qt::Orientation orientation) const = 0;
     virtual QString selectedText() const = 0;
     virtual bool findText(const QString & exp, QTextDocument::FindFlags options = 0 ) = 0;
 signals:

@@ -42,6 +42,8 @@ public slots:
     void appLoaded();
     void loadHeadData(const QString &css);
     void currentEditorChanged(LiteApi::IEditor*);
+    void contentsChanged();
+    void editorVerticalScrollBarValueChanged();
     void editorHtmlPrivew();
     void triggered(bool);
 protected:
@@ -50,6 +52,7 @@ protected:
     LiteApi::IHtmlWidget  *m_htmlWidget;
     QAction      *m_toolAct;
     QPointer<LiteApi::ITextEditor> m_curEditor;
+    QPointer<QPlainTextEdit> m_curTextEditor;
     QByteArray  m_lastData;
     QByteArray  m_head;
 };

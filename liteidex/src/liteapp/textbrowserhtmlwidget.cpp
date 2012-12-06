@@ -94,15 +94,38 @@ void TextBrowserHtmlWidget::scroolToAnchor(const QString &anchor)
     m_widget->scrollToAnchor(anchor);
 }
 
-QPoint TextBrowserHtmlWidget::scrollPos() const
+void TextBrowserHtmlWidget::setScrollBarValue(Qt::Orientation orientation, int value)
 {
-    return QPoint(m_widget->horizontalScrollBar()->value(),m_widget->verticalScrollBar()->value());
+    if (orientation == Qt::Horizontal) {
+        m_widget->horizontalScrollBar()->setValue(value);
+    } else {
+        m_widget->verticalScrollBar()->setValue(value);
+    }
 }
 
-void TextBrowserHtmlWidget::setScrollPos(const QPoint &pos)
+int TextBrowserHtmlWidget::scrollBarValue(Qt::Orientation orientation) const
 {
-    m_widget->horizontalScrollBar()->setValue(pos.x());
-    m_widget->verticalScrollBar()->setValue(pos.y());
+    if (orientation == Qt::Horizontal) {
+        return m_widget->horizontalScrollBar()->value();
+    }
+    return m_widget->verticalScrollBar()->value();
+}
+
+int TextBrowserHtmlWidget::scrollBarMinimum(Qt::Orientation orientation) const
+{
+    if (orientation == Qt::Horizontal) {
+        return m_widget->horizontalScrollBar()->minimum();
+    }
+    return m_widget->verticalScrollBar()->minimum();
+
+}
+
+int TextBrowserHtmlWidget::scrollBarMaximum(Qt::Orientation orientation) const
+{
+    if (orientation == Qt::Horizontal) {
+        return m_widget->horizontalScrollBar()->maximum();
+    }
+    return m_widget->verticalScrollBar()->maximum();
 }
 
 QString TextBrowserHtmlWidget::selectedText() const

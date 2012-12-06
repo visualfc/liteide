@@ -80,14 +80,24 @@ void WebViewHtmlWidget::scroolToAnchor(const QString &anchor)
     m_widget->page()->mainFrame()->scrollToAnchor(anchor);
 }
 
-QPoint WebViewHtmlWidget::scrollPos() const
+void WebViewHtmlWidget::setScrollBarValue(Qt::Orientation orientation, int value)
 {
-    return m_widget->page()->mainFrame()->scrollPosition();
+    m_widget->page()->mainFrame()->setScrollBarValue(orientation,value);
 }
 
-void WebViewHtmlWidget::setScrollPos(const QPoint &pos)
+int WebViewHtmlWidget::scrollBarValue(Qt::Orientation orientation) const
 {
-    m_widget->page()->mainFrame()->setScrollPosition(pos);
+    return m_widget->page()->mainFrame()->scrollBarValue(orientation);
+}
+
+int WebViewHtmlWidget::scrollBarMinimum(Qt::Orientation orientation) const
+{
+    return m_widget->page()->mainFrame()->scrollBarMinimum(orientation);
+}
+
+int WebViewHtmlWidget::scrollBarMaximum(Qt::Orientation orientation) const
+{
+    return m_widget->page()->mainFrame()->scrollBarMaximum(orientation);
 }
 
 QString WebViewHtmlWidget::selectedText() const
