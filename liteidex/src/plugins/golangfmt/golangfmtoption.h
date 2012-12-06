@@ -21,8 +21,6 @@
 // Module: golangfmtoption.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGFMTOPTION_H
 #define GOLANGFMTOPTION_H
 

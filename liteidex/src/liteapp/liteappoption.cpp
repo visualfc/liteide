@@ -21,8 +21,6 @@
 // Module: liteappoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteappoption.h"
 #include "liteapp_global.h"
 #include "ui_liteappoption.h"

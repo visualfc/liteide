@@ -21,8 +21,6 @@
 // Module: webkithtmlwidget_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WEBKITHTMLWIDGET_GLOBAL_H
 #define WEBKITHTMLWIDGET_GLOBAL_H
 

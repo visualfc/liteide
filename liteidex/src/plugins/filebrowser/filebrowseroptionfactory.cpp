@@ -21,8 +21,6 @@
 // Module: filebrowseroptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filebrowseroption.h"
 #include "filebrowseroptionfactory.h"
 //lite_memory_check_begin

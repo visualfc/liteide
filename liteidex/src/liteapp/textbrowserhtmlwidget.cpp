@@ -21,8 +21,6 @@
 // Module: textbrowserhtmlwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "textbrowserhtmlwidget.h"
 #include <QTextBrowser>
 #include <QScrollBar>

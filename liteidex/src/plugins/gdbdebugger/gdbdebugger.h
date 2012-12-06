@@ -21,8 +21,6 @@
 // Module: gdbdebugger.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GDBDEBUGGER_H
 #define GDBDEBUGGER_H
 

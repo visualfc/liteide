@@ -21,8 +21,6 @@
 // Module: golangdocoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangdocoption.h"
 #include "ui_golangdocoption.h"
 //lite_memory_check_begin

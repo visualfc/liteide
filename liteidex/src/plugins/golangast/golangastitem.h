@@ -21,8 +21,6 @@
 // Module: golangastitem.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGASTITEM_H
 #define GOLANGASTITEM_H
 

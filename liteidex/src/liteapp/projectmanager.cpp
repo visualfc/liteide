@@ -21,8 +21,6 @@
 // Module: projectmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "projectmanager.h"
 #include "liteapp_global.h"
 #include <QFileInfo>

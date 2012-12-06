@@ -21,8 +21,6 @@
 // Module: litedebugplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litedebugplugin.h"
 #include "litedebug.h"
 #include <QMenu>

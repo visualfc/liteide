@@ -21,8 +21,6 @@
 // Module: golangapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGAPI_H
 #define GOLANGAPI_H
 

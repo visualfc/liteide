@@ -21,8 +21,6 @@
 // Module: litetabwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITETABWIDGET_H
 #define LITETABWIDGET_H
 

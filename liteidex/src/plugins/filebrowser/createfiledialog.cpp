@@ -21,8 +21,6 @@
 // Module: createfiledialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "createfiledialog.h"
 #include "ui_createfiledialog.h"
 #include <QDir>

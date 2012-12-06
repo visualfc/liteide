@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: tableviewwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: tableviewwidget.cpp,v 1.0 2011-7-25 visualfc Exp $
 
 #include "tableviewwidget.h"
 #include "ui_tableviewwidget.h"

@@ -21,8 +21,6 @@
 // Module: goplaybrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "goplaybrowser.h"
 #include "liteenvapi/liteenvapi.h"
 #include "fileutil/fileutil.h"

@@ -21,8 +21,6 @@
 // Module: golangast.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGAST_H
 #define GOLANGAST_H
 

@@ -21,8 +21,6 @@
 // Module: litefindplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litefindplugin.h"
 #include "findeditor.h"
 #include "replaceeditor.h"

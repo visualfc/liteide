@@ -21,8 +21,6 @@
 // Module: litedebugapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef __LITEDEBUGAPI_H__
 #define __LITEDEBUGAPI_H__
 

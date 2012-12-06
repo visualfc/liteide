@@ -21,8 +21,6 @@
 // Module: mimetype.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEAPI_MIMETYPE_H
 #define LITEAPI_MIMETYPE_H
 

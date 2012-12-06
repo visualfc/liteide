@@ -21,8 +21,6 @@
 // Module: rotationtoolbutton.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "rotationtoolbutton.h"
 #include <QStylePainter>
 #include <QStyleOptionToolButton>

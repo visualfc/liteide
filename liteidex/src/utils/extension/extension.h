@@ -21,8 +21,6 @@
 // Module: extension.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef EXTENSION_H
 #define EXTENSION_H
 

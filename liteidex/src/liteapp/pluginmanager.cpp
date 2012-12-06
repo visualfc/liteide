@@ -21,8 +21,6 @@
 // Module: pluginmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "pluginmanager.h"
 #include "pluginsdialog.h"
 

@@ -21,8 +21,6 @@
 // Module: projectmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef PROJECTMANAGER_H
 #define PROJECTMANAGER_H
 

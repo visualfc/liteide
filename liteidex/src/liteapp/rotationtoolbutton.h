@@ -21,8 +21,6 @@
 // Module: rotationtoolbutton.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef ROTATIONTOOLBUTTON_H
 #define ROTATIONTOOLBUTTON_H
 

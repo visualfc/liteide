@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: golanghighlighter.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: golanghighlighter.h,v 1.0 2011-5-12 visualfc Exp $
 
 #ifndef GOLANGHIGHLIGHTER_H
 #define GOLANGHIGHLIGHTER_H

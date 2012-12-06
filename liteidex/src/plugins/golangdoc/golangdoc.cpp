@@ -21,8 +21,6 @@
 // Module: golangdoc.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangdoc.h"
 #include "litebuildapi/litebuildapi.h"
 #include "processex/processex.h"

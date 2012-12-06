@@ -21,8 +21,6 @@
 // Module: golangfmtoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangfmtoption.h"
 #include "ui_golangfmtoption.h"
 //lite_memory_check_begin

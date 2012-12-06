@@ -21,8 +21,6 @@
 // Module: golangplayplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGPLAYPLUGIN_H
 #define GOLANGPLAYPLUGIN_H
 

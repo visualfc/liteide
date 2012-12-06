@@ -21,8 +21,6 @@
 // Module: liteenvoption.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEENVOPTION_H
 #define LITEENVOPTION_H
 

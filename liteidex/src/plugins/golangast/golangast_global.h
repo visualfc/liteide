@@ -21,8 +21,6 @@
 // Module: golangast_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGAST_GLOBAL_H
 #define GOLANGAST_GLOBAL_H
 

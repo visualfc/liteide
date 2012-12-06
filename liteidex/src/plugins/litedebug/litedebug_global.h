@@ -21,8 +21,6 @@
 // Module: litedebug_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEDEBUG_GLOBAL_H
 #define LITEDEBUG_GLOBAL_H
 

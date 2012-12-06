@@ -21,8 +21,6 @@
 // Module: liteeditoroptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteeditoroptionfactory.h"
 #include "liteeditoroption.h"
 //lite_memory_check_begin

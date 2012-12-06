@@ -21,8 +21,6 @@
 // Module: liteeditorplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEEDITORPLUGIN_H
 #define LITEEDITORPLUGIN_H
 

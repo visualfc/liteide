@@ -21,8 +21,6 @@
 // Module: gotool.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "gotool.h"
 #include "liteenvapi/liteenvapi.h"
 #include "fileutil/fileutil.h"

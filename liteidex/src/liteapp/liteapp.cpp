@@ -21,8 +21,6 @@
 // Module: liteapp.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteapp.h"
 #include "filemanager.h"
 #include "editormanager.h"

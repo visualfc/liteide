@@ -21,8 +21,6 @@
 // Module: replaceeditor.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "replaceeditor.h"
 #include <QGridLayout>
 #include <QLineEdit>

@@ -21,8 +21,6 @@
 // Module: packagebrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "packagebrowser.h"
 #include "setupgopathdialog.h"
 #include "liteenvapi/liteenvapi.h"

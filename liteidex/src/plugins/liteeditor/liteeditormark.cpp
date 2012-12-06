@@ -21,8 +21,6 @@
 // Module: liteeditormark.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteeditormark.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"
 #include "liteeditorwidget.h"

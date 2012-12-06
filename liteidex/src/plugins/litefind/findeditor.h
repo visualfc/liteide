@@ -21,8 +21,6 @@
 // Module: findeditor.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FINDEDITOR_H
 #define FINDEDITOR_H
 

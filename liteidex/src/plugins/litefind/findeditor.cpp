@@ -21,8 +21,6 @@
 // Module: findeditor.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "findeditor.h"
 
 #include <QLineEdit>

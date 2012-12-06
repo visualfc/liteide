@@ -21,8 +21,6 @@
 // Module: filepathmodel.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILEPATHMODEL_H
 #define FILEPATHMODEL_H
 

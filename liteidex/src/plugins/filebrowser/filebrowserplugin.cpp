@@ -21,8 +21,6 @@
 // Module: filebrowserplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filebrowserplugin.h"
 #include "filebrowser.h"
 #include "filebrowseroptionfactory.h"

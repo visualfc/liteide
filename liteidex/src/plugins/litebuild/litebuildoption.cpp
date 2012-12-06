@@ -21,8 +21,6 @@
 // Module: litebuildoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litebuildoption.h"
 #include "ui_litebuildoption.h"
 #include <QFileSystemModel>

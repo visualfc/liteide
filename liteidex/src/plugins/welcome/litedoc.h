@@ -21,8 +21,6 @@
 // Module: litedoc.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEDOC_H
 #define LITEDOC_H
 

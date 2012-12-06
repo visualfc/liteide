@@ -21,8 +21,6 @@
 // Module: gdbdebuggerplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "gdbdebuggerplugin.h"
 #include "gdbdebugger.h"
 #include "litedebugapi/litedebugapi.h"

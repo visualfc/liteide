@@ -21,8 +21,6 @@
 // Module: optionmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef OPTIONMANAGER_H
 #define OPTIONMANAGER_H
 

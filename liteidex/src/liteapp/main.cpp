@@ -21,8 +21,6 @@
 // Module: main.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include <QApplication>
 #include <QTranslator>
 #include <QLocale>

@@ -21,8 +21,6 @@
 // Module: golangdoc_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGDOC_GLOBAL_H
 #define GOLANGDOC_GLOBAL_H
 

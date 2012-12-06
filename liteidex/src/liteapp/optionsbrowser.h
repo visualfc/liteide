@@ -21,8 +21,6 @@
 // Module: optionsbrowser.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef OPTIONSBROWSER_H
 #define OPTIONSBROWSER_H
 

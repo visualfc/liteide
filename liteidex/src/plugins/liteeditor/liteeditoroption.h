@@ -21,8 +21,6 @@
 // Module: liteeditoroption.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEEDITOROPTION_H
 #define LITEEDITOROPTION_H
 

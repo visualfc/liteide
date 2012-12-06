@@ -21,8 +21,6 @@
 // Module: filebrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filebrowser.h"
 #include "createfiledialog.h"
 #include "createdirdialog.h"

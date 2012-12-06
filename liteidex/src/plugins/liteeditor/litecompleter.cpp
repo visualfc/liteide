@@ -21,8 +21,6 @@
 // Module: litecompleter.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litecompleter.h"
 #include "treemodelcompleter/treemodelcompleter.h"
 

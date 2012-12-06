@@ -21,8 +21,6 @@
 // Module: textbrowserhtmlwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef TEXTBROWSERHTMLWIDGET_H
 #define TEXTBROWSERHTMLWIDGET_H
 

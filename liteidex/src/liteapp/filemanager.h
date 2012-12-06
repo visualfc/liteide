@@ -21,8 +21,6 @@
 // Module: filemanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 

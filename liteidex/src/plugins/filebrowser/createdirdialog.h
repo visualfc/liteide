@@ -21,8 +21,6 @@
 // Module: createdirdialog.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef CREATEDIRDIALOG_H
 #define CREATEDIRDIALOG_H
 

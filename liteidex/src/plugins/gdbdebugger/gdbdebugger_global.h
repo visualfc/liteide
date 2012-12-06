@@ -21,8 +21,6 @@
 // Module: gdbdebugger_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GDBDEBUGGER_GLOBAL_H
 #define GDBDEBUGGER_GLOBAL_H
 

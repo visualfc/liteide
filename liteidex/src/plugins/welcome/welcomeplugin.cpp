@@ -21,8 +21,6 @@
 // Module: welcomeplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "welcomeplugin.h"
 #include "../../liteapp/liteapp_global.h"
 #include <QAction>

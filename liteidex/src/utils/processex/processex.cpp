@@ -21,8 +21,6 @@
 // Module: processex.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "processex.h"
 #include <QMap>
 //lite_memory_check_begin

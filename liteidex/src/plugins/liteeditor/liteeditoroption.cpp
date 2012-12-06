@@ -21,8 +21,6 @@
 // Module: liteeditoroption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteeditoroption.h"
 #include "ui_liteeditoroption.h"
 #include "liteeditor_global.h"

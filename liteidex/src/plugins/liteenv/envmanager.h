@@ -21,8 +21,6 @@
 // Module: envmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef ENVMANAGER_H
 #define ENVMANAGER_H
 

@@ -21,8 +21,6 @@
 // Module: litebuild.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litebuild.h"
 #include "buildmanager.h"
 #include "fileutil/fileutil.h"

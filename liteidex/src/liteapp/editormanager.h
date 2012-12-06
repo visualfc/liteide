@@ -21,8 +21,6 @@
 // Module: editormanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef EDITORMANAGER_H
 #define EDITORMANAGER_H
 

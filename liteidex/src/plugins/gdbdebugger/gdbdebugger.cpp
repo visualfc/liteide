@@ -18,10 +18,8 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: gdbdebuger.cpp
+// Module: gdbdebugger.cpp
 // Creator: visualfc <visualfc@gmail.com>
-
-
 
 #include "gdbdebugger.h"
 #include "fileutil/fileutil.h"

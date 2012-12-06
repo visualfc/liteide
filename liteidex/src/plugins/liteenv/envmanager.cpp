@@ -21,8 +21,6 @@
 // Module: envmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "envmanager.h"
 #include <QDir>
 #include <QFile>

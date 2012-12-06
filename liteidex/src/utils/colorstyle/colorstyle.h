@@ -21,8 +21,6 @@
 // Module: colorstyle.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef COLORSTYLE_H
 #define COLORSTYLE_H
 

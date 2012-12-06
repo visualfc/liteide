@@ -21,8 +21,6 @@
 // Module: modelprojectimpl.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MODELPROJECTIMPL_H
 #define MODELPROJECTIMPL_H
 

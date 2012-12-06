@@ -21,8 +21,6 @@
 // Module: buildconfigdialog.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef BUILDCONFIGDIALOG_H
 #define BUILDCONFIGDIALOG_H
 

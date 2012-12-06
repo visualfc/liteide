@@ -21,8 +21,6 @@
 // Module: documentbrowserfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef DOCUMENTBROWSERFACTORY_H
 #define DOCUMENTBROWSERFACTORY_H
 

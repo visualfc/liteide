@@ -21,8 +21,6 @@
 // Module: mimetype.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "mimetype.h"
 
 #include <QFile>

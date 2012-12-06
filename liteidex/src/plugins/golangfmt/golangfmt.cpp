@@ -21,8 +21,6 @@
 // Module: golangfmt.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangfmt.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"

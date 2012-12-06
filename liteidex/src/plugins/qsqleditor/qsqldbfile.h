@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: qsqldbfile.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: qsqldbfile.h,v 1.0 2011-7-25 visualfc Exp $
 
 #ifndef QSQLDBFILE_H
 #define QSQLDBFILE_H

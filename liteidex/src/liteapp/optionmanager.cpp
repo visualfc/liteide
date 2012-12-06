@@ -21,8 +21,6 @@
 // Module: optionmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "optionmanager.h"
 #include "optionsbrowser.h"
 #include <QAction>

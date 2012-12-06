@@ -21,8 +21,6 @@
 // Module: webkithtmlwidgetplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "webkithtmlwidgetplugin.h"
 #include "webviewhtmlwidget.h"
 #include <QtPlugin>

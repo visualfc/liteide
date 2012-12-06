@@ -21,8 +21,6 @@
 // Module: golangcode.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangcode.h"
 #include "fileutil/fileutil.h"
 #include <QProcess>

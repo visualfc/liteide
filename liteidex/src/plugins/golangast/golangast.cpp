@@ -21,8 +21,6 @@
 // Module: golangast.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangast.h"
 #include "golangastitem.h"
 #include "golangasticon.h"

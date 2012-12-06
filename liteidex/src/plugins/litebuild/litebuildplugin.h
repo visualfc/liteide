@@ -21,8 +21,6 @@
 // Module: litebuildplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEBUILDPLUGIN_H
 #define LITEBUILDPLUGIN_H
 

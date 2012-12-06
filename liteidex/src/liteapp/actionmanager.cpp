@@ -21,8 +21,6 @@
 // Module: actionmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "actionmanager.h"
 
 #include <QMenuBar>

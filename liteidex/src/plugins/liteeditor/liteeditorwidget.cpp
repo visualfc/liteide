@@ -21,8 +21,6 @@
 // Module: liteeditorwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteeditorwidget.h"
 
 #include <QCompleter>

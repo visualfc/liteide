@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: sqltablemodel.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: sqltablemodel.cpp,v 1.0 2011-7-25 visualfc Exp $
 
 #include "sqltablemodel.h"
 #include <QColor>

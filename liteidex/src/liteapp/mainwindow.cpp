@@ -21,8 +21,6 @@
 // Module: mainwindow.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "mainwindow.h"
 #include "aboutdialog.h"
 

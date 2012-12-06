@@ -21,8 +21,6 @@
 // Module: filesystemwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILESYSTEMWIDGET_H
 #define FILESYSTEMWIDGET_H
 

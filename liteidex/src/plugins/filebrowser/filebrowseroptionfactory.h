@@ -21,8 +21,6 @@
 // Module: filebrowseroptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILEBROWSEROPTIONFACTORY_H
 #define FILEBROWSEROPTIONFACTORY_H
 

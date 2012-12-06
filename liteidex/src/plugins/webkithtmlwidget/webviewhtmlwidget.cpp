@@ -21,8 +21,6 @@
 // Module: webviewhtmlwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "webviewhtmlwidget.h"
 
 #include <QWebView>

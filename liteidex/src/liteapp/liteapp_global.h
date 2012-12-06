@@ -21,8 +21,6 @@
 // Module: liteapp_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEAPP_GLOBAL_H
 #define LITEAPP_GLOBAL_H
 

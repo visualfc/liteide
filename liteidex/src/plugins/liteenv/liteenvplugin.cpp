@@ -21,8 +21,6 @@
 // Module: liteenvplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteenvplugin.h"
 #include "envmanager.h"
 #include "liteenvoptionfactory.h"

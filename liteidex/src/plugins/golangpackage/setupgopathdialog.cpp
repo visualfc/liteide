@@ -21,8 +21,6 @@
 // Module: setupgopathdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "setupgopathdialog.h"
 #include "ui_setupgopathdialog.h"
 #include <QFileDialog>

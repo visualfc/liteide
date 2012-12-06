@@ -21,8 +21,6 @@
 // Module: wordapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEAPI_WORDAPI_H
 #define LITEAPI_WORDAPI_H
 

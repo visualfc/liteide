@@ -21,8 +21,6 @@
 // Module: toolwindowmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "toolwindowmanager.h"
 #include "toolmainwindow.h"
 //lite_memory_check_begin

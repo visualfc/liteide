@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: gopathprojectfactor.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: gopathprojectfactor.cpp,v 1.0 2012-2-28 visualfc Exp $
 
 #include "gopathprojectfactor.h"
 #include "gopathproject.h"

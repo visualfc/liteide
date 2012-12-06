@@ -21,8 +21,6 @@
 // Module: debugwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "debugwidget.h"
 #include <QTreeView>
 #include <QTabWidget>

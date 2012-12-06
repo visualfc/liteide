@@ -21,8 +21,6 @@
 // Module: liteapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef __LITEAPI_H__
 #define __LITEAPI_H__
 

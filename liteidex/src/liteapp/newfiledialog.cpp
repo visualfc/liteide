@@ -21,8 +21,6 @@
 // Module: newfiledialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "newfiledialog.h"
 #include "ui_newfiledialog.h"
 

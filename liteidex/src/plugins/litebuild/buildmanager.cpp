@@ -21,8 +21,6 @@
 // Module: buildmanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "buildmanager.h"
 #include "build.h"
 #include <QDir>

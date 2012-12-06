@@ -21,8 +21,6 @@
 // Module: litebuildoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEBUILDOPTIONFACTORY_H
 #define LITEBUILDOPTIONFACTORY_H
 

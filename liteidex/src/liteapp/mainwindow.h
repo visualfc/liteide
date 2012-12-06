@@ -21,8 +21,6 @@
 // Module: mainwindow.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

@@ -21,8 +21,6 @@
 // Module: golangapi.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangapi.h"
 #include <QFile>
 #include <QSet>

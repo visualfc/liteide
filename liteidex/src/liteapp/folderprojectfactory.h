@@ -21,8 +21,6 @@
 // Module: folderprojectfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FOLDERPROJECTFACTORY_H
 #define FOLDERPROJECTFACTORY_H
 

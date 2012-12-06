@@ -21,8 +21,6 @@
 // Module: liteenvplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEENVPLUGIN_H
 #define LITEENVPLUGIN_H
 

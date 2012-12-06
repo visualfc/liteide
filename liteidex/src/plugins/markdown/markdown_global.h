@@ -21,8 +21,6 @@
 // Module: markdown_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MARKDOWN_GLOBAL_H
 #define MARKDOWN_GLOBAL_H
 

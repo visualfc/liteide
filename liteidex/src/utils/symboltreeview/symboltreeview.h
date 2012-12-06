@@ -21,8 +21,6 @@
 // Module: symboltreeview.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef SYMBOLTREEVIEW_H
 #define SYMBOLTREEVIEW_H
 

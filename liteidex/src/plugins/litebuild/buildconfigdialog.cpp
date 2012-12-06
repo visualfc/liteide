@@ -21,8 +21,6 @@
 // Module: buildconfigdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "buildconfigdialog.h"
 #include "ui_buildconfigdialog.h"
 

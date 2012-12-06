@@ -21,8 +21,6 @@
 // Module: htmlpreview.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef HTMLPREVIEW_H
 #define HTMLPREVIEW_H
 

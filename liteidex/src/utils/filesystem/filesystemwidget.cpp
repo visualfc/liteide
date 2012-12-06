@@ -21,8 +21,6 @@
 // Module: filesystemwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filesystemwidget.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"

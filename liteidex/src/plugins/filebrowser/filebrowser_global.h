@@ -21,8 +21,6 @@
 // Module: filebrowser_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILEBROWSER_GLOBAL_H
 #define FILEBROWSER_GLOBAL_H
 

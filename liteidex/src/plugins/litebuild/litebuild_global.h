@@ -21,8 +21,6 @@
 // Module: litebuild_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEBUILD_GLOBAL_H
 #define LITEBUILD_GLOBAL_H
 

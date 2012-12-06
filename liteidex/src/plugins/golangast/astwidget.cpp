@@ -21,8 +21,6 @@
 // Module: astwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "astwidget.h"
 #include "golangastitem.h"
 #include "golangasticon.h"

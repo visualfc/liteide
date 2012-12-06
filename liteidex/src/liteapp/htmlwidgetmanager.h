@@ -21,8 +21,6 @@
 // Module: htmlwidgetmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef HTMLWIDGETMANAGER_H
 #define HTMLWIDGETMANAGER_H
 

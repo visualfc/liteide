@@ -21,8 +21,6 @@
 // Module: markdownplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "markdownplugin.h"
 #include "htmlpreview.h"
 #include "markdownedit.h"

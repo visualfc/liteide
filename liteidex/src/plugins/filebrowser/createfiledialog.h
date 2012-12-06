@@ -21,8 +21,6 @@
 // Module: createfiledialog.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef CREATEFILEDIALOG_H
 #define CREATEFILEDIALOG_H
 

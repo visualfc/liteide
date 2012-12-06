@@ -21,8 +21,6 @@
 // Module: filesystemmodel.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILESYSTEMMODEL_H
 #define FILESYSTEMMODEL_H
 

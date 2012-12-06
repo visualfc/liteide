@@ -21,8 +21,6 @@
 // Module: golangastplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangastplugin.h"
 #include <QAction>
 //lite_memory_check_begin

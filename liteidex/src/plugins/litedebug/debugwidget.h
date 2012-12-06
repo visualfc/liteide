@@ -21,8 +21,6 @@
 // Module: debugwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef DEBUGWIDGET_H
 #define DEBUGWIDGET_H
 

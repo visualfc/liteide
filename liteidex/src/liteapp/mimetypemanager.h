@@ -21,8 +21,6 @@
 // Module: mimetypemanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MIMETYPEMANAGER_H
 #define MIMETYPEMANAGER_H
 

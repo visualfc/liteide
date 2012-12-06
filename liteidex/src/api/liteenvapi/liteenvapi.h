@@ -21,8 +21,6 @@
 // Module: liteenvapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef __LITEENVAPI_H__
 #define __LITEENVAPI_H__
 

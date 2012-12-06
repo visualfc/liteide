@@ -21,8 +21,6 @@
 // Module: litebuildoption.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEBUILDOPTION_H
 #define LITEBUILDOPTION_H
 

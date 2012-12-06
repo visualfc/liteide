@@ -21,8 +21,6 @@
 // Module: terminaledit.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef TERMINALEDIT_H
 #define TERMINALEDIT_H
 

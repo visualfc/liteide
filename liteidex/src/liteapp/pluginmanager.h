@@ -21,8 +21,6 @@
 // Module: pluginmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 

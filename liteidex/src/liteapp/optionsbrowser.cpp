@@ -21,8 +21,6 @@
 // Module: optionsbrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "optionsbrowser.h"
 #include "ui_optionswidget.h"
 

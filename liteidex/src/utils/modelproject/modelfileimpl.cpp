@@ -21,8 +21,6 @@
 // Module: modelfileimpl.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "modelfileimpl.h"
 #include "fileutil/fileutil.h"
 

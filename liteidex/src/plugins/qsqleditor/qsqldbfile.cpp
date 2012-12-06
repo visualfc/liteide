@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: qsqldbfile.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: qsqldbfile.cpp,v 1.0 2011-7-25 visualfc Exp $
 
 #include "qsqldbfile.h"
 #include <QDebug>

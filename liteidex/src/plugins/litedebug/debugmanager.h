@@ -21,8 +21,6 @@
 // Module: debugmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef DEBUGMANAGER_H
 #define DEBUGMANAGER_H
 

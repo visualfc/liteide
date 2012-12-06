@@ -21,8 +21,6 @@
 // Module: actionmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef ACTIONMANAGER_H
 #define ACTIONMANAGER_H
 

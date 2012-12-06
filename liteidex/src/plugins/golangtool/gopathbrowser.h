@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: gopathbrowser.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: gopathbrowser.h,v 1.0 2012-2-28 visualfc Exp $
 
 #ifndef GOPATHBROWSER_H
 #define GOPATHBROWSER_H

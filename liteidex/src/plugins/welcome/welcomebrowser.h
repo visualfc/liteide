@@ -21,8 +21,6 @@
 // Module: welcomebrowser.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WELCOMEBROWSER_H
 #define WELCOMEBROWSER_H
 

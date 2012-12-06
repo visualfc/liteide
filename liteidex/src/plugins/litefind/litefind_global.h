@@ -21,8 +21,6 @@
 // Module: litefind_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEFIND_GLOBAL_H
 #define LITEFIND_GLOBAL_H
 

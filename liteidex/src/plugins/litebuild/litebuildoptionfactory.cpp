@@ -21,8 +21,6 @@
 // Module: litebuildoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litebuildoptionfactory.h"
 #include "litebuildoption.h"
 //lite_memory_check_begin

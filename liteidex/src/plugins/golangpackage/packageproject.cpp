@@ -21,8 +21,6 @@
 // Module: packageproject.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "packageproject.h"
 #include "filepathmodel.h"
 #include "gotool.h"

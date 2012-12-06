@@ -21,8 +21,6 @@
 // Module: filepathmodel.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filepathmodel.h"
 
 #include <QFileInfo>

@@ -21,8 +21,6 @@
 // Module: colorstyle.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "colorstyle.h"
 #include <QFile>
 #include <QXmlStreamReader>

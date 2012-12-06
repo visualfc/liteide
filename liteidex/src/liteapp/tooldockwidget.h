@@ -21,8 +21,6 @@
 // Module: tooldockwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef TOOLDOCKWIDGET_H
 #define TOOLDOCKWIDGET_H
 

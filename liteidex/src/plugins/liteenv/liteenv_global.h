@@ -21,8 +21,6 @@
 // Module: liteenv_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEENV_GLOBAL_H
 #define LITEENV_GLOBAL_H
 

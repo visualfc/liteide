@@ -21,8 +21,6 @@
 // Module: filesystemmodel.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filesystemmodel.h"
 
 #include <QFileInfo>

@@ -21,8 +21,6 @@
 // Module: documentbrowserfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "documentbrowserfactory.h"
 #include "documentbrowser.h"
 #include <QFile>

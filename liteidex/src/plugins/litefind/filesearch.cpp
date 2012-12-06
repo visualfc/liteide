@@ -21,8 +21,6 @@
 // Module: filesearch.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filesearch.h"
 #include <QFile>
 #include <QTableWidget>

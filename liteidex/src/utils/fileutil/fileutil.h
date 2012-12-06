@@ -21,8 +21,6 @@
 // Module: fileutil.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILEUTIL_H
 #define FILEUTIL_H
 

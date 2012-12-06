@@ -21,8 +21,6 @@
 // Module: build.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef BUILD_H
 #define BUILD_H
 

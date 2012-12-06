@@ -21,8 +21,6 @@
 // Module: liteeditoroptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEEDITOROPTIONFACTORY_H
 #define LITEEDITOROPTIONFACTORY_H
 

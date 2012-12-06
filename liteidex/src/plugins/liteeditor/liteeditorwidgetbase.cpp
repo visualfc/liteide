@@ -21,8 +21,6 @@
 // Module: liteeditorwidgetbase.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteeditorwidgetbase.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"
 #include <QCoreApplication>

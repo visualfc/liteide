@@ -21,8 +21,6 @@
 // Module: golangpackage_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGPACKAGE_GLOBAL_H
 #define GOLANGPACKAGE_GLOBAL_H
 

@@ -21,8 +21,6 @@
 // Module: golangpackageplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGPACKAGEPLUGIN_H
 #define GOLANGPACKAGEPLUGIN_H
 

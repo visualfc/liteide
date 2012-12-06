@@ -21,8 +21,6 @@
 // Module: filesearch.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILESEARCH_H
 #define FILESEARCH_H
 

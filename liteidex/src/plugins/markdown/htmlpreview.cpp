@@ -21,8 +21,6 @@
 // Module: htmlpreview.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "htmlpreview.h"
 #include "sundown/mdtohtml.h"
 #include <QScrollBar>

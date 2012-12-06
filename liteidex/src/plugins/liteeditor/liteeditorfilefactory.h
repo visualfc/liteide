@@ -21,8 +21,6 @@
 // Module: liteeditorfilefactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEEDITORFILEFACTORY_H
 #define LITEEDITORFILEFACTORY_H
 

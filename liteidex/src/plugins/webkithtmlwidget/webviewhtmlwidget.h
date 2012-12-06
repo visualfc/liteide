@@ -21,8 +21,6 @@
 // Module: webviewhtmlwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WEBVIEWHTMLWIDGET_H
 #define WEBVIEWHTMLWIDGET_H
 

@@ -21,8 +21,6 @@
 // Module: replaceeditor.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef REPLACEEDITOR_H
 #define REPLACEEDITOR_H
 

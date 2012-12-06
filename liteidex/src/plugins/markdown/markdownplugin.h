@@ -21,8 +21,6 @@
 // Module: markdownplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MARKDOWNPLUGIN_H
 #define MARKDOWNPLUGIN_H
 

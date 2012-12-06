@@ -21,8 +21,6 @@
 // Module: terminaledit.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "terminaledit.h"
 
 #include <QTextCursor>

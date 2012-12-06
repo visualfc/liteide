@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: importgopathdialog.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: importgopathdialog.h,v 1.0 2012-2-28 visualfc Exp $
 
 #ifndef IMPORTGOPATHDIALOG_H
 #define IMPORTGOPATHDIALOG_H

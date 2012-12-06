@@ -21,8 +21,6 @@
 // Module: modelfileimpl.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MODELFILEIMPL_H
 #define MODELFILEIMPL_H
 

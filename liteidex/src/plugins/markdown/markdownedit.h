@@ -21,8 +21,6 @@
 // Module: markdownedit.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef MARKDOWNEDIT_H
 #define MARKDOWNEDIT_H
 

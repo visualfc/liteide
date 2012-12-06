@@ -21,8 +21,6 @@
 // Module: litewordcompleter.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEWORDCOMPLETER_H
 #define LITEWORDCOMPLETER_H
 

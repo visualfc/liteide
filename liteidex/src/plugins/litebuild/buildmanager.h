@@ -21,8 +21,6 @@
 // Module: buildmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef BUILDMANAGER_H
 #define BUILDMANAGER_H
 

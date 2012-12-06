@@ -21,8 +21,6 @@
 // Module: fileutil.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "fileutil.h"
 #include <QFileInfo>
 #include <QDir>

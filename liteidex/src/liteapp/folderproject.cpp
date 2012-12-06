@@ -21,8 +21,6 @@
 // Module: folderproject.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "folderproject.h"
 #include <QFileInfo>
 //lite_memory_check_begin

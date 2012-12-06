@@ -21,8 +21,6 @@
 // Module: litefindplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEFINDPLUGIN_H
 #define LITEFINDPLUGIN_H
 

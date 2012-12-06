@@ -21,8 +21,6 @@
 // Module: golangdocoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGDOCOPTIONFACTORY_H
 #define GOLANGDOCOPTIONFACTORY_H
 

@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: golangtool_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: golangtool_global.h,v 1.0 2012-2-28 visualfc Exp $
 
 #ifndef GOLANGTOOL_GLOBAL_H
 #define GOLANGTOOL_GLOBAL_H

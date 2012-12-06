@@ -21,8 +21,6 @@
 // Module: goplaybrowser.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOPLAYBROWSER_H
 #define GOPLAYBROWSER_H
 

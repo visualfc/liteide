@@ -21,8 +21,6 @@
 // Module: toolmainwindow.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef TOOLMAINWINDOW_H
 #define TOOLMAINWINDOW_H
 

@@ -21,8 +21,6 @@
 // Module: goproxy.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOPROXY_H
 #define GOPROXY_H
 

@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: sqlitemdelegate.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: sqlitemdelegate.cpp,v 1.0 2011-7-25 visualfc Exp $
 
 #include "sqlitemdelegate.h"
 #include <QDebug>

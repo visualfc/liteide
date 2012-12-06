@@ -21,8 +21,6 @@
 // Module: welcomebrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "welcomebrowser.h"
 #include "ui_welcomewidget.h"
 #include "golangdocapi/golangdocapi.h"

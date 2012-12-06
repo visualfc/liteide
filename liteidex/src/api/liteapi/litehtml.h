@@ -21,8 +21,6 @@
 // Module: litehtml.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEHTML_H
 #define LITEHTML_H
 

@@ -21,8 +21,6 @@
 // Module: createdirdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "createdirdialog.h"
 #include "ui_createdirdialog.h"
 #include <QDir>

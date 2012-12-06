@@ -21,8 +21,6 @@
 // Module: packagetree.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "packagetree.h"
 
 #include <QStandardItem>

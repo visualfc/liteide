@@ -21,8 +21,6 @@
 // Module: mimetypemanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "mimetypemanager.h"
 #include "mimetype/mimetype.h"
 #include <QDir>

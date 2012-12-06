@@ -21,8 +21,6 @@
 // Module: wordapimanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "wordapimanager.h"
 #include "wordapi/wordapi.h"
 

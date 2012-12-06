@@ -21,8 +21,6 @@
 // Module: welcome_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WELCOME_GLOBAL_H
 #define WELCOME_GLOBAL_H
 

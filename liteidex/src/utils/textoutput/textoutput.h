@@ -21,8 +21,6 @@
 // Module: textoutput.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef TEXTOUTPUT_H
 #define TEXTOUTPUT_H
 

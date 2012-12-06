@@ -21,8 +21,6 @@
 // Module: filemanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "filemanager.h"
 #include "newfiledialog.h"
 #include "fileutil/fileutil.h"

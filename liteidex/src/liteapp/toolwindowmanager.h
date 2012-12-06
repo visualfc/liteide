@@ -21,8 +21,6 @@
 // Module: toolwindowmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef TOOLWINDOWMANAGER_H
 #define TOOLWINDOWMANAGER_H
 

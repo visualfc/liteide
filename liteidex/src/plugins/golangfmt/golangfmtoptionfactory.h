@@ -21,8 +21,6 @@
 // Module: golangfmtoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGFMTOPTIONFACTORY_H
 #define GOLANGFMTOPTIONFACTORY_H
 

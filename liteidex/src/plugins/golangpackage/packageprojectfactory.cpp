@@ -21,8 +21,6 @@
 // Module: packageprojectfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "packageprojectfactory.h"
 #include <packageproject.h>
 //lite_memory_check_begin

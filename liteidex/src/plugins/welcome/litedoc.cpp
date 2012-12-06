@@ -21,8 +21,6 @@
 // Module: litedoc.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litedoc.h"
 #include "documentbrowser/documentbrowser.h"
 #include "htmlutil/htmlutil.h"

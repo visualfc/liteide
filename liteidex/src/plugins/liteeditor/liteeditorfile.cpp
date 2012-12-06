@@ -21,8 +21,6 @@
 // Module: liteeditorfile.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "liteeditorfile.h"
 #include "liteeditor_global.h"
 #include <QFile>

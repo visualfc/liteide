@@ -21,8 +21,6 @@
 // Module: golangplayplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangplayplugin.h"
 #include "goplaybrowser.h"
 #include "liteapi/liteobj.h"

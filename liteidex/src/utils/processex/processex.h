@@ -21,8 +21,6 @@
 // Module: processex.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef LITEAPI_PROCESSEX_H
 #define LITEAPI_PROCESSEX_H
 

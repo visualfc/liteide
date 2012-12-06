@@ -21,8 +21,6 @@
 // Module: astwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef ASTWIDGET_H
 #define ASTWIDGET_H
 

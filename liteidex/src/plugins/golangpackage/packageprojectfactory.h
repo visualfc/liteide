@@ -21,8 +21,6 @@
 // Module: packageprojectfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef PACKAGEPROJECTFACTORY_H
 #define PACKAGEPROJECTFACTORY_H
 

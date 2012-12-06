@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: gopathbrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: gopathbrowser.cpp,v 1.0 2012-2-28 visualfc Exp $
 
 #include "gopathbrowser.h"
 #include "gopathmodel.h"

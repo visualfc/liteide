@@ -21,8 +21,6 @@
 // Module: golanghighlighter.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGHIGHLIGHTER_H
 #define GOLANGHIGHLIGHTER_H
 

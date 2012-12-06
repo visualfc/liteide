@@ -21,8 +21,6 @@
 // Module: packagebrowser.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef PACKAGEBROWSER_H
 #define PACKAGEBROWSER_H
 

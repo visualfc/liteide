@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: syntaxeditor_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-3-26
-// $Id: syntaxeditor_global.h,v 1.0 2011-5-12 visualfc Exp $
 
 #ifndef SYNTAXEDITOR_GLOBAL_H
 #define SYNTAXEDITOR_GLOBAL_H

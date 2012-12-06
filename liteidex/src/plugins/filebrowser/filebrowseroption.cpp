@@ -18,10 +18,8 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteappoption.cpp
+// Module: filebrowseroption.cpp
 // Creator: visualfc <visualfc@gmail.com>
-
-
 
 #include "filebrowseroption.h"
 #include "ui_filebrowseroption.h"

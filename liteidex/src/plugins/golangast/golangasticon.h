@@ -21,8 +21,6 @@
 // Module: golangasticon.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGASTICON_H
 #define GOLANGASTICON_H
 

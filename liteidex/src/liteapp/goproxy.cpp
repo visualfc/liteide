@@ -21,8 +21,6 @@
 // Module: goproxy.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "goproxy.h"
 #include "cdrv.h"
 #include <QDebug>

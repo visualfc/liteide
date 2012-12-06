@@ -21,8 +21,6 @@
 // Module: gotool.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOTOOL_H
 #define GOTOOL_H
 

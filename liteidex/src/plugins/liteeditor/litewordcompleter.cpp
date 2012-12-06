@@ -21,8 +21,6 @@
 // Module: litewordcompleter.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litewordcompleter.h"
 #include "treemodelcompleter/treemodelcompleter.h"
 #include <QPlainTextEdit>

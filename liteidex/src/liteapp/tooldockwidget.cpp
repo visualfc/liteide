@@ -21,8 +21,6 @@
 // Module: tooldockwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "tooldockwidget.h"
 #include "liteapi/liteapi.h"
 #include <QAction>

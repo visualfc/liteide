@@ -21,8 +21,6 @@
 // Module: wordapi.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "wordapi.h"
 
 #include <QFile>

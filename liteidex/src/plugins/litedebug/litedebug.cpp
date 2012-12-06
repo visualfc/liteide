@@ -21,8 +21,6 @@
 // Module: litedebug.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litedebug.h"
 #include "debugmanager.h"
 #include "debugwidget.h"

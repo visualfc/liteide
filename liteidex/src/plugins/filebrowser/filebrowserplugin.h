@@ -21,8 +21,6 @@
 // Module: filebrowserplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef FILEBROWSERPLUGIN_H
 #define FILEBROWSERPLUGIN_H
 

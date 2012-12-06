@@ -21,8 +21,6 @@
 // Module: welcomeplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WELCOMEPLUGIN_H
 #define WELCOMEPLUGIN_H
 

@@ -21,8 +21,6 @@
 // Module: litetabwidget.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litetabwidget.h"
 #include "liteapi/liteapi.h"
 #include <QTabBar>

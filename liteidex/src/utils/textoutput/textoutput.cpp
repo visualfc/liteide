@@ -21,8 +21,6 @@
 // Module: textoutput.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "textoutput.h"
 
 #include <QTextCharFormat>

@@ -21,8 +21,6 @@
 // Module: golangdocplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangdocplugin.h"
 #include "golangdoc.h"
 #include "golangdocoptionfactory.h"

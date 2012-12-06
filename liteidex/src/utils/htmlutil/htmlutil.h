@@ -21,8 +21,6 @@
 // Module: htmlutil.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef HTMLUTIL_H
 #define HTMLUTIL_H
 

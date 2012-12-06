@@ -21,8 +21,6 @@
 // Module: markdownedit.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "markdownedit.h"
 #include <QMenu>
 #include <QAction>

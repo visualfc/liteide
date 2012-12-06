@@ -21,8 +21,6 @@
 // Module: docbrowserapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef __LITEDOCBROWSERAPI_H__
 #define __LITEDOCBROWSERAPI_H__
 

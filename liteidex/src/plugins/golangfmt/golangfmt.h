@@ -21,8 +21,6 @@
 // Module: golangfmt.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGFMT_H
 #define GOLANGFMT_H
 

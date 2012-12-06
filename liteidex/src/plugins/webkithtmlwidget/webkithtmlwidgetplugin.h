@@ -21,8 +21,6 @@
 // Module: webkithtmlwidgetplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WEBKITHTMLWIDGETPLUGIN_H
 #define WEBKITHTMLWIDGETPLUGIN_H
 

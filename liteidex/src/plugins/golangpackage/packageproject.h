@@ -21,8 +21,6 @@
 // Module: packageproject.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef PACKAGEPROJECT_H
 #define PACKAGEPROJECT_H
 

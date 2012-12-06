@@ -18,10 +18,8 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteenvapi.h
+// Module: golangastapi.h
 // Creator: visualfc <visualfc@gmail.com>
-
-
 
 #ifndef __GOLANGASTAPI_H__
 #define __GOLANGASTAPI_H__

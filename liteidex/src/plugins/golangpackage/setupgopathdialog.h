@@ -21,8 +21,6 @@
 // Module: setupgopathdialog.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef SETUPGOPATHDIALOG_H
 #define SETUPGOPATHDIALOG_H
 

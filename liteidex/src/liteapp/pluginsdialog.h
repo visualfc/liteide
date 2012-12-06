@@ -21,8 +21,6 @@
 // Module: pluginsdialog.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef PLUGINSDIALOG_H
 #define PLUGINSDIALOG_H
 

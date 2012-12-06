@@ -21,8 +21,6 @@
 // Module: build.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "build.h"
 #include "fileutil/fileutil.h"
 #include <QFile>

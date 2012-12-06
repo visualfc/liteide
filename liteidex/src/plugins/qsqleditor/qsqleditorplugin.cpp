@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: qsqleditorplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-14
-// $Id: qsqleditorplugin.cpp,v 1.0 2011-7-14 visualfc Exp $
 
 #include "qsqleditorplugin.h"
 #include "qsqlfilefactory.h"

@@ -21,8 +21,6 @@
 // Module: documentbrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "documentbrowser.h"
 #include "extension/extension.h"
 #include "sundown/mdtohtml.h"

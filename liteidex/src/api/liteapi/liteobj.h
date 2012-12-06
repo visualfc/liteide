@@ -21,8 +21,6 @@
 // Module: liteobj.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef __LITEOBJ_H__
 #define __LITEOBJ_H__
 

@@ -21,8 +21,6 @@
 // Module: wordapimanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef WORDAPIMANAGER_H
 #define WORDAPIMANAGER_H
 

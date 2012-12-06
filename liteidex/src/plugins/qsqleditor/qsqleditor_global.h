@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: qsqleditor_global.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-14
-// $Id: qsqleditor_global.h,v 1.0 2011-7-14 visualfc Exp $
 
 #ifndef QSQLEDITOR_GLOBAL_H
 #define QSQLEDITOR_GLOBAL_H

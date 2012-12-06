@@ -21,8 +21,6 @@
 // Module: toolmainwindow.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "toolmainwindow.h"
 #include <QToolBar>
 #include <QAction>

@@ -21,8 +21,6 @@
 // Module: litebuildplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "litebuildplugin.h"
 #include "litebuild.h"
 #include "litebuildoptionfactory.h"

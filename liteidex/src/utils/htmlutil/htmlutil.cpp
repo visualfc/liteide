@@ -21,8 +21,6 @@
 // Module: htmlutil.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "htmlutil.h"
 #include <QStringList>
 #include <QDomDocument>

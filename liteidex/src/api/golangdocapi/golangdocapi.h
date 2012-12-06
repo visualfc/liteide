@@ -21,8 +21,6 @@
 // Module: golangdocapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef __GOLANGDOCAPI_H__
 #define __GOLANGDOCAPI_H__
 

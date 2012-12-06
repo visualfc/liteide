@@ -21,8 +21,6 @@
 // Module: editormanager.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "editormanager.h"
 #include "liteapp_global.h"
 #include <QFileInfo>

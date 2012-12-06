@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: importgopathdialog.cpp
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: importgopathdialog.cpp,v 1.0 2012-2-28 visualfc Exp $
 
 #include "importgopathdialog.h"
 #include "ui_importgopathdialog.h"

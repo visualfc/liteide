@@ -21,8 +21,6 @@
 // Module: golangplay_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGPLAY_GLOBAL_H
 #define GOLANGPLAY_GLOBAL_H
 

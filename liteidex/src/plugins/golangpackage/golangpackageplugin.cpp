@@ -21,8 +21,6 @@
 // Module: golangpackageplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangpackageplugin.h"
 #include "packagebrowser.h"
 #include "packageproject.h"

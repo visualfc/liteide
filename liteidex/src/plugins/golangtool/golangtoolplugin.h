@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: golangtoolplugin.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2012-2-27
-// $Id: golangtoolplugin.h,v 1.0 2012-2-28 visualfc Exp $
 
 #ifndef GOLANGTOOLPLUGIN_H
 #define GOLANGTOOLPLUGIN_H

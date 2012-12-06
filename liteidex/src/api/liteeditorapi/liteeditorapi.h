@@ -18,10 +18,8 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteapi.h
+// Module: liteeditorapi.h
 // Creator: visualfc <visualfc@gmail.com>
-
-
 
 #ifndef __LITEEDITORAPI_H__
 #define __LITEEDITORAPI_H__

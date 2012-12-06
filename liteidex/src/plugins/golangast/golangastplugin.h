@@ -21,8 +21,6 @@
 // Module: golangastplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef GOLANGASTPLUGIN_H
 #define GOLANGASTPLUGIN_H
 

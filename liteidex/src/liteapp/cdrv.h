@@ -21,8 +21,6 @@
 // Module: cdrv.h
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #ifndef CDRV_H
 #define CDRV_H
 

@@ -21,8 +21,6 @@
 // Module: symboltreeview.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "symboltreeview.h"
 #include <QHeaderView>
 #include <QFocusEvent>

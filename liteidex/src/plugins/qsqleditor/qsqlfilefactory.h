@@ -20,8 +20,6 @@
 **************************************************************************/
 // Module: qsqlfilefactory.h
 // Creator: visualfc <visualfc@gmail.com>
-// date: 2011-7-25
-// $Id: qsqlfilefactory.h,v 1.0 2011-7-25 visualfc Exp $
 
 #ifndef QSQLFILEFACTORY_H
 #define QSQLFILEFACTORY_H

@@ -21,8 +21,6 @@
 // Module: golangcodeplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #include "golangcodeplugin.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "fileutil/fileutil.h"
