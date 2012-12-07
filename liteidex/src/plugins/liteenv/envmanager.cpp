@@ -129,7 +129,7 @@ void Env::loadEnv(EnvManager *manager, const QString &filePath)
 
     Env *env = new Env(manager);
     env->m_filePath = filePath;
-    env->m_id = QFileInfo(filePath).baseName().toUpper();
+    env->m_id = QFileInfo(filePath).baseName();
     env->loadEnvFile(&f);
     f.close();
     manager->addEnv(env);
@@ -167,6 +167,9 @@ LiteApi::IEnv *EnvManager::findEnv(const QString &id) const
         if (env->id() == id) {
             return env;
         }
+    }
+    if (!m_envList.empty()) {
+        return m_envList.first();
     }
     return NULL;
 }
@@ -233,13 +236,6 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     QAction *editAct = new QAction(QIcon("icon:liteenv/images/setenv.png"),tr("Edit Environment"),this);
     m_toolBar->addAction(editAct);
 
-//    QMenu *buildMenu = m_liteApp->actionManager()->loadMenu("menu/build");
-//    if (!buildMenu) {
-//        buildMenu = m_liteApp->actionManager()->insertMenu("menu/build",tr("&Build"),"menu/help");
-//        buildMenu->addAction(editAct);
-//        buildMenu->addSeparator();
-//    }
-
     foreach (LiteApi::IEnv *env, m_envList) {
         m_envCmb->addItem(env->id());
     }
@@ -293,7 +289,8 @@ void EnvManager::editorSaved(LiteApi::IEditor *editor)
     if (!ed) {
         return;
     }
-    if (m_curEnv->filePath() == ed->filePath()) {
+
+    if (m_curEnv && m_curEnv->filePath() == ed->filePath()) {
         m_curEnv->reload();
         currentEnvChanged(m_curEnv);
     }

@@ -48,6 +48,7 @@ bool WebKitHtmlWidgetPlugin::initWithApp(LiteApi::IApplication *app)
     if (!LiteApi::IPlugin::initWithApp(app)) {
         return false;
     }
+
     LiteApi::IHtmlWidgetFactory *factory = new WebViewHtmlWidgetFactory(this);
     m_liteApp->htmlWidgetManager()->addFactory(factory);
     m_liteApp->htmlWidgetManager()->setDefaultClassName(factory->className());
