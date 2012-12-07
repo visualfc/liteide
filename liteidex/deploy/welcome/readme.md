@@ -5,7 +5,7 @@
 
 * Project: LiteIDE
 * Version: X15 (2.34375)
-* Author: visualfc <mailto:visualfc@gmail.com>
+* Author: visualfc <visualfc@gmail.com>
 
 ### Base Features
 * Mime type basis system

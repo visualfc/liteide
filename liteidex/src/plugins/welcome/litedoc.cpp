@@ -107,6 +107,7 @@ void LiteDoc::openUrl(const QUrl &_url)
     if (url.scheme() == "file") {
         openUrlFile(url);
     } else if (url.scheme() == "http" ||
+               url.scheme() == "https" ||
                url.scheme() == "mailto") {
         QDesktopServices::openUrl(url);
     }

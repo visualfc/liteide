@@ -36,6 +36,7 @@ Example `win32.env`
 
 
 Example `linux32.env`
+
 	#linux32 environment
 	
 	GOROOT=$HOME/go
@@ -119,6 +120,7 @@ The file or project source path cannot include outsite space or latin1 char
 
 ### Environment LITEIDE_GDB
 example LiteEnv -> win64.env
+
 	#win64 environment
 	
 	GOROOT=c:\go-w64
