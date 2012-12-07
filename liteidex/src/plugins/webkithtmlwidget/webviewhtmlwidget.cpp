@@ -115,6 +115,13 @@ bool WebViewHtmlWidget::findText(const QString &exp, QTextDocument::FindFlags op
     return m_widget->findText(exp,flag);
 }
 
+#ifndef QT_NO_PRINTER
+void WebViewHtmlWidget::print(QPrinter *printer)
+{
+    m_widget->print(printer);
+}
+#endif
+
 void WebViewHtmlWidget::webLinkHovered(const QString &link, const QString &title, const QString &textContent)
 {
     emit linkHovered(QUrl(link));

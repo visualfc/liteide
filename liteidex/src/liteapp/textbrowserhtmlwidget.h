@@ -49,6 +49,9 @@ public:
     virtual int scrollBarMaximum(Qt::Orientation orientation) const;
     virtual QString selectedText() const;
     virtual bool findText(const QString & exp, QTextDocument::FindFlags options = 0 );
+#ifndef QT_NO_PRINTER
+    virtual void print(QPrinter *printer);
+#endif
 signals:
     void linkClicked(const QUrl & url);
     void linkHovered(const QUrl & url);

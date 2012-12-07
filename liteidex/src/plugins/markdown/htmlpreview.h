@@ -44,10 +44,14 @@ public slots:
     void syncScrollValue();
     void editorHtmlPrivew();
     void triggered(bool);
+    void exportHtml();
+    void exportPdf();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget               *m_widget;
     LiteApi::IHtmlWidget  *m_htmlWidget;
+    QAction     *m_exportHtmlAct;
+    QAction     *m_exportPdfAct;
     QAction      *m_toolAct;
     QPointer<LiteApi::ITextEditor> m_curEditor;
     QPointer<QPlainTextEdit> m_curTextEditor;

@@ -30,6 +30,11 @@
 #include <QFile>
 #include <QUrl>
 #include <QVBoxLayout>
+#include <QMessageBox>
+#include <QFileDialog>
+#ifndef QT_NO_PRINTER
+#include <QPrinter>
+#endif
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -49,14 +54,20 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_curTextEditor = 0;
     m_widget = new QWidget;
     m_htmlWidget = 0;
+    m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export Html"),this);
+    m_exportPdfAct = new QAction(QIcon("icon:liteeditor/images/exportpdf.png"),tr("Export PDF"),this);
+
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_widget,
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
-                                                  true);
+                                                  false,
+                                                  QList<QAction*>() << m_exportHtmlAct << m_exportPdfAct);
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
+    connect(m_exportHtmlAct,SIGNAL(triggered()),this,SLOT(exportHtml()));
+    connect(m_exportPdfAct,SIGNAL(triggered()),this,SLOT(exportPdf()));
 }
 
 void HtmlPreview::appLoaded()
@@ -189,4 +200,52 @@ void HtmlPreview::triggered(bool b)
         m_lastData.clear();
         m_curEditor->disconnect(this);
     }
+}
+
+void HtmlPreview::exportHtml()
+{
+    if (m_curEditor == 0) {
+        return;
+    }
+    QString title = QFileInfo(m_curEditor->filePath()).baseName();
+    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export Html"),
+                                                    title, "*.html");
+    if (!fileName.isEmpty()) {
+        if (QFileInfo(fileName).suffix().isEmpty())
+            fileName.append(".html");
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            QMessageBox::critical(m_widget,
+                                  QString(tr("Can not write file %1")).arg(fileName)
+                                  ,tr("LiteIDE"));
+            return;
+        }
+        if (m_curEditor->mimeType() == "text/html") {
+            file.write(m_lastData);
+        } else {
+            file.write(m_head+mdtohtml(m_lastData)+end);
+        }
+        file.close();
+    }
+}
+
+void HtmlPreview::exportPdf()
+{
+    if (m_curEditor == 0) {
+        return;
+    }
+#ifndef QT_NO_PRINTER
+    QString title = QFileInfo(m_curEditor->filePath()).baseName();
+
+    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
+                                                    title, "*.pdf");
+    if (!fileName.isEmpty()) {
+        if (QFileInfo(fileName).suffix().isEmpty())
+            fileName.append(".pdf");
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setOutputFileName(fileName);
+        m_htmlWidget->print(&printer);
+    }
+#endif
 }

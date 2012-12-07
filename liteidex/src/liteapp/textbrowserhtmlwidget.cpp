@@ -136,6 +136,13 @@ bool TextBrowserHtmlWidget::findText(const QString &exp, QTextDocument::FindFlag
     return m_widget->find(exp,options);
 }
 
+#ifndef QT_NO_PRINTER
+void TextBrowserHtmlWidget::print(QPrinter *printer)
+{
+    m_widget->print(printer);
+}
+#endif
+
 TextBrowserHtmlWidgetFactory::TextBrowserHtmlWidgetFactory(QObject *parent)
     : IHtmlWidgetFactory(parent)
 {
