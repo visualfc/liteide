@@ -42,6 +42,7 @@ WebViewHtmlWidget::WebViewHtmlWidget(QObject *parent) :
     m_widget = new QWebView;
     connect(m_widget,SIGNAL(linkClicked(QUrl)),this,SIGNAL(linkClicked(QUrl)));
     connect(m_widget->page(),SIGNAL(linkHovered(QString,QString,QString)),this,SLOT(webLinkHovered(QString,QString,QString)));
+    connect(m_widget->page(),SIGNAL(loadFinished(bool)),this,SIGNAL(loadFinished(bool)));
 }
 
 QWidget *WebViewHtmlWidget::widget() const

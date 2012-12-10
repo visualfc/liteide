@@ -28,35 +28,52 @@
 
 #include <QPointer>
 
+class QActionGroup;
 class HtmlPreview : public QObject
 {
     Q_OBJECT
 public:
     explicit HtmlPreview(LiteApi::IApplication *app,QObject *parent = 0);
-    
-signals:
-    
+    virtual ~HtmlPreview();
 public slots:
     void appLoaded();
-    void loadHeadData(const QString &css);
+    QByteArray loadCssData(const QString &fileName);
     void currentEditorChanged(LiteApi::IEditor*);
     void contentsChanged();
+    void scrollValueChanged();
     void syncScrollValue();
-    void editorHtmlPrivew();
-    void triggered(bool);
+    void toggledSyncSwitchScroll(bool);
+    void toggledSyncScroll(bool);
+    void editorHtmlPrivew(bool force = false);
+    void triggeredTool(bool);
     void exportHtml();
     void exportPdf();
+    void cssTtriggered(QAction*);
+    void loadFinished(bool);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget               *m_widget;
     LiteApi::IHtmlWidget  *m_htmlWidget;
     QAction     *m_exportHtmlAct;
     QAction     *m_exportPdfAct;
-    QAction      *m_toolAct;
+    QAction     *m_configAct;
+    QAction     *m_syncScrollAct;
+    QAction     *m_syncSwitchAct;
+    QAction     *m_cssSelectAct;
+    QMenu       *m_cssMenu;
+    QMenu       *m_configMenu;
+    QActionGroup *m_cssActGroup;
+    QAction     *m_toolAct;
     QPointer<LiteApi::ITextEditor> m_curEditor;
     QPointer<QPlainTextEdit> m_curTextEditor;
+    bool        m_bWebkit;
+    bool        m_bFileChanged;
+    QByteArray  m_exportOrgTemple;
+    QByteArray  m_exportTemple;
+    QByteArray  m_exportHtml;
     QByteArray  m_lastData;
     QByteArray  m_head;
+    QPoint      m_prevPos;
 };
 
 #endif // HTMLPREVIEW_H

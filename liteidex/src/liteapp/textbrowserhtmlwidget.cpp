@@ -75,6 +75,7 @@ void TextBrowserHtmlWidget::setHtml(const QString &html, const QUrl &url)
             m_widget->setSearchPaths(paths);
         }
     }
+    emit loadFinished(true);
 }
 
 QUrl TextBrowserHtmlWidget::url() const

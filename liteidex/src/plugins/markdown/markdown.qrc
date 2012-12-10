@@ -12,5 +12,10 @@
         <file>images/lista.png</file>
         <file>images/listb.png</file>
         <file>images/quote.png</file>
+        <file>images/css.png</file>
+        <file>images/syncscroll.png</file>
+        <file>images/syncview.png</file>
+        <file>images/config.png</file>
+        <file>textbrowser.css</file>
     </qresource>
 </RCC>

@@ -17,3 +17,5 @@ HEADERS += markdownplugin.h\
 
 RESOURCES += \
     markdown.qrc
+
+OTHER_FILES +=

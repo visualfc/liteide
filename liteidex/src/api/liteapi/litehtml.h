@@ -54,6 +54,7 @@ public:
     virtual void print(QPrinter *printer) = 0;
 #endif
 signals:
+    void loadFinished(bool);
     void linkClicked(const QUrl & url);
     void linkHovered(const QUrl & url);
 };

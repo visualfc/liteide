@@ -24,10 +24,13 @@
 #include "htmlpreview.h"
 #include "sundown/mdtohtml.h"
 #include <QScrollBar>
+#include <QMenu>
 #include <QAction>
+#include <QActionGroup>
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QFile>
+#include <QDir>
 #include <QUrl>
 #include <QVBoxLayout>
 #include <QMessageBox>
@@ -54,85 +57,178 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_curTextEditor = 0;
     m_widget = new QWidget;
     m_htmlWidget = 0;
+    m_bWebkit = false;
+
+    m_cssMenu = new QMenu(tr("CSS Select Menu"));
+    m_cssActGroup = new QActionGroup(this);
+
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export Html"),this);
     m_exportPdfAct = new QAction(QIcon("icon:liteeditor/images/exportpdf.png"),tr("Export PDF"),this);
+
+    m_configAct = new QAction(QIcon("icon:markdown/images/config.png"),tr("Config"),this);
+
+
+    m_syncScrollAct = new QAction(tr("Sync Scroll"),this);
+    m_syncScrollAct->setCheckable(true);
+
+    m_syncSwitchAct = new QAction(tr("Sync Switch"),this);
+    m_syncSwitchAct->setCheckable(true);
+
+    m_configMenu = new QMenu(m_widget);
+    m_configMenu->addAction(m_syncSwitchAct);
+    m_configMenu->addAction(m_syncScrollAct);
+    m_configAct->setMenu(m_configMenu);
+
+    m_cssSelectAct = new QAction(QIcon("icon:/markdown/images/css.png"),tr("CSS"),this);
+    m_cssSelectAct->setMenu(m_cssMenu);
 
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_widget,
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
                                                   false,
-                                                  QList<QAction*>() << m_exportHtmlAct << m_exportPdfAct);
+                                                  QList<QAction*>() << m_configMenu->menuAction() << m_exportHtmlAct << m_exportPdfAct << m_cssSelectAct);
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggered(bool)));
-    connect(m_exportHtmlAct,SIGNAL(triggered()),this,SLOT(exportHtml()));
-    connect(m_exportPdfAct,SIGNAL(triggered()),this,SLOT(exportPdf()));
+    connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggeredTool(bool)));
+    connect(m_exportHtmlAct,SIGNAL(triggeredTool()),this,SLOT(exportHtml()));
+    connect(m_exportPdfAct,SIGNAL(triggeredTool()),this,SLOT(exportPdf()));
+    connect(m_cssActGroup,SIGNAL(triggeredTool(QAction*)),this,SLOT(cssTtriggered(QAction*)));
+    connect(m_syncSwitchAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncSwitchScroll(bool)()));
+    connect(m_syncScrollAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncScroll(bool)));
+
+    m_syncScrollAct->setChecked(m_liteApp->settings()->value("markdown/syncscroll",true).toBool());
+    m_syncSwitchAct->setChecked(m_liteApp->settings()->value("markdown/syncswitch",true).toBool());
 }
+
+HtmlPreview::~HtmlPreview()
+{
+    QAction *act = m_cssActGroup->checkedAction();
+    if (act != 0) {
+        m_liteApp->settings()->setValue("markdown/css",act->text());
+    }
+    m_liteApp->settings()->setValue("markdown/syncscroll",m_syncScrollAct->isChecked());
+    m_liteApp->settings()->setValue("markdown/syncswitch",m_syncSwitchAct->isChecked());
+    delete m_configMenu;
+    delete m_cssMenu;
+}
+
+static QByteArray export_data =
+"<html>"
+"<head>"
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"
+"__MARKDOWN_CSS__"
+"<title>__MARKDOWN_TITLE__</title>"
+"</head>"
+"<body>"
+"__MARKDOWN_CONTENT__"
+"</body>"
+"</html>";
+
 
 void HtmlPreview::appLoaded()
 {
     m_htmlWidget = m_liteApp->htmlWidgetManager()->create(this);
+    if (m_htmlWidget->className() == "QWebView") {
+        m_bWebkit = true;
+    } else {
+        m_bWebkit = false;
+    }
+
+    connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
+
+    QAction *nocssAct = new QAction("not use css",this);
+    nocssAct->setCheckable(true);
+    nocssAct->setObjectName("nocss");
+    m_cssActGroup->addAction(nocssAct);
+    QAction *sep = new QAction(this);
+    sep->setSeparator(true);
+    m_cssActGroup->addAction(sep);
+
+    QFile file(m_liteApp->resourcePath()+"/markdown/export.html");
+    if (file.open(QFile::ReadOnly)) {
+        m_exportOrgTemple = file.readAll();
+    } else {
+        m_exportOrgTemple = export_data;
+    }
+
+    m_exportTemple = m_exportOrgTemple;
+    m_exportTemple.replace("__MARKDOWN_CSS__","");
+
+    QString defcss;
+
+    if (m_bWebkit) {
+        //loadHeadData(m_liteApp->resourcePath()+"/markdown/markdown.css");
+        QDir dir(m_liteApp->resourcePath()+"/markdown");
+        foreach (QFileInfo info, dir.entryInfoList(QStringList()<<"*.css",QDir::Files)) {
+            QAction *act = new QAction(info.fileName(),this);
+            act->setCheckable(true);
+            m_cssActGroup->addAction(act);
+        }
+        defcss = "github.css";
+    } else {
+        QAction *act = new QAction("textbrowser.css",this);
+        act->setCheckable(true);
+        m_cssActGroup->addAction(act);
+        fix_qt_textbrowser(true);
+        defcss = "textbrowser.css";
+    }
+
+    m_cssMenu->addActions(m_cssActGroup->actions());
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
+
     layout->addWidget(m_htmlWidget->widget());
     m_widget->setLayout(layout);
-    if (m_htmlWidget->className() == "QWebView") {
-        loadHeadData(m_liteApp->resourcePath()+"/markdown/markdown.css");
-    } else {
-        loadHeadData(m_liteApp->resourcePath()+"/markdown/textbrowser.css");
+
+    QString css = m_liteApp->settings()->value("markdown/css",defcss).toString();
+    foreach (QAction *act, m_cssActGroup->actions()) {
+        if (act->text() == css) {
+            //act->setChecked(true);
+            act->trigger();
+            //this->cssTtriggered(act);
+            break;
+        }
     }
 }
 
-static QByteArray head1 =
-"<html>"
-"<head>"
-"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"
-"<style type=\"text/css\">";
-
-static QByteArray head2 =
-"</style>"
-"</head>"
-"<body>";
-
-static QByteArray end =
-"</body>"
-"</html>";
-
-void HtmlPreview::loadHeadData(const QString &css)
+QByteArray HtmlPreview::loadCssData(const QString &fileName)
 {
-    QFile f(css);
-    if (!f.open(QFile::ReadOnly)) {
-        m_head = head1+head2;
-        return;
+    QFile f(fileName);
+    if (f.open(QFile::ReadOnly)) {
+        return f.readAll();
     }
-    m_head = head1+f.readAll()+head2;
+    return QByteArray();
 }
 
 void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
-{
+{       
     if (m_curEditor != 0) {
         m_curEditor->disconnect(this);
-    }
+    }    
     if (m_curTextEditor != 0) {
         m_curTextEditor->verticalScrollBar()->disconnect(this);
     }
+
     if (editor &&
         ( (editor->mimeType() == "text/x-markdown") ||
             (editor->mimeType() == "text/html")) )  {
-        m_toolAct->setChecked(true);
+        if (m_syncSwitchAct->isChecked()) {
+            m_toolAct->setChecked(true);
+        }
         QPlainTextEdit *textEdit = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
         if (textEdit) {
             m_curTextEditor = textEdit;
-            connect(m_curTextEditor->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(syncScrollValue()));
+            connect(m_curTextEditor->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(scrollValueChanged()));
         }
         LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
         if (ed) {
             m_curEditor = ed;
             connect(m_curEditor,SIGNAL(contentsChanged()),this,SLOT(contentsChanged()));
         }
-        editorHtmlPrivew();
-        syncScrollValue();
+        m_bFileChanged = true;
+        editorHtmlPrivew(true);
     } else {
         m_toolAct->setChecked(false);
         m_curEditor = 0;
@@ -149,11 +245,19 @@ void HtmlPreview::contentsChanged()
     editorHtmlPrivew();
 }
 
+void HtmlPreview::scrollValueChanged()
+{
+    if (m_syncScrollAct->isChecked()) {
+        syncScrollValue();
+    }
+}
+
 void HtmlPreview::syncScrollValue()
 {
-    if (!m_curTextEditor) {
+    if (!m_curTextEditor || !m_htmlWidget || !m_toolAct->isChecked()) {
         return;
     }
+
     int max0 = m_curTextEditor->verticalScrollBar()->maximum();
     int min0 = m_curTextEditor->verticalScrollBar()->minimum();
     int value0 = m_curTextEditor->verticalScrollBar()->value();
@@ -166,39 +270,51 @@ void HtmlPreview::syncScrollValue()
     m_htmlWidget->setScrollBarValue(Qt::Vertical,value1);
 }
 
-void HtmlPreview::editorHtmlPrivew()
+void HtmlPreview::toggledSyncSwitchScroll(bool b)
 {
-    if (!m_curEditor || !m_htmlWidget) {
+    if (b) {
+        //this->editorHtmlPrivew(true);
+    }
+}
+
+void HtmlPreview::toggledSyncScroll(bool b)
+{
+    if (b) {
+        this->syncScrollValue();
+    }
+}
+
+void HtmlPreview::editorHtmlPrivew(bool force)
+{
+    if (!m_curEditor || !m_htmlWidget || !m_toolAct->isChecked()) {
         return;
     }
 
     QByteArray data = m_curEditor->utf8Data();
-    if (m_lastData == data) {
+    if (!force && (m_lastData == data)) {
         return;
     }
     m_lastData = data;
 
     int h = m_htmlWidget->scrollBarValue(Qt::Horizontal);
     int v = m_htmlWidget->scrollBarValue(Qt::Vertical);
+    m_prevPos = QPoint(h,v);
+
     if (m_curEditor->mimeType() == "text/html") {
         QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
         m_htmlWidget->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
     } else {
-        QString html = QString::fromUtf8(mdtohtml(data));
-        m_htmlWidget->setHtml(m_head+html+end,QUrl::fromLocalFile(m_curEditor->filePath()));
+        m_exportHtml = m_exportTemple;
+        m_exportHtml.replace("__MARKDOWN_TITLE__",QFileInfo(m_curEditor->filePath()).fileName().toUtf8());
+        m_exportHtml.replace("__MARKDOWN_CONTENT__",mdtohtml(data));
+        m_htmlWidget->setHtml(QString::fromUtf8(m_exportHtml),QUrl::fromLocalFile(m_curEditor->filePath()));
     }
-    m_htmlWidget->setScrollBarValue(Qt::Horizontal,h);
-    m_htmlWidget->setScrollBarValue(Qt::Vertical,v);
 }
 
-void HtmlPreview::triggered(bool b)
+void HtmlPreview::triggeredTool(bool b)
 {
-    return;
     if (b) {
         currentEditorChanged(m_liteApp->editorManager()->currentEditor());
-    } else if (m_curEditor){
-        m_lastData.clear();
-        m_curEditor->disconnect(this);
     }
 }
 
@@ -223,7 +339,7 @@ void HtmlPreview::exportHtml()
         if (m_curEditor->mimeType() == "text/html") {
             file.write(m_lastData);
         } else {
-            file.write(m_head+mdtohtml(m_lastData)+end);
+            file.write(m_exportHtml);
         }
         file.close();
     }
@@ -248,4 +364,40 @@ void HtmlPreview::exportPdf()
         m_htmlWidget->print(&printer);
     }
 #endif
+}
+
+void HtmlPreview::cssTtriggered(QAction *act)
+{
+    if (!act) {
+        return;
+    }
+    QByteArray cssData;
+    if (act->objectName() != "nocss") {
+        QString fileName;
+        if (!m_bWebkit) {
+            fileName = ":/markdown/"+act->text();
+        } else {
+            fileName = m_liteApp->resourcePath()+"/markdown/"+act->text();
+        }
+        cssData = this->loadCssData(fileName);
+    }
+    if (!cssData.isEmpty()) {
+        cssData = "<style type=\"text/css\">"+cssData+"</style>";
+    }
+
+    m_exportTemple = m_exportOrgTemple;
+    m_exportTemple.replace("__MARKDOWN_CSS__",cssData);
+
+    this->editorHtmlPrivew(true);
+}
+
+void HtmlPreview::loadFinished(bool)
+{
+    if (m_bFileChanged) {
+        this->syncScrollValue();
+        this->m_bFileChanged = false;
+    } else {
+        m_htmlWidget->setScrollBarValue(Qt::Horizontal,m_prevPos.x());
+        m_htmlWidget->setScrollBarValue(Qt::Vertical,m_prevPos.y());
+    }
 }
