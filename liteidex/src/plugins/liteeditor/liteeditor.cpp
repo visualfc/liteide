@@ -689,7 +689,7 @@ void LiteEditor::exportHtml()
 {
     QString title;
     if (m_file) {
-        title = QFileInfo(m_file->filePath()).baseName();
+        title = QFileInfo(m_file->filePath()).completeBaseName();
     }
     QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export HTML"),
                                                     title, "*.html");
@@ -716,7 +716,7 @@ void LiteEditor::exportPdf()
 //! [0]
     QString title;
     if (m_file) {
-        title = QFileInfo(m_file->filePath()).baseName();
+        title = QFileInfo(m_file->filePath()).completeBaseName();
     }
     QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
                                                     title, "*.pdf");

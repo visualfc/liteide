@@ -207,7 +207,7 @@ void HtmlPreview::exportHtml()
     if (m_curEditor == 0) {
         return;
     }
-    QString title = QFileInfo(m_curEditor->filePath()).baseName();
+    QString title = QFileInfo(m_curEditor->filePath()).completeBaseName();
     QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export Html"),
                                                     title, "*.html");
     if (!fileName.isEmpty()) {
@@ -235,7 +235,7 @@ void HtmlPreview::exportPdf()
         return;
     }
 #ifndef QT_NO_PRINTER
-    QString title = QFileInfo(m_curEditor->filePath()).baseName();
+    QString title = QFileInfo(m_curEditor->filePath()).completeBaseName();
 
     QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
                                                     title, "*.pdf");
