@@ -73,7 +73,9 @@ dd{margin-left:2em;margin-bottom:1em;}
     }
 }
 @media print {
+	/*
 	table, pre {
 		page-break-inside: avoid;
 	}
+	*/
 }

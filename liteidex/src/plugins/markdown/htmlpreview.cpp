@@ -64,6 +64,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
 
     m_cssActGroup = new QActionGroup(this);
 
+    m_reloadAct = new QAction(QIcon("icon:images/reload.png"),tr("Reload"),this);
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export Html"),this);
     m_exportPdfAct = new QAction(QIcon("icon:liteeditor/images/exportpdf.png"),tr("Export PDF"),this);
 
@@ -86,7 +87,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
                                                   false,
-                                                  QList<QAction*>() << m_configMenu->menuAction() << m_exportHtmlAct << m_exportPdfAct << m_cssMenu->menuAction());
+                                                  QList<QAction*>() << m_configMenu->menuAction() << m_reloadAct << m_exportHtmlAct << m_exportPdfAct << m_cssMenu->menuAction());
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggeredTool(bool)));
@@ -95,6 +96,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     connect(m_cssActGroup,SIGNAL(triggered(QAction*)),this,SLOT(cssTtriggered(QAction*)));
     connect(m_syncSwitchAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncSwitch(bool)));
     connect(m_syncScrollAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncScroll(bool)));
+    connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reload()));
 
     m_syncScrollAct->setChecked(m_liteApp->settings()->value("markdown/syncscroll",true).toBool());
     m_syncSwitchAct->setChecked(m_liteApp->settings()->value("markdown/syncswitch",true).toBool());
@@ -317,6 +319,12 @@ void HtmlPreview::triggeredTool(bool b)
     }
 }
 
+void HtmlPreview::reload()
+{
+    this->editorHtmlPrivew(true);
+    this->syncScrollValue();
+}
+
 void HtmlPreview::exportHtml()
 {
     if (m_curEditor == 0) {
@@ -389,8 +397,11 @@ void HtmlPreview::cssTtriggered(QAction *act)
     this->editorHtmlPrivew(true);
 }
 
-void HtmlPreview::loadFinished(bool)
+void HtmlPreview::loadFinished(bool b)
 {
+    if (!b) {
+        return;
+    }
     if (m_bFileChanged) {
         this->syncScrollValue();
         this->m_bFileChanged = false;

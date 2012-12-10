@@ -46,6 +46,7 @@ public slots:
     void toggledSyncScroll(bool);
     void editorHtmlPrivew(bool force = false);
     void triggeredTool(bool);
+    void reload();
     void exportHtml();
     void exportPdf();
     void cssTtriggered(QAction*);
@@ -54,6 +55,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     QWidget               *m_widget;
     LiteApi::IHtmlWidget  *m_htmlWidget;
+    QAction     *m_reloadAct;
     QAction     *m_exportHtmlAct;
     QAction     *m_exportPdfAct;
     QAction     *m_configAct;
