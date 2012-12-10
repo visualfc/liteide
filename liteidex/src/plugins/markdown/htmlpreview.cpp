@@ -60,6 +60,8 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_bWebkit = false;
 
     m_cssMenu = new QMenu(tr("CSS Select Menu"));
+    m_cssMenu->setIcon(QIcon("icon:/markdown/images/css.png"));
+
     m_cssActGroup = new QActionGroup(this);
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export Html"),this);
@@ -79,15 +81,12 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_configMenu->addAction(m_syncScrollAct);
     m_configAct->setMenu(m_configMenu);
 
-    m_cssSelectAct = new QAction(QIcon("icon:/markdown/images/css.png"),tr("CSS"),this);
-    m_cssSelectAct->setMenu(m_cssMenu);
-
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_widget,
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
                                                   false,
-                                                  QList<QAction*>() << m_configMenu->menuAction() << m_exportHtmlAct << m_exportPdfAct << m_cssSelectAct);
+                                                  QList<QAction*>() << m_configMenu->menuAction() << m_exportHtmlAct << m_exportPdfAct << m_cssMenu->menuAction());
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggeredTool(bool)));

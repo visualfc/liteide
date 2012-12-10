@@ -59,7 +59,6 @@ protected:
     QAction     *m_configAct;
     QAction     *m_syncScrollAct;
     QAction     *m_syncSwitchAct;
-    QAction     *m_cssSelectAct;
     QMenu       *m_cssMenu;
     QMenu       *m_configMenu;
     QActionGroup *m_cssActGroup;
