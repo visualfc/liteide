@@ -78,9 +78,9 @@ void HtmlPreview::appLoaded()
     layout->addWidget(m_htmlWidget->widget());
     m_widget->setLayout(layout);
     if (m_htmlWidget->className() == "QWebView") {
-        loadHeadData(m_liteApp->resourcePath()+"/markdown/style-github.css");
+        loadHeadData(m_liteApp->resourcePath()+"/markdown/markdown.css");
     } else {
-        loadHeadData(m_liteApp->resourcePath()+"/markdown/style.css");
+        loadHeadData(m_liteApp->resourcePath()+"/markdown/textbrowser.css");
     }
 }
 
