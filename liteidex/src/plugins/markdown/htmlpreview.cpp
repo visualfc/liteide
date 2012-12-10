@@ -90,10 +90,10 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggeredTool(bool)));
-    connect(m_exportHtmlAct,SIGNAL(triggeredTool()),this,SLOT(exportHtml()));
-    connect(m_exportPdfAct,SIGNAL(triggeredTool()),this,SLOT(exportPdf()));
-    connect(m_cssActGroup,SIGNAL(triggeredTool(QAction*)),this,SLOT(cssTtriggered(QAction*)));
-    connect(m_syncSwitchAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncSwitchScroll(bool)()));
+    connect(m_exportHtmlAct,SIGNAL(triggered()),this,SLOT(exportHtml()));
+    connect(m_exportPdfAct,SIGNAL(triggered()),this,SLOT(exportPdf()));
+    connect(m_cssActGroup,SIGNAL(triggered(QAction*)),this,SLOT(cssTtriggered(QAction*)));
+    connect(m_syncSwitchAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncSwitch(bool)));
     connect(m_syncScrollAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncScroll(bool)));
 
     m_syncScrollAct->setChecked(m_liteApp->settings()->value("markdown/syncscroll",true).toBool());
@@ -269,7 +269,7 @@ void HtmlPreview::syncScrollValue()
     m_htmlWidget->setScrollBarValue(Qt::Vertical,value1);
 }
 
-void HtmlPreview::toggledSyncSwitchScroll(bool b)
+void HtmlPreview::toggledSyncSwitch(bool b)
 {
     if (b) {
         //this->editorHtmlPrivew(true);
@@ -383,7 +383,6 @@ void HtmlPreview::cssTtriggered(QAction *act)
     if (!cssData.isEmpty()) {
         cssData = "<style type=\"text/css\">"+cssData+"</style>";
     }
-
     m_exportTemple = m_exportOrgTemple;
     m_exportTemple.replace("__MARKDOWN_CSS__",cssData);
 

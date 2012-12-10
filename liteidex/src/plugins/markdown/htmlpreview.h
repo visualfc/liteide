@@ -42,7 +42,7 @@ public slots:
     void contentsChanged();
     void scrollValueChanged();
     void syncScrollValue();
-    void toggledSyncSwitchScroll(bool);
+    void toggledSyncSwitch(bool);
     void toggledSyncScroll(bool);
     void editorHtmlPrivew(bool force = false);
     void triggeredTool(bool);
