@@ -79,6 +79,7 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 #else
     QString sep = ":";
 #endif
+
     QStringList pathList;
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));

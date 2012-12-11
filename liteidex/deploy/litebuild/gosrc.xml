@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="text/x-gosrc" id="gosrc" work="$(EDITOR_DIR)" ver="1">
-		<config id="Go" name="GO" value="$(GOROOT)/bin/go"/>
+		<config id="Go" name="GO" value="$(GOBIN_DIR)/go"/>
 		<config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>
 		<config id="ErrRegex" name="ERRREGEX" value="([\w\d_\\/\.]+):(\d+):"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>

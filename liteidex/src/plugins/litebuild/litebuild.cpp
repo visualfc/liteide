@@ -915,6 +915,17 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     QMap<QString,QString> env = buildEnvMap(build,buildFilePath);
 
     QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+
+    QString goroot = sysenv.value("GOROOT");
+    QString gobin = sysenv.value("GOBIN");
+    QString binDir;
+    if (!gobin.isEmpty()) {
+        binDir = gobin;
+    } else if(!goroot.isEmpty()) {
+        binDir = QFileInfo(goroot,"bin").filePath();
+    }
+    sysenv.insert("GOBIN_DIR",binDir);
+
     QString cmd = this->envToValue(ba->cmd(),env,sysenv);
     QString args = this->envToValue(ba->args(),env,sysenv);
 
