@@ -49,7 +49,7 @@ bool GdbDebuggerPlugin::initWithApp(LiteApi::IApplication *app)
         return false;
     }
 
-    LiteApi::IDebuggerManager *manager = LiteApi::findExtensionObject<LiteApi::IDebuggerManager*>(app,"LiteApi.IDebugManager");
+    LiteApi::IDebuggerManager *manager = LiteApi::getDebugManager(m_liteApp);
     if (!manager) {
         return false;
     }

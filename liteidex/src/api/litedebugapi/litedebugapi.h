@@ -102,8 +102,15 @@ public:
     virtual void setCurrentDebugger(IDebugger *debug) = 0;
     virtual IDebugger *currentDebugger() = 0;
 signals:
+    void debugBefore();
+    void debugEnd();
     void currentDebuggerChanged(LiteApi::IDebugger*);
 };
+
+inline IDebuggerManager *getDebugManager(LiteApi::IApplication *app)
+{
+    return LiteApi::findExtensionObject<IDebuggerManager*>(app,"LiteApi.IDebuggerManager");
+}
 
 } //namespace LiteApi
 

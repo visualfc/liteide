@@ -277,6 +277,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 act->setMenu(attrs.value("menu").toString());
                 act->setKey(attrs.value("key").toString());
                 act->setCmd(attrs.value("cmd").toString());
+                act->setFunc(attrs.value("func").toString());
                 act->setArgs(attrs.value("args").toString());
                 act->setSave(attrs.value("save").toString());
                 act->setOutput(attrs.value("output").toString());

@@ -64,6 +64,7 @@ public:
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
 public slots:
     void appLoaded();
+    void debugBefore();
     void currentEnvChanged(LiteApi::IEnv*);
     void currentProjectChanged(LiteApi::IProject*);
     void reloadProject();

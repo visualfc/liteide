@@ -165,7 +165,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterAppInputText(QString)));
 
-    m_liteApp->extension()->addObject("LiteApi.IDebugManager",m_manager);
+    m_liteApp->extension()->addObject("LiteApi.IDebuggerManager",m_manager);
 
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(
                 Qt::BottomDockWidgetArea,m_output,"debugoutput",tr("Debug Output"),false,
@@ -326,6 +326,9 @@ void LiteDebug::startDebug()
     if (!m_envManager) {
         return;
     }
+
+    m_manager->emitDebugBefore();
+
     m_dbgWidget->clearLog();
 
     QString targetFilepath = m_liteBuild->targetFilePath();
@@ -572,6 +575,8 @@ void LiteDebug::debugStoped()
         m_dbgWidget->saveDebugInfo(m_debugInfoId);
     m_widget->hide();
     emit debugVisible(false);
+
+    m_manager->emitDebugEnd();
 }
 
 void LiteDebug::setCurrentLine(const QString &fileName, int line)

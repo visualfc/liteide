@@ -36,7 +36,8 @@ public:
     void setId(const QString &id) { m_id = id; }
     void setMenu(const QString &menu) { m_menu = menu; }
     void setKey(const QString &key) { m_key = key; }
-    void setCmd(const QString &bin) { m_cmd = bin; }
+    void setFunc(const QString &func) { m_func = func; }
+    void setCmd(const QString &cmd) { m_cmd = cmd; }
     void setArgs(const QString &args) { m_args = args; }
     void setSave(const QString &save) { m_save = save; }
     void setOutput(const QString &text) {
@@ -58,6 +59,7 @@ public:
     QString menu() const { return m_menu; }
     QString key() const { return m_key; }
     QString cmd() const { return m_cmd; }
+    QString func() const { return m_func; }
     QString args() const { return m_args; }
     QString save() const { return m_save; }
     bool output() const { return m_output; }
@@ -88,6 +90,7 @@ protected:
     QString m_id;
     QString m_key;
     QString m_cmd;
+    QString m_func;
     QString m_args;
     QString m_codec;
     QString m_regex;

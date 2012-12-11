@@ -27,6 +27,7 @@
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
 #include "buildconfigdialog.h"
+#include "litedebugapi/litedebugapi.h"
 
 #include <QToolBar>
 #include <QComboBox>
@@ -132,6 +133,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     //connect(m_liteApp->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
     connect(m_output,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickBuildOutput(QTextCursor)));
@@ -144,7 +146,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     foreach(LiteApi::IBuild *build, m_buildManager->buildList()) {
         connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
-    }
+    }    
 }
 
 LiteBuild::~LiteBuild()
@@ -228,11 +230,19 @@ void LiteBuild::appendOutput(const QString &str, const QBrush &brush, bool activ
 void LiteBuild::appLoaded()
 {
     currentProjectChanged(m_liteApp->projectManager()->currentProject());
-    m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
+    m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
         currentEnvChanged(m_envManager->currentEnv());
     }
+    LiteApi::IDebuggerManager *debugManager = LiteApi::getDebugManager(m_liteApp);
+    if (debugManager) {
+        connect(debugManager,SIGNAL(debugBefore()),this,SLOT(debugBefore()));
+    }
+}
+
+void LiteBuild::debugBefore()
+{
 }
 
 void LiteBuild::config()
