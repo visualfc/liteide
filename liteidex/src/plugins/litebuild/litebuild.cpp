@@ -714,13 +714,14 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
 void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
 {
     if (!editor) {
+        m_buildMenu->menuAction()->setEnabled(false);
         setCurrentBuild(0);
         return;
     }
     LiteApi::IBuild *build = LiteApi::findExtensionObject<LiteApi::IBuild*>(editor,"LiteApi.IBuild");
     QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Build");
     m_buildMenu->menuAction()->setMenu(menu);
-    m_buildManager->setCurrentBuild(m_build);
+    m_buildMenu->setEnabled(menu != 0);
 
     loadEditorInfo(editor->filePath());
     loadTargetInfo(build);

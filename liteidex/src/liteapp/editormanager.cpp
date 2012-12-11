@@ -444,7 +444,9 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
         m_editMenu->menuAction()->setMenu(editor->editMenu());
+        m_editMenu->setEnabled(editor->editMenu() != 0);
     } else {
+        m_editMenu->setEnabled(false);
         m_editMenu->menuAction()->setMenu(0);
     }
 
