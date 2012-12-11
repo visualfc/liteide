@@ -101,18 +101,24 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
     closeAct->setShortcut(QKeySequence("Ctrl+W"));
-    QAction *closeOthersAct = new QAction(tr("Close Others"),this);
-    QAction *closeAllAct = new QAction(tr("Close All"),this);
+    QAction *closeOthersAct = new QAction(tr("Close Others Tabs"),this);
+    QAction *closeAllAct = new QAction(tr("Close All Tabs"),this);
+    QAction *closeLeftAct = new QAction(tr("Close Left Tabs"),this);
+    QAction *closeRightAct = new QAction(tr("Close Right Tabs"),this);
     QAction *moveToAct = new QAction(tr("Move To New Window"),this);
 
     m_tabContextMenu->addAction(closeAct);
     m_tabContextMenu->addAction(closeOthersAct);
+    m_tabContextMenu->addAction(closeLeftAct);
+    m_tabContextMenu->addAction(closeRightAct);
     m_tabContextMenu->addAction(closeAllAct);
     m_tabContextMenu->addSeparator();
     m_tabContextMenu->addAction(moveToAct);
 
     connect(closeAct,SIGNAL(triggered()),this,SLOT(tabContextClose()));
     connect(closeOthersAct,SIGNAL(triggered()),this,SLOT(tabContextCloseOthers()));
+    connect(closeLeftAct,SIGNAL(triggered()),this,SLOT(tabContextCloseLefts()));
+    connect(closeRightAct,SIGNAL(triggered()),this,SLOT(tabContextCloseRights()));
     connect(closeAllAct,SIGNAL(triggered()),this,SLOT(tabContextCloseAll()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
 
@@ -680,6 +686,38 @@ void EditorManager::tabContextCloseOthers()
             IEditor *ed = m_widgetEditorMap.value(w,0);
             closeList << ed;
         }
+    }
+    foreach(IEditor *ed, closeList ) {
+        closeEditor(ed);
+    }
+}
+
+void EditorManager::tabContextCloseLefts()
+{
+    if (m_tabContextIndex < 0) {
+        return;
+    }
+    QList<IEditor*> closeList;
+    for (int i = 0; i < m_tabContextIndex; i++) {
+        QWidget *w = m_editorTabWidget->widget(i);
+        IEditor *ed = m_widgetEditorMap.value(w,0);
+        closeList << ed;
+    }
+    foreach(IEditor *ed, closeList ) {
+        closeEditor(ed);
+    }
+}
+
+void EditorManager::tabContextCloseRights()
+{
+    if (m_tabContextIndex < 0) {
+        return;
+    }
+    QList<IEditor*> closeList;
+    for (int i = m_tabContextIndex+1; i < m_editorTabWidget->tabBar()->count(); i++) {
+        QWidget *w = m_editorTabWidget->widget(i);
+        IEditor *ed = m_widgetEditorMap.value(w,0);
+        closeList << ed;
     }
     foreach(IEditor *ed, closeList ) {
         closeEditor(ed);

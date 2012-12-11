@@ -74,6 +74,8 @@ public slots:
     virtual bool closeAllEditors(bool autoSaveAll = false);
     void tabContextClose();
     void tabContextCloseOthers();
+    void tabContextCloseLefts();
+    void tabContextCloseRights();
     void tabContextCloseAll();
     void goBack();
     void goForward();
