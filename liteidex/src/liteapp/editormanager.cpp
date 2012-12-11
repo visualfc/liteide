@@ -80,7 +80,7 @@ bool EditorManager::initWithApp(IApplication *app)
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(1);
-    mainLayout->setSpacing(1);
+    mainLayout->setSpacing(0);
 
     QToolBar *toolBar = m_editorTabWidget->headerToolBar();
     toolBar->setObjectName("toolbar/tabs");
