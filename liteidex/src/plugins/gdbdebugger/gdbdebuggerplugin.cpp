@@ -53,7 +53,7 @@ bool GdbDebuggerPlugin::initWithApp(LiteApi::IApplication *app)
     if (!manager) {
         return false;
     }
-    GdbDebugeer *debug = new GdbDebugeer(app);
+    GdbDebugger *debug = new GdbDebugger(app);
     manager->addDebugger(debug);
     manager->setCurrentDebugger(debug);
 

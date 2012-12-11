@@ -80,7 +80,7 @@ static void GdbMiValueToItem(QStandardItem *item, const GdbMiValue &value)
     }
 }
 
-GdbDebugeer::GdbDebugeer(LiteApi::IApplication *app, QObject *parent) :
+GdbDebugger::GdbDebugger(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IDebugger(parent),
     m_liteApp(app),
     m_envManager(0)
@@ -129,24 +129,24 @@ GdbDebugeer::GdbDebugeer(LiteApi::IApplication *app, QObject *parent) :
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdOutput()));
 }
 
-GdbDebugeer::~GdbDebugeer()
+GdbDebugger::~GdbDebugger()
 {
     if (m_process) {
          delete m_process;
     }
 }
 
-void GdbDebugeer::appLoaded()
+void GdbDebugger::appLoaded()
 {
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
 }
 
-QString GdbDebugeer::mimeType() const
+QString GdbDebugger::mimeType() const
 {
     return QLatin1String("debuger/gdb");
 }
 
-QAbstractItemModel *GdbDebugeer::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
+QAbstractItemModel *GdbDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
 {
     if (type == LiteApi::ASYNC_MODEL) {
         return m_asyncModel;
@@ -162,17 +162,17 @@ QAbstractItemModel *GdbDebugeer::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
     return 0;
 }
 
-void GdbDebugeer::setWorkingDirectory(const QString &dir)
+void GdbDebugger::setWorkingDirectory(const QString &dir)
 {
     m_process->setWorkingDirectory(dir);
 }
 
-void GdbDebugeer::setEnvironment (const QStringList &environment)
+void GdbDebugger::setEnvironment (const QStringList &environment)
 {
     m_process->setEnvironment(environment);
 }
 
-bool GdbDebugeer::start(const QString &program, const QString &arguments)
+bool GdbDebugger::start(const QString &program, const QString &arguments)
 {
     if (!m_envManager) {
         return false;
@@ -221,7 +221,7 @@ bool GdbDebugeer::start(const QString &program, const QString &arguments)
     return true;
 }
 
-void GdbDebugeer::stop()
+void GdbDebugger::stop()
 {
     command("-gdb-exit");
     if (!m_process->waitForFinished(300)) {
@@ -229,32 +229,32 @@ void GdbDebugeer::stop()
     }
 }
 
-bool GdbDebugeer::isRunning()
+bool GdbDebugger::isRunning()
 {
     return m_process->state() != QProcess::NotRunning;
 }
 
-void GdbDebugeer::continueRun()
+void GdbDebugger::continueRun()
 {
     command("-exec-continue");
 }
 
-void GdbDebugeer::stepOver()
+void GdbDebugger::stepOver()
 {
     command("-exec-next");
 }
 
-void GdbDebugeer::stepInto()
+void GdbDebugger::stepInto()
 {
     command("-exec-step");
 }
 
-void GdbDebugeer::stepOut()
+void GdbDebugger::stepOut()
 {
     command("-exec-finish");
 }
 
-void GdbDebugeer::runToLine(const QString &fileName, int line)
+void GdbDebugger::runToLine(const QString &fileName, int line)
 {
     line++;
     GdbCmd cmd;
@@ -267,7 +267,7 @@ void GdbDebugeer::runToLine(const QString &fileName, int line)
     command("-exec-continue");
 }
 
-void GdbDebugeer::createWatch(const QString &var, bool floating, bool watchModel)
+void GdbDebugger::createWatch(const QString &var, bool floating, bool watchModel)
 {
     GdbCmd cmd;
     QStringList args;
@@ -287,7 +287,7 @@ void GdbDebugeer::createWatch(const QString &var, bool floating, bool watchModel
     command(cmd);
 }
 
-void GdbDebugeer::removeWatch(const QString &var, bool children)
+void GdbDebugger::removeWatch(const QString &var, bool children)
 {
     QString name = m_varNameMap.value(var);
     QStringList args;
@@ -304,7 +304,7 @@ void GdbDebugeer::removeWatch(const QString &var, bool children)
     command(cmd);
 }
 
-void GdbDebugeer::removeWatchByName(const QString &name, bool children)
+void GdbDebugger::removeWatchByName(const QString &name, bool children)
 {
     QString var = m_varNameMap.key(name);
     QStringList args;
@@ -321,7 +321,7 @@ void GdbDebugeer::removeWatchByName(const QString &name, bool children)
     command(cmd);
 }
 
-void GdbDebugeer::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
+void GdbDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
 {
     QStandardItem *parent = 0;
     if (type == LiteApi::VARS_MODEL) {
@@ -346,12 +346,12 @@ void GdbDebugeer::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
     }
 }
 
-void GdbDebugeer::setInitBreakTable(const QMultiMap<QString,int> &bks)
+void GdbDebugger::setInitBreakTable(const QMultiMap<QString,int> &bks)
 {
     m_initBks = bks;
 }
 
-void GdbDebugeer::insertBreakPoint(const QString &fileName, int line)
+void GdbDebugger::insertBreakPoint(const QString &fileName, int line)
 {
     line++;
     QString location = QString("%1:%2").arg(fileName).arg(line);
@@ -368,7 +368,7 @@ void GdbDebugeer::insertBreakPoint(const QString &fileName, int line)
     command(cmd);
 }
 
-void GdbDebugeer::removeBreakPoint(const QString &fileName, int line)
+void GdbDebugger::removeBreakPoint(const QString &fileName, int line)
 {
     line++;
     QString location = QString("%1:%2").arg(fileName).arg(line);
@@ -384,7 +384,7 @@ void GdbDebugeer::removeBreakPoint(const QString &fileName, int line)
     command(cmd);
 }
 
-void GdbDebugeer::command_helper(const GdbCmd &cmd, bool emitOut)
+void GdbDebugger::command_helper(const GdbCmd &cmd, bool emitOut)
 {
     m_token++;
     QByteArray buf = cmd.makeCmd(m_token);
@@ -400,22 +400,22 @@ void GdbDebugeer::command_helper(const GdbCmd &cmd, bool emitOut)
     m_process->write(buf);
 }
 
-void GdbDebugeer::command(const GdbCmd &cmd)
+void GdbDebugger::command(const GdbCmd &cmd)
 {
     command_helper(cmd,true);
 }
 
-void GdbDebugeer::enterText(const QString &text)
+void GdbDebugger::enterText(const QString &text)
 {
     m_process->write(text.toUtf8());
 }
 
-void  GdbDebugeer::command(const QByteArray &cmd)
+void  GdbDebugger::command(const QByteArray &cmd)
 {
     command_helper(GdbCmd(cmd),false);
 }
 
-void GdbDebugeer::readStdError()
+void GdbDebugger::readStdError()
 {
     emit debugLog(LiteApi::DebugErrorLog,QString::fromUtf8(m_process->readAllStandardError()));
 }
@@ -476,7 +476,7 @@ static bool isNameChar(char c)
     return (c >= 'a' && c <= 'z') || c == '-';
 }
 
-void GdbDebugeer::handleResponse(const QByteArray &buff)
+void GdbDebugger::handleResponse(const QByteArray &buff)
 {
     if (buff.isEmpty() || buff == "(gdb) ")
         return;
@@ -590,7 +590,7 @@ void GdbDebugeer::handleResponse(const QByteArray &buff)
     }
 }
 
-void GdbDebugeer::handleStopped(const GdbMiValue &result)
+void GdbDebugger::handleStopped(const GdbMiValue &result)
 {
     QByteArray reason = result.findChild("reason").data();
     m_handleState.setReason(reason);
@@ -619,7 +619,7 @@ void GdbDebugeer::handleStopped(const GdbMiValue &result)
     }
 }
 
-void GdbDebugeer::handleLibrary(const GdbMiValue &result)
+void GdbDebugger::handleLibrary(const GdbMiValue &result)
 {
     QString id = result.findChild("id").data();
     QString thread_group = result.findChild("thread-group").data();
@@ -629,7 +629,7 @@ void GdbDebugeer::handleLibrary(const GdbMiValue &result)
                               );
 }
 
-void GdbDebugeer::handleAsyncClass(const QByteArray &asyncClass, const GdbMiValue &result)
+void GdbDebugger::handleAsyncClass(const QByteArray &asyncClass, const GdbMiValue &result)
 {
     m_asyncItem->removeRows(0,m_asyncItem->rowCount());
     m_asyncItem->setText(asyncClass);
@@ -645,22 +645,22 @@ void GdbDebugeer::handleAsyncClass(const QByteArray &asyncClass, const GdbMiValu
     emit setExpand(LiteApi::ASYNC_MODEL,m_asyncModel->indexFromItem(m_asyncItem),true);
 }
 
-void GdbDebugeer::handleConsoleStream(const QByteArray &data)
+void GdbDebugger::handleConsoleStream(const QByteArray &data)
 {
 
 }
 
-void GdbDebugeer::handleTargetStream(const QByteArray &data)
+void GdbDebugger::handleTargetStream(const QByteArray &data)
 {
 
 }
 
-void GdbDebugeer::handleLogStream(const QByteArray &data)
+void GdbDebugger::handleLogStream(const QByteArray &data)
 {
 
 }
 
-void GdbDebugeer::handleResultStackListFrame(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultStackListFrame(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000015^done,stack=[frame={level="0",addr="0x0040113f",func="main.main",file="F:/hg/debug_test/hello/main.go",fullname="F:/hg/debug_test/hello/main.go",line="36"},frame={level="1",addr="0x00401f8a",func="runtime.mainstart",file="386/asm.s",fullname="c:/go/src/pkg/runtime/386/asm.s",line="96"},frame={level="2",addr="0x0040bcfe",func="runtime.initdone",file="/go/src/pkg/runtime/proc.c",fullname="c:/go/src/pkg/runtime/proc.c",line="242"},frame={level="3",addr="0x00000000",func="??"}]
     m_framesModel->removeRows(0,m_framesModel->rowCount());
@@ -689,7 +689,7 @@ void GdbDebugeer::handleResultStackListFrame(const GdbResponse &response, QMap<Q
     }
 }
 
-void GdbDebugeer::handleResultStackListVariables(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultStackListVariables(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000014^done,variables=[{name="v"},{name="x"},{name="pt"},{name="str"},{name="sum1"},{name="y"}]
     if (response.resultClass != GdbResultDone) {
@@ -708,7 +708,7 @@ void GdbDebugeer::handleResultStackListVariables(const GdbResponse &response, QM
     }
 }
 
-void GdbDebugeer::handleResultVarCreate(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarCreate(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000018^done,name="var4",numchild="0",value="4265530",type="int",thread-id="1",has_more="0"
     //10000019^done,name="var5",numchild="2",value="{...}",type="struct string",thread-id="1",has_more="0"
@@ -753,7 +753,7 @@ void GdbDebugeer::handleResultVarCreate(const GdbResponse &response, QMap<QStrin
     }
 }
 
-void GdbDebugeer::handleResultVarListChildren(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarListChildren(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000022^done,numchild="2",children=[child={name="var5.str",exp="str",numchild="1",value="0x4115c6 \"\\203\\304\\b\\303d\\213\\r,\"",type="uint8 *",thread-id="1"},child={name="var5.len",exp="len",numchild="0",value="4242460",type="int",thread-id="1"}],has_more="0"
     if (response.resultClass != GdbResultDone) {
@@ -791,7 +791,7 @@ void GdbDebugeer::handleResultVarListChildren(const GdbResponse &response, QMap<
     }
 }
 
-void GdbDebugeer::handleResultVarUpdate(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarUpdate(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000040^done,changelist=[{name="var2",in_scope="true",type_changed="false",has_more="0"}]
     if (response.resultClass != GdbResultDone) {
@@ -825,7 +825,7 @@ void GdbDebugeer::handleResultVarUpdate(const GdbResponse &response, QMap<QStrin
     }
 }
 
-void GdbDebugeer::handleResultVarDelete(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarDelete(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000062^done,ndeleted="1"
     //10000063^done,ndeleted="0"
@@ -873,7 +873,7 @@ void GdbDebugeer::handleResultVarDelete(const GdbResponse &response, QMap<QStrin
     }
 }
 
-void GdbDebugeer::handleResultVarUpdateValue(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarUpdateValue(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000035^done,value="100"
     if (response.resultClass != GdbResultDone) {
@@ -899,7 +899,7 @@ void GdbDebugeer::handleResultVarUpdateValue(const GdbResponse &response, QMap<Q
     }
 }
 
-void GdbDebugeer::handleResultVarUpdateType(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarUpdateType(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     //10000060^done,type="struct string"
     if (response.resultClass != GdbResultDone) {
@@ -925,7 +925,7 @@ void GdbDebugeer::handleResultVarUpdateType(const GdbResponse &response, QMap<QS
     }
 }
 
-void GdbDebugeer::handleBreakInsert(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleBreakInsert(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
 // >>> 10000029-break-insert F:/hg/debug_test/hello/main.go:31
 // 10000029^done,bkpt={number="2",type="breakpoint",disp="keep",enabled="y",addr="0x004010dd",func="main.test",file="F:/hg/debug_test/hello/main.go",fullname="F:/hg/debug_test/hello/main.go",line="31",times="0",original-location="F:/hg/debug_test/hello/main.go:31"}
@@ -943,7 +943,7 @@ void GdbDebugeer::handleBreakInsert(const GdbResponse &response, QMap<QString,QV
     }
 }
 
-void GdbDebugeer::handleBreakDelete(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleBreakDelete(const GdbResponse &response, QMap<QString,QVariant> &map)
 {
     if (response.resultClass != GdbResultDone) {
         return;
@@ -956,7 +956,7 @@ void GdbDebugeer::handleBreakDelete(const GdbResponse &response, QMap<QString,QV
     m_locationBkMap.remove(number);
 }
 
-void GdbDebugeer::handleResultRecord(const GdbResponse &response)
+void GdbDebugger::handleResultRecord(const GdbResponse &response)
 {
     if (response.cookie.type() != QVariant::Map) {
         return;
@@ -993,7 +993,7 @@ void GdbDebugeer::handleResultRecord(const GdbResponse &response)
     }
 }
 
-void GdbDebugeer::clear()
+void GdbDebugger::clear()
 {
     m_gdbinit = false;
     m_gdbexit = false;
@@ -1014,7 +1014,7 @@ void GdbDebugeer::clear()
     m_watchModel->removeRows(0,m_watchModel->rowCount());
 }
 
-void GdbDebugeer::initGdb()
+void GdbDebugger::initGdb()
 {
     command("set unwindonsignal on");
     command("set overload-resolution off");
@@ -1057,7 +1057,7 @@ void GdbDebugeer::initGdb()
     debugLoaded();
 }
 
-void GdbDebugeer::updateWatch()
+void GdbDebugger::updateWatch()
 {
     foreach(QStandardItem *item, m_varChangedItemList) {
         item->setData(Qt::black,Qt::TextColorRole);
@@ -1066,22 +1066,22 @@ void GdbDebugeer::updateWatch()
     command("-var-update *");
 }
 
-void GdbDebugeer::updateLocals()
+void GdbDebugger::updateLocals()
 {
     command("-stack-list-variables 0");
 }
 
-void GdbDebugeer::updateFrames()
+void GdbDebugger::updateFrames()
 {
     command("-stack-list-frames");
 }
 
-void GdbDebugeer::updateBreaks()
+void GdbDebugger::updateBreaks()
 {
     command("-break-info");
 }
 
-void GdbDebugeer::updateVarTypeInfo(const QString &name)
+void GdbDebugger::updateVarTypeInfo(const QString &name)
 {
     QStringList args;
     args << "-var-info-type";
@@ -1092,7 +1092,7 @@ void GdbDebugeer::updateVarTypeInfo(const QString &name)
     command(cmd);
 }
 
-void GdbDebugeer::updateVarListChildren(const QString &name)
+void GdbDebugger::updateVarListChildren(const QString &name)
 {
     GdbCmd cmd;
     QStringList args;
@@ -1104,7 +1104,7 @@ void GdbDebugeer::updateVarListChildren(const QString &name)
     command(cmd);
 }
 
-void GdbDebugeer::updateVarValue(const QString &name)
+void GdbDebugger::updateVarValue(const QString &name)
 {
     QStringList args;
     args << "-var-evaluate-expression";
@@ -1115,7 +1115,7 @@ void GdbDebugeer::updateVarValue(const QString &name)
     command(cmd);
 }
 
-void GdbDebugeer::readStdOutput()
+void GdbDebugger::readStdOutput()
 {
     int newstart = 0;
     int scan = m_inbuffer.size();
@@ -1168,7 +1168,7 @@ void GdbDebugeer::readStdOutput()
     m_handleState.clear();
 }
 
-void GdbDebugeer::finished(int code)
+void GdbDebugger::finished(int code)
 {
     clear();
     emit debugStoped();

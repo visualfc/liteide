@@ -103,12 +103,12 @@ protected:
 class QStandardItemModel;
 class QStandardItem;
 
-class GdbDebugeer : public LiteApi::IDebugger
+class GdbDebugger : public LiteApi::IDebugger
 {
     Q_OBJECT
 public:
-    GdbDebugeer(LiteApi::IApplication *app, QObject *parent = 0);
-    ~GdbDebugeer();
+    GdbDebugger(LiteApi::IApplication *app, QObject *parent = 0);
+    ~GdbDebugger();
     enum VarItemDataRole{
         VarNameRole = Qt::UserRole + 1,
         VarNumChildRole,
