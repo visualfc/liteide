@@ -102,14 +102,42 @@ public:
     virtual void setCurrentDebugger(IDebugger *debug) = 0;
     virtual IDebugger *currentDebugger() = 0;
 signals:
-    void debugBefore();
-    void debugEnd();
     void currentDebuggerChanged(LiteApi::IDebugger*);
 };
 
 inline IDebuggerManager *getDebugManager(LiteApi::IApplication *app)
 {
     return LiteApi::findExtensionObject<IDebuggerManager*>(app,"LiteApi.IDebuggerManager");
+}
+
+class ILiteDebug : public IObject
+{
+    Q_OBJECT
+public:
+    ILiteDebug(QObject *parent) : IObject(parent)
+    {
+    }
+public:
+    virtual IDebuggerManager *debugManager() const = 0;
+public slots:
+    virtual void startDebug(const QString &cmd, const QString &args, const QString &work) = 0;
+    virtual void continueRun() = 0;
+    virtual void runToLine() = 0;
+    virtual void stopDebug() = 0;
+    virtual void stepOver() = 0;
+    virtual void stepInto() = 0;
+    virtual void stepOut() = 0;
+    virtual void showLine() = 0;
+    virtual void toggleBreakPoint() = 0;
+    virtual void removeAllBreakPoints() = 0;
+signals:
+    void debugBefore();
+    void debugEnd();
+};
+
+inline ILiteDebug *getLiteDebug(LiteApi::IApplication *app)
+{
+    return LiteApi::findExtensionObject<ILiteDebug*>(app,"LiteApi.ILiteDebug");
 }
 
 } //namespace LiteApi

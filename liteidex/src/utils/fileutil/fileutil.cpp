@@ -197,11 +197,11 @@ QString FileUtil::lookPath(const QString &file, const QProcessEnvironment &env, 
     return QString();
 }
 
-QString FileUtil::lookPathInDir(const QString &file,const QProcessEnvironment &env, const QString &dir)
+QString FileUtil::lookPathInDir(const QString &file, const QString &dir)
 {
     QString fileName = file;
     QStringList exts;
-    QString extenv = env.value("PATHEXT");
+    QString extenv =  QProcessEnvironment::systemEnvironment().value("PATHEXT");
     if (!extenv.isEmpty()) {
         foreach(QString ext, extenv.split(';',QString::SkipEmptyParts)) {
             if (ext.isEmpty()) {
@@ -266,7 +266,7 @@ QString FileUtil::lookPath(const QString &file, const QProcessEnvironment &env, 
     return QString();
 }
 
-QString FileUtil::lookPathInDir(const QString &file, const QProcessEnvironment &env, const QString &dir)
+QString FileUtil::lookPathInDir(const QString &file, const QString &dir)
 {
     QString fileName = file;
     if (fileName.contains('/')) {

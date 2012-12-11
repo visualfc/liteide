@@ -44,7 +44,7 @@ struct CurrentLine
     int      line;
 };
 
-class LiteDebug : public QObject
+class LiteDebug : public LiteApi::ILiteDebug
 {
     Q_OBJECT
 public:
@@ -52,6 +52,7 @@ public:
     virtual ~LiteDebug();
     QWidget *widget();
     bool canDebug(LiteApi::IEditor *editor) const;
+    virtual LiteApi::IDebuggerManager *debugManager() const;
 signals:
     void debugVisible(bool);
 public slots:
@@ -59,17 +60,18 @@ public slots:
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    void startDebug();
-    void continueRun();
-    void runToLine();
-    void stopDebug();
-    void stepOver();
-    void stepInto();
-    void stepOut();
-    void showLine();
-    void toggleBreakPoint();
-    void removeAllBreakPoints();
-    void enterAppInputText(QString);
+    virtual void startDebug(const QString &cmd, const QString &args, const QString &work);
+    virtual void startDebug();
+    virtual void continueRun();
+    virtual void runToLine();
+    virtual void stopDebug();
+    virtual void stepOver();
+    virtual void stepInto();
+    virtual void stepOut();
+    virtual void showLine();
+    virtual void toggleBreakPoint();
+    virtual void removeAllBreakPoints();
+    virtual void enterAppInputText(QString);
 protected slots:
     void setDebugger(LiteApi::IDebugger*);
     void debugLoaded();
@@ -96,6 +98,7 @@ protected:
     QAction *m_stepIntoAct;
     QAction *m_stepOverAct;
     QAction *m_stepOutAct;
+    QAction *m_continueAct;
     QAction *m_runToLineAct;
     QAction *m_insertBreakAct;
     QAction *m_removeAllBreakAct;

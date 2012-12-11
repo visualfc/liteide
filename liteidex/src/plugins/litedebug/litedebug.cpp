@@ -49,7 +49,7 @@
 
 
 LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
-    QObject(parent),
+    LiteApi::ILiteDebug(parent),
     m_liteApp(app),
     m_envManager(0),
     m_liteBuild(0),
@@ -60,14 +60,10 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 {
     m_manager->initWithApp(app);
 
+    m_liteApp->extension()->addObject("LiteApi.ILiteDebug",this);
+    m_liteApp->extension()->addObject("LiteApi.IDebuggerManager",m_manager);
+
     m_debugMimeTypes << "text/x-gosrc" << "text/x-csrc" << "text/x-chdr" << "text/x-c++src";
-
-//    m_toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/build");
-//    if (!m_toolBar) {
-//        m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Debug ToolBar"),"toolbar/nav");
-//    }
-
-//    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     m_output = new TextOutput;
     m_output->setReadOnly(true);
@@ -90,6 +86,8 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Go"),this);
     m_startDebugAct->setShortcut(QKeySequence(Qt::Key_F5));
     m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
+
+    m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
 
     m_stopDebugAct = new QAction(QIcon("icon:litedebug/images/stopdebug.png"),tr("Stop"),this);
     m_stopDebugAct->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F5));
@@ -164,8 +162,6 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterAppInputText(QString)));
-
-    m_liteApp->extension()->addObject("LiteApi.IDebuggerManager",m_manager);
 
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(
                 Qt::BottomDockWidgetArea,m_output,"debugoutput",tr("Debug Output"),false,
@@ -267,6 +263,53 @@ void LiteDebug::currentEditorChanged(IEditor *editor)
     }
 }
 
+void LiteDebug::startDebug(const QString &cmd, const QString &args, const QString &work)
+{
+    if (!m_debugger) {
+        return;
+    }
+    if (m_debugger->isRunning()) {
+        this->stopDebug();
+    }
+
+    if (!m_envManager) {
+        return;
+    }
+
+    emit debugBefore();
+
+    m_dbgWidget->clearLog();
+
+    QString target = QFileInfo(work,cmd).filePath();//FileUtil::lookPathInDir(cmd,work);
+
+    if (target.isEmpty() || !QFile::exists(target)) {
+        m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(cmd),true);
+        return;
+    }
+
+    m_debugInfoId = target;
+    QDir dir(work);
+    foreach (QFileInfo info, dir.entryInfoList(QStringList() << "*.go",QDir::Files)) {
+        QString filePath = info.filePath();
+        bool ok = false;
+        if (m_liteApp->editorManager()->findEditor(filePath,true)) {
+            continue;
+        }
+        m_fileBpMap.remove(filePath);
+        foreach(QString bp,m_liteApp->settings()->value(QString("bp_%1").arg(filePath)).toStringList()) {
+            int i = bp.toInt(&ok);
+            if (ok && i >= 0) {
+                m_fileBpMap.insert(filePath,i);
+            }
+        }
+    }
+
+    m_debugger->setInitBreakTable(m_fileBpMap);
+    m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
+    m_debugger->setWorkingDirectory(work);
+    m_debugger->start(cmd,args);
+}
+
 QWidget *LiteDebug::widget()
 {
     return m_widget;
@@ -278,6 +321,11 @@ bool LiteDebug::canDebug(IEditor *editor) const
         return true;
     }
     return false;
+}
+
+LiteApi::IDebuggerManager *LiteDebug::debugManager() const
+{
+    return m_manager;
 }
 
 void LiteDebug::setDebugger(LiteApi::IDebugger *debug)
@@ -327,8 +375,6 @@ void LiteDebug::startDebug()
         return;
     }
 
-    m_manager->emitDebugBefore();
-
     m_dbgWidget->clearLog();
 
     QString targetFilepath = m_liteBuild->targetFilePath();
@@ -361,27 +407,6 @@ void LiteDebug::startDebug()
         }
     }
 
-    /*
-    LiteApi::IBuild *build = m_liteBuild->buildManager()->currentBuild();
-    QList<LiteApi::BuildDebug*> debugList = build->debugList();
-    if (debugList.isEmpty()) {
-        return;
-    }
-    LiteApi::BuildDebug *buildDebug = debugList.first();
-    QString workDir = m_liteBuild->envValue(build,buildDebug->work());
-    QString cmd = m_liteBuild->envValue(build,buildDebug->cmd());
-    QString args = m_liteBuild->envValue(build,buildDebug->args());
-    //QString target = FileUtil::lookPath(cmd,m_envManager->currentEnvironment(),true);
-    QString target = cmd;
-    if (!QFileInfo(target).exists()) {
-        target = FileUtil::lookPathInDir(cmd,m_envManager->currentEnvironment(),workDir);
-    }
-
-    if (!QFileInfo(target).exists()) {
-        m_liteApp->appendLog("litebuild",QString("no find target %1").arg(cmd),true);
-        return;
-    }
-    */
     m_debugger->setInitBreakTable(m_fileBpMap);
     m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
     m_debugger->setWorkingDirectory(workDir);
@@ -576,7 +601,7 @@ void LiteDebug::debugStoped()
     m_widget->hide();
     emit debugVisible(false);
 
-    m_manager->emitDebugEnd();
+    emit debugEnd();
 }
 
 void LiteDebug::setCurrentLine(const QString &fileName, int line)

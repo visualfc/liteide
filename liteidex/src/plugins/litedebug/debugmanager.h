@@ -40,8 +40,6 @@ public:
     virtual QList<IDebugger*> debuggerList() const;
     virtual void setCurrentDebugger(IDebugger *debug);
     virtual IDebugger *currentDebugger();
-    void emitDebugBefore();
-    void emitDebugEnd();
 protected:
     QList<IDebugger*>  m_debugList;
     IDebugger *m_currentDebug;

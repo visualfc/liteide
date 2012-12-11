@@ -78,13 +78,3 @@ IDebugger *DebugManager::currentDebugger()
 {
     return m_currentDebug;
 }
-
-void DebugManager::emitDebugBefore()
-{
-    emit debugBefore();
-}
-
-void DebugManager::emitDebugEnd()
-{
-    emit debugEnd();
-}

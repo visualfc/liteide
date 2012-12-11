@@ -311,7 +311,7 @@ void FileBrowser::doubleClickedTreeView(QModelIndex proxyIndex)
         return;
     }
     QFileInfo info(fileName);
-    QString cmd = FileUtil::lookPathInDir(info.fileName(),LiteApi::getCurrentEnvironment(m_liteApp),info.path());
+    QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
     if (cmd == fileName) {
         LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
         if (build) {

@@ -437,7 +437,7 @@ void FileSystemWidget::openPathIndex(const QModelIndex &index)
     }
     if (node->isFile()) {
         QFileInfo info(node->path());
-        QString cmd = FileUtil::lookPathInDir(info.fileName(),LiteApi::getCurrentEnvironment(m_liteApp),info.path());
+        QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
         if (cmd == node->path()) {
             LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
             if (build) {

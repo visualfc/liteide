@@ -793,7 +793,7 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     m_process->setUserData(1,args);
     m_process->setUserData(2,"utf-8");
 
-    QString shell = FileUtil::lookPathInDir(cmd,sysenv,workDir);
+    QString shell = FileUtil::lookPathInDir(cmd,workDir);
     if (shell.isEmpty()) {
         shell = FileUtil::lookPath(cmd,sysenv,false);
     }
@@ -946,14 +946,14 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     }
 
     if (!QFileInfo(cmd).exists()) {
-        QString findCmd = FileUtil::lookPathInDir(cmd,sysenv,m_workDir);
+        QString findCmd = FileUtil::lookPathInDir(cmd,m_workDir);
         if (!findCmd.isEmpty()) {
             cmd = findCmd;
         }
     }
 
     if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
-        m_output->appendTag1(QString("> error, can not execute action '%1'\n").arg(ba->id()));
+        m_output->appendTag1(QString("> error, can not parser action '%1'\n").arg(ba->id()));
         m_process->setUserData(3,QStringList());
         return;
     }
@@ -968,6 +968,15 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     } else {
         m_output->setReadOnly(true);
     }
+
+    if (ba->func() == "debug") {
+        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+        if (debug) {
+            debug->startDebug(cmd,args,work);
+        }
+        return;
+    }
+
     m_process->setEnvironment(sysenv.toStringList());
     if (!ba->output()) {        
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);

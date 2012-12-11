@@ -39,7 +39,7 @@ struct FileUtil
     static QString findExecute(const QString &target);
     static QString canExec(QString file, QStringList exts = QStringList());
     static QString lookPath(const QString &fileName,const QProcessEnvironment &env, bool bLocalPriority);
-    static QString lookPathInDir(const QString &fileName,const QProcessEnvironment &env, const QString &dir);
+    static QString lookPathInDir(const QString &fileName,const QString &dir);
 };
 
 struct GoExecute
