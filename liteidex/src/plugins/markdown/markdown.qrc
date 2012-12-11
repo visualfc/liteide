@@ -16,6 +16,6 @@
         <file>images/syncscroll.png</file>
         <file>images/syncview.png</file>
         <file>images/config.png</file>
-        <file>textbrowser.css</file>
+        <file>css/textbrowser.css</file>
     </qresource>
 </RCC>

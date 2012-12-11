@@ -138,7 +138,7 @@ void HtmlPreview::appLoaded()
 
     connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
 
-    QAction *nocssAct = new QAction("not use css",this);
+    QAction *nocssAct = new QAction(tr("Not Use CSS"),this);
     nocssAct->setCheckable(true);
     nocssAct->setObjectName("nocss");
     m_cssActGroup->addAction(nocssAct);
@@ -159,8 +159,7 @@ void HtmlPreview::appLoaded()
     QString defcss;
 
     if (m_bWebkit) {
-        //loadHeadData(m_liteApp->resourcePath()+"/markdown/markdown.css");
-        QDir dir(m_liteApp->resourcePath()+"/markdown");
+        QDir dir(m_liteApp->resourcePath()+"/markdown/css");
         foreach (QFileInfo info, dir.entryInfoList(QStringList()<<"*.css",QDir::Files)) {
             QAction *act = new QAction(info.fileName(),this);
             act->setCheckable(true);
@@ -186,9 +185,7 @@ void HtmlPreview::appLoaded()
     QString css = m_liteApp->settings()->value("markdown/css",defcss).toString();
     foreach (QAction *act, m_cssActGroup->actions()) {
         if (act->text() == css) {
-            //act->setChecked(true);
             act->trigger();
-            //this->cssTtriggered(act);
             break;
         }
     }
@@ -382,9 +379,9 @@ void HtmlPreview::cssTtriggered(QAction *act)
     if (act->objectName() != "nocss") {
         QString fileName;
         if (!m_bWebkit) {
-            fileName = ":/markdown/"+act->text();
+            fileName = ":/markdown/css/"+act->text();
         } else {
-            fileName = m_liteApp->resourcePath()+"/markdown/"+act->text();
+            fileName = m_liteApp->resourcePath()+"/markdown/css/"+act->text();
         }
         cssData = this->loadCssData(fileName);
     }
