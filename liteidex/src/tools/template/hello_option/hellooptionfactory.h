@@ -1,7 +1,7 @@
 #ifndef HELLOOPTIONFACTORY_H
 #define HELLOOPTIONFACTORY_H
 
-#include "liteapi.h"
+#include "liteapi/liteapi.h"
 
 class HelloOptionFactory : public LiteApi::IOptionFactory
 {

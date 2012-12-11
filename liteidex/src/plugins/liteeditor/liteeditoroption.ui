@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>563</width>
-    <height>487</height>
+    <width>380</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,46 +140,55 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_3">
+    <widget class="QGroupBox" name="groupBox_6">
      <property name="title">
-      <string>Behavior</string>
+      <string>Auto complete brackets</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
        <widget class="QCheckBox" name="autoBraces0CheckBox">
         <property name="text">
-         <string>Auto complete brackets {}</string>
+         <string>{}</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces1CheckBox">
         <property name="text">
-         <string>Auto complete brackets ()</string>
+         <string> ()</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces2CheckBox">
         <property name="text">
-         <string>Auto complete brackets []</string>
+         <string>[]</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces3CheckBox">
         <property name="text">
-         <string>Auto complete brackets '</string>
+         <string> '</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces4CheckBox">
         <property name="text">
-         <string>Auto complete brackets &quot;</string>
+         <string>&quot;</string>
         </property>
        </widget>
       </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Behavior</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QCheckBox" name="autoIndentCheckBox">
         <property name="text">
@@ -283,19 +292,6 @@
       </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

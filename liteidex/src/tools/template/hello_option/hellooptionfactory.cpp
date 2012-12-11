@@ -9,12 +9,12 @@ HelloOptionFactory::HelloOptionFactory(LiteApi::IApplication *app, QObject *pare
 
 QStringList HelloOptionFactory::mimeTypes() const
 {
-    return QStringList() << "option/hello";
+    return QStringList() << OPTION_HELLO;
 }
 
 LiteApi::IOption *HelloOptionFactory::create(const QString &mimeType)
 {
-    if (mimeType == "option/hello") {
+    if (mimeType == OPTION_HELLO) {
         return new HelloOption(m_liteApp,this);
     }
     return 0;

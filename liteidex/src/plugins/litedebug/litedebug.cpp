@@ -25,6 +25,7 @@
 #include "debugmanager.h"
 #include "debugwidget.h"
 #include "fileutil/fileutil.h"
+#include "litedebug_global.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -85,11 +86,11 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
     m_startDebugAct->setShortcut(QKeySequence(Qt::Key_F5));
-    //m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
+    m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
 
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
     m_continueAct->setShortcut(QKeySequence(Qt::Key_F5));
-    m_continueAct->setEnabled(false);
+    m_continueAct->setToolTip(tr("Continue (F5)"));
 
     m_stopDebugAct = new QAction(QIcon("icon:litedebug/images/stopdebug.png"),tr("Stop"),this);
     m_stopDebugAct->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F5));
@@ -171,7 +172,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
                 Qt::BottomDockWidgetArea,m_output,"debugoutput",tr("Debug Output"),false,
                 QList<QAction*>() << clearAct);
 
-    m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
+    m_continueAct->setEnabled(false);
     m_stopDebugAct->setEnabled(false);
     m_stepOverAct->setEnabled(false);
     m_showLineAct->setEnabled(false);
@@ -381,7 +382,10 @@ void LiteDebug::startDebug()
         return;
     }
 
-    m_liteBuild->rebuild();
+    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
+    if (b) {
+        m_liteBuild->rebuild();
+    }
 
     QMap<QString,QString> env = m_liteBuild->buildEnvMap();
     QString cmd = env.value("TARGET_CMD");

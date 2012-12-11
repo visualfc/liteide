@@ -163,6 +163,7 @@ void LiteBuild::rebuild()
     if (!ba) {
         return;
     }
+    this->stopAction();
     this->execAction(m_build->mimeType(),ba->id());
     if (!m_process->waitForStarted()) {
         return;

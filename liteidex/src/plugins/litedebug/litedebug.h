@@ -53,6 +53,7 @@ public:
     QWidget *widget();
     bool canDebug(LiteApi::IEditor *editor) const;
     virtual LiteApi::IDebuggerManager *debugManager() const;
+    virtual void startDebug(const QString &cmd, const QString &args, const QString &work);
     virtual bool isRunning() const;
 signals:
     void debugVisible(bool);
@@ -61,7 +62,6 @@ public slots:
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    virtual void startDebug(const QString &cmd, const QString &args, const QString &work);
     virtual void startDebug();
     virtual void continueRun();
     virtual void runToLine();

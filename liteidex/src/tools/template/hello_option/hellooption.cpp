@@ -1,5 +1,6 @@
 #include "hellooption.h"
 #include "ui_hellooption.h"
+#include "hello_global.h"
 
 HelloOption::HelloOption(LiteApi::IApplication *app,QObject *parent) :
     LiteApi::IOption(parent),
@@ -21,14 +22,14 @@ QWidget *HelloOption::widget()
     return m_widget;
 }
 
-QString HelloOption::displayName() const
+QString HelloOption::name() const
 {
     return "Hello";
 }
 
 QString HelloOption::mimeType() const
 {
-    return "option/hello";
+    return OPTION_HELLO;
 }
 void HelloOption::apply()
 {

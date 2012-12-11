@@ -18,22 +18,37 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litedebug_global.h
+// Module: litedebugoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITEDEBUG_GLOBAL_H
-#define LITEDEBUG_GLOBAL_H
-
-#include <QtCore/qglobal.h>
-
-#if defined(LITEDEBUG_LIBRARY)
-#  define LITEDEBUGSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define LITEDEBUGSHARED_EXPORT Q_DECL_IMPORT
+#include "litedebugoption.h"
+#include "litedebugoptionfactory.h"
+#include "litedebug_global.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
 #endif
+//lite_memory_check_end
 
-#define OPTION_LITEDEBUG "option/litedebug"
+LiteDebugOptionFactory::LiteDebugOptionFactory(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IOptionFactory(parent),
+      m_liteApp(app)
+{
+}
 
-#define LITEDEBUG_REBUILD   "litedebug/rebuild"
+QStringList LiteDebugOptionFactory::mimeTypes() const
+{
+    return QStringList() << OPTION_LITEDEBUG;
+}
 
-#endif // LITEDEBUG_GLOBAL_H
+LiteApi::IOption *LiteDebugOptionFactory::create(const QString &mimeType)
+{
+    if (mimeType == OPTION_LITEDEBUG) {
+        return new LiteDebugOption(m_liteApp,this);
+    }
+    return 0;
+}

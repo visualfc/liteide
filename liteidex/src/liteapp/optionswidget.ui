@@ -40,6 +40,12 @@
        <property name="text">
         <string>Info</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="margin">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item>

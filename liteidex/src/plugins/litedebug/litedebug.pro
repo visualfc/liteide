@@ -12,13 +12,20 @@ DEFINES += LITEDEBUG_LIBRARY
 SOURCES += litedebugplugin.cpp \
     debugmanager.cpp \
     debugwidget.cpp \
-    litedebug.cpp
+    litedebug.cpp \
+    litedebugoptionfactory.cpp \
+    litedebugoption.cpp
 
 HEADERS += litedebugplugin.h\
         litedebug_global.h \
     debugmanager.h \
     debugwidget.h \
-    litedebug.h
+    litedebug.h \
+    litedebugoptionfactory.h \
+    litedebugoption.h
 
 RESOURCES += \
     litedebug.qrc
+
+FORMS += \
+    litedebugoption.ui

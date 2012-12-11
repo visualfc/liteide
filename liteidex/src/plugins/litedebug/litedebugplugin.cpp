@@ -23,6 +23,7 @@
 
 #include "litedebugplugin.h"
 #include "litedebug.h"
+#include "litedebugoptionfactory.h"
 #include <QMenu>
 #include <QLayout>
 #include <QAction>
@@ -56,6 +57,8 @@ bool LiteDebugPlugin::initWithApp(LiteApi::IApplication *app)
     if (!LiteApi::IPlugin::initWithApp(app)) {
         return false;
     }
+
+    m_liteApp->optionManager()->addFactory(new LiteDebugOptionFactory(app,this));
 
     QSplitter *splitter = LiteApi::findExtensionObject<QSplitter*>(m_liteApp,"LiteApi.QMainWindow.QSplitter");
     if (!splitter) {

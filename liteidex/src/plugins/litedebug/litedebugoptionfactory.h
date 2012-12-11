@@ -18,22 +18,22 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litedebug_global.h
+// Module: litedebugoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITEDEBUG_GLOBAL_H
-#define LITEDEBUG_GLOBAL_H
+#ifndef LITEDEBUGOPTIONFACTORY_H
+#define LITEDEBUGOPTIONFACTORY_H
 
-#include <QtCore/qglobal.h>
+#include "liteapi/liteapi.h"
 
-#if defined(LITEDEBUG_LIBRARY)
-#  define LITEDEBUGSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define LITEDEBUGSHARED_EXPORT Q_DECL_IMPORT
-#endif
+class LiteDebugOptionFactory : public LiteApi::IOptionFactory
+{
+public:
+    LiteDebugOptionFactory(LiteApi::IApplication *app, QObject *parent);
+    virtual QStringList mimeTypes() const;
+    virtual LiteApi::IOption *create(const QString &mimeType);
+protected:
+    LiteApi::IApplication *m_liteApp;
+};
 
-#define OPTION_LITEDEBUG "option/litedebug"
-
-#define LITEDEBUG_REBUILD   "litedebug/rebuild"
-
-#endif // LITEDEBUG_GLOBAL_H
+#endif // LITEDEBUGOPTIONFACTORY_H
