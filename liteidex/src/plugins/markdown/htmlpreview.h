@@ -52,6 +52,7 @@ public slots:
     void exportPdf();
     void cssTtriggered(QAction*);
     void linkClicked(const QUrl &);
+    void linkHovered(const QUrl &);
     void loadFinished(bool);
 protected:
     LiteApi::IApplication *m_liteApp;

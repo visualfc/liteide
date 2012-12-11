@@ -35,6 +35,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QStatusBar>
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #endif
@@ -138,6 +139,7 @@ void HtmlPreview::appLoaded()
 
     connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
     connect(m_htmlWidget,SIGNAL(linkClicked(QUrl)),this,SLOT(linkClicked(QUrl)));
+    connect(m_htmlWidget,SIGNAL(linkHovered(QUrl)),this,SLOT(linkHovered(QUrl)));
 
     QAction *nocssAct = new QAction(tr("Not Use CSS"),this);
     nocssAct->setCheckable(true);
@@ -179,8 +181,8 @@ void HtmlPreview::appLoaded()
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
-
-    layout->addWidget(m_htmlWidget->widget());
+    layout->setSpacing(0);
+    layout->addWidget(m_htmlWidget->widget(),1);
     m_widget->setLayout(layout);
 
     QString css = m_liteApp->settings()->value("markdown/css",defcss).toString();
@@ -420,6 +422,11 @@ void HtmlPreview::linkClicked(const QUrl &url)
     } else {
         QDesktopServices::openUrl(url);
     }
+}
+
+void HtmlPreview::linkHovered(const QUrl &url)
+{
+    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString(),0);
 }
 
 void HtmlPreview::loadFinished(bool b)
