@@ -137,6 +137,7 @@ void HtmlPreview::appLoaded()
     }
 
     connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
+    connect(m_htmlWidget,SIGNAL(linkClicked(QUrl)),this,SLOT(linkClicked(QUrl)));
 
     QAction *nocssAct = new QAction(tr("Not Use CSS"),this);
     nocssAct->setCheckable(true);
@@ -291,21 +292,32 @@ void HtmlPreview::editorHtmlPrivew(bool force)
     QByteArray data = m_curEditor->utf8Data();
     if (!force && (m_lastData == data)) {
         return;
-    }
+    }    
+    loadHtmlData(data,QFileInfo(m_curEditor->filePath()).fileName().toUtf8(),m_curEditor->mimeType(),QUrl::fromLocalFile(m_curEditor->filePath()));
+}
+
+void HtmlPreview::loadHtmlData(const QByteArray &data, const QByteArray &title, const QString &mime, const QUrl &url)
+{
     m_lastData = data;
 
     int h = m_htmlWidget->scrollBarValue(Qt::Horizontal);
     int v = m_htmlWidget->scrollBarValue(Qt::Vertical);
     m_prevPos = QPoint(h,v);
 
-    if (m_curEditor->mimeType() == "text/html") {
+    if (mime == "text/html") {
         QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
         m_htmlWidget->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
+    } else if (mime == "text/x-markdown") {
+        m_exportHtml = m_exportTemple;
+        m_exportHtml.replace("__MARKDOWN_TITLE__",title);
+        m_exportHtml.replace("__MARKDOWN_CONTENT__",mdtohtml(data));
+        m_htmlWidget->setHtml(QString::fromUtf8(m_exportHtml),url);
     } else {
         m_exportHtml = m_exportTemple;
-        m_exportHtml.replace("__MARKDOWN_TITLE__",QFileInfo(m_curEditor->filePath()).fileName().toUtf8());
-        m_exportHtml.replace("__MARKDOWN_CONTENT__",mdtohtml(data));
-        m_htmlWidget->setHtml(QString::fromUtf8(m_exportHtml),QUrl::fromLocalFile(m_curEditor->filePath()));
+        QTextCodec *codec = QTextCodec::codecForName("utf-8");
+        m_exportHtml.replace("__MARKDOWN_TITLE__",title);
+        m_exportHtml.replace("__MARKDOWN_CONTENT__","<pre>"+Qt::escape(codec->toUnicode(data)).toUtf8()+"</pre>");
+        m_htmlWidget->setHtml(QString::fromUtf8(m_exportHtml),url);
     }
 }
 
@@ -392,6 +404,22 @@ void HtmlPreview::cssTtriggered(QAction *act)
     m_exportTemple.replace("__MARKDOWN_CSS__",cssData);
 
     this->editorHtmlPrivew(true);
+}
+
+void HtmlPreview::linkClicked(const QUrl &url)
+{
+    if (url.scheme() == "file") {
+        QFileInfo info(url.toLocalFile());
+        QFile f(info.filePath());
+        if (!f.open(QFile::ReadOnly)) {
+            return;
+        }
+        QByteArray data = f.readAll();
+        QString mime = m_liteApp->mimeTypeManager()->findMimeTypeByFile(info.filePath());
+        loadHtmlData(data,info.fileName().toUtf8(),mime,url);
+    } else {
+        QDesktopServices::openUrl(url);
+    }
 }
 
 void HtmlPreview::loadFinished(bool b)

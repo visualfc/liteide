@@ -35,6 +35,7 @@ class HtmlPreview : public QObject
 public:
     explicit HtmlPreview(LiteApi::IApplication *app,QObject *parent = 0);
     virtual ~HtmlPreview();
+    void loadHtmlData(const QByteArray &data, const QByteArray &title, const QString &mime,const QUrl &url);
 public slots:
     void appLoaded();
     QByteArray loadCssData(const QString &fileName);
@@ -50,6 +51,7 @@ public slots:
     void exportHtml();
     void exportPdf();
     void cssTtriggered(QAction*);
+    void linkClicked(const QUrl &);
     void loadFinished(bool);
 protected:
     LiteApi::IApplication *m_liteApp;
