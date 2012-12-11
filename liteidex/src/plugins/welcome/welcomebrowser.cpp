@@ -26,6 +26,7 @@
 #include "golangdocapi/golangdocapi.h"
 #include "litedoc.h"
 #include <QMenu>
+#include <QStatusBar>
 #include <QDir>
 #include <QFileInfo>
 #include <QAction>
@@ -98,12 +99,16 @@ LiteApi::IExtension *WelcomeBrowser::extension()
 
 void WelcomeBrowser::highlightedUrl(const QUrl &url)
 {
-    ui->statusLabel->setText(url.toString());
+    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString());
 }
 
 void WelcomeBrowser::openUrl(const QUrl &url)
 {
-    if (url.scheme() == "http" || url.scheme() == "mailto") {
+    m_liteApp->mainWindow()->statusBar()->clearMessage();
+
+    if (url.scheme() == "http" ||
+            url.scheme() == "https" ||
+            url.scheme() == "mailto") {
         QDesktopServices::openUrl(url);
     } else if (url.scheme() == "session") {
         m_liteApp->loadSession(url.path());

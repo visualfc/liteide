@@ -687,6 +687,9 @@ void GolangDoc::openUrlFile(const QUrl &url)
 QUrl GolangDoc::parserUrl(const QUrl &_url)
 {
     QUrl url = _url;
+    if (url.path().isEmpty() && !url.fragment().isEmpty()) {
+        return url;
+    }
 #ifdef Q_OS_WIN
     //fix windows "f:/hg/zmq" -> scheme="f" path="/hg/zmq"
     if (url.scheme().length() == 1) {
@@ -806,17 +809,24 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
 
 void GolangDoc::highlighted(const QUrl &_url)
 {
-    if (_url.isEmpty()) {
-        m_docBrowser->statusBar()->showMessage(QString("GOROOT=%1").arg(m_goroot));
-    } else {
-        QUrl url = parserUrl(_url);
-        m_docBrowser->statusBar()->showMessage(QString("%1 [%2]").arg(_url.toString()).arg(url.toString()));
-    }
+    QUrl url = parserUrl(_url);
+    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString());
+//    if (_url.isEmpty()) {
+//        m_docBrowser->statusBar()->showMessage(QString("GOROOT=%1").arg(m_goroot));
+//    } else {
+//        QUrl url = parserUrl(_url);
+//        m_docBrowser->statusBar()->showMessage(QString("%1 [%2]").arg(_url.toString()).arg(url.toString()));
+//    }
 }
 
 void GolangDoc::openUrl(const QUrl &_url)
 { 
+    m_liteApp->mainWindow()->statusBar()->clearMessage();
     QUrl url = parserUrl(_url);
+    if (url.path().isEmpty() && !url.fragment().isEmpty()) {
+        m_docBrowser->scrollToAnchor(url.fragment());
+        return;
+    }
     if ( (m_openUrl.scheme() == url.scheme()) &&
          m_openUrl.path() == url.path()) {
         m_docBrowser->scrollToAnchor(url.fragment());
@@ -832,6 +842,8 @@ void GolangDoc::openUrl(const QUrl &_url)
         openUrlList(url);
     } else if (url.scheme() == "file") {
         openUrlFile(url);
+    } else {
+        QDesktopServices::openUrl(url);
     }
 }
 

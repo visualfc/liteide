@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QStatusBar>
+#include <QToolTip>
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #endif
@@ -410,6 +411,8 @@ void HtmlPreview::cssTtriggered(QAction *act)
 
 void HtmlPreview::linkClicked(const QUrl &url)
 {
+    m_liteApp->mainWindow()->statusBar()->clearMessage();
+
     if (url.scheme() == "file") {
         QFileInfo info(url.toLocalFile());
         QFile f(info.filePath());
@@ -426,7 +429,7 @@ void HtmlPreview::linkClicked(const QUrl &url)
 
 void HtmlPreview::linkHovered(const QUrl &url)
 {
-    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString(),0);
+    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString());
 }
 
 void HtmlPreview::loadFinished(bool b)

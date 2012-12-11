@@ -80,15 +80,12 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_toolBar->addWidget(m_urlComboBox);
     m_toolBar->addAction(m_reloadUrlAct);
 
-    m_statusBar = new QStatusBar;
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
     mainLayout->addWidget(m_toolBar);
     mainLayout->addWidget(m_textBrowser);
-    mainLayout->addWidget(m_statusBar);
     m_widget->setLayout(mainLayout);
 
     connect(m_textBrowser,SIGNAL(highlighted(QUrl)),this,SIGNAL(highlighted(QUrl)));
@@ -230,11 +227,6 @@ void DocumentBrowser::setUrlHtml(const QUrl &url,const QString &data)
 QToolBar *DocumentBrowser::toolBar()
 {
     return m_toolBar;
-}
-
-QStatusBar *DocumentBrowser::statusBar()
-{
-    return m_statusBar;
 }
 
 QComboBox *DocumentBrowser::urlComboBox()
@@ -406,9 +398,10 @@ void DocumentBrowser::forward()
 
 void DocumentBrowser::anchorClicked(QUrl url)
 {
-    QString text = url.toString(QUrl::RemoveFragment);
-    if (text.isEmpty() && !url.fragment().isEmpty()) {
-        m_textBrowser->scrollToAnchor(url.fragment());
+    if (url.path().isEmpty() && !url.fragment().isEmpty()) {
+        m_liteApp->mainWindow()->statusBar()->clearMessage();
+        //m_textBrowser->scrollToAnchor(url.fragment());
+        this->scrollToAnchor(url.fragment());
         return;
     }
     emit requestUrl(url);

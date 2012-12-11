@@ -57,7 +57,6 @@ public:
     virtual void setUrlHtml(const QUrl &url,const QString &html);
     virtual void scrollToAnchor(const QString &text);
     virtual QToolBar *toolBar();
-    virtual QStatusBar *statusBar();
     virtual QComboBox *urlComboBox();
     virtual QTextBrowser *textBrowser();
 public slots:
@@ -88,7 +87,6 @@ protected:
     QAction      *m_forwardAct;
     QAction      *m_reloadUrlAct;
     QComboBox    *m_urlComboBox;
-    QStatusBar   *m_statusBar;
     QString     m_name;
     QString     m_fileName;
     QString     m_mimeType;

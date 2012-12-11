@@ -39,7 +39,6 @@ public:
     virtual void setUrlHtml(const QUrl &url,const QString &html) = 0;
     virtual void scrollToAnchor(const QString &text) = 0;
     virtual QToolBar *toolBar() = 0;
-    virtual QStatusBar *statusBar() = 0;
     virtual QComboBox *urlComboBox() = 0;
     virtual QTextBrowser *textBrowser() = 0;
 signals:

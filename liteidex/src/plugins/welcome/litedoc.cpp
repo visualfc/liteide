@@ -103,6 +103,8 @@ QUrl LiteDoc::parserUrl(const QUrl &_url)
 
 void LiteDoc::openUrl(const QUrl &_url)
 {
+    m_liteApp->mainWindow()->statusBar()->clearMessage();
+
     QUrl url = parserUrl(_url);
     if (url.scheme() == "file") {
         openUrlFile(url);
@@ -115,7 +117,7 @@ void LiteDoc::openUrl(const QUrl &_url)
 
 void LiteDoc::highlighted(const QUrl &url)
 {
-    m_docBrowser->statusBar()->showMessage(url.toString());
+    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString());
 }
 
 void LiteDoc::openUrlFile(const QUrl &url)
