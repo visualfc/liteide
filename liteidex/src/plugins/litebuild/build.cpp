@@ -52,7 +52,7 @@ Build::~Build()
     qDeleteAll(m_actionList);
     qDeleteAll(m_configList);
     qDeleteAll(m_customList);
-    qDeleteAll(m_debugList);
+    qDeleteAll(m_targetList);
     qDeleteAll(m_idMenuMap);
 }
 
@@ -91,9 +91,9 @@ QList<BuildCustom*> Build::customList() const
     return m_customList;
 }
 
-QList<BuildDebug*>  Build::debugList() const
+QList<BuildTarget*>  Build::targetList() const
 {
-    return m_debugList;
+    return m_targetList;
 }
 
 BuildAction *Build::findAction(const QString &id)
@@ -227,9 +227,9 @@ void Build::appendCustom(BuildCustom *custom)
     m_customList.append(custom);
 }
 
-void Build::appendDebug(BuildDebug *debug)
+void Build::appendDebug(BuildTarget *debug)
 {
-    m_debugList.append(debug);
+    m_targetList.append(debug);
 }
 
 bool Build::loadBuild(LiteApi::IBuildManager *manager, const QString &fileName)
@@ -253,7 +253,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
     BuildLookup *lookup = 0;
     BuildConfig *config = 0;
     BuildCustom *custom = 0;
-    BuildDebug  *debug = 0;
+    BuildTarget  *target = 0;
     while (!reader.atEnd()) {
         switch (reader.readNext()) {
         case QXmlStreamReader::StartElement:
@@ -310,12 +310,12 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 custom->setId(attrs.value("id").toString());
                 custom->setName(attrs.value("name").toString());
                 custom->setValue(attrs.value("value").toString());
-            } else if (reader.name() == "debug" && debug == 0 && build != 0) {
-                debug = new BuildDebug;
-                debug->setId(attrs.value("id").toString());
-                debug->setCmd(attrs.value("cmd").toString());
-                debug->setArgs(attrs.value("args").toString());
-                debug->setWork(attrs.value("work").toString());
+            } else if (reader.name() == "target" && target == 0 && build != 0) {
+                target = new BuildTarget;
+                target->setId(attrs.value("id").toString());
+                target->setCmd(attrs.value("cmd").toString());
+                target->setArgs(attrs.value("args").toString());
+                target->setWork(attrs.value("work").toString());
             }
             break;
         case QXmlStreamReader::EndElement:
@@ -344,11 +344,11 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                     build->appendCustom(custom);
                 }
                 custom = 0;
-            } else if (reader.name() == "debug") {
-                if (build && debug) {
-                    build->appendDebug(debug);
+            } else if (reader.name() == "target") {
+                if (build && target) {
+                    build->appendDebug(target);
                 }
-                debug = 0;
+                target = 0;
             }
             break;
         default:

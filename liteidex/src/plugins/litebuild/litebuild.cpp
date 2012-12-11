@@ -151,14 +151,29 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
 LiteBuild::~LiteBuild()
 {
-    //m_liteApp->actionManager()->removeToolBar(m_toolBar);
     delete m_output;
+}
+
+void LiteBuild::rebuild()
+{
+    if (!m_build) {
+        return;
+    }
+    BuildAction *ba = m_build->findAction("Build");
+    if (!ba) {
+        return;
+    }
+    this->execAction(m_build->mimeType(),ba->id());
+    if (!m_process->waitForStarted()) {
+        return;
+    }
+    m_process->waitForFinished();
 }
 
 QString LiteBuild::envValue(LiteApi::IBuild *build, const QString &value)
 {
     QString buildFilePath;
-    if (m_buildFilePath.isEmpty()) {
+    if (m_buildTag.isEmpty()) {
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
         if (editor) {
             QString filePath = editor->filePath();
@@ -197,18 +212,9 @@ QString LiteBuild::envToValue(const QString &value,QMap<QString,QString> &liteEn
     return v;
 }
 
-QString LiteBuild::buildFilePath() const
+QString LiteBuild::buildTag() const
 {
-    return m_buildFilePath;
-}
-
-QString LiteBuild::targetFilePath() const
-{
-    QString path = m_targetInfo.value("TARGETPATH");
-    if (path.isEmpty()) {
-        return path;
-    }
-    return FileUtil::lookPath(path,m_envManager->currentEnvironment(),true);
+    return m_buildTag;
 }
 
 LiteApi::IBuildManager *LiteBuild::buildManager() const
@@ -229,15 +235,10 @@ void LiteBuild::appendOutput(const QString &str, const QBrush &brush, bool activ
 
 void LiteBuild::appLoaded()
 {
-    currentProjectChanged(m_liteApp->projectManager()->currentProject());
     m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
         currentEnvChanged(m_envManager->currentEnv());
-    }
-    LiteApi::IDebuggerManager *debugManager = LiteApi::getDebugManager(m_liteApp);
-    if (debugManager) {
-        connect(debugManager,SIGNAL(debugBefore()),this,SLOT(debugBefore()));
     }
 }
 
@@ -252,12 +253,12 @@ void LiteBuild::config()
     }
 
     BuildConfigDialog dlg;
-    dlg.setBuild(m_build->id(),m_buildFilePath);
+    dlg.setBuild(m_build->id(),m_buildTag);
     dlg.setModel(m_liteideModel,m_configModel,m_customModel);
     if (dlg.exec() == QDialog::Accepted) {
         QString key;
-        if (!m_buildFilePath.isEmpty()) {
-            key = "litebuild-custom/"+m_buildFilePath;
+        if (!m_buildTag.isEmpty()) {
+            key = "litebuild-custom/"+m_buildTag;
         }
         for (int i = 0; i < m_customModel->rowCount(); i++) {
             QStandardItem *name = m_customModel->item(i,0);
@@ -347,7 +348,7 @@ void LiteBuild::reloadProject()
 void LiteBuild::currentProjectChanged(LiteApi::IProject *project)
 {
     return;
-    m_buildFilePath.clear();
+    m_buildTag.clear();
     m_projectInfo.clear();
     m_targetInfo.clear();
     m_bProjectBuild = false;
@@ -355,7 +356,7 @@ void LiteBuild::currentProjectChanged(LiteApi::IProject *project)
         connect(project,SIGNAL(reloaded()),this,SLOT(reloadProject()));
         loadProjectInfo(project->filePath());
         m_targetInfo = project->targetInfo();
-        m_buildFilePath = project->filePath();
+        m_buildTag = project->filePath();
         LiteApi::IBuild *build = findProjectBuild(project);
         if (build) {
             m_bProjectBuild = true;
@@ -435,7 +436,7 @@ QMap<QString,QString> LiteBuild::buildEnvMap(LiteApi::IBuild *build, const QStri
 
 QMap<QString,QString> LiteBuild::buildEnvMap() const
 {
-    return buildEnvMap(m_build,m_buildFilePath);
+    return buildEnvMap(m_build,m_buildTag);
     /*
     LiteApi::IBuild *build = m_build;
     QString buildFilePath = m_buildFilePath;
@@ -529,8 +530,8 @@ void LiteBuild::updateBuildConfig(IBuild *build)
         m_configModel->removeRows(0,m_configModel->rowCount());
         m_customModel->removeRows(0,m_customModel->rowCount());
         QString customkey;
-        if (!m_buildFilePath.isEmpty()) {
-            customkey = "litebuild-custom/"+m_buildFilePath;
+        if (!m_buildTag.isEmpty()) {
+            customkey = "litebuild-custom/"+m_buildTag;
         }
         QString configkey = "litebuild-config/"+build->id();
         foreach(LiteApi::BuildCustom *cf, build->customList()) {
@@ -589,7 +590,7 @@ EDITOR_DIRNAME
 EDITOR_TARGETNAME
 EDITOR_TARGETATH
     */
-    m_buildFilePath = info.path();
+    m_buildTag = info.path();
     m_editorInfo.insert("EDITOR_BASENAME",info.baseName());
     m_editorInfo.insert("EDITOR_NAME",info.fileName());
     m_editorInfo.insert("EDITOR_SUFFIX",info.suffix());
@@ -616,21 +617,21 @@ void LiteBuild::loadTargetInfo(LiteApi::IBuild *build)
     if (!build) {
         return;
     }
-    QList<BuildDebug*> debugs = build->debugList();
-    if (!debugs.isEmpty()) {
-        BuildDebug *debug = debugs.first();
-        QString targetName = this->envValue(build,debug->cmd());
-        QString workDir = this->envValue(build,debug->work());
-        m_targetInfo.insert("TARGETNAME",targetName);
-        m_targetInfo.insert("TARGETPATH",QFileInfo(QDir(workDir),targetName).filePath());
-        m_targetInfo.insert("TARGETDIR",workDir);
-        m_targetInfo.insert("WORKDIR",workDir);
+    QList<BuildTarget*> lists = build->targetList();
+    if (!lists.isEmpty()) {
+        BuildTarget *target = lists.first();
+        QString cmd = this->envValue(build,target->cmd());
+        QString args = this->envValue(build,target->args());
+        QString work = this->envValue(build,target->work());
+        m_targetInfo.insert("TARGET_CMD",cmd);
+        m_targetInfo.insert("TARGET_ARGS",args);
+        m_targetInfo.insert("TARGET_WORK",work);
     }
 }
 
 LiteApi::IBuild *LiteBuild::findProjectBuildByEditor(IEditor *editor)
 {
-    m_buildFilePath.clear();
+    m_buildTag.clear();
     m_projectInfo.clear();
     m_targetInfo.clear();
 
@@ -654,7 +655,7 @@ LiteApi::IBuild *LiteBuild::findProjectBuildByEditor(IEditor *editor)
                     projectBuild = m_buildManager->findBuild(lookup->mimeType());
                     if (projectBuild != 0) {
                         projectPath = infos.at(0).filePath();
-                        m_buildFilePath = projectPath;
+                        m_buildTag = projectPath;
                         break;
                     }
                 }
@@ -818,6 +819,14 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
 
 void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
 {
+    if (ba->id() == "BuildAndDebug") {
+        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+        if (debug && debug->isRunning()) {
+            debug->continueRun();
+            return;
+        }
+    }
+
     m_outputAct->setChecked(true);
     if (m_process->isRuning()) {
         m_output->append("\nError,action process is runing, stop action first!\n",Qt::red);
@@ -870,6 +879,13 @@ void LiteBuild::buildAction()
         return;
     }
 
+    if (ba->id() == "BuildAndDebug") {
+        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+        if (debug && debug->isRunning()) {
+            debug->continueRun();
+            return;
+        }
+    }
     //m_liteApp->outputManager()->setCurrentOutput(m_output);
     m_output->updateExistsTextColor();
     m_process->setUserData(ID_MIMETYPE,mime);
@@ -919,7 +935,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     if (!editorPath.isEmpty()) {
         buildFilePath = QFileInfo(editorPath).path();
     } else {
-        buildFilePath = m_buildFilePath;
+        buildFilePath = m_buildTag;
     }
 
     QMap<QString,QString> env = buildEnvMap(build,buildFilePath);

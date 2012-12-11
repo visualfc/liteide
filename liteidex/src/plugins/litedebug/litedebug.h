@@ -53,6 +53,7 @@ public:
     QWidget *widget();
     bool canDebug(LiteApi::IEditor *editor) const;
     virtual LiteApi::IDebuggerManager *debugManager() const;
+    virtual bool isRunning() const;
 signals:
     void debugVisible(bool);
 public slots:

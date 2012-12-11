@@ -167,10 +167,10 @@ protected:
     QString m_value;
 };
 
-class BuildDebug
+class BuildTarget
 {
 public:
-    BuildDebug()
+    BuildTarget()
     {
     }
     void setId(const QString &id) { m_id = id; }
@@ -204,7 +204,7 @@ public:
     virtual QList<BuildLookup*> lookupList() const = 0;
     virtual QList<BuildConfig*> configList() const = 0;
     virtual QList<BuildCustom*> customList() const = 0;
-    virtual QList<BuildDebug*>  debugList() const = 0;
+    virtual QList<BuildTarget*>  targetList() const = 0;
     virtual BuildAction *findAction(const QString &name) = 0;
     virtual QList<QAction*> actions() = 0;
 signals:
@@ -234,8 +234,8 @@ public:
     {
     }
 public:
-    virtual QString buildFilePath() const = 0;
-    virtual QString targetFilePath() const = 0;
+    virtual void rebuild() = 0;
+    virtual QString buildTag() const = 0;
     virtual QMap<QString,QString> buildEnvMap() const = 0;
     virtual IBuildManager *buildManager() const = 0;   
     virtual QString envValue(LiteApi::IBuild *build, const QString &value) = 0;

@@ -43,15 +43,15 @@ public:
     explicit LiteBuild(LiteApi::IApplication *app, QObject *parent = 0);
     virtual ~LiteBuild();
 public:
-    virtual QString buildFilePath() const;
-    virtual QString targetFilePath() const;
+    virtual void rebuild();
+    virtual QString buildTag() const;
     virtual QMap<QString,QString> buildEnvMap() const;
     virtual QMap<QString,QString> liteideEnvMap() const;
     virtual QString envValue(LiteApi::IBuild *build, const QString &value);
     virtual LiteApi::IBuildManager *buildManager() const;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true);
     virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true);
-    QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildFilePath) const;
+    QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
 public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void initAction(QAction *act, LiteApi::IBuild *build, LiteApi::BuildAction *ba);
@@ -84,7 +84,6 @@ protected:
     BuildManager    *m_buildManager;
     LiteApi::IBuild *m_build;
     LiteApi::IEnvManager *m_envManager;
-    //QToolBar    *m_toolBar;
     QMenu       *m_buildMenu;
     QStandardItemModel *m_liteideModel;
     QStandardItemModel *m_configModel;
@@ -96,7 +95,7 @@ protected:
     QAction     *m_configAct;
     QAction    *m_outputAct;
     QString     m_outputRegex;
-    QString     m_buildFilePath;
+    QString     m_buildTag;
     bool        m_bProjectBuild;
     QMap<QString,QString> m_editorInfo;
     QMap<QString,QString> m_projectInfo;

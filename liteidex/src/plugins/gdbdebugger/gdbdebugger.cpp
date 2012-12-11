@@ -215,7 +215,7 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
         m_process->start(m_gdbFilePath + " " + args);
 #endif
 
-    QString log = QString("%1 %2").arg(m_gdbFilePath).arg(args);
+    QString log = QString("%1 %2 [%3]").arg(m_gdbFilePath).arg(args).arg(m_process->workingDirectory());
     emit debugLog(LiteApi::DebugRuntimeLog,log);
 
     return true;

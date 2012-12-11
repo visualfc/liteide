@@ -83,11 +83,13 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_dbgWidget->widget());
     m_widget->setLayout(layout);
 
-    m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Go"),this);
+    m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
     m_startDebugAct->setShortcut(QKeySequence(Qt::Key_F5));
-    m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
+    //m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
 
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
+    m_continueAct->setShortcut(QKeySequence(Qt::Key_F5));
+    m_continueAct->setEnabled(false);
 
     m_stopDebugAct = new QAction(QIcon("icon:litedebug/images/stopdebug.png"),tr("Stop"),this);
     m_stopDebugAct->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F5));
@@ -122,7 +124,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 //    m_toolBar->addAction(m_startDebugAct);
 //    m_toolBar->addAction(m_insertBreakAct);
 
-    widgetToolBar->addAction(m_startDebugAct);
+    widgetToolBar->addAction(m_continueAct);
     widgetToolBar->addAction(m_stopDebugAct);
     widgetToolBar->addSeparator();
     widgetToolBar->addAction(m_insertBreakAct);
@@ -137,6 +139,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_gdbMenu = new QMenu("Debug");
     if (m_gdbMenu) {
         m_gdbMenu->addAction(m_startDebugAct);
+        m_gdbMenu->addAction(m_continueAct);
         m_gdbMenu->addAction(m_stopDebugAct);
         m_gdbMenu->addSeparator();
         m_gdbMenu->addAction(m_showLineAct);
@@ -150,6 +153,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 
     connect(m_startDebugAct,SIGNAL(triggered()),this,SLOT(startDebug()));
+    connect(m_continueAct,SIGNAL(triggered()),this,SLOT(continueRun()));
     connect(m_runToLineAct,SIGNAL(triggered()),this,SLOT(runToLine()));
     connect(m_stopDebugAct,SIGNAL(triggered()),this,SLOT(stopDebug()));
     connect(m_stepOverAct,SIGNAL(triggered()),this,SLOT(stepOver()));
@@ -269,7 +273,8 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
         return;
     }
     if (m_debugger->isRunning()) {
-        this->stopDebug();
+        this->continueRun();
+        return;
     }
 
     if (!m_envManager) {
@@ -280,14 +285,12 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
 
     m_dbgWidget->clearLog();
 
-    QString target = QFileInfo(work,cmd).filePath();//FileUtil::lookPathInDir(cmd,work);
-
-    if (target.isEmpty() || !QFile::exists(target)) {
+    if (cmd.isEmpty() || !QFile::exists(cmd)) {
         m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(cmd),true);
         return;
     }
 
-    m_debugInfoId = target;
+    m_debugInfoId = cmd;
     QDir dir(work);
     foreach (QFileInfo info, dir.entryInfoList(QStringList() << "*.go",QDir::Files)) {
         QString filePath = info.filePath();
@@ -326,6 +329,11 @@ bool LiteDebug::canDebug(IEditor *editor) const
 LiteApi::IDebuggerManager *LiteDebug::debugManager() const
 {
     return m_manager;
+}
+
+bool LiteDebug::isRunning() const
+{
+    return m_debugger && m_debugger->isRunning();
 }
 
 void LiteDebug::setDebugger(LiteApi::IDebugger *debug)
@@ -368,49 +376,24 @@ void LiteDebug::startDebug()
         m_debugger->continueRun();
         return;
     }
-    if (!m_liteBuild || !m_liteBuild->buildManager()->currentBuild()) {
-        return;
-    }
-    if (!m_envManager) {
+
+    if (!m_liteBuild) {
         return;
     }
 
-    m_dbgWidget->clearLog();
+    m_liteBuild->rebuild();
 
-    QString targetFilepath = m_liteBuild->targetFilePath();
-    m_debugInfoId = targetFilepath;
-    if (targetFilepath.isEmpty() || !QFile::exists(targetFilepath)) {
-        m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(targetFilepath),true);
-        return;
-    }
-    QMap<QString,QString> m = m_liteBuild->buildEnvMap();
-    QString workDir = m.value("WORKDIR");
-    QString target = m.value("TARGETNAME");
-    QString args = m.value("TARGETARGS");
-    int index = targetFilepath.lastIndexOf(target);
-    if (index != -1) {
-        target = targetFilepath.right(targetFilepath.length()-index);
-    }
-    QDir dir(workDir);
-    foreach (QFileInfo info, dir.entryInfoList(QStringList() << "*.go",QDir::Files)) {
-        QString filePath = info.filePath();
-        bool ok = false;
-        if (m_liteApp->editorManager()->findEditor(filePath,true)) {
-            continue;
-        }
-        m_fileBpMap.remove(filePath);
-        foreach(QString bp,m_liteApp->settings()->value(QString("bp_%1").arg(filePath)).toStringList()) {
-            int i = bp.toInt(&ok);
-            if (ok && i >= 0) {
-                m_fileBpMap.insert(filePath,i);
-            }
-        }
+    QMap<QString,QString> env = m_liteBuild->buildEnvMap();
+    QString cmd = env.value("TARGET_CMD");
+    QString args = env.value("TARGET_ARGS");
+    QString work = env.value("TARGET_WORK");
+
+    QString findCmd = FileUtil::lookPathInDir(cmd,work);
+    if (!findCmd.isEmpty()) {
+        cmd = findCmd;
     }
 
-    m_debugger->setInitBreakTable(m_fileBpMap);
-    m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
-    m_debugger->setWorkingDirectory(workDir);
-    m_debugger->start(target,args);
+    this->startDebug(cmd,args,work);
 }
 
 void LiteDebug::continueRun()
@@ -570,7 +553,8 @@ void LiteDebug::debugLoaded()
 
 void LiteDebug::debugStarted()
 {
-    m_startDebugAct->setToolTip(tr("Continue (F5)"));
+    m_startDebugAct->setEnabled(false);
+    m_continueAct->setEnabled(true);
     m_stopDebugAct->setEnabled(true);
     m_showLineAct->setEnabled(true);
     m_stepOverAct->setEnabled(true);
@@ -586,7 +570,8 @@ void LiteDebug::debugStarted()
 
 void LiteDebug::debugStoped()
 {
-    m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
+    m_startDebugAct->setEnabled(true);
+    m_continueAct->setEnabled(false);
     m_stopDebugAct->setEnabled(false);
     m_stepOverAct->setEnabled(false);
     m_showLineAct->setEnabled(false);

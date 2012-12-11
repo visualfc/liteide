@@ -10,5 +10,6 @@
         <file>images/stopdebug.png</file>
         <file>images/startdebug.png</file>
         <file>images/showline.png</file>
+        <file>images/continue.png</file>
     </qresource>
 </RCC>
