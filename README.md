@@ -27,13 +27,12 @@ LiteIDE X
 * Linux 32  Linux 64
 * MacOS X10.6
 
-### GitHub
-* GitHub <https://github.com/visualfc/liteide>
-
-### GoogleCode
-* Source <http://code.google.com/p/liteide>
-* Download <http://code.google.com/p/golangide>
+### Links
+* Source <https://github.com/visualfc/liteide>
+* Downloads <http://code.google.com/p/golangide>
 * Group <https://groups.google.com/group/liteide-dev>
+* Issues tracker <https://github.com/visualfc/liteide/issues>
+* Wiki <https://github.com/visualfc/liteide/wiki>
 
 ### Developer
 * [visualfc](mail:visualfc@gmail.com)
