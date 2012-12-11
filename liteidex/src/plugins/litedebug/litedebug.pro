@@ -14,7 +14,8 @@ SOURCES += litedebugplugin.cpp \
     debugwidget.cpp \
     litedebug.cpp \
     litedebugoptionfactory.cpp \
-    litedebugoption.cpp
+    litedebugoption.cpp \
+    selectexternaldialog.cpp
 
 HEADERS += litedebugplugin.h\
         litedebug_global.h \
@@ -22,10 +23,12 @@ HEADERS += litedebugplugin.h\
     debugwidget.h \
     litedebug.h \
     litedebugoptionfactory.h \
-    litedebugoption.h
+    litedebugoption.h \
+    selectexternaldialog.h
 
 RESOURCES += \
     litedebug.qrc
 
 FORMS += \
-    litedebugoption.ui
+    litedebugoption.ui \
+    selectexternaldialog.ui

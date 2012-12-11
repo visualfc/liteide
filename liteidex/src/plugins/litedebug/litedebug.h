@@ -62,6 +62,7 @@ public slots:
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
+    void startDebugExternal();
     virtual void startDebug();
     virtual void continueRun();
     virtual void runToLine();
@@ -90,9 +91,9 @@ protected:
     QWidget      *m_widget;
     DebugWidget  *m_dbgWidget;
     QMenu        *m_debugMenu;
-    QMenu        *m_gdbMenu;
     TextOutput   *m_output;
     QAction      *m_outputAct;
+    QAction *m_startDebugExternal;
     QAction *m_startDebugAct;
     QAction *m_stopDebugAct;
     QAction *m_showLineAct;

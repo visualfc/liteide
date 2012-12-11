@@ -26,6 +26,7 @@
 #include "debugwidget.h"
 #include "fileutil/fileutil.h"
 #include "litedebug_global.h"
+#include "selectexternaldialog.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -84,6 +85,8 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_dbgWidget->widget());
     m_widget->setLayout(layout);
 
+    m_startDebugExternal = new QAction(tr("Start Debugging External Application"),this);
+
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
     m_startDebugAct->setShortcut(QKeySequence(Qt::Key_F5));
     m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
@@ -137,22 +140,22 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_debugMenu = m_liteApp->actionManager()->insertMenu("menu/debug",tr("&Debug"),"menu/help");
 
-    m_gdbMenu = new QMenu("Debug");
-    if (m_gdbMenu) {
-        m_gdbMenu->addAction(m_startDebugAct);
-        m_gdbMenu->addAction(m_continueAct);
-        m_gdbMenu->addAction(m_stopDebugAct);
-        m_gdbMenu->addSeparator();
-        m_gdbMenu->addAction(m_showLineAct);
-        m_gdbMenu->addAction(m_stepIntoAct);
-        m_gdbMenu->addAction(m_stepOverAct);
-        m_gdbMenu->addAction(m_stepOutAct);
-        m_gdbMenu->addAction(m_runToLineAct);
-    }
+    m_debugMenu->addAction(m_startDebugExternal);
+    m_debugMenu->addSeparator();
+    m_debugMenu->addAction(m_startDebugAct);
+    m_debugMenu->addAction(m_continueAct);
+    m_debugMenu->addAction(m_stopDebugAct);
+    m_debugMenu->addSeparator();
+    m_debugMenu->addAction(m_showLineAct);
+    m_debugMenu->addAction(m_stepIntoAct);
+    m_debugMenu->addAction(m_stepOverAct);
+    m_debugMenu->addAction(m_stepOutAct);
+    m_debugMenu->addAction(m_runToLineAct);
 
     connect(m_manager,SIGNAL(currentDebuggerChanged(LiteApi::IDebugger*)),this,SLOT(setDebugger(LiteApi::IDebugger*)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 
+    connect(m_startDebugExternal,SIGNAL(triggered()),this,SLOT(startDebugExternal()));
     connect(m_startDebugAct,SIGNAL(triggered()),this,SLOT(startDebug()));
     connect(m_continueAct,SIGNAL(triggered()),this,SLOT(continueRun()));
     connect(m_runToLineAct,SIGNAL(triggered()),this,SLOT(runToLine()));
@@ -262,9 +265,20 @@ void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
 void LiteDebug::currentEditorChanged(IEditor *editor)
 {
     if (canDebug(editor)) {
-        m_debugMenu->menuAction()->setMenu(m_gdbMenu);
+        m_startDebugAct->setEnabled(true);
     } else {
-        m_debugMenu->menuAction()->setMenu(0);
+        m_startDebugAct->setEnabled(false);
+    }
+}
+
+void LiteDebug::startDebugExternal()
+{
+    SelectExternalDialog dlg;
+    if (dlg.exec() == QDialog::Accepted) {
+        QString cmd = dlg.getCmd();
+        QString args = dlg.getArgs();
+        QString work = dlg.getWork();
+        this->startDebug(cmd,args,work);
     }
 }
 
