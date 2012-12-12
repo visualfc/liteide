@@ -18,15 +18,12 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: markdownplugin.cpp
+// Module: markdownbatchbrowser.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "markdownplugin.h"
-#include "htmlpreview.h"
-#include "markdownedit.h"
 #include "markdownbatchbrowser.h"
-#include <QtPlugin>
-#include <QDebug>
+#include "ui_markdownbatchwidget.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -37,38 +34,31 @@
 #endif
 //lite_memory_check_end
 
-MarkdownPlugin::MarkdownPlugin()
+MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *parent) :
+    LiteApi::IBrowserEditor(parent),
+    m_liteApp(app),
+    ui(new Ui::MarkdownBatchWidget)
 {
-    m_info->setId("plugin/Markdown");
-    m_info->setVer("x15.0");
-    m_info->setName("Markdown");
-    m_info->setAnchor("visualfc");
-    m_info->setInfo("Markdown Plugin");
+    m_widget = new QWidget;
+    ui->setupUi(m_widget);
 }
 
-bool MarkdownPlugin::initWithApp(LiteApi::IApplication *app)
+MarkdownBatchBrowser::~MarkdownBatchBrowser()
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
-    QAction *act = m_liteApp->editorManager()->registerBrowser(new MarkdownBatchBrowser(m_liteApp,this));
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,act);
-
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
-
-    new HtmlPreview(m_liteApp,this);
-
-
-    return true;
+    delete ui;
 }
 
-void MarkdownPlugin::editorCreated(LiteApi::IEditor *editor)
+QWidget *MarkdownBatchBrowser::widget()
 {
-    if (!editor || editor->mimeType() != "text/x-markdown") {
-        return;
-    }
-    new MarkdownEdit(m_liteApp,editor,this);
+    return m_widget;
 }
 
-Q_EXPORT_PLUGIN(PluginFactory)
+QString MarkdownBatchBrowser::name() const
+{
+    return tr("Markdown Batch");
+}
+
+QString MarkdownBatchBrowser::mimeType() const
+{
+    return "browser/markdown";
+}
