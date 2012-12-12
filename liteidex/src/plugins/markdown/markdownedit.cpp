@@ -76,10 +76,17 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     QAction *code = new QAction(QIcon("icon:markdown/images/code.png"),"Inline Code",this);
     code->setShortcut(QKeySequence("Ctrl+K"));
 
+    QAction *link = new QAction(QIcon("icon:markdown/images/link.png"),"Link",this);
+    link->setShortcut(QKeySequence("Ctrl+Shift+L"));
+
+    QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),"Image",this);
+    image->setShortcut(QKeySequence("Ctrl+Shift+I"));
+
     QList<QAction*> actions;
     actions << new Separator(this);
     actions << h1 << h2 << h3;
     actions << bold << italic << code;
+    actions << link << image;
 
     QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Edit");
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
@@ -99,6 +106,8 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     connect(bold,SIGNAL(triggered()),this,SLOT(bold()));
     connect(italic,SIGNAL(triggered()),this,SLOT(italic()));
     connect(code,SIGNAL(triggered()),this,SLOT(code()));
+    connect(link,SIGNAL(triggered()),this,SLOT(link()));
+    connect(image,SIGNAL(triggered()),this,SLOT(image()));
 }
 
 MarkdownEdit::~MarkdownEdit()
@@ -164,6 +173,48 @@ void MarkdownEdit::italic()
 void MarkdownEdit::code()
 {
     mark_selection("`");
+}
+
+void MarkdownEdit::link()
+{
+    QTextCursor cursor = m_ed->textCursor();
+    cursor.beginEditBlock();
+    if (cursor.hasSelection()) {
+        int n1 = cursor.selectionStart();
+        int n2 = cursor.selectionEnd();
+        cursor.setPosition(n1);
+        cursor.insertText("[");
+        cursor.setPosition(n2+1);
+        cursor.insertText("]()");
+        cursor.setPosition(n2+3);
+    } else {
+        int n = cursor.position();
+        cursor.insertText("[]()");
+        cursor.setPosition(n+1);
+    }
+    cursor.endEditBlock();
+    m_ed->setTextCursor(cursor);
+}
+
+void MarkdownEdit::image()
+{
+    QTextCursor cursor = m_ed->textCursor();
+    cursor.beginEditBlock();
+    if (cursor.hasSelection()) {
+        int n1 = cursor.selectionStart();
+        int n2 = cursor.selectionEnd();
+        cursor.setPosition(n1);
+        cursor.insertText("![");
+        cursor.setPosition(n2+2);
+        cursor.insertText("]()");
+        cursor.setPosition(n2+4);
+    } else {
+        int n = cursor.position();
+        cursor.insertText("![]()");
+        cursor.setPosition(n+2);
+    }
+    cursor.endEditBlock();
+    m_ed->setTextCursor(cursor);
 }
 
 

@@ -43,6 +43,8 @@ public slots:
     void bold();
     void italic();
     void code();
+    void link();
+    void image();
     void gotoLine(int line, int col);
 protected:
     LiteApi::IApplication *m_liteApp;
