@@ -90,12 +90,11 @@ void GolangFmtPlugin::appLoaded()
         if (m_playEditor->mimeType() != "text/x-gosrc") {
             return;
         }
-        QMenu *menu = LiteApi::getMenu(m_playEditor,"Edit");
-        if (!menu) {
-            return;
+        QMenu *menu = LiteApi::getContextMenu(m_playEditor);
+        if (menu) {
+            menu->addSeparator();
+            menu->addAction(m_goplayAct);
         }
-        menu->addSeparator();
-        menu->addAction(m_goplayAct);
     }
 }
 
@@ -107,12 +106,16 @@ void GolangFmtPlugin::editorCreated(LiteApi::IEditor *editor)
     if (editor->mimeType() != "text/x-gosrc") {
         return;
     }
-    QMenu *menu = LiteApi::getMenu(editor,"Edit");
-    if (!menu) {
-        return;
+    QMenu *menu = LiteApi::getEditMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(m_gofmtAct);
     }
-    menu->addSeparator();
-    menu->addAction(m_gofmtAct);
+    menu = LiteApi::getContextMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(m_gofmtAct);
+    }
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

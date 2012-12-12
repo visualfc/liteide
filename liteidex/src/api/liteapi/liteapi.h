@@ -265,18 +265,23 @@ inline ITextEditor *getTextEditor(IEditor *editor)
     return 0;
 }
 
-inline QMenu *getMenu(IEditor *editor, const QString &id)
+inline QMenu *getMenu(IObject *obj, const QString &id)
 {
-    if (editor && editor->extension()) {
-        return findExtensionObject<QMenu*>(editor->extension(),QString("LiteApi.Menu.%1").arg(id));
+    if (obj && obj->extension()) {
+        return findExtensionObject<QMenu*>(obj->extension(),QString("LiteApi.Menu.%1").arg(id));
     }
     return 0;
 }
 
-inline QMenu *getContextMenu(IEditor *editor)
+inline QMenu *getEditMenu(IObject *obj)
 {
-    if (editor && editor->extension()) {
-        return findExtensionObject<QMenu*>(editor->extension(),"LiteApi.ContextMenu");
+    return getMenu(obj,"Edit");
+}
+
+inline QMenu *getContextMenu(IObject *obj)
+{
+    if (obj && obj->extension()) {
+        return findExtensionObject<QMenu*>(obj->extension(),"LiteApi.ContextMenu");
     }
     return 0;
 }

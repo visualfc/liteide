@@ -89,7 +89,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     createToolBars();
     createMenu();
 
-    m_editorWidget->setContextMenu(m_editMenu);
+    m_editorWidget->setContextMenu(m_contextMenu);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -117,7 +117,6 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
     m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
-    m_extension->addObject("LiteApi.Menu.Context",m_contextMenu);
 
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
@@ -373,13 +372,16 @@ void LiteEditor::createMenu()
     m_contextMenu = new QMenu(m_editorWidget);
 
     //editor menu
+    m_editMenu->addAction(m_undoAct);
+    m_editMenu->addAction(m_redoAct);
+    m_editMenu->addSeparator();
     m_editMenu->addAction(m_cutAct);
     m_editMenu->addAction(m_copyAct);
     m_editMenu->addAction(m_pasteAct);
     m_editMenu->addAction(m_duplicateAct);
     m_editMenu->addSeparator();
     QMenu *expMenu = m_editMenu->addMenu(tr("Export"));
-    expMenu->addAction(m_exportHtmlAct);
+    //expMenu->addAction(m_exportHtmlAct);
 #ifndef QT_NO_PRINTER
     expMenu->addAction(m_exportPdfAct);
     expMenu->addSeparator();

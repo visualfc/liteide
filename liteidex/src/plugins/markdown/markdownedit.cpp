@@ -95,10 +95,10 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     actions << bold << italic << code;
     actions << link << image;
 
-    QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Edit");
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
     QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
 
+    QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
         QMenu *h = menu->addMenu("Heading");
@@ -116,6 +116,17 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         menu->addAction(link);
         menu->addAction(image);
     }
+    menu = LiteApi::getContextMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(bold);
+        menu->addAction(italic);
+        menu->addAction(code);
+        menu->addSeparator();
+        menu->addAction(link);
+        menu->addAction(image);
+    }
+
     if (toolBar) {
         toolBar->insertActions(spacer,actions);
     }

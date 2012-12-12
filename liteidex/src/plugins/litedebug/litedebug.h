@@ -102,7 +102,7 @@ protected:
     QAction *m_stepOutAct;
     QAction *m_continueAct;
     QAction *m_runToLineAct;
-    QAction *m_insertBreakAct;
+    QAction *m_switchBreakAct;
     QAction *m_removeAllBreakAct;
     QStringList m_debugMimeTypes;
     QString  m_debugInfoId;

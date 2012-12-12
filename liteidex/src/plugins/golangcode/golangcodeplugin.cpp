@@ -78,7 +78,12 @@ void GolangCodePlugin::editorCreated(LiteApi::IEditor *editor)
 {
     if (editor && editor->mimeType() == "text/x-gosrc") {
         editor->widget()->addAction(m_commentAct);
-        QMenu *menu = LiteApi::getContextMenu(editor);
+        QMenu *menu = LiteApi::getEditMenu(editor);
+        if (menu) {
+            menu->addSeparator();
+            menu->addAction(m_commentAct);
+        }
+        menu = LiteApi::getContextMenu(editor);
         if (menu) {
             menu->addSeparator();
             menu->addAction(m_commentAct);

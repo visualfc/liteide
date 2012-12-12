@@ -118,9 +118,9 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_runToLineAct->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_F10));
     m_runToLineAct->setToolTip(tr("Run to Line (Ctrl+F10)"));
 
-    m_insertBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove BreakPoint"),this);
-    m_insertBreakAct->setShortcut(QKeySequence(Qt::Key_F9));
-    m_insertBreakAct->setToolTip(tr("Insert/Remove Breakpoint (F9)"));
+    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove BreakPoint"),this);
+    m_switchBreakAct->setShortcut(QKeySequence(Qt::Key_F9));
+    m_switchBreakAct->setToolTip(tr("Insert/Remove Breakpoint (F9)"));
 
     m_removeAllBreakAct = new QAction(tr("Remove All Break Points"),this);
 
@@ -131,7 +131,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     widgetToolBar->addAction(m_continueAct);
     widgetToolBar->addAction(m_stopDebugAct);
     widgetToolBar->addSeparator();
-    widgetToolBar->addAction(m_insertBreakAct);
+    widgetToolBar->addAction(m_switchBreakAct);
     widgetToolBar->addAction(m_showLineAct);
     widgetToolBar->addAction(m_stepIntoAct);
     widgetToolBar->addAction(m_stepOverAct);
@@ -163,7 +163,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_stepOverAct,SIGNAL(triggered()),this,SLOT(stepOver()));
     connect(m_stepIntoAct,SIGNAL(triggered()),this,SLOT(stepInto()));
     connect(m_stepOutAct,SIGNAL(triggered()),this,SLOT(stepOut()));
-    connect(m_insertBreakAct,SIGNAL(triggered()),this,SLOT(toggleBreakPoint()));
+    connect(m_switchBreakAct,SIGNAL(triggered()),this,SLOT(toggleBreakPoint()));
     connect(m_removeAllBreakAct,SIGNAL(triggered()),this,SLOT(removeAllBreakPoints()));
     connect(m_showLineAct,SIGNAL(triggered()),this,SLOT(showLine()));
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
@@ -214,11 +214,16 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
         return;
     }
 
-    QMenu *menu = LiteApi::getContextMenu(editor);
+    QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
-        menu->addAction(m_insertBreakAct);
+        menu->addAction(m_switchBreakAct);
         menu->addAction(m_removeAllBreakAct);
+    }
+    menu = LiteApi::getContextMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(m_switchBreakAct);
     }
 
     QString filePath = editor->filePath();
@@ -239,7 +244,7 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
     if (toolBar) {
         QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
         toolBar->insertSeparator(spacer);
-        toolBar->insertAction(spacer,m_insertBreakAct);
+        toolBar->insertAction(spacer,m_switchBreakAct);
         toolBar->insertAction(spacer,m_startDebugAct);
     }
 }
