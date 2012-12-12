@@ -74,6 +74,21 @@ IHtmlWidget *HtmlWidgetManager::createByName(QObject *parent, const QString &cla
     return 0;
 }
 
+IHtmlDocument *HtmlWidgetManager::createDocument(QObject *parent)
+{
+   return createDocumentByName(parent,m_defaultClassName);
+}
+
+IHtmlDocument *HtmlWidgetManager::createDocumentByName(QObject *parent, const QString &className)
+{
+    foreach(IHtmlWidgetFactory *factory, m_factoryList) {
+        if (factory->className() == className) {
+            return factory->createDocument(parent);
+        }
+    }
+    return 0;
+}
+
 bool HtmlWidgetManager::setDefaultClassName(const QString &className)
 {
     foreach(IHtmlWidgetFactory *factory, m_factoryList) {

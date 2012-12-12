@@ -40,6 +40,8 @@ public:
     virtual QString defaultClassName() const;
     virtual IHtmlWidget *create(QObject *parent);
     virtual IHtmlWidget *createByName(QObject *parent, const QString &className);
+    virtual IHtmlDocument *createDocument(QObject *parent);
+    virtual IHtmlDocument *createDocumentByName(QObject *parent, const QString &className);
 protected:
     QList<IHtmlWidgetFactory*> m_factoryList;
     QString m_defaultClassName;

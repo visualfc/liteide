@@ -60,6 +60,23 @@ protected:
     QUrl          m_url;
 };
 
+class TextBrowserHtmlDocument : public IHtmlDocument
+{
+    Q_OBJECT
+public:
+    TextBrowserHtmlDocument(QObject *parent);
+    virtual ~TextBrowserHtmlDocument();
+public:
+    virtual void setHtml(const QString &html, const QUrl &url);
+#ifndef QT_NO_PRINTER
+    virtual void print(QPrinter *printer);
+#endif
+    virtual QString	toHtml () const;
+    virtual QString	toPlainText () const;
+protected:
+    QTextBrowser *m_doc;
+};
+
 class TextBrowserHtmlWidgetFactory : public IHtmlWidgetFactory
 {
     Q_OBJECT
@@ -67,6 +84,7 @@ public:
     TextBrowserHtmlWidgetFactory(QObject *parent = 0);
     virtual QString className() const;
     virtual IHtmlWidget *create(QObject *parent);
+    virtual IHtmlDocument  *createDocument(QObject *parent);
 };
 
 #endif // TEXTBROWSERHTMLWIDGET_H

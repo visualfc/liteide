@@ -143,3 +143,43 @@ IHtmlWidget *WebViewHtmlWidgetFactory::create(QObject *parent)
 {
     return new WebViewHtmlWidget(parent);
 }
+
+IHtmlDocument *WebViewHtmlWidgetFactory::createDocument(QObject *parent)
+{
+    return new WebPageHtmlDocument(parent);
+}
+
+
+WebPageHtmlDocument::WebPageHtmlDocument(QObject *parent) :
+    IHtmlDocument(parent)
+{
+    m_doc = new QWebPage(this);
+    connect(m_doc->mainFrame(),SIGNAL(loadFinished(bool)),this,SIGNAL(loadFinished(bool)));
+}
+
+WebPageHtmlDocument::~WebPageHtmlDocument()
+{
+    delete m_doc;
+}
+
+void WebPageHtmlDocument::setHtml(const QString &html, const QUrl &url)
+{
+    m_doc->mainFrame()->setHtml(html,url);
+}
+
+#ifndef QT_NO_PRINTER
+void WebPageHtmlDocument::print(QPrinter *printer)
+{
+    m_doc->mainFrame()->print(printer);
+}
+#endif
+
+QString WebPageHtmlDocument::toHtml() const
+{
+    return m_doc->mainFrame()->toHtml();
+}
+
+QString WebPageHtmlDocument::toPlainText() const
+{
+    return m_doc->mainFrame()->toPlainText();
+}

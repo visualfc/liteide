@@ -158,3 +158,54 @@ IHtmlWidget *TextBrowserHtmlWidgetFactory::create(QObject *parent)
 {
     return new TextBrowserHtmlWidget(parent);
 }
+
+IHtmlDocument *TextBrowserHtmlWidgetFactory::createDocument(QObject *parent)
+{
+    return new TextBrowserHtmlDocument(parent);
+}
+
+
+TextBrowserHtmlDocument::TextBrowserHtmlDocument(QObject *parent) :
+    IHtmlDocument(parent)
+{
+    m_doc = new QTextBrowser;
+    m_doc->setVisible(false);
+}
+
+TextBrowserHtmlDocument::~TextBrowserHtmlDocument()
+{
+    delete m_doc;
+}
+
+void TextBrowserHtmlDocument::setHtml(const QString &html, const QUrl &url)
+{
+    m_doc->setHtml(html);
+    if (!url.isEmpty()) {
+        QString file = url.toLocalFile();
+        if (!file.isEmpty()) {
+            QFileInfo info(file);
+            QStringList paths = m_doc->searchPaths();
+            paths.append(info.path());
+            paths.removeDuplicates();
+            m_doc->setSearchPaths(paths);
+        }
+    }
+    emit loadFinished(true);
+}
+
+#ifndef QT_NO_PRINTER
+void TextBrowserHtmlDocument::print(QPrinter *printer)
+{
+    m_doc->print(printer);
+}
+#endif
+
+QString TextBrowserHtmlDocument::toHtml() const
+{
+    return m_doc->toHtml();
+}
+
+QString TextBrowserHtmlDocument::toPlainText() const
+{
+    return m_doc->toPlainText();
+}

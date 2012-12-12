@@ -28,6 +28,8 @@
 
 using namespace LiteApi;
 class QWebView;
+class QWebPage;
+
 class WebViewHtmlWidget : public IHtmlWidget
 {
     Q_OBJECT
@@ -56,6 +58,23 @@ protected:
     QWebView *m_widget;
 };
 
+class WebPageHtmlDocument : public IHtmlDocument
+{
+    Q_OBJECT
+public:
+    WebPageHtmlDocument(QObject *parent);
+    virtual ~WebPageHtmlDocument();
+public:
+    virtual void setHtml(const QString &html, const QUrl &url);
+#ifndef QT_NO_PRINTER
+    virtual void print(QPrinter *printer);
+#endif
+    virtual QString	toHtml () const;
+    virtual QString	toPlainText () const;
+protected:
+    QWebPage *m_doc;
+};
+
 class WebViewHtmlWidgetFactory : public IHtmlWidgetFactory
 {
     Q_OBJECT
@@ -63,6 +82,7 @@ public:
     WebViewHtmlWidgetFactory(QObject *parent = 0);
     virtual QString className() const;
     virtual IHtmlWidget *create(QObject *parent);
+    virtual IHtmlDocument  *createDocument(QObject *parent);
 };
 
 
