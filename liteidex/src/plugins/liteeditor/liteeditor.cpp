@@ -115,8 +115,9 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_extension->addObject("LiteApi.QToolBar",m_toolBar);
     m_extension->addObject("LiteApi.QToolBar.Spacer",m_spacerAct);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
-    m_extension->addObject("LiteApi.ContextMenu",m_editMenu);
+    m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
     m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
+    m_extension->addObject("LiteApi.Menu.Context",m_contextMenu);
 
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
@@ -369,6 +370,9 @@ void LiteEditor::createToolBars()
 void LiteEditor::createMenu()
 {
     m_editMenu = new QMenu(m_editorWidget);
+    m_contextMenu = new QMenu(m_editorWidget);
+
+    //editor menu
     m_editMenu->addAction(m_cutAct);
     m_editMenu->addAction(m_copyAct);
     m_editMenu->addAction(m_pasteAct);
@@ -394,6 +398,12 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_gotoMatchBraceAct);
     m_editMenu->addAction(m_gotoPrevBlockAct);
     m_editMenu->addAction(m_gotoNextBlockAct);
+
+    //context menu
+    m_contextMenu->addAction(m_cutAct);
+    m_contextMenu->addAction(m_copyAct);
+    m_contextMenu->addAction(m_pasteAct);
+    m_contextMenu->addAction(m_duplicateAct);
 }
 
 #ifdef LITEEDITOR_FIND

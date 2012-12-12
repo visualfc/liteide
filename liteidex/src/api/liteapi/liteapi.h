@@ -265,10 +265,18 @@ inline ITextEditor *getTextEditor(IEditor *editor)
     return 0;
 }
 
-inline QMenu *getEditorMenu(IEditor *editor, const QString &id)
+inline QMenu *getMenu(IEditor *editor, const QString &id)
 {
     if (editor && editor->extension()) {
         return findExtensionObject<QMenu*>(editor->extension(),QString("LiteApi.Menu.%1").arg(id));
+    }
+    return 0;
+}
+
+inline QMenu *getContextMenu(IEditor *editor)
+{
+    if (editor && editor->extension()) {
+        return findExtensionObject<QMenu*>(editor->extension(),"LiteApi.ContextMenu");
     }
     return 0;
 }

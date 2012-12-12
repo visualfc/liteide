@@ -214,7 +214,7 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
         return;
     }
 
-    QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.ContextMenu");
+    QMenu *menu = LiteApi::getContextMenu(editor);
     if (menu) {
         menu->addSeparator();
         menu->addAction(m_insertBreakAct);

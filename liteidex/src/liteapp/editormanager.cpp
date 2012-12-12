@@ -443,7 +443,7 @@ void EditorManager::setCurrentEditor(IEditor *editor)
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
-        QMenu *menu = LiteApi::getEditorMenu(editor,"Edit");
+        QMenu *menu = LiteApi::getMenu(editor,"Edit");
         m_editMenu->menuAction()->setMenu(menu);
         m_editMenu->setEnabled(menu != 0);
     } else {

@@ -270,7 +270,7 @@ void GolangDoc::editorCreated(LiteApi::IEditor *editor)
     if (editor->mimeType() != "text/x-gosrc") {
         return;
     }
-    QMenu *menu = LiteApi::getEditorMenu(editor,"Edit");
+    QMenu *menu = LiteApi::getMenu(editor,"Edit");
     if (!menu) {
         return;
     }

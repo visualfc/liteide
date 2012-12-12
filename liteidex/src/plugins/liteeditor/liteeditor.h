@@ -154,6 +154,7 @@ public:
     QAction *m_lockAct;
     LiteEditorFile *m_file;
     QMenu   *m_editMenu;
+    QMenu   *m_contextMenu;
     QString  m_colorStyle;
     QPalette m_defPalette;
     bool       m_bReadOnly;

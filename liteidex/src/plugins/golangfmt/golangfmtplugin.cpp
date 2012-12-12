@@ -90,7 +90,7 @@ void GolangFmtPlugin::appLoaded()
         if (m_playEditor->mimeType() != "text/x-gosrc") {
             return;
         }
-        QMenu *menu = LiteApi::getEditorMenu(m_playEditor,"Edit");
+        QMenu *menu = LiteApi::getMenu(m_playEditor,"Edit");
         if (!menu) {
             return;
         }
@@ -107,7 +107,7 @@ void GolangFmtPlugin::editorCreated(LiteApi::IEditor *editor)
     if (editor->mimeType() != "text/x-gosrc") {
         return;
     }
-    QMenu *menu = LiteApi::getEditorMenu(editor,"Edit");
+    QMenu *menu = LiteApi::getMenu(editor,"Edit");
     if (!menu) {
         return;
     }
