@@ -443,8 +443,9 @@ void EditorManager::setCurrentEditor(IEditor *editor)
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
-        m_editMenu->menuAction()->setMenu(editor->editMenu());
-        m_editMenu->setEnabled(editor->editMenu() != 0);
+        QMenu *menu = LiteApi::getEditorMenu(editor,"Edit");
+        m_editMenu->menuAction()->setMenu(menu);
+        m_editMenu->setEnabled(menu != 0);
     } else {
         m_editMenu->setEnabled(false);
         m_editMenu->menuAction()->setMenu(0);

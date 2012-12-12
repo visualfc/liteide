@@ -173,11 +173,6 @@ QString DocumentBrowser::mimeType() const
     return m_mimeType;
 }
 
-QMenu *DocumentBrowser::editMenu() const
-{
-    return 0;
-}
-
 void DocumentBrowser::onActive()
 {
 }

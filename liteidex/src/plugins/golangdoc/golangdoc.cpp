@@ -270,16 +270,10 @@ void GolangDoc::editorCreated(LiteApi::IEditor *editor)
     if (editor->mimeType() != "text/x-gosrc") {
         return;
     }
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (!textEditor) {
-        return;
-    }
-    QMenu *menu = textEditor->editMenu();
+    QMenu *menu = LiteApi::getEditorMenu(editor,"Edit");
     if (!menu) {
         return;
     }
-    textEditor->widget()->addAction(m_findDocAct);
-    textEditor->widget()->addAction(m_jumpDeclAct);
     menu->addSeparator();
     menu->addAction(m_findDocAct);
     menu->addAction(m_jumpDeclAct);

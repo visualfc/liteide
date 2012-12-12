@@ -28,6 +28,7 @@
 #include "litehtml.h"
 
 #include <QWidget>
+#include <QMenu>
 #include <QPlainTextEdit>
 #include <QSettings>
 #include <QMainWindow>
@@ -237,7 +238,6 @@ public:
     virtual QString mimeType() const = 0;
     virtual QByteArray saveState() const = 0;
     virtual bool restoreState(const QByteArray &array) = 0;
-    virtual QMenu *editMenu() const = 0;
     virtual void onActive() = 0;
 signals:
     void modificationChanged(bool);
@@ -261,6 +261,14 @@ inline ITextEditor *getTextEditor(IEditor *editor)
 {
     if (editor && editor->extension()) {
         return findExtensionObject<ITextEditor*>(editor->extension(),"LiteApi.ITextEditor");
+    }
+    return 0;
+}
+
+inline QMenu *getEditorMenu(IEditor *editor, const QString &id)
+{
+    if (editor && editor->extension()) {
+        return findExtensionObject<QMenu*>(editor->extension(),QString("LiteApi.Menu.%1").arg(id));
     }
     return 0;
 }
@@ -322,7 +330,6 @@ public:
     virtual QMap<QString,QString> targetInfo() const { return QMap<QString,QString>(); }
     virtual QByteArray saveState() const {return QByteArray(); }
     virtual bool restoreState(const QByteArray &) { return false; }
-    virtual QMenu *editMenu() const { return 0; }
     virtual void onActive(){}
 };
 

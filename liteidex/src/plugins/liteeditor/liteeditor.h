@@ -93,7 +93,6 @@ public:
     virtual void gotoLine(int line, int column, bool center);
     virtual QString textCodec() const;
     virtual void setTextCodec(const QString &codec);
-    virtual QMenu *editMenu() const;
     virtual QByteArray saveState() const;
     virtual bool restoreState(const QByteArray &state);
     virtual void onActive();
