@@ -379,6 +379,7 @@ void HtmlPreview::exportPdf()
             fileName.append(".pdf");
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setPaperSize(QPrinter::A4);
         printer.setOutputFileName(fileName);
         m_htmlWidget->print(&printer);
     }
