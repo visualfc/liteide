@@ -37,6 +37,7 @@ signals:
 public slots:
     void insert_head(const QString &tag);
     void mark_selection(const QString &mark);
+    void mark_selection(const QString &mark1, const QString &mark2);
     void h1();
     void h2();
     void h3();
@@ -48,6 +49,8 @@ public slots:
     void code();
     void link();
     void image();
+    void ul();
+    void ol();
     void gotoLine(int line, int col);
 protected:
     LiteApi::IApplication *m_liteApp;

@@ -89,6 +89,12 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),"Image",this);
     image->setShortcut(QKeySequence("Ctrl+Shift+I"));
 
+    QAction *ul = new QAction(QIcon("icon:markdown/images/ul.png"),tr("Unordered List"),this);
+    ul->setShortcut(QKeySequence("Ctrl+Shift+U"));
+
+    QAction *ol = new QAction(QIcon("icon:markdown/images/ol.png"),tr("Ordered List"),this);
+    ol->setShortcut(QKeySequence("Ctrl+Shift+O"));
+
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
 
     QMenu *menu = LiteApi::getEditMenu(editor);
@@ -102,22 +108,28 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         h->addAction(h5);
         h->addAction(h6);
         menu->addSeparator();
+        menu->addAction(link);
+        menu->addAction(image);
+        menu->addSeparator();
         menu->addAction(bold);
         menu->addAction(italic);
         menu->addAction(code);
         menu->addSeparator();
-        menu->addAction(link);
-        menu->addAction(image);
+        menu->addAction(ul);
+        menu->addAction(ol);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
         menu->addSeparator();
+        menu->addAction(link);
+        menu->addAction(image);
+        menu->addSeparator();
         menu->addAction(bold);
         menu->addAction(italic);
         menu->addAction(code);
         menu->addSeparator();
-        menu->addAction(link);
-        menu->addAction(image);
+        menu->addAction(ul);
+        menu->addAction(ol);
     }
 
     if (toolBar) {
@@ -126,11 +138,15 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         toolBar->addAction(h2);
         toolBar->addAction(h3);
         toolBar->addSeparator();
+        toolBar->addAction(link);
+        toolBar->addAction(image);
+        toolBar->addSeparator();
         toolBar->addAction(bold);
         toolBar->addAction(italic);
         toolBar->addAction(code);
-        toolBar->addAction(link);
-        toolBar->addAction(image);
+        toolBar->addSeparator();
+        toolBar->addAction(ul);
+        toolBar->addAction(ol);
     }
 
     connect(editor,SIGNAL(destroyed()),this,SLOT(deleteLater()));
@@ -145,6 +161,8 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     connect(code,SIGNAL(triggered()),this,SLOT(code()));
     connect(link,SIGNAL(triggered()),this,SLOT(link()));
     connect(image,SIGNAL(triggered()),this,SLOT(image()));
+    connect(ul,SIGNAL(triggered()),this,SLOT(ul()));
+    connect(ol,SIGNAL(triggered()),this,SLOT(ol()));
 }
 
 MarkdownEdit::~MarkdownEdit()
@@ -163,6 +181,11 @@ void MarkdownEdit::insert_head(const QString &tag)
 }
 
 void MarkdownEdit::mark_selection(const QString &mark)
+{
+    mark_selection(mark,mark);
+}
+
+void MarkdownEdit::mark_selection(const QString &mark1, const QString &mark2)
 {
     QTextCursor cur = m_ed->textCursor();
     cur.beginEditBlock();
@@ -185,17 +208,23 @@ void MarkdownEdit::mark_selection(const QString &mark)
                 c2 = n2;
             }
             if (c2 > c1) {
-                cur.setPosition(c1);
-                cur.insertText(mark);
-                cur.setPosition(c2+mark.length());
-                cur.insertText(mark);
-                n2 += mark.length()*2;
+                if (!mark1.isEmpty()) {
+                    cur.setPosition(c1);
+                    cur.insertText(mark1);
+                    n2 += mark1.length();
+                }
+                if (!mark2.isEmpty()) {
+                    cur.setPosition(c2+mark1.length());
+                    cur.insertText(mark2);
+                    n2 += mark2.length();
+                }
             }
             block = block.next();
         } while(block.isValid() && block.position() <= end.position());
     } else {
-        cur.insertText(mark+mark);
-        cur.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,mark.length());
+        int pos = cur.position();
+        cur.insertText(mark1+mark2);
+        cur.setPosition(pos+mark1.length());
     }
     cur.endEditBlock();
     m_ed->setTextCursor(cur);
@@ -288,6 +317,15 @@ void MarkdownEdit::image()
     m_ed->setTextCursor(cursor);
 }
 
+void MarkdownEdit::ul()
+{
+    mark_selection("* ","");
+}
+
+void MarkdownEdit::ol()
+{
+    mark_selection("1. ","");
+}
 
 void MarkdownEdit::gotoLine(int line, int column)
 {
