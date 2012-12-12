@@ -51,7 +51,11 @@ public slots:
     void image();
     void ul();
     void ol();
+    void bq();
+    void hr();
     void gotoLine(int line, int col);
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ITextEditor  *m_editor;

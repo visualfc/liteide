@@ -50,6 +50,18 @@ public:
     }
 };
 
+static void updateToolTip(QToolBar *toolBar)
+{
+    foreach(QAction *act, toolBar->actions()) {
+        if (act->isSeparator()) {
+            continue;
+        }
+        if (act->toolTip() == act->text() && !act->shortcut().isEmpty()) {
+            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(act->shortcut().toString()));
+        }
+    }
+}
+
 MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
     QObject(parent), m_liteApp(app)
 {
@@ -63,30 +75,32 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     }
     m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
-    QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),"H1",this);
+    QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),tr("Header 1"),this);
     h1->setShortcut(QKeySequence("Ctrl+1"));
-    QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),"H2",this);
+
+    QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),tr("Header 2"),this);
     h2->setShortcut(QKeySequence("Ctrl+2"));
-    QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),"H3",this);
+
+    QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),tr("Header 3"),this);
     h3->setShortcut(QKeySequence("Ctrl+3"));
-    QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),"H4",this);
+    QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),tr("Header 4"),this);
     h4->setShortcut(QKeySequence("Ctrl+4"));
-    QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),"H5",this);
+    QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),tr("Header 5"),this);
     h5->setShortcut(QKeySequence("Ctrl+5"));
-    QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),"H6",this);
+    QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),tr("Header 6"),this);
     h6->setShortcut(QKeySequence("Ctrl+6"));
 
-    QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),"Bold",this);
+    QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),tr("Bold"),this);
     bold->setShortcut(QKeySequence::Bold);
-    QAction *italic = new QAction(QIcon("icon:markdown/images/italic.png"),"Italic",this);
+    QAction *italic = new QAction(QIcon("icon:markdown/images/italic.png"),tr("Italic"),this);
     italic->setShortcut(QKeySequence::Italic);
-    QAction *code = new QAction(QIcon("icon:markdown/images/code.png"),"Inline Code",this);
+    QAction *code = new QAction(QIcon("icon:markdown/images/code.png"),tr("Inline Code"),this);
     code->setShortcut(QKeySequence("Ctrl+K"));
 
-    QAction *link = new QAction(QIcon("icon:markdown/images/link.png"),"Link",this);
+    QAction *link = new QAction(QIcon("icon:markdown/images/link.png"),tr("Link"),this);
     link->setShortcut(QKeySequence("Ctrl+Shift+L"));
 
-    QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),"Image",this);
+    QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),tr("Image"),this);
     image->setShortcut(QKeySequence("Ctrl+Shift+I"));
 
     QAction *ul = new QAction(QIcon("icon:markdown/images/ul.png"),tr("Unordered List"),this);
@@ -94,6 +108,12 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
 
     QAction *ol = new QAction(QIcon("icon:markdown/images/ol.png"),tr("Ordered List"),this);
     ol->setShortcut(QKeySequence("Ctrl+Shift+O"));
+
+    QAction *bq = new QAction(QIcon("icon:markdown/images/quote.png"),tr("Blockquote"),this);
+    bq->setShortcut(QKeySequence("Ctrl+Shift+Q"));
+
+    QAction *hr = new QAction(QIcon("icon:markdown/images/hr.png"),tr("Horizontal Rule"),this);
+    hr->setShortcut(QKeySequence("Ctrl+Shift+H"));
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
 
@@ -117,6 +137,9 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         menu->addSeparator();
         menu->addAction(ul);
         menu->addAction(ol);
+        menu->addSeparator();
+        menu->addAction(bq);
+        menu->addAction(hr);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -130,6 +153,9 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         menu->addSeparator();
         menu->addAction(ul);
         menu->addAction(ol);
+        menu->addSeparator();
+        menu->addAction(bq);
+        menu->addAction(hr);
     }
 
     if (toolBar) {
@@ -147,6 +173,10 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         toolBar->addSeparator();
         toolBar->addAction(ul);
         toolBar->addAction(ol);
+        toolBar->addSeparator();
+        toolBar->addAction(bq);
+        toolBar->addAction(hr);
+        //updateToolTip(toolBar);
     }
 
     connect(editor,SIGNAL(destroyed()),this,SLOT(deleteLater()));
@@ -163,6 +193,10 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     connect(image,SIGNAL(triggered()),this,SLOT(image()));
     connect(ul,SIGNAL(triggered()),this,SLOT(ul()));
     connect(ol,SIGNAL(triggered()),this,SLOT(ol()));
+    connect(bq,SIGNAL(triggered()),this,SLOT(bq()));
+    connect(hr,SIGNAL(triggered()),this,SLOT(hr()));
+
+    m_ed->installEventFilter(this);
 }
 
 MarkdownEdit::~MarkdownEdit()
@@ -174,9 +208,26 @@ MarkdownEdit::~MarkdownEdit()
 void MarkdownEdit::insert_head(const QString &tag)
 {
     QTextCursor cur = m_ed->textCursor();
-    this->gotoLine(cur.block().firstLineNumber(),0);
-    cur = m_ed->textCursor();
-    cur.insertText(tag+" ");
+    cur.beginEditBlock();
+    if (cur.hasSelection()) {
+        QTextBlock begin = m_ed->document()->findBlock(cur.selectionStart());
+        QTextBlock end = m_ed->document()->findBlock(cur.selectionEnd());
+        if (end.position() == cur.selectionEnd()) {
+            end = end.previous();
+        }
+        QTextBlock block = begin;
+        do {
+            if (block.text().length() > 0) {
+                cur.setPosition(block.position());
+                cur.insertText(tag);
+            }
+            block = block.next();
+        } while(block.isValid() && block.position() <= end.position());
+    } else {
+        cur.setPosition(cur.block().position());
+        cur.insertText(tag);
+    }
+    cur.endEditBlock();
     m_ed->setTextCursor(cur);
 }
 
@@ -232,22 +283,22 @@ void MarkdownEdit::mark_selection(const QString &mark1, const QString &mark2)
 
 void MarkdownEdit::h1()
 {
-    insert_head("#");
+    insert_head("# ");
 }
 
 void MarkdownEdit::h2()
 {
-    insert_head("##");
+    insert_head("## ");
 }
 
 void MarkdownEdit::h3()
 {
-    insert_head("###");
+    insert_head("### ");
 }
 
 void MarkdownEdit::h4()
 {
-    insert_head("####");
+    insert_head("#### ");
 }
 
 void MarkdownEdit::h5()
@@ -257,7 +308,7 @@ void MarkdownEdit::h5()
 
 void MarkdownEdit::h6()
 {
-    insert_head("######");
+    insert_head("###### ");
 }
 
 void MarkdownEdit::bold()
@@ -327,6 +378,21 @@ void MarkdownEdit::ol()
     mark_selection("1. ","");
 }
 
+void MarkdownEdit::bq()
+{
+    insert_head("> ");
+}
+
+void MarkdownEdit::hr()
+{
+    QTextCursor cursor = m_ed->textCursor();
+    if (cursor.hasSelection()) {
+        cursor.setPosition(cursor.selectionEnd());
+    }
+    cursor.insertText("\n***\n");
+    m_ed->setTextCursor(cursor);
+}
+
 void MarkdownEdit::gotoLine(int line, int column)
 {
     const int blockNumber = line;
@@ -345,5 +411,16 @@ void MarkdownEdit::gotoLine(int line, int column)
         m_ed->setTextCursor(cursor);
         m_ed->ensureCursorVisible();
     }
+}
+
+bool MarkdownEdit::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == m_ed && event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Enter) {
+            return true;
+        }
+    }
+    return QObject::eventFilter(obj, event);
 }
 
