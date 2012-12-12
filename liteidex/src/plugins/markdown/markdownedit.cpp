@@ -29,6 +29,7 @@
 #include <QTextBlock>
 #include <QPlainTextEdit>
 #include <QTextDocument>
+#include <QRegExp>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -196,7 +197,7 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     connect(bq,SIGNAL(triggered()),this,SLOT(bq()));
     connect(hr,SIGNAL(triggered()),this,SLOT(hr()));
 
-    m_ed->installEventFilter(this);
+    //m_ed->installEventFilter(this);
 }
 
 MarkdownEdit::~MarkdownEdit()
@@ -417,8 +418,19 @@ bool MarkdownEdit::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == m_ed && event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_Enter) {
-            return true;
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+//            QObject::eventFilter(obj, event);
+//            QTextCursor cur = m_ed->textCursor();
+//            QTextBlock prev = cur.block().previous();
+//            if (prev.isValid()) {
+//                QString text = prev.text();
+//                qDebug() << text;
+//                if (text.length() > 2 && text.at(1) == ' ' && QString("*+-").contains(text.at(0))) {
+//                    cur.insertText(text.left(2));
+//                }
+//            }
+//            m_ed->setTextCursor(cur);
+            return false;
         }
     }
     return QObject::eventFilter(obj, event);

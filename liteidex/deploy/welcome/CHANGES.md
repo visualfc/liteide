@@ -2,6 +2,10 @@
 
 ## LiteIDE X Version
 	LiteIDE is a simple, open source, cross-platform Go IDE.
+	
+### 2012.12.12 Ver x15
+* Markdown: add markdown support plugin
+
 
 ### 2012.11.15 Ver x14.1
 * LiteIDE : quick start
