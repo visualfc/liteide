@@ -242,10 +242,9 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
     if (toolBar) {
-        QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
-        toolBar->insertSeparator(spacer);
-        toolBar->insertAction(spacer,m_switchBreakAct);
-        toolBar->insertAction(spacer,m_startDebugAct);
+        toolBar->addSeparator();
+        toolBar->addAction(m_switchBreakAct);
+        toolBar->addAction(m_startDebugAct);
     }
 }
 

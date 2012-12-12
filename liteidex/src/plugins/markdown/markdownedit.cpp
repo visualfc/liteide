@@ -89,14 +89,7 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),"Image",this);
     image->setShortcut(QKeySequence("Ctrl+Shift+I"));
 
-    QList<QAction*> actions;
-    actions << new Separator(this);
-    actions << h1 << h2 << h3;
-    actions << bold << italic << code;
-    actions << link << image;
-
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
-    QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
 
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
@@ -128,7 +121,16 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     }
 
     if (toolBar) {
-        toolBar->insertActions(spacer,actions);
+        toolBar->addSeparator();
+        toolBar->addAction(h1);
+        toolBar->addAction(h2);
+        toolBar->addAction(h3);
+        toolBar->addSeparator();
+        toolBar->addAction(bold);
+        toolBar->addAction(italic);
+        toolBar->addAction(code);
+        toolBar->addAction(link);
+        toolBar->addAction(image);
     }
 
     connect(editor,SIGNAL(destroyed()),this,SLOT(deleteLater()));
@@ -165,13 +167,32 @@ void MarkdownEdit::mark_selection(const QString &mark)
     QTextCursor cur = m_ed->textCursor();
     cur.beginEditBlock();
     if (cur.hasSelection()) {
-        int s = cur.selectionStart();
-        int e = cur.selectionEnd();
-        QString text = cur.selectedText();
-        cur.removeSelectedText();
-        cur.insertText(mark+text+mark);
-        cur.setPosition(s);
-        cur.setPosition(e+mark.length()*2,QTextCursor::KeepAnchor);
+        QTextBlock begin = m_ed->document()->findBlock(cur.selectionStart());
+        QTextBlock end = m_ed->document()->findBlock(cur.selectionEnd());
+        if (end.position() == cur.selectionEnd()) {
+            end = end.previous();
+        }
+        int n1 = cur.selectionStart();
+        int n2 = cur.selectionEnd();
+        QTextBlock block = begin;
+        do {
+            int c1 = block.position();
+            int c2 = c1+block.text().length();
+            if (block.position() == begin.position() && c1 < n1) {
+                c1 = n1;
+            }
+            if (c2 > n2) {
+                c2 = n2;
+            }
+            if (c2 > c1) {
+                cur.setPosition(c1);
+                cur.insertText(mark);
+                cur.setPosition(c2+mark.length());
+                cur.insertText(mark);
+                n2 += mark.length()*2;
+            }
+            block = block.next();
+        } while(block.isValid() && block.position() <= end.position());
     } else {
         cur.insertText(mark+mark);
         cur.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,mark.length());

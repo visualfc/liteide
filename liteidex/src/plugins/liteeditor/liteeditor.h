@@ -126,6 +126,7 @@ public:
     Extension   *m_extension;
     QWidget *m_widget;
     QToolBar *m_toolBar;
+    QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteCompleter   *m_completer;
     QAction *m_undoAct;
@@ -160,8 +161,7 @@ public:
     bool       m_bReadOnly;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
-    QAction *m_spacerAct;
-    QAction *m_closeEditor;
+    QAction *m_closeEditorAct;
 };
 
 #endif //LITEEDITOR_H
