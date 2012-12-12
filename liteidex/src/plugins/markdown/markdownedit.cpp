@@ -69,6 +69,13 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     h2->setShortcut(QKeySequence("Ctrl+2"));
     QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),"H3",this);
     h3->setShortcut(QKeySequence("Ctrl+3"));
+    QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),"H4",this);
+    h4->setShortcut(QKeySequence("Ctrl+4"));
+    QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),"H5",this);
+    h5->setShortcut(QKeySequence("Ctrl+5"));
+    QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),"H6",this);
+    h6->setShortcut(QKeySequence("Ctrl+6"));
+
     QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),"Bold",this);
     bold->setShortcut(QKeySequence::Bold);
     QAction *italic = new QAction(QIcon("icon:markdown/images/italic.png"),"Italic",this);
@@ -93,7 +100,21 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
 
     if (menu) {
-        menu->addActions(actions);
+        menu->addSeparator();
+        QMenu *h = menu->addMenu("Heading");
+        h->addAction(h1);
+        h->addAction(h2);
+        h->addAction(h3);
+        h->addAction(h4);
+        h->addAction(h5);
+        h->addAction(h6);
+        menu->addSeparator();
+        menu->addAction(bold);
+        menu->addAction(italic);
+        menu->addAction(code);
+        menu->addSeparator();
+        menu->addAction(link);
+        menu->addAction(image);
     }
     if (toolBar) {
         toolBar->insertActions(spacer,actions);
@@ -103,6 +124,9 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     connect(h1,SIGNAL(triggered()),this,SLOT(h1()));
     connect(h2,SIGNAL(triggered()),this,SLOT(h2()));
     connect(h3,SIGNAL(triggered()),this,SLOT(h3()));
+    connect(h4,SIGNAL(triggered()),this,SLOT(h4()));
+    connect(h5,SIGNAL(triggered()),this,SLOT(h5()));
+    connect(h6,SIGNAL(triggered()),this,SLOT(h6()));
     connect(bold,SIGNAL(triggered()),this,SLOT(bold()));
     connect(italic,SIGNAL(triggered()),this,SLOT(italic()));
     connect(code,SIGNAL(triggered()),this,SLOT(code()));
@@ -158,6 +182,21 @@ void MarkdownEdit::h2()
 void MarkdownEdit::h3()
 {
     insert_head("###");
+}
+
+void MarkdownEdit::h4()
+{
+    insert_head("####");
+}
+
+void MarkdownEdit::h5()
+{
+    insert_head("#####");
+}
+
+void MarkdownEdit::h6()
+{
+    insert_head("######");
 }
 
 void MarkdownEdit::bold()
@@ -236,4 +275,5 @@ void MarkdownEdit::gotoLine(int line, int column)
         m_ed->setTextCursor(cursor);
         m_ed->ensureCursorVisible();
     }
- }
+}
+

@@ -17,5 +17,8 @@
         <file>images/syncview.png</file>
         <file>images/config.png</file>
         <file>css/textbrowser.css</file>
+        <file>images/h4.png</file>
+        <file>images/h5.png</file>
+        <file>images/h6.png</file>
     </qresource>
 </RCC>

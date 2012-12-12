@@ -40,6 +40,9 @@ public slots:
     void h1();
     void h2();
     void h3();
+    void h4();
+    void h5();
+    void h6();
     void bold();
     void italic();
     void code();
