@@ -116,6 +116,9 @@ HtmlPreview::~HtmlPreview()
     delete m_cssMenu;
 }
 
+static QByteArray defcss_data =
+"@media print {pre,code {word-wrap: break-word;}";
+
 static QByteArray export_data =
 "<html>"
 "<head>"
@@ -158,7 +161,7 @@ void HtmlPreview::appLoaded()
     }
 
     m_exportTemple = m_exportOrgTemple;
-    m_exportTemple.replace("__MARKDOWN_CSS__","");
+    m_exportTemple.replace("__MARKDOWN_CSS__",defcss_data);
 
     QString defcss;
 
@@ -401,8 +404,8 @@ void HtmlPreview::cssTtriggered(QAction *act)
         }
         cssData = this->loadCssData(fileName);
     }
-    if (!cssData.isEmpty()) {
-        cssData = "<style type=\"text/css\">"+cssData+"</style>";
+    if (cssData.isEmpty()) {
+        cssData = "@media print {pre,code {word-wrap: break-word;}";
     }
     m_exportTemple = m_exportOrgTemple;
     m_exportTemple.replace("__MARKDOWN_CSS__",cssData);

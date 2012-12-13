@@ -282,6 +282,9 @@ pre {
     }
 }
 @media print {
+	pre,code {
+		word-wrap: break-word;
+	}	
 	/*
 	table, pre {
 		page-break-inside: avoid;
