@@ -208,9 +208,11 @@ void MarkdownBatchBrowser::loadFinished(bool b)
         }
     } else if (m_mode == MODE_MERGE_PRINT) {
         QPrinter printer(QPrinter::HighResolution);
+        printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
         m_doc->print(&printer);
     } else if (m_mode == MODE_MERGE_PRINTPREVIEW) {
         QPrinter printer(QPrinter::HighResolution);
+        printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
         QPrintPreviewDialog dlg(&printer);
         connect(&dlg,SIGNAL(paintRequested(QPrinter*)),m_doc,SLOT(print(QPrinter*)));
         dlg.exec();
