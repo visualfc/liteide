@@ -39,6 +39,7 @@
 #include <QToolTip>
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
+#include <QPrintPreviewDialog>
 #endif
 
 //lite_memory_check_begin
@@ -69,6 +70,8 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_reloadAct = new QAction(QIcon("icon:images/reload.png"),tr("Reload"),this);
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export Html"),this);
     m_exportPdfAct = new QAction(QIcon("icon:liteeditor/images/exportpdf.png"),tr("Export PDF"),this);
+    m_printPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview"),this);
+    m_printPreviewAct->setVisible(false);
 
     m_configAct = new QAction(QIcon("icon:markdown/images/config.png"),tr("Config"),this);
 
@@ -84,17 +87,23 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_configMenu->addAction(m_syncScrollAct);
     m_configAct->setMenu(m_configMenu);
 
+    QList<QAction*> actions;
+    actions << m_configMenu->menuAction() << m_reloadAct << m_exportHtmlAct << m_exportPdfAct << m_printPreviewAct << m_cssMenu->menuAction();
+
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_widget,
                                                   QString("HtmlPreview"),
                                                   QString(tr("Html Preview")),
                                                   false,
-                                                  QList<QAction*>() << m_configMenu->menuAction() << m_reloadAct << m_exportHtmlAct << m_exportPdfAct << m_cssMenu->menuAction());
+                                                  actions);
+
+
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_toolAct,SIGNAL(toggled(bool)),this,SLOT(triggeredTool(bool)));
     connect(m_exportHtmlAct,SIGNAL(triggered()),this,SLOT(exportHtml()));
     connect(m_exportPdfAct,SIGNAL(triggered()),this,SLOT(exportPdf()));
+    connect(m_printPreviewAct,SIGNAL(triggered()),this,SLOT(printPreview()));
     connect(m_cssActGroup,SIGNAL(triggered(QAction*)),this,SLOT(cssTtriggered(QAction*)));
     connect(m_syncSwitchAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncSwitch(bool)));
     connect(m_syncScrollAct,SIGNAL(toggled(bool)),this,SLOT(toggledSyncScroll(bool)));
@@ -384,10 +393,24 @@ void HtmlPreview::exportPdf()
             fileName.append(".pdf");
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setPaperSize(QPrinter::A4);
         printer.setOutputFileName(fileName);
         m_htmlWidget->print(&printer);
     }
+#endif
+}
+
+void HtmlPreview::printPreview()
+{
+    if (m_curEditor == 0) {
+        return;
+    }
+#ifndef QT_NO_PRINTER
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
+    printer.setPageSize(QPrinter::A4);
+    QPrintPreviewDialog dlg(&printer,m_widget);
+    connect(&dlg,SIGNAL(paintRequested(QPrinter*)),m_htmlWidget,SLOT(print(QPrinter*)));
+    dlg.exec();
 #endif
 }
 

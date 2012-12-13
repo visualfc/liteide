@@ -141,7 +141,7 @@
         <item>
          <widget class="QCheckBox" name="mergePageBreakCheckBox">
           <property name="text">
-           <string>Merge Print Page Break</string>
+           <string>Merge Page Break</string>
           </property>
          </widget>
         </item>

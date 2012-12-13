@@ -50,6 +50,7 @@ public slots:
     void reload();
     void exportHtml();
     void exportPdf();
+    void printPreview();
     void cssTtriggered(QAction*);
     void linkClicked(const QUrl &);
     void linkHovered(const QUrl &);
@@ -61,6 +62,7 @@ protected:
     QAction     *m_reloadAct;
     QAction     *m_exportHtmlAct;
     QAction     *m_exportPdfAct;
+    QAction     *m_printPreviewAct;
     QAction     *m_configAct;
     QAction     *m_syncScrollAct;
     QAction     *m_syncSwitchAct;

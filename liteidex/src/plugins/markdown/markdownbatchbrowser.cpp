@@ -115,6 +115,9 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     ui->exportFolderLineEdit->setText(m_liteApp->settings()->value("markdown/batch_oupath").toString());
     ui->mergeHrCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_hr",false).toBool());
     ui->mergePageBreakCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_page-break",true).toBool());
+
+    ui->mergePrintPreviwPushButton->setVisible(false);
+    ui->mergetPrintPushButton->setVisible(false);
 }
 
 MarkdownBatchBrowser::~MarkdownBatchBrowser()
