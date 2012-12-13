@@ -76,7 +76,7 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     ui->setupUi(m_widget);
     ui->filesTreeView->setModel(m_model);
     ui->filesTreeView->setEditTriggers(0);
-    ui->filesTreeView->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->filesTreeView->setDragDropMode(QAbstractItemView::NoDragDrop);
     connect(ui->importFolderPushButton,SIGNAL(clicked()),this,SLOT(browserImportFolder()));
     connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(addFiles()));
     connect(ui->removePushButton,SIGNAL(clicked()),this,SLOT(remove()));
