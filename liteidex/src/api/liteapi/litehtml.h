@@ -50,6 +50,7 @@ public:
     virtual int scrollBarMaximum(Qt::Orientation orientation) const = 0;
     virtual QString selectedText() const = 0;
     virtual bool findText(const QString & exp, QTextDocument::FindFlags options = 0 ) = 0;
+public slots:
 #ifndef QT_NO_PRINTER
     virtual void print(QPrinter *printer) = 0;
 #endif
@@ -68,6 +69,7 @@ public:
     virtual ~IHtmlDocument() {}
 public:
     virtual void setHtml(const QString &html, const QUrl &url) = 0;
+public slots:
 #ifndef QT_NO_PRINTER
     virtual void print(QPrinter *printer) = 0;
 #endif

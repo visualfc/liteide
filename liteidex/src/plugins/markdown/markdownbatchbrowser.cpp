@@ -33,6 +33,7 @@
 #include <QUrl>
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
+#include <QPrintPreviewDialog>
 #endif
 
 //lite_memory_check_begin
@@ -71,7 +72,7 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     m_doc = 0;
     m_mode = 0;
     m_model = new QStandardItemModel(this);
-    m_model->setHorizontalHeaderLabels(QStringList()<< "Name" << "Path");
+    m_model->setHorizontalHeaderLabels(QStringList()<< "FilePath");
     ui->setupUi(m_widget);
     ui->filesTreeView->setModel(m_model);
     ui->filesTreeView->setEditTriggers(0);
@@ -86,6 +87,10 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     connect(ui->browserExportFolderPushButton,SIGNAL(clicked()),this,SLOT(browserExportFolder()));
     connect(ui->splitHtmlPushButton,SIGNAL(clicked()),this,SLOT(splitHtml()));
     connect(ui->mergetHtmlPushButton,SIGNAL(clicked()),this,SLOT(mergeHtml()));
+    connect(ui->splitPdfPushButton,SIGNAL(clicked()),this,SLOT(splitPdf()));
+    connect(ui->mergePdfPushButton,SIGNAL(clicked()),this,SLOT(mergePdf()));
+    connect(ui->mergetPrintPushButton,SIGNAL(clicked()),this,SLOT(mergePrint()));
+    connect(ui->mergePrintPreviwPushButton,SIGNAL(clicked()),this,SLOT(mergePrintPreview()));
 
     QDir dir(m_liteApp->resourcePath()+"/markdown/css");
     QStringList csss;
@@ -108,7 +113,7 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     }
     ui->cssComboBox->setEnabled(ui->useCssCheckBox->isChecked());
     ui->exportFolderLineEdit->setText(m_liteApp->settings()->value("markdown/batch_oupath").toString());
-    ui->mergeHrCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_hr",true).toBool());
+    ui->mergeHrCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_hr",false).toBool());
     ui->mergePageBreakCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_page-break",true).toBool());
 }
 
@@ -164,14 +169,7 @@ QStringList MarkdownBatchBrowser::markdonwFilter() const
 
 void MarkdownBatchBrowser::addFile(const QString &file)
 {
-    QFileInfo info(file);
-    QStandardItem *item = new QStandardItem(info.fileName());
-    item->setData(info.filePath());
-
-    m_model->appendRow(QList<QStandardItem*>()
-                       << item
-                       << new QStandardItem(info.filePath())
-                       );
+    m_model->appendRow(new QStandardItem(file));
 }
 
 static QByteArray head =
@@ -185,42 +183,6 @@ static QByteArray end =
 "</body>"
 "</html>";
 
-
-void MarkdownBatchBrowser::mergeToPdf(const QStringList &files)
-{
-    if (files.isEmpty()) {
-        return;
-    }
-    QString htmls = head;
-    QByteArray datas;
-    QTextCodec *codec = QTextCodec::codecForName("utf-8");
-
-    foreach(QString file, files) {
-        QFile f(file);
-        if (f.open(QFile::ReadOnly)) {
-            this->appendLog("convert "+file+"...");
-            QByteArray data = mdtohtml(f.readAll());
-            datas.append(data);
-            htmls.append(codec->toUnicode(data));
-            htmls.append("\n<div STYLE=\"page-break-after: always;\"></div>\n");
-        }
-    }
-    htmls.append(end);
-
-    if (m_doc == 0) {
-        m_doc = m_liteApp->htmlWidgetManager()->createDocument(this);
-        connect(m_doc,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
-    }
-    m_mode = MODE_PDF;
-    QFileInfo info(m_pdfFileName);
-    QFile f(info.filePath()+".html");
-    if (f.open(QFile::WriteOnly | QFile::Truncate)) {
-        f.write(htmls.toUtf8());
-    }
-    this->appendLog("loading html ...");
-    m_doc->setHtml(htmls,QUrl::fromLocalFile(files.first()));
-}
-
 void MarkdownBatchBrowser::appendLog(const QString &log)
 {
     ui->logPlainTextEdit->appendPlainText(log);
@@ -229,17 +191,31 @@ void MarkdownBatchBrowser::appendLog(const QString &log)
 void MarkdownBatchBrowser::loadFinished(bool b)
 {
     if (!b) {
+        this->appendLog("load html document false!");
         return;
     }
-    if (m_mode == MODE_PDF) {
 #ifndef QT_NO_PRINTER
+    if (m_mode == MODE_MERGE_PDF || m_mode == MODE_SPLIT_PDF) {
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(m_pdfFileName);
         m_doc->print(&printer);
-        this->appendLog("print pdf ...");
-#endif
+        this->appendLog("print pdf "+m_pdfFileName+" ...");
+        if (m_mode == MODE_SPLIT_PDF) {
+            this->processPdfList();
+        } else {
+            QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(m_pdfFileName).path()));
+        }
+    } else if (m_mode == MODE_MERGE_PRINT) {
+        QPrinter printer(QPrinter::HighResolution);
+        m_doc->print(&printer);
+    } else if (m_mode == MODE_MERGE_PRINTPREVIEW) {
+        QPrinter printer(QPrinter::HighResolution);
+        QPrintPreviewDialog dlg(&printer);
+        connect(&dlg,SIGNAL(paintRequested(QPrinter*)),m_doc,SLOT(print(QPrinter*)));
+        dlg.exec();
     }
+#endif
 }
 
 void MarkdownBatchBrowser::browserImportFolder()
@@ -350,6 +326,147 @@ void MarkdownBatchBrowser::mergeHtml()
     }
 }
 
+void MarkdownBatchBrowser::splitPdf()
+{
+    this->init();
+    if (m_fileList.isEmpty()) {
+        return;
+    }
+    this->appendLog("\nSplit pdf ...\n");
+    if (m_exportPath.isEmpty()) {
+        this->appendLog("output path empty!");
+        return;
+    }
+    m_mode = MODE_SPLIT_PDF;
+
+    this->processPdfList();
+}
+
+void MarkdownBatchBrowser::processPdfList()
+{
+    if (m_fileList.isEmpty()) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(m_exportPath));
+        return;
+    }
+    QString file = m_fileList.takeFirst();
+    QFileInfo info(file);
+    QByteArray exportData = m_exportTemple;
+    exportData.replace("__MARKDOWN_TITLE__",info.fileName().toUtf8());
+    exportData.replace("__MARKDOWN_CONTENT__",m_fileHtmlMap.value(file));
+
+    m_pdfFileName = m_exportPath+"/"+info.completeBaseName()+".pdf";
+
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
+    m_doc->setHtml(codec->toUnicode(exportData),QUrl::fromLocalFile(file));
+}
+
+void MarkdownBatchBrowser::mergePdf()
+{
+    this->init();
+    if (m_fileList.isEmpty()) {
+        return;
+    }
+
+    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
+                                                    "merge", "*.pdf");
+    if (fileName.isEmpty()) {
+        return;
+    }
+    QFileInfo info(fileName);
+    if (info.suffix().isEmpty()) {
+        fileName.append(".pdf");
+    }
+
+    m_pdfFileName = fileName;
+    this->m_mode = MODE_MERGE_PDF;
+
+    this->appendLog("\nMerge pdf "+fileName+"...\n");
+
+    QByteArray datas;
+    foreach (QString file, m_fileList) {
+        if (!datas.isEmpty()) {
+            if (ui->mergeHrCheckBox->isChecked()) {
+                datas.append("\n<hr>\n");
+            }
+            if (ui->mergePageBreakCheckBox->isChecked()) {
+                datas.append("\n<div STYLE=\"page-break-after: always;\"></div>\n");
+            }
+        }
+        datas.append(m_fileHtmlMap.value(file));
+    }
+    QByteArray exportData = m_exportTemple;
+    exportData.replace("__MARKDOWN_TITLE__",fileName.toUtf8());
+    exportData.replace("__MARKDOWN_CONTENT__",datas);
+
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
+
+    m_doc->setHtml(codec->toUnicode(exportData),QUrl::fromLocalFile(m_fileList.first()));
+}
+
+void MarkdownBatchBrowser::mergePrint()
+{
+    this->init();
+    if (m_fileList.isEmpty()) {
+        return;
+    }
+
+    this->m_mode = MODE_MERGE_PRINT;
+
+    this->appendLog("\nMerge print ...\n");
+
+    QByteArray datas;
+    foreach (QString file, m_fileList) {
+        if (!datas.isEmpty()) {
+            if (ui->mergeHrCheckBox->isChecked()) {
+                datas.append("\n<hr>\n");
+            }
+            if (ui->mergePageBreakCheckBox->isChecked()) {
+                datas.append("\n<div STYLE=\"page-break-after: always;\"></div>\n");
+            }
+        }
+        datas.append(m_fileHtmlMap.value(file));
+    }
+    QByteArray exportData = m_exportTemple;
+    exportData.replace("__MARKDOWN_TITLE__","doc");
+    exportData.replace("__MARKDOWN_CONTENT__",datas);
+
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
+
+    m_doc->setHtml(codec->toUnicode(exportData),QUrl::fromLocalFile(m_fileList.first()));
+}
+
+void MarkdownBatchBrowser::mergePrintPreview()
+{
+    this->init();
+    if (m_fileList.isEmpty()) {
+        return;
+    }
+
+    this->m_mode = MODE_MERGE_PRINTPREVIEW;
+
+    this->appendLog("\nMerge print ...\n");
+
+    QByteArray datas;
+    foreach (QString file, m_fileList) {
+        if (!datas.isEmpty()) {
+            if (ui->mergeHrCheckBox->isChecked()) {
+                datas.append("\n<hr>\n");
+            }
+            if (ui->mergePageBreakCheckBox->isChecked()) {
+                datas.append("\n<div STYLE=\"page-break-after: always;\"></div>\n");
+            }
+        }
+        datas.append(m_fileHtmlMap.value(file));
+    }
+    QByteArray exportData = m_exportTemple;
+    exportData.replace("__MARKDOWN_TITLE__","doc");
+    exportData.replace("__MARKDOWN_CONTENT__",datas);
+
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
+
+    m_doc->setHtml(codec->toUnicode(exportData),QUrl::fromLocalFile(m_fileList.first()));
+}
+
 void MarkdownBatchBrowser::splitHtml()
 {
     this->init();
@@ -374,34 +491,6 @@ void MarkdownBatchBrowser::splitHtml()
         }
     }
     QDesktopServices::openUrl(QUrl::fromLocalFile(m_exportPath));
-}
-
-void MarkdownBatchBrowser::on_mergePdfPushButton_clicked()
-{
-    QStringList files;
-    for(int i = 0; i < m_model->rowCount(); i++) {
-        QModelIndex index = m_model->index(i,0);
-        if (index.isValid()) {
-            files.append(index.data(Qt::UserRole+1).toString());
-        }
-    }
-    if (files.isEmpty()) {
-        return;
-    }
-
-    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
-                                                    "merge", "*.pdf");
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    if (QFileInfo(fileName).suffix().isEmpty()) {
-        fileName.append(".pdf");
-    }
-
-    m_pdfFileName = fileName;
-
-    mergeToPdf(files);
 }
 
 void MarkdownBatchBrowser::init()
@@ -444,7 +533,7 @@ void MarkdownBatchBrowser::init()
         if (dir.exists()) {
             m_exportPath = dir.path();
         }
-   }
+    }
 }
 
 QStringList MarkdownBatchBrowser::getFiles() const
@@ -453,7 +542,7 @@ QStringList MarkdownBatchBrowser::getFiles() const
     for(int i = 0; i < m_model->rowCount(); i++) {
         QModelIndex index = m_model->index(i,0);
         if (index.isValid()) {
-            files.append(index.data(Qt::UserRole+1).toString());
+            files.append(index.data().toString());
         }
     }
     return files;

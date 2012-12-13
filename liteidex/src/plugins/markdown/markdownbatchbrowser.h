@@ -44,12 +44,14 @@ public:
     QString markdownOpenFilter() const;
     QStringList markdonwFilter() const;
     void addFile(const QString &file);
-    void mergeToPdf(const QStringList &files);
     void appendLog(const QString &log);
 public:
     enum {
         MODE_NONE = 0,
-        MODE_PDF
+        MODE_SPLIT_PDF,
+        MODE_MERGE_PDF,
+        MODE_MERGE_PRINT,
+        MODE_MERGE_PRINTPREVIEW
     };
 protected:
     LiteApi::IApplication *m_liteApp;
@@ -75,9 +77,13 @@ private slots:
     void browserExportFolder();
     void splitHtml();
     void mergeHtml();
-    void on_mergePdfPushButton_clicked();
+    void splitPdf();
+    void mergePdf();
+    void mergePrint();
+    void mergePrintPreview();
 protected:
     void init();
+    void processPdfList();
     QStringList getFiles() const;
     QMap<QString,QByteArray> getFileHtmlDataMap(const QStringList &files) const;
 };
