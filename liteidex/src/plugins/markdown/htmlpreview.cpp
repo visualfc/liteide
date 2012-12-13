@@ -375,6 +375,7 @@ void HtmlPreview::exportHtml()
             file.write(m_exportHtml);
         }
         file.close();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(fileName).path()));
     }
 }
 
@@ -395,6 +396,7 @@ void HtmlPreview::exportPdf()
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(fileName);
         m_htmlWidget->print(&printer);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(fileName).path()));
     }
 #endif
 }
