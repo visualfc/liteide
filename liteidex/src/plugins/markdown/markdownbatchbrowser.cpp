@@ -56,9 +56,9 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     ui->setupUi(m_widget);
     ui->filesTreeView->setHeaderHidden(true);
     ui->filesTreeView->setModel(m_model);
-    connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(on_addFilesPushButton_clicked()));
-    connect(ui->removePushButton,SIGNAL(clicked()),this,SLOT(on_removePushButton_clicked()));
-    connect(ui->mergePdfPushButton,SIGNAL(clicked()),this,SLOT(on_mergePdfPushButton_clicked()));
+    //connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(on_addFilesPushButton_clicked()));
+    //connect(ui->removePushButton,SIGNAL(clicked()),this,SLOT(on_removePushButton_clicked()));
+    //connect(ui->mergePdfPushButton,SIGNAL(clicked()),this,SLOT(on_mergePdfPushButton_clicked()));
 }
 
 MarkdownBatchBrowser::~MarkdownBatchBrowser()
@@ -132,10 +132,10 @@ void MarkdownBatchBrowser::mergeToPdf(const QStringList &files)
         QFile f(file);
         if (f.open(QFile::ReadOnly)) {
             this->appendLog("convert "+file+"...");
-            QByteArray data = mdtohtml(f.readAll()+"\n***\n");
+            QByteArray data = mdtohtml(f.readAll());
             datas.append(data);
             htmls.append(codec->toUnicode(data));
-            htmls.append("\n");
+            htmls.append("\n<div STYLE=\"page-break-after: always;\"></div>\n");
         }
     }
     htmls.append(end);

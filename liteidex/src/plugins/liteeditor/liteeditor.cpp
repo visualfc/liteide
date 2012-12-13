@@ -50,6 +50,7 @@
 #include <QTextDocumentWriter>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
+#include <QPageSetupDialog>
 #include <QTextCodec>
 #include <QDebug>
 #include <QPalette>
@@ -735,8 +736,9 @@ void LiteEditor::exportPdf()
     QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
                                                     title, "*.pdf");
     if (!fileName.isEmpty()) {
-        if (QFileInfo(fileName).suffix().isEmpty())
+        if (QFileInfo(fileName).suffix().isEmpty()) {
             fileName.append(".pdf");
+        }
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(fileName);
