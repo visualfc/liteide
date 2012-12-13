@@ -394,6 +394,7 @@ void HtmlPreview::exportPdf()
             fileName.append(".pdf");
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setCreator("LiteIDE");
         printer.setOutputFileName(fileName);
         m_htmlWidget->print(&printer);
         QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(fileName).path()));

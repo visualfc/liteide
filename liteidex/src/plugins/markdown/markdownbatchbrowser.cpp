@@ -201,6 +201,7 @@ void MarkdownBatchBrowser::loadFinished(bool b)
     if (m_mode == MODE_MERGE_PDF || m_mode == MODE_SPLIT_PDF) {
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setCreator("LiteIDE");
         printer.setOutputFileName(m_pdfFileName);
         m_doc->print(&printer);
         this->appendLog("print pdf "+m_pdfFileName+" ...");
