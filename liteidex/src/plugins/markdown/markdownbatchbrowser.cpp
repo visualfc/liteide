@@ -45,6 +45,23 @@
 #endif
 //lite_memory_check_end
 
+static QByteArray defcss_data =
+"@media print {pre,code {word-wrap: break-word;}";
+
+static QByteArray export_data =
+"<html>"
+"<head>"
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"
+"<style type=\"text/css\">"
+"__MARKDOWN_CSS__"
+"</style>"
+"<title>__MARKDOWN_TITLE__</title>"
+"</head>"
+"<body>"
+"__MARKDOWN_CONTENT__"
+"</body>"
+"</html>";
+
 MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IBrowserEditor(parent),
     m_liteApp(app),
@@ -59,17 +76,43 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     ui->filesTreeView->setModel(m_model);
     ui->filesTreeView->setEditTriggers(0);
     ui->filesTreeView->setDragDropMode(QAbstractItemView::InternalMove);
-    connect(ui->importFolderPushButton,SIGNAL(clicked()),this,SLOT(importFolder()));
+    connect(ui->importFolderPushButton,SIGNAL(clicked()),this,SLOT(browserImportFolder()));
     connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(addFiles()));
     connect(ui->removePushButton,SIGNAL(clicked()),this,SLOT(remove()));
     connect(ui->removeAllPushButton,SIGNAL(clicked()),this,SLOT(removeAll()));
     connect(ui->moveDownPushButton,SIGNAL(clicked()),this,SLOT(moveDown()));
     connect(ui->moveUpPushButton,SIGNAL(clicked()),this,SLOT(moveUp()));
-    //connect(ui->mergePdfPushButton,SIGNAL(clicked()),this,SLOT(on_mergePdfPushButton_clicked()));
+    connect(ui->useCssCheckBox,SIGNAL(toggled(bool)),ui->cssComboBox,SLOT(setEnabled(bool)));
+    connect(ui->browserExportFolderPushButton,SIGNAL(clicked()),this,SLOT(browserExportFolder()));
+    connect(ui->splitHtmlPushButton,SIGNAL(clicked()),this,SLOT(splitHtml()));
+    QDir dir(m_liteApp->resourcePath()+"/markdown/css");
+    QStringList csss;
+    foreach (QFileInfo info, dir.entryInfoList(QStringList()<<"*.css",QDir::Files)) {
+        csss.append(info.fileName());
+    }
+    if (!csss.isEmpty()) {
+        ui->cssComboBox->addItems(csss);
+        int index = m_liteApp->settings()->value("markdown/batch_css",0).toInt();
+        if (index >= 0 && index <= csss.size()-1) {
+            ui->cssComboBox->setCurrentIndex(index);
+        } else {
+            ui->cssComboBox->setCurrentIndex(0);
+        }
+        bool useCss = m_liteApp->settings()->value("markdown/batch_usecss",true).toBool();
+        ui->useCssCheckBox->setChecked(useCss);
+    } else {
+        ui->useCssCheckBox->setChecked(false);
+        ui->useCssCheckBox->setEnabled(false);
+    }
+    ui->cssComboBox->setEnabled(ui->useCssCheckBox->isChecked());
+    ui->exportFolderLineEdit->setText(m_liteApp->settings()->value("markdown/batch_oupath").toString());
 }
 
 MarkdownBatchBrowser::~MarkdownBatchBrowser()
 {
+    m_liteApp->settings()->setValue("markdown/batch_usecss",ui->useCssCheckBox->isChecked());
+    m_liteApp->settings()->setValue("markdown/batch_css",ui->cssComboBox->currentIndex());
+    m_liteApp->settings()->setValue("markdown/batch_oupath",ui->exportFolderLineEdit->text());
     delete ui;
 }
 
@@ -192,7 +235,7 @@ void MarkdownBatchBrowser::loadFinished(bool b)
     }
 }
 
-void MarkdownBatchBrowser::importFolder()
+void MarkdownBatchBrowser::browserImportFolder()
 {
     QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select Markdown Folder"));
     if (!folder.isEmpty()) {
@@ -251,6 +294,40 @@ void MarkdownBatchBrowser::moveDown()
     ui->filesTreeView->setCurrentIndex(m_model->index(row+1,0));
 }
 
+void MarkdownBatchBrowser::browserExportFolder()
+{
+    QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select Export Folder"));
+    if (!folder.isEmpty()) {
+        ui->exportFolderLineEdit->setText(folder);
+    }
+}
+
+void MarkdownBatchBrowser::splitHtml()
+{
+    this->init();
+    if (m_fileList.isEmpty()) {
+        return;
+    }
+    this->appendLog("\nSplit html ...\n");
+    if (m_exportPath.isEmpty()) {
+        this->appendLog("output path empty!");
+        return;
+    }
+    foreach (QString file, m_fileList) {
+        QFileInfo info(file);
+        QString out = m_exportPath+"/"+info.completeBaseName()+".html";
+        QFile f(out);
+        if (f.open(QFile::WriteOnly|QFile::Truncate)) {
+            this->appendLog(file+" => "+out+" ...");
+            QByteArray exportData = m_exportTemple;
+            exportData.replace("__MARKDOWN_TITLE__",info.fileName().toUtf8());
+            exportData.replace("__MARKDOWN_CONTENT__",m_fileHtmlMap.value(file));
+            f.write(exportData);
+        }
+    }
+    QDesktopServices::openUrl(QUrl::fromLocalFile(m_exportPath));
+}
+
 void MarkdownBatchBrowser::on_mergePdfPushButton_clicked()
 {
     QStringList files;
@@ -277,4 +354,71 @@ void MarkdownBatchBrowser::on_mergePdfPushButton_clicked()
     m_pdfFileName = fileName;
 
     mergeToPdf(files);
+}
+
+void MarkdownBatchBrowser::init()
+{
+    if (m_doc == 0) {
+        m_doc = m_liteApp->htmlWidgetManager()->createDocument(this);
+        connect(m_doc,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
+        QFile file(m_liteApp->resourcePath()+"/markdown/export.html");
+        if (file.open(QFile::ReadOnly)) {
+            m_exportOrgTemple = file.readAll();
+        } else {
+            m_exportOrgTemple = export_data;
+        }
+    }
+    m_exportTemple = m_exportOrgTemple;
+    QByteArray css;
+    if (ui->useCssCheckBox->isChecked()) {
+        QString fileName = ui->cssComboBox->currentText();
+        QFile f(m_liteApp->resourcePath()+"/markdown/css/"+fileName);
+        if (f.open(QFile::ReadOnly)) {
+            css = f.readAll();
+        }
+    }
+    if (css.isEmpty()) {
+        css = defcss_data;
+    }
+    m_exportTemple.replace("__MARKDOWN_CSS__",css);
+
+    m_fileList = getFiles();
+    m_fileHtmlMap = getFileHtmlDataMap(m_fileList);
+
+    m_exportPath.clear();
+
+    QString path = ui->exportFolderLineEdit->text();
+    if (!path.isEmpty()) {
+        QDir dir(path);
+        if (!dir.exists()) {
+            dir.mkpath(path);
+        }
+        if (dir.exists()) {
+            m_exportPath = dir.path();
+        }
+   }
+}
+
+QStringList MarkdownBatchBrowser::getFiles() const
+{
+    QStringList files;
+    for(int i = 0; i < m_model->rowCount(); i++) {
+        QModelIndex index = m_model->index(i,0);
+        if (index.isValid()) {
+            files.append(index.data(Qt::UserRole+1).toString());
+        }
+    }
+    return files;
+}
+
+QMap<QString, QByteArray> MarkdownBatchBrowser::getFileHtmlDataMap(const QStringList &files) const
+{
+    QMap<QString, QByteArray> map;
+    foreach(QString file, files) {
+        QFile f(file);
+        if (f.open(QFile::ReadOnly)) {
+            map.insert(file,mdtohtml(f.readAll()));
+        }
+    }
+    return map;
 }

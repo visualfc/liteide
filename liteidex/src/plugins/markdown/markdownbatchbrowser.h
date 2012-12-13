@@ -58,16 +58,27 @@ protected:
     LiteApi::IHtmlDocument *m_doc;
     QStandardItemModel     *m_model;
     int     m_mode;
+    QString m_exportPath;
     QString m_pdfFileName;
+    QStringList m_fileList;
+    QByteArray  m_exportOrgTemple;
+    QByteArray  m_exportTemple;
+    QMap<QString,QByteArray> m_fileHtmlMap;
 private slots:
     void loadFinished(bool);
-    void importFolder();
+    void browserImportFolder();
     void addFiles();
     void remove();
     void removeAll();
     void moveUp();
     void moveDown();
+    void browserExportFolder();
+    void splitHtml();
     void on_mergePdfPushButton_clicked();
+protected:
+    void init();
+    QStringList getFiles() const;
+    QMap<QString,QByteArray> getFileHtmlDataMap(const QStringList &files) const;
 };
 
 #endif // MARKDOWNBATCHBROWSER_H
