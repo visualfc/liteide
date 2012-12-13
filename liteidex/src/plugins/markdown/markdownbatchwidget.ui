@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="6,0,0,1">
+  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,1">
    <item>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="title">
@@ -47,7 +47,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="moveUpPpushButton">
+         <widget class="QPushButton" name="moveUpPushButton">
           <property name="text">
            <string>Move Up</string>
           </property>
@@ -248,9 +248,6 @@
   <tabstop>filesTreeView</tabstop>
   <tabstop>importFolderPushButton</tabstop>
   <tabstop>addFilesPushButton</tabstop>
-  <tabstop>moveUpPpushButton</tabstop>
-  <tabstop>moveDownPushButton</tabstop>
-  <tabstop>removePushButton</tabstop>
   <tabstop>removeAllPushButton</tabstop>
   <tabstop>useCssCheckBox</tabstop>
   <tabstop>cssComboBox</tabstop>

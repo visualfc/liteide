@@ -41,7 +41,8 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
-    QString markdownFilter() const;
+    QString markdownOpenFilter() const;
+    QStringList markdonwFilter() const;
     void addFile(const QString &file);
     void mergeToPdf(const QStringList &files);
     void appendLog(const QString &log);
@@ -60,8 +61,12 @@ protected:
     QString m_pdfFileName;
 private slots:
     void loadFinished(bool);
-    void on_addFilesPushButton_clicked();
-    void on_removePushButton_clicked();
+    void importFolder();
+    void addFiles();
+    void remove();
+    void removeAll();
+    void moveUp();
+    void moveDown();
     void on_mergePdfPushButton_clicked();
 };
 

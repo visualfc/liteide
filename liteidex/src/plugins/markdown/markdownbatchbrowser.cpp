@@ -27,6 +27,7 @@
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QStringListModel>
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QUrl>
@@ -53,11 +54,17 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     m_doc = 0;
     m_mode = 0;
     m_model = new QStandardItemModel(this);
+    m_model->setHorizontalHeaderLabels(QStringList()<< "Name" << "Path");
     ui->setupUi(m_widget);
-    ui->filesTreeView->setHeaderHidden(true);
     ui->filesTreeView->setModel(m_model);
-    //connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(on_addFilesPushButton_clicked()));
-    //connect(ui->removePushButton,SIGNAL(clicked()),this,SLOT(on_removePushButton_clicked()));
+    ui->filesTreeView->setEditTriggers(0);
+    ui->filesTreeView->setDragDropMode(QAbstractItemView::InternalMove);
+    connect(ui->importFolderPushButton,SIGNAL(clicked()),this,SLOT(importFolder()));
+    connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(addFiles()));
+    connect(ui->removePushButton,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(ui->removeAllPushButton,SIGNAL(clicked()),this,SLOT(removeAll()));
+    connect(ui->moveDownPushButton,SIGNAL(clicked()),this,SLOT(moveDown()));
+    connect(ui->moveUpPushButton,SIGNAL(clicked()),this,SLOT(moveUp()));
     //connect(ui->mergePdfPushButton,SIGNAL(clicked()),this,SLOT(on_mergePdfPushButton_clicked()));
 }
 
@@ -81,7 +88,7 @@ QString MarkdownBatchBrowser::mimeType() const
     return "browser/markdown";
 }
 
-QString MarkdownBatchBrowser::markdownFilter() const
+QString MarkdownBatchBrowser::markdownOpenFilter() const
 {
     QStringList types;
     QStringList filter;
@@ -96,6 +103,15 @@ QString MarkdownBatchBrowser::markdownFilter() const
     return filter.join(";;");
 }
 
+QStringList MarkdownBatchBrowser::markdonwFilter() const
+{
+    LiteApi::IMimeType *mimeType = m_liteApp->mimeTypeManager()->findMimeType("text/x-markdown");
+    if (mimeType) {
+        return mimeType->globPatterns();
+    }
+    return QStringList() << "*.md";
+}
+
 void MarkdownBatchBrowser::addFile(const QString &file)
 {
     QFileInfo info(file);
@@ -104,6 +120,7 @@ void MarkdownBatchBrowser::addFile(const QString &file)
 
     m_model->appendRow(QList<QStandardItem*>()
                        << item
+                       << new QStandardItem(info.filePath())
                        );
 }
 
@@ -175,17 +192,63 @@ void MarkdownBatchBrowser::loadFinished(bool b)
     }
 }
 
-void MarkdownBatchBrowser::on_addFilesPushButton_clicked()
+void MarkdownBatchBrowser::importFolder()
 {
-    QStringList files = QFileDialog::getOpenFileNames(m_widget,tr("Select Markdown Files"),QString(),this->markdownFilter());
+    QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select Markdown Folder"));
+    if (!folder.isEmpty()) {
+        QDir dir(folder);
+        foreach(QFileInfo info, dir.entryInfoList(markdonwFilter(),QDir::Files,QDir::Name)) {
+            addFile(info.filePath());
+        }
+    }
+}
+
+void MarkdownBatchBrowser::addFiles()
+{
+    QStringList files = QFileDialog::getOpenFileNames(m_widget,tr("Select Markdown Files"),QString(),this->markdownOpenFilter());
     foreach(QString file, files) {
         this->addFile(file);
     }
 }
 
-void MarkdownBatchBrowser::on_removePushButton_clicked()
+void MarkdownBatchBrowser::remove()
 {
+    QModelIndex index = ui->filesTreeView->currentIndex();
+    if (!index.isValid()) {
+        return;
+    }
+    m_model->removeRow(index.row());
+}
 
+void MarkdownBatchBrowser::removeAll()
+{
+    int size = m_model->rowCount();
+    if (size == 0) {
+        return;
+    }
+    m_model->removeRows(0,size);
+}
+
+void MarkdownBatchBrowser::moveUp()
+{
+    QModelIndex index = ui->filesTreeView->currentIndex();
+    if (!index.isValid() || index.row() == 0) {
+        return;
+    }
+    int row = index.row();
+    m_model->insertRow(row-1,m_model->takeRow(row));
+    ui->filesTreeView->setCurrentIndex(m_model->index(row-1,0));
+}
+
+void MarkdownBatchBrowser::moveDown()
+{
+    QModelIndex index = ui->filesTreeView->currentIndex();
+    if (!index.isValid() || index.row() >= m_model->rowCount()-1) {
+        return;
+    }
+    int row = index.row();
+    m_model->insertRow(row+1,m_model->takeRow(row));
+    ui->filesTreeView->setCurrentIndex(m_model->index(row+1,0));
 }
 
 void MarkdownBatchBrowser::on_mergePdfPushButton_clicked()
