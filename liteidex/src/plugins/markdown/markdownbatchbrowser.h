@@ -74,6 +74,7 @@ private slots:
     void moveDown();
     void browserExportFolder();
     void splitHtml();
+    void mergeHtml();
     void on_mergePdfPushButton_clicked();
 protected:
     void init();

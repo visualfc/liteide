@@ -85,6 +85,8 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     connect(ui->useCssCheckBox,SIGNAL(toggled(bool)),ui->cssComboBox,SLOT(setEnabled(bool)));
     connect(ui->browserExportFolderPushButton,SIGNAL(clicked()),this,SLOT(browserExportFolder()));
     connect(ui->splitHtmlPushButton,SIGNAL(clicked()),this,SLOT(splitHtml()));
+    connect(ui->mergetHtmlPushButton,SIGNAL(clicked()),this,SLOT(mergeHtml()));
+
     QDir dir(m_liteApp->resourcePath()+"/markdown/css");
     QStringList csss;
     foreach (QFileInfo info, dir.entryInfoList(QStringList()<<"*.css",QDir::Files)) {
@@ -106,6 +108,8 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     }
     ui->cssComboBox->setEnabled(ui->useCssCheckBox->isChecked());
     ui->exportFolderLineEdit->setText(m_liteApp->settings()->value("markdown/batch_oupath").toString());
+    ui->mergeHrCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_hr",true).toBool());
+    ui->mergePageBreakCheckBox->setChecked(m_liteApp->settings()->value("markdown/batch_page-break",true).toBool());
 }
 
 MarkdownBatchBrowser::~MarkdownBatchBrowser()
@@ -113,6 +117,9 @@ MarkdownBatchBrowser::~MarkdownBatchBrowser()
     m_liteApp->settings()->setValue("markdown/batch_usecss",ui->useCssCheckBox->isChecked());
     m_liteApp->settings()->setValue("markdown/batch_css",ui->cssComboBox->currentIndex());
     m_liteApp->settings()->setValue("markdown/batch_oupath",ui->exportFolderLineEdit->text());
+    m_liteApp->settings()->setValue("markdown/batch_hr",ui->mergeHrCheckBox->isChecked());
+    m_liteApp->settings()->setValue("markdown/batch_page-break",ui->mergePageBreakCheckBox->isChecked());
+
     delete ui;
 }
 
@@ -299,6 +306,47 @@ void MarkdownBatchBrowser::browserExportFolder()
     QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select Export Folder"));
     if (!folder.isEmpty()) {
         ui->exportFolderLineEdit->setText(folder);
+    }
+}
+
+void MarkdownBatchBrowser::mergeHtml()
+{
+    this->init();
+    if (m_fileList.isEmpty()) {
+        return;
+    }
+
+    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export Html"),
+                                                    "merge", "*.html");
+    if (fileName.isEmpty()) {
+        return;
+    }
+    QFileInfo info(fileName);
+    if (info.suffix().isEmpty()) {
+        fileName.append(".html");
+    }
+
+    this->appendLog("\nMerge html "+fileName+"...\n");
+
+    QFile f(fileName);
+    if (f.open(QFile::WriteOnly|QFile::Truncate)) {
+        QByteArray datas;
+        foreach (QString file, m_fileList) {
+            if (!datas.isEmpty()) {
+                if (ui->mergeHrCheckBox->isChecked()) {
+                    datas.append("\n<hr>\n");
+                }
+                if (ui->mergePageBreakCheckBox->isChecked()) {
+                    datas.append("\n<div STYLE=\"page-break-after: always;\"></div>\n");
+                }
+            }
+            datas.append(m_fileHtmlMap.value(file));
+        }
+        QByteArray exportData = m_exportTemple;
+        exportData.replace("__MARKDOWN_TITLE__",fileName.toUtf8());
+        exportData.replace("__MARKDOWN_CONTENT__",datas);
+        f.write(exportData);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(info.path()));
     }
 }
 

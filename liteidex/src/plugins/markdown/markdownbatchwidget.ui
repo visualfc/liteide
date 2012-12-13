@@ -132,6 +132,20 @@
          <widget class="QComboBox" name="cssComboBox"/>
         </item>
         <item>
+         <widget class="QCheckBox" name="mergeHrCheckBox">
+          <property name="text">
+           <string>Merge Page Split &lt;hr&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mergePageBreakCheckBox">
+          <property name="text">
+           <string>Merge Print Page Break</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
