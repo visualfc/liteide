@@ -285,6 +285,8 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 act->setCodec(attrs.value("codec").toString());
                 act->setRegex(attrs.value("regex").toString());
                 act->setWork(attrs.value("work").toString());
+                act->setKillold(attrs.value("killold").toString());
+                act->setSeparator(attrs.value("separator").toString());
                 QString img = attrs.value("img").toString();
                 if (!img.isEmpty()) {
                     if (img.at(0) != ':') {
@@ -295,10 +297,6 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 QString task = attrs.value("task").toString();
                 if (!task.isEmpty()) {
                     act->setTask(task.split(";",QString::SkipEmptyParts));
-                }
-                QString separator = attrs.value("separator").toString();
-                if (!separator.isEmpty()) {
-                    act->setSeparator(true);
                 }
             } else if (reader.name() == "config" && config == 0 && build != 0) {
                 config = new BuildConfig;

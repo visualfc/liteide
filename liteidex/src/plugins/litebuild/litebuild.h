@@ -54,7 +54,6 @@ public:
     QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
 public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
-    void initAction(QAction *act, LiteApi::IBuild *build, LiteApi::BuildAction *ba);
     void setCurrentBuild(LiteApi::IBuild *build);
     void updateBuildConfig(LiteApi::IBuild *build);
     void loadProjectInfo(const QString &filePath);
@@ -70,7 +69,6 @@ public slots:
     void reloadProject();
     void editorCreated(LiteApi::IEditor *editor);
     void currentEditorChanged(LiteApi::IEditor*);
-    void buildAction();
     void buildAction(LiteApi::IBuild*,LiteApi::BuildAction*);
     void execAction(const QString &mime,const QString &id);
     void extOutput(const QByteArray &output,bool bError);

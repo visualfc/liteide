@@ -32,7 +32,12 @@ namespace LiteApi {
 class BuildAction
 {  
 public:
-    BuildAction(): m_output(false),m_readline(false),m_separator(false) {}
+    BuildAction():
+        m_output(false),
+        m_readline(false),
+        m_separator(false),
+        m_killold(false)
+    {}
     void setId(const QString &id) { m_id = id; }
     void setMenu(const QString &menu) { m_menu = menu; }
     void setKey(const QString &key) { m_key = key; }
@@ -46,8 +51,11 @@ public:
     void setReadline(const QString &text) {
         m_readline = QVariant(text).toBool();
     }
-    void setSeparator(bool b) {
-        m_separator = b;
+    void setSeparator(const QString &text) {
+        m_separator = QVariant(text).toBool();
+    }
+    void setKillold(const QString &text) {
+        m_killold = QVariant(text).toBool();
     }
     void setWork(const QString &work) { m_work = work; }
     void setCodec(const QString &codec) { m_codec = codec; }
@@ -62,9 +70,10 @@ public:
     QString func() const { return m_func; }
     QString args() const { return m_args; }
     QString save() const { return m_save; }
-    bool output() const { return m_output; }
-    bool readline() const {return m_readline; }
+    bool isOutput() const { return m_output; }
+    bool isReadline() const {return m_readline; }
     bool isSeparator() const { return m_separator; }
+    bool isKillOld() const { return m_killold; }
     QString codec() const { return m_codec; }
     QString regex() const { return m_regex; }
     QString img() const { return m_img; }
@@ -81,6 +90,8 @@ public:
         m_task.clear();
         m_output = false;
         m_readline = false;
+        m_separator = false;
+        m_killold = false;
     }
     bool isEmpty() {
         return m_id.isEmpty();
@@ -102,6 +113,7 @@ protected:
     bool    m_output;
     bool    m_readline;
     bool    m_separator;
+    bool    m_killold;
 };
 
 class BuildLookup

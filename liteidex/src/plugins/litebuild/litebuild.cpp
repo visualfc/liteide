@@ -151,6 +151,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
 LiteBuild::~LiteBuild()
 {
+    stopAction();
     delete m_output;
 }
 
@@ -495,28 +496,6 @@ QMap<QString,QString> LiteBuild::buildEnvMap() const
     */
 }
 
-void LiteBuild::initAction(QAction *act, LiteApi::IBuild *build, LiteApi::BuildAction *ba)
-{
-    act->setProperty("mimetype",build->mimeType());
-    act->setProperty("id",ba->id());
-    act->setText(ba->id());
-    if (!ba->key().isEmpty()) {
-        QList<QKeySequence> list;
-        foreach(QString key, ba->key().split(";")) {
-            list.append(QKeySequence(key));
-        }
-        act->setShortcuts(list);
-        act->setToolTip(QString("%1 (%2)").arg(ba->id()).arg(ba->key()));
-    }
-    if (!ba->img().isEmpty()) {
-        QIcon icon(ba->img());
-        if (!icon.isNull()) {
-            act->setIcon(icon);
-        }
-    }
-    connect(act,SIGNAL(triggered()),this,SLOT(buildAction()));
-}
-
 void LiteBuild::updateBuildConfig(IBuild *build)
 {
     m_liteideModel->removeRows(0,m_liteideModel->rowCount());
@@ -599,17 +578,17 @@ EDITOR_TARGETATH
     m_editorInfo.insert("EDITOR_DIR",info.path());
     m_editorInfo.insert("EDITOR_DIRNAME",QFileInfo(info.path()).fileName());
     m_editorInfo.insert("EDITOR_DIRNAME_GO",QFileInfo(info.path()).fileName().replace(" ","_"));
-    QString target = info.fileName();
-    if (!info.suffix().isEmpty()) {
-        target = target.left(target.length()-info.suffix().length()-1);
-    }
-#ifdef Q_OS_WIN
-    m_editorInfo.insert("EDITOR_TARGETNAME",target+".exe");
-    m_editorInfo.insert("EDITOR_TARGETPATH",QFileInfo(info.path(),target+".exe").filePath());
-#else
-    m_editorInfo.insert("EDITOR_TARGETNAME",target);
-    m_editorInfo.insert("EDITOR_TARGETPATH",QFileInfo(info.path(),target).filePath());
-#endif
+//    QString target = info.fileName();
+//    if (!info.suffix().isEmpty()) {
+//        target = target.left(target.length()-info.suffix().length()-1);
+//    }
+//#ifdef Q_OS_WIN
+//    m_editorInfo.insert("EDITOR_TARGETNAME",target+".exe");
+//    m_editorInfo.insert("EDITOR_TARGETPATH",QFileInfo(info.path(),target+".exe").filePath());
+//#else
+//    m_editorInfo.insert("EDITOR_TARGETNAME",target);
+//    m_editorInfo.insert("EDITOR_TARGETPATH",QFileInfo(info.path(),target).filePath());
+//#endif
 }
 
 void LiteBuild::loadTargetInfo(LiteApi::IBuild *build)
@@ -754,7 +733,6 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
     } else {
         m_output->appendTag0(QString("exit code %1, %2.\n").arg(exitCode).arg(msg));
     }
-    //m_output->appendTag0(QString("</action>\n"));
 
     if (!error && exitCode == 0) {
         QStringList task = m_process->userData(ID_TASKLIST).toStringList();
@@ -820,19 +798,20 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
 }
 
 void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
-{
-    if (ba->id() == "BuildAndDebug") {
-        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
-        if (debug && debug->isRunning()) {
-            debug->continueRun();
+{  
+    m_outputAct->setChecked(true);
+    if (m_process->isRuning()) {        
+        if (ba->isKillOld()) {
+            m_output->append("\nkill process ...\n");
+            m_process->kill();
+            if (!m_process->waitForFinished(1000)) {
+                m_output->append("\nError,kill process false!\n",Qt::red);
+                return;
+            }
+        } else {
+            m_output->append("\nError,action process is runing, stop action first!\n",Qt::red);
             return;
         }
-    }
-
-    m_outputAct->setChecked(true);
-    if (m_process->isRuning()) {
-        m_output->append("\nError,action process is runing, stop action first!\n",Qt::red);
-        return;
     }
 
     QString mime = build->mimeType();
@@ -843,52 +822,6 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
         editor = ed->filePath();
     }
 
-    m_output->updateExistsTextColor();
-    m_process->setUserData(ID_MIMETYPE,mime);
-    m_process->setUserData(ID_EDITOR,editor);
-    if (ba->task().isEmpty()) {
-        execAction(mime,id);
-    } else {
-        QStringList task = ba->task();
-        QString id = task.takeFirst();
-        m_process->setUserData(ID_TASKLIST,task);
-        execAction(mime,id);
-    }
-}
-
-void LiteBuild::buildAction()
-{
-    m_outputAct->setChecked(true);
-    if (m_process->isRuning()) {
-        m_output->append("\nError,action process is runing, stop action first!\n",Qt::red);
-        return;
-    }
-
-    QAction *act = (QAction*)sender();
-    if (!act) {
-        return;
-    }
-    QString mime = act->property("mimetype").toString();
-    QString id = act->property("id").toString();
-    QString editor = act->property("editor").toString();
-
-    LiteApi::IBuild *build = m_buildManager->findBuild(mime);
-    if (!build) {
-        return;
-    }
-    LiteApi::BuildAction *ba = build->findAction(id);
-    if (!ba) {
-        return;
-    }
-
-    if (ba->id() == "BuildAndDebug") {
-        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
-        if (debug && debug->isRunning()) {
-            debug->continueRun();
-            return;
-        }
-    }
-    //m_liteApp->outputManager()->setCurrentOutput(m_output);
     m_output->updateExistsTextColor();
     m_process->setUserData(ID_MIMETYPE,mime);
     m_process->setUserData(ID_EDITOR,editor);
@@ -917,6 +850,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     if (!ba) {
         return;
     }
+
     QString codec = ba->codec();
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (ba->save() == "project") {
@@ -981,22 +915,22 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         m_outputRegex = this->envToValue(ba->regex(),env,sysenv);
     }
 
-    if (ba->output() && ba->readline()) {
+    if (ba->isOutput() && ba->isReadline()) {
         m_output->setReadOnly(false);
     } else {
         m_output->setReadOnly(true);
     }
 
-    if (ba->func() == "debug") {
-        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
-        if (debug) {
-            debug->startDebug(cmd,args,work);
-        }
-        return;
-    }
+//    if (ba->func() == "debug") {
+//        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+//        if (debug) {
+//            debug->startDebug(cmd,args,work);
+//        }
+//        return;
+//    }
 
     m_process->setEnvironment(sysenv.toStringList());
-    if (!ba->output()) {        
+    if (!ba->isOutput()) {
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);
         m_output->appendTag0(QString("%1 %2 [%3]\n")
                              .arg(QDir::cleanPath(cmd)).arg(args).arg(m_workDir));
