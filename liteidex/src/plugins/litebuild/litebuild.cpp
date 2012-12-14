@@ -164,12 +164,15 @@ void LiteBuild::rebuild()
     if (!ba) {
         return;
     }
-    this->stopAction();
+    if (m_process->isRuning()) {
+        m_process->kill();
+        m_process->waitForFinished(1000);
+    }
     this->execAction(m_build->mimeType(),ba->id());
-    if (!m_process->waitForStarted()) {
+    if (!m_process->waitForStarted(1000)) {
         return;
     }
-    m_process->waitForFinished();
+    m_process->waitForFinished(1000);
 }
 
 QString LiteBuild::envValue(LiteApi::IBuild *build, const QString &value)

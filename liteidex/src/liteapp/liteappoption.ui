@@ -129,7 +129,7 @@
       <item>
        <widget class="QCheckBox" name="editorTabsClosableCheckBox">
         <property name="text">
-         <string>Editor tab bar should place close buttons on each tab</string>
+         <string>Editor tabbar show close buttons on each tab</string>
         </property>
        </widget>
       </item>
