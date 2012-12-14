@@ -152,7 +152,7 @@
       <item>
        <widget class="QRadioButton" name="radioButton">
         <property name="text">
-         <string>16x16</string>
+         <string notr="true">16x16</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">buttonGroup</string>
@@ -162,7 +162,7 @@
       <item>
        <widget class="QRadioButton" name="radioButton_2">
         <property name="text">
-         <string>18x18</string>
+         <string notr="true">18x18</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">buttonGroup</string>
@@ -172,7 +172,7 @@
       <item>
        <widget class="QRadioButton" name="radioButton_3">
         <property name="text">
-         <string>20x20</string>
+         <string notr="true">20x20</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">buttonGroup</string>
@@ -182,7 +182,7 @@
       <item>
        <widget class="QRadioButton" name="radioButton_4">
         <property name="text">
-         <string>22x22</string>
+         <string notr="true">22x22</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">buttonGroup</string>
@@ -192,7 +192,7 @@
       <item>
        <widget class="QRadioButton" name="radioButton_5">
         <property name="text">
-         <string>24x24</string>
+         <string notr="true">24x24</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">buttonGroup</string>

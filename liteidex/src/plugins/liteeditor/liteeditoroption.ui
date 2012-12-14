@@ -148,35 +148,35 @@
       <item>
        <widget class="QCheckBox" name="autoBraces0CheckBox">
         <property name="text">
-         <string>{}</string>
+         <string notr="true">{}</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces1CheckBox">
         <property name="text">
-         <string> ()</string>
+         <string notr="true"> ()</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces2CheckBox">
         <property name="text">
-         <string>[]</string>
+         <string notr="true">[]</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces3CheckBox">
         <property name="text">
-         <string> '</string>
+         <string notr="true"> '</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoBraces4CheckBox">
         <property name="text">
-         <string>&quot;</string>
+         <string notr="true">&quot;</string>
         </property>
        </widget>
       </item>

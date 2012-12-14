@@ -1358,38 +1358,14 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="132"/>
-        <source>Editor tab bar should place close buttons on each tab</source>
-        <translation type="unfinished"></translation>
+        <source>Editor tabbar show close buttons on each tab</source>
+        <oldsource>Editor tab bar should place close buttons on each tab</oldsource>
+        <translation>编辑标签栏每个标签都显示关闭按钮</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="149"/>
         <source>ToolBar IconSize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="155"/>
-        <source>16x16</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="165"/>
-        <source>18x18</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="175"/>
-        <source>20x20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="185"/>
-        <source>22x22</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="195"/>
-        <source>24x24</source>
-        <translation type="unfinished"></translation>
+        <translation>工具栏图标大小</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="221"/>
@@ -1493,7 +1469,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="94"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>继续</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="100"/>
@@ -1569,12 +1545,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="88"/>
         <source>Start Debugging External Application</source>
-        <translation type="unfinished"></translation>
+        <translation>调试其他应用程序</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="90"/>
         <source>Start Debugging</source>
-        <translation type="unfinished"></translation>
+        <translation>开始调试</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="141"/>
@@ -1587,17 +1563,17 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="20"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>调试</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
         <source>Debug before rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>调试之间重新编译</translation>
     </message>
 </context>
 <context>
@@ -1623,32 +1599,32 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="196"/>
         <source>Undo</source>
-        <translation type="unfinished">撤消</translation>
+        <translation>撤消</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="199"/>
         <source>Redo</source>
-        <translation type="unfinished">重做</translation>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="202"/>
         <source>Cut</source>
-        <translation type="unfinished">剪切</translation>
+        <translation>剪切</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="205"/>
         <source>Copy</source>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="208"/>
         <source>Paste</source>
-        <translation type="unfinished">粘贴</translation>
+        <translation>粘贴</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="211"/>
         <source>Select All</source>
-        <translation type="unfinished">选择所有</translation>
+        <translation>选择所有</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="214"/>
@@ -1727,7 +1703,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="251"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>只读</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
@@ -1737,12 +1713,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="368"/>
         <source>Close Document</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭文档</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="386"/>
-        <source>Export</source>
-        <translation type="unfinished"></translation>
+        <source>Print</source>
+        <translation>打印</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="717"/>
@@ -1820,32 +1796,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="145"/>
         <source>Auto complete brackets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="151"/>
-        <source>{}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="158"/>
-        <source> ()</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="165"/>
-        <source>[]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="172"/>
-        <source> &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="179"/>
-        <source>&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>自动完成符号</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="189"/>
@@ -1855,12 +1806,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="252"/>
         <source>Display line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>显示行号</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="261"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>显示右侧边线</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="195"/>
@@ -1926,7 +1877,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="102"/>
         <source>File Search</source>
-        <translation type="unfinished">文件搜索</translation>
+        <translation>文件搜索</translation>
     </message>
 </context>
 <context>
@@ -1952,37 +1903,37 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="141"/>
         <source>Markdown Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdown批处理</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="160"/>
         <source>All Files (*)</source>
-        <translation type="unfinished">所有文件(*)</translation>
+        <translation>所有文件(*)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="229"/>
         <source>Select Markdown Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择Markdown目录</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="240"/>
         <source>Select Markdown Files</source>
-        <translation type="unfinished"></translation>
+        <translation>选择Markdown文件</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="288"/>
         <source>Select Export Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择输出目录</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="301"/>
         <source>Export Html</source>
-        <translation type="unfinished"></translation>
+        <translation>输出Html文档</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="376"/>
         <source>Export PDF</source>
-        <translation type="unfinished">输出PDF文档</translation>
+        <translation>输出PDF文档</translation>
     </message>
 </context>
 <context>
@@ -1990,190 +1941,205 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="20"/>
         <source>Markdown Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdown文件</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="38"/>
         <source>Import Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>从目录导入</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="45"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>添加文件</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="52"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>上移</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="59"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>下移</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="66"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="73"/>
         <source>Remove All</source>
-        <translation type="unfinished"></translation>
+        <translation>删除所有</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="98"/>
         <source>Options</source>
-        <translation type="unfinished">选项</translation>
+        <translation>选项</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="106"/>
         <source>Export Folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>输出目录:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="116"/>
         <source>Browser</source>
-        <translation type="unfinished">浏览</translation>
+        <translation>浏览</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="127"/>
         <source>Use CSS</source>
-        <translation type="unfinished"></translation>
+        <translation>使用CSS</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="137"/>
-        <source>Merge Page Split &lt;hr&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>Merge files insert split &lt;hr&gt;</source>
+        <oldsource>Merge Page Split &lt;hr&gt;</oldsource>
+        <translation>合并文件插入分隔&lt;hr&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="144"/>
-        <source>Merge Page Break</source>
-        <translation type="unfinished"></translation>
+        <source>Merge files insert page break</source>
+        <oldsource>Merge Page Break</oldsource>
+        <translation>合并文件插入分页符</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="169"/>
         <source>Export Util</source>
-        <translation type="unfinished"></translation>
+        <translation>输出工具</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="175"/>
-        <source>Split Html</source>
-        <translation type="unfinished"></translation>
+        <source>Separate Html</source>
+        <oldsource>Split Html</oldsource>
+        <translation>单独Html</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="182"/>
-        <source>Split PDF</source>
-        <translation type="unfinished"></translation>
+        <source>Separate PDF</source>
+        <oldsource>Split PDF</oldsource>
+        <translation>单独PDF</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="189"/>
         <source>Merge Html</source>
-        <translation type="unfinished"></translation>
+        <translation>合并Html</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="196"/>
         <source>Merge PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>合并PDF</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="203"/>
         <source>Merge Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>合并打印预览</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="210"/>
         <source>Merge Print</source>
-        <translation type="unfinished"></translation>
+        <translation>合并打印</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="233"/>
         <source>Log</source>
-        <translation type="unfinished"></translation>
+        <translation>记录</translation>
     </message>
 </context>
 <context>
     <name>MarkdownEdit</name>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="79"/>
-        <source>Header 1</source>
-        <translation type="unfinished"></translation>
+        <source>Header &lt;h1&gt;</source>
+        <oldsource>Header 1</oldsource>
+        <translation>标题&lt;h1&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="82"/>
-        <source>Header 2</source>
-        <translation type="unfinished"></translation>
+        <source>Header &lt;h2&gt;</source>
+        <oldsource>Header 2</oldsource>
+        <translation>标题&lt;h2&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="85"/>
-        <source>Header 3</source>
-        <translation type="unfinished"></translation>
+        <source>Header &lt;h3&gt;</source>
+        <oldsource>Header 3</oldsource>
+        <translation>标题&lt;h3&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="87"/>
-        <source>Header 4</source>
-        <translation type="unfinished"></translation>
+        <source>Header &lt;h4&gt;</source>
+        <oldsource>Header 4</oldsource>
+        <translation>标题&lt;h4&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="89"/>
-        <source>Header 5</source>
-        <translation type="unfinished"></translation>
+        <source>Header &lt;h5&gt;</source>
+        <oldsource>Header 5</oldsource>
+        <translation>标题&lt;h5&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="91"/>
-        <source>Header 6</source>
-        <translation type="unfinished"></translation>
+        <source>Header &lt;h6&gt;</source>
+        <oldsource>Header 6</oldsource>
+        <translation>标题&lt;h6&gt;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="94"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>加重</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="96"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>斜体</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="98"/>
         <source>Inline Code</source>
-        <translation type="unfinished"></translation>
+        <translation>内联代码</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="101"/>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>链接</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="104"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="107"/>
         <source>Unordered List</source>
-        <translation type="unfinished"></translation>
+        <translation>无序列表</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="110"/>
         <source>Ordered List</source>
-        <translation type="unfinished"></translation>
+        <translation>有序列表</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="113"/>
         <source>Blockquote</source>
-        <translation type="unfinished"></translation>
+        <translation>引用</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="116"/>
         <source>Horizontal Rule</source>
-        <translation type="unfinished"></translation>
+        <translation>水平分隔线</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/markdown/markdownedit.cpp" line="124"/>
+        <source>Heading</source>
+        <translation>标题</translation>
     </message>
 </context>
 <context>
@@ -2513,38 +2479,38 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="22"/>
         <source>Executable:</source>
-        <translation type="unfinished"></translation>
+        <translation>可执行文件:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="32"/>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="59"/>
         <source>Browser</source>
-        <translation type="unfinished">浏览</translation>
+        <translation>浏览</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="39"/>
         <source>Arguments:</source>
-        <translation type="unfinished">参数:</translation>
+        <translation>参数:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="49"/>
         <source>Working directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>工作目录:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="67"/>
         <source>Select Executable</source>
-        <translation type="unfinished"></translation>
+        <translation>选择可执行文件</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="77"/>
         <source>Select Working Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>选择工具目录</translation>
     </message>
 </context>
 <context>

@@ -1355,37 +1355,13 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="132"/>
-        <source>Editor tab bar should place close buttons on each tab</source>
+        <source>Editor tabbar show close buttons on each tab</source>
+        <oldsource>Editor tab bar should place close buttons on each tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="149"/>
         <source>ToolBar IconSize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="155"/>
-        <source>16x16</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="165"/>
-        <source>18x18</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="175"/>
-        <source>20x20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="185"/>
-        <source>22x22</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="195"/>
-        <source>24x24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1738,7 +1714,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="386"/>
-        <source>Export</source>
+        <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1817,31 +1793,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="145"/>
         <source>Auto complete brackets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="151"/>
-        <source>{}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="158"/>
-        <source> ()</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="165"/>
-        <source>[]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="172"/>
-        <source> &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="179"/>
-        <source>&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2046,12 +1997,14 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="137"/>
-        <source>Merge Page Split &lt;hr&gt;</source>
+        <source>Merge files insert split &lt;hr&gt;</source>
+        <oldsource>Merge Page Split &lt;hr&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="144"/>
-        <source>Merge Page Break</source>
+        <source>Merge files insert page break</source>
+        <oldsource>Merge Page Break</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2061,12 +2014,14 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="175"/>
-        <source>Split Html</source>
+        <source>Separate Html</source>
+        <oldsource>Split Html</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="182"/>
-        <source>Split PDF</source>
+        <source>Separate PDF</source>
+        <oldsource>Split PDF</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2099,32 +2054,38 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <name>MarkdownEdit</name>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="79"/>
-        <source>Header 1</source>
+        <source>Header &lt;h1&gt;</source>
+        <oldsource>Header 1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="82"/>
-        <source>Header 2</source>
+        <source>Header &lt;h2&gt;</source>
+        <oldsource>Header 2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="85"/>
-        <source>Header 3</source>
+        <source>Header &lt;h3&gt;</source>
+        <oldsource>Header 3</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="87"/>
-        <source>Header 4</source>
+        <source>Header &lt;h4&gt;</source>
+        <oldsource>Header 4</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="89"/>
-        <source>Header 5</source>
+        <source>Header &lt;h5&gt;</source>
+        <oldsource>Header 5</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="91"/>
-        <source>Header 6</source>
+        <source>Header &lt;h6&gt;</source>
+        <oldsource>Header 6</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2170,6 +2131,11 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="116"/>
         <source>Horizontal Rule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/markdown/markdownedit.cpp" line="124"/>
+        <source>Heading</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -134,14 +134,14 @@
         <item>
          <widget class="QCheckBox" name="mergeHrCheckBox">
           <property name="text">
-           <string>Merge Page Split &lt;hr&gt;</string>
+           <string>Merge files insert split &lt;hr&gt;</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="mergePageBreakCheckBox">
           <property name="text">
-           <string>Merge Page Break</string>
+           <string>Merge files insert page break</string>
           </property>
          </widget>
         </item>
@@ -172,14 +172,14 @@
       <item>
        <widget class="QPushButton" name="splitHtmlPushButton">
         <property name="text">
-         <string>Split Html</string>
+         <string>Separate Html</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="splitPdfPushButton">
         <property name="text">
-         <string>Split PDF</string>
+         <string>Separate PDF</string>
         </property>
        </widget>
       </item>

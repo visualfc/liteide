@@ -383,7 +383,7 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_pasteAct);
     m_editMenu->addAction(m_duplicateAct);
     m_editMenu->addSeparator();
-    QMenu *expMenu = m_editMenu->addMenu(tr("Export"));
+    QMenu *expMenu = m_editMenu->addMenu(tr("Print"));
     //expMenu->addAction(m_exportHtmlAct);
 #ifndef QT_NO_PRINTER
     expMenu->addAction(m_exportPdfAct);
