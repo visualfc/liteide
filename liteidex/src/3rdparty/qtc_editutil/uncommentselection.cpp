@@ -147,6 +147,7 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, const CommentDefinition &de
     bool doSingleLineStyleUncomment = false;
 
     bool hasSelection = cursor.hasSelection();
+    int firstSpacesOffset = -1;
 
     if (hasSelection && definition.hasMultiLineStyle()) {
 
@@ -263,10 +264,18 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, const CommentDefinition &de
                 QString text = block.text();
                 foreach(QChar c, text) {
                     if (!c.isSpace()) {
-                        if (definition.isAfterWhiteSpaces())
-                            cursor.setPosition(block.position() + text.indexOf(c));
-                        else
+                        if (definition.isAfterWhiteSpaces()) {
+                            int offset = text.indexOf(c);
+                            if (firstSpacesOffset != -1 && offset > firstSpacesOffset) {
+                                offset = firstSpacesOffset;
+                            }
+                            cursor.setPosition(block.position() + offset);
+                        } else {
                             cursor.setPosition(block.position());
+                        }
+                        if (firstSpacesOffset == -1) {
+                            firstSpacesOffset = cursor.position()-cursor.block().position();
+                        }
                         cursor.insertText(definition.singleLine());
                         break;
                     }

@@ -49,6 +49,7 @@ public:
     CommentDefinition();
 
     CommentDefinition &setAfterWhiteSpaces(const bool);
+    CommentDefinition &setAfterMaxSpaces(int spaces);
     CommentDefinition &setSingleLine(const QString &singleLine);
     CommentDefinition &setMultiLineStart(const QString &multiLineStart);
     CommentDefinition &setMultiLineEnd(const QString &multiLineEnd);

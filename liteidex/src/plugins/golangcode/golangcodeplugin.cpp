@@ -101,7 +101,9 @@ void GolangCodePlugin::editorComment()
     if (!textEdit) {
         return;
     }
-    Utils::unCommentSelection(textEdit);
+    Utils::CommentDefinition cd;
+    cd.setAfterWhiteSpaces(true);
+    Utils::unCommentSelection(textEdit,cd);
 }
 
 void GolangCodePlugin::currentEditorChanged(LiteApi::IEditor *editor)
