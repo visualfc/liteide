@@ -78,7 +78,7 @@ cp -r -v $LITEIDE_ROOT/os_deploy/macosx/* liteide/LiteIDE.app/Contents/Resources
 
 echo .
 echo macdeployqt liteide/LiteIDE.app -no-plugins
-macdeployqt liteide/LiteIDE.app -no-plugins
+# macdeployqt liteide/LiteIDE.app -no-plugins
 
 export QTLIBPATH=$QTDIR/lib
 echo QTLIBPATH=$QTLIBPATH
@@ -139,6 +139,49 @@ install_name_tool -change \
   liteide/LiteIDE.app/Contents/MacOS/$1   
 }
 
+function deploy_m3()
+{
+  echo "install_name_tool" $1
+install_name_tool -change \
+ $QTLIBPATH/QtCore.framework/Versions/4/QtCore \
+ @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \
+ liteide/LiteIDE.app/Contents/MacOS/$1  
+
+install_name_tool -change \
+ $QTLIBPATH/QtGui.framework/Versions/4/QtGui \
+ @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \
+  liteide/LiteIDE.app/Contents/MacOS/$1   
+  
+install_name_tool -change \
+ $QTLIBPATH/QtNetwork.framework/Versions/4/QtNetwork \
+ @executable_path/../Frameworks/QtXml.framework/Versions/4/QtNetwork \
+  liteide/LiteIDE.app/Contents/MacOS/$1   
+}
+
+function deploy_m4()
+{
+  echo "install_name_tool" $1
+install_name_tool -change \
+ $QTLIBPATH/QtCore.framework/Versions/4/QtCore \
+ @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \
+ liteide/LiteIDE.app/Contents/MacOS/$1  
+
+install_name_tool -change \
+ $QTLIBPATH/QtGui.framework/Versions/4/QtGui \
+ @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \
+  liteide/LiteIDE.app/Contents/MacOS/$1   
+  
+install_name_tool -change \
+ $QTLIBPATH/QtNetwork.framework/Versions/4/QtNetwork \
+ @executable_path/../Frameworks/QtXml.framework/Versions/4/QtNetwork \
+  liteide/LiteIDE.app/Contents/MacOS/$1   
+
+install_name_tool -change \
+ $QTLIBPATH/QttWebkit.framework/Versions/4/QttWebkit \
+ @executable_path/../Frameworks/QtXml.framework/Versions/4/QttWebkit \
+  liteide/LiteIDE.app/Contents/MacOS/$1 
+}
+
 deploy_m2 libliteapp.dylib
 deploy_m2 LiteIDE
 
@@ -157,4 +200,5 @@ deploy_p1 libgdbdebugger.dylib
 deploy_p1 libgolangplay.dylib
 deploy_p1 libgolangpackage.dylib
 deploy_p1 litemarkdown.dylib
+deploy_m4 libwebkithtmlwidget.dylib
 
