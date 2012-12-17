@@ -314,6 +314,7 @@ bool EditorManager::closeEditor(IEditor *editor)
             saveEditor(cur);
         }
     }
+
     if (!cur->filePath().isEmpty()) {
         m_liteApp->settings()->setValue(QString("state_%1").arg(cur->filePath()),cur->saveState());
     }
@@ -332,7 +333,7 @@ bool EditorManager::closeEditor(IEditor *editor)
             return true;
         }
     }
-    delete cur;
+    cur->deleteLater();
     return true;
 }
 
@@ -349,11 +350,13 @@ bool EditorManager::saveEditor(IEditor *editor, bool emitAboutSave)
         if (emitAboutSave) {
             emit editorAboutToSave(cur);
         }
+
         if (cur->save()) {
             emit editorSaved(cur);
         } else {
             m_liteApp->appendLog("Editor",QString("save file false! %1").arg(cur->filePath()),true);
         }
+
         return true;
     }
     return false;

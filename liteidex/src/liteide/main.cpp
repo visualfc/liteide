@@ -21,8 +21,6 @@
 // Module: main.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-
-
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
      #include <stdlib.h>

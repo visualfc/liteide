@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 include (../../liteidex.pri)
-include (../rpath.pri)
 include (../liteapp/liteapp.pri)
 
 QT -= gui
@@ -14,7 +13,11 @@ TARGET = $$IDE_APP_TARGET
 DESTDIR = $$IDE_APP_PATH
 TEMPLATE = app
 
-LIBS += -L$$IDE_APP_PATH
+macx {
+    LIBS += -L$$IDE_BIN_PATH
+} else {
+    LIBS += -L$$IDE_APP_PATH
+}
 
 SOURCES += main.cpp
 
