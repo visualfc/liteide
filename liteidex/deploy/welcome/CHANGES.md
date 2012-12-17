@@ -9,6 +9,9 @@
 	* changed LiteApp to dynamic library
 	* redesign editor menu and toolbar
 	* update doc to markdown format	
+	* add html render twin-engine
+		* internal QHtmlBrowser
+		* plugin QtWebKit, if find qt webkit dynamic library
 * LiteApp:
 	* changed to dynamic library	
 	* support full screen mode
@@ -41,10 +44,10 @@
 		* export pdf
 		* custom css , css files from [MouApp](http://mouapp.com) 
 	* markdown batch 
-		* separate html
-		* separate pdf
-		* merge html
-		* merge pdf
+		* separate to html
+		* separate to pdf
+		* merge to html
+		* merge to pdf
 * GolangDoc: 
 	* fix url parser
 

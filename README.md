@@ -13,27 +13,37 @@ LiteIDE X
 * WordApi complete helper
 
 ### Golang Support
-* Go Package Browser
-* Golang Ast View
-* Godoc Browser
-* Gocode Helper
-* Goapi Index
+* Package browser
+* Class view and outline
+* Document browser
+* [Gocode](https://github.com/nsf/gocode) support
+* GOPATH api index
 * Jump to Declaration
 * Code Expression info
 * Go Playground
 
+### Markdown Support
+* Live preview and sync scroll
+* Custom css , css files from [MouApp](http://mouapp.com) 
+* Export html and pdf
+* Markdown batch 
+	* separate to html or pdf
+	* merge to html or pdf
+
 ### System
-* Windows
-* Linux 32  Linux 64
+* Windows x86 (32bit or 64bit) 
+* Linux x86 (32bit or 64bit)
 * MacOS X10.6
 
-### GitHub
-* GitHub <https://github.com/visualfc/liteide>
+### Source
+* <https://github.com/visualfc/liteide>
+* <http://code.google/p/liteide>
 
-### GoogleCode
-* Source <http://code.google.com/p/liteide>
-* Download <http://code.google.com/p/golangide>
-* Group <https://groups.google.com/group/liteide-dev>
+###  Downloads 
+* <http://code.google.com/p/golangide>
+
+###  Group
+* <https://groups.google.com/group/liteide-dev>
 
 ### Developer
 * [visualfc](mail:visualfc@gmail.com)
