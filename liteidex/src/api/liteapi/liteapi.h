@@ -629,7 +629,7 @@ inline void gotoLine(IApplication *app, const QString &fileName, int line, int c
 
 inline QSize getToolBarIconSize() {
     const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
-    int v = settings.value("General/ToolBarIconSize",1).toInt();
+    int v = settings.value("General/ToolBarIconSize",0).toInt();
     switch (v) {
     case 0:
         return QSize(16,16);

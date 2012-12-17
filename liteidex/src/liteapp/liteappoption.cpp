@@ -86,7 +86,7 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
     ui->editorTabsClosableCheckBox->setChecked(b4);
 
-    int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,TOOLBAR_ICONSIZE_18).toInt();
+    int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
