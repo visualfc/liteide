@@ -1,0 +1,20 @@
+LIBRARY SUNDOWN
+EXPORTS
+	sdhtml_renderer
+	sdhtml_toc_renderer
+	sdhtml_smartypants
+	bufgrow
+	bufnew
+	bufcstr
+	bufprefix
+	bufput 
+	bufputs
+	bufputc
+	bufrelease
+	bufreset
+	bufslurp
+	bufprintf
+	sd_markdown_new
+	sd_markdown_render
+	sd_markdown_free
+	sd_version
