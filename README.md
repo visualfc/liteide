@@ -37,7 +37,7 @@ LiteIDE X
 
 ### Source
 * <https://github.com/visualfc/liteide>
-* <http://code.google/p/liteide>
+* <http://code.google.com/p/liteide>
 
 ###  Downloads 
 * <http://code.google.com/p/golangide>
