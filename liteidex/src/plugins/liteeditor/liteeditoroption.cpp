@@ -86,6 +86,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
+    int tab = m_liteApp->settings()->value(EDITOR_TABWIDTH,4).toInt();
 
     ui->noprintCheckBox->setChecked(noprintCheck);;
     ui->autoIndentCheckBox->setChecked(autoIndent);
@@ -99,6 +100,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->preMinLineEdit->setText(QString("%1").arg(min));
     ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
     ui->rightLineWidthSpinBox->setValue(rightLineWidth);
+    ui->tabWidthLineEdit->setText(QString("%1").arg(tab));
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
@@ -166,6 +168,11 @@ void LiteEditorOption::apply()
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }
+    int tab = ui->tabWidthLineEdit->text().toInt();
+    if (tab < 0 || tab > 10) {
+        tab = 4;
+    }
+    m_liteApp->settings()->setValue(EDITOR_TABWIDTH,tab);
 }
 
 LiteEditorOption::~LiteEditorOption()

@@ -37,6 +37,7 @@
 #define EDITOR_FAMILY "editor/family"
 #define EDITOR_FONTSIZE "editor/fontsize"
 #define EDITOR_ANTIALIAS "editor/antialias"
+#define EDITOR_TABWIDTH "editor/tabwidth"
 #define EDITOR_NOPRINTCHECK "editor/noprintcheck"
 #define EDITOR_AUTOINDENT "editor/autoindent"
 #define EDITOR_AUTOBRACE0 "editor/autobraces0"
