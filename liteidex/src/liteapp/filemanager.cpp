@@ -180,23 +180,20 @@ void FileManager::newFile()
     if (project) {
         QFileInfo info(project->filePath());
         if (info.isDir()) {
-            filePath = info.filePath();
+            projPath = info.filePath();
         } else {
-            filePath = info.path();
+            projPath = info.path();
         }
-    } else {
-        IEditor *editor = m_liteApp->editorManager()->currentEditor();
-        if (editor && !editor->filePath().isEmpty()) {
-            filePath = QFileInfo(editor->filePath()).absolutePath();
-        }
+    }
+    IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor && !editor->filePath().isEmpty()) {
+        filePath = QFileInfo(editor->filePath()).absolutePath();
     }
     if (filePath.isEmpty()) {
         filePath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        projPath = filePath;
-    } else {
-        QDir dir(filePath);
-        dir.cdUp();
-        projPath = dir.absolutePath();
+    }
+    if (projPath.isEmpty()) {
+        filePath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
     }
     execFileWizard(projPath,filePath);
 }
@@ -276,7 +273,7 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
 {
     if (!m_newFileDialog) {
         m_newFileDialog = new NewFileDialog(m_liteApp->mainWindow());
-        m_newFileDialog->setTemplatePath(m_liteApp->resourcePath()+"/liteapp/template");
+        m_newFileDialog->loadTemplate(m_liteApp->resourcePath()+"/liteapp/template");
     }
     QStringList pathList = LiteApi::getGopathList(m_liteApp,false);
     pathList.append(LiteApi::getGoroot(m_liteApp));

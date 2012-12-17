@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
+    <width>552</width>
     <height>435</height>
    </rect>
   </property>
@@ -63,7 +63,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="2,1,3">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,3">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -75,42 +75,6 @@
        </item>
        <item>
         <widget class="QTreeView" name="pathTreeView"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Category</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTreeView" name="categoryTreeView">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <attribute name="headerStretchLastSection">
-          <bool>true</bool>
-         </attribute>
-        </widget>
        </item>
       </layout>
      </item>

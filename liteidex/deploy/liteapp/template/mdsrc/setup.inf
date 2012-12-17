@@ -1,0 +1,7 @@
+[SETUP]
+NAME = "Markdown File"
+AUTHOR = visualfc
+INFO = new markdown file(*.md)
+TYPE = file
+FILES = root.md
+OPEN = root.md

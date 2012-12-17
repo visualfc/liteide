@@ -1,7 +1,7 @@
 [SETUP]
-NAME = "Text Source File"
+NAME = "Empty File"
 AUTHOR = visualfc
-INFO = make new text source file
+INFO = create a new empty file
 TYPE = file
 FILES = root
 OPEN = root

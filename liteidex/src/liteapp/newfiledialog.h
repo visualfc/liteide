@@ -73,7 +73,6 @@ public:
     void setGopath(const QString &path);
     void setProjectLocation(const QString &path);
     void setFileLocation(const QString &path);
-    void setTemplatePath(const QString &path);
     void updateLocation();
     virtual void accept();
     bool processFile(const QString &infile, const QString &outfile);
@@ -82,8 +81,8 @@ public:
     QString scheme() const;
     QString openPath() const;
 public slots:
+    void loadTemplate(const QString &root);
     void activePath(QModelIndex);
-    void activeCategory(QModelIndex);
     void activeTemplate(QModelIndex);
     void nameLineChanged(QString);
     void locationLineChanged(QString);
@@ -91,7 +90,6 @@ private slots:
     void on_locationBrowseButton_clicked();        
 private:
     Ui::NewFileDialog *ui;
-    QStandardItemModel  *m_categoryModel;
     QStandardItemModel  *m_templateModel;
     QStringListModel    *m_pathModel;
     QString m_projectLocation;

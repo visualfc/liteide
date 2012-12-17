@@ -50,11 +50,9 @@ NewFileDialog::NewFileDialog(QWidget *parent) :
     ui(new Ui::NewFileDialog)
 {
     ui->setupUi(this);
-    m_categoryModel = new QStandardItemModel(this);
     m_templateModel = new QStandardItemModel(this);
     m_pathModel = new QStringListModel(this);
 
-    ui->categoryTreeView->setModel(m_categoryModel);
     ui->templateTreeView->setModel(m_templateModel);
     ui->pathTreeView->setModel(m_pathModel);
 
@@ -62,15 +60,10 @@ NewFileDialog::NewFileDialog(QWidget *parent) :
     ui->pathTreeView->setRootIsDecorated(false);
     ui->pathTreeView->setHeaderHidden(true);
 
-    ui->categoryTreeView->setEditTriggers(0);
-    ui->categoryTreeView->setRootIsDecorated(false);
-    ui->categoryTreeView->setHeaderHidden(true);
-
     ui->templateTreeView->setEditTriggers(0);
     ui->templateTreeView->setRootIsDecorated(false);
     ui->templateTreeView->setHeaderHidden(true);
 
-    connect(ui->categoryTreeView,SIGNAL(clicked(QModelIndex)),this,SLOT(activeCategory(QModelIndex)));
     connect(ui->templateTreeView,SIGNAL(clicked(QModelIndex)),this,SLOT(activeTemplate(QModelIndex)));
     connect(ui->nameLineEdit,SIGNAL(textChanged(QString)),this,SLOT(nameLineChanged(QString)));
     connect(ui->locationLineEdit,SIGNAL(textChanged(QString)),this,SLOT(locationLineChanged(QString)));
@@ -103,24 +96,6 @@ void NewFileDialog::setProjectLocation(const QString &path)
 void NewFileDialog::setFileLocation(const QString &path)
 {
     m_fileLocation = path;
-}
-
-void NewFileDialog::setTemplatePath(const QString &path)
-{
-    m_categoryModel->removeRows(0,m_categoryModel->rowCount());
-    m_templateModel->removeRows(0,m_templateModel->rowCount());
-    QDir dir(path);
-    QFileInfoList infos = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot);
-    foreach (QFileInfo info, infos) {
-        QStandardItem *item = new QStandardItem(info.fileName());
-        item->setData(info.filePath());
-        m_categoryModel->appendRow(item);
-    }
-    if (m_categoryModel->rowCount() > 0) {
-        QModelIndex index = m_categoryModel->index(0,0);
-        ui->categoryTreeView->setCurrentIndex(index);
-        activeCategory(index);
-    }
 }
 
 void NewFileDialog::updateLocation()
@@ -222,18 +197,13 @@ void NewFileDialog::activePath(QModelIndex index)
     }
 }
 
-void  NewFileDialog::activeCategory(QModelIndex index)
+void  NewFileDialog::loadTemplate(const QString &root)
 {
     m_templateModel->clear();
     m_cur.clear();
     ui->nameLineEdit->clear();
     ui->locationLineEdit->clear();
 
-    if (!index.isValid()) {
-        return;
-    }
-
-    QString root = index.data(Qt::UserRole+1).toString();
     QStringList files;
     files << "file.sub" << "project.sub";
     foreach (QString file, files) {
