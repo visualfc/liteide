@@ -35,7 +35,7 @@ public:
 signals:
     
 public slots:
-    void insert_head(const QString &tag);
+    void insert_head(const QString &tag, bool blockStart = true);
     void mark_selection(const QString &mark);
     void mark_selection(const QString &mark1, const QString &mark2);
     void h1();

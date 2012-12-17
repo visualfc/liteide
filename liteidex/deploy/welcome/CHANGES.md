@@ -8,6 +8,7 @@
 	* add markdown plugin
 	* changed LiteApp to dynamic library
 	* redesign editor menu and toolbar
+	* update doc to markdown format	
 * LiteApp:
 	* changed to dynamic library	
 	* support full screen mode
@@ -21,6 +22,8 @@
 	* add  custom tab width option
 	* redesign editor menu , context menu and toolbar
 	* add right margin line visible option
+* GolangFmt:
+	* fix comment offset, remove spaces	
 * LiteBuild: 
 	* id BuildAndRun before kill old process
 	* redesign build toolbar and menu
@@ -30,11 +33,13 @@
 	* add debug external application action
 * Markdown: 
 	* markdown editor support
-		* h1-h6, bold, italic, code, list, quote, hr, link, image
-	* css selection  (css files from [MouApp](http://mouapp.com) )
-	* sync scroll
-	* export html
-	* export pdf
+		* action h1-h6, bold, italic, code, list, quote, hr, link, image
+		* syntax highlighting
+		* live preview
+		* sync scroll
+		* export html
+		* export pdf
+		* custom css , css files from [MouApp](http://mouapp.com) 
 	* markdown batch 
 		* separate html
 		* separate pdf

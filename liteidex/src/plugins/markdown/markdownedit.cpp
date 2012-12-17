@@ -206,7 +206,7 @@ MarkdownEdit::~MarkdownEdit()
 
 
 
-void MarkdownEdit::insert_head(const QString &tag)
+void MarkdownEdit::insert_head(const QString &tag, bool blockStart)
 {
     QTextCursor cur = m_ed->textCursor();
     cur.beginEditBlock();
@@ -219,13 +219,34 @@ void MarkdownEdit::insert_head(const QString &tag)
         QTextBlock block = begin;
         do {
             if (block.text().length() > 0) {
-                cur.setPosition(block.position());
+                if (blockStart) {
+                    cur.setPosition(block.position());
+                } else {
+                    QString text = block.text();
+                    foreach(QChar c, text) {
+                        if (!c.isSpace()) {
+                            cur.setPosition(block.position()+text.indexOf(c));
+                            break;
+                        }
+                    }
+                }
                 cur.insertText(tag);
             }
             block = block.next();
         } while(block.isValid() && block.position() <= end.position());
     } else {
-        cur.setPosition(cur.block().position());
+        if (blockStart) {
+            cur.setPosition(cur.block().position());
+        } else {
+            QTextBlock block = cur.block();
+            QString text = block.text();
+            foreach(QChar c, text) {
+                if (!c.isSpace()) {
+                    cur.setPosition(block.position()+text.indexOf(c));
+                    break;
+                }
+            }
+        }
         cur.insertText(tag);
     }
     cur.endEditBlock();
@@ -371,12 +392,12 @@ void MarkdownEdit::image()
 
 void MarkdownEdit::ul()
 {
-    insert_head("* ");
+    insert_head("* ",false);
 }
 
 void MarkdownEdit::ol()
 {
-    insert_head("* ");
+    insert_head("1. ",false);
 }
 
 void MarkdownEdit::bq()
