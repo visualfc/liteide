@@ -371,12 +371,12 @@ void MarkdownEdit::image()
 
 void MarkdownEdit::ul()
 {
-    mark_selection("* ","");
+    insert_head("* ");
 }
 
 void MarkdownEdit::ol()
 {
-    mark_selection("1. ","");
+    insert_head("* ");
 }
 
 void MarkdownEdit::bq()

@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string notr="true">2011-2012 (c) earthworm</string>
+          <string notr="true">2011-2012 (c) visualfc &lt;visualfc@gmail.com&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -122,7 +122,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/li.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/kun.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -135,7 +135,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/qian.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/gen.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -249,7 +249,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</string>
           <item row="2" column="1">
            <widget class="QLabel" name="label_16">
             <property name="text">
-             <string notr="true">X14 (2.1875)</string>
+             <string notr="true">X15 (2.34375)</string>
             </property>
            </widget>
           </item>

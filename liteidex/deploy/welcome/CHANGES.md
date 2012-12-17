@@ -5,7 +5,8 @@
 	
 ### 2012.12.12 Ver x15
 * Markdown: add markdown support plugin
-
+### 2012.12.17 Ver x15
+LiteIDE: add markdown support
 
 ### 2012.11.15 Ver x14.1
 * LiteIDE : quick start
