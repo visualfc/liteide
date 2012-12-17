@@ -69,13 +69,13 @@ mkdir -p liteide/bin
 mkdir -p liteide/share/liteide
 mkdir -p liteide/lib/liteide/plugins
 
-cp -v $LITEIDE_ROOT/LICENSE.LGPL liteide
-cp -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
-cp -v $LITEIDE_ROOT/README.TXT liteide
+cp -a -v $LITEIDE_ROOT/LICENSE.LGPL liteide
+cp -a -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
+cp -a -v $LITEIDE_ROOT/README.TXT liteide
 
-cp $LITEIDE_ROOT/liteide/bin/* liteide/bin
-cp $LITEIDE_ROOT/bin/* liteide/bin
-cp $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/lib/liteide/plugins
+cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
+cp -a -v $LITEIDE_ROOT/bin/* liteide/bin
+cp -a -v $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/lib/liteide/plugins
 
 cp -r -v $LITEIDE_ROOT/deploy/* liteide/share/liteide/
 cp -r -v $LITEIDE_ROOT/os_deploy/linux/* liteide/share/liteide/
