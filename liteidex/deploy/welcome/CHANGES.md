@@ -3,10 +3,46 @@
 ## LiteIDE X Version
 	LiteIDE is a simple, open source, cross-platform Go IDE.
 	
-### 2012.12.12 Ver x15
-* Markdown: add markdown support plugin
 ### 2012.12.17 Ver x15
-LiteIDE: add markdown support
+* LiteIDE:
+	* add markdown plugin
+	* changed LiteApp to dynamic library
+	* redesign editor menu and toolbar
+* LiteApp:
+	* changed to dynamic library	
+	* support full screen mode
+	* editor tabs change to toolbar
+	* add toolbar icon size option
+	* add splash visible option
+	* add editor tab bar close button visible option
+	* add tab context menu close left or right tabs
+* LiteEditor:
+	* add overwrite mode (key Insert)
+	* add  custom tab width option
+	* redesign editor menu , context menu and toolbar
+	* add right margin line visible option
+* LiteBuild: 
+	* id BuildAndRun before kill old process
+	* redesign build toolbar and menu
+	* support GOBIN
+* LiteDebug: 
+	* add debug before rebuild option
+	* add debug external application action
+* Markdown: 
+	* markdown editor support
+		* h1-h6, bold, italic, code, list, quote, hr, link, image
+	* css selection  (css files from [MouApp](http://mouapp.com) )
+	* sync scroll
+	* export html
+	* export pdf
+	* markdown batch 
+		* separate html
+		* separate pdf
+		* merge html
+		* merge pdf
+* GolangDoc: 
+	* fix url parser
+
 
 ### 2012.11.15 Ver x14.1
 * LiteIDE : quick start
