@@ -27,7 +27,7 @@
 
 ### Markdown Support
 * Live preview and sync scroll
-* Custom css , css files from [MouApp](http://mouapp.com) 
+* Custom css , css files from [Mou](http://mouapp.com) 
 * Export html and pdf
 * Markdown batch 
 	* separate to html or pdf

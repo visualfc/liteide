@@ -42,7 +42,7 @@
 		* sync scroll
 		* export html
 		* export pdf
-		* custom css , css files from [MouApp](http://mouapp.com) 
+		* custom css , css files from [Mou](http://mouapp.com) 
 	* markdown batch 
 		* separate to html
 		* separate to pdf
