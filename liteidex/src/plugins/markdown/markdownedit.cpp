@@ -76,19 +76,19 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     }
     m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
-    QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),tr("Header <h1>"),this);
+    QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),tr("Header (h1)"),this);
     h1->setShortcut(QKeySequence("Ctrl+1"));
 
-    QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),tr("Header <h2>"),this);
+    QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),tr("Header (h2)"),this);
     h2->setShortcut(QKeySequence("Ctrl+2"));
 
-    QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),tr("Header <h3>"),this);
+    QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),tr("Header (h3)"),this);
     h3->setShortcut(QKeySequence("Ctrl+3"));
-    QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),tr("Header <h4>"),this);
+    QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),tr("Header (h4)"),this);
     h4->setShortcut(QKeySequence("Ctrl+4"));
-    QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),tr("Header <h5>"),this);
+    QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),tr("Header (h5)"),this);
     h5->setShortcut(QKeySequence("Ctrl+5"));
-    QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),tr("Header <h6>"),this);
+    QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),tr("Header (h6)"),this);
     h6->setShortcut(QKeySequence("Ctrl+6"));
 
     QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),tr("Bold"),this);
