@@ -23,3 +23,4 @@ export PATH=$QTDIR/bin:$PATH
 cp -a -v $QTDIR/lib/libphonon.so* liteide/lib/liteide
 cp -a -v $QTDIR/lib/libQtNetwork.so* liteide/lib/liteide
 cp -a -v $QTDIR/lib/libQtWebKit.so* liteide/lib/liteide
+cp -a -v $QTDIR/lib/libQtDBus.so* liteide/lib/liteide
