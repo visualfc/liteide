@@ -695,14 +695,20 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
 
 void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
 {
+    static QMenu nullMenu;
     if (!editor) {
+        m_buildMenu->menuAction()->setMenu(&nullMenu);
         m_buildMenu->menuAction()->setEnabled(false);
         setCurrentBuild(0);
         return;
     }
     LiteApi::IBuild *build = LiteApi::findExtensionObject<LiteApi::IBuild*>(editor,"LiteApi.IBuild");
-    QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Build");
-    m_buildMenu->menuAction()->setMenu(menu);
+    QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Build");    
+    if (menu) {
+        m_buildMenu->menuAction()->setMenu(menu);
+    } else {
+        m_buildMenu->menuAction()->setMenu(&nullMenu);
+    }
     m_buildMenu->setEnabled(menu != 0);
 
     loadEditorInfo(editor->filePath());
