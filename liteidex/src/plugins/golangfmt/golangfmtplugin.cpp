@@ -48,7 +48,7 @@ GolangFmtPlugin::GolangFmtPlugin()
     m_info->setId("plugin/golangfmt");
     m_info->setName("GolangFmt");
     m_info->setAnchor("visualfc");
-    m_info->setVer("x13.2");
+    m_info->setVer("x15");
     m_info->setInfo("Golang Gofmt Plugin");
 }
 

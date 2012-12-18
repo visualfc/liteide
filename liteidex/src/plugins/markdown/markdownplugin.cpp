@@ -40,7 +40,7 @@
 MarkdownPlugin::MarkdownPlugin()
 {
     m_info->setId("plugin/Markdown");
-    m_info->setVer("x15.0");
+    m_info->setVer("x15");
     m_info->setName("Markdown");
     m_info->setAnchor("visualfc");
     m_info->setInfo("Markdown Plugin");

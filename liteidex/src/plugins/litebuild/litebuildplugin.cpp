@@ -40,7 +40,7 @@ LiteBuildPlugin::LiteBuildPlugin()
     m_info->setId("plugin/litebuild");
     m_info->setName("LiteBuilder");
     m_info->setAnchor("visualfc");
-    m_info->setVer("x13.3");
+    m_info->setVer("x15");
     m_info->setInfo("LiteIDE Build Plugin");
 }
 

@@ -1439,7 +1439,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         xoff -= this->horizontalScrollBar()->value();
         painter.save();
         painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
-        painter.drawLine(xoff,0,xoff,rect().width());
+        painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }
 

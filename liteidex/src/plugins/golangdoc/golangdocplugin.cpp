@@ -40,7 +40,7 @@ GolangDocPlugin::GolangDocPlugin()
     m_info->setId("plugin/golangdoc");
     m_info->setName("GolangDoc");
     m_info->setAnchor("visualfc");
-    m_info->setVer("x14.0");
+    m_info->setVer("x15");
     m_info->setInfo("Golang DocBrowser Plugin");
     m_info->appendDepend("plugin/liteenv");
     m_info->appendDepend("plugin/liteeditor");

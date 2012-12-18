@@ -51,7 +51,7 @@ PluginsDialog::PluginsDialog(QWidget *parent) :
     m_model->setHeaderData(1, Qt::Horizontal, "ID");
     m_model->setHeaderData(2, Qt::Horizontal, tr("Anchor"));
     m_model->setHeaderData(3, Qt::Horizontal, tr("Info"));
-    m_model->setHeaderData(4, Qt::Horizontal, tr("Ver"));
+    m_model->setHeaderData(4, Qt::Horizontal, tr("Last Ver"));
     m_model->setHeaderData(5, Qt::Horizontal, tr("FileName"));
     ui->treeView->setModel(m_model);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);

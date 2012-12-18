@@ -280,10 +280,16 @@ void LiteApp::cleanup()
 
 void LiteApp::fullScreen(bool b)
 {
+    static QByteArray save;
     if (b) {
+        save = m_mainwindow->saveGeometry();
         m_mainwindow->showFullScreen();
     } else {
-        m_mainwindow->showNormal();
+        if (!save.isEmpty()) {
+            m_mainwindow->restoreGeometry(save);
+        } else {
+            m_mainwindow->showNormal();
+        }
     }
 }
 

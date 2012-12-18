@@ -36,7 +36,7 @@
 
 WebKitHtmlWidgetPlugin::WebKitHtmlWidgetPlugin()
 {
-    m_info->setVer("x15.0");
+    m_info->setVer("x15");
     m_info->setId("plugin/WebKitHtmlWidget");
     m_info->setName("WebKitHtmlWidget");
     m_info->setAnchor("visualfc");
