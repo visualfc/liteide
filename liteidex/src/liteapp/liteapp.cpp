@@ -99,6 +99,12 @@ IApplication* LiteApp::NewApplication(bool loadSession)
     return app;
 }
 
+PluginManager *LiteApp::pluginManager()
+{
+    static PluginManager manager;
+    return &manager;
+}
+
 QMap<QString,QVariant> LiteApp::m_cookie;
 
 LiteApp::LiteApp()
@@ -112,7 +118,6 @@ LiteApp::LiteApp()
       m_toolWindowManager(new ToolWindowManager),
       m_htmlWidgetManager(new HtmlWidgetManager),
       m_actionManager(new ActionManager),
-      m_pluginManager(new PluginManager),
       m_projectManager(new ProjectManager),
       m_editorManager(new EditorManager),
       m_fileManager(new FileManager),
@@ -123,7 +128,6 @@ LiteApp::LiteApp()
     m_actionManager->initWithApp(this);
     m_toolWindowManager->initWithApp(this);
     m_mimeTypeManager->initWithApp(this);
-    m_pluginManager->initWithApp(this);
     m_projectManager->initWithApp(this);
     m_editorManager->initWithApp(this);
     m_fileManager->initWithApp(this);
@@ -138,7 +142,6 @@ LiteApp::LiteApp()
     m_htmlWidgetManager->addFactory(new TextBrowserHtmlWidgetFactory(this));
 
     m_extension->addObject("LiteApi.IMimeTypeManager",m_mimeTypeManager);
-    m_extension->addObject("LiteApi.IPluginManager",m_pluginManager);
     m_extension->addObject("LiteApi.IProjectManager",m_projectManager);
     m_extension->addObject("LiteApi.IEditManager",m_editorManager);
     m_extension->addObject("LiteApi.IOptoinManager",m_optionManager);
@@ -267,7 +270,6 @@ void LiteApp::cleanup()
     delete m_projectManager;
     delete m_editorManager;
     delete m_fileManager;
-    delete m_pluginManager;
     delete m_actionManager;
     delete m_mimeTypeManager;
     delete m_optionManager;
@@ -392,7 +394,7 @@ void LiteApp::setResourcePath(const QString &path)
 
 QList<IPlugin*> LiteApp::pluginList() const
 {
-    return m_pluginManager->pluginList();
+    return m_pluginList;
 }
 
 void LiteApp::appendLog(const QString &model, const QString &log, bool error)
@@ -420,7 +422,7 @@ void LiteApp::sendBroadcast(const QString &module, const QString &id, const QVar
 
 void LiteApp::loadPlugins()
 {
-    m_pluginManager->loadPlugins(m_pluginPath);
+    pluginManager()->loadPlugins(m_pluginPath);
 }
 
 void LiteApp::loadMimeType()
@@ -433,30 +435,14 @@ void LiteApp::loadMimeType()
 
 void LiteApp::initPlugins()
 {
-    QMap<QString,int> idIndexMap;
-    QMap<QString,IPlugin*> idPlguinMap;
-    foreach(IPlugin *p, m_pluginManager->pluginList()) {
-        idIndexMap.insert(p->id(),0);
-        idPlguinMap.insert(p->id(),p);
-    }
-
-    foreach(IPlugin *p, m_pluginManager->pluginList()) {
-        foreach(QString depId, p->dependPluginList()) {
-            idIndexMap.insert(depId,idIndexMap.value(depId)-1);
-        }
-    }
-    QMultiMap<int,IPlugin*> deps;
-    QMapIterator<QString,int> i(idIndexMap);
-    while (i.hasNext()) {
-        i.next();
-        deps.insertMulti(i.value(),idPlguinMap.value(i.key()));
-    }
-    QList<int> keys = deps.keys().toSet().toList();
-    qSort(keys);
-    foreach(int index, keys) {
-        foreach(IPlugin *p, deps.values(index)) {
-            bool ret = p->initWithApp(this);
-            appendLog("LiteApp",QString("initPlugin %1 %2").arg(p->id()).arg(ret?"success":"false"));
+    foreach (IPluginFactory *factory,pluginManager()->factoryList()) {
+        LiteApi::IPlugin *plugin = factory->createPlugin();
+        if (plugin) {
+            bool ret = plugin->initWithApp(this);
+            if (ret) {
+                m_pluginList.append(plugin);
+            }
+            appendLog("LiteApp",QString("initPlugin %1 %2").arg(factory->id()).arg(ret?"success":"false"));
         }
     }
 }
@@ -507,7 +493,7 @@ void LiteApp::createActions()
     connect(m_saveAllAct,SIGNAL(triggered()),m_editorManager,SLOT(saveAllEditors()));
     connect(m_exitAct,SIGNAL(triggered()),m_mainwindow,SLOT(close()));
     connect(m_aboutAct,SIGNAL(triggered()),m_mainwindow,SLOT(about()));
-    connect(m_aboutPluginsAct,SIGNAL(triggered()),m_pluginManager,SLOT(aboutPlugins()));
+//    connect(m_aboutPluginsAct,SIGNAL(triggered()),m_pluginManager,SLOT(aboutPlugins()));
     connect(m_fullScreent,SIGNAL(toggled(bool)),this,SLOT(fullScreen(bool)));
 }
 

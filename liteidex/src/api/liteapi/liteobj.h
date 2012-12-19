@@ -41,20 +41,12 @@ public:
     virtual QStringList objectMetaList() const = 0;
 };
 
-class IFactory
-{
-public:
-    virtual ~IFactory() {}
-    virtual IObject *newObject(const QString &meta);
-};
-
 class IObject : public QObject
 {
 public:
     IObject(QObject *parent = 0) : QObject(parent) {}
     virtual ~IObject() {}
     virtual IExtension *extension() { return 0; }
-    virtual IFactory *factory() { return 0; }
 };
 
 template <typename T>

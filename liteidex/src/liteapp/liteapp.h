@@ -54,8 +54,9 @@ public:
     static QString getResoucePath();
     static QString getStoragePath();
     static IApplication* NewApplication(bool loadSession);
+    static PluginManager *pluginManager();
 public:
-    LiteApp();
+    LiteApp();    
     virtual ~LiteApp();    
     virtual IExtension *extension();
     virtual IApplication *newInstance(bool loadSession);
@@ -118,7 +119,6 @@ protected:
     ToolWindowManager *m_toolWindowManager;
     HtmlWidgetManager *m_htmlWidgetManager;
     ActionManager  *m_actionManager;
-    PluginManager   *m_pluginManager;
     ProjectManager *m_projectManager;
     EditorManager   *m_editorManager;
     FileManager    *m_fileManager;
@@ -127,6 +127,7 @@ protected:
     TextOutput    *m_logOutput;
     QAction       *m_logAct;
     LiteAppOptionFactory *m_liteAppOptionFactory;
+    QList<IPlugin*> m_pluginList;
     static QMap<QString,QVariant> m_cookie;
 protected:
     QAction     *m_newAct;

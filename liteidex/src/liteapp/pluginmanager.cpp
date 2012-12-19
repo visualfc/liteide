@@ -42,55 +42,80 @@
 
 PluginManager::~PluginManager()
 {
-    m_filePluginMap.clear();
-    qDeleteAll(m_pluginList);
+    qDeleteAll(m_factroyList);
 }
 
-void PluginManager::addPlugin(IPlugin *plugin)
+QList<IPluginFactory*> PluginManager::factoryList()
 {
-    m_pluginList.append(plugin);
-}
-
-void PluginManager::removePlugin(IPlugin *plugin)
-{
-    m_pluginList.removeOne(plugin);
-}
-
-QList<IPlugin*> PluginManager::pluginList()
-{
-    return m_pluginList;
-}
-
-bool PluginManager::loadPlugin(const QString &fileName)
-{
-    QPluginLoader loader(fileName);
-    if (IPluginFactory *factory = qobject_cast<IPluginFactory*>(loader.instance())) {
-        IPlugin *plugin = factory->createPlugin();
-        if (plugin) {
-            addPlugin(plugin);
-            m_filePluginMap.insert(fileName,plugin);
-            return true;
-        }
-    }
-    return false;
+    return m_factroyList;
 }
 
 void PluginManager::loadPlugins(const QString &dir)
 {
+    if (m_bLoaded) {
+        return;
+    }
+    m_bLoaded = true;
+
     QDir pluginsDir = dir;
     pluginsDir.setFilter(QDir::Files | QDir::NoSymLinks);
-    foreach (QString fileName, pluginsDir.entryList()) {
-        loadPlugin(pluginsDir.absoluteFilePath(fileName));
+
+    QMap<QString,int> idIndexMap;
+    QMap<QString,IPluginFactory*> idPlguinMap;
+    foreach (QFileInfo info, pluginsDir.entryInfoList()) {
+        QPluginLoader loader(info.filePath());
+        if (IPluginFactory *factory = qobject_cast<IPluginFactory*>(loader.instance())) {
+            if (factory) {
+                factory->setFilePath(info.filePath());
+                idIndexMap.insert(factory->id(),0);
+                idPlguinMap.insert(factory->id(),factory);
+            }
+        }
     }
+
+    if (idIndexMap.isEmpty()) {
+        return;
+    }
+
+    foreach(IPluginFactory *p, idPlguinMap.values()) {
+        foreach(QString depId, p->dependPluginList()) {
+            idIndexMap.insert(depId,idIndexMap.value(depId)-1);
+        }
+    }
+    QMultiMap<int,IPluginFactory*> deps;
+    QMapIterator<QString,int> i(idIndexMap);
+    while (i.hasNext()) {
+        i.next();
+        deps.insertMulti(i.value(),idPlguinMap.value(i.key()));
+    }
+    QList<int> keys = deps.keys().toSet().toList();
+    qSort(keys);
+    foreach(int index, keys) {
+        foreach(IPluginFactory *p, deps.values(index)) {
+            m_factroyList.append(p);
+        }
+    }
+}
+
+bool PluginManager::isLoaded() const
+{
+    return m_bLoaded;
 }
 
 void PluginManager::aboutPlugins()
 {
-    PluginsDialog *dlg = new PluginsDialog(m_liteApp->mainWindow());
-    QMapIterator<QString,IPlugin*> i = m_filePluginMap;
-    while (i.hasNext()) {
-        i.next();
-        dlg->addPluginInfo(i.value()->info(),i.key());
-    }
-    dlg->exec();
+//    PluginsDialog *dlg = new PluginsDialog(m_liteApp->mainWindow());
+//    QMapIterator<QString,IPlugin*> i = m_filePluginMap;
+//    while (i.hasNext()) {
+//        i.next();
+//        dlg->addPluginInfo(i.value()->info(),i.key());
+//    }
+//    dlg->exec();
+}
+
+
+PluginManager::PluginManager(QObject *parent) :
+    QObject(parent),
+    m_bLoaded(false)
+{
 }

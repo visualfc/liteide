@@ -546,17 +546,19 @@ class PluginInfo
 {
 public:
     virtual ~PluginInfo() {}
-    virtual QString anchor() const { return m_anchor; }
-    virtual QString info() const { return m_info; }
-    virtual QString id() const { return m_id; }
-    virtual QString name() const { return m_name; }
-    virtual QString ver() const { return m_ver; }
-    virtual QStringList dependList() const { return m_dependList; }
-    void setAnchor(QString anchor) { m_anchor = anchor; }
-    void setInfo(QString info) { m_info = info; }
-    void setId(QString id) { m_id = id.toLower(); }
-    void setName(QString name) { m_name = name; }
-    void setVer(QString ver) { m_ver = ver; }
+    QString anchor() const { return m_anchor; }
+    QString info() const { return m_info; }
+    QString id() const { return m_id; }
+    QString name() const { return m_name; }
+    QString ver() const { return m_ver; }
+    QStringList dependList() const { return m_dependList; }
+    QString filePath() const { return m_filePath; }
+    void setAnchor(const QString &anchor) { m_anchor = anchor; }
+    void setInfo(const QString &info) { m_info = info; }
+    void setId(const QString &id) { m_id = id.toLower(); }
+    void setName(const QString &name) { m_name = name; }
+    void setVer(const QString &ver) { m_ver = ver; }
+    void setFilePath(const QString &path) { m_filePath = path; }
     void setDependList(const QStringList &dependList) { m_dependList = dependList; }
     void appendDepend(const QString &depend) { m_dependList.append(depend); }
 protected:
@@ -564,6 +566,7 @@ protected:
     QString m_info;
     QString m_id;
     QString m_name;
+    QString m_filePath;
     QString m_ver;
     QStringList m_dependList;
 };
@@ -572,39 +575,25 @@ class IPlugin : public IObject
 {
     Q_OBJECT
 public:
-    IPlugin() : m_info(new PluginInfo)
+    IPlugin(QObject *parent) : IObject(parent)
     {
-        m_info->setVer("x14.1");
     }
-    virtual ~IPlugin()
-    {
-        delete m_info;
-    }
-
     virtual bool initWithApp(IApplication *app) {
         m_liteApp = app;
         return true;
     }
-    virtual QString id() const {
-        return m_info->id();
-    }
-    virtual QString name() const {
-        return m_info->name();
-    }
-    virtual QStringList dependPluginList() const{
-        return m_info->dependList();
-    }
-    virtual const PluginInfo *info() const {
-        return m_info;
-    }
 protected:
-    PluginInfo   *m_info;
     IApplication *m_liteApp;
 };
 
 class IPluginFactory : public QObject
 {
 public:
+    virtual QString id() const = 0;
+    virtual PluginInfo *info() const = 0;    
+    virtual QStringList dependPluginList() const;
+    virtual void setFilePath(const QString &path) = 0;
+    virtual QString filePath() const = 0;
     virtual IPlugin *createPlugin() = 0;
 };
 
@@ -612,10 +601,39 @@ template <typename T>
 class PluginFactoryT : public IPluginFactory
 {
 public:
+    PluginFactoryT() : m_info(new PluginInfo)
+    {
+    }
+    virtual ~PluginFactoryT()
+    {
+        delete m_info;
+    }
+    virtual QString id() const
+    {
+        return m_info->id();
+    }
+    virtual PluginInfo *info() const
+    {
+        return m_info;
+    }
+    virtual QStringList dependPluginList() const{
+        return m_info->dependList();
+    }
+    virtual void setFilePath(const QString &path)
+    {
+        m_info->setFilePath(path);
+    }
+    virtual QString filePath() const
+    {
+        return m_info->filePath();
+    }
     virtual IPlugin *createPlugin()
     {
         return new T;
     }
+protected:
+    PluginInfo *m_info;
+    QString     m_filePath;
 };
 
 inline void gotoLine(IApplication *app, const QString &fileName, int line, int col) {
@@ -647,7 +665,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X15")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X15.1")
 
 
 #endif //__LITEAPI_H__

@@ -42,6 +42,14 @@ class PluginFactory : public LiteApi::PluginFactoryT<FileBrowserPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory()
+    {
+        m_info.setId("plugin/filebrowser");
+        m_info.setAnchor("visaulfc");
+        m_info.setName("FileBrowser");
+        m_info.setVer("x15");
+    }
 };
 
 #endif // FILEBROWSERPLUGIN_H

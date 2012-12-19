@@ -28,22 +28,21 @@
 
 using namespace LiteApi;
 
-class PluginManager : public IManager
+class PluginManager : public QObject
 {
     Q_OBJECT
 public:
+    PluginManager(QObject *parent = 0);
     virtual ~PluginManager();
-    void addPlugin(IPlugin *plugin);
-    void removePlugin(IPlugin *plugin);
-    QList<IPlugin*> pluginList();
-    bool loadPlugin(const QString &fileName);
+    QList<IPluginFactory*> factoryList();
     void loadPlugins(const QString &dir);
+    bool isLoaded() const;
 protected slots:
     void aboutPlugins();
 protected:
+    bool            m_bLoaded;
     QAction         *m_aboutPluginsAct;
-    QList<IPlugin*> m_pluginList;
-    QMap<QString,IPlugin*> m_filePluginMap;
+    QList<IPluginFactory*> m_factroyList;
 };
 
 #endif // PLUGINMANAGER_H
