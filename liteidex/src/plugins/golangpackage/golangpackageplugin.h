@@ -32,13 +32,22 @@ class GolangPackagePlugin : public LiteApi::IPlugin
 {
 public:
     GolangPackagePlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GolangPackagePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/GolangPackage");
+        m_info->setName("GolangPackage");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x12");
+        m_info->setInfo("GolangPackage Plugin");
+        m_info->appendDepend("plugin/liteenv");
+    }
 };
 
 #endif // GOLANGPACKAGEPLUGIN_H

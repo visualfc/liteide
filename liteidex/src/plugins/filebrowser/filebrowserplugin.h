@@ -33,7 +33,7 @@ class FileBrowserPlugin : public LiteApi::IPlugin
 {
 public:
     FileBrowserPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 protected:
     FileBrowser *m_browser;
 };
@@ -45,10 +45,11 @@ class PluginFactory : public LiteApi::PluginFactoryT<FileBrowserPlugin>
 public:
     PluginFactory()
     {
-        m_info.setId("plugin/filebrowser");
-        m_info.setAnchor("visaulfc");
-        m_info.setName("FileBrowser");
-        m_info.setVer("x15");
+        m_info->setId("plugin/filebrowser");
+        m_info->setName("FileBrowser");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x13");
+        m_info->setInfo("LiteIDE FileBrowser Plugin");
     }
 };
 

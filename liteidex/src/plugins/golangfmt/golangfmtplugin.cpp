@@ -45,31 +45,23 @@
 GolangFmtPlugin::GolangFmtPlugin()
     : m_fmt(0)
 {
-    m_info->setId("plugin/golangfmt");
-    m_info->setName("GolangFmt");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("Golang Gofmt Plugin");
 }
 
-bool GolangFmtPlugin::initWithApp(LiteApi::IApplication *app)
+bool GolangFmtPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
+    m_liteApp = app;
 
-    m_liteApp->optionManager()->addFactory(new GolangFmtOptionFactory(m_liteApp,this));
+    app->optionManager()->addFactory(new GolangFmtOptionFactory(app,this));
 
-    m_fmt = new GolangFmt(m_liteApp,this);
+    m_fmt = new GolangFmt(app,this);
     m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
     m_gofmtAct->setShortcut(QKeySequence("Shift+F7"));
     m_goplayAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
     connect(m_gofmtAct,SIGNAL(triggered()),m_fmt,SLOT(gofmt()));
     connect(m_goplayAct,SIGNAL(triggered()),this,SLOT(goplayFmt()));
 
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
-
+    connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+    connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
 
     return true;
 }

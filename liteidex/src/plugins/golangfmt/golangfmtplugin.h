@@ -35,13 +35,14 @@ class GolangFmtPlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     GolangFmtPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
     virtual QStringList dependPluginList() const;
 protected slots:
     void editorCreated(LiteApi::IEditor*);
     void appLoaded();
     void goplayFmt();
 protected:
+    LiteApi::IApplication *m_liteApp;
     QAction   *m_gofmtAct;
     QAction   *m_goplayAct;
     LiteApi::IEditor *m_playEditor;
@@ -53,6 +54,14 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangFmtPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/golangfmt");
+        m_info->setName("GolangFmt");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("Golang Gofmt Plugin");
+    }
 };
 
 #endif // GOLANGFMTPLUGIN_H

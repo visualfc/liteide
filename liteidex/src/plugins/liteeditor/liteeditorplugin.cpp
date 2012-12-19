@@ -37,30 +37,16 @@
 
 LiteEditorPlugin::LiteEditorPlugin()
 {
-    m_info->setId("plugin/liteeditor");
-    m_info->setName("LiteEditor");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("LiteIDE Editor Plugin");
 }
 
-bool LiteEditorPlugin::initWithApp(LiteApi::IApplication *app)
+bool LiteEditorPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
     LiteEditorFileFactory *factory = new LiteEditorFileFactory(app,this);
     app->editorManager()->addFactory(factory);
 
     app->optionManager()->addFactory(new LiteEditorOptionFactory(app,this));
 
     return true;
-}
-
-QStringList LiteEditorPlugin::dependPluginList() const
-{
-    return QStringList() << "plugin/litebuild";
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

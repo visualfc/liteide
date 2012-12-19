@@ -38,20 +38,11 @@
 
 GolangPackagePlugin::GolangPackagePlugin()
 {
-    m_info->setId("plugin/GolangPackage");
-    m_info->setName("GolangPackage");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x12");
-    m_info->setInfo("GolangPackage Plugin");
-    m_info->appendDepend("plugin/liteenv");
 }
 
-bool GolangPackagePlugin::initWithApp(LiteApi::IApplication *app)
+bool GolangPackagePlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-    new PackageBrowser(m_liteApp,this);
+    new PackageBrowser(app,this);
     //PackageProjectFactory *factory = new PackageProjectFactory(app,this);
     //m_liteApp->projectManager()->addFactory(factory);
 

@@ -35,10 +35,11 @@ class WelcomePlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     WelcomePlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 protected slots:
     void home();
 protected:
+    LiteApi::IApplication *m_liteApp;
     WelcomeBrowser *m_welcome;
     LiteDoc *m_liteDoc;
     QAction *m_welcomeAct;
@@ -49,6 +50,14 @@ class PluginFactory : public LiteApi::PluginFactoryT<WelcomePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/welcome");
+        m_info->setName("Welcome");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("LiteIDE Welcome Plugin");
+    }
 };
 
 #endif // WELCOMEPLUGIN_H

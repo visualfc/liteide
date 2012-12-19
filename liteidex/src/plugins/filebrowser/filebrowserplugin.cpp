@@ -36,18 +36,10 @@
 
 FileBrowserPlugin::FileBrowserPlugin() : m_browser(0)
 {
-    m_info->setId("plugin/filebrowser");
-    m_info->setName("FileBrowser");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x13");
-    m_info->setInfo("LiteIDE FileBrowser Plugin");
 }
 
-bool FileBrowserPlugin::initWithApp(LiteApi::IApplication *app)
+bool FileBrowserPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
     m_browser = new FileBrowser(app,this);
     //app->optionManager()->addFactory(new FileBrowserOptionFactory(app,this));
     return true;

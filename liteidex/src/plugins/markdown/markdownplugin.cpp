@@ -39,18 +39,11 @@
 
 MarkdownPlugin::MarkdownPlugin()
 {
-    m_info->setId("plugin/Markdown");
-    m_info->setVer("x15");
-    m_info->setName("Markdown");
-    m_info->setAnchor("visualfc");
-    m_info->setInfo("Markdown Plugin");
 }
 
-bool MarkdownPlugin::initWithApp(LiteApi::IApplication *app)
+bool MarkdownPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
+    m_liteApp = app;
 
     QAction *act = m_liteApp->editorManager()->registerBrowser(new MarkdownBatchBrowser(m_liteApp,this));
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,act);
@@ -58,7 +51,6 @@ bool MarkdownPlugin::initWithApp(LiteApi::IApplication *app)
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
 
     new HtmlPreview(m_liteApp,this);
-
 
     return true;
 }

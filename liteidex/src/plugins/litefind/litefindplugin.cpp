@@ -44,11 +44,6 @@ LiteFindPlugin::LiteFindPlugin()
       m_replaceEditor(0),
       m_fileSearch(0)
 {
-    m_info->setId("plugin/LiteFind");
-    m_info->setName("LiteFind");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x14");
-    m_info->setInfo("LiteIDE Find Plugin");
 }
 
 LiteFindPlugin::~LiteFindPlugin()
@@ -58,11 +53,8 @@ LiteFindPlugin::~LiteFindPlugin()
     }
 }
 
-bool LiteFindPlugin::initWithApp(LiteApi::IApplication *app)
+bool LiteFindPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
     m_liteApp = app;
 
     QLayout *layout = m_liteApp->editorManager()->widget()->layout();

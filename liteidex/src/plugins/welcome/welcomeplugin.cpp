@@ -39,11 +39,6 @@
 
 WelcomePlugin::WelcomePlugin() : m_welcome(0)
 {
-    m_info->setId("plugin/welcome");
-    m_info->setName("Welcome");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("LiteIDE Welcome Plugin");
 }
 
 void WelcomePlugin::home()
@@ -51,11 +46,9 @@ void WelcomePlugin::home()
     m_liteApp->editorManager()->activeBrowser(m_welcome);
 }
 
-bool WelcomePlugin::initWithApp(LiteApi::IApplication *app)
+bool WelcomePlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
+    m_liteApp = app;
 
     m_welcome = new WelcomeBrowser(app,this);
     m_welcomeAct = m_liteApp->editorManager()->registerBrowser(m_welcome);

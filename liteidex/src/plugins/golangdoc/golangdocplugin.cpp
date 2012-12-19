@@ -37,13 +37,6 @@
 GolangDocPlugin::GolangDocPlugin()
     : m_golangDoc(0)
 {
-    m_info->setId("plugin/golangdoc");
-    m_info->setName("GolangDoc");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("Golang DocBrowser Plugin");
-    m_info->appendDepend("plugin/liteenv");
-    m_info->appendDepend("plugin/liteeditor");
 }
 
 GolangDocPlugin::~GolangDocPlugin()
@@ -53,14 +46,10 @@ GolangDocPlugin::~GolangDocPlugin()
     }
 }
 
-bool GolangDocPlugin::initWithApp(LiteApi::IApplication *app)
+bool GolangDocPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
     m_golangDoc = new GolangDoc(app,this);
-    m_liteApp->optionManager()->addFactory(new GolangDocOptionFactory(m_liteApp,this));
+    app->optionManager()->addFactory(new GolangDocOptionFactory(app,this));
 
     return true;
 }

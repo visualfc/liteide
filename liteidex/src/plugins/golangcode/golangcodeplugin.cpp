@@ -42,26 +42,18 @@
 
 GolangCodePlugin::GolangCodePlugin()
 {
-    m_info->setId("plugin/golangcode");
-    m_info->setName("GolangCode");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("Golang Gocode Plugin");
 }
 
-bool GolangCodePlugin::initWithApp(LiteApi::IApplication *app)
+bool GolangCodePlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
+    m_liteApp = app;
     m_code = new GolangCode(app,this);
     m_commentAct = new QAction(tr("Toggle Comment Selection"),this);
     m_commentAct->setShortcut(QKeySequence("CTRL+/"));
     connect(m_commentAct,SIGNAL(triggered()),this,SLOT(editorComment()));
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
-    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+    connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+    connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     return true;
 }
 

@@ -40,27 +40,13 @@
 
 LiteDebugPlugin::LiteDebugPlugin()
 {
-    m_info->setId("plugin/LiteDebug");
-    m_info->setName("LiteDebug");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("LiteIDE Debug Manager Plugin");
 }
 
-QStringList LiteDebugPlugin::dependPluginList() const
+bool LiteDebugPlugin::load(LiteApi::IApplication *app)
 {
-    return QStringList() << "plugin/litebuild" <<"plugin/litefind";
-}
+    app->optionManager()->addFactory(new LiteDebugOptionFactory(app,this));
 
-bool LiteDebugPlugin::initWithApp(LiteApi::IApplication *app)
-{
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
-    m_liteApp->optionManager()->addFactory(new LiteDebugOptionFactory(app,this));
-
-    QSplitter *splitter = LiteApi::findExtensionObject<QSplitter*>(m_liteApp,"LiteApi.QMainWindow.QSplitter");
+    QSplitter *splitter = LiteApi::findExtensionObject<QSplitter*>(app,"LiteApi.QMainWindow.QSplitter");
     if (!splitter) {
         return false;
     }
@@ -74,7 +60,7 @@ bool LiteDebugPlugin::initWithApp(LiteApi::IApplication *app)
     connect(m_viewDebug,SIGNAL(triggered(bool)),m_liteDebug->widget(),SLOT(setVisible(bool)));
     connect(m_liteDebug,SIGNAL(debugVisible(bool)),m_viewDebug,SLOT(setChecked(bool)));
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_viewDebug);
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_viewDebug);
 
     return true;
 }

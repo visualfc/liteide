@@ -32,14 +32,22 @@ class LiteEditorPlugin : public LiteApi::IPlugin
 {
 public:
     LiteEditorPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
-    virtual QStringList dependPluginList() const;
+    virtual bool load(LiteApi::IApplication *app);
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<LiteEditorPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/liteeditor");
+        m_info->setName("LiteEditor");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("LiteIDE Editor Plugin");
+        m_info->appendDepend("plugin/litebuild");
+    }
 };
 
 #endif // LITEEDITORPLUGIN_H

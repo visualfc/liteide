@@ -33,7 +33,7 @@ class LiteEnvPlugin : public LiteApi::IPlugin
 {
 public:
     LiteEnvPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 protected:
     EnvManager *m_envManager;    
 };
@@ -42,6 +42,14 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteEnvPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/LiteEnv");
+        m_info->setName("LiteEnv");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("LiteIDE Environment Plugin");
+    }
 };
 
 #endif // LITEENVPLUGIN_H

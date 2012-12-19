@@ -34,8 +34,7 @@ class LiteDebugPlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     LiteDebugPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
-    virtual QStringList dependPluginList() const;
+    virtual bool load(LiteApi::IApplication *app);
 protected:
     LiteDebug *m_liteDebug;
     QAction   *m_viewDebug;
@@ -45,6 +44,16 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteDebugPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/LiteDebug");
+        m_info->setName("LiteDebug");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("LiteIDE Debug Manager Plugin");
+        m_info->appendDepend("plugin/litebuild");
+        m_info->appendDepend("plugin/litefind");
+    }
 };
 
 #endif // LITEDEBUGPLUGIN_H

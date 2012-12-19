@@ -36,22 +36,13 @@
 
 WebKitHtmlWidgetPlugin::WebKitHtmlWidgetPlugin()
 {
-    m_info->setVer("x15");
-    m_info->setId("plugin/WebKitHtmlWidget");
-    m_info->setName("WebKitHtmlWidget");
-    m_info->setAnchor("visualfc");
-    m_info->setInfo("WebKitHtmlWidget Plugin");
 }
 
-bool WebKitHtmlWidgetPlugin::initWithApp(LiteApi::IApplication *app)
+bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
     LiteApi::IHtmlWidgetFactory *factory = new WebViewHtmlWidgetFactory(this);
-    m_liteApp->htmlWidgetManager()->addFactory(factory);
-    m_liteApp->htmlWidgetManager()->setDefaultClassName(factory->className());
+    app->htmlWidgetManager()->addFactory(factory);
+    app->htmlWidgetManager()->setDefaultClassName(factory->className());
 
     return true;
 }

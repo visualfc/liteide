@@ -32,14 +32,22 @@ class GolangPlayPlugin : public LiteApi::IPlugin
 {
 public:
     GolangPlayPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
-    virtual QStringList dependPluginList() const;
+    virtual bool load(LiteApi::IApplication *app);
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GolangPlayPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/golangplay");
+        m_info->setName("GolangPlay");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x13.1");
+        m_info->setInfo("GolangPlay Plugin");
+        m_info->appendDepend("plugin/liteeditor");
+    }
 };
 
 #endif // GOLANGPLAYPLUGIN_H

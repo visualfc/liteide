@@ -35,7 +35,7 @@ class GolangDocPlugin : public LiteApi::IPlugin
 public:
     GolangDocPlugin();
     ~GolangDocPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 protected slots:
     void currentEditorChanged(LiteApi::IEditor*);
 protected:
@@ -46,6 +46,16 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangDocPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/golangdoc");
+        m_info->setName("GolangDoc");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("Golang DocBrowser Plugin");
+        m_info->appendDepend("plugin/liteenv");
+        m_info->appendDepend("plugin/liteeditor");
+    }
 };
 
 #endif // GOLANGDOCPLUGIN_H

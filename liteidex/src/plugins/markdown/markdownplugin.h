@@ -32,15 +32,26 @@ class MarkdownPlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     MarkdownPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 protected slots:
     void editorCreated(LiteApi::IEditor*);
+protected:
+    LiteApi::IApplication *m_liteApp;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<MarkdownPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/Markdown");
+        m_info->setVer("x15");
+        m_info->setName("Markdown");
+        m_info->setAnchor("visualfc");
+        m_info->setInfo("Markdown Plugin");
+        m_info->appendDepend("plugin/liteeditor");
+    }
 };
 
 

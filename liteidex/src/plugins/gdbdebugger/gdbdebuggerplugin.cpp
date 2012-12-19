@@ -36,20 +36,11 @@
 
 GdbDebuggerPlugin::GdbDebuggerPlugin()
 {
-    m_info->setId("plugin/GdbDebugger");
-    m_info->setName("GdbDebugger");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x13.1");
-    m_info->setInfo("Gdb Debugger Plugin");
 }
 
-bool GdbDebuggerPlugin::initWithApp(LiteApi::IApplication *app)
+bool GdbDebuggerPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
-    LiteApi::IDebuggerManager *manager = LiteApi::getDebugManager(m_liteApp);
+    LiteApi::IDebuggerManager *manager = LiteApi::getDebugManager(app);
     if (!manager) {
         return false;
     }

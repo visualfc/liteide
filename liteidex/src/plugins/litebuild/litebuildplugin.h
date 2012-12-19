@@ -33,8 +33,7 @@ class LiteBuildPlugin : public LiteApi::IPlugin
 {
 public:
     LiteBuildPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
-    virtual QStringList dependPluginList() const;
+    virtual bool load(LiteApi::IApplication *app);
 protected:
     LiteBuild *m_build;
 };
@@ -43,6 +42,15 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteBuildPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/litebuild");
+        m_info->setName("LiteBuilder");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("LiteIDE Build Plugin");
+        m_info->appendDepend("plugin/liteenv");
+    }
 };
 
 #endif // LITEBUILDPLUGIN_H

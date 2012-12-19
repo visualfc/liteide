@@ -37,29 +37,15 @@
 
 GolangPlayPlugin::GolangPlayPlugin()
 {
-    m_info->setId("plugin/golangplay");
-    m_info->setName("GolangPlay");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x13.1");
-    m_info->setInfo("GolangPlay Plugin");
 }
 
-bool GolangPlayPlugin::initWithApp(LiteApi::IApplication *app)
+bool GolangPlayPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-
     GoplayBrowser *gopaly = new GoplayBrowser(app,this);
-    QAction *act = m_liteApp->editorManager()->registerBrowser(gopaly);
+    QAction *act = app->editorManager()->registerBrowser(gopaly);
     act->setIcon(QIcon("icon:images/gopher.png"));
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,act);
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,act);
     return true;
-}
-
-QStringList GolangPlayPlugin::dependPluginList() const
-{
-    return QStringList() << "plugin/liteeditor";
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

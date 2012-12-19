@@ -31,13 +31,21 @@ class WebKitHtmlWidgetPlugin : public LiteApi::IPlugin
 {
 public:
     WebKitHtmlWidgetPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<WebKitHtmlWidgetPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setVer("x15");
+        m_info->setId("plugin/WebKitHtmlWidget");
+        m_info->setName("WebKitHtmlWidget");
+        m_info->setAnchor("visualfc");
+        m_info->setInfo("WebKitHtmlWidget Plugin");
+    }
 };
 
 

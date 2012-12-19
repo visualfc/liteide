@@ -36,19 +36,11 @@
 
 GolangAstPlugin::GolangAstPlugin()
 {
-    m_info->setId("plugin/golangast");
-    m_info->setName("GolangAst");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x13.2");
-    m_info->setInfo("Golang AstView Plugin");
 }
 
-bool GolangAstPlugin::initWithApp(LiteApi::IApplication *app)
+bool GolangAstPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
-    new GolangAst(m_liteApp,this);
+    new GolangAst(app,this);
     return true;
 }
 

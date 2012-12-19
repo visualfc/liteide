@@ -36,8 +36,8 @@ class LiteFindPlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     LiteFindPlugin();
-    ~LiteFindPlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual ~LiteFindPlugin();
+    virtual bool load(LiteApi::IApplication *app);
 public slots:
     void find();
     void replace();
@@ -46,6 +46,7 @@ public slots:
     void switchReplace();
     void fileSearch();
 protected:
+    LiteApi::IApplication *m_liteApp;
     FindEditor *m_findEditor;
     ReplaceEditor *m_replaceEditor;
     FileSearch  *m_fileSearch;
@@ -60,6 +61,14 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteFindPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/LiteFind");
+        m_info->setName("LiteFind");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x14");
+        m_info->setInfo("LiteIDE Find Plugin");
+    }
 };
 
 #endif // LITEFINDPLUGIN_H

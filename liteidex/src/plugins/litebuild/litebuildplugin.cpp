@@ -37,26 +37,13 @@
 
 LiteBuildPlugin::LiteBuildPlugin()
 {
-    m_info->setId("plugin/litebuild");
-    m_info->setName("LiteBuilder");
-    m_info->setAnchor("visualfc");
-    m_info->setVer("x15");
-    m_info->setInfo("LiteIDE Build Plugin");
 }
 
-bool LiteBuildPlugin::initWithApp(LiteApi::IApplication *app)
+bool LiteBuildPlugin::load(LiteApi::IApplication *app)
 {
-    if (!LiteApi::IPlugin::initWithApp(app)) {
-        return false;
-    }
     m_build = new LiteBuild(app,this);
     app->optionManager()->addFactory(new LiteBuildOptionFactory(app,this));
     return true;
-}
-
-QStringList LiteBuildPlugin::dependPluginList() const
-{
-    return QStringList() << "plugin/liteenv";
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

@@ -34,7 +34,7 @@ class GolangCodePlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     GolangCodePlugin();
-    virtual bool initWithApp(LiteApi::IApplication *app);
+    virtual bool load(LiteApi::IApplication *app);
     virtual QStringList dependPluginList() const;
 protected slots:
     void appLoaded();
@@ -42,6 +42,7 @@ protected slots:
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
 protected:
+    LiteApi::IApplication *m_liteApp;
     QAction    *m_commentAct;
     GolangCode *m_code;
 };
@@ -50,6 +51,14 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangCodePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+public:
+    PluginFactory() {
+        m_info->setId("plugin/golangcode");
+        m_info->setName("GolangCode");
+        m_info->setAnchor("visualfc");
+        m_info->setVer("x15");
+        m_info->setInfo("Golang Gocode Plugin");
+    }
 };
 
 #endif // GOLANGCODEPLUGIN_H

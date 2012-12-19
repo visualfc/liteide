@@ -575,36 +575,28 @@ class IPlugin : public IObject
 {
     Q_OBJECT
 public:
-    IPlugin(QObject *parent) : IObject(parent)
-    {
-    }
-    virtual bool initWithApp(IApplication *app) {
-        m_liteApp = app;
-        return true;
-    }
-protected:
-    IApplication *m_liteApp;
+    virtual bool load(LiteApi::IApplication *app) = 0;
 };
 
 class IPluginFactory : public QObject
 {
 public:
+    virtual ~IPluginFactory() {}
     virtual QString id() const = 0;
     virtual PluginInfo *info() const = 0;    
-    virtual QStringList dependPluginList() const;
+    virtual QStringList dependPluginList() const = 0;
     virtual void setFilePath(const QString &path) = 0;
     virtual QString filePath() const = 0;
     virtual IPlugin *createPlugin() = 0;
 };
 
-template <typename T>
-class PluginFactoryT : public IPluginFactory
+class IPluginFactoryImpl : public IPluginFactory
 {
 public:
-    PluginFactoryT() : m_info(new PluginInfo)
+    IPluginFactoryImpl() : m_info(new PluginInfo)
     {
     }
-    virtual ~PluginFactoryT()
+    virtual ~IPluginFactoryImpl()
     {
         delete m_info;
     }
@@ -627,13 +619,18 @@ public:
     {
         return m_info->filePath();
     }
+protected:
+    PluginInfo *m_info;
+};
+
+template <typename T>
+class PluginFactoryT : public IPluginFactoryImpl
+{
+public:
     virtual IPlugin *createPlugin()
     {
         return new T;
     }
-protected:
-    PluginInfo *m_info;
-    QString     m_filePath;
 };
 
 inline void gotoLine(IApplication *app, const QString &fileName, int line, int col) {

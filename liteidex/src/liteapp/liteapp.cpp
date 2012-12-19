@@ -438,11 +438,11 @@ void LiteApp::initPlugins()
     foreach (IPluginFactory *factory,pluginManager()->factoryList()) {
         LiteApi::IPlugin *plugin = factory->createPlugin();
         if (plugin) {
-            bool ret = plugin->initWithApp(this);
+            bool ret = plugin->load(this);
             if (ret) {
                 m_pluginList.append(plugin);
             }
-            appendLog("LiteApp",QString("initPlugin %1 %2").arg(factory->id()).arg(ret?"success":"false"));
+            appendLog("LiteApp",QString("load plugin %1 %2").arg(factory->id()).arg(ret?"success":"false"));
         }
     }
 }
