@@ -822,18 +822,24 @@ void GolangDoc::openUrl(const QUrl &_url)
 { 
     m_liteApp->mainWindow()->statusBar()->clearMessage();
     QUrl url = parserUrl(_url);
+    /*
+    if (url.scheme() != "file") {
+        if (url.path().isEmpty() && !url.fragment().isEmpty()) {
+            m_docBrowser->scrollToAnchor(url.fragment());
+            return;
+        }
+        if ( (m_openUrl.scheme() == url.scheme()) &&
+             m_openUrl.path() == url.path()) {
+            m_docBrowser->scrollToAnchor(url.fragment());
+            m_openUrl = url;
+            return;
+        }
+    }
+    */
+    m_openUrl = url;
     if (url.path().isEmpty() && !url.fragment().isEmpty()) {
         m_docBrowser->scrollToAnchor(url.fragment());
-        return;
-    }
-    if ( (m_openUrl.scheme() == url.scheme()) &&
-         m_openUrl.path() == url.path()) {
-        m_docBrowser->scrollToAnchor(url.fragment());
-        m_openUrl = url;
-        return;
-    }
-    m_openUrl = url;
-    if (url.scheme() == "find") {
+    } else if (url.scheme() == "find") {
         openUrlFind(url);
     } else if (url.scheme() == "pdoc") {
         openUrlPdoc(url);
