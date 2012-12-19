@@ -32,6 +32,7 @@ namespace Ui {
 }
 
 class QStandardItemModel;
+class QStandardItem;
 
 class PluginManager;
 class PluginsDialog : public QDialog
@@ -39,10 +40,13 @@ class PluginsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PluginsDialog(QWidget *parent = 0);
+    explicit PluginsDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     ~PluginsDialog();
-    void addPluginInfo(const LiteApi::PluginInfo *info, const QString &fileName);
+    void appendInfo(const LiteApi::PluginInfo *info);
+public slots:
+    void itemChanged(QStandardItem*);
 private:
+    LiteApi::IApplication *m_liteApp;
     Ui::PluginsDialog *ui;
     QStandardItemModel  *m_model;
 };

@@ -39,8 +39,9 @@
 //lite_memory_check_end
 
 
-PluginsDialog::PluginsDialog(QWidget *parent) :
+PluginsDialog::PluginsDialog(LiteApi::IApplication *app, QWidget *parent) :
     QDialog(parent),
+    m_liteApp(app),
     ui(new Ui::PluginsDialog)
 {
     ui->setupUi(this);
@@ -48,7 +49,7 @@ PluginsDialog::PluginsDialog(QWidget *parent) :
 
     m_model = new QStandardItemModel(0,6,this);
     m_model->setHeaderData(0, Qt::Horizontal, tr("Name"));
-    m_model->setHeaderData(1, Qt::Horizontal, "ID");
+    m_model->setHeaderData(1, Qt::Horizontal, tr("Load"));
     m_model->setHeaderData(2, Qt::Horizontal, tr("Anchor"));
     m_model->setHeaderData(3, Qt::Horizontal, tr("Info"));
     m_model->setHeaderData(4, Qt::Horizontal, tr("Last Ver"));
@@ -58,6 +59,8 @@ PluginsDialog::PluginsDialog(QWidget *parent) :
     ui->treeView->setItemsExpandable(true);
     ui->treeView->setRootIsDecorated(false);
     ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+
+    connect(m_model,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(itemChanged(QStandardItem*)));
 }
 
 PluginsDialog::~PluginsDialog()
@@ -65,18 +68,40 @@ PluginsDialog::~PluginsDialog()
     delete ui;
 }
 
-void PluginsDialog::addPluginInfo(const LiteApi::PluginInfo *info, const QString &fileName)
+void PluginsDialog::appendInfo(const LiteApi::PluginInfo *info)
 {
     if (!info) {
         return;
     }
     QList<QStandardItem*> items;
     items.append(new QStandardItem(info->name()));
-    items.append(new QStandardItem(info->id()));
+    QStandardItem *load = new QStandardItem();
+    load->setCheckable(true);
+    load->setData(info->id());
+    if (info->isMustLoad()) {
+        load->setEnabled(false);
+    }
+    bool b = m_liteApp->settings()->value(QString("liteapp/%1_load").arg(info->id()),true).toBool();
+    if (b) {
+        load->setCheckState(Qt::Checked);
+    } else {
+        load->setCheckState(Qt::Unchecked);
+    }
+    items.append(load);
     items.append(new QStandardItem(info->anchor()));
     items.append(new QStandardItem(info->info()));
     items.append(new QStandardItem(info->ver()));
-    items.append(new QStandardItem(QFileInfo(fileName).fileName()));
-    items.at(5)->setToolTip(fileName);
+    items.append(new QStandardItem(QFileInfo(info->filePath()).fileName()));
+    items.at(5)->setToolTip(info->filePath());
     m_model->appendRow(items);
+}
+
+void PluginsDialog::itemChanged(QStandardItem *item)
+{
+    if (item && item->isCheckable()) {
+        QString id = item->data(Qt::UserRole+1).toString();
+        if (!id.isEmpty()) {
+            m_liteApp->settings()->setValue(QString("liteapp/%1_load").arg(id),item->checkState() == Qt::Checked);
+        }
+    }
 }

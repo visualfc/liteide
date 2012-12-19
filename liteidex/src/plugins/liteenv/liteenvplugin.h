@@ -49,6 +49,7 @@ public:
         m_info->setAnchor("visualfc");
         m_info->setVer("x15");
         m_info->setInfo("LiteIDE Environment Plugin");
+        m_info->setMustLoad(true);
     }
 };
 

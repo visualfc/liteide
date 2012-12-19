@@ -545,6 +545,8 @@ signals:
 class PluginInfo
 {
 public:
+    PluginInfo() : m_mustLoad(false)
+    {}
     virtual ~PluginInfo() {}
     QString anchor() const { return m_anchor; }
     QString info() const { return m_info; }
@@ -553,6 +555,7 @@ public:
     QString ver() const { return m_ver; }
     QStringList dependList() const { return m_dependList; }
     QString filePath() const { return m_filePath; }
+    bool isMustLoad() const { return m_mustLoad; }
     void setAnchor(const QString &anchor) { m_anchor = anchor; }
     void setInfo(const QString &info) { m_info = info; }
     void setId(const QString &id) { m_id = id.toLower(); }
@@ -561,6 +564,7 @@ public:
     void setFilePath(const QString &path) { m_filePath = path; }
     void setDependList(const QStringList &dependList) { m_dependList = dependList; }
     void appendDepend(const QString &depend) { m_dependList.append(depend); }
+    void setMustLoad(bool b) { m_mustLoad = b; }
 protected:
     QString m_anchor;
     QString m_info;
@@ -569,6 +573,7 @@ protected:
     QString m_filePath;
     QString m_ver;
     QStringList m_dependList;
+    bool m_mustLoad;
 };
 
 class IPlugin : public IObject

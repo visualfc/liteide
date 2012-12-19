@@ -108,6 +108,7 @@ protected slots:
     void editorModifyChanged(bool);
     void cleanup();
     void fullScreen(bool b);
+    void aboutPlugins();
 protected:
     QString         m_applicationPath;
     QString         m_pluginPath;

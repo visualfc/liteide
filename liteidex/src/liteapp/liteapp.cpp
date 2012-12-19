@@ -35,6 +35,7 @@
 #include "liteappoptionfactory.h"
 #include "folderprojectfactory.h"
 #include "textbrowserhtmlwidget.h"
+#include "pluginsdialog.h"
 #include "liteapp_global.h"
 
 #include <QApplication>
@@ -289,6 +290,15 @@ void LiteApp::fullScreen(bool b)
     }
 }
 
+void LiteApp::aboutPlugins()
+{
+    PluginsDialog *dlg = new PluginsDialog(this,m_mainwindow);
+    foreach (LiteApi::IPluginFactory *factory, pluginManager()->factoryList()) {
+        dlg->appendInfo(factory->info());
+    }
+    dlg->exec();
+}
+
 bool LiteApp::hasGoProxy() const
 {
     return GoProxy::hasProxy();
@@ -436,6 +446,10 @@ void LiteApp::loadMimeType()
 void LiteApp::initPlugins()
 {
     foreach (IPluginFactory *factory,pluginManager()->factoryList()) {
+        bool load = m_settings->value(QString("liteapp/%1_load").arg(factory->id()),true).toBool();
+        if (!load) {
+            continue;
+        }
         LiteApi::IPlugin *plugin = factory->createPlugin();
         if (plugin) {
             bool ret = plugin->load(this);
@@ -493,7 +507,7 @@ void LiteApp::createActions()
     connect(m_saveAllAct,SIGNAL(triggered()),m_editorManager,SLOT(saveAllEditors()));
     connect(m_exitAct,SIGNAL(triggered()),m_mainwindow,SLOT(close()));
     connect(m_aboutAct,SIGNAL(triggered()),m_mainwindow,SLOT(about()));
-//    connect(m_aboutPluginsAct,SIGNAL(triggered()),m_pluginManager,SLOT(aboutPlugins()));
+    connect(m_aboutPluginsAct,SIGNAL(triggered()),this,SLOT(aboutPlugins()));
     connect(m_fullScreent,SIGNAL(toggled(bool)),this,SLOT(fullScreen(bool)));
 }
 

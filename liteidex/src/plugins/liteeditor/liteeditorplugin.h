@@ -47,6 +47,7 @@ public:
         m_info->setVer("x15");
         m_info->setInfo("LiteIDE Editor Plugin");
         m_info->appendDepend("plugin/litebuild");
+        m_info->setMustLoad(true);
     }
 };
 

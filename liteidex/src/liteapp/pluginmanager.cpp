@@ -102,18 +102,6 @@ bool PluginManager::isLoaded() const
     return m_bLoaded;
 }
 
-void PluginManager::aboutPlugins()
-{
-//    PluginsDialog *dlg = new PluginsDialog(m_liteApp->mainWindow());
-//    QMapIterator<QString,IPlugin*> i = m_filePluginMap;
-//    while (i.hasNext()) {
-//        i.next();
-//        dlg->addPluginInfo(i.value()->info(),i.key());
-//    }
-//    dlg->exec();
-}
-
-
 PluginManager::PluginManager(QObject *parent) :
     QObject(parent),
     m_bLoaded(false)

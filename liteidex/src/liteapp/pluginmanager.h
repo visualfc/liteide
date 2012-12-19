@@ -37,8 +37,6 @@ public:
     QList<IPluginFactory*> factoryList();
     void loadPlugins(const QString &dir);
     bool isLoaded() const;
-protected slots:
-    void aboutPlugins();
 protected:
     bool            m_bLoaded;
     QAction         *m_aboutPluginsAct;
