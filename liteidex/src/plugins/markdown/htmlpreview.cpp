@@ -79,7 +79,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_syncScrollAct = new QAction(tr("Sync Scroll"),this);
     m_syncScrollAct->setCheckable(true);
 
-    m_syncSwitchAct = new QAction(tr("Sync Switch"),this);
+    m_syncSwitchAct = new QAction(tr("Automatically Display Preview"),this);
     m_syncSwitchAct->setCheckable(true);
 
     m_configMenu = new QMenu(m_widget);
@@ -246,13 +246,15 @@ void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
         m_bFileChanged = true;
         editorHtmlPrivew(true);
     } else {
-        m_toolAct->setChecked(false);
+        if (m_syncSwitchAct->isChecked()) {
+            m_toolAct->setChecked(false);
+        }
         m_curEditor = 0;
         m_curTextEditor = 0;
-        m_lastData.clear();
-        if (m_htmlWidget) {
+        if (m_htmlWidget && !m_lastData.isEmpty()) {
             m_htmlWidget->clear();
         }
+        m_lastData.clear();
     }
 }
 
