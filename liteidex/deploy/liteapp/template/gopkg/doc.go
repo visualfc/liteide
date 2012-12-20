@@ -3,4 +3,4 @@
 /*
 $ROOT$ document
 */
-package documentation
+package $ROOT$
