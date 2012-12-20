@@ -1,7 +1,7 @@
 [SETUP]
 NAME = "LUA Source File"
 AUTHOR = visualfc
-INFO = new lua soruce(*.lua)
+INFO = new lua source(*.lua)
 TYPE = file
 FILES = root.lua
 OPEN = root.lua
