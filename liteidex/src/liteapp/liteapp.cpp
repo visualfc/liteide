@@ -132,7 +132,7 @@ LiteApp::LiteApp()
     m_projectManager->initWithApp(this);
     m_editorManager->initWithApp(this);
     m_fileManager->initWithApp(this);
-    m_optionManager->initWithApp(this);
+    m_optionManager->initWithApp(this);        
 
     //m_mainwindow->setCentralWidget(m_editorManager->widget());
     m_mainwindow->splitter()->addWidget(m_editorManager->widget());
@@ -192,10 +192,9 @@ LiteApp::LiteApp()
 
 void LiteApp::load(bool bUseSession)
 {
-    QPixmap pixmap("icon:/images/splash.png");
-
     QSplashScreen *splash = 0;
     if (m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool()) {
+        QPixmap pixmap("icon:/images/splash.png");
         splash = new QSplashScreen(pixmap,Qt::WindowStaysOnTopHint);
     }
     if (splash) {
