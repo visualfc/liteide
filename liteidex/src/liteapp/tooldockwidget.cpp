@@ -138,7 +138,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     btn->setMenu(menu);
     btn->setText(tr("Move To"));
     btn->setToolTip(tr("Move To"));
-    btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
+    //btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
     m_toolBar->insertWidget(m_closeAct,btn);
 }
 

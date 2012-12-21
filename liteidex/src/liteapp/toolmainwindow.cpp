@@ -249,13 +249,14 @@ ToolMainWindow::ToolMainWindow(QWidget *parent)
     m_statusBar->addWidget(btn);
 
     ActionToolBar *bar = m_areaToolBar.value(Qt::BottomDockWidgetArea);
-    bar->toolBar->setStyleSheet("QToolBar {border:0}");
+    //bar->toolBar->setStyleSheet("QToolBar {border:0}");
+    m_statusBar->setContentsMargins(0,0,0,0);
     m_statusBar->addWidget(bar->toolBar,1);
 
     this->setStatusBar(m_statusBar);
 
-    this->setStyleSheet("QMainWindow::separator{width:1; background-color: gray ;}");
-    m_statusBar->setStyleSheet("QStatusBar {border-top: 1px solid gray}");
+    //this->setStyleSheet("QMainWindow::separator{width:1; background-color: gray ;}");
+    //m_statusBar->setStyleSheet("QStatusBar {border-top: 1px solid gray}");
     //m_statusBar->setStyleSheet("QStatusBar {border:0}");
     /*
     this->setStyleSheet("QToolBar {border:1 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #EEEEEE, stop: 1 #ababab); color : #EEEEEE}"
