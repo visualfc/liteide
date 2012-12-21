@@ -72,6 +72,19 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
             }
         }
     }
+    const QString &liteQssPath = m_liteApp->resourcePath()+"/liteapp/qss";
+    QDir qssDir(liteQssPath);
+    if (qssDir.exists()) {
+        foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
+            ui->qssComboBox->addItem(info.fileName());
+        }
+    }
+    QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
+    int index = ui->qssComboBox->findText(qss,Qt::MatchFixedString);
+    if (index >= 0 && index < ui->qssComboBox->count()) {
+        ui->qssComboBox->setCurrentIndex(index);
+    }
+
     int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
     ui->maxRecentLineEdit->setText(QString("%1").arg(max));
     bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
@@ -115,11 +128,10 @@ QString LiteAppOption::mimeType() const
 void LiteAppOption::apply()
 {
     int index = ui->langComboBox->currentIndex();
-    if (index < 0) {
-        return;
+    if (index >= 0 && index < ui->langComboBox->count()) {
+        QString lc = ui->langComboBox->itemData(index).toString();
+        m_liteApp->settings()->setValue(LITEAPP_LANGUAGE,lc);
     }
-    QString lc = ui->langComboBox->itemData(index).toString();
-    m_liteApp->settings()->setValue(LITEAPP_LANGUAGE,lc);
     QString max = ui->maxRecentLineEdit->text();
     m_liteApp->settings()->setValue(LITEAPP_MAXRECENTFILES,max);
     bool b = ui->autoCloseProjecEditorsCheckBox->isChecked();
@@ -138,6 +150,16 @@ void LiteAppOption::apply()
         if (ui->buttonGroup->buttons().at(i)->isChecked()) {
             m_liteApp->settings()->setValue(LITEAPP_TOOLBARICONSIZE,i);
             break;
+        }
+    }
+
+    QString qss = ui->qssComboBox->currentText();
+    if (!qss.isEmpty()) {
+        QFile f(m_liteApp->resourcePath()+"/liteapp/qss/"+qss);
+        if (f.open(QFile::ReadOnly)) {
+            m_liteApp->settings()->setValue(LITEAPP_QSS,qss);
+            QString styleSheet = QLatin1String(f.readAll());
+            qApp->setStyleSheet(styleSheet);
         }
     }
 }
