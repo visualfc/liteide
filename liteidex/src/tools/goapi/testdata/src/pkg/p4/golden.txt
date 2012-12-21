@@ -1,0 +1,31 @@
+pkg p4, const C1 complex128
+pkg p4, const C2 float64
+pkg p4, const IntSize ideal-int
+pkg p4, func NewError(string) *Err
+pkg p4, method (*Err) Error() string
+pkg p4, type Err struct
+pkg p4, type T []string
+pkg p4, var P1 string
+pkg p4, var P10 int
+pkg p4, var P11 []byte
+pkg p4, var P12 string
+pkg p4, var P13 []byte
+pkg p4, var P14 *int
+pkg p4, var P2 string
+pkg p4, var P3 []byte
+pkg p4, var P4 map[int]string
+pkg p4, var P5 *ss
+pkg p4, var P6 string
+pkg p4, var P7 func(int) *ss
+pkg p4, var P8 []int
+pkg p4, var P9 []int
+pkg p4, var V1 []uint
+pkg p4, var V10 string
+pkg p4, var V2 string
+pkg p4, var V3 T
+pkg p4, var V4 chan int
+pkg p4, var V5 chan<- int
+pkg p4, var V6 <-chan int
+pkg p4, var V7 string
+pkg p4, var V8 <-chan int
+pkg p4, var V9 error
