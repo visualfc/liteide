@@ -28,6 +28,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QSplashScreen>
+#include <QTextCodec>
 #include <QDebug>
 #include "mainwindow.h"
 #include "liteapp.h"
@@ -75,6 +76,15 @@ int main(int argc, char *argv[])
             app.setProperty("liteide_locale", locale);
         }
     }
+    QString qss = settings.value(LITEAPP_QSS,"default.qss").toString();
+    if (!qss.isEmpty()) {
+        QFile f(resPath+"/liteapp/qss/"+qss);
+        if (f.open(QFile::ReadOnly)) {
+            QString styleSheet = QLatin1String(f.readAll());
+            app.setStyleSheet(styleSheet);
+        }
+    }
+
     QDir::addSearchPath("icon",resPath);
     QDir::addSearchPath("icon",resPath+"/liteapp");
     QDir::addSearchPath("icon",":/");
