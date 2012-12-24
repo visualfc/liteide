@@ -101,22 +101,6 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QLabel" name="label_27">
          <property name="text">
           <string/>
@@ -151,22 +135,6 @@ p, li { white-space: pre-wrap; }
           <pixmap resource="liteapp.qrc">:/images/logo/space.png</pixmap>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>
@@ -263,7 +231,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</string>
           <item row="3" column="1">
            <widget class="QLabel" name="label_18">
             <property name="text">
-             <string notr="true">http://code.google.com/liteide</string>
+             <string notr="true">http://code.google.com/p/liteide</string>
             </property>
            </widget>
           </item>

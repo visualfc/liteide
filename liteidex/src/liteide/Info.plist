@@ -5,7 +5,7 @@
     <key>NSHumanReadableCopyright</key>
         <string>(C) 2011-2012 visualfc@gmail.com</string>
 	<key>CFBundleIconFile</key>
-        <string>liteide.icns</string>
+        <string>liteide128.icns</string>
 	<key>CFBundlePackageType</key>
 		<string>APPL</string>
 	<key>CFBundleSignature</key>

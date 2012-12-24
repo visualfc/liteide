@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>images/close.png</file>
         <file>images/closeproject.png</file>
-        <file>images/liteide128.png</file>
         <file>images/new.png</file>
         <file>images/openfile.png</file>
         <file>images/openproject.png</file>
@@ -19,7 +18,6 @@
         <file>images/projectitem.png</file>
         <file>images/cleanoutput.png</file>
         <file>images/hideoutput.png</file>
-        <file>images/liteide64.png</file>
         <file>images/logo/dui.png</file>
         <file>images/logo/gen.png</file>
         <file>images/logo/kan.png</file>
@@ -44,5 +42,7 @@
         <file>images/paste.png</file>
         <file>images/lock.png</file>
         <file>images/unlock.png</file>
+        <file>images/liteide64.png</file>
+        <file>images/liteide128.png</file>
     </qresource>
 </RCC>
