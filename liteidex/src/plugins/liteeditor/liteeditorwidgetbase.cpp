@@ -101,7 +101,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_extraAreaSelectionNumber = -1;
     m_autoIndent = true;
     m_bLastBraces = false;
-    m_bTabToSpace = false;
+    m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
     setTabWidth(4);
@@ -139,9 +139,9 @@ void LiteEditorWidgetBase::setTabWidth(int n)
     setTabStopWidth(charWidth * n);
 }
 
-void LiteEditorWidgetBase::setTabToSpace(bool b)
+void LiteEditorWidgetBase::setTabUseSpace(bool b)
 {
-    m_bTabToSpace = b;
+    m_bTabUseSpace = b;
 }
 
 void LiteEditorWidgetBase::initLoadDocument()
@@ -1111,7 +1111,7 @@ void LiteEditorWidgetBase::indentBlock(QTextBlock block, bool bIndent)
         if (!text.isEmpty()) {
             if (text.at(0) == '\t') {
                 cursor.deleteChar();
-            } else if (m_bTabToSpace && text.startsWith(QString(m_nTabSize,' '))) {
+            } else if (m_bTabUseSpace && text.startsWith(QString(m_nTabSize,' '))) {
                 int count = m_nTabSize;
                 while (count--) {
                     cursor.deleteChar();
@@ -1136,7 +1136,7 @@ void LiteEditorWidgetBase::indentCursor(QTextCursor cur, bool bIndent)
             text = text.mid(cur.positionInBlock());
             if (text.at(0) == '\t') {
                 cur.deleteChar();
-            } else if (m_bTabToSpace && text.startsWith(QString(m_nTabSize,' '))) {
+            } else if (m_bTabUseSpace && text.startsWith(QString(m_nTabSize,' '))) {
                 int count = m_nTabSize;
                 while (count--) {
                     cur.deleteChar();
@@ -1195,7 +1195,7 @@ end:
 
 QString LiteEditorWidgetBase::tabText(int n) const
 {
-    if (m_bTabToSpace) {
+    if (m_bTabUseSpace) {
         return QString(m_nTabSize*n,' ');
     }
     return QString(n,'\t');

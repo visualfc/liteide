@@ -49,9 +49,7 @@ LiteEditorFileFactory::LiteEditorFileFactory(LiteApi::IApplication *app, QObject
       m_liteApp(app)
 {
     m_mimeTypes.append("text/x-gosrc");
-    m_mimeTypes.append("text/x-gopro");
     m_mimeTypes.append("text/x-lua");
-    m_mimeTypes.append("text/x-profile");
     m_mimeTypes.append("liteide/default.editor");
     QDir dir(m_liteApp->resourcePath()+"/liteeditor/kate");
     if (dir.exists()) {

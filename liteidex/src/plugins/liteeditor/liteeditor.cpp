@@ -636,8 +636,11 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setFont(font);
     m_editorWidget->extraArea()->setFont(font);
 
-    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH,4).toInt();
+    QString mime = this->m_file->mimeType();
+    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
     m_editorWidget->setTabWidth(tabWidth);
+    bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
+    m_editorWidget->setTabUseSpace(useSpace);
 
     QString style = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
     if (style != m_colorStyle) {

@@ -36,7 +36,7 @@ public:
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
     void setTabWidth(int n);
-    void setTabToSpace(bool b);
+    void setTabUseSpace(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
 public:
     QWidget* extraArea();
@@ -179,7 +179,7 @@ protected:
     bool m_autoBraces3; //'
     bool m_autoBraces4; //"
     bool m_bLastBraces;
-    bool m_bTabToSpace;
+    bool m_bTabUseSpace;
     int  m_nTabSize;
     QChar m_lastBraces;
     int m_lastSaveRevision;

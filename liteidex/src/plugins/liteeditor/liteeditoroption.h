@@ -30,6 +30,9 @@ namespace Ui {
     class LiteEditorOption;
 }
 
+class QStandardItemModel;
+class QStandardItem;
+
 class LiteEditorOption : public LiteApi::IOption
 {
     Q_OBJECT
@@ -45,6 +48,7 @@ public:
     QList<int> pointSizesForSelectedFont() const;
 public slots:
     void editStyleFile();
+    void mimeItemChanged(QStandardItem*);
 public:
     int m_fontSize;
     QString m_fontFamily;
@@ -52,6 +56,7 @@ private:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
     Ui::LiteEditorOption *ui;
+    QStandardItemModel *m_mimeModel;
 };
 
 #endif // LITEEDITOROPTION_H

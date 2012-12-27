@@ -27,6 +27,9 @@
 #include <QFontDatabase>
 #include <QDir>
 #include <QFileInfo>
+#include <QStandardItemModel>
+#include <QStandardItem>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -46,8 +49,102 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
+    QFontDatabase db;
+    const QStringList families = db.families();
+    ui->familyComboBox->addItems(families);
+
+    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
+    m_fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
+
+    int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();
+
+    bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
+    ui->antialiasCheckBox->setChecked(antialias);
+
+    const int idx = families.indexOf(m_fontFamily);
+    ui->familyComboBox->setCurrentIndex(idx);
+
+    updatePointSizes();
+
+    ui->fontZoomSpinBox->setValue(fontZoom);
+
+    QString styleName = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
+    QString stylePath = m_liteApp->resourcePath()+"/liteeditor/color";
+    QDir dir(stylePath);
+    int index = -1;
+    foreach(QFileInfo info, dir.entryInfoList(QStringList() << "*.xml")) {
+        ui->styleComboBox->addItem(info.fileName());
+        if (info.fileName() == styleName) {
+            index = ui->styleComboBox->count()-1;
+        }
+    }
+    if (index >= 0 && index < ui->styleComboBox->count()) {
+        ui->styleComboBox->setCurrentIndex(index);
+    }
+    bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
+    bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
+    bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
+    bool autoBraces1 = m_liteApp->settings()->value(EDITOR_AUTOBRACE1,true).toBool();
+    bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
+    bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
+    bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
+    bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
+    bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
+
+    int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
+
+    ui->noprintCheckBox->setChecked(noprintCheck);;
+    ui->autoIndentCheckBox->setChecked(autoIndent);
+    ui->autoBraces0CheckBox->setChecked(autoBraces0);
+    ui->autoBraces1CheckBox->setChecked(autoBraces1);
+    ui->autoBraces2CheckBox->setChecked(autoBraces2);
+    ui->autoBraces3CheckBox->setChecked(autoBraces3);
+    ui->autoBraces4CheckBox->setChecked(autoBraces4);
+    ui->lineNumberVisibleCheckBox->setChecked(lineNumberVisible);
+    ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
+    ui->preMinLineEdit->setText(QString("%1").arg(min));
+    ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
+    ui->rightLineWidthSpinBox->setValue(rightLineWidth);
+
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
+
+    m_mimeModel = new QStandardItemModel(0,4,this);
+    m_mimeModel->setHeaderData(0,Qt::Horizontal,"MimeType");
+    m_mimeModel->setHeaderData(1,Qt::Horizontal,"TabWidth");
+    m_mimeModel->setHeaderData(2,Qt::Horizontal,"Tab To Spaces");
+    m_mimeModel->setHeaderData(3,Qt::Horizontal,"Extensions");
+    connect(m_mimeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(mimeItemChanged(QStandardItem*)));
+
+    ui->mimeTreeView->setModel(m_mimeModel);
+    ui->mimeTreeView->setRootIsDecorated(false);
+    ui->mimeTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+
+    foreach(QString mime, m_liteApp->editorManager()->mimeTypeList()) {
+        if (mime.startsWith("text/")) {
+            QStandardItem *item = new QStandardItem(mime);
+            item->setEditable(false);
+            QString tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,"4").toString();
+            bool tabUseSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
+            QStandardItem *tab = new QStandardItem(tabWidth);
+            QStandardItem *useSpace = new QStandardItem();
+            useSpace->setCheckable(true);
+            useSpace->setCheckState(tabUseSpace?Qt::Checked:Qt::Unchecked);
+            QStandardItem *ext = new QStandardItem;
+            ext->setEditable(false);
+            LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);
+            if (imt) {
+                ext->setText(imt->globPatterns().join(";"));
+            }
+            m_mimeModel->appendRow(QList<QStandardItem*>()
+                                  << item
+                                  << tab
+                                  << useSpace
+                                  << ext);
+        }
+    }
 }
 
 QWidget *LiteEditorOption::widget()
@@ -119,75 +216,23 @@ void LiteEditorOption::apply()
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }
-    int tab = ui->tabWidthLineEdit->text().toInt();
-    if (tab < 0 || tab > 10) {
-        tab = 4;
+    for (int i = 0; i < m_mimeModel->rowCount(); i++) {
+        QString mime = m_mimeModel->item(i,0)->text();
+        QString tab = m_mimeModel->item(i,1)->text();
+        bool ok;
+        int n = tab.toInt(&ok);
+        if (ok && n > 0 && n < 20) {
+            m_liteApp->settings()->setValue(EDITOR_TABWIDTH+mime,n);
+        }
+        bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;
+        m_liteApp->settings()->setValue(EDITOR_TABUSESPACE+mime,b);
     }
-    m_liteApp->settings()->setValue(EDITOR_TABWIDTH,tab);
 }
 
 void LiteEditorOption::active()
 {
-    QFontDatabase db;
-    const QStringList families = db.families();
-    ui->familyComboBox->addItems(families);
-
-    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
-    m_fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
-
     int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();
-
-    bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
-    ui->antialiasCheckBox->setChecked(antialias);
-
-    const int idx = families.indexOf(m_fontFamily);
-    ui->familyComboBox->setCurrentIndex(idx);
-
-    updatePointSizes();
-
     ui->fontZoomSpinBox->setValue(fontZoom);
-
-    QString styleName = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
-    QString stylePath = m_liteApp->resourcePath()+"/liteeditor/color";
-    QDir dir(stylePath);
-    int index = -1;
-    foreach(QFileInfo info, dir.entryInfoList(QStringList() << "*.xml")) {
-        ui->styleComboBox->addItem(info.fileName());
-        if (info.fileName() == styleName) {
-            index = ui->styleComboBox->count()-1;
-        }
-    }
-    if (index >= 0 && index < ui->styleComboBox->count()) {
-        ui->styleComboBox->setCurrentIndex(index);
-    }
-    bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
-    bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
-    bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
-    bool autoBraces1 = m_liteApp->settings()->value(EDITOR_AUTOBRACE1,true).toBool();
-    bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
-    bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
-    bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
-    bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
-    bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
-    bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
-    int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
-
-    int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
-    int tab = m_liteApp->settings()->value(EDITOR_TABWIDTH,4).toInt();
-
-    ui->noprintCheckBox->setChecked(noprintCheck);;
-    ui->autoIndentCheckBox->setChecked(autoIndent);
-    ui->autoBraces0CheckBox->setChecked(autoBraces0);
-    ui->autoBraces1CheckBox->setChecked(autoBraces1);
-    ui->autoBraces2CheckBox->setChecked(autoBraces2);
-    ui->autoBraces3CheckBox->setChecked(autoBraces3);
-    ui->autoBraces4CheckBox->setChecked(autoBraces4);
-    ui->lineNumberVisibleCheckBox->setChecked(lineNumberVisible);
-    ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
-    ui->preMinLineEdit->setText(QString("%1").arg(min));
-    ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
-    ui->rightLineWidthSpinBox->setValue(rightLineWidth);
-    ui->tabWidthLineEdit->setText(QString("%1").arg(tab));
 }
 
 LiteEditorOption::~LiteEditorOption()
@@ -245,4 +290,15 @@ void LiteEditorOption::editStyleFile()
     }
     QString filePath = m_liteApp->resourcePath()+"/liteeditor/color/"+fileName;
     m_liteApp->fileManager()->openEditor(filePath);
+}
+
+void LiteEditorOption::mimeItemChanged(QStandardItem *item)
+{
+    if (item->column() == 1) {
+        bool ok;
+        int n = item->text().toInt(&ok);
+        if (!ok || n <= 0 || n >= 20) {
+            item->setText("4");
+        }
+    }
 }
