@@ -266,6 +266,8 @@ IExtension *LiteApp::extension()
 
 void LiteApp::cleanup()
 {
+    qDeleteAll(m_pluginList);
+
     delete m_liteAppOptionFactory;
     delete m_projectManager;
     delete m_editorManager;
@@ -276,7 +278,6 @@ void LiteApp::cleanup()
     delete m_extension;
     delete m_logOutput;
     delete m_toolWindowManager;
-   // delete m_mainwindow;
     delete m_settings;
 }
 
