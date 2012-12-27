@@ -36,6 +36,7 @@ public:
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
     void setTabWidth(int n);
+    void setTabToSpace(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
 public:
     QWidget* extraArea();
@@ -155,6 +156,7 @@ protected:
     void indentBlock(QTextBlock block, bool bIndent);
     void indentCursor(QTextCursor cur, bool bIndent);
     void indentText(QTextCursor cur, bool bIndent);
+    QString tabText(int n = 1) const;
     void indentEnter(QTextCursor cur);
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
 protected:
@@ -177,6 +179,8 @@ protected:
     bool m_autoBraces3; //'
     bool m_autoBraces4; //"
     bool m_bLastBraces;
+    bool m_bTabToSpace;
+    int  m_nTabSize;
     QChar m_lastBraces;
     int m_lastSaveRevision;
     int m_extraAreaSelectionNumber;

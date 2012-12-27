@@ -101,6 +101,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_extraAreaSelectionNumber = -1;
     m_autoIndent = true;
     m_bLastBraces = false;
+    m_bTabToSpace = false;
+    m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
     setTabWidth(4);
 
@@ -133,7 +135,13 @@ void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
 void LiteEditorWidgetBase::setTabWidth(int n)
 {
     int charWidth = QFontMetrics(font()).averageCharWidth();
+    m_nTabSize = n;
     setTabStopWidth(charWidth * n);
+}
+
+void LiteEditorWidgetBase::setTabToSpace(bool b)
+{
+    m_bTabToSpace = b;
 }
 
 void LiteEditorWidgetBase::initLoadDocument()
@@ -1097,11 +1105,20 @@ void LiteEditorWidgetBase::indentBlock(QTextBlock block, bool bIndent)
     cursor.movePosition(QTextCursor::StartOfBlock);
     cursor.removeSelectedText();
     if (bIndent) {
-        cursor.insertText("\t");
+        cursor.insertText(this->tabText());
     } else {
         QString text = block.text();
-        if (!text.isEmpty() && (text.at(0) == '\t' || text.at(0) == ' ')) {
-            cursor.deleteChar();
+        if (!text.isEmpty()) {
+            if (text.at(0) == '\t') {
+                cursor.deleteChar();
+            } else if (m_bTabToSpace && text.startsWith(QString(m_nTabSize,' '))) {
+                int count = m_nTabSize;
+                while (count--) {
+                    cursor.deleteChar();
+                }
+            } else if (text.at(0) == ' ') {
+                cursor.deleteChar();
+            }
         }
     }
     cursor.endEditBlock();
@@ -1109,18 +1126,27 @@ void LiteEditorWidgetBase::indentBlock(QTextBlock block, bool bIndent)
 
 void LiteEditorWidgetBase::indentCursor(QTextCursor cur, bool bIndent)
 {
+    cur.beginEditBlock();
     if (bIndent) {
-        cur.insertText("\t");
+        cur.insertText(this->tabText());
     } else {
         QString text = cur.block().text();
-        int pos = cur.position()-cur.block().position()-1;
-        int count = text.count();
-        if (count > 0 && pos >= 0 && pos < count) {
-            if (text.at(pos) == '\t' || text.at(pos) == ' ') {
-                cur.deletePreviousChar();
+        int pos = cur.positionInBlock();
+        if (pos >= 0 && pos < text.length()) {
+            text = text.mid(cur.positionInBlock());
+            if (text.at(0) == '\t') {
+                cur.deleteChar();
+            } else if (m_bTabToSpace && text.startsWith(QString(m_nTabSize,' '))) {
+                int count = m_nTabSize;
+                while (count--) {
+                    cur.deleteChar();
+                }
+            } else if (text.at(0) == ' ') {
+                cur.deleteChar();
             }
-        }
+       }
     }
+    cur.endEditBlock();
 }
 
 void LiteEditorWidgetBase::indentText(QTextCursor cur,bool bIndent)
@@ -1139,7 +1165,7 @@ void LiteEditorWidgetBase::indentText(QTextCursor cur,bool bIndent)
             cur.removeSelectedText();
             //indentCursor(cur,bIndent);
             if (bIndent) {
-                cur.insertText("\t");
+                cur.insertText(this->tabText());
             }
             goto end;
         }
@@ -1167,6 +1193,14 @@ end:
     setTextCursor(cur);
 }
 
+QString LiteEditorWidgetBase::tabText(int n) const
+{
+    if (m_bTabToSpace) {
+        return QString(m_nTabSize*n,' ');
+    }
+    return QString(n,'\t');
+}
+
 void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
 {
     QTextBlock block = cur.block();
@@ -1183,21 +1217,22 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
     while (i < text.size()) {
         if (!text.at(i).isSpace())
             break;
-        if (text.at(0) == ' ') {
+        if (text.at(i) == ' ') {
             space++;
-        }
-        else if (text.at(0) == '\t') {
-            inText += "\t";
+        } else if (text.at(i) == '\t') {
             tab++;
         }
         i++;
     }
+    tab += space/m_nTabSize;
+    inText += this->tabText(tab);
+
     text.trimmed();
     if (!text.isEmpty()) {
         if (pos >= text.size()) {
             const QChar ch = text.at(text.size()-1);
             if (ch == '{' || ch == '(') {
-                inText += "\t";
+                inText += this->tabText();
             }
         } else if (pos == text.size()-1 && text.size() >= 3) {
             const QChar l = text.at(text.size()-2);
@@ -1209,7 +1244,7 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
                 cur.insertText(inText);
                 cur.setPosition(pos);
                 this->setTextCursor(cur);
-                cur.insertText("\t");
+                cur.insertText(this->tabText());
                 cur.endEditBlock();
                 return;
             }
