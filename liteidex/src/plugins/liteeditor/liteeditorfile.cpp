@@ -214,12 +214,12 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
         }
     }
 
-    int tab = m_liteApp->settings()->value(EDITOR_TABWIDTH+m_mimeType,4).toInt();
-    int useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+m_mimeType,false).toBool();
-    if (!m_hasDecodingError && useSpace) {
-        QString space(tab,' ');
-        text.replace('\t',space);
-    }
+//    int tab = m_liteApp->settings()->value(EDITOR_TABWIDTH+m_mimeType,4).toInt();
+//    int useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+m_mimeType,false).toBool();
+//    if (!m_hasDecodingError && useSpace) {
+//        QString space(tab,' ');
+//        text.replace('\t',space);
+//    }
 
     m_document->setPlainText(text);
     return true;
