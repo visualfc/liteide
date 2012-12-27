@@ -1,71 +1,72 @@
 <!-- Changes -->
 
 ## LiteIDE X Version
-	LiteIDE is a simple, open source, cross-platform Go IDE.
-	
+  LiteIDE is a simple, open source, cross-platform Go IDE.
+  
 ### 2013.1.1 Ver x15.1
 * LiteIDE
-	* update logo
+  * update logo
 * LiteApp
-	* plugins custom load
-	* custom css	
-	* fix template `doc.go`
+  * plugins custom load
+  * custom css  
+  * fix template `doc.go`
 * LiteEditor:
-	* font zoom	support
-	* add sublime color scheme, thanks for `Henson Lu`
+  * font zoom  support
+  * add sublime color scheme, thanks for `Henson Lu`
+  * custom tab width and tab to spaces by mimetype
 * LiteEnv:
-	* add cross-compiler 	
+  * add cross-compiler   
 * GolangDoc:
-	* fix goto source
-		
-	
+  * fix goto source
+    
+  
 ### 2012.12.18 Ver x15
 * LiteIDE:
-	* add markdown plugin
-	* changed LiteApp to dynamic library
-	* redesign editor menu and toolbar
-	* update doc to markdown format	
-	* add html render twin-engine
-		* internal QHtmlBrowser
-		* plugin QtWebKit, if find qt webkit dynamic library
+  * add markdown plugin
+  * changed LiteApp to dynamic library
+  * redesign editor menu and toolbar
+  * update doc to markdown format  
+  * add html render twin-engine
+    * internal QHtmlBrowser
+    * plugin QtWebKit, if find qt webkit dynamic library
 * LiteApp:
-	* changed to dynamic library	
-	* support full screen mode
-	* editor tabs change to toolbar
-	* add toolbar icon size option
-	* add splash visible option
-	* add editor tab bar close button visible option
-	* add tab context menu close left or right tabs
+  * changed to dynamic library  
+  * support full screen mode
+  * editor tabs change to toolbar
+  * add toolbar icon size option
+  * add splash visible option
+  * add editor tab bar close button visible option
+  * add tab context menu close left or right tabs
 * LiteEditor:
-	* add overwrite mode (key Insert)
-	* add  custom tab width option
-	* redesign editor menu , context menu and toolbar
-	* add right margin line visible option
+  * add overwrite mode (key Insert)
+  * add  custom tab width option
+  * redesign editor menu , context menu and toolbar
+  * add right margin line visible option
 * GolangFmt:
-	* fix comment offset, remove spaces	
+  * fix comment offset, remove spaces  
 * LiteBuild: 
-	* id BuildAndRun before kill old process
-	* redesign build toolbar and menu
-	* support GOBIN
+  * id BuildAndRun before kill old process
+  * redesign build toolbar and menu
+  * support GOBIN
 * LiteDebug: 
-	* add debug before rebuild option
-	* add debug external application action
+  * add debug before rebuild option
+  * add debug external application action
 * Markdown: 
-	* markdown editor support
-		* action h1-h6, bold, italic, code, list, quote, hr, link, image
-		* syntax highlighting
-		* live preview
-		* sync scroll
-		* export html
-		* export pdf
-		* custom css , css files from [Mou](http://mouapp.com) 
-	* markdown batch 
-		* separate to html
-		* separate to pdf
-		* merge to html
-		* merge to pdf
+  * markdown editor support
+    * action h1-h6, bold, italic, code, list, quote, hr, link, image
+    * syntax highlighting
+    * live preview
+    * sync scroll
+    * export html
+    * export pdf
+    * custom css , css files from [Mou](http://mouapp.com) 
+  * markdown batch 
+    * separate to html
+    * separate to pdf
+    * merge to html
+    * merge to pdf
 * GolangDoc: 
-	* fix url parser
+  * fix url parser
 
 
 ### 2012.11.15 Ver x14.1
@@ -91,8 +92,8 @@
 * GolangFmt: auto popup gofmt messsage option
 * LiteBuild : fix build config custom view
 * LiteBuild : BUILDARGS / INSTALLARGS support set 
-	example -gcflags "-N -l" for debug
-	example -ldflags "-s" for release
+  example -gcflags "-N -l" for debug
+  example -ldflags "-s" for release
 * remove: Makefile plugin , Profile plugin, x64 Project
 
 ### 2012.10.10 Ver x13.2
