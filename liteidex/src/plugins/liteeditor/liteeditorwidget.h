@@ -43,7 +43,13 @@ protected:
     void contextMenuEvent(QContextMenuEvent *);
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
+    void wheelEvent(QWheelEvent *e);
     virtual QMimeData *createMimeDataFromSelection() const;
+public slots:
+    void zoomIn(int range = 1);
+    void zoomOut(int range = 1);
+signals:
+    void requestFontZoom(int);
 public:
     QString cursorToHtml(QTextCursor cursor) const;
 signals:
@@ -55,6 +61,7 @@ protected:
     QCompleter *m_completer;
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;
+    bool m_scrollWheelZooming;
 };
 
 #endif // LITEEDITORWIDGET_H

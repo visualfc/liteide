@@ -102,6 +102,7 @@ public:
 signals:
     void colorStyleChanged();
 public slots:
+    void requestFontZoom(int zoom);
     void applyOption(QString);
     void clipbordDataChanged();
 #ifdef LITEEDITOR_FIND
@@ -118,6 +119,9 @@ public slots:
     void navigationStateChanged(const QByteArray &state);
     void gotoLine();
     void selectNextParam();
+    void increaseFontSize();
+    void decreaseFontSize();
+    void resetFontSize();
 public:
     void findCodecs();
     ColorStyleScheme    *m_colorStyleScheme;
@@ -148,6 +152,9 @@ public:
     QAction *m_selectBlockAct;
     QAction *m_gotoLineAct;
     QAction *m_duplicateAct;
+    QAction *m_increaseFontSizeAct;
+    QAction *m_decreaseFontSizeAct;
+    QAction *m_resetFontSizeAct;
     QAction *m_foldAct;
     QAction *m_unfoldAct;
     QAction *m_foldAllAct;

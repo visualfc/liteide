@@ -980,7 +980,7 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 		if *showpos && w.wantedPkg[name] {
 			tf := w.fset.File(f.Pos())
 			if tf != nil {
-				fmt.Printf("pos %s,%s,%d,%d\n", name, filepath.Join(dir, file), tf.Base(), tf.Size())
+				fmt.Printf("pos %s%s%s%s%d%s%d\n", name, w.sep, filepath.Join(dir, file), w.sep, tf.Base(), w.sep, tf.Size())
 			}
 		}
 	}
@@ -2428,17 +2428,17 @@ func (w *Walker) findStructField(st ast.Expr, name string) (*ast.Ident, ast.Expr
 					return n, fi.Type
 				}
 			}
-			log.Println("->",w.nodeString(typ))
+			log.Println("->", w.nodeString(typ))
 			if fi.Names == nil {
 				switch v := typ.(type) {
 				case *ast.Ident:
 					if t := w.curPackage.findType(v.Name); t != nil {
 						if v.Name == name {
-							return v,v
+							return v, v
 						}
 						id, expr := w.findStructField(t, name)
 						if id != nil {
-							return id,expr
+							return id, expr
 						}
 					}
 				case *ast.StarExpr:
@@ -2446,11 +2446,11 @@ func (w *Walker) findStructField(st ast.Expr, name string) (*ast.Ident, ast.Expr
 					case *ast.Ident:
 						if t := w.curPackage.findType(vv.Name); t != nil {
 							if vv.Name == name {
-								return vv,v.X
-							}							
+								return vv, v.X
+							}
 							id, expr := w.findStructField(t, name)
 							if id != nil {
-								return id,expr
+								return id, expr
 							}
 						}
 					case *ast.SelectorExpr:
@@ -2861,12 +2861,12 @@ func (w *Walker) varValueType(vi ast.Expr, index int) (string, error) {
 				}
 			}
 		case *ast.CompositeLit:
-			typ, err := w.varValueType(st.Type,0)
+			typ, err := w.varValueType(st.Type, 0)
 			if err == nil {
-				log.Println(typ,v.Sel.Name)
-				t,err := w.varSelectorType(typ,v.Sel.Name)
+				log.Println(typ, v.Sel.Name)
+				t, err := w.varSelectorType(typ, v.Sel.Name)
 				if err == nil {
-					return t,nil
+					return t, nil
 				}
 			}
 		}

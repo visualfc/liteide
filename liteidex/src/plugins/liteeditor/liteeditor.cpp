@@ -129,6 +129,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
     connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
+    connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 }
@@ -258,6 +259,19 @@ void LiteEditor::createActions()
     m_widget->addAction(m_duplicateAct);
     connect(m_duplicateAct,SIGNAL(triggered()),m_editorWidget,SLOT(duplicate()));
 
+    m_increaseFontSizeAct = new QAction(tr("Increase Font Size"),this);
+    m_increaseFontSizeAct->setShortcuts(QList<QKeySequence>()
+                                        << QKeySequence("Ctrl++")
+                                        << QKeySequence("Ctrl+=")
+                                        );
+
+    m_decreaseFontSizeAct = new QAction(tr("Decrease Font Size"),this);
+    m_decreaseFontSizeAct->setShortcut(QKeySequence("Ctrl+-"));
+
+    m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
+    m_resetFontSizeAct->setShortcut(QKeySequence("Ctrl+0"));
+
+
     m_widget->addAction(m_foldAct);
     m_widget->addAction(m_unfoldAct);
     m_widget->addAction(m_gotoLineAct);
@@ -290,6 +304,9 @@ void LiteEditor::createActions()
     connect(m_gotoNextBlockAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextBlock()));
     connect(m_gotoMatchBraceAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoMatchBrace()));
     connect(m_gotoLineAct,SIGNAL(triggered()),this,SLOT(gotoLine()));
+    connect(m_increaseFontSizeAct,SIGNAL(triggered()),this,SLOT(increaseFontSize()));
+    connect(m_decreaseFontSizeAct,SIGNAL(triggered()),this,SLOT(decreaseFontSize()));
+    connect(m_resetFontSizeAct,SIGNAL(triggered()),this,SLOT(resetFontSize()));
 
     QClipboard *clipboard = QApplication::clipboard();
     connect(clipboard,SIGNAL(dataChanged()),this,SLOT(clipbordDataChanged()));
@@ -405,6 +422,11 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_gotoMatchBraceAct);
     m_editMenu->addAction(m_gotoPrevBlockAct);
     m_editMenu->addAction(m_gotoNextBlockAct);
+
+    m_editMenu->addSeparator();
+    m_editMenu->addAction(m_increaseFontSizeAct);
+    m_editMenu->addAction(m_decreaseFontSizeAct);
+    m_editMenu->addAction(m_resetFontSizeAct);
 
     //context menu
     m_contextMenu->addAction(m_cutAct);
@@ -601,10 +623,11 @@ void LiteEditor::applyOption(QString id)
     QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
 #endif
     int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
+    int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();    
     bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
     QFont font = m_editorWidget->font();
     font.setFamily(fontFamily);
-    font.setPointSize(fontSize);
+    font.setPointSize(fontSize*fontZoom/100.0);
     if (antialias) {
         font.setStyleStrategy(QFont::PreferAntialias);
     } else {
@@ -877,6 +900,25 @@ void LiteEditor::selectNextParam()
     }
 }
 
+void LiteEditor::increaseFontSize()
+{
+    this->requestFontZoom(10);
+}
+
+void LiteEditor::decreaseFontSize()
+{
+    this->requestFontZoom(-10);
+}
+
+void LiteEditor::resetFontSize()
+{
+    int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
+    m_liteApp->settings()->setValue(EDITOR_FONTZOOM,100);
+    QFont font = m_editorWidget->font();
+    font.setPointSize(fontSize);
+    m_editorWidget->setFont(font);
+}
+
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
     QLabel(text,parent)
@@ -890,3 +932,17 @@ void QLabelEx::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
+void LiteEditor::requestFontZoom(int zoom)
+{
+    int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
+    int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();
+    fontZoom += zoom;
+    if (fontZoom <= 10) {
+        return;
+    }
+    m_liteApp->settings()->setValue(EDITOR_FONTZOOM,fontZoom);
+
+    QFont font = m_editorWidget->font();
+    font.setPointSize(fontSize*fontZoom/100.0);
+    m_editorWidget->setFont(font);
+}

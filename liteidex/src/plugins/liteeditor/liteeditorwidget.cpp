@@ -53,7 +53,8 @@ LiteEditorWidget::LiteEditorWidget(QWidget *parent) :
     LiteEditorWidgetBase(parent),
     m_completer(0),
     m_contextMenu(0),
-    m_completionPrefixMin(3)
+    m_completionPrefixMin(3),
+    m_scrollWheelZooming(true)
 {
 }
 
@@ -107,6 +108,19 @@ void LiteEditorWidget::focusInEvent(QFocusEvent *e)
     if (m_completer)
         m_completer->setWidget(this);
     LiteEditorWidgetBase::focusInEvent(e);
+}
+
+void LiteEditorWidget::wheelEvent(QWheelEvent *e)
+{
+    if (m_scrollWheelZooming && e->modifiers() & Qt::ControlModifier) {
+        const int delta = e->delta();
+        if (delta < 0)
+            zoomOut();
+        else if (delta > 0)
+            zoomIn();
+        return;
+    }
+    LiteEditorWidgetBase::wheelEvent(e);
 }
 
 void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
@@ -264,4 +278,14 @@ QMimeData *LiteEditorWidget::createMimeDataFromSelection() const
     // Copy the selected text as HTML
     mimeData->setHtml(cursorToHtml(cursor));
     return mimeData;
+}
+
+void LiteEditorWidget::zoomIn(int range)
+{
+    emit requestFontZoom(range*10);
+}
+
+void LiteEditorWidget::zoomOut(int range)
+{
+    emit requestFontZoom(-range*10);
 }

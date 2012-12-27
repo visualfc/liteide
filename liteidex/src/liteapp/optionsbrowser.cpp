@@ -96,6 +96,7 @@ void OptionsBrowser::itemSelectionChanged()
     }
     LiteApi::IOption *opt = m_widgetOptionMap.value(item);
     if (opt) {
+        opt->active();
         ui->stackedWidget->setCurrentWidget(opt->widget());
         ui->infoLabel->setText(QString("Name : %1    MimeType : %2").arg(opt->name()).arg(opt->mimeType()));
     }

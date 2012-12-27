@@ -36,6 +36,7 @@
 #define EDITOR_STYLE "editor/style"
 #define EDITOR_FAMILY "editor/family"
 #define EDITOR_FONTSIZE "editor/fontsize"
+#define EDITOR_FONTZOOM "editor/fontzoom"
 #define EDITOR_ANTIALIAS "editor/antialias"
 #define EDITOR_TABWIDTH "editor/tabwidth"
 #define EDITOR_NOPRINTCHECK "editor/noprintcheck"

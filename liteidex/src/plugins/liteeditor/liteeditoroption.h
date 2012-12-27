@@ -40,6 +40,7 @@ public:
     virtual QString name() const;
     virtual QString mimeType() const;
     virtual void apply();
+    virtual void active();
     void updatePointSizes();
     QList<int> pointSizesForSelectedFont() const;
 public slots:

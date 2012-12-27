@@ -91,6 +91,11 @@ struct InitToolSate
     bool               checked;
 };
 
+class ToolWindowBar : public QObject
+{
+
+};
+
 class ToolMainWindow : public QMainWindow
 {
     Q_OBJECT    

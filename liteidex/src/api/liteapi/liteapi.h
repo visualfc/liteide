@@ -384,6 +384,7 @@ public:
     IOption(QObject *parent = 0) : IView(parent) {}
     virtual QString mimeType() const = 0;
     virtual void apply() = 0;
+    virtual void active() {}
 };
 
 class IOptionFactory : public QObject

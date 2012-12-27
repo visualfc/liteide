@@ -35,11 +35,12 @@ using namespace LiteApi;
 class Value
 {
 public:
-    Value(): typ(NullApi) {}
+    Value(): typ(NullApi),pos(-1) {}
     Value(PkgApiEnum _typ, const QString &_name, const QString &_exp) :
         typ(_typ), name(_name), exp(_exp) {}
 public:
     PkgApiEnum typ;
+    int     pos;
     QString name;
     QString exp;
 };
@@ -47,7 +48,7 @@ public:
 class Type
 {
 public:
-    Type() : typ(NullApi){}
+    Type() : typ(NullApi), pos(-1) {}
     Type(PkgApiEnum _typ, const QString &_name, const QString &_exp) :
         typ(_typ), name(_name), exp(_exp) {}
     ~Type() { clear(); }
@@ -66,6 +67,7 @@ public:
     }
 public:
     PkgApiEnum    typ;
+    int         pos;
     QString     name;
     QString     exp;
     QStringList     embeddedList;
@@ -75,7 +77,7 @@ public:
 class Package
 {
 public:
-    Package() : typ(PkgApi) {}
+    Package() : typ(PkgApi),pos(-1) {}
     Package(const QString &_name) :
         typ(PkgApi),name(_name) {}
     ~Package()  { clear(); }
@@ -103,6 +105,7 @@ public:
     }
 public:
     PkgApiEnum    typ;
+    int           pos;
     QString       name;
     QList<Value*> valueList;
     QList<Type*>  typeList;
