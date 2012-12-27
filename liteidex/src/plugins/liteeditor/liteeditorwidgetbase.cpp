@@ -1126,23 +1126,24 @@ void LiteEditorWidgetBase::indentBlock(QTextBlock block, bool bIndent)
 
 void LiteEditorWidgetBase::indentCursor(QTextCursor cur, bool bIndent)
 {
-    cur.beginEditBlock();
+   cur.beginEditBlock();
     if (bIndent) {
         cur.insertText(this->tabText());
-    } else {
+    } else {         
         QString text = cur.block().text();
-        int pos = cur.positionInBlock();
-        if (pos >= 0 && pos < text.length()) {
-            text = text.mid(cur.positionInBlock());
-            if (text.at(0) == '\t') {
-                cur.deleteChar();
-            } else if (m_bTabUseSpace && text.startsWith(QString(m_nTabSize,' '))) {
+        int pos = cur.positionInBlock()-1;
+        if (pos >= 0) {
+            if (text.at(pos) == '\t') {
+                cur.deletePreviousChar();
+            } else if (m_bTabUseSpace &&
+                       (pos-m_nTabSize+1 >= 0) &&
+                       (text.mid(pos-m_nTabSize+1,m_nTabSize) == QString(m_nTabSize,' '))) {
                 int count = m_nTabSize;
                 while (count--) {
-                    cur.deleteChar();
+                    cur.deletePreviousChar();
                 }
-            } else if (text.at(0) == ' ') {
-                cur.deleteChar();
+            } else if (text.at(pos) == ' ') {
+                cur.deletePreviousChar();
             }
        }
     }
