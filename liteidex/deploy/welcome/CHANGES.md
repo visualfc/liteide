@@ -3,15 +3,16 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
   
-### 2013.1.1 Ver x15.1
-* LiteIDE
+### 2012.12.28 Ver x15.1
+* LiteIDE:
 	* update logo
-* LiteApp
+* LiteApp:
 	* plugins custom load
-	* custom css  
+	* custom style use css(Qt Style Sheets)
 	* fix template `doc.go`
+	* tabs middle button close editor
 * LiteEditor:
-	* font zoom  support
+	* font zoom support
 	* add sublime color scheme, thanks for `Henson Lu`
 	* custom tab width and tab to spaces for mimetype
 * LiteEnv:

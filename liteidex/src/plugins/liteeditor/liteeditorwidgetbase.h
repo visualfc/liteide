@@ -58,7 +58,7 @@ public:
 protected:
     void saveCurrentCursorPositionForNavigation();
     QByteArray m_tempNavigationState;
-protected slots:
+public slots:
     void editContentsChanged(int,int,int);    
     virtual void highlightCurrentLine();
     virtual void slotUpdateExtraAreaWidth();

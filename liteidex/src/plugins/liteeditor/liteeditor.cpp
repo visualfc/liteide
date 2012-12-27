@@ -920,6 +920,8 @@ void LiteEditor::resetFontSize()
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize);
     m_editorWidget->setFont(font);
+    m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->slotUpdateExtraAreaWidth();
 }
 
 
@@ -948,4 +950,6 @@ void LiteEditor::requestFontZoom(int zoom)
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize*fontZoom/100.0);
     m_editorWidget->setFont(font);
+    m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->slotUpdateExtraAreaWidth();
 }
