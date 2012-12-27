@@ -265,6 +265,11 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
             if (m_tabContextIndex >= 0) {
                 m_tabContextMenu->popup(ev->globalPos());
             }
+        } else if (ev->button() == Qt::MiddleButton) {
+            int index = m_editorTabWidget->tabBar()->tabAt(ev->pos());
+            if (index >= 0) {
+                editorTabCloseRequested(index);
+            }
         }
     }
     return IEditorManager::eventFilter(target,event);
