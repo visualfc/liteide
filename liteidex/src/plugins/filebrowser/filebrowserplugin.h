@@ -49,7 +49,7 @@ public:
         m_info->setName("FileBrowser");
         m_info->setAnchor("visualfc");
         m_info->setVer("x13");
-        m_info->setInfo("LiteIDE FileBrowser Plugin");
+        m_info->setInfo("File Browser");
     }
 };
 

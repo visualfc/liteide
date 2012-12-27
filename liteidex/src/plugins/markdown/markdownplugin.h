@@ -49,7 +49,7 @@ public:
         m_info->setVer("x15");
         m_info->setName("Markdown");
         m_info->setAnchor("visualfc");
-        m_info->setInfo("Markdown Plugin");
+        m_info->setInfo("Markdown Editor");
         m_info->appendDepend("plugin/liteeditor");
     }
 };

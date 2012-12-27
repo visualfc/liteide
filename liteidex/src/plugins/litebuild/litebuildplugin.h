@@ -48,8 +48,9 @@ public:
         m_info->setName("LiteBuilder");
         m_info->setAnchor("visualfc");
         m_info->setVer("x15");
-        m_info->setInfo("LiteIDE Build Plugin");
+        m_info->setInfo("Core Build");
         m_info->appendDepend("plugin/liteenv");
+        m_info->setMustLoad(true);
     }
 };
 

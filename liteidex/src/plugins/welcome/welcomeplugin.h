@@ -56,7 +56,7 @@ public:
         m_info->setName("Welcome");
         m_info->setAnchor("visualfc");
         m_info->setVer("x15");
-        m_info->setInfo("LiteIDE Welcome Plugin");
+        m_info->setInfo("Welcome");
     }
 };
 

@@ -60,7 +60,7 @@ public:
         m_info->setName("GolangFmt");
         m_info->setAnchor("visualfc");
         m_info->setVer("x15");
-        m_info->setInfo("Golang Gofmt Plugin");
+        m_info->setInfo("Golang Gofmt Util");
     }
 };
 

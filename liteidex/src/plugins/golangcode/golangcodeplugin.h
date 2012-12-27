@@ -57,7 +57,7 @@ public:
         m_info->setName("GolangCode");
         m_info->setAnchor("visualfc");
         m_info->setVer("x15");
-        m_info->setInfo("Golang Gocode Plugin");
+        m_info->setInfo("Golang Gocode Util");
     }
 };
 
