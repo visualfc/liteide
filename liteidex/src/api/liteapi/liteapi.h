@@ -537,10 +537,10 @@ public:
     virtual void saveState() = 0;
 
     virtual void appendLog(const QString &model, const QString &log, bool error = false) = 0;
-    virtual void sendBroadcast(const QString &module, const QString &id, const QVariant &param = QVariant()) = 0;
+    virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString()) = 0;
 signals:
     void loaded();
-    void broadcast(QString,QString,QVariant);
+    void broadcast(QString,QString,QString);
 };
 
 class PluginInfo

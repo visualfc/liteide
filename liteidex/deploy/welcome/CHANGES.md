@@ -12,6 +12,7 @@
 	* add style coffee
 	* fix template `doc.go`
 	* tabs middle button close editor
+	* fix memory leak
 * LiteEditor:
 	* font zoom support
 	* add sublime color scheme, thanks for `Henson Lu`

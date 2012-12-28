@@ -129,6 +129,7 @@ MarkdownBatchBrowser::~MarkdownBatchBrowser()
     m_liteApp->settings()->setValue("markdown/batch_page-break",ui->mergePageBreakCheckBox->isChecked());
 
     delete ui;
+    delete m_widget;
 }
 
 QWidget *MarkdownBatchBrowser::widget()

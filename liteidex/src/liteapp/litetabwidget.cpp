@@ -93,6 +93,11 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_listButton->setEnabled(false);
 }
 
+LiteTabWidget::~LiteTabWidget()
+{
+    delete m_listActMenu;
+}
+
 void LiteTabWidget::closeCurrentTab()
 {
     int index = m_tabBar->currentIndex();

@@ -54,13 +54,12 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     }
     m_golangAst = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QVariant)),this,SLOT(broadcast(QString,QString,QVariant)));
+    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
 }
 
-void GolangCode::broadcast(QString module,QString id,QVariant)
+void GolangCode::broadcast(QString module,QString id,QString)
 {
     if (module == "golangpackage" && id == "reloadgopath") {
-        qDebug() << module;
         resetGocode();
     }
 }

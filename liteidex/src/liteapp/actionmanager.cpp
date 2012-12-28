@@ -77,7 +77,7 @@ QMenu *ActionManager::insertMenu(const QString &id, const QString &title, const 
     if (menu) {
         return menu;
     }
-    menu = new QMenu(title,m_liteApp->mainWindow()->menuBar());
+    menu = new QMenu(title,m_liteApp->mainWindow());
     menu->setObjectName(id);
     QMenu *m = 0;
     if (!idBefore.isEmpty()) {

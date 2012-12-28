@@ -267,17 +267,19 @@ IExtension *LiteApp::extension()
 void LiteApp::cleanup()
 {
     qDeleteAll(m_pluginList);
+    m_pluginList.clear();
 
-    delete m_liteAppOptionFactory;
     delete m_projectManager;
     delete m_editorManager;
+    delete m_htmlWidgetManager;
+    delete m_liteAppOptionFactory;
     delete m_fileManager;
     delete m_actionManager;
     delete m_mimeTypeManager;
     delete m_optionManager;
-    delete m_extension;
     delete m_logOutput;
     delete m_toolWindowManager;
+    delete m_extension;
     delete m_settings;
 }
 
@@ -425,7 +427,7 @@ void LiteApp::appendLog(const QString &model, const QString &log, bool error)
     }
 }
 
-void LiteApp::sendBroadcast(const QString &module, const QString &id, const QVariant &param)
+void LiteApp::sendBroadcast(const QString &module, const QString &id, const QString &param)
 {
     emit broadcast(module,id,param);
 }

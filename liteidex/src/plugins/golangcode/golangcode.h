@@ -46,7 +46,7 @@ public slots:
     void wordCompleted(QString,QString);
     void started();
     void finished(int,QProcess::ExitStatus);
-    void broadcast(QString,QString,QVariant);
+    void broadcast(QString,QString,QString);
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ICompleter   *m_completer;

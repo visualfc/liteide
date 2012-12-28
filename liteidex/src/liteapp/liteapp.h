@@ -88,7 +88,7 @@ public:
     virtual void saveState();
 
     virtual void appendLog(const QString &model, const QString &log = QString(), bool error = false);
-    virtual void sendBroadcast(const QString &module, const QString &id, const QVariant &param = QVariant());
+    virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString());
 public:
     void load(bool bUseSession);
     void createActions();

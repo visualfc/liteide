@@ -50,8 +50,8 @@ GoTool::GoTool(LiteApi::IApplication *app, QObject *parent) :
 
 GoTool::~GoTool()
 {
+    m_process->disconnect();
     kill();
-    delete m_process;
 }
 
 QStringList GoTool::liteGopath() const
