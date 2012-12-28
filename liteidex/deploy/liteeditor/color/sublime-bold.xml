@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<style-scheme version="1.0" name="Sublime Text 2">
+<style-scheme version="1.0" name="Sublime Text 2 bold">
   <!--
   Based on the Sublime Text2 theme for liteide
   Improvements are welcome
@@ -15,7 +15,7 @@
   <style name="String" foreground="#a3e22e" bold="true"/>
   <style name="Error" foreground="#fd2702"/>
   <style name="Text" foreground="#ffffff" background="#272822"/>
-  <style name="Selection" foreground="#ce5c00" background="#fdc066"/>
+  <style name="Selection" foreground="#000000" background="#fdc066"/>
   <style name="InactiveSelection" foreground="#000000" background="#fdc066"/>
   <style name="CurrentLine" background="#333333"/>
 </style-scheme>
