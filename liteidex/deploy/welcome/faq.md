@@ -138,3 +138,47 @@ example LiteEnv -> win64.env
 	
 ### WIN32 and WIN64
 WIN32 request gdb.exe,WIN64 request gdb64.exe.
+
+## Golang cross-compiler
+
+### Cross-compiler Optional environment variables
+
+* $GOOS and $GOARCH
+
+The name of the target operating system and compilation architecture. These default to the values of $GOHOSTOS and $GOHOSTARCH respectively (described below). 
+
+Choices for $GOOS are darwin (Mac OS X 10.6 and above), freebsd, linux, netbsd, openbsd, plan9, and windows. Choices for $GOARCH are amd64 (64-bit x86, the most mature port), 386 (32-bit x86), and arm (32-bit ARM). 
+
+* $GOARM (arm, default=6)
+
+The ARM architecture version the run-time libraries should target. Setting $GOARM to 5 causes the linker to emit calls to a software floating point implementation instead of using hardware floating point support. 
+
+* $CGO_ENABLED
+
+Cross-compiler setting $CGO_ENABLED  to 0
+
+### Examples
+
+* Windows cross-compiler linux amd64
+
+		> set GOARCH=amd64
+		> set GOOS=linux
+		> set CGO_ENABLED=0
+		> cd go\src
+		> all.bat
+
+* Linux cross-compiler windows amd64
+
+		> export GOARCH=amd64
+		> export GOOS=windows
+		> export CGO_ENABLED=0
+		> cd go/src
+		> all.bath
+
+* MacOS X cross-compiler linux arm
+
+		> export GOARCH=arm
+		> export GOOS=linux
+		> export CGO_ENABLED=0
+		> cd go/src
+		> all.bath
