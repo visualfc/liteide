@@ -38,7 +38,7 @@ win32 {
     INSTALLS += target
     RC_FILE += liteide.rc
 } else:macx {
-    ICON = liteide.icns
+    ICON = liteide128.icns
     QMAKE_INFO_PLIST = Info.plist
 } else {
     target.path  = /bin
