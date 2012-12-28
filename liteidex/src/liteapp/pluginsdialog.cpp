@@ -50,8 +50,8 @@ PluginsDialog::PluginsDialog(LiteApi::IApplication *app, QWidget *parent) :
     m_model = new QStandardItemModel(0,6,this);
     m_model->setHeaderData(0, Qt::Horizontal, tr("Name"));
     m_model->setHeaderData(1, Qt::Horizontal, tr("Load"));
-    m_model->setHeaderData(2, Qt::Horizontal, tr("Anchor"));
-    m_model->setHeaderData(3, Qt::Horizontal, tr("Info"));
+    m_model->setHeaderData(2, Qt::Horizontal, tr("Info"));
+    m_model->setHeaderData(3, Qt::Horizontal, tr("Anchor"));
     m_model->setHeaderData(4, Qt::Horizontal, tr("Last Ver"));
     m_model->setHeaderData(5, Qt::Horizontal, tr("FileName"));
     ui->treeView->setModel(m_model);
@@ -88,8 +88,8 @@ void PluginsDialog::appendInfo(const LiteApi::PluginInfo *info)
         load->setCheckState(Qt::Unchecked);
     }
     items.append(load);
-    items.append(new QStandardItem(info->anchor()));
     items.append(new QStandardItem(info->info()));
+    items.append(new QStandardItem(info->anchor()));
     items.append(new QStandardItem(info->ver()));
     items.append(new QStandardItem(QFileInfo(info->filePath()).fileName()));
     items.at(5)->setToolTip(info->filePath());

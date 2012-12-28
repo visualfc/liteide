@@ -9,6 +9,7 @@
 * LiteApp:
 	* plugins custom load
 	* custom style use css(Qt Style Sheets)
+	* add style coffee
 	* fix template `doc.go`
 	* tabs middle button close editor
 * LiteEditor:
