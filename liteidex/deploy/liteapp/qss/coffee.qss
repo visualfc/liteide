@@ -6,11 +6,19 @@ QToolBar {
 	background-color: beige;
 }
 
-.QDialog {
+QDialog, QFileDialog {
 	background-color: beige;
 }
 
-QTabBar {
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #C2C7CB;
+}
+
+QTabWidget::tab-bar {
+    left: 5px; /* move to the right by 5px */
+}
+
+QTabBar, QTabWidget {
 	background-color: beige;
 }
 QTabBar::tab {
