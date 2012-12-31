@@ -998,7 +998,7 @@ bool LiteEditorWidgetBase::event(QEvent *e)
 
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
-    if (e->key() == Qt::Key_Insert) {
+    if (e->key() == Qt::Key_Insert && e->modifiers() == Qt::NoModifier) {
         this->setOverwriteMode(!this->overwriteMode());
         emit overwriteModeChanged(this->overwriteMode());
         return;
