@@ -67,7 +67,7 @@ public:
         m_info->setName("LiteFind");
         m_info->setAnchor("visualfc");
         m_info->setVer("x14");
-        m_info->setInfo("Editor Find/Replace");
+        m_info->setInfo("Find/Replace Util");
     }
 };
 

@@ -54,6 +54,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangCodePlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/golangcode");
+        m_info->appendDepend("plugin/golangast");
         m_info->setName("GolangCode");
         m_info->setAnchor("visualfc");
         m_info->setVer("x15");
