@@ -49,6 +49,7 @@
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTimer>
+#include <QPainter>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -190,19 +191,67 @@ LiteApp::LiteApp()
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
 }
 
+static QString s_ver = "LiteIDE X16";
+
+static QString s_info =
+"2011-2013(c)\n"
+"visualfc@gmail.com\n"
+"\n"
+"http://code.google.com/p/liteide\n"
+"http://code.google.com/p/golangide\n"
+"https://github.com/visualfc/liteide";
+
+
+
+static QImage makeSplashImage()
+{
+    QRect r(0,0,400,280);
+    QImage image(r.size(),QImage::Format_ARGB32_Premultiplied);
+
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing,true);
+
+    QLinearGradient lg(0,0,r.width(),r.height());
+    lg.setColorAt(0.0,qRgb(0,125,127));
+    lg.setColorAt(1.0,qRgb(0,88,127));
+
+    QBrush bk(lg);
+    painter.fillRect(r,bk);
+    int th = r.height()*2/5;
+    int bh = r.height()-th;
+    painter.fillRect(1,th,r.width()-2,bh-1,Qt::white);
+
+    QFont font("Timer",32);
+    font.setPointSize(32);
+    font.setItalic(true);
+    painter.setPen(Qt::white);
+    painter.setFont(font);
+    painter.drawText(2,2,r.width()-2,th,Qt::AlignCenter,s_ver);
+
+    font.setPointSize(9);
+    font.setItalic(false);
+    font.setBold(true);
+    painter.setPen(Qt::black);
+    painter.setFont(font);
+    painter.drawText(4,th,r.width()-4,bh,Qt::AlignLeft|Qt::AlignVCenter,s_info);
+
+    painter.drawImage(r.width()-150,r.height()-150,QImage("icon:/images/liteide-logo128.png"));
+    return image;
+}
+
 void LiteApp::load(bool bUseSession)
 {
     QSplashScreen *splash = 0;
-    if (m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool()) {
-        QPixmap pixmap("icon:/images/splash.png");
-        splash = new QSplashScreen(pixmap,Qt::WindowStaysOnTopHint);
+    bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
+    if (bSplash) {
+        splash = new QSplashScreen(QPixmap::fromImage(makeSplashImage()),Qt::WindowStaysOnTopHint);
     }
-    if (splash) {
+    if (bSplash) {
         splash->show();
     }
 
-    if (splash) {
-        splash->showMessage("liteide scan plugins ...",Qt::AlignCenter);
+    if (bSplash) {
+        splash->showMessage("liteide scan plugins ...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -210,15 +259,15 @@ void LiteApp::load(bool bUseSession)
     loadMimeType();
     loadPlugins();
 
-    if (splash) {
-        splash->showMessage("liteide load plugins ...",Qt::AlignCenter);
+    if (bSplash) {
+        splash->showMessage("liteide load plugins ...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
     initPlugins();
 
-    if (splash) {
-        splash->showMessage("liteide load state ...",Qt::AlignCenter);
+    if (bSplash) {
+        splash->showMessage("liteide load state ...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -229,8 +278,8 @@ void LiteApp::load(bool bUseSession)
     emit loaded();
     m_projectManager->setCurrentProject(0);
 
-    if (splash) {
-        splash->showMessage("liteide load session ...",Qt::AlignCenter);
+    if (bSplash) {
+        splash->showMessage("liteide load session ...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -241,7 +290,7 @@ void LiteApp::load(bool bUseSession)
         loadSession("default");
     }
 
-    if (splash) {
+    if (bSplash) {
         m_mainwindow->raise();
         splash->finish(m_mainwindow);
         splash->deleteLater();

@@ -42,7 +42,13 @@
         <file>images/paste.png</file>
         <file>images/lock.png</file>
         <file>images/unlock.png</file>
+        <file>images/liteide-logo64.png</file>
+        <file>images/liteide16.png</file>
+        <file>images/liteide24.png</file>
+        <file>images/liteide32.png</file>
+        <file>images/liteide48.png</file>
         <file>images/liteide64.png</file>
         <file>images/liteide128.png</file>
+        <file>images/liteide-logo128.png</file>
     </qresource>
 </RCC>

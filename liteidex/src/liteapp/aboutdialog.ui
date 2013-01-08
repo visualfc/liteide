@@ -31,7 +31,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="liteapp.qrc">:/images/liteide64.png</pixmap>
+        <pixmap resource="liteapp.qrc">:/images/liteide-logo64.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
