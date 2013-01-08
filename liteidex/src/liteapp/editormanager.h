@@ -77,6 +77,8 @@ public slots:
     void tabContextCloseLefts();
     void tabContextCloseRights();
     void tabContextCloseAll();
+    void tabContextCloseOtherFolderFiles();
+    void tabContextCloseSameFolderFiles();
     void goBack();
     void goForward();
     void updateNavigatorActions();

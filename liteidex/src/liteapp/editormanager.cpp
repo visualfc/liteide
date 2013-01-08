@@ -106,6 +106,8 @@ bool EditorManager::initWithApp(IApplication *app)
     QAction *closeAllAct = new QAction(tr("Close All Tabs"),this);
     QAction *closeLeftAct = new QAction(tr("Close Left Tabs"),this);
     QAction *closeRightAct = new QAction(tr("Close Right Tabs"),this);
+    QAction *closeSameFolderFiles = new QAction(tr("Close Same Folder Files"),this);
+    QAction *closeOtherFolderFiles = new QAction(tr("Close Other Folder Files"),this);
     QAction *moveToAct = new QAction(tr("Move To New Window"),this);
 
     m_tabContextMenu->addAction(closeAct);
@@ -114,6 +116,9 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextMenu->addAction(closeRightAct);
     m_tabContextMenu->addAction(closeAllAct);
     m_tabContextMenu->addSeparator();
+    m_tabContextMenu->addAction(closeSameFolderFiles);
+    m_tabContextMenu->addAction(closeOtherFolderFiles);
+    m_tabContextMenu->addSeparator();
     m_tabContextMenu->addAction(moveToAct);
 
     connect(closeAct,SIGNAL(triggered()),this,SLOT(tabContextClose()));
@@ -121,6 +126,8 @@ bool EditorManager::initWithApp(IApplication *app)
     connect(closeLeftAct,SIGNAL(triggered()),this,SLOT(tabContextCloseLefts()));
     connect(closeRightAct,SIGNAL(triggered()),this,SLOT(tabContextCloseRights()));
     connect(closeAllAct,SIGNAL(triggered()),this,SLOT(tabContextCloseAll()));
+    connect(closeSameFolderFiles,SIGNAL(triggered()),this,SLOT(tabContextCloseSameFolderFiles()));
+    connect(closeOtherFolderFiles,SIGNAL(triggered()),this,SLOT(tabContextCloseOtherFolderFiles()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
 
     return true;
@@ -744,6 +751,81 @@ void EditorManager::tabContextCloseRights()
 void EditorManager::tabContextCloseAll()
 {
     closeAllEditors();
+}
+
+void EditorManager::tabContextCloseOtherFolderFiles()
+{
+    if (m_tabContextIndex < 0) {
+        return;
+    }
+    QWidget *w = m_editorTabWidget->widget(m_tabContextIndex);
+    IEditor *ed = m_widgetEditorMap.value(w,0);
+    if (!ed) {
+        return;
+    }
+    QString filePath = ed->filePath();
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QFileInfo info(filePath);
+    QString path = info.path();
+
+    QList<IEditor*> closeList;
+    for (int i = 0; i < m_editorTabWidget->tabBar()->count(); i++) {
+        if (i != m_tabContextIndex) {
+            QWidget *w = m_editorTabWidget->widget(i);
+            IEditor *ed = m_widgetEditorMap.value(w,0);
+            QString filePath = ed->filePath();
+            if (filePath.isEmpty()) {
+                continue;
+            }
+            QFileInfo info(filePath);
+            if (info.path() != path) {
+                closeList << ed;
+            }
+        }
+    }
+    foreach(IEditor *ed, closeList ) {
+        closeEditor(ed);
+    }
+}
+
+void EditorManager::tabContextCloseSameFolderFiles()
+{
+    if (m_tabContextIndex < 0) {
+        return;
+    }
+    QWidget *w = m_editorTabWidget->widget(m_tabContextIndex);
+    IEditor *ed = m_widgetEditorMap.value(w,0);
+    if (!ed) {
+        return;
+    }
+    QString filePath = ed->filePath();
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QFileInfo info(filePath);
+    QString path = info.path();
+
+    QList<IEditor*> closeList;
+    closeList << ed;
+    for (int i = 0; i < m_editorTabWidget->tabBar()->count(); i++) {
+        if (i != m_tabContextIndex) {
+            QWidget *w = m_editorTabWidget->widget(i);
+            IEditor *ed = m_widgetEditorMap.value(w,0);
+            QString filePath = ed->filePath();
+            if (filePath.isEmpty()) {
+                continue;
+            }
+            QFileInfo info(filePath);
+            if (info.path() == path) {
+                closeList << ed;
+            }
+        }
+    }
+    foreach(IEditor *ed, closeList ) {
+        closeEditor(ed);
+    }
 }
 
 void EditorManager::moveToNewWindow()
