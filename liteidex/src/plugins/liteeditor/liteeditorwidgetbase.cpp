@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2012 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -1452,13 +1452,11 @@ void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
 }
 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
-{
+{  
     QPlainTextEdit::paintEvent(e);
 
-
-    QTextDocument *doc = this->document();
     QPainter painter(viewport());
-
+    QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
     bool hasSelection = cursor.hasSelection();
     int selectionStart = cursor.selectionStart();

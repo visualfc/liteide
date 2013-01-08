@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2012 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -661,14 +661,14 @@ void LiteEditor::applyOption(QString id)
                 m_editorWidget->setCurrentLineColor(currentLine->background());
             }
             if (style || selection || inactiveSelection) {
-                QPalette p = m_defPalette;//m_editorWidget->palette();
+                QPalette p = m_defPalette;
                 if (style) {
                     if (style->foregound().isValid()) {
                         p.setColor(QPalette::Text,style->foregound());
                         p.setColor(QPalette::Foreground, style->foregound());
                     }
                     if (style->background().isValid()) {
-                        //p.setColor(QPalette::Base, style->background());
+                        //p.setColor(QPalette::Background, style->background());
                         p.setBrush(QPalette::Base, style->background());
                     }
                 }

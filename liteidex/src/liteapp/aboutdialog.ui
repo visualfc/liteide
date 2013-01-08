@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string notr="true">2011-2012 (c) visualfc &lt;visualfc@gmail.com&gt;</string>
+          <string notr="true">2011-2013 (c) visualfc &lt;visualfc@gmail.com&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -215,9 +215,9 @@ LiteIDE is a simple, open source, cross-platform IDE.</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLabel" name="label_16">
+           <widget class="QLabel" name="verLabel">
             <property name="text">
-             <string notr="true">X15.1 (2.34375)</string>
+             <string notr="true">X15.2 (2.34375)</string>
             </property>
            </widget>
           </item>
@@ -516,7 +516,7 @@ p, li { white-space: pre-wrap; }
           <bool>true</bool>
          </property>
          <property name="plainText">
-          <string>Copyright (c) 2011-2012 LiteIDE team. All rights reserved.
+          <string>Copyright (c) 2011-2013 LiteIDE team. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
 

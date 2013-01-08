@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2012 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -191,7 +191,7 @@ LiteApp::LiteApp()
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
 }
 
-static QString s_ver = "LiteIDE X16";
+static QString s_ver = "LiteIDE X15.2";
 
 static QString s_info =
 "2011-2013(c)\n"
@@ -233,9 +233,9 @@ static QImage makeSplashImage()
     font.setBold(true);
     painter.setPen(Qt::black);
     painter.setFont(font);
-    painter.drawText(4,th,r.width()-4,bh,Qt::AlignLeft|Qt::AlignVCenter,s_info);
+    painter.drawText(10,th,r.width()-10,bh,Qt::AlignLeft|Qt::AlignVCenter,s_info);
 
-    painter.drawImage(r.width()-150,r.height()-150,QImage("icon:/images/liteide-logo128.png"));
+    painter.drawImage(r.width()-145,r.height()-145,QImage("icon:/images/liteide-logo128.png"));
     return image;
 }
 
