@@ -24,6 +24,7 @@
 #include "filesystemwidget.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
+#include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
 #include "../../plugins/filebrowser/createfiledialog.h"
 #include "../../plugins/filebrowser/createdirdialog.h"
@@ -90,12 +91,16 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_openShellAct = new QAction(tr("Open Terminal Here"),this);
     m_openExplorerAct = new QAction(tr("Open Explorer Here"),this);
 
+    m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
+
     m_fileMenu->addAction(m_openEditorAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_newFileAct);
     m_fileMenu->addAction(m_newFileWizardAct);
     m_fileMenu->addAction(m_renameFileAct);
     m_fileMenu->addAction(m_removeFileAct);
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction(m_viewGodocAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_openShellAct);
     m_fileMenu->addAction(m_openExplorerAct);
@@ -105,6 +110,8 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_folderMenu->addAction(m_newFolderAct);
     m_folderMenu->addAction(m_renameFolderAct);
     m_folderMenu->addAction(m_removeFolderAct);
+    m_folderMenu->addSeparator();
+    m_folderMenu->addAction(m_viewGodocAct);
     m_folderMenu->addSeparator();
     m_folderMenu->addAction(m_openShellAct);
     m_folderMenu->addAction(m_openExplorerAct);
@@ -121,6 +128,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     connect(m_removeFolderAct,SIGNAL(triggered()),this,SLOT(removeFolder()));
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
+    connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
 
     connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
 }
@@ -331,6 +339,19 @@ void FileSystemWidget::openExplorer()
 {
     QDir dir = contextDir();
     QDesktopServices::openUrl(QUrl::fromLocalFile(dir.path()));
+}
+
+void FileSystemWidget::viewGodoc()
+{
+    QDir dir = contextDir();
+    LiteApi::IGolangDoc *doc = LiteApi::findExtensionObject<LiteApi::IGolangDoc*>(m_liteApp,"LiteApi.IGolangDoc");
+    if (doc) {
+        QUrl url;
+        url.setScheme("pdoc");
+        url.setPath(dir.path());
+        doc->openUrl(url);
+        doc->activeBrowser();
+    }
 }
 
 void FileSystemWidget::openShell()
