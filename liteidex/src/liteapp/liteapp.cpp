@@ -335,9 +335,14 @@ void LiteApp::cleanup()
 void LiteApp::fullScreen(bool b)
 {
     if (b) {
+        m_window_state.maximized = m_mainwindow->isMaximized();
+        m_window_state.geometry = m_mainwindow->saveGeometry();
         m_mainwindow->showFullScreen();
-    } else {
-        m_mainwindow->showNormal();
+    } else {        
+        m_mainwindow->restoreGeometry(m_window_state.geometry);
+        if (m_window_state.maximized) {
+            m_mainwindow->showMaximized();
+        }
     }
 }
 

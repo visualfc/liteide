@@ -45,6 +45,11 @@ class QSettings;
 class QSplitter;
 class LiteAppOptionFactory;
 
+struct windows_state {
+    bool        maximized;
+    QByteArray  geometry;
+};
+
 class LiteApp : public IApplication
 {
     Q_OBJECT
@@ -129,6 +134,7 @@ protected:
     QAction       *m_logAct;
     LiteAppOptionFactory *m_liteAppOptionFactory;
     QList<IPlugin*> m_pluginList;
+    windows_state m_window_state;
     static QMap<QString,QVariant> m_cookie;
 protected:
     QAction     *m_newAct;
