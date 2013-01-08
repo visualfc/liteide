@@ -114,14 +114,14 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check)
     QProcess process;
     process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
     process.start(m_gofmtCmd,args);
-    if (!process.waitForStarted(500)) {
-        m_liteApp->appendLog("gofmt","wait start timeout",true);
+    if (!process.waitForStarted(m_timeout)) {
+        m_liteApp->appendLog("gofmt","wait start timeout",false);
         return;
     }
     process.write(text.toUtf8());
     process.closeWriteChannel();
-    if (!process.waitForFinished(500)) {
-        m_liteApp->appendLog("gofmt","wait finish timeout",true);
+    if (!process.waitForFinished(m_timeout)) {
+        m_liteApp->appendLog("gofmt","wait finish timeout",false);
         return;
     }
     QTextCodec *codec = QTextCodec::codecForName("utf-8");

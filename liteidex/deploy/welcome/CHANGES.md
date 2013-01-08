@@ -9,6 +9,7 @@
 * LiteApp:
 	* update logo
 	* update splash	
+	* add action close same/other folder files
 * LiteEnv:
 	* add user env files	
 * LiteEditor:
@@ -18,7 +19,9 @@
 	* support go tip version
 	* show error output	
 * GolangCode:
-	* fix icon visible		
+	* fix code completer icon visible
+* Golang Fmt:
+	* fix timeout option
 	
 ### 2012.12.28 Ver x15.1
 * LiteIDE:
@@ -105,7 +108,7 @@
 * LiteApp: fix editor navigate 
 * LiteEditor : add action Move to New Windows
 * LiteFind : focus in find text and enter
-* LiteEditor: fix code compelter func test ()
+* LiteEditor: fix code completer func test ()
 * GolangCode : auto restart gocode if liteide GOPATH changed
 * GolanPlay: enable gocode and fmt
 * GolangFmt: auto popup gofmt messsage option
@@ -132,7 +135,7 @@
 * LiteEditor : color theme set currnet line background
 * LiteEditor : add color theme darktango.xml(Dumitru Ungureanu)
 * LiteEditor : go wordapi update, keyword types and funcs
-* LiteEditor : code compelter func auto append ()
+* LiteEditor : code completer func auto append ()
 * LiteEditor : fix tab indent
 * FileSystem : fix execute find path
 * LiteFind : fix current directory 
@@ -219,7 +222,7 @@
 * LiteBuild: fix execute args for gosrc/gopro/makefile
 * LiteApp: add option - when close project auto close project editors
 * PackageBrowser : double click pkg and load project
-* LiteEditor: add option - compelter case sensitive
+* LiteEditor: add option - completer case sensitive
 
 ### 2012.5.15 Ver X11 1.71875 beta4
 * GolangPackage : enable local package
@@ -237,7 +240,7 @@
 * GolangDoc: add golang api filter
 * GolangAst: add filter
 * GolangAst: classview and outline
-* LiteEditor : compelter option
+* LiteEditor : completer option
 * LiteApp : new file wizard support GO1
 * Welcome : new recent page
 * gopromake : update pkg depend
@@ -271,8 +274,8 @@
 
 ### 2011.9.1 Ver X8 1.25
 * LiteFind : new find and replace plugin, remove CodeSearch plugin
-* LiteEditor : fix word api complete three parts error
-* LiteEditor : fix word api complete sorted
+* LiteEditor : fix word api completer three parts error
+* LiteEditor : fix word api completer sorted
 * LiteApp : fix main window state load/save on linux
 * LiteApp : change path to standard linux path
 * LiteBuild : add build option, example execute arguments
@@ -284,7 +287,7 @@
 * GolangDoc : scheme entry [file|list|find|pdoc]
 * FileBrowser : add "View Godoc Here"
 * LiteBuild : auto clean output if line more than 1024
-* LiteEditor : word compelter sorted
+* LiteEditor : word completer sorted
 * LiteEditor : auto braces last state check
 * GolangAst : show type struct field
 * GolangAst : editor state keep self
@@ -326,7 +329,7 @@
 * fix FileBrowser sort incorrect on MACOSX
 * fix GoFmt reload editor display pos keep
 * fix Editor Close Ask BUG ret==SaveAll
-* fix Editor word writed ,compelter only one match auto hide
+* fix Editor word writed ,completer only one match auto hide
 
 ### 2011.6.30 X4 v0.625
 * add interface zh_cn
