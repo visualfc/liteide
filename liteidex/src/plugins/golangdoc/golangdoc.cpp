@@ -558,6 +558,10 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
         data.replace("{nav}","");
     }
     data.replace("{content}",content);
+    data.replace("#pkg-constants","#constants");
+    data.replace("#pkg-variables","#variables");
+    data.replace("id=\"pkg-constants\"","id=\"constants\"");
+    data.replace("id=\"pkg-variables\"","id=\"variables\"");
     m_docBrowser->setUrlHtml(url,data);
 }
 
