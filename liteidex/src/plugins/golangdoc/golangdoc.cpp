@@ -480,6 +480,8 @@ void GolangDoc::findFinish(bool error,int code,QString /*msg*/)
 void GolangDoc::godocOutput(QByteArray data,bool bStderr)
 {
     if (bStderr) {
+        QTextCodec *codec = QTextCodec::codecForName("utf8");
+        m_liteApp->appendLog("GolangDoc",codec->toUnicode(data),true);
         return;
     }
     m_godocData.append(data);
@@ -609,11 +611,11 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
     m_godocData.clear();
     QStringList args;
     //check additional path
-    bool additional = false;
+    bool local = false;
     if (QDir(url.path()).exists()) {
-        additional = true;
+        local = true;
         if (url.path().length() >= 2 && url.path().right(2) == "..") {
-            additional = false;
+            local = false;
         }
     }
 //    QStringList pathList = LiteApi::getGopathList(m_liteApp,false);
@@ -623,7 +625,7 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
 //    if (!pathList.isEmpty()) {
 //        args << "-path" << pathList.join(":");
 //    }
-    if (additional) {
+    if (local) {
         m_godocProcess->setWorkingDirectory(url.path());
         args << "-html=true" << ".";
     } else {
