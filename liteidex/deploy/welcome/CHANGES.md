@@ -3,9 +3,10 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
   
-### 2013.1.9 Ver x15.2
+### 2013.1.10 Ver x15.2
 * LiteIDE:
 	* use new logo and icon
+	* support go version hg-tip
 * LiteApp:
 	* update logo
 	* update splash	
@@ -21,7 +22,10 @@
 * GolangCode:
 	* fix code completer icon visible
 * Golang Fmt:
-	* fix timeout option
+	* fix timeout option invalid
+* Markdown:
+	* fix critical messsage
+	* add css Documents.css	
 	
 ### 2012.12.28 Ver x15.1
 * LiteIDE:
