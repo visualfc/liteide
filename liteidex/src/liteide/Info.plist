@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>NSHumanReadableCopyright</key>
-        <string>(C) 2011-2012 visualfc@gmail.com</string>
+        <string>(C) 2011-2013 visualfc@gmail.com</string>
 	<key>CFBundleIconFile</key>
-        <string>liteide128.icns</string>
+        <string>liteide.icns</string>
 	<key>CFBundlePackageType</key>
 		<string>APPL</string>
 	<key>CFBundleSignature</key>
