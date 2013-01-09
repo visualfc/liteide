@@ -744,8 +744,9 @@ void LiteEditor::exportHtml()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
             QMessageBox::critical(m_widget,
+                                  tr("LiteIDE"),
                                   QString(tr("Can not write file %1")).arg(fileName)
-                                  ,tr("LiteIDE"));
+                                  );
             return;
         }
         QTextCursor cur = m_editorWidget->textCursor();

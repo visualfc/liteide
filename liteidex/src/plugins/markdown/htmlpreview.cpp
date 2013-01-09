@@ -367,8 +367,9 @@ void HtmlPreview::exportHtml()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
             QMessageBox::critical(m_widget,
+                                  tr("LiteIDE"),
                                   QString(tr("Can not write file %1")).arg(fileName)
-                                  ,tr("LiteIDE"));
+                                  );
             return;
         }
         if (m_curEditor->mimeType() == "text/html") {
