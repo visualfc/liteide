@@ -11,6 +11,7 @@
 	* update logo
 	* update splash	
 	* add action close same/other folder files
+	* fix full screen restore
 * LiteEnv:
 	* add user env files	
 * LiteEditor:

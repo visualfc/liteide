@@ -51,7 +51,7 @@ public:
         m_info->setId("plugin/golangdoc");
         m_info->setName("GolangDoc");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x15.1");
+        m_info->setVer("x15.2");
         m_info->setInfo("Golang Documents Browser");
         m_info->appendDepend("plugin/liteenv");
         m_info->appendDepend("plugin/liteeditor");
