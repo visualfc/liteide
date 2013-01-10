@@ -1597,7 +1597,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
         <source>Debug before rebuild</source>
-        <translation>调试之间重新编译</translation>
+        <translation>调试前重新编译</translation>
     </message>
 </context>
 <context>

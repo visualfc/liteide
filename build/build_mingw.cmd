@@ -18,7 +18,7 @@ set PATH=%QTDIR%/bin;%MINGWDIR%/bin;%PATH%
 
 echo qmake liteide ...
 echo .
-qmake %LITEIDE_ROOT% -r -spec win32-g++ "CONFIG+=release"
+qmake %LITEIDE_ROOT% -spec win32-g++ "CONFIG+=release"
 
 if ERRORLEVEL 1 goto qmake_fail
 
