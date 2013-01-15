@@ -90,17 +90,8 @@ bool GoTool::exists()
 void GoTool::reloadEnv()
 {
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    QString goroot = env.value("GOROOT");
-    QString gobin = env.value("GOBIN");
-    if (!goroot.isEmpty() && gobin.isEmpty()) {
-        gobin = goroot+"/bin";
-    }
-    QString gotool = FileUtil::findExecute(gobin+"/go");
-    if (gotool.isEmpty()) {
-        gotool = FileUtil::lookPath("go",env,true);
-    }
+    m_gotool = FileUtil::lookupGoBin("go",m_liteApp);
     m_process->setProcessEnvironment(env);
-    m_gotool = gotool;
 }
 
 bool GoTool::isRuning() const

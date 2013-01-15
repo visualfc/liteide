@@ -85,18 +85,9 @@ void GolangCode::resetGocode()
 void GolangCode::currentEnvChanged(LiteApi::IEnv* e)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    QString goroot = env.value("GOROOT");
-    QString gobin = env.value("GOBIN");
-    if (!goroot.isEmpty() && gobin.isEmpty()) {
-        gobin = goroot+"/bin";
-    }
-    QString gocode = FileUtil::findExecute(gobin+"/gocode");
-    if (gocode.isEmpty()) {
-        gocode = FileUtil::lookPath("gocode",env,true);
-    }
-
+    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp);
     m_process->setProcessEnvironment(env);
-    m_gocodeCmd = gocode;
+
     if (m_gocodeCmd.isEmpty()) {
          m_liteApp->appendLog("GolangCode","no find gocode",true);
     } else {

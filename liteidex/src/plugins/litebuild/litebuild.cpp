@@ -99,27 +99,28 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
     m_customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
 
-    m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Config"),this);
-    m_configAct->setToolTip(tr("Build Config"));
-    //m_toolBar->addSeparator();
-    //m_toolBar->addAction(m_configAct);
+    m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Config"),this);
+    m_liteApp->actionManager()->regAction(m_configAct,"LiteBuild.Config","");
 
     m_process = new ProcessEx(this);
     m_output = new TextOutput;
     m_output->setMaxLine(1024);
 
-    QAction *stopAct = new QAction(tr("Stop Action"),this);
-    stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
-    QAction *clearAct = new QAction(tr("Clear All"),this);
-    clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
+    m_stopAct = new QAction(tr("Stop Action"),this);
+    m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
+    m_liteApp->actionManager()->regAction(m_stopAct,"LiteBuild.Stop","");
 
-    connect(stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
-    connect(clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
+    m_clearAct = new QAction(tr("Clear All"),this);
+    m_clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
+    m_liteApp->actionManager()->regAction(m_clearAct,"LiteBuild.Clear","");
+
+    connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
+    connect(m_clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
 
     m_buildMenu->addAction(m_configAct);
     m_buildMenu->addSeparator();
-    m_buildMenu->addAction(stopAct);
-    m_buildMenu->addAction(clearAct);
+    m_buildMenu->addAction(m_stopAct);
+    m_buildMenu->addAction(m_clearAct);
     m_buildMenu->addSeparator();
 
     //m_liteApp->outputManager()->addOutuput(m_output,tr("Build Output"));
@@ -127,7 +128,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
                                                                 m_output,"buildoutput",
                                                                 tr("Build Output"),
                                                                 false,
-                                                                QList<QAction*>() << stopAct << clearAct);
+                                                                QList<QAction*>() << m_stopAct << m_clearAct);
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     //connect(m_liteApp->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
@@ -146,6 +147,22 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     foreach(LiteApi::IBuild *build, m_buildManager->buildList()) {
         connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
+        QList<QAction*> actionList;
+        foreach(QAction *act, build->actions()) {
+            QMenu *subMenu = act->menu();
+            if (subMenu) {
+                actionList.append(subMenu->actions());
+            } else {
+                actionList.append(act);
+            }
+        }
+        foreach(QAction *act, actionList) {
+            QStringList shortcuts;
+            foreach(QKeySequence key, act->shortcuts()) {
+                shortcuts.append(key.toString());
+            }
+            m_liteApp->actionManager()->regAction(act,"LiteBuild."+act->objectName(),shortcuts.join(";"));
+        }
     }    
 }
 
@@ -291,17 +308,10 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     m_output->updateExistsTextColor();
     m_output->appendTag0(QString("Current environment change id \"%1\"\n").arg(env->id()));
     m_output->append(m_envManager->currentEnv()->orgEnvLines().join("\n")+"\n",Qt::black);
-    QString goroot = LiteApi::getGoroot(m_liteApp);
-    if (goroot.isEmpty()) {
-        m_output->appendTag0(QString("not find environment GOROOT\n"),true);
-        return;
-    }
-    QDir dir(goroot);
-    if (!dir.exists()) {
-        m_output->appendTag0(QString("GOROOT %1 not exists\n").arg(goroot),true);
-        return;
-    }
-    this->executeCommand(QFileInfo(dir,"bin/go").filePath(),"env",LiteApi::getGoroot(m_liteApp),false);
+
+    QString gobin = FileUtil::lookupGoBin("go",m_liteApp);
+
+    this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false);
 }
 
 void LiteBuild::loadProjectInfo(const QString &filePath)
@@ -678,6 +688,13 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     toolBar->insertActions(spacer,actions);
 
     QMenu *menu = new QMenu(editor->widget());
+
+    menu->addAction(m_configAct);
+    menu->addSeparator();
+    menu->addAction(m_stopAct);
+    menu->addAction(m_clearAct);
+    menu->addSeparator();
+
     foreach (QAction *act, actions) {
         QMenu *subMenu = act->menu();
         if (subMenu) {
@@ -886,16 +903,6 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     QMap<QString,QString> env = buildEnvMap(build,buildFilePath);
 
     QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
-
-    QString goroot = sysenv.value("GOROOT");
-    QString gobin = sysenv.value("GOBIN");
-    QString binDir;
-    if (!gobin.isEmpty()) {
-        binDir = gobin;
-    } else if(!goroot.isEmpty()) {
-        binDir = QFileInfo(goroot,"bin").filePath();
-    }
-    sysenv.insert("GOBIN_DIR",binDir);
 
     QString cmd = this->envToValue(ba->cmd(),env,sysenv);
     QString args = this->envToValue(ba->args(),env,sysenv);

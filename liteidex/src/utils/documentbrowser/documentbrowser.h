@@ -57,13 +57,13 @@ public:
     virtual void scrollToAnchor(const QString &text);
     virtual QToolBar *toolBar();
     virtual QComboBox *urlComboBox();
-    virtual QTextBrowser *textBrowser();
+    virtual LiteApi::IHtmlWidget *htmlWidget();
 public slots:
     virtual void backward();
     virtual void forward();
     virtual void reloadUrl();
 public slots:
-    void anchorClicked(QUrl);
+    void linkClicked(QUrl);
     void activatedUrl(QString text);
 protected:
     struct HistoryEntry {
@@ -76,11 +76,10 @@ protected:
     };
     HistoryEntry createHistoryEntry() const;
     void restoreHistoryEntry(const HistoryEntry &entry);
-    void setUrlHtml(const QUrl &url,const QString &data,bool html);
     LiteApi::IApplication   *m_liteApp;
     Extension     *m_extension;
     QWidget *m_widget;
-    QTextBrowser *m_textBrowser;
+    LiteApi::IHtmlWidget *m_htmlWidget;
     QToolBar     *m_toolBar;
     QAction      *m_backwardAct;
     QAction      *m_forwardAct;

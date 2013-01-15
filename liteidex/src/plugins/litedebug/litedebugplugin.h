@@ -49,7 +49,7 @@ public:
         m_info->setId("plugin/LiteDebug");
         m_info->setName("LiteDebug");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x15");
+        m_info->setVer("x16");
         m_info->setInfo("Debug Manager");
         m_info->appendDepend("plugin/litebuild");
         m_info->appendDepend("plugin/litefind");

@@ -91,6 +91,8 @@ protected:
     ProcessEx *m_process;
     TextOutput *m_output;
     QAction     *m_configAct;
+    QAction     *m_stopAct;
+    QAction     *m_clearAct;
     QAction    *m_outputAct;
     QString     m_outputRegex;
     QString     m_buildTag;

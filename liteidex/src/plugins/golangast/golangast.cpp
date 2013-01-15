@@ -342,6 +342,7 @@ void GolangAst::updateAstNow()
     QString cmd = m_liteApp->applicationPath();
     cmd += "/";
     cmd += goastview;
+
     QStringList args;
     args << "-files";
     args << m_updateFileNames.join(" ");

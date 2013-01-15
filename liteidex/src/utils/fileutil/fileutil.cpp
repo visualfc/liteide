@@ -22,10 +22,12 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "fileutil.h"
+#include "liteenvapi/liteenvapi.h"
 #include <QFileInfo>
 #include <QDir>
 #include <QProcess>
 #include <QDebug>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -281,6 +283,7 @@ QString FileUtil::lookPathInDir(const QString &file, const QString &dir)
     }
     return QString();
 }
+
 #endif
 
 QString FileUtil::findExecute(const QString &target)
@@ -340,3 +343,28 @@ bool GoExecute::exec(const QString &workPath, const QString &target, const QStri
     return QProcess::startDetached("/usr/bin/xterm",iargs);
 #endif
 }
+
+QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app)
+{
+    QProcessEnvironment env = LiteApi::getGoEnvironment(app);
+    QString goroot = env.value("GOROOT");
+    QString gobin = env.value("GOBIN");
+    if (!goroot.isEmpty() && gobin.isEmpty()) {
+        gobin = goroot+"/bin";
+    }
+    QString find = FileUtil::findExecute(gobin+"/"+bin);
+    if (find.isEmpty()) {
+        find = FileUtil::lookPath(bin,env,true);
+    }
+    return find;
+}
+
+QString FileUtil::lookupLiteBin(const QString &bin, LiteApi::IApplication *app)
+{
+    QString find = FileUtil::findExecute(app->applicationPath()+"/"+bin);
+    if (find.isEmpty()) {
+        find = FileUtil::lookPath(bin,LiteApi::getGoEnvironment(app),true);
+    }
+    return find;
+}
+

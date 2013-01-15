@@ -191,19 +191,7 @@ LiteApp::LiteApp()
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
 }
 
-static QString s_ver = "LiteIDE X15.2";
-
-static QString s_info =
-"2011-2013(c)\n"
-"visualfc@gmail.com\n"
-"\n"
-"http://code.google.com/p/liteide\n"
-"http://code.google.com/p/golangide\n"
-"https://github.com/visualfc/liteide";
-
-
-
-static QImage makeSplashImage()
+static QImage makeSplashImage(LiteApi::IApplication *app)
 {
     QRect r(0,0,400,280);
     QImage image(r.size(),QImage::Format_ARGB32_Premultiplied);
@@ -226,14 +214,14 @@ static QImage makeSplashImage()
     font.setItalic(true);
     painter.setPen(Qt::white);
     painter.setFont(font);
-    painter.drawText(2,2,r.width()-2,th,Qt::AlignCenter,s_ver);
+    painter.drawText(2,2,r.width()-2,th,Qt::AlignCenter,app->version());
 
     font.setPointSize(9);
     font.setItalic(false);
     font.setBold(true);
     painter.setPen(Qt::black);
     painter.setFont(font);
-    painter.drawText(10,th,r.width()-10,bh,Qt::AlignLeft|Qt::AlignVCenter,s_info);
+    painter.drawText(10,th,r.width()-10,bh,Qt::AlignLeft|Qt::AlignVCenter,app->copyright());
 
     painter.drawImage(r.width()-145,r.height()-145,QImage("icon:/images/liteide-logo128.png"));
     return image;
@@ -244,7 +232,7 @@ void LiteApp::load(bool bUseSession)
     QSplashScreen *splash = 0;
     bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
     if (bSplash) {
-        splash = new QSplashScreen(QPixmap::fromImage(makeSplashImage()),Qt::WindowStaysOnTopHint);
+        splash = new QSplashScreen(QPixmap::fromImage(makeSplashImage(this)),Qt::WindowStaysOnTopHint);
     }
     if (bSplash) {
         splash->show();
@@ -445,6 +433,33 @@ QString LiteApp::storagePath() const
     return m_storagePath;
 }
 
+QString LiteApp::shortVer() const
+{
+    return "X16";
+}
+
+QString LiteApp::version() const
+{
+    return "LiteIDE X16";
+}
+
+QString LiteApp::name() const
+{
+    return "LiteIDE";
+}
+
+QString LiteApp::copyright() const
+{
+    static QString s_info =
+    "2011-2013(c)\n"
+    "visualfc@gmail.com\n"
+    "\n"
+    "http://code.google.com/p/liteide\n"
+    "http://code.google.com/p/golangide\n"
+    "https://github.com/visualfc/liteide";
+    return s_info;
+}
+
 void LiteApp::setPluginPath(const QString &path)
 {
     m_pluginPath = path;
@@ -520,33 +535,53 @@ void LiteApp::initPlugins()
 void LiteApp::createActions()
 {
     m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
-    m_newAct->setShortcut(QKeySequence::New);
+    m_actionManager->regAction(m_newAct,"LiteApp.New",QKeySequence::New);
+
     m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File"),m_mainwindow);
-    m_openFileAct->setShortcut(QKeySequence::Open);
+    m_actionManager->regAction(m_openFileAct,"LiteApp.OpenFile",QKeySequence::Open);
+
     m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder"),m_mainwindow);
+    m_actionManager->regAction(m_openFolderAct,"LiteApp.OpenFolder","");
+
     m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder With New Instance"),m_mainwindow);
+    m_actionManager->regAction(m_openFolderNewInstanceAct,"LiteApp.OpenFolderNewInstance","");
+
     m_newInstance = new QAction(tr("New Instance"),m_mainwindow);
+    m_actionManager->regAction(m_newInstance,"LiteApp.NewInstance","");
+
     m_closeAct = new QAction(QIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
-    m_closeAct->setShortcut(QKeySequence("Ctrl+W"));
+    m_actionManager->regAction(m_closeAct,"LiteApp.CloseFile","Ctrl+W");
+
     m_closeAllAct = new QAction(QIcon("icon:images/closeall.png"),tr("Close All Files"),m_mainwindow);
-    m_openProjectAct = new QAction(QIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);
+    m_actionManager->regAction(m_closeAllAct,"LiteApp.CloseAllFiles","");
+
+    m_openProjectAct = new QAction(QIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);    
     m_saveProjectAct = new QAction(QIcon("icon:images/saveproject.png"),tr("Save Project"),m_mainwindow);
+
     m_closeProjectAct = new QAction(QIcon("icon:images/closeproject.png"),tr("Close Folders"),m_mainwindow);
+    m_actionManager->regAction(m_closeProjectAct,"LiteApp.CloseFolders","");
+
     m_saveAct = new QAction(QIcon("icon:images/save.png"),tr("Save File"),m_mainwindow);
-    m_saveAct->setShortcut(QKeySequence::Save);
+    m_actionManager->regAction(m_saveAct,"LiteApp.SaveFile",QKeySequence::Save);
+
     m_saveAsAct = new QAction(tr("Save File As..."),m_mainwindow);
-    m_saveAsAct->setShortcut(QKeySequence::SaveAs);
+    m_actionManager->regAction(m_saveAsAct,"LiteApp.SaveFileAs",QKeySequence::SaveAs);
+
     m_saveAllAct = new QAction(QIcon("icon:images/saveall.png"),tr("Save All Files"),m_mainwindow);
+    m_actionManager->regAction(m_saveAllAct,"LiteApp.SaveAllFiles","");
 
     m_exitAct = new QAction(tr("Exit"),m_mainwindow);
-    m_exitAct->setShortcut(QKeySequence::Quit);
+    m_actionManager->regAction(m_exitAct,"LiteApp.Exit",QKeySequence::Quit);
 
     m_fullScreent = new QAction(tr("Full Screen"),m_mainwindow);
     m_fullScreent->setCheckable(true);
-    m_fullScreent->setShortcut(QKeySequence("Ctrl+Shift+F11"));
+    m_actionManager->regAction(m_fullScreent,"LiteApp.FullScreen","Ctrl+Shift+F11");
 
     m_aboutAct = new QAction(tr("About LiteIDE..."),m_mainwindow);
+    m_actionManager->regAction(m_aboutAct,"LiteApp.About","");
+
     m_aboutPluginsAct = new QAction(tr("About Plugins..."),m_mainwindow);
+    m_actionManager->regAction(m_aboutPluginsAct,"LiteApp.AboutPlugins","");
 
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));
     connect(m_openFileAct,SIGNAL(triggered()),m_fileManager,SLOT(openFiles()));
@@ -722,9 +757,9 @@ void LiteApp::saveSession(const QString &name)
 
     QStringList fileList;
     foreach (IEditor* ed,m_editorManager->sortedEditorList()) {
-        if (ed->mimeType().indexOf("liteide/") == 0) {
-            continue;
-        }
+//        if (ed->mimeType().indexOf("liteide/") == 0) {
+//            continue;
+//        }
         if (ed->filePath().isEmpty()) {
             continue;
         }

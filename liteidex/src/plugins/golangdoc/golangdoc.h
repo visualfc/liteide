@@ -138,7 +138,7 @@ protected:
     LiteApi::IEnvManager *m_envManager;
     GolangApiThread *m_golangApiThread;
     QString m_godocCmd;
-    QString m_findCmd;
+    QString m_godocViewCmd;
     QString m_goapiCmd;
     bool    m_bApiLoaded;
     QStringList m_targetList;

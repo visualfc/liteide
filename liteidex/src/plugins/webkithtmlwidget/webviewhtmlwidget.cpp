@@ -56,7 +56,7 @@ QString WebViewHtmlWidget::className() const
     return "QWebView";
 }
 
-void WebViewHtmlWidget::setSerachPaths(const QStringList &paths)
+void WebViewHtmlWidget::setSearchPaths(const QStringList &paths)
 {
 }
 
@@ -75,7 +75,7 @@ void WebViewHtmlWidget::clear()
     m_widget->setHtml("");
 }
 
-void WebViewHtmlWidget::scroolToAnchor(const QString &anchor)
+void WebViewHtmlWidget::scrollToAnchor(const QString &anchor)
 {
     m_widget->page()->mainFrame()->scrollToAnchor(anchor);
 }

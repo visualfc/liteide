@@ -39,11 +39,11 @@ public:
 public:
     virtual QWidget *widget() const = 0;
     virtual QString className() const = 0;
-    virtual void setSerachPaths(const QStringList &paths) = 0;
+    virtual void setSearchPaths(const QStringList &paths) = 0;
     virtual void setHtml(const QString &html, const QUrl &url) = 0;
     virtual QUrl url() const = 0;
     virtual void clear() = 0;
-    virtual void scroolToAnchor(const QString &anchor) = 0;
+    virtual void scrollToAnchor(const QString &anchor) = 0;
     virtual void setScrollBarValue(Qt::Orientation orientation, int value) = 0;
     virtual int scrollBarValue(Qt::Orientation orientation) const = 0;
     virtual int scrollBarMinimum(Qt::Orientation orientation) const = 0;

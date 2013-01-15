@@ -165,11 +165,11 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     QHBoxLayout *cmdLayout = new QHBoxLayout;
     cmdLayout->setMargin(0);
     QLabel *label = new QLabel("Exec:");
-    label->setToolTip("Execute\tCtrl+,");
-    QAction *q = new QAction(this);
-    q->setShortcut(QKeySequence("Ctrl+,"));
-    m_liteApp->mainWindow()->addAction(q);
-    connect(q,SIGNAL(triggered()),this,SLOT(requestCommand()));
+    QAction *execute = new QAction(tr("Execute"),this);
+    m_liteApp->actionManager()->regAction(execute,"FileSystem.Execute","Ctrl+,");
+
+    m_liteApp->mainWindow()->addAction(execute);
+    connect(execute,SIGNAL(triggered()),this,SLOT(requestCommand()));
     cmdLayout->addWidget(label);
     m_commandEdit = new QLineEdit;
     m_commandEdit->setText("go ");

@@ -150,7 +150,8 @@ void MainWindow::editorModifyChanged(bool b)
 
 void MainWindow::about()
 {
-    AboutDialog *dlg = new AboutDialog(m_liteApp->mainWindow());
+    AboutDialog *dlg = new AboutDialog(m_liteApp,m_liteApp->mainWindow());
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->exec();
 }
 

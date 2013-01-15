@@ -30,6 +30,9 @@ namespace Ui {
     class LiteAppOption;
 }
 
+class QStandardItemModel;
+class QStandardItem;
+
 class LiteAppOption : public LiteApi::IOption
 {
     Q_OBJECT
@@ -41,10 +44,19 @@ public:
     virtual QString name() const;
     virtual QString mimeType() const;
     virtual void apply();
+    virtual void active();
+public slots:
+    void reloadShortcuts();
+    void shortcutsChanaged(QStandardItem*);
+    void resetAllShortcuts();
+    void resetShortcuts();
+    void importShortcuts();
+    void exportShortcuts();
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;
     Ui::LiteAppOption *ui;
+    QStandardItemModel *m_keysModel;
 };
 
 #endif // LITEAPPOPTION_H

@@ -77,44 +77,49 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
     QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),tr("Header (h1)"),this);
-    h1->setShortcut(QKeySequence("Ctrl+1"));
+    m_liteApp->actionManager()->regAction(h1,"Markdown.Header1","Ctrl+1");
 
     QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),tr("Header (h2)"),this);
-    h2->setShortcut(QKeySequence("Ctrl+2"));
+    m_liteApp->actionManager()->regAction(h2,"Markdown.Header2","Ctrl+2");
 
     QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),tr("Header (h3)"),this);
-    h3->setShortcut(QKeySequence("Ctrl+3"));
+    m_liteApp->actionManager()->regAction(h3,"Markdown.Header3","Ctrl+3");
+
     QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),tr("Header (h4)"),this);
-    h4->setShortcut(QKeySequence("Ctrl+4"));
+    m_liteApp->actionManager()->regAction(h4,"Markdown.Header4","Ctrl+4");
+
     QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),tr("Header (h5)"),this);
-    h5->setShortcut(QKeySequence("Ctrl+5"));
+    m_liteApp->actionManager()->regAction(h5,"Markdown.Header2","Ctrl+5");
+
     QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),tr("Header (h6)"),this);
-    h6->setShortcut(QKeySequence("Ctrl+6"));
+    m_liteApp->actionManager()->regAction(h6,"Markdown.Header6","Ctrl+6");
 
     QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),tr("Bold"),this);
-    bold->setShortcut(QKeySequence::Bold);
+    m_liteApp->actionManager()->regAction(bold,"Markdown.Bold",QKeySequence::Bold);
+
     QAction *italic = new QAction(QIcon("icon:markdown/images/italic.png"),tr("Italic"),this);
-    italic->setShortcut(QKeySequence::Italic);
+    m_liteApp->actionManager()->regAction(italic,"Markdown.Italic",QKeySequence::Italic);
+
     QAction *code = new QAction(QIcon("icon:markdown/images/code.png"),tr("Inline Code"),this);
-    code->setShortcut(QKeySequence("Ctrl+K"));
+    m_liteApp->actionManager()->regAction(code,"Markdown.InlineCode","Ctrl+K");
 
     QAction *link = new QAction(QIcon("icon:markdown/images/link.png"),tr("Link"),this);
-    link->setShortcut(QKeySequence("Ctrl+Shift+L"));
+    m_liteApp->actionManager()->regAction(link,"Markdown.Link","Ctrl+Shift+L");
 
     QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),tr("Image"),this);
-    image->setShortcut(QKeySequence("Ctrl+Shift+I"));
+    m_liteApp->actionManager()->regAction(image,"Markdown.Image","Ctrl+Shift+I");
 
     QAction *ul = new QAction(QIcon("icon:markdown/images/ul.png"),tr("Unordered List"),this);
-    ul->setShortcut(QKeySequence("Ctrl+Shift+U"));
+    m_liteApp->actionManager()->regAction(ul,"Markdown.UnorderedList","Ctrl+Shift+U");
 
     QAction *ol = new QAction(QIcon("icon:markdown/images/ol.png"),tr("Ordered List"),this);
-    ol->setShortcut(QKeySequence("Ctrl+Shift+O"));
+    m_liteApp->actionManager()->regAction(ol,"Markdown.OrderedList","Ctrl+Shift+O");
 
     QAction *bq = new QAction(QIcon("icon:markdown/images/quote.png"),tr("Blockquote"),this);
-    bq->setShortcut(QKeySequence("Ctrl+Shift+Q"));
+    m_liteApp->actionManager()->regAction(bq,"Markdown.Blockquote","Ctrl+Shift+Q");
 
     QAction *hr = new QAction(QIcon("icon:markdown/images/hr.png"),tr("Horizontal Rule"),this);
-    hr->setShortcut(QKeySequence("Ctrl+Shift+H"));
+    m_liteApp->actionManager()->regAction(hr,"Markdown.HorizontalRule","Ctrl+Shift+H");
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
 

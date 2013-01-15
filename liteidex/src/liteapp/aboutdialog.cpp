@@ -34,12 +34,12 @@
 //lite_memory_check_end
 
 
-AboutDialog::AboutDialog(QWidget *parent) :
+AboutDialog::AboutDialog(LiteApi::IApplication *app,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_DeleteOnClose);
+    ui->verLabel->setText(app->shortVer());
 }
 
 AboutDialog::~AboutDialog()

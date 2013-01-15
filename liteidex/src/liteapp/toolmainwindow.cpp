@@ -266,6 +266,7 @@ ToolMainWindow::ToolMainWindow(QWidget *parent)
 
     QAction *hideBottomAct = new QAction("HideBottom",this);
     hideBottomAct->setShortcut(QKeySequence(Qt::Key_Escape));
+
     this->addAction(hideBottomAct);
     connect(hideBottomAct,SIGNAL(triggered()),bar->dock1,SLOT(close()));
     connect(hideBottomAct,SIGNAL(triggered()),bar->dock2,SLOT(close()));

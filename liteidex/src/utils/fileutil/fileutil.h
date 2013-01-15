@@ -29,6 +29,7 @@
 #include <QIODevice>
 #include <QStringList>
 #include <QProcessEnvironment>
+#include "liteapi/liteapi.h"
 
 struct FileUtil
 {
@@ -40,6 +41,8 @@ struct FileUtil
     static QString canExec(QString file, QStringList exts = QStringList());
     static QString lookPath(const QString &fileName,const QProcessEnvironment &env, bool bLocalPriority);
     static QString lookPathInDir(const QString &fileName,const QString &dir);
+    static QString lookupGoBin(const QString &bin, LiteApi::IApplication *app);
+    static QString lookupLiteBin(const QString &bin, LiteApi::IApplication *app);
 };
 
 struct GoExecute

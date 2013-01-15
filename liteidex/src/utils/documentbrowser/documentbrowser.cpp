@@ -59,9 +59,7 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
 {
     m_widget = new QWidget;
 
-    m_textBrowser = new QTextBrowser;
-    m_textBrowser->setOpenExternalLinks(false);
-    m_textBrowser->setOpenLinks(false);
+    m_htmlWidget = app->htmlWidgetManager()->createByName(this,"QTextBrowser");
 
     m_toolBar = new QToolBar;
     m_toolBar->setIconSize(LiteApi::getToolBarIconSize());
@@ -85,11 +83,12 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     mainLayout->setSpacing(0);
 
     mainLayout->addWidget(m_toolBar);
-    mainLayout->addWidget(m_textBrowser);
+    mainLayout->addWidget(m_htmlWidget->widget());
     m_widget->setLayout(mainLayout);
 
-    connect(m_textBrowser,SIGNAL(highlighted(QUrl)),this,SIGNAL(highlighted(QUrl)));
-    connect(m_textBrowser,SIGNAL(anchorClicked(QUrl)),this,SLOT(anchorClicked(QUrl)));
+    connect(m_htmlWidget,SIGNAL(linkHovered(QUrl)),this,SIGNAL(linkHovered(QUrl)));
+    connect(m_htmlWidget,SIGNAL(linkClicked(QUrl)),this,SLOT(linkClicked(QUrl)));
+    connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SIGNAL(documentLoaded()));
     connect(m_backwardAct,SIGNAL(triggered()),this,SLOT(backward()));
     connect(m_forwardAct,SIGNAL(triggered()),this,SLOT(forward()));
     connect(m_reloadUrlAct,SIGNAL(triggered()),this,SLOT(reloadUrl()));
@@ -98,8 +97,9 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(this,SIGNAL(forwardAvailable(bool)),m_forwardAct,SLOT(setEnabled(bool)));
 
     m_extension->addObject("LiteApi.IDocumentBrowser",this);
-    m_extension->addObject("LiteApi.QTextBrowser",m_textBrowser);
-    m_textBrowser->installEventFilter(m_liteApp->editorManager());
+    m_extension->addObject("LiteApi.IHtmlWidget",m_htmlWidget);
+    m_extension->addObject("LiteApi.QTextBrowser",m_htmlWidget);
+    m_htmlWidget->installEventFilter(m_liteApp->editorManager());
 
     emit backwardAvailable(false);
     emit forwardAvailable(false);
@@ -132,9 +132,7 @@ bool DocumentBrowser::open(const QString &fileName,const QString &mimeType)
     m_name = info.fileName();
     m_fileName = QDir::toNativeSeparators(fileName);
 
-    QStringList paths = m_textBrowser->searchPaths();
-    paths << info.absolutePath();
-    m_textBrowser->setSearchPaths(paths);
+    m_htmlWidget->setSearchPaths(QStringList()<<info.absolutePath());
 
     QByteArray ba = file.readAll();
 
@@ -144,10 +142,7 @@ bool DocumentBrowser::open(const QString &fileName,const QString &mimeType)
     } else if (htmlType == "text/x-markdown") {
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
         QByteArray out = mdtohtml(ba);
-        setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(out),true);
-    } else {
-        QTextCodec *codec = QTextCodec::codecForLocale();
-        setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(ba),false);
+        setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(out));
     }
     file.close();
     return true;
@@ -185,7 +180,7 @@ void DocumentBrowser::setName(const QString &t)
 
 void DocumentBrowser::setSearchPaths(const QStringList &paths)
 {
-    m_textBrowser->setSearchPaths(paths);
+    m_htmlWidget->setSearchPaths(paths);
 }
 
 QUrl DocumentBrowser::resolveUrl(const QUrl &url) const
@@ -213,12 +208,6 @@ QUrl DocumentBrowser::resolveUrl(const QUrl &url) const
     return url;
 }
 
-void DocumentBrowser::setUrlHtml(const QUrl &url,const QString &data)
-{
-    setUrlHtml(url,data,false);
-    emit documentLoaded();
-}
-
 QToolBar *DocumentBrowser::toolBar()
 {
     return m_toolBar;
@@ -229,9 +218,9 @@ QComboBox *DocumentBrowser::urlComboBox()
     return m_urlComboBox;
 }
 
-QTextBrowser *DocumentBrowser::textBrowser()
+LiteApi::IHtmlWidget *DocumentBrowser::htmlWidget()
 {
-    return m_textBrowser;
+    return m_htmlWidget;
 }
 
 void DocumentBrowser::scrollToAnchor(const QString &text)
@@ -241,10 +230,10 @@ void DocumentBrowser::scrollToAnchor(const QString &text)
     m_url.setFragment(text);
 
     if (text.isEmpty()) {
-        m_textBrowser->horizontalScrollBar()->setValue(0);
-        m_textBrowser->verticalScrollBar()->setValue(0);
+        m_htmlWidget->setScrollBarValue(Qt::Horizontal,0);
+        m_htmlWidget->setScrollBarValue(Qt::Vertical,0);
     } else {
-        m_textBrowser->scrollToAnchor(text);
+        m_htmlWidget->scrollToAnchor(text);
     }
 
     m_urlComboBox->blockSignals(true);
@@ -283,22 +272,18 @@ void DocumentBrowser::scrollToAnchor(const QString &text)
     }
 }
 
-void DocumentBrowser::setUrlHtml(const QUrl &url,const QString &data,bool html)
+void DocumentBrowser::setUrlHtml(const QUrl &url,const QString &data)
 {
     const HistoryEntry &historyEntry = createHistoryEntry();
     if (!data.isEmpty()) {
-        if (html) {
-            m_textBrowser->setHtml(data);
-        } else {
-            m_textBrowser->setText(data);
-        }
+        m_htmlWidget->setHtml(data,url);
     }
     m_url = url;
     if (!url.fragment().isEmpty()) {
-        m_textBrowser->scrollToAnchor(url.fragment());
+        m_htmlWidget->scrollToAnchor(url.fragment());
     } else {
-        m_textBrowser->horizontalScrollBar()->setValue(0);
-        m_textBrowser->verticalScrollBar()->setValue(0);
+        m_htmlWidget->setScrollBarValue(Qt::Horizontal,0);
+        m_htmlWidget->setScrollBarValue(Qt::Vertical,0);
     }
 
     m_urlComboBox->blockSignals(true);
@@ -348,16 +333,16 @@ DocumentBrowser::HistoryEntry DocumentBrowser::createHistoryEntry() const
 {
     HistoryEntry entry;
     entry.url = m_url;
-    entry.hpos = m_textBrowser->horizontalScrollBar()->value();
-    entry.vpos = m_textBrowser->verticalScrollBar()->value();
+    entry.hpos = m_htmlWidget->scrollBarValue(Qt::Horizontal);
+    entry.vpos = m_htmlWidget->scrollBarValue(Qt::Vertical);
     return entry;
 }
 
 void DocumentBrowser::restoreHistoryEntry(const HistoryEntry &entry)
 {
     m_url = entry.url;
-    m_textBrowser->horizontalScrollBar()->setValue(entry.hpos);
-    m_textBrowser->verticalScrollBar()->setValue(entry.vpos);
+    m_htmlWidget->setScrollBarValue(Qt::Horizontal,entry.hpos);
+    m_htmlWidget->setScrollBarValue(Qt::Vertical,entry.vpos);
 }
 
 void DocumentBrowser::backward()
@@ -391,7 +376,7 @@ void DocumentBrowser::forward()
     emit forwardAvailable(m_forwardStack.count() > 0);
 }
 
-void DocumentBrowser::anchorClicked(QUrl url)
+void DocumentBrowser::linkClicked(QUrl url)
 {
     if (url.path().isEmpty() && !url.fragment().isEmpty()) {
         m_liteApp->mainWindow()->statusBar()->clearMessage();

@@ -56,7 +56,7 @@ QString TextBrowserHtmlWidget::className() const
     return QLatin1String("QTextBrowser");
 }
 
-void TextBrowserHtmlWidget::setSerachPaths(const QStringList &paths)
+void TextBrowserHtmlWidget::setSearchPaths(const QStringList &paths)
 {
     m_widget->setSearchPaths(paths);
 }
@@ -88,7 +88,7 @@ void TextBrowserHtmlWidget::clear()
     m_widget->clear();
 }
 
-void TextBrowserHtmlWidget::scroolToAnchor(const QString &anchor)
+void TextBrowserHtmlWidget::scrollToAnchor(const QString &anchor)
 {
     m_widget->scrollToAnchor(anchor);
 }

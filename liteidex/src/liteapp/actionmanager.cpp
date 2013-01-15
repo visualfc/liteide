@@ -46,6 +46,11 @@ ActionManager::ActionManager(QObject *parent) :
 {
 }
 
+ActionManager::~ActionManager()
+{
+    qDeleteAll(m_actionInfoMap);
+}
+
 bool ActionManager::initWithApp(IApplication *app)
 {
     if (!IActionManager::initWithApp(app)) {
@@ -189,4 +194,65 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
     } else {
         m_viewMenu->addAction(act);
     }
+}
+
+void ActionManager::regAction(QAction *act, const QString &id, const QString &defShortcuts, bool standard)
+{
+    ActionInfo *info = m_actionInfoMap.value(id);
+    if (!info) {
+        info = new ActionInfo;
+        if (act) {
+            info->label = act->text();
+        }
+        info->standard = standard;
+        info->defShortcuts = defShortcuts;
+        info->shortcuts = m_liteApp->settings()->value("shortcuts/"+id,defShortcuts).toString();
+        foreach(QString key, info->shortcuts.split(";",QString::SkipEmptyParts)) {
+            info->keys.append(QKeySequence(key));
+        }
+        m_actionInfoMap.insert(id,info);
+    }    
+    if (!act) {
+        return;
+    }
+    act->setShortcuts(info->keys);
+    if (!info->shortcuts.isEmpty()) {
+        act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->shortcuts));
+    }
+    info->actions.append(act);
+}
+
+void ActionManager::regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def)
+{
+    regAction(act,id,QKeySequence(def).toString(),true);
+}
+
+QStringList ActionManager::actionKeys() const
+{
+    return m_actionInfoMap.keys();
+}
+
+ActionInfo *ActionManager::actionInfo(const QString &key)
+{
+    return m_actionInfoMap.value(key);
+}
+
+void ActionManager::setActionShourtcuts(const QString &id, const QString &shortcuts)
+{
+    ActionInfo *info = m_actionInfoMap.value(id);
+    if (!info) {
+        return;
+    }
+    info->shortcuts = shortcuts;
+    info->keys.clear();
+    foreach(QString key, shortcuts.split(";",QString::SkipEmptyParts)) {
+        info->keys.append(QKeySequence(key));
+    }
+    foreach (QAction *act, info->actions) {
+        act->setShortcuts(info->keys);
+        if (!info->shortcuts.isEmpty()) {
+            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->shortcuts));
+        }
+    }
+    m_liteApp->settings()->setValue("shortcuts/"+id,shortcuts);
 }

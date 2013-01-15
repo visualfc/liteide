@@ -237,17 +237,8 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
-    QString goroot = env.value("GOROOT");
-    QString gobin = env.value("GOBIN");
-    if (!goroot.isEmpty() && gobin.isEmpty()) {
-        gobin = goroot+"/bin";
-    }
-    QString gofmt = FileUtil::findExecute(gobin+"/gofmt");
-    if (gofmt.isEmpty()) {
-        gofmt = FileUtil::lookPath("gofmt",env,true);
-    }
+    m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
     m_process->setProcessEnvironment(env);
-    m_gofmtCmd = gofmt;
 }
 
 void GolangFmt::gofmt()

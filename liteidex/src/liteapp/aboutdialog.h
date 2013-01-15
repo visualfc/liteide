@@ -25,6 +25,7 @@
 #define ABOUTDIALOG_H
 
 #include <QDialog>
+#include "liteapi/liteapi.h"
 
 namespace Ui {
     class AboutDialog;
@@ -35,7 +36,7 @@ class AboutDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutDialog(QWidget *parent = 0);
+    explicit AboutDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     ~AboutDialog();
 
 private:

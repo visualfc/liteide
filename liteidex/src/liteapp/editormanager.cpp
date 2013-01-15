@@ -101,13 +101,14 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextMenu = new QMenu;
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
-    closeAct->setShortcut(QKeySequence("Ctrl+W"));
+    closeAct->setShortcut(QKeySequence("Ctrl+W"));    
     QAction *closeOthersAct = new QAction(tr("Close Others Tabs"),this);
     QAction *closeAllAct = new QAction(tr("Close All Tabs"),this);
     QAction *closeLeftAct = new QAction(tr("Close Left Tabs"),this);
     QAction *closeRightAct = new QAction(tr("Close Right Tabs"),this);
     QAction *closeSameFolderFiles = new QAction(tr("Close Same Folder Files"),this);
     QAction *closeOtherFolderFiles = new QAction(tr("Close Other Folder Files"),this);
+
     QAction *moveToAct = new QAction(tr("Move To New Window"),this);
 
     m_tabContextMenu->addAction(closeAct);
@@ -174,11 +175,11 @@ void EditorManager::createActions()
 
     m_goBackAct = new QAction(tr("GoBack"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
-    m_goBackAct->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Left));
+    m_liteApp->actionManager()->regAction(m_goBackAct,"LiteApp.Backward","Alt+Left");
 
     m_goForwardAct = new QAction(tr("GoForward"),this);
     m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
-    m_goForwardAct->setShortcut(Qt::ALT+Qt::Key_Right);
+    m_liteApp->actionManager()->regAction(m_goForwardAct,"LiteApp.Forward","Alt+Right");
 
     updateNavigatorActions();
 

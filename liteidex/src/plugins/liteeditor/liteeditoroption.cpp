@@ -53,7 +53,13 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     const QStringList families = db.families();
     ui->familyComboBox->addItems(families);
 
+#if defined(Q_OS_WIN)
     m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
+#elif defined(Q_OS_LINUX)
+    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
+#elif defined(Q_OS_MAC)
+    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
+#endif
     m_fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
 
     int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();

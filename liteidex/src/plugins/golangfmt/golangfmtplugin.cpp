@@ -55,8 +55,11 @@ bool GolangFmtPlugin::load(LiteApi::IApplication *app)
 
     m_fmt = new GolangFmt(app,this);
     m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
-    m_gofmtAct->setShortcut(QKeySequence("Shift+F7"));
+    m_liteApp->actionManager()->regAction(m_gofmtAct,"Golang.Gofmt","Shift+F7");
+
     m_goplayAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
+    m_liteApp->actionManager()->regAction(m_goplayAct,"Golang.Goplayfmt","Shift+F7");
+
     connect(m_gofmtAct,SIGNAL(triggered()),m_fmt,SLOT(gofmt()));
     connect(m_goplayAct,SIGNAL(triggered()),this,SLOT(goplayFmt()));
 
@@ -82,10 +85,11 @@ void GolangFmtPlugin::appLoaded()
         if (m_playEditor->mimeType() != "text/x-gosrc") {
             return;
         }
+        m_playEditor->widget()->addAction(m_goplayAct);
         QMenu *menu = LiteApi::getContextMenu(m_playEditor);
         if (menu) {
             menu->addSeparator();
-            menu->addAction(m_goplayAct);
+            menu->addAction(m_goplayAct);            
         }
     }
 }

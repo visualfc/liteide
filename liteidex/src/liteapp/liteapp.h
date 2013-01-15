@@ -85,6 +85,11 @@ public:
     virtual QString pluginPath() const;
     virtual QString storagePath() const;
 
+    virtual QString shortVer() const;
+    virtual QString version() const;
+    virtual QString name() const;
+    virtual QString copyright() const;
+
     virtual QList<IPlugin*> pluginList() const;
 
     virtual void loadSession(const QString &name);

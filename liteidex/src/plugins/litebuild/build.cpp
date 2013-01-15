@@ -129,6 +129,7 @@ void Build::make()
 
     foreach(LiteApi::BuildAction *ba,m_actionList) {
         QAction *act = this->makeAction(ba);
+        act->setObjectName(ba->id());
         QString idMenu = ba->menu();
         if (idMenu.isEmpty()) {
             QMenu *menu = m_idMenuMap.value(ba->id());
@@ -136,7 +137,7 @@ void Build::make()
                 QAction *menuAction = menu->menuAction();
                 menuAction->setObjectName(act->objectName());
                 menuAction->setText(act->text());
-                menuAction->setToolTip(act->toolTip());
+                //menuAction->setToolTip(act->toolTip());
                 menuAction->setIcon(act->icon());
                 connect(menuAction,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
                 menu->addAction(act);

@@ -149,7 +149,12 @@ void WelcomeBrowser::loadData()
 
 
     QStringList list;
-    foreach (QString scheme, m_liteApp->fileManager()->schemeList()) {
+    QStringList schemeList;
+    //schemeList = m_liteApp->fileManager()->schemeList();
+    schemeList << "folder" << "file";
+    schemeList.append(m_liteApp->fileManager()->schemeList());
+    schemeList.removeDuplicates();
+    foreach (QString scheme, schemeList) {
         QString s = scheme.left(1).toUpper()+scheme.right(scheme.length()-1);
         list.append(QString("<h3><i>Recent %1</i></h3>").arg(s));
         list.append("<table border=\"0\"><tr><td>");

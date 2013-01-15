@@ -25,6 +25,7 @@
 #define __LITEDOCBROWSERAPI_H__
 
 #include "liteapi/liteapi.h"
+#include "liteapi/litehtml.h"
 #include <QTextBrowser>
 
 class QComboBox;
@@ -40,9 +41,9 @@ public:
     virtual void scrollToAnchor(const QString &text) = 0;
     virtual QToolBar *toolBar() = 0;
     virtual QComboBox *urlComboBox() = 0;
-    virtual QTextBrowser *textBrowser() = 0;
+    virtual IHtmlWidget *htmlWidget() = 0;
 signals:
-    void highlighted(const QUrl &url);
+    void linkHovered(const QUrl &url);
     void requestUrl(const QUrl &url);
     void forwardAvailable(bool available);
     void backwardAvailable(bool available);

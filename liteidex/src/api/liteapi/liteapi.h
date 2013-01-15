@@ -472,6 +472,15 @@ enum VIEWMENU_ACTION_POS
     ViewMenuLastPos
 };
 
+struct ActionInfo {
+    QString label;
+    QString defShortcuts;
+    QString shortcuts;
+    bool    standard;
+    QList<QKeySequence> keys;
+    QList<QAction*> actions;
+};
+
 class IActionManager : public IManager
 {
     Q_OBJECT
@@ -487,6 +496,11 @@ public:
     virtual void removeToolBar(QToolBar* toolBar) = 0;
     virtual QList<QString> toolBarList() const = 0;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act) = 0;
+    virtual void regAction(QAction *act, const QString &id, const QString &defShortcuts, bool standard = false) = 0;
+    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
+    virtual QStringList actionKeys() const = 0;
+    virtual ActionInfo *actionInfo(const QString &key) = 0;
+    virtual void setActionShourtcuts(const QString &id, const QString &shortcuts) = 0;
 };
 
 class IGoProxy : public QObject
@@ -528,6 +542,11 @@ public:
     virtual QString applicationPath() const = 0;
     virtual QString pluginPath() const = 0;
     virtual QString storagePath() const = 0;
+
+    virtual QString shortVer() const = 0;
+    virtual QString version() const = 0;
+    virtual QString name() const = 0;
+    virtual QString copyright() const = 0;
 
     virtual QList<IPlugin*> pluginList() const = 0;
 
@@ -668,7 +687,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X15.1")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X16")
 
 
 #endif //__LITEAPI_H__

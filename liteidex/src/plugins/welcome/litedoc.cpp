@@ -62,7 +62,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_browserAct);
 
     connect(m_docBrowser,SIGNAL(requestUrl(QUrl)),this,SLOT(openUrl(QUrl)));
-    connect(m_docBrowser,SIGNAL(highlighted(QUrl)),this,SLOT(highlighted(QUrl)));
+    connect(m_docBrowser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlighted(QUrl)));
 
     QString path = m_liteApp->resourcePath()+"/welcome/doc.html";
     QFile file(path);

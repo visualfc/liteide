@@ -27,7 +27,12 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QLocale>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QDebug>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -103,6 +108,22 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
+
+    m_keysModel = new QStandardItemModel(0,4,this);
+    m_keysModel->setHeaderData(0,Qt::Horizontal,tr("Command"));
+    m_keysModel->setHeaderData(1,Qt::Horizontal,tr("Label"));
+    m_keysModel->setHeaderData(2,Qt::Horizontal,tr("Shortcuts"));
+    m_keysModel->setHeaderData(3,Qt::Horizontal,tr("Standard"));
+    ui->keysTreeView->setModel(m_keysModel);
+    ui->keysTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    ui->standardCheckBox->setChecked(true);
+
+    connect(m_keysModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(shortcutsChanaged(QStandardItem*)));
+    connect(ui->resetAllButton,SIGNAL(clicked()),this,SLOT(resetAllShortcuts()));
+    connect(ui->resetButton,SIGNAL(clicked()),this,SLOT(resetShortcuts()));
+    connect(ui->importButton,SIGNAL(clicked()),this,SLOT(importShortcuts()));
+    connect(ui->exportButton,SIGNAL(clicked()),this,SLOT(exportShortcuts()));
+    connect(ui->standardCheckBox,SIGNAL(toggled(bool)),this,SLOT(reloadShortcuts()));
 }
 
 LiteAppOption::~LiteAppOption()
@@ -162,4 +183,181 @@ void LiteAppOption::apply()
             qApp->setStyleSheet(styleSheet);
         }
     }
+
+    for (int i = 0; i < m_keysModel->rowCount(); i++) {
+        QStandardItem *id = m_keysModel->item(i,0);
+        if (!id) {
+            continue;
+        }
+        QStandardItem *bind = m_keysModel->item(i,2);
+        if (!bind) {
+            continue;
+        }
+        m_liteApp->actionManager()->setActionShourtcuts(id->text(),bind->text());
+    }
+}
+
+void LiteAppOption::active()
+{
+    this->reloadShortcuts();
+}
+
+void LiteAppOption::reloadShortcuts()
+{
+    m_keysModel->removeRows(0,m_keysModel->rowCount());
+    bool bCheckStandard = ui->standardCheckBox->isChecked();
+    foreach (QString id, m_liteApp->actionManager()->actionKeys()) {
+        LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id);
+        if (!info) {
+            continue;
+        }
+        if (bCheckStandard && info->standard && (info->shortcuts == info->defShortcuts)) {
+            continue;
+        }
+        QStandardItem *item = new QStandardItem(id);
+        item->setEditable(false);
+        QStandardItem *label = new QStandardItem(info->label);
+        label->setEditable(false);
+        QStandardItem *std = new QStandardItem;
+        std->setCheckable(true);
+        std->setEnabled(false);
+        std->setCheckState(info->standard?Qt::Checked:Qt::Unchecked);
+        QStandardItem *bind = new QStandardItem(info->shortcuts);
+        bind->setEditable(true);
+        if (info->shortcuts != info->defShortcuts) {
+            QFont font = bind->font();
+            font.setBold(true);
+            bind->setFont(font);            
+        }
+        m_keysModel->appendRow(QList<QStandardItem*>() << item << label << bind << std);
+    }
+}
+
+void LiteAppOption::shortcutsChanaged(QStandardItem *bind)
+{
+    if (!bind) {
+        return;
+    }
+    QStandardItem *item = m_keysModel->item(bind->row(),0);
+    if (!item) {
+        return;
+    }
+    QString id = item->text();
+    LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id);
+    if (!info) {
+        return;
+    }
+    QFont font = bind->font();
+    if (info->defShortcuts != bind->text()) {
+        font.setBold(true);
+    } else {
+        font.setBold(false);
+    }
+    bind->setFont(font);
+}
+
+void LiteAppOption::resetAllShortcuts()
+{
+    for (int i = 0; i < m_keysModel->rowCount(); i++) {
+        QStandardItem *id = m_keysModel->item(i,0);
+        if (!id) {
+            continue;
+        }
+        QStandardItem *bind = m_keysModel->item(i,2);
+        if (!bind) {
+            continue;
+        }
+        LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id->text());
+        if (!info) {
+            continue;
+        }
+        bind->setText(info->defShortcuts);
+        QFont font = bind->font();
+        font.setBold(false);
+        bind->setFont(font);
+    }
+}
+
+void LiteAppOption::resetShortcuts()
+{
+    QModelIndex index = ui->keysTreeView->currentIndex();
+    if (!index.isValid()) {
+        return;
+    }
+    QStandardItem *id = m_keysModel->item(index.row(),0);
+    if (!id) {
+        return;
+    }
+    QStandardItem *bind = m_keysModel->item(index.row(),2);
+    if (!bind) {
+        return;
+    }
+    LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id->text());
+    if (!info) {
+        return;
+    }
+    bind->setText(info->defShortcuts);
+    QFont font = bind->font();
+    font.setBold(false);
+    bind->setFont(font);
+}
+
+void LiteAppOption::importShortcuts()
+{
+    QString dir = m_liteApp->resourcePath()+"/liteapp/kms";
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Export Keyboard Mapping Scheme"),dir,"Import Mapping Scheme (*.kms)");
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QSettings read(filePath,QSettings::IniFormat);
+    if (!read.childGroups().contains("Shortcuts",Qt::CaseInsensitive)) {
+        QMessageBox::critical(m_liteApp->mainWindow(),"LiteIDE",QString(tr("Error read file %1")).arg(filePath));
+        return;
+    }
+    read.beginGroup("Shortcuts");
+    for (int i = 0; i < m_keysModel->rowCount(); i++) {
+        QStandardItem *id = m_keysModel->item(i,0);
+        if (!id) {
+            continue;
+        }
+        QStandardItem *bind = m_keysModel->item(i,2);
+        if (!bind) {
+            continue;
+        }
+        QVariant val = read.value(id->text());
+        if (!val.isValid()) {
+            continue;
+        }
+        bind->setText(val.toString());
+    }
+    read.endGroup();
+}
+
+void LiteAppOption::exportShortcuts()
+{
+    QString dir = m_liteApp->resourcePath()+"/liteapp/kms";
+    QString filePath = QFileDialog::getSaveFileName(m_liteApp->mainWindow(),tr("Export Keyboard Mapping Scheme"),dir,"Keyboard Mapping Scheme (*.kms)");
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    QSettings write(filePath,QSettings::IniFormat);
+    if (!write.isWritable()) {
+        QMessageBox::critical(m_liteApp->mainWindow(),"LiteIDE",QString(tr("Error write file %1")).arg(filePath));
+        return;
+    }
+    write.clear();
+    write.beginGroup("Shortcuts");
+    for (int i = 0; i < m_keysModel->rowCount(); i++) {
+        QStandardItem *id = m_keysModel->item(i,0);
+        if (!id) {
+            continue;
+        }
+        QStandardItem *bind = m_keysModel->item(i,2);
+        if (!bind) {
+            continue;
+        }
+        write.setValue(id->text(),bind->text());
+    }
+    write.endGroup();
 }

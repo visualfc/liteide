@@ -79,21 +79,19 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     layout->addWidget(m_replaceEditor->widget());
 
     m_findAct = new QAction(tr("Find"),this);
-    m_findAct->setShortcut(QKeySequence::Find);
-    //m_findAct->setCheckable(true);
+    m_liteApp->actionManager()->regAction(m_findAct,"LiteFind.Find",QKeySequence::Find);
 
     m_findNextAct = new QAction(tr("Find Next"),this);
-    m_findNextAct->setShortcut(QKeySequence::FindNext);
+    m_liteApp->actionManager()->regAction(m_findNextAct,"LiteFind.FindNext",QKeySequence::FindNext);
+
     m_findPrevAct = new QAction(tr("Find Previous"),this);
-    m_findPrevAct->setShortcut(QKeySequence::FindPrevious);
+    m_liteApp->actionManager()->regAction(m_findPrevAct,"LiteFind.FindPrevious",QKeySequence::FindPrevious);
 
     m_replaceAct = new QAction(tr("Replace"),this);
-    m_replaceAct->setShortcut(QKeySequence::Replace);
-    //m_replaceAct->setCheckable(true);
+    m_liteApp->actionManager()->regAction(m_replaceAct,"LiteFind.Replace",QKeySequence::Replace);
 
     m_fileSearchAct = new QAction(tr("File Search"),this);
-    m_fileSearchAct->setShortcut(QKeySequence("CTRL+SHIFT+F"));
-   // m_fileSearchAct->setCheckable(true);
+    m_liteApp->actionManager()->regAction(m_fileSearchAct,"LiteFind.FileSearch","Ctrl+Shift+F");
 
     menu->addAction(m_findAct);
     menu->addAction(m_findNextAct);

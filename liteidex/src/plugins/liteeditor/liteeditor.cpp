@@ -197,22 +197,22 @@ void LiteEditor::clipbordDataChanged()
 void LiteEditor::createActions()
 {
     m_undoAct = new QAction(QIcon("icon:liteeditor/images/undo.png"),tr("Undo"),this);
-    m_undoAct->setShortcut(QKeySequence::Undo);
+    m_liteApp->actionManager()->regAction(m_undoAct,"LiteEditor.Undo",QKeySequence::Undo);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
-    m_redoAct->setShortcut(QKeySequence::Redo);
+    m_liteApp->actionManager()->regAction(m_redoAct,"LiteEditor.Redo",QKeySequence::Redo);
 
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
-    m_cutAct->setShortcut(QKeySequence::Cut);
+    m_liteApp->actionManager()->regAction(m_cutAct,"LiteEditor.Cut",QKeySequence::Cut);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
-    m_copyAct->setShortcut(QKeySequence::Copy);
+    m_liteApp->actionManager()->regAction(m_copyAct,"LiteEditor.Copy",QKeySequence::Copy);
 
     m_pasteAct = new QAction(QIcon("icon:liteeditor/images/paste.png"),tr("Paste"),this);
-    m_pasteAct->setShortcut(QKeySequence::Paste);
+    m_liteApp->actionManager()->regAction(m_pasteAct,"LiteEditor.Paste",QKeySequence::Paste);
 
     m_selectAllAct = new QAction(tr("Select All"),this);
-    m_selectAllAct->setShortcut(QKeySequence::SelectAll);
+    m_liteApp->actionManager()->regAction(m_selectAllAct,"LiteEditor.SelectAll",QKeySequence::SelectAll);
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML"),this);
 #ifndef QT_NO_PRINTER
@@ -221,27 +221,29 @@ void LiteEditor::createActions()
     m_filePrintPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview Document"),this);
 #endif
     m_gotoPrevBlockAct = new QAction(tr("Goto Previous Block"),this);
-    m_gotoPrevBlockAct->setShortcut(QKeySequence("Ctrl+["));
-    m_gotoNextBlockAct = new QAction(tr("Goto Next block"),this);
-    m_gotoNextBlockAct->setShortcut(QKeySequence("Ctrl+]"));
+    m_liteApp->actionManager()->regAction(m_gotoPrevBlockAct,"LiteEditor.GotoPreviousBlock","Ctrl+[");
+
+    m_gotoNextBlockAct = new QAction(tr("Goto Next Block"),this);
+    m_liteApp->actionManager()->regAction(m_gotoNextBlockAct,"LiteEditor.GotoNextBlock","Ctrl+]");
+
 
     m_selectBlockAct = new QAction(tr("Select Block"),this);
-    m_selectBlockAct->setShortcut(QKeySequence("Ctrl+U"));
+    m_liteApp->actionManager()->regAction(m_selectBlockAct,"LiteEditor.SelectBlock","Ctrl+U");
 
     m_gotoMatchBraceAct = new QAction(tr("Goto Match Brace"),this);
-    m_gotoMatchBraceAct->setShortcut(QKeySequence("Ctrl+E"));
+    m_liteApp->actionManager()->regAction(m_gotoMatchBraceAct,"LiteEditor.GotoMatchBrace","Ctrl+E");
 
-    QAction *selectNextParamAct = new QAction(tr("Select Next Param"),this);
-    selectNextParamAct->setShortcut(QKeySequence("Ctrl+P"));
-    m_widget->addAction(selectNextParamAct);
-    connect(selectNextParamAct,SIGNAL(triggered()),this,SLOT(selectNextParam()));
+    m_foldAct = new QAction(tr("Fold"),this);   
+    m_liteApp->actionManager()->regAction(m_foldAct,"LiteEditor.Fold","Ctrl+<");
 
-    m_foldAct = new QAction(tr("Fold"),this);
-    m_foldAct->setShortcut(QKeySequence("Ctrl+<"));
     m_unfoldAct = new QAction(tr("Unfold"),this);
-    m_unfoldAct->setShortcut(QKeySequence("Ctrl+>"));
+    m_liteApp->actionManager()->regAction(m_unfoldAct,"LiteEditor.Unfold","Ctrl+>");
+
     m_foldAllAct = new QAction(tr("Fold All"),this);
+    m_liteApp->actionManager()->regAction(m_foldAllAct,"LiteEditor.FoldAll","");
+
     m_unfoldAllAct = new QAction(tr("Unfold All"),this);
+    m_liteApp->actionManager()->regAction(m_unfoldAllAct,"LiteEditor.UnfoldAll","");
 
     connect(m_foldAct,SIGNAL(triggered()),m_editorWidget,SLOT(fold()));
     connect(m_unfoldAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfold()));
@@ -249,37 +251,39 @@ void LiteEditor::createActions()
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
     m_gotoLineAct = new QAction(tr("Goto Line"),this);
-    m_gotoLineAct->setShortcut(QKeySequence("Ctrl+G"));
+    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+G");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
-    m_duplicateAct->setShortcut(QKeySequence("Ctrl+D"));
-    m_widget->addAction(m_duplicateAct);
+    m_liteApp->actionManager()->regAction(m_duplicateAct,"LiteEditor.Duplicate","Ctrl+D");
+
     connect(m_duplicateAct,SIGNAL(triggered()),m_editorWidget,SLOT(duplicate()));
 
+    m_deleteLineAct = new QAction(tr("Delete Line"),this);
+    m_liteApp->actionManager()->regAction(m_deleteLineAct,"LiteEditor.DeleteLine","Ctrl+Shift+K");
+
+    connect(m_deleteLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(deleteLine()));
+
     m_increaseFontSizeAct = new QAction(tr("Increase Font Size"),this);
-    m_increaseFontSizeAct->setShortcuts(QList<QKeySequence>()
-                                        << QKeySequence("Ctrl++")
-                                        << QKeySequence("Ctrl+=")
-                                        );
+    m_liteApp->actionManager()->regAction(m_increaseFontSizeAct,"LiteEditor.IncreaseFontSize","Ctrl++;Ctrl+=");
 
     m_decreaseFontSizeAct = new QAction(tr("Decrease Font Size"),this);
-    m_decreaseFontSizeAct->setShortcut(QKeySequence("Ctrl+-"));
+    m_liteApp->actionManager()->regAction(m_decreaseFontSizeAct,"LiteEditor.DecreaseFontSize","Ctrl+-");
 
     m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
-    m_resetFontSizeAct->setShortcut(QKeySequence("Ctrl+0"));
+    m_liteApp->actionManager()->regAction(m_resetFontSizeAct,"LiteEditor.ResetFontSize","Ctrl+0");
 
 
-    m_widget->addAction(m_foldAct);
-    m_widget->addAction(m_unfoldAct);
-    m_widget->addAction(m_gotoLineAct);
+//    m_widget->addAction(m_foldAct);
+//    m_widget->addAction(m_unfoldAct);
+//    m_widget->addAction(m_gotoLineAct);
 
-    m_widget->addAction(m_gotoPrevBlockAct);
-    m_widget->addAction(m_gotoNextBlockAct);
-    m_widget->addAction(m_selectBlockAct);
-    m_widget->addAction(m_gotoMatchBraceAct);
+//    m_widget->addAction(m_gotoPrevBlockAct);
+//    m_widget->addAction(m_gotoNextBlockAct);
+//    m_widget->addAction(m_selectBlockAct);
+//    m_widget->addAction(m_gotoMatchBraceAct);
 
     connect(m_editorWidget,SIGNAL(undoAvailable(bool)),m_undoAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(redoAvailable(bool)),m_redoAct,SLOT(setEnabled(bool)));
@@ -401,6 +405,7 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_copyAct);
     m_editMenu->addAction(m_pasteAct);
     m_editMenu->addAction(m_duplicateAct);
+    m_editMenu->addAction(m_deleteLineAct);
     m_editMenu->addSeparator();
     QMenu *expMenu = m_editMenu->addMenu(tr("Print"));
     //expMenu->addAction(m_exportHtmlAct);

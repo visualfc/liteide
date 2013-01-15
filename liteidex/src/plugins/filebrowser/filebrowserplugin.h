@@ -48,7 +48,7 @@ public:
         m_info->setId("plugin/filebrowser");
         m_info->setName("FileBrowser");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x13");
+        m_info->setVer("x16");
         m_info->setInfo("File Browser");
     }
 };
