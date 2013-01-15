@@ -913,11 +913,18 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         m_workDir = this->envToValue(work,env,sysenv);
     }
 
-    if (!QFileInfo(cmd).exists()) {
-        QString findCmd = FileUtil::lookPathInDir(cmd,m_workDir);
-        if (!findCmd.isEmpty()) {
-            cmd = findCmd;
-        }
+//    if (!QFileInfo(cmd).exists()) {
+//        QString findCmd = FileUtil::lookPathInDir(cmd,m_workDir);
+//        if (!findCmd.isEmpty()) {
+//            cmd = findCmd;
+//        }
+//    }
+    QString shell = FileUtil::lookPathInDir(cmd,m_workDir);
+    if (shell.isEmpty()) {
+        shell = FileUtil::lookPath(cmd,sysenv,false);
+    }
+    if (!shell.isEmpty()) {
+        cmd = shell;
     }
 
     if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
