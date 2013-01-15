@@ -305,7 +305,7 @@ void LiteAppOption::resetShortcuts()
 void LiteAppOption::importShortcuts()
 {
     QString dir = m_liteApp->resourcePath()+"/liteapp/kms";
-    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Export Keyboard Mapping Scheme"),dir,"Import Mapping Scheme (*.kms)");
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Import Keyboard Mapping Scheme"),dir,"Import Mapping Scheme (*.kms)");
     if (filePath.isEmpty()) {
         return;
     }
