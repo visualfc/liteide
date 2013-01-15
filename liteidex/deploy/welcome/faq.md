@@ -22,10 +22,11 @@ Example `win32.env`
 	#win32 environment
 	
 	GOROOT=c:\go
+	GOBIN=
 	GOARCH=386
 	GOOS=windows
 	
-	PATH=%GOROOT%\bin;%PATH%
+	PATH=%GOBIN%;%GOROOT%\bin;%PATH%
 	
 	LITEIDE_GDB=gdb
 	LITEIDE_MAKE=mingw32-make
@@ -40,10 +41,11 @@ Example `linux32.env`
 	#linux32 environment
 	
 	GOROOT=$HOME/go
+	GOBIN=
 	GOARCH=386
 	GOOS=linux
 	
-	PATH=$GOROOT/bin:$PATH
+	PATH=$GOBIN:$GOROOT/bin:$PATH
 	
 	LITEIDE_GDB=gdb
 	LITEIDE_MAKE=make
@@ -63,7 +65,7 @@ Example gosrc.xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 		<mime-type type="text/x-gosrc" id="gosrc" work="$(EDITOR_DIR)" ver="1">
-			<config id="Go" name="GO" value="$(GOROOT)/bin/go"/>
+			<config id="Go" name="GO" value="go"/>
 			<config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>
 			<config id="ErrRegex" name="ERRREGEX" value="([\w\d_\\/\.]+):(\d+):"/>
 			<custom id="TargetArgs" name="TARGETARGS" value=""/>
@@ -124,10 +126,11 @@ example LiteEnv -> win64.env
 	#win64 environment
 	
 	GOROOT=c:\go-w64
+	GOBIN=
 	GOARCH=amd64
 	GOOS=windows
 	
-	PATH=%GOROOT%\bin;%PATH%
+	PATH=%GOBIN%;%GOROOT%\bin;%PATH%
 	
 	LITEIDE_GDB=gdb64
 	LITEIDE_MAKE=mingw32-make
@@ -138,6 +141,18 @@ example LiteEnv -> win64.env
 	
 ### WIN32 and WIN64
 WIN32 request gdb.exe,WIN64 request gdb64.exe.
+
+## Keybord Mapping Scheme
+LiteIDE - View - Options : LiteApp - Keybord
+Double clicked item shortcuts and editor, 
+press `apply` to update actions.
+
+### Formats:
+
+	* Base: Ctrl+B
+	* Base: Ctrl+Shift+B
+	* And: Ctrl+K,Ctrl+U
+	* Or: Ctrl+Y;Ctrl+Shift+Z
 
 ## Golang cross-compiler
 
@@ -182,3 +197,18 @@ Cross-compiler setting $CGO_ENABLED  to 0
 		> export CGO_ENABLED=0
 		> cd go/src
 		> all.bath
+
+### LiteIDE cross-compiler 
+
+Select cross-compiler environment, editor and modify `GOROOT` and `GOBIN` to save. Rebuild project for generic cross-compiler target.
+
+Example cross-compiler Linux amd64
+
+	GOROOT=c:\go
+	GOBIN=
+	GOARCH=amd64
+	GOOS=linux
+	CGO_ENABLED=0
+	
+	PATH=%GOBIN%;%GOROOT%\bin;%PATH%
+	...
