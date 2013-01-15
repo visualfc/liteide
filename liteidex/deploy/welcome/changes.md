@@ -6,8 +6,8 @@
 ### 2013.1.16 Ver x16
 * LiteIDE:
 	* support keybord mapping scheme
-	* fix remove GOBIN enviroment setup	
-	* fix lookup go command in $PATH
+	* fix: lookup go command in $PATH
+	* fix: remove GOBIN enviroment setup	
   
 ### 2013.1.10 Ver x15.2
 * LiteIDE:
