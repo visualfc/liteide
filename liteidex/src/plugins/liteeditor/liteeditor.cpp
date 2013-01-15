@@ -584,6 +584,7 @@ QByteArray LiteEditor::utf8Data() const {
 
 void LiteEditor::gotoLine(int line, int column, bool center)
 {
+    m_editorWidget->setFocus();
     m_editorWidget->gotoLine(line,column,center);
 }
 
