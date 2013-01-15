@@ -340,6 +340,10 @@ void LiteAppOption::exportShortcuts()
     if (filePath.isEmpty()) {
         return;
     }
+    QFileInfo info(filePath);
+    if (info.suffix() != "kms") {
+        filePath += ".kms";
+    }
 
     QSettings write(filePath,QSettings::IniFormat);
     if (!write.isWritable()) {
