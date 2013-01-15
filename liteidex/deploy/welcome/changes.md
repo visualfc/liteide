@@ -7,7 +7,8 @@
 * LiteIDE:
 	* support keybord mapping scheme
 	* fix: lookup go command in $PATH
-	* fix: remove GOBIN enviroment setup	
+	* fix: remove GOBIN enviroment setup
+	* fix: empty editor cursor position	
   
 ### 2013.1.10 Ver x15.2
 * LiteIDE:
