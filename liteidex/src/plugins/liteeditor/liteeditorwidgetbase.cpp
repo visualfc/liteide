@@ -148,7 +148,6 @@ void LiteEditorWidgetBase::initLoadDocument()
 {
     m_lastSaveRevision = document()->revision();
     document()->setModified(false);
-    moveCursor(QTextCursor::Start);
 }
 
 
@@ -329,6 +328,7 @@ int LiteEditorWidgetBase::extraAreaWidth()
         space += foldBoxWidth(fm);
     }
     space += 2;
+
     return space;
 }
 
@@ -1458,6 +1458,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
+
     bool hasSelection = cursor.hasSelection();
     int selectionStart = cursor.selectionStart();
     int selectionEnd = cursor.selectionEnd();

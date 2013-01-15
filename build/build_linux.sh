@@ -48,7 +48,7 @@ echo build liteide tools ...
 cd $LITEIDE_ROOT
 export GOPATH=$PWD
 
-go install -ldflags "-s -r ." -v liteidex
+#go install -ldflags "-s -r ." -v liteidex
 go install -ldflags "-s" -v tools/goastview
 go install -ldflags "-s" -v tools/godocview
 go install -ldflags "-s" -v tools/goexec

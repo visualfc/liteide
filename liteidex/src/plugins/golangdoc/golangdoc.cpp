@@ -742,7 +742,7 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
             }
             if (!info.exists()) {
                 QString path = url.path();
-                qDebug() << path;
+
                 if (path.at(0) == '/') {
                     info.setFile(QDir(m_goroot),path.right(path.length()-1));
                 } else if (m_lastUrl.scheme() == "file") {
