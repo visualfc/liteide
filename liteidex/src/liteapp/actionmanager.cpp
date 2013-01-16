@@ -196,7 +196,7 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
     }
 }
 
-void ActionManager::regAction(QAction *act, const QString &id, const QString &defShortcuts, bool standard)
+void ActionManager::regAction(QAction *act, const QString &id, const QString &defks, bool standard)
 {
     ActionInfo *info = m_actionInfoMap.value(id);
     if (!info) {
@@ -205,19 +205,18 @@ void ActionManager::regAction(QAction *act, const QString &id, const QString &de
             info->label = act->text();
         }
         info->standard = standard;
-        info->defShortcuts = defShortcuts;
-        info->shortcuts = m_liteApp->settings()->value("shortcuts/"+id,defShortcuts).toString();
-        foreach(QString key, info->shortcuts.split(";",QString::SkipEmptyParts)) {
-            info->keys.append(QKeySequence(key));
-        }
+        info->defks = formatShortcutsString(defks);
+        info->ks = m_liteApp->settings()->value("shortcuts/"+id,info->defks).toString();
+        info->ks = formatShortcutsString(info->ks);
+        info->keys = toShortcuts(info->ks);
         m_actionInfoMap.insert(id,info);
     }    
     if (!act) {
         return;
     }
     act->setShortcuts(info->keys);
-    if (!info->shortcuts.isEmpty()) {
-        act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->shortcuts));
+    if (!info->ks.isEmpty()) {
+        act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
     }
     info->actions.append(act);
 }
@@ -237,22 +236,64 @@ ActionInfo *ActionManager::actionInfo(const QString &key)
     return m_actionInfoMap.value(key);
 }
 
+QList<QKeySequence> ActionManager::toShortcuts(const QString &ks)
+{
+    QString keyseq = ks;
+    QString part;
+    int p = 0, diff = 0;
+
+    QList<QKeySequence> keys;
+    while (keyseq.length()) {
+        // We MUST use something to separate each sequence, and space
+        // does not cut it, since some of the key names have space
+        // in them.. (Let's hope no one translate with a comma in it:)
+        p = keyseq.indexOf(QLatin1Char(';'));
+        if (-1 != p) {
+            if (p == keyseq.count() - 1) { // Last comma 'Ctrl+;'
+                p = -1;
+            } else {
+                if (QLatin1Char(';') == keyseq.at(p+1)) // e.g. 'Ctrl+;; Shift+;;'
+                    p++;
+                if (QLatin1Char(' ') == keyseq.at(p+1)) { // Space after comma
+                    diff = 1;
+                    p++;
+                } else {
+                    diff = 0;
+                }
+            }
+        }
+        part = keyseq.left(-1 == p ? keyseq.length() : p - diff);
+        keyseq = keyseq.right(-1 == p ? 0 : keyseq.length() - (p + 1));
+        QKeySequence key(part);
+        if (!key.isEmpty()) {
+            keys.append(key);
+        }
+    }
+    return keys;
+}
+
+QString ActionManager::formatShortcutsString(const QString &ks)
+{
+    QStringList ksList;
+    foreach(QKeySequence k, toShortcuts(ks)) {
+        ksList.append(k.toString());
+    }
+    return ksList.join("; ");
+}
+
 void ActionManager::setActionShourtcuts(const QString &id, const QString &shortcuts)
 {
     ActionInfo *info = m_actionInfoMap.value(id);
     if (!info) {
         return;
     }
-    info->shortcuts = shortcuts;
-    info->keys.clear();
-    foreach(QString key, shortcuts.split(";",QString::SkipEmptyParts)) {
-        info->keys.append(QKeySequence(key));
-    }
+    info->ks = formatShortcutsString(shortcuts);
+    info->keys = toShortcuts(info->ks);
     foreach (QAction *act, info->actions) {
         act->setShortcuts(info->keys);
-        if (!info->shortcuts.isEmpty()) {
-            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->shortcuts));
+        if (!info->ks.isEmpty()) {
+            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
         }
     }
-    m_liteApp->settings()->setValue("shortcuts/"+id,shortcuts);
+    m_liteApp->settings()->setValue("shortcuts/"+id,info->ks);
 }

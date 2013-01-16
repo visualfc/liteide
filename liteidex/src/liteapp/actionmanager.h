@@ -45,11 +45,14 @@ public:
     virtual void removeToolBar(QToolBar* toolBar);
     virtual QList<QString> toolBarList() const;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act);
-    virtual void regAction(QAction *act, const QString &id, const QString &defShortcuts, bool standard = false);
+    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false);
     virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def);
     virtual QStringList actionKeys() const;
     virtual ActionInfo *actionInfo(const QString &key);
     virtual void setActionShourtcuts(const QString &id, const QString &shortcuts);
+public:
+    static QList<QKeySequence> toShortcuts(const QString &ks);
+    static QString formatShortcutsString(const QString &ks);
 protected:
     QMap<QString,QMenu*>   m_idMenuMap;
     QMap<QString,QToolBar*> m_idToolBarMap;

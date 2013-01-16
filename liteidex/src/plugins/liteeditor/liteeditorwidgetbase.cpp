@@ -667,7 +667,6 @@ QByteArray LiteEditorWidgetBase::saveState() const
         block = block.next();
     }
     stream << foldedBlocks;
-
     return state;
 }
 
@@ -700,10 +699,12 @@ bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
     }
 
     m_lastCursorChangeWasInteresting = false; // avoid adding last position to history
+
     gotoLine(lval, cval,false);
     verticalScrollBar()->setValue(vval);
     horizontalScrollBar()->setValue(hval);
     saveCurrentCursorPositionForNavigation();
+
     return true;
 }
 

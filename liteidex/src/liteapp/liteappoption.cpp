@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "liteappoption.h"
+#include "actionmanager.h"
 #include "liteapp_global.h"
 #include "ui_liteappoption.h"
 #include <QDir>
@@ -211,7 +212,7 @@ void LiteAppOption::reloadShortcuts()
         if (!info) {
             continue;
         }
-        if (bCheckStandard && info->standard && (info->shortcuts == info->defShortcuts)) {
+        if (bCheckStandard && info->standard && (info->ks == info->defks)) {
             continue;
         }
         QStandardItem *item = new QStandardItem(id);
@@ -222,9 +223,9 @@ void LiteAppOption::reloadShortcuts()
         std->setCheckable(true);
         std->setEnabled(false);
         std->setCheckState(info->standard?Qt::Checked:Qt::Unchecked);
-        QStandardItem *bind = new QStandardItem(info->shortcuts);
+        QStandardItem *bind = new QStandardItem(info->ks);
         bind->setEditable(true);
-        if (info->shortcuts != info->defShortcuts) {
+        if (info->ks != info->defks) {
             QFont font = bind->font();
             font.setBold(true);
             bind->setFont(font);            
@@ -241,14 +242,17 @@ void LiteAppOption::shortcutsChanaged(QStandardItem *bind)
     QStandardItem *item = m_keysModel->item(bind->row(),0);
     if (!item) {
         return;
-    }
+    }    
     QString id = item->text();
     LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id);
     if (!info) {
         return;
     }
+    m_keysModel->blockSignals(true);
+    bind->setText(ActionManager::formatShortcutsString(bind->text()));
+    m_keysModel->blockSignals(false);
     QFont font = bind->font();
-    if (info->defShortcuts != bind->text()) {
+    if (info->defks != bind->text()) {
         font.setBold(true);
     } else {
         font.setBold(false);
@@ -271,7 +275,7 @@ void LiteAppOption::resetAllShortcuts()
         if (!info) {
             continue;
         }
-        bind->setText(info->defShortcuts);
+        bind->setText(info->defks);
         QFont font = bind->font();
         font.setBold(false);
         bind->setFont(font);
@@ -296,7 +300,7 @@ void LiteAppOption::resetShortcuts()
     if (!info) {
         return;
     }
-    bind->setText(info->defShortcuts);
+    bind->setText(info->defks);
     QFont font = bind->font();
     font.setBold(false);
     bind->setFont(font);
@@ -328,7 +332,7 @@ void LiteAppOption::importShortcuts()
         if (!val.isValid()) {
             continue;
         }
-        bind->setText(val.toString());
+        bind->setText(ActionManager::formatShortcutsString(val.toString()));
     }
     read.endGroup();
 }

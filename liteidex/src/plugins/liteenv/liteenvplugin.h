@@ -47,7 +47,7 @@ public:
         m_info->setId("plugin/LiteEnv");
         m_info->setName("LiteEnv");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x15.1");
+        m_info->setVer("x16");
         m_info->setInfo("Environment Manager");
         m_info->setMustLoad(true);
     }
