@@ -10,4 +10,5 @@ TRANSLATIONS = \
     liteide_zh_tw.ts \
     liteide_ru.ts   \
     liteide_ja.ts   \
-    liteide_fr.ts
+    liteide_fr.ts   \
+    liteide_de.ts
