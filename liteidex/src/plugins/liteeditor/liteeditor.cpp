@@ -200,7 +200,7 @@ void LiteEditor::createActions()
     m_liteApp->actionManager()->regAction(m_undoAct,"LiteEditor.Undo",QKeySequence::Undo);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
-    m_liteApp->actionManager()->regAction(m_redoAct,"LiteEditor.Redo",QKeySequence::Redo);
+    m_liteApp->actionManager()->regAction(m_redoAct,"LiteEditor.Redo","Ctrl+Shift+Z; Ctrl+Y");
 
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
     m_liteApp->actionManager()->regAction(m_cutAct,"LiteEditor.Cut",QKeySequence::Cut);
@@ -251,7 +251,7 @@ void LiteEditor::createActions()
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
     m_gotoLineAct = new QAction(tr("Goto Line"),this);
-    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+G");
+    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+L");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);

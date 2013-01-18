@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "actionmanager.h"
-
+#include "liteapp_global.h"
 #include <QMenuBar>
 #include <QToolBar>
 #include <QAction>
@@ -206,7 +206,7 @@ void ActionManager::regAction(QAction *act, const QString &id, const QString &de
         }
         info->standard = standard;
         info->defks = formatShortcutsString(defks);
-        info->ks = m_liteApp->settings()->value("shortcuts/"+id,info->defks).toString();
+        info->ks = m_liteApp->settings()->value(LITEAPP_SHORTCUTS+id,info->defks).toString();
         info->ks = formatShortcutsString(info->ks);
         info->keys = toShortcuts(info->ks);
         m_actionInfoMap.insert(id,info);
@@ -295,5 +295,9 @@ void ActionManager::setActionShourtcuts(const QString &id, const QString &shortc
             act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
         }
     }
-    m_liteApp->settings()->setValue("shortcuts/"+id,info->ks);
+    if (info->ks != info->defks) {
+        m_liteApp->settings()->setValue(LITEAPP_SHORTCUTS+id,info->ks);
+    } else {
+        m_liteApp->settings()->remove(LITEAPP_SHORTCUTS+id);
+    }
 }
