@@ -194,7 +194,14 @@ void PackageBrowser::reloadAll()
         m_model->appendRow(new QStandardItem(tr("Loading go package ...")));
     }
     QString root = LiteApi::getGoroot(m_liteApp);
-    m_taskList = LiteApi::getGopathList(m_liteApp,false);
+    m_taskList.clear();
+
+    foreach (QString path, LiteApi::getGopathList(m_liteApp,false)) {
+        if (QDir(path).exists()) {
+            m_taskList.append(path);
+        }
+    }
+
     m_taskData.clear();
     m_gopathList.clear();
     m_gopathList.append(root);
