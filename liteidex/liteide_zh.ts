@@ -1434,42 +1434,42 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation>语言更改生效,需要重启LiteIDE.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="113"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="114"/>
         <source>Command</source>
         <translation>命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="114"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="115"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="115"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="116"/>
         <source>Shortcuts</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="116"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="117"/>
         <source>Standard</source>
         <translation>标准键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="308"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="312"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>导入键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="339"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="343"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>导出键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="314"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="318"/>
         <source>Error read file %1</source>
         <translation>读取文件错误 %1</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="346"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="354"/>
         <source>Error write file %1</source>
         <translation>写入文件错误 %1</translation>
     </message>
@@ -1725,19 +1725,19 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="217"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="744"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="745"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="219"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="772"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="773"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="220"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="797"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="798"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
@@ -1783,7 +1783,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="253"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="849"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="850"/>
         <source>Goto Line</source>
         <translation>跳转到行</translation>
     </message>
@@ -1828,12 +1828,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation>打印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="753"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="754"/>
         <source>Can not write file %1</source>
         <translation>无法写入文件 %1</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="752"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="753"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
@@ -1843,12 +1843,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation>移动光标到下一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="814"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="815"/>
         <source>Cancel file %1 modify and reload ?</source>
         <translation>是否取消对文件 %1 的修改并重新加载?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="849"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="850"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>
