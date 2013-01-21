@@ -37,6 +37,9 @@
 #include "textbrowserhtmlwidget.h"
 #include "pluginsdialog.h"
 #include "liteapp_global.h"
+#ifdef Q_OS_MAC
+#include "macsupport.h"
+#endif
 
 #include <QApplication>
 #include <QSplashScreen>
@@ -627,7 +630,16 @@ void LiteApp::createMenus()
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_exitAct);
 
+#ifdef Q_OS_MAC
+    if (MacSupport::isLionOrHigh()) {
+        MacSupport::setFullScreen(m_mainwindow);
+    } else {
+        m_viewMenu->addAction(m_fullScreent);
+    }
+#else
     m_viewMenu->addAction(m_fullScreent);
+#endif
+
     m_viewMenu->addSeparator();
 
     m_helpMenu->addAction(m_aboutAct);

@@ -33,6 +33,10 @@ contains(DEFINES, LITEAPP_LIBRARY) {
 
 LIBS += -L$$IDE_LIBRARY_PATH
 
+macx {
+    LIBS += -framework Foundation
+}
+
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/api
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/utils
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/3rdparty
@@ -101,6 +105,11 @@ FORMS += \
 
 RESOURCES += \
     liteapp.qrc
+
+macx {
+    HEADERS  += macsupport.h
+    OBJECTIVE_SOURCES += macsupport.mm
+}
 
 contains(DEFINES, LITEAPP_LIBRARY) {
     win32 {
