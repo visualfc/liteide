@@ -116,7 +116,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_stepOutAct = new QAction(QIcon("icon:litedebug/images/stepout.png"),tr("StepOut"),this);
     m_stepOutAct->setToolTip(tr("Step Out (Shift+F11)"));
-    m_liteApp->actionManager()->regAction(m_stepOverAct,"LiteDebug.StepOut","Shift+F11");
+    m_liteApp->actionManager()->regAction(m_stepOutAct,"LiteDebug.StepOut","Shift+F11");
 
     m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("RunToLine"),this);
     m_runToLineAct->setToolTip(tr("Run to Line (Ctrl+F10)"));
