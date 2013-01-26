@@ -54,10 +54,10 @@ bool GolangFmtPlugin::load(LiteApi::IApplication *app)
     app->optionManager()->addFactory(new GolangFmtOptionFactory(app,this));
 
     m_fmt = new GolangFmt(app,this);
-    m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
+    m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code"),this);
     m_liteApp->actionManager()->regAction(m_gofmtAct,"Golang.Gofmt","Shift+F7");
 
-    m_goplayAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
+    m_goplayAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code"),this);
     m_liteApp->actionManager()->regAction(m_goplayAct,"Golang.Goplayfmt","Shift+F7");
 
     connect(m_gofmtAct,SIGNAL(triggered()),m_fmt,SLOT(gofmt()));

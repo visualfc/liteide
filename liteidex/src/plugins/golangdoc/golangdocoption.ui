@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Load golang api</string>
+      <string>Go API</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -30,7 +30,7 @@
       <item>
        <widget class="QCheckBox" name="onlyStdCheckBox">
         <property name="text">
-         <string>Only load standard api</string>
+         <string>Only load standard API documentation</string>
         </property>
        </widget>
       </item>

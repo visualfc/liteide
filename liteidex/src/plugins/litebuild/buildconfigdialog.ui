@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Build Config Dialog</string>
+   <string>Build Configuration</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -92,7 +92,7 @@
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>Build Config</string>
+       <string>Build</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -102,7 +102,7 @@
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
-       <string>Build Custom</string>
+       <string>Custom</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>

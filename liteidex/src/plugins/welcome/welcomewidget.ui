@@ -35,7 +35,7 @@
      <item>
       <widget class="QPushButton" name="newFileButton">
        <property name="text">
-        <string>New</string>
+        <string>New...</string>
        </property>
        <property name="flat">
         <bool>false</bool>
@@ -45,7 +45,7 @@
      <item>
       <widget class="QPushButton" name="openFileButton">
        <property name="text">
-        <string>Open File</string>
+        <string>Open File...</string>
        </property>
        <property name="flat">
         <bool>false</bool>
@@ -55,7 +55,7 @@
      <item>
       <widget class="QPushButton" name="openFolderButton">
        <property name="text">
-        <string>Open Folder</string>
+        <string>Open Folder...</string>
        </property>
        <property name="flat">
         <bool>false</bool>

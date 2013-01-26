@@ -82,7 +82,7 @@ public:
                                   arg(find.blockNumber()+1).
                                   arg(find.columnNumber()));
         } else {
-            m_status->setText(tr("Not find"));
+            m_status->setText(tr("No occurrences found"));
         }
     }
     template <typename T>
@@ -149,7 +149,7 @@ public:
                                           arg(find.blockNumber()+1).
                                           arg(find.columnNumber()));
                 } else {
-                    m_status->setText(tr("Not find"));
+                    m_status->setText(tr("No more occurrences found"));
                 }
                 break;
             }

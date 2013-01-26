@@ -309,13 +309,13 @@ void LiteAppOption::resetShortcuts()
 void LiteAppOption::importShortcuts()
 {
     QString dir = m_liteApp->resourcePath()+"/liteapp/kms";
-    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Import Keyboard Mapping Scheme"),dir,"Import Mapping Scheme (*.kms)");
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Import Keyboard Mapping Scheme"),dir,QString(tr("Keyboard Mapping Scheme (%1)")).arg("*.kms"));
     if (filePath.isEmpty()) {
         return;
     }
     QSettings read(filePath,QSettings::IniFormat);
     if (!read.childGroups().contains("Shortcuts",Qt::CaseInsensitive)) {
-        QMessageBox::critical(m_liteApp->mainWindow(),"LiteIDE",QString(tr("Error read file %1")).arg(filePath));
+        QMessageBox::critical(m_liteApp->mainWindow(),"Import Error",QString(tr("Could not read scheme from %1!")).arg(filePath));
         return;
     }
     read.beginGroup("Shortcuts");
@@ -340,7 +340,7 @@ void LiteAppOption::importShortcuts()
 void LiteAppOption::exportShortcuts()
 {
     QString dir = m_liteApp->resourcePath()+"/liteapp/kms";
-    QString filePath = QFileDialog::getSaveFileName(m_liteApp->mainWindow(),tr("Export Keyboard Mapping Scheme"),dir,"Keyboard Mapping Scheme (*.kms)");
+    QString filePath = QFileDialog::getSaveFileName(m_liteApp->mainWindow(),tr("Export Keyboard Mapping Scheme"),dir,QString(tr("Keyboard Mapping Scheme (%1)")).arg("*.kms"));
     if (filePath.isEmpty()) {
         return;
     }
@@ -351,7 +351,7 @@ void LiteAppOption::exportShortcuts()
 
     QSettings write(filePath,QSettings::IniFormat);
     if (!write.isWritable()) {
-        QMessageBox::critical(m_liteApp->mainWindow(),"LiteIDE",QString(tr("Error write file %1")).arg(filePath));
+        QMessageBox::critical(m_liteApp->mainWindow(),"Export Error",QString(tr("Could not write scheme to %1!")).arg(filePath));
         return;
     }
     write.clear();

@@ -17,7 +17,17 @@
    <item>
     <widget class="QCheckBox" name="goenvCheckBox">
      <property name="text">
-      <string>Recheck go env if enviroment changed</string>
+      <string>Recheck Go installation when changing environments</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="treeLabel">
+     <property name="text">
+      <string>Build command configuration files:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -27,7 +37,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>The build config change will take effect after a restart of LiteIDE.</string>
+      <string>Build configuration changes will take effect after LiteIDE is restarted.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

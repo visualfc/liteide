@@ -238,7 +238,7 @@ ToolMainWindow::ToolMainWindow(QWidget *parent)
 
     m_statusBar = new QStatusBar;
 
-    m_hideSideAct = new QAction(tr("HideSideBar"),this);
+    m_hideSideAct = new QAction(tr("Hide Sidebars"),this);
     m_hideSideAct->setIcon(QIcon("icon:images/hidesidebar.png"));
     m_hideSideAct->setCheckable(true);
 
@@ -360,7 +360,7 @@ QAction *ToolMainWindow::addToolWindow(Qt::DockWidgetArea area, QWidget *widget,
     int index = m_actStateMap.size();
     if (index <= 9) {
         action->setText(QString("&%1: %2").arg(index).arg(title));
-        action->setToolTip(QString("ToolWindow \"%1\"\tATL+%2").arg(title).arg(index));
+        action->setToolTip(tr("\"%1\" Tool Window\tALT+%2").arg(title).arg(index));
         action->setShortcut(QKeySequence(QString("ALT+%1").arg(index)));
     }
     m_actStateMap.insert(action,state);

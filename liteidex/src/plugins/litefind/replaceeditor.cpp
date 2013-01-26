@@ -52,9 +52,9 @@ ReplaceEditor::ReplaceEditor(LiteApi::IApplication *app, QObject *parent) :
     QPushButton *replace = new QPushButton(tr("Replace"));
     QPushButton *replaceAll = new QPushButton(tr("Replace All"));
     QPushButton *hideReplace = new QPushButton(tr("Hide"));
-    hideReplace->setToolTip(tr("Hide Replace"));
+    hideReplace->setToolTip(tr("Hide replace panel"));
 
-    m_matchWordCheckBox = new QCheckBox(tr("Match whole word only"));
+    m_matchWordCheckBox = new QCheckBox(tr("Match whole word"));
     m_matchCaseCheckBox = new QCheckBox(tr("Match case"));
     m_useRegexCheckBox = new QCheckBox(tr("Regular expression"));
     m_wrapAroundCheckBox = new QCheckBox(tr("Wrap around"));
@@ -93,7 +93,7 @@ ReplaceEditor::ReplaceEditor(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_replaceEdit,1,1);
     layout->addWidget(replace,1,2);
     layout->addWidget(replaceAll,1,3);
-    layout->addWidget(new QLabel(tr("Find Option:")),3,0);
+    layout->addWidget(new QLabel(tr("Options:")),3,0);
     layout->addLayout(optLayout,3,1,1,3);
 
     m_widget->setLayout(layout);

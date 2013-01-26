@@ -49,11 +49,11 @@ PluginsDialog::PluginsDialog(LiteApi::IApplication *app, QWidget *parent) :
 
     m_model = new QStandardItemModel(0,6,this);
     m_model->setHeaderData(0, Qt::Horizontal, tr("Name"));
-    m_model->setHeaderData(1, Qt::Horizontal, tr("Load"));
-    m_model->setHeaderData(2, Qt::Horizontal, tr("Info"));
-    m_model->setHeaderData(3, Qt::Horizontal, tr("Anchor"));
-    m_model->setHeaderData(4, Qt::Horizontal, tr("Last Ver"));
-    m_model->setHeaderData(5, Qt::Horizontal, tr("FileName"));
+    m_model->setHeaderData(1, Qt::Horizontal, tr("Enabled"));
+    m_model->setHeaderData(2, Qt::Horizontal, tr("Details"));
+    m_model->setHeaderData(3, Qt::Horizontal, tr("Author"));
+    m_model->setHeaderData(4, Qt::Horizontal, tr("Version"));
+    m_model->setHeaderData(5, Qt::Horizontal, tr("File Name"));
     ui->treeView->setModel(m_model);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->treeView->setItemsExpandable(true);

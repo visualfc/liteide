@@ -99,7 +99,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
     m_customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
 
-    m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Config"),this);
+    m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Configuration..."),this);
     m_liteApp->actionManager()->regAction(m_configAct,"LiteBuild.Config","");
 
     m_process = new ProcessEx(this);
@@ -110,7 +110,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
     m_liteApp->actionManager()->regAction(m_stopAct,"LiteBuild.Stop","");
 
-    m_clearAct = new QAction(tr("Clear All"),this);
+    m_clearAct = new QAction(tr("Clear Output"),this);
     m_clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
     m_liteApp->actionManager()->regAction(m_clearAct,"LiteBuild.Clear","");
 

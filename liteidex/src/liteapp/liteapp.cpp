@@ -537,16 +537,16 @@ void LiteApp::initPlugins()
 
 void LiteApp::createActions()
 {
-    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
+    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New..."),m_mainwindow);
     m_actionManager->regAction(m_newAct,"LiteApp.New",QKeySequence::New);
 
-    m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File"),m_mainwindow);
+    m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File..."),m_mainwindow);
     m_actionManager->regAction(m_openFileAct,"LiteApp.OpenFile",QKeySequence::Open);
 
-    m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder"),m_mainwindow);
+    m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder..."),m_mainwindow);
     m_actionManager->regAction(m_openFolderAct,"LiteApp.OpenFolder","");
 
-    m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder With New Instance"),m_mainwindow);
+    m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Instance..."),m_mainwindow);
     m_actionManager->regAction(m_openFolderNewInstanceAct,"LiteApp.OpenFolderNewInstance","");
 
     m_newInstance = new QAction(tr("New Instance"),m_mainwindow);
@@ -580,10 +580,10 @@ void LiteApp::createActions()
     m_fullScreent->setCheckable(true);
     m_actionManager->regAction(m_fullScreent,"LiteApp.FullScreen","Ctrl+Shift+F11");
 
-    m_aboutAct = new QAction(tr("About LiteIDE..."),m_mainwindow);
+    m_aboutAct = new QAction(tr("About LiteIDE"),m_mainwindow);
     m_actionManager->regAction(m_aboutAct,"LiteApp.About","");
 
-    m_aboutPluginsAct = new QAction(tr("About Plugins..."),m_mainwindow);
+    m_aboutPluginsAct = new QAction(tr("About Plugins"),m_mainwindow);
     m_actionManager->regAction(m_aboutPluginsAct,"LiteApp.AboutPlugins","");
 
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));

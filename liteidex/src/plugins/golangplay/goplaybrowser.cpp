@@ -86,13 +86,13 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     QHBoxLayout *head = new QHBoxLayout;
     QSplitter *spliter = new QSplitter(Qt::Vertical);
 
-    QLabel *label = new QLabel("<h2>Go Playground</h2>");
-    QPushButton *run = new QPushButton("Run");
-    QPushButton *stop = new QPushButton("Stop");
-    QPushButton *_new = new QPushButton("New");
-    QPushButton *load = new QPushButton("Load");
-    QPushButton *save = new QPushButton("Save");
-    QPushButton *shell = new QPushButton("Explorer");
+    QLabel *label = new QLabel(QString("<h2>%1</h2>").arg(tr("Go Playground")));
+    QPushButton *run = new QPushButton(tr("Run"));
+    QPushButton *stop = new QPushButton(tr("Stop"));
+    QPushButton *_new = new QPushButton(tr("New"));
+    QPushButton *load = new QPushButton(tr("Load..."));
+    QPushButton *save = new QPushButton(tr("Save..."));
+    QPushButton *shell = new QPushButton(tr("Explore Folder"));
     m_editLabel  = new QLabel;
 
     head->addWidget(label);
@@ -246,7 +246,7 @@ void GoplayBrowser::loadPlay()
         return;
     }
     bool ok = false;
-    QString name = QInputDialog::getItem(m_widget,tr("Load File"),tr("Items"),items,0,false,&ok);
+    QString name = QInputDialog::getItem(m_widget,tr("Load File"),tr("Select a file to load:"),items,0,false,&ok);
     if (!ok) {
         return;
     }
@@ -262,7 +262,7 @@ void GoplayBrowser::savePlay()
 {
     if (m_editFile.isEmpty()) {
         bool ok = false;
-        QString name = QInputDialog::getText(m_widget,tr("Save File"),tr("New FileName:"),QLineEdit::Normal,"",&ok);
+        QString name = QInputDialog::getText(m_widget,tr("Save File"),tr("New File Name:"),QLineEdit::Normal,"",&ok);
         if (!ok) {
             return;
         }

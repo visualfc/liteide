@@ -85,48 +85,39 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_dbgWidget->widget());
     m_widget->setLayout(layout);
 
-    m_startDebugExternal = new QAction(tr("Start Debugging External Application"),this);
+    m_startDebugExternal = new QAction(tr("Start Debugging External Application..."),this);
     m_liteApp->actionManager()->regAction(m_startDebugExternal,"LiteDebug.StartDebugExternal","");
 
 
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
-    m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
     m_liteApp->actionManager()->regAction(m_startDebugAct,"LiteDebug.StartDebug","F5");
 
 
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
-    m_continueAct->setToolTip(tr("Continue (F5)"));
     m_liteApp->actionManager()->regAction(m_continueAct,"LiteDebug.Continue","F5");
 
     m_stopDebugAct = new QAction(QIcon("icon:litedebug/images/stopdebug.png"),tr("Stop"),this);
-    m_stopDebugAct->setToolTip(tr("Stop Debugger (Shift+F5)"));
     m_liteApp->actionManager()->regAction(m_stopDebugAct,"LiteDebug.StopDebug","Shift+F5");
 
-    m_showLineAct = new QAction(QIcon("icon:litedebug/images/showline.png"),tr("ShowLine"),this);
-    m_showLineAct->setToolTip(tr("Show Current Line"));
+    m_showLineAct = new QAction(QIcon("icon:litedebug/images/showline.png"),tr("Show Current Line"),this);
     m_liteApp->actionManager()->regAction(m_showLineAct,"LiteDebug.ShowLine","");
 
-    m_stepIntoAct = new QAction(QIcon("icon:litedebug/images/stepinto.png"),tr("StepInto"),this);
-    m_stepIntoAct->setToolTip(tr("Step Info (F11)"));
+    m_stepIntoAct = new QAction(QIcon("icon:litedebug/images/stepinto.png"),tr("Step Into"),this);
     m_liteApp->actionManager()->regAction(m_stepIntoAct,"LiteDebug.StepInfo","F11");
 
-    m_stepOverAct = new QAction(QIcon("icon:litedebug/images/stepover.png"),tr("StepOver"),this);
-    m_stepOverAct->setToolTip(tr("Step Over (F10)"));
+    m_stepOverAct = new QAction(QIcon("icon:litedebug/images/stepover.png"),tr("Step Over"),this);
     m_liteApp->actionManager()->regAction(m_stepOverAct,"LiteDebug.StepOver","F10");
 
-    m_stepOutAct = new QAction(QIcon("icon:litedebug/images/stepout.png"),tr("StepOut"),this);
-    m_stepOutAct->setToolTip(tr("Step Out (Shift+F11)"));
+    m_stepOutAct = new QAction(QIcon("icon:litedebug/images/stepout.png"),tr("Step Out"),this);
     m_liteApp->actionManager()->regAction(m_stepOutAct,"LiteDebug.StepOut","Shift+F11");
 
-    m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("RunToLine"),this);
-    m_runToLineAct->setToolTip(tr("Run to Line (Ctrl+F10)"));
+    m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("Run to Line"),this);
     m_liteApp->actionManager()->regAction(m_runToLineAct,"LiteDebug.RunToLine","Ctrl+F10");
 
-    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove BreakPoint"),this);
-    m_switchBreakAct->setToolTip(tr("Insert/Remove Breakpoint (F9)"));
+    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove Breakpoint"),this);
     m_liteApp->actionManager()->regAction(m_switchBreakAct,"LiteDebug.Breakpoint","F9");
 
-    m_removeAllBreakAct = new QAction(tr("Remove All Break Points"),this);
+    m_removeAllBreakAct = new QAction(tr("Remove All Breakpoints"),this);
     m_liteApp->actionManager()->regAction(m_removeAllBreakAct,"LiteDebug.RemoveAllBreakPoints","");
 
 //    m_toolBar->addSeparator();

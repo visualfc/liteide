@@ -122,13 +122,13 @@ void NewFileDialog::accept()
     QDir dir(location);
     if (!dir.exists()) {
         if (!dir.mkpath(location)) {
-            QMessageBox::warning(this,"Warning",tr("MakePath false:")+location);
+            QMessageBox::warning(this,tr("Error"),tr("Could not create the target directory: %1").arg(location));
             return;
         }
     } else {
         if (m_cur.type != "file" && !dir.entryList(QDir::Files).isEmpty()) {
-            int ret = QMessageBox::warning(this,"Warning",QString(tr("Location %1 is not empty, continue?")).arg(location),
-                                 QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel,QMessageBox::Cancel);
+            int ret = QMessageBox::warning(this,tr("Warning"),QString(tr("Location %1 is not empty.\nUse the target directory anyway?")).arg(location),
+                                 QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
             if (ret != QMessageBox::Yes) {
                 return;
             }
@@ -157,7 +157,7 @@ void NewFileDialog::accept()
 
         QString outfile = QFileInfo(location,ofile).absoluteFilePath();
         if (QFile::exists(outfile)) {
-            int ret = QMessageBox::warning(this,"Warning",QString(tr("%1 exists, continue to rewrite or abort?").arg(outfile)),
+            int ret = QMessageBox::warning(this,tr("Overwrite File"),QString(tr("%1 already exists.\nDo you want to replace it?").arg(outfile)),
                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort,QMessageBox::Abort);
             if (ret == QMessageBox::Abort) {
                 return;
@@ -173,7 +173,7 @@ void NewFileDialog::accept()
         }
     }
     if (ofiles.isEmpty()) {
-        QMessageBox::warning(this,"Warning",QString(tr("%1 create false!")).arg(name));
+        QMessageBox::warning(this,tr("Error"),tr("No files could be created."));
         return;
     }
     QDialog::accept();
@@ -268,9 +268,9 @@ void  NewFileDialog::activeTemplate(QModelIndex index)
 
     }
     if (m_cur.type == "file") {
-        ui->typeLabel->setText(tr("New file wizard:"));
+        ui->typeLabel->setText(tr("File template details:"));
     } else {
-        ui->typeLabel->setText(tr("New project wizard:"));
+        ui->typeLabel->setText(tr("Project template details:"));
     }
     QStringList infos;
     if (!m_cur.name.isEmpty()) {
@@ -348,7 +348,7 @@ QString NewFileDialog::openPath() const
 void NewFileDialog::on_locationBrowseButton_clicked()
 {
     QString location = ui->locationLineEdit->text();
-    location = QFileDialog::getExistingDirectory(this,tr("Browser Location"),location);
+    location = QFileDialog::getExistingDirectory(this,tr("Choose a directory for the new content:"),location);
     if (location.isEmpty()) {
         return;
     }

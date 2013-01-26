@@ -214,23 +214,23 @@ void LiteEditor::createActions()
     m_selectAllAct = new QAction(tr("Select All"),this);
     m_liteApp->actionManager()->regAction(m_selectAllAct,"LiteEditor.SelectAll",QKeySequence::SelectAll);
 
-    m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML"),this);
+    m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML..."),this);
 #ifndef QT_NO_PRINTER
-    m_exportPdfAct = new QAction(QIcon("icon:liteeditor/images/exportpdf.png"),tr("Export PDF"),this);
-    m_filePrintAct = new QAction(QIcon("icon:liteeditor/images/fileprint.png"),tr("Print Document"),this);
-    m_filePrintPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview Document"),this);
+    m_exportPdfAct = new QAction(QIcon("icon:liteeditor/images/exportpdf.png"),tr("Export PDF..."),this);
+    m_filePrintAct = new QAction(QIcon("icon:liteeditor/images/fileprint.png"),tr("Print..."),this);
+    m_filePrintPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview..."),this);
 #endif
-    m_gotoPrevBlockAct = new QAction(tr("Goto Previous Block"),this);
+    m_gotoPrevBlockAct = new QAction(tr("Go To Previous Block"),this);
     m_liteApp->actionManager()->regAction(m_gotoPrevBlockAct,"LiteEditor.GotoPreviousBlock","Ctrl+[");
 
-    m_gotoNextBlockAct = new QAction(tr("Goto Next Block"),this);
+    m_gotoNextBlockAct = new QAction(tr("Go To Next Block"),this);
     m_liteApp->actionManager()->regAction(m_gotoNextBlockAct,"LiteEditor.GotoNextBlock","Ctrl+]");
 
 
     m_selectBlockAct = new QAction(tr("Select Block"),this);
     m_liteApp->actionManager()->regAction(m_selectBlockAct,"LiteEditor.SelectBlock","Ctrl+U");
 
-    m_gotoMatchBraceAct = new QAction(tr("Goto Match Brace"),this);
+    m_gotoMatchBraceAct = new QAction(tr("Go To Matching Brace"),this);
     m_liteApp->actionManager()->regAction(m_gotoMatchBraceAct,"LiteEditor.GotoMatchBrace","Ctrl+E");
 
     m_foldAct = new QAction(tr("Fold"),this);   
@@ -250,8 +250,8 @@ void LiteEditor::createActions()
     connect(m_foldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(foldAll()));
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
-    m_gotoLineAct = new QAction(tr("Goto Line"),this);
-    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+L");
+    m_gotoLineAct = new QAction(tr("Go To Line"),this);
+    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+G");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);
@@ -750,8 +750,8 @@ void LiteEditor::exportHtml()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
             QMessageBox::critical(m_widget,
-                                  tr("LiteIDE"),
-                                  QString(tr("Can not write file %1")).arg(fileName)
+                                  tr("Export Failed"),
+                                  QString(tr("Could not open %1 for writing.")).arg(fileName)
                                   );
             return;
         }
@@ -812,8 +812,8 @@ void LiteEditor::codecComboBoxChanged(QString codec)
         return;
     }
     if (m_file->document()->isModified()) {
-        QString text = QString(tr("Cancel file %1 modify and reload ?")).arg(m_file->filePath());
-        int ret = QMessageBox::question(m_liteApp->mainWindow(),"LiteIDE X",text,QMessageBox::Yes|QMessageBox::No);
+        QString text = QString(tr("Do you want to permanently discard unsaved modifications and reload %1?")).arg(m_file->filePath());
+        int ret = QMessageBox::question(m_liteApp->mainWindow(),"Unsaved Modifications",text,QMessageBox::Yes|QMessageBox::No);
         if (ret != QMessageBox::Yes) {
             return;
         }
@@ -847,7 +847,7 @@ void LiteEditor::gotoLine()
     int max = m_editorWidget->document()->lineCount();
     int v = m_editorWidget->textCursor().blockNumber()+1;
     bool ok = false;
-    v = QInputDialog::getInt(this->m_widget,tr("Goto Line"),tr("Line: ")+QString("%1-%2").arg(min).arg(max),v,min,max,1,&ok);
+    v = QInputDialog::getInt(this->m_widget,tr("Go To Line"),tr("Line: ")+QString("%1-%2").arg(min).arg(max),v,min,max,1,&ok);
     if (!ok) {
         return;
     }

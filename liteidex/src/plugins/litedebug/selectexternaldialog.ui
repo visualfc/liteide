@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Debug External Application</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -19,7 +19,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Executable:</string>
+        <string>Application:</string>
        </property>
       </widget>
      </item>
@@ -29,7 +29,7 @@
      <item row="0" column="2">
       <widget class="QPushButton" name="cmbPushButton">
        <property name="text">
-        <string>Browser</string>
+        <string>Browse...</string>
        </property>
       </widget>
      </item>
@@ -56,7 +56,7 @@
      <item row="2" column="2">
       <widget class="QPushButton" name="workPushButton">
        <property name="text">
-        <string>Browser</string>
+        <string>Browse...</string>
        </property>
       </widget>
      </item>

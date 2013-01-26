@@ -56,7 +56,7 @@
      <item>
       <widget class="QToolButton" name="locationBrowseButton">
        <property name="text">
-        <string>...</string>
+        <string>Browse...</string>
        </property>
       </widget>
      </item>
@@ -83,7 +83,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Template</string>
+          <string>Template:</string>
          </property>
         </widget>
        </item>

@@ -130,7 +130,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootToolBar = new QToolBar(m_widget);
     m_rootToolBar->setIconSize(QSize(16,16));
 
-    m_cdupAct = new QAction(QIcon("icon:filebrowser/images/cdup.png"),tr("Open to Parent"),this);
+    m_cdupAct = new QAction(QIcon("icon:filebrowser/images/cdup.png"),tr("Open Parent"),this);
 
     m_rootCombo = new QComboBox;
     m_rootCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -187,16 +187,16 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu = new QMenu;
 
     m_openFileAct = new QAction(tr("Open File"),this);
-    m_openEditorAct = new QAction(tr("Open Editor"),this);
-    m_newFileAct = new QAction(tr("New File"),this);
-    m_newFileWizardAct = new QAction(tr("New File Wizard"),this);
-    m_renameFileAct = new QAction(tr("Rename File"),this);
-    m_removeFileAct = new QAction(tr("Remove File"),this);
+    //m_openEditorAct = new QAction(tr("Open Editor"),this);
+    m_newFileAct = new QAction(tr("New File..."),this);
+    m_newFileWizardAct = new QAction(tr("New File Wizard..."),this);
+    m_renameFileAct = new QAction(tr("Rename File..."),this);
+    m_removeFileAct = new QAction(tr("Delete File"),this);
 
-    m_setRootAct = new QAction(tr("Set Folder To Root"),this);
-    m_newFolderAct = new QAction(tr("New Folder"),this);
-    m_renameFolderAct = new QAction(tr("Rename Folder"),this);
-    m_removeFolderAct = new QAction(tr("Remove Folder"),this);
+    m_setRootAct = new QAction(tr("Set As Root Folder"),this);
+    m_newFolderAct = new QAction(tr("New Folder..."),this);
+    m_renameFolderAct = new QAction(tr("Rename Folder..."),this);
+    m_removeFolderAct = new QAction(tr("Delete Folder"),this);
 
     m_openShellAct = new QAction(tr("Open Terminal Here"),this);
     m_openExplorerAct = new QAction(tr("Open Explorer Here"),this);
@@ -206,7 +206,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_loadFolderAct = new QAction(tr("Load Folder Project"),this);
 
     m_fileMenu->addAction(m_openFileAct);
-    m_fileMenu->addAction(m_openEditorAct);
+    //m_fileMenu->addAction(m_openEditorAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_newFileAct);
     m_fileMenu->addAction(m_newFileWizardAct);
@@ -240,12 +240,13 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu->addAction(m_newFolderAct);
     m_rootMenu->addSeparator();
     m_rootMenu->addAction(m_loadFolderAct);
+    m_fileMenu->addAction(m_viewGodocAct);
     m_rootMenu->addSeparator();
     m_rootMenu->addAction(m_openShellAct);
     m_rootMenu->addAction(m_openExplorerAct);
 
     connect(m_openFileAct,SIGNAL(triggered()),this,SLOT(openFile()));
-    connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));    
+    //connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));    
     connect(m_newFileAct,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(m_newFileWizardAct,SIGNAL(triggered()),this,SLOT(newFileWizard()));
     connect(m_renameFileAct,SIGNAL(triggered()),this,SLOT(renameFile()));
@@ -415,7 +416,7 @@ void FileBrowser::newFile()
         QString filePath = QFileInfo(dir,fileName).filePath();
         if (QFile::exists(filePath)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Create File"),
-                                     tr("The file already exists!"));
+                                     tr("A file with that name already exists!"));
         } else {
             QFile file(filePath);
             if (file.open(QIODevice::WriteOnly)) {
@@ -455,7 +456,7 @@ void FileBrowser::renameFile()
         return;
     }
     QString fileName = QInputDialog::getText(m_liteApp->mainWindow(),
-                                             tr("Rename File"),tr("File Name"),
+                                             tr("Rename File"),tr("New Name:"),
                                              QLineEdit::Normal,info.fileName());
     if (!fileName.isEmpty() && fileName != info.fileName()) {
         QDir dir = contextDir();
@@ -480,13 +481,13 @@ void FileBrowser::removeFile()
         return;
     }
 
-    int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Remove File"),
-                          tr("Confirm remove the file and continue"),
-                          QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
+    int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Delete File"),
+                          tr("Are you sure that you want to permanently delete this file?"),
+                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         if (!QFile::remove(info.filePath())) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Remove File"),
-                                     tr("Failed to remove the file!"));
+            QMessageBox::information(m_liteApp->mainWindow(),tr("Delete File"),
+                                     tr("Failed to delete the file!"));
         }
     }
 }
@@ -505,7 +506,7 @@ void FileBrowser::newFolder()
     if (!folderName.isEmpty()) {
         if (!dir.entryList(QStringList() << folderName,QDir::Dirs).isEmpty()) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Create Folder"),
-                                     tr("The folder name is exists!"));
+                                     tr("A folder with that name already exists!"));
         } else if (!dir.mkpath(folderName)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Create Folder"),
                                      tr("Failed to create the folder!"));
@@ -521,7 +522,7 @@ void FileBrowser::renameFolder()
     }
 
     QString folderName = QInputDialog::getText(m_liteApp->mainWindow(),
-                                               tr("Rename Folder"),tr("Folder Name"),
+                                               tr("Rename Folder"),tr("New Name:"),
                                                QLineEdit::Normal,info.fileName());
     if (!folderName.isEmpty() && folderName != info.fileName()) {
         QDir dir = contextDir();
@@ -549,13 +550,13 @@ void FileBrowser::removeFolder()
         return;
     }
 
-    int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("Remove Folder"),
-                          tr("Confirm remove the foler and continue"),
-                          QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
+    int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("Delete Folder"),
+                          tr("Are you sure that you want to permanently delete this folder and all of its contents?"),
+                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         if (!m_fileModel->rmdir(m_contextIndex)) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Remove Folder"),
-                                     tr("Failed to remove the folder!"));
+            QMessageBox::information(m_liteApp->mainWindow(),tr("Delete Folder"),
+                                     tr("Failed to delete the folder!"));
         }
     }
 }

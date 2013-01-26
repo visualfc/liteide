@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="rebuildCheckBox">
         <property name="text">
-         <string>Debug before rebuild</string>
+         <string>Rebuild before debugging</string>
         </property>
        </widget>
       </item>

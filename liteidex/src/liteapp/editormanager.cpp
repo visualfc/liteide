@@ -102,14 +102,14 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
     closeAct->setShortcut(QKeySequence("Ctrl+W"));    
-    QAction *closeOthersAct = new QAction(tr("Close Others Tabs"),this);
-    QAction *closeAllAct = new QAction(tr("Close All Tabs"),this);
+    QAction *closeOthersAct = new QAction(tr("Close Others"),this);
+    QAction *closeAllAct = new QAction(tr("Close All"),this);
     QAction *closeLeftAct = new QAction(tr("Close Left Tabs"),this);
     QAction *closeRightAct = new QAction(tr("Close Right Tabs"),this);
-    QAction *closeSameFolderFiles = new QAction(tr("Close Same Folder Files"),this);
-    QAction *closeOtherFolderFiles = new QAction(tr("Close Other Folder Files"),this);
+    QAction *closeSameFolderFiles = new QAction(tr("Close Files in Same Folder"),this);
+    QAction *closeOtherFolderFiles = new QAction(tr("Close Files in Other Folders"),this);
 
-    QAction *moveToAct = new QAction(tr("Move To New Window"),this);
+    QAction *moveToAct = new QAction(tr("Move to New Window"),this);
 
     m_tabContextMenu->addAction(closeAct);
     m_tabContextMenu->addAction(closeOthersAct);
@@ -173,11 +173,11 @@ void EditorManager::createActions()
 
     QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
 
-    m_goBackAct = new QAction(tr("GoBack"),this);
+    m_goBackAct = new QAction(tr("Navigate Backward"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
     m_liteApp->actionManager()->regAction(m_goBackAct,"LiteApp.Backward","Alt+Left");
 
-    m_goForwardAct = new QAction(tr("GoForward"),this);
+    m_goForwardAct = new QAction(tr("Navigate Forward"),this);
     m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
     m_liteApp->actionManager()->regAction(m_goForwardAct,"LiteApp.Forward","Alt+Right");
 
@@ -319,8 +319,8 @@ bool EditorManager::closeEditor(IEditor *editor)
     }
 
     if (cur->isModified() && !cur->isReadOnly()) {
-        QString text = QString(tr("%1 is modified.")).arg(cur->filePath());
-        int ret = QMessageBox::question(m_widget,tr("Save Modify"),text,QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+        QString text = QString(tr("Save changes to %1?")).arg(cur->filePath());
+        int ret = QMessageBox::question(m_widget,tr("Unsaved Modifications"),text,QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
         if (ret == QMessageBox::Cancel) {
             return false;
         } else if (ret == QMessageBox::Save) {

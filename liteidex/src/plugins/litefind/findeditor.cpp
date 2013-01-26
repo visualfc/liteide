@@ -52,7 +52,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
 {
     m_findEdit = new QLineEdit;
 
-    m_matchWordCheckBox = new QCheckBox(tr("Match word"));
+    m_matchWordCheckBox = new QCheckBox(tr("Match whole word"));
     m_matchCaseCheckBox = new QCheckBox(tr("Match case"));
     m_useRegexCheckBox = new QCheckBox(tr("Regular expression"));
     m_wrapAroundCheckBox = new QCheckBox(tr("Wrap around"));
@@ -65,11 +65,11 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_liteApp->settings()->endGroup();
 
     QPushButton *findNext = new QPushButton(tr("Find Next"));
-    QPushButton *findPrev = new QPushButton(tr("Find Prev"));
+    QPushButton *findPrev = new QPushButton(tr("Find Previous"));
     QPushButton *switchReplace = new QPushButton(tr("Replace"));
-    switchReplace->setToolTip(tr("Switch Replace"));
+    switchReplace->setToolTip(tr("Switch to replace mode"));
     QPushButton *hideFind = new QPushButton(tr("Hide"));
-    hideFind->setToolTip(tr("Hide Find"));
+    hideFind->setToolTip(tr("Hide find panel"));
 
 
     m_status = new QLabel(tr("Ready"));
@@ -97,7 +97,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(findPrev,0,3);
     layout->addWidget(switchReplace,0,4);
     layout->addWidget(hideFind,0,5);
-    layout->addWidget(new QLabel(tr("Find Option:")),1,0);
+    layout->addWidget(new QLabel(tr("Options:")),1,0);
     layout->addLayout(optLayout,1,1,1,5);
 
     m_widget->setLayout(layout);

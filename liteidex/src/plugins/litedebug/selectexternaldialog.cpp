@@ -74,7 +74,7 @@ void SelectExternalDialog::on_cmbPushButton_clicked()
 
 void SelectExternalDialog::on_workPushButton_clicked()
 {
-    QString path = QFileDialog::getExistingDirectory(this,tr("Select Working Directory"));
+    QString path = QFileDialog::getExistingDirectory(this,tr("Select the working directory:"));
     if (!path.isEmpty()) {
         ui->workLineEdit->setText(path);
     }

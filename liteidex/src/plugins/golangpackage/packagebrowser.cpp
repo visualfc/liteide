@@ -79,13 +79,13 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_fileMenu = new QMenu;
 
     m_reloadAct = new QAction(tr("Reload All"),this);
-    m_setupGopathAct = new QAction(QIcon("icon:images/gopath.png"),tr("Setup GOPATH"),this);
+    m_setupGopathAct = new QAction(QIcon("icon:images/gopath.png"),tr("Manage GOPATH..."),this);
     m_liteApp->actionManager()->regAction(m_setupGopathAct,"Golang.SetupGOPATH","");
 
-    m_godocAct = new QAction(tr("View Package Document"),this);
-    m_editPackageAct = new QAction(tr("Load Package Project"),this);
+    m_godocAct = new QAction(tr("View Documentation"),this);
+    m_editPackageAct = new QAction(tr("Load as Project"),this);
     m_openSrcAct = new QAction(tr("Open Source File"),this);
-    m_copyNameAct = new QAction(tr("Copy Name To Clipboard"),this);
+    m_copyNameAct = new QAction(tr("Copy Name to Clipboard"),this);
 
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_setupGopathAct);
 
@@ -186,12 +186,12 @@ void PackageBrowser::reloadAll()
     m_goTool->reloadEnv();
     if (!m_goTool->exists()) {
         m_model->clear();
-        m_model->appendRow(new QStandardItem(tr("Not find go in PATH...")));
+        m_model->appendRow(new QStandardItem(tr("No Go installation was found.")));
         return;
     }
     m_bLoaded = true;
     if (m_model->rowCount() == 0) {
-        m_model->appendRow(new QStandardItem(tr("Loading go package ...")));
+        m_model->appendRow(new QStandardItem(tr("Loading Go package list...")));
     }
     QString root = LiteApi::getGoroot(m_liteApp);
     m_taskList.clear();

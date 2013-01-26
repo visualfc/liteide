@@ -122,10 +122,10 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_widget->setLayout(mainLayout);
 
     //m_liteApp->dockManager()->addDock(m_widget,tr("Golang Document Find"),Qt::LeftDockWidgetArea);
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"godocfind",tr("Golang Document"),true);
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"godocfind",tr("Godoc Search"),true);
 
     m_docBrowser = new DocumentBrowser(m_liteApp,this);
-    m_docBrowser->setName(tr("Golang Document Browser"));
+    m_docBrowser->setName(tr("Godoc Viewer"));
 
     QPalette p = m_docBrowser->htmlWidget()->widget()->palette();
     p.setBrush(QPalette::Highlight,Qt::yellow);

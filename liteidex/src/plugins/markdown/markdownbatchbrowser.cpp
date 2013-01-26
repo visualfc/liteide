@@ -139,7 +139,7 @@ QWidget *MarkdownBatchBrowser::widget()
 
 QString MarkdownBatchBrowser::name() const
 {
-    return tr("Markdown Batch");
+    return tr("Markdown Exporter");
 }
 
 QString MarkdownBatchBrowser::mimeType() const
@@ -227,7 +227,7 @@ void MarkdownBatchBrowser::loadFinished(bool b)
 
 void MarkdownBatchBrowser::browserImportFolder()
 {
-    QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select Markdown Folder"));
+    QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select the folder containing your markdown files:"));
     if (!folder.isEmpty()) {
         QDir dir(folder);
         foreach(QFileInfo info, dir.entryInfoList(markdonwFilter(),QDir::Files,QDir::Name)) {
@@ -286,7 +286,7 @@ void MarkdownBatchBrowser::moveDown()
 
 void MarkdownBatchBrowser::browserExportFolder()
 {
-    QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select Export Folder"));
+    QString folder = QFileDialog::getExistingDirectory(m_widget,tr("Select the folder to contain separated markdown exports:"));
     if (!folder.isEmpty()) {
         ui->exportFolderLineEdit->setText(folder);
     }
@@ -299,7 +299,7 @@ void MarkdownBatchBrowser::mergeHtml()
         return;
     }
 
-    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export Html"),
+    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export Merged HTML"),
                                                     "merge", "*.html");
     if (fileName.isEmpty()) {
         return;
@@ -374,7 +374,7 @@ void MarkdownBatchBrowser::mergePdf()
         return;
     }
 
-    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export PDF"),
+    QString fileName = QFileDialog::getSaveFileName(m_widget, tr("Export Merged PDF"),
                                                     "merge", "*.pdf");
     if (fileName.isEmpty()) {
         return;
