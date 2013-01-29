@@ -309,8 +309,13 @@ void FileBrowser::doubleClickedTreeView(QModelIndex proxyIndex)
         return;
     }
     QFileInfo info(fileName);
+    QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
+    if (mimeType.startsWith("text/")) {
+        m_liteApp->fileManager()->openEditor(fileName);
+        return;
+    }
     QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
-    if (cmd == fileName) {
+    if (cmd == fileName) {        
         LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
         if (build) {
             build->executeCommand(info.fileName(),QString(),info.path());
