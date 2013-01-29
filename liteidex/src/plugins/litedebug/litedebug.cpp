@@ -410,17 +410,14 @@ void LiteDebug::startDebug()
         m_liteBuild->rebuild();
     }
 
-    QMap<QString,QString> env = m_liteBuild->buildEnvMap();
-    QString cmd = env.value("TARGET_CMD");
-    QString args = env.value("TARGETARGS");
-    QString work = env.value("TARGET_WORK");
-    qDebug() << env;
-    QString findCmd = FileUtil::lookPathInDir(cmd,work);
+    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
+
+    QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
     if (!findCmd.isEmpty()) {
-        cmd = findCmd;
+        info.cmd = findCmd;
     }
 
-    this->startDebug(cmd,args,work);
+    this->startDebug(info.cmd,info.args,info.workDir);
 }
 
 void LiteDebug::continueRun()

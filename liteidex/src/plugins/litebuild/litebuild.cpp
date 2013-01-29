@@ -409,6 +409,25 @@ QMap<QString,QString> LiteBuild::liteideEnvMap() const
     return env;
 }
 
+LiteApi::TargetInfo LiteBuild::getTargetInfo()
+{
+    LiteApi::TargetInfo info;
+    if (!m_build) {
+        return info;
+    }
+    QList<BuildTarget*> lists = m_build->targetList();
+    if (!lists.isEmpty()) {
+        BuildTarget *target = lists.first();
+
+        QMap<QString,QString> env = buildEnvMap(m_build,m_buildTag);
+        QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+        info.cmd = this->envToValue(target->cmd(),env,sysenv);
+        info.args = this->envToValue(target->args(),env,sysenv);
+        info.workDir = this->envToValue(target->work(),env,sysenv);
+    }
+    return info;
+}
+
 QMap<QString,QString> LiteBuild::buildEnvMap(LiteApi::IBuild *build, const QString &buildFilePath) const
 {
     QMap<QString,QString> env = liteideEnvMap();
@@ -553,6 +572,10 @@ void LiteBuild::updateBuildConfig(IBuild *build)
 void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
 {
     //update buildconfig
+    if (build) {
+        updateBuildConfig(build);
+    }
+
     if (m_build == build) {
          return;
     }
@@ -561,8 +584,6 @@ void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
     m_buildManager->setCurrentBuild(build);
 
     m_outputRegex.clear();
-
-    updateBuildConfig(build);
 }
 
 void LiteBuild::loadEditorInfo(const QString &filePath)
@@ -729,7 +750,6 @@ void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
     m_buildMenu->setEnabled(menu != 0);
 
     loadEditorInfo(editor->filePath());
-    loadTargetInfo(build);
 
     setCurrentBuild(build);
 }

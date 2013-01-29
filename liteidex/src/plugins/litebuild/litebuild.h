@@ -47,6 +47,7 @@ public:
     virtual QString buildTag() const;
     virtual QMap<QString,QString> buildEnvMap() const;
     virtual QMap<QString,QString> liteideEnvMap() const;
+    virtual LiteApi::TargetInfo getTargetInfo();
     virtual QString envValue(LiteApi::IBuild *build, const QString &value);
     virtual LiteApi::IBuildManager *buildManager() const;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true);

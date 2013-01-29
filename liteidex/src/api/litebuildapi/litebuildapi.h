@@ -238,6 +238,12 @@ signals:
     void buildChanged(LiteApi::IBuild*);
 };
 
+struct TargetInfo {
+    QString cmd;
+    QString args;
+    QString workDir;
+};
+
 class ILiteBuild : public IObject
 {
     Q_OBJECT
@@ -249,6 +255,7 @@ public:
     virtual void rebuild() = 0;
     virtual QString buildTag() const = 0;
     virtual QMap<QString,QString> buildEnvMap() const = 0;
+    virtual TargetInfo getTargetInfo() = 0;
     virtual IBuildManager *buildManager() const = 0;   
     virtual QString envValue(LiteApi::IBuild *build, const QString &value) = 0;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true) = 0;
