@@ -331,6 +331,18 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
         }
     }
 
+    foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+        LiteApi::IEditorMark *editorMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
+        if (!editorMark) {
+            continue;
+        }
+        QString path = editor->filePath();
+        m_fileBpMap.remove(path);
+        foreach(int i,editorMark->markList(LiteApi::BreakPointMark)) {
+            m_fileBpMap.insert(path,i);
+        }
+    }
+
     m_debugger->setInitBreakTable(m_fileBpMap);
     m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
     m_debugger->setWorkingDirectory(work);
