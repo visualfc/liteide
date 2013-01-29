@@ -98,7 +98,7 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_extension->addObject("LiteApi.IDocumentBrowser",this);
     m_extension->addObject("LiteApi.IHtmlWidget",m_htmlWidget);
-    m_extension->addObject("LiteApi.QTextBrowser",m_htmlWidget);
+    m_extension->addObject("LiteApi.QTextBrowser",m_htmlWidget->widget());
     m_htmlWidget->installEventFilter(m_liteApp->editorManager());
 
     emit backwardAvailable(false);

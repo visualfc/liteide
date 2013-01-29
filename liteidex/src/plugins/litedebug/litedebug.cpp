@@ -412,9 +412,9 @@ void LiteDebug::startDebug()
 
     QMap<QString,QString> env = m_liteBuild->buildEnvMap();
     QString cmd = env.value("TARGET_CMD");
-    QString args = env.value("TARGET_ARGS");
+    QString args = env.value("TARGETARGS");
     QString work = env.value("TARGET_WORK");
-
+    qDebug() << env;
     QString findCmd = FileUtil::lookPathInDir(cmd,work);
     if (!findCmd.isEmpty()) {
         cmd = findCmd;
