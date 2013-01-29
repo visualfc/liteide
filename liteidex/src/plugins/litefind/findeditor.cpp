@@ -187,10 +187,15 @@ void FindEditor::findNext()
     if (!editor) {
         return;
     }
-    QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
-    if (ed) {
-        //findAllHelper(ed,&state);
-        findHelper(ed,&state);
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (textEditor) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
+        if (ed) {
+            QTextCursor find = findHelper(ed,&state);
+            if (!find.isNull()) {
+                textEditor->gotoLine(find.blockNumber(),find.columnNumber());
+            }
+        }
     } else {
         QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
         if (ed) {
@@ -211,9 +216,15 @@ void FindEditor::findPrev()
     if (!editor) {
         return;
     }
-    QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
-    if (ed) {
-        findHelper(ed,&state);
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (textEditor) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
+        if (ed) {
+            QTextCursor find = findHelper(ed,&state);
+            if (!find.isNull()) {
+                textEditor->gotoLine(find.blockNumber(),find.columnNumber());
+            }
+        }
     } else {
         QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
         if (ed) {
