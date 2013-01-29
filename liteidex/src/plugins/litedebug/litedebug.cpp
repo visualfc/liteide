@@ -429,6 +429,11 @@ void LiteDebug::startDebug()
         info.cmd = findCmd;
     }
 
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        m_startDebugFile = editor->filePath();
+    }
+
     this->startDebug(info.cmd,info.args,info.workDir);
 }
 
@@ -620,6 +625,11 @@ void LiteDebug::debugStoped()
     if (!m_debugInfoId.isEmpty())
         m_dbgWidget->saveDebugInfo(m_debugInfoId);
     m_widget->hide();
+
+    if (!m_startDebugFile.isEmpty()) {
+        m_liteApp->fileManager()->openEditor(m_startDebugFile,true);
+    }
+
     emit debugVisible(false);
 
     emit debugEnd();

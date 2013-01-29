@@ -85,7 +85,7 @@ protected:
     void clearLastLine();
     LiteApi::IApplication *m_liteApp;
     LiteApi::IEnvManager *m_envManager;
-    LiteApi::ILiteBuild *m_liteBuild;
+    LiteApi::ILiteBuild *m_liteBuild;    
     LiteApi::IDebugger *m_debugger;
     DebugManager *m_manager;
     QWidget      *m_widget;
@@ -106,6 +106,7 @@ protected:
     QAction *m_removeAllBreakAct;
     QStringList m_debugMimeTypes;
     QString  m_debugInfoId;
+    QString  m_startDebugFile;
     CurrentLine m_lastLine;
     QMultiMap<QString,int> m_fileBpMap;
 };
