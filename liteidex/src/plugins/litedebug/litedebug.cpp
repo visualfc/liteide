@@ -309,12 +309,16 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
 
     m_dbgWidget->clearLog();
 
-    if (cmd.isEmpty() || !QFile::exists(cmd)) {
+    if (cmd.isEmpty()) {
         m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(cmd),true);
         return;
     }
+    if (QFileInfo(cmd).isAbsolute()) {
+        m_debugInfoId = cmd;
+    } else {
+        m_debugInfoId = work+"/"+cmd;
+    }
 
-    m_debugInfoId = cmd;
     QDir dir(work);
     foreach (QFileInfo info, dir.entryInfoList(QStringList() << "*.go",QDir::Files)) {
         QString filePath = info.filePath();
@@ -426,7 +430,7 @@ void LiteDebug::startDebug()
 
     QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
     if (!findCmd.isEmpty()) {
-        info.cmd = findCmd;
+        info.cmd = QFileInfo(findCmd).fileName();
     }
 
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
