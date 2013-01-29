@@ -194,6 +194,7 @@ void FindEditor::findNext()
             QTextCursor find = findHelper(ed,&state);
             if (!find.isNull()) {
                 textEditor->gotoLine(find.blockNumber(),find.columnNumber());
+                m_findEdit->setFocus();
             }
         }
     } else {
@@ -223,6 +224,7 @@ void FindEditor::findPrev()
             QTextCursor find = findHelper(ed,&state);
             if (!find.isNull()) {
                 textEditor->gotoLine(find.blockNumber(),find.columnNumber());
+                m_findEdit->setFocus();
             }
         }
     } else {
