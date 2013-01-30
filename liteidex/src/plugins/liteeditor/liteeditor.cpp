@@ -113,6 +113,13 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_file = new LiteEditorFile(m_liteApp,this);
     m_file->setDocument(m_editorWidget->document());
 
+//    QTextOption option =  m_editorWidget->document()->defaultTextOption();
+//    option.setFlags(option.flags() | QTextOption::ShowTabsAndSpaces);
+//    option.setFlags(option.flags() | QTextOption::AddSpaceForLineAndParagraphSeparators);
+//    option.setTabs(tabs);
+
+//    m_editorWidget->document()->setDefaultTextOption(option);
+
     connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));

@@ -62,7 +62,7 @@ TARGETNAME
 TARGETDIR
 */
 
-struct TargetInfo
+struct TargetInfo1
 {
     QString workDir;
     QString targetPath;

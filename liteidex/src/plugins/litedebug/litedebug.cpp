@@ -300,12 +300,16 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
 
     m_dbgWidget->clearLog();
 
-    if (cmd.isEmpty() || !QFile::exists(cmd)) {
+    if (cmd.isEmpty()) {
         m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(cmd),true);
         return;
     }
+    if (QFileInfo(cmd).isAbsolute()) {
+        m_debugInfoId = cmd;
+    } else {
+        m_debugInfoId = work+"/"+cmd;
+    }
 
-    m_debugInfoId = cmd;
     QDir dir(work);
     foreach (QFileInfo info, dir.entryInfoList(QStringList() << "*.go",QDir::Files)) {
         QString filePath = info.filePath();
@@ -319,6 +323,18 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
             if (ok && i >= 0) {
                 m_fileBpMap.insert(filePath,i);
             }
+        }
+    }
+
+    foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+        LiteApi::IEditorMark *editorMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
+        if (!editorMark) {
+            continue;
+        }
+        QString path = editor->filePath();
+        m_fileBpMap.remove(path);
+        foreach(int i,editorMark->markList(LiteApi::BreakPointMark)) {
+            m_fileBpMap.insert(path,i);
         }
     }
 
@@ -401,17 +417,19 @@ void LiteDebug::startDebug()
         m_liteBuild->rebuild();
     }
 
-    QMap<QString,QString> env = m_liteBuild->buildEnvMap();
-    QString cmd = env.value("TARGET_CMD");
-    QString args = env.value("TARGET_ARGS");
-    QString work = env.value("TARGET_WORK");
+    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
-    QString findCmd = FileUtil::lookPathInDir(cmd,work);
+    QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
     if (!findCmd.isEmpty()) {
-        cmd = findCmd;
+        info.cmd = QFileInfo(findCmd).fileName();
     }
 
-    this->startDebug(cmd,args,work);
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        m_startDebugFile = editor->filePath();
+    }
+
+    this->startDebug(info.cmd,info.args,info.workDir);
 }
 
 void LiteDebug::continueRun()
@@ -602,6 +620,11 @@ void LiteDebug::debugStoped()
     if (!m_debugInfoId.isEmpty())
         m_dbgWidget->saveDebugInfo(m_debugInfoId);
     m_widget->hide();
+
+    if (!m_startDebugFile.isEmpty()) {
+        m_liteApp->fileManager()->openEditor(m_startDebugFile,true);
+    }
+
     emit debugVisible(false);
 
     emit debugEnd();

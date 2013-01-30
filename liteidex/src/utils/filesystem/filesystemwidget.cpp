@@ -458,6 +458,11 @@ void FileSystemWidget::openPathIndex(const QModelIndex &index)
     }
     if (node->isFile()) {
         QFileInfo info(node->path());
+        QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(node->path());
+        if (mimeType.startsWith("text/")) {
+            m_liteApp->fileManager()->openEditor(node->path());
+            return;
+        }
         QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
         if (cmd == node->path()) {
             LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);

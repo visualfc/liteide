@@ -64,7 +64,7 @@ public slots:
 public:
     QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindState *state);        
     template <typename T>
-    void findHelper(T *ed, FindState *state)
+    QTextCursor findHelper(T *ed, FindState *state)
     {
         QTextCursor cursor = ed->textCursor();
         QTextCursor find = findEditor(ed->document(),cursor,state);
@@ -84,6 +84,7 @@ public:
         } else {
             m_status->setText(tr("No occurrences found"));
         }
+        return find;
     }
     template <typename T>
     void findAllHelper(T *ed, FindState *state)
