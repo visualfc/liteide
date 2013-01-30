@@ -1452,10 +1452,27 @@ void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
         viewport()->setCursor(Qt::IBeamCursor);
 }
 
+static void fillBackground(QPainter *p, const QRectF &rect, QBrush brush, QRectF gradientRect = QRectF())
+{
+    p->save();
+    if (brush.style() >= Qt::LinearGradientPattern && brush.style() <= Qt::ConicalGradientPattern) {
+        if (!gradientRect.isNull()) {
+            QTransform m = QTransform::fromTranslate(gradientRect.left(), gradientRect.top());
+            m.scale(gradientRect.width(), gradientRect.height());
+            brush.setTransform(m);
+            const_cast<QGradient *>(brush.gradient())->setCoordinateMode(QGradient::LogicalMode);
+        }
+    } else {
+        p->setBrushOrigin(rect.topLeft());
+    }
+    p->fillRect(rect, brush);
+    p->restore();
+}
+
+
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {  
-    QPlainTextEdit::paintEvent(e);
-
+    //QPlainTextEdit::paintEvent(e);
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
@@ -1466,20 +1483,112 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     QTextBlock block = firstVisibleBlock();
     QPointF offset = contentOffset();
-    qreal top = blockBoundingGeometry(block).translated(offset).top();
-    qreal bottom = top + blockBoundingRect(block).height();
 
-    if (m_rightLineVisible) {
-        const QFontMetrics fm(this->font());
-        int xoff = this->document()->documentMargin()+fm.averageCharWidth()*m_rightLineWidth;
-        xoff -= this->horizontalScrollBar()->value();
-        painter.save();
-        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
-        painter.drawLine(xoff,0,xoff,rect().height());
-        painter.restore();
-    }
+    //copy of QPlainTextEdit::paintEvent
+    QRect er = e->rect();
+    QRect viewportRect = viewport()->rect();
 
-    while (block.isValid() && top <= e->rect().bottom()) {
+    bool editable = !isReadOnly();
+
+    qreal maximumWidth = document()->documentLayout()->documentSize().width();
+
+    // Set a brush origin so that the WaveUnderline knows where the wave started
+    painter.setBrushOrigin(offset);
+
+    // keep right margin clean from full-width selection
+    int maxX = offset.x() + qMax((qreal)viewportRect.width(), maximumWidth)
+               - document()->documentMargin();
+    er.setRight(qMin(er.right(), maxX));
+    painter.setClipRect(er);
+
+
+    QAbstractTextDocumentLayout::PaintContext context = getPaintContext();
+
+    while (block.isValid()) {
+
+        QRectF r = blockBoundingRect(block).translated(offset);
+        QTextLayout *layout = block.layout();
+
+        if (!block.isVisible()) {
+            offset.ry() += r.height();
+            block = block.next();
+            continue;
+        }
+
+        if (r.bottom() >= er.top() && r.top() <= er.bottom()) {
+
+            QTextBlockFormat blockFormat = block.blockFormat();
+
+            QBrush bg = blockFormat.background();
+            if (bg != Qt::NoBrush) {
+                QRectF contentsRect = r;
+                contentsRect.setWidth(qMax(r.width(), maximumWidth));
+                fillBackground(&painter, contentsRect, bg);
+            }
+
+
+            QVector<QTextLayout::FormatRange> selections;
+            int blpos = block.position();
+            int bllen = block.length();
+            for (int i = 0; i < context.selections.size(); ++i) {
+                const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
+                const int selStart = range.cursor.selectionStart() - blpos;
+                const int selEnd = range.cursor.selectionEnd() - blpos;
+                if (selStart < bllen && selEnd > 0
+                    && selEnd > selStart) {
+                    QTextLayout::FormatRange o;
+                    o.start = selStart;
+                    o.length = selEnd - selStart;
+                    o.format = range.format;
+                    selections.append(o);
+                } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
+                           && block.contains(range.cursor.position())) {
+                    // for full width selections we don't require an actual selection, just
+                    // a position to specify the line. that's more convenience in usage.
+                    QTextLayout::FormatRange o;
+                    QTextLine l = layout->lineForTextPosition(range.cursor.position() - blpos);
+                    o.start = l.textStart();
+                    o.length = l.textLength();
+                    if (o.start + o.length == bllen - 1)
+                        ++o.length; // include newline
+                    o.format = range.format;
+                    selections.append(o);
+                }
+            }
+
+            bool drawCursor = (editable
+                               && context.cursorPosition >= blpos
+                               && context.cursorPosition < blpos + bllen);
+
+            bool drawCursorAsBlock = drawCursor && overwriteMode() ;
+
+            if (drawCursorAsBlock) {
+                if (context.cursorPosition == blpos + bllen - 1) {
+                    drawCursorAsBlock = false;
+                } else {
+                    QTextLayout::FormatRange o;
+                    o.start = context.cursorPosition - blpos;
+                    o.length = 1;
+                    o.format.setForeground(palette().base());
+                    o.format.setBackground(palette().text());
+                    selections.append(o);
+                }
+            }
+
+
+            layout->draw(&painter, offset, selections, er);
+            if ((drawCursor && !drawCursorAsBlock)
+                || (editable && context.cursorPosition < -1
+                    && !layout->preeditAreaText().isEmpty())) {
+                int cpos = context.cursorPosition;
+                if (cpos < -1)
+                    cpos = layout->preeditAreaPosition() - (cpos + 2);
+                else
+                    cpos -= blpos;
+                layout->drawCursor(&painter, offset, cpos, cursorWidth());
+            }
+        }
+
         QTextBlock nextBlock = block.next();
         QTextBlock nextVisibleBlock = nextBlock;
 
@@ -1491,67 +1600,83 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             while (nextVisibleBlock.isValid() && !nextVisibleBlock.isVisible())
                 nextVisibleBlock = nextVisibleBlock.next();
         }
-        if (block.isVisible() && bottom >= e->rect().top()) {
-            if (nextBlock.isValid() && !nextBlock.isVisible()) {
 
-                bool selectThis = (hasSelection
-                                   && nextBlock.position() >= selectionStart
-                                   && nextBlock.position() < selectionEnd);
-                if (selectThis) {
-                    painter.save();
-                    painter.setBrush(palette().highlight());
-                }
+        if (nextBlock.isValid() && !nextBlock.isVisible()) {
 
-                QTextLayout *layout = block.layout();
-                QTextLine line = layout->lineAt(layout->lineCount()-1);
-                QRectF lineRect = line.naturalTextRect().translated(offset.x(), top);
-                lineRect.adjust(0, 0, -1, -1);
+            bool selectThis = (hasSelection
+                               && nextBlock.position() >= selectionStart
+                               && nextBlock.position() < selectionEnd);
+            if (selectThis) {
+                painter.save();
+                painter.setBrush(palette().highlight());
+            }
 
-                QRectF collapseRect(lineRect.right() + 12,
-                                    lineRect.top(),
-                                    fontMetrics().width(QLatin1String(" {...}; ")),
-                                    lineRect.height());
-                painter.setRenderHint(QPainter::Antialiasing, true);
-                painter.translate(.5, .5);
-                painter.drawRoundedRect(collapseRect.adjusted(0, 0, 0, -1), 3, 3);
-                painter.setRenderHint(QPainter::Antialiasing, false);
-                painter.translate(-.5, -.5);
+            QTextLayout *layout = block.layout();
+            QTextLine line = layout->lineAt(layout->lineCount()-1);
+            QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+            lineRect.adjust(0, 0, -1, -1);
 
-                QString replacement = QLatin1String("...");
+            QRectF collapseRect(lineRect.right() + 12,
+                                lineRect.top(),
+                                fontMetrics().width(QLatin1String(" {...}; ")),
+                                lineRect.height());
+            painter.setRenderHint(QPainter::Antialiasing, true);
+            painter.translate(.5, .5);
+            painter.drawRoundedRect(collapseRect.adjusted(0, 0, 0, -1), 3, 3);
+            painter.setRenderHint(QPainter::Antialiasing, false);
+            painter.translate(-.5, -.5);
 
-                if (TextEditor::TextBlockUserData *nextBlockUserData = TextEditor::BaseTextDocumentLayout::testUserData(nextBlock)) {
-                    if (nextBlockUserData->foldingStartIncluded())
-                        replacement.prepend(nextBlock.text().trimmed().left(1));
-                }
+            QString replacement = QLatin1String("...");
 
-                block = nextVisibleBlock.previous();
-                if (!block.isValid())
-                    block = doc->lastBlock();
+            if (TextEditor::TextBlockUserData *nextBlockUserData = TextEditor::BaseTextDocumentLayout::testUserData(nextBlock)) {
+                if (nextBlockUserData->foldingStartIncluded())
+                    replacement.prepend(nextBlock.text().trimmed().left(1));
+            }
 
-                if (TextEditor::TextBlockUserData *blockUserData = TextEditor::BaseTextDocumentLayout::testUserData(block)) {
-                    if (blockUserData->foldingEndIncluded()) {
-                        QString right = block.text().trimmed();
-                        if (right.endsWith(QLatin1Char(';'))) {
-                            right.chop(1);
-                            right = right.trimmed();
-                            replacement.append(right.right(right.endsWith(QLatin1Char('/')) ? 2 : 1));
-                            replacement.append(QLatin1Char(';'));
-                        } else {
-                            replacement.append(right.right(right.endsWith(QLatin1Char('/')) ? 2 : 1));
-                        }
+            block = nextVisibleBlock.previous();
+            if (!block.isValid())
+                block = doc->lastBlock();
+
+            if (TextEditor::TextBlockUserData *blockUserData = TextEditor::BaseTextDocumentLayout::testUserData(block)) {
+                if (blockUserData->foldingEndIncluded()) {
+                    QString right = block.text().trimmed();
+                    if (right.endsWith(QLatin1Char(';'))) {
+                        right.chop(1);
+                        right = right.trimmed();
+                        replacement.append(right.right(right.endsWith(QLatin1Char('/')) ? 2 : 1));
+                        replacement.append(QLatin1Char(';'));
+                    } else {
+                        replacement.append(right.right(right.endsWith(QLatin1Char('/')) ? 2 : 1));
                     }
                 }
-
-                if (selectThis)
-                    painter.setPen(palette().highlightedText().color());
-                painter.drawText(collapseRect, Qt::AlignCenter, replacement);
-                if (selectThis)
-                    painter.restore();
             }
+
+            if (selectThis)
+                painter.setPen(palette().highlightedText().color());
+            painter.drawText(collapseRect, Qt::AlignCenter, replacement);
+            if (selectThis)
+                painter.restore();
         }
 
-        block = nextVisibleBlock;
-        top = bottom;
-        bottom = top + blockBoundingRect(block).height();
+        offset.ry() += r.height();
+
+        if (offset.y() > viewportRect.height())
+            break;
+        block = block.next();
+    }
+
+    if (backgroundVisible() && !block.isValid() && offset.y() <= er.bottom()
+        && (centerOnScroll() || verticalScrollBar()->maximum() == verticalScrollBar()->minimum())) {
+        painter.fillRect(QRect(QPoint((int)er.left(), (int)offset.y()), er.bottomRight()), palette().background());
+    }
+
+    if (m_rightLineVisible) {
+        const QFontMetrics fm(this->font());
+        int xoff = this->document()->documentMargin()+fm.averageCharWidth()*m_rightLineWidth;
+        xoff -= this->horizontalScrollBar()->value();
+        painter.save();
+        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        painter.drawLine(xoff,0,xoff,rect().height());
+        painter.restore();
     }
 }
