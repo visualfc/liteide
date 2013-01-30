@@ -1577,6 +1577,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
 
             layout->draw(&painter, offset, selections, er);
+
             if ((drawCursor && !drawCursorAsBlock)
                 || (editable && context.cursorPosition < -1
                     && !layout->preeditAreaText().isEmpty())) {
@@ -1589,7 +1590,66 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
         }
 
+        //draw tabs
+        painter.save();
+        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        QString text = block.text();
+        int k = 0;
+        for (int i = 0; i < text.length(); i++) {
+            const QChar c = text.at(i);
+            if (c.isSpace()) {
+                if (c == '\t') {
+                    k += 4;
+                } else {
+                    k += 1;
+                }
+            } else {
+                break;
+            }
+            if (k%4 == 0) {
+                QTextLine line = layout->lineForTextPosition(i);
+                qreal l = line.cursorToX(i);
+                painter.drawLine(offset.x()+l,r.top(),offset.x()+l,r.bottom());
+            }
+        }
+        painter.restore();
+
+
         QTextBlock nextBlock = block.next();
+        //daaw wrap
+        if (true) {
+            int lineCount = layout->lineCount();
+            if (lineCount >= 2 || !nextBlock.isValid()) {
+                painter.save();
+                painter.setPen(Qt::lightGray);
+                for (int i = 0; i < lineCount-1; ++i) { // paint line wrap indicator
+                    QTextLine line = layout->lineAt(i);
+                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                    QChar visualArrow((ushort)0x21b5);
+                    painter.drawText(QPointF(lineRect.right(),
+                                             lineRect.top() + line.ascent()),
+                                     visualArrow);
+                }
+                if (!nextBlock.isValid()) { // paint EOF symbol
+                    QTextLine line = layout->lineAt(lineCount-1);
+                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                    int h = 4;
+                    lineRect.adjust(0, 0, -1, -1);
+                    QPainterPath path;
+                    QPointF pos(lineRect.topRight() + QPointF(h+4, line.ascent()));
+                    path.moveTo(pos);
+                    path.lineTo(pos + QPointF(-h, -h));
+                    path.lineTo(pos + QPointF(0, -2*h));
+                    path.lineTo(pos + QPointF(h, -h));
+                    path.closeSubpath();
+                    painter.setBrush(painter.pen().color());
+                    painter.drawPath(path);
+                }
+                painter.restore();
+            }
+        }
+
+        //draw fold text ...
         QTextBlock nextVisibleBlock = nextBlock;
 
         if (!nextVisibleBlock.isVisible()) {
