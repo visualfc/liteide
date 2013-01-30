@@ -13,4 +13,5 @@
   <style name="Text" foreground="#000000" background="#ffffff"/>
   <style name="Selection" foreground="#ffffff"/>
   <style name="InactiveSelection" foreground="#000000" background="#bbbbbb"/>
+  <style name="CurrentLine" background="#B4C8C8"/>
 </style-scheme>

@@ -1484,9 +1484,12 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     QTextBlock block = firstVisibleBlock();
     QPointF offset = contentOffset();
 
-    //copy of QPlainTextEdit::paintEvent
+    //QPlainTextEdit::paintEvent
     QRect er = e->rect();
     QRect viewportRect = viewport()->rect();
+
+    painter.setPen(this->palette().color(QPalette::Text));
+    painter.fillRect(er,this->palette().brush(QPalette::Base));
 
     bool editable = !isReadOnly();
 
@@ -1594,7 +1597,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         painter.save();
         painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
         QString text = block.text();
-        qDebug() << text ;
+
         int k = 0;
         for (int i = 0; i < text.length(); i++) {
             const QChar c = text.at(i);
