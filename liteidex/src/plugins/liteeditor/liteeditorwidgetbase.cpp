@@ -1594,22 +1594,22 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         painter.save();
         painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
         QString text = block.text();
+        qDebug() << text ;
         int k = 0;
         for (int i = 0; i < text.length(); i++) {
             const QChar c = text.at(i);
-            if (c.isSpace()) {
-                if (c == '\t') {
-                    k += 4;
-                } else {
-                    k += 1;
-                }
-            } else {
+            if (!c.isSpace()) {
                 break;
             }
             if (k%4 == 0) {
                 QTextLine line = layout->lineForTextPosition(i);
                 qreal l = line.cursorToX(i);
                 painter.drawLine(offset.x()+l,r.top(),offset.x()+l,r.bottom());
+            }
+            if (c == '\t') {
+                k += 4;
+            } else {
+                k += 1;
             }
         }
         painter.restore();
