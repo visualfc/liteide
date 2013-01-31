@@ -35,7 +35,9 @@ public:
     LiteEditorWidgetBase(QWidget *parent = 0);
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
-    void setTabWidth(int n);
+    void setTabSize(int n);
+    int tabSize() const;
+    void updateTabWidth();
     void setTabUseSpace(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
 public:

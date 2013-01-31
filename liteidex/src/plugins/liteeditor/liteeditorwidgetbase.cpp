@@ -104,7 +104,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
-    setTabWidth(4);
+    setTabSize(4);
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(slotUpdateExtraAreaWidth()));
     connect(this, SIGNAL(modificationChanged(bool)), this, SLOT(slotModificationChanged(bool)));
@@ -132,11 +132,20 @@ void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
     }
 }
 
-void LiteEditorWidgetBase::setTabWidth(int n)
+void LiteEditorWidgetBase::setTabSize(int n)
 {
-    int charWidth = QFontMetrics(font()).averageCharWidth();
     m_nTabSize = n;
-    setTabStopWidth(charWidth * n);
+    updateTabWidth();
+}
+
+int LiteEditorWidgetBase::tabSize() const
+{
+    return m_nTabSize;
+}
+
+void LiteEditorWidgetBase::updateTabWidth()
+{
+    setTabStopWidth(QFontMetrics(font()).averageCharWidth() * m_nTabSize);
 }
 
 void LiteEditorWidgetBase::setTabUseSpace(bool b)
@@ -1476,6 +1485,9 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
+    const QFontMetrics fm(this->font());
+    int averageCharWidth = fm.averageCharWidth();
+    int charOffsetX = this->document()->documentMargin()- this->horizontalScrollBar()->value();
 
     bool hasSelection = cursor.hasSelection();
     int selectionStart = cursor.selectionStart();
@@ -1593,33 +1605,32 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
         }
 
-        //draw tabs
-        painter.save();
-        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        //draw indent line
         QString text = block.text();
-
-        int k = 0;
-        for (int i = 0; i < text.length(); i++) {
-            const QChar c = text.at(i);
-            if (!c.isSpace()) {
+        int pos = text.length();
+        for (int i = 0; i < pos; i++) {
+            if (!text.at(i).isSpace()) {
+                pos = i;
                 break;
             }
-            if (k%4 == 0) {
-                QTextLine line = layout->lineForTextPosition(i);
-                qreal l = line.cursorToX(i);
-                painter.drawLine(offset.x()+l,r.top(),offset.x()+l,r.bottom());
-            }
-            if (c == '\t') {
-                k += 4;
-            } else {
-                k += 1;
-            }
         }
+        QTextLine line = layout->lineForTextPosition(pos);
+        int kt = r.top()+1;
+        int kb = r.top()+line.height()-1;
+        int k = line.cursorToX(pos)/averageCharWidth;
+
+        painter.save();
+        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        for (int i = 0; i < k; i+=4) {
+            int xoff = charOffsetX+averageCharWidth*i;
+            painter.drawLine(xoff,kt,xoff,kb);
+        }
+
         painter.restore();
 
 
         QTextBlock nextBlock = block.next();
-        //daaw wrap
+        //draw wrap
         if (true) {
             int lineCount = layout->lineCount();
             if (lineCount >= 2 || !nextBlock.isValid()) {
@@ -1734,9 +1745,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     }
 
     if (m_rightLineVisible) {
-        const QFontMetrics fm(this->font());
-        int xoff = this->document()->documentMargin()+fm.averageCharWidth()*m_rightLineWidth;
-        xoff -= this->horizontalScrollBar()->value();
+        int xoff = charOffsetX+averageCharWidth*m_rightLineWidth;
         painter.save();
         painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
         painter.drawLine(xoff,0,xoff,rect().height());

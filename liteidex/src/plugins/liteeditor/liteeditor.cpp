@@ -651,7 +651,7 @@ void LiteEditor::applyOption(QString id)
 
     QString mime = this->m_file->mimeType();
     int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-    m_editorWidget->setTabWidth(tabWidth);
+    m_editorWidget->setTabSize(tabWidth);
     bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
     m_editorWidget->setTabUseSpace(useSpace);
 
@@ -935,6 +935,7 @@ void LiteEditor::resetFontSize()
     font.setPointSize(fontSize);
     m_editorWidget->setFont(font);
     m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->updateTabWidth();
     m_editorWidget->slotUpdateExtraAreaWidth();
 }
 
@@ -965,5 +966,6 @@ void LiteEditor::requestFontZoom(int zoom)
     font.setPointSize(fontSize*fontZoom/100.0);
     m_editorWidget->setFont(font);
     m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->updateTabWidth();
     m_editorWidget->slotUpdateExtraAreaWidth();
 }
