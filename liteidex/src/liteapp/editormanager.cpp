@@ -454,6 +454,9 @@ IEditor *EditorManager::currentEditor() const
 void EditorManager::setCurrentEditor(IEditor *editor)
 {
     if (m_currentEditor == editor) {
+        if (m_currentEditor) {
+            m_currentEditor->onActive();
+        }
         return;
     }
     m_currentEditor = editor;

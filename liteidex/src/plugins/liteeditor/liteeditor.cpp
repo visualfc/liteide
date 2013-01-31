@@ -899,6 +899,7 @@ void LiteEditor::navigationStateChanged(const QByteArray &state)
 
 void LiteEditor::onActive()
 {
+    m_editorWidget->setFocus();
     //clipbordDataChanged();
     //editPositionChanged();
 }

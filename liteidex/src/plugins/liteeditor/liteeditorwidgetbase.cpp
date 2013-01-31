@@ -159,6 +159,9 @@ void LiteEditorWidgetBase::initLoadDocument()
 {
     m_lastSaveRevision = document()->revision();
     document()->setModified(false);
+    if (!document()->isEmpty()) {
+        this->moveCursor(QTextCursor::Start);
+    }
 }
 
 
