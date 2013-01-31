@@ -33,7 +33,8 @@ class LiteEditorWidgetBase : public QPlainTextEdit
     Q_OBJECT
 public:
     enum TextFormatProperty {
-        MatchBrace = QTextFormat::UserProperty+1
+        MatchBrace = QTextFormat::UserProperty+1,
+        CurrentLine
     };
 
     LiteEditorWidgetBase(QWidget *parent = 0);
@@ -72,6 +73,7 @@ public slots:
     virtual void slotModificationChanged(bool);
     virtual void slotUpdateRequest(const QRect &r, int dy);
     virtual void slotCursorPositionChanged();
+    virtual void slotSelectionChanged();
     virtual void slotUpdateBlockNotify(const QTextBlock &);
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    

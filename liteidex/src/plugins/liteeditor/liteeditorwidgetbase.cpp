@@ -111,6 +111,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(slotUpdateExtraAreaWidth()));
     connect(this, SIGNAL(modificationChanged(bool)), this, SLOT(slotModificationChanged(bool)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(slotCursorPositionChanged()));
+    connect(this, SIGNAL(selectionChanged()),this,SLOT(slotSelectionChanged()));
     connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(slotUpdateRequest(QRect, int)));
     connect(this->document(),SIGNAL(contentsChange(int,int,int)),this,SLOT(editContentsChanged(int,int,int)));
 
@@ -231,11 +232,11 @@ void LiteEditorWidgetBase::highlightCurrentLine()
 
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
-        QColor color = m_currentLineBackground;
-        color.setAlpha(128);
-        selection.format.setBackground(color);
+        selection.format.setBackground(m_currentLineBackground);
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        selection.cursor = textCursor();
+        QTextCursor cur(this->document());
+        cur.setPosition(this->textCursor().position());
+        selection.cursor = cur;
 
         extraSelections.append(selection);
     }
@@ -306,6 +307,7 @@ void LiteEditorWidgetBase::setCurrentLineColor(const QColor &background)
     } else {
         m_currentLineBackground = QColor(180,200,200,128);
     }
+    m_currentLineBackground.setAlpha(128);
 }
 
 void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)
@@ -764,6 +766,11 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     }
     */
     highlightCurrentLine();
+}
+
+void LiteEditorWidgetBase::slotSelectionChanged()
+{
+
 }
 
 void LiteEditorWidgetBase::slotUpdateBlockNotify(const QTextBlock &)
@@ -1514,7 +1521,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     bool hasSelection = cursor.hasSelection();
     int selectionStart = cursor.selectionStart();
     int selectionEnd = cursor.selectionEnd();
-    QTextBlock textCursorBlock = cursor.block();
 
     QTextBlock block = firstVisibleBlock();
     QPointF offset = contentOffset();
@@ -1596,18 +1602,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.format = range.format;
                     selections.append(o);
                 }
-            }
-
-            //draw current line
-            if (block == textCursorBlock) {
-                QRectF rr = layout->lineForTextPosition(textCursor().positionInBlock()).rect();
-                rr.moveTop(rr.top() + r.top());
-                rr.setLeft(0);
-                rr.setRight(viewportRect.width() - offset.x());
-                QColor color = m_currentLineBackground;
-                // set alpha, otherwise we cannot see block highlighting and find scope underneath
-                color.setAlpha(128);
-                painter.fillRect(rr, color);
             }
 
             bool drawCursor = (editable
