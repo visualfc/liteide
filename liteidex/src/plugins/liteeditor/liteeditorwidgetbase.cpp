@@ -872,30 +872,30 @@ void LiteEditorWidgetBase::gotoLineEndWithSelection()
 void LiteEditorWidgetBase::duplicate()
 {
     QTextCursor cursor = textCursor();
-    QTextCursor move = cursor;
-    move.beginEditBlock();
+    cursor.beginEditBlock();
     if (cursor.hasSelection()) {
-        QString text = move.selectedText();
-        int pos = move.selectionEnd();
-        move.setPosition(pos);
-        move.insertText(text);
-        int end = move.position();
-        move.setPosition(pos);
-        move.setPosition(end,QTextCursor::KeepAnchor);
+        QString text = cursor.selectedText();
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        cursor.setPosition(end);
+        cursor.insertText(text);
+        cursor.setPosition(start,QTextCursor::MoveAnchor);
+        cursor.setPosition(end,QTextCursor::KeepAnchor);
     } else {
-        int pos = move.positionInBlock();
-        move.movePosition(QTextCursor::StartOfBlock);
-        move.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        QString text = move.selectedText();
-        move.movePosition(QTextCursor::EndOfBlock);
-        move.insertBlock();
-        int start = move.position();
-        move.insertText(text);
-        move.setPosition(start);
-        move.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
+        int pos = cursor.positionInBlock();
+        cursor.movePosition(QTextCursor::StartOfBlock);
+        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+        QString text = cursor.selectedText();
+        cursor.movePosition(QTextCursor::EndOfBlock);
+        cursor.insertBlock();
+        int start = cursor.position();
+        cursor.insertText(text);
+        cursor.endEditBlock();
+        cursor.setPosition(start);
+        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
     }
-    move.endEditBlock();
-    setTextCursor(move);
+    cursor.endEditBlock();
+    setTextCursor(cursor);
 }
 
 // shift+del
