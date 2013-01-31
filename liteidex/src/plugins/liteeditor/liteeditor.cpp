@@ -663,12 +663,16 @@ void LiteEditor::applyOption(QString id)
         bool b = m_colorStyleScheme->load(styleFileName);
         if (b) {
             const ColorStyle *extra = m_colorStyleScheme->findStyle("Extra");
+            const ColorStyle *indent = m_colorStyleScheme->findStyle("IndentLine");
             const ColorStyle *style = m_colorStyleScheme->findStyle("Text");
             const ColorStyle *selection = m_colorStyleScheme->findStyle("Selection");
             const ColorStyle *inactiveSelection = m_colorStyleScheme->findStyle("InactiveSelection");
             const ColorStyle *currentLine = m_colorStyleScheme->findStyle("CurrentLine");
             if (extra) {
                 m_editorWidget->setExtraColor(extra->foregound(),extra->background());
+            }
+            if (indent) {
+                m_editorWidget->setIndentLineColor(indent->foregound());
             }
             if (currentLine) {
                 m_editorWidget->setCurrentLineColor(currentLine->background());

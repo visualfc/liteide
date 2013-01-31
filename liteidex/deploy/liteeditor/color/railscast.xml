@@ -6,6 +6,7 @@
   Public Domain, Alexander Rødseth, 2012
   -->
   <style name="Extra" foreground="#008B8B" background="#232323"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="Text" foreground="#bbbbbb" background="#232323"/>
   <style name="Comment" foreground="#bc9458"/>
   <style name="Function" foreground="#ffc66d"/>

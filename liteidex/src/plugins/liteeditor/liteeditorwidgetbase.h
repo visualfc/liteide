@@ -44,6 +44,7 @@ public:
     QWidget* extraArea();
     void setExtraColor(const QColor &foreground,const QColor &background);
     void setCurrentLineColor(const QColor &background);
+    void setIndentLineColor(const QColor &foreground);
     int extraAreaWidth();
     void extraAreaPaintEvent(QPaintEvent *e);
     void extraAreaMouseEvent(QMouseEvent *e);
@@ -168,6 +169,7 @@ protected:
     QTextCursor m_lastSelection;
     QColor  m_extraForeground;
     QColor  m_extraBackground;
+    QColor  m_indentLineForeground;
     QColor  m_CurrentLineBackground;
     bool m_lineNumbersVisible;
     bool m_marksVisible;

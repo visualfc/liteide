@@ -4,6 +4,7 @@
   Based on the default vim theme for a dark background, Linux console colors.
   -->
   <style name="Extra" foreground="#008B8B" background="#000000"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="DataType" foreground="#55ff55" /> 
   <style name="VisualWhitespace" foreground="#c0c0c0"/>
   <style name="Comment" foreground="#55ffff"/>

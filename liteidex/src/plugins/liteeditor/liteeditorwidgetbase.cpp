@@ -86,6 +86,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
 {
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
+    m_indentLineForeground = QColor(Qt::darkCyan);
     m_extraForeground = QColor(Qt::darkCyan);
     m_extraBackground = m_extraArea->palette().color(QPalette::Background);
     m_CurrentLineBackground = QColor(180,200,200,128);
@@ -297,6 +298,15 @@ void LiteEditorWidgetBase::setCurrentLineColor(const QColor &background)
     }
 }
 
+void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)
+{
+    if (foreground.isValid()) {
+        m_indentLineForeground = foreground;
+    } else {
+        m_indentLineForeground = QColor(Qt::darkCyan);
+    }
+}
+
 void LiteEditorWidgetBase::setExtraColor(const QColor &foreground,const QColor &background)
 {
     if (foreground.isValid()) {
@@ -403,9 +413,9 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
     painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), INT_MAX)),
                      m_extraBackground);
 
-    painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
-    painter.drawLine(extraAreaWidth - 3, e->rect().top(), extraAreaWidth - 3, e->rect().bottom());
-    painter.drawLine(e->rect().width()-1, e->rect().top(), e->rect().width()-1, e->rect().bottom());
+    //painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+   // painter.drawLine(extraAreaWidth - 3, e->rect().top(), extraAreaWidth - 3, e->rect().bottom());
+    //painter.drawLine(e->rect().width()-1, e->rect().top(), e->rect().width()-1, e->rect().bottom());
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
@@ -1620,7 +1630,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         int k = line.cursorToX(pos)/averageCharWidth;
 
         painter.save();
-        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        painter.setPen(QPen(m_indentLineForeground,1,Qt::DotLine));
         for (int i = 0; i < k; i+=4) {
             int xoff = charOffsetX+averageCharWidth*i;
             painter.drawLine(xoff,kt,xoff,kb);
@@ -1747,7 +1757,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     if (m_rightLineVisible) {
         int xoff = charOffsetX+averageCharWidth*m_rightLineWidth;
         painter.save();
-        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        painter.setPen(QPen(m_indentLineForeground,1,Qt::DotLine));
         painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }

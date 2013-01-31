@@ -6,6 +6,7 @@
   Public Domain, Henson Lu, 2012
   -->
   <style name="Extra" foreground="#008B8B" background="#2e3436"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="DataType" foreground="#64b72d" /> 
   <style name="VisualWhitespace" foreground="#ffffff"/>
   <style name="Comment" foreground="#729fcf"/>

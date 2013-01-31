@@ -2,6 +2,7 @@
 <style-scheme version="1.0" name="Default">
   <!-- Empty scheme, relying entirely on built-in defaults. -->
   <style name="Extra" foreground="#008B8B"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="DataType" foreground="#000080" /> 
   <style name="VisualWhitespace" foreground="#c0c0c0"/>
   <style name="Comment" foreground="#008000"/>

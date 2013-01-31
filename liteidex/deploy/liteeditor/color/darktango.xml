@@ -6,6 +6,7 @@
   Public Domain, Dumitru UNGUREANU, 2012
   -->
   <style name="Extra" foreground="#008B8B" background="#2e3436"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="DataType" foreground="#FF00DC" /> 
   <style name="VisualWhitespace" foreground="#FF00DC"/>
   <style name="Comment" foreground="#edd400"/>
