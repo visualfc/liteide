@@ -177,7 +177,7 @@ protected:
     QColor  m_extraForeground;
     QColor  m_extraBackground;
     QColor  m_indentLineForeground;
-    QColor  m_CurrentLineBackground;
+    QColor  m_currentLineBackground;
     bool m_lineNumbersVisible;
     bool m_marksVisible;    
     bool m_codeFoldingVisible;
