@@ -97,6 +97,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_marksVisible = true;
     m_codeFoldingVisible = true;
     m_rightLineVisible = true;
+    m_eofVisible = false;
     m_rightLineWidth = 80;
     m_lastSaveRevision = 0;
     m_extraAreaSelectionNumber = -1;
@@ -1641,36 +1642,34 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
         QTextBlock nextBlock = block.next();
         //draw wrap
-        if (true) {
-            int lineCount = layout->lineCount();
-            if (lineCount >= 2 || !nextBlock.isValid()) {
-                painter.save();
-                painter.setPen(Qt::lightGray);
-                for (int i = 0; i < lineCount-1; ++i) { // paint line wrap indicator
-                    QTextLine line = layout->lineAt(i);
-                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
-                    QChar visualArrow((ushort)0x21b5);
-                    painter.drawText(QPointF(lineRect.right(),
-                                             lineRect.top() + line.ascent()),
-                                     visualArrow);
-                }
-                if (!nextBlock.isValid()) { // paint EOF symbol
-                    QTextLine line = layout->lineAt(lineCount-1);
-                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
-                    int h = 4;
-                    lineRect.adjust(0, 0, -1, -1);
-                    QPainterPath path;
-                    QPointF pos(lineRect.topRight() + QPointF(h+4, line.ascent()));
-                    path.moveTo(pos);
-                    path.lineTo(pos + QPointF(-h, -h));
-                    path.lineTo(pos + QPointF(0, -2*h));
-                    path.lineTo(pos + QPointF(h, -h));
-                    path.closeSubpath();
-                    painter.setBrush(painter.pen().color());
-                    painter.drawPath(path);
-                }
-                painter.restore();
+        int lineCount = layout->lineCount();
+        if (lineCount >= 2 || !nextBlock.isValid()) {
+            painter.save();
+            painter.setPen(Qt::lightGray);
+            for (int i = 0; i < lineCount-1; ++i) { // paint line wrap indicator
+                QTextLine line = layout->lineAt(i);
+                QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                QChar visualArrow((ushort)0x21b5);
+                painter.drawText(QPointF(lineRect.right(),
+                                         lineRect.top() + line.ascent()),
+                                 visualArrow);
             }
+            if (m_eofVisible && !nextBlock.isValid()) { // paint EOF symbol
+                QTextLine line = layout->lineAt(lineCount-1);
+                QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                int h = 4;
+                lineRect.adjust(0, 0, -1, -1);
+                QPainterPath path;
+                QPointF pos(lineRect.topRight() + QPointF(h+4, line.ascent()));
+                path.moveTo(pos);
+                path.lineTo(pos + QPointF(-h, -h));
+                path.lineTo(pos + QPointF(0, -2*h));
+                path.lineTo(pos + QPointF(h, -h));
+                path.closeSubpath();
+                painter.setBrush(painter.pen().color());
+                painter.drawPath(path);
+            }
+            painter.restore();
         }
 
         //draw fold text ...

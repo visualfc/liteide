@@ -145,6 +145,9 @@ public:
     int rightLineWidth() const {
         return m_rightLineWidth;
     }
+    void setEofVisible(bool b) {
+        m_eofVisible = b;
+    }
 
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
@@ -172,9 +175,10 @@ protected:
     QColor  m_indentLineForeground;
     QColor  m_CurrentLineBackground;
     bool m_lineNumbersVisible;
-    bool m_marksVisible;
+    bool m_marksVisible;    
     bool m_codeFoldingVisible;
     bool m_rightLineVisible;
+    bool m_eofVisible;
     int  m_rightLineWidth;
     bool m_autoIndent;
     bool m_autoBraces0; //{

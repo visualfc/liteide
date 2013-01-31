@@ -97,6 +97,8 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
@@ -113,6 +115,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->preMinLineEdit->setText(QString("%1").arg(min));
     ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
     ui->rightLineWidthSpinBox->setValue(rightLineWidth);
+    ui->eofVisibleCheckBox->setChecked(eofVisible);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
@@ -198,6 +201,7 @@ void LiteEditorOption::apply()
     bool caseSensitive = ui->completerCaseSensitiveCheckBox->isChecked();
     bool antialias = ui->antialiasCheckBox->isChecked();
     bool rightLineVisible = ui->rightLineVisibleCheckBox->isChecked();
+    bool eofVisible = ui->eofVisibleCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
@@ -216,6 +220,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE3,autoBraces3);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE4,autoBraces4);
     m_liteApp->settings()->setValue(EDITOR_LINENUMBERVISIBLE,lineNumberVisible);
+    m_liteApp->settings()->setValue(EDITOR_EOFVISIBLE,eofVisible);
     m_liteApp->settings()->setValue(EDITOR_COMPLETER_CASESENSITIVE,caseSensitive);
     m_liteApp->settings()->setValue(EDITOR_PREFIXLENGTH,min);
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);

@@ -610,6 +610,7 @@ void LiteEditor::applyOption(QString id)
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
@@ -621,6 +622,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setAutoBraces3(autoBraces3);
     m_editorWidget->setAutoBraces4(autoBraces4);
     m_editorWidget->setLineNumberVisible(lineNumberVisible);
+    m_editorWidget->setEofVisible(eofVisible);
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
 
@@ -663,7 +665,7 @@ void LiteEditor::applyOption(QString id)
         bool b = m_colorStyleScheme->load(styleFileName);
         if (b) {
             const ColorStyle *extra = m_colorStyleScheme->findStyle("Extra");
-            const ColorStyle *indent = m_colorStyleScheme->findStyle("IndentLine");
+            const ColorStyle *indentLine = m_colorStyleScheme->findStyle("IndentLine");
             const ColorStyle *style = m_colorStyleScheme->findStyle("Text");
             const ColorStyle *selection = m_colorStyleScheme->findStyle("Selection");
             const ColorStyle *inactiveSelection = m_colorStyleScheme->findStyle("InactiveSelection");
@@ -671,8 +673,8 @@ void LiteEditor::applyOption(QString id)
             if (extra) {
                 m_editorWidget->setExtraColor(extra->foregound(),extra->background());
             }
-            if (indent) {
-                m_editorWidget->setIndentLineColor(indent->foregound());
+            if (indentLine) {
+                m_editorWidget->setIndentLineColor(indentLine->foregound());
             }
             if (currentLine) {
                 m_editorWidget->setCurrentLineColor(currentLine->background());
