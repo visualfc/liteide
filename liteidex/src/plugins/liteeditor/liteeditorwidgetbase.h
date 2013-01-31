@@ -32,6 +32,10 @@ class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
 public:
+    enum TextFormatProperty {
+        MatchBrace = QTextFormat::UserProperty+1
+    };
+
     LiteEditorWidgetBase(QWidget *parent = 0);
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();

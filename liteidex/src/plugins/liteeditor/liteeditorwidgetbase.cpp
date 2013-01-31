@@ -248,12 +248,14 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
+            selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
 
             cur.setPosition(pos2);
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
+            selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
         } else if (type == TextEditor::TextBlockUserData::Mismatch) {
             QTextEdit::ExtraSelection selection;
@@ -262,6 +264,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
             selection.format.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+            selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             selection.format.setForeground(Qt::red);
             extraSelections.append(selection);
         }
@@ -1569,6 +1572,10 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.start = selStart;
                     o.length = selEnd - selStart;
                     o.format = range.format;
+                    if (!o.format.hasProperty(LiteEditorWidgetBase::MatchBrace)) {
+                        o.format.setForeground(palette().highlightedText());
+                        o.format.setBackground(palette().highlight());
+                    }
                     selections.append(o);
                 } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
                            && block.contains(range.cursor.position())) {
@@ -1599,7 +1606,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.start = context.cursorPosition - blpos;
                     o.length = 1;
                     o.format.setForeground(palette().base());
-                    o.format.setBackground(palette().text());
+                    o.format.setBackground(palette().text());                    
                     selections.append(o);
                 }
             }
