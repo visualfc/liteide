@@ -114,7 +114,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(slotUpdateExtraAreaWidth()));
     connect(this, SIGNAL(modificationChanged(bool)), this, SLOT(slotModificationChanged(bool)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(slotCursorPositionChanged()));
-    connect(this, SIGNAL(selectionChanged()),this,SLOT(slotSelectionChanged()));
+    //connect(this, SIGNAL(selectionChanged()),this,SLOT(updateSelection()));
     connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(slotUpdateRequest(QRect, int)));
     connect(this->document(),SIGNAL(contentsChange(int,int,int)),this,SLOT(editContentsChanged(int,int,int)));
 
@@ -233,18 +233,16 @@ void LiteEditorWidgetBase::highlightCurrentLine()
 {    
     QList<QTextEdit::ExtraSelection> extraSelections;
 
-    if (!isReadOnly()) {
-        QTextEdit::ExtraSelection selection;
-        selection.format.setBackground(m_currentLineBackground);
-        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        QTextCursor cur(this->document());
-        cur.setPosition(this->textCursor().position());
-        selection.cursor = cur;
+    QTextCursor cur = textCursor();
 
-        extraSelections.append(selection);
+    if (!isReadOnly()) {
+        QTextEdit::ExtraSelection full;
+        full.format.setBackground(m_currentLineBackground);
+        full.format.setProperty(QTextFormat::FullWidthSelection, true);
+        full.cursor = this->textCursor();
+        extraSelections.append(full);
     }
 
-    QTextCursor cur = textCursor();
     TextEditor::TextBlockUserData::MatchType type;
     int pos1 = -1;
     int pos2 = -1;
@@ -769,9 +767,10 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     }
     */
     highlightCurrentLine();
+    updateSelection();
 }
 
-void LiteEditorWidgetBase::slotSelectionChanged()
+void LiteEditorWidgetBase::updateSelection()
 {
     QString pattern;
     QTextCursor cur = this->textCursor();
@@ -779,7 +778,7 @@ void LiteEditorWidgetBase::slotSelectionChanged()
         QString text = cur.selectedText();
         cur.setPosition(cur.selectionStart());
         cur.select(QTextCursor::WordUnderCursor);
-        if (text == cur.selectedText() && text.begin()->isLetter()) {
+        if (text == cur.selectedText() && text.begin()->isLetterOrNumber()) {
             pattern = text;
         }
     }
@@ -1640,7 +1639,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                         o.format.setBackground(palette().highlight());
                     }
                     selections.append(o);
-                } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
+                } /*else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
                            && block.contains(range.cursor.position())) {
                     // for full width selections we don't require an actual selection, just
                     // a position to specify the line. that's more convenience in usage.
@@ -1652,8 +1651,17 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                         ++o.length; // include newline
                     o.format = range.format;
                     selections.append(o);
-                }
+                }*/
             }
+
+            if (block == textCursor().block()) {
+                QRectF rr = layout->lineForTextPosition(textCursor().positionInBlock()).rect();
+                rr.moveTop(rr.top() + r.top());
+                rr.setLeft(0);
+                rr.setRight(viewportRect.width() - offset.x());
+                painter.fillRect(rr, m_currentLineBackground);
+            }
+
 
             if (!m_selectionRxpression.isEmpty()) {
                 painter.save();

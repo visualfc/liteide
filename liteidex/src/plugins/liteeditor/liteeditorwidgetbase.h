@@ -73,7 +73,7 @@ public slots:
     virtual void slotModificationChanged(bool);
     virtual void slotUpdateRequest(const QRect &r, int dy);
     virtual void slotCursorPositionChanged();
-    virtual void slotSelectionChanged();
+    virtual void updateSelection();
     virtual void slotUpdateBlockNotify(const QTextBlock &);
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    
