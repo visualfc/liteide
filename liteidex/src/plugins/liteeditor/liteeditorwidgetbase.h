@@ -180,6 +180,7 @@ protected:
     QColor  m_extraBackground;
     QColor  m_indentLineForeground;
     QColor  m_currentLineBackground;
+    QRegExp m_selectionRxpression;
     bool m_lineNumbersVisible;
     bool m_marksVisible;    
     bool m_codeFoldingVisible;

@@ -108,6 +108,9 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_mouseOnFoldedMarker = false;
     setTabSize(4);
 
+    m_selectionRxpression.setCaseSensitivity(Qt::CaseSensitive);
+    m_selectionRxpression.setPatternSyntax(QRegExp::FixedString);
+
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(slotUpdateExtraAreaWidth()));
     connect(this, SIGNAL(modificationChanged(bool)), this, SLOT(slotModificationChanged(bool)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(slotCursorPositionChanged()));
@@ -770,7 +773,20 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
 
 void LiteEditorWidgetBase::slotSelectionChanged()
 {
-
+    QString pattern;
+    QTextCursor cur = this->textCursor();
+    if (cur.hasSelection()) {
+        QString text = cur.selectedText();
+        cur.setPosition(cur.selectionStart());
+        cur.select(QTextCursor::WordUnderCursor);
+        if (text == cur.selectedText() && text.begin()->isLetter()) {
+            pattern = text;
+        }
+    }
+    if (m_selectionRxpression.pattern() != pattern) {
+        m_selectionRxpression.setPattern(pattern);
+        viewport()->update();
+    }
 }
 
 void LiteEditorWidgetBase::slotUpdateBlockNotify(const QTextBlock &)
@@ -855,7 +871,6 @@ void LiteEditorWidgetBase::handleHomeKey(bool anchor)
     setTextCursor(cursor);
 }
 
-
 void LiteEditorWidgetBase::gotoLineStart()
 {
     handleHomeKey(false);
@@ -897,7 +912,6 @@ void LiteEditorWidgetBase::duplicate()
         cursor.insertBlock();
         int start = cursor.position();
         cursor.insertText(text);
-        cursor.endEditBlock();
         cursor.setPosition(start);
         cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
     }
@@ -1505,10 +1519,46 @@ static void fillBackground(QPainter *p, const QRectF &rect, QBrush brush, QRectF
     p->restore();
 }
 
+//copy of QTextDocument
+static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int offset,
+                        QTextDocument::FindFlags options, QTextCursor &cursor)
+{
+    const QRegExp expr(expression);
+    QString text = block.text();
+    text.replace(QChar::Nbsp, QLatin1Char(' '));
+
+    int idx = -1;
+    while (offset >=0 && offset <= text.length()) {
+        idx = (options & QTextDocument::FindBackward) ?
+               expr.lastIndexIn(text, offset) : expr.indexIn(text, offset);
+        if (idx == -1)
+            return false;
+
+        if (options & QTextDocument::FindWholeWords) {
+            const int start = idx;
+            const int end = start + expr.matchedLength();
+            if ((start != 0 && text.at(start - 1).isLetterOrNumber())
+                || (end != text.length() && text.at(end).isLetterOrNumber())) {
+                //if this is not a whole word, continue the search in the string
+                offset = (options & QTextDocument::FindBackward) ? idx-1 : end+1;
+                idx = -1;
+                continue;
+            }
+        }
+        //we have a hit, return the cursor for that.
+        break;
+    }
+    if (idx == -1)
+        return false;
+    cursor = QTextCursor(block.docHandle(), block.position() + idx);
+    cursor.setPosition(cursor.position() + expr.matchedLength(), QTextCursor::KeepAnchor);
+    return true;
+}
 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {  
-    //QPlainTextEdit::paintEvent(e);
+//    QPlainTextEdit::paintEvent(e);
+
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
@@ -1524,6 +1574,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     QTextBlock block = firstVisibleBlock();
     QPointF offset = contentOffset();
+    qreal offsetX = offset.x();
 
     //QPlainTextEdit::paintEvent
     QRect er = e->rect();
@@ -1602,6 +1653,26 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.format = range.format;
                     selections.append(o);
                 }
+            }
+
+            if (!m_selectionRxpression.isEmpty()) {
+                painter.save();
+                QColor color(this->palette().color(QPalette::Text));
+                color.setAlpha(128);
+                painter.setPen(color);
+                int pos = 0;
+                while (true) {
+                    QTextCursor cur;
+                    if (!findInBlock(block,m_selectionRxpression,pos,QTextDocument::FindWholeWords,cur)) {
+                        break;
+                    }
+                    pos = cur.selectionEnd()-block.position();
+                    QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
+                    qreal left = l.cursorToX(cur.selectionStart()-blpos);
+                    qreal right = l.cursorToX(cur.selectionEnd()-blpos);
+                    painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                }
+                painter.restore();
             }
 
             bool drawCursor = (editable
