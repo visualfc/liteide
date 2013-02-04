@@ -71,7 +71,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
         file.close();
     }
 
-    m_liteApp->extension()->addObject("LiteApi.ILiteDoc",this);
+    m_liteApp->extension()->addObject("LiteApi.ILiteDoc",this);    
 
     QUrl url("/readme.html");
     openUrl(url);

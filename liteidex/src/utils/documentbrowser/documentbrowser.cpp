@@ -121,6 +121,11 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     requestFontZoom(0);
 
+    QPalette p = m_htmlWidget->widget()->palette();
+    p.setBrush(QPalette::Highlight,Qt::yellow);
+    p.setColor(QPalette::HighlightedText,Qt::black);
+    m_htmlWidget->widget()->setPalette(p);
+
     emit backwardAvailable(false);
     emit forwardAvailable(false);
 }

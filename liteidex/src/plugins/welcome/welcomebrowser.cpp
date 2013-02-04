@@ -27,12 +27,15 @@
 #include "litedoc.h"
 #include <QMenu>
 #include <QStatusBar>
+#include <QToolBar>
 #include <QDir>
 #include <QFileInfo>
 #include <QAction>
 #include <QFile>
 #include <QTextBrowser>
 #include <QDesktopServices>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -49,25 +52,43 @@ WelcomeBrowser::WelcomeBrowser(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IBrowserEditor(parent),
       m_liteApp(app),
       m_extension(new Extension),
-      m_widget(new QWidget),
-      ui (new Ui::WelcomeWidget)
+      m_widget(new QWidget)
 {
-    ui->setupUi(m_widget);
+    m_browser = new DocumentBrowser(m_liteApp,this);
+    m_browser->toolBar()->hide();
 
-    connect(ui->newFileButton,SIGNAL(clicked()),m_liteApp->fileManager(),SLOT(newFile()));
-    connect(ui->openFileButton,SIGNAL(clicked()),m_liteApp->fileManager(),SLOT(openFiles()));
-//    connect(ui->openProjectButton,SIGNAL(clicked()),m_liteApp->fileManager(),SLOT(openProjects()));
-    connect(ui->openFolderButton,SIGNAL(clicked()),this,SLOT(openFolder()));
-//    connect(ui->openEditorButton,SIGNAL(clicked()),m_liteApp->fileManager(),SLOT(openEditors()));
-    connect(ui->optionsButton,SIGNAL(clicked()),m_liteApp->optionManager(),SLOT(exec()));
-    connect(ui->textBrowser,SIGNAL(anchorClicked(QUrl)),this,SLOT(openUrl(QUrl)));
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+
+    mainLayout->addWidget(m_browser->widget());
+
+    QPushButton *newFile = new QPushButton(tr("New"));
+    QPushButton *openFile = new QPushButton(tr("Open"));
+    QPushButton *openFolder = new QPushButton(tr("Open Folder"));
+    QPushButton *options = new QPushButton(tr("Options"));
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(newFile);
+    layout->addWidget(openFile);
+    layout->addWidget(openFolder);
+    layout->addStretch(1);
+    layout->addWidget(options);
+
+    mainLayout->addLayout(layout);
+
+    m_widget->setLayout(mainLayout);
+
+    connect(newFile,SIGNAL(clicked()),m_liteApp->fileManager(),SLOT(newFile()));
+    connect(openFile,SIGNAL(clicked()),m_liteApp->fileManager(),SLOT(openFiles()));
+    connect(openFolder,SIGNAL(clicked()),this,SLOT(openFolder()));
+
+    connect(options,SIGNAL(clicked()),m_liteApp->optionManager(),SLOT(exec()));
+    connect(m_browser,SIGNAL(requestUrl(QUrl)),this,SLOT(openUrl(QUrl)));
     connect(m_liteApp->fileManager(),SIGNAL(recentFilesChanged(QString)),this,SLOT(loadData()));
-    connect(ui->textBrowser,SIGNAL(highlighted(QUrl)),this,SLOT(highlightedUrl(QUrl)));
+    connect(m_browser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlightedUrl(QUrl)));
 
-    ui->textBrowser->setSearchPaths(QStringList() << m_liteApp->resourcePath()+"/welcome");
-    ui->textBrowser->setOpenLinks(false);
+    m_browser->setSearchPaths(QStringList() << m_liteApp->resourcePath()+"/welcome");
 
-    m_extension->addObject("LiteApi.QTextBrowser",ui->textBrowser);
+    m_extension->addObject("LiteApi.QTextBrowser",m_browser->htmlWidget()->widget());
 
     QString path = m_liteApp->resourcePath()+"/welcome/welcome.html";
     QFile file(path);
@@ -80,7 +101,7 @@ WelcomeBrowser::WelcomeBrowser(LiteApi::IApplication *app, QObject *parent)
 
 WelcomeBrowser::~WelcomeBrowser()
 {
-    delete ui;
+    delete m_browser;
     delete m_widget;
     if (m_extension) {
         delete m_extension;
@@ -179,8 +200,8 @@ void WelcomeBrowser::loadData()
     data.replace("{recent_sessions}",sessionList.join("\n"));
     data.replace("{recent_files}",list.join("\n"));
 
-    ui->textBrowser->setHtml(data);
-
+    QUrl url(m_liteApp->resourcePath()+"/welcome/welcome.html");
+    m_browser->setUrlHtml(url,data);
 }
 
 QWidget *WelcomeBrowser::widget()

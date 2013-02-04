@@ -127,11 +127,6 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_docBrowser = new DocumentBrowser(m_liteApp,this);
     m_docBrowser->setName(tr("Golang Document Browser"));
 
-    QPalette p = m_docBrowser->htmlWidget()->widget()->palette();
-    p.setBrush(QPalette::Highlight,Qt::yellow);
-    p.setColor(QPalette::HighlightedText,Qt::black);
-    m_docBrowser->htmlWidget()->widget()->setPalette(p);
-
     QStringList paths;
     paths << m_liteApp->resourcePath()+"/golangdoc";
     m_docBrowser->setSearchPaths(paths);
