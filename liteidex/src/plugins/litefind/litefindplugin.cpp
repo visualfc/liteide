@@ -112,12 +112,23 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     connect(m_findEditor,SIGNAL(swithReplace()),this,SLOT(switchReplace()));
     connect(m_fileSearchAct,SIGNAL(triggered()),this,SLOT(fileSearch()));
 
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFind()));
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideReplace()));
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFileSearch()));
+
     return true;
 }
 
 void LiteFindPlugin::hideFind()
 {
     m_findEditor->setVisible(false);
+}
+
+void LiteFindPlugin::hideFileSearch()
+{
+    if (m_fileSearch) {
+        m_fileSearch->setVisible(false);
+    }
 }
 
 void LiteFindPlugin::hideReplace()

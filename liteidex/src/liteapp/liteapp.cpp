@@ -168,6 +168,11 @@ LiteApp::LiteApp()
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_fileManager,SLOT(applyOption(QString)));
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_projectManager,SLOT(applyOption(QString)));
 
+    QAction *esc = new QAction("Escape",this);
+    esc->setShortcut(QKeySequence(Qt::Key_Escape));
+    connect(esc,SIGNAL(triggered()),this,SIGNAL(key_escape()));
+    m_mainwindow->addAction(esc);
+
     createActions();
     createMenus();
     createToolBars();
@@ -192,6 +197,7 @@ LiteApp::LiteApp()
     m_projectManager->addFactory(new FolderProjectFactory(this,this));
 
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
+    connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideToolWindow()));
 }
 
 static QImage makeSplashImage(LiteApi::IApplication *app)
@@ -537,8 +543,9 @@ void LiteApp::initPlugins()
 
 void LiteApp::createActions()
 {
-    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
     IActionContext *actionContext =  m_actionManager->getActionContext(this,"LiteApp");
+
+    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
     actionContext->regAction(m_newAct,"New",QKeySequence::New);
 
     m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File"),m_mainwindow);

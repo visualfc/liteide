@@ -570,6 +570,7 @@ public:
     virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString()) = 0;
 signals:
     void loaded();
+    void key_escape();
     void broadcast(QString,QString,QString);
 };
 

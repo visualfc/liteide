@@ -42,6 +42,7 @@ public slots:
     void find();
     void replace();
     void hideFind();
+    void hideFileSearch();
     void hideReplace();
     void switchReplace();
     void fileSearch();
