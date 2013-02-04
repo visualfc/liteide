@@ -66,7 +66,7 @@ public:
         m_info->setId("plugin/LiteFind");
         m_info->setName("LiteFind");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x16");
+        m_info->setVer("x17");
         m_info->setInfo("Find/Replace Util");
     }
 };

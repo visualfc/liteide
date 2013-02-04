@@ -52,7 +52,7 @@
 #endif
 //lite_memory_check_end
 
-QString data = "package main\n\nimport \"fmt\"\n\nfunc main(){\n\tfmt.Println(\"Hello World\")\n}";
+QString data = "package main\n\nimport(\n\t\"fmt\"\n)\n\nfunc main(){\n\tfmt.Println(\"Hello World\")\n}";
 GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IBrowserEditor(parent),
       m_liteApp(app)
@@ -76,9 +76,6 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_editor->open(m_playFile,"text/x-gosrc");
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(m_editor,"LiteApi.QToolBar");
-    if (toolBar) {
-        toolBar->hide();
-    }
 
     m_output = new TextOutput;
 
@@ -87,24 +84,29 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     QSplitter *spliter = new QSplitter(Qt::Vertical);
 
     QLabel *label = new QLabel("<h2>Go Playground</h2>");
-    QPushButton *run = new QPushButton("Run");
-    QPushButton *stop = new QPushButton("Stop");
-    QPushButton *_new = new QPushButton("New");
-    QPushButton *load = new QPushButton("Load");
-    QPushButton *save = new QPushButton("Save");
-    QPushButton *shell = new QPushButton("Explorer");
+
+    QAction *run = new QAction("Run",this);
+    QAction *stop = new QAction("Stop",this);
+    QAction *_new = new QAction("New",this);
+    QAction *load = new QAction("Load",this);
+    QAction *save = new QAction("Save",this);
+    QAction *shell = new QAction("Explorer",this);
     m_editLabel  = new QLabel;
 
-    head->addWidget(label);
-    head->addWidget(run);
-    head->addWidget(stop);
-    head->addWidget(_new);
-    head->addWidget(load);
-    head->addWidget(save);
-    head->addWidget(shell);
-    head->addWidget(m_editLabel);
-    head->addStretch();
+    if (toolBar) {
+        toolBar->addSeparator();
+        toolBar->addAction(run);
+        toolBar->addAction(stop);
+        toolBar->addAction(_new);
+        toolBar->addAction(load);
+        toolBar->addAction(save);
+        toolBar->addSeparator();
+        toolBar->addAction(shell);
+        toolBar->addSeparator();
+        toolBar->addWidget(m_editLabel);
+    }
 
+    head->addWidget(label);
     layout->addLayout(head);
 
     spliter->addWidget(m_editor->widget());
@@ -119,13 +121,12 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_process->setWorkingDirectory(dir.path());
     m_codec = QTextCodec::codecForName("utf-8");
 
-
-    connect(run,SIGNAL(clicked()),this,SLOT(run()));
-    connect(stop,SIGNAL(clicked()),this,SLOT(stop()));
-    connect(_new,SIGNAL(clicked()),this,SLOT(newPlay()));
-    connect(load,SIGNAL(clicked()),this,SLOT(loadPlay()));
-    connect(save,SIGNAL(clicked()),this,SLOT(savePlay()));
-    connect(shell,SIGNAL(clicked()),this,SLOT(shell()));
+    connect(run,SIGNAL(triggered()),this,SLOT(run()));
+    connect(stop,SIGNAL(triggered()),this,SLOT(stop()));
+    connect(_new,SIGNAL(triggered()),this,SLOT(newPlay()));
+    connect(load,SIGNAL(triggered()),this,SLOT(loadPlay()));
+    connect(save,SIGNAL(triggered()),this,SLOT(savePlay()));
+    connect(shell,SIGNAL(triggered()),this,SLOT(shell()));
     connect(m_process,SIGNAL(started()),this,SLOT(runStarted()));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(runOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(runFinish(bool,int,QString)));

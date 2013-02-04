@@ -55,7 +55,7 @@ public:
         m_info->setId("plugin/welcome");
         m_info->setName("Welcome");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x16");
+        m_info->setVer("x17");
         m_info->setInfo("Welcome");
     }
 };
