@@ -80,6 +80,6 @@ Gofmt=Shift+F7
 Goplayfmt=Shift+F7
 
 [Document]
-Document.DecreaseFontSize=Ctrl+-
-Document.IncreaseFontSize="Ctrl++; Ctrl+="
-Document.ResizeFontSize=Ctrl+0
+DecreaseFontSize=Ctrl+-
+IncreaseFontSize="Ctrl++; Ctrl+="
+ResizeFontSize=Ctrl+0
