@@ -3,6 +3,36 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2013.2.6 Ver x17
+* liteapp : fix action manager
+* liteeditor:
+	* update current line color
+	* selection same word mark
+	* focus on active
+	* eof visible option
+	* fix zoom tab width
+	* show tab ident guide
+* markdown:
+	* fix export path
+* filesystem:
+	* fix double clicked item and execute
+* litedebug:
+	* fix cmd args
+	* save/restore start editor
+	* fix breakpoint for editor
+* litefind:
+	* find editor and unfold
+* litebuild:		
+	* add test bench
+* document:
+	* fix find
+* gopath setup:
+	* fix invalid path
+* macosx:
+	* lion full screen support
+* translations:
+	add tr liteide_de.ts , thanks for HelgePlaschke
+	
 ### 2013.1.16 Ver x16
 * support keybord mapping scheme
 * fix: lookup go command in $PATH

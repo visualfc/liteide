@@ -438,12 +438,12 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::shortVer() const
 {
-    return "X16";
+    return "X17";
 }
 
 QString LiteApp::version() const
 {
-    return "LiteIDE X16";
+    return "LiteIDE X17";
 }
 
 QString LiteApp::name() const
