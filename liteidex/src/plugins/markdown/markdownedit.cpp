@@ -76,7 +76,7 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     }
     m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"MarkdownEdit");
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Markdown");
 
     QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),tr("Header (h1)"),this);
     actionContext->regAction(h1,"Header1","Ctrl+1");

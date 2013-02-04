@@ -85,7 +85,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_dbgWidget->widget());
     m_widget->setLayout(layout);
 
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"LiteDebug");
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Debug");
 
     m_startDebugExternal = new QAction(tr("Start Debugging External Application"),this);
     actionContext->regAction(m_startDebugExternal,"StartDebugExternal","");

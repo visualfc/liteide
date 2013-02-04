@@ -175,7 +175,7 @@ void EditorManager::createActions()
 
     m_goBackAct = new QAction(tr("GoBack"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
-    IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"LiteApp");
+    IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
     actionContext->regAction(m_goBackAct,"Backward","Alt+Left");
 
     m_goForwardAct = new QAction(tr("GoForward"),this);

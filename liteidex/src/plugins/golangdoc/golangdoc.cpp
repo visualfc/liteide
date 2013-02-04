@@ -139,7 +139,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_browserAct = m_liteApp->editorManager()->registerBrowser(m_docBrowser);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_browserAct);
 
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangDoc");
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoDoc");
 
     m_findDocAct = new QAction(tr("View Expression Information"),this);
     actionContext->regAction(m_findDocAct,"ViewInfo",QKeySequence::HelpContents);

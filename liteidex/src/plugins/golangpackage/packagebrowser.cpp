@@ -81,7 +81,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_reloadAct = new QAction(tr("Reload All"),this);
     m_setupGopathAct = new QAction(QIcon("icon:images/gopath.png"),tr("Setup GOPATH"),this);
 
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"PackageBrowser");
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoPkg");
 
     actionContext->regAction(m_setupGopathAct,"SetupGOPATH","");
 

@@ -56,7 +56,7 @@ bool GolangFmtPlugin::load(LiteApi::IApplication *app)
     m_fmt = new GolangFmt(app,this);
     m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
 
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangFmt");
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoFmt");
 
     actionContext->regAction(m_gofmtAct,"Gofmt","Shift+F7");
 

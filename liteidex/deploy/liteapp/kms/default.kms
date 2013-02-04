@@ -1,20 +1,6 @@
 [liteidex]
 version=1
 
-[LiteApp]
-About=
-AboutPlugins=
-Backward=Alt+Left
-CloseAllFiles=
-CloseFile=Ctrl+W
-CloseFolders=
-Forward=Alt+Right
-FullScreen=Ctrl+Shift+F11
-NewInstance=
-OpenFolder=
-OpenFolderNewInstance=
-SaveAllFiles=
-
 [Find]
 FileSearch=Ctrl+Shift+F
 
@@ -35,14 +21,6 @@ RunTerm=Alt+Shift+F5
 Stop=
 Test=Ctrl+T
 Vet=
-
-[GolangDoc]
-JumpToDeclaration=F2
-
-[PackageBrowser]
-SetupGOPATH=
-
-[FileSystem]
 Execute="Ctrl+,"
 
 [Editor]
@@ -62,7 +40,32 @@ SelectBlock=Ctrl+U
 Unfold=Ctrl+>
 UnfoldAll=
 
-[LiteDebug]
+[Document]
+DecreaseFontSize=Ctrl+-
+IncreaseFontSize="Ctrl++; Ctrl+="
+ResizeFontSize=Ctrl+0
+
+[App]
+About=
+AboutPlugins=
+Backward=Alt+Left
+CloseAllFiles=
+CloseFile=Ctrl+W
+CloseFolders=
+Forward=Alt+Right
+FullScreen=Ctrl+Shift+F11
+NewInstance=
+OpenFolder=
+OpenFolderNewInstance=
+SaveAllFiles=
+
+[GoPkg]
+SetupGOPATH=
+
+[GoDoc]
+JumpToDeclaration=F2
+
+[Debug]
 Breakpoint=F9
 Continue=F5
 LiteDebug.StepOver=F10
@@ -75,11 +78,21 @@ StepInfo=F11
 StepOut=Shift+F11
 StopDebug=Shift+F5
 
-[GolangFmt]
+[GoFmt]
 Gofmt=Shift+F7
 Goplayfmt=Shift+F7
 
-[Document]
-DecreaseFontSize=Ctrl+-
-IncreaseFontSize="Ctrl++; Ctrl+="
-ResizeFontSize=Ctrl+0
+[Markdown]
+Blockquote=Ctrl+Shift+Q
+Header1=Ctrl+1
+Header2=Ctrl+2
+Header3=Ctrl+3
+Header4=Ctrl+4
+Header5=Ctrl+5
+Header6=Ctrl+6
+HorizontalRule=Ctrl+Shift+H
+Image=Ctrl+Shift+I
+InlineCode=Ctrl+K
+Link=Ctrl+Shift+L
+OrderedList=Ctrl+Shift+O
+UnorderedList=Ctrl+Shift+U

@@ -543,7 +543,7 @@ void LiteApp::initPlugins()
 
 void LiteApp::createActions()
 {
-    IActionContext *actionContext =  m_actionManager->getActionContext(this,"LiteApp");
+    IActionContext *actionContext =  m_actionManager->getActionContext(this,"App");
 
     m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
     actionContext->regAction(m_newAct,"New",QKeySequence::New);
