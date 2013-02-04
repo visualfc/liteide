@@ -144,11 +144,13 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_browserAct = m_liteApp->editorManager()->registerBrowser(m_docBrowser);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_browserAct);
 
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangDoc");
+
     m_findDocAct = new QAction(tr("View Expression Information"),this);
-    m_liteApp->actionManager()->regAction(m_findDocAct,"Golang.ViewInfo",QKeySequence::HelpContents);
+    actionContext->regAction(m_findDocAct,"Golang.ViewInfo",QKeySequence::HelpContents);
 
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
-    m_liteApp->actionManager()->regAction(m_jumpDeclAct,"Golang.JumpToDeclaration","F2");
+    actionContext->regAction(m_jumpDeclAct,"Golang.JumpToDeclaration","F2");
 
     connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(triggeredToolWindow(bool)));
     connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));

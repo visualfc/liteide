@@ -166,7 +166,11 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     cmdLayout->setMargin(0);
     QLabel *label = new QLabel("Exec:");
     QAction *execute = new QAction(tr("Execute"),this);
-    m_liteApp->actionManager()->regAction(execute,"FileSystem.Execute","Ctrl+,");
+
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"FileSystem");
+
+
+    actionContext->regAction(execute,"FileSystem.Execute","Ctrl+,");
 
     m_liteApp->mainWindow()->addAction(execute);
     connect(execute,SIGNAL(triggered()),this,SLOT(requestCommand()));

@@ -78,20 +78,22 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     layout->addWidget(m_findEditor->widget());
     layout->addWidget(m_replaceEditor->widget());
 
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Find");
+
     m_findAct = new QAction(tr("Find"),this);
-    m_liteApp->actionManager()->regAction(m_findAct,"LiteFind.Find",QKeySequence::Find);
+    actionContext->regAction(m_findAct,"LiteFind.Find",QKeySequence::Find);
 
     m_findNextAct = new QAction(tr("Find Next"),this);
-    m_liteApp->actionManager()->regAction(m_findNextAct,"LiteFind.FindNext",QKeySequence::FindNext);
+    actionContext->regAction(m_findNextAct,"LiteFind.FindNext",QKeySequence::FindNext);
 
     m_findPrevAct = new QAction(tr("Find Previous"),this);
-    m_liteApp->actionManager()->regAction(m_findPrevAct,"LiteFind.FindPrevious",QKeySequence::FindPrevious);
+    actionContext->regAction(m_findPrevAct,"LiteFind.FindPrevious",QKeySequence::FindPrevious);
 
     m_replaceAct = new QAction(tr("Replace"),this);
-    m_liteApp->actionManager()->regAction(m_replaceAct,"LiteFind.Replace",QKeySequence::Replace);
+    actionContext->regAction(m_replaceAct,"LiteFind.Replace",QKeySequence::Replace);
 
     m_fileSearchAct = new QAction(tr("File Search"),this);
-    m_liteApp->actionManager()->regAction(m_fileSearchAct,"LiteFind.FileSearch","Ctrl+Shift+F");
+    actionContext->regAction(m_fileSearchAct,"LiteFind.FileSearch","Ctrl+Shift+F");
 
     menu->addAction(m_findAct);
     menu->addAction(m_findNextAct);

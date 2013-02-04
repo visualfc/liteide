@@ -48,7 +48,11 @@ ActionManager::ActionManager(QObject *parent) :
 
 ActionManager::~ActionManager()
 {
-    qDeleteAll(m_actionInfoMap);
+    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while(it.hasNext()) {
+        it.next();
+        delete it.value();
+    }
 }
 
 bool ActionManager::initWithApp(IApplication *app)
@@ -196,44 +200,40 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
     }
 }
 
-void ActionManager::regAction(QAction *act, const QString &id, const QString &defks, bool standard)
+IActionContext *ActionManager::getActionContext(QObject *obj, const QString &name)
 {
-    ActionInfo *info = m_actionInfoMap.value(id);
-    if (!info) {
-        info = new ActionInfo;
-        if (act) {
-            info->label = act->text();
-        }
-        info->standard = standard;
-        info->defks = formatShortcutsString(defks);
-        info->ks = m_liteApp->settings()->value(LITEAPP_SHORTCUTS+id,info->defks).toString();
-        info->ks = formatShortcutsString(info->ks);
-        info->keys = toShortcuts(info->ks);
-        m_actionInfoMap.insert(id,info);
-    }    
-    if (!act) {
-        return;
+    ActionContext *context = m_objContextMap.value(obj);
+    if (!context) {
+        context = new ActionContext(m_liteApp,name);
+        connect(obj,SIGNAL(destroyed(QObject*)),this,SLOT(removeActionContext(QObject*)));
+        m_objContextMap.insert(obj,context);
     }
-    act->setShortcuts(info->keys);
-    if (!info->ks.isEmpty()) {
-        act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
-    }
-    info->actions.append(act);
-}
-
-void ActionManager::regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def)
-{
-    regAction(act,id,QKeySequence(def).toString(),true);
+    return context;
 }
 
 QStringList ActionManager::actionKeys() const
 {
-    return m_actionInfoMap.keys();
+    QStringList keys;
+    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while(it.hasNext()) {
+        it.next();
+        keys.append(it.value()->actionKeys());
+    }
+    keys.removeDuplicates();
+    return keys;
 }
 
-ActionInfo *ActionManager::actionInfo(const QString &key)
+ActionInfo *ActionManager::actionInfo(const QString &id) const
 {
-    return m_actionInfoMap.value(key);
+    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while (it.hasNext()) {
+        it.next();
+        ActionInfo *info = it.value()->actionInfo(id);
+        if (info) {
+            return info;
+        }
+    }
+    return 0;
 }
 
 QList<QKeySequence> ActionManager::toShortcuts(const QString &ks)
@@ -283,16 +283,90 @@ QString ActionManager::formatShortcutsString(const QString &ks)
 
 void ActionManager::setActionShourtcuts(const QString &id, const QString &shortcuts)
 {
+    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while(it.hasNext()) {
+        it.next();
+        it.value()->setActionShourtcuts(id,shortcuts);
+    }
+}
+
+void ActionManager::removeActionContext(QObject *obj)
+{
+    QMutableMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key() == obj) {
+            delete it.value();
+            it.remove();
+            break;
+        }
+    }
+}
+
+ActionContext::ActionContext(IApplication *app, const QString &name)
+    : m_liteApp(app), m_name(name)
+{
+}
+
+QString ActionContext::contextName() const
+{
+    return m_name;
+}
+
+ActionContext::~ActionContext()
+{
+    QMapIterator<QString,ActionInfo*> it(m_actionInfoMap);
+    while(it.hasNext()) {
+        it.next();
+        delete it.value();
+    }
+}
+
+void ActionContext::regAction(QAction *act, const QString &id, const QString &defks, bool standard)
+{
+    ActionInfo *info = new ActionInfo;
+    info->standard = standard;
+    info->defks = ActionManager::formatShortcutsString(defks);
+    info->ks = m_liteApp->settings()->value(LITEAPP_SHORTCUTS+id,info->defks).toString();
+    info->ks = ActionManager::formatShortcutsString(info->ks);
+    info->keys = ActionManager::toShortcuts(info->ks);
+    if (act) {
+        act->setShortcuts(info->keys);
+        if (!info->ks.isEmpty()) {
+            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
+        }
+        info->action = act;
+    }
+    m_actionInfoMap.insert(id,info);
+}
+
+void ActionContext::regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def)
+{
+    regAction(act,id,QKeySequence(def).toString(),true);
+}
+
+QStringList ActionContext::actionKeys() const
+{
+    return m_actionInfoMap.keys();
+}
+
+ActionInfo *ActionContext::actionInfo(const QString &key) const
+{
+    return m_actionInfoMap.value(key);
+}
+
+void ActionContext::setActionShourtcuts(const QString &id, const QString &shortcuts)
+{
     ActionInfo *info = m_actionInfoMap.value(id);
     if (!info) {
         return;
     }
-    info->ks = formatShortcutsString(shortcuts);
-    info->keys = toShortcuts(info->ks);
-    foreach (QAction *act, info->actions) {
-        act->setShortcuts(info->keys);
+    info->ks = ActionManager::formatShortcutsString(shortcuts);
+    info->keys = ActionManager::toShortcuts(info->ks);
+    if (info->action) {
+        info->action->setShortcuts(info->keys);
         if (!info->ks.isEmpty()) {
-            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
+            info->action->setToolTip(QString("%1 (%2)").arg(info->action->text()).arg(info->ks));
         }
     }
     if (info->ks != info->defks) {

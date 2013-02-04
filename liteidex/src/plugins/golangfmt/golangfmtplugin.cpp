@@ -55,10 +55,13 @@ bool GolangFmtPlugin::load(LiteApi::IApplication *app)
 
     m_fmt = new GolangFmt(app,this);
     m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
-    m_liteApp->actionManager()->regAction(m_gofmtAct,"Golang.Gofmt","Shift+F7");
+
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangFmt");
+
+    actionContext->regAction(m_gofmtAct,"Golang.Gofmt","Shift+F7");
 
     m_goplayAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("gofmt"),this);
-    m_liteApp->actionManager()->regAction(m_goplayAct,"Golang.Goplayfmt","Shift+F7");
+    actionContext->regAction(m_goplayAct,"Golang.Goplayfmt","Shift+F7");
 
     connect(m_gofmtAct,SIGNAL(triggered()),m_fmt,SLOT(gofmt()));
     connect(m_goplayAct,SIGNAL(triggered()),this,SLOT(goplayFmt()));

@@ -203,23 +203,25 @@ void LiteEditor::clipbordDataChanged()
 
 void LiteEditor::createActions()
 {
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Editor");
+
     m_undoAct = new QAction(QIcon("icon:liteeditor/images/undo.png"),tr("Undo"),this);
-    m_liteApp->actionManager()->regAction(m_undoAct,"LiteEditor.Undo",QKeySequence::Undo);
+    actionContext->regAction(m_undoAct,"LiteEditor.Undo",QKeySequence::Undo);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
-    m_liteApp->actionManager()->regAction(m_redoAct,"LiteEditor.Redo","Ctrl+Shift+Z; Ctrl+Y");
+    actionContext->regAction(m_redoAct,"LiteEditor.Redo","Ctrl+Shift+Z; Ctrl+Y");
 
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
-    m_liteApp->actionManager()->regAction(m_cutAct,"LiteEditor.Cut",QKeySequence::Cut);
+    actionContext->regAction(m_cutAct,"LiteEditor.Cut",QKeySequence::Cut);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
-    m_liteApp->actionManager()->regAction(m_copyAct,"LiteEditor.Copy",QKeySequence::Copy);
+    actionContext->regAction(m_copyAct,"LiteEditor.Copy",QKeySequence::Copy);
 
     m_pasteAct = new QAction(QIcon("icon:liteeditor/images/paste.png"),tr("Paste"),this);
-    m_liteApp->actionManager()->regAction(m_pasteAct,"LiteEditor.Paste",QKeySequence::Paste);
+    actionContext->regAction(m_pasteAct,"LiteEditor.Paste",QKeySequence::Paste);
 
     m_selectAllAct = new QAction(tr("Select All"),this);
-    m_liteApp->actionManager()->regAction(m_selectAllAct,"LiteEditor.SelectAll",QKeySequence::SelectAll);
+    actionContext->regAction(m_selectAllAct,"LiteEditor.SelectAll",QKeySequence::SelectAll);
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML"),this);
 #ifndef QT_NO_PRINTER
@@ -228,29 +230,29 @@ void LiteEditor::createActions()
     m_filePrintPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview Document"),this);
 #endif
     m_gotoPrevBlockAct = new QAction(tr("Goto Previous Block"),this);
-    m_liteApp->actionManager()->regAction(m_gotoPrevBlockAct,"LiteEditor.GotoPreviousBlock","Ctrl+[");
+    actionContext->regAction(m_gotoPrevBlockAct,"LiteEditor.GotoPreviousBlock","Ctrl+[");
 
     m_gotoNextBlockAct = new QAction(tr("Goto Next Block"),this);
-    m_liteApp->actionManager()->regAction(m_gotoNextBlockAct,"LiteEditor.GotoNextBlock","Ctrl+]");
+    actionContext->regAction(m_gotoNextBlockAct,"LiteEditor.GotoNextBlock","Ctrl+]");
 
 
     m_selectBlockAct = new QAction(tr("Select Block"),this);
-    m_liteApp->actionManager()->regAction(m_selectBlockAct,"LiteEditor.SelectBlock","Ctrl+U");
+    actionContext->regAction(m_selectBlockAct,"LiteEditor.SelectBlock","Ctrl+U");
 
     m_gotoMatchBraceAct = new QAction(tr("Goto Match Brace"),this);
-    m_liteApp->actionManager()->regAction(m_gotoMatchBraceAct,"LiteEditor.GotoMatchBrace","Ctrl+E");
+    actionContext->regAction(m_gotoMatchBraceAct,"LiteEditor.GotoMatchBrace","Ctrl+E");
 
     m_foldAct = new QAction(tr("Fold"),this);   
-    m_liteApp->actionManager()->regAction(m_foldAct,"LiteEditor.Fold","Ctrl+<");
+    actionContext->regAction(m_foldAct,"LiteEditor.Fold","Ctrl+<");
 
     m_unfoldAct = new QAction(tr("Unfold"),this);
-    m_liteApp->actionManager()->regAction(m_unfoldAct,"LiteEditor.Unfold","Ctrl+>");
+    actionContext->regAction(m_unfoldAct,"LiteEditor.Unfold","Ctrl+>");
 
     m_foldAllAct = new QAction(tr("Fold All"),this);
-    m_liteApp->actionManager()->regAction(m_foldAllAct,"LiteEditor.FoldAll","");
+    actionContext->regAction(m_foldAllAct,"LiteEditor.FoldAll","");
 
     m_unfoldAllAct = new QAction(tr("Unfold All"),this);
-    m_liteApp->actionManager()->regAction(m_unfoldAllAct,"LiteEditor.UnfoldAll","");
+    actionContext->regAction(m_unfoldAllAct,"LiteEditor.UnfoldAll","");
 
     connect(m_foldAct,SIGNAL(triggered()),m_editorWidget,SLOT(fold()));
     connect(m_unfoldAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfold()));
@@ -258,29 +260,29 @@ void LiteEditor::createActions()
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
     m_gotoLineAct = new QAction(tr("Goto Line"),this);
-    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+L");
+    actionContext->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+L");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
-    m_liteApp->actionManager()->regAction(m_duplicateAct,"LiteEditor.Duplicate","Ctrl+D");
+    actionContext->regAction(m_duplicateAct,"LiteEditor.Duplicate","Ctrl+D");
 
     connect(m_duplicateAct,SIGNAL(triggered()),m_editorWidget,SLOT(duplicate()));
 
     m_deleteLineAct = new QAction(tr("Delete Line"),this);
-    m_liteApp->actionManager()->regAction(m_deleteLineAct,"LiteEditor.DeleteLine","Ctrl+Shift+K");
+    actionContext->regAction(m_deleteLineAct,"LiteEditor.DeleteLine","Ctrl+Shift+K");
 
     connect(m_deleteLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(deleteLine()));
 
     m_increaseFontSizeAct = new QAction(tr("Increase Font Size"),this);
-    m_liteApp->actionManager()->regAction(m_increaseFontSizeAct,"LiteEditor.IncreaseFontSize","Ctrl++;Ctrl+=");
+    actionContext->regAction(m_increaseFontSizeAct,"LiteEditor.IncreaseFontSize","Ctrl++;Ctrl+=");
 
     m_decreaseFontSizeAct = new QAction(tr("Decrease Font Size"),this);
-    m_liteApp->actionManager()->regAction(m_decreaseFontSizeAct,"LiteEditor.DecreaseFontSize","Ctrl+-");
+    actionContext->regAction(m_decreaseFontSizeAct,"LiteEditor.DecreaseFontSize","Ctrl+-");
 
     m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
-    m_liteApp->actionManager()->regAction(m_resetFontSizeAct,"LiteEditor.ResetFontSize","Ctrl+0");
+    actionContext->regAction(m_resetFontSizeAct,"LiteEditor.ResetFontSize","Ctrl+0");
 
 
 //    m_widget->addAction(m_foldAct);

@@ -478,7 +478,17 @@ struct ActionInfo {
     QString ks;
     bool    standard;
     QList<QKeySequence> keys;
-    QList<QAction*> actions;
+    QAction *action;
+};
+
+class IActionContext {
+public:
+    virtual QString contextName() const = 0;
+    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false) = 0;
+    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
+    virtual QStringList actionKeys() const = 0;
+    virtual ActionInfo *actionInfo(const QString &key) const = 0;
+    virtual void setActionShourtcuts(const QString &id, const QString &shortcuts);
 };
 
 class IActionManager : public IManager
@@ -496,10 +506,9 @@ public:
     virtual void removeToolBar(QToolBar* toolBar) = 0;
     virtual QList<QString> toolBarList() const = 0;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act) = 0;
-    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false) = 0;
-    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
+    virtual IActionContext *getActionContext(QObject *obj, const QString &name) = 0;
     virtual QStringList actionKeys() const = 0;
-    virtual ActionInfo *actionInfo(const QString &key) = 0;
+    virtual ActionInfo *actionInfo(const QString &id) const = 0;
     virtual void setActionShourtcuts(const QString &id, const QString &shortcuts) = 0;
 };
 
@@ -687,7 +696,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X16")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X17")
 
 
 #endif //__LITEAPI_H__
