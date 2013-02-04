@@ -539,54 +539,54 @@ void LiteApp::createActions()
 {
     m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
     IActionContext *actionContext =  m_actionManager->getActionContext(this,"LiteApp");
-    actionContext->regAction(m_newAct,"LiteApp.New",QKeySequence::New);
+    actionContext->regAction(m_newAct,"New",QKeySequence::New);
 
     m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File"),m_mainwindow);
-    actionContext->regAction(m_openFileAct,"LiteApp.OpenFile",QKeySequence::Open);
+    actionContext->regAction(m_openFileAct,"OpenFile",QKeySequence::Open);
 
     m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder"),m_mainwindow);
-    actionContext->regAction(m_openFolderAct,"LiteApp.OpenFolder","");
+    actionContext->regAction(m_openFolderAct,"OpenFolder","");
 
     m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder With New Instance"),m_mainwindow);
-    actionContext->regAction(m_openFolderNewInstanceAct,"LiteApp.OpenFolderNewInstance","");
+    actionContext->regAction(m_openFolderNewInstanceAct,"OpenFolderNewInstance","");
 
     m_newInstance = new QAction(tr("New Instance"),m_mainwindow);
-    actionContext->regAction(m_newInstance,"LiteApp.NewInstance","");
+    actionContext->regAction(m_newInstance,"NewInstance","");
 
     m_closeAct = new QAction(QIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
-    actionContext->regAction(m_closeAct,"LiteApp.CloseFile","Ctrl+W");
+    actionContext->regAction(m_closeAct,"CloseFile","Ctrl+W");
 
     m_closeAllAct = new QAction(QIcon("icon:images/closeall.png"),tr("Close All Files"),m_mainwindow);
-    actionContext->regAction(m_closeAllAct,"LiteApp.CloseAllFiles","");
+    actionContext->regAction(m_closeAllAct,"CloseAllFiles","");
 
     m_openProjectAct = new QAction(QIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);    
 
     m_saveProjectAct = new QAction(QIcon("icon:images/saveproject.png"),tr("Save Project"),m_mainwindow);
 
     m_closeProjectAct = new QAction(QIcon("icon:images/closeproject.png"),tr("Close Folders"),m_mainwindow);
-    actionContext->regAction(m_closeProjectAct,"LiteApp.CloseFolders","");
+    actionContext->regAction(m_closeProjectAct,"CloseFolders","");
 
     m_saveAct = new QAction(QIcon("icon:images/save.png"),tr("Save File"),m_mainwindow);
-    actionContext->regAction(m_saveAct,"LiteApp.SaveFile",QKeySequence::Save);
+    actionContext->regAction(m_saveAct,"SaveFile",QKeySequence::Save);
 
     m_saveAsAct = new QAction(tr("Save File As..."),m_mainwindow);
-    actionContext->regAction(m_saveAsAct,"LiteApp.SaveFileAs",QKeySequence::SaveAs);
+    actionContext->regAction(m_saveAsAct,"SaveFileAs",QKeySequence::SaveAs);
 
     m_saveAllAct = new QAction(QIcon("icon:images/saveall.png"),tr("Save All Files"),m_mainwindow);
-    actionContext->regAction(m_saveAllAct,"LiteApp.SaveAllFiles","");
+    actionContext->regAction(m_saveAllAct,"SaveAllFiles","");
 
     m_exitAct = new QAction(tr("Exit"),m_mainwindow);
-    actionContext->regAction(m_exitAct,"LiteApp.Exit",QKeySequence::Quit);
+    actionContext->regAction(m_exitAct,"Exit",QKeySequence::Quit);
 
     m_fullScreent = new QAction(tr("Full Screen"),m_mainwindow);
     m_fullScreent->setCheckable(true);
-    actionContext->regAction(m_fullScreent,"LiteApp.FullScreen","Ctrl+Shift+F11");
+    actionContext->regAction(m_fullScreent,"FullScreen","Ctrl+Shift+F11");
 
     m_aboutAct = new QAction(tr("About LiteIDE..."),m_mainwindow);
-    actionContext->regAction(m_aboutAct,"LiteApp.About","");
+    actionContext->regAction(m_aboutAct,"About","");
 
     m_aboutPluginsAct = new QAction(tr("About Plugins..."),m_mainwindow);
-    actionContext->regAction(m_aboutPluginsAct,"LiteApp.AboutPlugins","");
+    actionContext->regAction(m_aboutPluginsAct,"AboutPlugins","");
 
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));
     connect(m_openFileAct,SIGNAL(triggered()),m_fileManager,SLOT(openFiles()));

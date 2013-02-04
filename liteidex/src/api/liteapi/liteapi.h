@@ -510,6 +510,8 @@ public:
     virtual QStringList actionKeys() const = 0;
     virtual ActionInfo *actionInfo(const QString &id) const = 0;
     virtual void setActionShourtcuts(const QString &id, const QString &shortcuts) = 0;
+    virtual QStringList actionContextNameList() const = 0;
+    virtual IActionContext *actionContextForName(const QString &name) = 0;
 };
 
 class IGoProxy : public QObject

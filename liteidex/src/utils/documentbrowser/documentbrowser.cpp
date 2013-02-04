@@ -73,13 +73,13 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Document");
 
     m_increaseFontSize = new QAction(tr("Increase Font Size"),this);
-    actionContext->regAction(m_increaseFontSize,"Document.IncreaseFontSize","Ctrl++;Ctrl+=");
+    actionContext->regAction(m_increaseFontSize,"IncreaseFontSize","Ctrl++;Ctrl+=");
 
     m_decreaseFontSize = new QAction(tr("Decrease Font Size"),this);
-    actionContext->regAction(m_decreaseFontSize,"Document.DecreaseFontSize","Ctrl+-");
+    actionContext->regAction(m_decreaseFontSize,"DecreaseFontSize","Ctrl+-");
 
     m_resetFontSize = new QAction(tr("Reset Font Size"),this);
-    actionContext->regAction(m_resetFontSize,"Document.ResizeFontSize","Ctrl+0");
+    actionContext->regAction(m_resetFontSize,"ResizeFontSize","Ctrl+0");
 
     m_urlComboBox = new QComboBox;
     m_urlComboBox->setEditable(true);

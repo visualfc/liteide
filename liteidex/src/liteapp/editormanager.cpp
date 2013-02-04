@@ -176,11 +176,11 @@ void EditorManager::createActions()
     m_goBackAct = new QAction(tr("GoBack"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
     IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"LiteApp");
-    actionContext->regAction(m_goBackAct,"LiteApp.Backward","Alt+Left");
+    actionContext->regAction(m_goBackAct,"Backward","Alt+Left");
 
     m_goForwardAct = new QAction(tr("GoForward"),this);
     m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
-    actionContext->regAction(m_goForwardAct,"LiteApp.Forward","Alt+Right");
+    actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
 
     updateNavigatorActions();
 

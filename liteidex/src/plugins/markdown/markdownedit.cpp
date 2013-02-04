@@ -79,49 +79,49 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"MarkdownEdit");
 
     QAction *h1 = new QAction(QIcon("icon:markdown/images/h1.png"),tr("Header (h1)"),this);
-    actionContext->regAction(h1,"Markdown.Header1","Ctrl+1");
+    actionContext->regAction(h1,"Header1","Ctrl+1");
 
     QAction *h2 = new QAction(QIcon("icon:markdown/images/h2.png"),tr("Header (h2)"),this);
-    actionContext->regAction(h2,"Markdown.Header2","Ctrl+2");
+    actionContext->regAction(h2,"Header2","Ctrl+2");
 
     QAction *h3 = new QAction(QIcon("icon:markdown/images/h3.png"),tr("Header (h3)"),this);
-    actionContext->regAction(h3,"Markdown.Header3","Ctrl+3");
+    actionContext->regAction(h3,"Header3","Ctrl+3");
 
     QAction *h4 = new QAction(QIcon("icon:markdown/images/h4.png"),tr("Header (h4)"),this);
-    actionContext->regAction(h4,"Markdown.Header4","Ctrl+4");
+    actionContext->regAction(h4,"Header4","Ctrl+4");
 
     QAction *h5 = new QAction(QIcon("icon:markdown/images/h5.png"),tr("Header (h5)"),this);
-    actionContext->regAction(h5,"Markdown.Header2","Ctrl+5");
+    actionContext->regAction(h5,"Header5","Ctrl+5");
 
     QAction *h6 = new QAction(QIcon("icon:markdown/images/h6.png"),tr("Header (h6)"),this);
-    actionContext->regAction(h6,"Markdown.Header6","Ctrl+6");
+    actionContext->regAction(h6,"Header6","Ctrl+6");
 
     QAction *bold = new QAction(QIcon("icon:markdown/images/bold.png"),tr("Bold"),this);
-    actionContext->regAction(bold,"Markdown.Bold",QKeySequence::Bold);
+    actionContext->regAction(bold,"Bold",QKeySequence::Bold);
 
     QAction *italic = new QAction(QIcon("icon:markdown/images/italic.png"),tr("Italic"),this);
-    actionContext->regAction(italic,"Markdown.Italic",QKeySequence::Italic);
+    actionContext->regAction(italic,"Italic",QKeySequence::Italic);
 
     QAction *code = new QAction(QIcon("icon:markdown/images/code.png"),tr("Inline Code"),this);
-    actionContext->regAction(code,"Markdown.InlineCode","Ctrl+K");
+    actionContext->regAction(code,"InlineCode","Ctrl+K");
 
     QAction *link = new QAction(QIcon("icon:markdown/images/link.png"),tr("Link"),this);
-    actionContext->regAction(link,"Markdown.Link","Ctrl+Shift+L");
+    actionContext->regAction(link,"Link","Ctrl+Shift+L");
 
     QAction *image = new QAction(QIcon("icon:markdown/images/image.png"),tr("Image"),this);
-    actionContext->regAction(image,"Markdown.Image","Ctrl+Shift+I");
+    actionContext->regAction(image,"Image","Ctrl+Shift+I");
 
     QAction *ul = new QAction(QIcon("icon:markdown/images/ul.png"),tr("Unordered List"),this);
-    actionContext->regAction(ul,"Markdown.UnorderedList","Ctrl+Shift+U");
+    actionContext->regAction(ul,"UnorderedList","Ctrl+Shift+U");
 
     QAction *ol = new QAction(QIcon("icon:markdown/images/ol.png"),tr("Ordered List"),this);
-    actionContext->regAction(ol,"Markdown.OrderedList","Ctrl+Shift+O");
+    actionContext->regAction(ol,"OrderedList","Ctrl+Shift+O");
 
     QAction *bq = new QAction(QIcon("icon:markdown/images/quote.png"),tr("Blockquote"),this);
-    actionContext->regAction(bq,"Markdown.Blockquote","Ctrl+Shift+Q");
+    actionContext->regAction(bq,"Blockquote","Ctrl+Shift+Q");
 
     QAction *hr = new QAction(QIcon("icon:markdown/images/hr.png"),tr("Horizontal Rule"),this);
-    actionContext->regAction(hr,"Markdown.HorizontalRule","Ctrl+Shift+H");
+    actionContext->regAction(hr,"HorizontalRule","Ctrl+Shift+H");
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
 

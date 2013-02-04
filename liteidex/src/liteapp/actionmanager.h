@@ -65,6 +65,8 @@ public:
     virtual QStringList actionKeys() const;
     virtual ActionInfo *actionInfo(const QString &id) const;
     virtual void setActionShourtcuts(const QString &id, const QString &shortcuts);
+    virtual QStringList actionContextNameList() const;
+    virtual IActionContext *actionContextForName(const QString &name);
 protected slots:
     void removeActionContext(QObject *obj);
 public:

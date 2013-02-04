@@ -83,7 +83,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"PackageBrowser");
 
-    actionContext->regAction(m_setupGopathAct,"Golang.SetupGOPATH","");
+    actionContext->regAction(m_setupGopathAct,"SetupGOPATH","");
 
     m_godocAct = new QAction(tr("View Package Document"),this);
     m_editPackageAct = new QAction(tr("Load Package Project"),this);

@@ -170,7 +170,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"FileSystem");
 
 
-    actionContext->regAction(execute,"FileSystem.Execute","Ctrl+,");
+    actionContext->regAction(execute,"Execute","Ctrl+,");
 
     m_liteApp->mainWindow()->addAction(execute);
     connect(execute,SIGNAL(triggered()),this,SLOT(requestCommand()));

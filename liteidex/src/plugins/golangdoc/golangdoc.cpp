@@ -142,10 +142,10 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangDoc");
 
     m_findDocAct = new QAction(tr("View Expression Information"),this);
-    actionContext->regAction(m_findDocAct,"Golang.ViewInfo",QKeySequence::HelpContents);
+    actionContext->regAction(m_findDocAct,"ViewInfo",QKeySequence::HelpContents);
 
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
-    actionContext->regAction(m_jumpDeclAct,"Golang.JumpToDeclaration","F2");
+    actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
     connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(triggeredToolWindow(bool)));
     connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));

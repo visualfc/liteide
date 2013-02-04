@@ -102,7 +102,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Build");
 
     m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Config"),this);
-    actionContext->regAction(m_configAct,"LiteBuild.Config","");
+    actionContext->regAction(m_configAct,"Config","");
 
     m_process = new ProcessEx(this);
     m_output = new TextOutput;
@@ -110,11 +110,11 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_stopAct = new QAction(tr("Stop Action"),this);
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
-    actionContext->regAction(m_stopAct,"LiteBuild.Stop","");
+    actionContext->regAction(m_stopAct,"Stop","");
 
     m_clearAct = new QAction(tr("Clear All"),this);
     m_clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
-    actionContext->regAction(m_clearAct,"LiteBuild.Clear","");
+    actionContext->regAction(m_clearAct,"ClearOutput","");
 
     connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
     connect(m_clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
@@ -163,7 +163,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
             foreach(QKeySequence key, act->shortcuts()) {
                 shortcuts.append(key.toString());
             }
-            actionContext->regAction(act,"LiteBuild."+act->objectName(),shortcuts.join(";"));
+            actionContext->regAction(act,act->objectName(),shortcuts.join(";"));
         }
     }    
 }

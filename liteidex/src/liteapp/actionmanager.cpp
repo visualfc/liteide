@@ -290,6 +290,30 @@ void ActionManager::setActionShourtcuts(const QString &id, const QString &shortc
     }
 }
 
+QStringList ActionManager::actionContextNameList() const
+{
+    QStringList nameList;
+    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while(it.hasNext()) {
+        it.next();
+        nameList.append(it.value()->contextName());
+    }
+    nameList.removeDuplicates();
+    return nameList;
+}
+
+IActionContext *ActionManager::actionContextForName(const QString &name)
+{
+    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    while(it.hasNext()) {
+        it.next();
+        if (it.value()->contextName().compare(name,Qt::CaseInsensitive) == 0) {
+            return it.value();
+        }
+    }
+    return 0;
+}
+
 void ActionManager::removeActionContext(QObject *obj)
 {
     QMutableMapIterator<QObject*,ActionContext*> it(m_objContextMap);
@@ -331,6 +355,7 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
     info->ks = ActionManager::formatShortcutsString(info->ks);
     info->keys = ActionManager::toShortcuts(info->ks);
     if (act) {
+        info->label = act->text();
         act->setShortcuts(info->keys);
         if (!info->ks.isEmpty()) {
             act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));

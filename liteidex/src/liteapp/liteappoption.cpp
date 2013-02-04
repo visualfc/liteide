@@ -186,15 +186,26 @@ void LiteAppOption::apply()
     }
 
     for (int i = 0; i < m_keysModel->rowCount(); i++) {
-        QStandardItem *id = m_keysModel->item(i,0);
-        if (!id) {
+        QStandardItem *root = m_keysModel->item(i,0);
+        if (!root) {
             continue;
         }
-        QStandardItem *bind = m_keysModel->item(i,2);
-        if (!bind) {
+        LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->actionContextForName(root->text());
+        if (!actionContext) {
             continue;
         }
-        m_liteApp->actionManager()->setActionShourtcuts(id->text(),bind->text());
+
+        for (int j = 0; j < root->rowCount(); j++) {
+            QStandardItem *id = root->child(j,0);
+            if (!id) {
+                continue;
+            }
+            QStandardItem *bind = root->child(j,2);
+            if (!bind) {
+                continue;
+            }
+            m_liteApp->actionManager()->setActionShourtcuts(id->text(),bind->text());
+       }
     }
 }
 
@@ -207,31 +218,40 @@ void LiteAppOption::reloadShortcuts()
 {
     m_keysModel->removeRows(0,m_keysModel->rowCount());
     bool bCheckStandard = ui->standardCheckBox->isChecked();
-    foreach (QString id, m_liteApp->actionManager()->actionKeys()) {
-        LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id);
-        if (!info) {
-            continue;
+    foreach(QString name, m_liteApp->actionManager()->actionContextNameList() ) {
+        LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->actionContextForName(name);
+        if (actionContext) {
+            QStandardItem *root = new QStandardItem(name);
+            root->setEditable(false);
+            foreach(QString id, actionContext->actionKeys()) {
+                LiteApi::ActionInfo *info = actionContext->actionInfo(id);
+                if (!info) {
+                    continue;
+                }
+                if (bCheckStandard && info->standard && (info->ks == info->defks)) {
+                    continue;
+                }
+                QStandardItem *item = new QStandardItem(id);
+                item->setEditable(false);
+                QStandardItem *label = new QStandardItem(info->label);
+                label->setEditable(false);
+                QStandardItem *std = new QStandardItem;
+                std->setCheckable(true);
+                std->setEnabled(false);
+                std->setCheckState(info->standard?Qt::Checked:Qt::Unchecked);
+                QStandardItem *bind = new QStandardItem(info->ks);
+                bind->setEditable(true);
+                if (info->ks != info->defks) {
+                    QFont font = bind->font();
+                    font.setBold(true);
+                    bind->setFont(font);
+                }
+                root->appendRow(QList<QStandardItem*>() << item << label << bind << std);
+            }
+            m_keysModel->appendRow(root);
         }
-        if (bCheckStandard && info->standard && (info->ks == info->defks)) {
-            continue;
-        }
-        QStandardItem *item = new QStandardItem(id);
-        item->setEditable(false);
-        QStandardItem *label = new QStandardItem(info->label);
-        label->setEditable(false);
-        QStandardItem *std = new QStandardItem;
-        std->setCheckable(true);
-        std->setEnabled(false);
-        std->setCheckState(info->standard?Qt::Checked:Qt::Unchecked);
-        QStandardItem *bind = new QStandardItem(info->ks);
-        bind->setEditable(true);
-        if (info->ks != info->defks) {
-            QFont font = bind->font();
-            font.setBold(true);
-            bind->setFont(font);            
-        }
-        m_keysModel->appendRow(QList<QStandardItem*>() << item << label << bind << std);
     }
+    ui->keysTreeView->expandAll();
 }
 
 void LiteAppOption::shortcutsChanaged(QStandardItem *bind)
@@ -239,12 +259,19 @@ void LiteAppOption::shortcutsChanaged(QStandardItem *bind)
     if (!bind) {
         return;
     }
-    QStandardItem *item = m_keysModel->item(bind->row(),0);
+    QStandardItem *root = bind->parent();
+    if (!root) {
+        return;
+    }
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->actionContextForName(root->text());
+     if (!actionContext) {
+         return;
+    }
+    QStandardItem *item = root->child(bind->row(),0);
     if (!item) {
         return;
-    }    
-    QString id = item->text();
-    LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id);
+    }
+    LiteApi::ActionInfo *info = actionContext->actionInfo(item->text());
     if (!info) {
         return;
     }
@@ -263,22 +290,32 @@ void LiteAppOption::shortcutsChanaged(QStandardItem *bind)
 void LiteAppOption::resetAllShortcuts()
 {
     for (int i = 0; i < m_keysModel->rowCount(); i++) {
-        QStandardItem *id = m_keysModel->item(i,0);
-        if (!id) {
+        QStandardItem *root = m_keysModel->item(i,0);
+        if (!root) {
             continue;
         }
-        QStandardItem *bind = m_keysModel->item(i,2);
-        if (!bind) {
+        LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->actionContextForName(root->text());
+        if (!actionContext) {
             continue;
         }
-        LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id->text());
-        if (!info) {
-            continue;
+        for (int j = 0; j < root->rowCount(); j++) {
+            QStandardItem *id = root->child(j,0);
+            if (!id) {
+                continue;
+            }
+            QStandardItem *bind = root->child(j,2);
+            if (!bind) {
+                continue;
+            }
+            LiteApi::ActionInfo *info = actionContext->actionInfo(id->text());
+            if (!info) {
+                continue;
+            }
+            bind->setText(info->defks);
+            QFont font = bind->font();
+            font.setBold(false);
+            bind->setFont(font);
         }
-        bind->setText(info->defks);
-        QFont font = bind->font();
-        font.setBold(false);
-        bind->setFont(font);
     }
 }
 
@@ -287,16 +324,28 @@ void LiteAppOption::resetShortcuts()
     QModelIndex index = ui->keysTreeView->currentIndex();
     if (!index.isValid()) {
         return;
+    }    
+    QModelIndex rootIndex = index.parent();
+    if (!rootIndex.isValid()) {
+        return;
     }
-    QStandardItem *id = m_keysModel->item(index.row(),0);
+    QStandardItem *root = m_keysModel->item(rootIndex.row());
+    if (!root) {
+        return;
+    }
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->actionContextForName(root->text());
+    if (!actionContext) {
+        return;
+    }
+    QStandardItem *id = root->child(index.row(),0);
     if (!id) {
         return;
     }
-    QStandardItem *bind = m_keysModel->item(index.row(),2);
+    QStandardItem *bind = root->child(index.row(),2);
     if (!bind) {
         return;
     }
-    LiteApi::ActionInfo *info = m_liteApp->actionManager()->actionInfo(id->text());
+    LiteApi::ActionInfo *info = actionContext->actionInfo(id->text());
     if (!info) {
         return;
     }
@@ -314,27 +363,30 @@ void LiteAppOption::importShortcuts()
         return;
     }
     QSettings read(filePath,QSettings::IniFormat);
-    if (!read.childGroups().contains("Shortcuts",Qt::CaseInsensitive)) {
+    int version = read.value("liteidex/version",0).toInt();
+    if (version < 1) {
         QMessageBox::critical(m_liteApp->mainWindow(),"LiteIDE",QString(tr("Error read file %1")).arg(filePath));
         return;
     }
-    read.beginGroup("Shortcuts");
+
     for (int i = 0; i < m_keysModel->rowCount(); i++) {
-        QStandardItem *id = m_keysModel->item(i,0);
-        if (!id) {
-            continue;
+        QStandardItem *root = m_keysModel->item(i,0);
+        for (int j = 0; j < root->rowCount(); j++) {
+            QStandardItem *id = root->child(j,0);
+            if (!id) {
+                continue;
+            }
+            QStandardItem *bind = root->child(j,2);
+            if (!bind) {
+                continue;
+            }
+            QVariant val = read.value(root->text()+"/"+id->text());
+            if (!val.isValid()) {
+                continue;
+            }
+            bind->setText(ActionManager::formatShortcutsString(val.toString()));
         }
-        QStandardItem *bind = m_keysModel->item(i,2);
-        if (!bind) {
-            continue;
-        }
-        QVariant val = read.value(id->text());
-        if (!val.isValid()) {
-            continue;
-        }
-        bind->setText(ActionManager::formatShortcutsString(val.toString()));
     }
-    read.endGroup();
 }
 
 void LiteAppOption::exportShortcuts()
@@ -355,17 +407,19 @@ void LiteAppOption::exportShortcuts()
         return;
     }
     write.clear();
-    write.beginGroup("Shortcuts");
+    write.setValue("liteidex/version",1);
     for (int i = 0; i < m_keysModel->rowCount(); i++) {
-        QStandardItem *id = m_keysModel->item(i,0);
-        if (!id) {
-            continue;
+        QStandardItem *root = m_keysModel->item(i,0);
+        for (int j = 0; j < root->rowCount(); j++) {
+            QStandardItem *id = root->child(j,0);
+            if (!id) {
+                continue;
+            }
+            QStandardItem *bind = root->child(j,2);
+            if (!bind) {
+                continue;
+            }
+            write.setValue(root->text()+"/"+id->text(),bind->text());
         }
-        QStandardItem *bind = m_keysModel->item(i,2);
-        if (!bind) {
-            continue;
-        }
-        write.setValue(id->text(),bind->text());
     }
-    write.endGroup();
 }

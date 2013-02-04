@@ -81,19 +81,19 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Find");
 
     m_findAct = new QAction(tr("Find"),this);
-    actionContext->regAction(m_findAct,"LiteFind.Find",QKeySequence::Find);
+    actionContext->regAction(m_findAct,"Find",QKeySequence::Find);
 
     m_findNextAct = new QAction(tr("Find Next"),this);
-    actionContext->regAction(m_findNextAct,"LiteFind.FindNext",QKeySequence::FindNext);
+    actionContext->regAction(m_findNextAct,"FindNext",QKeySequence::FindNext);
 
     m_findPrevAct = new QAction(tr("Find Previous"),this);
-    actionContext->regAction(m_findPrevAct,"LiteFind.FindPrevious",QKeySequence::FindPrevious);
+    actionContext->regAction(m_findPrevAct,"FindPrevious",QKeySequence::FindPrevious);
 
     m_replaceAct = new QAction(tr("Replace"),this);
-    actionContext->regAction(m_replaceAct,"LiteFind.Replace",QKeySequence::Replace);
+    actionContext->regAction(m_replaceAct,"Replace",QKeySequence::Replace);
 
     m_fileSearchAct = new QAction(tr("File Search"),this);
-    actionContext->regAction(m_fileSearchAct,"LiteFind.FileSearch","Ctrl+Shift+F");
+    actionContext->regAction(m_fileSearchAct,"FileSearch","Ctrl+Shift+F");
 
     menu->addAction(m_findAct);
     menu->addAction(m_findNextAct);
