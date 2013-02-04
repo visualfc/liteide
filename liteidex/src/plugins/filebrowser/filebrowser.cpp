@@ -162,27 +162,10 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     for (int i = 1; i < count; i++) {
         m_treeView->setColumnHidden(i,true);
     }
-    QHBoxLayout *cmdLayout = new QHBoxLayout;
-    cmdLayout->setMargin(0);
-    QLabel *label = new QLabel("Exec:");
-    QAction *execute = new QAction(tr("Execute"),this);
-
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"FileSystem");
-
-
-    actionContext->regAction(execute,"Execute","Ctrl+,");
-
-    m_liteApp->mainWindow()->addAction(execute);
-    connect(execute,SIGNAL(triggered()),this,SLOT(requestCommand()));
-    cmdLayout->addWidget(label);
-    m_commandEdit = new QLineEdit;
-    m_commandEdit->setText("go ");
-    cmdLayout->addWidget(m_commandEdit);
 
     mainLayout->addWidget(m_filterToolBar);
     mainLayout->addWidget(m_rootToolBar);
     mainLayout->addWidget(m_treeView);
-    mainLayout->addLayout(cmdLayout);
     m_widget->setLayout(mainLayout);
 
     //create menu
@@ -274,7 +257,6 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_syncAct,SIGNAL(triggered(bool)),this,SLOT(syncFileModel(bool)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
-    connect(m_commandEdit,SIGNAL(returnPressed()),this,SLOT(commandReturn()));
 
     QString root = m_liteApp->settings()->value("FileBrowser/root",m_fileModel->myComputer().toString()).toString();
     addFolderToRoot(root);
@@ -688,32 +670,4 @@ void FileBrowser::cdUp()
     if (!dir.path().isEmpty() && dir.cdUp()) {
         addFolderToRoot(dir.path());
     }
-}
-
-void FileBrowser::commandReturn()
-{
-    QString text = m_commandEdit->text();
-    if (text.isEmpty()) {
-        return;
-    }
-    m_commandEdit->selectAll();
-    QString cmd = text;
-    QString args;
-    int find = text.indexOf(" ");
-    if (find != -1) {
-        cmd = text.left(find);
-        args = text.right(text.length()-find-1);
-    }
-    LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
-    if (!build) {
-        return;
-    }
-    build->executeCommand(cmd.trimmed(),args.trimmed(),m_fileModel->rootPath());
-}
-
-void FileBrowser::requestCommand()
-{
-    m_toolWindowAct->setChecked(true);
-    m_commandEdit->setFocus();
-    m_commandEdit->selectAll();
 }
