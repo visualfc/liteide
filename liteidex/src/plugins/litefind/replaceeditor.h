@@ -61,6 +61,8 @@ public slots:
     void findNext();
     void replace();
     void replaceAll();
+    void saveState();
+    void loadState();
 public:
     QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, ReplaceState *state);
     template <typename T>

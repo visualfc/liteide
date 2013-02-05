@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "findeditor.h"
-
+#include "litefind_global.h"
 #include <QLineEdit>
 #include <QTextCursor>
 #include <QPlainTextEdit>
@@ -57,12 +57,10 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_useRegexCheckBox = new QCheckBox(tr("Regular expression"));
     m_wrapAroundCheckBox = new QCheckBox(tr("Wrap around"));
 
-    m_liteApp->settings()->beginGroup("findeditor");
-    m_matchWordCheckBox->setChecked(m_liteApp->settings()->value("matchWord",true).toBool());
-    m_matchCaseCheckBox->setChecked(m_liteApp->settings()->value("matchCase",true).toBool());
-    m_useRegexCheckBox->setChecked(m_liteApp->settings()->value("useRegexp",false).toBool());
-    m_wrapAroundCheckBox->setChecked(m_liteApp->settings()->value("wrapAround",true).toBool());
-    m_liteApp->settings()->endGroup();
+    m_matchWordCheckBox->setChecked(m_liteApp->settings()->value(FIND_MATCHWORD,true).toBool());
+    m_matchCaseCheckBox->setChecked(m_liteApp->settings()->value(FIND_MATCHCASE,true).toBool());
+    m_useRegexCheckBox->setChecked(m_liteApp->settings()->value(FIND_USEREGEXP,false).toBool());
+    m_wrapAroundCheckBox->setChecked(m_liteApp->settings()->value(FIND_WRAPAROUND,true).toBool());
 
     QPushButton *findNext = new QPushButton(tr("Find Next"));
     QPushButton *findPrev = new QPushButton(tr("Find Prev"));
@@ -107,16 +105,21 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     connect(findPrev,SIGNAL(clicked()),this,SLOT(findPrev()));
     connect(hideFind,SIGNAL(clicked()),this,SIGNAL(hideFind()));
     connect(switchReplace,SIGNAL(clicked()),this,SIGNAL(swithReplace()));
+
+    connect(m_matchCaseCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
+    connect(m_matchWordCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
+    connect(m_useRegexCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
+    connect(m_wrapAroundCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
+
+    this->saveState();
 }
 
 FindEditor::~FindEditor()
 {
-    m_liteApp->settings()->beginGroup("findeditor");
-    m_liteApp->settings()->setValue("matchWord",m_matchWordCheckBox->isChecked());
-    m_liteApp->settings()->setValue("matchCase",m_matchCaseCheckBox->isChecked());
-    m_liteApp->settings()->setValue("useRegexp",m_useRegexCheckBox->isChecked());
-    m_liteApp->settings()->setValue("wrapAround",m_wrapAroundCheckBox->isChecked());
-    m_liteApp->settings()->endGroup();
+    m_liteApp->settings()->setValue(FIND_MATCHWORD,m_matchWordCheckBox->isChecked());
+    m_liteApp->settings()->setValue(FIND_MATCHCASE,m_matchCaseCheckBox->isChecked());
+    m_liteApp->settings()->setValue(FIND_USEREGEXP,m_useRegexCheckBox->isChecked());
+    m_liteApp->settings()->setValue(FIND_WRAPAROUND,m_wrapAroundCheckBox->isChecked());
 
     if (m_widget) {
         delete m_widget;
@@ -127,6 +130,7 @@ void FindEditor::setVisible(bool b)
 {
     this->m_widget->setVisible(b);
     if (b) {
+        this->loadState();
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
         if (editor) {
             QString text;
@@ -239,6 +243,22 @@ void FindEditor::findPrev()
     if (bFocus) {
         m_findEdit->setFocus();
     }
+}
+
+void FindEditor::saveState()
+{
+    m_liteApp->globalCookie().insert(FIND_MATCHWORD,m_matchWordCheckBox->isChecked());
+    m_liteApp->globalCookie().insert(FIND_MATCHCASE,m_matchCaseCheckBox->isChecked());
+    m_liteApp->globalCookie().insert(FIND_USEREGEXP,m_useRegexCheckBox->isChecked());
+    m_liteApp->globalCookie().insert(FIND_WRAPAROUND,m_wrapAroundCheckBox->isChecked());
+}
+
+void FindEditor::loadState()
+{
+    m_matchWordCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_MATCHWORD,true).toBool());
+    m_matchCaseCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_MATCHCASE,true).toBool());
+    m_useRegexCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_USEREGEXP,true).toBool());
+    m_wrapAroundCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_WRAPAROUND,true).toBool());
 }
 
 QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindState *state)

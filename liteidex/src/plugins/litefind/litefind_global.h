@@ -32,4 +32,9 @@
 #  define LITEFINDSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define FIND_MATCHWORD "find/matchWord"
+#define FIND_MATCHCASE "find/matchCase"
+#define FIND_USEREGEXP "find/useRegexp"
+#define FIND_WRAPAROUND "find/wrapAround"
+
 #endif // LITEFIND_GLOBAL_H

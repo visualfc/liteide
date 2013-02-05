@@ -61,6 +61,8 @@ signals:
 public slots:
     void findNext();
     void findPrev();
+    void saveState();
+    void loadState();
 public:
     QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindState *state);        
     template <typename T>
