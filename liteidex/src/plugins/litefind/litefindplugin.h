@@ -29,7 +29,7 @@
 #include <QtPlugin>
 
 class FindEditor;
-class ReplaceEditor;
+class FindEditor;
 class FileSearch;
 class LiteFindPlugin : public LiteApi::IPlugin
 {
@@ -43,13 +43,10 @@ public slots:
     void replace();
     void hideFind();
     void hideFileSearch();
-    void hideReplace();
-    void switchReplace();
     void fileSearch();
 protected:
     LiteApi::IApplication *m_liteApp;
     FindEditor *m_findEditor;
-    ReplaceEditor *m_replaceEditor;
     FileSearch  *m_fileSearch;
     QAction *m_findAct;
     QAction *m_findNextAct;

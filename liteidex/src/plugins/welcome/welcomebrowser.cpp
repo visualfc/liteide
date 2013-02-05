@@ -22,7 +22,6 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "welcomebrowser.h"
-#include "ui_welcomewidget.h"
 #include "golangdocapi/golangdocapi.h"
 #include "litedoc.h"
 #include <QMenu>
@@ -36,6 +35,7 @@
 #include <QDesktopServices>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QPushButton>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)

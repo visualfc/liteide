@@ -23,7 +23,6 @@
 
 #include "litefindplugin.h"
 #include "findeditor.h"
-#include "replaceeditor.h"
 #include "filesearch.h"
 
 #include <QMenu>
@@ -41,7 +40,6 @@
 
 LiteFindPlugin::LiteFindPlugin()
     : m_findEditor(0),
-      m_replaceEditor(0),
       m_fileSearch(0)
 {
 }
@@ -70,13 +68,7 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     m_findEditor = new FindEditor(m_liteApp,this);
     m_findEditor->widget()->hide();
 
-    m_replaceEditor = new ReplaceEditor(m_liteApp,this);
-    m_replaceEditor->widget()->hide();
-
-    m_fileSearch = new FileSearch(m_liteApp,this);
-
     layout->addWidget(m_findEditor->widget());
-    layout->addWidget(m_replaceEditor->widget());
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Find");
 
@@ -107,13 +99,8 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     connect(m_findNextAct,SIGNAL(triggered()),m_findEditor,SLOT(findNext()));
     connect(m_findPrevAct,SIGNAL(triggered()),m_findEditor,SLOT(findPrev()));
     connect(m_replaceAct,SIGNAL(triggered()),this,SLOT(replace()));
-    connect(m_findEditor,SIGNAL(hideFind()),this,SLOT(hideFind()));
-    connect(m_replaceEditor,SIGNAL(hideReplace()),this,SLOT(hideReplace()));
-    connect(m_findEditor,SIGNAL(swithReplace()),this,SLOT(switchReplace()));
-    connect(m_fileSearchAct,SIGNAL(triggered()),this,SLOT(fileSearch()));
 
     connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFind()));
-    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideReplace()));
     connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFileSearch()));
 
     return true;
@@ -131,27 +118,16 @@ void LiteFindPlugin::hideFileSearch()
     }
 }
 
-void LiteFindPlugin::hideReplace()
-{
-    m_replaceEditor->setVisible(false);
-}
-
-void LiteFindPlugin::switchReplace()
-{
-    m_findEditor->setVisible(false);
-    m_replaceEditor->setVisible(true);
-}
-
 void LiteFindPlugin::find()
 {
-    m_replaceEditor->setVisible(false);
+    m_findEditor->setReplaceMode(false);
     m_findEditor->setVisible(true);
 }
 
 void LiteFindPlugin::replace()
 {
-    m_findEditor->setVisible(false);
-    m_replaceEditor->setVisible(true);
+    m_findEditor->setReplaceMode(true);
+    m_findEditor->setVisible(true);
 }
 
 void LiteFindPlugin::fileSearch()

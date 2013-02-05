@@ -23,17 +23,15 @@
 
 #include "findeditor.h"
 #include "litefind_global.h"
+#include <QGridLayout>
 #include <QLineEdit>
-#include <QTextCursor>
 #include <QPlainTextEdit>
 #include <QTextEdit>
-#include <QTextBrowser>
-#include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QCheckBox>
+#include <QTextBlock>
+#include <QTextBrowser>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -51,8 +49,17 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_widget(new QWidget)
 {
     m_findEdit = new QLineEdit;
+    m_replaceEdit = new QLineEdit;
 
-    m_matchWordCheckBox = new QCheckBox(tr("Match word"));
+    m_findNext = new QPushButton(tr("Find Next"));
+    m_findPrev = new QPushButton(tr("Find Prev"));
+    m_replaceLabel = new QLabel(tr("Replace With:"));
+    m_replace = new QPushButton(tr("Replace"));
+    m_replaceAll = new QPushButton(tr("Replace All"));
+    QPushButton *hideReplace = new QPushButton(tr("Hide"));
+    hideReplace->setToolTip(tr("Hide Replace"));
+
+    m_matchWordCheckBox = new QCheckBox(tr("Match whole word only"));
     m_matchCaseCheckBox = new QCheckBox(tr("Match case"));
     m_useRegexCheckBox = new QCheckBox(tr("Regular expression"));
     m_wrapAroundCheckBox = new QCheckBox(tr("Wrap around"));
@@ -61,14 +68,6 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_matchCaseCheckBox->setChecked(m_liteApp->settings()->value(FIND_MATCHCASE,true).toBool());
     m_useRegexCheckBox->setChecked(m_liteApp->settings()->value(FIND_USEREGEXP,false).toBool());
     m_wrapAroundCheckBox->setChecked(m_liteApp->settings()->value(FIND_WRAPAROUND,true).toBool());
-
-    QPushButton *findNext = new QPushButton(tr("Find Next"));
-    QPushButton *findPrev = new QPushButton(tr("Find Prev"));
-    QPushButton *switchReplace = new QPushButton(tr("Replace"));
-    switchReplace->setToolTip(tr("Switch Replace"));
-    QPushButton *hideFind = new QPushButton(tr("Hide"));
-    hideFind->setToolTip(tr("Hide Find"));
-
 
     m_status = new QLabel(tr("Ready"));
     m_status->setFrameStyle(QFrame::Panel | QFrame::Sunken);
@@ -80,7 +79,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     layout->setVerticalSpacing(1);
 
     QHBoxLayout *optLayout = new QHBoxLayout;
-    optLayout->setMargin(0);
+    optLayout->setMargin(0);    
 
     optLayout->addWidget(m_matchWordCheckBox);
     optLayout->addWidget(m_matchCaseCheckBox);
@@ -91,27 +90,28 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
 
     layout->addWidget(new QLabel(tr("Find What:")),0,0);
     layout->addWidget(m_findEdit,0,1);
-    layout->addWidget(findNext,0,2);
-    layout->addWidget(findPrev,0,3);
-    layout->addWidget(switchReplace,0,4);
-    layout->addWidget(hideFind,0,5);
-    layout->addWidget(new QLabel(tr("Find Option:")),1,0);
-    layout->addLayout(optLayout,1,1,1,5);
+    layout->addWidget(m_findNext,0,2);
+    layout->addWidget(m_findPrev,0,3);
+    //layout->addWidget(hideReplace,0,3);
+
+    layout->addWidget(m_replaceLabel,1,0);
+    layout->addWidget(m_replaceEdit,1,1);
+    layout->addWidget(m_replace,1,2);
+    layout->addWidget(m_replaceAll,1,3);
+
+    layout->addWidget(new QLabel(tr("Find Option:")),3,0);
+    layout->addLayout(optLayout,3,1,1,3);
 
     m_widget->setLayout(layout);
 
+    QWidget::setTabOrder(m_findEdit,m_replaceEdit);
+
     connect(m_findEdit,SIGNAL(returnPressed()),this,SLOT(findNext()));
-    connect(findNext,SIGNAL(clicked()),this,SLOT(findNext()));
-    connect(findPrev,SIGNAL(clicked()),this,SLOT(findPrev()));
-    connect(hideFind,SIGNAL(clicked()),this,SIGNAL(hideFind()));
-    connect(switchReplace,SIGNAL(clicked()),this,SIGNAL(swithReplace()));
-
-    connect(m_matchCaseCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
-    connect(m_matchWordCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
-    connect(m_useRegexCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
-    connect(m_wrapAroundCheckBox,SIGNAL(toggled(bool)),this,SLOT(saveState()));
-
-    this->saveState();
+    connect(m_findNext,SIGNAL(clicked()),this,SLOT(findNext()));
+    connect(m_findPrev,SIGNAL(clicked()),this,SLOT(findPrev()));
+    connect(m_replace,SIGNAL(clicked()),this,SLOT(replace()));
+    connect(m_replaceAll,SIGNAL(clicked()),this,SLOT(replaceAll()));
+    connect(hideReplace,SIGNAL(clicked()),this,SIGNAL(hideReplace()));
 }
 
 FindEditor::~FindEditor()
@@ -126,22 +126,21 @@ FindEditor::~FindEditor()
     }
 }
 
+QWidget *FindEditor::widget()
+{
+    return m_widget;
+}
+
 void FindEditor::setVisible(bool b)
 {
     this->m_widget->setVisible(b);
     if (b) {
-        this->loadState();
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
         if (editor) {
             QString text;
             QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
             if (ed) {
                 text = ed->textCursor().selectedText();
-            } else {
-                QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
-                if (ed) {
-                    text = ed->textCursor().selectedText();
-                }
             }
             if (!text.isEmpty()) {
                 this->m_findEdit->setText(text);
@@ -152,26 +151,63 @@ void FindEditor::setVisible(bool b)
 
 }
 
-QWidget *FindEditor::widget()
+void FindEditor::setReplaceMode(bool b)
 {
-    return m_widget;
+    m_replaceLabel->setVisible(b);
+    m_replaceEdit->setVisible(b);
+    m_replace->setVisible(b);
+    m_replaceAll->setVisible(b);
 }
 
-void FindEditor::setReady()
+void FindEditor::findHelper(FindState *state)
+{
+    bool bFocus = m_findEdit->hasFocus();
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (textEditor) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
+        if (ed) {
+            QTextCursor find = findEditor(ed->document(),ed->textCursor(),state);
+            if (!find.isNull()) {
+                textEditor->gotoLine(find.blockNumber(),find.columnNumber());
+                ed->setTextCursor(find);
+            }
+        }
+    } else {
+        QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
+        if (ed) {
+            QTextCursor find = findEditor(ed->document(),ed->textCursor(),state);
+            if (!find.isNull()) {
+                ed->setTextCursor(find);
+            }
+        }
+    }
+    if (bFocus) {
+        m_findEdit->setFocus();
+    }
+}
+
+void FindEditor::setReady(const QString &findText)
 {
     m_widget->setFocus();
+    if (!findText.isEmpty()) {
+        m_findEdit->setText(findText);
+    }
+    if (m_findEdit->text().isEmpty()) {
+        m_findEdit->setFocus();
+    } else {
+        m_replaceEdit->setFocus();
+    }
     m_status->setText(tr("Ready"));
-    m_findEdit->setFocus();
 }
 
-QString FindEditor::findText() const
-{
-    return m_findEdit->text();
-}
-
-void FindEditor::genFindState(FindState *state, bool backWard)
+void FindEditor::getFindState(FindState *state, bool backWard)
 {
     state->findText = m_findEdit->text();
+    state->replaceText = m_replaceEdit->text();
     state->matchWord = m_matchWordCheckBox->isChecked();
     state->matchCase = m_matchCaseCheckBox->isChecked();
     state->useRegexp = m_useRegexCheckBox->isChecked();
@@ -179,91 +215,8 @@ void FindEditor::genFindState(FindState *state, bool backWard)
     state->backWard = backWard;
 }
 
-void FindEditor::findNext()
-{
-    bool bFocus = m_findEdit->hasFocus();
-    FindState state;
-    genFindState(&state,false);
-    if (!state.isValid()) {
-        return;
-    }
-
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (!editor) {
-        return;
-    }
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (textEditor) {
-        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
-        if (ed) {
-            QTextCursor find = findHelper(ed,&state);
-            if (!find.isNull()) {
-                textEditor->gotoLine(find.blockNumber(),find.columnNumber());
-            }
-        }
-    } else {
-        QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
-        if (ed) {
-            findHelper(ed,&state);
-        }
-    }
-    if (bFocus) {
-        m_findEdit->setFocus();
-    }
-}
-
-void FindEditor::findPrev()
-{
-    bool bFocus = m_findEdit->hasFocus();
-    FindState state;
-    genFindState(&state,true);
-    if (!state.isValid()) {
-        return;
-    }
-
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (!editor) {
-        return;
-    }
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (textEditor) {
-        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
-        if (ed) {
-            QTextCursor find = findHelper(ed,&state);
-            if (!find.isNull()) {
-                textEditor->gotoLine(find.blockNumber(),find.columnNumber());
-            }
-        }
-    } else {
-        QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
-        if (ed) {
-            findHelper(ed,&state);
-        }
-    }
-    if (bFocus) {
-        m_findEdit->setFocus();
-    }
-}
-
-void FindEditor::saveState()
-{
-    m_liteApp->globalCookie().insert(FIND_MATCHWORD,m_matchWordCheckBox->isChecked());
-    m_liteApp->globalCookie().insert(FIND_MATCHCASE,m_matchCaseCheckBox->isChecked());
-    m_liteApp->globalCookie().insert(FIND_USEREGEXP,m_useRegexCheckBox->isChecked());
-    m_liteApp->globalCookie().insert(FIND_WRAPAROUND,m_wrapAroundCheckBox->isChecked());
-}
-
-void FindEditor::loadState()
-{
-    m_matchWordCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_MATCHWORD,true).toBool());
-    m_matchCaseCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_MATCHCASE,true).toBool());
-    m_useRegexCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_USEREGEXP,true).toBool());
-    m_wrapAroundCheckBox->setChecked(m_liteApp->globalCookie().value(FIND_WRAPAROUND,true).toBool());
-}
-
 QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindState *state)
 {
-    QString text = m_findEdit->text();
     QTextDocument::FindFlags flags = 0;
     if (state->backWard) {
         flags |= QTextDocument::FindBackward;
@@ -278,12 +231,98 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
     if (state->matchCase) {
         cs = Qt::CaseSensitive;
     }
+    int from = cursor.position();
+    if (cursor.hasSelection()) {
+        if (state->backWard) {
+            from = cursor.selectionStart();
+        } else {
+            from = cursor.selectionEnd();
+        }
+    }
     QTextCursor find;
     if (state->useRegexp) {
-        find = doc->find(QRegExp(text,cs),cursor,flags);
+        find = doc->find(QRegExp(state->findText,cs),from,flags);
     } else {
-        find = doc->find(text,cursor,flags);
+        find = doc->find(state->findText,from,flags);
+    }
+    if (find.isNull() && state->wrapAround) {
+        if (state->backWard) {
+            from = doc->lastBlock().position()+doc->lastBlock().length();
+        } else {
+            from = 0;
+        }
+        if (state->useRegexp) {
+            find = doc->find(QRegExp(state->findText,cs),from,flags);
+        } else {
+            find = doc->find(state->findText,from,flags);
+        }
     }
     return find;
 }
 
+
+void FindEditor::findNext()
+{
+    FindState state;
+    getFindState(&state,false);
+    if (!state.isValid()) {
+        return;
+    }
+    findHelper(&state);
+}
+
+void FindEditor::findPrev()
+{
+    FindState state;
+    getFindState(&state,true);
+    if (!state.isValid()) {
+        return;
+    }
+    findHelper(&state);
+}
+
+void FindEditor::replace()
+{
+    FindState state;
+    getFindState(&state,false);
+    if (!state.isValid()) {
+        return;
+    }
+
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+    if (ed && !ed->isReadOnly()) {
+        replaceHelper(ed,&state,1);
+    } else {
+        QTextEdit *ed = LiteApi::findExtensionObject<QTextEdit*>(editor,"LiteApi.QTextEdit");
+        if (ed && !ed->isReadOnly()) {
+            replaceHelper(ed,&state,1);
+        }
+    }
+}
+
+void FindEditor::replaceAll()
+{
+    FindState state;
+    getFindState(&state,false);
+    if (!state.isValid()) {
+        return;
+    }
+
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+    if (ed && !ed->isReadOnly()) {
+        replaceHelper(ed,&state,-1);
+    } else {
+        QTextEdit *ed = LiteApi::findExtensionObject<QTextEdit*>(editor,"LiteApi.QTextEdit");
+        if (ed && !ed->isReadOnly()) {
+            replaceHelper(ed,&state,-1);
+        }
+    }
+}
