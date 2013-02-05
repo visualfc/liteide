@@ -170,7 +170,7 @@ LiteApp::LiteApp()
 
     QAction *esc = new QAction("Escape",this);
     esc->setShortcut(QKeySequence(Qt::Key_Escape));
-    connect(esc,SIGNAL(triggered()),this,SIGNAL(key_escape()));
+    connect(esc,SIGNAL(triggered()),this,SLOT(escape()));
     m_mainwindow->addAction(esc);
 
     createActions();
@@ -350,6 +350,15 @@ void LiteApp::aboutPlugins()
         dlg->appendInfo(factory->info());
     }
     dlg->exec();
+}
+
+void LiteApp::escape()
+{
+    emit key_escape();
+    IEditor *editor = m_editorManager->currentEditor();
+    if (editor) {
+        editor->onActive();
+    }
 }
 
 bool LiteApp::hasGoProxy() const

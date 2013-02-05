@@ -177,6 +177,7 @@ void FindEditor::genFindState(FindState *state, bool backWard)
 
 void FindEditor::findNext()
 {
+    bool bFocus = m_findEdit->hasFocus();
     FindState state;
     genFindState(&state,false);
     if (!state.isValid()) {
@@ -194,7 +195,6 @@ void FindEditor::findNext()
             QTextCursor find = findHelper(ed,&state);
             if (!find.isNull()) {
                 textEditor->gotoLine(find.blockNumber(),find.columnNumber());
-                m_findEdit->setFocus();
             }
         }
     } else {
@@ -203,10 +203,14 @@ void FindEditor::findNext()
             findHelper(ed,&state);
         }
     }
+    if (bFocus) {
+        m_findEdit->setFocus();
+    }
 }
 
 void FindEditor::findPrev()
 {
+    bool bFocus = m_findEdit->hasFocus();
     FindState state;
     genFindState(&state,true);
     if (!state.isValid()) {
@@ -224,7 +228,6 @@ void FindEditor::findPrev()
             QTextCursor find = findHelper(ed,&state);
             if (!find.isNull()) {
                 textEditor->gotoLine(find.blockNumber(),find.columnNumber());
-                m_findEdit->setFocus();
             }
         }
     } else {
@@ -232,6 +235,9 @@ void FindEditor::findPrev()
         if (ed) {
             findHelper(ed,&state);
         }
+    }
+    if (bFocus) {
+        m_findEdit->setFocus();
     }
 }
 
