@@ -7,12 +7,16 @@
 * LiteIDE:
 	* move execute from filesystem to bottom tool
 	* escape for any bottom tool window (find , execute ...)
+	* macosx lion full screen
+	* add color theme highcontrastdark.xml and app theme black.qss, thanks for addxtoy <pollux@lavabit.com>
+	* add tr liteide_de.ts , thanks for Helge Plaschke <https://github.com/HelgePlaschke>
 	* fix keybord scheme 
 * liteeditor:
 	* show tab ident guide
 	* show find scope expression
 	* show selection scope expression
 	* show file eof - option
+	* show line wrap (markdown editor)
 	* update current line color
 	* fix zoom tab width
 	* any time focus if need
@@ -33,10 +37,7 @@
 	* fix find crash
 * gopath setup:
 	* fix invalid path
-* macosx:
-	* lion full screen support
-* translations:
-	add tr liteide_de.ts , thanks for HelgePlaschke
+
 	
 ### 2013.1.16 Ver x16
 * support keybord mapping scheme

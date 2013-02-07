@@ -1,0 +1,366 @@
+
+/* === Shared === */
+QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
+QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog {
+	background-color: #222222;
+	color: #BBBBBB;
+	font-family: "Segoe UI";
+}
+
+/* === QWidget === */
+QWidget:window {
+	background: #222222;
+	color: #BBBBBB;
+	font-family: "Segoe UI";
+}
+
+/* === QToolTip === */
+QToolTip {
+	background-color: #000000;
+    border: 2px solid #333333;
+	color: yellow;
+}
+
+/* === QPushButton === */
+QPushButton {
+	border: 1px solid #333333;
+	padding: 4px;
+	min-width: 65px;
+	min-height: 12px;
+}
+
+QPushButton:hover {
+	background-color: #333333;
+	border-color: #444444;
+}
+
+QPushButton:pressed {
+	background-color: #111111;
+	border-color: #333333;
+	color: yellow;
+}
+
+QPushButton:disabled {
+	color: #333333;
+}
+
+/* === QComboBox === */
+QComboBox {
+	background-color: black;
+	border: 1px solid #333333;
+	color: white;
+}
+
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	border-left: 1px solid #333333;
+}
+
+/* === QGroupBox === */
+QGroupBox {
+	border: 2px solid #333333;
+	margin-top: 2ex;
+}
+
+QGroupBox::title {
+	color: yellow;
+	subcontrol-origin: margin;
+	subcontrol-position: top left;
+	margin-left: 5px;
+}
+
+/* === QTabWidget === */
+QTabWidget::pane {
+	background: #222222;
+	border: 2px solid #333333;
+}
+
+/* === QTabBar === */
+QTabBar::tab {
+	background: transparent;
+	border: 1px solid #333333;
+	border-bottom: none;
+	color: #BBBBBB;
+	padding-left: 5px;
+	padding-right: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+QTabBar::tab:hover {
+	background-color: #333333;
+	border: 1px solid #444444;
+	border-bottom: none;
+}
+
+QTabBar::tab:selected {
+	background-color: #111111;
+	border: 1px solid #333333;
+	border-top: 1px solid yellow;
+	border-bottom: none;
+	color: yellow
+}
+
+/* === QToolBar === */
+QToolBar {
+	background-color: #222222;
+	border: none;
+	padding: 1px;
+}
+
+QToolBar:handle {
+	background: #222222;
+	border-left: 1px dotted yellow;
+	color: #BBBBBB;
+}
+
+QToolBar::separator {
+	width: 6px;
+	background-color: #222222;
+}
+
+/* === QToolButton === */
+QToolButton {
+	border: 1px solid #333333;
+	margin: 1px;
+}
+
+QToolButton:hover {
+	background-color: #333333;
+	border: 1px solid #444444;
+}
+
+QToolButton[popupMode="1"] { /* only for MenuButtonPopup */
+	padding-right: 20px; /* make way for the popup button */
+}
+
+QToolButton::menu-button {
+	border-left: 1px solid #333333;
+	background: transparent;
+    width: 16px;
+}
+
+QToolButton::menu-button:hover {
+	border-left: 1px solid #444444;
+	background: transparent;
+    width: 16px;
+}
+
+QToolButton:checked, QToolButton:pressed {
+	background-color: #111111;
+	color: yellow;
+}
+
+/* === QMenu === */
+QMenu {
+	background-color: black;
+	border: 1px solid gray;
+	color: white;
+	padding: 1px;
+}
+
+QMenu::item {
+	padding: 2px 25px 2px 20px;
+	border: 1px solid transparent;
+}
+
+QMenu::item:disabled {
+	color: #666666;
+}
+
+QMenu::item:selected {
+	border-color: gray;
+	background: #222222;
+}
+
+QMenu::icon:checked {
+
+}
+
+QMenu::separator {
+	height: 1px;
+	background: #222222;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+QMenu::indicator {
+	width: 13px;
+	height: 13px;
+}
+
+/* === QMenuBar === */
+QMenuBar {
+	background-color: black;
+	color: white;
+}
+
+QMenuBar::item {
+	background: transparent;
+}
+
+QMenuBar::item:disabled {
+	color: gray;
+}
+
+QMenuBar::item:selected {
+	background: #222222;
+}
+
+QMenuBar::item:pressed {
+	background: #444444;
+}
+ 
+/* === QScrollBar:vertical === */
+QScrollBar:vertical {
+	background: #111111;
+	width: 16px;
+	margin: 16px 0 16px 0;
+}
+
+QScrollBar::handle:vertical {
+    background: #222222;
+    min-height: 16px;
+}
+
+QScrollBar::add-line:vertical {
+    background: #222222;
+    height: 16px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    background: #222222;
+    height: 16px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+}
+
+/* === QScrollBar:horizontal === */
+QScrollBar:horizontal {
+	background: #111111;
+	height: 16px;
+	margin: 0 16px 0 16px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #222222;
+    min-width: 16px;
+}
+
+QScrollBar::add-line:horizontal {
+    background: #222222;
+    width: 16px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    background: #222222;
+    width: 16px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+	background: none;
+}
+
+/* =================== */
+QLineEdit, QListView, QTreeView, QTableView, QAbstractSpinBox {
+	background-color: black;
+	color: #BBBBBB;
+	border: 1px solid #333333;
+}
+
+QAbstractScrollArea, QLineEdit, QTextEdit, QAbstractSpinBox, QComboBox {
+	border-color: #333333;
+	border: 1px solid #333333;
+
+}
+
+/* === QHeaderView === */
+QHeaderView::section {
+	height: 20px;
+}
+
+QHeaderView::section {
+	background: #222222;
+	border: 0;
+	color: #BBBBBB;
+	padding-left: 4px;
+}
+
+/* === QListView === */
+QListView::item:hover {
+	background: #333333;
+}
+
+QListView::item:selected {
+	background: #111111;
+	color: yellow;
+}
+
+/* === QTableView === */
+QTableView::item:hover {
+	background: #333333;
+}
+
+QTableView::item:hover {
+	background: #111111;
+	color: yellow;
+}
+
+/* === QTreeView === */
+QTreeView::item {
+	background: black;
+}
+
+QTreeView::item:hover {
+	background: #333333;
+}
+
+QTreeView::item:selected {
+	background: #111111;
+	color: yellow;
+}
+
+QTreeView::branch {
+
+}
+
+QTreeView::branch:has-siblings:adjoins-item {
+
+}
+
+QTreeView::branch:has-siblings:!adjoins-item {
+
+}
+
+QTreeView::branch:closed:has-children:has-siblings {
+
+}
+
+QTreeView::branch:has-children:!has-siblings:closed {
+
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+
+}
+
+QTreeView::branch:open:has-children:has-siblings {
+
+}
+
+QTreeView::branch:open:has-children:!has-siblings {
+
+}

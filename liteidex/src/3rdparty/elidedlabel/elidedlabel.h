@@ -71,8 +71,8 @@ signals:
 
 private:
     bool elided;
-    Qt::TextElideMode m_elideMode;
     QString content;
+    Qt::TextElideMode m_elideMode;
 };
 //! [0]
 
