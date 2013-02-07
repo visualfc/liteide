@@ -69,7 +69,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_build,"Build");
     QAction *execAct = new QAction(tr("Execute"),this);
     actionContext->regAction(execAct,"Execute","Ctrl+,");
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,execAct);
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,execAct);
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
     connect(m_executeEdit,SIGNAL(returnPressed()),this,SLOT(execute()));

@@ -168,8 +168,8 @@ LiteApp::LiteApp()
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_fileManager,SLOT(applyOption(QString)));
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_projectManager,SLOT(applyOption(QString)));
 
-    QAction *esc = new QAction("Escape",this);
-    esc->setShortcut(QKeySequence(Qt::Key_Escape));
+    QAction *esc = new QAction(tr("Escape"),this);
+    m_actionManager->getActionContext(this,"App")->regAction(esc,"Esacpe","ESC");
     connect(esc,SIGNAL(triggered()),this,SLOT(escape()));
     m_mainwindow->addAction(esc);
 
