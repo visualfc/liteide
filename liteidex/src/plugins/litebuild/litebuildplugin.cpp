@@ -60,6 +60,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     m_executeWidget->setLayout(hbox);
     m_executeEdit = new QLineEdit;
     m_workLabel = new ElidedLabel("");
+    m_workLabel->setElideMode(Qt::ElideMiddle);
     hbox->addWidget(new QLabel(tr("Exec:")));
     hbox->addWidget(m_executeEdit);
     hbox->addWidget(m_workLabel);
@@ -127,6 +128,7 @@ void LiteBuildPlugin::currentEditorChanged(LiteApi::IEditor *)
         work = QFileInfo(textEditor->filePath()).path();
     }
     m_workLabel->setText(work);
+    m_workLabel->setToolTip(work);
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

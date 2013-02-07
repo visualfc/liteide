@@ -61,7 +61,8 @@ public:
     void setText(const QString &text);
     const QString & text() const { return content; }
     bool isElided() const { return elided; }
-
+    void setElideMode(Qt::TextElideMode mode);
+    Qt::TextElideMode elideMode() const;
 protected:
     void paintEvent(QPaintEvent *event);
 
@@ -70,6 +71,7 @@ signals:
 
 private:
     bool elided;
+    Qt::TextElideMode m_elideMode;
     QString content;
 };
 //! [0]
