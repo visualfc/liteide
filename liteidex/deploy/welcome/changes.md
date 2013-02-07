@@ -37,6 +37,7 @@
 * litebuild:		
 	* add test bench	
 * document:
+	* enable zoom font size Ctrl++/Ctrl+-/Ctrl+0
 	* fix find crash
 * gopath setup:
 	* fix invalid path
