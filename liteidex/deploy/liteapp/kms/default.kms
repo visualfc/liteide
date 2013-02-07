@@ -21,7 +21,7 @@ RunTerm=Alt+Shift+F5
 Stop=
 Test=Ctrl+T
 Vet=
-Execute="Ctrl+,"
+ExecuteFile="Ctrl+,"
 
 [Editor]
 DecreaseFontSize=Ctrl+-
@@ -58,6 +58,7 @@ NewInstance=
 OpenFolder=
 OpenFolderNewInstance=
 SaveAllFiles=
+Esacpe=Esc
 
 [GoPkg]
 SetupGOPATH=
