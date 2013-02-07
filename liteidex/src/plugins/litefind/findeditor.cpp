@@ -117,6 +117,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     connect(m_useRegexCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
     connect(m_wrapAroundCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
     connect(m_findEdit,SIGNAL(textChanged(QString)),this,SLOT(findOptionChanged()));
+    connect(m_replaceEdit,SIGNAL(textChanged(QString)),this,SLOT(replaceChanged()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(updateCurrentEditor(LiteApi::IEditor*)));
 }
 
@@ -430,6 +431,11 @@ void FindEditor::findOptionChanged()
         }
     }
     updateCurrentEditor(m_liteApp->editorManager()->currentEditor());
+}
+
+void FindEditor::replaceChanged()
+{
+    m_option.replaceText = m_replaceEdit->text();
 }
 
 

@@ -56,6 +56,7 @@ public:
 public slots:
     void updateCurrentEditor(LiteApi::IEditor*);
     void findOptionChanged();
+    void replaceChanged();
     void findNext();
     void findPrev();
     void replace();
