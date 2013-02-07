@@ -33,6 +33,7 @@
 #include <QTextBlock>
 #include <QTextBrowser>
 #include <QStatusBar>
+#include <QRegExp>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -141,6 +142,9 @@ QWidget *FindEditor::widget()
 
 void FindEditor::setVisible(bool b)
 {
+    if (m_widget->isVisible() == b) {
+        return;
+    }
     this->m_widget->setVisible(b);
     if (b) {
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -256,12 +260,14 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
             from = cursor.selectionEnd();
         }
     }
+
     QTextCursor find;
     if (opt->useRegexp) {
         find = doc->find(QRegExp(opt->findText,cs),from,flags);
     } else {
         find = doc->find(opt->findText,from,flags);
     }
+
     if (find.isNull() && opt->wrapAround && wrap) {
         if (opt->backWard) {
             from = doc->lastBlock().position()+doc->lastBlock().length();

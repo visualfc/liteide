@@ -896,6 +896,9 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
         if (opt->matchWord) {
             m_findFlags |= QTextDocument::FindWholeWords;
         }
+        if (!m_findExpression.isValid()) {
+            m_findExpression.setPattern("");
+        }
     }
     viewport()->update();
 }
@@ -1560,7 +1563,8 @@ static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int 
     while (offset >=0 && offset <= text.length()) {
         idx = (options & QTextDocument::FindBackward) ?
                expr.lastIndexIn(text, offset) : expr.indexIn(text, offset);
-        if (idx == -1)
+
+        if (idx == -1 || expr.matchedLength() == 0)
             return false;
 
         if (options & QTextDocument::FindWholeWords) {
