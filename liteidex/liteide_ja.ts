@@ -92,17 +92,22 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="476"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="459"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="490"/>
         <source>Thanks to...</source>
         <translation>謝辞...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="510"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="524"/>
         <source>License</source>
         <translation>ライセンス</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="519"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="533"/>
         <source>Copyright (c) 2011-2013 LiteIDE team. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
@@ -120,7 +125,7 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="551"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="565"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>

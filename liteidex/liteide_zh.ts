@@ -85,7 +85,7 @@ LiteIDE是一个简单的，开源的，多平台的IDE.</translation>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="431"/>
         <source>French</source>
-        <translation>法语</translation>
+        <translation>法文</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="445"/>
@@ -93,17 +93,22 @@ LiteIDE是一个简单的，开源的，多平台的IDE.</translation>
         <translation>繁体中文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="476"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="459"/>
+        <source>German</source>
+        <translation>德文</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="490"/>
         <source>Thanks to...</source>
         <translation>感谢...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="510"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="524"/>
         <source>License</source>
         <translation>许可协议</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="519"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="533"/>
         <source>Copyright (c) 2011-2013 LiteIDE team. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
@@ -121,7 +126,7 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="551"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="565"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
