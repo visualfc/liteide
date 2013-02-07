@@ -425,6 +425,13 @@ void FindEditor::replaceAll()
 void FindEditor::findOptionChanged()
 {
     getFindOption(&m_option,false);
+    m_status->setText(tr("Ready"));
+    if (m_option.useRegexp) {
+        QRegExp reg(m_option.findText);
+        if (!reg.isValid()) {
+            m_status->setText(reg.errorString());
+        }
+    }
     updateCurrentEditor(m_liteApp->editorManager()->currentEditor());
 }
 
