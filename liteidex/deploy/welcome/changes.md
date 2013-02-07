@@ -18,8 +18,10 @@
 	* show file eof - option
 	* show line wrap (markdown editor)
 	* update current line color
-	* fix zoom tab width
 	* any time focus if need
+	* fix zoom tab width
+	* fix open file cursor position start
+	* fix set color theme not request restart
 * markdown:
 	* fix export path
 * filesystem:
