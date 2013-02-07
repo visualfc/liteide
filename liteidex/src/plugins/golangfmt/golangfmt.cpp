@@ -81,7 +81,7 @@ void GolangFmt::applyOption(QString id)
     m_timeout = m_liteApp->settings()->value("golangfmt/timeout",500).toInt();
 }
 
-void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check)
+void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
 {
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!textEditor) {
@@ -111,17 +111,22 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check)
     if (m_diff) {
         args << "-d";
     }
+
+    if (timeout < 0) {
+        timeout = m_timeout;
+    }
+
     QProcess process;
     process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
     process.start(m_gofmtCmd,args);
-    if (!process.waitForStarted(m_timeout)) {
-        m_liteApp->appendLog("gofmt",QString("wait start timeout %1ms").arg(m_timeout),false);
+    if (!process.waitForStarted(timeout)) {
+        m_liteApp->appendLog("gofmt",QString("wait start timeout %1ms").arg(timeout),false);
         return;
     }
     process.write(text.toUtf8());
     process.closeWriteChannel();
-    if (!process.waitForFinished(m_timeout)) {
-        m_liteApp->appendLog("gofmt",QString("wait start timeout %1ms").arg(m_timeout),false);
+    if (!process.waitForFinished(timeout)) {
+        m_liteApp->appendLog("gofmt",QString("wait start timeout %1ms").arg(timeout),false);
         return;
     }
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
@@ -248,7 +253,7 @@ void GolangFmt::gofmt()
         return;
     }
     //fmtEditor(editor,false);
-    syncfmtEditor(editor,false);
+    syncfmtEditor(editor,false,true,1500);
 }
 
 void GolangFmt::fmtStarted()
