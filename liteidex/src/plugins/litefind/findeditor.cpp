@@ -114,6 +114,12 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     connect(m_replace,SIGNAL(clicked()),this,SLOT(replace()));
     connect(m_replaceAll,SIGNAL(clicked()),this,SLOT(replaceAll()));
     connect(hideReplace,SIGNAL(clicked()),this,SIGNAL(hideReplace()));
+    connect(m_matchCaseCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
+    connect(m_matchWordCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
+    connect(m_useRegexCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
+    connect(m_wrapAroundCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
+    connect(m_findEdit,SIGNAL(textChanged(QString)),this,SLOT(findOptionChanged()));
+    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(updateCurrentEditor(LiteApi::IEditor*)));
 }
 
 FindEditor::~FindEditor()
@@ -150,7 +156,7 @@ void FindEditor::setVisible(bool b)
             this->m_findEdit->setFocus();
         }
     }
-
+    updateCurrentEditor(m_liteApp->editorManager()->currentEditor());
 }
 
 void FindEditor::setReplaceMode(bool b)
@@ -161,7 +167,7 @@ void FindEditor::setReplaceMode(bool b)
     m_replaceAll->setVisible(b);
 }
 
-void FindEditor::findHelper(FindState *state)
+void FindEditor::findHelper(FindOption *opt)
 {
     bool bFocus = m_findEdit->hasFocus();
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -173,7 +179,7 @@ void FindEditor::findHelper(FindState *state)
     if (textEditor) {
         QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
         if (ed) {
-            find = findEditor(ed->document(),ed->textCursor(),state);
+            find = findEditor(ed->document(),ed->textCursor(),opt);
             if (!find.isNull()) {
                 ed->setTextCursor(find);
             }
@@ -181,7 +187,7 @@ void FindEditor::findHelper(FindState *state)
     } else {
         QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
         if (ed) {
-            find = findEditor(ed->document(),ed->textCursor(),state);
+            find = findEditor(ed->document(),ed->textCursor(),opt);
             if (!find.isNull()) {
                 ed->setTextCursor(find);
             }
@@ -215,18 +221,18 @@ void FindEditor::setReady(const QString &findText)
     m_status->setText(tr("Ready"));
 }
 
-void FindEditor::getFindState(FindState *state, bool backWard)
+void FindEditor::getFindOption(FindOption *opt, bool backWard)
 {
-    state->findText = m_findEdit->text();
-    state->replaceText = m_replaceEdit->text();
-    state->matchWord = m_matchWordCheckBox->isChecked();
-    state->matchCase = m_matchCaseCheckBox->isChecked();
-    state->useRegexp = m_useRegexCheckBox->isChecked();
-    state->wrapAround = m_wrapAroundCheckBox->isChecked();
-    state->backWard = backWard;
+    opt->findText = m_findEdit->text();
+    opt->replaceText = m_replaceEdit->text();
+    opt->matchWord = m_matchWordCheckBox->isChecked();
+    opt->matchCase = m_matchCaseCheckBox->isChecked();
+    opt->useRegexp = m_useRegexCheckBox->isChecked();
+    opt->wrapAround = m_wrapAroundCheckBox->isChecked();
+    opt->backWard = backWard;
 }
 
-QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindState *state, bool wrap)
+QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindOption *state, bool wrap)
 {
     QTextDocument::FindFlags flags = 0;
     if (state->backWard) {
@@ -271,7 +277,7 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
     return find;
 }
 
-void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, int replaceCount)
+void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, int replaceCount)
 {
     bool bFocus = m_replaceEdit->hasFocus();
 
@@ -285,32 +291,32 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
     int line = cursor.blockNumber();
     int col = cursor.columnNumber();
     Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-    if (state->matchCase) {
+    if (opt->matchCase) {
         cs = Qt::CaseSensitive;
     }
     if ( cursor.hasSelection() ) {
         QString text = cursor.selectedText();
-        if (state->useRegexp) {
-            if (text.indexOf(QRegExp(state->findText,cs),0) != -1) {
+        if (opt->useRegexp) {
+            if (text.indexOf(QRegExp(opt->findText,cs),0) != -1) {
                 find = cursor;
             }
         } else {
-            if (text.indexOf(state->findText,0,cs) != -1) {
+            if (text.indexOf(opt->findText,0,cs) != -1) {
                 find = cursor;
             }
         }
     }
     int number = 0;
-    bool wrap = state->wrapAround;
+    bool wrap = opt->wrapAround;
     do {
         if (!find.isNull()) {
             number++;
             find.beginEditBlock();
             QString text = find.selectedText();
-            if (state->useRegexp) {
-                text.replace(QRegExp(state->findText,cs),state->replaceText);
+            if (opt->useRegexp) {
+                text.replace(QRegExp(opt->findText,cs),opt->replaceText);
             } else {
-                text.replace(state->findText,state->replaceText);
+                text.replace(opt->findText,opt->replaceText);
             }
             find.removeSelectedText();
             find.insertText(text);
@@ -318,12 +324,12 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
             ed->setTextCursor(find);
         }
         cursor = ed->textCursor();
-        find = findEditor(ed->document(),cursor,state,false);
+        find = findEditor(ed->document(),cursor,opt,false);
         if (find.isNull() && wrap) {
             wrap = false;
-            find = findEditor(ed->document(),cursor,state,true);
+            find = findEditor(ed->document(),cursor,opt,true);
         }
-        if (state->wrapAround && !wrap) {
+        if (opt->wrapAround && !wrap) {
             if (find.blockNumber() > line ||
                     (find.blockNumber() >= line && find.columnNumber() > col) )  {
                 break;
@@ -355,8 +361,8 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
 
 void FindEditor::findNext()
 {
-    FindState state;
-    getFindState(&state,false);
+    FindOption state;
+    getFindOption(&state,false);
     if (!state.isValid()) {
         return;
     }
@@ -365,8 +371,8 @@ void FindEditor::findNext()
 
 void FindEditor::findPrev()
 {
-    FindState state;
-    getFindState(&state,true);
+    FindOption state;
+    getFindOption(&state,true);
     if (!state.isValid()) {
         return;
     }
@@ -375,8 +381,8 @@ void FindEditor::findPrev()
 
 void FindEditor::replace()
 {
-    FindState state;
-    getFindState(&state,false);
+    FindOption state;
+    getFindOption(&state,false);
     if (!state.isValid()) {
         return;
     }
@@ -394,8 +400,8 @@ void FindEditor::replace()
 
 void FindEditor::replaceAll()
 {
-    FindState state;
-    getFindState(&state,false);
+    FindOption state;
+    getFindOption(&state,false);
     if (!state.isValid()) {
         return;
     }
@@ -409,4 +415,29 @@ void FindEditor::replaceAll()
         return;
     }
     replaceHelper(textEditor,&state,-1);
+}
+
+
+void FindEditor::findOptionChanged()
+{
+    updateCurrentEditor(m_liteApp->editorManager()->currentEditor());
+}
+
+
+void FindEditor::updateCurrentEditor(LiteApi::IEditor *editor)
+{
+    if (!editor) {
+        return;
+    }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
+    }
+    if (m_widget->isVisible()) {
+        FindOption opt;
+        getFindOption(&opt,false);
+        textEditor->setFindOption(&opt);
+    } else {
+        textEditor->setFindOption(0);
+    }
 }

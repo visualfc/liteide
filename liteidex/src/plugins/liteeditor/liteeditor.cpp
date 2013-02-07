@@ -906,6 +906,11 @@ void LiteEditor::onActive()
     //editPositionChanged();
 }
 
+void LiteEditor::setFindOption(LiteApi::FindOption *opt)
+{
+    m_editorWidget->setFindOption(opt);
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();

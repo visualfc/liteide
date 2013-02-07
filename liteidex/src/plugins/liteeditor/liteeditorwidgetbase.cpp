@@ -108,8 +108,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_mouseOnFoldedMarker = false;
     setTabSize(4);
 
-    m_selectionRxpression.setCaseSensitivity(Qt::CaseSensitive);
-    m_selectionRxpression.setPatternSyntax(QRegExp::FixedString);
+    m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
+    m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(slotUpdateExtraAreaWidth()));
     connect(this, SIGNAL(modificationChanged(bool)), this, SLOT(slotModificationChanged(bool)));
@@ -786,8 +786,8 @@ void LiteEditorWidgetBase::updateSelection()
             pattern = text;
         }
     }
-    if (m_selectionRxpression.pattern() != pattern) {
-        m_selectionRxpression.setPattern(pattern);
+    if (m_selectionExpression.pattern() != pattern) {
+        m_selectionExpression.setPattern(pattern);
         viewport()->update();
     }
 }
@@ -869,6 +869,35 @@ void LiteEditorWidgetBase::handleHomeKey(bool anchor)
 
     cursor.setPosition(pos, mode);
     setTextCursor(cursor);
+}
+
+void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
+{
+    if (!opt) {
+        m_findExpression.setPattern("");
+    } else {
+        m_findExpression.setPattern(opt->findText);
+        if (opt->useRegexp) {
+            m_findExpression.setPatternSyntax(QRegExp::RegExp);
+        } else {
+            m_findExpression.setPatternSyntax(QRegExp::FixedString);
+        }
+        m_findFlags = 0;
+        if (opt->backWard) {
+            m_findFlags |= QTextDocument::FindBackward;
+        }
+
+        if (opt->matchCase) {
+            m_findFlags |= QTextDocument::FindCaseSensitively;
+            m_findExpression.setCaseSensitivity(Qt::CaseSensitive);
+        } else {
+            m_findExpression.setCaseSensitivity(Qt::CaseInsensitive);
+        }
+        if (opt->matchWord) {
+            m_findFlags |= QTextDocument::FindWholeWords;
+        }
+    }
+    viewport()->update();
 }
 
 void LiteEditorWidgetBase::gotoLineStart()
@@ -1663,8 +1692,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 painter.fillRect(rr, m_currentLineBackground);
             }
 
-
-            if (!m_selectionRxpression.isEmpty()) {
+            if (!m_findExpression.isEmpty()) {
                 painter.save();
                 QColor color(this->palette().color(QPalette::Text));
                 color.setAlpha(128);
@@ -1672,7 +1700,25 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 int pos = 0;
                 while (true) {
                     QTextCursor cur;
-                    if (!findInBlock(block,m_selectionRxpression,pos,QTextDocument::FindWholeWords,cur)) {
+                    if (!findInBlock(block,m_findExpression,pos,m_findFlags,cur)) {
+                        break;
+                    }
+                    pos = cur.selectionEnd()-block.position();
+                    QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
+                    qreal left = l.cursorToX(cur.selectionStart()-blpos);
+                    qreal right = l.cursorToX(cur.selectionEnd()-blpos);
+                    painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                }
+                painter.restore();
+            } else if (!m_selectionExpression.isEmpty()) {
+                painter.save();
+                QColor color(this->palette().color(QPalette::Text));
+                color.setAlpha(128);
+                painter.setPen(color);
+                int pos = 0;
+                while (true) {
+                    QTextCursor cur;
+                    if (!findInBlock(block,m_selectionExpression,pos,QTextDocument::FindWholeWords,cur)) {
                         break;
                     }
                     pos = cur.selectionEnd()-block.position();

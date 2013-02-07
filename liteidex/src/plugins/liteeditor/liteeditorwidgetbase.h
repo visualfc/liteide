@@ -77,6 +77,7 @@ public slots:
     virtual void slotUpdateBlockNotify(const QTextBlock &);
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    
+    void setFindOption(LiteApi::FindOption *opt);
 public slots:
     void gotoMatchBrace();
     void gotoLine(int line, int column, bool center);
@@ -180,7 +181,9 @@ protected:
     QColor  m_extraBackground;
     QColor  m_indentLineForeground;
     QColor  m_currentLineBackground;
-    QRegExp m_selectionRxpression;
+    QRegExp m_selectionExpression;
+    QRegExp m_findExpression;
+    QTextDocument::FindFlags m_findFlags;
     bool m_lineNumbersVisible;
     bool m_marksVisible;    
     bool m_codeFoldingVisible;

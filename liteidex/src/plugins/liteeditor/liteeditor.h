@@ -96,6 +96,7 @@ public:
     virtual QByteArray saveState() const;
     virtual bool restoreState(const QByteArray &state);
     virtual void onActive();
+    virtual void setFindOption(LiteApi::FindOption *opt);
 
     const ColorStyleScheme *colorStyleScheme() const;
     LiteEditorWidget *editorWidget() const;

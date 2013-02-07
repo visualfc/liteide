@@ -33,14 +33,9 @@ class QCheckBox;
 class QPushButton;
 class QLabel;
 
-struct FindState {
-    QString findText;
+struct FindOption : public LiteApi::FindOption
+{
     QString replaceText;
-    bool    useRegexp;
-    bool    matchWord;
-    bool    matchCase;
-    bool    wrapAround;
-    bool    backWard;
     bool isValid() {
         return !findText.isEmpty();
     }
@@ -54,20 +49,22 @@ public:
     virtual ~FindEditor();
     virtual QWidget *widget();
     virtual void setReady(const QString &findText = QString());
-    void getFindState(FindState *state, bool backWard);
+    void getFindOption(FindOption *state, bool backWard);
     void setVisible(bool b);
     void setReplaceMode(bool b);
-    void findHelper(FindState *state);
+    void findHelper(FindOption *state);
 signals:
     void hideReplace();
 public slots:
+    void updateCurrentEditor(LiteApi::IEditor*);
+    void findOptionChanged();
     void findNext();
     void findPrev();
     void replace();
     void replaceAll();
 public:
-    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindState *state, bool wrap = true);
-    void replaceHelper(LiteApi::ITextEditor *editor, FindState *state,int replaceCount = -1);
+    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindOption *state, bool wrap = true);
+    void replaceHelper(LiteApi::ITextEditor *editor, FindOption *state,int replaceCount = -1);
 protected:
     LiteApi::IApplication   *m_liteApp;
     QWidget *m_widget;

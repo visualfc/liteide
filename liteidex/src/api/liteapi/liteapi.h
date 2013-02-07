@@ -245,6 +245,15 @@ signals:
     void reloaded();
 };
 
+struct FindOption {
+    QString findText;
+    bool    useRegexp;
+    bool    matchWord;
+    bool    matchCase;
+    bool    wrapAround;
+    bool    backWard;
+};
+
 class ITextEditor : public IEditor
 {
     Q_OBJECT
@@ -255,6 +264,7 @@ public:
     virtual int utf8Position() const = 0;
     virtual QByteArray utf8Data() const = 0;
     virtual void gotoLine(int line, int column, bool center = false) = 0;
+    virtual void setFindOption(FindOption *opt) = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)
