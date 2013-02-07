@@ -39,6 +39,7 @@ ResetFontSize=Ctrl+0
 SelectBlock=Ctrl+U
 Unfold=Ctrl+>
 UnfoldAll=
+CleanWhitespace=
 
 [Document]
 DecreaseFontSize=Ctrl+-

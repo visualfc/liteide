@@ -1758,19 +1758,19 @@ Diese Datei wurde außerhalb von LiteIDE geändert. Soll sie aktualisiert werden
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="760"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="764"/>
         <source>Export HTML</source>
         <translation>Exportiere HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="228"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="788"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="792"/>
         <source>Export PDF</source>
         <translation>Exportiere PDF</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="229"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="813"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="817"/>
         <source>Print Document</source>
         <translation>Drucke Dokument</translation>
     </message>
@@ -1816,7 +1816,7 @@ Diese Datei wurde außerhalb von LiteIDE geändert. Soll sie aktualisiert werden
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="865"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="869"/>
         <source>Goto Line</source>
         <translation>Springe zu Zeile</translation>
     </message>
@@ -1851,22 +1851,27 @@ Diese Datei wurde außerhalb von LiteIDE geändert. Soll sie aktualisiert werden
         <translation>Schriftgröße zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="400"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
+        <source>Clean Whitespace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="403"/>
         <source>Close Document</source>
         <translation>Dokument schließen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="419"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="423"/>
         <source>Print</source>
         <translation>Drucken</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="769"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="773"/>
         <source>Can not write file %1</source>
         <translation>Kann Datei %1 nicht schreiben</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="768"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="772"/>
         <source>LiteIDE</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1876,12 +1881,12 @@ Diese Datei wurde außerhalb von LiteIDE geändert. Soll sie aktualisiert werden
         <translation>Springe zu nächstem Block</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="830"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="834"/>
         <source>Cancel file %1 modify and reload ?</source>
         <translation>Änderungen an Datei %1 verwerfen und neu laden?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="865"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="869"/>
         <source>Line: </source>
         <translation>Zeile</translation>
     </message>

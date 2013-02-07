@@ -28,11 +28,12 @@
 	* fix double clicked item and execute
 * litedebug:
 	* save/restore start editor
-	* fix enable target args
-	* fix breakpoint for editor
+	* fix breakpoint move in editor
+	* fix debug target args
 * litefind:
 	* new find and replace
 	* fix find editor and unfold
+	* fix backword find	
 * litebuild:		
 	* add test bench	
 * document:

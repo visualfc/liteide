@@ -1758,19 +1758,19 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="760"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="764"/>
         <source>Export HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="228"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="788"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="792"/>
         <source>Export PDF</source>
         <translation>Экспортировать в PDF</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="229"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="813"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="817"/>
         <source>Print Document</source>
         <translation>Печать документа</translation>
     </message>
@@ -1816,7 +1816,7 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="865"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="869"/>
         <source>Goto Line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1851,22 +1851,27 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="400"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
+        <source>Clean Whitespace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="403"/>
         <source>Close Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="419"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="423"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="769"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="773"/>
         <source>Can not write file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="768"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="772"/>
         <source>LiteIDE</source>
         <translation type="unfinished">LiteIDE</translation>
     </message>
@@ -1876,12 +1881,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="830"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="834"/>
         <source>Cancel file %1 modify and reload ?</source>
         <translation type="unfinished">Отменить изменения в %1 и перезагрузить файл?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="865"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="869"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
