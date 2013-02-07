@@ -232,46 +232,46 @@ void FindEditor::getFindOption(FindOption *opt, bool backWard)
     opt->backWard = backWard;
 }
 
-QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindOption *state, bool wrap)
+QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindOption *opt, bool wrap)
 {
     QTextDocument::FindFlags flags = 0;
-    if (state->backWard) {
+    if (opt->backWard) {
         flags |= QTextDocument::FindBackward;
     }
-    if (state->matchCase) {
+    if (opt->matchCase) {
         flags |= QTextDocument::FindCaseSensitively;
     }
-    if (state->matchWord) {
+    if (opt->matchWord) {
         flags |= QTextDocument::FindWholeWords;
     }
     Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-    if (state->matchCase) {
+    if (opt->matchCase) {
         cs = Qt::CaseSensitive;
     }
     int from = cursor.position();
     if (cursor.hasSelection()) {
-        if (state->backWard) {
+        if (opt->backWard) {
             from = cursor.selectionStart();
         } else {
             from = cursor.selectionEnd();
         }
     }
     QTextCursor find;
-    if (state->useRegexp) {
-        find = doc->find(QRegExp(state->findText,cs),from,flags);
+    if (opt->useRegexp) {
+        find = doc->find(QRegExp(opt->findText,cs),from,flags);
     } else {
-        find = doc->find(state->findText,from,flags);
+        find = doc->find(opt->findText,from,flags);
     }
-    if (find.isNull() && state->wrapAround && wrap) {
-        if (state->backWard) {
+    if (find.isNull() && opt->wrapAround && wrap) {
+        if (opt->backWard) {
             from = doc->lastBlock().position()+doc->lastBlock().length();
         } else {
             from = 0;
         }
-        if (state->useRegexp) {
-            find = doc->find(QRegExp(state->findText,cs),from,flags);
+        if (opt->useRegexp) {
+            find = doc->find(QRegExp(opt->findText,cs),from,flags);
         } else {
-            find = doc->find(state->findText,from,flags);
+            find = doc->find(opt->findText,from,flags);
         }
     }
     return find;
@@ -361,31 +361,29 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
 
 void FindEditor::findNext()
 {
-    FindOption state;
-    getFindOption(&state,false);
-    if (!state.isValid()) {
+    if (!m_option.isValid()) {
         return;
     }
-    findHelper(&state);
+    m_option.backWard = false;
+    findHelper(&m_option);
 }
 
 void FindEditor::findPrev()
 {
-    FindOption state;
-    getFindOption(&state,true);
-    if (!state.isValid()) {
+    if (!m_option.isValid()) {
         return;
     }
-    findHelper(&state);
+    m_option.backWard = true;
+    findHelper(&m_option);
 }
 
 void FindEditor::replace()
 {
-    FindOption state;
-    getFindOption(&state,false);
-    if (!state.isValid()) {
+    if (!m_option.isValid()) {
         return;
     }
+
+    m_option.backWard = false;
 
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (!editor) {
@@ -395,16 +393,16 @@ void FindEditor::replace()
     if (!textEditor) {
         return;
     }
-    replaceHelper(textEditor,&state,1);
+    replaceHelper(textEditor,&m_option,1);
 }
 
 void FindEditor::replaceAll()
 {
-    FindOption state;
-    getFindOption(&state,false);
-    if (!state.isValid()) {
+    if (!m_option.isValid()) {
         return;
     }
+
+    m_option.backWard = false;
 
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (!editor) {
@@ -414,12 +412,13 @@ void FindEditor::replaceAll()
     if (!textEditor) {
         return;
     }
-    replaceHelper(textEditor,&state,-1);
+    replaceHelper(textEditor,&m_option,-1);
 }
 
 
 void FindEditor::findOptionChanged()
 {
+    getFindOption(&m_option,false);
     updateCurrentEditor(m_liteApp->editorManager()->currentEditor());
 }
 
@@ -434,9 +433,7 @@ void FindEditor::updateCurrentEditor(LiteApi::IEditor *editor)
         return;
     }
     if (m_widget->isVisible()) {
-        FindOption opt;
-        getFindOption(&opt,false);
-        textEditor->setFindOption(&opt);
+        textEditor->setFindOption(&m_option);
     } else {
         textEditor->setFindOption(0);
     }

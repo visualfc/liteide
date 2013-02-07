@@ -52,7 +52,7 @@ public:
     void getFindOption(FindOption *state, bool backWard);
     void setVisible(bool b);
     void setReplaceMode(bool b);
-    void findHelper(FindOption *state);
+    void findHelper(FindOption *opt);
 signals:
     void hideReplace();
 public slots:
@@ -63,8 +63,8 @@ public slots:
     void replace();
     void replaceAll();
 public:
-    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindOption *state, bool wrap = true);
-    void replaceHelper(LiteApi::ITextEditor *editor, FindOption *state,int replaceCount = -1);
+    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindOption *opt, bool wrap = true);
+    void replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt,int replaceCount = -1);
 protected:
     LiteApi::IApplication   *m_liteApp;
     QWidget *m_widget;
@@ -80,6 +80,7 @@ protected:
     QCheckBox   *m_useRegexCheckBox;
     QCheckBox   *m_wrapAroundCheckBox;
     QLabel      *m_status;
+    FindOption   m_option;
 };
 
 #endif // REPLACEEDITOR_H
