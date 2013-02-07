@@ -58,8 +58,6 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_replaceLabel = new QLabel(tr("Replace With:"));
     m_replace = new QPushButton(tr("Replace"));
     m_replaceAll = new QPushButton(tr("Replace All"));
-    QPushButton *hideReplace = new QPushButton(tr("Hide"));
-    hideReplace->setToolTip(tr("Hide Replace"));
 
     m_matchWordCheckBox = new QCheckBox(tr("Match whole word only"));
     m_matchCaseCheckBox = new QCheckBox(tr("Match case"));
@@ -114,7 +112,6 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     connect(m_replaceEdit,SIGNAL(returnPressed()),this,SLOT(replace()));
     connect(m_replace,SIGNAL(clicked()),this,SLOT(replace()));
     connect(m_replaceAll,SIGNAL(clicked()),this,SLOT(replaceAll()));
-    connect(hideReplace,SIGNAL(clicked()),this,SIGNAL(hideReplace()));
     connect(m_matchCaseCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
     connect(m_matchWordCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));
     connect(m_useRegexCheckBox,SIGNAL(toggled(bool)),this,SLOT(findOptionChanged()));

@@ -61,14 +61,14 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     m_executeEdit = new QLineEdit;
     m_workLabel = new ElidedLabel("");
     m_workLabel->setElideMode(Qt::ElideMiddle);
-    hbox->addWidget(new QLabel(tr("Exec:")));
+    hbox->addWidget(new QLabel(tr("Execute:")));
     hbox->addWidget(m_executeEdit);
     hbox->addWidget(m_workLabel);
     layout->addWidget(m_executeWidget);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_build,"Build");
-    QAction *execAct = new QAction(tr("Execute"),this);
-    actionContext->regAction(execAct,"Execute","Ctrl+,");
+    QAction *execAct = new QAction(tr("Execute File"),this);
+    actionContext->regAction(execAct,"ExecuteFile","Ctrl+,");
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,execAct);
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));

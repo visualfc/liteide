@@ -53,8 +53,6 @@ public:
     void setVisible(bool b);
     void setReplaceMode(bool b);
     void findHelper(FindOption *opt);
-signals:
-    void hideReplace();
 public slots:
     void updateCurrentEditor(LiteApi::IEditor*);
     void findOptionChanged();
