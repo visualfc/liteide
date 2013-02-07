@@ -234,6 +234,9 @@ void LiteEditorWidgetBase::highlightCurrentLine()
     QList<QTextEdit::ExtraSelection> extraSelections;
 
     QTextCursor cur = textCursor();
+    if (!cur.block().isVisible()) {
+        unfold();
+    }
 
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection full;
@@ -774,6 +777,7 @@ void LiteEditorWidgetBase::updateSelection()
 {
     QString pattern;
     QTextCursor cur = this->textCursor();
+
     if (cur.hasSelection()) {
         QString text = cur.selectedText();
         cur.setPosition(cur.selectionStart());
@@ -827,9 +831,6 @@ void LiteEditorWidgetBase::gotoLine(int line, int column, bool center)
             cursor.setPosition(pos);
         }
         setTextCursor(cursor);
-        if (!cursor.block().isVisible()) {
-            unfold();
-        }
         if (center) {
             centerCursor();
         } else {

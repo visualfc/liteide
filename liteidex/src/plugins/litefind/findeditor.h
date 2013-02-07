@@ -66,80 +66,8 @@ public slots:
     void replace();
     void replaceAll();
 public:
-    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindState *state);
-    template <typename T>
-    void replaceHelper(T *ed, FindState *state, int replaceCount = -1)
-    {
-        QTextCursor find;
-        QTextCursor cursor = ed->textCursor();
-        int line = cursor.blockNumber();
-        int col = cursor.columnNumber();
-        Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-        if (state->matchCase) {
-            cs = Qt::CaseSensitive;
-        }
-        if ( cursor.hasSelection() ) {
-            QString text = cursor.selectedText();
-            if (state->useRegexp) {
-                if (text.indexOf(QRegExp(state->findText,cs),0) != -1) {
-                    find = cursor;
-                }
-            } else {
-                if (text.indexOf(state->findText,0,cs) != -1) {
-                    find = cursor;
-                }
-            }
-        }
-        int number = 0;
-        bool warp = state->wrapAround;
-        do {
-            if (!find.isNull()) {
-                number++;
-                find.beginEditBlock();
-                QString text = find.selectedText();
-                if (state->useRegexp) {
-                    text.replace(QRegExp(state->findText,cs),state->replaceText);
-                } else {
-                    text.replace(state->findText,state->replaceText);
-                }
-                find.removeSelectedText();
-                find.insertText(text);
-                find.endEditBlock();
-                ed->setTextCursor(find);
-            }
-            cursor = ed->textCursor();
-            find = findEditor(ed->document(),cursor,state);
-            if (find.isNull() && warp) {
-                warp = false;
-                if (state->backWard) {
-                    cursor.movePosition(QTextCursor::End,QTextCursor::MoveAnchor);
-                } else {
-                    cursor.movePosition(QTextCursor::Start,QTextCursor::MoveAnchor);
-                }
-                find = findEditor(ed->document(),cursor,state);
-            }
-            if (state->wrapAround && !warp) {
-                if (find.blockNumber() > line ||
-                        (find.blockNumber() >= line && find.columnNumber() > col) )  {
-                    break;
-                }
-            }
-            if (replaceCount != -1 && number >= replaceCount) {
-                if (!find.isNull()) {
-                    ed->setTextCursor(find);
-                    m_status->setText(QString("Ln:%1 Col:%2").
-                                          arg(find.blockNumber()+1).
-                                          arg(find.columnNumber()));
-                } else {
-                    m_status->setText(tr("Not find"));
-                }
-                break;
-            }
-        } while(!find.isNull());
-        if (replaceCount == -1) {
-            m_status->setText(QString("Replace:%1").arg(number));
-        }
-    }
+    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindState *state, bool wrap = true);
+    void replaceHelper(LiteApi::ITextEditor *editor, FindState *state,int replaceCount = -1);
 protected:
     LiteApi::IApplication   *m_liteApp;
     QWidget *m_widget;

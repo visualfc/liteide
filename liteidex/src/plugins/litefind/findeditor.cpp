@@ -172,7 +172,6 @@ void FindEditor::findHelper(FindState *state)
         if (ed) {
             QTextCursor find = findEditor(ed->document(),ed->textCursor(),state);
             if (!find.isNull()) {
-                textEditor->gotoLine(find.blockNumber(),find.columnNumber());
                 ed->setTextCursor(find);
             }
         }
@@ -215,7 +214,7 @@ void FindEditor::getFindState(FindState *state, bool backWard)
     state->backWard = backWard;
 }
 
-QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindState *state)
+QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindState *state, bool wrap)
 {
     QTextDocument::FindFlags flags = 0;
     if (state->backWard) {
@@ -245,7 +244,7 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
     } else {
         find = doc->find(state->findText,from,flags);
     }
-    if (find.isNull() && state->wrapAround) {
+    if (find.isNull() && state->wrapAround && wrap) {
         if (state->backWard) {
             from = doc->lastBlock().position()+doc->lastBlock().length();
         } else {
@@ -258,6 +257,80 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
         }
     }
     return find;
+}
+
+void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, int replaceCount)
+{
+    QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
+    if (!ed) {
+        return;
+    }
+
+    QTextCursor find;
+    QTextCursor cursor = ed->textCursor();
+    int line = cursor.blockNumber();
+    int col = cursor.columnNumber();
+    Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+    if (state->matchCase) {
+        cs = Qt::CaseSensitive;
+    }
+    if ( cursor.hasSelection() ) {
+        QString text = cursor.selectedText();
+        if (state->useRegexp) {
+            if (text.indexOf(QRegExp(state->findText,cs),0) != -1) {
+                find = cursor;
+            }
+        } else {
+            if (text.indexOf(state->findText,0,cs) != -1) {
+                find = cursor;
+            }
+        }
+    }
+    int number = 0;
+    bool g_wrap = state->wrapAround;
+    do {
+        if (!find.isNull()) {
+            number++;
+            find.beginEditBlock();
+            QString text = find.selectedText();
+            if (state->useRegexp) {
+                text.replace(QRegExp(state->findText,cs),state->replaceText);
+            } else {
+                text.replace(state->findText,state->replaceText);
+            }
+            find.removeSelectedText();
+            find.insertText(text);
+            find.endEditBlock();
+            ed->setTextCursor(find);
+        }
+        cursor = ed->textCursor();
+        find = findEditor(ed->document(),cursor,state,false);
+        if (find.isNull() && g_wrap) {
+            g_wrap = false;
+            find = findEditor(ed->document(),cursor,state,true);
+        }
+        if (state->wrapAround && !g_wrap) {
+            if (find.blockNumber() > line ||
+                    (find.blockNumber() >= line && find.columnNumber() > col) )  {
+                break;
+            }
+        }
+        if (replaceCount != -1 && number >= replaceCount) {
+            if (!find.isNull()) {
+                editor->gotoLine(find.blockNumber(),find.columnNumber());
+                ed->setTextCursor(find);
+                m_status->setText(QString("Ln:%1 Col:%2").
+                                      arg(find.blockNumber()+1).
+                                      arg(find.columnNumber()));
+            } else {
+                m_status->setText(tr("Not find"));
+            }
+            break;
+        }
+    } while(!find.isNull());
+    if (replaceCount == -1) {
+        m_status->setText(QString("Replace:%1").arg(number));
+    }
 }
 
 
@@ -293,15 +366,11 @@ void FindEditor::replace()
     if (!editor) {
         return;
     }
-    QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
-    if (ed && !ed->isReadOnly()) {
-        replaceHelper(ed,&state,1);
-    } else {
-        QTextEdit *ed = LiteApi::findExtensionObject<QTextEdit*>(editor,"LiteApi.QTextEdit");
-        if (ed && !ed->isReadOnly()) {
-            replaceHelper(ed,&state,1);
-        }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
     }
+    replaceHelper(textEditor,&state,1);
 }
 
 void FindEditor::replaceAll()
@@ -316,13 +385,9 @@ void FindEditor::replaceAll()
     if (!editor) {
         return;
     }
-    QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
-    if (ed && !ed->isReadOnly()) {
-        replaceHelper(ed,&state,-1);
-    } else {
-        QTextEdit *ed = LiteApi::findExtensionObject<QTextEdit*>(editor,"LiteApi.QTextEdit");
-        if (ed && !ed->isReadOnly()) {
-            replaceHelper(ed,&state,-1);
-        }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
     }
+    replaceHelper(textEditor,&state,-1);
 }
