@@ -32,6 +32,7 @@
 #include <QCheckBox>
 #include <QTextBlock>
 #include <QTextBrowser>
+#include <QStatusBar>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -109,6 +110,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findEdit,SIGNAL(returnPressed()),this,SLOT(findNext()));
     connect(m_findNext,SIGNAL(clicked()),this,SLOT(findNext()));
     connect(m_findPrev,SIGNAL(clicked()),this,SLOT(findPrev()));
+    connect(m_replaceEdit,SIGNAL(returnPressed()),this,SLOT(replace()));
     connect(m_replace,SIGNAL(clicked()),this,SLOT(replace()));
     connect(m_replaceAll,SIGNAL(clicked()),this,SLOT(replaceAll()));
     connect(hideReplace,SIGNAL(clicked()),this,SIGNAL(hideReplace()));
@@ -167,10 +169,11 @@ void FindEditor::findHelper(FindState *state)
         return;
     }
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    QTextCursor find;
     if (textEditor) {
         QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
         if (ed) {
-            QTextCursor find = findEditor(ed->document(),ed->textCursor(),state);
+            find = findEditor(ed->document(),ed->textCursor(),state);
             if (!find.isNull()) {
                 ed->setTextCursor(find);
             }
@@ -178,14 +181,23 @@ void FindEditor::findHelper(FindState *state)
     } else {
         QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
         if (ed) {
-            QTextCursor find = findEditor(ed->document(),ed->textCursor(),state);
+            find = findEditor(ed->document(),ed->textCursor(),state);
             if (!find.isNull()) {
                 ed->setTextCursor(find);
             }
         }
     }
+    if (find.isNull()) {
+        m_status->setText(tr("Not find"));
+    } else {
+        m_status->setText(QString("Ln:%1 Col:%2").
+                              arg(find.blockNumber()+1).
+                              arg(find.columnNumber()+1));
+    }
     if (bFocus) {
         m_findEdit->setFocus();
+    } else if (textEditor) {
+        textEditor->onActive();
     }
 }
 
@@ -261,6 +273,8 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
 
 void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, int replaceCount)
 {
+    bool bFocus = m_replaceEdit->hasFocus();
+
     QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
     if (!ed) {
         return;
@@ -287,7 +301,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
         }
     }
     int number = 0;
-    bool g_wrap = state->wrapAround;
+    bool wrap = state->wrapAround;
     do {
         if (!find.isNull()) {
             number++;
@@ -305,11 +319,11 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
         }
         cursor = ed->textCursor();
         find = findEditor(ed->document(),cursor,state,false);
-        if (find.isNull() && g_wrap) {
-            g_wrap = false;
+        if (find.isNull() && wrap) {
+            wrap = false;
             find = findEditor(ed->document(),cursor,state,true);
         }
-        if (state->wrapAround && !g_wrap) {
+        if (state->wrapAround && !wrap) {
             if (find.blockNumber() > line ||
                     (find.blockNumber() >= line && find.columnNumber() > col) )  {
                 break;
@@ -317,11 +331,10 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
         }
         if (replaceCount != -1 && number >= replaceCount) {
             if (!find.isNull()) {
-                editor->gotoLine(find.blockNumber(),find.columnNumber());
                 ed->setTextCursor(find);
                 m_status->setText(QString("Ln:%1 Col:%2").
                                       arg(find.blockNumber()+1).
-                                      arg(find.columnNumber()));
+                                      arg(find.columnNumber()+1));
             } else {
                 m_status->setText(tr("Not find"));
             }
@@ -330,6 +343,12 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindState *state, i
     } while(!find.isNull());
     if (replaceCount == -1) {
         m_status->setText(QString("Replace:%1").arg(number));
+    }
+
+    if (bFocus) {
+        m_replaceEdit->setFocus();
+    } else if (editor) {
+        editor->onActive();
     }
 }
 
