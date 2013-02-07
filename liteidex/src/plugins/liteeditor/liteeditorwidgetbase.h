@@ -57,6 +57,8 @@ public:
     void resizeEvent(QResizeEvent *e);
     void showToolTip(const QTextCursor &cursor, const QString &tip);
     void hideToolTip();
+    void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
+    void ensureFinalNewLine(QTextCursor& cursor);
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
@@ -67,7 +69,8 @@ protected:
     void saveCurrentCursorPositionForNavigation();
     QByteArray m_tempNavigationState;
 public slots:
-    void editContentsChanged(int,int,int);    
+    void cleanWhitespace();
+    void editContentsChanged(int,int,int);
     virtual void highlightCurrentLine();
     virtual void slotUpdateExtraAreaWidth();
     virtual void slotModificationChanged(bool);

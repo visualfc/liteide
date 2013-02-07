@@ -1351,6 +1351,67 @@ void LiteEditorWidgetBase::hideToolTip()
     QToolTip::hideText();
 }
 
+void LiteEditorWidgetBase::cleanWhitespace()
+{
+    QTextCursor cursor = this->textCursor();
+    bool hasSelection = cursor.hasSelection();
+    QTextCursor copyCursor = cursor;
+    copyCursor.setVisualNavigation(false);
+    copyCursor.beginEditBlock();
+    cleanWhitespace(copyCursor, true);
+    if (!hasSelection)
+        ensureFinalNewLine(copyCursor);
+    copyCursor.endEditBlock();
+}
+
+static int trailingWhitespaces(const QString &text)
+{
+    int i = 0;
+    while (i < text.size()) {
+        if (!text.at(text.size()-1-i).isSpace())
+            return i;
+        ++i;
+    }
+    return i;
+}
+
+void LiteEditorWidgetBase::cleanWhitespace(QTextCursor &cursor, bool inEntireDocument)
+{
+    QTextDocument *document = this->document();
+    TextEditor::BaseTextDocumentLayout *documentLayout = qobject_cast<TextEditor::BaseTextDocumentLayout*>(document->documentLayout());
+    Q_ASSERT(cursor.visualNavigation() == false);
+
+    QTextBlock block = document->findBlock(cursor.selectionStart());
+    QTextBlock end;
+    if (cursor.hasSelection())
+        end = document->findBlock(cursor.selectionEnd()-1).next();
+
+    while (block.isValid() && block != end) {
+        if (inEntireDocument || block.revision() != documentLayout->lastSaveRevision) {
+            QString blockText = block.text();
+            if (int trailing = trailingWhitespaces(blockText)) {
+                cursor.setPosition(block.position() + block.length() - 1);
+                cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, trailing);
+                cursor.removeSelectedText();
+            }
+        }
+
+        block = block.next();
+    }
+}
+
+void LiteEditorWidgetBase::ensureFinalNewLine(QTextCursor &cursor)
+{
+    cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+    bool emptyFile = !cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+
+    if (!emptyFile && cursor.selectedText().at(0) != QChar::ParagraphSeparator)
+    {
+        cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+        cursor.insertText(QLatin1String("\n"));
+    }
+}
+
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)
 {
     QTextCursor cursor = this->textCursor();

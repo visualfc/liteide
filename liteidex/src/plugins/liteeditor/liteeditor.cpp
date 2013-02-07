@@ -284,6 +284,8 @@ void LiteEditor::createActions()
     m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
     actionContext->regAction(m_resetFontSizeAct,"ResetFontSize","Ctrl+0");
 
+    m_cleanWhitespaceAct = new QAction(tr("Clean Whitespace"),this);
+    actionContext->regAction(m_cleanWhitespaceAct,"CleanWhitespace","");
 
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
@@ -320,6 +322,7 @@ void LiteEditor::createActions()
     connect(m_increaseFontSizeAct,SIGNAL(triggered()),this,SLOT(increaseFontSize()));
     connect(m_decreaseFontSizeAct,SIGNAL(triggered()),this,SLOT(decreaseFontSize()));
     connect(m_resetFontSizeAct,SIGNAL(triggered()),this,SLOT(resetFontSize()));
+    connect(m_cleanWhitespaceAct,SIGNAL(triggered()),m_editorWidget,SLOT(cleanWhitespace()));
 
     QClipboard *clipboard = QApplication::clipboard();
     connect(clipboard,SIGNAL(dataChanged()),this,SLOT(clipbordDataChanged()));
@@ -415,6 +418,7 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_pasteAct);
     m_editMenu->addAction(m_duplicateAct);
     m_editMenu->addAction(m_deleteLineAct);
+    m_editMenu->addAction(m_cleanWhitespaceAct);
     m_editMenu->addSeparator();
     QMenu *expMenu = m_editMenu->addMenu(tr("Print"));
     //expMenu->addAction(m_exportHtmlAct);
