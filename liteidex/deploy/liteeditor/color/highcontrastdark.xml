@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <style-scheme version="1.0" name="Default">
   <style name="Extra" foreground="#FFFFFF" background="#222222"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="DataType" foreground="#FF00FF" background="#000000" /> 
   <style name="VisualWhitespace" foreground="#FFFFFF" background="#0000000"/>
   <style name="Comment" foreground="#00FF00" background="#000000"/>

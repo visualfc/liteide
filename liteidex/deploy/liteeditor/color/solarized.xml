@@ -3,6 +3,7 @@
 	<!-- Based on the Solarized color scheme by Ethan Schoonover:
 	     http://ethanschoonover.com/solarized                     -->
 	<style name="Extra" foreground="#657b83" background="#eee8d5"/>
+ 	<style name="IndentLine" foreground="#008B8B"/>
 	<style name="DataType" foreground="#b58900" /> 
 	<style name="Comment" foreground="#93a1a1"/>  
 	<style name="Keyword" foreground="#cb4b16"/>  
@@ -11,4 +12,7 @@
 	<style name="String" foreground="#2aa198"/>  
 	<style name="Error" foreground="#dc322f"/>  
 	<style name="Text" foreground="#657b83" background="#fdf6e3"/>
+    <style name="Selection" foreground="#ffffff"/>
+    <style name="InactiveSelection" foreground="#000000" background="#bbbbbb"/>
+  	<style name="CurrentLine" background="#B4C8C8"/>
 </style-scheme>
