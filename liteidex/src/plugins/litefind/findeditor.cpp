@@ -140,9 +140,6 @@ QWidget *FindEditor::widget()
 
 void FindEditor::setVisible(bool b)
 {
-    if (m_widget->isVisible() == b) {
-        return;
-    }
     this->m_widget->setVisible(b);
     if (b) {
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -156,6 +153,9 @@ void FindEditor::setVisible(bool b)
                 this->m_findEdit->setText(text);
             }
             this->m_findEdit->setFocus();
+            if (this->m_replaceEdit->isVisible()) {
+                this->m_replaceEdit->setFocus();
+            }
         }
     }
     updateCurrentEditor(m_liteApp->editorManager()->currentEditor());
