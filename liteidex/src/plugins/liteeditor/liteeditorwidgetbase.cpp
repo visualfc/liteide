@@ -321,6 +321,7 @@ void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)
     } else {
         m_indentLineForeground = QColor(Qt::darkCyan);
     }
+    m_indentLineForeground.setAlpha(128);
 }
 
 void LiteEditorWidgetBase::setExtraColor(const QColor &foreground,const QColor &background)
