@@ -36,6 +36,7 @@ class ProcessEx;
 class TextOutput;
 class QStandardItemModel;
 
+
 class LiteBuild : public LiteApi::ILiteBuild
 {
     Q_OBJECT
