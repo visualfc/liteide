@@ -269,7 +269,6 @@
       <zorder>groupBox_5</zorder>
       <zorder>groupBox_2</zorder>
       <zorder>groupBox_4</zorder>
-      <zorder>verticalSpacer</zorder>
       <zorder>groupBox</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">

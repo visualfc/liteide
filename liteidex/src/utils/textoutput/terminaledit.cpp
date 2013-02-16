@@ -47,7 +47,7 @@
 TerminalEdit::TerminalEdit(QWidget *parent) :
     QPlainTextEdit(parent), m_endPostion(0)
 {
-    this->setCursorWidth(2);
+    this->setCursorWidth(4);
     this->setAcceptDrops(false);
 
     m_contextMenu = new QMenu(this);
@@ -188,6 +188,33 @@ void TerminalEdit::mouseDoubleClickEvent(QMouseEvent *e)
     QPlainTextEdit::mouseDoubleClickEvent(e);
     QTextCursor cur = cursorForPosition(e->pos());
     emit dbclickEvent(cur);
+}
+
+void TerminalEdit::mousePressEvent(QMouseEvent *e)
+{
+    QPlainTextEdit::mousePressEvent(e);
+    if (!this->isReadOnly() && m_bFocusOut) {
+        m_bFocusOut = false;
+        QTextCursor cur = this->textCursor();
+        cur.movePosition(QTextCursor::End);
+        this->setTextCursor(cur);
+    }
+}
+
+void TerminalEdit::focusOutEvent(QFocusEvent *e)
+{
+    QPlainTextEdit::focusOutEvent(e);
+    m_bFocusOut = true;
+}
+
+void TerminalEdit::focusInEvent(QFocusEvent *e)
+{
+    QPlainTextEdit::focusInEvent(e);
+    if (!this->isReadOnly()) {
+        QTextCursor cur = this->textCursor();
+        cur.movePosition(QTextCursor::End);
+        this->setTextCursor(cur);
+    }
 }
 
 void TerminalEdit::contextMenuRequested(const QPoint &pt)

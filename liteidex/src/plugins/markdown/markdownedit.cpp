@@ -51,17 +51,17 @@ public:
     }
 };
 
-static void updateToolTip(QToolBar *toolBar)
-{
-    foreach(QAction *act, toolBar->actions()) {
-        if (act->isSeparator()) {
-            continue;
-        }
-        if (act->toolTip() == act->text() && !act->shortcut().isEmpty()) {
-            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(act->shortcut().toString()));
-        }
-    }
-}
+//static void updateToolTip(QToolBar *toolBar)
+//{
+//    foreach(QAction *act, toolBar->actions()) {
+//        if (act->isSeparator()) {
+//            continue;
+//        }
+//        if (act->toolTip() == act->text() && !act->shortcut().isEmpty()) {
+//            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(act->shortcut().toString()));
+//        }
+//    }
+//}
 
 MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
     QObject(parent), m_liteApp(app)

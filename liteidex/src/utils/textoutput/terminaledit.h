@@ -42,6 +42,9 @@ public slots:
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
     virtual void mouseDoubleClickEvent(QMouseEvent *e);
+    virtual void mousePressEvent(QMouseEvent *e);
+    virtual void focusOutEvent(QFocusEvent *e);
+    virtual void focusInEvent(QFocusEvent *e);
     int m_endPostion;
     QMenu *m_contextMenu;
     QMenu *m_contextRoMenu;
@@ -50,6 +53,7 @@ protected:
     QAction *m_paste;
     QAction *m_selectAll;
     QAction *m_clear;
+    bool    m_bFocusOut;
 };
 
 
