@@ -122,6 +122,12 @@ void KateHighlighter::setColorStyle(TextEditor::SyntaxHighlighter *h,const Color
     }
     highlighter->configureFormat(Highlighter::RegionMarker,fmt_rm);
 
+    QTextCharFormat fmt_alert;
+    if (!setTextCharStyle(fmt_alert,"Alert",scheme)) {
+        fmt_alert.setForeground(Qt::red);
+    }
+    highlighter->configureFormat(Highlighter::Alert,fmt_alert);
+
     QTextCharFormat fmt_err;
     if (!setTextCharStyle(fmt_err,"Error",scheme)) {
         fmt_err.setForeground(Qt::red);
