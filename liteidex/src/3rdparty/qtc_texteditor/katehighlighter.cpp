@@ -52,61 +52,99 @@ void KateHighlighter::setColorStyle(TextEditor::SyntaxHighlighter *h,const Color
         return;
     }
 
-    QTextCharFormat fmt1;
-    if (!setTextCharStyle(fmt1,"VisualWhitespace",scheme)) {
-        fmt1.setForeground(Qt::lightGray);
+    QTextCharFormat fmt_vw;
+    if (!setTextCharStyle(fmt_vw,"VisualWhitespace",scheme)) {
+        fmt_vw.setForeground(Qt::lightGray);
     }
-    highlighter->configureFormat(Highlighter::VisualWhitespace, fmt1);
+    highlighter->configureFormat(Highlighter::VisualWhitespace, fmt_vw);
 
-    QTextCharFormat fmt2;
-    if (!setTextCharStyle(fmt2,"Keyword",scheme)) {
-        fmt2.setForeground(Qt::darkBlue);
-        fmt2.setFontWeight(QFont::Bold);
+    QTextCharFormat fmt_kw;
+    if (!setTextCharStyle(fmt_kw,"Keyword",scheme)) {
+        fmt_kw.setForeground(Qt::darkBlue);
+        fmt_kw.setFontWeight(QFont::Bold);
     }
-    highlighter->configureFormat(Highlighter::Keyword, fmt2);
+    highlighter->configureFormat(Highlighter::Keyword, fmt_kw);
 
-    QTextCharFormat fmt3;
-    if (!setTextCharStyle(fmt3,"DataType",scheme)) {
-        fmt3.setForeground(Qt::darkBlue);//Qt::darkMagenta);
+    QTextCharFormat fmt_dt;
+    if (!setTextCharStyle(fmt_dt,"DataType",scheme)) {
+        fmt_dt.setForeground(Qt::darkBlue);//Qt::darkMagenta);
     }
-    highlighter->configureFormat(Highlighter::DataType, fmt3);
+    highlighter->configureFormat(Highlighter::DataType, fmt_dt);
 
-    QTextCharFormat fmt4;
-    if (!setTextCharStyle(fmt4,"Function",scheme)) {
-        fmt4.setForeground(Qt::blue);
+    QTextCharFormat fmt_fn;
+    if (!setTextCharStyle(fmt_fn,"Function",scheme)) {
+        fmt_fn.setForeground(Qt::blue);
     }
-    highlighter->configureFormat(Highlighter::Function,fmt4);
+    highlighter->configureFormat(Highlighter::Function,fmt_fn);
 
-    QTextCharFormat fmt5;
-    if (!setTextCharStyle(fmt5,"Comment",scheme)) {
-        fmt5.setForeground(Qt::darkGreen);
+    QTextCharFormat fmt_cmn;
+    if (!setTextCharStyle(fmt_cmn,"Comment",scheme)) {
+        fmt_cmn.setForeground(Qt::darkGreen);
     }
-    highlighter->configureFormat(Highlighter::Comment, fmt5);
+    highlighter->configureFormat(Highlighter::Comment, fmt_cmn);
 
-    QTextCharFormat fmt6;
-    if (!setTextCharStyle(fmt6,"Number",scheme)) {
-        fmt6.setForeground(Qt::darkMagenta);
+    QTextCharFormat fmt_dd;
+    if (!setTextCharStyle(fmt_dd,"Decimal",scheme)) {
+        fmt_dd.setForeground(Qt::darkMagenta);
     }
     // Using C_NUMBER for all kinds of numbers.
-    highlighter->configureFormat(Highlighter::Decimal, fmt6);
-    highlighter->configureFormat(Highlighter::BaseN, fmt6);
-    highlighter->configureFormat(Highlighter::Float, fmt6);
+    highlighter->configureFormat(Highlighter::Decimal, fmt_dd);
+
+    QTextCharFormat fmt_db;
+    if (!setTextCharStyle(fmt_db,"BaseN",scheme)) {
+        fmt_db.setForeground(Qt::darkMagenta);
+    }
+    highlighter->configureFormat(Highlighter::BaseN, fmt_db);
+
+    QTextCharFormat fmt_df;
+    if (!setTextCharStyle(fmt_df,"Float",scheme)) {
+        fmt_df.setForeground(Qt::darkMagenta);
+    }
+    highlighter->configureFormat(Highlighter::Float, fmt_df);
 
 
-    QTextCharFormat fmt7;
-    if (!setTextCharStyle(fmt7,"String",scheme)) {
-        fmt7.setForeground(Qt::darkGreen);
+    QTextCharFormat fmt_ch;
+    if (!setTextCharStyle(fmt_ch,"Char",scheme)) {
+        fmt_ch.setForeground(Qt::darkGreen);
     }
     // Using C_STRING for strings and chars.
-    highlighter->configureFormat(Highlighter::Char, fmt7);
-    highlighter->configureFormat(Highlighter::String, fmt7);
+    highlighter->configureFormat(Highlighter::Char, fmt_ch);
 
-
-    QTextCharFormat fmt8;
-    if (!setTextCharStyle(fmt8,"Error",scheme)) {
-        fmt8.setForeground(Qt::red);
+    QTextCharFormat fmt_cs;
+    if (!setTextCharStyle(fmt_cs,"String",scheme)) {
+        fmt_cs.setForeground(Qt::darkGreen);
     }
-    highlighter->configureFormat(Highlighter::Error,fmt8);
+    highlighter->configureFormat(Highlighter::String, fmt_cs);
+
+    QTextCharFormat fmt_rm;
+    if (!setTextCharStyle(fmt_rm,"RegionMarker",scheme)) {
+        fmt_rm.setForeground(Qt::yellow);
+    }
+    highlighter->configureFormat(Highlighter::RegionMarker,fmt_rm);
+
+    QTextCharFormat fmt_err;
+    if (!setTextCharStyle(fmt_err,"Error",scheme)) {
+        fmt_err.setForeground(Qt::red);
+    }
+    highlighter->configureFormat(Highlighter::Error,fmt_err);
+
+    QTextCharFormat fmt_bf;
+    if (!setTextCharStyle(fmt_bf,"BuiltinFunc",scheme)) {
+        fmt_bf.setForeground(Qt::blue);
+    }
+    highlighter->configureFormat(Highlighter::BuiltinFunc,fmt_bf);
+
+    QTextCharFormat fmt_pre;
+    if (!setTextCharStyle(fmt_pre,"Predeclared",scheme)) {
+        fmt_pre.setForeground(Qt::blue);
+    }
+    highlighter->configureFormat(Highlighter::Predeclared,fmt_pre);
+
+    QTextCharFormat fmt_fc;
+    if (!setTextCharStyle(fmt_fc,"FuncDecl",scheme)) {
+        fmt_fc.setForeground(Qt::blue);
+    }
+    highlighter->configureFormat(Highlighter::FuncDecl,fmt_fc);
 
     highlighter->rehighlight();
 }

@@ -81,7 +81,10 @@ public:
         Error,
         Function,
         RegionMarker,
-        Others
+        Others,
+        BuiltinFunc,
+        Predeclared,
+        FuncDecl
     };
 
     void configureFormat(TextFormatId id, const QTextCharFormat &format);

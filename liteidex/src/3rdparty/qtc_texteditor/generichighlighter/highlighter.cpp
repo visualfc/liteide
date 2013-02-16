@@ -94,6 +94,9 @@ Highlighter::KateFormatMap::KateFormatMap()
     m_ids.insert(QLatin1String("dsFunction"), Highlighter::Function);
     m_ids.insert(QLatin1String("dsRegionMarker"), Highlighter::RegionMarker);
     m_ids.insert(QLatin1String("dsError"), Highlighter::Error);
+    m_ids.insert(QLatin1String("esBuiltinFunc"), Highlighter::BuiltinFunc);
+    m_ids.insert(QLatin1String("esPredeclared"), Highlighter::Predeclared);
+    m_ids.insert(QLatin1String("esFuncDecl"), Highlighter::FuncDecl);
 }
 
 void Highlighter::configureFormat(TextFormatId id, const QTextCharFormat &format)
