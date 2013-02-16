@@ -110,13 +110,13 @@
         <AnyChar attribute="Symbol" context="#stay" String=":!%&amp;()+,-/.*&lt;=&gt;?[]|~^&#59;"/>
       </context>
       <context attribute="Normal Text" lineEndContext="#stay" name="FuncDecl">
-        <DetectChar attribute="Symbol" context="MethodDecl" char="(" beginRegion="Brace2" />
-        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2" />
+        <DetectChar attribute="Brace" context="MethodDecl" char="(" beginRegion="Brace2" />
+        <DetectChar attribute="Brace" context="#pop" char=")" endRegion="Brace2" />
         <RegExpr attribute="FuncDecl" context="#pop" String="[\w]+"/>
       </context>
       <context attribute="Normal Text" lineEndContext="#pop" name="MethodDecl">
-        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2" />
-        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2" />
+        <DetectChar attribute="Brace" context="#stay" char="(" beginRegion="Brace2" />
+        <DetectChar attribute="Brace" context="#pop" char=")" endRegion="Brace2" />
         <RegExpr attribute="Normal Text" context="#stay" String="\b[\w]+\s*\*?\w+\b"/>
         <RegExpr attribute="FuncDecl" context="#pop" String="[\w]+"/>
       </context>			
