@@ -5,17 +5,25 @@
   Improvements are welcome
   Public Domain, Alexander Rødseth, 2012
   -->
-  <style name="Extra" foreground="#008B8B" background="#232323"/>
-  <style name="IndentLine" foreground="#008B8B"/>
   <style name="Text" foreground="#bbbbbb" background="#232323"/>
-  <style name="Comment" foreground="#bc9458"/>
-  <style name="Function" foreground="#ffc66d"/>
+  <style name="Extra" foreground="#008B8B" background="#232323"/>
   <style name="Selection" foreground="#000000" background="#555577"/>
-  <style name="Keyword" foreground="#cc7833"/>
-  <style name="String" foreground="#a5c261"/>
-  <style name="Number" foreground="#6d9cbe"/>
-  <style name="InactiveSelection" foreground="#000000" background="darkslateblue"/>
-  <style name="DataType" foreground="white" /> 
-  <style name="VisualWhitespace" foreground="#c0c0c0"/>
   <style name="CurrentLine" background="#000000"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#cc7833"/>
+  <style name="DataType" foreground="#white" /> 
+  <style name="Decimal" foreground="#6d9cbe"/>
+  <style name="BaseN" foreground="#6d9cbe"/>
+  <style name="Float" foreground="#6d9cbe"/>
+  <style name="Char" foreground="#a5c261"/>
+  <style name="String" foreground="#a5c261"/>
+  <style name="Comment" foreground="#bc9458"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#ffc66d"/>
+  <style name="RegionMarker" foreground="#bbbbbb"/>
+  <style name="BuiltinFunc" foreground="#ffc66d"/>
+  <style name="Predeclared" foreground="#ffc66d"/>
+  <style name="FuncDecl" foreground="#bbbbbb"/>
 </style-scheme>

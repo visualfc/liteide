@@ -141,7 +141,7 @@
       <itemData name="Normal Text"  defStyleNum="dsNormal" spellChecking="false"/>
       <itemData name="Keyword"      defStyleNum="dsKeyword" spellChecking="false"/>
       <itemData name="Predeclared Identifier" defStyleNum="esPredeclared" spellChecking="false"/>
-      <itemData name="Builtin Function" defStyleNum="esBuiltin" spellChecking="false"/>
+      <itemData name="Builtin Function" defStyleNum="esBuiltinFunc" spellChecking="false"/>
       <itemData name="Data Type"    defStyleNum="dsDataType" spellChecking="false"/>
       <itemData name="Numbers"      defStyleNum="dsDecVal" spellChecking="false"/>
       <itemData name="Decimal"      defStyleNum="dsDecVal" spellChecking="false"/>
