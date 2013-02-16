@@ -98,12 +98,12 @@ public:
     virtual void onActive();
     virtual void setFindOption(LiteApi::FindOption *opt);
 
-    const ColorStyleScheme *colorStyleScheme() const;
     LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();
 public slots:
     void requestFontZoom(int zoom);
+    void loadColorScheme();
     void applyOption(QString);
     void clipbordDataChanged();
 #ifdef LITEEDITOR_FIND
@@ -125,7 +125,6 @@ public slots:
     void resetFontSize();
 public:
     void findCodecs();
-    ColorStyleScheme    *m_colorStyleScheme;
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;

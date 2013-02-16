@@ -83,7 +83,6 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
 
-    m_colorStyleScheme = new ColorStyleScheme(this);
     m_defPalette = m_editorWidget->palette();
 
     createActions();
@@ -123,6 +122,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorScheme()));
 
     //applyOption("option/liteeditor");
 
@@ -152,11 +152,6 @@ LiteEditor::~LiteEditor()
     delete m_editorWidget;
     delete m_widget;
     delete m_file;
-}
-
-const ColorStyleScheme *LiteEditor::colorStyleScheme() const
-{
-    return m_colorStyleScheme;
 }
 
 LiteEditorWidget *LiteEditor::editorWidget() const
@@ -662,65 +657,6 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setTabSize(tabWidth);
     bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
     m_editorWidget->setTabUseSpace(useSpace);
-
-    QString style = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
-    if (style != m_colorStyle) {
-        m_colorStyle = style;
-        m_colorStyleScheme->clear();
-        QString styleFileName = m_liteApp->resourcePath()+"/liteeditor/color/"+m_colorStyle;
-        bool b = m_colorStyleScheme->load(styleFileName);
-        if (b) {
-            const ColorStyle *extra = m_colorStyleScheme->findStyle("Extra");
-            const ColorStyle *indentLine = m_colorStyleScheme->findStyle("IndentLine");
-            const ColorStyle *style = m_colorStyleScheme->findStyle("Text");
-            const ColorStyle *selection = m_colorStyleScheme->findStyle("Selection");
-            const ColorStyle *inactiveSelection = m_colorStyleScheme->findStyle("InactiveSelection");
-            const ColorStyle *currentLine = m_colorStyleScheme->findStyle("CurrentLine");
-            if (extra) {
-                m_editorWidget->setExtraColor(extra->foregound(),extra->background());
-            }
-            if (indentLine) {
-                m_editorWidget->setIndentLineColor(indentLine->foregound());
-            }
-            if (currentLine) {
-                m_editorWidget->setCurrentLineColor(currentLine->background());
-            }
-            if (style || selection || inactiveSelection) {
-                QPalette p = m_defPalette;
-                if (style) {
-                    if (style->foregound().isValid()) {
-                        p.setColor(QPalette::Text,style->foregound());
-                        p.setColor(QPalette::Foreground, style->foregound());
-                    }
-                    if (style->background().isValid()) {
-                        //p.setColor(QPalette::Background, style->background());
-                        p.setBrush(QPalette::Base, style->background());
-                    }
-                }
-                if (selection) {
-                    if (selection->foregound().isValid()) {
-                        p.setBrush(QPalette::HighlightedText,selection->foregound().isValid()?
-                                       selection->foregound() : m_defPalette.foreground());
-                    }
-                    if (selection->background().isValid()) {
-                        p.setBrush(QPalette::Highlight,selection->background());
-                    }
-                }
-                if (inactiveSelection) {
-                    if (inactiveSelection->foregound().isValid()) {
-                        p.setBrush(QPalette::Inactive,QPalette::HighlightedText,inactiveSelection->foregound());
-                    }
-                    if (inactiveSelection->background().isValid()) {
-                        p.setBrush(QPalette::Inactive,QPalette::Highlight,inactiveSelection->background());
-                    }
-                }
-                m_editorWidget->setPalette(p);
-            } else {
-                m_editorWidget->setPalette(m_defPalette);
-            }
-            emit colorStyleChanged();
-        }
-    }
 }
 
 void LiteEditor::updateTip(QString func,QString args)
@@ -986,4 +922,58 @@ void LiteEditor::requestFontZoom(int zoom)
     m_editorWidget->extraArea()->setFont(font);
     m_editorWidget->updateTabWidth();
     m_editorWidget->slotUpdateExtraAreaWidth();
+}
+
+void LiteEditor::loadColorScheme()
+{
+    const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
+    const ColorStyle *extra = colorScheme->findStyle("Extra");
+    const ColorStyle *indentLine = colorScheme->findStyle("IndentLine");
+    const ColorStyle *style = colorScheme->findStyle("Text");
+    const ColorStyle *selection = colorScheme->findStyle("Selection");
+    const ColorStyle *inactiveSelection = colorScheme->findStyle("InactiveSelection");
+    const ColorStyle *currentLine = colorScheme->findStyle("CurrentLine");
+    if (extra) {
+        m_editorWidget->setExtraColor(extra->foregound(),extra->background());
+    }
+    if (indentLine) {
+        m_editorWidget->setIndentLineColor(indentLine->foregound());
+    }
+    if (currentLine) {
+        m_editorWidget->setCurrentLineColor(currentLine->background());
+    }
+    if (style || selection || inactiveSelection) {
+        QPalette p = m_defPalette;
+        if (style) {
+            if (style->foregound().isValid()) {
+                p.setColor(QPalette::Text,style->foregound());
+                p.setColor(QPalette::Foreground, style->foregound());
+            }
+            if (style->background().isValid()) {
+                //p.setColor(QPalette::Background, style->background());
+                p.setBrush(QPalette::Base, style->background());
+            }
+        }
+        if (selection) {
+            if (selection->foregound().isValid()) {
+                p.setBrush(QPalette::HighlightedText,selection->foregound().isValid()?
+                               selection->foregound() : m_defPalette.foreground());
+            }
+            if (selection->background().isValid()) {
+                p.setBrush(QPalette::Highlight,selection->background());
+            }
+        }
+        if (inactiveSelection) {
+            if (inactiveSelection->foregound().isValid()) {
+                p.setBrush(QPalette::Inactive,QPalette::HighlightedText,inactiveSelection->foregound());
+            }
+            if (inactiveSelection->background().isValid()) {
+                p.setBrush(QPalette::Inactive,QPalette::Highlight,inactiveSelection->background());
+            }
+        }
+        m_editorWidget->setPalette(p);
+    } else {
+        m_editorWidget->setPalette(m_defPalette);
+    }
+    emit colorStyleChanged();
 }

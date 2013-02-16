@@ -190,6 +190,12 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,fontZoom);
 
     QString style = ui->styleComboBox->currentText();
+    if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString()) {
+        m_liteApp->settings()->setValue(EDITOR_STYLE,style);
+        QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
+        m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+    }
+
     bool noprintCheck = ui->noprintCheckBox->isChecked();
     bool autoIndent = ui->autoIndentCheckBox->isChecked();
     bool autoBraces0 = ui->autoBraces0CheckBox->isChecked();
@@ -212,7 +218,6 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_FAMILY,m_fontFamily);
     m_liteApp->settings()->setValue(EDITOR_FONTSIZE,m_fontSize);
     m_liteApp->settings()->setValue(EDITOR_ANTIALIAS,antialias);
-    m_liteApp->settings()->setValue(EDITOR_STYLE,style);
     m_liteApp->settings()->setValue(EDITOR_AUTOINDENT,autoIndent);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE0,autoBraces0);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE1,autoBraces1);

@@ -37,6 +37,9 @@
 #include <QUrl>
 #include <QDesktopServices>
 
+class ColorStyle;
+class ColorStyleScheme;
+
 namespace LiteApi {
 
 class IApplication;
@@ -322,6 +325,8 @@ public:
     virtual void activeBrowser(IEditor *editor) = 0;
     virtual void addNavigationHistory(IEditor *editor = 0,const QByteArray &saveState = QByteArray()) = 0;
     virtual void cutForwardNavigationHistory() = 0;
+    virtual void loadColorStyleScheme(const QString &fileName) = 0;
+    virtual const ColorStyleScheme *colorStyleScheme() const = 0;
 public slots:
     virtual bool saveEditor(IEditor *editor = 0, bool emitAboutSave = true) = 0;
     virtual bool saveEditorAs(IEditor *editor = 0) = 0;
@@ -334,6 +339,7 @@ signals:
     void editorAboutToClose(LiteApi::IEditor *editor);
     void editorAboutToSave(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
+    void colorStyleSchemeChanged();
 };
 
 class IBrowserEditor : public IEditor

@@ -70,6 +70,7 @@ bool EditorManager::initWithApp(IApplication *app)
     }
 
     m_currentNavigationHistoryPosition = 0;
+    m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
     m_editorTabWidget = new LiteTabWidget;
 
@@ -672,6 +673,18 @@ void EditorManager::cutForwardNavigationHistory()
 {
     while (m_currentNavigationHistoryPosition < m_navigationHistory.size() - 1)
         m_navigationHistory.removeLast();
+}
+
+void EditorManager::loadColorStyleScheme(const QString &fileName)
+{
+    if (m_colorStyleScheme->load(fileName)) {
+        emit colorStyleSchemeChanged();
+    }
+}
+
+const ColorStyleScheme *EditorManager::colorStyleScheme() const
+{
+    return m_colorStyleScheme;
 }
 
 void EditorManager::updateCurrentPositionInNavigationHistory()

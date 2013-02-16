@@ -41,6 +41,11 @@ LiteEditorPlugin::LiteEditorPlugin()
 
 bool LiteEditorPlugin::load(LiteApi::IApplication *app)
 {
+    QString style = app->settings()->value(EDITOR_STYLE,"default.xml").toString();
+    if (!style.isEmpty()) {
+        QString styleFileName = app->resourcePath()+"/liteeditor/color/"+style;
+        app->editorManager()->loadColorStyleScheme(styleFileName);
+    }
     LiteEditorFileFactory *factory = new LiteEditorFileFactory(app,this);
     app->editorManager()->addFactory(factory);
 

@@ -93,7 +93,7 @@ void LiteEditorFileFactory::colorStyleChanged()
     }
     TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
     if (h) {
-        m_kate->setColorStyle(h,editor->colorStyleScheme());
+        m_kate->setColorStyle(h,m_liteApp->editorManager()->colorStyleScheme());
     }
 }
 
@@ -153,5 +153,6 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
         }
     }
     editor->applyOption(OPTION_LITEEDITOR);
+    editor->loadColorScheme();
     return editor;
 }
