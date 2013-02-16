@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <style-scheme version="1.0" name="Default">
-  <!-- Empty scheme, relying entirely on built-in defaults. -->
-  <style name="Extra" foreground="#008B8B"/>
-  <style name="IndentLine" foreground="#008B8B"/>
-  <style name="DataType" foreground="#000080" /> 
-  <style name="VisualWhitespace" foreground="#c0c0c0"/>
-  <style name="Comment" foreground="#008000"/>
-  <style name="Keyword" foreground="#000080" bold="true"/>
-  <style name="Function" foreground="#0000ff"/>
-  <style name="Number" foreground="#800080"/>
-  <style name="String" foreground="#008000"/>
-  <style name="Error" foreground="#ff0000"/>
+  <!-- default color scheme -->
   <style name="Text" foreground="#000000" background="#ffffff"/>
-  <style name="Selection" foreground="#ffffff"/>
-  <style name="InactiveSelection" foreground="#000000" background="#bbbbbb"/>
+  <style name="Extra" foreground="#008B8B" background=""/>
+  <style name="Selection" foreground="#ffffff" background=""/>
   <style name="CurrentLine" background="#B4C8C8"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#000080" bold="true"/>
+  <style name="DataType" foreground="#000080" /> 
+  <style name="Decimal" foreground="#800080"/>
+  <style name="BaseN" foreground="#800080"/>
+  <style name="Float" foreground="#800080"/>
+  <style name="Char" foreground="#008000"/>
+  <style name="String" foreground="#008000"/>
+  <style name="Comment" foreground="#008000"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#000080"/>
+  <style name="RegionMarker" foreground="#000000"/>
+  <style name="BuiltinFunc" foreground="#000080"/>
+  <style name="Predeclared" foreground="#000080"/>
+  <style name="FuncDecl" foreground="#000000"/>
 </style-scheme>
