@@ -27,6 +27,8 @@
 #include "terminaledit.h"
 #include "liteapi/liteapi.h"
 
+#define TEXTOUTPUT_USECOLORSCHEME "textoutput/usecolorscheme"
+
 class TextOutput : public TerminalEdit
 {
     Q_OBJECT
@@ -42,6 +44,7 @@ public slots:
     void loadColorStyleScheme();
 protected:
     LiteApi::IApplication *m_liteApp;
+    QPalette    m_defPalette;
     QTextCharFormat m_fmt;
     QColor m_clrTag;
     QColor m_clrError;

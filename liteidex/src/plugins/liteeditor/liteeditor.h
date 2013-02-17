@@ -166,7 +166,7 @@ public:
     QMenu   *m_editMenu;
     QMenu   *m_contextMenu;
     QString  m_colorStyle;
-    QPalette m_defPalette;
+    QPalette m_defEditorPalette;
     bool       m_bReadOnly;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;

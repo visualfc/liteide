@@ -24,6 +24,7 @@
 #include "liteeditoroption.h"
 #include "ui_liteeditoroption.h"
 #include "liteeditor_global.h"
+#include "textoutput/textoutput.h"
 #include <QFontDatabase>
 #include <QDir>
 #include <QFileInfo>
@@ -98,6 +99,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool outputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
 
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
@@ -116,6 +118,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
     ui->rightLineWidthSpinBox->setValue(rightLineWidth);
     ui->eofVisibleCheckBox->setChecked(eofVisible);
+    ui->outputUseColorSchemeCheck->setChecked(outputUseColor);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
@@ -189,8 +192,13 @@ void LiteEditorOption::apply()
     }
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,fontZoom);
 
+    bool outputUseColor = ui->outputUseColorSchemeCheck->isChecked();
+    bool oldOutputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
+
     QString style = ui->styleComboBox->currentText();
-    if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString()) {
+    if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString() ||
+            outputUseColor != oldOutputUseColor) {
+        m_liteApp->settings()->setValue(TEXTOUTPUT_USECOLORSCHEME,outputUseColor);
         m_liteApp->settings()->setValue(EDITOR_STYLE,style);
         QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
         m_liteApp->editorManager()->loadColorStyleScheme(styleFile);

@@ -83,7 +83,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
 
-    m_defPalette = m_editorWidget->palette();
+    m_defEditorPalette = m_editorWidget->palette();
 
     createActions();
     createToolBars();
@@ -941,7 +941,7 @@ void LiteEditor::loadColorStyleScheme()
     if (currentLine) {
         m_editorWidget->setCurrentLineColor(currentLine->background());
     }
-    QPalette p = m_editorWidget->palette();
+    QPalette p = m_defEditorPalette;
     if (text) {
         if (text->foregound().isValid()) {
             p.setColor(QPalette::Text,text->foregound());

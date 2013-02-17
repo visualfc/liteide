@@ -44,40 +44,48 @@ TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *paren
     this->setReadOnly(readOnly);
 
     m_fmt = this->currentCharFormat();
+    m_defPalette = this->palette();
+    m_clrText = m_defPalette.foreground().color();
+    m_clrTag = Qt::darkBlue;
+    m_clrError = Qt::red;
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 }
 
 void TextOutput::append(const QString &text)
 {
-    m_fmt.setForeground(m_clrText);
-    TerminalEdit::append(text,&m_fmt);
+    QTextCharFormat f = m_fmt;
+    f.setForeground(m_clrText);
+    TerminalEdit::append(text,&f);
 }
 
 void TextOutput::append(const QString &text,const QBrush &foreground)
 {
-    m_fmt.setForeground(foreground);
-    TerminalEdit::append(text,&m_fmt);
+    QTextCharFormat f = m_fmt;
+    f.setForeground(foreground);
+    TerminalEdit::append(text,&f);
 }
 
 void TextOutput::appendTag(const QString &text, bool error)
 {
-    m_fmt.setFontWeight(QFont::Bold);
+    QTextCharFormat f = m_fmt;
+    f.setFontWeight(QFont::Bold);
     if (error) {
-        m_fmt.setForeground(m_clrError);
+        f.setForeground(m_clrError);
     } else {
-        m_fmt.setForeground(m_clrTag);
+        f.setForeground(m_clrTag);
     }
-    TerminalEdit::append(text,&m_fmt);
+    TerminalEdit::append(text,&f);
 }
 
 void TextOutput::updateExistsTextColor()
 {
+    QTextCharFormat f = m_fmt;
     QColor color = m_clrText;
     color.setAlpha(128);
-    m_fmt.setForeground(color);
+    f.setForeground(color);
     QTextCursor cur = this->textCursor();
     cur.select(QTextCursor::Document);
-    cur.setCharFormat(m_fmt);
+    cur.setCharFormat(f);
 }
 
 void TextOutput::setMaxLine(int max)
@@ -93,14 +101,16 @@ void TextOutput::appLoaded()
 
 void TextOutput::loadColorStyleScheme()
 {
+    bool useColorShceme = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
+
     const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
     const ColorStyle *text = colorScheme->findStyle("Text");
     const ColorStyle *selection = colorScheme->findStyle("Selection");
     const ColorStyle *keyword = colorScheme->findStyle("Keyword");
     const ColorStyle *error = colorScheme->findStyle("Error");
 
-    QPalette p = this->palette();
-    if (text) {
+    QPalette p = this->m_defPalette;
+    if (useColorShceme && text) {
         if (text->foregound().isValid()) {
             p.setColor(QPalette::Text,text->foregound());
             p.setColor(QPalette::Foreground, text->foregound());
@@ -109,7 +119,7 @@ void TextOutput::loadColorStyleScheme()
             p.setColor(QPalette::Base, text->background());
         }
     }
-    if (selection) {
+    if (useColorShceme && selection) {
         if (selection->foregound().isValid()) {
             p.setColor(QPalette::HighlightedText, selection->foregound());
         }
@@ -133,12 +143,12 @@ void TextOutput::loadColorStyleScheme()
     m_fmt.setForeground(p.text().color());
     m_fmt.setBackground(p.base().color());
 
-    if (keyword && keyword->foregound().isValid()) {
+    if (useColorShceme && keyword && keyword->foregound().isValid()) {
         m_clrTag = keyword->foregound();
     } else {
         m_clrTag = Qt::darkBlue;
     }
-    if (error && error->foregound().isValid()) {
+    if (useColorShceme && error && error->foregound().isValid()) {
         m_clrError = error->foregound();
     } else {
         m_clrError = Qt::red;
