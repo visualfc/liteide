@@ -122,7 +122,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
-    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorScheme()));
+    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
 
     //applyOption("option/liteeditor");
 
@@ -924,14 +924,13 @@ void LiteEditor::requestFontZoom(int zoom)
     m_editorWidget->slotUpdateExtraAreaWidth();
 }
 
-void LiteEditor::loadColorScheme()
+void LiteEditor::loadColorStyleScheme()
 {
     const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
     const ColorStyle *extra = colorScheme->findStyle("Extra");
     const ColorStyle *indentLine = colorScheme->findStyle("IndentLine");
-    const ColorStyle *style = colorScheme->findStyle("Text");
+    const ColorStyle *text = colorScheme->findStyle("Text");
     const ColorStyle *selection = colorScheme->findStyle("Selection");
-    const ColorStyle *inactiveSelection = colorScheme->findStyle("InactiveSelection");
     const ColorStyle *currentLine = colorScheme->findStyle("CurrentLine");
     if (extra) {
         m_editorWidget->setExtraColor(extra->foregound(),extra->background());
@@ -942,38 +941,34 @@ void LiteEditor::loadColorScheme()
     if (currentLine) {
         m_editorWidget->setCurrentLineColor(currentLine->background());
     }
-    if (style || selection || inactiveSelection) {
-        QPalette p = m_defPalette;
-        if (style) {
-            if (style->foregound().isValid()) {
-                p.setColor(QPalette::Text,style->foregound());
-                p.setColor(QPalette::Foreground, style->foregound());
-            }
-            if (style->background().isValid()) {
-                //p.setColor(QPalette::Background, style->background());
-                p.setBrush(QPalette::Base, style->background());
-            }
+    QPalette p = m_editorWidget->palette();
+    if (text) {
+        if (text->foregound().isValid()) {
+            p.setColor(QPalette::Text,text->foregound());
+            p.setColor(QPalette::Foreground, text->foregound());
         }
-        if (selection) {
-            if (selection->foregound().isValid()) {
-                p.setBrush(QPalette::HighlightedText,selection->foregound().isValid()?
-                               selection->foregound() : m_defPalette.foreground());
-            }
-            if (selection->background().isValid()) {
-                p.setBrush(QPalette::Highlight,selection->background());
-            }
+        if (text->background().isValid()) {
+            p.setColor(QPalette::Base, text->background());
         }
-        if (inactiveSelection) {
-            if (inactiveSelection->foregound().isValid()) {
-                p.setBrush(QPalette::Inactive,QPalette::HighlightedText,inactiveSelection->foregound());
-            }
-            if (inactiveSelection->background().isValid()) {
-                p.setBrush(QPalette::Inactive,QPalette::Highlight,inactiveSelection->background());
-            }
-        }
-        m_editorWidget->setPalette(p);
-    } else {
-        m_editorWidget->setPalette(m_defPalette);
     }
+    if (selection) {
+        if (selection->foregound().isValid()) {
+            p.setColor(QPalette::HighlightedText, selection->foregound());
+        }
+        if (selection->background().isValid()) {
+            p.setColor(QPalette::Highlight, selection->background());
+        }
+        p.setBrush(QPalette::Inactive, QPalette::Highlight, p.highlight());
+        p.setBrush(QPalette::Inactive, QPalette::HighlightedText, p.highlightedText());
+    }
+
+    QString sheet = QString("QPlainTextEdit{color:%1;background-color:%2;selection-color:%3;selection-background-color:%4;}")
+                .arg(p.text().color().name())
+                .arg(p.base().color().name())
+                .arg(p.highlightedText().color().name())
+                .arg(p.highlight().color().name());
+    m_editorWidget->setPalette(p);
+    m_editorWidget->setStyleSheet(sheet);
+
     emit colorStyleChanged();
 }

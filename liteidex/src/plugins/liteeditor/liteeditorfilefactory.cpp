@@ -153,6 +153,6 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
         }
     }
     editor->applyOption(OPTION_LITEEDITOR);
-    editor->loadColorScheme();
+    editor->loadColorStyleScheme();
     return editor;
 }

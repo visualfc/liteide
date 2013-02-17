@@ -103,7 +103,7 @@ signals:
     void colorStyleChanged();
 public slots:
     void requestFontZoom(int zoom);
-    void loadColorScheme();
+    void loadColorStyleScheme();
     void applyOption(QString);
     void clipbordDataChanged();
 #ifdef LITEEDITOR_FIND

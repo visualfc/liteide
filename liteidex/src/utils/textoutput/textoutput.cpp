@@ -94,27 +94,27 @@ void TextOutput::appLoaded()
 void TextOutput::loadColorStyleScheme()
 {
     const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
-    const ColorStyle *style = colorScheme->findStyle("Text");
-    const ColorStyle *select = colorScheme->findStyle("Selection");
+    const ColorStyle *text = colorScheme->findStyle("Text");
+    const ColorStyle *selection = colorScheme->findStyle("Selection");
     const ColorStyle *keyword = colorScheme->findStyle("Keyword");
     const ColorStyle *error = colorScheme->findStyle("Error");
 
     QPalette p = this->palette();
-    if (style) {
-        if (style->foregound().isValid()) {
-            p.setColor(QPalette::Text,style->foregound());
-            p.setColor(QPalette::Foreground, style->foregound());
+    if (text) {
+        if (text->foregound().isValid()) {
+            p.setColor(QPalette::Text,text->foregound());
+            p.setColor(QPalette::Foreground, text->foregound());
         }
-        if (style->background().isValid()) {
-            p.setColor(QPalette::Base, style->background());
+        if (text->background().isValid()) {
+            p.setColor(QPalette::Base, text->background());
         }
     }
-    if (select) {
-        if (select->foregound().isValid()) {
-            p.setColor(QPalette::HighlightedText, select->foregound());
+    if (selection) {
+        if (selection->foregound().isValid()) {
+            p.setColor(QPalette::HighlightedText, selection->foregound());
         }
-        if (select->background().isValid()) {
-            p.setColor(QPalette::Highlight, select->background());
+        if (selection->background().isValid()) {
+            p.setColor(QPalette::Highlight, selection->background());
         }
         p.setBrush(QPalette::Inactive, QPalette::Highlight, p.highlight());
         p.setBrush(QPalette::Inactive, QPalette::HighlightedText, p.highlightedText());
