@@ -570,15 +570,15 @@ public:
     virtual QString pluginPath() const = 0;
     virtual QString storagePath() const = 0;
 
-    virtual QString shortVer() const = 0;
-    virtual QString version() const = 0;
-    virtual QString name() const = 0;
-    virtual QString copyright() const = 0;
+    virtual QString ideVersion() const = 0;
+    virtual QString ideFullName() const = 0;
+    virtual QString ideName() const = 0;
+    virtual QString ideCopyright() const = 0;
 
     virtual QList<IPlugin*> pluginList() const = 0;
 
-    virtual void loadSession(const QString &name) = 0;
-    virtual void saveSession(const QString &name) = 0;
+    virtual void loadSession(const QString &ideName) = 0;
+    virtual void saveSession(const QString &ideName) = 0;
     virtual void loadState() = 0;
     virtual void saveState() = 0;
 
@@ -715,7 +715,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X17")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X18")
 
 
 #endif //__LITEAPI_H__

@@ -223,14 +223,14 @@ static QImage makeSplashImage(LiteApi::IApplication *app)
     font.setItalic(true);
     painter.setPen(Qt::white);
     painter.setFont(font);
-    painter.drawText(2,2,r.width()-2,th,Qt::AlignCenter,app->version());
+    painter.drawText(2,2,r.width()-2,th,Qt::AlignCenter,app->ideFullName());
 
     font.setPointSize(9);
     font.setItalic(false);
     font.setBold(true);
     painter.setPen(Qt::black);
     painter.setFont(font);
-    painter.drawText(10,th,r.width()-10,bh,Qt::AlignLeft|Qt::AlignVCenter,app->copyright());
+    painter.drawText(10,th,r.width()-10,bh,Qt::AlignLeft|Qt::AlignVCenter,app->ideCopyright());
 
     painter.drawImage(r.width()-145,r.height()-145,QImage("icon:/images/liteide-logo128.png"));
     return image;
@@ -451,22 +451,22 @@ QString LiteApp::storagePath() const
     return m_storagePath;
 }
 
-QString LiteApp::shortVer() const
+QString LiteApp::ideVersion() const
 {
-    return "X17";
+    return "X18";
 }
 
-QString LiteApp::version() const
+QString LiteApp::ideFullName() const
 {
-    return "LiteIDE X17";
+    return this->ideName()+" "+this->ideVersion();
 }
 
-QString LiteApp::name() const
+QString LiteApp::ideName() const
 {
     return "LiteIDE";
 }
 
-QString LiteApp::copyright() const
+QString LiteApp::ideCopyright() const
 {
     static QString s_info =
     "2011-2013(c)\n"
