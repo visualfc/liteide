@@ -67,9 +67,9 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_debugMimeTypes << "text/x-gosrc" << "text/x-csrc" << "text/x-chdr" << "text/x-c++src";
 
-    m_output = new TextOutput;
+    m_output = new TextOutput(m_liteApp);
     m_output->setReadOnly(true);
-    m_output->setMaxLine(1024);
+    m_output->setMaxLine(2048);
 
     QAction *clearAct = new QAction(tr("Clear"),this);
     clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
@@ -398,7 +398,7 @@ void LiteDebug::debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log)
         m_dbgWidget->appendLog(log);
         break;
     case LiteApi::DebugRuntimeLog:
-        m_output->appendTag1(QString("%1\n").arg(log));
+        m_output->appendTag(QString("%1\n").arg(log));
         break;
     case LiteApi::DebugErrorLog:
         m_output->append(QString("%1\n").arg(log));

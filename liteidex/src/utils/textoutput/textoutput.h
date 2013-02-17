@@ -25,21 +25,27 @@
 #define TEXTOUTPUT_H
 
 #include "terminaledit.h"
+#include "liteapi/liteapi.h"
 
 class TextOutput : public TerminalEdit
 {
     Q_OBJECT
 public:
-    explicit TextOutput(bool readOnly = true, QWidget *parent = 0);
+    explicit TextOutput(LiteApi::IApplication *app, bool readOnly = true, QWidget *parent = 0);
     void append(const QString &text);
     void append(const QString &text,const QBrush &foreground);
-    void appendTag0(const QString &text, bool error = false);
-    void appendTag1(const QString &text, bool error = false);
-    void updateExistsTextColor(const QBrush &foreground = Qt::gray);
+    void appendTag(const QString &text, bool error = false);
+    void updateExistsTextColor();
     void setMaxLine(int max);
+public slots:
+    void appLoaded();
+    void loadColorStyleScheme();
 protected:
-    TerminalEdit  *m_editor;
+    LiteApi::IApplication *m_liteApp;
     QTextCharFormat m_fmt;
+    QColor m_clrTag;
+    QColor m_clrError;
+    QColor m_clrText;
 };
 
 #endif // TEXTOUTPUT_H

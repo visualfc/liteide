@@ -7,6 +7,7 @@ include (../../3rdparty/elidedlabel/elidedlabel.pri)
 include (../../utils/fileutil/fileutil.pri)
 include (../../utils/processex/processex.pri)
 include (../../utils/textoutput/textoutput.pri)
+include (../../utils/colorstyle/colorstyle.pri)
 
 DEFINES += LITEBUILD_LIBRARY
 

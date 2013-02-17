@@ -179,7 +179,7 @@ LiteApp::LiteApp()
 
     m_editorManager->createActions();
 
-    m_logOutput = new TextOutput;
+    m_logOutput = new TextOutput(this);
     //m_outputManager->addOutuput(m_logOutput,tr("Console"));
     m_logAct = m_toolWindowManager->addToolWindow(Qt::BottomDockWidgetArea,m_logOutput,"eventlog",tr("Event Log"),true);
     connect(m_logOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickLogOutput(QTextCursor)));

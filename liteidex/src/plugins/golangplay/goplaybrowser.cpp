@@ -77,7 +77,7 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(m_editor,"LiteApi.QToolBar");
 
-    m_output = new TextOutput;
+    m_output = new TextOutput(m_liteApp);
 
     QVBoxLayout *layout = new QVBoxLayout;
     QHBoxLayout *head = new QHBoxLayout;
@@ -171,7 +171,7 @@ void GoplayBrowser::run()
         m_process->kill();
     }
     m_output->clear();
-    m_output->appendTag0(QString("Run start ...\n\n"));
+    m_output->appendTag(QString("Run start ...\n\n"));
     m_process->setEnvironment(env.toStringList());
 
     m_process->start(go,args);
@@ -195,9 +195,9 @@ void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
 {
     m_output->setReadOnly(true);
     if (err) {
-        m_output->appendTag1(QString("\nError %1.\n").arg(msg));
+        m_output->appendTag(QString("\nError %1.\n").arg(msg));
     } else {
-        m_output->appendTag0(QString("\nRun finished %1, %2.").arg(code).arg(msg));
+        m_output->appendTag(QString("\nRun finished %1, %2.").arg(code).arg(msg));
     }
 }
 

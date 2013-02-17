@@ -105,8 +105,8 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_configAct,"Config","");
 
     m_process = new ProcessEx(this);
-    m_output = new TextOutput;
-    m_output->setMaxLine(1024);
+    m_output = new TextOutput(m_liteApp);
+    m_output->setMaxLine(2048);
 
     m_stopAct = new QAction(tr("Stop Action"),this);
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
@@ -308,7 +308,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
     m_output->updateExistsTextColor();
-    m_output->appendTag0(QString("Current environment change id \"%1\"\n").arg(env->id()));
+    m_output->appendTag(QString("Current environment change id \"%1\"\n").arg(env->id()));
     m_output->append(m_envManager->currentEnv()->orgEnvLines().join("\n")+"\n",Qt::black);
 
     QString gobin = FileUtil::lookupGoBin("go",m_liteApp);
@@ -777,9 +777,9 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
     m_output->setReadOnly(true);
 
     if (error) {
-        m_output->appendTag0(QString("error %1.\n").arg(msg),true);
+        m_output->appendTag(QString("error %1.\n").arg(msg),true);
     } else {
-        m_output->appendTag0(QString("exit code %1, %2.\n").arg(exitCode).arg(msg));
+        m_output->appendTag(QString("exit code %1, %2.\n").arg(exitCode).arg(msg));
     }
 
     if (!error && exitCode == 0) {
@@ -831,7 +831,7 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     }
 
     m_process->setWorkingDirectory(workDir);
-    m_output->appendTag0(QString("%1 %2 [%3]\n")
+    m_output->appendTag(QString("%1 %2 [%3]\n")
                          .arg(cmd).arg(args).arg(workDir));
 #ifdef Q_OS_WIN
     m_process->setNativeArguments(args);
@@ -950,7 +950,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     }
 
     if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
-        m_output->appendTag1(QString("> error, can not parser action '%1'\n").arg(ba->id()));
+        m_output->appendTag(QString("> error, can not parser action '%1'\n").arg(ba->id()));
         m_process->setUserData(3,QStringList());
         return;
     }
@@ -977,16 +977,16 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     m_process->setEnvironment(sysenv.toStringList());
     if (!ba->isOutput()) {
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);
-        m_output->appendTag0(QString("%1 %2 [%3]\n")
+        m_output->appendTag(QString("%1 %2 [%3]\n")
                              .arg(QDir::cleanPath(cmd)).arg(args).arg(m_workDir));
-        m_output->appendTag0(QString("Start process %1\n").arg(b?"success":"false"));
+        m_output->appendTag(QString("Start process %1\n").arg(b?"success":"false"));
     } else {
         m_process->setUserData(0,cmd);
         m_process->setUserData(1,args);
         m_process->setUserData(2,codec);
 
         m_process->setWorkingDirectory(m_workDir);        
-        m_output->appendTag0(QString("%1 %2 [%3]\n")
+        m_output->appendTag(QString("%1 %2 [%3]\n")
                              .arg(QDir::cleanPath(cmd)).arg(args).arg(m_workDir));
 #ifdef Q_OS_WIN
         m_process->setNativeArguments(args);
