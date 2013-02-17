@@ -196,8 +196,10 @@ void TerminalEdit::mousePressEvent(QMouseEvent *e)
     if (!this->isReadOnly() && m_bFocusOut) {
         m_bFocusOut = false;
         QTextCursor cur = this->textCursor();
-        cur.movePosition(QTextCursor::End);
-        this->setTextCursor(cur);
+        if (!cur.hasSelection()) {
+            cur.movePosition(QTextCursor::End);
+            this->setTextCursor(cur);
+        }
     }
 }
 
@@ -212,8 +214,10 @@ void TerminalEdit::focusInEvent(QFocusEvent *e)
     QPlainTextEdit::focusInEvent(e);
     if (!this->isReadOnly()) {
         QTextCursor cur = this->textCursor();
-        cur.movePosition(QTextCursor::End);
-        this->setTextCursor(cur);
+        if (!cur.hasSelection()) {
+            cur.movePosition(QTextCursor::End);
+            this->setTextCursor(cur);
+        }
     }
 }
 
