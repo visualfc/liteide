@@ -80,6 +80,8 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
     m_contextRoMenu->addAction(m_copy);
     m_contextRoMenu->addSeparator();
     m_contextRoMenu->addAction(m_selectAll);
+    m_contextRoMenu->addSeparator();
+    m_contextRoMenu->addAction(m_clear);
 
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
     connect(this,SIGNAL(cursorPositionChanged()),this,SLOT(cursorPositionChanged()));
