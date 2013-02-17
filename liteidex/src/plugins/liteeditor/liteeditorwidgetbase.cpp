@@ -98,6 +98,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_codeFoldingVisible = true;
     m_rightLineVisible = true;
     m_eofVisible = false;
+    m_indentLineVisible = true;
     m_rightLineWidth = 80;
     m_lastSaveRevision = 0;
     m_extraAreaSelectionNumber = -1;
@@ -1831,28 +1832,28 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         }
 
         //draw indent line
-        QString text = block.text();
-        int pos = text.length();
-        for (int i = 0; i < pos; i++) {
-            if (!text.at(i).isSpace()) {
-                pos = i;
-                break;
+        if (m_indentLineVisible) {
+            QString text = block.text();
+            int pos = text.length();
+            for (int i = 0; i < pos; i++) {
+                if (!text.at(i).isSpace()) {
+                    pos = i;
+                    break;
+                }
             }
+            QTextLine line = layout->lineForTextPosition(pos);
+            int kt = r.top()+1;
+            int kb = r.top()+line.height()-1;
+            int k = line.cursorToX(pos)/averageCharWidth;
+
+            painter.save();
+            painter.setPen(QPen(m_indentLineForeground,1,Qt::DotLine));
+            for (int i = 0; i < k; i+=4) {
+                int xoff = charOffsetX+averageCharWidth*i;
+                painter.drawLine(xoff,kt,xoff,kb);
+            }
+            painter.restore();
         }
-        QTextLine line = layout->lineForTextPosition(pos);
-        int kt = r.top()+1;
-        int kb = r.top()+line.height()-1;
-        int k = line.cursorToX(pos)/averageCharWidth;
-
-        painter.save();
-        painter.setPen(QPen(m_indentLineForeground,1,Qt::DotLine));
-        for (int i = 0; i < k; i+=4) {
-            int xoff = charOffsetX+averageCharWidth*i;
-            painter.drawLine(xoff,kt,xoff,kb);
-        }
-
-        painter.restore();
-
 
         QTextBlock nextBlock = block.next();
         //draw wrap

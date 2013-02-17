@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>475</width>
-    <height>220</height>
+    <height>242</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -344,6 +344,13 @@
            <widget class="QCheckBox" name="lineNumberVisibleCheckBox">
             <property name="text">
              <string>Display line numbers</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="indentLineCheckBox">
+            <property name="text">
+             <string>Display indent guide </string>
             </property>
            </widget>
           </item>

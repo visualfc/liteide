@@ -612,6 +612,7 @@ void LiteEditor::applyOption(QString id)
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
@@ -624,6 +625,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setAutoBraces4(autoBraces4);
     m_editorWidget->setLineNumberVisible(lineNumberVisible);
     m_editorWidget->setEofVisible(eofVisible);
+    m_editorWidget->setIndentLineVisible(indentLineVisible);
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
 

@@ -158,6 +158,12 @@ public:
     void setEofVisible(bool b) {
         m_eofVisible = b;
     }
+    void setIndentLineVisible(bool b) {
+        m_indentLineVisible = b;
+    }
+    bool indentLineVisible() const {
+        return m_indentLineVisible;
+    }
 
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
@@ -193,6 +199,7 @@ protected:
     bool m_rightLineVisible;
     bool m_eofVisible;
     int  m_rightLineWidth;
+    bool m_indentLineVisible;
     bool m_autoIndent;
     bool m_autoBraces0; //{
     bool m_autoBraces1; //(
