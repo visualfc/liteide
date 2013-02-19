@@ -99,6 +99,7 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     connect(m_findNextAct,SIGNAL(triggered()),m_findEditor,SLOT(findNext()));
     connect(m_findPrevAct,SIGNAL(triggered()),m_findEditor,SLOT(findPrev()));
     connect(m_replaceAct,SIGNAL(triggered()),this,SLOT(replace()));
+    connect(m_fileSearchAct,SIGNAL(triggered()),this,SLOT(fileSearch()));
 
     connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFind()));
     connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFileSearch()));
