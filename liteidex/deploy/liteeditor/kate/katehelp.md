@@ -18,9 +18,10 @@ Kate Default Styles
 	dsFunction
 	dsRegionMarker
 	dsOthers
-	
+
 **liteide extension:**
 
-	esBuiltinFunc
-	esPredeclared
-	esFuncDecl
+	dsSymbol
+	dsBuiltinFunc
+	dsPredeclared
+	dsFuncDecl

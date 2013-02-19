@@ -30,6 +30,7 @@ LiteIDE Color Scheme
 	Error
 	Function
 	RegionMarker
+	Symbol
 	BuiltinFunc
 	Predeclared
 	FuncDecl
@@ -40,8 +41,7 @@ LiteIDE Color Scheme
 	background
 	bold
 	italic
-	
+
 ### item example
 
 	<style name="Keyword" foreground="#000000" background="#ffffff" bold="true" italic="true"/>
-	

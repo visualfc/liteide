@@ -82,6 +82,7 @@ public:
         Function,
         RegionMarker,
         Others,
+        Symbol,
         BuiltinFunc,
         Predeclared,
         FuncDecl

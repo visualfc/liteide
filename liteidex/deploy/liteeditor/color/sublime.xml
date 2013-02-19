@@ -23,6 +23,7 @@
   <style name="Error" foreground="#ff0000"/>
   <style name="Function" foreground="#4cb8e3"/>
   <style name="RegionMarker" foreground="#ffffff"/>
+  <style name="Symbol" foreground="#ffffff"/>       
   <style name="BuiltinFunc" foreground="#4cb8e3"/>
   <style name="Predeclared" foreground="#4cb8e3"/>
   <style name="FuncDecl" foreground="#4cb8e3"/>

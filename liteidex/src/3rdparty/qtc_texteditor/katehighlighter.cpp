@@ -134,6 +134,12 @@ void KateHighlighter::setColorStyle(TextEditor::SyntaxHighlighter *h,const Color
     }
     highlighter->configureFormat(Highlighter::Error,fmt_err);
 
+    QTextCharFormat fmt_sym;
+    if (!setTextCharStyle(fmt_sym,"Symbol",scheme)) {
+        fmt_sym.setForeground(Qt::red);
+    }
+    highlighter->configureFormat(Highlighter::Symbol,fmt_sym);
+
     QTextCharFormat fmt_bf;
     if (!setTextCharStyle(fmt_bf,"BuiltinFunc",scheme)) {
         fmt_bf.setForeground(Qt::blue);
