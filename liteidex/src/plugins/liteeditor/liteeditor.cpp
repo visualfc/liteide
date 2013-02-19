@@ -801,7 +801,7 @@ void LiteEditor::editPositionChanged()
 void LiteEditor::gotoLine()
 {
     int min = 1;
-    int max = m_editorWidget->document()->lineCount();
+    int max = m_editorWidget->document()->blockCount();
     int v = m_editorWidget->textCursor().blockNumber()+1;
     bool ok = false;
     v = QInputDialog::getInt(this->m_widget,tr("Goto Line"),tr("Line: ")+QString("%1-%2").arg(min).arg(max),v,min,max,1,&ok);
