@@ -161,6 +161,15 @@ void KateHighlighter::setColorStyle(TextEditor::SyntaxHighlighter *h,const Color
     highlighter->rehighlight();
 }
 
+void KateHighlighter::setTabSize(SyntaxHighlighter *h, int tabSize)
+{
+    Highlighter *highlighter = static_cast<Highlighter*>(h);
+    if (!highlighter) {
+        return;
+    }
+    highlighter->setTabSize(tabSize);
+}
+
 void KateHighlighter::loadPath(const QString &definitionsPaths)
 {
     Manager2::instance()->loadPath(QStringList(definitionsPaths));

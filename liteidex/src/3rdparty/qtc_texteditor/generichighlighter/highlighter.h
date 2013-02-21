@@ -89,7 +89,8 @@ public:
     };
 
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
-    void setTabSettings(const TabSettings &ts);
+    //void setTabSettings(const TabSettings &ts);
+    void setTabSize(int tabSize);
     void setDefaultContext(const QSharedPointer<Context> &defaultContext);
 
 protected:
@@ -179,14 +180,17 @@ protected:
         PersistentsStart
     };
     int computeState(const int observableState) const;
-
+    int tabIndentationColumn(const QString &text) const;
+    int tabColumnAt(const QString &text, int position) const;
+    int firstNonSpace(const QString &text) const;
     static int extractRegionDepth(const int state);
     static int extractObservableState(const int state);
 
     int m_regionDepth;
     int m_lastRegionDepth;
     bool m_indentationBasedFolding;
-    const TabSettings *m_tabSettings;
+    //const TabSettings *m_tabSettings;
+    int m_tabSize;
 
     int m_persistentObservableStatesCounter;
     int m_dynamicContextsCounter;

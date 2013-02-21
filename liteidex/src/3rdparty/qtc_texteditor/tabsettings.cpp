@@ -60,7 +60,7 @@ TabSettings::TabSettings() :
     m_autoSpacesForTabs(false),
     m_autoIndent(true),
     m_smartBackspace(false),
-    m_tabSize(8),
+    m_tabSize(4),
     m_indentSize(4),
     m_indentBraces(false),
     m_doubleIndentBlocks(false),

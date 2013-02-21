@@ -62,7 +62,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
     m_regionDepth(0),
     m_lastRegionDepth(0),
     m_indentationBasedFolding(false),
-    m_tabSettings(0),
+    m_tabSize(4),
     m_persistentObservableStatesCounter(PersistentsStart),
     m_dynamicContextsCounter(0),
     m_isBroken(false),
@@ -112,9 +112,14 @@ void  Highlighter::setDefaultContext(const QSharedPointer<Context> &defaultConte
     m_indentationBasedFolding = defaultContext->definition()->isIndentationBasedFolding();
 }
 
-void Highlighter::setTabSettings(const TabSettings &ts)
+//void Highlighter::setTabSettings(const TabSettings &ts)
+//{
+//    m_tabSettings = &ts;
+//}
+
+void Highlighter::setTabSize(int tabSize)
 {
-    m_tabSettings = &ts;
+    m_tabSize = tabSize;
 }
 
 void Highlighter::highlightBlock(const QString &text)
@@ -569,6 +574,34 @@ int Highlighter::computeState(const int observableState) const
     return m_regionDepth << 12 | observableState;
 }
 
+int Highlighter::firstNonSpace(const QString &text) const
+{
+    int i = 0;
+    while (i < text.size()) {
+        if (!text.at(i).isSpace())
+            return i;
+        ++i;
+    }
+    return i;
+}
+
+int Highlighter::tabIndentationColumn(const QString &text) const
+{
+    return tabColumnAt(text, firstNonSpace(text));
+}
+
+int Highlighter::tabColumnAt(const QString &text, int position) const
+{
+    int column = 0;
+    for (int i = 0; i < position; ++i) {
+        if (text.at(i) == QLatin1Char('\t'))
+            column = column - (column % m_tabSize) + m_tabSize;
+        else
+            ++column;
+    }
+    return column;
+}
+
 void Highlighter::setFoldIndent(BlockData *data, int indent, const QTextBlock &block)
 {
     if (data->foldingIndent() != indent) {
@@ -617,7 +650,7 @@ void Highlighter::applyIndentationBasedFolding(const QString &text)
         }
     } else {
         //data->setFoldingIndent(m_tabSettings->indentationColumn(text));
-        setFoldIndent(data,m_tabSettings->indentationColumn(text),currentBlock());
+        setFoldIndent(data,tabIndentationColumn(text),currentBlock());
     }
 }
 
@@ -632,7 +665,7 @@ int Highlighter::neighbouringNonEmptyBlockIndent(QTextBlock block, const bool pr
             else
                 block = block.next();
         } else {
-            return m_tabSettings->indentationColumn(block.text());
+            return tabIndentationColumn(block.text());
         }
     }
 }

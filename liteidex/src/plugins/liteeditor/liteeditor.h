@@ -101,6 +101,7 @@ public:
     LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();
+    void tabSettingChanged(int);
 public slots:
     void requestFontZoom(int zoom);
     void loadColorStyleScheme();

@@ -659,6 +659,8 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setTabSize(tabWidth);
     bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
     m_editorWidget->setTabUseSpace(useSpace);
+
+    emit tabSettingChanged(tabWidth);
 }
 
 void LiteEditor::updateTip(QString func,QString args)

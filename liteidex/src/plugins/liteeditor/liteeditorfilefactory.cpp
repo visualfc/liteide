@@ -97,6 +97,18 @@ void LiteEditorFileFactory::colorStyleChanged()
     }
 }
 
+void LiteEditorFileFactory::tabSettingChanged(int tabSize)
+{
+    LiteEditor *editor = static_cast<LiteEditor *>(sender());
+    if (!editor) {
+        return;
+    }
+    TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
+    if (h) {
+        m_kate->setTabSize(h,tabSize);
+    }
+}
+
 LiteApi::IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mimeType)
 {
    // m_liteApp->editorManager()->cutForwardNavigationHistory();
@@ -129,6 +141,7 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
     if (h) {
         editor->extension()->addObject("TextEditor::SyntaxHighlighter",h);
         connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
+        connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
         connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
     }
 
