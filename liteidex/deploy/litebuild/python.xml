@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-python" id="python" work="$(EDITOR_DIR)" ver="1">
+    <config id="ErrRegex" name="ERRREGEX" value="\&quot;([\w\.]+)\&quot;\,\s*line\s*(\d+)"/>
+		<config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>    
+		<action id="RunTerm" key="Alt+Shift+F5" img="gray/runterm.png" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOEXEC) python $(EDITOR_NAME)" save="editor" output="false" readline="true"/>
+		<action id="Run" key="Alt+F5;Ctrl+R" img="gray/run.png" cmd="python" args="$(EDITOR_NAME)" save="editor" output="true" codec="utf-8" regex="$(ERRREGEX)" readline="true" />
+	</mime-type>
+</mime-info>

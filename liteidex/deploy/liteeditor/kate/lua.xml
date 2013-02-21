@@ -252,12 +252,12 @@
         <AnyChar      attribute="Symbols"  context="#stay" String="[]().=~+-*/^&gt;&lt;#;" />
       </context>
       <context name="Comment"       attribute="Comment"     lineEndContext="#pop">
-        <Detect2Chars attribute="Alerts"   context="#stay" char="-" char1="-" />
+        <Detect2Chars attribute="Comment"   context="#stay" char="-" char1="-" />
         <keyword      attribute="Alerts"   context="#stay" String="attention"/>
       </context>
       <context name="Block Comment" attribute="Comment"     lineEndContext="#stay" dynamic="true" >
         <RegExpr attribute="Comment"  context="#pop"  endRegion="block comment" String="\]%1\]" dynamic="true" />
-        <Detect2Chars attribute="Alerts"   context="#stay" char="-" char1="-" />
+        <Detect2Chars attribute="Comment"   context="#stay" char="-" char1="-" />
         <keyword      attribute="Alerts"   context="#stay" String="attention" />
       </context>
       <context name="String_single" attribute="Strings"     lineEndContext="Error">
