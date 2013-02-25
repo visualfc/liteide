@@ -198,6 +198,7 @@ LiteApp::LiteApp()
 
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
     connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideToolWindow()));
+    connect(m_mainwindow,SIGNAL(fullScreenStateChanged(bool)),m_fullScreent,SLOT(setChecked(bool)));
 }
 
 static QImage makeSplashImage(LiteApi::IApplication *app)
@@ -327,20 +328,6 @@ void LiteApp::cleanup()
     delete m_toolWindowManager;
     delete m_extension;
     delete m_settings;
-}
-
-void LiteApp::fullScreen(bool b)
-{
-    if (b) {
-        m_window_state.maximized = m_mainwindow->isMaximized();
-        m_window_state.geometry = m_mainwindow->saveGeometry();
-        m_mainwindow->showFullScreen();
-    } else {        
-        m_mainwindow->restoreGeometry(m_window_state.geometry);
-        if (m_window_state.maximized) {
-            m_mainwindow->showMaximized();
-        }
-    }
 }
 
 void LiteApp::aboutPlugins()
@@ -620,7 +607,7 @@ void LiteApp::createActions()
     connect(m_exitAct,SIGNAL(triggered()),m_mainwindow,SLOT(close()));
     connect(m_aboutAct,SIGNAL(triggered()),m_mainwindow,SLOT(about()));
     connect(m_aboutPluginsAct,SIGNAL(triggered()),this,SLOT(aboutPlugins()));
-    connect(m_fullScreent,SIGNAL(toggled(bool)),this,SLOT(fullScreen(bool)));
+    connect(m_fullScreent,SIGNAL(toggled(bool)),m_mainwindow,SLOT(setFullScreen(bool)));
 }
 
 void LiteApp::createMenus()

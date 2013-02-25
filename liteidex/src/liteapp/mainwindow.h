@@ -41,7 +41,11 @@ protected:
     virtual void closeEvent(QCloseEvent *event);
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *event);
+    virtual void changeEvent(QEvent *e);
+signals:
+    void fullScreenStateChanged(bool b);
 public slots:
+    void setFullScreen(bool b);
     void editorModifyChanged(bool b);
     void currentEditorChanged(LiteApi::IEditor *editor);
     void about();

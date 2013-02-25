@@ -43,6 +43,8 @@
 #define LITEAPP_TOOLBARICONSIZE "General/ToolBarIconSize"
 #define LITEAPP_EDITTABSCLOSABLE "LiteApp/EditTabsClosable"
 #define LITEAPP_QSS "LitApp/Qss"
+#define LITEAPP_FULLSCREEN "LiteApp/FullScreen"
+#define LITEAPP_WINSTATE   "LiteApp/WinState"
 #define LITEAPP_SHORTCUTS "keybord_shortcuts/"
 
 enum TOOLBAR_ICONSIZE {

@@ -117,7 +117,6 @@ protected slots:
     void currentEditorChanged(LiteApi::IEditor *editor);
     void editorModifyChanged(bool);
     void cleanup();
-    void fullScreen(bool b);
     void aboutPlugins();
     void escape();
 protected:
@@ -140,7 +139,6 @@ protected:
     QAction       *m_logAct;
     LiteAppOptionFactory *m_liteAppOptionFactory;
     QList<IPlugin*> m_pluginList;
-    windows_state m_window_state;
     static QMap<QString,QVariant> m_cookie;
 protected:
     QAction     *m_newAct;
