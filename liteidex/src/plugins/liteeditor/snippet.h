@@ -18,31 +18,41 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: mimetypemanager.h
+// Module: snippet.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef MIMETYPEMANAGER_H
-#define MIMETYPEMANAGER_H
+#ifndef SNIPPET_H
+#define SNIPPET_H
 
-#include "liteapi/liteapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 
-using namespace LiteApi;
-
-class MimeTypeManager : public IMimeTypeManager
+class Snippet : public LiteApi::ISnippet
 {
 public:
-    ~MimeTypeManager();
-    virtual bool addMimeType(IMimeType *mimeType);
-    virtual void removeMimeType(IMimeType *mimeType);
-    virtual QList<IMimeType*> mimeTypeList() const;
-    virtual IMimeType *findMimeType(const QString &type) const;
-    virtual QString findMimeTypeByFile(const QString &fileName) const;
-    virtual QString findMimeTypeBySuffix(const QString &suffix) const;
-    virtual QString findMimeTypeByScheme(const QString &scheme) const;
-    virtual QStringList findAllFilesByMimeType(const QString &dir, const QString &type, int deep = 0) const;
-    void loadMimeTypes(const QString &path);
+    QString trigger() const;
+    void setTrigger(const QString &trigger);
+    QString content() const;
+    void setContent(const QString &content);
 protected:
-    QList<IMimeType*>   m_mimeTypeList;
+    QString m_trigger;
+    QString m_content;
 };
 
-#endif // MIMETYPEMANAGER_H
+class SnippetList : public LiteApi::ISnippetList
+{
+public:
+    SnippetList(const QString &mimeType);
+    virtual ~SnippetList();
+    virtual QString mimeType() const;    
+    virtual bool load();
+    virtual QList<LiteApi::ISnippet*> findSnippet(const QString &trigger, Qt::CaseSensitivity cs = Qt::CaseInsensitive) const;
+    virtual QList<LiteApi::ISnippet*> snippetList() const;
+    void appendPath(const QString &path);
+protected:
+    bool    m_bLoad;
+    QString m_mimeType;
+    QStringList m_pathList;
+    QList<LiteApi::ISnippet*> m_snippetList;
+};
+
+#endif // SNIPPET_H

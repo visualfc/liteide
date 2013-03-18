@@ -18,31 +18,29 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: mimetypemanager.h
+// Module: snippetmanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef MIMETYPEMANAGER_H
-#define MIMETYPEMANAGER_H
+#ifndef SNIPPETMANAGER_H
+#define SNIPPETMANAGER_H
 
-#include "liteapi/liteapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 
 using namespace LiteApi;
 
-class MimeTypeManager : public IMimeTypeManager
+class SnippetsManager : public LiteApi::ISnippetsManager
 {
 public:
-    ~MimeTypeManager();
-    virtual bool addMimeType(IMimeType *mimeType);
-    virtual void removeMimeType(IMimeType *mimeType);
-    virtual QList<IMimeType*> mimeTypeList() const;
-    virtual IMimeType *findMimeType(const QString &type) const;
-    virtual QString findMimeTypeByFile(const QString &fileName) const;
-    virtual QString findMimeTypeBySuffix(const QString &suffix) const;
-    virtual QString findMimeTypeByScheme(const QString &scheme) const;
-    virtual QStringList findAllFilesByMimeType(const QString &dir, const QString &type, int deep = 0) const;
-    void loadMimeTypes(const QString &path);
+    SnippetsManager(QObject *parent);
+    virtual ~SnippetsManager();
+    virtual void addSnippetList(ISnippetList *snippets);
+    virtual void removeSnippetList(ISnippetList *snippets);
+    virtual ISnippetList *findSnippetList(const QString &mimeType);
+    virtual QList<ISnippetList*> allSnippetList() const;
+public:
+    void load(const QString &path);
 protected:
-    QList<IMimeType*>   m_mimeTypeList;
+    QList<ISnippetList*> m_snippetsList;
 };
 
-#endif // MIMETYPEMANAGER_H
+#endif // SNIPPETMANAGER_H

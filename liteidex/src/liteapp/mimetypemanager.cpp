@@ -92,6 +92,19 @@ QString MimeTypeManager::findMimeTypeByFile(const QString &fileName) const
     return  QString();
 }
 
+QString MimeTypeManager::findMimeTypeBySuffix(const QString &suffix) const
+{
+    QString find = "*."+suffix;
+    foreach (IMimeType *mimeType, m_mimeTypeList) {
+        foreach (QString pattern, mimeType->globPatterns()) {
+            if (find.compare(pattern,Qt::CaseInsensitive) == 0) {
+               return mimeType->type();
+            }
+        }
+    }
+    return  QString();
+}
+
 QString MimeTypeManager::findMimeTypeByScheme(const QString &scheme) const
 {
     foreach (IMimeType *mimeType, m_mimeTypeList) {

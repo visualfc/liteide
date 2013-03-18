@@ -53,6 +53,36 @@ public:
     virtual QList<IWordApi*> wordApiList() const = 0;
 };
 
+class ISnippet
+{
+public:
+    virtual ~ISnippet() {}
+    virtual QString trigger() const = 0;
+    virtual void setTrigger(const QString &trigger) = 0;
+    virtual QString content() const = 0;
+    virtual void setContent(const QString &content) = 0;
+};
+
+class ISnippetList
+{
+public:
+    virtual ~ISnippetList() {}
+    virtual QString mimeType() const = 0;
+    virtual bool load() = 0;
+    virtual QList<ISnippet*> findSnippet(const QString &trigger, Qt::CaseSensitivity cs = Qt::CaseInsensitive) const = 0;
+    virtual QList<ISnippet*> snippetList() const = 0;
+};
+
+class ISnippetsManager : public IManager
+{
+public:
+    ISnippetsManager(QObject *parent = 0) : IManager(parent) {}
+    virtual void addSnippetList(ISnippetList *snippets) = 0;
+    virtual void removeSnippetList(ISnippetList *snippets) = 0;
+    virtual ISnippetList *findSnippetList(const QString &mimeType) = 0;
+    virtual QList<ISnippetList*> allSnippetList() const = 0;
+};
+
 class ICompleter : public QObject
 {
     Q_OBJECT

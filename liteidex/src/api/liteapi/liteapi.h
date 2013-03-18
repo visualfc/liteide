@@ -125,6 +125,7 @@ public:
     virtual QList<IMimeType*> mimeTypeList() const= 0;
     virtual IMimeType *findMimeType(const QString &type) const = 0;
     virtual QString findMimeTypeByFile(const QString &fileName) const = 0;
+    virtual QString findMimeTypeBySuffix(const QString &suffix) const = 0;
     virtual QString findMimeTypeByScheme(const QString &scheme) const = 0;
     virtual QStringList findAllFilesByMimeType(const QString &dir, const QString &type, int deep = 0) const = 0;
 };
