@@ -166,7 +166,7 @@ bool DocumentBrowser::open(const QString &fileName,const QString &mimeType)
         setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(ba));
     } else if (htmlType == "text/x-markdown") {
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
-        QByteArray out = mdtohtml(ba);
+        QByteArray out = md2html(ba);
         setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(out));
     }
     file.close();
