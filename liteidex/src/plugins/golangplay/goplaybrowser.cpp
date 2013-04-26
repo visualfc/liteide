@@ -52,7 +52,7 @@
 #endif
 //lite_memory_check_end
 
-QString data = "package main\n\nimport \"fmt\"\n\nfunc main(){\n\tfmt.Println(\"Hello World\")\n}";
+QString data = "package main\n\nimport(\n\t\"fmt\"\n)\n\nfunc main(){\n\tfmt.Println(\"Hello World\")\n}";
 GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IBrowserEditor(parent),
       m_liteApp(app)
@@ -76,35 +76,37 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_editor->open(m_playFile,"text/x-gosrc");
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(m_editor,"LiteApi.QToolBar");
-    if (toolBar) {
-        toolBar->hide();
-    }
 
-    m_output = new TextOutput;
+    m_output = new TextOutput(m_liteApp);
 
     QVBoxLayout *layout = new QVBoxLayout;
     QHBoxLayout *head = new QHBoxLayout;
     QSplitter *spliter = new QSplitter(Qt::Vertical);
 
     QLabel *label = new QLabel(QString("<h2>%1</h2>").arg(tr("Go Playground")));
-    QPushButton *run = new QPushButton(tr("Run"));
-    QPushButton *stop = new QPushButton(tr("Stop"));
-    QPushButton *_new = new QPushButton(tr("New"));
-    QPushButton *load = new QPushButton(tr("Load..."));
-    QPushButton *save = new QPushButton(tr("Save..."));
-    QPushButton *shell = new QPushButton(tr("Explore Folder"));
+
+    QAction *run = new QAction(tr("Run"),this);
+    QAction *stop = new QAction(tr("Stop"),this);
+    QAction *_new = new QAction(tr("New"),this);
+    QAction *load = new QAction(tr("Load..."),this);
+    QAction *save = new QAction(tr("Save..."),this);
+    QAction *shell = new QAction(tr("Explore Folder"),this);
     m_editLabel  = new QLabel;
 
-    head->addWidget(label);
-    head->addWidget(run);
-    head->addWidget(stop);
-    head->addWidget(_new);
-    head->addWidget(load);
-    head->addWidget(save);
-    head->addWidget(shell);
-    head->addWidget(m_editLabel);
-    head->addStretch();
+    if (toolBar) {
+        toolBar->addSeparator();
+        toolBar->addAction(run);
+        toolBar->addAction(stop);
+        toolBar->addAction(_new);
+        toolBar->addAction(load);
+        toolBar->addAction(save);
+        toolBar->addSeparator();
+        toolBar->addAction(shell);
+        toolBar->addSeparator();
+        toolBar->addWidget(m_editLabel);
+    }
 
+    head->addWidget(label);
     layout->addLayout(head);
 
     spliter->addWidget(m_editor->widget());
@@ -119,13 +121,12 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_process->setWorkingDirectory(dir.path());
     m_codec = QTextCodec::codecForName("utf-8");
 
-
-    connect(run,SIGNAL(clicked()),this,SLOT(run()));
-    connect(stop,SIGNAL(clicked()),this,SLOT(stop()));
-    connect(_new,SIGNAL(clicked()),this,SLOT(newPlay()));
-    connect(load,SIGNAL(clicked()),this,SLOT(loadPlay()));
-    connect(save,SIGNAL(clicked()),this,SLOT(savePlay()));
-    connect(shell,SIGNAL(clicked()),this,SLOT(shell()));
+    connect(run,SIGNAL(triggered()),this,SLOT(run()));
+    connect(stop,SIGNAL(triggered()),this,SLOT(stop()));
+    connect(_new,SIGNAL(triggered()),this,SLOT(newPlay()));
+    connect(load,SIGNAL(triggered()),this,SLOT(loadPlay()));
+    connect(save,SIGNAL(triggered()),this,SLOT(savePlay()));
+    connect(shell,SIGNAL(triggered()),this,SLOT(shell()));
     connect(m_process,SIGNAL(started()),this,SLOT(runStarted()));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(runOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(runFinish(bool,int,QString)));
@@ -170,7 +171,7 @@ void GoplayBrowser::run()
         m_process->kill();
     }
     m_output->clear();
-    m_output->appendTag0(QString("Run start ...\n\n"));
+    m_output->appendTag(QString("Run start ...\n\n"));
     m_process->setEnvironment(env.toStringList());
 
     m_process->start(go,args);
@@ -194,9 +195,9 @@ void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
 {
     m_output->setReadOnly(true);
     if (err) {
-        m_output->appendTag1(QString("\nError %1.\n").arg(msg));
+        m_output->appendTag(QString("\nError %1.\n").arg(msg));
     } else {
-        m_output->appendTag0(QString("\nRun finished %1, %2.").arg(code).arg(msg));
+        m_output->appendTag(QString("\nRun finished %1, %2.").arg(code).arg(msg));
     }
 }
 

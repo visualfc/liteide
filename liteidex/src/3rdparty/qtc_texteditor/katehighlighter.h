@@ -17,6 +17,7 @@ class TEXTEDITOR_EXPORT KateHighlighter : public QObject
 public:
     explicit KateHighlighter(QObject *parent = 0);
     static void setColorStyle(TextEditor::SyntaxHighlighter *h,const ColorStyleScheme*);
+    static void setTabSize(TextEditor::SyntaxHighlighter *h, int tabSize);
 public:
     void loadPath(const QString &definitionsPaths);
     QStringList mimeTypes() const;

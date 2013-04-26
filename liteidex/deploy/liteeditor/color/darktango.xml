@@ -5,17 +5,26 @@
   Improvements are welcome
   Public Domain, Dumitru UNGUREANU, 2012
   -->
-  <style name="Extra" foreground="#008B8B" background="#2e3436"/>
-  <style name="DataType" foreground="#FF00DC" /> 
-  <style name="VisualWhitespace" foreground="#FF00DC"/>
-  <style name="Comment" foreground="#edd400"/>
-  <style name="Keyword" foreground="#f57900"/>
-  <style name="Function" foreground="#f57900"/>
-  <style name="Number" foreground="#e9b96e"/>
-  <style name="String" foreground="#729fcf"/>
-  <style name="Error" foreground="#ff0000"/>
   <style name="Text" foreground="#bbbbbb" background="#2e3436"/>
+  <style name="Extra" foreground="#008B8B" background="#2e3436"/>
   <style name="Selection" foreground="#ce5c00" background="#fcaf3e"/>
-  <style name="InactiveSelection" foreground="#000000" background="#555753"/>
   <style name="CurrentLine" background="#212628"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#FF00DC"/>
+  <style name="Keyword" foreground="#f57900"/>
+  <style name="DataType" foreground="#FF00DC" /> 
+  <style name="Decimal" foreground="#e9b96e"/>
+  <style name="BaseN" foreground="#e9b96e"/>
+  <style name="Float" foreground="#e9b96e"/>
+  <style name="Char" foreground="#729fcf"/>
+  <style name="String" foreground="#729fcf"/>
+  <style name="Comment" foreground="#edd400"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#f57900"/>
+  <style name="RegionMarker" foreground="#bbbbbb"/>
+  <style name="Symbol" foreground="#bbbbbb"/>
+  <style name="BuiltinFunc" foreground="#f57900"/>
+  <style name="Predeclared" foreground="#f57900"/>
+  <style name="FuncDecl" foreground="#bbbbbb"/>
 </style-scheme>

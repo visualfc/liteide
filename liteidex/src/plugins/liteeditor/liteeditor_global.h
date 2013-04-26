@@ -53,5 +53,7 @@
 #define EDITOR_PREFIXLENGTH "editor/prefixlength"
 #define EDITOR_RIGHTLINEVISIBLE "editor/rightlinevisible"
 #define EDITOR_RIGHTLINEWIDTH "editor/rightlinewidth"
+#define EDITOR_EOFVISIBLE "editor/eofvisible"
+#define EDITOR_INDENTLINEVISIBLE "editor/indentlinevisible"
 
 #endif // LITEEDITOR_GLOBAL_H

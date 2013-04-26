@@ -93,7 +93,19 @@ void LiteEditorFileFactory::colorStyleChanged()
     }
     TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
     if (h) {
-        m_kate->setColorStyle(h,editor->colorStyleScheme());
+        m_kate->setColorStyle(h,m_liteApp->editorManager()->colorStyleScheme());
+    }
+}
+
+void LiteEditorFileFactory::tabSettingChanged(int tabSize)
+{
+    LiteEditor *editor = static_cast<LiteEditor *>(sender());
+    if (!editor) {
+        return;
+    }
+    TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
+    if (h) {
+        m_kate->setTabSize(h,tabSize);
     }
 }
 
@@ -129,6 +141,7 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
     if (h) {
         editor->extension()->addObject("TextEditor::SyntaxHighlighter",h);
         connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
+        connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
         connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
     }
 
@@ -153,5 +166,6 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
         }
     }
     editor->applyOption(OPTION_LITEEDITOR);
+    editor->loadColorStyleScheme();
     return editor;
 }

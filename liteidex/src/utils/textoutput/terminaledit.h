@@ -25,42 +25,36 @@
 #define TERMINALEDIT_H
 
 #include <QPlainTextEdit>
-#include <QTextCharFormat>
 
-class QLineEdit;
 class TerminalEdit : public QPlainTextEdit
 {
     Q_OBJECT
 public:
     explicit TerminalEdit(QWidget *parent = 0);
-    void append(const QString &text, QTextCharFormat *fmt = 0);
-    void clearAll();
 signals:
     void enterText(const QString &text);
     void dbclickEvent(const QTextCursor &cur);
 public slots:
-    void contextMenuRequested(QPoint);
-    void selectCopy();
-    void selectAll();
+    void append(const QString &text, QTextCharFormat *fmt = 0);
+    void clear();
+    void contextMenuRequested(const QPoint &pt);
+    void cursorPositionChanged();
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
-    virtual void keyReleaseEvent(QKeyEvent *e);
-    virtual void mousePressEvent(QMouseEvent *e);
-    virtual void mouseMoveEvent(QMouseEvent *e);
-    virtual void mouseReleaseEvent(QMouseEvent *e);
     virtual void mouseDoubleClickEvent(QMouseEvent *e);
-protected:
-    QLineEdit *m_lineEdit;
-    QMenu     *m_menu;
-    QAction   *m_selCopyAct;
-    QAction   *m_pasteAct;
-    QAction   *m_selAllAct;
-    int        m_lastPos;
-    bool       m_bPress;
-    int        m_leftPos;
-    QTextCursor m_selectCursor;
-    QTextCharFormat m_normalFmt;
-    QTextCharFormat m_selectFmt;
+    virtual void mousePressEvent(QMouseEvent *e);
+    virtual void focusOutEvent(QFocusEvent *e);
+    virtual void focusInEvent(QFocusEvent *e);
+    int m_endPostion;
+    QMenu *m_contextMenu;
+    QMenu *m_contextRoMenu;
+    QAction *m_cut;
+    QAction *m_copy;
+    QAction *m_paste;
+    QAction *m_selectAll;
+    QAction *m_clear;
+    bool    m_bFocusOut;
 };
+
 
 #endif // TERMINALEDIT_H

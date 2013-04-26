@@ -28,6 +28,22 @@
 
 using namespace LiteApi;
 
+class ActionContext : public IActionContext {
+public:
+    ActionContext(LiteApi::IApplication *app, const QString &name);
+    virtual QString contextName() const;
+    virtual ~ActionContext();
+    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false);
+    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def);
+    virtual QStringList actionKeys() const;
+    virtual ActionInfo *actionInfo(const QString &key) const;
+    virtual void setActionShourtcuts(const QString &id, const QString &shortcuts);
+protected:
+    LiteApi::IApplication   *m_liteApp;
+    QString m_name;
+    QMap<QString,ActionInfo*> m_actionInfoMap;
+};
+
 class ActionManager : public IActionManager
 {
     Q_OBJECT
@@ -45,11 +61,14 @@ public:
     virtual void removeToolBar(QToolBar* toolBar);
     virtual QList<QString> toolBarList() const;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act);
-    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false);
-    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def);
+    virtual IActionContext *getActionContext(QObject *obj, const QString &name);
     virtual QStringList actionKeys() const;
-    virtual ActionInfo *actionInfo(const QString &key);
+    virtual ActionInfo *actionInfo(const QString &id) const;
     virtual void setActionShourtcuts(const QString &id, const QString &shortcuts);
+    virtual QStringList actionContextNameList() const;
+    virtual IActionContext *actionContextForName(const QString &name);
+protected slots:
+    void removeActionContext(QObject *obj);
 public:
     static QList<QKeySequence> toShortcuts(const QString &ks);
     static QString formatShortcutsString(const QString &ks);
@@ -60,7 +79,7 @@ protected:
     QMenu *m_viewToolMenu;
     QAction *m_baseToolBarAct;
     QAction *m_baseBrowserAct;
-    QMap<QString,ActionInfo*> m_actionInfoMap;
+    QMap<QObject*,ActionContext*> m_objContextMap;
 };
 
 #endif // ACTIONMANAGER_H

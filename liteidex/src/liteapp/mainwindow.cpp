@@ -103,6 +103,25 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
         event->acceptProposedAction();
 }
 
+void MainWindow::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::WindowStateChange) {
+        bool b = (windowState() & Qt::WindowFullScreen) != 0;
+        emit fullScreenStateChanged(b);
+    }
+}
+
+void MainWindow::setFullScreen(bool b)
+{
+    if (bool(windowState() & Qt::WindowFullScreen) == b)
+        return;
+    if (b) {
+        setWindowState(windowState() | Qt::WindowFullScreen);
+    } else {
+        setWindowState(windowState() & ~Qt::WindowFullScreen);
+    }
+}
+
 void MainWindow::dropEvent(QDropEvent *event)
 {
     QList<QUrl> urls = event->mimeData()->urls();

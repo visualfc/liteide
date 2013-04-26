@@ -561,7 +561,7 @@ QMap<QString, QByteArray> MarkdownBatchBrowser::getFileHtmlDataMap(const QString
     foreach(QString file, files) {
         QFile f(file);
         if (f.open(QFile::ReadOnly)) {
-            map.insert(file,mdtohtml(f.readAll()));
+            map.insert(file,md2html(f.readAll()));
         }
     }
     return map;

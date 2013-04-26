@@ -248,28 +248,14 @@ ToolMainWindow::ToolMainWindow(QWidget *parent)
                        "QToolButton:checked {background : qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(55, 57, 59, 255), stop:1 rgba(255, 255, 255, 255));}");
     m_statusBar->addWidget(btn);
 
-    ActionToolBar *bar = m_areaToolBar.value(Qt::BottomDockWidgetArea);
-    //bar->toolBar->setStyleSheet("QToolBar {border:0}");
     m_statusBar->setContentsMargins(0,0,0,0);
-    m_statusBar->addWidget(bar->toolBar,1);
+
+    ActionToolBar *bar = m_areaToolBar.value(Qt::BottomDockWidgetArea);
+    if (bar) {
+        m_statusBar->addWidget(bar->toolBar,1);
+    }
 
     this->setStatusBar(m_statusBar);
-
-    //this->setStyleSheet("QMainWindow::separator{width:1; background-color: gray ;}");
-    //m_statusBar->setStyleSheet("QStatusBar {border-top: 1px solid gray}");
-    //m_statusBar->setStyleSheet("QStatusBar {border:0}");
-    /*
-    this->setStyleSheet("QToolBar {border:1 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #EEEEEE, stop: 1 #ababab); color : #EEEEEE}"
-                        "QStatusBar {border:1 ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #EEEEEE, stop: 1 #ababab); color : #EEEEEE}"
-                        "QMainWindow::separator{width:1; background-color: #ababab ;}");
-    */
-
-    QAction *hideBottomAct = new QAction("HideBottom",this);
-    hideBottomAct->setShortcut(QKeySequence(Qt::Key_Escape));
-
-    this->addAction(hideBottomAct);
-    connect(hideBottomAct,SIGNAL(triggered()),bar->dock1,SLOT(close()));
-    connect(hideBottomAct,SIGNAL(triggered()),bar->dock2,SLOT(close()));
 
     connect(m_hideSideAct,SIGNAL(toggled(bool)),this,SLOT(hideSideBar(bool)));
 }
@@ -472,6 +458,15 @@ bool ToolMainWindow::restoreState(const QByteArray &state, int version)
     m_initIdStateMap.clear();
     m_hideSideAct->setChecked(m_areaToolBar.value(Qt::LeftDockWidgetArea)->toolBar->isHidden());
     return b;
+}
+
+void ToolMainWindow::hideToolWindow(Qt::DockWidgetArea area)
+{
+    ActionToolBar *bar = m_areaToolBar.value(area);
+    if (bar) {
+        bar->dock1->close();
+        bar->dock2->close();
+    }
 }
 
 bool ToolMainWindow::loadInitToolState(const QByteArray &state, int version)

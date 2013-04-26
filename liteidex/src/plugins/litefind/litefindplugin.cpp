@@ -23,7 +23,6 @@
 
 #include "litefindplugin.h"
 #include "findeditor.h"
-#include "replaceeditor.h"
 #include "filesearch.h"
 
 #include <QMenu>
@@ -41,7 +40,6 @@
 
 LiteFindPlugin::LiteFindPlugin()
     : m_findEditor(0),
-      m_replaceEditor(0),
       m_fileSearch(0)
 {
 }
@@ -70,28 +68,24 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     m_findEditor = new FindEditor(m_liteApp,this);
     m_findEditor->widget()->hide();
 
-    m_replaceEditor = new ReplaceEditor(m_liteApp,this);
-    m_replaceEditor->widget()->hide();
-
-    m_fileSearch = new FileSearch(m_liteApp,this);
-
     layout->addWidget(m_findEditor->widget());
-    layout->addWidget(m_replaceEditor->widget());
+
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Find");
 
     m_findAct = new QAction(tr("Find"),this);
-    m_liteApp->actionManager()->regAction(m_findAct,"LiteFind.Find",QKeySequence::Find);
+    actionContext->regAction(m_findAct,"Find",QKeySequence::Find);
 
     m_findNextAct = new QAction(tr("Find Next"),this);
-    m_liteApp->actionManager()->regAction(m_findNextAct,"LiteFind.FindNext",QKeySequence::FindNext);
+    actionContext->regAction(m_findNextAct,"FindNext",QKeySequence::FindNext);
 
     m_findPrevAct = new QAction(tr("Find Previous"),this);
-    m_liteApp->actionManager()->regAction(m_findPrevAct,"LiteFind.FindPrevious",QKeySequence::FindPrevious);
+    actionContext->regAction(m_findPrevAct,"FindPrevious",QKeySequence::FindPrevious);
 
     m_replaceAct = new QAction(tr("Replace"),this);
-    m_liteApp->actionManager()->regAction(m_replaceAct,"LiteFind.Replace",QKeySequence::Replace);
+    actionContext->regAction(m_replaceAct,"Replace",QKeySequence::Replace);
 
     m_fileSearchAct = new QAction(tr("File Search"),this);
-    m_liteApp->actionManager()->regAction(m_fileSearchAct,"LiteFind.FileSearch","Ctrl+Shift+F");
+    actionContext->regAction(m_fileSearchAct,"FileSearch","Ctrl+Shift+F");
 
     menu->addAction(m_findAct);
     menu->addAction(m_findNextAct);
@@ -105,10 +99,10 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     connect(m_findNextAct,SIGNAL(triggered()),m_findEditor,SLOT(findNext()));
     connect(m_findPrevAct,SIGNAL(triggered()),m_findEditor,SLOT(findPrev()));
     connect(m_replaceAct,SIGNAL(triggered()),this,SLOT(replace()));
-    connect(m_findEditor,SIGNAL(hideFind()),this,SLOT(hideFind()));
-    connect(m_replaceEditor,SIGNAL(hideReplace()),this,SLOT(hideReplace()));
-    connect(m_findEditor,SIGNAL(swithReplace()),this,SLOT(switchReplace()));
     connect(m_fileSearchAct,SIGNAL(triggered()),this,SLOT(fileSearch()));
+
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFind()));
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFileSearch()));
 
     return true;
 }
@@ -118,27 +112,23 @@ void LiteFindPlugin::hideFind()
     m_findEditor->setVisible(false);
 }
 
-void LiteFindPlugin::hideReplace()
+void LiteFindPlugin::hideFileSearch()
 {
-    m_replaceEditor->setVisible(false);
-}
-
-void LiteFindPlugin::switchReplace()
-{
-    m_findEditor->setVisible(false);
-    m_replaceEditor->setVisible(true);
+    if (m_fileSearch) {
+        m_fileSearch->setVisible(false);
+    }
 }
 
 void LiteFindPlugin::find()
 {
-    m_replaceEditor->setVisible(false);
+    m_findEditor->setReplaceMode(false);
     m_findEditor->setVisible(true);
 }
 
 void LiteFindPlugin::replace()
 {
-    m_findEditor->setVisible(false);
-    m_replaceEditor->setVisible(true);
+    m_findEditor->setReplaceMode(true);
+    m_findEditor->setVisible(true);
 }
 
 void LiteFindPlugin::fileSearch()

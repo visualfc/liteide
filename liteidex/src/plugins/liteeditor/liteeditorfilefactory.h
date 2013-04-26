@@ -41,6 +41,7 @@ public:
     LiteApi::IEditor *setupEditor(LiteEditor *editor,const QString &mimeType);
 public slots:
     void colorStyleChanged();
+    void tabSettingChanged(int);
 protected:
     LiteApi::IApplication *m_liteApp;
     WordApiManager *m_wordApiManager;

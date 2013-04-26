@@ -3,7 +3,8 @@ TEMPLATE = lib
 
 CONFIG += staticlib
 
-include(../../liteideutils.pri)
+include (../../liteideutils.pri)
+include (../colorstyle/colorstyle.pri)
 
 HEADERS += textoutput.h \
     terminaledit.h

@@ -70,6 +70,17 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_toolBar->addAction(m_backwardAct);
     m_toolBar->addAction(m_forwardAct);
 
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Document");
+
+    m_increaseFontSize = new QAction(tr("Increase Font Size"),this);
+    actionContext->regAction(m_increaseFontSize,"IncreaseFontSize","Ctrl++;Ctrl+=");
+
+    m_decreaseFontSize = new QAction(tr("Decrease Font Size"),this);
+    actionContext->regAction(m_decreaseFontSize,"DecreaseFontSize","Ctrl+-");
+
+    m_resetFontSize = new QAction(tr("Reset Font Size"),this);
+    actionContext->regAction(m_resetFontSize,"ResizeFontSize","Ctrl+0");
+
     m_urlComboBox = new QComboBox;
     m_urlComboBox->setEditable(true);
     m_urlComboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -86,6 +97,13 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     mainLayout->addWidget(m_htmlWidget->widget());
     m_widget->setLayout(mainLayout);
 
+    m_widget->addAction(m_increaseFontSize);
+    m_widget->addAction(m_decreaseFontSize);
+    m_widget->addAction(m_resetFontSize);
+
+    connect(m_increaseFontSize,SIGNAL(triggered()),this,SLOT(increaseFontSize()));
+    connect(m_decreaseFontSize,SIGNAL(triggered()),this,SLOT(decreaseFontSize()));
+    connect(m_resetFontSize,SIGNAL(triggered()),this,SLOT(resetFontSize()));
     connect(m_htmlWidget,SIGNAL(linkHovered(QUrl)),this,SIGNAL(linkHovered(QUrl)));
     connect(m_htmlWidget,SIGNAL(linkClicked(QUrl)),this,SLOT(linkClicked(QUrl)));
     connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SIGNAL(documentLoaded()));
@@ -100,6 +118,13 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_extension->addObject("LiteApi.IHtmlWidget",m_htmlWidget);
     m_extension->addObject("LiteApi.QTextBrowser",m_htmlWidget->widget());
     m_htmlWidget->installEventFilter(m_liteApp->editorManager());
+
+    requestFontZoom(0);
+
+    QPalette p = m_htmlWidget->widget()->palette();
+    p.setBrush(QPalette::Highlight,Qt::yellow);
+    p.setColor(QPalette::HighlightedText,Qt::black);
+    m_htmlWidget->widget()->setPalette(p);
 
     emit backwardAvailable(false);
     emit forwardAvailable(false);
@@ -141,7 +166,7 @@ bool DocumentBrowser::open(const QString &fileName,const QString &mimeType)
         setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(ba));
     } else if (htmlType == "text/x-markdown") {
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
-        QByteArray out = mdtohtml(ba);
+        QByteArray out = md2html(ba);
         setUrlHtml(QUrl::fromLocalFile(fileName),codec->toUnicode(out));
     }
     file.close();
@@ -360,6 +385,42 @@ void DocumentBrowser::backward()
 void DocumentBrowser::reloadUrl()
 {
     emit requestUrl(m_url);
+}
+
+void DocumentBrowser::increaseFontSize()
+{
+    this->requestFontZoom(10);
+}
+
+void DocumentBrowser::decreaseFontSize()
+{
+    this->requestFontZoom(-10);
+}
+
+void DocumentBrowser::resetFontSize()
+{
+    int fontSize = m_liteApp->settings()->value(DOCUMENT_FONTSIZE,12).toInt();
+    m_liteApp->settings()->setValue(DOCUMENT_FONTZOOM,100);
+    QWidget *widget = m_htmlWidget->widget();
+    QFont font = widget->font();
+    font.setPointSize(fontSize);
+    widget->setFont(font);
+
+}
+
+void DocumentBrowser::requestFontZoom(int zoom)
+{
+    int fontSize = m_liteApp->settings()->value(DOCUMENT_FONTSIZE,12).toInt();
+    int fontZoom = m_liteApp->settings()->value(DOCUMENT_FONTZOOM,100).toInt();
+    fontZoom += zoom;
+    if (fontZoom <= 10) {
+        return;
+    }
+    m_liteApp->settings()->setValue(DOCUMENT_FONTZOOM,fontZoom);
+    QWidget *widget = m_htmlWidget->widget();
+    QFont font = widget->font();
+    font.setPointSize(fontSize*fontZoom/100.0);
+    widget->setFont(font);
 }
 
 void DocumentBrowser::forward()

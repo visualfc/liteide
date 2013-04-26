@@ -5,6 +5,7 @@ include(../../liteideplugin.pri)
 include(../../utils/fileutil/fileutil.pri)
 include(../../utils/textoutput/textoutput.pri)
 include(../../utils/processex/processex.pri)
+include (../../utils/colorstyle/colorstyle.pri)
 
 DEFINES += GOLANGPLAY_LIBRARY
 

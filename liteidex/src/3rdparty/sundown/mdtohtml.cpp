@@ -6,7 +6,7 @@
 #define READ_UNIT 1024
 #define OUTPUT_UNIT 64
 
-QByteArray mdtohtml(const QByteArray &data)
+QByteArray md2html(const QByteArray &data, int ext)
 {
     if (data.isEmpty()) {
         return data;
@@ -22,7 +22,7 @@ QByteArray mdtohtml(const QByteArray &data)
     ob = bufnew(OUTPUT_UNIT);
 
     sdhtml_renderer(&callbacks, &options, 0);
-    markdown = sd_markdown_new(0, 16, &callbacks, &options);
+    markdown = sd_markdown_new(ext, 16, &callbacks, &options);
 
     sd_markdown_render(ob, (uint8_t*)data.constData(), data.size(), markdown);
     sd_markdown_free(markdown);

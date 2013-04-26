@@ -71,8 +71,6 @@ protected slots:
     void cdUp();
     void viewGodoc();
     void loadFolderProject();
-    void commandReturn();
-    void requestCommand();
 protected:
     QFileInfo contextFileInfo() const;
     QDir contextDir() const;
@@ -86,7 +84,6 @@ protected:
     QFileSystemModel        *m_fileModel;
     QComboBox   *m_filterCombo;
     QComboBox   *m_rootCombo;
-    QLineEdit   *m_commandEdit;
     QToolBar    *m_filterToolBar;
     QToolBar    *m_rootToolBar;
     QAction *m_syncAct;

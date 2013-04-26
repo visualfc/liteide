@@ -80,7 +80,10 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_reloadAct = new QAction(tr("Reload All"),this);
     m_setupGopathAct = new QAction(QIcon("icon:images/gopath.png"),tr("Manage GOPATH..."),this);
-    m_liteApp->actionManager()->regAction(m_setupGopathAct,"Golang.SetupGOPATH","");
+
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoPkg");
+
+    actionContext->regAction(m_setupGopathAct,"SetupGOPATH","");
 
     m_godocAct = new QAction(tr("View Documentation"),this);
     m_editPackageAct = new QAction(tr("Load as Project"),this);

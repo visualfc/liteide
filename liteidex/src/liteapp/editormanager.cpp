@@ -70,6 +70,7 @@ bool EditorManager::initWithApp(IApplication *app)
     }
 
     m_currentNavigationHistoryPosition = 0;
+    m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
     m_editorTabWidget = new LiteTabWidget;
 
@@ -175,11 +176,12 @@ void EditorManager::createActions()
 
     m_goBackAct = new QAction(tr("Navigate Backward"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
-    m_liteApp->actionManager()->regAction(m_goBackAct,"LiteApp.Backward","Alt+Left");
+    IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+    actionContext->regAction(m_goBackAct,"Backward","Alt+Left");
 
     m_goForwardAct = new QAction(tr("Navigate Forward"),this);
     m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
-    m_liteApp->actionManager()->regAction(m_goForwardAct,"LiteApp.Forward","Alt+Right");
+    actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
 
     updateNavigatorActions();
 
@@ -454,6 +456,9 @@ IEditor *EditorManager::currentEditor() const
 void EditorManager::setCurrentEditor(IEditor *editor)
 {
     if (m_currentEditor == editor) {
+        if (m_currentEditor) {
+            m_currentEditor->onActive();
+        }
         return;
     }
     m_currentEditor = editor;
@@ -668,6 +673,18 @@ void EditorManager::cutForwardNavigationHistory()
 {
     while (m_currentNavigationHistoryPosition < m_navigationHistory.size() - 1)
         m_navigationHistory.removeLast();
+}
+
+void EditorManager::loadColorStyleScheme(const QString &fileName)
+{
+    if (m_colorStyleScheme->load(fileName)) {
+        emit colorStyleSchemeChanged();
+    }
+}
+
+const ColorStyleScheme *EditorManager::colorStyleScheme() const
+{
+    return m_colorStyleScheme;
 }
 
 void EditorManager::updateCurrentPositionInNavigationHistory()

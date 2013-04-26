@@ -109,6 +109,7 @@ public:
     bool loadInitToolState(const QByteArray &state, int version = 0);
     bool restoreState(const QByteArray &state, int version = 0);
 public slots:
+    void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     void showOrHideToolWindow();
     void hideAllToolWindows();
     void restoreToolWindows();

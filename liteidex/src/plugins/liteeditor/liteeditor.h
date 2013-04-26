@@ -96,13 +96,15 @@ public:
     virtual QByteArray saveState() const;
     virtual bool restoreState(const QByteArray &state);
     virtual void onActive();
+    virtual void setFindOption(LiteApi::FindOption *opt);
 
-    const ColorStyleScheme *colorStyleScheme() const;
     LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();
+    void tabSettingChanged(int);
 public slots:
     void requestFontZoom(int zoom);
+    void loadColorStyleScheme();
     void applyOption(QString);
     void clipbordDataChanged();
 #ifdef LITEEDITOR_FIND
@@ -124,7 +126,6 @@ public slots:
     void resetFontSize();
 public:
     void findCodecs();
-    ColorStyleScheme    *m_colorStyleScheme;
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;
@@ -161,11 +162,12 @@ public:
     QAction *m_foldAllAct;
     QAction *m_unfoldAllAct;
     QAction *m_lockAct;
+    QAction *m_cleanWhitespaceAct;
     LiteEditorFile *m_file;
     QMenu   *m_editMenu;
     QMenu   *m_contextMenu;
     QString  m_colorStyle;
-    QPalette m_defPalette;
+    QPalette m_defEditorPalette;
     bool       m_bReadOnly;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;

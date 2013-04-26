@@ -85,15 +85,15 @@ public:
     virtual QString pluginPath() const;
     virtual QString storagePath() const;
 
-    virtual QString shortVer() const;
-    virtual QString version() const;
-    virtual QString name() const;
-    virtual QString copyright() const;
+    virtual QString ideVersion() const;
+    virtual QString ideFullName() const;
+    virtual QString ideName() const;
+    virtual QString ideCopyright() const;
 
     virtual QList<IPlugin*> pluginList() const;
 
-    virtual void loadSession(const QString &name);
-    virtual void saveSession(const QString &name);
+    virtual void loadSession(const QString &ideName);
+    virtual void saveSession(const QString &ideName);
     virtual void loadState();
     virtual void saveState();
 
@@ -117,8 +117,8 @@ protected slots:
     void currentEditorChanged(LiteApi::IEditor *editor);
     void editorModifyChanged(bool);
     void cleanup();
-    void fullScreen(bool b);
     void aboutPlugins();
+    void escape();
 protected:
     QString         m_applicationPath;
     QString         m_pluginPath;
@@ -139,7 +139,6 @@ protected:
     QAction       *m_logAct;
     LiteAppOptionFactory *m_liteAppOptionFactory;
     QList<IPlugin*> m_pluginList;
-    windows_state m_window_state;
     static QMap<QString,QVariant> m_cookie;
 protected:
     QAction     *m_newAct;

@@ -71,7 +71,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
         file.close();
     }
 
-    m_liteApp->extension()->addObject("LiteApi.ILiteDoc",this);
+    m_liteApp->extension()->addObject("LiteApi.ILiteDoc",this);    
 
     QUrl url("/readme.html");
     openUrl(url);
@@ -141,7 +141,7 @@ void LiteDoc::openUrlFile(const QUrl &url)
     } else if (ext == "md") {
         QFile file(info.filePath());
         if (file.open(QIODevice::ReadOnly)) {
-            QByteArray ba = mdtohtml(file.readAll());
+            QByteArray ba = md2html(file.readAll());
             updateHtmlDoc(url,ba);
         }
     } else if (ext == "go") {

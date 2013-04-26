@@ -20,8 +20,7 @@ HEADERS += welcomeplugin.h\
     welcomebrowser.h \
     litedoc.h
 
-FORMS += \
-    welcomewidget.ui
+FORMS +=
 
 OTHER_FILES +=
 

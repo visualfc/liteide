@@ -5,17 +5,26 @@
   Improvements are welcome
   Public Domain, Henson Lu, 2012
   -->
-  <style name="Extra" foreground="#008B8B" background="#2e3436"/>
-  <style name="DataType" foreground="#64b72d" /> 
-  <style name="VisualWhitespace" foreground="#ffffff"/>
-  <style name="Comment" foreground="#729fcf"/>
-  <style name="Keyword" foreground="#f92672"/>
-  <style name="Function" foreground="#4cb8e3"/>
-  <style name="Number" foreground="#e6db74"/>
-  <style name="String" foreground="#a3e22e"/>
-  <style name="Error" foreground="#fd2702"/>
   <style name="Text" foreground="#ffffff" background="#272822"/>
+  <style name="Extra" foreground="#008B8B" background="#2e3436"/>
   <style name="Selection" foreground="#000000" background="#fdc066"/>
-  <style name="InactiveSelection" foreground="#000000" background="#fdc066"/>
   <style name="CurrentLine" background="#333333"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#f92672"/>
+  <style name="DataType" foreground="#64b72d" /> 
+  <style name="Decimal" foreground="#e6db74"/>
+  <style name="BaseN" foreground="#e6db74"/>
+  <style name="Float" foreground="#e6db74"/>
+  <style name="Char" foreground="#a3e22e"/>
+  <style name="String" foreground="#a3e22e"/>
+  <style name="Comment" foreground="#729fcf"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#4cb8e3"/>
+  <style name="RegionMarker" foreground="#ffffff"/>
+  <style name="Symbol" foreground="#ffffff"/>       
+  <style name="BuiltinFunc" foreground="#4cb8e3"/>
+  <style name="Predeclared" foreground="#4cb8e3"/>
+  <style name="FuncDecl" foreground="#4cb8e3"/>
 </style-scheme>

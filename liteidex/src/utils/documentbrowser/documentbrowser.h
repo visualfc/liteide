@@ -29,6 +29,9 @@
 #include <QStack>
 #include <QUrl>
 
+#define DOCUMENT_FONTSIZE "Documents/FontSize"
+#define DOCUMENT_FONTZOOM "Documents/FontZoom"
+
 class QTextBrowser;
 class QComboBox;
 class QToolButton;
@@ -63,6 +66,10 @@ public slots:
     virtual void forward();
     virtual void reloadUrl();
 public slots:
+    void increaseFontSize();
+    void decreaseFontSize();
+    void resetFontSize();
+    void requestFontZoom(int zoom);
     void linkClicked(QUrl);
     void activatedUrl(QString text);
 protected:
@@ -84,6 +91,9 @@ protected:
     QAction      *m_backwardAct;
     QAction      *m_forwardAct;
     QAction      *m_reloadUrlAct;
+    QAction      *m_increaseFontSize;
+    QAction      *m_decreaseFontSize;
+    QAction      *m_resetFontSize;
     QComboBox    *m_urlComboBox;
     QString     m_name;
     QString     m_fileName;

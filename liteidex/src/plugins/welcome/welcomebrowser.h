@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include "extension/extension.h"
+#include "documentbrowser/documentbrowser.h"
 #include <QUrl>
 
 namespace Ui {
@@ -51,7 +52,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;
     QWidget *m_widget;
-    Ui::WelcomeWidget *ui;
+    DocumentBrowser *m_browser;
     QString m_templateData;
 };
 

@@ -25,6 +25,7 @@
 #define EDITORMANAGER_H
 
 #include "liteapi/liteapi.h"
+#include "colorstyle/colorstyle.h"
 #include <QPointer>
 
 using namespace LiteApi;
@@ -61,6 +62,8 @@ public:
     virtual void activeBrowser(IEditor *editor);
     virtual void addNavigationHistory(IEditor *editor,const QByteArray &saveState);
     virtual void cutForwardNavigationHistory();
+    virtual void loadColorStyleScheme(const QString &file);
+    virtual const ColorStyleScheme *colorStyleScheme() const;
 protected:
     void addEditor(IEditor *editor);
     bool eventFilter(QObject *target, QEvent *event);
@@ -105,6 +108,7 @@ protected:
     QAction     *m_goForwardAct;
     QMenu       *m_editMenu;
     QMenu       *m_tabContextMenu;
+    ColorStyleScheme *m_colorStyleScheme;
     int          m_tabContextIndex;
 };
 

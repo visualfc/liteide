@@ -24,6 +24,7 @@
 #include "liteeditoroption.h"
 #include "ui_liteeditoroption.h"
 #include "liteeditor_global.h"
+#include "textoutput/textoutput.h"
 #include <QFontDatabase>
 #include <QDir>
 #include <QFileInfo>
@@ -97,6 +98,10 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool outputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
+    bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
+
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
@@ -113,6 +118,9 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->preMinLineEdit->setText(QString("%1").arg(min));
     ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
     ui->rightLineWidthSpinBox->setValue(rightLineWidth);
+    ui->eofVisibleCheckBox->setChecked(eofVisible);
+    ui->indentLineCheckBox->setChecked(indentLineVisible);
+    ui->outputUseColorSchemeCheck->setChecked(outputUseColor);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
@@ -186,7 +194,18 @@ void LiteEditorOption::apply()
     }
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,fontZoom);
 
+    bool outputUseColor = ui->outputUseColorSchemeCheck->isChecked();
+    bool oldOutputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
+
     QString style = ui->styleComboBox->currentText();
+    if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString() ||
+            outputUseColor != oldOutputUseColor) {
+        m_liteApp->settings()->setValue(TEXTOUTPUT_USECOLORSCHEME,outputUseColor);
+        m_liteApp->settings()->setValue(EDITOR_STYLE,style);
+        QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
+        m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+    }
+
     bool noprintCheck = ui->noprintCheckBox->isChecked();
     bool autoIndent = ui->autoIndentCheckBox->isChecked();
     bool autoBraces0 = ui->autoBraces0CheckBox->isChecked();
@@ -198,6 +217,8 @@ void LiteEditorOption::apply()
     bool caseSensitive = ui->completerCaseSensitiveCheckBox->isChecked();
     bool antialias = ui->antialiasCheckBox->isChecked();
     bool rightLineVisible = ui->rightLineVisibleCheckBox->isChecked();
+    bool eofVisible = ui->eofVisibleCheckBox->isChecked();
+    bool indentLineVisible = ui->indentLineCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
@@ -208,7 +229,6 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_FAMILY,m_fontFamily);
     m_liteApp->settings()->setValue(EDITOR_FONTSIZE,m_fontSize);
     m_liteApp->settings()->setValue(EDITOR_ANTIALIAS,antialias);
-    m_liteApp->settings()->setValue(EDITOR_STYLE,style);
     m_liteApp->settings()->setValue(EDITOR_AUTOINDENT,autoIndent);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE0,autoBraces0);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE1,autoBraces1);
@@ -216,6 +236,8 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE3,autoBraces3);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE4,autoBraces4);
     m_liteApp->settings()->setValue(EDITOR_LINENUMBERVISIBLE,lineNumberVisible);
+    m_liteApp->settings()->setValue(EDITOR_EOFVISIBLE,eofVisible);
+    m_liteApp->settings()->setValue(EDITOR_INDENTLINEVISIBLE,indentLineVisible);
     m_liteApp->settings()->setValue(EDITOR_COMPLETER_CASESENSITIVE,caseSensitive);
     m_liteApp->settings()->setValue(EDITOR_PREFIXLENGTH,min);
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);

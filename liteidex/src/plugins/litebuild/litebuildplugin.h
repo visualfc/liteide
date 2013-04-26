@@ -26,16 +26,27 @@
 
 #include "litebuild_global.h"
 #include "liteapi/liteapi.h"
+#include "elidedlabel/elidedlabel.h"
 #include <QtPlugin>
 
 class LiteBuild;
+class QLineEdit;
 class LiteBuildPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     LiteBuildPlugin();
     virtual bool load(LiteApi::IApplication *app);
+protected slots:
+    void showExecute();
+    void execute();
+    void currentEditorChanged(LiteApi::IEditor*);
 protected:
+    LiteApi::IApplication *m_liteApp;
     LiteBuild *m_build;
+    QWidget   *m_executeWidget;
+    QLineEdit *m_executeEdit;
+    ElidedLabel *m_workLabel;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<LiteBuildPlugin>
@@ -47,7 +58,7 @@ public:
         m_info->setId("plugin/litebuild");
         m_info->setName("LiteBuilder");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x16");
+        m_info->setVer("x17");
         m_info->setInfo("Core Build");
         m_info->appendDepend("plugin/liteenv");
         m_info->setMustLoad(true);

@@ -9,7 +9,7 @@
           author="The Go Authors"
           license="BSD">
   <highlighting>
-     <list name="keywords">
+    <list name="keywords">
       <item> break </item>
       <item> case </item>
       <item> chan </item>
@@ -64,9 +64,9 @@
       <item> uint32 </item>
       <item> uint64 </item>
     </list>
-    <list name="functions">
+    <list name="builtin">
       <item> append </item>
-	  <item> delete </item>
+  	  <item> delete </item>
       <item> cap </item>
       <item> close </item>
       <item> complex </item>
@@ -82,61 +82,66 @@
       <item> recover </item>
     </list>
     <contexts>
-      <context attribute="Normal Text" lineEndContext="#stay" name="Normal">
-        <DetectSpaces />
-        <keyword attribute="Keyword" context="#stay" String="keywords"/>
-        <keyword attribute="Predeclared Identifier" context="#stay"
-          String="predeclared"/>
+      <context attribute="Normal Text" lineEndContext="#pop" name="Normal">
+        <DetectSpaces/>
+        <RegExpr attribute="Keyword" context="FuncDecl" String="^func\s*"/>
+        <keyword attribute="Keyword" context="#pop" String="keywords"/>
+        <keyword attribute="Predeclared Identifier" context="#stay" String="predeclared"/>
         <keyword attribute="Data Type" context="#stay" String="types"/>
-        <keyword attribute="Builtin Function" context="#stay" String="functions"/>
-        <DetectIdentifier />
+        <keyword attribute="Builtin Function" context="#stay" String="builtin"/>
+        <DetectIdentifier/>
         <DetectChar attribute="Symbol" context="#stay" char="{" beginRegion="Brace1" />
         <DetectChar attribute="Symbol" context="#stay" char="}" endRegion="Brace1" />
         <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2" />
         <DetectChar attribute="Symbol" context="#stay" char=")" endRegion="Brace2" />
         <DetectChar attribute="Symbol" context="#stay" char="[" beginRegion="Brace3" />
         <DetectChar attribute="Symbol" context="#stay" char="]" endRegion="Brace3" />
-
-		<RegExpr      attribute="Numbers"  context="#stay"  String="\-?\.\d*(e|e\-|e\+)?\d+i?\b"/>
-		<RegExpr      attribute="Numbers"  context="#stay"  String="\-\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
-        <RegExpr      attribute="Numbers"  context="#stay"  String="\b\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>		
-        <RegExpr      attribute="Numbers"  context="#stay"  String="\b-?0[xX][0-9a-fA-F]+\b"/>
-
+        <RegExpr attribute="Numbers"  context="#stay" String="\-?\.\d*(e|e\-|e\+)?\d+i?\b"/>
+        <RegExpr attribute="Numbers"  context="#stay" String="\-\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
+        <RegExpr attribute="Numbers"  context="#stay" String="\b\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
+        <RegExpr attribute="Numbers"  context="#stay" String="\b-?0[xX][0-9a-fA-F]+\b"/>
         <HlCOct attribute="Octal" context="#stay"/>
         <HlCHex attribute="Hex" context="#stay"/>
         <HlCChar attribute="Char" context="#stay"/>
         <DetectChar attribute="String" context="String" char="&quot;"/>
-        <DetectChar attribute="Multiline String" context="Multiline String" char="`"/>
+        <DetectChar attribute="String" context="Multiline String" char="`"/>
         <Detect2Chars attribute="Comment" context="Comment 1" char="/" char1="/"/>
         <Detect2Chars attribute="Comment" context="Comment 2" char="/" char1="*" beginRegion="Comment"/>
         <AnyChar attribute="Symbol" context="#stay" String=":!%&amp;()+,-/.*&lt;=&gt;?[]|~^&#59;"/>
       </context>
-
+      <context attribute="Normal Text" lineEndContext="#stay" name="FuncDecl">
+        <DetectChar attribute="Symbol" context="MethodDecl" char="(" beginRegion="Brace2" />
+        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2" />
+        <RegExpr attribute="FuncDecl" context="#pop" String="[\w]+"/>
+      </context>
+      <context attribute="Normal Text" lineEndContext="#pop" name="MethodDecl">
+        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2" />
+        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2" />
+        <RegExpr attribute="Normal Text" context="#stay" String="\b[\w]+\s*\*?\w+\b"/>
+        <RegExpr attribute="FuncDecl" context="#pop" String="[\w]+"/>
+      </context>
       <context attribute="String" lineEndContext="#pop" name="String">
         <!--LineContinue attribute="String" context="#stay"/-->
         <HlCStringChar attribute="String Char" context="#stay"/>
         <DetectChar attribute="String" context="#pop" char="&quot;"/>
       </context>
-
       <context attribute="String" lineEndContext="#stay" name="Multiline String">
         <!--LineContinue attribute="String" context="#stay"/-->
         <HlCStringChar attribute="String Char" context="#stay"/>
         <DetectChar attribute="String" context="#pop" char="`"/>
       </context>
-
       <context attribute="Comment" lineEndContext="#pop" name="Comment 1">
         <!--LineContinue attribute="Comment" context="#stay"/-->
       </context>
-
       <context attribute="Comment" lineEndContext="#stay" name="Comment 2">
-        <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment"/>
+      <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment"/>
       </context>
     </contexts>
     <itemDatas>
       <itemData name="Normal Text"  defStyleNum="dsNormal" spellChecking="false"/>
       <itemData name="Keyword"      defStyleNum="dsKeyword" spellChecking="false"/>
-      <itemData name="Predeclared Identifier" defStyleNum="dsOthers" spellChecking="false"/>
-      <itemData name="Builtin Function" defStyleNum="dsFunction" spellChecking="false"/>
+      <itemData name="Predeclared Identifier" defStyleNum="dsPredeclared" spellChecking="false"/>
+      <itemData name="Builtin Function" defStyleNum="dsBuiltinFunc" spellChecking="false"/>
       <itemData name="Data Type"    defStyleNum="dsDataType" spellChecking="false"/>
       <itemData name="Numbers"      defStyleNum="dsDecVal" spellChecking="false"/>
       <itemData name="Decimal"      defStyleNum="dsDecVal" spellChecking="false"/>
@@ -145,9 +150,10 @@
       <itemData name="Float"        defStyleNum="dsFloat" spellChecking="false"/>
       <itemData name="Char"         defStyleNum="dsChar" spellChecking="false"/>
       <itemData name="String"       defStyleNum="dsString"/>
+      <itemData name="FuncDecl"     defStyleNum="dsFuncDecl"/>
       <itemData name="String Char"  defStyleNum="dsChar"/>
       <itemData name="Comment"      defStyleNum="dsComment"/>
-      <itemData name="Symbol"       defStyleNum="dsNormal" spellChecking="false"/>
+      <itemData name="Symbol"       defStyleNum="dsSymbol" spellChecking="false"/>
       <itemData name="Error"        defStyleNum="dsError" spellChecking="false"/>
     </itemDatas>
   </highlighting>

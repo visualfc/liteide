@@ -53,9 +53,6 @@ public slots:
 #ifndef QT_NO_PRINTER
     virtual void print(QPrinter *printer);
 #endif
-signals:
-    void linkClicked(const QUrl & url);
-    void linkHovered(const QUrl & url);
 protected:
     QTextBrowser *m_widget;
     QUrl          m_url;

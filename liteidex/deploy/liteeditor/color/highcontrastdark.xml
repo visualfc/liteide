@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Default">
+  <style name="Text" foreground="#FFFFFF" background="#000000"/>
+  <style name="Selection" foreground="#FFFF00" background="#800000"/>
+  <style name="Extra" foreground="#FFFFFF" background="#222222"/>
+  <style name="CurrentLine" background="#222222"/>
+  <style name="IndentLine" foreground="#64B1FF"/>
+  <style name="VisualWhitespace" foreground="#FFFFFF"/>
+  <style name="Keyword" foreground="#64B1FF" bold="true"/>
+  <style name="DataType" foreground="#FF00FF" /> 
+  <style name="Decimal" foreground="#64B1FF"/>
+  <style name="BaseN" foreground="#64B1FF"/>
+  <style name="Float" foreground="#64B1FF"/>
+  <style name="Char" foreground="#FFFF00"/>
+  <style name="String" foreground="#FFFF00"/>
+  <style name="Comment" foreground="#00FF00"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#FF8000"/>
+  <style name="RegionMarker" foreground="#FF0000"/>
+  <style name="Symbol" foreground="#FF0000"/>
+  <style name="BuiltinFunc" foreground="#FF8000"/>
+  <style name="Predeclared" foreground="#FF8000"/>
+  <style name="FuncDecl" foreground="#FF8000"/>
+</style-scheme>

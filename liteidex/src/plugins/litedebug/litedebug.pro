@@ -6,6 +6,7 @@ include(../../api/litedebugapi/litedebugapi.pri)
 include(../../api/litebuildapi/litebuildapi.pri)
 include (../../utils/fileutil/fileutil.pri)
 include (../../utils/textoutput/textoutput.pri)
+include (../../utils/colorstyle/colorstyle.pri)
 
 DEFINES += LITEDEBUG_LIBRARY
 

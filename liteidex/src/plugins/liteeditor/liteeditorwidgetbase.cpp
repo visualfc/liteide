@@ -86,9 +86,10 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
 {
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
+    m_indentLineForeground = QColor(Qt::darkCyan);
     m_extraForeground = QColor(Qt::darkCyan);
     m_extraBackground = m_extraArea->palette().color(QPalette::Background);
-    m_CurrentLineBackground = QColor(180,200,200,128);
+    m_currentLineBackground = QColor(180,200,200,128);
 
     setLayoutDirection(Qt::LeftToRight);
     viewport()->setMouseTracking(true);
@@ -96,6 +97,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_marksVisible = true;
     m_codeFoldingVisible = true;
     m_rightLineVisible = true;
+    m_eofVisible = false;
+    m_indentLineVisible = true;
     m_rightLineWidth = 80;
     m_lastSaveRevision = 0;
     m_extraAreaSelectionNumber = -1;
@@ -104,11 +107,15 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
-    setTabWidth(4);
+    setTabSize(4);
+
+    m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
+    m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(slotUpdateExtraAreaWidth()));
     connect(this, SIGNAL(modificationChanged(bool)), this, SLOT(slotModificationChanged(bool)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(slotCursorPositionChanged()));
+    //connect(this, SIGNAL(selectionChanged()),this,SLOT(updateSelection()));
     connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(slotUpdateRequest(QRect, int)));
     connect(this->document(),SIGNAL(contentsChange(int,int,int)),this,SLOT(editContentsChanged(int,int,int)));
 
@@ -132,11 +139,20 @@ void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
     }
 }
 
-void LiteEditorWidgetBase::setTabWidth(int n)
+void LiteEditorWidgetBase::setTabSize(int n)
 {
-    int charWidth = QFontMetrics(font()).averageCharWidth();
     m_nTabSize = n;
-    setTabStopWidth(charWidth * n);
+    updateTabWidth();
+}
+
+int LiteEditorWidgetBase::tabSize() const
+{
+    return m_nTabSize;
+}
+
+void LiteEditorWidgetBase::updateTabWidth()
+{
+    setTabStopWidth(QFontMetrics(font()).averageCharWidth() * m_nTabSize);
 }
 
 void LiteEditorWidgetBase::setTabUseSpace(bool b)
@@ -148,6 +164,9 @@ void LiteEditorWidgetBase::initLoadDocument()
 {
     m_lastSaveRevision = document()->revision();
     document()->setModified(false);
+    if (!document()->isEmpty()) {
+        this->moveCursor(QTextCursor::Start);
+    }
 }
 
 
@@ -214,16 +233,20 @@ void LiteEditorWidgetBase::gotoMatchBrace()
 void LiteEditorWidgetBase::highlightCurrentLine()
 {    
     QList<QTextEdit::ExtraSelection> extraSelections;
-    if (!isReadOnly()) {
-        QTextEdit::ExtraSelection selection;
 
-        selection.format.setBackground(m_CurrentLineBackground);
-        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        selection.cursor = textCursor();
-
-        extraSelections.append(selection);
-    }
     QTextCursor cur = textCursor();
+    if (!cur.block().isVisible()) {
+        unfold();
+    }
+
+    if (!isReadOnly()) {
+        QTextEdit::ExtraSelection full;
+        full.format.setBackground(m_currentLineBackground);
+        full.format.setProperty(QTextFormat::FullWidthSelection, true);
+        full.cursor = this->textCursor();
+        extraSelections.append(full);
+    }
+
     TextEditor::TextBlockUserData::MatchType type;
     int pos1 = -1;
     int pos2 = -1;
@@ -234,12 +257,14 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
+            selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
 
             cur.setPosition(pos2);
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
+            selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
         } else if (type == TextEditor::TextBlockUserData::Mismatch) {
             QTextEdit::ExtraSelection selection;
@@ -248,6 +273,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
             selection.format.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+            selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             selection.format.setForeground(Qt::red);
             extraSelections.append(selection);
         }
@@ -282,10 +308,21 @@ QWidget* LiteEditorWidgetBase::extraArea()
 void LiteEditorWidgetBase::setCurrentLineColor(const QColor &background)
 {
     if (background.isValid()) {
-        m_CurrentLineBackground = background;
+        m_currentLineBackground = background;
     } else {
-        m_CurrentLineBackground = QColor(180,200,200,128);
+        m_currentLineBackground = QColor(180,200,200,128);
     }
+    m_currentLineBackground.setAlpha(128);
+}
+
+void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)
+{
+    if (foreground.isValid()) {
+        m_indentLineForeground = foreground;
+    } else {
+        m_indentLineForeground = QColor(Qt::darkCyan);
+    }
+    m_indentLineForeground.setAlpha(128);
 }
 
 void LiteEditorWidgetBase::setExtraColor(const QColor &foreground,const QColor &background)
@@ -394,9 +431,9 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
     painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), INT_MAX)),
                      m_extraBackground);
 
-    painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
-    painter.drawLine(extraAreaWidth - 3, e->rect().top(), extraAreaWidth - 3, e->rect().bottom());
-    painter.drawLine(e->rect().width()-1, e->rect().top(), e->rect().width()-1, e->rect().bottom());
+    //painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+   // painter.drawLine(extraAreaWidth - 3, e->rect().top(), extraAreaWidth - 3, e->rect().bottom());
+    //painter.drawLine(e->rect().width()-1, e->rect().top(), e->rect().width()-1, e->rect().bottom());
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
@@ -735,6 +772,26 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     }
     */
     highlightCurrentLine();
+    updateSelection();
+}
+
+void LiteEditorWidgetBase::updateSelection()
+{
+    QString pattern;
+    QTextCursor cur = this->textCursor();
+
+    if (cur.hasSelection()) {
+        QString text = cur.selectedText();
+        cur.setPosition(cur.selectionStart());
+        cur.select(QTextCursor::WordUnderCursor);
+        if (text == cur.selectedText() && text.begin()->isLetterOrNumber()) {
+            pattern = text;
+        }
+    }
+    if (m_selectionExpression.pattern() != pattern) {
+        m_selectionExpression.setPattern(pattern);
+        viewport()->update();
+    }
 }
 
 void LiteEditorWidgetBase::slotUpdateBlockNotify(const QTextBlock &)
@@ -776,9 +833,6 @@ void LiteEditorWidgetBase::gotoLine(int line, int column, bool center)
             cursor.setPosition(pos);
         }
         setTextCursor(cursor);
-        if (!cursor.block().isVisible()) {
-            unfold();
-        }
         if (center) {
             centerCursor();
         } else {
@@ -819,6 +873,37 @@ void LiteEditorWidgetBase::handleHomeKey(bool anchor)
     setTextCursor(cursor);
 }
 
+void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
+{
+    if (!opt) {
+        m_findExpression.setPattern("");
+    } else {
+        m_findExpression.setPattern(opt->findText);
+        if (opt->useRegexp) {
+            m_findExpression.setPatternSyntax(QRegExp::RegExp);
+        } else {
+            m_findExpression.setPatternSyntax(QRegExp::FixedString);
+        }
+        m_findFlags = 0;
+        if (opt->backWard) {
+            m_findFlags |= QTextDocument::FindBackward;
+        }
+
+        if (opt->matchCase) {
+            m_findFlags |= QTextDocument::FindCaseSensitively;
+            m_findExpression.setCaseSensitivity(Qt::CaseSensitive);
+        } else {
+            m_findExpression.setCaseSensitivity(Qt::CaseInsensitive);
+        }
+        if (opt->matchWord) {
+            m_findFlags |= QTextDocument::FindWholeWords;
+        }
+        if (!m_findExpression.isValid()) {
+            m_findExpression.setPattern("");
+        }
+    }
+    viewport()->update();
+}
 
 void LiteEditorWidgetBase::gotoLineStart()
 {
@@ -843,30 +928,29 @@ void LiteEditorWidgetBase::gotoLineEndWithSelection()
 void LiteEditorWidgetBase::duplicate()
 {
     QTextCursor cursor = textCursor();
-    QTextCursor move = cursor;
-    move.beginEditBlock();
+    cursor.beginEditBlock();
     if (cursor.hasSelection()) {
-        QString text = move.selectedText();
-        int pos = move.selectionEnd();
-        move.setPosition(pos);
-        move.insertText(text);
-        int end = move.position();
-        move.setPosition(pos);
-        move.setPosition(end,QTextCursor::KeepAnchor);
+        QString text = cursor.selectedText();
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        cursor.setPosition(end);
+        cursor.insertText(text);
+        cursor.setPosition(start,QTextCursor::MoveAnchor);
+        cursor.setPosition(end,QTextCursor::KeepAnchor);
     } else {
-        int pos = move.positionInBlock();
-        move.movePosition(QTextCursor::StartOfBlock);
-        move.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        QString text = move.selectedText();
-        move.movePosition(QTextCursor::EndOfBlock);
-        move.insertBlock();
-        int start = move.position();
-        move.insertText(text);
-        move.setPosition(start);
-        move.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
+        int pos = cursor.positionInBlock();
+        cursor.movePosition(QTextCursor::StartOfBlock);
+        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+        QString text = cursor.selectedText();
+        cursor.movePosition(QTextCursor::EndOfBlock);
+        cursor.insertBlock();
+        int start = cursor.position();
+        cursor.insertText(text);
+        cursor.setPosition(start);
+        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
     }
-    move.endEditBlock();
-    setTextCursor(move);
+    cursor.endEditBlock();
+    setTextCursor(cursor);
 }
 
 // shift+del
@@ -1269,6 +1353,67 @@ void LiteEditorWidgetBase::hideToolTip()
     QToolTip::hideText();
 }
 
+void LiteEditorWidgetBase::cleanWhitespace()
+{
+    QTextCursor cursor = this->textCursor();
+    bool hasSelection = cursor.hasSelection();
+    QTextCursor copyCursor = cursor;
+    copyCursor.setVisualNavigation(false);
+    copyCursor.beginEditBlock();
+    cleanWhitespace(copyCursor, true);
+    if (!hasSelection)
+        ensureFinalNewLine(copyCursor);
+    copyCursor.endEditBlock();
+}
+
+static int trailingWhitespaces(const QString &text)
+{
+    int i = 0;
+    while (i < text.size()) {
+        if (!text.at(text.size()-1-i).isSpace())
+            return i;
+        ++i;
+    }
+    return i;
+}
+
+void LiteEditorWidgetBase::cleanWhitespace(QTextCursor &cursor, bool inEntireDocument)
+{
+    QTextDocument *document = this->document();
+    TextEditor::BaseTextDocumentLayout *documentLayout = qobject_cast<TextEditor::BaseTextDocumentLayout*>(document->documentLayout());
+    Q_ASSERT(cursor.visualNavigation() == false);
+
+    QTextBlock block = document->findBlock(cursor.selectionStart());
+    QTextBlock end;
+    if (cursor.hasSelection())
+        end = document->findBlock(cursor.selectionEnd()-1).next();
+
+    while (block.isValid() && block != end) {
+        if (inEntireDocument || block.revision() != documentLayout->lastSaveRevision) {
+            QString blockText = block.text();
+            if (int trailing = trailingWhitespaces(blockText)) {
+                cursor.setPosition(block.position() + block.length() - 1);
+                cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, trailing);
+                cursor.removeSelectedText();
+            }
+        }
+
+        block = block.next();
+    }
+}
+
+void LiteEditorWidgetBase::ensureFinalNewLine(QTextCursor &cursor)
+{
+    cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+    bool emptyFile = !cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+
+    if (!emptyFile && cursor.selectedText().at(0) != QChar::ParagraphSeparator)
+    {
+        cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+        cursor.insertText(QLatin1String("\n"));
+    }
+}
+
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)
 {
     QTextCursor cursor = this->textCursor();
@@ -1469,13 +1614,55 @@ static void fillBackground(QPainter *p, const QRectF &rect, QBrush brush, QRectF
     p->restore();
 }
 
+//copy of QTextDocument
+static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int offset,
+                        QTextDocument::FindFlags options, QTextCursor &cursor)
+{
+    const QRegExp expr(expression);
+    QString text = block.text();
+    text.replace(QChar::Nbsp, QLatin1Char(' '));
+
+    int idx = -1;
+    while (offset >=0 && offset <= text.length()) {
+        idx = (options & QTextDocument::FindBackward) ?
+               expr.lastIndexIn(text, offset) : expr.indexIn(text, offset);
+
+        if (idx == -1 || expr.matchedLength() == 0)
+            return false;
+
+        if (options & QTextDocument::FindWholeWords) {
+            const int start = idx;
+            const int end = start + expr.matchedLength();
+            if ((start != 0 && text.at(start - 1).isLetterOrNumber())
+                || (end != text.length() && text.at(end).isLetterOrNumber())) {
+                //if this is not a whole word, continue the search in the string
+                offset = (options & QTextDocument::FindBackward) ? idx-1 : end+1;
+                idx = -1;
+                continue;
+            }
+        }
+        //we have a hit, return the cursor for that.
+        break;
+    }
+    if (idx == -1)
+        return false;
+    cursor = QTextCursor(block.docHandle(), block.position() + idx);
+    cursor.setPosition(cursor.position() + expr.matchedLength(), QTextCursor::KeepAnchor);
+    return true;
+}
 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {  
-    //QPlainTextEdit::paintEvent(e);
+//    QPlainTextEdit::paintEvent(e);
+
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
+
+
+    const QFontMetrics fm(this->font());
+    int averageCharWidth = fm.averageCharWidth();
+    int charOffsetX = this->document()->documentMargin()- this->horizontalScrollBar()->value();
 
     bool hasSelection = cursor.hasSelection();
     int selectionStart = cursor.selectionStart();
@@ -1483,6 +1670,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     QTextBlock block = firstVisibleBlock();
     QPointF offset = contentOffset();
+    qreal offsetX = offset.x();
 
     //QPlainTextEdit::paintEvent
     QRect er = e->rect();
@@ -1543,8 +1731,12 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.start = selStart;
                     o.length = selEnd - selStart;
                     o.format = range.format;
+                    if (!o.format.hasProperty(LiteEditorWidgetBase::MatchBrace)) {
+                        o.format.setForeground(palette().highlightedText());
+                        o.format.setBackground(palette().highlight());
+                    }
                     selections.append(o);
-                } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
+                } /*else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
                            && block.contains(range.cursor.position())) {
                     // for full width selections we don't require an actual selection, just
                     // a position to specify the line. that's more convenience in usage.
@@ -1556,7 +1748,53 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                         ++o.length; // include newline
                     o.format = range.format;
                     selections.append(o);
+                }*/
+            }
+
+            if (block == textCursor().block()) {
+                QRectF rr = layout->lineForTextPosition(textCursor().positionInBlock()).rect();
+                rr.moveTop(rr.top() + r.top());
+                rr.setLeft(0);
+                rr.setRight(viewportRect.width() - offset.x());
+                painter.fillRect(rr, m_currentLineBackground);
+            }
+
+            if (!m_findExpression.isEmpty()) {
+                painter.save();
+                QColor color(this->palette().color(QPalette::Text));
+                color.setAlpha(128);
+                painter.setPen(color);
+                int pos = 0;
+                while (true) {
+                    QTextCursor cur;
+                    if (!findInBlock(block,m_findExpression,pos,m_findFlags,cur)) {
+                        break;
+                    }
+                    pos = cur.selectionEnd()-block.position();
+                    QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
+                    qreal left = l.cursorToX(cur.selectionStart()-blpos);
+                    qreal right = l.cursorToX(cur.selectionEnd()-blpos);
+                    painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
                 }
+                painter.restore();
+            } else if (!m_selectionExpression.isEmpty()) {
+                painter.save();
+                QColor color(this->palette().color(QPalette::Text));
+                color.setAlpha(128);
+                painter.setPen(color);
+                int pos = 0;
+                while (true) {
+                    QTextCursor cur;
+                    if (!findInBlock(block,m_selectionExpression,pos,QTextDocument::FindWholeWords,cur)) {
+                        break;
+                    }
+                    pos = cur.selectionEnd()-block.position();
+                    QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
+                    qreal left = l.cursorToX(cur.selectionStart()-blpos);
+                    qreal right = l.cursorToX(cur.selectionEnd()-blpos);
+                    painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                }
+                painter.restore();
             }
 
             bool drawCursor = (editable
@@ -1573,7 +1811,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.start = context.cursorPosition - blpos;
                     o.length = 1;
                     o.format.setForeground(palette().base());
-                    o.format.setBackground(palette().text());
+                    o.format.setBackground(palette().text());                    
                     selections.append(o);
                 }
             }
@@ -1593,63 +1831,60 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
         }
 
-        //draw tabs
-        painter.save();
-        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
-        QString text = block.text();
+        //draw indent line
+        if (m_indentLineVisible) {
+            QString text = block.text();
+            int pos = text.length();
+            for (int i = 0; i < pos; i++) {
+                if (!text.at(i).isSpace()) {
+                    pos = i;
+                    break;
+                }
+            }
+            QTextLine line = layout->lineForTextPosition(pos);
+            int kt = r.top()+1;
+            int kb = r.top()+line.height()-1;
+            int k = line.cursorToX(pos)/averageCharWidth;
 
-        int k = 0;
-        for (int i = 0; i < text.length(); i++) {
-            const QChar c = text.at(i);
-            if (!c.isSpace()) {
-                break;
+            painter.save();
+            painter.setPen(QPen(m_indentLineForeground,1,Qt::DotLine));
+            for (int i = 0; i < k; i+=m_nTabSize) {
+                int xoff = charOffsetX+averageCharWidth*i;
+                painter.drawLine(xoff,kt,xoff,kb);
             }
-            if (k%4 == 0) {
-                QTextLine line = layout->lineForTextPosition(i);
-                qreal l = line.cursorToX(i);
-                painter.drawLine(offset.x()+l,r.top(),offset.x()+l,r.bottom());
-            }
-            if (c == '\t') {
-                k += 4;
-            } else {
-                k += 1;
-            }
+            painter.restore();
         }
-        painter.restore();
-
 
         QTextBlock nextBlock = block.next();
-        //daaw wrap
-        if (true) {
-            int lineCount = layout->lineCount();
-            if (lineCount >= 2 || !nextBlock.isValid()) {
-                painter.save();
-                painter.setPen(Qt::lightGray);
-                for (int i = 0; i < lineCount-1; ++i) { // paint line wrap indicator
-                    QTextLine line = layout->lineAt(i);
-                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
-                    QChar visualArrow((ushort)0x21b5);
-                    painter.drawText(QPointF(lineRect.right(),
-                                             lineRect.top() + line.ascent()),
-                                     visualArrow);
-                }
-                if (!nextBlock.isValid()) { // paint EOF symbol
-                    QTextLine line = layout->lineAt(lineCount-1);
-                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
-                    int h = 4;
-                    lineRect.adjust(0, 0, -1, -1);
-                    QPainterPath path;
-                    QPointF pos(lineRect.topRight() + QPointF(h+4, line.ascent()));
-                    path.moveTo(pos);
-                    path.lineTo(pos + QPointF(-h, -h));
-                    path.lineTo(pos + QPointF(0, -2*h));
-                    path.lineTo(pos + QPointF(h, -h));
-                    path.closeSubpath();
-                    painter.setBrush(painter.pen().color());
-                    painter.drawPath(path);
-                }
-                painter.restore();
+        //draw wrap
+        int lineCount = layout->lineCount();
+        if (lineCount >= 2 || !nextBlock.isValid()) {
+            painter.save();
+            painter.setPen(Qt::lightGray);
+            for (int i = 0; i < lineCount-1; ++i) { // paint line wrap indicator
+                QTextLine line = layout->lineAt(i);
+                QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                QChar visualArrow((ushort)0x21b5);
+                painter.drawText(QPointF(lineRect.right(),
+                                         lineRect.top() + line.ascent()),
+                                 visualArrow);
             }
+            if (m_eofVisible && !nextBlock.isValid()) { // paint EOF symbol
+                QTextLine line = layout->lineAt(lineCount-1);
+                QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                int h = 4;
+                lineRect.adjust(0, 0, -1, -1);
+                QPainterPath path;
+                QPointF pos(lineRect.topRight() + QPointF(h+4, line.ascent()));
+                path.moveTo(pos);
+                path.lineTo(pos + QPointF(-h, -h));
+                path.lineTo(pos + QPointF(0, -2*h));
+                path.lineTo(pos + QPointF(h, -h));
+                path.closeSubpath();
+                painter.setBrush(painter.pen().color());
+                painter.drawPath(path);
+            }
+            painter.restore();
         }
 
         //draw fold text ...
@@ -1734,11 +1969,9 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     }
 
     if (m_rightLineVisible) {
-        const QFontMetrics fm(this->font());
-        int xoff = this->document()->documentMargin()+fm.averageCharWidth()*m_rightLineWidth;
-        xoff -= this->horizontalScrollBar()->value();
+        int xoff = charOffsetX+averageCharWidth*m_rightLineWidth;
         painter.save();
-        painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
+        painter.setPen(QPen(m_indentLineForeground,1,Qt::DotLine));
         painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }

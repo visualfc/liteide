@@ -1,11 +1,9 @@
 body {
 	margin: 0;
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 16px;
 }
 pre, code {
 	font-family: Menlo, monospace;
-	font-size: 14px;
 }
 pre {
 	line-height: 18px;
@@ -41,25 +39,11 @@ h1, h2, h3, h4, .rootHeading {
 	color: #375EAB;
 	font-weight: bold;
 }
-h1 {
-	font-size: 24px;
-}
 h2 {
-	font-size: 20px;
 	background: #E0EBF5;
 	padding: 2px 5px;
 }
-h3 {
-	font-size: 18px;
-}
-h3, h4 {
-	margin: 20px 5px;
-}
-h4 {
-	font-size: 16px;
-}
 .rootHeading {
-	font-size: 20px;
 	margin: 0;
 }
 
@@ -72,9 +56,6 @@ dl {
 }
 dd {
 	margin: 2px 20px;
-}
-dl, dd {
-	font-size: 14px;
 }
 #nav table td {
 	vertical-align: top;
@@ -92,7 +73,6 @@ table.dir td {
 	float: left;
 	margin: 0 0 10px 0;
 	padding: 16px 0;
-	font-size: 26px;
 	font-weight: normal;
 }
 #heading a {
@@ -124,7 +104,6 @@ body {
 
 #copyright {
 	color: #666;
-	font-size: 14px;
 	margin: 40px 0;
 }
 
@@ -135,8 +114,6 @@ body {
 	padding: 10px;
 
 	text-decoration: none;
-	font-size: 16px;
-
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -196,9 +173,6 @@ body {
 #about {
 	margin: 0;
 }
-#about {
-	font-size: 20px;
-}
 
 #about {
 	height: 96px;
@@ -221,10 +195,8 @@ body {
 }
 #start .big {
 	font-weight: bold;
-	font-size: 20px;
 }
 #start .desc {
-	font-size: 14px;
 	font-weight: normal;
 	margin-top: 5px;
 }
@@ -233,7 +205,6 @@ body {
 	padding: 0;
 	margin: 0;
 	font-family: Menlo, monospace;
-	font-size: 14px;
 }
 #learn .input {
 	padding: 10px;
@@ -313,11 +284,9 @@ body {
 	color: #222;
 	text-decoration: none;
 	display: block;
-	font-size: 20px;
 }
 #blog .when {
 	color: #666;
-	font-size: 14px;
 }
 #blog .read {
 	text-align: right;

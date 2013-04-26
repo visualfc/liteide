@@ -62,6 +62,7 @@ bool ColorStyleScheme::load(const QString &fileName)
     if (!file.open(QIODevice::ReadOnly|QIODevice::Text)) {
         return false;
     }
+    clear();
     return load(&file,fileName);
 }
 

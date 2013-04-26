@@ -67,9 +67,9 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_debugMimeTypes << "text/x-gosrc" << "text/x-csrc" << "text/x-chdr" << "text/x-c++src";
 
-    m_output = new TextOutput;
+    m_output = new TextOutput(m_liteApp);
     m_output->setReadOnly(true);
-    m_output->setMaxLine(1024);
+    m_output->setMaxLine(2048);
 
     QAction *clearAct = new QAction(tr("Clear"),this);
     clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
@@ -85,40 +85,42 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_dbgWidget->widget());
     m_widget->setLayout(layout);
 
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Debug");
+
     m_startDebugExternal = new QAction(tr("Start Debugging External Application..."),this);
-    m_liteApp->actionManager()->regAction(m_startDebugExternal,"LiteDebug.StartDebugExternal","");
+    actionContext->regAction(m_startDebugExternal,"StartDebugExternal","");
 
 
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
-    m_liteApp->actionManager()->regAction(m_startDebugAct,"LiteDebug.StartDebug","F5");
+    actionContext->regAction(m_startDebugAct,"StartDebug","F5");
 
 
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
-    m_liteApp->actionManager()->regAction(m_continueAct,"LiteDebug.Continue","F5");
+    actionContext->regAction(m_continueAct,"Continue","F5");
 
     m_stopDebugAct = new QAction(QIcon("icon:litedebug/images/stopdebug.png"),tr("Stop"),this);
-    m_liteApp->actionManager()->regAction(m_stopDebugAct,"LiteDebug.StopDebug","Shift+F5");
+    actionContext->regAction(m_stopDebugAct,"StopDebug","Shift+F5");
 
     m_showLineAct = new QAction(QIcon("icon:litedebug/images/showline.png"),tr("Show Current Line"),this);
-    m_liteApp->actionManager()->regAction(m_showLineAct,"LiteDebug.ShowLine","");
+    actionContext->regAction(m_showLineAct,"ShowLine","");
 
     m_stepIntoAct = new QAction(QIcon("icon:litedebug/images/stepinto.png"),tr("Step Into"),this);
-    m_liteApp->actionManager()->regAction(m_stepIntoAct,"LiteDebug.StepInfo","F11");
+    actionContext->regAction(m_stepIntoAct,"StepInfo","F11");
 
     m_stepOverAct = new QAction(QIcon("icon:litedebug/images/stepover.png"),tr("Step Over"),this);
-    m_liteApp->actionManager()->regAction(m_stepOverAct,"LiteDebug.StepOver","F10");
+    actionContext->regAction(m_stepOverAct,"LiteDebug.StepOver","F10");
 
     m_stepOutAct = new QAction(QIcon("icon:litedebug/images/stepout.png"),tr("Step Out"),this);
-    m_liteApp->actionManager()->regAction(m_stepOutAct,"LiteDebug.StepOut","Shift+F11");
+    actionContext->regAction(m_stepOutAct,"StepOut","Shift+F11");
 
     m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("Run to Line"),this);
-    m_liteApp->actionManager()->regAction(m_runToLineAct,"LiteDebug.RunToLine","Ctrl+F10");
+    actionContext->regAction(m_runToLineAct,"RunToLine","Ctrl+F10");
 
     m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove Breakpoint"),this);
-    m_liteApp->actionManager()->regAction(m_switchBreakAct,"LiteDebug.Breakpoint","F9");
+    actionContext->regAction(m_switchBreakAct,"Breakpoint","F9");
 
     m_removeAllBreakAct = new QAction(tr("Remove All Breakpoints"),this);
-    m_liteApp->actionManager()->regAction(m_removeAllBreakAct,"LiteDebug.RemoveAllBreakPoints","");
+    actionContext->regAction(m_removeAllBreakAct,"RemoveAllBreakPoints","");
 
 //    m_toolBar->addSeparator();
 //    m_toolBar->addAction(m_startDebugAct);
@@ -387,7 +389,7 @@ void LiteDebug::debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log)
         m_dbgWidget->appendLog(log);
         break;
     case LiteApi::DebugRuntimeLog:
-        m_output->appendTag1(QString("%1\n").arg(log));
+        m_output->appendTag(QString("%1\n").arg(log));
         break;
     case LiteApi::DebugErrorLog:
         m_output->append(QString("%1\n").arg(log));

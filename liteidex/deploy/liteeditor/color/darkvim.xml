@@ -3,17 +3,26 @@
   <!--
   Based on the default vim theme for a dark background, Linux console colors.
   -->
-  <style name="Extra" foreground="#008B8B" background="#000000"/>
-  <style name="DataType" foreground="#55ff55" /> 
-  <style name="VisualWhitespace" foreground="#c0c0c0"/>
-  <style name="Comment" foreground="#55ffff"/>
-  <style name="Keyword" foreground="#ffff55"/>
-  <style name="Function" foreground="#ffff55"/>
-  <style name="Number" foreground="#ff55ff"/>
-  <style name="Selection" foreground="#000000" background="#aaaaaa"/>
-  <style name="String" foreground="#ff55ff"/>
   <style name="Text" foreground="#bbbbbb" background="#000000"/>
+  <style name="Extra" foreground="#008B8B" background="#000000"/>
   <style name="Selection" foreground="#000000" background="#bbbbbb"/>
-  <style name="InactiveSelection" foreground="#000000" background="#bbbbbb"/>
   <style name="CurrentLine" background="#212628"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#ffff55"/>
+  <style name="DataType" foreground="#55ff55" /> 
+  <style name="Decimal" foreground="#800080"/>
+  <style name="BaseN" foreground="#ff55ff"/>
+  <style name="Float" foreground="#ff55ff"/>
+  <style name="Char" foreground="#ff55ff"/>
+  <style name="String" foreground="#ff55ff"/>
+  <style name="Comment" foreground="#55ffff"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#ffff55"/>
+  <style name="RegionMarker" foreground="#bbbbbb"/>
+  <style name="Symbol" foreground="#bbbbbb"/>  
+  <style name="BuiltinFunc" foreground="#ffff55"/>
+  <style name="Predeclared" foreground="#ffff55"/>
+  <style name="FuncDecl" foreground="#bbbbbb"/>
 </style-scheme>

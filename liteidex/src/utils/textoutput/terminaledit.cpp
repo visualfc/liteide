@@ -45,49 +45,57 @@
 //lite_memory_check_end
 
 TerminalEdit::TerminalEdit(QWidget *parent) :
-    QPlainTextEdit(parent)
+    QPlainTextEdit(parent), m_endPostion(0)
 {
-    //setReadOnly(true);
-    //m_lineEdit = new QLineEdit(this);
-    this->setLineWrapMode(QPlainTextEdit::NoWrap);
-    this->setCursorWidth(6);
-    m_lastPos = 0;
-    m_leftPos = 0;
-    m_bPress = false;
-    m_selectCursor = this->textCursor();
+    this->setCursorWidth(4);
+    this->setAcceptDrops(false);
 
-    m_normalFmt.setBackground(Qt::white);
-    m_selectFmt.setBackground(Qt::darkCyan);
-
-    this->mergeCurrentCharFormat(m_normalFmt);
+    m_contextMenu = new QMenu(this);
+    m_contextRoMenu = new QMenu(this);
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_menu = new QMenu(this);
-    m_selCopyAct = new QAction(tr("Copy"),this);
-    m_selCopyAct->setShortcut(QKeySequence::Copy);
-    m_pasteAct = new QAction(tr("Paste"),this);
-    m_pasteAct->setShortcut(QKeySequence::Paste);
-    m_selAllAct = new QAction(tr("Select All"),this);
-    m_selAllAct->setShortcut(QKeySequence::SelectAll);
-    m_menu->addAction(m_selCopyAct);
-    m_menu->addAction(m_pasteAct);
-    m_menu->addSeparator();
-    m_menu->addAction(m_selAllAct);
+
+    m_cut = new QAction(tr("Cut"),this);
+    m_cut->setShortcut(QKeySequence::Cut);
+
+    m_copy = new QAction(tr("Copy"),this);
+    m_copy->setShortcut(QKeySequence::Copy);
+
+    m_paste = new QAction(tr("Paste"),this);
+    m_paste->setShortcut(QKeySequence::Paste);
+
+    m_selectAll = new QAction(tr("Select All"),this);
+    m_selectAll->setShortcut(QKeySequence::SelectAll);
+
+    m_clear = new QAction(tr("Clear All"),this);
+
+    m_contextMenu->addAction(m_cut);
+    m_contextMenu->addAction(m_copy);
+    m_contextMenu->addAction(m_paste);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_selectAll);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_clear);
+
+    m_contextRoMenu->addAction(m_copy);
+    m_contextRoMenu->addSeparator();
+    m_contextRoMenu->addAction(m_selectAll);
+    m_contextRoMenu->addSeparator();
+    m_contextRoMenu->addAction(m_clear);
 
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
-    connect(m_selCopyAct,SIGNAL(triggered()),this,SLOT(selectCopy()));
-    connect(m_pasteAct,SIGNAL(triggered()),this,SLOT(paste()));
-    connect(m_selAllAct,SIGNAL(triggered()),this,SLOT(selectAll()));
-}
-
-void TerminalEdit::clearAll()
-{
-    m_lastPos = 0;
-    this->clear();
+    connect(this,SIGNAL(cursorPositionChanged()),this,SLOT(cursorPositionChanged()));
+    connect(this,SIGNAL(selectionChanged()),this,SLOT(cursorPositionChanged()));
+    connect(m_cut,SIGNAL(triggered()),this,SLOT(cut()));
+    connect(m_copy,SIGNAL(triggered()),this,SLOT(copy()));
+    connect(m_paste,SIGNAL(triggered()),this,SLOT(paste()));
+    connect(m_selectAll,SIGNAL(triggered()),this,SLOT(selectAll()));
+    connect(m_clear,SIGNAL(triggered()),this,SLOT(clear()));
 }
 
 void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
 {
+    setUndoRedoEnabled(false);
     QTextCursor cur = this->textCursor();
     cur.movePosition(QTextCursor::End);
     if (fmt) {
@@ -95,138 +103,161 @@ void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
     }
     cur.insertText(text);
     this->setTextCursor(cur);
-    m_lastPos = cur.position();
+    setUndoRedoEnabled(true);
+    m_endPostion = cur.position();
 }
 
-void TerminalEdit::keyPressEvent(QKeyEvent *e)
+void TerminalEdit::clear()
 {
-    if (e->key() == Qt::Key_C && e->modifiers() == Qt::CTRL) {
-        this->selectCopy();
-        return;
+    m_endPostion = 0;
+    QPlainTextEdit::clear();
+}
+
+void TerminalEdit::keyPressEvent(QKeyEvent *ke)
+{
+    QTextCursor cur = this->textCursor();
+    int pos = cur.position();
+    int end = cur.position();
+
+    if (cur.hasSelection()) {
+        pos = cur.selectionStart();
+        end = cur.selectionEnd();
     }
-    if (e->key() == Qt::Key_V && e->modifiers() == Qt::CTRL) {
-        this->paste();
-        return;
-    }
-    if (e->key() == Qt::Key_A && e->modifiers() == Qt::CTRL) {
-        this->selectAll();
+
+    bool bReadOnly = pos < m_endPostion;
+
+    if (bReadOnly && ( ke == QKeySequence::Paste || ke == QKeySequence::Cut ||
+                       ke == QKeySequence::DeleteEndOfWord ||
+                       ke == QKeySequence::DeleteStartOfWord)) {
         return;
     }
 
-    if (e->key() == Qt::Key_Up || e->key() == Qt::Key_Down ||
-            e->key() == Qt::Key_PageDown ||
-            e->key() == Qt::Key_PageUp) {
-        return;
-    }
-    if (( e->key() == Qt::Key_Backspace ||
-            e->key() == Qt::Key_Left )
-        && this->textCursor().position() <= m_lastPos) {
-        return;
-    }
-    if (e->key() == Qt::Key_Home) {
-        QTextCursor cur = this->textCursor();
-        cur.setPosition(m_lastPos);
-        this->setTextCursor(cur);
+    if (ke == QKeySequence::DeleteStartOfWord) {
+        if (!cur.hasSelection()) {
+            cur.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
+            if (cur.selectionStart() < m_endPostion) {
+                cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_endPostion-cur.selectionStart());
+            }
+        }
+        cur.removeSelectedText();
         return;
     }
 
-    if (e->modifiers() != Qt::NoModifier) {
-        //return;
-    }
 
-    if (e->key() == Qt::Key_Enter ||
-            e->key() == Qt::Key_Return) {
-        QTextCursor cur = this->textCursor();
-        int pos = m_lastPos;
-        m_lastPos = cur.position();
-        cur.setPosition(pos,QTextCursor::KeepAnchor);
-        QString text = cur.selectedText();
+    if (ke->modifiers() == Qt::NoModifier
+            || ke->modifiers() == Qt::ShiftModifier
+            || ke->modifiers() == Qt::KeypadModifier) {
+        if (ke->key() < Qt::Key_Escape) {
+            if (bReadOnly) {
+                return;
+            }
+        } else {
+            if (ke->key() == Qt::Key_Backspace) {
+                if (cur.hasSelection()) {
+                    if (bReadOnly) {
+                        return;
+                    }
+                } else if (pos <= m_endPostion) {
+                    return;
+                }
+            } else if (bReadOnly && (
+                           ke->key() == Qt::Key_Delete ||
+                           ke->key() == Qt::Key_Tab ||
+                           ke->key() == Qt::Key_Backtab ||
+                           ke->key() == Qt::Key_Return ||
+                           ke->key() == Qt::Key_Enter)) {
+                return;
+            }
+            if (ke->key() == Qt::Key_Return ||
+                    ke->key() == Qt::Key_Enter) {
+                QPlainTextEdit::keyPressEvent(ke);
+                cur.setPosition(end,QTextCursor::MoveAnchor);
+                cur.setPosition(m_endPostion,QTextCursor::KeepAnchor);
 #ifdef Q_OS_WIN
-        text.append("\r\n");
+                emit enterText(cur.selectedText()+"\r\n");
 #else
-        text.append("\n");
+                emit enterText(cur.selectedText()+"\n");
 #endif
-        emit enterText(text);
+                return;
+            }
+        }
     }
-
-    QPlainTextEdit::keyPressEvent(e);
+    QPlainTextEdit::keyPressEvent(ke);
 }
 
-void TerminalEdit::keyReleaseEvent(QKeyEvent *e)
+void TerminalEdit::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    QPlainTextEdit::keyReleaseEvent(e);
+    QPlainTextEdit::mouseDoubleClickEvent(e);
+    QTextCursor cur = cursorForPosition(e->pos());
+    emit dbclickEvent(cur);
 }
 
 void TerminalEdit::mousePressEvent(QMouseEvent *e)
 {
-    if (e->button() == Qt::LeftButton) {
-        m_bPress = true;
-        m_leftPos = cursorForPosition(e->pos()).position();
-        if (m_selectCursor.hasSelection()) {
-            m_selectCursor.mergeCharFormat(m_normalFmt);
-        }
-        if (m_leftPos >= m_lastPos) {
-            QTextCursor cur = this->textCursor();
-            cur.setPosition(m_leftPos);
+    QPlainTextEdit::mousePressEvent(e);
+    if (!this->isReadOnly() && m_bFocusOut) {
+        m_bFocusOut = false;
+        QTextCursor cur = this->textCursor();
+        if (!cur.hasSelection()) {
+            cur.movePosition(QTextCursor::End);
             this->setTextCursor(cur);
         }
     }
 }
 
-void TerminalEdit::mouseMoveEvent(QMouseEvent *e)
+void TerminalEdit::focusOutEvent(QFocusEvent *e)
 {
-    if (m_bPress) {
-        int pos = cursorForPosition(e->pos()).position();
-        if (pos > m_leftPos) {
-            if (m_selectCursor.hasSelection()) {
-                m_selectCursor.mergeCharFormat(m_normalFmt);
-            }
-            m_selectCursor.setPosition(m_leftPos);
-            m_selectCursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,pos-m_leftPos);
-            m_selectCursor.mergeCharFormat(m_selectFmt);
+    QPlainTextEdit::focusOutEvent(e);
+    m_bFocusOut = true;
+}
+
+void TerminalEdit::focusInEvent(QFocusEvent *e)
+{
+    QPlainTextEdit::focusInEvent(e);
+    if (!this->isReadOnly()) {
+        QTextCursor cur = this->textCursor();
+        if (!cur.hasSelection()) {
+            cur.movePosition(QTextCursor::End);
+            this->setTextCursor(cur);
         }
     }
 }
 
-void TerminalEdit::mouseReleaseEvent(QMouseEvent *e)
+void TerminalEdit::contextMenuRequested(const QPoint &pt)
 {
-    m_bPress = false;
-}
-
-void TerminalEdit::mouseDoubleClickEvent(QMouseEvent *e)
-{
-    if (m_selectCursor.hasSelection()) {
-        m_selectCursor.mergeCharFormat(m_normalFmt);
-    }
-    m_selectCursor = cursorForPosition(e->pos());
-    m_selectCursor.select(QTextCursor::LineUnderCursor);
-    m_selectCursor.mergeCharFormat(m_selectFmt);
-
-    emit dbclickEvent(m_selectCursor);
-}
-
-void TerminalEdit::contextMenuRequested(QPoint pos)
-{
-    QPoint globalPos = this->mapToGlobal(pos);
-    int curpos = this->cursorForPosition(pos).position();
-    if (m_menu && m_menu->actions().count() > 0) {
-        m_selCopyAct->setEnabled(m_selectCursor.hasSelection());
-        m_pasteAct->setEnabled(this->canPaste() && curpos >= m_lastPos);
-        m_menu->popup(globalPos);
+    QPoint globalPos = this->mapToGlobal(pt);
+    if (isReadOnly()) {
+        m_contextRoMenu->popup(globalPos);
+    } else {
+        m_contextMenu->popup(globalPos);
     }
 }
 
-void TerminalEdit::selectCopy()
+void TerminalEdit::cursorPositionChanged()
 {
-    QString text = m_selectCursor.selectedText();
-    QClipboard *clipborad = QApplication::clipboard();
-    if (clipborad) {
-        clipborad->setText(text);
+    QTextCursor cur = this->textCursor();
+    int pos = cur.position();
+    if (cur.hasSelection()) {
+        pos = cur.selectionStart();
+        m_copy->setEnabled(true);
+        if (pos < m_endPostion) {
+            m_cut->setEnabled(false);
+        } else {
+            m_cut->setEnabled(!this->isReadOnly());
+        }
+    } else {
+        m_copy->setEnabled(false);
+        m_cut->setEnabled(false);
     }
-}
-
-void TerminalEdit::selectAll()
-{
-    m_selectCursor.select(QTextCursor::Document);
-    m_selectCursor.mergeCharFormat(m_selectFmt);
+    if (pos < m_endPostion) {
+        m_paste->setEnabled(false);
+    } else {
+        QClipboard *clipboard = QApplication::clipboard();
+        if (clipboard->mimeData()->hasText() ||
+                clipboard->mimeData()->hasHtml()){
+            m_paste->setEnabled(true);
+        } else {
+            m_paste->setEnabled(false);
+        }
+    }
 }

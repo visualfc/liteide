@@ -21,24 +21,21 @@
 // Module: findeditor.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef FINDEDITOR_H
-#define FINDEDITOR_H
+#ifndef REPLACEEDITOR_H
+#define REPLACEEDITOR_H
 
 #include "liteapi/liteapi.h"
-#include <QTextEdit>
 #include <QTextCursor>
 #include <QLabel>
 
 class QLineEdit;
 class QCheckBox;
+class QPushButton;
+class QLabel;
 
-struct FindState {
-    QString findText;
-    bool    useRegexp;
-    bool    matchWord;
-    bool    matchCase;
-    bool    wrapAround;
-    bool    backWard;
+struct FindOption : public LiteApi::FindOption
+{
+    QString replaceText;
     bool isValid() {
         return !findText.isEmpty();
     }
@@ -51,71 +48,38 @@ public:
     explicit FindEditor(LiteApi::IApplication *app, QObject *parent = 0);
     virtual ~FindEditor();
     virtual QWidget *widget();
-    virtual void setReady();
-    QString findText() const;
-    void genFindState(FindState *state, bool backWard);
+    virtual void setReady(const QString &findText = QString());
+    void getFindOption(FindOption *state, bool backWard);
     void setVisible(bool b);
-signals:
-    void hideFind();
-    void swithReplace();
+    void setReplaceMode(bool b);
+    void findHelper(FindOption *opt);
 public slots:
+    void updateCurrentEditor(LiteApi::IEditor*);
+    void findOptionChanged();
+    void replaceChanged();
     void findNext();
     void findPrev();
+    void replace();
+    void replaceAll();
 public:
-    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindState *state);        
-    template <typename T>
-    QTextCursor findHelper(T *ed, FindState *state)
-    {
-        QTextCursor cursor = ed->textCursor();
-        QTextCursor find = findEditor(ed->document(),cursor,state);
-        if (find.isNull() && state->wrapAround) {
-            if (state->backWard) {
-                cursor.movePosition(QTextCursor::End,QTextCursor::MoveAnchor);
-            } else {
-                cursor.movePosition(QTextCursor::Start,QTextCursor::MoveAnchor);
-            }
-            find = findEditor(ed->document(),cursor,state);
-        }
-        if (!find.isNull()) {
-            ed->setTextCursor(find);
-            m_status->setText(QString("Ln:%1 Col:%2").
-                                  arg(find.blockNumber()+1).
-                                  arg(find.columnNumber()));
-        } else {
-            m_status->setText(tr("No occurrences found"));
-        }
-        return find;
-    }
-    template <typename T>
-    void findAllHelper(T *ed, FindState *state)
-    {
-        QTextCursor cursor = ed->textCursor();
-        cursor.setPosition(0);
-        QList<QTextEdit::ExtraSelection> selections;
-        QTextCursor find = findEditor(ed->document(),cursor,state);
-        while (!find.isNull()) {
-            QTextEdit::ExtraSelection sel;
-            sel.cursor = find;
-            sel.format.setFontUnderline(true);
-            sel.format.setBackground(Qt::yellow);
-            sel.format.setAnchor(true);
-            selections.append(sel);
-            cursor.setPosition(find.position()+1);
-            find = findEditor(ed->document(),cursor,state);
-        }
-        ed->setExtraSelections(selections);
-    }
+    QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindOption *opt, bool wrap = true);
+    void replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt,int replaceCount = -1);
 protected:
-    LiteApi::IApplication *m_liteApp;
-    QWidget     *m_widget;
-    QLineEdit   *m_findEdit;
+    LiteApi::IApplication   *m_liteApp;
+    QWidget *m_widget;
+    QLineEdit *m_findEdit;
+    QPushButton *m_findNext;
+    QPushButton *m_findPrev;
+    QLineEdit *m_replaceEdit;
+    QLabel    *m_replaceLabel;
+    QPushButton *m_replace;
+    QPushButton *m_replaceAll;
     QCheckBox   *m_matchWordCheckBox;
     QCheckBox   *m_matchCaseCheckBox;
     QCheckBox   *m_useRegexCheckBox;
     QCheckBox   *m_wrapAroundCheckBox;
     QLabel      *m_status;
+    FindOption   m_option;
 };
 
-
-
-#endif // FINDEDITOR_H
+#endif // REPLACEEDITOR_H

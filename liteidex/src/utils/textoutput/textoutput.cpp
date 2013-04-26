@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "textoutput.h"
-
+#include "colorstyle/colorstyle.h"
 #include <QTextCharFormat>
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -37,16 +37,25 @@
 #endif
 //lite_memory_check_end
 
-TextOutput::TextOutput(bool readOnly, QWidget *parent) :
-    TerminalEdit(parent)
+TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *parent) :
+    TerminalEdit(parent),
+    m_liteApp(app)
 {
     this->setReadOnly(readOnly);
+
     m_fmt = this->currentCharFormat();
+    m_defPalette = this->palette();
+    m_clrText = m_defPalette.foreground().color();
+    m_clrTag = Qt::darkBlue;
+    m_clrError = Qt::red;
+    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 }
 
 void TextOutput::append(const QString &text)
 {
-    TerminalEdit::append(text,&m_fmt);
+    QTextCharFormat f = m_fmt;
+    f.setForeground(m_clrText);
+    TerminalEdit::append(text,&f);
 }
 
 void TextOutput::append(const QString &text,const QBrush &foreground)
@@ -56,40 +65,93 @@ void TextOutput::append(const QString &text,const QBrush &foreground)
     TerminalEdit::append(text,&f);
 }
 
-void TextOutput::appendTag0(const QString &text, bool error)
+void TextOutput::appendTag(const QString &text, bool error)
 {
     QTextCharFormat f = m_fmt;
     f.setFontWeight(QFont::Bold);
     if (error) {
-        f.setForeground(Qt::red);
+        f.setForeground(m_clrError);
     } else {
-        f.setForeground(Qt::darkBlue);
+        f.setForeground(m_clrTag);
     }
     TerminalEdit::append(text,&f);
 }
 
-void TextOutput::appendTag1(const QString &text, bool error)
+void TextOutput::updateExistsTextColor()
 {
     QTextCharFormat f = m_fmt;
-    f.setFontWeight(QFont::Bold);
-    if (error) {
-        f.setForeground(Qt::red);
-    } else {
-        f.setForeground(Qt::black);
-    }
-    TerminalEdit::append(text,&f);
-}
-
-void TextOutput::updateExistsTextColor(const QBrush &foreground)
-{
-    QTextCharFormat f = m_fmt;
-    f.setForeground(foreground);
-    QTextCursor all = this->textCursor();
-    all.select(QTextCursor::Document);
-    all.setCharFormat(f);
+    QColor color = m_clrText;
+    color.setAlpha(128);
+    f.setForeground(color);
+    QTextCursor cur = this->textCursor();
+    cur.select(QTextCursor::Document);
+    cur.setCharFormat(f);
 }
 
 void TextOutput::setMaxLine(int max)
 {
     this->setMaximumBlockCount(max);;
+}
+
+void TextOutput::appLoaded()
+{
+    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
+    this->loadColorStyleScheme();
+}
+
+void TextOutput::loadColorStyleScheme()
+{
+    bool useColorShceme = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
+
+    const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
+    const ColorStyle *text = colorScheme->findStyle("Text");
+    const ColorStyle *selection = colorScheme->findStyle("Selection");
+    const ColorStyle *keyword = colorScheme->findStyle("Keyword");
+    const ColorStyle *error = colorScheme->findStyle("Error");
+
+    QPalette p = this->m_defPalette;
+    if (useColorShceme && text) {
+        if (text->foregound().isValid()) {
+            p.setColor(QPalette::Text,text->foregound());
+            p.setColor(QPalette::Foreground, text->foregound());
+        }
+        if (text->background().isValid()) {
+            p.setColor(QPalette::Base, text->background());
+        }
+    }
+    if (useColorShceme && selection) {
+        if (selection->foregound().isValid()) {
+            p.setColor(QPalette::HighlightedText, selection->foregound());
+        }
+        if (selection->background().isValid()) {
+            p.setColor(QPalette::Highlight, selection->background());
+        }
+        p.setBrush(QPalette::Inactive, QPalette::Highlight, p.highlight());
+        p.setBrush(QPalette::Inactive, QPalette::HighlightedText, p.highlightedText());
+    }
+
+    QString sheet = QString("QPlainTextEdit{color:%1;background-color:%2;selection-color:%3;selection-background-color:%4;}")
+                .arg(p.text().color().name())
+                .arg(p.base().color().name())
+                .arg(p.highlightedText().color().name())
+                .arg(p.highlight().color().name());
+    this->setPalette(p);
+    this->setStyleSheet(sheet);
+
+    m_clrText = p.text().color();
+
+    m_fmt.setForeground(p.text().color());
+    m_fmt.setBackground(p.base().color());
+
+    if (useColorShceme && keyword && keyword->foregound().isValid()) {
+        m_clrTag = keyword->foregound();
+    } else {
+        m_clrTag = Qt::darkBlue;
+    }
+    if (useColorShceme && error && error->foregound().isValid()) {
+        m_clrError = error->foregound();
+    } else {
+        m_clrError = Qt::red;
+    }
+    this->updateExistsTextColor();
 }

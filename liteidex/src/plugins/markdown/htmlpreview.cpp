@@ -329,7 +329,7 @@ void HtmlPreview::loadHtmlData(const QByteArray &data, const QByteArray &title, 
     } else if (mime == "text/x-markdown") {
         m_exportHtml = m_exportTemple;
         m_exportHtml.replace("__MARKDOWN_TITLE__",title);
-        m_exportHtml.replace("__MARKDOWN_CONTENT__",mdtohtml(data));
+        m_exportHtml.replace("__MARKDOWN_CONTENT__",md2html(data));
         m_htmlWidget->setHtml(QString::fromUtf8(m_exportHtml),url);
     } else {
         m_exportHtml = m_exportTemple;

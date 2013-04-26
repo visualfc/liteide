@@ -83,8 +83,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
 
-    m_colorStyleScheme = new ColorStyleScheme(this);
-    m_defPalette = m_editorWidget->palette();
+    m_defEditorPalette = m_editorWidget->palette();
 
     createActions();
     createToolBars();
@@ -95,12 +94,12 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
-
-//    m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
-//                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
-//                             "QToolBar QToolButton::hover { background-color: #ababab;}"\
-//                             "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
-
+/*
+    m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
+                             "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
+                             "QToolBar QToolButton::hover { background-color: #ababab;}"\
+                             "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
+*/
     QHBoxLayout *toolLayout = new QHBoxLayout;
     toolLayout->setMargin(0);
     toolLayout->setSpacing(0);
@@ -123,6 +122,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
 
     //applyOption("option/liteeditor");
 
@@ -152,11 +152,6 @@ LiteEditor::~LiteEditor()
     delete m_editorWidget;
     delete m_widget;
     delete m_file;
-}
-
-const ColorStyleScheme *LiteEditor::colorStyleScheme() const
-{
-    return m_colorStyleScheme;
 }
 
 LiteEditorWidget *LiteEditor::editorWidget() const
@@ -203,23 +198,25 @@ void LiteEditor::clipbordDataChanged()
 
 void LiteEditor::createActions()
 {
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Editor");
+
     m_undoAct = new QAction(QIcon("icon:liteeditor/images/undo.png"),tr("Undo"),this);
-    m_liteApp->actionManager()->regAction(m_undoAct,"LiteEditor.Undo",QKeySequence::Undo);
+    actionContext->regAction(m_undoAct,"Undo",QKeySequence::Undo);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
-    m_liteApp->actionManager()->regAction(m_redoAct,"LiteEditor.Redo","Ctrl+Shift+Z; Ctrl+Y");
+    actionContext->regAction(m_redoAct,"Redo","Ctrl+Shift+Z; Ctrl+Y");
 
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
-    m_liteApp->actionManager()->regAction(m_cutAct,"LiteEditor.Cut",QKeySequence::Cut);
+    actionContext->regAction(m_cutAct,"Cut",QKeySequence::Cut);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
-    m_liteApp->actionManager()->regAction(m_copyAct,"LiteEditor.Copy",QKeySequence::Copy);
+    actionContext->regAction(m_copyAct,"Copy",QKeySequence::Copy);
 
     m_pasteAct = new QAction(QIcon("icon:liteeditor/images/paste.png"),tr("Paste"),this);
-    m_liteApp->actionManager()->regAction(m_pasteAct,"LiteEditor.Paste",QKeySequence::Paste);
+    actionContext->regAction(m_pasteAct,"Paste",QKeySequence::Paste);
 
     m_selectAllAct = new QAction(tr("Select All"),this);
-    m_liteApp->actionManager()->regAction(m_selectAllAct,"LiteEditor.SelectAll",QKeySequence::SelectAll);
+    actionContext->regAction(m_selectAllAct,"SelectAll",QKeySequence::SelectAll);
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML..."),this);
 #ifndef QT_NO_PRINTER
@@ -228,29 +225,29 @@ void LiteEditor::createActions()
     m_filePrintPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview..."),this);
 #endif
     m_gotoPrevBlockAct = new QAction(tr("Go To Previous Block"),this);
-    m_liteApp->actionManager()->regAction(m_gotoPrevBlockAct,"LiteEditor.GotoPreviousBlock","Ctrl+[");
+    actionContext->regAction(m_gotoPrevBlockAct,"GotoPreviousBlock","Ctrl+[");
 
     m_gotoNextBlockAct = new QAction(tr("Go To Next Block"),this);
-    m_liteApp->actionManager()->regAction(m_gotoNextBlockAct,"LiteEditor.GotoNextBlock","Ctrl+]");
+    actionContext->regAction(m_gotoNextBlockAct,"GotoNextBlock","Ctrl+]");
 
 
     m_selectBlockAct = new QAction(tr("Select Block"),this);
-    m_liteApp->actionManager()->regAction(m_selectBlockAct,"LiteEditor.SelectBlock","Ctrl+U");
+    actionContext->regAction(m_selectBlockAct,"SelectBlock","Ctrl+U");
 
     m_gotoMatchBraceAct = new QAction(tr("Go To Matching Brace"),this);
-    m_liteApp->actionManager()->regAction(m_gotoMatchBraceAct,"LiteEditor.GotoMatchBrace","Ctrl+E");
+    actionContext->regAction(m_gotoMatchBraceAct,"GotoMatchBrace","Ctrl+E");
 
     m_foldAct = new QAction(tr("Fold"),this);   
-    m_liteApp->actionManager()->regAction(m_foldAct,"LiteEditor.Fold","Ctrl+<");
+    actionContext->regAction(m_foldAct,"Fold","Ctrl+<");
 
     m_unfoldAct = new QAction(tr("Unfold"),this);
-    m_liteApp->actionManager()->regAction(m_unfoldAct,"LiteEditor.Unfold","Ctrl+>");
+    actionContext->regAction(m_unfoldAct,"Unfold","Ctrl+>");
 
     m_foldAllAct = new QAction(tr("Fold All"),this);
-    m_liteApp->actionManager()->regAction(m_foldAllAct,"LiteEditor.FoldAll","");
+    actionContext->regAction(m_foldAllAct,"FoldAll","");
 
     m_unfoldAllAct = new QAction(tr("Unfold All"),this);
-    m_liteApp->actionManager()->regAction(m_unfoldAllAct,"LiteEditor.UnfoldAll","");
+    actionContext->regAction(m_unfoldAllAct,"UnfoldAll","");
 
     connect(m_foldAct,SIGNAL(triggered()),m_editorWidget,SLOT(fold()));
     connect(m_unfoldAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfold()));
@@ -258,30 +255,32 @@ void LiteEditor::createActions()
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
     m_gotoLineAct = new QAction(tr("Go To Line"),this);
-    m_liteApp->actionManager()->regAction(m_gotoLineAct,"LiteEditor.GotoLine","Ctrl+G");
+    actionContext->regAction(m_gotoLineAct,"GotoLine","Ctrl+G");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
-    m_liteApp->actionManager()->regAction(m_duplicateAct,"LiteEditor.Duplicate","Ctrl+D");
+    actionContext->regAction(m_duplicateAct,"Duplicate","Ctrl+D");
 
     connect(m_duplicateAct,SIGNAL(triggered()),m_editorWidget,SLOT(duplicate()));
 
     m_deleteLineAct = new QAction(tr("Delete Line"),this);
-    m_liteApp->actionManager()->regAction(m_deleteLineAct,"LiteEditor.DeleteLine","Ctrl+Shift+K");
+    actionContext->regAction(m_deleteLineAct,"DeleteLine","Ctrl+Shift+K");
 
     connect(m_deleteLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(deleteLine()));
 
     m_increaseFontSizeAct = new QAction(tr("Increase Font Size"),this);
-    m_liteApp->actionManager()->regAction(m_increaseFontSizeAct,"LiteEditor.IncreaseFontSize","Ctrl++;Ctrl+=");
+    actionContext->regAction(m_increaseFontSizeAct,"IncreaseFontSize","Ctrl++;Ctrl+=");
 
     m_decreaseFontSizeAct = new QAction(tr("Decrease Font Size"),this);
-    m_liteApp->actionManager()->regAction(m_decreaseFontSizeAct,"LiteEditor.DecreaseFontSize","Ctrl+-");
+    actionContext->regAction(m_decreaseFontSizeAct,"DecreaseFontSize","Ctrl+-");
 
     m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
-    m_liteApp->actionManager()->regAction(m_resetFontSizeAct,"LiteEditor.ResetFontSize","Ctrl+0");
+    actionContext->regAction(m_resetFontSizeAct,"ResetFontSize","Ctrl+0");
 
+    m_cleanWhitespaceAct = new QAction(tr("Clean Whitespace"),this);
+    actionContext->regAction(m_cleanWhitespaceAct,"CleanWhitespace","");
 
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
@@ -318,6 +317,7 @@ void LiteEditor::createActions()
     connect(m_increaseFontSizeAct,SIGNAL(triggered()),this,SLOT(increaseFontSize()));
     connect(m_decreaseFontSizeAct,SIGNAL(triggered()),this,SLOT(decreaseFontSize()));
     connect(m_resetFontSizeAct,SIGNAL(triggered()),this,SLOT(resetFontSize()));
+    connect(m_cleanWhitespaceAct,SIGNAL(triggered()),m_editorWidget,SLOT(cleanWhitespace()));
 
     QClipboard *clipboard = QApplication::clipboard();
     connect(clipboard,SIGNAL(dataChanged()),this,SLOT(clipbordDataChanged()));
@@ -413,6 +413,7 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_pasteAct);
     m_editMenu->addAction(m_duplicateAct);
     m_editMenu->addAction(m_deleteLineAct);
+    m_editMenu->addAction(m_cleanWhitespaceAct);
     m_editMenu->addSeparator();
     QMenu *expMenu = m_editMenu->addMenu(tr("Print"));
     //expMenu->addAction(m_exportHtmlAct);
@@ -610,6 +611,8 @@ void LiteEditor::applyOption(QString id)
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,true).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
@@ -621,6 +624,8 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setAutoBraces3(autoBraces3);
     m_editorWidget->setAutoBraces4(autoBraces4);
     m_editorWidget->setLineNumberVisible(lineNumberVisible);
+    m_editorWidget->setEofVisible(eofVisible);
+    m_editorWidget->setIndentLineVisible(indentLineVisible);
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
 
@@ -651,64 +656,11 @@ void LiteEditor::applyOption(QString id)
 
     QString mime = this->m_file->mimeType();
     int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-    m_editorWidget->setTabWidth(tabWidth);
+    m_editorWidget->setTabSize(tabWidth);
     bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
     m_editorWidget->setTabUseSpace(useSpace);
 
-    QString style = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
-    if (style != m_colorStyle) {
-        m_colorStyle = style;
-        m_colorStyleScheme->clear();
-        QString styleFileName = m_liteApp->resourcePath()+"/liteeditor/color/"+m_colorStyle;
-        bool b = m_colorStyleScheme->load(styleFileName);
-        if (b) {
-            const ColorStyle *extra = m_colorStyleScheme->findStyle("Extra");
-            const ColorStyle *style = m_colorStyleScheme->findStyle("Text");
-            const ColorStyle *selection = m_colorStyleScheme->findStyle("Selection");
-            const ColorStyle *inactiveSelection = m_colorStyleScheme->findStyle("InactiveSelection");
-            const ColorStyle *currentLine = m_colorStyleScheme->findStyle("CurrentLine");
-            if (extra) {
-                m_editorWidget->setExtraColor(extra->foregound(),extra->background());
-            }
-            if (currentLine) {
-                m_editorWidget->setCurrentLineColor(currentLine->background());
-            }
-            if (style || selection || inactiveSelection) {
-                QPalette p = m_defPalette;
-                if (style) {
-                    if (style->foregound().isValid()) {
-                        p.setColor(QPalette::Text,style->foregound());
-                        p.setColor(QPalette::Foreground, style->foregound());
-                    }
-                    if (style->background().isValid()) {
-                        //p.setColor(QPalette::Background, style->background());
-                        p.setBrush(QPalette::Base, style->background());
-                    }
-                }
-                if (selection) {
-                    if (selection->foregound().isValid()) {
-                        p.setBrush(QPalette::HighlightedText,selection->foregound().isValid()?
-                                       selection->foregound() : m_defPalette.foreground());
-                    }
-                    if (selection->background().isValid()) {
-                        p.setBrush(QPalette::Highlight,selection->background());
-                    }
-                }
-                if (inactiveSelection) {
-                    if (inactiveSelection->foregound().isValid()) {
-                        p.setBrush(QPalette::Inactive,QPalette::HighlightedText,inactiveSelection->foregound());
-                    }
-                    if (inactiveSelection->background().isValid()) {
-                        p.setBrush(QPalette::Inactive,QPalette::Highlight,inactiveSelection->background());
-                    }
-                }
-                m_editorWidget->setPalette(p);
-            } else {
-                m_editorWidget->setPalette(m_defPalette);
-            }
-            emit colorStyleChanged();
-        }
-    }
+    emit tabSettingChanged(tabWidth);
 }
 
 void LiteEditor::updateTip(QString func,QString args)
@@ -851,7 +803,7 @@ void LiteEditor::editPositionChanged()
 void LiteEditor::gotoLine()
 {
     int min = 1;
-    int max = m_editorWidget->document()->lineCount();
+    int max = m_editorWidget->document()->blockCount();
     int v = m_editorWidget->textCursor().blockNumber()+1;
     bool ok = false;
     v = QInputDialog::getInt(this->m_widget,tr("Go To Line"),tr("Line: ")+QString("%1-%2").arg(min).arg(max),v,min,max,1,&ok);
@@ -893,8 +845,14 @@ void LiteEditor::navigationStateChanged(const QByteArray &state)
 
 void LiteEditor::onActive()
 {
+    m_editorWidget->setFocus();
     //clipbordDataChanged();
     //editPositionChanged();
+}
+
+void LiteEditor::setFindOption(LiteApi::FindOption *opt)
+{
+    m_editorWidget->setFindOption(opt);
 }
 
 void LiteEditor::selectNextParam()
@@ -935,6 +893,7 @@ void LiteEditor::resetFontSize()
     font.setPointSize(fontSize);
     m_editorWidget->setFont(font);
     m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->updateTabWidth();
     m_editorWidget->slotUpdateExtraAreaWidth();
 }
 
@@ -965,5 +924,55 @@ void LiteEditor::requestFontZoom(int zoom)
     font.setPointSize(fontSize*fontZoom/100.0);
     m_editorWidget->setFont(font);
     m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->updateTabWidth();
     m_editorWidget->slotUpdateExtraAreaWidth();
+}
+
+void LiteEditor::loadColorStyleScheme()
+{
+    const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
+    const ColorStyle *extra = colorScheme->findStyle("Extra");
+    const ColorStyle *indentLine = colorScheme->findStyle("IndentLine");
+    const ColorStyle *text = colorScheme->findStyle("Text");
+    const ColorStyle *selection = colorScheme->findStyle("Selection");
+    const ColorStyle *currentLine = colorScheme->findStyle("CurrentLine");
+    if (extra) {
+        m_editorWidget->setExtraColor(extra->foregound(),extra->background());
+    }
+    if (indentLine) {
+        m_editorWidget->setIndentLineColor(indentLine->foregound());
+    }
+    if (currentLine) {
+        m_editorWidget->setCurrentLineColor(currentLine->background());
+    }
+    QPalette p = m_defEditorPalette;
+    if (text) {
+        if (text->foregound().isValid()) {
+            p.setColor(QPalette::Text,text->foregound());
+            p.setColor(QPalette::Foreground, text->foregound());
+        }
+        if (text->background().isValid()) {
+            p.setColor(QPalette::Base, text->background());
+        }
+    }
+    if (selection) {
+        if (selection->foregound().isValid()) {
+            p.setColor(QPalette::HighlightedText, selection->foregound());
+        }
+        if (selection->background().isValid()) {
+            p.setColor(QPalette::Highlight, selection->background());
+        }
+        p.setBrush(QPalette::Inactive, QPalette::Highlight, p.highlight());
+        p.setBrush(QPalette::Inactive, QPalette::HighlightedText, p.highlightedText());
+    }
+
+    QString sheet = QString("QPlainTextEdit{color:%1;background-color:%2;selection-color:%3;selection-background-color:%4;}")
+                .arg(p.text().color().name())
+                .arg(p.base().color().name())
+                .arg(p.highlightedText().color().name())
+                .arg(p.highlight().color().name());
+    m_editorWidget->setPalette(p);
+    m_editorWidget->setStyleSheet(sheet);
+
+    emit colorStyleChanged();
 }

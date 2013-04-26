@@ -39,7 +39,7 @@ AboutDialog::AboutDialog(LiteApi::IApplication *app,QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
-    ui->verLabel->setText(app->shortVer());
+    ui->verLabel->setText(app->ideVersion());
 }
 
 AboutDialog::~AboutDialog()

@@ -47,7 +47,8 @@
 
 ElidedLabel::ElidedLabel(QWidget *parent)
     : QFrame(parent),
-      elided(false)
+      elided(false),
+      m_elideMode(Qt::ElideRight)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
@@ -58,6 +59,7 @@ ElidedLabel::ElidedLabel(const QString &text, QWidget *parent)
     : QFrame(parent)
     , elided(false)
     , content(text)
+    , m_elideMode(Qt::ElideRight)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
@@ -68,6 +70,17 @@ void ElidedLabel::setText(const QString &newText)
 {
     content = newText;
     update();
+}
+
+void ElidedLabel::setElideMode(Qt::TextElideMode mode)
+{
+    m_elideMode = mode;
+    update();
+}
+
+Qt::TextElideMode ElidedLabel::elideMode() const
+{
+    return m_elideMode;
 }
 //! [1]
 
@@ -101,7 +114,7 @@ void ElidedLabel::paintEvent(QPaintEvent *event)
             //! [3]
         } else {
             QString lastLine = content.mid(line.textStart());
-            QString elidedLastLine = fontMetrics.elidedText(lastLine, Qt::ElideRight, width());
+            QString elidedLastLine = fontMetrics.elidedText(lastLine, m_elideMode, width());
             painter.drawText(QPoint(0, y + fontMetrics.ascent()), elidedLastLine);
             line = textLayout.createLine();
             didElide = line.isValid();

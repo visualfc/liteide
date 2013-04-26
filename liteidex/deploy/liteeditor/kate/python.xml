@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language>
+<!-- Python syntax highlightning v0.9 by Per Wigren -->
+<!-- Python syntax highlighting v1.9 by Michael Bueker (improved keyword differentiation) -->
+<!-- Python syntax highlighting v1.97 by Paul Giannaros -->
+<!-- Python syntax highlighting v1.99 by Primoz Anzur -->
+<!-- Python syntax highlighting v2.01 by Paul Giannaros:
+	* full format character support
+	* unicode string modifier supported -->
+<!-- v2.02 remove RegExpr for nums and make indent consistent -->
+<!-- v2.03 highlight decorators, remove operator regex, don't highlight parens as operators -->
+<!-- v2.04 make alerts visible even if they are directly after ''' or # without a space -->
+<!-- v2.06 decorator names can (and often do) contain periods -->
+<!-- v2.07 add support for %prog and co, see bug 142832 -->
+<!-- v2.08 add missing overloaders, new Python 3 statements, builtins, and keywords -->
+<language name="Python" version="2.09" kateversion="2.4" section="Scripts" extensions="*.py;*.pyw" mimetype="text/x-python" casesensitive="1" author="Michael Bueker" license="">
+	<highlighting>
+		<list name="prep">
+			<item> import </item>
+			<item> from </item>
+			<item> as </item>
+		</list>
+		<list name="defs">
+			<item> class </item>
+			<item> def </item>
+			<item> del </item>
+			<item> global </item>
+			<item> lambda </item>
+			<item> nonlocal </item>
+		</list>
+		<list name="operators">
+			<item> and </item>
+			<item> in </item>
+			<item> is </item>
+			<item> not </item>
+			<item> or </item>
+		</list>
+		<list name="commands">
+			<item> exec </item>
+			<item> print </item>
+		</list>
+		<list name="flow">
+			<item> assert </item>
+			<item> break </item>
+			<item> continue </item>
+			<item> elif </item>
+			<item> else </item>
+			<item> except </item>
+			<item> finally </item>
+			<item> for </item>
+			<item> if </item>
+			<item> pass </item>
+			<item> raise </item>
+			<item> return </item>
+			<item> try </item>
+			<item> while </item>
+			<item> with </item>
+			<item> yield </item>
+		</list>
+		<list name="builtinfuncs">
+			<item> __future__ </item>
+			<item> __import__ </item>
+			<item> __name__ </item>
+			<item> abs </item>
+			<item> all </item>
+			<item> any </item>
+			<item> apply </item>
+			<item> basestring </item>
+			<item> bin </item>
+			<item> bool </item>
+			<item> buffer </item>
+			<item> callable </item>
+			<item> chr </item>
+			<item> classmethod </item>
+			<item> cmp </item>
+			<item> coerce </item>
+			<item> compile </item>
+			<item> complex </item>
+			<item> delattr </item>
+			<item> dict </item>
+			<item> dir </item>
+			<item> divmod </item>
+			<item> enumerate </item>
+			<item> eval </item>
+			<item> execfile </item>
+			<item> file </item>
+			<item> filter </item>
+			<item> float </item>
+			<item> format </item>
+			<item> frozenset </item>
+			<item> getattr </item>
+			<item> globals </item>
+			<item> hasattr </item>
+			<item> hash </item>
+			<item> help </item>
+			<item> hex </item>
+			<item> id </item>
+			<item> input </item>
+			<item> int </item>
+			<item> intern </item>
+			<item> isinstance </item>
+			<item> issubclass </item>
+			<item> iter </item>
+			<item> len </item>
+			<item> list </item>
+			<item> locals </item>
+			<item> long </item>
+			<item> map </item>
+			<item> max </item>
+			<item> min </item>
+			<item> next </item>
+			<item> object </item>
+			<item> oct </item>
+			<item> open </item>
+			<item> ord </item>
+			<item> pow </item>
+			<item> property </item>
+			<item> range </item>
+			<item> raw_input </item>
+			<item> reduce </item>
+			<item> reload </item>
+			<item> repr </item>
+			<item> reversed </item>
+			<item> round </item>
+			<item> set </item>
+			<item> setattr </item>
+			<item> slice </item>
+			<item> sorted </item>
+			<item> staticmethod </item>
+			<item> str </item>
+			<item> sum </item>
+			<item> super </item>
+			<item> tuple </item>
+			<item> type </item>
+			<item> unichr </item>
+			<item> unicode </item>
+			<item> vars </item>
+			<item> xrange </item>
+			<item> zip </item>
+		</list>
+		<list name="specialvars">
+			<item> None </item>
+			<item> self </item>
+			<item> True </item>
+			<item> False </item>
+			<item> NotImplemented </item>
+			<item> Ellipsis </item>
+			<item> __debug__ </item>
+			<item> __file__ </item>
+		</list>
+		<list name="bindings">
+			<item> SIGNAL </item>
+			<item> SLOT </item>
+			<item> connect </item>
+		</list>
+		<list name="overloaders">
+			<item>__new__</item>
+			<item>__init__</item>
+			<item>__del__</item>
+			<item>__repr__</item>
+			<item>__str__</item>
+			<item>__lt__</item>
+			<item>__le__</item>
+			<item>__eq__</item>
+			<item>__ne__</item>
+			<item>__gt__</item>
+			<item>__ge__</item>
+			<item>__cmp__</item>
+			<item>__rcmp__</item>
+			<item>__hash__</item>
+			<item>__nonzero__</item>
+			<item>__unicode__</item>
+			<item>__getattr__</item>
+			<item>__setattr__</item>
+			<item>__delattr__</item>
+			<item>__getattribute__</item>
+			<item>__get__</item>
+			<item>__set__</item>
+			<item>__delete__</item>
+			<item>__call__</item>
+			<item>__len__</item>
+			<item>__getitem__</item>
+			<item>__setitem__</item>
+			<item>__delitem__</item>
+			<item>__iter__</item>
+			<item>__reversed__</item>
+			<item>__contains__</item>
+			<item>__getslice__</item>
+			<item>__setslice__</item>
+			<item>__delslice__</item>
+			<item>__add__</item>
+			<item>__sub__</item>
+			<item>__mul__</item>
+			<item>__floordiv__</item>
+			<item>__mod__</item>
+			<item>__divmod__</item>
+			<item>__pow__</item>
+			<item>__lshift__</item>
+			<item>__rshift__</item>
+			<item>__and__</item>
+			<item>__xor__</item>
+			<item>__or__</item>
+			<item>__div__</item>
+			<item>__truediv__</item>
+			<item>__radd__</item>
+			<item>__rsub__</item>
+			<item>__rmul__</item>
+			<item>__rdiv__</item>
+			<item>__rtruediv__</item>
+			<item>__rfloordiv__</item>
+			<item>__rmod__</item>
+			<item>__rdivmod__</item>
+			<item>__rpow__</item>
+			<item>__rlshift__</item>
+			<item>__rrshift__</item>
+			<item>__rand__</item>
+			<item>__rxor__</item>
+			<item>__ror__</item>
+			<item>__iadd__</item>
+			<item>__isub__</item>
+			<item>__imul__</item>
+			<item>__idiv__</item>
+			<item>__itruediv__</item>
+			<item>__ifloordiv__</item>
+			<item>__imod__</item>
+			<item>__ipow__</item>
+			<item>__ilshift__</item>
+			<item>__irshift__</item>
+			<item>__iand__</item>
+			<item>__ixor__</item>
+			<item>__ior__</item>
+			<item>__neg__</item>
+			<item>__pos__</item>
+			<item>__abs__</item>
+			<item>__invert__</item>
+			<item>__complex__</item>
+			<item>__int__</item>
+			<item>__long__</item>
+			<item>__float__</item>
+			<item>__oct__</item>
+			<item>__hex__</item>
+			<item>__index__</item>
+			<item>__coerce__</item>
+			<item>__enter__</item>
+			<item>__exit__</item>
+		</list>
+		<list name="exceptions">
+			<item>ArithmeticError</item>
+			<item>AssertionError</item>
+			<item>AttributeError</item>
+			<item>BaseException</item>
+			<item>DeprecationWarning</item>
+			<item>EnvironmentError</item>
+			<item>EOFError</item>
+			<item>Exception</item>
+			<item>FloatingPointError</item>
+			<item>FutureWarning</item>
+			<item>GeneratorExit</item>
+			<item>IOError</item>
+			<item>ImportError</item>
+			<item>ImportWarning</item>
+			<item>IndexError</item>
+			<item>KeyError</item>
+			<item>KeyboardInterrupt</item>
+			<item>LookupError</item>
+			<item>MemoryError</item>
+			<item>NameError</item>
+			<item>NotImplementedError</item>
+			<item>OSError</item>
+			<item>OverflowError</item>
+			<item>PendingDeprecationWarning</item>
+			<item>ReferenceError</item>
+			<item>RuntimeError</item>
+			<item>RuntimeWarning</item>
+			<item>StandardError</item>
+			<item>StopIteration</item>
+			<item>SyntaxError</item>
+			<item>SyntaxWarning</item>
+			<item>SystemError</item>
+			<item>SystemExit</item>
+			<item>TypeError</item>
+			<item>UnboundLocalError</item>
+			<item>UserWarning</item>
+			<item>UnicodeError</item>
+			<item>UnicodeWarning</item>
+			<item>UnicodeEncodeError</item>
+			<item>UnicodeDecodeError</item>
+			<item>UnicodeTranslateError</item>
+			<item>ValueError</item>
+			<item>Warning</item>
+			<item>WindowsError</item>
+			<item>ZeroDivisionError</item>
+		</list>
+		<contexts>
+			<context name="Normal" attribute="Normal Text" lineEndContext="#stay">
+				<keyword attribute="Preprocessor" String="prep" context="#stay"/>
+				<keyword attribute="Definition Keyword" String="defs" context="#stay"/>
+				<keyword attribute="Operator" String="operators" context="#stay"/>
+				<keyword attribute="Command Keyword" String="commands" context="#stay"/>
+				<keyword attribute="Flow Control Keyword" String="flow" context="#stay"/>
+				<keyword attribute="Builtin Function" String="builtinfuncs" context="#stay"/>
+				<keyword attribute="Special Variable" String="specialvars" context="#stay"/>
+				<keyword attribute="Extensions" String="bindings" context="#stay"/>
+				<keyword attribute="Exceptions" String="exceptions" context="#stay"/>
+				<keyword attribute="Overloaders" String="overloaders" context="#stay"/>
+				<RegExpr attribute="Normal" String="[a-zA-Z_][a-zA-Z_0-9]+" context="#stay"/>
+
+				<RegExpr attribute="Complex" String=" ((([0-9]*\.[0-9]+|[0-9]+\.)|([0-9]+|([0-9]*\.[0-9]+|[0-9]+\.))[eE](\+|-)?[0-9]+)|[0-9]+)[jJ]" context="#stay"/>
+				<Float attribute="Float" context="#stay" />
+				<HlCHex attribute="Hex" context="#stay"/>
+				<HlCOct attribute="Octal" context="#stay"/>
+				<Int attribute="Int" context="#stay">
+					<StringDetect attribute="Int" String="L" insensitive="true" context="#stay"/>
+				</Int>
+
+				<StringDetect attribute="Raw String" String="r'''" insensitive="true" context="Raw Tripple A-string"/>
+				<StringDetect attribute="Raw String" String="r&quot;&quot;&quot;" insensitive="true" context="Raw Tripple Q-string"/>
+
+				<StringDetect attribute="Raw String" String="r'" insensitive="true" context="Raw A-string"/>
+				<StringDetect attribute="Raw String" String="r&quot;" insensitive="true" context="Raw Q-string"/>
+
+				<DetectChar attribute="Comment" char="#" context="Hash comment"/>
+                                <RegExpr attribute="Comment" String="u?'''" firstNonSpace="true" context="Tripple A-comment" beginRegion="Tripple A-region"/>
+                                <RegExpr attribute="Comment" String="u?&quot;&quot;&quot;" firstNonSpace="true" context="Tripple Q-comment" beginRegion="Tripple Q-region"/>
+
+				<!-- ''' -->
+				<StringDetect attribute="String" String="'''" context="Tripple A-string" beginRegion="Tripple A-region"/>
+				<StringDetect attribute="String" String="u'''" context="Tripple A-string" beginRegion="Tripple A-region"/>
+				<!-- """ -->
+				<StringDetect attribute="String" String="&quot;&quot;&quot;" context="Tripple Q-string" beginRegion="Tripple Q-region"/>
+				<StringDetect attribute="String" String="u&quot;&quot;&quot;" context="Tripple Q-string" beginRegion="Tripple Q-region"/>
+				<!-- ' -->
+				<DetectChar attribute="String" char="'" context="Single A-string"/>
+				<Detect2Chars attribute="String" char="u" char1="'" context="Single A-string"/>
+				<!-- " -->
+				<DetectChar attribute="String" char="&quot;" context="Single Q-string"/>
+				<Detect2Chars attribute="String" char="u" char1="&quot;" context="Single Q-string"/>
+
+				<DetectChar attribute="Normal" char="(" context="parenthesised" beginRegion="parenthesis"/>
+				<DetectChar attribute="Normal" char=")" context="#pop" endRegion="parenthesis"/>
+
+				<AnyChar attribute="Operator" String="+*/%\|=;\!&lt;&gt;!^&amp;~-" context="#stay"/>
+				<RegExpr attribute="Decorator" String="@[_a-zA-Z][\._a-zA-Z0-9]*" firstNonSpace="true"/>
+			</context>
+
+			<context name="parenthesised" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<IncludeRules context="Normal" />
+			</context>
+
+			<!-- Comments -->
+
+			<context name="Hash comment" attribute="Comment" lineEndContext="#pop">
+				<IncludeRules context="##Alerts_indent" />
+			</context>
+
+			<context name="Tripple A-comment" attribute="Comment" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<StringDetect attribute="Comment" String="'''" context="#pop" endRegion="Tripple A-region"/>
+				<IncludeRules context="##Alerts_indent" />
+			</context>
+
+			<context name="Tripple Q-comment" attribute="Comment" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<HlCChar attribute="Comment" context="#stay"/>
+				<StringDetect attribute="Comment" String="&quot;&quot;&quot;" context="#pop" endRegion="Tripple Q-region"/>
+				<IncludeRules context="##Alerts_indent" />
+			</context>
+
+			<context name="Single A-comment" attribute="Comment" lineEndContext="#stay">
+				<HlCStringChar attribute="Comment" context="#stay"/>
+				<DetectChar attribute="Comment" char="'" context="#pop"/>
+				<IncludeRules context="##Alerts_indent" />
+			</context>
+
+			<context name="Single Q-comment" attribute="Comment" lineEndContext="#stay">
+				<HlCStringChar attribute="Comment" context="#stay"/>
+				<DetectChar attribute="Comment" char="&quot;" context="#pop"/>
+				<IncludeRules context="##Alerts_indent" />
+			</context>
+
+			<!-- Strings -->
+
+			<!-- format characters -->
+			<context name="stringformat" attribute="String Substitution" lineEndContext="#stay">
+				<!-- Python 2 style. Syntax:
+				     1. start character '%'
+				     2. [optional] Mapping key, e.g. '(foo)'
+				     3. [optional] Conversion flags, one of '#0- +'
+				     4. [optional] Minimum width, integer or '*'
+				     5. [optional] Precision, '.' followed by integer or '*'
+				     6. [optional] Length modifier, one of 'hlL'
+				     7. conversion type, one of 'crsdiouxXeEfFgG%'
+				     [Special cases: %prog and %default - see http://docs.python.org/library/optparse.html]
+				-->
+				<RegExpr attribute="String Substitution" String="%((\([a-zA-Z0-9_]+\))?[#0\- +]?([1-9][0-9]*|\*)?(\.([1-9][0-9]*|\*))?[hlL]?[crsdiouxXeEfFgG%]|prog|default)" context="#stay"/>
+			</context>
+
+			<context name="Tripple A-string" attribute="String" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<HlCStringChar attribute="String Char" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<StringDetect attribute="String" String="'''" context="#pop" endRegion="Tripple A-region"/>
+			</context>
+
+			<context name="Raw Tripple A-string" attribute="Raw String" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<HlCStringChar attribute="Raw String" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<StringDetect attribute="String" String="'''" context="#pop" endRegion="Tripple A-region"/>
+			</context>
+
+			<context name="Tripple Q-string" attribute="String" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<HlCStringChar attribute="String Char" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<StringDetect attribute="String" String="&quot;&quot;&quot;" context="#pop" endRegion="Tripple Q-region"/>
+			</context>
+
+			<context name="Raw Tripple Q-string" attribute="Raw String" lineEndContext="#stay" noIndentationBasedFolding="true">
+				<HlCStringChar attribute="Raw String" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<StringDetect attribute="String" String="&quot;&quot;&quot;" context="#pop" endRegion="Tripple Q-region"/>
+			</context>
+
+
+			<context name="Single A-string" attribute="String" lineEndContext="#stay">
+				<HlCStringChar attribute="String Char" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<DetectChar attribute="String" char="'" context="#pop"/>
+			</context>
+
+			<context name="Single Q-string" attribute="String" lineEndContext="#stay">
+				<HlCStringChar attribute="String Char" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<DetectChar attribute="String" char="&quot;" context="#pop"/>
+			</context>
+
+			<context name="Raw A-string" attribute="Raw String" lineEndContext="#stay">
+				<HlCStringChar attribute="Raw String" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<DetectChar attribute="Raw String" char="'" context="#pop"/>
+			</context>
+
+			<context name="Raw Q-string" attribute="Raw String" lineEndContext="#stay">
+				<HlCStringChar attribute="Raw String" context="#stay"/>
+				<IncludeRules context="stringformat"/>
+				<DetectChar attribute="Raw String" char="&quot;" context="#pop"/>
+			</context>
+
+
+		</contexts>
+		<itemDatas>
+			<itemData name="Normal Text" defStyleNum="dsNormal" spellChecking="false"/>
+			<itemData name="Definition Keyword" defStyleNum="dsKeyword" spellChecking="false"/>
+			<itemData name="Operator" defStyleNum="dsNormal" bold="1" spellChecking="false"/>
+			<itemData name="String Substitution" defStyleNum="dsOthers" color="#0057ae" selColor="#ffffff"  spellChecking="false"/>
+			<itemData name="Command Keyword" defStyleNum="dsKeyword" spellChecking="false"/>
+			<itemData name="Flow Control Keyword" defStyleNum="dsKeyword" spellChecking="false"/>
+			<itemData name="Builtin Function" defStyleNum="dsDataType" spellChecking="false"/>
+			<itemData name="Special Variable" defStyleNum="dsOthers" spellChecking="false"/>
+			<itemData name="Extensions" defStyleNum="dsOthers" color="#0095ff" selColor="#ffffff" bold="1" italic="0" spellChecking="false"/>
+			<itemData name="Exceptions" defStyleNum="dsOthers" color="#054d00" selColor="#ffffff" bold="1" italic="0" spellChecking="false"/>
+			<itemData name="Overloaders" defStyleNum="dsOthers" color="#000e52" selColor="#ffffff" bold="1" italic="0" spellChecking="false"/>
+			<itemData name="Preprocessor" defStyleNum="dsChar" spellChecking="false"/>
+			<itemData name="String Char" defStyleNum="dsChar" spellChecking="false"/>
+			<itemData name="Float" defStyleNum="dsFloat" spellChecking="false"/>
+			<itemData name="Int" defStyleNum="dsDecVal" spellChecking="false"/>
+			<itemData name="Hex" defStyleNum="dsBaseN" spellChecking="false"/>
+			<itemData name="Octal" defStyleNum="dsBaseN" spellChecking="false"/>
+			<itemData name="Complex" defStyleNum="dsOthers" spellChecking="false"/>
+			<itemData name="Comment" defStyleNum="dsComment"/>
+			<itemData name="String" defStyleNum="dsString"/>
+			<itemData name="Raw String" defStyleNum="dsString"/>
+			<itemData name="Decorator" defStyleNum="dsOthers" color="#8f6b32" selColor="#ffffff" italic="0" spellChecking="false"/>
+		</itemDatas>
+	</highlighting>
+	<general>
+		<folding indentationsensitive="1" />
+		<emptyLines>
+			<emptyLine regexpr="(?:\s+|\s*#.*)"/>
+		</emptyLines>
+		<comments>
+			<comment name="singleLine" start="#" position="afterwhitespace"/>
+		</comments>
+		<keywords casesensitive="1" additionalDeliminator="#'"/>
+	</general>
+</language>

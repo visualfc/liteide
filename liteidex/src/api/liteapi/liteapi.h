@@ -37,6 +37,9 @@
 #include <QUrl>
 #include <QDesktopServices>
 
+class ColorStyle;
+class ColorStyleScheme;
+
 namespace LiteApi {
 
 class IApplication;
@@ -122,6 +125,7 @@ public:
     virtual QList<IMimeType*> mimeTypeList() const= 0;
     virtual IMimeType *findMimeType(const QString &type) const = 0;
     virtual QString findMimeTypeByFile(const QString &fileName) const = 0;
+    virtual QString findMimeTypeBySuffix(const QString &suffix) const = 0;
     virtual QString findMimeTypeByScheme(const QString &scheme) const = 0;
     virtual QStringList findAllFilesByMimeType(const QString &dir, const QString &type, int deep = 0) const = 0;
 };
@@ -245,6 +249,15 @@ signals:
     void reloaded();
 };
 
+struct FindOption {
+    QString findText;
+    bool    useRegexp;
+    bool    matchWord;
+    bool    matchCase;
+    bool    wrapAround;
+    bool    backWard;
+};
+
 class ITextEditor : public IEditor
 {
     Q_OBJECT
@@ -255,6 +268,7 @@ public:
     virtual int utf8Position() const = 0;
     virtual QByteArray utf8Data() const = 0;
     virtual void gotoLine(int line, int column, bool center = false) = 0;
+    virtual void setFindOption(FindOption *opt) = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)
@@ -312,6 +326,8 @@ public:
     virtual void activeBrowser(IEditor *editor) = 0;
     virtual void addNavigationHistory(IEditor *editor = 0,const QByteArray &saveState = QByteArray()) = 0;
     virtual void cutForwardNavigationHistory() = 0;
+    virtual void loadColorStyleScheme(const QString &fileName) = 0;
+    virtual const ColorStyleScheme *colorStyleScheme() const = 0;
 public slots:
     virtual bool saveEditor(IEditor *editor = 0, bool emitAboutSave = true) = 0;
     virtual bool saveEditorAs(IEditor *editor = 0) = 0;
@@ -324,6 +340,7 @@ signals:
     void editorAboutToClose(LiteApi::IEditor *editor);
     void editorAboutToSave(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
+    void colorStyleSchemeChanged();
 };
 
 class IBrowserEditor : public IEditor
@@ -478,7 +495,17 @@ struct ActionInfo {
     QString ks;
     bool    standard;
     QList<QKeySequence> keys;
-    QList<QAction*> actions;
+    QAction *action;
+};
+
+class IActionContext {
+public:
+    virtual QString contextName() const = 0;
+    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false) = 0;
+    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
+    virtual QStringList actionKeys() const = 0;
+    virtual ActionInfo *actionInfo(const QString &key) const = 0;
+    virtual void setActionShourtcuts(const QString &id, const QString &shortcuts) = 0;
 };
 
 class IActionManager : public IManager
@@ -496,11 +523,12 @@ public:
     virtual void removeToolBar(QToolBar* toolBar) = 0;
     virtual QList<QString> toolBarList() const = 0;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act) = 0;
-    virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false) = 0;
-    virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
+    virtual IActionContext *getActionContext(QObject *obj, const QString &name) = 0;
     virtual QStringList actionKeys() const = 0;
-    virtual ActionInfo *actionInfo(const QString &key) = 0;
+    virtual ActionInfo *actionInfo(const QString &id) const = 0;
     virtual void setActionShourtcuts(const QString &id, const QString &shortcuts) = 0;
+    virtual QStringList actionContextNameList() const = 0;
+    virtual IActionContext *actionContextForName(const QString &name) = 0;
 };
 
 class IGoProxy : public QObject
@@ -543,15 +571,15 @@ public:
     virtual QString pluginPath() const = 0;
     virtual QString storagePath() const = 0;
 
-    virtual QString shortVer() const = 0;
-    virtual QString version() const = 0;
-    virtual QString name() const = 0;
-    virtual QString copyright() const = 0;
+    virtual QString ideVersion() const = 0;
+    virtual QString ideFullName() const = 0;
+    virtual QString ideName() const = 0;
+    virtual QString ideCopyright() const = 0;
 
     virtual QList<IPlugin*> pluginList() const = 0;
 
-    virtual void loadSession(const QString &name) = 0;
-    virtual void saveSession(const QString &name) = 0;
+    virtual void loadSession(const QString &ideName) = 0;
+    virtual void saveSession(const QString &ideName) = 0;
     virtual void loadState() = 0;
     virtual void saveState() = 0;
 
@@ -559,6 +587,7 @@ public:
     virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString()) = 0;
 signals:
     void loaded();
+    void key_escape();
     void broadcast(QString,QString,QString);
 };
 
@@ -687,7 +716,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X16")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X18")
 
 
 #endif //__LITEAPI_H__

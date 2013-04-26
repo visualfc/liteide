@@ -64,11 +64,26 @@ inline IEnvManager *getEnvManager(LiteApi::IApplication* app)
 
 inline QProcessEnvironment getCurrentEnvironment(LiteApi::IApplication *app)
 {
+    QProcessEnvironment e;
     IEnvManager *env = getEnvManager(app);
     if (env) {
-        return env->currentEnvironment();
+        e = env->currentEnvironment();
+    } else {
+        e = QProcessEnvironment::systemEnvironment();
     }
-    return QProcessEnvironment::systemEnvironment();
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+    QStringList pathList;
+    foreach (QString path, e.value("PATH").split(sep,QString::SkipEmptyParts)) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.append(app->applicationPath());
+    pathList.removeDuplicates();
+    e.insert("PATH",pathList.join(sep));
+    return e;
 }
 
 inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)

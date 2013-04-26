@@ -12,6 +12,7 @@ include (../utils/textoutput/textoutput.pri)
 include (../utils/extension/extension.pri)
 include (../utils/filesystem/filesystem.pri)
 include (../utils/symboltreeview/symboltreeview.pri)
+include (../utils/colorstyle/colorstyle.pri)
 include (../3rdparty/elidedlabel/elidedlabel.pri)
 
 isEmpty(PRECOMPILED_HEADER):PRECOMPILED_HEADER = $$IDE_SOURCE_TREE/src/pch/liteide_gui_pch.h

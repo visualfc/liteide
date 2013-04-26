@@ -32,16 +32,24 @@ class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
 public:
+    enum TextFormatProperty {
+        MatchBrace = QTextFormat::UserProperty+1,
+        CurrentLine
+    };
+
     LiteEditorWidgetBase(QWidget *parent = 0);
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
-    void setTabWidth(int n);
+    void setTabSize(int n);
+    int tabSize() const;
+    void updateTabWidth();
     void setTabUseSpace(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
 public:
     QWidget* extraArea();
     void setExtraColor(const QColor &foreground,const QColor &background);
     void setCurrentLineColor(const QColor &background);
+    void setIndentLineColor(const QColor &foreground);
     int extraAreaWidth();
     void extraAreaPaintEvent(QPaintEvent *e);
     void extraAreaMouseEvent(QMouseEvent *e);
@@ -49,6 +57,8 @@ public:
     void resizeEvent(QResizeEvent *e);
     void showToolTip(const QTextCursor &cursor, const QString &tip);
     void hideToolTip();
+    void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
+    void ensureFinalNewLine(QTextCursor& cursor);
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
@@ -59,15 +69,18 @@ protected:
     void saveCurrentCursorPositionForNavigation();
     QByteArray m_tempNavigationState;
 public slots:
-    void editContentsChanged(int,int,int);    
+    void cleanWhitespace();
+    void editContentsChanged(int,int,int);
     virtual void highlightCurrentLine();
     virtual void slotUpdateExtraAreaWidth();
     virtual void slotModificationChanged(bool);
     virtual void slotUpdateRequest(const QRect &r, int dy);
     virtual void slotCursorPositionChanged();
+    virtual void updateSelection();
     virtual void slotUpdateBlockNotify(const QTextBlock &);
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    
+    void setFindOption(LiteApi::FindOption *opt);
 public slots:
     void gotoMatchBrace();
     void gotoLine(int line, int column, bool center);
@@ -142,6 +155,15 @@ public:
     int rightLineWidth() const {
         return m_rightLineWidth;
     }
+    void setEofVisible(bool b) {
+        m_eofVisible = b;
+    }
+    void setIndentLineVisible(bool b) {
+        m_indentLineVisible = b;
+    }
+    bool indentLineVisible() const {
+        return m_indentLineVisible;
+    }
 
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
@@ -166,12 +188,18 @@ protected:
     QTextCursor m_lastSelection;
     QColor  m_extraForeground;
     QColor  m_extraBackground;
-    QColor  m_CurrentLineBackground;
+    QColor  m_indentLineForeground;
+    QColor  m_currentLineBackground;
+    QRegExp m_selectionExpression;
+    QRegExp m_findExpression;
+    QTextDocument::FindFlags m_findFlags;
     bool m_lineNumbersVisible;
-    bool m_marksVisible;
+    bool m_marksVisible;    
     bool m_codeFoldingVisible;
     bool m_rightLineVisible;
+    bool m_eofVisible;
     int  m_rightLineWidth;
+    bool m_indentLineVisible;
     bool m_autoIndent;
     bool m_autoBraces0; //{
     bool m_autoBraces1; //(

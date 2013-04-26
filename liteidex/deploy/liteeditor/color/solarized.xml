@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Solarized-Light">
+	<!-- Based on the Solarized color scheme by Ethan Schoonover:
+	     http://ethanschoonover.com/solarized                     -->
+	<style name="Text" foreground="#657b83" background="#fdf6e3"/>
+ 	<style name="Extra" foreground="#657b83" background="#eee8d5"/>
+  <style name="Selection" foreground="#ffffff"/>
+ 	<style name="CurrentLine" background="#B4C8C8"/>
+ 	<style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#cb4b16"/>
+  <style name="DataType" foreground="#b58900" /> 
+  <style name="Decimal" foreground="#268bd2"/>
+  <style name="BaseN" foreground="#268bd2"/>
+  <style name="Float" foreground="#268bd2"/>
+  <style name="Char" foreground="#2aa198"/>
+  <style name="String" foreground="#2aa198"/>
+  <style name="Comment" foreground="#93a1a1"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#dc322f"/>
+  <style name="Function" foreground="#859900"/>
+  <style name="RegionMarker" foreground="#657b83"/>
+  <style name="Symbol" foreground="#657b83"/>   
+  <style name="BuiltinFunc" foreground="#859900"/>
+  <style name="Predeclared" foreground="#859900"/>
+  <style name="FuncDecl" foreground="#657b83"/>
+</style-scheme>
