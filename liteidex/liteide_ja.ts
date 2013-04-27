@@ -502,16 +502,16 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="450"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="456"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="461"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="449"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="455"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="460"/>
         <source>Rename File</source>
         <translation>ファイル名を変更</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="181"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="475"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="480"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="474"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="479"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation type="unfinished">ファイルを削除</translation>
@@ -539,41 +539,41 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="476"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="475"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="481"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="480"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="500"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="499"/>
         <source>A folder with that name already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="516"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="525"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="530"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="524"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="529"/>
         <source>Rename Folder</source>
         <translation>フォルダ名を変更</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="545"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="544"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="550"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="549"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="186"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="544"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="549"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="543"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation type="unfinished">フォルダを削除</translation>
@@ -594,8 +594,8 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="409"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="419"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="408"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="418"/>
         <source>Create File</source>
         <translation>ファイルを作成</translation>
     </message>
@@ -615,29 +615,29 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="253"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="252"/>
         <source>File System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="410"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="409"/>
         <source>A file with that name already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="420"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="419"/>
         <source>Failed to create the file!</source>
         <translation>ファイルの作成に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="450"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="516"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="449"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
         <source>New Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="457"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="462"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="456"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="461"/>
         <source>Failed to rename the file!</source>
         <translation>ファイル名の変更に失敗しました!</translation>
     </message>
@@ -650,8 +650,8 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="obsolete">ファイルの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="499"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="502"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="498"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="501"/>
         <source>Create Folder</source>
         <translation>フォルダを作成</translation>
     </message>
@@ -660,13 +660,13 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation type="obsolete">フォルダ名</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="503"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="502"/>
         <source>Failed to create the folder!</source>
         <translation>フォルダの作成に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="526"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="531"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="525"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="530"/>
         <source>Failed to rename the folder!</source>
         <translation>フォルダ名の変更に失敗しました!</translation>
     </message>
@@ -731,11 +731,6 @@ Do you want to load?</oldsource>
         <translation>プロジェクトもしくはファイルを開く...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="68"/>
-        <source>Clean All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/liteapp/filemanager.cpp" line="126"/>
         <location filename="src/liteapp/filemanager.cpp" line="147"/>
         <location filename="src/liteapp/filemanager.cpp" line="168"/>
@@ -787,6 +782,11 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <location filename="src/liteapp/filemanager.cpp" line="249"/>
         <source>Open Files</source>
         <translation>ファイルを開く...</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/filemanager.cpp" line="68"/>
+        <source>Clear History</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="262"/>
@@ -1411,87 +1411,87 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="obsolete">ファイルを開く</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="556"/>
+        <location filename="src/liteapp/liteapp.cpp" line="557"/>
         <source>New Instance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="559"/>
+        <location filename="src/liteapp/liteapp.cpp" line="560"/>
         <source>Close File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="562"/>
+        <location filename="src/liteapp/liteapp.cpp" line="563"/>
         <source>Close All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="569"/>
+        <location filename="src/liteapp/liteapp.cpp" line="570"/>
         <source>Close Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="572"/>
+        <location filename="src/liteapp/liteapp.cpp" line="573"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="575"/>
+        <location filename="src/liteapp/liteapp.cpp" line="576"/>
         <source>Save File As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="578"/>
+        <location filename="src/liteapp/liteapp.cpp" line="579"/>
         <source>Save All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="565"/>
+        <location filename="src/liteapp/liteapp.cpp" line="566"/>
         <source>Open Project</source>
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="544"/>
+        <location filename="src/liteapp/liteapp.cpp" line="545"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="547"/>
+        <location filename="src/liteapp/liteapp.cpp" line="548"/>
         <source>Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="550"/>
+        <location filename="src/liteapp/liteapp.cpp" line="551"/>
         <source>Open Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="553"/>
+        <location filename="src/liteapp/liteapp.cpp" line="554"/>
         <source>Open Folder in New Instance...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="567"/>
+        <location filename="src/liteapp/liteapp.cpp" line="568"/>
         <source>Save Project</source>
         <translation>プロジェクトを保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="581"/>
+        <location filename="src/liteapp/liteapp.cpp" line="582"/>
         <source>Exit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="584"/>
+        <location filename="src/liteapp/liteapp.cpp" line="585"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="588"/>
+        <location filename="src/liteapp/liteapp.cpp" line="589"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Liteide について</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="591"/>
+        <location filename="src/liteapp/liteapp.cpp" line="592"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1607,7 +1607,8 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="154"/>
-        <source>When Close Project, Project Editors Is Closed Automatically.</source>
+        <source>Close associated editor windows when closing a project</source>
+        <oldsource>When Close Project, Project Editors Is Closed Automatically.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1618,8 +1619,9 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="177"/>
-        <source>The language change will take effect after a restart of LiteIDE.</source>
-        <translation>言語の変更は LiteIDE の再起動後に有効となります。</translation>
+        <source>Language changes will take effect after LiteIDE is restarted.</source>
+        <oldsource>The language change will take effect after a restart of LiteIDE.</oldsource>
+        <translation type="unfinished">言語の変更は LiteIDE の再起動後に有効となります。</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="114"/>
@@ -2124,7 +2126,8 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="166"/>
-        <source>Output widget use color scheme</source>
+        <source>Apply color scheme to text output widgets</source>
+        <oldsource>Output widget use color scheme</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
