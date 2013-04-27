@@ -208,7 +208,7 @@ QProcessEnvironment EnvManager::currentEnvironment() const
 void EnvManager::loadEnvFiles(const QString &path)
 {
     QDir dir = path;
-    m_liteApp->appendLog("LiteEnv","LoadEnvFiles "+path);
+    m_liteApp->appendLog("LiteEnv","Loaded environment files from "+path);
     dir.setFilter(QDir::Files | QDir::NoSymLinks);
     dir.setNameFilters(QStringList("*.env"));
     foreach (QString fileName, dir.entryList()) {

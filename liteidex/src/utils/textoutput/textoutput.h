@@ -27,6 +27,8 @@
 #include "terminaledit.h"
 #include "liteapi/liteapi.h"
 
+#include <QElapsedTimer>
+
 #define TEXTOUTPUT_USECOLORSCHEME "textoutput/usecolorscheme"
 
 class TextOutput : public TerminalEdit
@@ -43,12 +45,14 @@ public slots:
     void appLoaded();
     void loadColorStyleScheme();
 protected:
+    void appendAndReset(const QString &text, QTextCharFormat& f);
     LiteApi::IApplication *m_liteApp;
     QPalette    m_defPalette;
     QTextCharFormat m_fmt;
     QColor m_clrTag;
     QColor m_clrError;
     QColor m_clrText;
+    QElapsedTimer m_existsTimer;
 };
 
 #endif // TEXTOUTPUT_H

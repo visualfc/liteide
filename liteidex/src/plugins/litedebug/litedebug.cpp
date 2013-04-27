@@ -303,7 +303,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
     m_dbgWidget->clearLog();
 
     if (cmd.isEmpty()) {
-        m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(cmd),true);
+        m_liteApp->appendLog("LiteDebug",QString("Could not execute %1").arg(cmd),true);
         return;
     }
     if (QFileInfo(cmd).isAbsolute()) {

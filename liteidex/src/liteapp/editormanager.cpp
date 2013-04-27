@@ -370,7 +370,7 @@ bool EditorManager::saveEditor(IEditor *editor, bool emitAboutSave)
         if (cur->save()) {
             emit editorSaved(cur);
         } else {
-            m_liteApp->appendLog("Editor",QString("save file false! %1").arg(cur->filePath()),true);
+            m_liteApp->appendLog("Editor",QString("Failed to save %1").arg(cur->filePath()),true);
         }
 
         return true;

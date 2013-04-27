@@ -1172,5 +1172,5 @@ void GdbDebugger::finished(int code)
 {
     clear();
     emit debugStoped();
-    emit debugLog(LiteApi::DebugRuntimeLog,QString("program exited code %1").arg(code));
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Program exited with code %1").arg(code));
 }

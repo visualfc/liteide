@@ -89,9 +89,9 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv* e)
     m_process->setProcessEnvironment(env);
 
     if (m_gocodeCmd.isEmpty()) {
-         m_liteApp->appendLog("GolangCode","no find gocode",true);
+         m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
     } else {
-         m_liteApp->appendLog("GolangCode",QString("find gocode %1").arg(m_gocodeCmd));
+         m_liteApp->appendLog("GolangCode",QString("Found gocode at %1").arg(m_gocodeCmd));
     }
     resetGocode();
 }

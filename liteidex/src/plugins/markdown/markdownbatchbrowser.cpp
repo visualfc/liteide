@@ -195,7 +195,7 @@ void MarkdownBatchBrowser::appendLog(const QString &log)
 void MarkdownBatchBrowser::loadFinished(bool b)
 {
     if (!b) {
-        this->appendLog("load html document false!");
+        this->appendLog("Failed loading the HTML document!");
         return;
     }
 #ifndef QT_NO_PRINTER
@@ -205,7 +205,7 @@ void MarkdownBatchBrowser::loadFinished(bool b)
         printer.setCreator("LiteIDE");
         printer.setOutputFileName(m_pdfFileName);
         m_doc->print(&printer);
-        this->appendLog("print pdf "+m_pdfFileName+" ...");
+        this->appendLog("Printing PDF "+m_pdfFileName);
         if (m_mode == MODE_SPLIT_PDF) {
             this->processPdfList();
         } else {
@@ -309,7 +309,7 @@ void MarkdownBatchBrowser::mergeHtml()
         fileName.append(".html");
     }
 
-    this->appendLog("\nMerge html "+fileName+"...\n");
+    this->appendLog("\nExporting merged HTML to "+fileName+"\n");
 
     QFile f(fileName);
     if (f.open(QFile::WriteOnly|QFile::Truncate)) {
@@ -339,9 +339,9 @@ void MarkdownBatchBrowser::splitPdf()
     if (m_fileList.isEmpty()) {
         return;
     }
-    this->appendLog("\nSplit pdf ...\n");
+    this->appendLog("\nExporting split PDF\n");
     if (m_exportPath.isEmpty()) {
-        this->appendLog("output path empty!");
+        this->appendLog("The output path is empty!");
         return;
     }
     m_mode = MODE_SPLIT_PDF;
@@ -387,7 +387,7 @@ void MarkdownBatchBrowser::mergePdf()
     m_pdfFileName = fileName;
     this->m_mode = MODE_MERGE_PDF;
 
-    this->appendLog("\nMerge pdf "+fileName+"...\n");
+    this->appendLog("\nExporting merged PDF"+fileName+"\n");
 
     QByteArray datas;
     foreach (QString file, m_fileList) {
@@ -419,7 +419,7 @@ void MarkdownBatchBrowser::mergePrint()
 
     this->m_mode = MODE_MERGE_PRINT;
 
-    this->appendLog("\nMerge print ...\n");
+    this->appendLog("\nPrinting merged document\n");
 
     QByteArray datas;
     foreach (QString file, m_fileList) {
@@ -451,7 +451,7 @@ void MarkdownBatchBrowser::mergePrintPreview()
 
     this->m_mode = MODE_MERGE_PRINTPREVIEW;
 
-    this->appendLog("\nMerge print ...\n");
+    this->appendLog("\nPreviewing merged document\n");
 
     QByteArray datas;
     foreach (QString file, m_fileList) {
@@ -480,9 +480,9 @@ void MarkdownBatchBrowser::splitHtml()
     if (m_fileList.isEmpty()) {
         return;
     }
-    this->appendLog("\nSplit html ...\n");
+    this->appendLog("\nExporting split HTML\n");
     if (m_exportPath.isEmpty()) {
-        this->appendLog("output path empty!");
+        this->appendLog("The output path is empty!");
         return;
     }
     foreach (QString file, m_fileList) {
@@ -490,7 +490,7 @@ void MarkdownBatchBrowser::splitHtml()
         QString out = m_exportPath+"/"+info.completeBaseName()+".html";
         QFile f(out);
         if (f.open(QFile::WriteOnly|QFile::Truncate)) {
-            this->appendLog(file+" => "+out+" ...");
+            this->appendLog(file+" => "+out);
             QByteArray exportData = m_exportTemple;
             exportData.replace("__MARKDOWN_TITLE__",info.fileName().toUtf8());
             exportData.replace("__MARKDOWN_CONTENT__",m_fileHtmlMap.value(file));

@@ -188,7 +188,7 @@ LiteApp::LiteApp()
     m_actionManager->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_optionAct);
     m_optionManager->setAction(m_optionAct);
 
-    this->appendLog("LiteApp","Init");
+    this->appendLog("LiteApp","Initializing");
 
     m_liteAppOptionFactory = new LiteAppOptionFactory(this,this);
 
@@ -249,7 +249,7 @@ void LiteApp::load(bool bUseSession)
     }
 
     if (bSplash) {
-        splash->showMessage("liteide scan plugins ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Scanning plugins...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -258,14 +258,14 @@ void LiteApp::load(bool bUseSession)
     loadPlugins();
 
     if (bSplash) {
-        splash->showMessage("liteide load plugins ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Loading plugins...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
     initPlugins();
 
     if (bSplash) {
-        splash->showMessage("liteide load state ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Loading state...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -277,12 +277,11 @@ void LiteApp::load(bool bUseSession)
     m_projectManager->setCurrentProject(0);
 
     if (bSplash) {
-        splash->showMessage("liteide load session ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Loading session...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
 
-    appendLog("LiteApp","loaded");
     bool b = m_settings->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
     if (b && bUseSession) {
         loadSession("default");
@@ -299,6 +298,8 @@ void LiteApp::load(bool bUseSession)
 
     m_goProxy->call("version");
     m_goProxy->call("cmdlist");    
+	
+    appendLog("LiteApp","Finished loading");
 }
 
 LiteApp::~LiteApp()
@@ -468,13 +469,13 @@ QString LiteApp::ideCopyright() const
 void LiteApp::setPluginPath(const QString &path)
 {
     m_pluginPath = path;
-    appendLog("LiteApp","setPluginPath "+path);
+    appendLog("LiteApp","Set plugin path to "+path);
 }
 
 void LiteApp::setResourcePath(const QString &path)
 {
     m_resourcePath = path;
-    appendLog("LiteApp","setResourcePath "+path);
+    appendLog("LiteApp","Set resource path to "+path);
 }
 
 
@@ -489,7 +490,7 @@ void LiteApp::appendLog(const QString &model, const QString &log, bool error)
     QString text = dt.toString("hh:mm:ss");
     text += QLatin1Char(' ');
     text += model;
-    text += QLatin1Char(' ');
+    text += ": ";
     text += log;
     text += QLatin1Char('\n');
     m_logOutput->updateExistsTextColor();
@@ -532,7 +533,7 @@ void LiteApp::initPlugins()
             if (ret) {
                 m_pluginList.append(plugin);
             }
-            appendLog("LiteApp",QString("load plugin %1 %2").arg(factory->id()).arg(ret?"success":"false"));
+            appendLog("LiteApp",QString("%1 %2").arg(ret?"Loaded":"ERROR while loading").arg(factory->id()),!ret);
         }
     }
 }
