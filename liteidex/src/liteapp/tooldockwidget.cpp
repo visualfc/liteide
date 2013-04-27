@@ -83,7 +83,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act->setData(Qt::TopDockWidgetArea);
         moveMenu->addAction(act);
         connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
-        QAction *act1 = new QAction(tr("Top : Split"),this);
+        QAction *act1 = new QAction(tr("Top (Split)"),this);
         act1->setData(Qt::TopDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
@@ -93,7 +93,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act->setData(Qt::BottomDockWidgetArea);
         moveMenu->addAction(act);
         connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
-        QAction *act1 = new QAction(tr("Bottom : Split"),this);
+        QAction *act1 = new QAction(tr("Bottom (Split)"),this);
         act1->setData(Qt::BottomDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
@@ -103,7 +103,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act->setData(Qt::LeftDockWidgetArea);
         moveMenu->addAction(act);
         connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
-        QAction *act1 = new QAction(tr("Left : Split"),this);
+        QAction *act1 = new QAction(tr("Left (Split)"),this);
         act1->setData(Qt::LeftDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
@@ -113,7 +113,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act->setData(Qt::RightDockWidgetArea);
         moveMenu->addAction(act);
         connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
-        QAction *act1 = new QAction(tr("Right : Split"),this);
+        QAction *act1 = new QAction(tr("Right (Split)"),this);
         act1->setData(Qt::RightDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
@@ -121,7 +121,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
 
     QMenu *menu = new QMenu(this);
     if (split) {
-        QAction *unsplitAct = new QAction(tr("UnSplit"),this);
+        QAction *unsplitAct = new QAction(tr("Unsplit"),this);
         unsplitAct->setData(area);
         connect(unsplitAct,SIGNAL(triggered()),this,SLOT(unsplitAction()));
         menu->addAction(unsplitAct);

@@ -101,7 +101,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Build");
 
-    m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Config"),this);
+    m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Configuration..."),this);
     actionContext->regAction(m_configAct,"Config","");
 
     m_process = new ProcessEx(this);
@@ -112,7 +112,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
     actionContext->regAction(m_stopAct,"Stop","");
 
-    m_clearAct = new QAction(tr("Clear All"),this);
+    m_clearAct = new QAction(tr("Clear Output"),this);
     m_clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
     actionContext->regAction(m_clearAct,"ClearOutput","");
 

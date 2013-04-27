@@ -201,10 +201,10 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     m_findCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     QHBoxLayout *optLayout = new QHBoxLayout;
-    m_matchWordCheckBox = new QCheckBox(tr("Match word"));
+    m_matchWordCheckBox = new QCheckBox(tr("Match whole word"));
     m_matchCaseCheckBox = new QCheckBox(tr("Match case"));
     m_useRegexCheckBox = new QCheckBox(tr("Regular expression"));
-    m_findSubCheckBox = new QCheckBox(tr("Look in subdirs"));
+    m_findSubCheckBox = new QCheckBox(tr("Scan subdirectories"));
     optLayout->addWidget(m_matchWordCheckBox);
     optLayout->addWidget(m_matchCaseCheckBox);
     optLayout->addWidget(m_useRegexCheckBox);
@@ -232,8 +232,8 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     QHBoxLayout *dirLayout = new QHBoxLayout;
     m_findPathCombo = new QComboBox;
     m_findPathCombo->setEditable(true);
-    QPushButton *browserBtn = new QPushButton(tr("Browser"));
-    QPushButton *currentBtn = new QPushButton(tr("Current"));
+    QPushButton *browserBtn = new QPushButton(tr("Browse..."));
+    QPushButton *currentBtn = new QPushButton(tr("Use Current"));
     dirLayout->addWidget(m_findPathCombo,1);
     dirLayout->addWidget(currentBtn);
     dirLayout->addWidget(browserBtn);

@@ -120,13 +120,13 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
     process.start(m_gofmtCmd,args);
     if (!process.waitForStarted(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("wait start timeout %1ms").arg(timeout),false);
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting gofmt").arg(timeout),false);
         return;
     }
     process.write(text.toUtf8());
     process.closeWriteChannel();
     if (!process.waitForFinished(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("wait start timeout %1ms").arg(timeout),false);
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running gofmt").arg(timeout),false);
         return;
     }
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
@@ -134,7 +134,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     if (!error.isEmpty()) {
         QString data = codec->toUnicode(error);
         data.replace("<standard input>",fileName);
-        m_liteApp->appendLog("gofmt error\n",data,m_autopop);
+        m_liteApp->appendLog("gofmt error","\n"+data,m_autopop);
         return;
         //goto error line
 //        QRegExp rep("([\\w\\d_\\\\/\\.]+):(\\d+):");

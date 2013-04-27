@@ -17,27 +17,27 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Golang Format</string>
+      <string>Format Options</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QCheckBox" name="checkBoxDiff">
         <property name="text">
-         <string>Use diff (gofmt -d), need find diff in PATH</string>
+         <string>Use diff tool for faster formatting (requires diff program in PATH)</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="checkBoxAutoFmt">
         <property name="text">
-         <string>When the editor is saved automatically gofmt</string>
+         <string>Automatically format code when saving</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="checkBoxAutoPopMessage">
         <property name="text">
-         <string>Auto popup gofmt error message</string>
+         <string>Display log window on error</string>
         </property>
        </widget>
       </item>
@@ -46,7 +46,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Process TimeOut( &gt; 50ms ):</string>
+           <string>Formatting timeout in milliseconds (50ms or more):</string>
           </property>
          </widget>
         </item>

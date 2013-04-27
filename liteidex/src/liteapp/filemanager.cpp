@@ -65,7 +65,7 @@ bool FileManager::initWithApp(IApplication *app)
     m_maxRecentFiles = m_liteApp->settings()->value("LiteApp/MaxRecentFiles",16).toInt();
     m_newFileDialog = 0;
     m_recentMenu = m_liteApp->actionManager()->loadMenu("menu/recent");
-    QAction *cleanAct = new QAction(tr("Clean All"),this);
+    QAction *cleanAct = new QAction(tr("Clear History"),this);
     m_recentSeparator = m_recentMenu->addSeparator();
     m_recentMenu->addAction(cleanAct);
     foreach (QString key, this->schemeList()) {
@@ -214,7 +214,7 @@ void FileManager::openFiles()
 void FileManager::openFolder()
 {
      QString folder = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),
-           tr("Open Folder"), m_initPath);
+           tr("Select a folder:"), m_initPath);
     if (!folder.isEmpty()) {
         QDir dir(folder);
         if (dir.cdUp()) {
@@ -232,7 +232,7 @@ void FileManager::newInstance()
 void FileManager::openFolderNewInstance()
 {
     QString folder = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),
-          tr("Open Folder With New Instance"), m_initPath);
+          tr("Select a folder:"), m_initPath);
    if (!folder.isEmpty()) {
        QDir dir(folder);
        if (dir.cdUp()) {
@@ -291,8 +291,8 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
         emit fileWizardFinished(m_newFileDialog->type(),m_newFileDialog->scheme(),m_newFileDialog->openPath());
         QMessageBox::StandardButton ret;
         ret = QMessageBox::question(m_liteApp->mainWindow(), tr("LiteIDE"),
-                                    tr("Project '%1' is created.\n"
-                                       "Do you want to load?")
+                                    tr("Project '%1' has been created.\n"
+                                       "Do you want to open it now?")
                                     .arg(m_newFileDialog->openFiles().join(" ")),
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
                                     QMessageBox::Yes);
@@ -413,6 +413,15 @@ QString FileManager::schemeKey(const QString &scheme) const
     return QString("Recent1/%1").arg(scheme);
 }
 
+QString FileManager::schemeName(const QString &scheme) const
+{
+	if (scheme == "session") return tr("Session");
+    else if (scheme == "proj") return tr("Project");
+    else if (scheme == "file") return tr("File");
+    else if (scheme == "folder") return tr("Folder");
+	else return scheme;
+}
+
 QStringList FileManager::recentFiles(const QString &scheme) const
 {
     return m_liteApp->settings()->value(schemeKey(scheme)).toStringList();;
@@ -451,7 +460,8 @@ void FileManager::updateRecentFileActions(const QString &scheme)
 {
     QMenu *menu = m_schemeMenuMap.value(scheme);
     if (!menu) {
-        QAction *act = new QAction(scheme,this);
+		QString name = schemeName(scheme);
+        QAction *act = new QAction(name,this);
         m_recentMenu->insertAction(m_recentSeparator,act);
         menu = new QMenu(scheme);
         act->setMenu(menu);
@@ -594,7 +604,8 @@ void FileManager::checkForReload()
                 if (!fileName.isEmpty()) {
                     LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,false);
                     if (editor) {
-                        QString text = QString(tr("%1\nThis file has been removed. Do you want save to file or close editor?")).arg(fileName);
+                        QString text = QString(tr("The following file has been deleted outside of LiteIDE:\n%1\n"
+							"\nDo you want to save the previous contents, close the file, or leave the contents unsaved?")).arg(fileName);
                         int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Save |QMessageBox::Close | QMessageBox::Cancel,QMessageBox::Save);
                         if (ret == QMessageBox::Save) {
                             if (m_liteApp->editorManager()->saveEditor(editor)) {
@@ -613,7 +624,7 @@ void FileManager::checkForReload()
                     QDateTime lastModified = QFileInfo(fileName).lastModified();
                     QDateTime modified = m_fileStateMap.value(fileName);
                     if (lastModified > modified) {
-                        QString text = QString(tr("%1\nThis file has been modified outside of the liteide. Do you want to reload it?")).arg(fileName);
+                        QString text = QString(tr("%1\nThis file has been modified outside of LiteIDE.  Do you want to reload it?")).arg(fileName);
                         int ret = QMessageBox::question(m_liteApp->mainWindow(),"LiteIDE X",text,QMessageBox::Yes|QMessageBox::No);
                         if (ret == QMessageBox::Yes) {
                             editor->reload();

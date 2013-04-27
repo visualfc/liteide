@@ -27,6 +27,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QTextCursor>
+#include <QElapsedTimer>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -48,21 +49,20 @@ TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *paren
     m_clrText = m_defPalette.foreground().color();
     m_clrTag = Qt::darkBlue;
     m_clrError = Qt::red;
+    m_existsTimer.start();
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 }
 
 void TextOutput::append(const QString &text)
 {
-    QTextCharFormat f = m_fmt;
-    f.setForeground(m_clrText);
-    TerminalEdit::append(text,&f);
+    append(text, m_clrText);
 }
 
 void TextOutput::append(const QString &text,const QBrush &foreground)
 {
     QTextCharFormat f = m_fmt;
     f.setForeground(foreground);
-    TerminalEdit::append(text,&f);
+    appendAndReset(text, f);
 }
 
 void TextOutput::appendTag(const QString &text, bool error)
@@ -74,18 +74,31 @@ void TextOutput::appendTag(const QString &text, bool error)
     } else {
         f.setForeground(m_clrTag);
     }
-    TerminalEdit::append(text,&f);
+    appendAndReset(text, f);
+}
+
+void TextOutput::appendAndReset(const QString &text, QTextCharFormat& f)
+{
+    TerminalEdit::append(text, &f);
+    m_existsTimer.restart();
 }
 
 void TextOutput::updateExistsTextColor()
 {
-    QTextCharFormat f = m_fmt;
-    QColor color = m_clrText;
-    color.setAlpha(128);
-    f.setForeground(color);
-    QTextCursor cur = this->textCursor();
-    cur.select(QTextCursor::Document);
-    cur.setCharFormat(f);
+    if (!m_existsTimer.hasExpired(1000)) return;
+
+    QTextDocument* doc = document();
+    for (QTextBlock it = doc->begin(); it != doc->end(); it = it.next())
+    {
+        QTextCursor cur(it);
+        cur.select(QTextCursor::BlockUnderCursor);
+
+        QTextCharFormat f(cur.charFormat());
+        QColor color(f.foreground().color());
+        color.setAlpha(128);
+        f.setForeground(color);
+        cur.setCharFormat(f);
+    }
 }
 
 void TextOutput::setMaxLine(int max)

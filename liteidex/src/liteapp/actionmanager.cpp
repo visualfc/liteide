@@ -73,7 +73,7 @@ bool ActionManager::initWithApp(IApplication *app)
     m_viewMenu->addSeparator();
     insertMenu("menu/help",tr("&Help"));
 
-    QToolBar *stdToolBar = insertToolBar("toolbar/std",tr("Standard ToolBar"));
+    QToolBar *stdToolBar = insertToolBar("toolbar/std",tr("Standard Toolbar"));
 
     insertViewMenu(LiteApi::ViewMenuToolBarPos,stdToolBar->toggleViewAction());
 

@@ -126,10 +126,10 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
 
     m_mimeModel = new QStandardItemModel(0,4,this);
-    m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MimeType"));
-    m_mimeModel->setHeaderData(1,Qt::Horizontal,tr("TabWidth"));
-    m_mimeModel->setHeaderData(2,Qt::Horizontal,tr("Tab To Spaces"));
-    m_mimeModel->setHeaderData(3,Qt::Horizontal,tr("Extensions"));
+    m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
+    m_mimeModel->setHeaderData(1,Qt::Horizontal,tr("Tab Width"));
+    m_mimeModel->setHeaderData(2,Qt::Horizontal,tr("Spaces as Tabs"));
+    m_mimeModel->setHeaderData(3,Qt::Horizontal,tr("File Extensions"));
     connect(m_mimeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(mimeItemChanged(QStandardItem*)));
 
     ui->mimeTreeView->setModel(m_mimeModel);

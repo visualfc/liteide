@@ -208,7 +208,7 @@ QProcessEnvironment EnvManager::currentEnvironment() const
 void EnvManager::loadEnvFiles(const QString &path)
 {
     QDir dir = path;
-    m_liteApp->appendLog("LiteEnv","LoadEnvFiles "+path);
+    m_liteApp->appendLog("LiteEnv","Loaded environment files from "+path);
     dir.setFilter(QDir::Files | QDir::NoSymLinks);
     dir.setNameFilters(QStringList("*.env"));
     foreach (QString fileName, dir.entryList()) {
@@ -223,7 +223,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     }
     loadEnvFiles(m_liteApp->resourcePath()+"/liteenv");
 
-    m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/env",tr("Environment ToolBar"),"toolbar/tabs");
+    m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/env",tr("Environment Toolbar"),"toolbar/tabs");
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     m_envCmb = new QComboBox;

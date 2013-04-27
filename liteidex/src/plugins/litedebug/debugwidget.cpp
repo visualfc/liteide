@@ -77,11 +77,11 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_debugLogEdit->setReadOnly(false);
     m_debugLogEdit->setMaximumBlockCount(1024);
 
-    m_tabWidget->addTab(m_asyncView,tr("AsyncRecord"));
+    m_tabWidget->addTab(m_asyncView,tr("Async Record"));
     m_tabWidget->addTab(m_varsView,tr("Variables"));
     m_tabWidget->addTab(m_watchView,tr("Watch"));
-    m_tabWidget->addTab(m_statckView,tr("CallStack"));
-    m_tabWidget->addTab(m_libraryView,tr("Library"));
+    m_tabWidget->addTab(m_statckView,tr("Call Stack"));
+    m_tabWidget->addTab(m_libraryView,tr("Libraries"));
     m_tabWidget->addTab(m_debugLogEdit,tr("Console"));
 
     QVBoxLayout *layout = new QVBoxLayout;
@@ -250,7 +250,7 @@ void DebugWidget::saveDebugInfo(const QString &id)
 
 void DebugWidget::addWatch()
 {
-    QString text = QInputDialog::getText(this->m_widget,tr("Add Global Watch"),tr("Watch var:(example main.var os.Stdout)"));
+    QString text = QInputDialog::getText(this->m_widget,tr("Add Global Watch"),tr("Watch expression (e.g. main.var os.Stdout):"));
     if (text.isEmpty()) {
         return;
     }
@@ -262,7 +262,7 @@ void DebugWidget::addWatch()
 
 void DebugWidget::addLocalWatch()
 {
-    QString text = QInputDialog::getText(this->m_widget,tr("Add Local Watch"),tr("Watch var:(example s1.str)"));
+    QString text = QInputDialog::getText(this->m_widget,tr("Add Local Watch"),tr("Watch expression (e.g. s1.str):"));
     if (text.isEmpty()) {
         return;
     }

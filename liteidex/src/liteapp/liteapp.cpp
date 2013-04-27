@@ -169,7 +169,7 @@ LiteApp::LiteApp()
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_projectManager,SLOT(applyOption(QString)));
 
     QAction *esc = new QAction(tr("Escape"),this);
-    m_actionManager->getActionContext(this,"App")->regAction(esc,"Esacpe","ESC");
+    m_actionManager->getActionContext(this,"App")->regAction(esc,"Escape","ESC");
     connect(esc,SIGNAL(triggered()),this,SLOT(escape()));
     m_mainwindow->addAction(esc);
 
@@ -188,7 +188,7 @@ LiteApp::LiteApp()
     m_actionManager->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_optionAct);
     m_optionManager->setAction(m_optionAct);
 
-    this->appendLog("LiteApp","Init");
+    this->appendLog("LiteApp","Initializing");
 
     m_liteAppOptionFactory = new LiteAppOptionFactory(this,this);
 
@@ -249,7 +249,7 @@ void LiteApp::load(bool bUseSession)
     }
 
     if (bSplash) {
-        splash->showMessage("liteide scan plugins ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Scanning plugins...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -258,14 +258,14 @@ void LiteApp::load(bool bUseSession)
     loadPlugins();
 
     if (bSplash) {
-        splash->showMessage("liteide load plugins ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Loading plugins...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
     initPlugins();
 
     if (bSplash) {
-        splash->showMessage("liteide load state ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Loading state...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
@@ -277,12 +277,11 @@ void LiteApp::load(bool bUseSession)
     m_projectManager->setCurrentProject(0);
 
     if (bSplash) {
-        splash->showMessage("liteide load session ...",Qt::AlignLeft|Qt::AlignBottom);
+        splash->showMessage("Loading session...",Qt::AlignLeft|Qt::AlignBottom);
     }
 
     qApp->processEvents();
 
-    appendLog("LiteApp","loaded");
     bool b = m_settings->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
     if (b && bUseSession) {
         loadSession("default");
@@ -299,6 +298,8 @@ void LiteApp::load(bool bUseSession)
 
     m_goProxy->call("version");
     m_goProxy->call("cmdlist");    
+	
+    appendLog("LiteApp","Finished loading");
 }
 
 LiteApp::~LiteApp()
@@ -459,8 +460,8 @@ QString LiteApp::ideCopyright() const
     "2011-2013(c)\n"
     "visualfc@gmail.com\n"
     "\n"
-    "http://code.google.com/p/liteide\n"
-    "http://code.google.com/p/golangide\n"
+    "https://code.google.com/p/liteide\n"
+    "https://code.google.com/p/golangide\n"
     "https://github.com/visualfc/liteide";
     return s_info;
 }
@@ -468,13 +469,13 @@ QString LiteApp::ideCopyright() const
 void LiteApp::setPluginPath(const QString &path)
 {
     m_pluginPath = path;
-    appendLog("LiteApp","setPluginPath "+path);
+    appendLog("LiteApp","Set plugin path to "+path);
 }
 
 void LiteApp::setResourcePath(const QString &path)
 {
     m_resourcePath = path;
-    appendLog("LiteApp","setResourcePath "+path);
+    appendLog("LiteApp","Set resource path to "+path);
 }
 
 
@@ -489,7 +490,7 @@ void LiteApp::appendLog(const QString &model, const QString &log, bool error)
     QString text = dt.toString("hh:mm:ss");
     text += QLatin1Char(' ');
     text += model;
-    text += QLatin1Char(' ');
+    text += ": ";
     text += log;
     text += QLatin1Char('\n');
     m_logOutput->updateExistsTextColor();
@@ -532,7 +533,7 @@ void LiteApp::initPlugins()
             if (ret) {
                 m_pluginList.append(plugin);
             }
-            appendLog("LiteApp",QString("load plugin %1 %2").arg(factory->id()).arg(ret?"success":"false"));
+            appendLog("LiteApp",QString("%1 %2").arg(ret?"Loaded":"ERROR while loading").arg(factory->id()),!ret);
         }
     }
 }
@@ -541,16 +542,16 @@ void LiteApp::createActions()
 {
     IActionContext *actionContext =  m_actionManager->getActionContext(this,"App");
 
-    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New"),m_mainwindow);
+    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New..."),m_mainwindow);
     actionContext->regAction(m_newAct,"New",QKeySequence::New);
 
-    m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File"),m_mainwindow);
+    m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File..."),m_mainwindow);
     actionContext->regAction(m_openFileAct,"OpenFile",QKeySequence::Open);
 
-    m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder"),m_mainwindow);
+    m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder..."),m_mainwindow);
     actionContext->regAction(m_openFolderAct,"OpenFolder","");
 
-    m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder With New Instance"),m_mainwindow);
+    m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Instance..."),m_mainwindow);
     actionContext->regAction(m_openFolderNewInstanceAct,"OpenFolderNewInstance","");
 
     m_newInstance = new QAction(tr("New Instance"),m_mainwindow);
@@ -585,10 +586,10 @@ void LiteApp::createActions()
     m_fullScreent->setCheckable(true);
     actionContext->regAction(m_fullScreent,"FullScreen","Ctrl+Shift+F11");
 
-    m_aboutAct = new QAction(tr("About LiteIDE..."),m_mainwindow);
+    m_aboutAct = new QAction(tr("About LiteIDE"),m_mainwindow);
     actionContext->regAction(m_aboutAct,"About","");
 
-    m_aboutPluginsAct = new QAction(tr("About Plugins..."),m_mainwindow);
+    m_aboutPluginsAct = new QAction(tr("About Plugins"),m_mainwindow);
     actionContext->regAction(m_aboutPluginsAct,"AboutPlugins","");
 
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));

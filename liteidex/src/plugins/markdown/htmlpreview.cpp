@@ -62,7 +62,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_htmlWidget = 0;
     m_bWebkit = false;
 
-    m_cssMenu = new QMenu(tr("CSS Select Menu"));
+    m_cssMenu = new QMenu(tr("Page Style"));
     m_cssMenu->setIcon(QIcon("icon:/markdown/images/css.png"));
 
     m_cssActGroup = new QActionGroup(this);
@@ -73,13 +73,13 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_printPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview"),this);
     m_printPreviewAct->setVisible(false);
 
-    m_configAct = new QAction(QIcon("icon:markdown/images/config.png"),tr("Config"),this);
+    m_configAct = new QAction(QIcon("icon:markdown/images/config.png"),tr("Configuration"),this);
 
 
-    m_syncScrollAct = new QAction(tr("Sync Scroll"),this);
+    m_syncScrollAct = new QAction(tr("Synchronize preview and code scrollbars"),this);
     m_syncScrollAct->setCheckable(true);
 
-    m_syncSwitchAct = new QAction(tr("Automatically Display Preview"),this);
+    m_syncSwitchAct = new QAction(tr("Automatically display preview"),this);
     m_syncSwitchAct->setCheckable(true);
 
     m_configMenu = new QMenu(m_widget);
@@ -93,7 +93,7 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                                   m_widget,
                                                   QString("HtmlPreview"),
-                                                  QString(tr("Html Preview")),
+                                                  QString(tr("HTML Preview")),
                                                   false,
                                                   actions);
 
@@ -156,7 +156,7 @@ void HtmlPreview::appLoaded()
     connect(m_htmlWidget,SIGNAL(linkClicked(QUrl)),this,SLOT(linkClicked(QUrl)));
     connect(m_htmlWidget,SIGNAL(linkHovered(QUrl)),this,SLOT(linkHovered(QUrl)));
 
-    QAction *nocssAct = new QAction(tr("Not Use CSS"),this);
+    QAction *nocssAct = new QAction(tr("Plain HTML"),this);
     nocssAct->setCheckable(true);
     nocssAct->setObjectName("nocss");
     m_cssActGroup->addAction(nocssAct);
@@ -369,8 +369,8 @@ void HtmlPreview::exportHtml()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
             QMessageBox::critical(m_widget,
-                                  tr("LiteIDE"),
-                                  QString(tr("Can not write file %1")).arg(fileName)
+                                  tr("Export Failed"),
+                                  QString(tr("Could not open %1 for writing!")).arg(fileName)
                                   );
             return;
         }

@@ -48,7 +48,7 @@ bool GolangCodePlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
     m_code = new GolangCode(app,this);
-    m_commentAct = new QAction(tr("Toggle Comment Selection"),this);
+    m_commentAct = new QAction(tr("Comment/Uncomment Selection"),this);
     m_commentAct->setShortcut(QKeySequence("CTRL+/"));
     connect(m_commentAct,SIGNAL(triggered()),this,SLOT(editorComment()));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
