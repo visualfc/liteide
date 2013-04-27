@@ -303,7 +303,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
     m_dbgWidget->clearLog();
 
     if (cmd.isEmpty()) {
-        m_liteApp->appendLog("LiteDebug",QString("Could not execute %1").arg(cmd),true);
+        m_liteApp->appendLog("LiteDebug","No debugger command specified",true);
         return;
     }
     if (QFileInfo(cmd).isAbsolute()) {
@@ -343,7 +343,9 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
     m_debugger->setInitBreakTable(m_fileBpMap);
     m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
     m_debugger->setWorkingDirectory(work);
-    m_debugger->start(cmd,args);
+    if (!m_debugger->start(cmd,args)) {
+        m_liteApp->appendLog("LiteDebug","Failed to start debugger",true);
+    }
 }
 
 QWidget *LiteDebug::widget()

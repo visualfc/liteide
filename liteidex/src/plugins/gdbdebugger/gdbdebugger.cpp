@@ -203,6 +203,7 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
 
     m_gdbFilePath = FileUtil::lookPath(gdb,env,true);
     if (m_gdbFilePath.isEmpty()) {
+        m_liteApp->appendLog("GdbDebugger",gdb+" was not found on system PATH (hint: is GDB installed?)",true);
         return false;
     }
 
