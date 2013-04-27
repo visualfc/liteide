@@ -169,7 +169,7 @@ LiteApp::LiteApp()
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_projectManager,SLOT(applyOption(QString)));
 
     QAction *esc = new QAction(tr("Escape"),this);
-    m_actionManager->getActionContext(this,"App")->regAction(esc,"Esacpe","ESC");
+    m_actionManager->getActionContext(this,"App")->regAction(esc,"Escape","ESC");
     connect(esc,SIGNAL(triggered()),this,SLOT(escape()));
     m_mainwindow->addAction(esc);
 

@@ -163,7 +163,7 @@
           <item>
            <widget class="QCheckBox" name="outputUseColorSchemeCheck">
             <property name="text">
-             <string>Output widget use color scheme</string>
+             <string>Apply color scheme to text output widgets</string>
             </property>
            </widget>
           </item>
