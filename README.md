@@ -42,9 +42,9 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 ### Website
 * Source code
-	* <http://code.google.com/p/liteide>
+	* <https://code.google.com/p/liteide>
 	* <https://github.com/visualfc/liteide>
 * Binary downloads 
-	* <http://code.google.com/p/golangide>
+	* <https://code.google.com/p/golangide>
 * Google group
 	* <https://groups.google.com/group/liteide-dev>
