@@ -59,11 +59,11 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_headerToolBar->setObjectName("toolbar.tabs");
     m_headerToolBar->setIconSize(LiteApi::getToolBarIconSize());
 
-    m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close Page"),this);
+    m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close tab"),this);
     m_listButton = new QToolButton(m_headerToolBar);
-    m_listButton->setToolTip(tr("List Page"));
+    m_listButton->setToolTip(tr("List all tabs"));
     m_listButton->setIcon(QIcon("icon:images/listpage.png"));
-    m_addTabAct = new QAction(QIcon("icon:images/addpage.png"),tr("Add Page"),this);
+    m_addTabAct = new QAction(QIcon("icon:images/addpage.png"),tr("Open a new tab"),this);
 
     m_listActMenu = new QMenu;
     m_listActGroup = new QActionGroup(this);

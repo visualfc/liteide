@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="title">
-      <string>Markdown Files</string>
+      <string>Markdown Source Files</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
@@ -35,14 +35,14 @@
         <item>
          <widget class="QPushButton" name="importFolderPushButton">
           <property name="text">
-           <string>Import Folder</string>
+           <string>Import Folder...</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="addFilesPushButton">
           <property name="text">
-           <string>Add Files</string>
+           <string>Add Files...</string>
           </property>
          </widget>
         </item>
@@ -113,7 +113,7 @@
         <item>
          <widget class="QPushButton" name="browserExportFolderPushButton">
           <property name="text">
-           <string>Browser</string>
+           <string>Browse...</string>
           </property>
          </widget>
         </item>
@@ -134,14 +134,14 @@
         <item>
          <widget class="QCheckBox" name="mergeHrCheckBox">
           <property name="text">
-           <string>Merge files insert split &lt;hr&gt;</string>
+           <string>Insert horizontal line between merged files</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="mergePageBreakCheckBox">
           <property name="text">
-           <string>Merge files insert page break</string>
+           <string>Insert page break between merged files</string>
           </property>
          </widget>
         </item>
@@ -166,48 +166,48 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Export Util</string>
+      <string>Export</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QPushButton" name="splitHtmlPushButton">
         <property name="text">
-         <string>Separate Html</string>
+         <string>Export Separated HTML</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="splitPdfPushButton">
         <property name="text">
-         <string>Separate PDF</string>
+         <string>Export Separated PDF</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="mergetHtmlPushButton">
         <property name="text">
-         <string>Merge Html</string>
+         <string>Export Merged HTML...</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="mergePdfPushButton">
         <property name="text">
-         <string>Merge PDF</string>
+         <string>Export Merged PDF...</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="mergePrintPreviwPushButton">
         <property name="text">
-         <string>Merge Print Preview</string>
+         <string>Print Preview Merged...</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="mergetPrintPushButton">
         <property name="text">
-         <string>Merge Print</string>
+         <string>Print Merged</string>
         </property>
        </widget>
       </item>

@@ -83,14 +83,14 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     QHBoxLayout *head = new QHBoxLayout;
     QSplitter *spliter = new QSplitter(Qt::Vertical);
 
-    QLabel *label = new QLabel("<h2>Go Playground</h2>");
+    QLabel *label = new QLabel(QString("<h2>%1</h2>").arg(tr("Go Playground")));
 
-    QAction *run = new QAction("Run",this);
-    QAction *stop = new QAction("Stop",this);
-    QAction *_new = new QAction("New",this);
-    QAction *load = new QAction("Load",this);
-    QAction *save = new QAction("Save",this);
-    QAction *shell = new QAction("Explorer",this);
+    QAction *run = new QAction(tr("Run"),this);
+    QAction *stop = new QAction(tr("Stop"),this);
+    QAction *_new = new QAction(tr("New"),this);
+    QAction *load = new QAction(tr("Load..."),this);
+    QAction *save = new QAction(tr("Save..."),this);
+    QAction *shell = new QAction(tr("Explore Folder"),this);
     m_editLabel  = new QLabel;
 
     if (toolBar) {
@@ -247,7 +247,7 @@ void GoplayBrowser::loadPlay()
         return;
     }
     bool ok = false;
-    QString name = QInputDialog::getItem(m_widget,tr("Load File"),tr("Items"),items,0,false,&ok);
+    QString name = QInputDialog::getItem(m_widget,tr("Load File"),tr("Select a file to load:"),items,0,false,&ok);
     if (!ok) {
         return;
     }
@@ -263,7 +263,7 @@ void GoplayBrowser::savePlay()
 {
     if (m_editFile.isEmpty()) {
         bool ok = false;
-        QString name = QInputDialog::getText(m_widget,tr("Save File"),tr("New FileName:"),QLineEdit::Normal,"",&ok);
+        QString name = QInputDialog::getText(m_widget,tr("Save File"),tr("New File Name:"),QLineEdit::Normal,"",&ok);
         if (!ok) {
             return;
         }

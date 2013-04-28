@@ -228,7 +228,7 @@ void ProjectManager::setCurrentProject(IProject *project)
         m_toolWindowAct->setChecked(true);
         m_widget->setWidget(m_currentProject->widget());
         m_currentProject->load();
-        m_liteApp->appendLog("ProjectManager","loadProject "+m_currentProject->name());
+        m_liteApp->appendLog("ProjectManager","Loaded project "+m_currentProject->name());
     }
     emit currentProjectChanged(project);
 }
@@ -299,7 +299,7 @@ void ProjectManager::closeProjectHelper(IProject *project)
         }
     }
 
-    m_liteApp->appendLog("ProjectManager","closeProject "+cur->name());
+    m_liteApp->appendLog("ProjectManager","Closed project "+cur->name());
     if (cur != m_folderProject) {
         delete cur;
     } else if (cur && (cur == m_currentProject) ){

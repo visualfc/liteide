@@ -87,48 +87,39 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Debug");
 
-    m_startDebugExternal = new QAction(tr("Start Debugging External Application"),this);
+    m_startDebugExternal = new QAction(tr("Start Debugging External Application..."),this);
     actionContext->regAction(m_startDebugExternal,"StartDebugExternal","");
 
 
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
-    m_startDebugAct->setToolTip(tr("Start Debugging (F5)"));
     actionContext->regAction(m_startDebugAct,"StartDebug","F5");
 
 
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
-    m_continueAct->setToolTip(tr("Continue (F5)"));
     actionContext->regAction(m_continueAct,"Continue","F5");
 
     m_stopDebugAct = new QAction(QIcon("icon:litedebug/images/stopdebug.png"),tr("Stop"),this);
-    m_stopDebugAct->setToolTip(tr("Stop Debugger (Shift+F5)"));
     actionContext->regAction(m_stopDebugAct,"StopDebug","Shift+F5");
 
-    m_showLineAct = new QAction(QIcon("icon:litedebug/images/showline.png"),tr("ShowLine"),this);
-    m_showLineAct->setToolTip(tr("Show Current Line"));
+    m_showLineAct = new QAction(QIcon("icon:litedebug/images/showline.png"),tr("Show Current Line"),this);
     actionContext->regAction(m_showLineAct,"ShowLine","");
 
-    m_stepIntoAct = new QAction(QIcon("icon:litedebug/images/stepinto.png"),tr("StepInto"),this);
-    m_stepIntoAct->setToolTip(tr("Step Info (F11)"));
+    m_stepIntoAct = new QAction(QIcon("icon:litedebug/images/stepinto.png"),tr("Step Into"),this);
     actionContext->regAction(m_stepIntoAct,"StepInfo","F11");
 
-    m_stepOverAct = new QAction(QIcon("icon:litedebug/images/stepover.png"),tr("StepOver"),this);
-    m_stepOverAct->setToolTip(tr("Step Over (F10)"));
+    m_stepOverAct = new QAction(QIcon("icon:litedebug/images/stepover.png"),tr("Step Over"),this);
     actionContext->regAction(m_stepOverAct,"LiteDebug.StepOver","F10");
 
-    m_stepOutAct = new QAction(QIcon("icon:litedebug/images/stepout.png"),tr("StepOut"),this);
-    m_stepOutAct->setToolTip(tr("Step Out (Shift+F11)"));
+    m_stepOutAct = new QAction(QIcon("icon:litedebug/images/stepout.png"),tr("Step Out"),this);
     actionContext->regAction(m_stepOutAct,"StepOut","Shift+F11");
 
-    m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("RunToLine"),this);
-    m_runToLineAct->setToolTip(tr("Run to Line (Ctrl+F10)"));
+    m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("Run to Line"),this);
     actionContext->regAction(m_runToLineAct,"RunToLine","Ctrl+F10");
 
-    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove BreakPoint"),this);
-    m_switchBreakAct->setToolTip(tr("Insert/Remove Breakpoint (F9)"));
+    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove Breakpoint"),this);
     actionContext->regAction(m_switchBreakAct,"Breakpoint","F9");
 
-    m_removeAllBreakAct = new QAction(tr("Remove All Break Points"),this);
+    m_removeAllBreakAct = new QAction(tr("Remove All Breakpoints"),this);
     actionContext->regAction(m_removeAllBreakAct,"RemoveAllBreakPoints","");
 
 //    m_toolBar->addSeparator();
@@ -312,7 +303,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
     m_dbgWidget->clearLog();
 
     if (cmd.isEmpty()) {
-        m_liteApp->appendLog("litedebug",QString("not find execute target %1").arg(cmd),true);
+        m_liteApp->appendLog("LiteDebug","No debugger command specified",true);
         return;
     }
     if (QFileInfo(cmd).isAbsolute()) {
@@ -352,7 +343,9 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
     m_debugger->setInitBreakTable(m_fileBpMap);
     m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
     m_debugger->setWorkingDirectory(work);
-    m_debugger->start(cmd,args);
+    if (!m_debugger->start(cmd,args)) {
+        m_liteApp->appendLog("LiteDebug","Failed to start debugger",true);
+    }
 }
 
 QWidget *LiteDebug::widget()

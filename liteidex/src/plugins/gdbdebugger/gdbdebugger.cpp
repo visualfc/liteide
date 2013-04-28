@@ -203,6 +203,7 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
 
     m_gdbFilePath = FileUtil::lookPath(gdb,env,true);
     if (m_gdbFilePath.isEmpty()) {
+        m_liteApp->appendLog("GdbDebugger",gdb+" was not found on system PATH (hint: is GDB installed?)",true);
         return false;
     }
 
@@ -1172,5 +1173,5 @@ void GdbDebugger::finished(int code)
 {
     clear();
     emit debugStoped();
-    emit debugLog(LiteApi::DebugRuntimeLog,QString("program exited code %1").arg(code));
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Program exited with code %1").arg(code));
 }

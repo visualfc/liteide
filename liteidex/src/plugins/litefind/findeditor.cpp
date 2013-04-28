@@ -54,7 +54,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_replaceEdit = new QLineEdit;
 
     m_findNext = new QPushButton(tr("Find Next"));
-    m_findPrev = new QPushButton(tr("Find Prev"));
+    m_findPrev = new QPushButton(tr("Find Previous"));
     m_replaceLabel = new QLabel(tr("Replace With:"));
     m_replace = new QPushButton(tr("Replace"));
     m_replaceAll = new QPushButton(tr("Replace All"));
@@ -99,7 +99,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_replace,1,2);
     layout->addWidget(m_replaceAll,1,3);
 
-    layout->addWidget(new QLabel(tr("Find Option:")),3,0);
+    layout->addWidget(new QLabel(tr("Options:")),3,0);
     layout->addLayout(optLayout,3,1,1,3);
 
     m_widget->setLayout(layout);

@@ -297,7 +297,7 @@ void PackageProject::openExplorer()
 
 void PackageProject::addSource()
 {
-    QString source = QInputDialog::getText(m_widget,tr("Add Source File"),tr("FileName:"));
+    QString source = QInputDialog::getText(m_widget,tr("Add Source File"),tr("File Name:"));
     if (source.isEmpty()) {
         return;
     }
@@ -308,12 +308,12 @@ void PackageProject::addSource()
         fileName += ".go";
     }
     if (QFile::exists(fileName)) {
-        QMessageBox::information(m_widget,tr("LiteApp"),QString(tr("File %1 exists")).arg(fileName));
+        QMessageBox::information(m_widget,tr("Error"),QString(tr("File %1 already exists.")).arg(fileName));
         return;
     }
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly)) {
-        QMessageBox::information(m_widget,tr("LiteApp"),QString(tr("Open File %1 false")).arg(fileName));
+        QMessageBox::information(m_widget,tr("Error"),QString(tr("Could not open %1 for writing.")).arg(fileName));
         return;
     }
     file.write(QString("package %1\n").arg(m_json.value("Name").toString()).toLatin1());

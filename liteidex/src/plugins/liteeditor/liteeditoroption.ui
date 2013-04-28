@@ -116,7 +116,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>ColorStyle Scheme</string>
+          <string>Editor Color Scheme</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
@@ -163,7 +163,7 @@
           <item>
            <widget class="QCheckBox" name="outputUseColorSchemeCheck">
             <property name="text">
-             <string>Output widget use color scheme</string>
+             <string>Apply color scheme to text output widgets</string>
             </property>
            </widget>
           </item>
@@ -193,7 +193,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_6">
          <property name="title">
-          <string>Auto complete brackets</string>
+          <string>Syntax Auto-completion</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
@@ -243,14 +243,14 @@
           <item>
            <widget class="QCheckBox" name="autoIndentCheckBox">
             <property name="text">
-             <string>Enable automatic indentation</string>
+             <string>Automatic indentation</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="completerCaseSensitiveCheckBox">
             <property name="text">
-             <string>Completer case sensitive</string>
+             <string>Case sensitive code completion</string>
             </property>
            </widget>
           </item>
@@ -259,7 +259,7 @@
             <item>
              <widget class="QLabel" name="label_4">
               <property name="text">
-               <string>Word Complete Prefix Length</string>
+               <string>Code completion prefix length:</string>
               </property>
              </widget>
             </item>
@@ -411,7 +411,7 @@
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>MimeType</string>
+       <string>File Types</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>

@@ -59,7 +59,7 @@
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>StyleSheet:</string>
+             <string>Theme:</string>
             </property>
            </widget>
           </item>
@@ -144,14 +144,14 @@
           <item>
            <widget class="QCheckBox" name="autoLoadLastSessionCheckBox">
             <property name="text">
-             <string>Auto load last session</string>
+             <string>Reload session on startup</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="autoCloseProjecEditorsCheckBox">
             <property name="text">
-             <string>When Close Project, Project Editors Is Closed Automatically.</string>
+             <string>Close associated editor windows when closing a project</string>
             </property>
            </widget>
           </item>
@@ -174,7 +174,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>The language change will take effect after a restart of LiteIDE.</string>
+          <string>Language changes will take effect after LiteIDE is restarted.</string>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
@@ -205,21 +205,21 @@
           <item>
            <widget class="QCheckBox" name="splashVisibleCheckBox">
             <property name="text">
-             <string>Show splash screen</string>
+             <string>Show splash screen on startup</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="welcomeVisibleCheckBox">
             <property name="text">
-             <string>Show welcome page</string>
+             <string>Show welcome page on startup</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="editorTabsClosableCheckBox">
             <property name="text">
-             <string>Editor tabbar show close buttons on each tab</string>
+             <string>Show close buttons on each editor tab</string>
             </property>
            </widget>
           </item>
@@ -229,7 +229,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_9">
          <property name="title">
-          <string>ToolBar IconSize</string>
+          <string>Toolbar Icon Size</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
@@ -320,7 +320,7 @@
          <item>
           <widget class="QCheckBox" name="standardCheckBox">
            <property name="text">
-            <string>Hide Standard</string>
+            <string>Hide standard commands</string>
            </property>
           </widget>
          </item>

@@ -64,7 +64,7 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_toolBar = new QToolBar;
     m_toolBar->setIconSize(LiteApi::getToolBarIconSize());
 
-    m_backwardAct = new QAction(QIcon("icon:images/backward.png"),tr("Backward"),this);
+    m_backwardAct = new QAction(QIcon("icon:images/backward.png"),tr("Back"),this);
     m_forwardAct = new QAction(QIcon("icon:images/forward.png"),tr("Forward"),this);
     m_reloadUrlAct = new QAction(QIcon("icon:images/reload.png"),tr("Reload"),this);
     m_toolBar->addAction(m_backwardAct);

@@ -61,6 +61,7 @@ public:
     QString openEditorTypeFilter() const;
 protected:
     QString schemeKey(const QString &scheme) const;
+	QString schemeName(const QString &scheme) const;
     void updateFileState(const QString &fileName);
 public slots:
     void updateRecentFileActions(const QString &scheme);

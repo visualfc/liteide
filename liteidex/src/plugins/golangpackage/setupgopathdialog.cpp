@@ -71,7 +71,7 @@ QStringList SetupGopathDialog::litePathList() const
 void SetupGopathDialog::browser()
 {
     static QString last = QDir::homePath();
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Load GOPATH Directory"),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose directory to add to GOPATH:"),
                                                     last,
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);

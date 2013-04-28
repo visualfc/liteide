@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Install Plugins</string>
+   <string>Installed Plugins</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
