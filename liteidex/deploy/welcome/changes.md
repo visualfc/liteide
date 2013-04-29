@@ -5,6 +5,14 @@
 
 ### Ver x18
 * English spelling and grammar corrections throughout
+* LiteIDE:
+	* Improved event log
+* litefind:
+	* Find/Replace commands highlight existing text
+* liteeditor:
+	* Word wrap support
+	* Added option to trim whitespace on save
+	* Added option to hide edit toolbar
 
 ### 2013.2.8 Ver x17
 * LiteIDE:
