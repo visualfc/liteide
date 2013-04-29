@@ -199,6 +199,7 @@ protected:
     QTextDocument::FindFlags m_findFlags;
     bool m_defaultWordWrap;
     bool m_wordWrapOverridden;
+    bool m_wordWrap;
     bool m_lineNumbersVisible;
     bool m_marksVisible;    
     bool m_codeFoldingVisible;
