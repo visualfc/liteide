@@ -254,7 +254,7 @@ QList<IEditor*> ProjectManager::editorList(IProject *project) const
     return editors;
 }
 
-void ProjectManager::addImportAction(QAction *act)
+void ProjectManager::addImportAction(QAction*)
 {
     //m_importMenu->addAction(act);
 }

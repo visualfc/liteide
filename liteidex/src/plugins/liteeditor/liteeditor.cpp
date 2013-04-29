@@ -119,10 +119,13 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
 //    m_editorWidget->document()->setDefaultTextOption(option);
 
+    setEditToolbarVisible(true);
+
     connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
+    connect(m_liteApp->editorManager(),SIGNAL(editToolbarVisibleChanged(bool)),this,SLOT(setEditToolbarVisible(bool)));
 
     //applyOption("option/liteeditor");
 
@@ -906,6 +909,12 @@ void LiteEditor::resetFontSize()
     m_editorWidget->extraArea()->setFont(font);
     m_editorWidget->updateTabWidth();
     m_editorWidget->slotUpdateExtraAreaWidth();
+}
+
+void LiteEditor::setEditToolbarVisible(bool visible)
+{
+    m_toolBar->setVisible(visible);
+    m_infoToolBar->setVisible(visible);
 }
 
 

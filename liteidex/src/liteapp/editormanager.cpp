@@ -58,6 +58,7 @@
 
 EditorManager::~EditorManager()
 {
+    m_liteApp->settings()->setValue(LITEAPP_SHOWEDITTOOLBAR,m_editToolbarAct->isChecked());
     delete m_tabContextMenu;
     delete m_editorTabWidget;
     m_browserActionMap.clear();
@@ -135,36 +136,6 @@ bool EditorManager::initWithApp(IApplication *app)
     return true;
 }
 
-static QList<QTextCodec*> textCodecList()
-{
-    QMap<QString, QTextCodec *> codecMap;
-    QRegExp iso8859RegExp("ISO[- ]8859-([0-9]+).*");
-
-    foreach (int mib, QTextCodec::availableMibs()) {
-        QTextCodec *codec = QTextCodec::codecForMib(mib);
-
-        QString sortKey = codec->name().toUpper();
-        int rank;
-
-        if (sortKey.startsWith("UTF-8")) {
-            rank = 1;
-        } else if (sortKey.startsWith("UTF-16")) {
-            rank = 2;
-        } else if (iso8859RegExp.exactMatch(sortKey)) {
-            if (iso8859RegExp.cap(1).size() == 1)
-                rank = 3;
-            else
-                rank = 4;
-        } else {
-            rank = 5;
-        }
-        sortKey.prepend(QChar('0' + rank));
-
-        codecMap.insert(sortKey, codec);
-    }
-    return codecMap.values();
-}
-
 void EditorManager::createActions()
 {
     m_editMenu = m_liteApp->actionManager()->loadMenu("menu/edit");
@@ -191,6 +162,13 @@ void EditorManager::createActions()
 
     connect(m_goBackAct,SIGNAL(triggered()),this,SLOT(goBack()));
     connect(m_goForwardAct,SIGNAL(triggered()),this,SLOT(goForward()));
+
+    m_editToolbarAct = new QAction(tr("Edit Toolbar"),this);
+    m_editToolbarAct->setCheckable(true);
+    m_editToolbarAct->setChecked(m_liteApp->settings()->value(LITEAPP_SHOWEDITTOOLBAR,true).toBool());
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_editToolbarAct);
+
+    connect(m_editToolbarAct,SIGNAL(triggered(bool)),this,SIGNAL(editToolbarVisibleChanged(bool)));
 }
 
 QWidget *EditorManager::widget()
@@ -240,6 +218,7 @@ void EditorManager::addEditor(IEditor *editor)
         m_widgetEditorMap.insert(w,editor);
         emit editorCreated(editor);
         connect(editor,SIGNAL(modificationChanged(bool)),this,SLOT(modificationChanged(bool)));
+        emit editToolbarVisibleChanged(m_editToolbarAct->isChecked());
     }
 }
 

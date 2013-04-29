@@ -124,6 +124,7 @@ public slots:
     void increaseFontSize();
     void decreaseFontSize();
     void resetFontSize();
+    void setEditToolbarVisible(bool visible);
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;
