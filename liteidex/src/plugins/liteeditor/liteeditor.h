@@ -163,6 +163,7 @@ public:
     QAction *m_unfoldAllAct;
     QAction *m_lockAct;
     QAction *m_cleanWhitespaceAct;
+    QAction *m_wordWrapAct;
     LiteEditorFile *m_file;
     QMenu   *m_editMenu;
     QMenu   *m_contextMenu;

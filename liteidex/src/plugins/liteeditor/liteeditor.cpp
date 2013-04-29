@@ -282,6 +282,10 @@ void LiteEditor::createActions()
     m_cleanWhitespaceAct = new QAction(tr("Clean Whitespace"),this);
     actionContext->regAction(m_cleanWhitespaceAct,"CleanWhitespace","");
 
+    m_wordWrapAct = new QAction(tr("Word Wrap"),this);
+    m_wordWrapAct->setCheckable(true);
+    actionContext->regAction(m_wordWrapAct,"WordWrap","");
+
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
 //    m_widget->addAction(m_gotoLineAct);
@@ -295,6 +299,7 @@ void LiteEditor::createActions()
     connect(m_editorWidget,SIGNAL(redoAvailable(bool)),m_redoAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_cutAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_copyAct,SLOT(setEnabled(bool)));
+    connect(m_editorWidget,SIGNAL(wordWrapChanged(bool)),m_wordWrapAct,SLOT(setChecked(bool)));
 
     connect(m_undoAct,SIGNAL(triggered()),m_editorWidget,SLOT(undo()));
     connect(m_redoAct,SIGNAL(triggered()),m_editorWidget,SLOT(redo()));
@@ -318,6 +323,7 @@ void LiteEditor::createActions()
     connect(m_decreaseFontSizeAct,SIGNAL(triggered()),this,SLOT(decreaseFontSize()));
     connect(m_resetFontSizeAct,SIGNAL(triggered()),this,SLOT(resetFontSize()));
     connect(m_cleanWhitespaceAct,SIGNAL(triggered()),m_editorWidget,SLOT(cleanWhitespace()));
+    connect(m_wordWrapAct,SIGNAL(triggered(bool)),m_editorWidget,SLOT(setWordWrapOverride(bool)));
 
     QClipboard *clipboard = QApplication::clipboard();
     connect(clipboard,SIGNAL(dataChanged()),this,SLOT(clipbordDataChanged()));
@@ -440,6 +446,9 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_increaseFontSizeAct);
     m_editMenu->addAction(m_decreaseFontSizeAct);
     m_editMenu->addAction(m_resetFontSizeAct);
+
+    m_editMenu->addSeparator();
+    m_editMenu->addAction(m_wordWrapAct);
 
     //context menu
     m_contextMenu->addAction(m_cutAct);
@@ -612,6 +621,7 @@ void LiteEditor::applyOption(QString id)
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
@@ -628,6 +638,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setIndentLineVisible(indentLineVisible);
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
+    m_editorWidget->setDefaultWordWrap(defaultWordWrap);
 
     if (m_completer) {
         m_completer->completer()->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);

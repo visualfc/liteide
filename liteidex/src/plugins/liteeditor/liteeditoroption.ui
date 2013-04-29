@@ -341,6 +341,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="defaultWordWrapCheckBox">
+            <property name="text">
+             <string>Word wrap by default</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="lineNumberVisibleCheckBox">
             <property name="text">
              <string>Display line numbers</string>

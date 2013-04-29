@@ -93,6 +93,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
 
     setLayoutDirection(Qt::LeftToRight);
     viewport()->setMouseTracking(true);
+    m_defaultWordWrap = false;
+    m_wordWrapOverridden = false;
     m_lineNumbersVisible = true;
     m_marksVisible = true;
     m_codeFoldingVisible = true;
@@ -170,7 +172,7 @@ void LiteEditorWidgetBase::initLoadDocument()
 }
 
 
-void LiteEditorWidgetBase::editContentsChanged(int pos, int, int)
+void LiteEditorWidgetBase::editContentsChanged(int, int, int)
 {
     m_contentsChanged = true;
 }
@@ -369,7 +371,7 @@ int LiteEditorWidgetBase::extraAreaWidth()
     return space;
 }
 
-void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &pal,
+void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette&,
                                        const QRect &rect,
                                        bool expanded) const
 {
@@ -903,6 +905,25 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
         }
     }
     viewport()->update();
+}
+
+void LiteEditorWidgetBase::setWordWrap(bool wrap)
+{
+    setLineWrapMode(wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+    emit wordWrapChanged(wrap);
+}
+
+void LiteEditorWidgetBase::setWordWrapOverride(bool wrap)
+{
+    m_wordWrapOverridden = true;
+    this->setWordWrap(wrap);
+}
+
+void LiteEditorWidgetBase::setDefaultWordWrap(bool wrap)
+{
+    if (!m_wordWrapOverridden) {
+        this->setWordWrap(wrap);
+    }
 }
 
 void LiteEditorWidgetBase::gotoLineStart()
@@ -1446,7 +1467,7 @@ void LiteEditorWidgetBase::foldIndentChanged(QTextBlock block)
     }
 }
 
-void LiteEditorWidgetBase::updateBlock(QTextBlock cur)
+void LiteEditorWidgetBase::updateBlock(QTextBlock)
 {
 
 }

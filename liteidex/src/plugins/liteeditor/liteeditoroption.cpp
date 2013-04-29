@@ -99,6 +99,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool outputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
 
@@ -119,6 +120,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
     ui->rightLineWidthSpinBox->setValue(rightLineWidth);
     ui->eofVisibleCheckBox->setChecked(eofVisible);
+    ui->defaultWordWrapCheckBox->setChecked(defaultWordWrap);
     ui->indentLineCheckBox->setChecked(indentLineVisible);
     ui->outputUseColorSchemeCheck->setChecked(outputUseColor);
 
@@ -218,6 +220,7 @@ void LiteEditorOption::apply()
     bool antialias = ui->antialiasCheckBox->isChecked();
     bool rightLineVisible = ui->rightLineVisibleCheckBox->isChecked();
     bool eofVisible = ui->eofVisibleCheckBox->isChecked();
+    bool defaultWordWrap = ui->defaultWordWrapCheckBox->isChecked();
     bool indentLineVisible = ui->indentLineCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
     int min = ui->preMinLineEdit->text().toInt();
@@ -237,6 +240,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE4,autoBraces4);
     m_liteApp->settings()->setValue(EDITOR_LINENUMBERVISIBLE,lineNumberVisible);
     m_liteApp->settings()->setValue(EDITOR_EOFVISIBLE,eofVisible);
+    m_liteApp->settings()->setValue(EDITOR_DEFAULTWORDWRAP,defaultWordWrap);
     m_liteApp->settings()->setValue(EDITOR_INDENTLINEVISIBLE,indentLineVisible);
     m_liteApp->settings()->setValue(EDITOR_COMPLETER_CASESENSITIVE,caseSensitive);
     m_liteApp->settings()->setValue(EDITOR_PREFIXLENGTH,min);
