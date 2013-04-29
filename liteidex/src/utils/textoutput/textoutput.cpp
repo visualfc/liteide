@@ -85,7 +85,7 @@ void TextOutput::appendAndReset(const QString &text, QTextCharFormat& f)
 
 void TextOutput::updateExistsTextColor()
 {
-    if (!m_existsTimer.hasExpired(1000)) return;
+    if (!m_existsTimer.hasExpired(2500)) return;
 
     QTextDocument* doc = document();
     for (QTextBlock it = doc->begin(); it != doc->end(); it = it.next())
