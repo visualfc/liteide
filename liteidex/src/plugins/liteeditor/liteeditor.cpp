@@ -525,11 +525,15 @@ bool LiteEditor::save()
     if (m_bReadOnly) {
         return false;
     }
-    return m_file->save(m_file->filePath());
+    return saveAs(m_file->filePath());
 }
 
 bool LiteEditor::saveAs(const QString &fileName)
 {
+    bool cleanWhitespaceonSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,true).toBool();
+    if (cleanWhitespaceonSave) {
+        m_editorWidget->cleanWhitespace();
+    }
     return m_file->save(fileName);
 }
 

@@ -51,6 +51,7 @@
 #define EDITOR_COMPLETER_CASESENSITIVE "editor/ComplererCaseSensitive"
 #define EDITOR_LINENUMBERVISIBLE "editor/linenumbervisible"
 #define EDITOR_PREFIXLENGTH "editor/prefixlength"
+#define EDITOR_CLEANWHITESPACEONSAVE "editor/cleanwhitespaceonsave"
 #define EDITOR_RIGHTLINEVISIBLE "editor/rightlinevisible"
 #define EDITOR_RIGHTLINEWIDTH "editor/rightlinewidth"
 #define EDITOR_EOFVISIBLE "editor/eofvisible"

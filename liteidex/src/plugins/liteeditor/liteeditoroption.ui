@@ -288,6 +288,13 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cleanWhitespaceOnSaveCheckBox">
+            <property name="text">
+             <string>Clean whitespace when saving files</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
