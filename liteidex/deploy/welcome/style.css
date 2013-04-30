@@ -5,9 +5,6 @@ body {
 pre, code {
 	font-family: Menlo, monospace;
 }
-pre {
-	line-height: 18px;
-}
 pre .comment {
 	color: #375EAB;
 }
