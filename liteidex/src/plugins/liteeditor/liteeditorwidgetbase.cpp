@@ -1387,12 +1387,15 @@ void LiteEditorWidgetBase::hideToolTip()
     QToolTip::hideText();
 }
 
-void LiteEditorWidgetBase::cleanWhitespace()
+void LiteEditorWidgetBase::cleanWhitespace(bool wholeDocument)
 {
     QTextCursor cursor = this->textCursor();
     bool hasSelection = cursor.hasSelection();
     QTextCursor copyCursor = cursor;
     copyCursor.setVisualNavigation(false);
+    if (wholeDocument) {
+        copyCursor.select(QTextCursor::Document);
+    }
     copyCursor.beginEditBlock();
     cleanWhitespace(copyCursor, true);
     if (!hasSelection)

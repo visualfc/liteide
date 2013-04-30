@@ -70,7 +70,7 @@ protected:
     void saveCurrentCursorPositionForNavigation();
     QByteArray m_tempNavigationState;
 public slots:
-    void cleanWhitespace();
+    void cleanWhitespace(bool wholeDocument = false);
     void editContentsChanged(int,int,int);
     virtual void highlightCurrentLine();
     virtual void slotUpdateExtraAreaWidth();
