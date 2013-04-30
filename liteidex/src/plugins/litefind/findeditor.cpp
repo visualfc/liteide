@@ -153,9 +153,7 @@ void FindEditor::setVisible(bool b)
                 this->m_findEdit->setText(text);
             }
             this->m_findEdit->setFocus();
-            if (this->m_replaceEdit->isVisible()) {
-                this->m_replaceEdit->setFocus();
-            }
+            this->m_findEdit->selectAll();
         }
     }
     updateCurrentEditor(m_liteApp->editorManager()->currentEditor());

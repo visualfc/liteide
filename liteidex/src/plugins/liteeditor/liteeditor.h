@@ -124,6 +124,7 @@ public slots:
     void increaseFontSize();
     void decreaseFontSize();
     void resetFontSize();
+    void setEditToolbarVisible(bool visible);
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;
@@ -163,6 +164,7 @@ public:
     QAction *m_unfoldAllAct;
     QAction *m_lockAct;
     QAction *m_cleanWhitespaceAct;
+    QAction *m_wordWrapAct;
     LiteEditorFile *m_file;
     QMenu   *m_editMenu;
     QMenu   *m_contextMenu;

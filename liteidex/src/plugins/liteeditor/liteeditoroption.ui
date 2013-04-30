@@ -288,6 +288,13 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cleanWhitespaceOnSaveCheckBox">
+            <property name="text">
+             <string>Clean whitespace when saving files</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -337,6 +344,13 @@
            <widget class="QCheckBox" name="eofVisibleCheckBox">
             <property name="text">
              <string>Display EOF</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="defaultWordWrapCheckBox">
+            <property name="text">
+             <string>Word wrap by default</string>
             </property>
            </widget>
           </item>

@@ -341,6 +341,7 @@ signals:
     void editorAboutToSave(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
     void colorStyleSchemeChanged();
+    void editToolbarVisibleChanged(bool visible);
 };
 
 class IBrowserEditor : public IEditor

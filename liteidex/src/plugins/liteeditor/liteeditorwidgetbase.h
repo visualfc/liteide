@@ -62,6 +62,7 @@ public:
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
+    void wordWrapChanged(bool);
 public:
     bool restoreState(const QByteArray &state);
     QByteArray saveState() const;
@@ -69,7 +70,7 @@ protected:
     void saveCurrentCursorPositionForNavigation();
     QByteArray m_tempNavigationState;
 public slots:
-    void cleanWhitespace();
+    void cleanWhitespace(bool wholeDocument = false);
     void editContentsChanged(int,int,int);
     virtual void highlightCurrentLine();
     virtual void slotUpdateExtraAreaWidth();
@@ -81,6 +82,8 @@ public slots:
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    
     void setFindOption(LiteApi::FindOption *opt);
+    void setWordWrapOverride(bool wrap);
+    void setDefaultWordWrap(bool wrap);
 public slots:
     void gotoMatchBrace();
     void gotoLine(int line, int column, bool center);
@@ -170,6 +173,7 @@ protected:
                            const QRect &rect,
                            bool expanded) const;
     void maybeSelectLine();
+    void setWordWrap(bool wrap);
     bool event(QEvent *e);
     void keyPressEvent(QKeyEvent *e);
     void paintEvent(QPaintEvent *);
@@ -193,6 +197,9 @@ protected:
     QRegExp m_selectionExpression;
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
+    bool m_defaultWordWrap;
+    bool m_wordWrapOverridden;
+    bool m_wordWrap;
     bool m_lineNumbersVisible;
     bool m_marksVisible;    
     bool m_codeFoldingVisible;
