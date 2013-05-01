@@ -371,89 +371,90 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="104"/>
+        <location filename="src/liteapp/editormanager.cpp" line="105"/>
         <source>Close</source>
         <translation type="unfinished">閉じる</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="113"/>
+        <location filename="src/liteapp/editormanager.cpp" line="114"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="172"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation type="unfinished">編集</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="182"/>
+        <location filename="src/liteapp/editormanager.cpp" line="153"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="106"/>
+        <location filename="src/liteapp/editormanager.cpp" line="107"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="107"/>
+        <location filename="src/liteapp/editormanager.cpp" line="108"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="108"/>
+        <location filename="src/liteapp/editormanager.cpp" line="109"/>
         <source>Close Left Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="109"/>
+        <location filename="src/liteapp/editormanager.cpp" line="110"/>
         <source>Close Right Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="110"/>
+        <location filename="src/liteapp/editormanager.cpp" line="111"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="111"/>
+        <location filename="src/liteapp/editormanager.cpp" line="112"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="177"/>
+        <location filename="src/liteapp/editormanager.cpp" line="148"/>
         <source>Navigate Backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="324"/>
+        <location filename="src/liteapp/editormanager.cpp" line="166"/>
+        <source>Edit Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="303"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 is modified.</source>
-        <translation type="obsolete">%1 は変更されています</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/editormanager.cpp" line="325"/>
+        <location filename="src/liteapp/editormanager.cpp" line="304"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation type="unfinished">変更を保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="403"/>
+        <location filename="src/liteapp/editormanager.cpp" line="382"/>
         <source>All Files (*)</source>
         <translation>全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="405"/>
+        <location filename="src/liteapp/editormanager.cpp" line="384"/>
         <source>Save As</source>
         <translation>名前を付けて保存...</translation>
     </message>
@@ -600,10 +601,6 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation>ファイルを作成</translation>
     </message>
     <message>
-        <source>File Name</source>
-        <translation type="obsolete">ファイル名</translation>
-    </message>
-    <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="133"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
@@ -642,22 +639,10 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation>ファイル名の変更に失敗しました!</translation>
     </message>
     <message>
-        <source>Confirm remove the file and continue</source>
-        <translation type="obsolete">ファイル削除の続行を確認</translation>
-    </message>
-    <message>
-        <source>Failed to remove the file!</source>
-        <translation type="obsolete">ファイルの削除に失敗しました!</translation>
-    </message>
-    <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="498"/>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="501"/>
         <source>Create Folder</source>
         <translation>フォルダを作成</translation>
-    </message>
-    <message>
-        <source>Folder Name</source>
-        <translation type="obsolete">フォルダ名</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="502"/>
@@ -669,14 +654,6 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="530"/>
         <source>Failed to rename the folder!</source>
         <translation>フォルダ名の変更に失敗しました!</translation>
-    </message>
-    <message>
-        <source>Confirm remove the foler and continue</source>
-        <translation type="obsolete">フォルダ削除の続行を確認</translation>
-    </message>
-    <message>
-        <source>Failed to remove the folder!</source>
-        <translation type="obsolete">フォルダの削除に失敗しました!</translation>
     </message>
 </context>
 <context>
@@ -794,21 +771,9 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <source>%1
-This file has been removed. Do you want save to file or close editor?</source>
-        <translation type="obsolete">%1
-このファイルは削除されました。ファイルを保存しますか?またはエディタを終了しますか?</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/filemanager.cpp" line="609"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
-    </message>
-    <message>
-        <source>%1
-This file has been modified outside of the liteide. Do you want to reload it?</source>
-        <translation type="obsolete">%1
-ファイルが liteide 以外で変更されました。再読み込みしますか?</translation>
     </message>
 </context>
 <context>
@@ -889,17 +854,17 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="364"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="365"/>
         <source>Searching for &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="404"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="405"/>
         <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="416"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="417"/>
         <source>%1 occurrence(s) have been found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1019,10 +984,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Confirm remove the file and continue</source>
-        <translation type="obsolete">ファイル削除の続行を確認</translation>
-    </message>
-    <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="261"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
@@ -1055,10 +1016,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
         <source>Failed to rename the folder!</source>
         <translation type="unfinished">フォルダ名の変更に失敗しました!</translation>
-    </message>
-    <message>
-        <source>Confirm remove the foler and continue</source>
-        <translation type="obsolete">フォルダ削除の続行を確認</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="332"/>
@@ -1117,8 +1074,8 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="223"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="426"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="221"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="424"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1134,8 +1091,8 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="199"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="349"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="197"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="347"/>
         <source>Not find</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1252,10 +1209,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
 </context>
 <context>
     <name>GolangFmtPlugin</name>
-    <message>
-        <source>gofmt</source>
-        <translation type="obsolete">gofmt</translation>
-    </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="57"/>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="63"/>
@@ -1385,17 +1338,9 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <oldsource>Can not write file %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>LiteIDE</source>
-        <translation type="obsolete">LiteIDE</translation>
-    </message>
 </context>
 <context>
     <name>LiteApp</name>
-    <message>
-        <source>New</source>
-        <translation type="obsolete">新規</translation>
-    </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="184"/>
         <source>Event Log</source>
@@ -1405,10 +1350,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <location filename="src/liteapp/liteapp.cpp" line="171"/>
         <source>Escape</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open File</source>
-        <translation type="obsolete">ファイルを開く</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="557"/>
@@ -1494,14 +1435,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <location filename="src/liteapp/liteapp.cpp" line="592"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About LiteIDE...</source>
-        <translation type="obsolete">LiteIDE について...</translation>
-    </message>
-    <message>
-        <source>About Plugins...</source>
-        <translation type="obsolete">プラグインについて...</translation>
     </message>
 </context>
 <context>
@@ -1732,10 +1665,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <source>Build configuration changes will take effect after LiteIDE is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>The build config change will take effect after a restart of LiteIDE.</source>
-        <translation type="obsolete">ビルド設定の変更は LiteIDE の再起動後に有効となります。</translation>
-    </message>
 </context>
 <context>
     <name>LiteBuildPlugin</name>
@@ -1867,191 +1796,188 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="203"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="206"/>
         <source>Undo</source>
         <translation type="unfinished">元に戻す</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="206"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="209"/>
         <source>Redo</source>
         <translation type="unfinished">やり直し</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="209"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="212"/>
         <source>Cut</source>
         <translation type="unfinished">切り取り</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="212"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="215"/>
         <source>Copy</source>
         <translation type="unfinished">コピー</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="215"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="218"/>
         <source>Paste</source>
         <translation type="unfinished">貼り付け</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="218"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="221"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="704"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="722"/>
         <source>Export HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="712"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="730"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="713"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="731"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="732"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="750"/>
         <source>Export PDF</source>
         <translation>PDFへエクスポート</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="757"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="775"/>
         <source>Print Document</source>
         <translation>印刷</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="225"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="228"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation type="unfinished">印刷プレビュー</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="221"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="224"/>
         <source>Export HTML...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="223"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
         <source>Export PDF...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="224"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="227"/>
         <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="227"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="230"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="234"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="237"/>
         <source>Select Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="237"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="240"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="240"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Fold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
         <source>Unfold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
         <source>Fold All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
         <source>Unfold All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="257"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="809"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="827"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
         <source>Delete Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="273"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="276"/>
         <source>Increase Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="276"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
         <source>Decrease Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
         <source>Reset Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="285"/>
         <source>Clean Whitespace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
+        <source>Word Wrap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="407"/>
         <source>Close Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="418"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="427"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="774"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="792"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LiteIDE</source>
-        <translation type="obsolete">LiteIDE</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="230"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="233"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel file %1 modify and reload ?</source>
-        <translation type="obsolete">ファイル %1 の変更を取り消し、再読み込みしますか?</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="809"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="827"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2064,12 +1990,12 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="317"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="324"/>
         <source>Load File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="323"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="330"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2137,7 +2063,17 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="414"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="294"/>
+        <source>Clean whitespace when saving files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="353"/>
+        <source>Word wrap by default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="428"/>
         <source>File Types</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2148,22 +2084,22 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="339"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="346"/>
         <source>Display EOF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="346"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
         <source>Display line numbers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="353"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
         <source>Display indent guide </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="362"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="376"/>
         <source>Display right margin at column</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2186,28 +2122,28 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="311"/>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="333"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="318"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="340"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="129"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="133"/>
         <source>MIME Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="130"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="134"/>
         <source>Tab Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="131"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="135"/>
         <source>Spaces as Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="132"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="136"/>
         <source>File Extensions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2281,10 +2217,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <location filename="src/liteapp/litetabwidget.cpp" line="66"/>
         <source>Open a new tab</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Page</source>
-        <translation type="obsolete">ページを追加</translation>
     </message>
 </context>
 <context>
@@ -2588,30 +2520,6 @@ This file has been modified outside of the liteide. Do you want to reload it?</s
         <translation>位置:</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
-        <source>MakePath false:</source>
-        <translation type="obsolete">MakePath false:</translation>
-    </message>
-    <message>
-        <source>Location %1 is not empty, continue?</source>
-        <translation type="obsolete">位置 %1 は空です。続行しますか?</translation>
-    </message>
-    <message>
-        <source>%1 exists, continue to rewrite or abort?</source>
-        <translation type="obsolete">%1 は存在します。再書き込みを続行しますか?もしくは中断しますか?</translation>
-    </message>
-    <message>
-        <source>%1 create false!</source>
-        <translation type="obsolete">%1 の作成が失敗しました!</translation>
-    </message>
-    <message>
-        <source>New file wizard:</source>
-        <translation type="obsolete">新規ファイルウィザード:</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="125"/>
         <location filename="src/liteapp/newfiledialog.cpp" line="176"/>
         <source>Error</source>
@@ -2664,10 +2572,6 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/newfiledialog.cpp" line="351"/>
         <source>Choose a directory for the new content:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Browser Location</source>
-        <translation type="obsolete">ブラウザロケーション</translation>
     </message>
 </context>
 <context>
@@ -2810,10 +2714,6 @@ Do you want to replace it?</source>
         <source>Author</source>
         <oldsource>Anchor</oldsource>
         <translation type="unfinished">作者</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">情報</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="52"/>
