@@ -320,6 +320,7 @@ void FileSearch::setVisible(bool b)
         }
         m_tab->setCurrentWidget(m_findWidget);
         m_findCombo->setFocus();
+        m_findCombo->lineEdit()->selectAll();
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
         if (editor) {
             QString text;

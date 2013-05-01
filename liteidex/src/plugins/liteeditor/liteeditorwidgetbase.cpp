@@ -93,6 +93,9 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
 
     setLayoutDirection(Qt::LeftToRight);
     viewport()->setMouseTracking(true);
+    m_defaultWordWrap = false;
+    m_wordWrapOverridden = false;
+    m_wordWrap = false;
     m_lineNumbersVisible = true;
     m_marksVisible = true;
     m_codeFoldingVisible = true;
@@ -170,7 +173,7 @@ void LiteEditorWidgetBase::initLoadDocument()
 }
 
 
-void LiteEditorWidgetBase::editContentsChanged(int pos, int, int)
+void LiteEditorWidgetBase::editContentsChanged(int, int, int)
 {
     m_contentsChanged = true;
 }
@@ -369,7 +372,7 @@ int LiteEditorWidgetBase::extraAreaWidth()
     return space;
 }
 
-void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette &pal,
+void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette&,
                                        const QRect &rect,
                                        bool expanded) const
 {
@@ -685,7 +688,7 @@ QByteArray LiteEditorWidgetBase::saveState() const
 {
     QByteArray state;
     QDataStream stream(&state, QIODevice::WriteOnly);
-    stream << 1; // version number
+    stream << 2; // version number
     stream << verticalScrollBar()->value();
     stream << horizontalScrollBar()->value();
     int line, column;
@@ -704,6 +707,11 @@ QByteArray LiteEditorWidgetBase::saveState() const
         block = block.next();
     }
     stream << foldedBlocks;
+
+    // store word wrap state
+    stream << m_wordWrapOverridden;
+    stream << m_wordWrap;
+
     return state;
 }
 
@@ -741,6 +749,12 @@ bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
     verticalScrollBar()->setValue(vval);
     horizontalScrollBar()->setValue(hval);
     saveCurrentCursorPositionForNavigation();
+
+    if (version >= 2) {
+        stream >> m_wordWrapOverridden;
+        stream >> m_wordWrap;
+        setWordWrap(m_wordWrap);
+    }
 
     return true;
 }
@@ -903,6 +917,26 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
         }
     }
     viewport()->update();
+}
+
+void LiteEditorWidgetBase::setWordWrap(bool wrap)
+{
+    setLineWrapMode(wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+    m_wordWrap = wrap;
+    emit wordWrapChanged(wrap);
+}
+
+void LiteEditorWidgetBase::setWordWrapOverride(bool wrap)
+{
+    m_wordWrapOverridden = true;
+    this->setWordWrap(wrap);
+}
+
+void LiteEditorWidgetBase::setDefaultWordWrap(bool wrap)
+{
+    if (!m_wordWrapOverridden) {
+        this->setWordWrap(wrap);
+    }
 }
 
 void LiteEditorWidgetBase::gotoLineStart()
@@ -1353,12 +1387,15 @@ void LiteEditorWidgetBase::hideToolTip()
     QToolTip::hideText();
 }
 
-void LiteEditorWidgetBase::cleanWhitespace()
+void LiteEditorWidgetBase::cleanWhitespace(bool wholeDocument)
 {
     QTextCursor cursor = this->textCursor();
     bool hasSelection = cursor.hasSelection();
     QTextCursor copyCursor = cursor;
     copyCursor.setVisualNavigation(false);
+    if (wholeDocument) {
+        copyCursor.select(QTextCursor::Document);
+    }
     copyCursor.beginEditBlock();
     cleanWhitespace(copyCursor, true);
     if (!hasSelection)
@@ -1446,7 +1483,7 @@ void LiteEditorWidgetBase::foldIndentChanged(QTextBlock block)
     }
 }
 
-void LiteEditorWidgetBase::updateBlock(QTextBlock cur)
+void LiteEditorWidgetBase::updateBlock(QTextBlock)
 {
 
 }

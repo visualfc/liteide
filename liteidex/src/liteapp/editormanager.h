@@ -106,6 +106,7 @@ protected:
     QMap<IEditor*,QAction*>   m_browserActionMap;
     QAction     *m_goBackAct;
     QAction     *m_goForwardAct;
+    QAction     *m_editToolbarAct;
     QMenu       *m_editMenu;
     QMenu       *m_tabContextMenu;
     ColorStyleScheme *m_colorStyleScheme;
