@@ -530,7 +530,7 @@ bool LiteEditor::save()
 
 bool LiteEditor::saveAs(const QString &fileName)
 {
-    bool cleanWhitespaceonSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,true).toBool();
+    bool cleanWhitespaceonSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
     if (cleanWhitespaceonSave) {
         m_editorWidget->cleanWhitespace(true);
     }
