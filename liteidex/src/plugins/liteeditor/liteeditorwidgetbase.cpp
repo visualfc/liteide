@@ -1767,9 +1767,11 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     QTextLayout::FormatRange o;
                     o.start = selStart;
                     o.length = selEnd - selStart;
-                    o.format = range.format;
+                    QTextCharFormat formatCopy(range.format);
+                    formatCopy.clearForeground();
+                    o.format = formatCopy;
                     if (!o.format.hasProperty(LiteEditorWidgetBase::MatchBrace)) {
-                        o.format.setForeground(palette().highlightedText());
+                        //o.format.setForeground(palette().highlightedText());
                         o.format.setBackground(palette().highlight());
                     }
                     selections.append(o);

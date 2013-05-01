@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <style-scheme version="1.0" name="Default">
   <style name="Text" foreground="#FFFFFF" background="#000000"/>
-  <style name="Selection" foreground="#FFFF00" background="#800000"/>
+  <style name="Selection" background="#800000"/>
   <style name="Extra" foreground="#FFFFFF" background="#222222"/>
   <style name="CurrentLine" background="#222222"/>
   <style name="IndentLine" foreground="#64B1FF"/>
