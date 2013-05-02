@@ -38,9 +38,9 @@
 #endif
 //lite_memory_check_end
 
-static void fadeText(QTextCursor& cur, QTextCharFormat& fmt, QColor* clr = 0) {
-    QTextCharFormat f(fmt);
-    QColor color(clr ? *clr : f.foreground().color());
+static void fadeText(QTextCursor& cur) {
+    QTextCharFormat f(cur.charFormat());
+    QColor color(f.foreground().color());
     color.setAlpha(160);
     f.setForeground(color);
     cur.setCharFormat(f);
@@ -100,7 +100,7 @@ void TextOutput::updateExistsTextColor()
     {
         QTextCursor cur(it);
         cur.select(QTextCursor::BlockUnderCursor);
-        fadeText(cur, m_fmt);
+        fadeText(cur);
     }
 }
 
@@ -172,5 +172,6 @@ void TextOutput::loadColorStyleScheme()
 
     QTextCursor cur(document());
     cur.select(QTextCursor::Document);
-    fadeText(cur, m_fmt, &m_clrText);
+    cur.setCharFormat(m_fmt);
+    fadeText(cur);
 }
