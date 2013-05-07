@@ -67,7 +67,7 @@ void GoTool::setLiteGopath(const QStringList &pathList)
 QStringList GoTool::sysGopath() const
 {
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
-    QString goroot = env.value("GOROOT");
+//    QString goroot = env.value("GOROOT");
     QStringList pathList;
 #ifdef Q_OS_WIN
     QString sep = ";";
@@ -78,7 +78,6 @@ QStringList GoTool::sysGopath() const
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeDuplicates();
-    pathList.removeAll(goroot);
     return pathList;
 }
 

@@ -6,7 +6,7 @@ if [ -z $LITEIDE_ROOT ]; then
 	export LITEIDE_ROOT=$PWD/../liteidex
 fi
 
-echo build liteide 
+echo build liteide
 echo GOROOT=$GOROOT
 echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
@@ -63,6 +63,7 @@ rm liteide/LiteIDE.app/Contents/PlugIns/*.a
 cp -R -v $LITEIDE_ROOT/LICENSE.LGPL liteide
 cp -R -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -R -v $LITEIDE_ROOT/../README.md liteide
+cp -R -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 
 cp -R -v $LITEIDE_ROOT/bin/* liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/deploy/* liteide/LiteIDE.app/Contents/Resources

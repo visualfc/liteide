@@ -6,7 +6,7 @@ if [ -z $LITEIDE_ROOT ]; then
 	export LITEIDE_ROOT=$PWD/../liteidex
 fi
 
-echo build liteide 
+echo build liteide
 echo QTDIR=$QTDIR
 echo GOROOT=$GOROOT
 echo BUILD_ROOT=$BUILD_ROOT
@@ -72,6 +72,7 @@ mkdir -p liteide/lib/liteide/plugins
 cp -a -v $LITEIDE_ROOT/LICENSE.LGPL liteide
 cp -a -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -a -v $LITEIDE_ROOT/../README.md liteide
+cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 
 cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/* liteide/bin
