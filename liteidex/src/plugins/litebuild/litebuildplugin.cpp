@@ -26,6 +26,7 @@
 #include "litebuildoptionfactory.h"
 #include <QHBoxLayout>
 #include <QLineEdit>
+#include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QFileInfo>
@@ -58,12 +59,23 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(1);
     m_executeWidget->setLayout(hbox);
-    m_executeEdit = new QLineEdit;
+    m_commandCombo = new QComboBox;
+    m_commandCombo->setEditable(true);
+    m_commandCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     m_workLabel = new ElidedLabel("");
     m_workLabel->setElideMode(Qt::ElideMiddle);
+
+    QPushButton *close = new QPushButton();
+    close->setIcon(QIcon("icon:images/closetool.png"));
+    close->setIconSize(QSize(16,16));
+    close->setFlat(true);
+    close->setToolTip(tr("Close"));
+
+    connect(close,SIGNAL(clicked()),m_executeWidget,SLOT(hide()));
     hbox->addWidget(new QLabel(tr("Execute:")));
-    hbox->addWidget(m_executeEdit);
-    hbox->addWidget(m_workLabel);
+    hbox->addWidget(m_commandCombo,1);
+    hbox->addWidget(m_workLabel,1);
+    hbox->addWidget(close);
     layout->addWidget(m_executeWidget);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_build,"Build");
@@ -72,7 +84,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,execAct);
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
-    connect(m_executeEdit,SIGNAL(returnPressed()),this,SLOT(execute()));
+    connect(m_commandCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(execute()));
     connect(m_liteApp,SIGNAL(key_escape()),m_executeWidget,SLOT(hide()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
@@ -82,8 +94,8 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
 void LiteBuildPlugin::showExecute()
 {
     m_executeWidget->show();
-    m_executeEdit->selectAll();
-    m_executeEdit->setFocus();
+    m_commandCombo->lineEdit()->selectAll();
+    m_commandCombo->lineEdit()->setFocus();
     QString work = m_liteApp->applicationPath();
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
@@ -95,11 +107,11 @@ void LiteBuildPlugin::showExecute()
 
 void LiteBuildPlugin::execute()
 {
-    QString text = m_executeEdit->text().trimmed();
+    QString text = m_commandCombo->lineEdit()->text().trimmed();
     if (text.isEmpty()) {
         return;
     }
-    m_executeEdit->selectAll();
+    m_commandCombo->lineEdit()->selectAll();
     QString cmd = text;
     QString args;
     int find = text.indexOf(" ");

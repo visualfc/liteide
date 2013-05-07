@@ -28,9 +28,10 @@
 #include "liteapi/liteapi.h"
 #include "elidedlabel/elidedlabel.h"
 #include <QtPlugin>
+#include <QStyleOption>
 
 class LiteBuild;
-class QLineEdit;
+class QComboBox;
 class LiteBuildPlugin : public LiteApi::IPlugin
 {
     Q_OBJECT
@@ -45,7 +46,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     LiteBuild *m_build;
     QWidget   *m_executeWidget;
-    QLineEdit *m_executeEdit;
+    QComboBox *m_commandCombo;
     ElidedLabel *m_workLabel;
 };
 
