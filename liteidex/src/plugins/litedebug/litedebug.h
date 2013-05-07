@@ -58,6 +58,7 @@ public:
 signals:
     void debugVisible(bool);
 public slots:
+    void hideDebug();
     void appLoaded();
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);

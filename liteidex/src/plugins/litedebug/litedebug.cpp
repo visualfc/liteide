@@ -81,7 +81,22 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     widgetToolBar->setIconSize(LiteApi::getToolBarIconSize());
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(widgetToolBar);
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
+    hbox->addWidget(widgetToolBar);
+    QPushButton *close = new QPushButton();
+    close->setIcon(QIcon("icon:images/closetool.png"));
+    close->setIconSize(QSize(16,16));
+    close->setFlat(true);
+    close->setToolTip(tr("Close"));
+
+    connect(close,SIGNAL(clicked()),this,SLOT(hideDebug()));
+    hbox->addStretch(1);
+    hbox->addWidget(close);
+
+    layout->addLayout(hbox);
     layout->addWidget(m_dbgWidget->widget());
     m_widget->setLayout(layout);
 
@@ -665,3 +680,9 @@ void LiteDebug::enterAppInputText(QString text)
     }
 }
 
+
+void LiteDebug::hideDebug()
+{
+    m_widget->hide();
+    emit debugVisible(false);
+}
