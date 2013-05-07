@@ -3,16 +3,23 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### Ver x18
-* English spelling and grammar corrections throughout
+### 2013.5.8 Ver x18
+* English spelling and grammar corrections throughout, thanks for Nik-U <https://github.com/Nik-U>
 * LiteIDE:
 	* Improved event log
 * litefind:
 	* Find/Replace commands highlight existing text
+	* enable find file
 * liteeditor:
 	* Word wrap support
 	* Added option to trim whitespace on save
 	* Added option to hide edit toolbar
+	* update kate go.xml
+	* fix kate/highlight tab
+	* fix editor indent guide by tabsize
+* liteapp:
+	* fix full screen bug
+	
 
 ### 2013.2.8 Ver x17
 * LiteIDE:

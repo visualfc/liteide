@@ -74,11 +74,11 @@ QStringList GoTool::sysGopath() const
 #else
     QString sep = ":";
 #endif
-    pathList.append(goroot);
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeDuplicates();
+    pathList.removeAll(goroot);
     return pathList;
 }
 
