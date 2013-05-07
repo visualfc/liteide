@@ -10,16 +10,23 @@
 * litefind:
 	* Find/Replace commands highlight existing text
 	* enable find file
+	* add close button	
 * liteeditor:
 	* Word wrap support
 	* Added option to trim whitespace on save
 	* Added option to hide edit toolbar
-	* update kate go.xml
+	* update kate and color scheme
 	* fix kate/highlight tab
 	* fix editor indent guide by tabsize
 * liteapp:
 	* fix full screen bug
-	
+* litebuild:
+	* execute use combbox	
+	* add close button
+* litedebug:
+	* add close button
+* markdown:
+	* enable markdown(sundown) extend
 
 ### 2013.2.8 Ver x17
 * LiteIDE:
