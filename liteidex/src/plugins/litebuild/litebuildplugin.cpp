@@ -87,7 +87,6 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
         c->setCaseSensitivity(Qt::CaseSensitive);
     }
     load_execute(m_liteApp->resourcePath()+"/litebuild/command",m_commandCombo);
-    m_commandCombo->model()->sort(0);
     m_commandCombo->installEventFilter(this);
 
     m_workLabel = new ElidedLabel("");

@@ -195,8 +195,8 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
         return;
     }
 
-    QString read = m_process->readAllStandardOutput();
-    QStringList all = read.split('\n');
+    QByteArray read = m_process->readAllStandardOutput();
+    QList<QByteArray> all = read.split('\n');
     //func,,Fprint,,func(w io.Writer, a ...interface{}) (n int, error os.Error)
     //type,,Formatter,,interface
     //const,,ModeExclusive,,
@@ -204,8 +204,8 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     int n = 0;
     QIcon icon;
     QStandardItem *root= m_completer->findRoot(m_preWord);
-    foreach (QString s, all) {
-        QStringList word = s.split(",,");
+    foreach (QByteArray bs, all) {
+        QStringList word = QString::fromUtf8(bs,bs.size()).split(",,");
         if (word.count() != 3) {
             continue;
         }
