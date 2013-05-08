@@ -65,6 +65,7 @@ if not exist liteide\lib\liteide\plugins mkdir liteide\lib\liteide\plugins
 xcopy %LITEIDE_ROOT%\LICENSE.LGPL liteide /y
 xcopy %LITEIDE_ROOT%\LGPL_EXCEPTION.TXT liteide /y
 xcopy %LITEIDE_ROOT%\..\README.MD liteide /y
+xcopy %LITEIDE_ROOT%\..\CONTRIBUTORS liteide /y
 
 xcopy %LITEIDE_ROOT%\liteide\bin\* liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\* liteide\bin /y

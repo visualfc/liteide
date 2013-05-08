@@ -3,16 +3,35 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### Ver x18
-* English spelling and grammar corrections throughout
+### 2013.5.8 Ver x18.1
+* optimization gocode plugin
+* execute preload litebuild/command/*.api
+* execute enable tab key to compiler
+
+### 2013.5.7 Ver x18
+* English spelling and grammar corrections throughout, thanks for Nik-U <https://github.com/Nik-U>
 * LiteIDE:
 	* Improved event log
 * litefind:
 	* Find/Replace commands highlight existing text
+	* enable find file
+	* add close button	
 * liteeditor:
 	* Word wrap support
 	* Added option to trim whitespace on save
 	* Added option to hide edit toolbar
+	* update kate and color scheme
+	* fix kate/highlight tab
+	* fix editor indent guide by tabsize
+* liteapp:
+	* fix full screen bug
+* litebuild:
+	* execute use combbox	
+	* add close button
+* litedebug:
+	* add close button
+* markdown:
+	* enable markdown(sundown) extend
 
 ### 2013.2.8 Ver x17
 * LiteIDE:

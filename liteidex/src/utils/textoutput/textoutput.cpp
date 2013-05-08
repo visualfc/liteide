@@ -27,6 +27,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QTextCursor>
+#include <QTextBlock>
 #include <QElapsedTimer>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)

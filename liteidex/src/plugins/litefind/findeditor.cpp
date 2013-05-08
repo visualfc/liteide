@@ -74,6 +74,14 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_status->setAlignment(Qt::AlignRight);
     m_status->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
+    QPushButton *close = new QPushButton();
+    close->setIcon(QIcon("icon:images/closetool.png"));
+    close->setIconSize(QSize(16,16));
+    close->setFlat(true);
+    close->setToolTip(tr("Close"));
+
+    connect(close,SIGNAL(clicked()),m_widget,SLOT(hide()));
+
     QGridLayout *layout = new QGridLayout;
     layout->setMargin(0);
     layout->setVerticalSpacing(1);
@@ -92,7 +100,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_findEdit,0,1);
     layout->addWidget(m_findNext,0,2);
     layout->addWidget(m_findPrev,0,3);
-    //layout->addWidget(hideReplace,0,3);
+    layout->addWidget(close,0,4);
 
     layout->addWidget(m_replaceLabel,1,0);
     layout->addWidget(m_replaceEdit,1,1);
@@ -100,7 +108,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_replaceAll,1,3);
 
     layout->addWidget(new QLabel(tr("Options:")),3,0);
-    layout->addLayout(optLayout,3,1,1,3);
+    layout->addLayout(optLayout,3,1,1,4);
 
     m_widget->setLayout(layout);
 

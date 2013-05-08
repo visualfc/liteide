@@ -132,6 +132,79 @@ QCompleter *LiteCompleter::completer() const
     return m_completer;
 }
 
+QStandardItem *LiteCompleter::findRoot(const QString &name)
+{
+    QStringList words = name.split(m_completer->separator(),QString::SkipEmptyParts);
+    WordItem *root = 0;
+    WordItem *item = 0;
+    foreach (QString word, words) {
+        item = 0;
+        QModelIndex parent = m_model->indexFromItem(root);
+        for (int i = 0; i < m_model->rowCount(parent); i++) {
+            QModelIndex index = m_model->index(i,0,parent);
+            if (index.data(WordItem::NameRole).toString() == word) {
+                item = static_cast<WordItem*>(m_model->itemFromIndex(index));
+                break;
+            }
+        }
+        if (item == 0) {
+            item = new WordItem(word);
+            if (root == 0) {
+                m_model->appendRow(item);
+            } else {
+                root->appendRow(item);
+            }
+        }
+        root = item;
+    }
+    return root;
+}
+
+void LiteCompleter::clearChildItem(QStandardItem *root)
+{
+    if (root) {
+        QModelIndex index = m_model->indexFromItem(root);
+        m_model->removeRows(0,m_model->rowCount(index),index);
+    }
+}
+
+void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QString &kind, const QString &info, const QIcon &icon, bool temp)
+{
+    if (root == 0) {
+        WordItem *item = 0;
+        QModelIndex parent = m_model->indexFromItem(root);
+        int count = m_model->rowCount(parent);
+        while(count--) {
+            QModelIndex index = m_model->index(count,0,parent);
+            if (index.data(WordItem::NameRole).toString() == name) {
+                item = static_cast<WordItem*>(m_model->itemFromIndex(index));
+                break;
+            }
+        }
+        if (item == 0) {
+            item = new WordItem(name);
+            if (root == 0) {
+                m_model->appendRow(item);
+            } else {
+                root->appendRow(item);
+            }
+        }
+        if (item && item->kind().isEmpty()) {
+            item->setKind(kind);
+            item->setInfo(info);
+            item->setTemp(temp);
+            item->setIcon(icon);
+        }
+   } else {
+        WordItem *item = new WordItem(name);
+        root->appendRow(item);
+        item->setKind(kind);
+        item->setInfo(info);
+        item->setTemp(temp);
+        item->setIcon(icon);
+    }
+}
+
 void LiteCompleter::clear()
 {
     m_model->clear();

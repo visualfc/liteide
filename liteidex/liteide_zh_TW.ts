@@ -1074,25 +1074,30 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="221"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="424"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="229"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="432"/>
         <source>Ready</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="91"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="81"/>
+        <source>Close</source>
+        <translation type="unfinished">關閉</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="99"/>
         <source>Find What:</source>
         <translation>查找:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="102"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="110"/>
         <source>Options:</source>
         <oldsource>Find Option:</oldsource>
         <translation type="unfinished">選項:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="197"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="347"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="205"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="355"/>
         <source>Not find</source>
         <translation>沒有找到</translation>
     </message>
@@ -1669,13 +1674,18 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>LiteBuildPlugin</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="64"/>
+        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="72"/>
+        <source>Close</source>
+        <translation type="unfinished">關閉</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="75"/>
         <source>Execute:</source>
         <oldsource>Exec:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="70"/>
+        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="82"/>
         <source>Execute File</source>
         <oldsource>Execute</oldsource>
         <translation type="unfinished"></translation>
@@ -1684,7 +1694,7 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>LiteDebug</name>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="101"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="116"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -1694,64 +1704,69 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished">清除</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="98"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="113"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="104"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="119"/>
         <source>Show Current Line</source>
         <translation>顯示當前行</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="173"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="188"/>
         <source>Debug Output</source>
         <oldsource>Debug</oldsource>
         <translation>除錯輸出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="90"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="105"/>
         <source>Start Debugging External Application...</source>
         <oldsource>Start Debugging External Application</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="94"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="93"/>
+        <source>Close</source>
+        <translation type="unfinished">關閉</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="109"/>
         <source>Start Debugging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="107"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="122"/>
         <source>Step Into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="110"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="125"/>
         <source>Step Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="113"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="128"/>
         <source>Step Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="116"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="131"/>
         <source>Run to Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="119"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="134"/>
         <source>Insert/Remove Breakpoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="122"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="137"/>
         <source>Remove All Breakpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="139"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="154"/>
         <source>&amp;Debug</source>
         <translation>除錯(&amp;D)</translation>
     </message>

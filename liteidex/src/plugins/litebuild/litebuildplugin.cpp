@@ -26,9 +26,14 @@
 #include "litebuildoptionfactory.h"
 #include <QHBoxLayout>
 #include <QLineEdit>
+#include <QComboBox>
+#include <QCompleter>
 #include <QLabel>
 #include <QPushButton>
 #include <QFileInfo>
+#include <QDir>
+#include <QTextStream>
+#include <QApplication>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -45,6 +50,22 @@ LiteBuildPlugin::LiteBuildPlugin()
 {
 }
 
+void LiteBuildPlugin::load_execute(const QString& path, QComboBox *combo)
+{
+    QDir dir = path;
+    m_liteApp->appendLog("Execute commands","Loading "+path);
+    dir.setFilter(QDir::Files | QDir::NoSymLinks);
+    dir.setNameFilters(QStringList("*.api"));
+    foreach (QFileInfo info, dir.entryInfoList()) {
+        QFile f(info.filePath());
+        if (f.open(QFile::ReadOnly)) {
+            foreach (QByteArray line, f.readAll().split('\n')) {
+                combo->addItem(QString(line.trimmed()));
+            }
+        }
+    }
+}
+
 bool LiteBuildPlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
@@ -58,12 +79,31 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(1);
     m_executeWidget->setLayout(hbox);
-    m_executeEdit = new QLineEdit;
+    m_commandCombo = new QComboBox;
+    m_commandCombo->setEditable(true);
+    m_commandCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    QCompleter *c = m_commandCombo->completer();
+    if (c != 0) {
+        c->setCaseSensitivity(Qt::CaseSensitive);
+    }
+    load_execute(m_liteApp->resourcePath()+"/litebuild/command",m_commandCombo);
+    m_commandCombo->installEventFilter(this);
+
     m_workLabel = new ElidedLabel("");
     m_workLabel->setElideMode(Qt::ElideMiddle);
+
+
+    QPushButton *close = new QPushButton();
+    close->setIcon(QIcon("icon:images/closetool.png"));
+    close->setIconSize(QSize(16,16));
+    close->setFlat(true);
+    close->setToolTip(tr("Close"));
+
+    connect(close,SIGNAL(clicked()),m_executeWidget,SLOT(hide()));
     hbox->addWidget(new QLabel(tr("Execute:")));
-    hbox->addWidget(m_executeEdit);
-    hbox->addWidget(m_workLabel);
+    hbox->addWidget(m_commandCombo,1);
+    hbox->addWidget(m_workLabel,1);
+    hbox->addWidget(close);
     layout->addWidget(m_executeWidget);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_build,"Build");
@@ -72,8 +112,8 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,execAct);
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
-    connect(m_executeEdit,SIGNAL(returnPressed()),this,SLOT(execute()));
-    connect(m_liteApp,SIGNAL(key_escape()),m_executeWidget,SLOT(hide()));
+    connect(m_commandCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(execute()));
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(closeRequest()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
     return true;
@@ -82,8 +122,8 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
 void LiteBuildPlugin::showExecute()
 {
     m_executeWidget->show();
-    m_executeEdit->selectAll();
-    m_executeEdit->setFocus();
+    m_commandCombo->lineEdit()->selectAll();
+    m_commandCombo->lineEdit()->setFocus();
     QString work = m_liteApp->applicationPath();
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
@@ -95,11 +135,11 @@ void LiteBuildPlugin::showExecute()
 
 void LiteBuildPlugin::execute()
 {
-    QString text = m_executeEdit->text().trimmed();
+    QString text = m_commandCombo->lineEdit()->text().trimmed();
     if (text.isEmpty()) {
         return;
     }
-    m_executeEdit->selectAll();
+    m_commandCombo->lineEdit()->selectAll();
     QString cmd = text;
     QString args;
     int find = text.indexOf(" ");
@@ -129,6 +169,28 @@ void LiteBuildPlugin::currentEditorChanged(LiteApi::IEditor *)
     }
     m_workLabel->setText(work);
     m_workLabel->setToolTip(work);
+}
+
+void LiteBuildPlugin::closeRequest()
+{
+    m_executeWidget->hide();
+}
+
+bool LiteBuildPlugin::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == m_commandCombo) {
+        if (event->type() == QEvent::KeyPress) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            if (keyEvent->key() == Qt::Key_Tab) {
+                QLineEdit *edit = m_commandCombo->lineEdit();
+                if (edit->completer()->widget()->isVisible()) {
+                    edit->setText(edit->completer()->currentCompletion());
+                }
+                return true;
+            }
+        }
+    }
+    return LiteApi::IPlugin::eventFilter(obj,event);
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)
