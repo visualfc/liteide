@@ -27,9 +27,12 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QCompleter>
 #include <QLabel>
 #include <QPushButton>
 #include <QFileInfo>
+#include <QDir>
+#include <QTextStream>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -44,6 +47,22 @@
 
 LiteBuildPlugin::LiteBuildPlugin()
 {
+}
+
+void LiteBuildPlugin::load_execute(const QString& path, QComboBox *combo)
+{
+    QDir dir = path;
+    m_liteApp->appendLog("Execute commands","Loading "+path);
+    dir.setFilter(QDir::Files | QDir::NoSymLinks);
+    dir.setNameFilters(QStringList("*.api"));
+    foreach (QFileInfo info, dir.entryInfoList()) {
+        QFile f(info.filePath());
+        if (f.open(QFile::ReadOnly)) {
+            foreach (QByteArray line, f.readAll().split('\n')) {
+                combo->addItem(QString(line.trimmed()));
+            }
+        }
+    }
 }
 
 bool LiteBuildPlugin::load(LiteApi::IApplication *app)
@@ -62,6 +81,12 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     m_commandCombo = new QComboBox;
     m_commandCombo->setEditable(true);
     m_commandCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    QCompleter *c = m_commandCombo->completer();
+    if (c != 0) {
+        c->setCaseSensitivity(Qt::CaseSensitive);
+    }
+    load_execute(m_liteApp->resourcePath()+"/litebuild/execute",m_commandCombo);
+
     m_workLabel = new ElidedLabel("");
     m_workLabel->setElideMode(Qt::ElideMiddle);
 

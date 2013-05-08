@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include <QTextCursor>
 #include <QCompleter>
+#include <QStandardItem>
 
 namespace LiteApi {
 
@@ -89,6 +90,9 @@ class ICompleter : public QObject
 public:
     ICompleter(QObject *parent): QObject(parent) {}
     virtual QCompleter *completer() const = 0;
+    virtual QStandardItem *findRoot(const QString &name) = 0;
+    virtual void clearChildItem(QStandardItem *root) = 0;
+    virtual void appendChildItem(QStandardItem *root,QString name,const QString &kind, const QString &info,const QIcon &icon, bool temp) = 0;
     virtual bool appendItem(const QString &name,const QIcon &icon, bool temp) = 0;
     virtual bool appendItemEx(const QString &name,const QString &kind, const QString &info,const QIcon &icon, bool temp) = 0;
     virtual void appendItems(QStringList items, const QString &kind, const QString &info,const QIcon &icon, bool temp) = 0;

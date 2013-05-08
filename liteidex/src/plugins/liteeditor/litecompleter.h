@@ -41,6 +41,9 @@ public:
     virtual ~LiteCompleter();
     void setEditor(QPlainTextEdit *editor);
     virtual QCompleter *completer() const;
+    virtual QStandardItem *findRoot(const QString &name);
+    virtual void clearChildItem(QStandardItem *root);
+    virtual void appendChildItem(QStandardItem *root,QString name,const QString &kind, const QString &info,const QIcon &icon, bool temp);
     virtual bool appendItem(const QString &name,const QIcon &icon, bool temp);
     virtual bool appendItemEx(const QString &name,const QString &kind, const QString &info,const QIcon &icon, bool temp);
     virtual void appendItems(QStringList nameList,const QString &kind, const QString &info,const QIcon &icon, bool temp);

@@ -38,6 +38,7 @@ class LiteBuildPlugin : public LiteApi::IPlugin
 public:
     LiteBuildPlugin();
     virtual bool load(LiteApi::IApplication *app);
+    void load_execute(const QString& path, QComboBox *combo);
 protected slots:
     void showExecute();
     void execute();

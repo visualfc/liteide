@@ -154,7 +154,6 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
     QStringList args;
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileName << QString::number(m_writeData.length());
     m_writeData = src.toUtf8();
-
     m_process->start(m_gocodeCmd,args);
 }
 
@@ -203,7 +202,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     //var,,Args,,[]string
     int n = 0;
     QIcon icon;
-
+    QStandardItem *root= m_completer->findRoot(m_preWord);
     foreach (QString s, all) {
         QStringList word = s.split(",,");
         if (word.count() != 3) {
@@ -236,11 +235,10 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
         if (m_golangAst) {
             icon = m_golangAst->iconFromTagEnum(tag,true);
         }
-
-        m_completer->appendItemEx(m_preWord+word.at(1),kind,info,icon,true);
+        //m_completer->appendItemEx(m_preWord+word.at(1),kind,info,icon,true);
+        m_completer->appendChildItem(root,word.at(1),kind,info,icon,true);
         n++;
     }
-
     m_prefix.clear();
     if (n >= 1) {
         m_completer->show();
