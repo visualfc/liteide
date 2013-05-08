@@ -33,6 +33,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QTextStream>
+#include <QApplication>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -85,10 +86,13 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     if (c != 0) {
         c->setCaseSensitivity(Qt::CaseSensitive);
     }
-    load_execute(m_liteApp->resourcePath()+"/litebuild/execute",m_commandCombo);
+    load_execute(m_liteApp->resourcePath()+"/litebuild/command",m_commandCombo);
+    m_commandCombo->model()->sort(0);
+    m_commandCombo->installEventFilter(this);
 
     m_workLabel = new ElidedLabel("");
     m_workLabel->setElideMode(Qt::ElideMiddle);
+
 
     QPushButton *close = new QPushButton();
     close->setIcon(QIcon("icon:images/closetool.png"));
@@ -110,7 +114,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
     connect(m_commandCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(execute()));
-    connect(m_liteApp,SIGNAL(key_escape()),m_executeWidget,SLOT(hide()));
+    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(closeRequest()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
     return true;
@@ -166,6 +170,28 @@ void LiteBuildPlugin::currentEditorChanged(LiteApi::IEditor *)
     }
     m_workLabel->setText(work);
     m_workLabel->setToolTip(work);
+}
+
+void LiteBuildPlugin::closeRequest()
+{
+    m_executeWidget->hide();
+}
+
+bool LiteBuildPlugin::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == m_commandCombo) {
+        if (event->type() == QEvent::KeyPress) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            if (keyEvent->key() == Qt::Key_Tab) {
+                QLineEdit *edit = m_commandCombo->lineEdit();
+                if (edit->completer()->widget()->isVisible()) {
+                    edit->setText(edit->completer()->currentCompletion());
+                }
+                return true;
+            }
+        }
+    }
+    return LiteApi::IPlugin::eventFilter(obj,event);
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

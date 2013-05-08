@@ -154,6 +154,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
     QStringList args;
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileName << QString::number(m_writeData.length());
     m_writeData = src.toUtf8();
+    m_breset = false;
     m_process->start(m_gocodeCmd,args);
 }
 

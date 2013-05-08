@@ -43,6 +43,9 @@ protected slots:
     void showExecute();
     void execute();
     void currentEditorChanged(LiteApi::IEditor*);
+    void closeRequest();
+protected:
+    virtual bool eventFilter(QObject *, QEvent *);
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteBuild *m_build;
