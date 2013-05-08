@@ -46,6 +46,8 @@ protected slots:
     void slotReadOutput();
     void slotReadError();
 protected:
+	QString exitStatusText(int code,QProcess::ExitStatus status);
+	QString processErrorText(QProcess::ProcessError code);
     QMap<int,QVariant> m_idVarMap;
 };
 

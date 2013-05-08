@@ -171,7 +171,7 @@ void GoplayBrowser::run()
         m_process->kill();
     }
     m_output->clear();
-    m_output->appendTag(QString("Run start ...\n\n"));
+    m_output->appendTag(tr("Running...\n\n"));
     m_process->setEnvironment(env.toStringList());
 
     m_process->start(go,args);
@@ -195,9 +195,9 @@ void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
 {
     m_output->setReadOnly(true);
     if (err) {
-        m_output->appendTag(QString("\nError %1.\n").arg(msg));
+        m_output->appendTag(tr("\nError running script: %1.\n").arg(msg));
     } else {
-        m_output->appendTag(QString("\nRun finished %1, %2.").arg(code).arg(msg));
+        m_output->appendTag(tr("\nRun completed successfully: %2.").arg(msg));
     }
 }
 

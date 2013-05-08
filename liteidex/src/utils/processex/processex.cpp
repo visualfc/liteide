@@ -35,44 +35,44 @@
 
 
 
-static QString exitStatusText(QProcess::ExitStatus code)
+QString ProcessEx::exitStatusText(int code, QProcess::ExitStatus status)
 {
     static QString text;
-    switch (code) {
+    switch (status) {
     case QProcess::NormalExit:
-        text = "process exited normally";
+        text = tr("process exited with code %1").arg(code);
         break;
     case QProcess::CrashExit:
-        text = "process crashed";
+        text = tr("process crashed");
         break;
     default:
-        text = "process exited unknown";
+        text = tr("process exited with an unknown status");
     }
     return text;
 }
 
-static QString processErrorText(QProcess::ProcessError code)
+QString ProcessEx::processErrorText(QProcess::ProcessError code)
 {
     static QString text;
     switch (code) {
     case QProcess::FailedToStart:
-        text = "process failed to start";
+        text = tr("process failed to start");
         break;
     case QProcess::Crashed:
-        text = "process crashed some time after starting successfully";
+        text = tr("process crashed after starting");
         break;
     case QProcess::Timedout:
-        text = "last waitFor...() function timed out";
+        text = tr("timed out waiting for process");
         break;
     case QProcess::ReadError:
-        text = "error occurred when attempting to read from the process";
+        text = tr("couldn't read from the process");
         break;
     case QProcess::WriteError:
-        text = "error occurred when attempting to write to the process";
+        text = tr("couldn't write to the process");
         break;
     case QProcess::UnknownError:
     default:
-        text = "unknown error occurred";
+        text = tr("an unknown error occurred");
     }
     return text;
 }
@@ -111,12 +111,12 @@ QVariant ProcessEx::userData(int id) const
 
 void ProcessEx::slotError(QProcess::ProcessError error)
 {
-    emit extFinish(true,-1,processErrorText(error));
+    emit extFinish(true,-1,this->processErrorText(error));
 }
 
 void ProcessEx::slotFinished(int code,QProcess::ExitStatus status)
 {
-    emit extFinish(false,code,exitStatusText(status));
+    emit extFinish(false,code,this->exitStatusText(code,status));
 }
 
 void ProcessEx::slotReadOutput()
