@@ -767,7 +767,7 @@ void LiteBuild::extOutput(const QByteArray &data, bool /*bError*/)
     QString codecName = m_process->userData(2).toString();
     QTextCodec *codec = QTextCodec::codecForLocale();
     if (!codecName.isEmpty()) {
-        codec = QTextCodec::codecForName(codecName.toAscii());
+        codec = QTextCodec::codecForName(codecName.toLatin1());
     }
     m_output->append(codec->toUnicode(data));
 }
@@ -1005,12 +1005,12 @@ void LiteBuild::enterTextBuildOutput(QString text)
     QTextCodec *codec = QTextCodec::codecForLocale();
     QString codecName = m_process->userData(2).toString();
     if (!codecName.isEmpty()) {
-        codec = QTextCodec::codecForName(codecName.toAscii());
+        codec = QTextCodec::codecForName(codecName.toLatin1());
     }
     if (codec) {
         m_process->write(codec->fromUnicode(text));
     } else {
-        m_process->write(text.toAscii());
+        m_process->write(text.toLatin1());
     }
 }
 

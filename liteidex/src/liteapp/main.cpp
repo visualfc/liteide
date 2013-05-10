@@ -29,6 +29,9 @@
 #include <QSettings>
 #include <QSplashScreen>
 #include <QTextCodec>
+#if QT_VERSION >= 0x050000
+#include <QStandardPaths>
+#endif
 #include <QDebug>
 #include "mainwindow.h"
 #include "liteapp.h"
@@ -88,8 +91,11 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("icon",resPath);
     QDir::addSearchPath("icon",resPath+"/liteapp");
     QDir::addSearchPath("icon",":/");
-
+#if QT_VERSION >= 0x050000
+    QString storage = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
     QString storage = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#endif
     QDir dir(storage);
     dir.mkdir("liteide");
 

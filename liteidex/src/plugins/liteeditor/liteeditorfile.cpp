@@ -108,7 +108,7 @@ void LiteEditorFile::setDocument(QTextDocument *document)
 
 void LiteEditorFile::setTextCodec(const QString &name)
 {
-    QTextCodec *codec = QTextCodec::codecForName(name.toAscii());
+    QTextCodec *codec = QTextCodec::codecForName(name.toLatin1());
     if (codec) {
         m_codec = codec;
     }
@@ -147,7 +147,7 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
             if (im) {
                 QString codecName = im->codec();
                 if (!codecName.isEmpty()) {
-                    m_codec = QTextCodec::codecForName(codecName.toAscii());
+                    m_codec = QTextCodec::codecForName(codecName.toLatin1());
                 }
             }
             int bytesRead = buf.size();

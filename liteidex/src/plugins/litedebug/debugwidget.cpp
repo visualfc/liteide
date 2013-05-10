@@ -150,7 +150,11 @@ static void setResizeView(QTreeView *view)
         view->setHeaderHidden(true);
         return;
     }
+#if QT_VERSION >= 0x050000
+    view->header()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+#else
     view->header()->setResizeMode(0,QHeaderView::ResizeToContents);
+#endif
 }
 
 void DebugWidget::setDebugger(LiteApi::IDebugger *debug)

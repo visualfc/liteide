@@ -3,7 +3,11 @@ TEMPLATE = lib
 
 include(../../liteideplugin.pri)
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+QT += webkitwidgets
+} else {
 QT += webkit
+}
 
 DEFINES += WEBKITHTMLWIDGET_LIBRARY
 

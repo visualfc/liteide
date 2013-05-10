@@ -57,10 +57,9 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IBrowserEditor(parent),
       m_liteApp(app)
 {
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    dir.mkpath("liteide/goplay");
+    QDir dir(m_liteApp->storagePath());
+    dir.mkpath("goplay");
 
-    dir.cd("liteide");
     m_dataPath = dir.path()+"/goplay";
 
     m_playFile = QFileInfo(dir,"goplay.go").filePath();

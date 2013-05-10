@@ -59,6 +59,9 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteFindPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.LiteFindPlugin")
+#endif
 public:
     PluginFactory() {
         m_info->setId("plugin/LiteFind");

@@ -66,7 +66,7 @@ void QObjectHelper::qvariant2qobject(const QVariantMap& variant, QObject* object
 
   QVariantMap::const_iterator iter;
   for (iter = variant.constBegin(); iter != variant.constEnd(); ++iter) {
-    int pIdx = metaobject->indexOfProperty( iter.key().toAscii() );
+    int pIdx = metaobject->indexOfProperty( iter.key().toLatin1() );
 
     if ( pIdx < 0 ) {
       continue;

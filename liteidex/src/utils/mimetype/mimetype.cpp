@@ -164,7 +164,7 @@ bool MimeType::loadMimeTypes(LiteApi::IMimeTypeManager *manager, QIODevice *dev,
                 mimeType->appendSubClassesOf(attrs.value("type").toString());
             } else if (reader.name() == "comment" && mimeType) {
                 QString locale = attrs.value("xml:lang").toString();
-                const QString comment = QCoreApplication::translate("MimeType", reader.readElementText().toAscii());
+                const QString comment = QCoreApplication::translate("MimeType", reader.readElementText().toLatin1());
                 if (locale.isEmpty()) {
                     mimeType->setComment(comment);
                 } else {

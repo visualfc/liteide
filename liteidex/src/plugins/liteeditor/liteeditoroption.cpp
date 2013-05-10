@@ -138,7 +138,11 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
 
     ui->mimeTreeView->setModel(m_mimeModel);
     ui->mimeTreeView->setRootIsDecorated(false);
+#if QT_VERSION >= 0x050000
+    ui->mimeTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
     ui->mimeTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
 
     foreach(QString mime, m_liteApp->editorManager()->mimeTypeList()) {
         if (mime.startsWith("text/")) {

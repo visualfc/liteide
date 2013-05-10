@@ -38,8 +38,8 @@
 
 #include "itexteditor.h"
 
-#include <QtGui/QTextBlockUserData>
-#include <QtGui/QPlainTextDocumentLayout>
+#include <QTextBlockUserData>
+#include <QPlainTextDocumentLayout>
 
 namespace TextEditor {
 

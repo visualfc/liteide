@@ -895,7 +895,7 @@ void GdbDebugger::handleResultVarUpdateValue(const GdbResponse &response, QMap<Q
     }
     if (v) {
         v->setData(value,Qt::DisplayRole);
-        v->setData(Qt::red,Qt::TextColorRole);
+        v->setData(QColor(Qt::red),Qt::TextColorRole);
         m_varChangedItemList.insert(v);
     }
 }
@@ -921,7 +921,7 @@ void GdbDebugger::handleResultVarUpdateType(const GdbResponse &response, QMap<QS
     }
     if (v) {
         v->setData(type,Qt::DisplayRole);
-        v->setData(Qt::red,Qt::TextColorRole);
+        v->setData(QColor(Qt::red),Qt::TextColorRole);
         m_varChangedItemList.insert(v);
     }
 }
@@ -1061,7 +1061,7 @@ void GdbDebugger::initGdb()
 void GdbDebugger::updateWatch()
 {
     foreach(QStandardItem *item, m_varChangedItemList) {
-        item->setData(Qt::black,Qt::TextColorRole);
+        item->setData(QColor(Qt::black),Qt::TextColorRole);
     }
     m_varChangedItemList.clear();
     command("-var-update *");

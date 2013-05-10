@@ -50,7 +50,11 @@ LiteEnvOption::LiteEnvOption(LiteApi::IApplication *app,QObject *parent) :
     ui->fileTreeView->setEditTriggers(0);
     ui->fileTreeView->setModel(m_fileModel);
     ui->fileTreeView->setRootIndex(root);
+#if QT_VERSION >= 0x050000
+    ui->fileTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
     ui->fileTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
     connect(ui->fileTreeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFile(QModelIndex)));
 
 }

@@ -155,7 +155,11 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_treeView->setHeaderHidden(true);
     m_treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     // show horizontal scrollbar
+#if QT_VERSION >= 0x050000
+    m_treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
     m_treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
     m_treeView->header()->setStretchLastSection(false);
     //hide
     int count = m_treeView->header()->count();

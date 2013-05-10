@@ -79,7 +79,11 @@ SymbolTreeView::SymbolTreeView(QWidget *parent)
     {
         QHeaderView *treeHeader = header();
         treeHeader->setVisible(false);
+#if QT_VERSION >= 0x050000
+        treeHeader->setSectionResizeMode(QHeaderView::Stretch);
+#else
         treeHeader->setResizeMode(QHeaderView::Stretch);
+#endif
         treeHeader->setStretchLastSection(true);
     }
     setContextMenuPolicy(Qt::CustomContextMenu);

@@ -49,6 +49,7 @@ protected:
 class PluginFactory : public LiteApi::PluginFactoryT<WelcomePlugin>
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "liteidex.WelcomePlugin")
     Q_INTERFACES(LiteApi::IPluginFactory)
 public:
     PluginFactory() {

@@ -27,6 +27,9 @@
 #include <QWidget>
 #include <QUrl>
 #include <QTextDocument>
+#ifndef QT_NO_PRINTER
+#include <QPrinter>
+#endif
 
 namespace LiteApi {
 
