@@ -39,6 +39,9 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangPackagePlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.GolangPackagePlugin")
+#endif
 public:
     PluginFactory() {
         m_info->setId("plugin/GolangPackage");

@@ -2,6 +2,7 @@ TARGET = litebuild
 TEMPLATE = lib
 
 include (../../liteideplugin.pri)
+include (../../api/liteenvapi/liteenvapi.pri)
 include (../../api/litebuildapi/litebuildapi.pri)
 include (../../3rdparty/elidedlabel/elidedlabel.pri)
 include (../../utils/fileutil/fileutil.pri)

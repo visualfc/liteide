@@ -47,6 +47,9 @@
 #include <QDir>
 #include <QTextBrowser>
 #include <QUrl>
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <QPlainTextEdit>
 #include <QTextCursor>
 #include <QGroupBox>
@@ -483,7 +486,11 @@ void GolangDoc::updateTextDoc(const QUrl &url, const QByteArray &ba, const QStri
 {
     m_lastUrl = url;
     QTextCodec *codec = QTextCodec::codecForUtfText(ba,QTextCodec::codecForName("utf-8"));
+#if QT_VERSION >= 0x050000
+    QString html = codec->toUnicode(ba).toHtmlEscaped();
+#else
     QString html = Qt::escape(codec->toUnicode(ba));
+#endif
     QString data = m_templateData;
     data.replace("{header}",header);
     data.replace("{nav}","");
@@ -637,8 +644,13 @@ void GolangDoc::openUrlFile(const QUrl &url)
         }
         if (editor) {
             QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+#if QT_VERSION >= 0x050000
+            if (ed && QUrlQuery(url).hasQueryItem("s")) {
+                QStringList pos =  QUrlQuery(url).queryItemValue("s").split(":");
+#else
             if (ed && url.hasQueryItem("s")) {
                 QStringList pos = url.queryItemValue("s").split(":");
+#endif
                 if (pos.length() == 2) {
                     bool ok = false;
                     int begin = pos.at(0).toInt(&ok);

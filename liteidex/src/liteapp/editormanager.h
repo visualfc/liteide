@@ -96,6 +96,7 @@ protected slots:
     void modificationChanged(bool);
     void toggleBrowserAction(bool);
 protected:
+    QMenu *m_nullMenu;
     QList<EditLocation> m_navigationHistory;
     int m_currentNavigationHistoryPosition;
     QWidget      *m_widget;

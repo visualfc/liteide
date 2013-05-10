@@ -37,6 +37,7 @@
 #include <QCloseEvent>
 #include <QVBoxLayout>
 #include <QUrl>
+#include <QMimeData>
 #include <QTextBlock>
 #include <QRegExp>
 #include <QFileInfo>

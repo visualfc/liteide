@@ -42,6 +42,9 @@ class PluginFactory : public LiteApi::PluginFactoryT<FileBrowserPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.FileBrowserPlugin")
+#endif
 public:
     PluginFactory()
     {

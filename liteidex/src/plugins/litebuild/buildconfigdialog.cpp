@@ -76,8 +76,13 @@ void BuildConfigDialog::resizeTableView(QTableView *tableView)
     QAbstractItemModel *model = tableView->model();
     if (model && model->columnCount() >= 2) {
         tableView->resizeColumnToContents(0);
+#if QT_VERSION >= 0x050000
+        tableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Interactive);
+        tableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+#else
         tableView->horizontalHeader()->setResizeMode(0,QHeaderView::Interactive);
         tableView->horizontalHeader()->setResizeMode(1,QHeaderView::Stretch);
+#endif
     }
 }
 
