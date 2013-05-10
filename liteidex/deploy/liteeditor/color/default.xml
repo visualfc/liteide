@@ -3,7 +3,7 @@
   <!-- default color scheme -->
   <style name="Text" foreground="#000000" background="#ffffff"/>
   <style name="Extra" foreground="#008B8B" background=""/>
-  <style name="Selection" foreground="#ffffff" background=""/>
+  <style name="Selection" background="#77ddff"/>
   <style name="CurrentLine" background="#B4C8C8"/>
   <style name="IndentLine" foreground="#008B8B"/>
   <style name="VisualWhitespace" foreground="#c0c0c0"/>

@@ -73,7 +73,7 @@
 #endif
 //lite_memory_check_end
 
-void ListViewEx::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+void ListViewEx::currentChanged(const QModelIndex &current, const QModelIndex&)
 {
     emit currentIndexChanged(current);
 }
@@ -585,7 +585,7 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
     if (m_godocCmd.isEmpty()) {
         return;
     }
-    if (m_godocProcess->isRuning()) {
+    if (m_godocProcess->isRunning()) {
         m_godocProcess->waitForFinished(200);
     }
     m_godocData.clear();

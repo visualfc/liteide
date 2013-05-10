@@ -333,7 +333,7 @@ public slots:
     virtual bool saveEditorAs(IEditor *editor = 0) = 0;
     virtual bool saveAllEditors() = 0;
     virtual bool closeEditor(IEditor *editor = 0) = 0;
-    virtual bool closeAllEditors(bool autoSaveAll = false) = 0;
+    virtual bool closeAllEditors() = 0;
 signals:
     void currentEditorChanged(LiteApi::IEditor *editor);
     void editorCreated(LiteApi::IEditor *editor);

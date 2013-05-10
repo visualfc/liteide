@@ -166,11 +166,11 @@ void PackageBrowser::triggeredToolWindow(bool b)
     }
 }
 
-void PackageBrowser::fileWizardFinished(const QString &type, const QString &scheme, const QString &location)
+void PackageBrowser::fileWizardFinished(const QString&, const QString&, const QString&)
 {
-    if (scheme == "gopkg") {
-        //reloadAll();
-    }
+    /*if (scheme == "gopkg") {
+        reloadAll();
+    }*/
 }
 
 void PackageBrowser::currentEnvChanged(LiteApi::IEnv *)

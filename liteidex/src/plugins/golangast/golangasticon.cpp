@@ -104,7 +104,7 @@ QIcon GolangAstIconPublic::iconFromTag(const QString &tag) const
     return QIcon();
 }
 
-QIcon GolangAstIconPublic::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub) const
+QIcon GolangAstIconPublic::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) const
 {
     if (tag == LiteApi::TagPackage)
         return iconPackage;
@@ -184,7 +184,7 @@ QIcon GolangAstIconPrivate::iconFromTag(const QString &tag) const
     return QIcon();
 }
 
-QIcon GolangAstIconPrivate::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub) const
+QIcon GolangAstIconPrivate::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) const
 {
     if (tag == LiteApi::TagPackage)
         return iconPackage;

@@ -39,6 +39,14 @@
 #endif
 //lite_memory_check_end
 
+static void fadeText(QTextCursor& cur) {
+    QTextCharFormat f(cur.charFormat());
+    QColor color(f.foreground().color());
+    color.setAlpha(160);
+    f.setForeground(color);
+    cur.setCharFormat(f);
+}
+
 TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *parent) :
     TerminalEdit(parent),
     m_liteApp(app)
@@ -93,12 +101,7 @@ void TextOutput::updateExistsTextColor()
     {
         QTextCursor cur(it);
         cur.select(QTextCursor::BlockUnderCursor);
-
-        QTextCharFormat f(cur.charFormat());
-        QColor color(f.foreground().color());
-        color.setAlpha(128);
-        f.setForeground(color);
-        cur.setCharFormat(f);
+        fadeText(cur);
     }
 }
 
@@ -167,5 +170,9 @@ void TextOutput::loadColorStyleScheme()
     } else {
         m_clrError = Qt::red;
     }
-    this->updateExistsTextColor();
+
+    QTextCursor cur(document());
+    cur.select(QTextCursor::Document);
+    cur.setCharFormat(m_fmt);
+    fadeText(cur);
 }

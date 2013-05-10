@@ -166,11 +166,11 @@ void GoplayBrowser::run()
     QStringList args;
     args << "run";
     args << "goplay.go";
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         m_process->kill();
     }
     m_output->clear();
-    m_output->appendTag(QString("Run start ...\n\n"));
+    m_output->appendTag(tr("Running...\n\n"));
     m_process->setEnvironment(env.toStringList());
 
     m_process->start(go,args);
@@ -178,7 +178,7 @@ void GoplayBrowser::run()
 
 void GoplayBrowser::stop()
 {
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         if (!m_process->waitForFinished(100)) {
             m_process->kill();
         }
@@ -193,10 +193,10 @@ void GoplayBrowser::runOutput(const QByteArray &data,bool)
 void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
 {
     m_output->setReadOnly(true);
-    if (err) {
-        m_output->appendTag(QString("\nError %1.\n").arg(msg));
+    if (err || code != 0) {
+        m_output->appendTag(tr("\nError: %1.").arg(msg),true);
     } else {
-        m_output->appendTag(QString("\nRun finished %1, %2.").arg(code).arg(msg));
+        m_output->appendTag(tr("\nSuccess: %2.").arg(msg));
     }
 }
 

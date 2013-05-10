@@ -17,3 +17,6 @@ SOURCES += \
     uncommentselection.cpp
 
 RESOURCES +=
+
+QMAKE_CFLAGS_WARN_ON -= -W -Wextra -Wall
+QMAKE_CXXFLAGS_WARN_ON -= -W -Wextra -Wall
