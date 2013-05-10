@@ -203,7 +203,7 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
         return;
     }
 
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         return;
     }
 

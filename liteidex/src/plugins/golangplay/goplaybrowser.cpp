@@ -166,7 +166,7 @@ void GoplayBrowser::run()
     QStringList args;
     args << "run";
     args << "goplay.go";
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         m_process->kill();
     }
     m_output->clear();
@@ -178,7 +178,7 @@ void GoplayBrowser::run()
 
 void GoplayBrowser::stop()
 {
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         if (!m_process->waitForFinished(100)) {
             m_process->kill();
         }
@@ -190,13 +190,13 @@ void GoplayBrowser::runOutput(const QByteArray &data,bool)
     m_output->append(m_codec->toUnicode(data));
 }
 
-void GoplayBrowser::runFinish(bool err,int,const QString &msg)
+void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
 {
     m_output->setReadOnly(true);
-    if (err) {
-        m_output->appendTag(tr("\nError running script: %1.\n").arg(msg));
+    if (err || code != 0) {
+        m_output->appendTag(tr("\nError: %1.").arg(msg),true);
     } else {
-        m_output->appendTag(tr("\nRun completed successfully: %2.").arg(msg));
+        m_output->appendTag(tr("\nSuccess: %2.").arg(msg));
     }
 }
 
