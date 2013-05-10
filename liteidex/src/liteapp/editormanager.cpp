@@ -62,6 +62,9 @@ EditorManager::~EditorManager()
     delete m_tabContextMenu;
     delete m_editorTabWidget;
     m_browserActionMap.clear();
+    if (!m_nullMenu->parent()) {
+        delete m_nullMenu;
+    }
 }
 
 bool EditorManager::initWithApp(IApplication *app)
@@ -69,7 +72,7 @@ bool EditorManager::initWithApp(IApplication *app)
     if (!IEditorManager::initWithApp(app)) {
         return false;
     }
-
+    m_nullMenu = new QMenu;
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
@@ -441,7 +444,7 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         return;
     }
     m_currentEditor = editor;
-    static QMenu nullMenu;
+
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
@@ -449,11 +452,11 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         if (menu) {
             m_editMenu->menuAction()->setMenu(menu);
         } else {
-            m_editMenu->menuAction()->setMenu(&nullMenu);
+            m_editMenu->menuAction()->setMenu(m_nullMenu);
         }
         m_editMenu->setEnabled(menu != 0);
     } else {
-        m_editMenu->menuAction()->setMenu(&nullMenu);
+        m_editMenu->menuAction()->setMenu(m_nullMenu);
         m_editMenu->setEnabled(false);
     }
 
