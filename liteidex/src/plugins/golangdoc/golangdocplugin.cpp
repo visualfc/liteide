@@ -54,12 +54,8 @@ bool GolangDocPlugin::load(LiteApi::IApplication *app)
     return true;
 }
 
-void GolangDocPlugin::currentEditorChanged(LiteApi::IEditor *editor)
+void GolangDocPlugin::currentEditorChanged(LiteApi::IEditor*)
 {
-    bool active = false;
-    if (editor && editor->mimeType() == "text/x-gosrc") {
-        active = true;
-    }
 }
 
 Q_EXPORT_PLUGIN(PluginFactory)

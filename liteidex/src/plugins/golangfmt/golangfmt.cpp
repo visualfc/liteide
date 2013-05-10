@@ -272,7 +272,7 @@ void GolangFmt::fmtOutput(QByteArray data,bool stdErr)
     m_data.append(data);
 }
 
-void GolangFmt::fmtFinish(bool error,int code,QString msg)
+void GolangFmt::fmtFinish(bool error,int code,QString)
 {
     if (!error && code == 0) {
         QString fileName = m_process->userData(0).toString();

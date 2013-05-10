@@ -1,5 +1,7 @@
 @echo off
 
+setlocal
+
 set BUILD_ROOT=%CD%
 if x%LITEIDE_ROOT%==x set LITEIDE_ROOT=%CD%\..\liteidex
 
@@ -38,11 +40,11 @@ echo .
 cd %LITEIDE_ROOT%
 set GOPATH=%CD%;%GOPATH%
 
-cd src\liteidex
-windres -o liteide-res.syso liteide.rc
-go install -ldflags "-s -H windowgui" -v liteidex
-del liteide-res.syso
-cd ..\..
+REM cd src\liteidex
+REM windres -o liteide-res.syso liteide.rc
+REM go install -ldflags "-s -H windowsgui" -v liteidex
+REM del liteide-res.syso
+REM cd ..\..
 
 go install -ldflags "-s" -v tools/goastview
 go install -ldflags "-s" -v tools/godocview

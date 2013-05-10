@@ -58,7 +58,7 @@ LiteApi::IProject *PackageProjectFactory::open(const QString &fileName, const QS
     return project;
 }
 
-bool PackageProjectFactory::findTargetInfo(const QString &fileName, const QString &mimetype, QMap<QString,QString>& targetInfo) const
+bool PackageProjectFactory::findTargetInfo(const QString&, const QString&, QMap<QString,QString>&) const
 {
     return false;
 }

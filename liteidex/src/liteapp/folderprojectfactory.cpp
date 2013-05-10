@@ -52,7 +52,7 @@ LiteApi::IProject *FolderProjectFactory::open(const QString &fileName, const QSt
     return m_liteApp->projectManager()->openFolder(fileName);
 }
 
-bool FolderProjectFactory::findTargetInfo(const QString &fileName, const QString &mimetype, QMap<QString,QString>& targetInfo) const
+bool FolderProjectFactory::findTargetInfo(const QString&, const QString&, QMap<QString,QString>&) const
 {
     return false;
 }

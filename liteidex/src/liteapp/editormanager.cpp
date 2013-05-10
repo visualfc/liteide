@@ -407,12 +407,8 @@ bool EditorManager::saveAllEditors()
     return true;
 }
 
-bool EditorManager::closeAllEditors(bool autoSaveAll)
+bool EditorManager::closeAllEditors()
 {
-    bool bSaveAll = false;
-    if (autoSaveAll) {
-        bSaveAll = true;
-    }
     bool bCloseAll = true;
 
     QMapIterator<QWidget *, IEditor *> i (m_widgetEditorMap);

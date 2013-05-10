@@ -396,7 +396,7 @@ int FileSystemModel::rowCount(const QModelIndex &parent) const
     return node->childCount();
 }
 
-int FileSystemModel::columnCount(const QModelIndex &parent) const
+int FileSystemModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }

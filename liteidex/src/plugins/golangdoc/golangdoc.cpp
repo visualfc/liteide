@@ -70,7 +70,7 @@
 #endif
 //lite_memory_check_end
 
-void ListViewEx::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+void ListViewEx::currentChanged(const QModelIndex &current, const QModelIndex&)
 {
     emit currentIndexChanged(current);
 }

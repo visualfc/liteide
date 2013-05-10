@@ -90,7 +90,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     m_liteApp->saveSession("default");
     m_liteApp->saveState();
     m_liteApp->projectManager()->closeProject();
-    if (m_liteApp->editorManager()->closeAllEditors(false)) {
+    if (m_liteApp->editorManager()->closeAllEditors()) {
         event->accept();
     } else {
         event->ignore();

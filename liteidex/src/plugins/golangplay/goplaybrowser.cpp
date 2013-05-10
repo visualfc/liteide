@@ -191,7 +191,7 @@ void GoplayBrowser::runOutput(const QByteArray &data,bool)
     m_output->append(m_codec->toUnicode(data));
 }
 
-void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
+void GoplayBrowser::runFinish(bool err,int,const QString &msg)
 {
     m_output->setReadOnly(true);
     if (err) {
