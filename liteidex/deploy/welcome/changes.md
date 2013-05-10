@@ -3,6 +3,9 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2013.5.10
+* compiled compatibility for qt5.02
+
 ### 2013.5.8 Ver x18.1
 * optimization gocode plugin
 * execute preload litebuild/command/*.api
