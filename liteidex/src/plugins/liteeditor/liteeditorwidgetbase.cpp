@@ -351,7 +351,7 @@ int LiteEditorWidgetBase::extraAreaWidth()
         QFont fnt = m_extraArea->font();
         fnt.setBold(true);
         const QFontMetrics linefm(fnt);
-        int lines = qMax(1, blockCount());
+        int lines = qMax(99, blockCount());
         int maxNumber = pow(10, ceil(log10(lines + 1))) - 1;
         space += linefm.width(QString::number(maxNumber));
     }
