@@ -1677,53 +1677,59 @@ Success: %2.</source>
         <translation>编译输出</translation>
     </message>
     <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="315"/>
+        <source>Current environment change id &quot;%1&quot;</source>
+        <translation>当前环境变更 id &quot;%1&quot;</translation>
+    </message>
+    <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="785"/>
-        <source>Error: %1.
-</source>
+        <source>Error: %1.</source>
+        <oldsource>Error: %1.
+</oldsource>
         <translation>错误: %1.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="787"/>
-        <source>Success: %1.
-</source>
+        <source>Success: %1.</source>
+        <oldsource>Success: %1.
+</oldsource>
         <translation>成功: %1.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="819"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="865"/>
-        <source>A process is currently running.  Stop the current action first.
-</source>
+        <source>A process is currently running.  Stop the current action first.</source>
+        <oldsource>A process is currently running.  Stop the current action first.
+</oldsource>
         <translation>进程正在运行.请先停止当前命令操作.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="858"/>
-        <source>Killing current process...
-</source>
+        <source>Killing current process...</source>
+        <oldsource>Killing current process...
+</oldsource>
         <translation>终止当前进程...</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="861"/>
-        <source>Failed to terminate the existing process!
-</source>
+        <source>Failed to terminate the existing process!</source>
+        <oldsource>Failed to terminate the existing process!
+</oldsource>
         <translation>无法终止已存在进程!</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="958"/>
-        <source>&gt; Could not parse action &apos;%1&apos;
-</source>
+        <source>&gt; Could not parse action &apos;%1&apos;</source>
+        <oldsource>&gt; Could not parse action &apos;%1&apos;
+</oldsource>
         <translation>&gt; 不能解析命令 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="987"/>
-        <source>Started process successfully
-</source>
+        <source>Started process successfully</source>
+        <oldsource>Started process successfully
+</oldsource>
         <translation>进程启动成功</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="987"/>
-        <source>Failed to start process
-</source>
-        <translation>无法启动进程</translation>
     </message>
 </context>
 <context>

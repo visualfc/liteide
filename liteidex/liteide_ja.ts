@@ -1677,52 +1677,65 @@ Success: %2.</source>
         <translation type="unfinished">LiteBuild</translation>
     </message>
     <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="315"/>
+        <source>Current environment change id &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="785"/>
-        <source>Error: %1.
-</source>
+        <source>Error: %1.</source>
+        <oldsource>Error: %1.
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="787"/>
-        <source>Success: %1.
-</source>
+        <source>Success: %1.</source>
+        <oldsource>Success: %1.
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="819"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="865"/>
-        <source>A process is currently running.  Stop the current action first.
-</source>
+        <source>A process is currently running.  Stop the current action first.</source>
+        <oldsource>A process is currently running.  Stop the current action first.
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="858"/>
-        <source>Killing current process...
-</source>
+        <source>Killing current process...</source>
+        <oldsource>Killing current process...
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="861"/>
-        <source>Failed to terminate the existing process!
-</source>
+        <source>Failed to terminate the existing process!</source>
+        <oldsource>Failed to terminate the existing process!
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="958"/>
-        <source>&gt; Could not parse action &apos;%1&apos;
-</source>
+        <source>&gt; Could not parse action &apos;%1&apos;</source>
+        <oldsource>&gt; Could not parse action &apos;%1&apos;
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="987"/>
-        <source>Started process successfully
-</source>
+        <source>Started process successfully</source>
+        <oldsource>Started process successfully
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="987"/>
-        <source>Failed to start process
-</source>
+        <source>Started process successfully</source>
+        <oldsource>Failed to start process
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
