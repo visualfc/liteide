@@ -44,6 +44,9 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteDebugPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.LiteDebugPlugin")
+#endif
 public:
     PluginFactory() {
         m_info->setId("plugin/LiteDebug");

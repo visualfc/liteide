@@ -115,8 +115,12 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     m_keysModel->setHeaderData(1,Qt::Horizontal,tr("Label"));
     m_keysModel->setHeaderData(2,Qt::Horizontal,tr("Shortcuts"));
     m_keysModel->setHeaderData(3,Qt::Horizontal,tr("Standard"));
-    ui->keysTreeView->setModel(m_keysModel);
+    ui->keysTreeView->setModel(m_keysModel);  
+#if QT_VERSION >= 0x050000
+    ui->keysTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
     ui->keysTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
     ui->standardCheckBox->setChecked(true);
 
     connect(m_keysModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(shortcutsChanaged(QStandardItem*)));

@@ -36,6 +36,10 @@
 #include <QDesktopServices>
 #include <QStatusBar>
 #include <QComboBox>
+#include <QUrl>
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -149,8 +153,13 @@ void LiteDoc::openUrlFile(const QUrl &url)
         if (editor) {
             editor->setReadOnly(true);
             QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+#if QT_VERSION >= 0x050000
+            if (ed && QUrlQuery(url).hasQueryItem("s")) {
+                QStringList pos =  QUrlQuery(url).queryItemValue("s").split(":");
+#else
             if (ed && url.hasQueryItem("s")) {
                 QStringList pos = url.queryItemValue("s").split(":");
+#endif
                 if (pos.length() == 2) {
                     bool ok = false;
                     int begin = pos.at(0).toInt(&ok);
@@ -178,7 +187,11 @@ void LiteDoc::updateTextDoc(const QUrl &url, const QByteArray &ba, const QString
 {
     m_lastUrl = url;
     QTextCodec *codec = QTextCodec::codecForUtfText(ba,QTextCodec::codecForName("utf-8"));
+#if QT_VERSION >= 0x050000
+    QString html = codec->toUnicode(ba).toHtmlEscaped();
+#else
     QString html = Qt::escape(codec->toUnicode(ba));
+#endif
     QString data = m_templateData;
     data.replace("{header}",header);
     data.replace("{nav}","");

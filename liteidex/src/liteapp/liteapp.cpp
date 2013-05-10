@@ -93,7 +93,11 @@ QString LiteApp::getResoucePath()
 
 QString LiteApp::getStoragePath()
 {
+#if QT_VERSION >= 0x050000
+    QString root = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
     QString root = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#endif
     return root+"/liteide";
 }
 

@@ -47,4 +47,6 @@ bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
     return true;
 }
 
-Q_EXPORT_PLUGIN(PluginFactory)
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
+#endif

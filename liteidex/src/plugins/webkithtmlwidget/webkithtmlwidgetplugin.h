@@ -38,6 +38,9 @@ class PluginFactory : public LiteApi::PluginFactoryT<WebKitHtmlWidgetPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.WebKitHtmlWidgetPlugin")
+#endif
 public:
     PluginFactory() {
         m_info->setVer("x15");

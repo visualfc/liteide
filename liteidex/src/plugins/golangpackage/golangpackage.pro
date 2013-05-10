@@ -2,6 +2,7 @@ TARGET = golangpackage
 TEMPLATE = lib
 
 include(../../liteideplugin.pri)
+include (../../api/liteenvapi/liteenvapi.pri)
 include(../../api/golangdocapi/golangdocapi.pri)
 include (../../utils/fileutil/fileutil.pri)
 include (../../utils/symboltreeview/symboltreeview.pri)

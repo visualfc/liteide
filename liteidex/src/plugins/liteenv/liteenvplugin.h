@@ -41,6 +41,9 @@ protected:
 class PluginFactory : public LiteApi::PluginFactoryT<LiteEnvPlugin>
 {
     Q_OBJECT
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.LiteEnvPlugin")
+#endif
     Q_INTERFACES(LiteApi::IPluginFactory)
 public:
     PluginFactory() {

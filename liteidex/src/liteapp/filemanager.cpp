@@ -190,10 +190,18 @@ void FileManager::newFile()
         filePath = QFileInfo(editor->filePath()).absolutePath();
     }
     if (filePath.isEmpty()) {
+#if QT_VERSION >= 0x050000
+        filePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#else
         filePath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
     }
     if (projPath.isEmpty()) {
-        filePath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#if QT_VERSION >= 0x050000
+        projPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#else
+        projPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
     }
     execFileWizard(projPath,filePath);
 }

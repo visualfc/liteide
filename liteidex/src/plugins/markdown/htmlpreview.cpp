@@ -335,7 +335,11 @@ void HtmlPreview::loadHtmlData(const QByteArray &data, const QByteArray &title, 
         m_exportHtml = m_exportTemple;
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
         m_exportHtml.replace("__MARKDOWN_TITLE__",title);
+#if QT_VERSION >= 0x050000
+        m_exportHtml.replace("__MARKDOWN_CONTENT__","<pre>"+codec->toUnicode(data).toHtmlEscaped().toUtf8()+"</pre>");
+#else
         m_exportHtml.replace("__MARKDOWN_CONTENT__","<pre>"+Qt::escape(codec->toUnicode(data)).toUtf8()+"</pre>");
+#endif
         m_htmlWidget->setHtml(QString::fromUtf8(m_exportHtml),url);
     }
 }

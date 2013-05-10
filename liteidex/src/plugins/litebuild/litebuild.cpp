@@ -71,6 +71,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_build(0),
     m_envManager(0)
 {
+    m_nullMenu = new QMenu;
     if (m_buildManager->initWithApp(m_liteApp)) {
         m_buildManager->load(m_liteApp->resourcePath()+"/litebuild");
         m_liteApp->extension()->addObject("LiteApi.IBuildManager",m_buildManager);
@@ -172,6 +173,9 @@ LiteBuild::~LiteBuild()
 {
     stopAction();
     delete m_output;
+    if (!m_nullMenu->parent()) {
+        delete m_nullMenu;
+    }
 }
 
 void LiteBuild::rebuild()
@@ -735,9 +739,8 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
 
 void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
 {
-    static QMenu nullMenu;
     if (!editor) {
-        m_buildMenu->menuAction()->setMenu(&nullMenu);
+        m_buildMenu->menuAction()->setMenu(m_nullMenu);
         m_buildMenu->menuAction()->setEnabled(false);
         setCurrentBuild(0);
         return;
@@ -747,7 +750,7 @@ void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
     if (menu) {
         m_buildMenu->menuAction()->setMenu(menu);
     } else {
-        m_buildMenu->menuAction()->setMenu(&nullMenu);
+        m_buildMenu->menuAction()->setMenu(m_nullMenu);
     }
     m_buildMenu->setEnabled(menu != 0);
 
@@ -767,7 +770,7 @@ void LiteBuild::extOutput(const QByteArray &data, bool /*bError*/)
     QString codecName = m_process->userData(2).toString();
     QTextCodec *codec = QTextCodec::codecForLocale();
     if (!codecName.isEmpty()) {
-        codec = QTextCodec::codecForName(codecName.toAscii());
+        codec = QTextCodec::codecForName(codecName.toLatin1());
     }
     m_output->append(codec->toUnicode(data));
 }
@@ -1007,12 +1010,12 @@ void LiteBuild::enterTextBuildOutput(QString text)
     QTextCodec *codec = QTextCodec::codecForLocale();
     QString codecName = m_process->userData(2).toString();
     if (!codecName.isEmpty()) {
-        codec = QTextCodec::codecForName(codecName.toAscii());
+        codec = QTextCodec::codecForName(codecName.toLatin1());
     }
     if (codec) {
         m_process->write(codec->fromUnicode(text));
     } else {
-        m_process->write(text.toAscii());
+        m_process->write(text.toLatin1());
     }
 }
 

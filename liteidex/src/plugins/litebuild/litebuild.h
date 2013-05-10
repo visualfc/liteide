@@ -80,6 +80,7 @@ public slots:
     void enterTextBuildOutput(QString);
     void config();
 protected:
+    QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;
     BuildManager    *m_buildManager;
     LiteApi::IBuild *m_build;

@@ -58,7 +58,11 @@ PluginsDialog::PluginsDialog(LiteApi::IApplication *app, QWidget *parent) :
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->treeView->setItemsExpandable(true);
     ui->treeView->setRootIsDecorated(false);
+#if QT_VERSION >= 0x050000
+    ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
     ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
 
     connect(m_model,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(itemChanged(QStandardItem*)));
 }
