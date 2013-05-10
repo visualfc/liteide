@@ -74,7 +74,7 @@ public slots:
     virtual bool saveEditorAs(IEditor *editor = 0);
     virtual bool saveAllEditors();
     virtual bool closeEditor(IEditor *editor = 0);
-    virtual bool closeAllEditors(bool autoSaveAll = false);
+    virtual bool closeAllEditors();
     void tabContextClose();
     void tabContextCloseOthers();
     void tabContextCloseLefts();

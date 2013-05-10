@@ -33,6 +33,7 @@
 #include <QTextCursor>
 #include <QTextDocumentFragment>
 #include <QScrollBar>
+#include <cmath>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -350,13 +351,9 @@ int LiteEditorWidgetBase::extraAreaWidth()
         QFont fnt = m_extraArea->font();
         fnt.setBold(true);
         const QFontMetrics linefm(fnt);
-        int digits = 2;
-        int max = qMax(1, blockCount());
-        while (max >= 100) {
-            max /= 10;
-            ++digits;
-        }
-        space += linefm.width(QLatin1Char('9')) * digits;
+        int lines = qMax(99, blockCount());
+        int maxNumber = pow(10, ceil(log10(lines + 1))) - 1;
+        space += linefm.width(QString::number(maxNumber));
     }
     if (m_marksVisible) {
         int markWidth = fm.lineSpacing();
@@ -367,7 +364,7 @@ int LiteEditorWidgetBase::extraAreaWidth()
     if (m_codeFoldingVisible) {
         space += foldBoxWidth(fm);
     }
-    space += 2;
+    space += 4;
 
     return space;
 }
@@ -1767,9 +1764,11 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     QTextLayout::FormatRange o;
                     o.start = selStart;
                     o.length = selEnd - selStart;
-                    o.format = range.format;
+                    QTextCharFormat formatCopy(range.format);
+                    formatCopy.clearForeground();
+                    o.format = formatCopy;
                     if (!o.format.hasProperty(LiteEditorWidgetBase::MatchBrace)) {
-                        o.format.setForeground(palette().highlightedText());
+                        //o.format.setForeground(palette().highlightedText());
                         o.format.setBackground(palette().highlight());
                     }
                     selections.append(o);

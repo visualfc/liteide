@@ -1,5 +1,7 @@
 @echo off
 
+setlocal
+
 set BUILD_ROOT=%CD%
 if x%LITEIDE_ROOT%==x set LITEIDE_ROOT=%CD%\..\liteidex
 

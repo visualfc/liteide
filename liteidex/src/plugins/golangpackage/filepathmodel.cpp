@@ -368,7 +368,7 @@ int FilePathModel::rowCount(const QModelIndex &parent) const
     return node->childCount();
 }
 
-int FilePathModel::columnCount(const QModelIndex &parent) const
+int FilePathModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }

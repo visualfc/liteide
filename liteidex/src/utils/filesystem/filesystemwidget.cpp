@@ -475,7 +475,7 @@ void FileSystemWidget::openPathIndex(const QModelIndex &index)
     }
 }
 
-void FileSystemWidget::currentEditorChanged(LiteApi::IEditor* editor)
+void FileSystemWidget::currentEditorChanged(LiteApi::IEditor* /*editor*/)
 {
     /*
     if (!m_syncEditor->isChecked()) {

@@ -27,3 +27,6 @@ SOURCES += html/houdini_href_e.c \
            src/markdown.c \
            src/stack.c \
            mdtohtml.cpp \
+
+QMAKE_CFLAGS_WARN_ON -= -W -Wextra
+QMAKE_CXXFLAGS_WARN_ON -= -W -Wextra

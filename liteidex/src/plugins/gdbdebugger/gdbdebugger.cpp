@@ -646,22 +646,22 @@ void GdbDebugger::handleAsyncClass(const QByteArray &asyncClass, const GdbMiValu
     emit setExpand(LiteApi::ASYNC_MODEL,m_asyncModel->indexFromItem(m_asyncItem),true);
 }
 
-void GdbDebugger::handleConsoleStream(const QByteArray &data)
+void GdbDebugger::handleConsoleStream(const QByteArray&)
 {
 
 }
 
-void GdbDebugger::handleTargetStream(const QByteArray &data)
+void GdbDebugger::handleTargetStream(const QByteArray&)
 {
 
 }
 
-void GdbDebugger::handleLogStream(const QByteArray &data)
+void GdbDebugger::handleLogStream(const QByteArray&)
 {
 
 }
 
-void GdbDebugger::handleResultStackListFrame(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultStackListFrame(const GdbResponse &response, QMap<QString,QVariant>&)
 {
     //10000015^done,stack=[frame={level="0",addr="0x0040113f",func="main.main",file="F:/hg/debug_test/hello/main.go",fullname="F:/hg/debug_test/hello/main.go",line="36"},frame={level="1",addr="0x00401f8a",func="runtime.mainstart",file="386/asm.s",fullname="c:/go/src/pkg/runtime/386/asm.s",line="96"},frame={level="2",addr="0x0040bcfe",func="runtime.initdone",file="/go/src/pkg/runtime/proc.c",fullname="c:/go/src/pkg/runtime/proc.c",line="242"},frame={level="3",addr="0x00000000",func="??"}]
     m_framesModel->removeRows(0,m_framesModel->rowCount());
@@ -690,7 +690,7 @@ void GdbDebugger::handleResultStackListFrame(const GdbResponse &response, QMap<Q
     }
 }
 
-void GdbDebugger::handleResultStackListVariables(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultStackListVariables(const GdbResponse &response, QMap<QString,QVariant>&)
 {
     //10000014^done,variables=[{name="v"},{name="x"},{name="pt"},{name="str"},{name="sum1"},{name="y"}]
     if (response.resultClass != GdbResultDone) {
@@ -792,7 +792,7 @@ void GdbDebugger::handleResultVarListChildren(const GdbResponse &response, QMap<
     }
 }
 
-void GdbDebugger::handleResultVarUpdate(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleResultVarUpdate(const GdbResponse &response, QMap<QString,QVariant>&)
 {
     //10000040^done,changelist=[{name="var2",in_scope="true",type_changed="false",has_more="0"}]
     if (response.resultClass != GdbResultDone) {
@@ -934,7 +934,7 @@ void GdbDebugger::handleResultVarUpdateType(const GdbResponse &response, QMap<QS
     }
 }
 
-void GdbDebugger::handleBreakInsert(const GdbResponse &response, QMap<QString,QVariant> &map)
+void GdbDebugger::handleBreakInsert(const GdbResponse &response, QMap<QString,QVariant>&)
 {
 // >>> 10000029-break-insert F:/hg/debug_test/hello/main.go:31
 // 10000029^done,bkpt={number="2",type="breakpoint",disp="keep",enabled="y",addr="0x004010dd",func="main.test",file="F:/hg/debug_test/hello/main.go",fullname="F:/hg/debug_test/hello/main.go",line="31",times="0",original-location="F:/hg/debug_test/hello/main.go:31"}

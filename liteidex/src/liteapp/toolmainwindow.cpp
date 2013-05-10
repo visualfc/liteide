@@ -320,11 +320,9 @@ void ToolMainWindow::removeToolWindow(QAction *action)
 QAction *ToolMainWindow::addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
 {
     QMap<QString,InitToolSate>::iterator it = m_initIdStateMap.find(id);
-    bool checked = true;
     if (it != m_initIdStateMap.end()) {
         area = it.value().area;
         split = it.value().split;
-        checked = it.value().checked;
     }
 
     ActionToolBar *actToolBar = m_areaToolBar.value(area);

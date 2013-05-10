@@ -287,10 +287,6 @@ void LiteEditorOption::updatePointSizes()
     const int oldSize = m_fontSize;
     if (ui->sizeComboBox->count()) {
         const QString curSize = ui->sizeComboBox->currentText();
-        bool ok = true;
-        int oldSize = curSize.toInt(&ok);
-        if (!ok)
-            oldSize = m_fontSize;
         ui->sizeComboBox->clear();
     }
     const QList<int> sizeLst = pointSizesForSelectedFont();

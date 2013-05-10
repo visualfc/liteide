@@ -7,7 +7,7 @@
   -->
   <style name="Text" foreground="#bbbbbb" background="#232323"/>
   <style name="Extra" foreground="#008B8B" background="#232323"/>
-  <style name="Selection" foreground="#000000" background="#555577"/>
+  <style name="Selection" background="#555577"/>
   <style name="CurrentLine" background="#000000"/>
   <style name="IndentLine" foreground="#008B8B"/>
   <style name="VisualWhitespace" foreground="#c0c0c0"/>

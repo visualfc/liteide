@@ -56,7 +56,7 @@ QString WebViewHtmlWidget::className() const
     return "QWebView";
 }
 
-void WebViewHtmlWidget::setSearchPaths(const QStringList &paths)
+void WebViewHtmlWidget::setSearchPaths(const QStringList&)
 {
 }
 
@@ -124,7 +124,7 @@ void WebViewHtmlWidget::print(QPrinter *printer)
 }
 #endif
 
-void WebViewHtmlWidget::webLinkHovered(const QString &link, const QString &title, const QString &textContent)
+void WebViewHtmlWidget::webLinkHovered(const QString &link, const QString&, const QString&)
 {
     emit linkHovered(QUrl(link));
 }

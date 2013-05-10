@@ -45,7 +45,7 @@ void Snippet::setContent(const QString &content)
 
 
 SnippetList::SnippetList(const QString &mimeType) :
-    m_mimeType(mimeType), m_bLoad(false)
+    m_bLoad(false), m_mimeType(mimeType)
 {
 }
 
