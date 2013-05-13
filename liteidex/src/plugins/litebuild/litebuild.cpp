@@ -775,11 +775,12 @@ void LiteBuild::extOutput(const QByteArray &data, bool /*bError*/)
     m_output->append(codec->toUnicode(data));
 }
 
-void LiteBuild::extFinish(bool error,int exitCode, QString msg)
+void LiteBuild::extFinish(bool error,int /*exitCode*/, QString msg)
 {
     m_output->setReadOnly(true);
 
-    error = error || (exitCode != 0);
+    // exitCode != 0 does not mean error, example "gofmt --help"
+    //error = error || (exitCode != 0);
 
     if (error) {
         m_output->appendTag(tr("Error: %1.").arg(msg)+"\n",true);
