@@ -43,7 +43,7 @@ QString ProcessEx::exitStatusText(int code, QProcess::ExitStatus status)
         text = tr("process exited with code %1").arg(code);
         break;
     case QProcess::CrashExit:
-        text = tr("process crashed");
+        text = tr("process crashed or was terminated");
         break;
     default:
         text = tr("process exited with an unknown status");
@@ -59,7 +59,7 @@ QString ProcessEx::processErrorText(QProcess::ProcessError code)
         text = tr("process failed to start");
         break;
     case QProcess::Crashed:
-        text = tr("process crashed after starting");
+        text = tr("process crashed or was terminated while running");
         break;
     case QProcess::Timedout:
         text = tr("timed out waiting for process");
@@ -78,8 +78,9 @@ QString ProcessEx::processErrorText(QProcess::ProcessError code)
 }
 
 ProcessEx::ProcessEx(QObject *parent)
-    : QProcess(parent)
+    : QProcess(parent), m_suppressFinish(false)
 {
+    connect(this,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(slotStateChanged(QProcess::ProcessState)));
     connect(this,SIGNAL(readyReadStandardOutput()),this,SLOT(slotReadOutput()));
     connect(this,SIGNAL(readyReadStandardError()),this,SLOT(slotReadError()));
     connect(this,SIGNAL(error(QProcess::ProcessError)),this,SLOT(slotError(QProcess::ProcessError)));
@@ -88,12 +89,12 @@ ProcessEx::ProcessEx(QObject *parent)
 
 ProcessEx::~ProcessEx()
 {
-    if (isRuning()) {
+    if (isRunning()) {
         this->kill();
     }
 }
 
-bool ProcessEx::isRuning() const
+bool ProcessEx::isRunning() const
 {
     return this->state() == QProcess::Running;
 }
@@ -109,14 +110,43 @@ QVariant ProcessEx::userData(int id) const
 }
 
 
+void ProcessEx::slotStateChanged(QProcess::ProcessState newState)
+{
+    if (newState == QProcess::Starting) {
+        m_suppressFinish = false;
+    }
+}
+
 void ProcessEx::slotError(QProcess::ProcessError error)
 {
-    emit extFinish(true,-1,this->processErrorText(error));
+    switch (error) {
+
+    // Suppress only if the process has stopped
+    default:
+    case QProcess::UnknownError:
+        if (this->isRunning()) break;
+        // Fall through
+
+    // Always suppress
+    case QProcess::FailedToStart:
+    case QProcess::Crashed:
+        m_suppressFinish = true;
+        emit extFinish(true,-1,this->processErrorText(error));
+        break;
+
+    // Never suppress
+    case QProcess::Timedout:
+    case QProcess::WriteError:
+    case QProcess::ReadError:
+        break;
+    }
 }
 
 void ProcessEx::slotFinished(int code,QProcess::ExitStatus status)
 {
-    emit extFinish(false,code,this->exitStatusText(code,status));
+    if (!m_suppressFinish) {
+        emit extFinish(false,code,this->exitStatusText(code,status));
+    }
 }
 
 void ProcessEx::slotReadOutput()

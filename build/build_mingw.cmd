@@ -56,7 +56,7 @@ cd %BUILD_ROOT%
 echo deploy liteide ...
 echo .
 
-rmdir /q /s liteide
+if exist liteide rmdir /q /s liteide
 
 if not exist liteide mkdir liteide
 if not exist liteide\bin mkdir liteide\bin

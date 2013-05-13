@@ -187,7 +187,7 @@ void LiteDoc::updateTextDoc(const QUrl &url, const QByteArray &ba, const QString
 {
     m_lastUrl = url;
     QTextCodec *codec = QTextCodec::codecForUtfText(ba,QTextCodec::codecForName("utf-8"));
-#if QT_VERSION >= 0x05000
+#if QT_VERSION >= 0x050000
     QString html = codec->toUnicode(ba).toHtmlEscaped();
 #else
     QString html = Qt::escape(codec->toUnicode(ba));

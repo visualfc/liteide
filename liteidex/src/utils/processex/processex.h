@@ -35,20 +35,23 @@ public:
     ~ProcessEx();
     void setUserData(int id, const QVariant &data);
     QVariant userData(int id) const;
-    bool isRuning() const;
+    bool isRunning() const;
     void startEx(const QString &cmd, const QString &args);
 signals:
     void extOutput(const QByteArray &data,bool bError);
     void extFinish(bool error,int code, QString msg);
 protected slots:
+    void slotStateChanged(QProcess::ProcessState);
     void slotError(QProcess::ProcessError);
     void slotFinished(int,QProcess::ExitStatus);
     void slotReadOutput();
     void slotReadError();
 protected:
-	QString exitStatusText(int code,QProcess::ExitStatus status);
-	QString processErrorText(QProcess::ProcessError code);
+    QString exitStatusText(int code,QProcess::ExitStatus status);
+    QString processErrorText(QProcess::ProcessError code);
     QMap<int,QVariant> m_idVarMap;
+private:
+    bool m_suppressFinish;
 };
 
 #endif // LITEAPI_PROCESSEX_H

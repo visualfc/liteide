@@ -187,7 +187,7 @@ void LiteBuild::rebuild()
     if (!ba) {
         return;
     }
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         m_process->kill();
         m_process->waitForFinished(1000);
     }
@@ -312,7 +312,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
     m_output->updateExistsTextColor();
-    m_output->appendTag(QString("Current environment change id \"%1\"\n").arg(env->id()));
+    m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
     m_output->append(m_envManager->currentEnv()->orgEnvLines().join("\n")+"\n",Qt::black);
 
     QString gobin = FileUtil::lookupGoBin("go",m_liteApp);
@@ -779,12 +779,12 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 {
     m_output->setReadOnly(true);
 
-	error = error || (exitCode != 0);
+    error = error || (exitCode != 0);
 
     if (error) {
-        m_output->appendTag(tr("Build error: %1.\n").arg(msg),true);
+        m_output->appendTag(tr("Error: %1.").arg(msg)+"\n",true);
     } else {
-        m_output->appendTag(tr("Built successfully: %1.\n").arg(msg));
+        m_output->appendTag(tr("Success: %1.").arg(msg)+"\n");
     }
 
     if (!error) {
@@ -802,7 +802,7 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 
 void LiteBuild::stopAction()
 {
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         if (!m_process->waitForFinished(100)) {
             m_process->kill();
         }
@@ -815,8 +815,8 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
         m_output->updateExistsTextColor();
     }
     m_outputAct->setChecked(true);
-    if (m_process->isRuning()) {
-        m_output->append(tr("\nA process is currently running.  Stop the current action first.\n"),Qt::red);
+    if (m_process->isRunning()) {
+        m_output->append(tr("A process is currently running.  Stop the current action first.")+"\n",Qt::red);
         return;
     }
     QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
@@ -853,16 +853,16 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
 void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
 {  
     m_outputAct->setChecked(true);
-    if (m_process->isRuning()) {        
+    if (m_process->isRunning()) {        
         if (ba->isKillOld()) {
-            m_output->append(tr("\nKilling current process...\n"));
+            m_output->append(tr("Killing current process...")+"\n");
             m_process->kill();
             if (!m_process->waitForFinished(1000)) {
-                m_output->append(tr("\nFailed to terminate the existing process!\n"),Qt::red);
+                m_output->append(tr("Failed to terminate the existing process!")+"\n",Qt::red);
                 return;
             }
         } else {
-            m_output->append(tr("\nA process is currently running.  Stop the current action first.\n"),Qt::red);
+            m_output->append(tr("A process is currently running.  Stop the current action first.")+"\n",Qt::red);
             return;
         }
     }
@@ -890,7 +890,7 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
 
 void LiteBuild::execAction(const QString &mime, const QString &id)
 {
-    if (m_process->isRuning()) {
+    if (m_process->isRunning()) {
         return;
     }
 
@@ -955,7 +955,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     }
 
     if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
-        m_output->appendTag(tr("> Could not parse action '%1'\n").arg(ba->id()));
+        m_output->appendTag(tr("> Could not parse action '%1'").arg(ba->id())+"\n");
         m_process->setUserData(3,QStringList());
         return;
     }
@@ -984,7 +984,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);
         m_output->appendTag(QString("%1 %2 [%3]\n")
                              .arg(QDir::cleanPath(cmd)).arg(args).arg(m_workDir));
-        m_output->appendTag(b?tr("Started process successfully\n"):tr("Failed to start process\n"));
+        m_output->appendTag(b?tr("Started process successfully"):tr("Failed to start process")+"\n");
     } else {
         m_process->setUserData(0,cmd);
         m_process->setUserData(1,args);
@@ -1004,7 +1004,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
 void LiteBuild::enterTextBuildOutput(QString text)
 {
-    if (!m_process->isRuning()) {
+    if (!m_process->isRunning()) {
         return;
     }
     QTextCodec *codec = QTextCodec::codecForLocale();
