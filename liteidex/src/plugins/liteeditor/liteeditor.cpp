@@ -25,6 +25,7 @@
 #include "liteeditorwidget.h"
 #include "liteeditorfile.h"
 #include "litecompleter.h"
+#include "litewordcompleter.h"
 #include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
@@ -130,6 +131,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     //applyOption("option/liteeditor");
 
     m_extension->addObject("LiteApi.ITextEditor",this);
+    m_extension->addObject("LiteApi.ILiteEditor",this);
     m_extension->addObject("LiteApi.QToolBar",m_toolBar);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
@@ -168,7 +170,7 @@ void LiteEditor::setEditorMark(LiteApi::IEditorMark *mark)
     m_extension->addObject("LiteApi.IEditorMark",mark);
 }
 
-void LiteEditor::setCompleter(LiteCompleter *complter)
+void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
 {
     if (m_completer) {
         QObject::disconnect(m_completer, 0, m_editorWidget, 0);

@@ -37,15 +37,12 @@ class LiteWordCompleter : public LiteCompleter
     Q_OBJECT
 public:
     explicit LiteWordCompleter(QObject *parent = 0);
-    virtual void setSearchSeparator(bool b);
-    virtual bool searchSeparator() const;
 public slots:
     virtual void completionPrefixChanged(QString);
 protected:
     virtual QString textUnderCursor(QTextCursor tc) const;
     QSet<QString>   m_wordSet;
     QIcon           m_icon;
-    bool            m_bSearchSeparator;
 };
 
 #endif // LITEWORDCOMPLETER_H
