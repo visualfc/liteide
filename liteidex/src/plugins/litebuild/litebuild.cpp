@@ -61,7 +61,8 @@ enum {
     ID_CODEC = 2,
     ID_MIMETYPE = 3,
     ID_TASKLIST = 4,
-    ID_EDITOR = 5
+    ID_EDITOR = 5,
+    ID_EXPECTEXITZERO = 6
 };
 
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
@@ -779,16 +780,18 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 {
     m_output->setReadOnly(true);
 
-    // exitCode != 0 does not mean error, example "gofmt --help"
-    //error = error || (exitCode != 0);
+    bool expectExitZero = m_process->userData(ID_EXPECTEXITZERO).toBool();
+    if (expectExitZero && exitCode != 0) {
+        error = true;
+    }
 
     if (error) {
         m_output->appendTag(tr("Error: %1.").arg(msg)+"\n",true);
     } else {
-        m_output->appendTag(tr("Success: %1.").arg(msg)+"\n");
+        m_output->appendTag(tr("Finished: %1.").arg(msg)+"\n");
     }
 
-    if (!error && exitCode == 0) {
+    if (!error) {
         QStringList task = m_process->userData(ID_TASKLIST).toStringList();
         if (!task.isEmpty()) {
             QString id = task.takeFirst();
@@ -979,6 +982,8 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 //        }
 //        return;
 //    }
+    
+    m_process->setUserData(ID_EXPECTEXITZERO,ba->expectExitZero());
 
     m_process->setEnvironment(sysenv.toStringList());
     if (!ba->isOutput()) {
