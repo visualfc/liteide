@@ -75,6 +75,7 @@ public:
           m_lexerState(0),
           m_foldingStartIncluded(false),
           m_foldingEndIncluded(false),
+          m_lastSpellCheck(true),
           m_codeFormatterData(0)
     {}
     ~TextBlockUserData();
@@ -95,6 +96,10 @@ public:
     inline const Parentheses &parentheses() const { return m_parentheses; }
     inline bool hasParentheses() const { return !m_parentheses.isEmpty(); }
     int braceDepthDelta() const;
+
+    void clearSpellCheckZones(bool defaultSpellCheck);
+    void addSpellCheckZone(int position, bool spellCheck);
+    bool shouldSpellCheck(int position) const;
 
     inline bool setIfdefedOut() { bool result = m_ifdefedOut; m_ifdefedOut = true; return !result; }
     inline bool clearIfdefedOut() { bool result = m_ifdefedOut; m_ifdefedOut = false; return result;}
@@ -143,6 +148,8 @@ private:
     uint m_foldingStartIncluded : 1;
     uint m_foldingEndIncluded : 1;
     Parentheses m_parentheses;
+    QMap<int,bool> m_spellCheckZones;
+    bool m_lastSpellCheck;
     CodeFormatterData *m_codeFormatterData;
 };
 
