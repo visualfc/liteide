@@ -104,7 +104,9 @@ public:
 LiteCompleter::LiteCompleter(QObject *parent) :
     LiteApi::ICompleter(parent),
     m_completer( new TreeModelCompleter(this)),
-    m_model(new QStandardItemModel(this))
+    m_model(new QStandardItemModel(this)),
+    m_bSearchSeparator(true),
+    m_bExternalMode(false)
 {
     m_completer->setModel(m_model);
     m_completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -239,6 +241,26 @@ void LiteCompleter::show()
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
 
+}
+
+void LiteCompleter::setSearchSeparator(bool b)
+{
+    m_bSearchSeparator = b;
+}
+
+bool LiteCompleter::searchSeparator() const
+{
+    return m_bSearchSeparator;
+}
+
+bool LiteCompleter::externalMode() const
+{
+    return m_bExternalMode;
+}
+
+void LiteCompleter::setExternalMode(bool b)
+{
+    m_bExternalMode = b;
 }
 
 void LiteCompleter::appendItems(QStringList items,const QString &kind, const QString &info,const QIcon &icon, bool temp)

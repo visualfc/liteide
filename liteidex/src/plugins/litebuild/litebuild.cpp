@@ -779,7 +779,8 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 {
     m_output->setReadOnly(true);
 
-    error = error || (exitCode != 0);
+    // exitCode != 0 does not mean error, example "gofmt --help"
+    //error = error || (exitCode != 0);
 
     if (error) {
         m_output->appendTag(tr("Error: %1.").arg(msg)+"\n",true);
@@ -787,7 +788,7 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
         m_output->appendTag(tr("Success: %1.").arg(msg)+"\n");
     }
 
-    if (!error) {
+    if (!error && exitCode == 0) {
         QStringList task = m_process->userData(ID_TASKLIST).toStringList();
         if (!task.isEmpty()) {
             QString id = task.takeFirst();

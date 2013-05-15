@@ -76,12 +76,6 @@ xcopy %LITEIDE_ROOT%\liteide\lib\liteide\plugins\*.dll liteide\lib\liteide\plugi
 xcopy %LITEIDE_ROOT%\deploy liteide\share\liteide /e /y /i 
 xcopy %LITEIDE_ROOT%\os_deploy\windows liteide\share\liteide  /e /y /i 
 
-xcopy %QTDIR%\bin\QtCore4.dll liteide\bin /y
-xcopy %QTDIR%\bin\QtGui4.dll liteide\bin /y 
-xcopy %QTDIR%\bin\QtXml4.dll liteide\bin /y 
-xcopy %MINGWDIR%\bin\mingwm10.dll liteide\bin /y
-xcopy %MINGWDIR%\bin\libgcc_s_dw2-1.dll liteide\bin /y
-
 goto end
 
 :qtdir_fail

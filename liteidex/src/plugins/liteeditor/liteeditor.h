@@ -59,14 +59,14 @@ protected:
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
 };
 
-class LiteEditor : public LiteApi::ITextEditor
+class LiteEditor : public LiteApi::ILiteEditor
 {
     Q_OBJECT
 public:
     LiteEditor(LiteApi::IApplication *app);
     virtual ~LiteEditor();
-    void setCompleter(LiteCompleter *complter);
-    void setEditorMark(LiteApi::IEditorMark *mark);
+    virtual void setCompleter(LiteApi::ICompleter *complter);
+    virtual void setEditorMark(LiteApi::IEditorMark *mark);
     void createActions();
     void createToolBars();
     void createMenu();
@@ -134,7 +134,7 @@ public:
     QToolBar *m_toolBar;
     QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
-    LiteCompleter   *m_completer;
+    LiteApi::ICompleter *m_completer;
     QAction *m_undoAct;
     QAction *m_redoAct;
     QAction *m_cutAct;

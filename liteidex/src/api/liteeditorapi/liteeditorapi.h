@@ -89,6 +89,7 @@ class ICompleter : public QObject
     Q_OBJECT
 public:
     ICompleter(QObject *parent): QObject(parent) {}
+    virtual void setEditor(QPlainTextEdit *editor) = 0;
     virtual QCompleter *completer() const = 0;
     virtual QStandardItem *findRoot(const QString &name) = 0;
     virtual void clearChildItem(QStandardItem *root) = 0;
@@ -102,6 +103,8 @@ public:
     virtual void show() = 0;
     virtual void setSearchSeparator(bool b) = 0;
     virtual bool searchSeparator() const = 0;
+    virtual void setExternalMode(bool b) = 0;
+    virtual bool externalMode() const = 0;
 signals:
     void prefixChanged(QTextCursor,QString);
     void wordCompleted(const QString &func, const QString &args);
@@ -128,6 +131,15 @@ public:
     virtual QList<int> lineTypeList(int line) const = 0;
 signals:
     void markChanged();
+};
+
+class ILiteEditor : public ITextEditor
+{
+    Q_OBJECT
+public:
+    ILiteEditor(QObject *parent = 0) : ITextEditor(parent) {}
+    virtual void setCompleter(ICompleter *complter) = 0;
+    virtual void setEditorMark(IEditorMark *mark) = 0;
 };
 
 } //namespace LiteApi

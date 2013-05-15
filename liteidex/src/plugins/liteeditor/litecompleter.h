@@ -39,7 +39,7 @@ class LiteCompleter : public LiteApi::ICompleter
 public:
     explicit LiteCompleter(QObject *parent = 0);
     virtual ~LiteCompleter();
-    void setEditor(QPlainTextEdit *editor);
+    virtual void setEditor(QPlainTextEdit *editor);
     virtual QCompleter *completer() const;
     virtual QStandardItem *findRoot(const QString &name);
     virtual void clearChildItem(QStandardItem *root);
@@ -51,6 +51,10 @@ public:
     virtual void clear();
     virtual void clearTemp();
     virtual void show();
+    virtual void setSearchSeparator(bool b);
+    virtual bool searchSeparator() const;
+    virtual void setExternalMode(bool b);
+    virtual bool externalMode() const;
 public slots:
     virtual void completionPrefixChanged(QString);
     virtual void insertCompletion(QModelIndex);
@@ -59,6 +63,8 @@ protected:
     QStandardItemModel *m_model;
     QPlainTextEdit *m_editor;
     QChar           m_stop;
+    bool            m_bSearchSeparator;
+    bool            m_bExternalMode;
 };
 
 #endif // LITECOMPLETER_H
