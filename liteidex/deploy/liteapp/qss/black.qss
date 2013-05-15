@@ -44,17 +44,37 @@ QPushButton:disabled {
 	color: #333333;
 }
 
+/* === Checkable items === */
+QCheckBox::indicator, QRadioButton::indicator, QTreeView::indicator {
+	width: 16px;
+	height: 16px;
+	background-color: #111111;
+	border: 1px solid #333333;
+}
+
+QCheckBox::indicator::checked, QRadioButton::indicator::checked, QTreeView::indicator {
+	background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #111111); 
+}
+
 /* === QComboBox === */
 QComboBox {
 	background-color: black;
 	border: 1px solid #333333;
 	color: white;
+	padding:1px 2em 1px 3px;
 }
 
 QComboBox::drop-down {
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	border-left: 1px solid #333333;
+}
+
+QComboBox::down-arrow {
+	border: 2px solid #333333;
+	width: 6px;
+	height: 6px;
+	background: #5f5f5f;
 }
 
 /* === QGroupBox === */
@@ -222,19 +242,19 @@ QScrollBar:vertical {
 }
 
 QScrollBar::handle:vertical {
-    background: #222222;
+    background: #555555;
     min-height: 16px;
 }
 
 QScrollBar::add-line:vertical {
-    background: #222222;
+    background: #444444;
     height: 16px;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
 }
 
 QScrollBar::sub-line:vertical {
-    background: #222222;
+    background: #444444;
     height: 16px;
     subcontrol-position: top;
     subcontrol-origin: margin;
@@ -242,6 +262,13 @@ QScrollBar::sub-line:vertical {
 
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 	background: none;
+}
+
+QScrollBar:up-arrow:vertical, QScrollBar:down-arrow:vertical {
+	border: 2px solid #333333;
+	width: 6px;
+	height: 6px;
+	background: #5f5f5f;
 }
 
 /* === QScrollBar:horizontal === */
@@ -252,19 +279,19 @@ QScrollBar:horizontal {
 }
 
 QScrollBar::handle:horizontal {
-    background: #222222;
+    background: #555555;
     min-width: 16px;
 }
 
 QScrollBar::add-line:horizontal {
-    background: #222222;
+    background: #444444;
     width: 16px;
     subcontrol-position: right;
     subcontrol-origin: margin;
 }
 
 QScrollBar::sub-line:horizontal {
-    background: #222222;
+    background: #444444;
     width: 16px;
     subcontrol-position: left;
     subcontrol-origin: margin;
@@ -272,6 +299,13 @@ QScrollBar::sub-line:horizontal {
 
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
 	background: none;
+}
+
+QScrollBar:left-arrow:horizontal, QScrollBar:right-arrow:horizontal {
+	border: 2px solid #333333;
+	width: 6px;
+	height: 6px;
+	background: #5f5f5f;
 }
 
 /* =================== */
@@ -289,14 +323,10 @@ QAbstractScrollArea, QLineEdit, QTextEdit, QAbstractSpinBox, QComboBox {
 
 /* === QHeaderView === */
 QHeaderView::section {
-	height: 20px;
-}
-
-QHeaderView::section {
 	background: #222222;
 	border: 0;
 	color: #BBBBBB;
-	padding-left: 4px;
+	padding: 3px 0 3px 4px;
 }
 
 /* === QListView === */
@@ -363,4 +393,9 @@ QTreeView::branch:open:has-children:has-siblings {
 
 QTreeView::branch:open:has-children:!has-siblings {
 
+}
+
+/* === Customizations === */
+QFrame#infoLabel {
+	border: 1px inset #333333;
 }
