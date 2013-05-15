@@ -37,6 +37,7 @@ public:
     QVariant userData(int id) const;
     bool isRunning() const;
     void startEx(const QString &cmd, const QString &args);
+    static bool startDetachedEx(const QString& cmd, const QStringList &args);
 signals:
     void extOutput(const QByteArray &data,bool bError);
     void extFinish(bool error,int code, QString msg);
