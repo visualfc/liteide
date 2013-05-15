@@ -98,6 +98,8 @@ Highlighter::KateFormatMap::KateFormatMap()
     m_ids.insert(QLatin1String("dsBuiltinFunc"), Highlighter::BuiltinFunc);
     m_ids.insert(QLatin1String("dsPredeclared"), Highlighter::Predeclared);
     m_ids.insert(QLatin1String("dsFuncDecl"), Highlighter::FuncDecl);
+    m_ids.insert(QLatin1String("dsPlaceholder"), Highlighter::Placeholder);
+    m_ids.insert(QLatin1String("dsToDo"), Highlighter::ToDo);
 }
 
 void Highlighter::configureFormat(TextFormatId id, const QTextCharFormat &format)

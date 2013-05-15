@@ -85,7 +85,9 @@ public:
         Symbol,
         BuiltinFunc,
         Predeclared,
-        FuncDecl
+        FuncDecl,
+        Placeholder,
+        ToDo,
     };
 
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
