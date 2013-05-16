@@ -25,3 +25,5 @@ Kate Default Styles
 	dsBuiltinFunc
 	dsPredeclared
 	dsFuncDecl
+	dsPlaceholder
+	dsToDo
