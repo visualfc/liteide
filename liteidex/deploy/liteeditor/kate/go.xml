@@ -133,10 +133,22 @@
       </context>
       <context attribute="Comment" lineEndContext="#pop" name="Comment 1">
         <!--LineContinue attribute="Comment" context="#stay"/-->
-        <RegExpr attribute="TODO" String="\bTODO\b" insensitive="true" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bTODO(?:\([^\)]+\)|\b)\:?" insensitive="true" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bBUG(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bNOTE(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bSECBUG(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bFIXME(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\W!!!\:" context="#stay"/>
+        <RegExpr attribute="TODO" String="\W\?\?\?\:" context="#stay"/>
       </context>
       <context attribute="Comment" lineEndContext="#stay" name="Comment 2">
-        <RegExpr attribute="TODO" String="\bTODO\b" insensitive="true" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bTODO(?:\([^\)]+\)|\b)\:?" insensitive="true" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bBUG(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bNOTE(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bSECBUG(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\bFIXME(?:\([^\)]+\)|\b)\:?" context="#stay"/>
+        <RegExpr attribute="TODO" String="\W!!!\:" context="#stay"/>
+        <RegExpr attribute="TODO" String="\W\?\?\?\:" context="#stay"/>
         <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment"/>
       </context>
     </contexts>
