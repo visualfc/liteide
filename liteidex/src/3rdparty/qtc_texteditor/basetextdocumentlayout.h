@@ -75,7 +75,6 @@ public:
           m_lexerState(0),
           m_foldingStartIncluded(false),
           m_foldingEndIncluded(false),
-          m_lastSpellCheck(true),
           m_codeFormatterData(0)
     {}
     ~TextBlockUserData();
@@ -149,7 +148,6 @@ private:
     uint m_foldingEndIncluded : 1;
     Parentheses m_parentheses;
     QMap<int,bool> m_spellCheckZones;
-    bool m_lastSpellCheck;
     CodeFormatterData *m_codeFormatterData;
 };
 

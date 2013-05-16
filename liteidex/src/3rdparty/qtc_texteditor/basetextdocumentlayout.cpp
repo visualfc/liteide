@@ -68,14 +68,12 @@ int TextBlockUserData::braceDepthDelta() const
 void TextBlockUserData::clearSpellCheckZones(bool defaultSpellCheck)
 {
     m_spellCheckZones.clear();
-    m_lastSpellCheck = !defaultSpellCheck;
     addSpellCheckZone(0, defaultSpellCheck);
 }
 
 void TextBlockUserData::addSpellCheckZone(int position, bool spellCheck)
 {
-    if (spellCheck != m_lastSpellCheck) {
-        m_lastSpellCheck = spellCheck;
+    if (m_spellCheckZones.isEmpty() || spellCheck != shouldSpellCheck(position)) {
         m_spellCheckZones[position] = spellCheck;
     }
 }
@@ -83,11 +81,13 @@ void TextBlockUserData::addSpellCheckZone(int position, bool spellCheck)
 bool TextBlockUserData::shouldSpellCheck(int position) const
 {
     bool spellCheck = true;
-
-    QMap<int,bool>::const_iterator it;
-    for (it = m_spellCheckZones.constBegin(); it != m_spellCheckZones.constEnd(); ++it) {
-        if (it.key() >= position) break;
-        spellCheck = it.value();
+    
+    if (!m_spellCheckZones.isEmpty()) {
+        QMap<int,bool>::const_iterator it = m_spellCheckZones.constEnd();
+        do {
+            --it;
+            spellCheck = it.value();
+        } while (it.key() >= position && it != m_spellCheckZones.constBegin());
     }
 
     return spellCheck;
