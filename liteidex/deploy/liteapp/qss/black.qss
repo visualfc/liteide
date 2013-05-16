@@ -52,8 +52,20 @@ QCheckBox::indicator, QRadioButton::indicator, QTreeView::indicator {
 	border: 1px solid #333333;
 }
 
-QCheckBox::indicator::checked, QRadioButton::indicator::checked, QTreeView::indicator {
-	background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #111111); 
+QRadioButton::indicator {
+	border-radius: 8px;
+}
+
+QCheckBox::indicator::checked, QRadioButton::indicator::checked, QTreeView::indicator::checked {
+	background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #111111);
+}
+
+QCheckBox::indicator:disabled, QRadioButton::indicator:disabled, QTreeView::indicator:disabled {
+	background-color: #444444;
+}
+
+QCheckBox::indicator::checked:disabled, QRadioButton::indicator::checked:disabled, QTreeView::indicator::checked:disabled {
+	background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #444444);
 }
 
 /* === QComboBox === */
