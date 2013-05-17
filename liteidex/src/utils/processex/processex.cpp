@@ -23,6 +23,8 @@
 
 #include "processex.h"
 #include <QMap>
+#ifdef Q_OS_WIN
+#include <windows.h>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -32,6 +34,7 @@
      #define new DEBUG_NEW
 #endif
 //lite_memory_check_end
+#endif
 
 
 
@@ -170,5 +173,14 @@ void ProcessEx::startEx(const QString &cmd, const QString &args)
     }
 #else
     this->start(cmd+" "+args);
+#endif
+}
+
+bool ProcessEx::startDetachedEx(const QString& cmd, const QStringList &args)
+{
+#ifdef Q_OS_WIN
+    return (int)ShellExecuteW(NULL, NULL, (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), NULL, SW_HIDE) > 32;
+#else
+    return QProcess::startDetached(cmd, args);
 #endif
 }

@@ -158,6 +158,18 @@ void KateHighlighter::setColorStyle(TextEditor::SyntaxHighlighter *h,const Color
     }
     highlighter->configureFormat(Highlighter::FuncDecl,fmt_fc);
 
+    QTextCharFormat fmt_plc;
+    if (!setTextCharStyle(fmt_plc,"Placeholder",scheme)) {
+        fmt_plc.setForeground(fmt_cs.foreground());
+    }
+    highlighter->configureFormat(Highlighter::Placeholder,fmt_plc);
+
+    QTextCharFormat fmt_todo;
+    if (!setTextCharStyle(fmt_todo,"ToDo",scheme)) {
+        fmt_todo.setForeground(fmt_cmn.foreground());
+    }
+    highlighter->configureFormat(Highlighter::ToDo,fmt_todo);
+
     highlighter->rehighlight();
 }
 

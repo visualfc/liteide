@@ -23,6 +23,7 @@
 
 #include "golangcode.h"
 #include "fileutil/fileutil.h"
+#include "processex/processex.h"
 #include <QProcess>
 #include <QTextDocument>
 #include <QAbstractItemView>
@@ -41,7 +42,8 @@
 GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_completer(0)
+    m_completer(0),
+    m_closeOnExit(true)
 {
     m_process = new QProcess(this);
     m_breset = false;
@@ -56,6 +58,14 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_golangAst = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    applyOption("option/golangcode");
+}
+
+void GolangCode::applyOption(QString id)
+{
+    if (id != "option/golangcode") return;
+    m_closeOnExit = m_liteApp->settings()->value("golangcode/close",true).toBool();
 }
 
 void GolangCode::broadcast(QString module,QString id,QString)
@@ -67,11 +77,10 @@ void GolangCode::broadcast(QString module,QString id,QString)
 
 GolangCode::~GolangCode()
 {
-//    if (!m_gocodeCmd.isEmpty()) {
-//        m_process->start(m_gocodeCmd,QStringList() << "close");
-//        m_process->waitForFinished();
-//    }
-//    delete m_process;
+    if (m_closeOnExit && !m_gocodeCmd.isEmpty()) {
+        ProcessEx::startDetachedEx(m_gocodeCmd,QStringList() << "close");
+    }
+    delete m_process;
 }
 
 void GolangCode::resetGocode()

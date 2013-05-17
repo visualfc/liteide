@@ -96,6 +96,10 @@ public:
     inline bool hasParentheses() const { return !m_parentheses.isEmpty(); }
     int braceDepthDelta() const;
 
+    void clearSpellCheckZones(bool defaultSpellCheck);
+    void addSpellCheckZone(int position, bool spellCheck);
+    bool shouldSpellCheck(int position) const;
+
     inline bool setIfdefedOut() { bool result = m_ifdefedOut; m_ifdefedOut = true; return !result; }
     inline bool clearIfdefedOut() { bool result = m_ifdefedOut; m_ifdefedOut = false; return result;}
     inline bool ifdefedOut() const { return m_ifdefedOut; }
@@ -143,6 +147,7 @@ private:
     uint m_foldingStartIncluded : 1;
     uint m_foldingEndIncluded : 1;
     Parentheses m_parentheses;
+    QMap<int,bool> m_spellCheckZones;
     CodeFormatterData *m_codeFormatterData;
 };
 

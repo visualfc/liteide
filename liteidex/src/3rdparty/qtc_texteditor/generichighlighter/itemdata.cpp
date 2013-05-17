@@ -46,6 +46,8 @@ ItemData::ItemData() :
     m_underlinedSpecified(false),
     m_strikedOut(false),
     m_strikeOutSpecified(false),
+    m_spellChecking(true),
+    m_spellCheckingSpecified(false),
     m_isCustomized(false)
 {}
 
@@ -136,6 +138,21 @@ bool ItemData::isStrikeOut() const
 
 bool ItemData::isStrikeOutSpecified() const
 { return m_strikeOutSpecified; }
+
+void ItemData::setSpellChecking(const QString &checking)
+{
+    if (!checking.isEmpty()) {
+        m_spellChecking = toBool(checking);
+        m_spellCheckingSpecified = true;
+        m_isCustomized = true;
+    }
+}
+
+bool ItemData::isSpellChecking() const
+{ return m_spellChecking; }
+
+bool ItemData::isSpellCheckingSpecified() const
+{ return m_spellCheckingSpecified; }
 
 bool ItemData::isCustomized() const
 { return m_isCustomized; }

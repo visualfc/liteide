@@ -26,6 +26,7 @@
 #include "fileutil/fileutil.h"
 #include "qtc_editutil/uncommentselection.h"
 #include "golangcode.h"
+#include "golangcodeoptionfactory.h"
 #include <QMenu>
 #include <QAction>
 #include <QPlainTextEdit>
@@ -48,6 +49,7 @@ bool GolangCodePlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
     m_code = new GolangCode(app,this);
+    app->optionManager()->addFactory(new GolangCodeOptionFactory(app,this));
     m_commentAct = new QAction(tr("Comment/Uncomment Selection"),this);
     m_commentAct->setShortcut(QKeySequence("CTRL+/"));
     connect(m_commentAct,SIGNAL(triggered()),this,SLOT(editorComment()));
