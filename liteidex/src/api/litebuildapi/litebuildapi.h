@@ -36,8 +36,7 @@ public:
         m_output(false),
         m_readline(false),
         m_separator(false),
-        m_killold(false),
-        m_expectExitZero(false)
+        m_killold(false)
     {}
     void setId(const QString &id) { m_id = id; }
     void setMenu(const QString &menu) { m_menu = menu; }
@@ -58,9 +57,6 @@ public:
     void setKillold(const QString &text) {
         m_killold = QVariant(text).toBool();
     }
-    void setExpectExitZero(const QString &text) {
-        m_expectExitZero = QVariant(text).toBool();
-    }
     void setWork(const QString &work) { m_work = work; }
     void setCodec(const QString &codec) { m_codec = codec; }
     void setRegex(const QString &regex) { m_regex = regex; }
@@ -78,7 +74,6 @@ public:
     bool isReadline() const {return m_readline; }
     bool isSeparator() const { return m_separator; }
     bool isKillOld() const { return m_killold; }
-    bool expectExitZero() const { return m_expectExitZero; }
     QString codec() const { return m_codec; }
     QString regex() const { return m_regex; }
     QString img() const { return m_img; }
@@ -119,7 +114,6 @@ protected:
     bool    m_readline;
     bool    m_separator;
     bool    m_killold;
-    bool    m_expectExitZero;
 };
 
 class BuildLookup

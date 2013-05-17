@@ -992,8 +992,6 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 //        }
 //        return;
 //    }
-    
-    m_process->setUserData(ID_EXPECTEXITZERO,ba->expectExitZero());
 
     m_process->setEnvironment(sysenv.toStringList());
     if (!ba->isOutput()) {
