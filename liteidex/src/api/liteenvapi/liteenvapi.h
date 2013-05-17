@@ -95,15 +95,20 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     QString sep = ":";
 #endif
 
-    QStringList pathList;
+    QStringList gopathList;
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
-        pathList.append(QDir::toNativeSeparators(path));
+        gopathList.append(QDir::toNativeSeparators(path));
     }
     foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
-        pathList.append(QDir::toNativeSeparators(path));
+        gopathList.append(QDir::toNativeSeparators(path));
     }
-    pathList.removeDuplicates();
-    env.insert("GOPATH",pathList.join(sep));
+    gopathList.removeDuplicates();
+    env.insert("GOPATH",gopathList.join(sep));
+    QStringList gobinList;
+    foreach (QString path, gopathList) {
+        gobinList.append(QFileInfo(path,"bin").filePath());
+    }
+    env.insert("PATH",env.value("PATH")+sep+gobinList.join(sep));
     return env;
 }
 

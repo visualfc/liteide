@@ -54,6 +54,10 @@
 #endif
 //lite_memory_check_end
 
+enum {
+    INPUT_ACTION = 0,
+    INPUT_COMMAND = 1
+};
 
 enum {
     ID_CMD = 0,
@@ -62,7 +66,7 @@ enum {
     ID_MIMETYPE = 3,
     ID_TASKLIST = 4,
     ID_EDITOR = 5,
-    ID_EXPECTEXITZERO = 6
+    ID_INPUTTYPE = 6 //action - 0, command - 1
 };
 
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
@@ -780,15 +784,20 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 {
     m_output->setReadOnly(true);
 
-    bool expectExitZero = m_process->userData(ID_EXPECTEXITZERO).toBool();
-    if (expectExitZero && exitCode != 0) {
+    bool isCommand = m_process->userData(ID_INPUTTYPE).toInt() == INPUT_COMMAND;
+
+    if (!isCommand && exitCode != 0) {
         error = true;
     }
 
     if (error) {
         m_output->appendTag(tr("Error: %1.").arg(msg)+"\n",true);
     } else {
-        m_output->appendTag(tr("Finished: %1.").arg(msg)+"\n");
+        if (isCommand) {
+            m_output->appendTag(tr("Command exited with code %1.").arg(exitCode)+"\n");
+        } else {
+            m_output->appendTag(tr("Success: %1.").arg(msg)+"\n");
+        }
     }
 
     if (!error) {
@@ -827,9 +836,10 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     QString cmd = cmd1.trimmed();
     m_output->setReadOnly(false);
     m_process->setEnvironment(sysenv.toStringList());
-    m_process->setUserData(0,cmd);
-    m_process->setUserData(1,args);
-    m_process->setUserData(2,"utf-8");
+    m_process->setUserData(ID_CMD,cmd);
+    m_process->setUserData(ID_ARGS,args);
+    m_process->setUserData(ID_CODEC,"utf-8");
+    m_process->setUserData(ID_INPUTTYPE,INPUT_COMMAND);
 
     QString shell = FileUtil::lookPathInDir(cmd,workDir);
     if (shell.isEmpty()) {
@@ -960,7 +970,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
     if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
         m_output->appendTag(tr("> Could not parse action '%1'").arg(ba->id())+"\n");
-        m_process->setUserData(3,QStringList());
+        m_process->setUserData(ID_TASKLIST,QStringList());
         return;
     }
 
@@ -992,9 +1002,10 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
                              .arg(QDir::cleanPath(cmd)).arg(args).arg(m_workDir));
         m_output->appendTag(b?tr("Started process successfully"):tr("Failed to start process")+"\n");
     } else {
-        m_process->setUserData(0,cmd);
-        m_process->setUserData(1,args);
-        m_process->setUserData(2,codec);
+        m_process->setUserData(ID_CMD,cmd);
+        m_process->setUserData(ID_ARGS,args);
+        m_process->setUserData(ID_CODEC,codec);
+        m_process->setUserData(ID_INPUTTYPE,INPUT_ACTION);
 
         m_process->setWorkingDirectory(m_workDir);        
         m_output->appendTag(QString("%1 %2 [%3]\n")
