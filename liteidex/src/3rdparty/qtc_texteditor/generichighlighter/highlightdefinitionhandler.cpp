@@ -70,7 +70,8 @@ namespace {
     static const QLatin1String kItalic("italic");
     static const QLatin1String kBold("bold");
     static const QLatin1String kUnderline("underline");
-    static const QLatin1String kStrikeout("strikeout");
+    static const QLatin1String kStrikeout("strikeOut");
+    static const QLatin1String kSpellChecking("spellChecking");
     static const QLatin1String kChar("char");
     static const QLatin1String kChar1("char1");
     static const QLatin1String kString("String");
@@ -275,6 +276,7 @@ void HighlightDefinitionHandler::itemDataElementStarted(const QXmlAttributes &at
     itemData->setBold(atts.value(kBold));
     itemData->setUnderlined(atts.value(kUnderline));
     itemData->setStrikeOut(atts.value(kStrikeout));
+    itemData->setSpellChecking(atts.value(kSpellChecking));
 }
 
 void HighlightDefinitionHandler::commentElementStarted(const QXmlAttributes &atts) const

@@ -70,6 +70,10 @@ public:
     bool isStrikeOut() const;
     bool isStrikeOutSpecified() const;
 
+    void setSpellChecking(const QString &checking);
+    bool isSpellChecking() const;
+    bool isSpellCheckingSpecified() const;
+
     bool isCustomized() const;
 
 private:
@@ -81,6 +85,8 @@ private:
     bool m_underlinedSpecified;
     bool m_strikedOut;
     bool m_strikeOutSpecified;
+    bool m_spellChecking;
+    bool m_spellCheckingSpecified;
     bool m_isCustomized;
     QString m_style;
     QColor m_color;

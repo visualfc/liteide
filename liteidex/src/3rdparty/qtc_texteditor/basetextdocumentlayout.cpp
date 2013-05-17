@@ -65,6 +65,34 @@ int TextBlockUserData::braceDepthDelta() const
     return delta;
 }
 
+void TextBlockUserData::clearSpellCheckZones(bool defaultSpellCheck)
+{
+    m_spellCheckZones.clear();
+    addSpellCheckZone(0, defaultSpellCheck);
+}
+
+void TextBlockUserData::addSpellCheckZone(int position, bool spellCheck)
+{
+    if (m_spellCheckZones.isEmpty() || spellCheck != shouldSpellCheck(position)) {
+        m_spellCheckZones[position] = spellCheck;
+    }
+}
+
+bool TextBlockUserData::shouldSpellCheck(int position) const
+{
+    bool spellCheck = true;
+    
+    if (!m_spellCheckZones.isEmpty()) {
+        QMap<int,bool>::const_iterator it = m_spellCheckZones.constEnd();
+        do {
+            --it;
+            spellCheck = it.value();
+        } while (it.key() >= position && it != m_spellCheckZones.constBegin());
+    }
+
+    return spellCheck;
+}
+
 TextBlockUserData::MatchType TextBlockUserData::checkOpenParenthesis(QTextCursor *cursor, QChar c)
 {
     QTextBlock block = cursor->block();

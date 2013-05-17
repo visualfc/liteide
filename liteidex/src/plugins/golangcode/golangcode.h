@@ -47,6 +47,7 @@ public slots:
     void started();
     void finished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);
+    void applyOption(QString);
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ICompleter   *m_completer;
@@ -60,6 +61,7 @@ protected:
     LiteApi::IEnvManager *m_envManager;
     LiteApi::IGolangAst *m_golangAst;
     QString     m_gocodeCmd;
+    bool        m_closeOnExit;
 };
 
 #endif // GOLANGCODE_H

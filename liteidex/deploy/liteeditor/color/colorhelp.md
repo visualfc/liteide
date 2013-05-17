@@ -34,6 +34,8 @@ LiteIDE Color Scheme
 	BuiltinFunc
 	Predeclared
 	FuncDecl
+	Placeholder
+	ToDo
 
 ### item attribute
 

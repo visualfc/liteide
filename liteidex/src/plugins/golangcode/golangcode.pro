@@ -11,8 +11,15 @@ include (../../3rdparty/qtc_editutil/qtc_editutil.pri)
 DEFINES += GOLANGCODE_LIBRARY
 
 SOURCES += golangcodeplugin.cpp \
-    golangcode.cpp
+        golangcode.cpp \
+        golangcodeoptionfactory.cpp \
+        golangcodeoption.cpp
 
 HEADERS += golangcodeplugin.h\
         golangcode_global.h \
-    golangcode.h
+        golangcode.h \
+        golangcodeoptionfactory.h \
+        golangcodeoption.h
+
+FORMS += \
+        golangcodeoption.ui

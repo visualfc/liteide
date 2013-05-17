@@ -98,6 +98,8 @@ Highlighter::KateFormatMap::KateFormatMap()
     m_ids.insert(QLatin1String("dsBuiltinFunc"), Highlighter::BuiltinFunc);
     m_ids.insert(QLatin1String("dsPredeclared"), Highlighter::Predeclared);
     m_ids.insert(QLatin1String("dsFuncDecl"), Highlighter::FuncDecl);
+    m_ids.insert(QLatin1String("dsPlaceholder"), Highlighter::Placeholder);
+    m_ids.insert(QLatin1String("dsToDo"), Highlighter::ToDo);
 }
 
 void Highlighter::configureFormat(TextFormatId id, const QTextCharFormat &format)
@@ -185,6 +187,7 @@ void Highlighter::setupDataForBlock(const QString &text)
             blockData(currentBlock().previous().userData())->m_foldingRegions;
         blockData(currentBlockUserData())->clearParentheses();
     }
+    blockData(currentBlockUserData())->clearSpellCheckZones(true);
 
     assignCurrentContext();
 }
@@ -429,6 +432,8 @@ void Highlighter::applyFormat(int offset,
         // inexistent Printf item data. These cases are considered to have normal text style.
         return;
     }
+
+    blockData(currentBlockUserData())->addSpellCheckZone(offset, itemData->isSpellChecking());
 
     TextFormatId formatId = m_kateFormats.m_ids.value(itemData->style());
     if (formatId != Normal) {

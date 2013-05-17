@@ -181,6 +181,10 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         m_completer->popup()->hide();
         return;
     }
+
+    // Do not pass data to the completer when we're in a spell-checked region
+    if (isSpellCheckingAt(textCursor())) return;
+
     emit completionPrefixChanged(completionPrefix);
 
     if (completionPrefix != m_completer->completionPrefix()) {

@@ -14,7 +14,7 @@
   <style name="Decimal" foreground="#800080"/>
   <style name="BaseN" foreground="#ff55ff"/>
   <style name="Float" foreground="#ff55ff"/>
-  <style name="Char" foreground="#ff55ff"/>
+  <style name="Char" foreground="#ff0055"/>
   <style name="String" foreground="#ff55ff"/>
   <style name="Comment" foreground="#55ffff"/>
   <style name="Alert" foreground="#ff0000"/>
@@ -25,4 +25,6 @@
   <style name="BuiltinFunc" foreground="#ffff55"/>
   <style name="Predeclared" foreground="#ffff55"/>
   <style name="FuncDecl" foreground="#bbbbbb"/>
+  <style name="Placeholder" foreground="#55ff55"/>
+  <style name="ToDo" foreground="#5555ff" bold="true"/>
 </style-scheme>

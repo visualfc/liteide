@@ -185,6 +185,7 @@ protected:
     QString tabText(int n = 1) const;
     void indentEnter(QTextCursor cur);
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
+    bool isSpellCheckingAt(QTextCursor cur) const;
 protected:
     QWidget *m_extraArea;
     LiteApi::IEditorMark *m_editorMark;

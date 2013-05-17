@@ -1600,6 +1600,13 @@ QTextBlock LiteEditorWidgetBase::foldedBlockAt(const QPoint &pos, QRect *box) co
     return QTextBlock();
 }
 
+bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
+{
+    QTextBlock block = cur.block();
+    TextEditor::TextBlockUserData *data = static_cast<TextEditor::TextBlockUserData*>(block.userData());
+    return data->shouldSpellCheck(cur.positionInBlock());
+}
+
 void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton) {
