@@ -170,7 +170,7 @@ void GoplayBrowser::run()
         m_process->kill();
     }
     m_output->clear();
-    m_output->appendTag(tr("Running...\n\n"));
+    m_output->appendTag(tr("Running...")+"\n\n");
     m_process->setEnvironment(env.toStringList());
 
     m_process->start(go,args);
@@ -194,9 +194,9 @@ void GoplayBrowser::runFinish(bool err,int code,const QString &msg)
 {
     m_output->setReadOnly(true);
     if (err || code != 0) {
-        m_output->appendTag(tr("\nError: %1.").arg(msg),true);
+        m_output->appendTag("\n"+tr("Error: %1.").arg(msg),true);
     } else {
-        m_output->appendTag(tr("\nSuccess: %2.").arg(msg));
+        m_output->appendTag("\n"+tr("Success: %2.").arg(msg));
     }
 }
 

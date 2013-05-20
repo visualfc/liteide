@@ -1278,21 +1278,24 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="173"/>
-        <source>Running...
+        <source>Running...</source>
+        <oldsource>Running...
 
-</source>
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="197"/>
-        <source>
-Error: %1.</source>
+        <source>Error: %1.</source>
+        <oldsource>
+Error: %1.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="199"/>
-        <source>
-Success: %2.</source>
+        <source>Success: %2.</source>
+        <oldsource>
+Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
