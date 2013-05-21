@@ -82,6 +82,10 @@ void GolangCodePlugin::editorCreated(LiteApi::IEditor *editor)
             menu->addSeparator();
             menu->addAction(m_commentAct);
         }
+        LiteApi::ILiteEditor *liteEdit = LiteApi::getLiteEditor(editor);
+        if (liteEdit) {
+            liteEdit->setSpellCheckZoneDontComplete(true);
+        }
     }
 }
 

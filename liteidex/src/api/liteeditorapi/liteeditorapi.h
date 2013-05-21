@@ -140,7 +140,16 @@ public:
     ILiteEditor(QObject *parent = 0) : ITextEditor(parent) {}
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
+    virtual void setSpellCheckZoneDontComplete(bool b) = 0;
 };
+
+inline ILiteEditor *getLiteEditor(IEditor *editor)
+{
+    if (editor && editor->extension()) {
+        return findExtensionObject<ILiteEditor*>(editor->extension(),"LiteApi.ILiteEditor");
+    }
+    return 0;
+}
 
 } //namespace LiteApi
 

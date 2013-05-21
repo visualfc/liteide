@@ -3,6 +3,12 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2013.5.21 Ver x18.2
+* fast for gocode
+* add option to close gocode on exit
+* auto append GOPATH/bin to liteide env PATH
+* editor extern highlighting "TODO"
+
 ### 2013.5.10
 * compiled compatibility for qt5.02
 

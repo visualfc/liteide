@@ -54,7 +54,8 @@ LiteEditorWidget::LiteEditorWidget(QWidget *parent) :
     m_completer(0),
     m_contextMenu(0),
     m_completionPrefixMin(3),
-    m_scrollWheelZooming(true)
+    m_scrollWheelZooming(true),
+    m_bSpellCheckZoneDontComplete(false)
 {
 }
 
@@ -183,7 +184,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     }
 
     // Do not pass data to the completer when we're in a spell-checked region
-    if (isSpellCheckingAt(textCursor())) return;
+    if (m_bSpellCheckZoneDontComplete && isSpellCheckingAt(textCursor())) {
+        return;
+    }
 
     emit completionPrefixChanged(completionPrefix);
 

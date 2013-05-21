@@ -97,6 +97,7 @@ public:
     virtual bool restoreState(const QByteArray &state);
     virtual void onActive();
     virtual void setFindOption(LiteApi::FindOption *opt);
+    virtual void setSpellCheckZoneDontComplete(bool b);
 
     LiteEditorWidget *editorWidget() const;
 signals:

@@ -45,11 +45,6 @@ class QSettings;
 class QSplitter;
 class LiteAppOptionFactory;
 
-struct windows_state {
-    bool        maximized;
-    QByteArray  geometry;
-};
-
 class LiteApp : public IApplication
 {
     Q_OBJECT

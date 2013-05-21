@@ -36,6 +36,7 @@ public:
     void setCompleter(QCompleter *m_completer);
     QCompleter *completer() const;
     void setPrefixMin(int min) {m_completionPrefixMin = min; }
+    void setSpellCheckZoneDontComplete(bool b) {m_bSpellCheckZoneDontComplete = b; }
     int prefixMin() const{
         return m_completionPrefixMin;
     }
@@ -62,6 +63,7 @@ protected:
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;
     bool m_scrollWheelZooming;
+    bool m_bSpellCheckZoneDontComplete;
 };
 
 #endif // LITEEDITORWIDGET_H
