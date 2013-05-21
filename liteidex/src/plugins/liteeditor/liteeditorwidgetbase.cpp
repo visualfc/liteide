@@ -1603,6 +1603,9 @@ QTextBlock LiteEditorWidgetBase::foldedBlockAt(const QPoint &pos, QRect *box) co
 bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 {
     QTextBlock block = cur.block();
+    if (!block.userData()) {
+        return false;
+    }
     TextEditor::TextBlockUserData *data = static_cast<TextEditor::TextBlockUserData*>(block.userData());
     return data->shouldSpellCheck(cur.positionInBlock());
 }
