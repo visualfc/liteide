@@ -8,6 +8,7 @@
 * add option to close gocode on exit
 * auto append GOPATH/bin to liteide env PATH
 * editor extern highlighting "TODO"
+* go code auto-complete ignores strings and comments
 
 ### 2013.5.10
 * compiled compatibility for qt5.02
