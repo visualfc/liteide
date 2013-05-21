@@ -354,7 +354,8 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app)
     }
     QString find = FileUtil::findExecute(gobin+"/"+bin);
     if (find.isEmpty()) {
-        find = FileUtil::lookPath(bin,env,true);
+        //find = FileUtil::lookPath(bin,env,true);
+        find = FileUtil::lookupLiteBin(bin,app);
     }
     return find;
 }
