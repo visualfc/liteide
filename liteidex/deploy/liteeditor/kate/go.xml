@@ -128,7 +128,7 @@
       </context>
       <context attribute="String" lineEndContext="#stay" name="Multiline String">
         <!--LineContinue attribute="String" context="#stay"/-->
-        <HlCStringChar attribute="String Char" context="#stay"/>
+        <!-- HlCStringChar attribute="String Char" context="#stay"/-->
         <DetectChar attribute="String" context="#pop" char="`"/>
       </context>
       <context attribute="Comment" lineEndContext="#pop" name="Comment 1">
