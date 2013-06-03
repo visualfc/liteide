@@ -40,6 +40,9 @@ public:
     int prefixMin() const{
         return m_completionPrefixMin;
     }
+    void setScrollWheelZooming(bool b) {
+        m_scrollWheelZooming = b;
+    }
 protected:
     void contextMenuEvent(QContextMenuEvent *);
     void keyPressEvent(QKeyEvent *e);

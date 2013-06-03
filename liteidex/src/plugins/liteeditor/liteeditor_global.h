@@ -57,5 +57,6 @@
 #define EDITOR_EOFVISIBLE "editor/eofvisible"
 #define EDITOR_DEFAULTWORDWRAP "editor/defaultwordwrap"
 #define EDITOR_INDENTLINEVISIBLE "editor/indentlinevisible"
+#define EDITOR_WHEEL_SCROLL "editor/whellscroll"
 
 #endif // LITEEDITOR_GLOBAL_H

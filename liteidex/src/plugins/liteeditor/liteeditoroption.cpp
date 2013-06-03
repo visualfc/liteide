@@ -103,6 +103,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool outputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
+    bool wheelZoom = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
 
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
@@ -125,6 +126,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->defaultWordWrapCheckBox->setChecked(defaultWordWrap);
     ui->indentLineCheckBox->setChecked(indentLineVisible);
     ui->outputUseColorSchemeCheck->setChecked(outputUseColor);
+    ui->wheelZoomingCheckBox->setChecked(wheelZoom);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
@@ -229,6 +231,7 @@ void LiteEditorOption::apply()
     bool eofVisible = ui->eofVisibleCheckBox->isChecked();
     bool defaultWordWrap = ui->defaultWordWrapCheckBox->isChecked();
     bool indentLineVisible = ui->indentLineCheckBox->isChecked();
+    bool wheelZoom = ui->wheelZoomingCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
@@ -253,6 +256,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_PREFIXLENGTH,min);
     m_liteApp->settings()->setValue(EDITOR_CLEANWHITESPACEONSAVE,cleanWhitespaceOnSave);
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);
+    m_liteApp->settings()->setValue(EDITOR_WHEEL_SCROLL,wheelZoom);
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }

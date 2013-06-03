@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>475</width>
-    <height>242</height>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -292,6 +292,13 @@
            <widget class="QCheckBox" name="cleanWhitespaceOnSaveCheckBox">
             <property name="text">
              <string>Clean whitespace when saving files</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="wheelZoomingCheckBox">
+            <property name="text">
+             <string>Enable scroll wheel zooming</string>
             </property>
            </widget>
           </item>

@@ -632,6 +632,7 @@ void LiteEditor::applyOption(QString id)
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
+    bool wheelZooming = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
@@ -648,6 +649,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
     m_editorWidget->setDefaultWordWrap(defaultWordWrap);
+    m_editorWidget->setScrollWheelZooming(wheelZooming);
 
     if (m_completer) {
         m_completer->completer()->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
