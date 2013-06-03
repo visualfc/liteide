@@ -80,7 +80,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     close->setFlat(true);
     close->setToolTip(tr("Close"));
 
-    connect(close,SIGNAL(clicked()),m_widget,SLOT(hide()));
+    connect(close,SIGNAL(clicked()),this,SLOT(hideFind()));
 
     QGridLayout *layout = new QGridLayout;
     layout->setMargin(0);
@@ -213,6 +213,11 @@ void FindEditor::findHelper(FindOption *opt)
     } else if (textEditor) {
         textEditor->onActive();
     }
+}
+
+void FindEditor::hideFind()
+{
+    this->setVisible(false);
 }
 
 void FindEditor::setReady(const QString &findText)
