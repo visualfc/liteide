@@ -675,6 +675,7 @@ void LiteEditor::applyOption(QString id)
     }
     m_editorWidget->setFont(font);
     m_editorWidget->extraArea()->setFont(font);
+    m_editorWidget->slotUpdateExtraAreaWidth();
 
     QString mime = this->m_file->mimeType();
     int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
