@@ -24,7 +24,7 @@ public:
         m_info->setVer("x18");
         m_info->setName("LiteTty");
         m_info->setAnchor("visualfc");
-        m_info->setInfo("LiteTty");
+        m_info->setInfo("LiteIDE tty Util");
         //m_info->appendDepend("plugin/liteenv");
     }
 };
