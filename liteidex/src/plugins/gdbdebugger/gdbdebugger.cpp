@@ -41,8 +41,6 @@
 #endif
 //lite_memory_check_end
 
-
-
 static void GdbMiValueToItem(QStandardItem *item, const GdbMiValue &value)
 {
     switch (value.type()) {
@@ -83,7 +81,8 @@ static void GdbMiValueToItem(QStandardItem *item, const GdbMiValue &value)
 GdbDebugger::GdbDebugger(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IDebugger(parent),
     m_liteApp(app),
-    m_envManager(0)
+    m_envManager(0),
+    m_tty(0)
 {
     m_process = new QProcess(this);
     m_asyncModel = new QStandardItemModel(this);
@@ -185,9 +184,20 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
         m_runtimeFilePath = QFileInfo(QDir(goroot),"src/pkg/runtime/").path();
     }
 
-    QString args = QString("--interpreter=mi --args %1").arg(program);
+    QStringList argsList;
+    argsList << "--interpreter mi";
+
+    if (!m_tty) {
+        m_tty = LiteApi::createTty(m_liteApp,this);
+        connect(m_tty,SIGNAL(byteDelivery(QByteArray)),this,SLOT(readTty(QByteArray)));
+    }
+    if (m_tty && m_tty->listen()) {
+       // argsList << "--tty "+m_tty->serverName();
+    }
+
+    argsList << "--args "+program;
     if (!arguments.isEmpty()) {
-        args  += " " + arguments;
+        argsList  << arguments;
     }
 
     QString gdb = env.value("LITEIDE_GDB","gdb");
@@ -208,12 +218,12 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     }
 
     clear();
-
+    QString args = argsList.join(" ");
 #ifdef Q_OS_WIN
-        m_process->setNativeArguments(args);
-        m_process->start("\""+m_gdbFilePath+"\"");
+    m_process->setNativeArguments(args);
+    m_process->start("\""+m_gdbFilePath+"\"");
 #else
-        m_process->start(m_gdbFilePath + " " + args);
+    m_process->start(m_gdbFilePath + " " + args);
 #endif
 
     QString log = QString("%1 %2 [%3]").arg(m_gdbFilePath).arg(args).arg(m_process->workingDirectory());
@@ -421,12 +431,20 @@ void GdbDebugger::readStdError()
     emit debugLog(LiteApi::DebugErrorLog,QString::fromUtf8(m_process->readAllStandardError()));
 }
 
+
+
+static bool isNameChar(char c)
+{
+    // could be 'stopped' or 'shlibs-added'
+    return (c >= 'a' && c <= 'z') || c == '-';
+}
+
 /*
 27.4.2 gdb/mi Output Syntax
 
 The output from gdb/mi consists of zero or more out-of-band records followed, optionally,
 by a single result record. This result record is for the most recent command. The sequence
-of output records is terminated by ¡®(gdb)¡¯.
+of output records is terminated by (gdb).
 If an input command was prefixed with a token then the corresponding output for that
 command will also be prefixed by that same token.
 
@@ -451,7 +469,7 @@ async-class ( "," result )* nl
 result-class ->
 "done" | "running" | "connected" | "error" | "exit"
 async-class ->
-"stopped" | others (where others will be added depending on the needs¡ªthis
+"stopped" | others (where others will be added depending on the needsÂ¡Âªthis
 is still in development).
 result -> variable "=" value
 variable ->
@@ -470,12 +488,6 @@ log-stream-output ->
 "&" c-string
 nl -> CR | CR-LF
 */
-
-static bool isNameChar(char c)
-{
-    // could be 'stopped' or 'shlibs-added'
-    return (c >= 'a' && c <= 'z') || c == '-';
-}
 
 void GdbDebugger::handleResponse(const QByteArray &buff)
 {
@@ -1016,7 +1028,6 @@ void GdbDebugger::clear()
     m_varChangedItemList.clear();
     m_inbuffer.clear();
     m_locationBkMap.clear();
-
     m_framesModel->removeRows(0,m_framesModel->rowCount());
     m_libraryModel->removeRows(0,m_libraryModel->rowCount());
     m_varsModel->removeRows(0,m_varsModel->rowCount());
@@ -1186,4 +1197,9 @@ void GdbDebugger::finished(int code)
     clear();
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Program exited with code %1").arg(code));
+}
+
+void GdbDebugger::readTty(const QByteArray &data)
+{
+    emit debugLog(LiteApi::DebugApplationLog,QString::fromUtf8(data));
 }

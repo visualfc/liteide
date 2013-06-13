@@ -26,6 +26,7 @@
 
 #include "litedebugapi/litedebugapi.h"
 #include "liteenvapi/liteenvapi.h"
+#include "litettyapi/litettyapi.h"
 #include "qtc_gdbmi/gdbmi.h"
 
 #include <QSet>
@@ -145,6 +146,7 @@ public slots:
     void readStdError();
     void readStdOutput();
     void finished(int);
+    void readTty(const QByteArray &data);
 protected:
     void handleResponse(const QByteArray &buff);
     void handleStopped(const GdbMiValue &result);
@@ -177,6 +179,7 @@ protected:
 protected:
     LiteApi::IApplication   *m_liteApp;
     LiteApi::IEnvManager    *m_envManager;
+    LiteApi::ITty           *m_tty;
     QProcess *m_process;
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;
