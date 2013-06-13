@@ -1,11 +1,11 @@
-#include "helloplugin.h"
+#include "litettyplugin.h"
 #include <QtPlugin>
 
-HelloPlugin::HelloPlugin()
+LiteTtyPlugin::LiteTtyPlugin()
 {
 }
 
-bool HelloPlugin::load(LiteApi::IApplication *app)
+bool LiteTtyPlugin::load(LiteApi::IApplication *app)
 {
     return true;
 }
