@@ -18,18 +18,32 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litetty_global.h
+// Module: sockettty.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITETTY_GLOBAL_H
-#define LITETTY_GLOBAL_H
+#ifndef SOCKETTTY_H
+#define SOCKETTTY_H
 
-#include <QtCore/qglobal.h>
+#include "litettyapi/litettyapi.h"
 
-#if defined(LITETTY_LIBRARY)
-#  define LITETTYSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define LITETTYSHARED_EXPORT Q_DECL_IMPORT
-#endif
+class QLocalServer;
+class QLocalSocket;
+class SocketTty : public LiteApi::ITty
+{
+    Q_OBJECT
+public:
+    explicit SocketTty(QObject *parent = 0);
+    virtual ~SocketTty();
+    virtual QString serverName() const;
+    virtual QString errorString() const;
+    virtual bool listen();
+    virtual void shutdown();
+public slots:
+    void newConnectionAvailable();
+    void bytesAvailable();
+protected:
+    QLocalServer *m_server;
+    QLocalSocket *m_socket;
+};
 
-#endif // LITETTY_GLOBAL_H
+#endif // SOCKETTTY_H

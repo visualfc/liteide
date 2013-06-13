@@ -18,13 +18,15 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: snippetmanager.cpp
+// Module: sockettty.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "snippetmanager.h"
-#include "snippet.h"
-#include <QFileInfo>
-#include <QDir>
+#include "sockettty.h"
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QCoreApplication>
+#include <stdlib.h>
+#include <time.h>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -35,53 +37,56 @@
 #endif
 //lite_memory_check_end
 
-SnippetsManager::SnippetsManager(QObject *parent) :
-    LiteApi::ISnippetsManager(parent)
+SocketTty::SocketTty(QObject *parent) :
+    LiteApi::ITty(parent), m_server(0),m_socket(0)
 {
 }
 
-SnippetsManager::~SnippetsManager()
+SocketTty::~SocketTty()
 {
-    qDeleteAll(m_snippetsList);
+    shutdown();
 }
 
-void SnippetsManager::addSnippetList(ISnippetList *snippets)
+QString SocketTty::serverName() const
 {
-    m_snippetsList.append(snippets);
+    return m_server->fullServerName();
 }
 
-void SnippetsManager::removeSnippetList(ISnippetList *snippets)
+QString SocketTty::errorString() const
 {
-    m_snippetsList.removeAll(snippets);
+    return m_server->errorString();
 }
 
-ISnippetList *SnippetsManager::findSnippetList(const QString &mimeType)
+bool SocketTty::listen()
 {
-    foreach (ISnippetList *snippets, m_snippetsList) {
-        if (snippets->mimeType() == mimeType) {
-            return snippets;
-        }
+    if (m_server)
+        return m_server->isListening();
+    m_server = new QLocalServer(this);
+    srand(time(0));
+    connect(m_server, SIGNAL(newConnection()), SLOT(newConnectionAvailable()));
+    return m_server->listen(QString::fromLatin1("liteide-%1-%2")
+                            .arg(QCoreApplication::applicationPid())
+                            .arg(rand()));
+}
+
+void SocketTty::shutdown()
+{
+    if (m_server) {
+        delete m_server;
+        m_server = 0;
+        m_socket = 0;
     }
-    return 0;
 }
 
-QList<ISnippetList *> SnippetsManager::allSnippetList() const
+void SocketTty::newConnectionAvailable()
 {
-    return m_snippetsList;
+    if (m_socket)
+        return;
+    m_socket = m_server->nextPendingConnection();
+    connect(m_socket, SIGNAL(readyRead()), SLOT(bytesAvailable()));
 }
 
-void SnippetsManager::load(const QString &path)
+void SocketTty::bytesAvailable()
 {
-    QDir dir(path);
-    foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs)) {
-        QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeBySuffix(info.fileName());
-        if (!mimeType.isEmpty()) {
-            ISnippetList *find = this->findSnippetList(mimeType);
-            if (!find) {
-                find = new SnippetList(mimeType);
-                this->addSnippetList(find);
-            }
-            ((SnippetList*)find)->appendPath(info.path());
-        }
-    }
+    emit byteDelivery(m_socket->readAll());
 }

@@ -18,18 +18,35 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litetty_global.h
+// Module: litetty.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITETTY_GLOBAL_H
-#define LITETTY_GLOBAL_H
-
-#include <QtCore/qglobal.h>
-
-#if defined(LITETTY_LIBRARY)
-#  define LITETTYSHARED_EXPORT Q_DECL_EXPORT
+#include "litetty.h"
+#ifdef Q_OS_WIN
+#include "sockettty.h"
 #else
-#  define LITETTYSHARED_EXPORT Q_DECL_IMPORT
+#include "fifotty.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 #endif
 
-#endif // LITETTY_GLOBAL_H
+LiteTty::LiteTty(QObject *parent) :
+    LiteApi::ILiteTty(parent)
+{
+}
+
+LiteApi::ITty *LiteTty::createTty(QObject *parent) const
+{
+#ifdef Q_OS_WIN
+    return new SocketTty(parent);
+#else
+    return new FiFoTty(parent);
+#endif
+}

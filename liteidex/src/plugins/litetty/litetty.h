@@ -18,18 +18,19 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litetty_global.h
+// Module: litetty.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITETTY_GLOBAL_H
-#define LITETTY_GLOBAL_H
+#ifndef LITETTY_H
+#define LITETTY_H
+#include <litettyapi/litettyapi.h>
 
-#include <QtCore/qglobal.h>
+class LiteTty : public LiteApi::ILiteTty
+{
+    Q_OBJECT
+public:
+    explicit LiteTty(QObject *parent = 0);
+    virtual LiteApi::ITty* createTty(QObject *parent) const;
+};
 
-#if defined(LITETTY_LIBRARY)
-#  define LITETTYSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define LITETTYSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // LITETTY_GLOBAL_H
+#endif // LITETTY_H

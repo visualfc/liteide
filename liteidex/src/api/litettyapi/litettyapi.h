@@ -35,8 +35,9 @@ class ITty : public QObject
     Q_OBJECT
 public:
     ITty(QObject *parent = 0): QObject(parent) {}
-    virtual ~ITty() {}
     virtual QString serverName() const = 0;
+    virtual QString errorString() const = 0;
+    virtual bool listen() = 0;
     virtual void shutdown() = 0;
 signals:
     void byteDelivery(const QByteArray &data);
@@ -44,9 +45,9 @@ signals:
 
 class ILiteTty : public QObject
 {
-    Q_OBJECT
 public:
-    virtual ITty* createTty() const = 0;
+    ILiteTty(QObject *parent) : QObject(parent) { }
+    virtual ITty* createTty(QObject *parent) const = 0;
 };
 
 inline ILiteTty *getLiteTty(LiteApi::IApplication* app)
@@ -54,11 +55,11 @@ inline ILiteTty *getLiteTty(LiteApi::IApplication* app)
     return LiteApi::findExtensionObject<ILiteTty*>(app,"LiteApi.ILiteTty");
 }
 
-inline ITty *createTty(LiteApi::IApplication *app)
+inline ITty *createTty(LiteApi::IApplication *app,QObject *parent)
 {
     ILiteTty *liteTty = getLiteTty(app);
     if (liteTty) {
-        return liteTty->createTty();
+        return liteTty->createTty(parent);
     }
     return 0;
 }

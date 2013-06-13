@@ -18,18 +18,32 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litetty_global.h
+// Module: fifotty.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITETTY_GLOBAL_H
-#define LITETTY_GLOBAL_H
+#ifndef FIFOTTY_H
+#define FIFOTTY_H
 
-#include <QtCore/qglobal.h>
+#include "litettyapi/litettyapi.h"
 
-#if defined(LITETTY_LIBRARY)
-#  define LITETTYSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define LITETTYSHARED_EXPORT Q_DECL_IMPORT
-#endif
+class QSocketNotifier;
+class FiFoTty : public LiteApi::ITty
+{
+    Q_OBJECT
+public:
+    FiFoTty(QObject *parent);
+    virtual ~FiFoTty();
+    virtual QString serverName() const;
+    virtual QString errorString() const;
+    virtual bool listen();
+    virtual void shutdown();
+public slots:
+    void bytesAvailable();
+protected:
+    QString m_serverPath;
+    int m_serverFd;
+    QSocketNotifier *m_serverNotifier;
+    QString m_errorString;
+};
 
-#endif // LITETTY_GLOBAL_H
+#endif // FIFOTTY_H
