@@ -117,6 +117,11 @@ void FiFoTty::shutdown()
     }
 }
 
+void FiFoTty::write(const QByteArray &data)
+{
+    ::write(m_serverFd,data.data(),data.length());
+}
+
 void FiFoTty::bytesAvailable()
 {
     size_t nbytes = 0;

@@ -23,6 +23,7 @@
 
 #include "gdbdebugger.h"
 #include "fileutil/fileutil.h"
+#include "processex/processex.h"
 
 #include <QStandardItemModel>
 #include <QProcess>
@@ -124,6 +125,7 @@ GdbDebugger::GdbDebugger(LiteApi::IApplication *app, QObject *parent) :
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_process,SIGNAL(started()),this,SIGNAL(debugStarted()));
     connect(m_process,SIGNAL(finished(int)),this,SLOT(finished(int)));
+    connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStdError()));
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdOutput()));
 }
@@ -192,12 +194,14 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
         connect(m_tty,SIGNAL(byteDelivery(QByteArray)),this,SLOT(readTty(QByteArray)));
     }
     if (m_tty && m_tty->listen()) {
-       // argsList << "--tty "+m_tty->serverName();
+        argsList << "--tty "+m_tty->serverName();
     }
-
+    QStringList argsListInfo;
     argsList << "--args "+program;
+    argsListInfo << "--args "+program;
     if (!arguments.isEmpty()) {
         argsList  << arguments;
+        argsListInfo << arguments;
     }
 
     QString gdb = env.value("LITEIDE_GDB","gdb");
@@ -218,15 +222,14 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     }
 
     clear();
-    QString args = argsList.join(" ");
 #ifdef Q_OS_WIN
-    m_process->setNativeArguments(args);
+    m_process->setNativeArguments(argsList.join(" "));
     m_process->start("\""+m_gdbFilePath+"\"");
 #else
-    m_process->start(m_gdbFilePath + " " + args);
+    m_process->start(m_gdbFilePath + " " + argsList.join(" "));
 #endif
 
-    QString log = QString("%1 %2 [%3]").arg(m_gdbFilePath).arg(args).arg(m_process->workingDirectory());
+    QString log = QString("%1 %2 [%3]").arg(m_gdbFilePath).arg(argsListInfo.join(" ")).arg(m_process->workingDirectory());
     emit debugLog(LiteApi::DebugRuntimeLog,log);
 
     return true;
@@ -418,7 +421,11 @@ void GdbDebugger::command(const GdbCmd &cmd)
 
 void GdbDebugger::enterText(const QString &text)
 {
-    m_process->write(text.toUtf8());
+    if (m_tty) {
+        m_tty->write(text.toUtf8());
+    } else {
+        m_process->write(text.toUtf8());
+    }
 }
 
 void  GdbDebugger::command(const QByteArray &cmd)
@@ -1195,8 +1202,21 @@ void GdbDebugger::readStdOutput()
 void GdbDebugger::finished(int code)
 {
     clear();
+    if (m_tty) {
+        m_tty->shutdown();
+    }
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Program exited with code %1").arg(code));
+}
+
+void GdbDebugger::error(QProcess::ProcessError err)
+{
+    clear();
+    if (m_tty) {
+        m_tty->shutdown();
+    }
+    emit debugStoped();
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Error! %1").arg(ProcessEx::processErrorText(err)));
 }
 
 void GdbDebugger::readTty(const QByteArray &data)

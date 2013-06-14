@@ -39,6 +39,7 @@ public:
     virtual QString errorString() const = 0;
     virtual bool listen() = 0;
     virtual void shutdown() = 0;
+    virtual void write(const QByteArray &data) = 0;
 signals:
     void byteDelivery(const QByteArray &data);
 };

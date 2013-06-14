@@ -146,6 +146,7 @@ public slots:
     void readStdError();
     void readStdOutput();
     void finished(int);
+    void error(QProcess::ProcessError);
     void readTty(const QByteArray &data);
 protected:
     void handleResponse(const QByteArray &buff);

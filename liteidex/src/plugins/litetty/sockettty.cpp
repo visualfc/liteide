@@ -59,8 +59,9 @@ QString SocketTty::errorString() const
 
 bool SocketTty::listen()
 {
-    if (m_server)
+    if (m_server) {
         return m_server->isListening();
+    }
     m_server = new QLocalServer(this);
     srand(time(0));
     connect(m_server, SIGNAL(newConnection()), SLOT(newConnectionAvailable()));
@@ -76,6 +77,11 @@ void SocketTty::shutdown()
         m_server = 0;
         m_socket = 0;
     }
+}
+
+void SocketTty::write(const QByteArray &data)
+{
+    m_socket->write(data);
 }
 
 void SocketTty::newConnectionAvailable()

@@ -47,9 +47,10 @@ protected slots:
     void slotFinished(int,QProcess::ExitStatus);
     void slotReadOutput();
     void slotReadError();
+public:
+    static QString exitStatusText(int code,QProcess::ExitStatus status);
+    static QString processErrorText(QProcess::ProcessError code);
 protected:
-    QString exitStatusText(int code,QProcess::ExitStatus status);
-    QString processErrorText(QProcess::ProcessError code);
     QMap<int,QVariant> m_idVarMap;
 private:
     bool m_suppressFinish;

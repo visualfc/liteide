@@ -38,6 +38,7 @@ public:
     virtual QString errorString() const;
     virtual bool listen();
     virtual void shutdown();
+    virtual void write(const QByteArray &data);
 public slots:
     void newConnectionAvailable();
     void bytesAvailable();
