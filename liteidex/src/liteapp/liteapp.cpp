@@ -445,7 +445,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X18.2";
+    return "X19";
 }
 
 QString LiteApp::ideFullName() const
