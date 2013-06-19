@@ -47,6 +47,7 @@ LiteApi::ITty *LiteTty::createTty(QObject *parent) const
 #ifdef Q_OS_WIN
     return new SocketTty(parent);
 #else
-    return new FiFoTty(parent);
+    //return new FiFoTty(parent);
+    return 0;
 #endif
 }
