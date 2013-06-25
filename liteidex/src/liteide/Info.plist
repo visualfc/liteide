@@ -18,5 +18,9 @@
 		<string>liteide x version</string>
 	<key>CFBundleShortVersionString</key>
 		<string>liteidex</string>
+	<key>NSPrincipalClass</key>
+		<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+		<string>True</string>
 </dict>
 </plist>
