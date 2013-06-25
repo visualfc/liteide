@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPrincipalClass</key>
+		<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+		<string>True</string>
     <key>NSHumanReadableCopyright</key>
         <string>(C) 2011-2013 visualfc@gmail.com</string>
 	<key>CFBundleIconFile</key>
@@ -18,9 +22,5 @@
 		<string>liteide x version</string>
 	<key>CFBundleShortVersionString</key>
 		<string>liteidex</string>
-	<key>NSPrincipalClass</key>
-		<string>NSApplication</string>
-	<key>NSHighResolutionCapable</key>
-		<string>True</string>
 </dict>
 </plist>
