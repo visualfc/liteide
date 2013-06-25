@@ -12,6 +12,13 @@ echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
 
+if [ -z $QTDIR ]; then
+	echo 'error, QTDIR is null'
+	exit 1
+fi
+
+export PATH=$QTDIR/bin:$PATH
+
 echo qmake liteide ...
 echo .
 qmake $LITEIDE_ROOT -spec macx-g++ "CONFIG+=release"

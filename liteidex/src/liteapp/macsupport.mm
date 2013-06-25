@@ -22,6 +22,8 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "macsupport.h"
+#include <AppKit/NSView.h>
+#include <AppKit/NSWindow.h>
 
 #ifndef NSWindowCollectionBehaviorFullScreenPrimary
 #define NSWindowCollectionBehaviorFullScreenPrimary 1 << 7

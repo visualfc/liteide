@@ -35,7 +35,7 @@ contains(DEFINES, LITEAPP_LIBRARY) {
 LIBS += -L$$IDE_LIBRARY_PATH
 
 macx {
-    LIBS += -framework Foundation
+    LIBS += -framework AppKit
 }
 
 INCLUDEPATH += $$IDE_SOURCE_TREE/src/api
