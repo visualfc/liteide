@@ -60,6 +60,10 @@ int main(int argc, char *argv[])
 #endif
     QApplication app(argc, argv);
 
+#if QT_VERSION >= 0x050100
+    app.setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
     QTranslator translator;
     QTranslator qtTranslator;
     const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
