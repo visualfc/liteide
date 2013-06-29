@@ -55,7 +55,6 @@ public:
     bool canDebug(LiteApi::IEditor *editor) const;
     virtual LiteApi::IDebuggerManager *debugManager() const;
     virtual void startDebug(const QString &cmd, const QString &args, const QString &work);
-
     virtual bool isRunning() const;
 signals:
     void debugVisible(bool);
