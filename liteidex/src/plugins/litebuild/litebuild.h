@@ -52,14 +52,18 @@ public:
     virtual LiteApi::IBuildManager *buildManager() const;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true);
     virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true);
+    virtual bool buildTests();
     QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
+
 public:
+
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void setCurrentBuild(LiteApi::IBuild *build);
     void updateBuildConfig(LiteApi::IBuild *build);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
     void loadTargetInfo(LiteApi::IBuild *build);
+
     LiteApi::IBuild *findProjectBuildByEditor(LiteApi::IEditor *editor);
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
 public slots:
