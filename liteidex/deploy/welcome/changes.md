@@ -7,6 +7,7 @@
 * add litetty plugin
 * gdb enable --tty mode
 * MacOS X 10.8 Retina support
+* add debug test, thanks for GoEddie <https://github.com/GoEddie>
 
 ### 2013.5.21 Ver x18.2
 * fast for gocode
