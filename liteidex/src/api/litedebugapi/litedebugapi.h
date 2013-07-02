@@ -120,6 +120,7 @@ public:
 public:
     virtual IDebuggerManager *debugManager() const = 0;
     virtual void startDebug(const QString &cmd, const QString &args, const QString &work) = 0;
+    virtual void startDebugTests() = 0;
     virtual bool isRunning() const = 0;
 public slots:
     virtual void continueRun() = 0;

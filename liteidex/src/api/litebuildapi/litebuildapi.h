@@ -261,6 +261,7 @@ public:
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true) = 0;
     virtual void execAction(const QString &mime,const QString &id) = 0;
     virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir, bool updateExistsTextColor = true) = 0;
+    virtual bool buildTests() = 0;
 signals:
     void currentBuildFileChanged(const QString &filePath);
 };

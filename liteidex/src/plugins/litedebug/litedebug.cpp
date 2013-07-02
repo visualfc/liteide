@@ -105,9 +105,11 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_startDebugExternal = new QAction(tr("Start Debugging External Application..."),this);
     actionContext->regAction(m_startDebugExternal,"StartDebugExternal","");
 
-
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
     actionContext->regAction(m_startDebugAct,"StartDebug","F5");
+
+    m_startDebugTestAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging Tests"),this);
+    actionContext->regAction(m_startDebugTestAct,"StartDebugTests","F6");
 
 
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
@@ -156,6 +158,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_debugMenu->addAction(m_startDebugExternal);
     m_debugMenu->addSeparator();
     m_debugMenu->addAction(m_startDebugAct);
+    m_debugMenu->addAction(m_startDebugTestAct);
     m_debugMenu->addAction(m_continueAct);
     m_debugMenu->addAction(m_stopDebugAct);
     m_debugMenu->addSeparator();
@@ -170,6 +173,8 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     connect(m_startDebugExternal,SIGNAL(triggered()),this,SLOT(startDebugExternal()));
     connect(m_startDebugAct,SIGNAL(triggered()),this,SLOT(startDebug()));
+    connect(m_startDebugTestAct,SIGNAL(triggered()),this,SLOT(startDebugTests()));
+
     connect(m_continueAct,SIGNAL(triggered()),this,SLOT(continueRun()));
     connect(m_runToLineAct,SIGNAL(triggered()),this,SLOT(runToLine()));
     connect(m_stopDebugAct,SIGNAL(triggered()),this,SLOT(stopDebug()));
@@ -415,6 +420,51 @@ void LiteDebug::debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log)
         m_output->append(log);
         break;
     }
+}
+
+void LiteDebug::startDebugTests()
+{
+
+    if (!m_debugger) {
+        return;
+    }
+    if (m_debugger->isRunning()) {
+        m_debugger->continueRun();
+        return;
+    }
+
+    if (!m_liteBuild) {
+        return;
+    }
+
+    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
+    if (b) {
+        m_liteBuild->rebuild();
+    }
+
+    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
+
+    QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
+    if (!findCmd.isEmpty()) {
+        info.cmd = QFileInfo(findCmd).fileName();
+    }
+
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        m_startDebugFile = editor->filePath();
+    }
+
+    if(!m_liteBuild->buildTests())
+    {
+    	m_liteApp->appendLog("LiteDebug","Build tests failed",true);
+
+    }
+
+    QString testCmd = info.cmd;
+    testCmd.append(".test");
+
+	this->startDebug(testCmd,info.args,info.workDir);
+
 }
 
 void LiteDebug::startDebug()
