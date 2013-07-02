@@ -65,7 +65,6 @@ public slots:
     void editorAboutToClose(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
     void startDebugExternal();
-    void buildTestBinary();
     virtual void startDebug();
     virtual void startDebugTests();
     virtual void continueRun();

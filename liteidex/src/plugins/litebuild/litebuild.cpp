@@ -205,24 +205,24 @@ void LiteBuild::rebuild()
 
 bool LiteBuild::buildTests()
 {
-	   if (!m_build) {
-	        return false;
-	    }
-	    BuildAction *ba = m_build->findAction("BuildTests");
-	    if (!ba) {
-	        return false;
-	    }
-	    if (m_process->isRunning()) {
-	        m_process->kill();
-	        m_process->waitForFinished(1000);
-	    }
-	    this->execAction(m_build->mimeType(),ba->id());
-	    if (!m_process->waitForStarted(1000)) {
-	        return false;
-	    }
-	    m_process->waitForFinished(1000);
+   if (!m_build) {
+        return false;
+    }
+    BuildAction *ba = m_build->findAction("BuildTests");
+    if (!ba) {
+        return false;
+    }
+    if (m_process->isRunning()) {
+        m_process->kill();
+        m_process->waitForFinished(1000);
+    }
+    this->execAction(m_build->mimeType(),ba->id());
+    if (!m_process->waitForStarted(1000)) {
+        return false;
+    }
+    m_process->waitForFinished(1000);
 
-	    return true;
+    return true;
 }
 
 

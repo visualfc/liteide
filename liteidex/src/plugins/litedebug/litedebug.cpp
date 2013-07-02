@@ -424,7 +424,6 @@ void LiteDebug::debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log)
 
 void LiteDebug::startDebugTests()
 {
-
     if (!m_debugger) {
         return;
     }
@@ -437,18 +436,6 @@ void LiteDebug::startDebugTests()
         return;
     }
 
-    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
-    if (b) {
-        m_liteBuild->rebuild();
-    }
-
-    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
-
-    QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
-    if (!findCmd.isEmpty()) {
-        info.cmd = QFileInfo(findCmd).fileName();
-    }
-
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor) {
         m_startDebugFile = editor->filePath();
@@ -457,14 +444,17 @@ void LiteDebug::startDebugTests()
     if(!m_liteBuild->buildTests())
     {
     	m_liteApp->appendLog("LiteDebug","Build tests failed",true);
+    }
+    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
+    QString testCmd = info.cmd+".test";
+    QString findCmd = FileUtil::lookPathInDir(testCmd,info.workDir);
+
+    if (!findCmd.isEmpty()) {
+        testCmd = QFileInfo(findCmd).fileName();
     }
 
-    QString testCmd = info.cmd;
-    testCmd.append(".test");
-
 	this->startDebug(testCmd,info.args,info.workDir);
-
 }
 
 void LiteDebug::startDebug()
