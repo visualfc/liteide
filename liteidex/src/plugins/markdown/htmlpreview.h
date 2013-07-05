@@ -41,6 +41,7 @@ public slots:
     QByteArray loadCssData(const QString &fileName);
     void currentEditorChanged(LiteApi::IEditor*);
     void contentsChanged();
+    void htmlUpdate();
     void scrollValueChanged();
     void syncScrollValue();
     void toggledSyncSwitch(bool);
@@ -81,6 +82,7 @@ protected:
     QByteArray  m_lastData;
     QByteArray  m_head;
     QPoint      m_prevPos;
+    QTimer      *m_htmlUpdateTimer;
 };
 
 #endif // HTMLPREVIEW_H
