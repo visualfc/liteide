@@ -55,6 +55,7 @@ public slots:
     void linkClicked(const QUrl &);
     void linkHovered(const QUrl &);
     void loadFinished(bool);
+    void htmlContentsSizeChanged();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget               *m_widget;

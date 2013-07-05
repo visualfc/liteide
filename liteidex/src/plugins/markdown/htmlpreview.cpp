@@ -37,6 +37,7 @@
 #include <QFileDialog>
 #include <QStatusBar>
 #include <QToolTip>
+#include <QTimer>
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #include <QPrintPreviewDialog>
@@ -152,7 +153,8 @@ void HtmlPreview::appLoaded()
         m_bWebkit = false;
     }
 
-    connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
+    //connect(m_htmlWidget,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
+    connect(m_htmlWidget,SIGNAL(contentsSizeChanged()),this,SLOT(htmlContentsSizeChanged()));
     connect(m_htmlWidget,SIGNAL(linkClicked(QUrl)),this,SLOT(linkClicked(QUrl)));
     connect(m_htmlWidget,SIGNAL(linkHovered(QUrl)),this,SLOT(linkHovered(QUrl)));
 
@@ -319,10 +321,9 @@ void HtmlPreview::loadHtmlData(const QByteArray &data, const QByteArray &title, 
 {
     m_lastData = data;
 
-    int h = m_htmlWidget->scrollBarValue(Qt::Horizontal);
-    int v = m_htmlWidget->scrollBarValue(Qt::Vertical);
-    m_prevPos = QPoint(h,v);
-
+//    int h = m_htmlWidget->scrollBarValue(Qt::Horizontal);
+//    int v = m_htmlWidget->scrollBarValue(Qt::Vertical);
+//    m_prevPos = QPoint(h,v);
     if (mime == "text/html") {
         QTextCodec *codec = QTextCodec::codecForHtml(data,QTextCodec::codecForName("utf-8"));
         m_htmlWidget->setHtml(codec->toUnicode(data),QUrl::fromLocalFile(m_curEditor->filePath()));
@@ -486,4 +487,9 @@ void HtmlPreview::loadFinished(bool b)
         m_htmlWidget->setScrollBarValue(Qt::Horizontal,m_prevPos.x());
         m_htmlWidget->setScrollBarValue(Qt::Vertical,m_prevPos.y());
     }
+}
+
+void HtmlPreview::htmlContentsSizeChanged()
+{
+    this->syncScrollValue();
 }
