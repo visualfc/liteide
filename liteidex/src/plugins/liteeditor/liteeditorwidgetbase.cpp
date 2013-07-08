@@ -1201,6 +1201,18 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                 return;
             }
         }
+    } else if (!ro && e == QKeySequence::DeleteStartOfWord && !textCursor().hasSelection()) {
+        e->accept();
+        QTextCursor c = textCursor();
+        c.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
+        c.removeSelectedText();
+        return;
+    } else if (!ro && e == QKeySequence::DeleteEndOfWord && !textCursor().hasSelection()) {
+        e->accept();
+        QTextCursor c = textCursor();
+        c.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
+        c.removeSelectedText();
+        return;
     } else {
         switch (e->key()) {
         case Qt::Key_Tab:
@@ -1211,6 +1223,33 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             e->accept();
             return;
         }
+        case Qt::Key_Backspace: {
+            break;
+        }
+        case Qt::Key_Up:
+        case Qt::Key_Down:
+            if (e->modifiers() & Qt::ControlModifier) {
+                verticalScrollBar()->triggerAction(
+                        e->key() == Qt::Key_Up ? QAbstractSlider::SliderSingleStepSub :
+                                                 QAbstractSlider::SliderSingleStepAdd);
+                e->accept();
+                return;
+            }
+        case Qt::Key_Right:
+        case Qt::Key_Left:
+            break;
+        case Qt::Key_PageUp:
+        case Qt::Key_PageDown:
+            if (e->modifiers() == Qt::ControlModifier) {
+                verticalScrollBar()->triggerAction(
+                        e->key() == Qt::Key_PageUp ? QAbstractSlider::SliderPageStepSub :
+                                                     QAbstractSlider::SliderPageStepAdd);
+                e->accept();
+                return;
+            }
+            break;
+        default:
+            break;
         }
     }
     QPlainTextEdit::keyPressEvent(e);
