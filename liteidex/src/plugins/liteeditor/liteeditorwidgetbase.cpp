@@ -349,9 +349,13 @@ int LiteEditorWidgetBase::extraAreaWidth()
         QFont fnt = m_extraArea->font();
         fnt.setBold(true);
         const QFontMetrics linefm(fnt);
-        int lines = qMax(99, blockCount());
-        int maxNumber = pow(10, ceil(log10(lines + 1))) - 1;
-        space += linefm.width(QString::number(maxNumber));
+        int digits = 2;
+        int max = qMax(1, blockCount());
+        while (max >= 100) {
+            max /= 10;
+            ++digits;
+        }
+        space += linefm.width(QLatin1Char('9')) * digits;
     }
     if (m_marksVisible) {
         int markWidth = fm.lineSpacing();
