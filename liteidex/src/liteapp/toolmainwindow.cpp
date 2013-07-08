@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "toolmainwindow.h"
+#include "liteapi/liteapi.h"
 #include <QToolBar>
 #include <QAction>
 #include <QActionGroup>
@@ -344,8 +345,9 @@ QAction *ToolMainWindow::addToolWindow(Qt::DockWidgetArea area, QWidget *widget,
     int index = m_actStateMap.size();
     if (index <= 9) {
         action->setText(QString("&%1: %2").arg(index).arg(title));
-        action->setToolTip(tr("\"%1\" Tool Window\tALT+%2").arg(title).arg(index));
-        action->setShortcut(QKeySequence(QString("ALT+%1").arg(index)));
+        QKeySequence ks(LiteApi::UseMacShortcuts?QString("CTRL+%1").arg(index):QString("ALT+%1").arg(index));
+        action->setShortcut(ks);
+        action->setToolTip(tr("\"%1\" Tool Window (%2)").arg(title).arg(ks.toString()));
     }
     m_actStateMap.insert(action,state);
 
