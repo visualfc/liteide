@@ -9,7 +9,7 @@ GdbDebuggerOption::GdbDebuggerOption(LiteApi::IApplication *app,QObject *parent)
     ui(new Ui::GdbDebuggerOption)
 {
     ui->setupUi(m_widget);
-    ui->useTtyCheckBox->setChecked(isGdbDebuggerUseTty);
+    ui->useTtyCheckBox->setChecked(isGdbDebuggerUseTty(app));
 }
 
 GdbDebuggerOption::~GdbDebuggerOption()
