@@ -54,7 +54,7 @@ protected:
     QString     m_preWord;
     QString     m_prefix;
     QString     m_lastPrefix;
-    QString     m_fileName;
+    QFileInfo   m_fileInfo;
     bool        m_breset;
     QProcess   *m_process;
     QByteArray  m_writeData;

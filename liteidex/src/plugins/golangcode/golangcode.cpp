@@ -87,8 +87,9 @@ void GolangCode::resetGocode()
 {
     if (!m_gocodeCmd.isEmpty()) {
         m_breset = true;
-        m_process->start(m_gocodeCmd,QStringList() << "close");
+        m_process->setWorkingDirectory(m_liteApp->applicationPath());
         m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+        m_process->start(m_gocodeCmd,QStringList() << "close");
     }
 }
 
@@ -116,8 +117,7 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
     if (filePath.isEmpty()) {
         return;
     }
-    m_fileName = QFileInfo(filePath).fileName();
-    m_process->setWorkingDirectory(QFileInfo(filePath).path());
+    m_fileInfo.setFile(filePath);
 }
 
 void GolangCode::setCompleter(LiteApi::ICompleter *completer)
@@ -168,9 +168,10 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
     src = src.replace("\r\n","\n");
     m_writeData = src.left(cur.position()).toUtf8();
     QStringList args;
-    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileName << QString::number(m_writeData.length());
+    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length());
     m_writeData = src.toUtf8();
     m_breset = false;
+    m_process->setWorkingDirectory(m_fileInfo.path());
     m_process->start(m_gocodeCmd,args);
 }
 
@@ -198,6 +199,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
 
     if (m_breset) {
         m_breset = false;
+        m_process->setWorkingDirectory(m_liteApp->applicationPath());
         m_process->start(m_gocodeCmd);
         return;
     }
