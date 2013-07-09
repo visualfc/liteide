@@ -24,6 +24,7 @@
 #ifndef TOOLMAINWINDOW_H
 #define TOOLMAINWINDOW_H
 
+#include "liteapi/liteapi.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QPointer>
@@ -102,7 +103,7 @@ class ToolMainWindow : public QMainWindow
 public:
     ToolMainWindow(QWidget *parent = 0);
     ~ToolMainWindow();
-    QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
+    QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
     QByteArray saveToolState(int version = 0) const;

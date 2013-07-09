@@ -35,7 +35,7 @@
 
 QAction *ToolWindowManager::addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
 {
-    QAction *act = ((ToolMainWindow*)m_liteApp->mainWindow())->addToolWindow(area,widget,id,title,split,widgetActions);
+    QAction *act = ((ToolMainWindow*)m_liteApp->mainWindow())->addToolWindow(m_liteApp,area,widget,id,title,split,widgetActions);
     if (act) {
         m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolWindowPos,act);
     }

@@ -318,7 +318,7 @@ void ToolMainWindow::removeToolWindow(QAction *action)
     }
 }
 
-QAction *ToolMainWindow::addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
+QAction *ToolMainWindow::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
 {
     QMap<QString,InitToolSate>::iterator it = m_initIdStateMap.find(id);
     if (it != m_initIdStateMap.end()) {
@@ -344,10 +344,10 @@ QAction *ToolMainWindow::addToolWindow(Qt::DockWidgetArea area, QWidget *widget,
 
     int index = m_actStateMap.size();
     if (index <= 9) {
-        action->setText(QString("&%1: %2").arg(index).arg(title));
-        QKeySequence ks(LiteApi::UseMacShortcuts?QString("CTRL+%1").arg(index):QString("ALT+%1").arg(index));
-        action->setShortcut(ks);
-        action->setToolTip(tr("\"%1\" Tool Window (%2)").arg(title).arg(ks.toString()));
+        action->setText(QString("%1: %2").arg(index).arg(title));
+        QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Alt+%1").arg(index));
+        LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
+        actionContext->regAction(action,"ToolWindow_"+id,ks);
     }
     m_actStateMap.insert(action,state);
 
