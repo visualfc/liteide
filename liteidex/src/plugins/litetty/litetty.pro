@@ -1,9 +1,9 @@
 TARGET = litetty
 TEMPLATE = lib
 
-win32 {
+
     QT += network
-}
+
 
 include(../../liteideplugin.pri)
 include(../../api/litettyapi/litettyapi.pri)
@@ -21,6 +21,8 @@ win32 {
     SOURCES += sockettty.cpp
     HEADERS += sockettty.h
 } else {
+    SOURCES += sockettty.cpp
+    HEADERS += sockettty.h
     SOURCES += fifotty.cpp
     HEADERS += fifotty.h
 }

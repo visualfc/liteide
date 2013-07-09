@@ -27,6 +27,7 @@
 #include <QSocketNotifier>
 #include <QTemporaryFile>
 #include <QVarLengthArray>
+#include <QDebug>
 
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -38,6 +39,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <pty.h>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -74,6 +76,8 @@ bool FiFoTty::listen()
 {
     if (!m_serverPath.isEmpty())
         return true;
+    if (!m_serverPath.isEmpty())
+        return true;
     QByteArray codedServerPath;
     forever {
         {
@@ -96,7 +100,7 @@ bool FiFoTty::listen()
             return false;
         }
     }
-    if ((m_serverFd = ::open(codedServerPath.constData(), O_RDONLY|O_NONBLOCK)) < 0) {
+    if ((m_serverFd = ::open(codedServerPath.constData(), O_RDWR|O_NONBLOCK)) < 0) {
         m_errorString = tr("Cannot open FiFo %1: %2").
                         arg(m_serverPath, QString::fromLocal8Bit(strerror(errno)));
         m_serverPath.clear();
@@ -123,13 +127,15 @@ void FiFoTty::write(const QByteArray &data)
 }
 
 void FiFoTty::bytesAvailable()
-{
+{  
     size_t nbytes = 0;
     if (::ioctl(m_serverFd, FIONREAD, (char *) &nbytes) < 0)
         return;
-    QVarLengthArray<char, 8192> buff(nbytes);
+
+    QByteArray buff(nbytes,0);
     if (::read(m_serverFd, buff.data(), nbytes) != (int)nbytes)
         return;
+
     if (nbytes) // Skip EOF notifications
-        emit byteDelivery(QByteArray::fromRawData(buff.data(), nbytes));
+        emit byteDelivery(buff);
 }

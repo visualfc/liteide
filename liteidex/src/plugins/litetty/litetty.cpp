@@ -25,6 +25,7 @@
 #ifdef Q_OS_WIN
 #include "sockettty.h"
 #else
+#include "sockettty.h"
 #include "fifotty.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -47,7 +48,6 @@ LiteApi::ITty *LiteTty::createTty(QObject *parent) const
 #ifdef Q_OS_WIN
     return new SocketTty(parent);
 #else
-    //return new FiFoTty(parent);
-    return 0;
+    return new FiFoTty(parent);
 #endif
 }

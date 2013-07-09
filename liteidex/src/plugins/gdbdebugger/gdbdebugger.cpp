@@ -187,16 +187,20 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     }
 
     QStringList argsList;
-    argsList << "--interpreter mi";
 
     if (!m_tty) {
         m_tty = LiteApi::createTty(m_liteApp,this);
-        connect(m_tty,SIGNAL(byteDelivery(QByteArray)),this,SLOT(readTty(QByteArray)));
+        if (m_tty) {
+            connect(m_tty,SIGNAL(byteDelivery(QByteArray)),this,SLOT(readTty(QByteArray)));
+        }
     }
     if (m_tty && m_tty->listen()) {
-        argsList << "--tty "+m_tty->serverName();
+        argsList << "--tty="+m_tty->serverName();
+    } else if (m_tty) {
+        qDebug() << "error" << m_tty->errorString() << m_tty->serverName();
     }
     QStringList argsListInfo;
+    argsList << "--interpreter=mi";
     argsList << "--args "+program;
     argsListInfo << "--args "+program;
     if (!arguments.isEmpty()) {
@@ -229,7 +233,7 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     m_process->start(m_gdbFilePath + " " + argsList.join(" "));
 #endif
 
-    QString log = QString("%1 %2 [%3]").arg(m_gdbFilePath).arg(argsListInfo.join(" ")).arg(m_process->workingDirectory());
+    QString log = QString("%1 %2 [%3]").arg(m_gdbFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
     emit debugLog(LiteApi::DebugRuntimeLog,log);
 
     return true;
