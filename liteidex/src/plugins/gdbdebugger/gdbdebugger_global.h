@@ -32,4 +32,7 @@
 #  define GDBDEBUGERSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define OPTION_GDBDEBUGGER "option/gdbdebugger"
+#define GDBDEBUGGER_USETTY "gdbdebugger/usetty"
+
 #endif // GDBDEBUGGER_GLOBAL_H

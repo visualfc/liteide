@@ -11,7 +11,14 @@ DEFINES += GDBDEBUGER_LIBRARY
 
 SOURCES += gdbdebuggerplugin.cpp \
     gdbdebugger.cpp \
+    gdbdebuggeroptionfactory.cpp \
+    gdbdebuggeroption.cpp
 
 HEADERS += gdbdebuggerplugin.h\
         gdbdebugger_global.h \
     gdbdebugger.h \
+    gdbdebuggeroptionfactory.h \
+    gdbdebuggeroption.h
+
+FORMS += \
+    gdbdebuggeroption.ui

@@ -23,6 +23,7 @@
 
 #include "gdbdebuggerplugin.h"
 #include "gdbdebugger.h"
+#include "gdbdebuggeroptionfactory.h"
 #include "litedebugapi/litedebugapi.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -47,7 +48,7 @@ bool GdbDebuggerPlugin::load(LiteApi::IApplication *app)
     GdbDebugger *debug = new GdbDebugger(app);
     manager->addDebugger(debug);
     manager->setCurrentDebugger(debug);
-
+    app->optionManager()->addFactory(new GdbDebuggerOptionFactory(app,this));
     return true;
 }
 

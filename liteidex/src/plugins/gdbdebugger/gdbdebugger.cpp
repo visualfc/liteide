@@ -24,6 +24,7 @@
 #include "gdbdebugger.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
+#include "gdbdebuggeroption.h"
 
 #include <QStandardItemModel>
 #include <QProcess>
@@ -187,17 +188,18 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     }
 
     QStringList argsList;
-
-    if (!m_tty) {
-        m_tty = LiteApi::createTty(m_liteApp,this);
-        if (m_tty) {
-            connect(m_tty,SIGNAL(byteDelivery(QByteArray)),this,SLOT(readTty(QByteArray)));
+    if (isGdbDebuggerUseTty(m_liteApp)) {
+        if (!m_tty) {
+            m_tty = LiteApi::createTty(m_liteApp,this);
+            if (m_tty) {
+                connect(m_tty,SIGNAL(byteDelivery(QByteArray)),this,SLOT(readTty(QByteArray)));
+            }
         }
-    }
-    if (m_tty && m_tty->listen()) {
-        argsList << "--tty="+m_tty->serverName();
-    } else if (m_tty) {
-        qDebug() << "error" << m_tty->errorString() << m_tty->serverName();
+        if (m_tty && m_tty->listen()) {
+            argsList << "--tty="+m_tty->serverName();
+        } else if (m_tty) {
+            qDebug() << "error" << m_tty->errorString() << m_tty->serverName();
+        }
     }
     QStringList argsListInfo;
     argsList << "--interpreter=mi";
