@@ -347,7 +347,7 @@ QAction *ToolMainWindow::addToolWindow(LiteApi::IApplication *app,Qt::DockWidget
         action->setText(QString("%1: %2").arg(index).arg(title));
         QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Alt+%1").arg(index));
         LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
-        actionContext->regAction(action,"ToolWindow_"+id,ks);
+        actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
     }
     m_actStateMap.insert(action,state);
 

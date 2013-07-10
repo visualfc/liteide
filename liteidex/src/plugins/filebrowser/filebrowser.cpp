@@ -99,8 +99,16 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     mainLayout->setSpacing(0);
 
     m_fileModel = new QFileSystemModel(this);
-    m_fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
-
+    m_fileModel->setResolveSymlinks(false);
+    //m_fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
+                            | QDir::Readable| QDir::Writable
+                            | QDir::Executable | QDir::Hidden
+                            | QDir::NoDotAndDotDot;
+#ifdef Q_OS_WIN // Symlinked directories can cause file watcher warnings on Win32.
+    filters |= QDir::NoSymLinks;
+#endif
+    m_fileModel->setFilter(filters);
     m_proxyModel = new QSortFileSystemProxyModel(this);
     m_proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     m_proxyModel->setDynamicSortFilter(true);
