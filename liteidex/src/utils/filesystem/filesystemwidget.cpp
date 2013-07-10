@@ -64,6 +64,16 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_tree = new SymbolTreeView;
     m_tree->setHeaderHidden(true);
     m_model = new FileSystemModel(this);
+
+    QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
+                            | QDir::Readable| QDir::Writable
+                            | QDir::Executable | QDir::Hidden
+                            | QDir::NoDotAndDotDot;
+#ifdef Q_OS_WIN // Symlinked directories can cause file watcher warnings on Win32.
+    filters |= QDir::NoSymLinks;
+#endif
+    m_model->setFilter(filters);
+
     m_tree->setContextMenuPolicy(Qt::CustomContextMenu);
     m_tree->setModel(m_model);
 
