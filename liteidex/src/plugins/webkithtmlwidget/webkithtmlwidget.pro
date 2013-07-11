@@ -12,8 +12,10 @@ QT += webkit
 DEFINES += WEBKITHTMLWIDGET_LIBRARY
 
 SOURCES += webkithtmlwidgetplugin.cpp \
-    webviewhtmlwidget.cpp
+    webviewhtmlwidget.cpp \
+    webkitbrowser.cpp
 
 HEADERS += webkithtmlwidgetplugin.h\
         webkithtmlwidget_global.h \
-    webviewhtmlwidget.h
+    webviewhtmlwidget.h \
+    webkitbrowser.h

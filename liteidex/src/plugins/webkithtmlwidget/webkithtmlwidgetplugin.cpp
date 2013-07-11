@@ -23,6 +23,7 @@
 
 #include "webkithtmlwidgetplugin.h"
 #include "webviewhtmlwidget.h"
+#include "webkitbrowser.h"
 #include <QtPlugin>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -43,6 +44,11 @@ bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
     LiteApi::IHtmlWidgetFactory *factory = new WebViewHtmlWidgetFactory(this);
     app->htmlWidgetManager()->addFactory(factory);
     app->htmlWidgetManager()->setDefaultClassName(factory->className());
+
+    WebkitBrowser *wb = new WebkitBrowser;
+    app->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
+                                            wb,"WebkitBrowser",tr("WebkitBrowser"),
+                                            false);
 
     return true;
 }

@@ -409,7 +409,7 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="112"/>
         <source>Close Left Tabs</source>
-        <translation>关闭左铡所有标签</translation>
+        <translation>关闭左侧所有标签</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="113"/>

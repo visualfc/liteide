@@ -41,15 +41,15 @@
 #endif
 //lite_memory_check_end
 
-class Separator : public QAction
-{
-public:
-    Separator(QObject *parent) :
-        QAction(parent)
-    {
-        setSeparator(true);
-    }
-};
+//class Separator : public QAction
+//{
+//public:
+//    Separator(QObject *parent) :
+//        QAction(parent)
+//    {
+//        setSeparator(true);
+//    }
+//};
 
 //static void updateToolTip(QToolBar *toolBar)
 //{
