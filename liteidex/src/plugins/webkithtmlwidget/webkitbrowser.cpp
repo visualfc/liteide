@@ -81,7 +81,7 @@ void WebkitBrowser::loadFinished(bool b)
     if (b) {
         m_locationEdit->setText(url);
     } else {
-        QString context = QString("load %1 false").arg(url);
+        QString context = QString("load %1 false!").arg(url);
     #if QT_VERSION >= 0x050000
         QString html = context.toHtmlEscaped();
     #else
