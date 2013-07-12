@@ -45,7 +45,7 @@ bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
     app->htmlWidgetManager()->addFactory(factory);
     app->htmlWidgetManager()->setDefaultClassName(factory->className());
 
-    WebkitBrowser *wb = new WebkitBrowser;
+    WebkitBrowser *wb = new WebkitBrowser(app);
     app->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                             wb,"WebkitBrowser",tr("WebkitBrowser"),
                                             false);
