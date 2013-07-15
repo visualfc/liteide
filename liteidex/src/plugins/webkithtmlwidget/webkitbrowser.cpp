@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QStatusBar>
+#include <QProgressBar>
 #include <QRegExp>
 #include <QDebug>
 
@@ -26,6 +27,8 @@ WebkitBrowser::WebkitBrowser(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_view, SIGNAL(linkClicked(QUrl)),this, SLOT(linkClicked(QUrl)));
     connect(m_view->page(), SIGNAL(linkHovered(QString,QString,QString)),this,SLOT(linkHovered(QString,QString,QString)));
     connect(m_view,SIGNAL(statusBarMessage(QString)),this,SLOT(statusBarMessage(QString)));
+    connect(m_view,SIGNAL(loadStarted()),this,SLOT(loadStarted()));
+    connect(m_view,SIGNAL(loadProgress(int)),this,SLOT(loadProgress(int)));
 
     QToolBar *toolBar = new QToolBar(tr("Navigation"));
     toolBar->setIconSize(QSize(16,16));
@@ -35,12 +38,17 @@ WebkitBrowser::WebkitBrowser(LiteApi::IApplication *app, QWidget *parent) :
     toolBar->addAction(m_view->pageAction(QWebPage::Stop));
     toolBar->addWidget(m_locationEdit);
 
+    m_progressBar = new QProgressBar;
+    m_progressBar->hide();
+    m_progressBar->setRange(0,100);
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
 
     layout->addWidget(toolBar);
     layout->addWidget(m_view);
+    layout->addWidget(m_progressBar);
 
     this->setLayout(layout);
 }
@@ -77,11 +85,12 @@ void WebkitBrowser::adjustLocation()
 
 void WebkitBrowser::loadFinished(bool b)
 {
+    m_progressBar->hide();
     QString url = m_view->url().toString();
     if (b) {
         m_locationEdit->setText(url);
     } else {
-        QString context = QString("load %1 false!").arg(url);
+        QString context = QString(tr("False load %1 !")).arg(url);
     #if QT_VERSION >= 0x050000
         QString html = context.toHtmlEscaped();
     #else
@@ -144,7 +153,7 @@ void WebkitBrowser::loadUrl(const QUrl &url)
     m_view->setFocus();
 }
 
-void WebkitBrowser::linkHovered(const QString & link, const QString & title, const QString & textContent)
+void WebkitBrowser::linkHovered(const QString & link, const QString & /*title*/, const QString & /*textContent*/)
 {
    m_liteApp->mainWindow()->statusBar()->showMessage(link);
 }
@@ -152,4 +161,14 @@ void WebkitBrowser::linkHovered(const QString & link, const QString & title, con
 void WebkitBrowser::statusBarMessage(const QString &msg)
 {
     m_liteApp->mainWindow()->statusBar()->showMessage(msg);
+}
+
+void WebkitBrowser::loadStarted()
+{
+    m_progressBar->show();
+}
+
+void WebkitBrowser::loadProgress(int value)
+{
+    m_progressBar->setValue(value);
 }
