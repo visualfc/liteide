@@ -40,6 +40,8 @@ AboutDialog::AboutDialog(LiteApi::IApplication *app,QWidget *parent) :
 {
     ui->setupUi(this);
     ui->verLabel->setText(app->ideVersion());
+    ui->qtVerLabel->setText(QString("Based on Qt %1 (%2 bit)").arg(QLatin1String(qVersion())).
+                            arg(QString::number(QSysInfo::WordSize)));
 }
 
 AboutDialog::~AboutDialog()
