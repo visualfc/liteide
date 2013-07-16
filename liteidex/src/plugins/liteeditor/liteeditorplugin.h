@@ -47,7 +47,7 @@ public:
         m_info->setId("plugin/liteeditor");
         m_info->setName("LiteEditor");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x18.1");
+        m_info->setVer("x19");
         m_info->setInfo("Core Editor");
         m_info->appendDepend("plugin/litebuild");
         m_info->setMustLoad(true);
