@@ -12,7 +12,7 @@
 #include <QRegExp>
 #include <QDebug>
 
-WebkitBrowser::WebkitBrowser(LiteApi::IApplication *app, QWidget *parent) :
+WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QWidget *parent) :
     QWidget(parent), m_liteApp(app)
 {        
     QNetworkProxyFactory::setUseSystemConfiguration(true);
@@ -64,7 +64,7 @@ static QByteArray html_data =
 "</body>"
 "</html>";
 
-void WebkitBrowser::changeLocation()
+void WebKitBrowser::changeLocation()
 {
     QString text = m_locationEdit->text();
     if (text.isEmpty()) {
@@ -78,12 +78,12 @@ void WebkitBrowser::changeLocation()
     loadUrl(text);
 }
 
-void WebkitBrowser::adjustLocation()
+void WebKitBrowser::adjustLocation()
 {
     m_locationEdit->setText(m_view->url().toString());
 }
 
-void WebkitBrowser::loadFinished(bool b)
+void WebKitBrowser::loadFinished(bool b)
 {
     m_progressBar->hide();
     QString url = m_view->url().toString();
@@ -103,12 +103,12 @@ void WebkitBrowser::loadFinished(bool b)
     }
 }
 
-void WebkitBrowser::linkClicked(QUrl url)
+void WebKitBrowser::linkClicked(QUrl url)
 {
     this->loadUrl(url);
 }
 
-void WebkitBrowser::loadUrl(const QUrl &url)
+void WebKitBrowser::loadUrl(const QUrl &url)
 {
     m_liteApp->mainWindow()->statusBar()->clearMessage();
     if (url.scheme() == "http" || url.scheme() == "https") {
@@ -153,22 +153,22 @@ void WebkitBrowser::loadUrl(const QUrl &url)
     m_view->setFocus();
 }
 
-void WebkitBrowser::linkHovered(const QString & link, const QString & /*title*/, const QString & /*textContent*/)
+void WebKitBrowser::linkHovered(const QString & link, const QString & /*title*/, const QString & /*textContent*/)
 {
    m_liteApp->mainWindow()->statusBar()->showMessage(link);
 }
 
-void WebkitBrowser::statusBarMessage(const QString &msg)
+void WebKitBrowser::statusBarMessage(const QString &msg)
 {
     m_liteApp->mainWindow()->statusBar()->showMessage(msg);
 }
 
-void WebkitBrowser::loadStarted()
+void WebKitBrowser::loadStarted()
 {
     m_progressBar->show();
 }
 
-void WebkitBrowser::loadProgress(int value)
+void WebKitBrowser::loadProgress(int value)
 {
     m_progressBar->setValue(value);
 }
