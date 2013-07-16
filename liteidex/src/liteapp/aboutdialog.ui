@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>577</width>
-    <height>441</height>
+    <height>427</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -165,8 +165,7 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Welcome to LiteIDE X!
-LiteIDE is a simple, open source, cross-platform IDE.</string>
+             <string>Welcome to LiteIDE X! LiteIDE is a simple, open source, cross-platform IDE.</string>
             </property>
            </widget>
           </item>
@@ -193,20 +192,6 @@ LiteIDE is a simple, open source, cross-platform IDE.</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Author:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string notr="true">visualfc &lt;visualfc@gmail.com&gt;</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_15">
             <property name="text">
@@ -221,14 +206,14 @@ LiteIDE is a simple, open source, cross-platform IDE.</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_17">
             <property name="text">
              <string>Website:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QLabel" name="label_18">
             <property name="text">
              <string notr="true">https://github.com/visualfc/liteide</string>
@@ -246,6 +231,20 @@ LiteIDE is a simple, open source, cross-platform IDE.</string>
            <widget class="QLabel" name="qtVerLabel">
             <property name="text">
              <string>Based on Qt</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Author:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string notr="true">visualfc &lt;visualfc@gmail.com&gt;</string>
             </property>
            </widget>
           </item>

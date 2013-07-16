@@ -9,11 +9,11 @@ class QWebView;
 class QToolBar;
 class QLineEdit;
 class QProgressBar;
-class WebkitBrowser : public QWidget
+class WebKitBrowser : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WebkitBrowser(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit WebKitBrowser(LiteApi::IApplication *app, QWidget *parent = 0);
 public slots:
     void changeLocation();
     void adjustLocation();

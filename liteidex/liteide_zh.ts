@@ -22,104 +22,104 @@
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="168"/>
-        <source>Welcome to LiteIDE X!
-LiteIDE is a simple, open source, cross-platform IDE.</source>
-        <translation>欢迎使用 LiteIDE X!
-LiteIDE是一个简单的，开源的，多平台的IDE.</translation>
+        <source>Welcome to LiteIDE X! LiteIDE is a simple, open source, cross-platform IDE.</source>
+        <oldsource>Welcome to LiteIDE X!
+LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
+        <translation>欢迎使用 LiteIDE X! LiteIDE是一个轻量级的开源跨平台IDE.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="179"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="178"/>
         <source>Project:</source>
         <translation>项目:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="185"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="184"/>
         <source>Name:</source>
         <translation>名称:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="199"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="240"/>
         <source>Author:</source>
         <translation>作者:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="213"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="198"/>
         <source>Version:</source>
         <translation>版本:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="227"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="212"/>
         <source>Website:</source>
         <translation>网址:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="241"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="226"/>
         <source>Build:</source>
         <translation>编译:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="248"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="233"/>
         <source>Based on Qt</source>
         <oldsource>Based on Qt Version</oldsource>
         <translation>基于 Qt</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="258"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="257"/>
         <source>Markdown:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="288"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="287"/>
         <source>Developers</source>
         <translation>开发者</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="391"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="390"/>
         <source>Translations</source>
         <translation>翻译</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="403"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="402"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="417"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="416"/>
         <source>Japanese</source>
         <translation>日文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="431"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="430"/>
         <source>Russian</source>
         <translation>俄文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="445"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="444"/>
         <source>French</source>
         <translation>法文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="459"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="458"/>
         <source>Traditional Chinese</source>
         <translation>繁体中文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="473"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="472"/>
         <source>German</source>
         <translation>德文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="504"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="503"/>
         <source>Thanks to...</source>
         <translation>感谢...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="539"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="538"/>
         <source>License</source>
         <translation>许可协议</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="548"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="547"/>
         <source>Copyright (c) 2011-2013 LiteIDE team. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
@@ -137,7 +137,7 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="580"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="579"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -1454,87 +1454,87 @@ Success: %2.</oldsource>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="561"/>
+        <location filename="src/liteapp/liteapp.cpp" line="560"/>
         <source>New Instance</source>
         <translation>启动新实例</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="564"/>
+        <location filename="src/liteapp/liteapp.cpp" line="563"/>
         <source>Close File</source>
         <translation>关闭文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="567"/>
+        <location filename="src/liteapp/liteapp.cpp" line="566"/>
         <source>Close All Files</source>
         <translation>关闭所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="574"/>
+        <location filename="src/liteapp/liteapp.cpp" line="573"/>
         <source>Close Folders</source>
         <translation>关闭目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="577"/>
+        <location filename="src/liteapp/liteapp.cpp" line="576"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="580"/>
+        <location filename="src/liteapp/liteapp.cpp" line="579"/>
         <source>Save File As...</source>
         <translation>文件另存为...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="583"/>
+        <location filename="src/liteapp/liteapp.cpp" line="582"/>
         <source>Save All Files</source>
         <translation>保存所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="570"/>
+        <location filename="src/liteapp/liteapp.cpp" line="569"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="549"/>
+        <location filename="src/liteapp/liteapp.cpp" line="548"/>
         <source>New...</source>
         <translation>新建...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="552"/>
+        <location filename="src/liteapp/liteapp.cpp" line="551"/>
         <source>Open File...</source>
         <translation>打开文件...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="555"/>
+        <location filename="src/liteapp/liteapp.cpp" line="554"/>
         <source>Open Folder...</source>
         <translation>打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="558"/>
+        <location filename="src/liteapp/liteapp.cpp" line="557"/>
         <source>Open Folder in New Instance...</source>
         <translation>打开目录(启动新实例)...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="572"/>
+        <location filename="src/liteapp/liteapp.cpp" line="571"/>
         <source>Save Project</source>
         <translation>保存项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="586"/>
+        <location filename="src/liteapp/liteapp.cpp" line="585"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="589"/>
+        <location filename="src/liteapp/liteapp.cpp" line="588"/>
         <source>Full Screen</source>
         <translation>全屏显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="593"/>
+        <location filename="src/liteapp/liteapp.cpp" line="592"/>
         <source>About LiteIDE</source>
         <translation>关于 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="596"/>
+        <location filename="src/liteapp/liteapp.cpp" line="595"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>

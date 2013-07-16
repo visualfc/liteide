@@ -464,9 +464,8 @@ QString LiteApp::ideCopyright() const
     "2011-2013(c)\n"
     "visualfc@gmail.com\n"
     "\n"
-    "https://code.google.com/p/liteide\n"
-    "https://code.google.com/p/golangide\n"
-    "https://github.com/visualfc/liteide";
+    "https://github.com/visualfc/liteide\n"
+    "https://code.google.com/p/golangide";
     return s_info;
 }
 
