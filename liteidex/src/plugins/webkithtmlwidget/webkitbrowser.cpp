@@ -10,6 +10,7 @@
 #include <QStatusBar>
 #include <QProgressBar>
 #include <QRegExp>
+#include <QTextCodec>
 #include <QDebug>
 
 WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QWidget *parent) :
