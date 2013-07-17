@@ -39,7 +39,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
-#include <pty.h>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
