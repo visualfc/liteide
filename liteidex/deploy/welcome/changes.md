@@ -3,22 +3,24 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2013.7.16 Ver x19
+### 2013.7.17 Ver x19
 * LiteIDE
 	* MacOS X 10.8 Retina support
 	* add simple webkit browser
 	* update macosx tool window short key to Ctrl+Alt+1~9
+* LiteDebug	
+	* add debug go test support, thanks for GoEddie <https://github.com/GoEddie>
 * GdbDebugger	
 	* gdb debugger --tty mode support (windows default)
-	* add debug go test support, thanks for GoEddie <https://github.com/GoEddie>
-* Markdown
-	* markdown preview fast sync	
+	* debugger command input foucus
 * LiteEditor		
 	* add wheel zooming option 
 	* fix editor extra width
 	* fix init editor update
 * LiteFind	
 	* fix find hide
+* Markdown
+	* markdown preview fast sync	
 
 ### 2013.5.21 Ver x18.2
 * fast for gocode
