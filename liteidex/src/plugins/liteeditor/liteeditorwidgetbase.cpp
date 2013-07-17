@@ -1122,7 +1122,8 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         return;
     }
     bool ro = isReadOnly();
-    if (m_bLastBraces == true && e->key() == m_lastBraces) {
+    QString keyText = e->text();
+    if (m_bLastBraces == true && keyText == m_lastBraces) {
         QTextCursor cursor = textCursor();
         cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
         setTextCursor(cursor);
@@ -1130,30 +1131,20 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    m_lastBraces = false;
-    QChar mr;
+    m_bLastBraces = false;
+    QString mr;
     QString mrList = " ";
-    switch (e->key()) {
-        case '{':
-            if (m_autoBraces0)
-                mr = '}';
-            break;
-        case '(':
-            if (m_autoBraces1)
-                mr = ')';
-            break;
-        case '[':
-            if (m_autoBraces2)
-                mr = ']';
-            break;
-        case '\'':
-            if (m_autoBraces3)
-                mr = '\'';
-            break;
-        case '\"':
-            if (m_autoBraces4)
-                mr = '\"', mrList += "()[]{}";
-            break;
+    if (m_autoBraces0 && keyText == "{") {
+        mr = "}";
+    } else if (m_autoBraces1 && keyText == "(") {
+        mr = ")";
+    } else if (m_autoBraces2 && keyText == "[") {
+        mr = "]";
+    } else if (m_autoBraces3 && keyText == "\'") {
+        mr = "\'";
+    } else if (m_autoBraces4 && keyText == "\"") {
+        mr = "\"";
+        mrList += "()[]{}";
     }
     if (!mr.isNull()) {
         QPlainTextEdit::keyPressEvent(e);

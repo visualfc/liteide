@@ -217,7 +217,7 @@ protected:
     bool m_bLastBraces;
     bool m_bTabUseSpace;
     int  m_nTabSize;
-    QChar m_lastBraces;
+    QString m_lastBraces;
     int m_lastSaveRevision;
     int m_extraAreaSelectionNumber;
     bool m_mouseOnFoldedMarker;
