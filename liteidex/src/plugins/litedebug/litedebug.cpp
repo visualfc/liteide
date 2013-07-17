@@ -143,6 +143,8 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 //    m_toolBar->addAction(m_startDebugAct);
 //    m_toolBar->addAction(m_insertBreakAct);
 
+    m_bLastDebugCmdInput = false;
+
     widgetToolBar->addAction(m_continueAct);
     widgetToolBar->addAction(m_stopDebugAct);
     widgetToolBar->addSeparator();
@@ -188,6 +190,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterAppInputText(QString)));
+    connect(m_dbgWidget,SIGNAL(debugCmdInput()),this,SLOT(debugCmdInput()));
 
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(
                 Qt::BottomDockWidgetArea,m_output,"debugoutput",tr("Debug Output"),false,
@@ -711,6 +714,15 @@ void LiteDebug::setCurrentLine(const QString &fileName, int line)
             }
         }
     }
+    if (m_bLastDebugCmdInput) {
+        m_bLastDebugCmdInput = false;
+        m_dbgWidget->setInputFocus();
+    }
+}
+
+void LiteDebug::debugCmdInput()
+{
+    m_bLastDebugCmdInput = true;
 }
 
 void LiteDebug::enterAppInputText(QString text)

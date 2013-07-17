@@ -40,7 +40,10 @@ public:
     explicit DebugWidget(LiteApi::IApplication *app,QObject *parent = 0);
     virtual ~DebugWidget();
     virtual QWidget *widget();
+signals:
+    void debugCmdInput();
 public slots:
+    void setInputFocus();
     void loadDebugInfo(const QString &id);
     void saveDebugInfo(const QString &id);
     void addWatch();
