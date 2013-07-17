@@ -48,6 +48,8 @@ public:
     QString startPath() const;
     void clear();
 public slots:
+    void showHideFiles(bool b);
+    bool isShowHideFiles() const;
     void directoryChanged(QString);
     void pathIndexChanged(const QModelIndex & index);
     void openPathIndex(const QModelIndex &index);

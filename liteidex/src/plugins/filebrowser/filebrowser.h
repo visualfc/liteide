@@ -48,6 +48,8 @@ public:
 signals:
 
 public slots:
+    void showHideFiles(bool b);
+    bool isShowHideFiles() const;
     void visibilityChanged(bool);
     void doubleClickedTreeView(QModelIndex);
     void activatedFilter(QString);

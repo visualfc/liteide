@@ -103,7 +103,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     //m_fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable
-                            | QDir::Executable | QDir::Hidden
+                            | QDir::Executable /*| QDir::Hidden*/
                             | QDir::NoDotAndDotDot;
 #ifdef Q_OS_WIN // Symlinked directories can cause file watcher warnings on Win32.
     filters |= QDir::NoSymLinks;
@@ -583,6 +583,25 @@ QStringList FileBrowser::getShellArgs(LiteApi::IApplication *app)
     defArgs << "-a" << "Terminal";
 #endif
     return app->settings()->value("filebrowser/shell_args",defArgs).toStringList();
+}
+
+void FileBrowser::showHideFiles(bool b)
+{
+    if (isShowHideFiles() == b) {
+        return;
+    }
+    QDir::Filters filters = m_fileModel->filter();
+    if (b) {
+        filters |= QDir::Hidden;
+    } else {
+        filters ^= QDir::Hidden;
+    }
+    m_fileModel->setFilter(filters);
+}
+
+bool FileBrowser::isShowHideFiles() const
+{
+    return m_fileModel->filter() & QDir::Hidden;
 }
 
 QFileInfo FileBrowser::contextFileInfo() const
