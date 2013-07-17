@@ -23,4 +23,4 @@ SUBDIRS = \
     golangpackage \
     gdbdebugger \
     markdown \
-#    webkithtmlwidget \
+    webkithtmlwidget \
