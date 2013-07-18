@@ -78,19 +78,16 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     m_printPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview"),this);
     m_printPreviewAct->setVisible(false);
 
-    m_configAct = new QAction(QIcon("icon:markdown/images/config.png"),tr("Configuration"),this);
-
-
     m_syncScrollAct = new QAction(tr("Synchronize preview and code scrollbars"),this);
     m_syncScrollAct->setCheckable(true);
 
     m_syncSwitchAct = new QAction(tr("Automatically display preview"),this);
     m_syncSwitchAct->setCheckable(true);
 
-    m_configMenu = new QMenu(m_widget);
+    m_configMenu = new QMenu(tr("Config"),m_widget);
+    m_configMenu->setIcon(QIcon("icon:markdown/images/config.png"));
     m_configMenu->addAction(m_syncSwitchAct);
     m_configMenu->addAction(m_syncScrollAct);
-    m_configAct->setMenu(m_configMenu);
 
     QList<QAction*> actions;
     actions << m_configMenu->menuAction() << m_reloadAct << m_exportHtmlAct << m_exportPdfAct << m_printPreviewAct << m_cssMenu->menuAction();

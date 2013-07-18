@@ -65,7 +65,6 @@ protected:
     QAction     *m_exportHtmlAct;
     QAction     *m_exportPdfAct;
     QAction     *m_printPreviewAct;
-    QAction     *m_configAct;
     QAction     *m_syncScrollAct;
     QAction     *m_syncSwitchAct;
     QMenu       *m_cssMenu;
