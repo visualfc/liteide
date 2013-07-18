@@ -212,6 +212,13 @@ void ToolDockWidget::setWidgetActions(QList<QAction*> actions)
     m_spacerAct->setVisible(!m_widgetActions.isEmpty());
     foreach(QAction *action, m_widgetActions) {
         m_toolBar->insertAction(m_spacerAct,action);
+        if (action->menu() != 0) {
+            QWidget *w = m_toolBar->widgetForAction(action);
+            QToolButton *btn = qobject_cast<QToolButton*>(w);
+            if (btn) {
+                btn->setPopupMode(QToolButton::InstantPopup);
+            }
+        }
     }
 }
 
