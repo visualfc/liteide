@@ -89,6 +89,8 @@ protected:
     QToolBar    *m_filterToolBar;
     QToolBar    *m_rootToolBar;
     QAction *m_syncAct;
+    QAction *m_showHideFilesAct;
+    QMenu   *m_configMenu;
 protected:
     QModelIndex m_contextIndex;
     QAction *m_toolWindowAct;
