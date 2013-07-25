@@ -769,7 +769,7 @@ void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
 {
     if (!editor) {
         m_buildMenu->menuAction()->setMenu(m_nullMenu);
-        m_buildMenu->menuAction()->setEnabled(false);
+        m_buildMenu->setEnabled(false);
         setCurrentBuild(0);
         return;
     }
