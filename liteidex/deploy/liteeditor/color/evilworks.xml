@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="evilworks">
+  <!-- 
+    Style by evilworks, 2012-2013. pollux@lavabit.com
+    This file is Public Domain.
+  -->
+  <style name="Alert" foreground="#FF0000"/>
+  <style name="BaseN" foreground="#FFAA00"/>
+  <style name="BuiltinFunc" foreground="#80FFFF"/>
+  <style name="Char" foreground="#EAFF00"/>
+  <style name="Comment" foreground="#00FF00"/>
+  <style name="CurrentLine" background="#333333"/>
+  <style name="DataType" foreground="#FF00FF" bold="true"/> 
+  <style name="Decimal" foreground="#FFAA00"/>
+  <style name="Error" foreground="#FF0000" bold="true"/>
+  <style name="Extra" foreground="#FFFFFF" background="#222222"/>
+  <style name="Float" foreground="#FFAA00"/>
+  <style name="FuncDecl" foreground="#FFFFFF"/>
+  <style name="Function" foreground="#80FFFF"/>
+  <style name="InactiveSelection" foreground="#808000" background="#602020"/>
+  <style name="IndentLine" foreground="#64B1FF"/>
+  <style name="Keyword" foreground="#64B1FF" bold="true"/>
+  <style name="Number" foreground="#64B1FF"/>
+  <style name="Placeholder" foreground="#EAFF00"/>
+  <style name="Predeclared" foreground="#FF00FF" bold="true"/>
+  <style name="RegionMarker" foreground="#FF0000"/>
+  <style name="Selection" foreground="#FFFF00" background="#800000"/>
+  <style name="String" foreground="#EAFF00"/>
+  <style name="Symbol" foreground="#FF0000" bold="true"/>
+  <style name="Text" foreground="#FFFFFF" background="#000000"/>
+  <style name="ToDo" foreground="#000000" background="#00FF00" bold="true" italic="true"/>
+  <style name="VisualWhitespace" foreground="#FFFFFF" background="#0000000"/>
+</style-scheme>
