@@ -177,37 +177,45 @@ void LiteEditorWidgetBase::editContentsChanged(int, int, int)
     m_contentsChanged = true;
 }
 
-static bool findMatchBrace(QTextCursor &cur, TextEditor::TextBlockUserData::MatchType &type,int &pos1, int &pos2)
+struct MatchBracePos {
+    int startPos;
+    int matchPos;
+    bool startIsLeft;
+    bool startIsOpen;
+    TextEditor::TextBlockUserData::MatchType matchType;
+};
+
+static bool findMatchBrace(QTextCursor &cur, MatchBracePos &mb)
 {
     QTextBlock block = cur.block();
     int pos = cur.positionInBlock();
-    pos1 = -1;
-    pos2 = -1;
+    mb.startPos = -1;
+    mb.matchPos = -1;
     if (block.isValid()) {
         TextEditor::TextBlockUserData *data = static_cast<TextEditor::TextBlockUserData*>(block.userData());
         if (data) {
             TextEditor::Parentheses ses = data->parentheses();
-            TextEditor::Parenthesis::Type typ = TextEditor::Parenthesis::Opened;
             QChar chr;
             int i = ses.size();
             while(i--) {
                 TextEditor::Parenthesis s = ses.at(i);
                 if (s.pos == pos || s.pos+1 == pos) {
-                    pos1 = cur.block().position()+s.pos;
-                    typ = s.type;
+                    mb.startPos = cur.block().position()+s.pos;
+                    mb.startIsLeft = (s.pos == pos);
+                    mb.startIsOpen = (s.type == TextEditor::Parenthesis::Opened);
                     chr = s.chr;
                     break;
                 }
             }
-            if (pos1 != -1) {
-                if (typ == TextEditor::Parenthesis::Opened) {
-                    cur.setPosition(pos1);
-                    type = TextEditor::TextBlockUserData::checkOpenParenthesis(&cur,chr);
-                    pos2 = cur.position()-1;
+            if (mb.startPos != -1) {
+                if (mb.startIsOpen) {
+                    cur.setPosition(mb.startPos);
+                    mb.matchType = TextEditor::TextBlockUserData::checkOpenParenthesis(&cur,chr);
+                    mb.matchPos = cur.position()-1;
                 } else {
-                    cur.setPosition(pos1+1);
-                    type = TextEditor::TextBlockUserData::checkClosedParenthesis(&cur,chr);
-                    pos2 = cur.position();
+                    cur.setPosition(mb.startPos+1);
+                    mb.matchType = TextEditor::TextBlockUserData::checkClosedParenthesis(&cur,chr);
+                    mb.matchPos = cur.position();
                 }
                 return true;
             }
@@ -219,11 +227,13 @@ static bool findMatchBrace(QTextCursor &cur, TextEditor::TextBlockUserData::Matc
 void LiteEditorWidgetBase::gotoMatchBrace()
 {
     QTextCursor cur = this->textCursor();
-    TextEditor::TextBlockUserData::MatchType type;
-    int pos1 = -1;
-    int pos2 = -1;
-    if (findMatchBrace(cur,type,pos1,pos2) && type == TextEditor::TextBlockUserData::Match) {
-        cur.setPosition(pos2);
+    MatchBracePos mb;
+    if (findMatchBrace(cur,mb) && mb.matchType == TextEditor::TextBlockUserData::Match) {
+        if (mb.startIsLeft) {
+            cur.setPosition(mb.matchPos+1);
+        } else {
+            cur.setPosition(mb.matchPos);
+        }
         this->setTextCursor(cur);
         if (!cur.block().isVisible()) {
             unfold();
@@ -249,28 +259,26 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         extraSelections.append(full);
     }
 
-    TextEditor::TextBlockUserData::MatchType type;
-    int pos1 = -1;
-    int pos2 = -1;
-    if (findMatchBrace(cur,type,pos1,pos2)) {
-        if (type == TextEditor::TextBlockUserData::Match) {
+    MatchBracePos mb;
+    if (findMatchBrace(cur,mb)) {
+        if (mb.matchType == TextEditor::TextBlockUserData::Match) {
             QTextEdit::ExtraSelection selection;
-            cur.setPosition(pos1);
+            cur.setPosition(mb.startPos);
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
             selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
 
-            cur.setPosition(pos2);
+            cur.setPosition(mb.matchPos);
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
             selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
-        } else if (type == TextEditor::TextBlockUserData::Mismatch) {
+        } else if (mb.matchType == TextEditor::TextBlockUserData::Mismatch) {
             QTextEdit::ExtraSelection selection;
-            cur.setPosition(pos1);
+            cur.setPosition(mb.startPos);
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
