@@ -22,5 +22,16 @@
 		<action id="Fmt" menu="Test" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)"/>
 		<action id="Vet" menu="Test" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)"/>
 		<target id="Target" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" work="$(EDITOR_DIR)"/>
+		
+		<config id="Godep" name="GODEP" value="godep"/>
+		<action id="Build Godep" img="blue/get.png" key="Ctrl+Shift+B;Shift+F7" cmd="$(GODEP)" args="go build $(BUILDARGS)" save="all" output="true" codec="" regex="$(ERRREGEX)"/>
+		<action id="Install Godep" menu="Build Godep" img="blue/install.png" key="Ctrl+Shift+F8" cmd="$(GODEP)" args="go install $(INSTALLARGS)" save="all" output="true"/>
+		<action id="BuildTests Godep" menu="Build Godep" img="blue/buildtest.png" cmd="$(GODEP)" args="go test -c -gcflags &quot;-N -l&quot;" save="all" output="true" codec="" regex="$(ERRREGEX)"/>
+		<action id="Clean Godep" menu="Build Godep" img="blue/clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
+		<action id="CleanAll Godep" menu="Build Godep" img="blue/cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
+		<action id="BuildRun Godep" menu="Build Godep" img="blue/buildrun.png" key="Ctrl+Shift+R;Ctrl+Shift+F7" task="Build Godep;Run Godep" killold="true"/>
+		<action id="Run Godep" menu="Build Godep" img="blue/run.png" key="Ctrl+Shift+F5" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
+		
+		<action id="Run Revel" img="blue/run.png" cmd="revel" args="run $(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
 	</mime-type>
 </mime-info>
