@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Default">
+  <!--
+  Based on the visual studio 2012
+  Improvements are welcome
+  Public Domain, William Kennedy, 2013
+  -->
+  <style name="Text" foreground="#000000" background="#f2f2f2"/>
+  <style name="Extra" foreground="#008B8B" background=""/>
+  <style name="Selection" background="#ADD6FF"/>
+  <style name="CurrentLine" background="#B4C8C8"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#f57900"/>
+  <style name="Keyword" foreground="#0000ff" bold="false"/>
+  <style name="DataType" foreground="#2aa2d4" /> 
+  <style name="Decimal" foreground="#000000"/>
+  <style name="BaseN" foreground="#000000"/>
+  <style name="Float" foreground="#000000"/>
+  <style name="Char" foreground="#a5120b"/>
+  <style name="String" foreground="#a5120b"/>
+  <style name="Comment" foreground="#008000"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#f57900"/>
+  <style name="RegionMarker" foreground="#000000"/>
+  <style name="Symbol" foreground="#000000"/> 
+  <style name="BuiltinFunc" foreground="#3085c6"/>
+  <style name="Predeclared" foreground="#3085c6"/>
+  <style name="FuncDecl" foreground="#000000"/>
+  <style name="Placeholder" foreground="#a5120b"/>
+  <style name="ToDo" foreground="#006000" background="#e0e0e0" bold="true"/>
+</style-scheme>
