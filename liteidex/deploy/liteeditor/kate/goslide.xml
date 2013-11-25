@@ -62,7 +62,7 @@
 				<!--RegExpr attribute="strong" String="&strongregex;" /-->
 				<!--RegExpr attribute="emphasis" String="&emphasisregex;" /-->
 				<!--RegExpr attribute="strongemphasis" String="&strongemphasisregex;" /-->
-				<RegExpr attribute="code" String="^([\s]{4,}|\t+).*$" />
+				<RegExpr attribute="code" String="^([\s]{2,}|\t+).*$" />
 				<RegExpr context="bullet" String="^\-\s.*$" />
 				<RegExpr attribute="meta" String="^\.(code|play|image|iframe|link|html)\s+(.*)+$" />
 				<IncludeRules context="inc" />
