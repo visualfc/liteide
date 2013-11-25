@@ -23,9 +23,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="cmdLineEdit"/>
-     </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="cmbPushButton">
        <property name="text">
@@ -59,6 +56,9 @@
         <string>Browse...</string>
        </property>
       </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="cmdLineEdit"/>
      </item>
     </layout>
    </item>

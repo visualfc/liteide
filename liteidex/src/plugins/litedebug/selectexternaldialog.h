@@ -25,6 +25,7 @@
 #define SELECTEXTERNALDIALOG_H
 
 #include <QDialog>
+#include "liteapi/liteapi.h"
 
 namespace Ui {
 class SelectExternalDialog;
@@ -35,15 +36,18 @@ class SelectExternalDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit SelectExternalDialog(QWidget *parent = 0);
+    explicit SelectExternalDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     ~SelectExternalDialog();
     QString getCmd() const;
     QString getArgs() const;
     QString getWork() const;
+    void loadSetting();
+    void saveSetting();
 private slots:
     void on_cmbPushButton_clicked();
     void on_workPushButton_clicked();
 private:
+    LiteApi::IApplication *m_liteApp;
     Ui::SelectExternalDialog *ui;
 };
 

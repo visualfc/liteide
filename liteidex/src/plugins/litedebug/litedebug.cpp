@@ -298,11 +298,13 @@ void LiteDebug::currentEditorChanged(IEditor *editor)
 
 void LiteDebug::startDebugExternal()
 {
-    SelectExternalDialog dlg;
+    SelectExternalDialog dlg(m_liteApp);
+    dlg.loadSetting();
     if (dlg.exec() == QDialog::Accepted) {
         QString cmd = dlg.getCmd();
         QString args = dlg.getArgs();
         QString work = dlg.getWork();
+        dlg.saveSetting();
         this->startDebug(cmd,args,work);
     }
 }
