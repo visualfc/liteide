@@ -42,7 +42,7 @@
 
 <language name="Go-Slide" version="1.0" section="Markup"
 		extensions="*.slide;" 
-		mimetype="text/x-slide"
+		mimetype="text/x-goslide"
 		priority="15"
 		author="Darrin Yeager, Claes Holmerson, visualfc"
 		license="GPL,BSD" >
