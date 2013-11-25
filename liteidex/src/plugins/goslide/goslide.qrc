@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/goslide">
+        <file>images/bold.png</file>
+        <file>images/code.png</file>
+        <file>images/image.png</file>
+        <file>images/italic.png</file>
+        <file>images/link.png</file>
+        <file>images/quote.png</file>
+        <file>images/config.png</file>
+        <file>images/ul.png</file>
+        <file>images/s1.png</file>
+        <file>images/s2.png</file>
+        <file>images/s3.png</file>
+    </qresource>
+</RCC>

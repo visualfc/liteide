@@ -18,28 +18,18 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: gdbdebuggeroptionfactory.cpp
+// Module: goslide_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "gdbdebuggeroption.h"
-#include "gdbdebuggeroptionfactory.h"
-#include "gdbdebugger_global.h"
+#ifndef GOSLIDE_GLOBAL_H
+#define GOSLIDE_GLOBAL_H
 
-GdbDebuggerOptionFactory::GdbDebuggerOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
-      m_liteApp(app)
-{
-}
+#include <QtCore/qglobal.h>
 
-QStringList GdbDebuggerOptionFactory::mimeTypes() const
-{
-    return QStringList() << OPTION_GDBDEBUGGER;
-}
+#if defined(GOSLIDE_LIBRARY)
+#  define GOSLIDESHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define GOSLIDESHARED_EXPORT Q_DECL_IMPORT
+#endif
 
-LiteApi::IOption *GdbDebuggerOptionFactory::create(const QString &mimeType)
-{
-    if (mimeType == OPTION_GDBDEBUGGER) {
-        return new GdbDebuggerOption(m_liteApp,this);
-    }
-    return 0;
-}
+#endif // GOSLIDE_GLOBAL_H

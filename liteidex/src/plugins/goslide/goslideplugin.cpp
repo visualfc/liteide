@@ -18,28 +18,32 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: gdbdebuggeroptionfactory.cpp
+// Module: goslideplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "gdbdebuggeroption.h"
-#include "gdbdebuggeroptionfactory.h"
-#include "gdbdebugger_global.h"
+#include "goslideplugin.h"
+#include "goslideedit.h"
+#include <QtPlugin>
 
-GdbDebuggerOptionFactory::GdbDebuggerOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
-      m_liteApp(app)
+GoSlidePlugin::GoSlidePlugin()
 {
 }
 
-QStringList GdbDebuggerOptionFactory::mimeTypes() const
+bool GoSlidePlugin::load(LiteApi::IApplication *app)
 {
-    return QStringList() << OPTION_GDBDEBUGGER;
+    m_liteApp = app;
+    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+    return true;
 }
 
-LiteApi::IOption *GdbDebuggerOptionFactory::create(const QString &mimeType)
+void GoSlidePlugin::editorCreated(LiteApi::IEditor *editor)
 {
-    if (mimeType == OPTION_GDBDEBUGGER) {
-        return new GdbDebuggerOption(m_liteApp,this);
+    if (!editor || editor->mimeType() != "text/x-goslide") {
+        return;
     }
-    return 0;
+    new GoSlideEdit(m_liteApp,editor,this);
 }
+
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
+#endif

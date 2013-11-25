@@ -18,28 +18,44 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: gdbdebuggeroptionfactory.cpp
+// Module: goslideplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "gdbdebuggeroption.h"
-#include "gdbdebuggeroptionfactory.h"
-#include "gdbdebugger_global.h"
+#ifndef GOSLIDEPLUGIN_H
+#define GOSLIDEPLUGIN_H
 
-GdbDebuggerOptionFactory::GdbDebuggerOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
-      m_liteApp(app)
-{
-}
+#include "goslide_global.h"
+#include "liteapi/liteapi.h"
 
-QStringList GdbDebuggerOptionFactory::mimeTypes() const
+class GoSlidePlugin : public LiteApi::IPlugin
 {
-    return QStringList() << OPTION_GDBDEBUGGER;
-}
+    Q_OBJECT
+public:
+    GoSlidePlugin();
+    virtual bool load(LiteApi::IApplication *app);
+protected slots:
+    void editorCreated(LiteApi::IEditor*);
+protected:
+    LiteApi::IApplication *m_liteApp;
+};
 
-LiteApi::IOption *GdbDebuggerOptionFactory::create(const QString &mimeType)
+class PluginFactory : public LiteApi::PluginFactoryT<GoSlidePlugin>
 {
-    if (mimeType == OPTION_GDBDEBUGGER) {
-        return new GdbDebuggerOption(m_liteApp,this);
+    Q_OBJECT
+    Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.GoSlidePlugin")
+#endif
+public:
+    PluginFactory() {
+        m_info->setId("plugin/GoSlide");
+        m_info->setVer("x19");
+        m_info->setName("GoSlide");
+        m_info->setAnchor("visualfc");
+        m_info->setInfo("Go Slide (.slide present file)");
+        m_info->appendDepend("plugin/liteeditor");
     }
-    return 0;
-}
+};
+
+
+#endif // GOSLIDEPLUGIN_H

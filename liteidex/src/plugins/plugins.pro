@@ -16,6 +16,7 @@ SUBDIRS = \
     filebrowser \
     golangast \
 #    golangtool \
+    goslide \
     golangfmt \
     golangcode \
     golangdoc \

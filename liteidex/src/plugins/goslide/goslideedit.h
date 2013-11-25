@@ -18,28 +18,34 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: gdbdebuggeroptionfactory.cpp
+// Module: goslideedit.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "gdbdebuggeroption.h"
-#include "gdbdebuggeroptionfactory.h"
-#include "gdbdebugger_global.h"
+#ifndef GOSLIDEEDIT_H
+#define GOSLIDEEDIT_H
 
-GdbDebuggerOptionFactory::GdbDebuggerOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
-      m_liteApp(app)
-{
-}
+#include "liteapi/liteapi.h"
 
-QStringList GdbDebuggerOptionFactory::mimeTypes() const
+class GoSlideEdit : public QObject
 {
-    return QStringList() << OPTION_GDBDEBUGGER;
-}
+    Q_OBJECT
+public:
+    enum update_flag {
+      UPDATE_ADD,
+      UPDATE_REMOVE,
+      UPDATE_SWITCH
+    };
+    explicit GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
+    void update_head(const QString &tag, bool blockStart = true, update_flag flag = UPDATE_ADD);
+public slots:
+    void s1();
+    void s2();
+    void s3();
+    void comment();
+protected:
+    LiteApi::IApplication *m_liteApp;
+    LiteApi::ITextEditor  *m_editor;
+    QPlainTextEdit        *m_ed;
+};
 
-LiteApi::IOption *GdbDebuggerOptionFactory::create(const QString &mimeType)
-{
-    if (mimeType == OPTION_GDBDEBUGGER) {
-        return new GdbDebuggerOption(m_liteApp,this);
-    }
-    return 0;
-}
+#endif // GOSLIDEEDIT_H
