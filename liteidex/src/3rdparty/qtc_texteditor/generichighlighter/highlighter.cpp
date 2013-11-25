@@ -436,7 +436,10 @@ void Highlighter::applyFormat(int offset,
     blockData(currentBlockUserData())->addSpellCheckZone(offset, itemData->isSpellChecking());
 
     TextFormatId formatId = m_kateFormats.m_ids.value(itemData->style());
-    if (formatId != Normal) {
+    if (formatId == Normal && !itemData->isCustomized()) {
+        return;
+    }
+    //if (formatId != Normal) {
         QHash<TextFormatId, QTextCharFormat>::const_iterator cit =
             m_creatorFormats.constFind(formatId);
         if (cit != m_creatorFormats.constEnd()) {
@@ -460,10 +463,9 @@ void Highlighter::applyFormat(int offset,
                 if (itemData->isStrikeOutSpecified())
                     format.setFontStrikeOut(itemData->isStrikeOut());
             }
-
             setFormat(offset, count, format);
         }
-    }
+    //}
 }
 
 void Highlighter::createWillContinueBlock()

@@ -52,6 +52,9 @@ void KateHighlighter::setColorStyle(TextEditor::SyntaxHighlighter *h,const Color
         return;
     }
 
+    QTextCharFormat fmt_nm;
+    highlighter->configureFormat(Highlighter::Normal, fmt_nm);
+
     QTextCharFormat fmt_vw;
     if (!setTextCharStyle(fmt_vw,"VisualWhitespace",scheme)) {
         fmt_vw.setForeground(Qt::lightGray);
