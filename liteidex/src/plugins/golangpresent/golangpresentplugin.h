@@ -57,5 +57,4 @@ public:
     }
 };
 
-
 #endif // GOLANGPRESENTPLUGIN_H
