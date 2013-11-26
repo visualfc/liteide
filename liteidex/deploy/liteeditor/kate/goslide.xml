@@ -52,9 +52,9 @@
 		<contexts>
 			<context attribute="Normal Text" lineEndContext="#stay" name="Normal Text" >
 				<DetectChar context="blockquote" char="&gt;" column="0"/>
-				<RegExpr attribute="h1" String="^\*\s.*$" />
-				<RegExpr attribute="h2" String="^\*\*\s.*$" />
-				<RegExpr attribute="h3" String="^\*\*\*\s.*$" />
+				<RegExpr attribute="s1" String="^\*\s.*$"  endRegion="section" beginRegion="section"/>
+				<RegExpr attribute="s2" String="^\*\*\s.*$"/>
+				<RegExpr attribute="s3" String="^\*\*\*\s.*$"/>
 				<RegExpr attribute="comment" String="^#.*$" />
 				<RegExpr attribute="strong" String="(^|\s)\*[&quot;\'\`\w\*\-\;\:\?\.\,]+\*(\s|\.|,|;|:|\-|\?|$)"/>
 				<RegExpr attribute="italic" String="(^|\s)\_[&quot;\'\`\w\*\-\;\:\?\.\,]+\_(\s|\.|,|;|:|\-|\?|$)"/>
@@ -134,11 +134,9 @@
 			<itemData name="ruler" defStyleNum="dsNormal" bold="true" />
 			<itemData name="strikeout" defStyleNum="dsNormal" strikeOut="true" />
 			<itemData name="linebreak" defStyleNum="dsNormal" underline="true" color="#999999"/>
-			<itemData name="h1" defStyleNum="dsFunction" bold="true" />
-			<itemData name="h2" defStyleNum="dsFunction" bold="true" />
-			<itemData name="h3" defStyleNum="dsFunction" bold="true" />
-			<itemData name="h4" defStyleNum="dsFunction" bold="true" />
-			<itemData name="h5" defStyleNum="dsFunction" bold="true" />
+			<itemData name="s1" defStyleNum="dsFunction" bold="true" />
+			<itemData name="s2" defStyleNum="dsFunction" bold="true" />
+			<itemData name="s3" defStyleNum="dsFunction" bold="true" />
 			<itemData name="blockquote" defStyleNum="dsDataType" />
 			<itemData name="bq-emphasis" defStyleNum="dsDataType" italic="true" />
 			<itemData name="bq-strong" defStyleNum="dsDataType" bold="true" />
