@@ -18,18 +18,18 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: goslide_global.h
+// Module: golangpresent_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOSLIDE_GLOBAL_H
-#define GOSLIDE_GLOBAL_H
+#ifndef GOLANGPRESENT_GLOBAL_H
+#define GOLANGPRESENT_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 
-#if defined(GOSLIDE_LIBRARY)
-#  define GOSLIDESHARED_EXPORT Q_DECL_EXPORT
+#if defined(GOLANGPRESENT_LIBRARY)
+#  define GOLANGPRESENTSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define GOSLIDESHARED_EXPORT Q_DECL_IMPORT
+#  define GOLANGPRESENTSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // GOSLIDE_GLOBAL_H
+#endif // GOLANGPRESENT_GLOBAL_H

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Kate syntax highlight filter for Golang slide documents.
-	
+	Kate syntax highlight filter for Golang present documents.
+
 	Kate syntax highlight filter for Markdown/MultiMarkdown documents.
 
 	Copyright 2008 Darrin Yeager. http://www.dyeager.org/
 	Dual-Licensed under both GPL and BSD licenses.
 
 	Extended 2009 Claes Holmerson. http://github.com/claes/kate-markdown/
-	
+
 	Extended 2013 visualfc. http://github.com/visualfc/liteide/
 -->
 
@@ -41,7 +41,7 @@
 ]>
 
 <language name="Go-Slide" version="1.0" section="Markup"
-		extensions="*.slide;" 
+		extensions="*.slide;*.article"
 		mimetype="text/x-goslide"
 		priority="15"
 		author="Darrin Yeager, Claes Holmerson, visualfc"

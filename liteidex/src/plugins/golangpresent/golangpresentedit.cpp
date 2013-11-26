@@ -18,10 +18,10 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: goslideedit.cpp
+// Module: golangpresentedit.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "goslideedit.h"
+#include "golangpresentedit.h"
 #include "editorutil/editorutil.h"
 #include <QToolBar>
 #include <QMenu>
@@ -29,7 +29,7 @@
 #include <QTextCursor>
 #include <QTextBlock>
 
-GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
+GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
     QObject(parent), m_liteApp(app)
 {
     m_editor = LiteApi::getTextEditor(editor);
@@ -43,25 +43,25 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoSlide");
 
-    QAction *s1 = new QAction(QIcon("icon:goslide/images/s1.png"),tr("Section (s1)"),this);
+    QAction *s1 = new QAction(QIcon("icon:golangpresent/images/s1.png"),tr("Section (s1)"),this);
     actionContext->regAction(s1,"Section","Ctrl+1");
 
-    QAction *s2 = new QAction(QIcon("icon:goslide/images/s2.png"),tr("Subsection (s2)"),this);
+    QAction *s2 = new QAction(QIcon("icon:golangpresent/images/s2.png"),tr("Subsection (s2)"),this);
     actionContext->regAction(s2,"Subsection","Ctrl+2");
 
-    QAction *s3 = new QAction(QIcon("icon:goslide/images/s3.png"),tr("Sub-subsection (s3)"),this);
+    QAction *s3 = new QAction(QIcon("icon:golangpresent/images/s3.png"),tr("Sub-subsection (s3)"),this);
     actionContext->regAction(s3,"Sub-subsection","Ctrl+3");
 
-    QAction *bold = new QAction(QIcon("icon:goslide/images/bold.png"),tr("Bold"),this);
+    QAction *bold = new QAction(QIcon("icon:golangpresent/images/bold.png"),tr("Bold"),this);
     actionContext->regAction(bold,"Bold",QKeySequence::Bold);
 
-    QAction *italic = new QAction(QIcon("icon:goslide/images/italic.png"),tr("Italic"),this);
+    QAction *italic = new QAction(QIcon("icon:golangpresent/images/italic.png"),tr("Italic"),this);
     actionContext->regAction(italic,"Italic",QKeySequence::Italic);
 
-    QAction *code = new QAction(QIcon("icon:goslide/images/code.png"),tr("Inline Code"),this);
+    QAction *code = new QAction(QIcon("icon:golangpresent/images/code.png"),tr("Inline Code"),this);
     actionContext->regAction(code,"InlineCode","Ctrl+K");
 
-    QAction *bullets = new QAction(QIcon("icon:goslide/images/bullets.png"),tr("Switch Bullets"),this);
+    QAction *bullets = new QAction(QIcon("icon:golangpresent/images/bullets.png"),tr("Switch Bullets"),this);
     actionContext->regAction(bullets,"Switch Bullets","Ctrl+Shift+U");
 
 
@@ -125,42 +125,42 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
     }
 }
 
-void GoSlideEdit::s1()
+void GolangPresentEdit::s1()
 {
     EditorUtil::InsertHead(m_ed,"* ");
 }
 
-void GoSlideEdit::s2()
+void GolangPresentEdit::s2()
 {
     EditorUtil::InsertHead(m_ed,"** ");
 }
 
-void GoSlideEdit::s3()
+void GolangPresentEdit::s3()
 {
     EditorUtil::InsertHead(m_ed,"*** ");
 }
 
-void GoSlideEdit::bold()
+void GolangPresentEdit::bold()
 {
     EditorUtil::MarkSelection(m_ed,"*");
 }
 
-void GoSlideEdit::italic()
+void GolangPresentEdit::italic()
 {
     EditorUtil::MarkSelection(m_ed,"_");
 }
 
-void GoSlideEdit::code()
+void GolangPresentEdit::code()
 {
     EditorUtil::MarkSelection(m_ed,"`");
 }
 
-void GoSlideEdit::bullets()
+void GolangPresentEdit::bullets()
 {
     EditorUtil::SwitchHead(m_ed,"- ",QStringList() << "- ");
 }
 
-void GoSlideEdit::comment()
+void GolangPresentEdit::comment()
 {
     EditorUtil::SwitchHead(m_ed,"# ",QStringList() << "# " << "#");
 }

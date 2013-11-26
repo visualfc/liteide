@@ -18,32 +18,44 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: goslideplugin.cpp
+// Module: golangpresentplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "goslideplugin.h"
-#include "goslideedit.h"
-#include <QtPlugin>
+#ifndef GOLANGPRESENTPLUGIN_H
+#define GOLANGPRESENTPLUGIN_H
 
-GoSlidePlugin::GoSlidePlugin()
+#include "golangpresent_global.h"
+#include "liteapi/liteapi.h"
+
+class GolangPresentPlugin : public LiteApi::IPlugin
 {
-}
+    Q_OBJECT
+public:
+    GolangPresentPlugin();
+    virtual bool load(LiteApi::IApplication *app);
+protected slots:
+    void editorCreated(LiteApi::IEditor*);
+protected:
+    LiteApi::IApplication *m_liteApp;
+};
 
-bool GoSlidePlugin::load(LiteApi::IApplication *app)
+class PluginFactory : public LiteApi::PluginFactoryT<GolangPresentPlugin>
 {
-    m_liteApp = app;
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
-    return true;
-}
-
-void GoSlidePlugin::editorCreated(LiteApi::IEditor *editor)
-{
-    if (!editor || editor->mimeType() != "text/x-goslide") {
-        return;
-    }
-    new GoSlideEdit(m_liteApp,editor,this);
-}
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
+    Q_OBJECT
+    Q_INTERFACES(LiteApi::IPluginFactory)
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "liteidex.GoPresentPlugin")
 #endif
+public:
+    PluginFactory() {
+        m_info->setId("plugin/GoPresent");
+        m_info->setVer("x19");
+        m_info->setName("GolangPresent");
+        m_info->setAnchor("visualfc");
+        m_info->setInfo("Golang Present Editor");
+        m_info->appendDepend("plugin/liteeditor");
+    }
+};
+
+
+#endif // GOLANGPRESENTPLUGIN_H

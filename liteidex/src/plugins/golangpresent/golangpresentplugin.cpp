@@ -18,32 +18,32 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: goslideedit.h
+// Module: golangpresentplugin.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOSLIDEEDIT_H
-#define GOSLIDEEDIT_H
+#include "golangpresentplugin.h"
+#include "golangpresentedit.h"
+#include <QtPlugin>
 
-#include "liteapi/liteapi.h"
-
-class GoSlideEdit : public QObject
+GolangPresentPlugin::GolangPresentPlugin()
 {
-    Q_OBJECT
-public:
-    explicit GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
-public slots:
-    void s1();
-    void s2();
-    void s3();
-    void bold();
-    void italic();
-    void code();
-    void bullets();
-    void comment();
-protected:
-    LiteApi::IApplication *m_liteApp;
-    LiteApi::ITextEditor  *m_editor;
-    QPlainTextEdit        *m_ed;
-};
+}
 
-#endif // GOSLIDEEDIT_H
+bool GolangPresentPlugin::load(LiteApi::IApplication *app)
+{
+    m_liteApp = app;
+    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+    return true;
+}
+
+void GolangPresentPlugin::editorCreated(LiteApi::IEditor *editor)
+{
+    if (!editor || editor->mimeType() != "text/x-goslide") {
+        return;
+    }
+    new GolangPresentEdit(m_liteApp,editor,this);
+}
+
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
+#endif

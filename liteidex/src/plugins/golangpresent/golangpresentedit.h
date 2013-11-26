@@ -18,44 +18,32 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: goslideplugin.h
+// Module: golangpresenteedit.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOSLIDEPLUGIN_H
-#define GOSLIDEPLUGIN_H
+#ifndef GOLANGPRESENTEDIT_H
+#define GOLANGPRESENTEDIT_H
 
-#include "goslide_global.h"
 #include "liteapi/liteapi.h"
 
-class GoSlidePlugin : public LiteApi::IPlugin
+class GolangPresentEdit : public QObject
 {
     Q_OBJECT
 public:
-    GoSlidePlugin();
-    virtual bool load(LiteApi::IApplication *app);
-protected slots:
-    void editorCreated(LiteApi::IEditor*);
+    explicit GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
+public slots:
+    void s1();
+    void s2();
+    void s3();
+    void bold();
+    void italic();
+    void code();
+    void bullets();
+    void comment();
 protected:
     LiteApi::IApplication *m_liteApp;
+    LiteApi::ITextEditor  *m_editor;
+    QPlainTextEdit        *m_ed;
 };
 
-class PluginFactory : public LiteApi::PluginFactoryT<GoSlidePlugin>
-{
-    Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.GoSlidePlugin")
-#endif
-public:
-    PluginFactory() {
-        m_info->setId("plugin/GoSlide");
-        m_info->setVer("x19");
-        m_info->setName("GoSlide");
-        m_info->setAnchor("visualfc");
-        m_info->setInfo("Go Slide (.slide present file)");
-        m_info->appendDepend("plugin/liteeditor");
-    }
-};
-
-
-#endif // GOSLIDEPLUGIN_H
+#endif // GOLANGPRESENTEDIT_H

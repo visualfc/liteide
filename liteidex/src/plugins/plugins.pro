@@ -11,12 +11,9 @@ SUBDIRS = \
     litefind    \
     litedebug   \
     litetty \
-#    makefileproject \
-#    profileproject  \
     filebrowser \
     golangast \
-#    golangtool \
-    goslide \
+    golangpresent \
     golangfmt \
     golangcode \
     golangdoc \

@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/goslide">
+    <qresource prefix="/golangpresent">
         <file>images/bold.png</file>
         <file>images/code.png</file>
         <file>images/image.png</file>
