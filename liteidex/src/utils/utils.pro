@@ -18,5 +18,6 @@ SUBDIRS = \
     htmlutil \
     golangapi \
     filesystem \
+    editorutil \
 
 
