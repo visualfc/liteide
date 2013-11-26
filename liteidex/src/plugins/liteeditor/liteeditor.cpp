@@ -460,6 +460,12 @@ void LiteEditor::createMenu()
     m_contextMenu->addAction(m_copyAct);
     m_contextMenu->addAction(m_pasteAct);
     m_contextMenu->addAction(m_duplicateAct);
+    m_contextMenu->addSeparator();
+    QMenu *sub = m_contextMenu->addMenu(tr("Fold"));
+    sub->addAction(m_foldAct);
+    sub->addAction(m_unfoldAct);
+    sub->addAction(m_foldAllAct);
+    sub->addAction(m_unfoldAllAct);
 }
 
 #ifdef LITEEDITOR_FIND
