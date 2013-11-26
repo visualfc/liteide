@@ -2,6 +2,7 @@ TARGET = goslide
 TEMPLATE = lib
 
 include(../../liteideplugin.pri)
+include (../../utils/editorutil/editorutil.pri)
 
 DEFINES += GOSLIDE_LIBRARY
 

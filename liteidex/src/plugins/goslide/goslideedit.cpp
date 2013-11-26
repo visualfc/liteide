@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "goslideedit.h"
+#include "editorutil/editorutil.h"
 #include <QToolBar>
 #include <QMenu>
 #include <QAction>
@@ -89,83 +90,22 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
     }
 }
 
-static void insert_block(const QString &tag, QTextCursor &cur, QTextBlock &block, bool blockStart, GoSlideEdit::update_flag flag)
-{
-    if (blockStart) {
-        cur.setPosition(block.position());
-    } else {
-        QString text = block.text();
-        foreach(QChar c, text) {
-            if (!c.isSpace()) {
-                cur.setPosition(block.position()+text.indexOf(c));
-                break;
-            }
-        }
-    }
-    if (flag == GoSlideEdit::UPDATE_ADD) {
-        cur.insertText(tag);
-    } else if (flag == GoSlideEdit::UPDATE_REMOVE ||
-               flag == GoSlideEdit::UPDATE_SWITCH) {
-        int len = 0;
-        if (cur.block().text().startsWith(tag)) {
-            len = tag.length();
-        } else if (cur.block().text().startsWith(tag.trimmed())) {
-            len = tag.trimmed().length();
-        }
-        if (len > 0) {
-            cur.setPosition(block.position());
-            cur.movePosition(QTextCursor::NextCharacter,
-                                QTextCursor::KeepAnchor,
-                                len);
-            cur.removeSelectedText();
-        }
-        if (len == 0 && flag == GoSlideEdit::UPDATE_SWITCH) {
-            cur.insertText(tag);
-        }
-    }
-}
-
-void GoSlideEdit::update_head(const QString &tag, bool blockStart, update_flag flag)
-{
-    QTextCursor cur = m_ed->textCursor();
-    cur.beginEditBlock();
-    if (cur.hasSelection()) {
-        QTextBlock begin = m_ed->document()->findBlock(cur.selectionStart());
-        QTextBlock end = m_ed->document()->findBlock(cur.selectionEnd());
-        if (end.position() == cur.selectionEnd()) {
-            end = end.previous();
-        }
-        QTextBlock block = begin;
-        do {
-            if (block.text().length() > 0) {
-               insert_block(tag,cur,block,blockStart,flag);
-            }
-            block = block.next();
-        } while(block.isValid() && block.position() <= end.position());
-    } else {
-        QTextBlock block = cur.block();
-        insert_block(tag,cur,block,blockStart,flag);
-    }
-    cur.endEditBlock();
-    m_ed->setTextCursor(cur);
-}
-
 void GoSlideEdit::s1()
 {
-    update_head("* ");
+    EditorUtil::InsertHead(m_ed,"* ");
 }
 
 void GoSlideEdit::s2()
 {
-    update_head("** ");
+    EditorUtil::InsertHead(m_ed,"** ");
 }
 
 void GoSlideEdit::s3()
 {
-    update_head("*** ");
+    EditorUtil::InsertHead(m_ed,"*** ");
 }
 
 void GoSlideEdit::comment()
 {
-    update_head("# ",true,UPDATE_SWITCH);
+    EditorUtil::SwitchHead(m_ed,"# ",QStringList() << "# " << "#");
 }

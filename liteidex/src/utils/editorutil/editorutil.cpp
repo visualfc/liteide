@@ -27,6 +27,9 @@ typedef void (*EnumEditorProc)(QTextCursor &cursor, QTextBlock &block, void *par
 
 void EditorUtil::EnumEditor(QPlainTextEdit *ed, EnumEditorProc proc, void *param)
 {
+    if (!ed) {
+        return;
+    }
     QTextCursor cur = ed->textCursor();
     cur.beginEditBlock();
     if (cur.hasSelection()) {
@@ -156,5 +159,55 @@ void EditorUtil::SwitchHead(QPlainTextEdit *ed, const QString &tagAdd, const QSt
 {
     SwitchHeadParam param = {tagAdd,tagRemove,blockStart};
     EnumEditor(ed,&switchHead,&param);
+}
+
+void EditorUtil::MarkSelection(QPlainTextEdit *ed, const QString &mark1, const QString &mark2)
+{
+    QTextCursor cur = ed->textCursor();
+    cur.beginEditBlock();
+    if (cur.hasSelection()) {
+        QTextBlock begin = ed->document()->findBlock(cur.selectionStart());
+        QTextBlock end = ed->document()->findBlock(cur.selectionEnd());
+        if (end.position() == cur.selectionEnd()) {
+            end = end.previous();
+        }
+        int n1 = cur.selectionStart();
+        int n2 = cur.selectionEnd();
+        QTextBlock block = begin;
+        do {
+            int c1 = block.position();
+            int c2 = c1+block.text().length();
+            if (block.position() == begin.position() && c1 < n1) {
+                c1 = n1;
+            }
+            if (c2 > n2) {
+                c2 = n2;
+            }
+            if (c2 > c1) {
+                if (!mark1.isEmpty()) {
+                    cur.setPosition(c1);
+                    cur.insertText(mark1);
+                    n2 += mark1.length();
+                }
+                if (!mark2.isEmpty()) {
+                    cur.setPosition(c2+mark1.length());
+                    cur.insertText(mark2);
+                    n2 += mark2.length();
+                }
+            }
+            block = block.next();
+        } while(block.isValid() && block.position() <= end.position());
+    } else {
+        int pos = cur.position();
+        cur.insertText(mark1+mark2);
+        cur.setPosition(pos+mark1.length());
+    }
+    cur.endEditBlock();
+    ed->setTextCursor(cur);
+}
+
+void EditorUtil::MarkSelection(QPlainTextEdit *ed, const QString &mark)
+{
+    EditorUtil::MarkSelection(ed,mark,mark);
 }
 

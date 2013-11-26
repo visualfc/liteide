@@ -34,6 +34,8 @@ public:
     static void InsertHead(QPlainTextEdit *ed, const QString &tag, bool blockStart = true);
     static void RemoveHead(QPlainTextEdit *ed, const QStringList &tags, bool blockStart = true);
     static void SwitchHead(QPlainTextEdit *ed, const QString &tagAdd, const QStringList &tagRemove, bool blockStart = true);
+    static void MarkSelection(QPlainTextEdit *ed, const QString &mark1, const QString &mark2);
+    static void MarkSelection(QPlainTextEdit *ed, const QString &mark);
 };
 
 #endif // EDITORUTIL_H

@@ -30,13 +30,7 @@ class GoSlideEdit : public QObject
 {
     Q_OBJECT
 public:
-    enum update_flag {
-      UPDATE_ADD,
-      UPDATE_REMOVE,
-      UPDATE_SWITCH
-    };
     explicit GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
-    void update_head(const QString &tag, bool blockStart = true, update_flag flag = UPDATE_ADD);
 public slots:
     void s1();
     void s2();
