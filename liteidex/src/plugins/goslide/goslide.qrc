@@ -7,9 +7,9 @@
         <file>images/link.png</file>
         <file>images/quote.png</file>
         <file>images/config.png</file>
-        <file>images/ul.png</file>
         <file>images/s1.png</file>
         <file>images/s2.png</file>
         <file>images/s3.png</file>
+        <file>images/bullets.png</file>
     </qresource>
 </RCC>

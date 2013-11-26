@@ -163,6 +163,9 @@ void EditorUtil::SwitchHead(QPlainTextEdit *ed, const QString &tagAdd, const QSt
 
 void EditorUtil::MarkSelection(QPlainTextEdit *ed, const QString &mark1, const QString &mark2)
 {
+    if (!ed) {
+        return;
+    }
     QTextCursor cur = ed->textCursor();
     cur.beginEditBlock();
     if (cur.hasSelection()) {

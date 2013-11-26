@@ -35,6 +35,10 @@ public slots:
     void s1();
     void s2();
     void s3();
+    void bold();
+    void italic();
+    void code();
+    void bullets();
     void comment();
 protected:
     LiteApi::IApplication *m_liteApp;

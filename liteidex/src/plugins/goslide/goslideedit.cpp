@@ -52,6 +52,19 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
     QAction *s3 = new QAction(QIcon("icon:goslide/images/s3.png"),tr("Sub-subsection (s3)"),this);
     actionContext->regAction(s3,"Sub-subsection","Ctrl+3");
 
+    QAction *bold = new QAction(QIcon("icon:goslide/images/bold.png"),tr("Bold"),this);
+    actionContext->regAction(bold,"Bold",QKeySequence::Bold);
+
+    QAction *italic = new QAction(QIcon("icon:goslide/images/italic.png"),tr("Italic"),this);
+    actionContext->regAction(italic,"Italic",QKeySequence::Italic);
+
+    QAction *code = new QAction(QIcon("icon:goslide/images/code.png"),tr("Inline Code"),this);
+    actionContext->regAction(code,"InlineCode","Ctrl+K");
+
+    QAction *bullets = new QAction(QIcon("icon:goslide/images/bullets.png"),tr("Switch Bullets"),this);
+    actionContext->regAction(bullets,"Switch Bullets","Ctrl+Shift+U");
+
+
     QAction *comment = new QAction(tr("Comment/Uncomment Selection"),this);
     actionContext->regAction(comment,"Comment","Ctrl+/");
 
@@ -59,6 +72,10 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
     connect(s1,SIGNAL(triggered()),this,SLOT(s1()));
     connect(s2,SIGNAL(triggered()),this,SLOT(s2()));
     connect(s3,SIGNAL(triggered()),this,SLOT(s3()));
+    connect(bold,SIGNAL(triggered()),this,SLOT(bold()));
+    connect(italic,SIGNAL(triggered()),this,SLOT(italic()));
+    connect(code,SIGNAL(triggered()),this,SLOT(code()));
+    connect(bullets,SIGNAL(triggered()),this,SLOT(bullets()));
     connect(comment,SIGNAL(triggered()),this,SLOT(comment()));
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
@@ -67,6 +84,12 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
         toolBar->addAction(s1);
         toolBar->addAction(s2);
         toolBar->addAction(s3);
+        toolBar->addSeparator();
+        toolBar->addAction(bold);
+        toolBar->addAction(italic);
+        toolBar->addAction(code);
+        toolBar->addSeparator();
+        toolBar->addAction(bullets);
     }
 
     QMenu *menu = LiteApi::getEditMenu(editor);
@@ -75,6 +98,12 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
         menu->addAction(s1);
         menu->addAction(s2);
         menu->addAction(s3);
+        menu->addSeparator();
+        menu->addAction(bold);
+        menu->addAction(italic);
+        menu->addAction(code);
+        menu->addSeparator();
+        menu->addAction(bullets);
         menu->addSeparator();
         menu->addAction(comment);
     }
@@ -85,6 +114,12 @@ GoSlideEdit::GoSlideEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, Q
        menu->addAction(s1);
        menu->addAction(s2);
        menu->addAction(s3);
+       menu->addSeparator();
+       menu->addAction(bold);
+       menu->addAction(italic);
+       menu->addAction(code);
+       menu->addSeparator();
+       menu->addAction(bullets);
        menu->addSeparator();
        menu->addAction(comment);
     }
@@ -103,6 +138,26 @@ void GoSlideEdit::s2()
 void GoSlideEdit::s3()
 {
     EditorUtil::InsertHead(m_ed,"*** ");
+}
+
+void GoSlideEdit::bold()
+{
+    EditorUtil::MarkSelection(m_ed,"*");
+}
+
+void GoSlideEdit::italic()
+{
+    EditorUtil::MarkSelection(m_ed,"_");
+}
+
+void GoSlideEdit::code()
+{
+    EditorUtil::MarkSelection(m_ed,"`");
+}
+
+void GoSlideEdit::bullets()
+{
+    EditorUtil::SwitchHead(m_ed,"- ",QStringList() << "- ");
 }
 
 void GoSlideEdit::comment()
