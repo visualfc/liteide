@@ -369,3 +369,22 @@ QString FileUtil::lookupLiteBin(const QString &bin, LiteApi::IApplication *app)
     return find;
 }
 
+bool FileUtil::CopyDirectory(const QString &src, const QString &dest)
+{
+    QDir dir(src);
+    foreach(QFileInfo info, dir.entryInfoList(QDir::Files)) {
+        if (info.isFile() && !info.isSymLink()) {
+            QFile in(info.filePath());
+            if (!in.open(QFile::ReadOnly)) {
+                return false;
+            }
+            QFile out(dest+"/"+info.fileName());
+            if (!out.open(QFile::WriteOnly)) {
+                return false;
+            }
+            out.write(in.readAll());
+        }
+    }
+    return true;
+}
+

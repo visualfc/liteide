@@ -11,5 +11,6 @@
         <file>images/s2.png</file>
         <file>images/s3.png</file>
         <file>images/bullets.png</file>
+        <file>images/exporthtml.png</file>
     </qresource>
 </RCC>

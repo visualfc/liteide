@@ -23,14 +23,20 @@
 
 #include "golangpresentedit.h"
 #include "editorutil/editorutil.h"
+#include "fileutil/fileutil.h"
+#include "liteenvapi/liteenvapi.h"
 #include <QToolBar>
 #include <QMenu>
 #include <QAction>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QProcess>
+#include <QFileDialog>
+#include <QDesktopServices>
+#include <QDebug>
 
 GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
-    QObject(parent), m_liteApp(app)
+    QObject(parent), m_liteApp(app), m_process(0)
 {
     m_editor = LiteApi::getTextEditor(editor);
     if (!m_editor) {
@@ -64,9 +70,11 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     QAction *bullets = new QAction(QIcon("icon:golangpresent/images/bullets.png"),tr("Switch Bullets"),this);
     actionContext->regAction(bullets,"Switch Bullets","Ctrl+Shift+U");
 
-
     QAction *comment = new QAction(tr("Comment/Uncomment Selection"),this);
     actionContext->regAction(comment,"Comment","Ctrl+/");
+
+    QAction *exportHtml = new QAction(QIcon("icon:golangpresent/images/exporthtml.png"),tr("Export HTML"),this);
+    actionContext->regAction(exportHtml,"Export HTML","");
 
     connect(m_editor,SIGNAL(destroyed()),this,SLOT(deleteLater()));
     connect(s1,SIGNAL(triggered()),this,SLOT(s1()));
@@ -77,6 +85,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     connect(code,SIGNAL(triggered()),this,SLOT(code()));
     connect(bullets,SIGNAL(triggered()),this,SLOT(bullets()));
     connect(comment,SIGNAL(triggered()),this,SLOT(comment()));
+    connect(exportHtml,SIGNAL(triggered()),this,SLOT(exportHtml()));
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
     if (toolBar) {
@@ -90,6 +99,8 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         toolBar->addAction(code);
         toolBar->addSeparator();
         toolBar->addAction(bullets);
+        toolBar->addSeparator();
+        toolBar->addAction(exportHtml);
     }
 
     QMenu *menu = LiteApi::getEditMenu(editor);
@@ -106,6 +117,8 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         menu->addAction(bullets);
         menu->addSeparator();
         menu->addAction(comment);
+        menu->addSeparator();
+        menu->addAction(exportHtml);
     }
 
     menu = LiteApi::getContextMenu(editor);
@@ -163,4 +176,59 @@ void GolangPresentEdit::bullets()
 void GolangPresentEdit::comment()
 {
     EditorUtil::SwitchHead(m_ed,"# ",QStringList() << "# " << "#");
+}
+
+void GolangPresentEdit::exportHtml()
+{
+    QString cmd = FileUtil::lookupLiteBin("gopresent",m_liteApp);
+    if (cmd.isEmpty()) {
+        m_liteApp->appendLog("GolangPresent","Not find gopresent",true);
+        return;
+    }
+    QFileInfo info(m_editor->filePath());
+    if (!m_process) {
+        m_process = new ProcessEx(this);
+        m_process->setWorkingDirectory(m_liteApp->resourcePath()+"/gopresent");
+        connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
+        connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
+    }
+    if (m_process->isRunning()) {
+        return;
+    }
+    m_exportData.clear();
+    m_process->startEx(cmd,"-stdout -i "+info.filePath().toUtf8());
+}
+
+void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
+{
+    if (!bError) {
+        m_exportData.append(data);
+    } else {
+        m_liteApp->appendLog("GolangPresent",QString::fromUtf8(data),true);
+    }
+}
+
+void GolangPresentEdit::extFinish(bool error, int code, QString msg)
+{
+    if (error || code != 0) {
+        m_liteApp->appendLog("GolangPresent",msg,true);
+    } else {
+        static QString init = QFileInfo(m_editor->filePath()).absolutePath();
+        QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
+        if (outdir.isEmpty()) {
+            return;
+        }
+        init = outdir;
+        QDir dir(outdir);
+        QFile file(QFileInfo(dir,QFileInfo(m_editor->filePath()).fileName()+".html").filePath());
+        if (!file.open(QFile::WriteOnly)) {
+            return;
+        }
+        file.write(m_exportData);
+        dir.mkdir("static");
+        dir.mkdir("js");
+        FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/static",dir.path()+"/static");
+        FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/js",dir.path()+"/js");
+        QDesktopServices::openUrl(QUrl::fromLocalFile(outdir));
+     }
 }

@@ -3,6 +3,8 @@ TEMPLATE = lib
 
 include(../../liteideplugin.pri)
 include (../../utils/editorutil/editorutil.pri)
+include (../../utils/fileutil/fileutil.pri)
+include (../../utils/processex/processex.pri)
 
 DEFINES += GOLANGPRESENT_LIBRARY
 
