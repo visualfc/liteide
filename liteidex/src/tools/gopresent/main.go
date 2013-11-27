@@ -9,6 +9,7 @@ import (
 )
 
 var (
+	verify = flag.Bool("v", false, "verify present only")
 	input  = flag.String("i", "", "input golang present file")
 	stdout = flag.Bool("stdout", false, "output use std output")
 	output = flag.String("o", "", "output html file")
@@ -29,6 +30,14 @@ func main() {
 		flag.Usage()
 		return
 	}
+	if *verify {
+		err := verifyDoc(*input)
+		if err != nil {
+			abort(err)
+		}
+		return
+	}
+
 	w := os.Stdout
 	if !*stdout {
 		if *output == "" {

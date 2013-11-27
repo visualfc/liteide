@@ -292,6 +292,10 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     }
     m_exportData.clear();
     m_process->setUserData(0,type);
-    m_process->startEx(cmd,"-stdout -i "+info.filePath().toUtf8());
+    if (type == EXPORT_TYPE_VERIFY) {
+        m_process->startEx(cmd,"-v -i "+info.filePath().toUtf8());
+    } else {
+        m_process->startEx(cmd,"-stdout -i "+info.filePath().toUtf8());
+    }
     return true;
 }

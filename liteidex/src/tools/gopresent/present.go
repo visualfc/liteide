@@ -23,6 +23,15 @@ func isDoc(path string) bool {
 	return ok
 }
 
+func verifyDoc(docFile string) error {
+	doc, err := parse(docFile, 0)
+	if err != nil {
+		return err
+	}
+	dir := filepath.Dir(docFile)
+	return verify_doc(dir, doc)
+}
+
 // renderDoc reads the present file, builds its template representation,
 // and executes the template, sending output to w.
 func renderDoc(w io.Writer, base, docFile string) error {
