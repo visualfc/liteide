@@ -12,5 +12,7 @@
         <file>images/s3.png</file>
         <file>images/bullets.png</file>
         <file>images/exporthtml.png</file>
+        <file>images/exportpdf.png</file>
+        <file>images/verify.png</file>
     </qresource>
 </RCC>

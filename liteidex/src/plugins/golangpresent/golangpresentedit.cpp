@@ -76,6 +76,9 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     QAction *exportHtml = new QAction(QIcon("icon:golangpresent/images/exporthtml.png"),tr("Export HTML"),this);
     actionContext->regAction(exportHtml,"Export HTML","");
 
+    QAction *verify = new QAction(QIcon("icon:golangpresent/images/verify.png"),tr("Verify Present"),this);
+    actionContext->regAction(verify,"Verify Present","");
+
     //QAction *exportPdf = new QAction(QIcon("icon:golangpresent/images/exportpdf.png"),tr("Export PDF"),this);
     //actionContext->regAction(exportPdf,"Export PDF","");
 
@@ -89,6 +92,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     connect(bullets,SIGNAL(triggered()),this,SLOT(bullets()));
     connect(comment,SIGNAL(triggered()),this,SLOT(comment()));
     connect(exportHtml,SIGNAL(triggered()),this,SLOT(exportHtml()));
+    connect(verify,SIGNAL(triggered()),this,SLOT(verify()));
     //connect(exportPdf,SIGNAL(triggered()),this,SLOT(exportPdf()));
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
@@ -103,6 +107,8 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         toolBar->addAction(code);
         toolBar->addSeparator();
         toolBar->addAction(bullets);
+        toolBar->addSeparator();
+        toolBar->addAction(verify);
         toolBar->addSeparator();
         toolBar->addAction(exportHtml);
         //toolBar->addAction(exportPdf);
@@ -122,6 +128,8 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         menu->addAction(bullets);
         menu->addSeparator();
         menu->addAction(comment);
+        menu->addSeparator();
+        menu->addAction(verify);
         menu->addSeparator();
         menu->addAction(exportHtml);
         //menu->addAction(exportPdf);
@@ -184,6 +192,11 @@ void GolangPresentEdit::comment()
     EditorUtil::SwitchHead(m_ed,"# ",QStringList() << "# " << "#");
 }
 
+void GolangPresentEdit::verify()
+{
+    startExportHtmlDoc(EXPORT_TYPE_VERIFY);
+}
+
 void GolangPresentEdit::exportHtml()
 {
     startExportHtmlDoc(EXPORT_TYPE_HTML);
@@ -203,13 +216,13 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
     }
 }
 
-void GolangPresentEdit::extFinish(bool error, int code, QString msg)
+void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
 {
-    if (error || code != 0) {
-        m_liteApp->appendLog("GolangPresent",msg,true);
-    } else {
+    if (!error && code == 0) {
         int exportType = m_process->userData(0).toInt();
-        if (exportType == EXPORT_TYPE_HTML) {
+        if (exportType == EXPORT_TYPE_VERIFY) {
+            m_liteApp->appendLog("GolangPresent","verify success",false);
+        } else if (exportType == EXPORT_TYPE_HTML) {
             static QString init = QFileInfo(m_editor->filePath()).absolutePath();
             QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
             if (outdir.isEmpty()) {
@@ -261,6 +274,7 @@ void GolangPresentEdit::loadHtmlFinished(bool b)
 
 bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
 {
+    m_liteApp->editorManager()->saveEditor(m_editor);
     QString cmd = FileUtil::lookupLiteBin("gopresent",m_liteApp);
     if (cmd.isEmpty()) {
         m_liteApp->appendLog("GolangPresent","Not find gopresent",true);

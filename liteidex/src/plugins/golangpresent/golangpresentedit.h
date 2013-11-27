@@ -32,6 +32,7 @@ class GolangPresentEdit : public QObject
     Q_OBJECT
 public:
     enum EXPORT_TYPE {
+        EXPORT_TYPE_VERIFY,
         EXPORT_TYPE_HTML,
         EXPORT_TYPE_PDF
     };
@@ -47,6 +48,7 @@ public slots:
     void code();
     void bullets();
     void comment();
+    void verify();
     void exportHtml();
     void exportPdf();
     void extOutput(const QByteArray &data,bool bError);

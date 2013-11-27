@@ -3,7 +3,7 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
 	"os"
 	"path/filepath"
 )
@@ -13,6 +13,11 @@ var (
 	stdout = flag.Bool("stdout", false, "output use std output")
 	output = flag.String("o", "", "output html file")
 )
+
+func abort(err error) {
+	fmt.Fprint(os.Stderr, err)
+	os.Exit(1)
+}
 
 func main() {
 	flag.Parse()
@@ -36,11 +41,11 @@ func main() {
 		var err error
 		w, err = os.Create(*output)
 		if err != nil {
-			log.Fatalln(err)
+			abort(err)
 		}
 	}
 	err := renderDoc(w, "", *input)
 	if err != nil {
-		log.Fatalln(err)
+		abort(err)
 	}
 }
