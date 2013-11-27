@@ -22,6 +22,8 @@
 	* add new Github_Style.css (by Slene <vslene@gmail.com>)
 * FileBrowser:
 	* option show hidden files
+* LiteBuild:
+	* fix build menu enable	
 * GolangPresent:
 	* support golang present editor
 	* verify golang present

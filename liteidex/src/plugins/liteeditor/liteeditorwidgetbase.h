@@ -47,6 +47,7 @@ public:
     void setEditorMark(LiteApi::IEditorMark *mark);
 public:
     QWidget* extraArea();
+    QWidget* navigateArea();
     void setExtraColor(const QColor &foreground,const QColor &background);
     void setCurrentLineColor(const QColor &background);
     void setIndentLineColor(const QColor &foreground);
@@ -54,6 +55,10 @@ public:
     void extraAreaPaintEvent(QPaintEvent *e);
     void extraAreaMouseEvent(QMouseEvent *e);
     void extraAreaLeaveEvent(QEvent *e);
+    int navigateAreaWidth();
+    void navigateAreaPaintEvent(QPaintEvent *e);
+    void navigateAreaMouseEvent(QMouseEvent *e);
+    void navigateAreaLeaveEvent(QEvent *e);\
     void resizeEvent(QResizeEvent *e);
     void showToolTip(const QTextCursor &cursor, const QString &tip);
     void hideToolTip();
@@ -133,6 +138,10 @@ public:
         m_lineNumbersVisible = b;
         slotUpdateExtraAreaWidth();
     }
+    void setNatigateWidgetVisible(bool b) {
+        m_navigateWidgetVisible = b;
+        slotUpdateExtraAreaWidth();
+    }
     void setMarksVisible(bool b) {
         m_marksVisible = b;
         slotUpdateExtraAreaWidth();
@@ -188,6 +197,7 @@ protected:
     bool isSpellCheckingAt(QTextCursor cur) const;
 protected:
     QWidget *m_extraArea;
+    QWidget *m_navateArea;
     LiteApi::IEditorMark *m_editorMark;
     QList<QTextEdit::ExtraSelection> m_extraSelections;
     QTextCursor m_lastSelection;
@@ -202,6 +212,7 @@ protected:
     bool m_wordWrapOverridden;
     bool m_wordWrap;
     bool m_lineNumbersVisible;
+    bool m_navigateWidgetVisible;
     bool m_marksVisible;    
     bool m_codeFoldingVisible;
     bool m_rightLineVisible;

@@ -75,6 +75,7 @@ public:
           m_lexerState(0),
           m_foldingStartIncluded(false),
           m_foldingEndIncluded(false),
+          m_findExpressionMark(false),
           m_codeFormatterData(0)
     {}
     ~TextBlockUserData();
@@ -133,7 +134,8 @@ public:
     inline bool foldingEndIncluded() const { return m_foldingEndIncluded; }
     inline int lexerState() const { return m_lexerState; }
     inline void setLexerState(int state) {m_lexerState = state; }
-
+    inline void setFindExpressionMark(bool b) { m_findExpressionMark = b; }
+    inline bool isFindExpressionMark() { return m_findExpressionMark; }
 
     CodeFormatterData *codeFormatterData() const { return m_codeFormatterData; }
     void setCodeFormatterData(CodeFormatterData *data);
@@ -146,6 +148,7 @@ private:
     uint m_lexerState : 4;
     uint m_foldingStartIncluded : 1;
     uint m_foldingEndIncluded : 1;
+    uint m_findExpressionMark:1;
     Parentheses m_parentheses;
     QMap<int,bool> m_spellCheckZones;
     CodeFormatterData *m_codeFormatterData;
@@ -180,6 +183,7 @@ public:
     static void doFoldOrUnfold(const QTextBlock& block, bool unfold);
     static bool isFolded(const QTextBlock &block);
     static void setFolded(const QTextBlock &block, bool folded);
+    static bool isFindExpressionMark(const QTextBlock &block);
 
     static TextBlockUserData *testUserData(const QTextBlock &block) {
         return static_cast<TextBlockUserData*>(block.userData());

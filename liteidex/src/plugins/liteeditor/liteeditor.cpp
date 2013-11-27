@@ -108,6 +108,10 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     toolLayout->addWidget(m_infoToolBar);
 
     layout->addLayout(toolLayout);
+//    QHBoxLayout *hlayout = new QHBoxLayout;
+//    hlayout->addWidget(m_editorWidget);
+//    hlayout->addWidget(m_editorWidget->navigateArea());
+    //layout->addLayout(hlayout);
     layout->addWidget(m_editorWidget);
     m_widget->setLayout(layout);
     m_file = new LiteEditorFile(m_liteApp,this);

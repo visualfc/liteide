@@ -565,6 +565,13 @@ void BaseTextDocumentLayout::setFolded(const QTextBlock &block, bool folded)
     }
 }
 
+bool BaseTextDocumentLayout::isFindExpressionMark(const QTextBlock &block)
+{
+    if (TextBlockUserData *userData = testUserData(block))
+        return userData->isFindExpressionMark();
+    return false;
+}
+
 void BaseTextDocumentLayout::doFoldOrUnfold(const QTextBlock& block, bool unfold)
 {
     if (!canFold(block))

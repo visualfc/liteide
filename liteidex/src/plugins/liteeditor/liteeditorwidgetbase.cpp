@@ -79,6 +79,37 @@ protected:
     LiteEditorWidgetBase *textEdit;
 };
 
+class TextEditNavigateArea : public QWidget {
+public:
+    TextEditNavigateArea(LiteEditorWidgetBase *edit):QWidget(edit) {
+        textEdit = edit;
+        setAutoFillBackground(true);
+    }
+public:
+
+    QSize sizeHint() const {
+        return QSize(textEdit->navigateAreaWidth(), 0);
+    }
+protected:
+    void paintEvent(QPaintEvent *event){
+        textEdit->navigateAreaPaintEvent(event);
+    }
+    void mousePressEvent(QMouseEvent *event){
+        textEdit->navigateAreaMouseEvent(event);
+    }
+    void mouseMoveEvent(QMouseEvent *event){
+        textEdit->navigateAreaMouseEvent(event);
+    }
+    void mouseReleaseEvent(QMouseEvent *event){
+        textEdit->navigateAreaMouseEvent(event);
+    }
+    void leaveEvent(QEvent *event){
+        textEdit->navigateAreaLeaveEvent(event);
+    }
+protected:
+    LiteEditorWidgetBase *textEdit;
+};
+
 LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     : QPlainTextEdit(parent),
       m_editorMark(0),
@@ -87,6 +118,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
 {
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
+    m_navateArea = new TextEditNavigateArea(this);
+
     m_indentLineForeground = QColor(Qt::darkCyan);
     m_extraForeground = QColor(Qt::darkCyan);
     m_extraBackground = m_extraArea->palette().color(QPalette::Background);
@@ -98,6 +131,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_wordWrapOverridden = false;
     m_wordWrap = false;
     m_lineNumbersVisible = true;
+    m_navigateWidgetVisible = true;
     m_marksVisible = true;
     m_codeFoldingVisible = true;
     m_rightLineVisible = true;
@@ -313,6 +347,11 @@ static int foldBoxWidth(const QFontMetrics &fm)
 QWidget* LiteEditorWidgetBase::extraArea()
 {
     return m_extraArea;
+}
+
+QWidget *LiteEditorWidgetBase::navigateArea()
+{
+    return m_navateArea;
 }
 
 void LiteEditorWidgetBase::setCurrentLineColor(const QColor &background)
@@ -538,6 +577,7 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
             painter.restore();
         }
 
+
 //        if (/*m_marksVisible &&*/ m_editorMark) {
 //            m_editorMark->paint(&painter,blockNumber,0,top,fmLineSpacing-0.5,fmLineSpacing-1);
 //        }
@@ -548,7 +588,7 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
                     (selStart < block.position() + block.length()
                     && selEnd > block.position())
                     || (selStart == selEnd && selStart == block.position())
-                    );
+                    );            
             if (selected) {
                 painter.save();
                 QFont f = painter.font();
@@ -621,22 +661,52 @@ void LiteEditorWidgetBase::extraAreaLeaveEvent(QEvent *)
 
 }
 
+int LiteEditorWidgetBase::navigateAreaWidth()
+{
+    return 20;
+}
+
+void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
+{
+    QTextDocument *doc = document();
+
+    QPalette pal = m_navateArea->palette();
+    pal.setCurrentColorGroup(QPalette::Active);
+    QPainter painter(m_navateArea);
+
+    painter.fillRect(e->rect(), pal.color(QPalette::Base));
+    painter.fillRect(e->rect().intersected(QRect(0, 0, m_navateArea->width(), INT_MAX)),
+                     m_extraBackground);
+}
+
+void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
+{
+}
+
+void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent *e)
+{
+}
+
 void LiteEditorWidgetBase::resizeEvent(QResizeEvent *e)
 {
     QPlainTextEdit::resizeEvent(e);
     QRect cr = contentsRect();
     m_extraArea->setGeometry(
-        QStyle::visualRect(layoutDirection(), cr,
-                           QRect(cr.left(), cr.top(), extraAreaWidth(), cr.height())));
+                QStyle::visualRect(layoutDirection(), cr,
+                                   QRect(cr.left(), cr.top(), extraAreaWidth(), cr.height())));
+    m_navateArea->setGeometry(
+                QStyle::visualRect(layoutDirection(), cr,
+                                   QRect(cr.left()+extraAreaWidth()+viewport()->rect().width(), cr.top(), navigateAreaWidth(), cr.height())));
+
 }
 
 
 void LiteEditorWidgetBase::slotUpdateExtraAreaWidth()
 {
     if (isLeftToRight())
-        setViewportMargins(extraAreaWidth(), 0, 0, 0);
+        setViewportMargins(extraAreaWidth(), 0, navigateAreaWidth(), 0);
     else
-        setViewportMargins(0, 0, extraAreaWidth(), 0);
+        setViewportMargins(navigateAreaWidth(), 0, extraAreaWidth(), 0);
 }
 
 void LiteEditorWidgetBase::slotModificationChanged(bool m)
@@ -1844,7 +1914,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 rr.setRight(viewportRect.width() - offset.x());
                 painter.fillRect(rr, m_currentLineBackground);
             }
-
+            bool findSelectionMark = false;
             if (!m_findExpression.isEmpty()) {
                 painter.save();
                 QColor color(this->palette().color(QPalette::Text));
@@ -1856,6 +1926,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     if (!findInBlock(block,m_findExpression,pos,m_findFlags,cur)) {
                         break;
                     }
+                    findSelectionMark = true;
                     pos = cur.selectionEnd()-block.position();
                     QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
                     qreal left = l.cursorToX(cur.selectionStart()-blpos);
@@ -1874,6 +1945,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     if (!findInBlock(block,m_selectionExpression,pos,QTextDocument::FindWholeWords,cur)) {
                         break;
                     }
+                    findSelectionMark = true;
                     pos = cur.selectionEnd()-block.position();
                     QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
                     qreal left = l.cursorToX(cur.selectionStart()-blpos);
@@ -1882,6 +1954,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 }
                 painter.restore();
             }
+            TextEditor::BaseTextDocumentLayout::userData(block)->setFindExpressionMark(findSelectionMark);
 
             bool drawCursor = (editable
                                && context.cursorPosition >= blpos
@@ -2061,4 +2134,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }
+    //update extra
+    m_extraArea->update();
 }
