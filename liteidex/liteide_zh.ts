@@ -320,13 +320,13 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="94"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="257"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="258"/>
         <source>Add Global Watch</source>
         <translation>添加全局监视</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="95"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="269"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="270"/>
         <source>Add Local Watch</source>
         <translation>添加本地监视</translation>
     </message>
@@ -341,12 +341,12 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
         <translation>移除所有监视</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="257"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="258"/>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
         <translation>变量监视: (例 main.var os.Stdout):</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="269"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="270"/>
         <source>Watch expression (e.g. s1.str):</source>
         <translation>变量监视: (例 sq.str):</translation>
     </message>
@@ -516,177 +516,187 @@ In addition, as a special exception, that plugins developed for LiteIDE, are all
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="122"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="129"/>
         <source>Synchronize with editor</source>
         <translation>与编辑器同步</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="188"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="202"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="190"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="204"/>
         <source>New File...</source>
         <oldsource>New File</oldsource>
         <translation>新建文件...</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="191"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="205"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
         <translation>新建文件向导...</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="461"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="467"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="472"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="482"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="488"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="493"/>
         <source>Rename File</source>
         <translation>文件更名</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="193"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="491"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="207"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="507"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="512"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="192"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="132"/>
+        <source>Show Hidden Files</source>
+        <translation>显示隐藏文件</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="206"/>
         <source>Rename File...</source>
         <translation>重命名文件...</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="195"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="209"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation>设置为顶层目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="196"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="210"/>
         <source>New Folder...</source>
         <oldsource>New Folder</oldsource>
         <translation>新建目录...</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="197"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="211"/>
         <source>Rename Folder...</source>
         <translation>重命名目录...</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="487"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="279"/>
+        <source>Config</source>
+        <translation>配置</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="508"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="492"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="513"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="511"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="532"/>
         <source>A folder with that name already exists!</source>
         <translation>这个目录已存在!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="527"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="536"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="541"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="557"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="562"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="556"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="577"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="561"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="582"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="198"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="560"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="212"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="576"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="581"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="200"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="214"/>
         <source>Open Terminal Here</source>
         <translation>打开终端</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="201"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="215"/>
         <source>Open Explorer Here</source>
         <translation>打开目录浏览</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="203"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="217"/>
         <source>View Godoc Here</source>
         <translation>查看GODOC</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="420"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="430"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="441"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="451"/>
         <source>Create File</source>
         <translation>建立文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="141"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="155"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation>打开上级目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="205"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
         <source>Load Folder Project</source>
         <translation>加载目录项目</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="264"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="284"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="421"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="442"/>
         <source>A file with that name already exists!</source>
         <translation>文件已存在!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="431"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="452"/>
         <source>Failed to create the file!</source>
         <translation>建立文件失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="461"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="527"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="482"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
         <source>New Name:</source>
         <translation>新名称:</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="468"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="473"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="494"/>
         <source>Failed to rename the file!</source>
         <translation>重命名文件失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="510"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="513"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="531"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="534"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="514"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="535"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="537"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="542"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="558"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="563"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
@@ -924,16 +934,16 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>新建文件向导...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="240"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="246"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="251"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="259"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="265"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="270"/>
         <source>Rename File</source>
         <translation>文件更名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="95"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="265"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="270"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="284"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="289"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation>删除文件</translation>
@@ -945,21 +955,21 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>新建目录...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="266"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="306"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="315"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="320"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="325"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="334"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="339"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="99"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="334"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="341"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="353"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="360"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation>删除目录</translation>
@@ -990,74 +1000,74 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>查看GODOC</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="199"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="209"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="218"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="228"/>
         <source>Create File</source>
         <translation>建立文件</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="200"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="219"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
         <translation>文件已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="210"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="229"/>
         <source>Failed to create the file!</source>
         <translation>建立文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="240"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="259"/>
         <source>New Name:</source>
         <translation>新名称:</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="247"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="252"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="266"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="271"/>
         <source>Failed to rename the file!</source>
         <translation>重命名文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="354"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="271"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="289"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="292"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="308"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="309"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
         <translation>目录名已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="293"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="312"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="306"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="325"/>
         <source>Folder Name</source>
         <translation>目录名</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="321"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="340"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="342"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="361"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation>删除目录失败!</translation>
@@ -1292,6 +1302,69 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     </message>
 </context>
 <context>
+    <name>GolangPresentEdit</name>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="52"/>
+        <source>Section (s1)</source>
+        <translation>一级标题 (s1)</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="55"/>
+        <source>Subsection (s2)</source>
+        <translation>二级标题 (s2)</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="58"/>
+        <source>Sub-subsection (s3)</source>
+        <translation>三级标题 (s3)</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="61"/>
+        <source>Bold</source>
+        <translation>加重</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="64"/>
+        <source>Italic</source>
+        <translation>斜体</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="67"/>
+        <source>Inline Code</source>
+        <translation>内联代码</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="70"/>
+        <source>Switch Bullets</source>
+        <translation>切换列表</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="73"/>
+        <source>Comment/Uncomment Selection</source>
+        <translation>切换区域注释/反注释</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="76"/>
+        <source>Export HTML</source>
+        <translation>输出HTML文档</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="79"/>
+        <source>Verify Present</source>
+        <translation>校验</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="227"/>
+        <source>Select export html directory</source>
+        <translation>选择导出HTML目录</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="245"/>
+        <source>Export PDF</source>
+        <translation>输出PDF文档</translation>
+    </message>
+</context>
+<context>
     <name>GoplayBrowser</name>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="85"/>
@@ -1386,13 +1459,13 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="380"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="377"/>
         <source>Export Html</source>
         <translation>输出Html文档</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="412"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="409"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
@@ -1402,40 +1475,44 @@ Success: %2.</oldsource>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="81"/>
         <source>Configuration</source>
         <oldsource>Config</oldsource>
-        <translation>配置</translation>
+        <translation type="obsolete">配置</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="84"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="81"/>
         <source>Synchronize preview and code scrollbars</source>
         <translation>同步预览和代码窗口滚动</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="167"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="87"/>
+        <source>Config</source>
+        <translation>配置</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="164"/>
         <source>Plain HTML</source>
         <translation>纯HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="388"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="385"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="87"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="84"/>
         <source>Automatically display preview</source>
         <oldsource>Automatically Display Preview</oldsource>
         <translation>自动显示预览窗口</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="101"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="98"/>
         <source>HTML Preview</source>
         <oldsource>Html Preview</oldsource>
         <translation>HTML预览</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="386"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation>无法写入文件 %1!</translation>
@@ -1882,7 +1959,7 @@ Success: %2.</oldsource>
         <translation>显示当前行</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="193"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="196"/>
         <source>Debug Output</source>
         <oldsource>Debug</oldsource>
         <translation>调试输出</translation>
@@ -1939,7 +2016,7 @@ Success: %2.</oldsource>
         <translation>删除所有断点</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/litedebug.cpp" line="156"/>
+        <location filename="src/plugins/litedebug/litedebug.cpp" line="158"/>
         <source>&amp;Debug</source>
         <translation>调试(&amp;D)</translation>
     </message>
@@ -2014,27 +2091,27 @@ Success: %2.</oldsource>
         <translation>选择所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="727"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="733"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="735"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="741"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="736"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="742"/>
         <source>Could not open %1 for writing.</source>
         <translation>无法写入文件 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="755"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="761"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="780"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="786"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
@@ -2078,6 +2155,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="245"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="464"/>
         <source>Fold</source>
         <translation>折叠</translation>
     </message>
@@ -2098,7 +2176,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="832"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="838"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>跳转到行</translation>
@@ -2154,7 +2232,7 @@ Success: %2.</oldsource>
         <translation>打印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="797"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="803"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>您想要放弃未保存的修改并重新载入%1?</translation>
     </message>
@@ -2165,7 +2243,7 @@ Success: %2.</oldsource>
         <translation>移动光标到下一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="832"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="838"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>
@@ -3011,29 +3089,29 @@ Do you want to replace it?</source>
         <translation>应用程序:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="32"/>
-        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="59"/>
+        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="29"/>
+        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="56"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
         <translation>浏览...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="39"/>
+        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="36"/>
         <source>Arguments:</source>
         <translation>参数:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="49"/>
+        <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="46"/>
         <source>Working directory:</source>
         <translation>工作目录:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="67"/>
+        <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="82"/>
         <source>Select Executable</source>
         <translation>选择可执行文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="77"/>
+        <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="92"/>
         <source>Select the working directory:</source>
         <oldsource>Select Working Directory</oldsource>
         <translation>选择工作目录:</translation>
@@ -3218,12 +3296,12 @@ Do you want to replace it?</source>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="33"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="57"/>
         <source>Navigation</source>
         <translation>导航</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="93"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="117"/>
         <source>False load %1 !</source>
         <translation>加载失败 %1 !</translation>
     </message>
