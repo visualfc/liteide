@@ -3,6 +3,30 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2013.12.27 Ver x20
+* LiteIDE
+	* add new GolangPresent plugin
+	* add evilworks.qss style (by Vedran Vuk<vedranvuk82@gmail.com>)
+	* tool windows use instantpopup
+* LiteEditor
+	* update kate highlighter
+	* add gopresent.xml syntax
+	* add Visual Studio Theme (by William Kennedy <bill@ardanstudios.com>)
+	* fix goto match braces	
+* LiteDebug:
+	* external cmd setting
+	* fix command input foucus
+* LiteEnv:
+	* fix to use utf8 encoding
+* Markdown:
+	* add new Github_Style.css (by Slene <vslene@gmail.com>)
+* FileBrowser:
+	* option show hidden files
+* GolangPresent:
+	* support golang present editor
+	* verify golang present
+	* export golang present to html
+	
 ### 2013.7.17 Ver x19
 * LiteIDE
 	* MacOS X 10.8 Retina support
