@@ -102,7 +102,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_findResultListView->setEditTriggers(0);
     m_findResultListView->setModel(m_findFilterModel);
 
-    m_findEdit = new Utils::FilterLineEdit(200);
+    m_findEdit = new Utils::FilterLineEdit(500);
     m_tagInfo = new QLabel;
     m_tagInfo->setWordWrap(true);
     //m_tagInfo->setScaledContents(true);
@@ -924,6 +924,9 @@ void GolangDoc::documentLoaded()
 
 void GolangDoc::filterTextChanged(QString str)
 {
+    if (str.isEmpty()) {
+        return;
+    }
     m_findFilterModel->setFilterFixedString(str);
     m_findResultListView->verticalScrollBar()->setValue(0);
     if (m_findFilterModel->rowCount() > 0) {
