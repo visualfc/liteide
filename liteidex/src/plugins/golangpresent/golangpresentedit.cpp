@@ -36,7 +36,7 @@
 #include <QDebug>
 
 GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
-    QObject(parent), m_liteApp(app), m_process(0)
+    QObject(parent), m_liteApp(app), m_htmldoc(0), m_process(0)
 {
     m_editor = LiteApi::getTextEditor(editor);
     if (!m_editor) {
@@ -76,6 +76,9 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     QAction *exportHtml = new QAction(QIcon("icon:golangpresent/images/exporthtml.png"),tr("Export HTML"),this);
     actionContext->regAction(exportHtml,"Export HTML","");
 
+    //QAction *exportPdf = new QAction(QIcon("icon:golangpresent/images/exportpdf.png"),tr("Export PDF"),this);
+    //actionContext->regAction(exportPdf,"Export PDF","");
+
     connect(m_editor,SIGNAL(destroyed()),this,SLOT(deleteLater()));
     connect(s1,SIGNAL(triggered()),this,SLOT(s1()));
     connect(s2,SIGNAL(triggered()),this,SLOT(s2()));
@@ -86,6 +89,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     connect(bullets,SIGNAL(triggered()),this,SLOT(bullets()));
     connect(comment,SIGNAL(triggered()),this,SLOT(comment()));
     connect(exportHtml,SIGNAL(triggered()),this,SLOT(exportHtml()));
+    //connect(exportPdf,SIGNAL(triggered()),this,SLOT(exportPdf()));
 
     QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
     if (toolBar) {
@@ -101,6 +105,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         toolBar->addAction(bullets);
         toolBar->addSeparator();
         toolBar->addAction(exportHtml);
+        //toolBar->addAction(exportPdf);
     }
 
     QMenu *menu = LiteApi::getEditMenu(editor);
@@ -119,6 +124,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         menu->addAction(comment);
         menu->addSeparator();
         menu->addAction(exportHtml);
+        //menu->addAction(exportPdf);
     }
 
     menu = LiteApi::getContextMenu(editor);
@@ -180,23 +186,12 @@ void GolangPresentEdit::comment()
 
 void GolangPresentEdit::exportHtml()
 {
-    QString cmd = FileUtil::lookupLiteBin("gopresent",m_liteApp);
-    if (cmd.isEmpty()) {
-        m_liteApp->appendLog("GolangPresent","Not find gopresent",true);
-        return;
-    }
-    QFileInfo info(m_editor->filePath());
-    if (!m_process) {
-        m_process = new ProcessEx(this);
-        m_process->setWorkingDirectory(m_liteApp->resourcePath()+"/gopresent");
-        connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
-        connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
-    }
-    if (m_process->isRunning()) {
-        return;
-    }
-    m_exportData.clear();
-    m_process->startEx(cmd,"-stdout -i "+info.filePath().toUtf8());
+    startExportHtmlDoc(EXPORT_TYPE_HTML);
+}
+
+void GolangPresentEdit::exportPdf()
+{
+    startExportHtmlDoc(EXPORT_TYPE_PDF);
 }
 
 void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
@@ -213,22 +208,76 @@ void GolangPresentEdit::extFinish(bool error, int code, QString msg)
     if (error || code != 0) {
         m_liteApp->appendLog("GolangPresent",msg,true);
     } else {
-        static QString init = QFileInfo(m_editor->filePath()).absolutePath();
-        QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
-        if (outdir.isEmpty()) {
-            return;
+        int exportType = m_process->userData(0).toInt();
+        if (exportType == EXPORT_TYPE_HTML) {
+            static QString init = QFileInfo(m_editor->filePath()).absolutePath();
+            QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
+            if (outdir.isEmpty()) {
+                return;
+            }
+            init = outdir;
+            QDir dir(outdir);
+            QFile file(QFileInfo(dir,QFileInfo(m_editor->filePath()).fileName()+".html").filePath());
+            if (!file.open(QFile::WriteOnly)) {
+                return;
+            }
+            file.write(m_exportData);
+            dir.mkdir("static");
+            dir.mkdir("js");
+            FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/static",dir.path()+"/static");
+            FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/js",dir.path()+"/js");
+            QDesktopServices::openUrl(QUrl::fromLocalFile(outdir));
+        } else if (exportType == EXPORT_TYPE_PDF) {
+            QString init = QFileInfo(m_editor->filePath()).absolutePath()+"/"+QFileInfo(m_editor->filePath()).completeBaseName()+".pdf";
+            m_pdfFileName = QFileDialog::getSaveFileName(m_liteApp->mainWindow(),tr("Export PDF"),init,"*.pdf");
+            if (m_pdfFileName.isEmpty()) {
+                return;
+            }
+            if (!m_htmldoc) {
+                m_htmldoc = m_liteApp->htmlWidgetManager()->createDocument(this);
+                connect(m_htmldoc,SIGNAL(loadFinished(bool)),this,SLOT(loadHtmlFinished(bool)));
+            }
+            QUrl url = QUrl::fromLocalFile(m_liteApp->resourcePath()+"/gopresent/export.html");
+            m_htmldoc->setHtml(QString::fromUtf8(m_exportData),url);
         }
-        init = outdir;
-        QDir dir(outdir);
-        QFile file(QFileInfo(dir,QFileInfo(m_editor->filePath()).fileName()+".html").filePath());
-        if (!file.open(QFile::WriteOnly)) {
-            return;
-        }
-        file.write(m_exportData);
-        dir.mkdir("static");
-        dir.mkdir("js");
-        FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/static",dir.path()+"/static");
-        FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/js",dir.path()+"/js");
-        QDesktopServices::openUrl(QUrl::fromLocalFile(outdir));
-     }
+    }
+}
+
+void GolangPresentEdit::loadHtmlFinished(bool b)
+{
+    if (!b) {
+        m_liteApp->appendLog("GolangPresent","Failed export PDF document!");
+        return;
+    }
+#ifndef QT_NO_PRINTER
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setCreator("LiteIDE");
+        printer.setOutputFileName(m_pdfFileName);
+        m_htmldoc->print(&printer);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(m_pdfFileName).path()));
+#endif
+}
+
+bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
+{
+    QString cmd = FileUtil::lookupLiteBin("gopresent",m_liteApp);
+    if (cmd.isEmpty()) {
+        m_liteApp->appendLog("GolangPresent","Not find gopresent",true);
+        return false;
+    }
+    QFileInfo info(m_editor->filePath());
+    if (!m_process) {
+        m_process = new ProcessEx(this);
+        m_process->setWorkingDirectory(m_liteApp->resourcePath()+"/gopresent");
+        connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
+        connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
+    }
+    if (m_process->isRunning()) {
+        return false;
+    }
+    m_exportData.clear();
+    m_process->setUserData(0,type);
+    m_process->startEx(cmd,"-stdout -i "+info.filePath().toUtf8());
+    return true;
 }

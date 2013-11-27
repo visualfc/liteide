@@ -31,6 +31,12 @@ class GolangPresentEdit : public QObject
 {
     Q_OBJECT
 public:
+    enum EXPORT_TYPE {
+        EXPORT_TYPE_HTML,
+        EXPORT_TYPE_PDF
+    };
+
+public:
     explicit GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
 public slots:
     void s1();
@@ -42,14 +48,19 @@ public slots:
     void bullets();
     void comment();
     void exportHtml();
+    void exportPdf();
     void extOutput(const QByteArray &data,bool bError);
     void extFinish(bool error,int code, QString msg);
+    void loadHtmlFinished(bool);
 protected:
+    bool startExportHtmlDoc(EXPORT_TYPE type);
     LiteApi::IApplication *m_liteApp;
     LiteApi::ITextEditor  *m_editor;
+    LiteApi::IHtmlDocument *m_htmldoc;
     QPlainTextEdit        *m_ed;
     ProcessEx             *m_process;
     QByteArray             m_exportData;
+    QString                m_pdfFileName;
 };
 
 #endif // GOLANGPRESENTEDIT_H
