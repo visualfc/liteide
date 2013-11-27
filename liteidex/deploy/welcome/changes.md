@@ -6,7 +6,7 @@
 ### 2013.11.27 Ver x20
 * LiteIDE
 	* add new GolangPresent plugin
-	* add evilworks.qss style (by Vedran Vuk<vedranvuk82@gmail.com>)
+	* add evilworks.qss style (by Vedran Vuk <vedranvuk82@gmail.com>)
 	* tool windows use instantpopup
 * LiteEditor
 	* update kate highlighter
