@@ -868,7 +868,7 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
                 if (node) {
                     tooltip = true;
                     QPoint pos(1,offset);
-                    QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),node->msg,this->m_navigateArea);
+                    QToolTip::showText(m_navigateArea->mapToGlobal(pos),node->msg,this->m_navigateArea);
                 }
             }
         }
@@ -1793,6 +1793,7 @@ void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, con
 void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg)
 {
     m_navigateManager->insertMark(line,msg,type);
+    m_navigateArea->update();
 }
 
 void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types)

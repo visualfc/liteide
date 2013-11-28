@@ -4,6 +4,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -19,6 +20,8 @@ func abort(err error) {
 	fmt.Fprint(os.Stderr, err)
 	os.Exit(1)
 }
+
+//func test;
 
 func main() {
 	flag.Parse()

@@ -1092,26 +1092,7 @@ void LiteBuild::dbclickBuildOutput(const QTextCursor &cur)
             }
         }
     }
-    /*
-    LiteApi::IProject *project = m_liteApp->projectManager()->currentProject();
-    if (project) {
-        fileName = project->fileNameToFullPath(fileName);
-    } else {
-        QDir dir(m_workDir);
-        QString filePath = dir.filePath(fileName);
-        if (QFile::exists(filePath)) {
-            fileName = filePath;
-        } else {
-            foreach(QFileInfo info,dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
-                QString filePath = info.absoluteDir().filePath(fileName);
-                if (QFile::exists(filePath)) {
-                    fileName = filePath;
-                    break;
-                }
-            }
-        }
-    }
-    */
+
     LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName);
     if (editor) {
         QTextCursor lineCur = cur;

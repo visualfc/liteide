@@ -25,6 +25,7 @@
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "litebuildapi/litebuildapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 
 #include <QDebug>
 #include <QProcess>
@@ -74,7 +75,6 @@ void GolangFmt::applyOption(QString id)
     }
     m_diff = m_liteApp->settings()->value("golangfmt/diff",true).toBool();
     m_autofmt = m_liteApp->settings()->value("golangfmt/autofmt",true).toBool();
-    m_autopop = m_liteApp->settings()->value("golangfmt/autopop",false).toBool();
     if (!m_diff) {
         m_autofmt = false;
     }
@@ -129,32 +129,34 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running gofmt").arg(timeout),false);
         return;
     }
+    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
-    QByteArray error = process.readAllStandardError();
-    if (!error.isEmpty()) {
-        QString data = codec->toUnicode(error);
-        data.replace("<standard input>",fileName);
-        m_liteApp->appendLog("gofmt error","\n"+data,m_autopop);
+    if (process.exitCode() != 0) {
+        QByteArray error = process.readAllStandardError();
+        QString errmsg = codec->toUnicode(error);
+        if (!errmsg.isEmpty()) {
+            //<standard input>:23:1: expected declaration, found 'INT' 1
+             foreach(QString msg,errmsg.split("\n")) {
+                QRegExp re(":(\\d+):");
+                if (re.indexIn(msg,16) >= 0) {
+                    bool ok = false;
+                    int line = re.cap(1).toInt(&ok);
+                    if (ok) {
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16));
+                    }
+                }
+            }
+        }
+        QString log = errmsg;
+        errmsg.replace("<standard input>","");
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"gofmt error\n"+errmsg);
+        log.replace("<standard input>",info.filePath());
+        m_liteApp->appendLog("gofmt error",log,false);
         return;
-        //goto error line
-//        QRegExp rep("([\\w\\d_\\\\/\\.]+):(\\d+):");
-
-//        int index = rep.indexIn(data);
-//        if (index < 0)
-//            return;
-//        QStringList capList = rep.capturedTexts();
-
-//        if (capList.count() < 3)
-//            return;
-//        //QString fileName = capList[1];
-//        QString fileLine = capList[2];
-
-//        bool ok = false;
-//        int line = fileLine.toInt(&ok);
-//        if (!ok)
-//            return;
-        //textEditor->gotoLine(line-1,0,true);
     }
+    liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"gofmt success");
+
     QByteArray data = process.readAllStandardOutput();
     /*
     int vpos = -1;

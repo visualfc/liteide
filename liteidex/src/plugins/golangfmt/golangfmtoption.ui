@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>463</width>
     <height>300</height>
    </rect>
   </property>
@@ -31,13 +31,6 @@
        <widget class="QCheckBox" name="checkBoxAutoFmt">
         <property name="text">
          <string>Automatically format code when saving</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxAutoPopMessage">
-        <property name="text">
-         <string>Display log window on error</string>
         </property>
        </widget>
       </item>

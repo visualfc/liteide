@@ -56,7 +56,6 @@ public:
     QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
 
 public:
-
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void setCurrentBuild(LiteApi::IBuild *build);
     void updateBuildConfig(LiteApi::IBuild *build);
