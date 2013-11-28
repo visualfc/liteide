@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	//"log"
 	"os"
 	"path/filepath"
 )

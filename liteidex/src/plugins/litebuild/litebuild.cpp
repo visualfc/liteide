@@ -28,7 +28,7 @@
 #include "textoutput/textoutput.h"
 #include "buildconfigdialog.h"
 #include "litedebugapi/litedebugapi.h"
-
+#include "liteeditorapi/liteeditorapi.h"
 #include <QToolBar>
 #include <QComboBox>
 #include <QAction>
@@ -66,7 +66,10 @@ enum {
     ID_MIMETYPE = 3,
     ID_TASKLIST = 4,
     ID_EDITOR = 5,
-    ID_INPUTTYPE = 6 //action - 0, command - 1
+    ID_INPUTTYPE = 6, //action - 0, command - 1
+    ID_NAVIGATE = 7,
+    ID_REGEXP = 8,
+    ID_ACTIONID = 9
 };
 
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
@@ -787,7 +790,7 @@ void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
     setCurrentBuild(build);
 }
 
-void LiteBuild::extOutput(const QByteArray &data, bool /*bError*/)
+void LiteBuild::extOutput(const QByteArray &data, bool bError)
 {
     if (data.isEmpty()) {
         return;
@@ -800,7 +803,49 @@ void LiteBuild::extOutput(const QByteArray &data, bool /*bError*/)
     if (!codecName.isEmpty()) {
         codec = QTextCodec::codecForName(codecName.toLatin1());
     }
-    m_output->append(codec->toUnicode(data));
+    QString msg = codec->toUnicode(data);
+    m_output->append(msg);
+
+    if (bError && m_process->userData(ID_NAVIGATE).toBool() ) {
+        QString regexp = m_process->userData(ID_REGEXP).toString();
+        if (regexp.isEmpty()) {
+            return;
+        }
+        QRegExp re(regexp);
+        foreach (QString err, msg.split("\n",QString::SkipEmptyParts)) {
+            if (re.indexIn(err) >= 0 && re.captureCount() >= 2) {
+                QString fileName = re.cap(1);
+                QString fileLine = re.cap(2);
+
+                bool ok = false;
+                int line = fileLine.toInt(&ok);
+                if (ok) {
+                    QDir dir(m_workDir);
+                    QString filePath = dir.filePath(fileName);
+                    if (QFile::exists(filePath)) {
+                        fileName = filePath;
+                    } else {
+                        foreach(QFileInfo info,dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
+                            QString filePath = info.absoluteDir().filePath(fileName);
+                            if (QFile::exists(filePath)) {
+                                fileName = filePath;
+                                break;
+                            }
+                        }
+                    }
+
+                    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName,true);
+                    if (editor) {
+                        LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+                        if (liteEditor) {
+                            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,m_process->userData(ID_ACTIONID).toString()+" Error");
+                            liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void LiteBuild::extFinish(bool error,int exitCode, QString msg)
@@ -833,7 +878,7 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
         }
     } else {
         m_process->setUserData(ID_TASKLIST,QStringList());
-    }
+    }    
 }
 
 void LiteBuild::stopAction()
@@ -863,6 +908,7 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     m_process->setUserData(ID_ARGS,args);
     m_process->setUserData(ID_CODEC,"utf-8");
     m_process->setUserData(ID_INPUTTYPE,INPUT_COMMAND);
+    m_process->setUserData(ID_NAVIGATE,false);
 
     QString shell = FileUtil::lookPathInDir(cmd,workDir);
     if (shell.isEmpty()) {
@@ -1000,6 +1046,9 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
     if (!ba->regex().isEmpty()) {
         m_outputRegex = this->envToValue(ba->regex(),env,sysenv);
+        m_process->setUserData(ID_REGEXP,m_outputRegex);
+    } else {
+        m_process->setUserData(ID_REGEXP,"");
     }
 
     if (ba->isOutput() && ba->isReadline()) {
@@ -1017,6 +1066,19 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 //    }
 
     m_process->setEnvironment(sysenv.toStringList());
+    m_process->setUserData(ID_NAVIGATE,ba->isNavigate());
+    m_process->setUserData(ID_ACTIONID,ba->id());
+
+    if (ba->isNavigate()) {
+        foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+            LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+            if (liteEditor) {
+                liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+                liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"Normal");
+            }
+        }
+    }
+
     if (!ba->isOutput()) {
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);
         m_output->appendTag(QString("%1 %2 [%3]\n")

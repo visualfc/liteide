@@ -4,7 +4,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	//"log"
 	"os"
 	"path/filepath"
 )

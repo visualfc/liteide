@@ -288,6 +288,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 act->setWork(attrs.value("work").toString());
                 act->setKillold(attrs.value("killold").toString());
                 act->setSeparator(attrs.value("separator").toString());
+                act->setNavigate(attrs.value("navigate").toString());
                 QString img = attrs.value("img").toString();
                 if (!img.isEmpty()) {
                     if (img.at(0) != ':') {
