@@ -851,7 +851,9 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
             this->gotoLine(line,0,true);
         }
     } else if (e->type() == QEvent::MouseMove) {
+        bool tooltip = false;
         if (isInNavigateHead(e->pos())) {
+            tooltip = true;
             QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),this->m_navigateManager->m_msg,this->m_navigateArea);
         } else {
             int line = isInNavigateMark(e->pos());
@@ -859,9 +861,13 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
                 NavigateMark *mark = m_navigateManager->markMap.value(line);
                 NavigateMark::Node *node = mark->findNode(LiteApi::EditorNavigateError);
                 if (node) {
+                    tooltip = true;
                     QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),node->msg,this->m_navigateArea);
                 }
             }
+        }
+        if (!tooltip) {
+            QToolTip::hideText();
         }
     }
 }
