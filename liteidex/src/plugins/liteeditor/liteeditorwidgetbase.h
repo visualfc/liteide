@@ -28,6 +28,8 @@
 #include <QTextBlock>
 #include "liteeditorapi/liteeditorapi.h"
 
+
+class NavigateManager;
 class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
@@ -64,6 +66,8 @@ public:
     void hideToolTip();
     void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
     void ensureFinalNewLine(QTextCursor& cursor);
+    void insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type);
+    void clearAllNavigateMark();
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
@@ -236,6 +240,7 @@ protected:
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;
+    NavigateManager *m_navigateManager;
 };
 
 #endif // LITEEDITORWIDGETBASE_H

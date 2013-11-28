@@ -133,6 +133,12 @@ signals:
     void markChanged();
 };
 
+enum EditorNaviagteType{
+    EditorNavigateNormal = 0,
+    EditorNavigateWaring,
+    EditorNavigateError
+};
+
 class ILiteEditor : public ITextEditor
 {
     Q_OBJECT
@@ -141,6 +147,9 @@ public:
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
+    virtual void insertNavigateMark(int line, const QString &msg, EditorNaviagteType type) = 0;
+    virtual void clearNavigateMarak(int line) = 0;
+    virtual void clearAllNavigateMark() = 0;
 };
 
 inline ILiteEditor *getLiteEditor(IEditor *editor)

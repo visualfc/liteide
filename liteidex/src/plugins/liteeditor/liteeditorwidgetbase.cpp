@@ -44,6 +44,80 @@
 #endif
 //lite_memory_check_end
 
+struct NavigateMark
+{
+    NavigateMark() {}
+    ~NavigateMark()
+    {
+        foreach (Node *node, m_nodeList) {
+            delete node;
+        }
+        m_nodeList.clear();
+    }
+
+    struct Node {
+        LiteApi::EditorNaviagteType type;
+        QString msg;
+    };
+    void addNode(LiteApi::EditorNaviagteType type, const QString & msg)
+    {
+        Node *node = new Node;
+        node->type = type;
+        node->msg = msg;
+        m_nodeList.append(node);
+    }
+    Node* findNode(LiteApi::EditorNaviagteType type)
+    {
+        foreach (Node *node, m_nodeList) {
+            if (node->type == type) {
+                return node;
+            }
+        }
+        return 0;
+    }
+    QList<Node*> m_nodeList;
+};
+
+typedef QMap<int,NavigateMark*> NavigateMarkMap;
+
+class NavigateManager : public QObject
+{
+public:
+    NavigateManager(QObject *parent) : QObject(parent)
+    {
+    }
+    ~NavigateManager()
+    {
+        clearAll();
+    }
+    void insertMark(int line, const QString &msg, LiteApi::EditorNaviagteType type)
+    {
+         NavigateMarkMap::iterator it = markMap.find(line);
+         if (it == markMap.end()) {
+             NavigateMark *mark = new NavigateMark;
+             mark->addNode(type,msg);
+             markMap.insert(line,mark);
+         } else {
+             NavigateMark *mark = it.value();
+             NavigateMark::Node *node = mark->findNode(type);
+             if (node) {
+                 node->msg = msg;
+             } else {
+                 mark->addNode(type,msg);
+             }
+         }
+    }
+    void clearAll()
+    {
+        foreach(NavigateMark *mark,markMap.values()) {
+            delete mark;
+        }
+        markMap.clear();
+    }
+    NavigateMarkMap markMap;
+};
+
+
 class TextEditExtraArea : public QWidget {
 public:
     TextEditExtraArea(LiteEditorWidgetBase *edit):QWidget(edit) {
@@ -119,6 +193,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
     m_navateArea = new TextEditNavigateArea(this);
+    m_navigateManager = new NavigateManager(this);
 
     m_indentLineForeground = QColor(Qt::darkCyan);
     m_extraForeground = QColor(Qt::darkCyan);
@@ -1583,6 +1658,16 @@ void LiteEditorWidgetBase::ensureFinalNewLine(QTextCursor &cursor)
         cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
         cursor.insertText(QLatin1String("\n"));
     }
+}
+
+void LiteEditorWidgetBase::insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type)
+{
+    m_navigateManager->insertMark(line,msg,type);
+}
+
+void LiteEditorWidgetBase::clearAllNavigateMark()
+{
+    m_navigateManager->clearAll();
 }
 
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)

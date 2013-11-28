@@ -903,6 +903,19 @@ void LiteEditor::setSpellCheckZoneDontComplete(bool b)
     m_editorWidget->setSpellCheckZoneDontComplete(b);
 }
 
+void LiteEditor::insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type)
+{
+
+}
+
+void LiteEditor::clearNavigateMarak(int line)
+{
+}
+
+void LiteEditor::clearAllNavigateMark()
+{
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();
