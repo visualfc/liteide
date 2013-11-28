@@ -98,7 +98,8 @@ public:
     virtual void onActive();
     virtual void setFindOption(LiteApi::FindOption *opt);
     virtual void setSpellCheckZoneDontComplete(bool b);
-    virtual void insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type);
+    virtual void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
+    virtual void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg);
     virtual void clearNavigateMarak(int line);
     virtual void clearAllNavigateMark();
     LiteEditorWidget *editorWidget() const;

@@ -903,9 +903,14 @@ void LiteEditor::setSpellCheckZoneDontComplete(bool b)
     m_editorWidget->setSpellCheckZoneDontComplete(b);
 }
 
-void LiteEditor::insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type)
+void LiteEditor::setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg)
 {
+    m_editorWidget->setNavigateHead(type,msg);
+}
 
+void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg )
+{
+    m_editorWidget->insertNavigateMark(line,type,msg);
 }
 
 void LiteEditor::clearNavigateMarak(int line)
@@ -914,6 +919,7 @@ void LiteEditor::clearNavigateMarak(int line)
 
 void LiteEditor::clearAllNavigateMark()
 {
+    m_editorWidget->clearAllNavigateMark();
 }
 
 void LiteEditor::selectNextParam()

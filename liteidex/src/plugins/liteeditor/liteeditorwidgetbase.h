@@ -66,7 +66,8 @@ public:
     void hideToolTip();
     void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
     void ensureFinalNewLine(QTextCursor& cursor);
-    void insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type);
+    void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
+    void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg);
     void clearAllNavigateMark();
 signals:
     void navigationStateChanged(const QByteArray &array);

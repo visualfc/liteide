@@ -85,6 +85,7 @@ class NavigateManager : public QObject
 public:
     NavigateManager(QObject *parent) : QObject(parent)
     {
+        m_type = LiteApi::EditorNavigateNormal;
     }
     ~NavigateManager()
     {
@@ -114,7 +115,15 @@ public:
         }
         markMap.clear();
     }
+    void setType(LiteApi::EditorNaviagteType type, const QString &msg)
+    {
+        m_type = type;
+        m_msg = msg;
+    }
+public:
     NavigateMarkMap markMap;
+    LiteApi::EditorNaviagteType m_type;
+    QString m_msg;
 };
 
 
@@ -552,7 +561,7 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
     const int extraAreaWidth = m_extraArea->width() - collapseColumnWidth;
 
     painter.fillRect(e->rect(), pal.color(QPalette::Base));
-    painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), INT_MAX)),
+    painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), m_extraArea->height())),
                      m_extraBackground);
 
     //painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
@@ -738,7 +747,7 @@ void LiteEditorWidgetBase::extraAreaLeaveEvent(QEvent *)
 
 int LiteEditorWidgetBase::navigateAreaWidth()
 {
-    return 20;
+    return 16;
 }
 
 void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
@@ -752,6 +761,12 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     painter.fillRect(e->rect(), pal.color(QPalette::Base));
     painter.fillRect(e->rect().intersected(QRect(0, 0, m_navateArea->width(), m_navateArea->height())),
                      m_extraBackground);
+    int width = this->navigateAreaWidth();
+    if (m_navigateManager->m_type == LiteApi::EditorNavigateNormal) {
+        painter.fillRect(2,2,width-4,width-4,Qt::darkGreen);
+    } else {
+        painter.fillRect(2,2,width-4,width-4,Qt::darkRed);
+    }
 }
 
 void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
@@ -1660,7 +1675,13 @@ void LiteEditorWidgetBase::ensureFinalNewLine(QTextCursor &cursor)
     }
 }
 
-void LiteEditorWidgetBase::insertNavigateMark(int line, const QString &msg, LiteApi::EditorNaviagteType type)
+void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg)
+{
+    m_navigateManager->setType(type,msg);
+    m_navateArea->update();
+}
+
+void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg)
 {
     m_navigateManager->insertMark(line,msg,type);
 }

@@ -40,6 +40,7 @@ public:
 public:
     explicit GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
 public slots:
+    void editorSaved(LiteApi::IEditor*);
     void s1();
     void s2();
     void s3();

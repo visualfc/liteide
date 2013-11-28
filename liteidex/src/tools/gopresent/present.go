@@ -18,12 +18,17 @@ var extensions = map[string]string{
 	".article": "article.tmpl",
 }
 
+var extensions_tmpl = map[string]string{
+	".slide":   slides_tmpl,
+	".article": article_tmpl,
+}
+
 func isDoc(path string) bool {
 	_, ok := extensions[filepath.Ext(path)]
 	return ok
 }
 
-func verifyDoc(docFile string) error {
+func VerifyDoc(docFile string) error {
 	doc, err := parse(docFile, 0)
 	if err != nil {
 		return err
@@ -56,6 +61,35 @@ func renderDoc(w io.Writer, base, docFile string) error {
 	tmpl := present.Template()
 	tmpl = tmpl.Funcs(template.FuncMap{"playable": playable})
 	if _, err := tmpl.ParseFiles(actionTmpl, contentTmpl); err != nil {
+		return err
+	}
+	// Execute the template.
+	return doc.Render(w, tmpl)
+}
+
+func RenderDoc(w io.Writer, docFile string) error {
+	// Read the input and build the doc structure.
+	doc, err := parse(docFile, 0)
+	if err != nil {
+		return err
+	}
+
+	// Find which template should be executed.
+	ext := filepath.Ext(docFile)
+	contentTmpl, ok := extensions_tmpl[ext]
+	if !ok {
+		return fmt.Errorf("no template for extension %v", ext)
+	}
+
+	// Locate the template file.
+	actionTmpl := action_tmpl //filepath.Join(base, "templates/action.tmpl")
+	// Read and parse the input.
+	tmpl := present.Template()
+	tmpl = tmpl.Funcs(template.FuncMap{"playable": playable})
+	if tmpl, err = tmpl.New("action").Parse(actionTmpl); err != nil {
+		return err
+	}
+	if tmpl, err = tmpl.New("content").Parse(contentTmpl); err != nil {
 		return err
 	}
 

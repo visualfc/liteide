@@ -30,8 +30,9 @@ func main() {
 		flag.Usage()
 		return
 	}
+
 	if *verify {
-		err := verifyDoc(*input)
+		err := VerifyDoc(*input)
 		if err != nil {
 			abort(err)
 		}
@@ -53,8 +54,9 @@ func main() {
 			abort(err)
 		}
 	}
-	err := renderDoc(w, "", *input)
+	err := RenderDoc(w, *input)
 	if err != nil {
 		abort(err)
 	}
+
 }

@@ -25,6 +25,7 @@
 #include "editorutil/editorutil.h"
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 #include <QToolBar>
 #include <QMenu>
 #include <QAction>
@@ -33,6 +34,7 @@
 #include <QProcess>
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QRegExp>
 #include <QDebug>
 
 GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
@@ -46,6 +48,8 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     if (m_ed) {
         m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     }
+
+    connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoSlide");
 
@@ -152,6 +156,13 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     }
 }
 
+void GolangPresentEdit::editorSaved(LiteApi::IEditor *editor)
+{
+    if (editor == m_editor) {
+        this->verify();
+    }
+}
+
 void GolangPresentEdit::s1()
 {
     EditorUtil::InsertHead(m_ed,"* ");
@@ -212,7 +223,21 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
     if (!bError) {
         m_exportData.append(data);
     } else {
-        m_liteApp->appendLog("GolangPresent",QString::fromUtf8(data),true);
+        QString msg = QString::fromUtf8(data);
+        m_liteApp->appendLog("GolangPresent",msg,true);
+        LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(m_editor);
+        if (liteEditor) {
+            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,QString::fromUtf8(data));
+        }
+        QRegExp re("(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):");
+        re.indexIn(msg);
+        if (re.captureCount() >= 2) {
+            bool ok = false;
+            int line = re.cap(2).toInt(&ok);
+            if (ok) {
+                liteEditor->gotoLine(line-1,0,true);
+            }
+        }
     }
 }
 
@@ -222,6 +247,10 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
         int exportType = m_process->userData(0).toInt();
         if (exportType == EXPORT_TYPE_VERIFY) {
             m_liteApp->appendLog("GolangPresent","verify success",false);
+            LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(m_editor);
+            if (liteEditor) {
+                liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,tr("Present verify success"));
+            }
         } else if (exportType == EXPORT_TYPE_HTML) {
             static QString init = QFileInfo(m_editor->filePath()).absolutePath();
             QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
@@ -283,19 +312,22 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     QFileInfo info(m_editor->filePath());
     if (!m_process) {
         m_process = new ProcessEx(this);
-        m_process->setWorkingDirectory(m_liteApp->resourcePath()+"/gopresent");
+        m_process->setWorkingDirectory(info.absolutePath());
         connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
         connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
     }
     if (m_process->isRunning()) {
-        return false;
+        m_process->waitForFinished(3000);
+        if (m_process->isRunning()) {
+            return false;
+        }
     }
     m_exportData.clear();
     m_process->setUserData(0,type);
     if (type == EXPORT_TYPE_VERIFY) {
-        m_process->startEx(cmd,"-v -i "+info.filePath().toUtf8());
+        m_process->startEx(cmd,"-v -i "+info.fileName().toUtf8());
     } else {
-        m_process->startEx(cmd,"-stdout -i "+info.filePath().toUtf8());
+        m_process->startEx(cmd,"-stdout -i "+info.fileName().toUtf8());
     }
     return true;
 }

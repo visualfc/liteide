@@ -27,7 +27,7 @@ func verify_path(root string, url string) error {
 	}
 	_, err := os.Stat(path)
 	if err != nil {
-		return fmt.Errorf("path %s not find", url)
+		return err
 	}
 	return nil
 }
@@ -38,7 +38,7 @@ func verify_doc(root string, doc *present.Doc) error {
 			switch i := elem.(type) {
 			case present.Image:
 				if err := verify_path(root, i.URL); err != nil {
-					return err
+					return fmt.Errorf("! .image %s not exist", i.URL)
 				}
 			}
 		}
