@@ -59,7 +59,7 @@ public:
     void extraAreaMouseEvent(QMouseEvent *e);
     void extraAreaLeaveEvent(QEvent *e);
     int navigateAreaWidth();
-    int isInNavigateMark(const QPoint &pos);
+    int isInNavigateMark(const QPoint &pos, int *poffset);
     bool isInNavigateHead(const QPoint &pos);
     void navigateAreaPaintEvent(QPaintEvent *e);
     void navigateAreaMouseEvent(QMouseEvent *e);

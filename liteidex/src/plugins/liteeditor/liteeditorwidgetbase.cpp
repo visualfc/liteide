@@ -813,7 +813,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     }
 }
 
-int LiteEditorWidgetBase::isInNavigateMark(const QPoint &pos)
+int LiteEditorWidgetBase::isInNavigateMark(const QPoint &pos, int *poffset)
 {
     int count = this->blockCount();
     int height = m_navigateArea->height()-m_navigateArea->width();
@@ -825,6 +825,9 @@ int LiteEditorWidgetBase::isInNavigateMark(const QPoint &pos)
             int offset = i.key()*height*1.0/count;
             QRect rect(0,width+offset-1,width,4+1);
             if (rect.contains(pos)) {
+                if (poffset) {
+                    *poffset = offset+width;
+                }
                 return i.key();
             }
         }
@@ -846,7 +849,7 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton &&
         (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonDblClick)) {
-        int line = isInNavigateMark(e->pos());
+        int line = isInNavigateMark(e->pos(),0);
         if (line != -1) {
             this->gotoLine(line,0,true);
         }
@@ -854,14 +857,17 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
         bool tooltip = false;
         if (isInNavigateHead(e->pos())) {
             tooltip = true;
-            QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),this->m_navigateManager->m_msg,this->m_navigateArea);
+            QPoint pos(1,1);
+            QToolTip::showText(m_navigateArea->mapToGlobal(pos),this->m_navigateManager->m_msg,this->m_navigateArea);
         } else {
-            int line = isInNavigateMark(e->pos());
+            int offset = 0;
+            int line = isInNavigateMark(e->pos(),&offset);
             if (line != -1) {
                 NavigateMark *mark = m_navigateManager->markMap.value(line);
                 NavigateMark::Node *node = mark->findNode(LiteApi::EditorNavigateError);
                 if (node) {
                     tooltip = true;
+                    QPoint pos(1,offset);
                     QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),node->msg,this->m_navigateArea);
                 }
             }
