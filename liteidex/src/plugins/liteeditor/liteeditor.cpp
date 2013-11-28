@@ -917,9 +917,9 @@ void LiteEditor::clearNavigateMarak(int line)
 {
 }
 
-void LiteEditor::clearAllNavigateMark()
+void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types)
 {
-    m_editorWidget->clearAllNavigateMark();
+    m_editorWidget->clearAllNavigateMark(types);
 }
 
 void LiteEditor::selectNextParam()

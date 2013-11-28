@@ -136,7 +136,8 @@ signals:
 enum EditorNaviagteType{
     EditorNavigateNormal = 1,
     EditorNavigateWaring = 2,
-    EditorNavigateError = 4
+    EditorNavigateError = 4,
+    EditorNavigateBad = EditorNavigateWaring|EditorNavigateError
 };
 
 class ILiteEditor : public ITextEditor
@@ -149,7 +150,7 @@ public:
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
     virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg) = 0;
     virtual void clearNavigateMarak(int line) = 0;
-    virtual void clearAllNavigateMark() = 0;
+    virtual void clearAllNavigateMark(EditorNaviagteType types) = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
 };
 

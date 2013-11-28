@@ -101,7 +101,7 @@ public:
     virtual void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
     virtual void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg);
     virtual void clearNavigateMarak(int line);
-    virtual void clearAllNavigateMark();
+    virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types);
     LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();

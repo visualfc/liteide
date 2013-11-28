@@ -68,7 +68,7 @@ public:
     void ensureFinalNewLine(QTextCursor& cursor);
     void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
     void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg);
-    void clearAllNavigateMark();
+    void clearAllNavigateMark(LiteApi::EditorNaviagteType types);
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);

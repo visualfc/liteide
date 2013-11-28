@@ -25,6 +25,7 @@
 #define GOLANGPRESENTEDIT_H
 
 #include "liteapi/liteapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 #include "processex/processex.h"
 
 class GolangPresentEdit : public QObject
@@ -58,7 +59,7 @@ public slots:
 protected:
     bool startExportHtmlDoc(EXPORT_TYPE type);
     LiteApi::IApplication *m_liteApp;
-    LiteApi::ITextEditor  *m_editor;
+    LiteApi::ILiteEditor  *m_editor;
     LiteApi::IHtmlDocument *m_htmldoc;
     QPlainTextEdit        *m_ed;
     ProcessEx             *m_process;

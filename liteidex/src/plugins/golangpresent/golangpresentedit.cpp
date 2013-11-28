@@ -40,7 +40,7 @@
 GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
     QObject(parent), m_liteApp(app), m_htmldoc(0), m_process(0)
 {
-    m_editor = LiteApi::getTextEditor(editor);
+    m_editor = LiteApi::getLiteEditor(editor);
     if (!m_editor) {
         return;
     }
@@ -225,19 +225,14 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
     } else {
         QString msg = QString::fromUtf8(data);
         m_liteApp->appendLog("GolangPresent",msg,true);
-        LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(m_editor);
-        if (liteEditor) {
-            liteEditor->clearAllNavigateMark();
-            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,msg);
-        }
+        m_editor->setNavigateHead(LiteApi::EditorNavigateError,msg);
         QRegExp re("(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):");
         re.indexIn(msg);
         if (re.captureCount() >= 2) {
             bool ok = false;
             int line = re.cap(2).toInt(&ok);
             if (ok) {
-                liteEditor->gotoLine(line-1,0,true);
-                liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg);
+                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg);
             }
         }
     }
@@ -249,11 +244,7 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
         int exportType = m_process->userData(0).toInt();
         if (exportType == EXPORT_TYPE_VERIFY) {
             m_liteApp->appendLog("GolangPresent","verify success",false);
-            LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(m_editor);
-            if (liteEditor) {
-                liteEditor->clearAllNavigateMark();
-                liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,tr("Present verify success"));
-            }
+            m_editor->setNavigateHead(LiteApi::EditorNavigateNormal,tr("Present verify success"));
         } else if (exportType == EXPORT_TYPE_HTML) {
             static QString init = QFileInfo(m_editor->filePath()).absolutePath();
             QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
@@ -327,6 +318,7 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     }
     m_exportData.clear();
     m_process->setUserData(0,type);
+    m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
     if (type == EXPORT_TYPE_VERIFY) {
         m_process->startEx(cmd,"-v -i "+info.fileName().toUtf8());
     } else {

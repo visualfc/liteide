@@ -75,6 +75,22 @@ struct NavigateMark
         }
         return 0;
     }
+    void removeNode(LiteApi::EditorNaviagteType types)
+    {
+        QMutableListIterator<Node*> i(m_nodeList);
+        while (i.hasNext()) {
+            Node *node = i.next();
+            qDebug() << node->type << types << (node->type&types);
+            if (node->type&types) {
+                i.remove();
+                delete node;
+            }
+        }
+    }
+    bool isEmpty() const {
+        return m_nodeList.isEmpty();
+    }
+
     QList<Node*> m_nodeList;
 };
 
@@ -107,6 +123,20 @@ public:
                  mark->addNode(type,msg);
              }
          }
+    }
+    void clearAllNavigateMark(LiteApi::EditorNaviagteType types)
+    {
+        QMutableMapIterator<int,NavigateMark*> i(markMap);
+        while (i.hasNext()) {
+            i.next();
+            NavigateMark *mark = i.value();
+            mark->removeNode(types);
+            if (mark->isEmpty()) {
+                delete mark;
+                i.remove();
+            }
+
+        }
     }
     void clearAll()
     {
@@ -752,8 +782,6 @@ int LiteEditorWidgetBase::navigateAreaWidth()
 
 void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
 {
-    QTextDocument *doc = document();
-
     QPalette pal = m_navateArea->palette();
     pal.setCurrentColorGroup(QPalette::Active);
     QPainter painter(m_navateArea);
@@ -767,10 +795,40 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     } else {
         painter.fillRect(2,2,width-4,width-4,Qt::darkRed);
     }
+    int count = this->blockCount();
+    int height = m_navateArea->height()-m_navateArea->width();
+    QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
+    while(i.hasNext()) {
+        i.next();
+        if (!i.value()->isEmpty()) {
+            int pos = i.key()*height*1.0/count;
+            NavigateMark::Node *node = i.value()->findNode(LiteApi::EditorNavigateError);
+            if (node) {
+                painter.fillRect(2,width+pos,width-4,4,Qt::darkRed);
+            }
+        }
+    }
 }
 
 void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
 {
+    if (e->button() == Qt::LeftButton &&
+        (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonDblClick)) {
+        int count = this->blockCount();
+        int height = m_navateArea->height()-m_navateArea->width();
+        int width = m_navateArea->width();
+        QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
+        while(i.hasNext()) {
+            i.next();
+            if (!i.value()->isEmpty()) {
+                int pos = i.key()*height*1.0/count;
+                QRect rect(0,width+pos-1,width,4+1);
+                if (rect.contains(e->pos())) {
+                    this->gotoLine(i.key(),0,true);
+                }
+            }
+        }
+    }
 }
 
 void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent *e)
@@ -1686,9 +1744,9 @@ void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteT
     m_navigateManager->insertMark(line,msg,type);
 }
 
-void LiteEditorWidgetBase::clearAllNavigateMark()
+void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types)
 {
-    m_navigateManager->clearAll();
+    m_navigateManager->clearAllNavigateMark(types);
 }
 
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)
