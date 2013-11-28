@@ -30,6 +30,7 @@
 
 
 class NavigateManager;
+class NavigateMark;
 class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
@@ -58,9 +59,12 @@ public:
     void extraAreaMouseEvent(QMouseEvent *e);
     void extraAreaLeaveEvent(QEvent *e);
     int navigateAreaWidth();
+    int isInNavigateMark(const QPoint &pos);
+    bool isInNavigateHead(const QPoint &pos);
     void navigateAreaPaintEvent(QPaintEvent *e);
     void navigateAreaMouseEvent(QMouseEvent *e);
-    void navigateAreaLeaveEvent(QEvent *e);\
+    void navigateAreaLeaveEvent(QEvent *e);
+    void navigateAreaEnterEvent(QEvent *e);
     void resizeEvent(QResizeEvent *e);
     void showToolTip(const QTextCursor &cursor, const QString &tip);
     void hideToolTip();
@@ -204,7 +208,7 @@ protected:
     bool isSpellCheckingAt(QTextCursor cur) const;
 protected:
     QWidget *m_extraArea;
-    QWidget *m_navateArea;
+    QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
     QList<QTextEdit::ExtraSelection> m_extraSelections;
     QTextCursor m_lastSelection;

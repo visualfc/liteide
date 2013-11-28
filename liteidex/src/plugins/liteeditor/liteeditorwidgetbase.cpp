@@ -80,7 +80,6 @@ struct NavigateMark
         QMutableListIterator<Node*> i(m_nodeList);
         while (i.hasNext()) {
             Node *node = i.next();
-            qDebug() << node->type << types << (node->type&types);
             if (node->type&types) {
                 i.remove();
                 delete node;
@@ -156,7 +155,6 @@ public:
     QString m_msg;
 };
 
-
 class TextEditExtraArea : public QWidget {
 public:
     TextEditExtraArea(LiteEditorWidgetBase *edit):QWidget(edit) {
@@ -216,7 +214,12 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event){
         textEdit->navigateAreaMouseEvent(event);
     }
+    void enterEvent(QEvent * event) {
+        this->setMouseTracking(true);
+        textEdit->navigateAreaEnterEvent(event);
+    }
     void leaveEvent(QEvent *event){
+        this->setMouseTracking(false);
         textEdit->navigateAreaLeaveEvent(event);
     }
 protected:
@@ -231,7 +234,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
 {
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
-    m_navateArea = new TextEditNavigateArea(this);
+    m_navigateArea = new TextEditNavigateArea(this);
     m_navigateManager = new NavigateManager(this);
 
     m_indentLineForeground = QColor(Qt::darkCyan);
@@ -465,7 +468,7 @@ QWidget* LiteEditorWidgetBase::extraArea()
 
 QWidget *LiteEditorWidgetBase::navigateArea()
 {
-    return m_navateArea;
+    return m_navigateArea;
 }
 
 void LiteEditorWidgetBase::setCurrentLineColor(const QColor &background)
@@ -782,12 +785,12 @@ int LiteEditorWidgetBase::navigateAreaWidth()
 
 void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
 {
-    QPalette pal = m_navateArea->palette();
+    QPalette pal = m_navigateArea->palette();
     pal.setCurrentColorGroup(QPalette::Active);
-    QPainter painter(m_navateArea);
+    QPainter painter(m_navigateArea);
 
     painter.fillRect(e->rect(), pal.color(QPalette::Base));
-    painter.fillRect(e->rect().intersected(QRect(0, 0, m_navateArea->width(), m_navateArea->height())),
+    painter.fillRect(e->rect().intersected(QRect(0, 0, m_navigateArea->width(), m_navigateArea->height())),
                      m_extraBackground);
     int width = this->navigateAreaWidth();
     if (m_navigateManager->m_type == LiteApi::EditorNavigateNormal) {
@@ -796,7 +799,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
         painter.fillRect(2,2,width-4,width-4,Qt::darkRed);
     }
     int count = this->blockCount();
-    int height = m_navateArea->height()-m_navateArea->width();
+    int height = m_navigateArea->height()-m_navigateArea->width();
     QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
     while(i.hasNext()) {
         i.next();
@@ -810,21 +813,53 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     }
 }
 
+int LiteEditorWidgetBase::isInNavigateMark(const QPoint &pos)
+{
+    int count = this->blockCount();
+    int height = m_navigateArea->height()-m_navigateArea->width();
+    int width = m_navigateArea->width();
+    QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
+    while(i.hasNext()) {
+        i.next();
+        if (!i.value()->isEmpty()) {
+            int offset = i.key()*height*1.0/count;
+            QRect rect(0,width+offset-1,width,4+1);
+            if (rect.contains(pos)) {
+                return i.key();
+            }
+        }
+    }
+    return -1;
+}
+
+bool LiteEditorWidgetBase::isInNavigateHead(const QPoint &pos)
+{
+    int width = m_navigateArea->width();
+    QRect rect(0,0,width,width);
+    if (rect.contains(pos)) {
+        return true;
+    }
+    return false;
+}
+
 void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton &&
         (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonDblClick)) {
-        int count = this->blockCount();
-        int height = m_navateArea->height()-m_navateArea->width();
-        int width = m_navateArea->width();
-        QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
-        while(i.hasNext()) {
-            i.next();
-            if (!i.value()->isEmpty()) {
-                int pos = i.key()*height*1.0/count;
-                QRect rect(0,width+pos-1,width,4+1);
-                if (rect.contains(e->pos())) {
-                    this->gotoLine(i.key(),0,true);
+        int line = isInNavigateMark(e->pos());
+        if (line != -1) {
+            this->gotoLine(line,0,true);
+        }
+    } else if (e->type() == QEvent::MouseMove) {
+        if (isInNavigateHead(e->pos())) {
+            QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),this->m_navigateManager->m_msg,this->m_navigateArea);
+        } else {
+            int line = isInNavigateMark(e->pos());
+            if (line != -1) {
+                NavigateMark *mark = m_navigateManager->markMap.value(line);
+                NavigateMark::Node *node = mark->findNode(LiteApi::EditorNavigateError);
+                if (node) {
+                    QToolTip::showText(m_navigateArea->mapToGlobal(e->pos()),node->msg,this->m_navigateArea);
                 }
             }
         }
@@ -835,6 +870,10 @@ void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent *e)
 {
 }
 
+void LiteEditorWidgetBase::navigateAreaEnterEvent(QEvent *e)
+{
+}
+
 void LiteEditorWidgetBase::resizeEvent(QResizeEvent *e)
 {
     QPlainTextEdit::resizeEvent(e);
@@ -842,7 +881,7 @@ void LiteEditorWidgetBase::resizeEvent(QResizeEvent *e)
     m_extraArea->setGeometry(
                 QStyle::visualRect(layoutDirection(), cr,
                                    QRect(cr.left(), cr.top(), extraAreaWidth(), cr.height())));
-    m_navateArea->setGeometry(
+    m_navigateArea->setGeometry(
                 QStyle::visualRect(layoutDirection(), cr,
                                    QRect(cr.left()+extraAreaWidth()+viewport()->rect().width(), cr.top(), navigateAreaWidth(), cr.height())));
 
@@ -1736,7 +1775,7 @@ void LiteEditorWidgetBase::ensureFinalNewLine(QTextCursor &cursor)
 void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg)
 {
     m_navigateManager->setType(type,msg);
-    m_navateArea->update();
+    m_navigateArea->update();
 }
 
 void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg)

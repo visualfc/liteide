@@ -224,28 +224,34 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
         m_exportData.append(data);
     } else {
         QString msg = QString::fromUtf8(data);
-        m_liteApp->appendLog("GolangPresent",msg,true);
         m_editor->setNavigateHead(LiteApi::EditorNavigateError,msg);
         QRegExp re("(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):");
-        re.indexIn(msg);
-        if (re.captureCount() >= 2) {
+        if ((re.indexIn(msg)>=0) && re.captureCount() >= 2) {
             bool ok = false;
             int line = re.cap(2).toInt(&ok);
             if (ok) {
-                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg);
+                QString errmsg = re.cap(0)+"\n"+msg.mid(re.cap(0).length()).trimmed();
+                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,errmsg);
+                m_errorMsg.append(errmsg);
             }
+        } else {
+            m_errorMsg.append(msg);
         }
     }
 }
 
 void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
 {
-    if (!error && code == 0) {
-        int exportType = m_process->userData(0).toInt();
-        if (exportType == EXPORT_TYPE_VERIFY) {
-            m_liteApp->appendLog("GolangPresent","verify success",false);
+    int exportType = m_process->userData(0).toInt();
+    if (exportType == EXPORT_TYPE_VERIFY) {
+        if (!error && code == 0) {
             m_editor->setNavigateHead(LiteApi::EditorNavigateNormal,tr("Present verify success"));
-        } else if (exportType == EXPORT_TYPE_HTML) {
+        } else {
+            m_editor->setNavigateHead(LiteApi::EditorNavigateError,tr("Present verify false")+"\n"+m_errorMsg.join("\n"));
+        }
+    }
+    if (!error && code == 0) {
+        if (exportType == EXPORT_TYPE_HTML) {
             static QString init = QFileInfo(m_editor->filePath()).absolutePath();
             QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
             if (outdir.isEmpty()) {
@@ -317,6 +323,7 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
         }
     }
     m_exportData.clear();
+    m_errorMsg.clear();
     m_process->setUserData(0,type);
     m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
     if (type == EXPORT_TYPE_VERIFY) {

@@ -64,6 +64,7 @@ protected:
     QPlainTextEdit        *m_ed;
     ProcessEx             *m_process;
     QByteArray             m_exportData;
+    QStringList            m_errorMsg;
     QString                m_pdfFileName;
 };
 
