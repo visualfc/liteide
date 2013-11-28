@@ -227,7 +227,8 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
         m_liteApp->appendLog("GolangPresent",msg,true);
         LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(m_editor);
         if (liteEditor) {
-            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,QString::fromUtf8(data));
+            liteEditor->clearAllNavigateMark();
+            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,msg);
         }
         QRegExp re("(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):");
         re.indexIn(msg);
@@ -236,6 +237,7 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
             int line = re.cap(2).toInt(&ok);
             if (ok) {
                 liteEditor->gotoLine(line-1,0,true);
+                liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg);
             }
         }
     }
@@ -249,6 +251,7 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
             m_liteApp->appendLog("GolangPresent","verify success",false);
             LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(m_editor);
             if (liteEditor) {
+                liteEditor->clearAllNavigateMark();
                 liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,tr("Present verify success"));
             }
         } else if (exportType == EXPORT_TYPE_HTML) {

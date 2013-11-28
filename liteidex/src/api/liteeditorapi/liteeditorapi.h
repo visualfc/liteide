@@ -134,9 +134,9 @@ signals:
 };
 
 enum EditorNaviagteType{
-    EditorNavigateNormal = 0,
-    EditorNavigateWaring,
-    EditorNavigateError
+    EditorNavigateNormal = 1,
+    EditorNavigateWaring = 2,
+    EditorNavigateError = 4
 };
 
 class ILiteEditor : public ITextEditor
