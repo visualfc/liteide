@@ -675,7 +675,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     QPainter painter(m_navateArea);
 
     painter.fillRect(e->rect(), pal.color(QPalette::Base));
-    painter.fillRect(e->rect().intersected(QRect(0, 0, m_navateArea->width(), INT_MAX)),
+    painter.fillRect(e->rect().intersected(QRect(0, 0, m_navateArea->width(), m_navateArea->height())),
                      m_extraBackground);
 }
 
@@ -1086,6 +1086,33 @@ void LiteEditorWidgetBase::deleteLine()
     textCursor().removeSelectedText();
 }
 
+void LiteEditorWidgetBase::insertLineBefore()
+{
+    QTextCursor cur = this->textCursor();
+    cur.movePosition(QTextCursor::PreviousBlock);
+    cur.movePosition(QTextCursor::EndOfLine);
+
+    if (m_autoIndent) {
+        indentEnter(cur);
+    } else {
+        cur.insertText("\n");
+    }
+
+    this->setTextCursor(cur);
+}
+
+void LiteEditorWidgetBase::insertLineAfter()
+{
+    QTextCursor cur = this->textCursor();
+    cur.movePosition(QTextCursor::EndOfLine);
+    if (m_autoIndent) {
+        indentEnter(cur);
+    } else {
+        cur.insertText("\n");
+    }
+    this->setTextCursor(cur);
+}
+
 bool LiteEditorWidgetBase::findPrevBlock(QTextCursor &cursor, int indent, const QString &skip) const
 {
     QTextBlock block = cursor.block().previous();
@@ -1242,7 +1269,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    if ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return ) {
+    if (e->modifiers() == Qt::NoModifier && ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return )) {
         if (m_autoIndent) {
             indentEnter(textCursor());
             return;

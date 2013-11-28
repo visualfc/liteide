@@ -279,6 +279,14 @@ void LiteEditor::createActions()
 
     connect(m_deleteLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(deleteLine()));
 
+    m_insertLineBeforeAct = new QAction(tr("Insert Line Before"),this);
+    actionContext->regAction(m_insertLineBeforeAct,"InsertLineBefore","Ctrl+Shift+Return");
+    connect(m_insertLineBeforeAct,SIGNAL(triggered()),m_editorWidget,SLOT(insertLineBefore()));
+
+    m_insertLineAfterAct = new QAction(tr("Insert Line After"),this);
+    actionContext->regAction(m_insertLineAfterAct,"InsertLineAfter","Ctrl+Return");
+    connect(m_insertLineAfterAct,SIGNAL(triggered()),m_editorWidget,SLOT(insertLineAfter()));
+
     m_increaseFontSizeAct = new QAction(tr("Increase Font Size"),this);
     actionContext->regAction(m_increaseFontSizeAct,"IncreaseFontSize","Ctrl++;Ctrl+=");
 
@@ -428,6 +436,8 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_pasteAct);
     m_editMenu->addAction(m_duplicateAct);
     m_editMenu->addAction(m_deleteLineAct);
+    m_editMenu->addAction(m_insertLineBeforeAct);
+    m_editMenu->addAction(m_insertLineAfterAct);
     m_editMenu->addAction(m_cleanWhitespaceAct);
     m_editMenu->addSeparator();
     QMenu *expMenu = m_editMenu->addMenu(tr("Print"));

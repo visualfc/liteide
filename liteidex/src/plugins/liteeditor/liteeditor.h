@@ -156,6 +156,8 @@ public:
     QAction *m_gotoLineAct;
     QAction *m_duplicateAct;
     QAction *m_deleteLineAct;
+    QAction *m_insertLineBeforeAct;
+    QAction *m_insertLineAfterAct;
     QAction *m_increaseFontSizeAct;
     QAction *m_decreaseFontSizeAct;
     QAction *m_resetFontSizeAct;

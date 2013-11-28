@@ -100,6 +100,8 @@ public slots:
     void cutLine();
     void copyLine();
     void deleteLine();    
+    void insertLineBefore();
+    void insertLineAfter();
     void gotoPrevBlock();
     void gotoNextBlock();
     void selectBlock();
@@ -191,8 +193,8 @@ protected:
     void indentBlock(QTextBlock block, bool bIndent);
     void indentCursor(QTextCursor cur, bool bIndent);
     void indentText(QTextCursor cur, bool bIndent);
-    QString tabText(int n = 1) const;
     void indentEnter(QTextCursor cur);
+    QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
     bool isSpellCheckingAt(QTextCursor cur) const;
 protected:
