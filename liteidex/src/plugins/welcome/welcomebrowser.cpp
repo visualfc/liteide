@@ -90,10 +90,10 @@ WelcomeBrowser::WelcomeBrowser(LiteApi::IApplication *app, QObject *parent)
 
     m_extension->addObject("LiteApi.QTextBrowser",m_browser->htmlWidget()->widget());
 
-    QString path = m_liteApp->resourcePath()+"/welcome/welcome.html";
+    QString path = LiteDoc::localeFile(m_liteApp->resourcePath()+"/welcome/welcome.html");
     QFile file(path);
     if (file.open(QIODevice::ReadOnly)) {
-        m_templateData = file.readAll();
+        m_templateData = QString::fromUtf8(file.readAll());
         file.close();
     }
     loadData();

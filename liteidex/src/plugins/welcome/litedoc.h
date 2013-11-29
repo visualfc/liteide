@@ -49,6 +49,7 @@ class LiteDoc : public LiteApi::ILiteDoc
     Q_OBJECT
 public:
     explicit LiteDoc(LiteApi::IApplication *app, QObject *parent = 0);
+    static QString localeFile(const QString &fileName);
     virtual void activeBrowser();
 public slots:
     virtual void openUrl(const QUrl &url);
