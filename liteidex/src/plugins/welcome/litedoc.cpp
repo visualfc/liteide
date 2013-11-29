@@ -71,7 +71,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
     connect(m_docBrowser,SIGNAL(requestUrl(QUrl)),this,SLOT(openUrl(QUrl)));
     connect(m_docBrowser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlighted(QUrl)));
 
-    QString path = localeFile(m_liteApp->resourcePath()+"/welcome/litedoc.html");
+    QString path = localeFile(m_liteApp->resourcePath()+"/welcome/liteide.html");
     QFile file(path);
     if (file.open(QIODevice::ReadOnly)) {
         m_templateData = file.readAll();
