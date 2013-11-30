@@ -47,3 +47,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* <https://code.google.com/p/golangide>
 * Google group
 	* <https://groups.google.com/group/liteide-dev>
+	
+### Donate
+<a href='http://me.alipay.com/liteide'> <img src='https://img.alipay.com/sys/personalprod/style/mc/btn-index.png' /> </a>
+	
