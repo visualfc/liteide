@@ -271,8 +271,7 @@ void GolangFmt::gofmt()
     if (!editor) {
         return;
     }
-    //fmtEditor(editor,false);
-    syncfmtEditor(editor,false,true,1500);
+    syncfmtEditor(editor,false,true,2000);
 }
 
 void GolangFmt::fmtStarted()

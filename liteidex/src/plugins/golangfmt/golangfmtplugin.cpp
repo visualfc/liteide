@@ -78,7 +78,7 @@ QStringList GolangFmtPlugin::dependPluginList() const{
 
 void GolangFmtPlugin::goplayFmt()
 {
-    m_fmt->syncfmtEditor(m_playEditor,false,false);
+    m_fmt->syncfmtEditor(m_playEditor,false,false,2000);
 }
 
 void GolangFmtPlugin::appLoaded()

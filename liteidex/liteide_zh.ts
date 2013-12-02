@@ -33,111 +33,114 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>项目:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="184"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="208"/>
         <source>Name:</source>
         <translation>名称:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="240"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="191"/>
         <source>Author:</source>
         <translation>作者:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="198"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="222"/>
         <source>Version:</source>
         <translation>版本:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="212"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="229"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;visualfc@gmail.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="249"/>
         <source>Website:</source>
         <translation>网址:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="226"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="242"/>
         <source>Build:</source>
         <translation>编译:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="233"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="215"/>
         <source>Based on Qt</source>
         <oldsource>Based on Qt Version</oldsource>
         <translation>基于 Qt</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="257"/>
-        <source>Markdown:</source>
-        <translation></translation>
+        <location filename="src/liteapp/aboutdialog.ui" line="263"/>
+        <source>Donate:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="287"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="270"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://visualfc.github.com/donate&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://visualfc.github.com/donate&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="297"/>
         <source>Developers</source>
         <translation>开发者</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="390"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="400"/>
         <source>Translations</source>
         <translation>翻译</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="402"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="412"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="416"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="426"/>
         <source>Japanese</source>
         <translation>日文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="430"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="440"/>
         <source>Russian</source>
         <translation>俄文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="444"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="454"/>
         <source>French</source>
         <translation>法文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="458"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="468"/>
         <source>Traditional Chinese</source>
         <translation>繁体中文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="472"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="482"/>
         <source>German</source>
         <translation>德文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="503"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="513"/>
         <source>Thanks to...</source>
         <translation>感谢...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="538"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="548"/>
         <source>License</source>
         <translation>许可协议</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="547"/>
-        <source>Copyright (c) 2011-2013 LiteIDE team. All rights reserved.
+        <location filename="src/liteapp/aboutdialog.ui" line="557"/>
+        <source>Copyright (c) 2011-2013 LiteIDE. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
 
 This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
 
 In addition, as a special exception, that plugins developed for LiteIDE, are allowed to remain closed sourced and can be distributed under any license .These rights are included in the file LGPL_EXCEPTION.txt in this package.</source>
-        <oldsource>Copyright (c) 2011-2012 LiteIDE team. All rights reserved.
-
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-
-In addition, as a special exception, that plugins developed for LiteIDE, are allowed to remain closed sourced and can be distributed under any license .These rights are included in the file LGPL_EXCEPTION.txt in this package.</oldsource>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="579"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="589"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -1271,14 +1274,13 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>Golang 格式化</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="33"/>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
         <translation>使用diff工具进行快速格式化(要求diff程序位于PATH路径中)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="40"/>
         <source>Display log window on error</source>
-        <translation>在log窗口中显示错误</translation>
+        <translation type="obsolete">在log窗口中显示错误</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="49"/>
@@ -1286,7 +1288,7 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>格式化超时设置(50毫秒或者更多):</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="33"/>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="40"/>
         <source>Automatically format code when saving</source>
         <oldsource>When the editor is saved automatically gofmt</oldsource>
         <translation>文件保存时代码自动格式化</translation>
@@ -1304,62 +1306,72 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>GolangPresentEdit</name>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="52"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="56"/>
         <source>Section (s1)</source>
         <translation>一级标题 (s1)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="55"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="59"/>
         <source>Subsection (s2)</source>
         <translation>二级标题 (s2)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="58"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="62"/>
         <source>Sub-subsection (s3)</source>
         <translation>三级标题 (s3)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="61"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="65"/>
         <source>Bold</source>
         <translation>加重</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="64"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="68"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="67"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="71"/>
         <source>Inline Code</source>
         <translation>内联代码</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="70"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="74"/>
         <source>Switch Bullets</source>
         <translation>切换列表</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="73"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="77"/>
         <source>Comment/Uncomment Selection</source>
         <translation>切换区域注释/反注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="76"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="80"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="79"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="83"/>
         <source>Verify Present</source>
         <translation>校验</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="227"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="248"/>
+        <source>Present verify success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="250"/>
+        <source>Present verify false</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="256"/>
         <source>Select export html directory</source>
         <translation>选择导出HTML目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="245"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="274"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
@@ -1785,109 +1797,109 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="91"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="94"/>
         <source>&amp;Build</source>
         <translation>编译(&amp;B)</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="97"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="101"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="105"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="100"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="104"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="108"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="98"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="102"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="106"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="101"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="105"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="109"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="110"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="113"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation>编译配置...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="117"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="120"/>
         <source>Stop Action</source>
         <translation>停止执行</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="121"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="124"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation>清除输出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="137"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="140"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>编译输出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="343"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="346"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>当前环境变更 id &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="817"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="862"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>错误: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="820"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="865"/>
         <source>Command exited with code %1.</source>
         <translation>命令退出代码 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="822"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="867"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>成功: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="855"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="902"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="900"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="948"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>进程正在运行.请先停止当前命令操作.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="895"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="941"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>终止当前进程...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="898"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="944"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation>无法终止已存在进程!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="995"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1041"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation>&gt; 不能解析命令 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1024"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1086"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>进程启动成功</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1024"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1086"/>
         <source>Failed to start process</source>
         <translation></translation>
     </message>
@@ -2052,7 +2064,7 @@ Success: %2.</oldsource>
 <context>
     <name>LiteDoc</name>
     <message>
-        <location filename="src/plugins/welcome/litedoc.cpp" line="60"/>
+        <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
         <translation>LiteIDE文档</translation>
@@ -2061,189 +2073,199 @@ Success: %2.</oldsource>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="208"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="212"/>
         <source>Undo</source>
         <translation>撤消</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="211"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="215"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="214"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="218"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="217"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="221"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="220"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="224"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="223"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="227"/>
         <source>Select All</source>
         <translation>选择所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="733"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="747"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="741"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="755"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="742"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="756"/>
         <source>Could not open %1 for writing.</source>
         <translation>无法写入文件 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="761"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="775"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="786"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="800"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="230"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="234"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation>打印预览...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="230"/>
         <source>Export HTML...</source>
         <translation>导出HTML...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="228"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
         <source>Export PDF...</source>
         <translation>导出PDF...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="229"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="233"/>
         <source>Print...</source>
         <translation>打印...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="236"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
         <translation>移动光标到上一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="239"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Select Block</source>
         <translation>选择段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="242"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
         <translation>移到光标到匹配</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="245"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="464"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="478"/>
         <source>Fold</source>
         <translation>折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="248"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
         <source>Unfold</source>
         <translation>展开</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="251"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="255"/>
         <source>Fold All</source>
         <translation>折叠所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="258"/>
         <source>Unfold All</source>
         <translation>展开所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="838"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="852"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
         <source>Locked</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
         <source>Duplicate</source>
         <translation>复制行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="273"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="277"/>
         <source>Delete Line</source>
         <translation>删除行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="278"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <source>Insert Line Before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="286"/>
+        <source>Insert Line After</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="290"/>
         <source>Increase Font Size</source>
         <translation>增大字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="281"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
         <source>Decrease Font Size</source>
         <translation>减小字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="284"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="296"/>
         <source>Reset Font Size</source>
         <translation>重置字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="299"/>
         <source>Clean Whitespace</source>
         <translation>清除空白</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="290"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="302"/>
         <source>Word Wrap</source>
         <translation>自动换行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="409"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="421"/>
         <source>Close Document</source>
         <translation>关闭文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="429"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
         <source>Print</source>
         <translation>打印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="803"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="817"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>您想要放弃未保存的修改并重新载入%1?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="235"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="239"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
         <translation>移动光标到下一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="838"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="852"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>
@@ -3338,7 +3360,7 @@ Do you want to replace it?</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="src/plugins/welcome/welcomebrowser.cpp" line="214"/>
+        <location filename="src/plugins/welcome/welcomebrowser.cpp" line="216"/>
         <source>Welcome</source>
         <oldsource>Welcome Page</oldsource>
         <translation>起始页</translation>
