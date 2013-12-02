@@ -62,7 +62,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
     m_docBrowser->urlComboBox()->setEditable(false);
     m_docBrowser->setName(tr("LiteIDE Documentation"));
     QStringList paths;
-    paths << m_liteApp->resourcePath()+"/welcome";
+    paths << m_liteApp->resourcePath()+"/welcome" << localePath(m_liteApp->resourcePath()+"/welcome");
     m_docBrowser->setSearchPaths(paths);
 
     m_browserAct = m_liteApp->editorManager()->registerBrowser(m_docBrowser);
@@ -98,6 +98,19 @@ QString LiteDoc::localeFile(const QString &fileName)
         return path;
     }
     return info.absolutePath()+"/en/"+info.fileName();;
+}
+
+QString LiteDoc::localePath(const QString &path)
+{
+    QString locale = getAppLocale();
+    if (locale.isEmpty()) {
+        locale = "en";
+    }
+    QDir dir(path+"/"+locale);
+    if (dir.exists()) {
+        return dir.path();
+    }
+    return path+"/en";
 }
 
 void LiteDoc::activeBrowser()

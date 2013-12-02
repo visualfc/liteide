@@ -86,7 +86,9 @@ WelcomeBrowser::WelcomeBrowser(LiteApi::IApplication *app, QObject *parent)
     connect(m_liteApp->fileManager(),SIGNAL(recentFilesChanged(QString)),this,SLOT(loadData()));
     connect(m_browser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlightedUrl(QUrl)));
 
-    m_browser->setSearchPaths(QStringList() << m_liteApp->resourcePath()+"/welcome");
+    QStringList paths;
+    paths << m_liteApp->resourcePath()+"/welcome" << LiteDoc::localePath(m_liteApp->resourcePath()+"/welcome");
+    m_browser->setSearchPaths(paths);
 
     m_extension->addObject("LiteApi.QTextBrowser",m_browser->htmlWidget()->widget());
 
