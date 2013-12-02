@@ -7,7 +7,7 @@ LiteIDE X
 
 _LiteIDE is a simple, open source, cross-platform Go IDE._
 
-* Version: X19
+* Version: X20
 * Author: [visualfc](mailto:visualfc@gmail.com)
 
 
@@ -31,9 +31,13 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* Go playground
 * Markdown support
 	* Live preview and synchronized scroll
-	* Custom CSS with themes from [Mou](http://mouapp.com) 
+	* Custom CSS with themes 
 	* Export Markdown as HTML or PDF
 	* Markdown batch conversion with optional merging
+* Golang Present support
+	* Present syntax editor
+	* Auto verify at save time
+	* Export to html
 
 ### Supported Systems
 * Windows x86 (32-bit or 64-bit) 
@@ -47,3 +51,5 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* <https://code.google.com/p/golangide>
 * Google group
 	* <https://groups.google.com/group/liteide-dev>
+* Donate
+	* <http://visualfc.github.com/donate>

@@ -8,7 +8,7 @@ The LiteIDE environment setup plugin allows you to quickly switch between multip
 ### Selecting an Environment
 The dropdown in the toolbar can be used to select the environment currently being used for builds.  By default, the `system` environment, representing the platform and architecture of the host machine, is used.
 
-![envselect.png](images/envselect.png)
+![envselect.png](../images/envselect.png)
 
 The following environments are provided as part of the supported platforms:
 * Windows - system win64 win32
@@ -137,31 +137,32 @@ To modify the available build options, open `View > Options > LiteBuild`.  You c
 
 Example XML for Go (`gosrc.xml`):
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-	<mime-type type="text/x-gosrc" id="gosrc" work="$(EDITOR_DIR)" ver="1">
-	    <config id="Go" name="GO" value="go"/>
-	    <config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>
-	    <config id="ErrRegex" name="ERRREGEX" value="([\w\d_\-\\/\.]+):(\d+):"/>
-	    <custom id="TargetArgs" name="TARGETARGS" value=""/>
-	    <custom id="BuildArgs" name="BUILDARGS" value=""/>
-	    <custom id="InstallArgs" name="INSTALLARGS" value=""/>
-	    <action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="" regex="$(ERRREGEX)"/>
-	    <action id="Install" menu="Build" img="blue/install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true"/>
-	    <action id="Clean" menu="Build" img="blue/clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
-	    <action id="CleanAll" menu="Build" img="blue/cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
-	    <action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
-	    <action id="Run" menu="BuildAndRun" img="blue/run.png" key="Ctrl+F5" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
-	    <action id="RunTerm" menu="BuildAndRun" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOEXEC) $(EDITOR_DIRNAME_GO) $(TARGETARGS)" output="false" readline="true"/>
-	    <action id="FileRun" menu="BuildAndRun" img="gray/filerun.png" key="Alt+F6" cmd="$(GO)" args="run $(EDITOR_NAME)" save="editor" output="true" codec="utf-8" readline="true"/>
-	    <action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="$(GO)" args="test" save="all" output="true" codec="utf-8"/>
-	    <action id="Bench" menu="Test" img="blue/testbench.png" cmd="$(GO)" args="test -test.bench=.*" save="all" output="true" codec="utf-8"/>
-	    <action id="Get" menu="Test" img="blue/get.png" cmd="$(GO)" args="get -v ." save="all" output="true" codec="utf-8"/>
-	    <action id="Fmt" menu="Test" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)"/>
-	    <action id="Vet" menu="Test" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)"/>
-	    <target id="Target" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" work="$(EDITOR_DIR)"/>
-	</mime-type>	
-    </mime-info>
+	<?xml version="1.0" encoding="UTF-8"?>
+	<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+		<mime-type type="text/x-gosrc" id="gosrc" work="$(EDITOR_DIR)" ver="1">
+			<config id="Go" name="GO" value="go"/>
+			<config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>
+			<config id="ErrRegex" name="ERRREGEX" value="(\w?:?[\w\d_\-\\/\.]+):(\d+):"/>
+			<custom id="TargetArgs" name="TARGETARGS" value=""/>
+			<custom id="BuildArgs" name="BUILDARGS" value=""/>
+			<custom id="InstallArgs" name="INSTALLARGS" value=""/>
+			<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="" regex="$(ERRREGEX)" navigate="true"/>
+			<action id="Install" menu="Build" img="blue/install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
+			<action id="BuildTests" menu="Build" img="blue/buildtest.png" cmd="$(GO)" args="test -c -gcflags &quot;-N -l&quot;" save="all" output="true" codec="" regex="$(ERRREGEX)"/>
+			<action id="Clean" menu="Build" img="blue/clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
+			<action id="CleanAll" menu="Build" img="blue/cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
+			<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
+			<action id="Run" menu="BuildAndRun" img="blue/run.png" key="Ctrl+F5" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
+			<action id="RunTerm" menu="BuildAndRun" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOEXEC) $(EDITOR_DIRNAME_GO) $(TARGETARGS)" output="false" readline="true"/>
+			<action id="FileRun" menu="BuildAndRun" img="gray/filerun.png" key="Alt+F6" cmd="$(GO)" args="run $(EDITOR_NAME)" save="editor" output="true" codec="utf-8" readline="true"/>
+			<action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="$(GO)" args="test" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+			<action id="Bench" menu="Test" img="blue/testbench.png" cmd="$(GO)" args="test -test.bench=.*" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+			<action id="Get" menu="Test" img="blue/get.png" cmd="$(GO)" args="get -v ." save="all" output="true" codec="utf-8"/>
+			<action id="Fmt" menu="Test" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
+			<action id="Vet" menu="Test" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
+			<target id="Target" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" work="$(EDITOR_DIR)"/>
+		</mime-type>
+	</mime-info>
 
 ## Gocode
 Gocode is required for auto-completion of identifiers.  See `INSTALL` for installation details.

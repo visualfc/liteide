@@ -19,6 +19,9 @@ This optional step is required for debugging support.  Install GDB 7.1 or higher
 
 Ensure that gdb can be found on your system PATH before launching LiteIDE.
 
+## Install from binary
+<http://code.google.com/p/golangide>
+
 ## Building from Source
 Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  You will need to install Qt4 in order to compile the source.  Qt4 can be obtained from <https://qt-project.org/downloads> or from your distribution's package manager.  On Windows, ensure that you install Qt4 for MinGW.
 

@@ -74,7 +74,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
     QString path = localeFile(m_liteApp->resourcePath()+"/welcome/liteide.html");
     QFile file(path);
     if (file.open(QIODevice::ReadOnly)) {
-        m_templateData = file.readAll();
+        m_templateData = QString::fromUtf8(file.readAll());
         file.close();
     }
 
@@ -120,7 +120,7 @@ void LiteDoc::activeBrowser()
 
 QUrl LiteDoc::parserUrl(const QUrl &_url)
 {
-    QDir root(m_liteApp->resourcePath()+"/welcome");
+    QDir root(localePath(m_liteApp->resourcePath()+"/welcome"));
     QUrl url = _url;
     if (url.isRelative() && !url.path().isEmpty()) {
         QFileInfo info;

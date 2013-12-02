@@ -1,4 +1,4 @@
-<!-- Changes -->
+<!-- 历史记录 -->
 
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
@@ -6,11 +6,10 @@
 ### 2013.11.27 Ver x20
 * LiteIDE
 	* add new GolangPresent plugin
-	* editor add navigate area for error jump
 	* add evilworks.qss style (by Vedran Vuk <vedranvuk82@gmail.com>)
 	* tool windows use instantpopup
 * LiteEditor
-	* add navigate area for error jump
+	* add error navigate area
 	* update kate highlighter
 	* add gopresent.xml syntax
 	* add Visual Studio Theme (by William Kennedy <bill@ardanstudios.com>)
@@ -18,10 +17,6 @@
 * LiteDebug:
 	* external cmd setting
 	* fix command input foucus
-* LiteBuild:
-	* enable editor navigate for error jump
-* GolangFmt:
-	* enable editor navigate for error jump
 * LiteEnv:
 	* fix to use utf8 encoding
 * Markdown:
@@ -33,8 +28,10 @@
 * GolangPresent:
 	* support golang present editor
 	* verify golang present
-	* enable editor navigate for error jump
 	* export golang present to html
+* Welcome:
+	* update document
+	* add zh_CN document
 	
 ### 2013.7.17 Ver x19
 * LiteIDE
