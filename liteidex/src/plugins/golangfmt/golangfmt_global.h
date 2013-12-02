@@ -32,4 +32,9 @@
 #  define GOLANGFMTSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define GOLANGFMT_USEGOIMPORTS "golangfmt/goimports"
+#define GOLANGFMT_USEDIFF "golangfmt/diff"
+#define GOLANGFMT_AUTOFMT "golangfmt/autofmt"
+#define GOLANGFMT_TIMEOUT "golangfmt/timeout"
+
 #endif // GOLANGFMT_GLOBAL_H

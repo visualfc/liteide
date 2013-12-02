@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangfmt.h"
+#include "golangfmt_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "litebuildapi/litebuildapi.h"
@@ -49,6 +50,7 @@
 GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
+    m_goimports(true),
     m_diff(true),
     m_autofmt(true),
     m_timeout(500)
@@ -73,12 +75,17 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    m_diff = m_liteApp->settings()->value("golangfmt/diff",true).toBool();
-    m_autofmt = m_liteApp->settings()->value("golangfmt/autofmt",true).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
+    m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     if (!m_diff) {
         m_autofmt = false;
     }
-    m_timeout = m_liteApp->settings()->value("golangfmt/timeout",500).toInt();
+    if (goimports != m_goimports) {
+        m_goimports = goimports;
+        currentEnvChanged(0);
+    }
+    m_timeout = m_liteApp->settings()->value(GOLANGFMT_TIMEOUT,500).toInt();
 }
 
 void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
@@ -244,7 +251,17 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
-    m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
+    if (m_goimports) {
+        m_gofmtCmd = FileUtil::lookupGoBin("goimports",m_liteApp);
+    } else {
+        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
+    }
+    if (m_gofmtCmd.isEmpty()) {
+        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
+    }
+    if (!m_gofmtCmd.isEmpty()) {
+        m_liteApp->appendLog("GolangFmt",QString("found %1").arg(m_gofmtCmd),false);
+    }
     m_process->setProcessEnvironment(env);
 }
 

@@ -54,6 +54,7 @@ protected:
     QString m_gofmtCmd;
     QByteArray m_data;
     QByteArray m_errData;
+    bool m_goimports;
     bool m_diff;
     bool m_autofmt;
     int  m_timeout;

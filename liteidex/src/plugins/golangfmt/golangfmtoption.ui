@@ -21,6 +21,13 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QCheckBox" name="checkBoxUseGoimports">
+        <property name="text">
+         <string>Use goimports for code format (https://github.com/bradfitz/goimports)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="checkBoxDiff">
         <property name="text">
          <string>Use diff tool for faster formatting (requires diff program in PATH)</string>

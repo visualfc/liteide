@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangfmtoption.h"
+#include "golangfmt_global.h"
 #include "ui_golangfmtoption.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -41,12 +42,14 @@ GolangFmtOption::GolangFmtOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
-    bool diff = m_liteApp->settings()->value("golangfmt/diff",true).toBool();
-    bool autofmt = m_liteApp->settings()->value("golangfmt/autofmt",true).toBool();
-    int timeout = m_liteApp->settings()->value("golangfmt/timeout",600).toInt();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    bool diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
+    bool autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
+    int timeout = m_liteApp->settings()->value(GOLANGFMT_TIMEOUT,600).toInt();
     if (!diff) {
         autofmt = false;
     }
+    ui->checkBoxUseGoimports->setChecked(goimports);
     ui->checkBoxDiff->setChecked(diff);
     ui->checkBoxAutoFmt->setChecked(autofmt);
     ui->timeoutLineEdit->setText(QString("%1").arg(timeout));
@@ -78,17 +81,19 @@ QString GolangFmtOption::mimeType() const
 
 void GolangFmtOption::apply()
 {
+    bool goimports = ui->checkBoxUseGoimports->isChecked();
     bool diff = ui->checkBoxDiff->isChecked();
     bool autofmt = ui->checkBoxAutoFmt->isChecked();
     if (!diff) {
         autofmt = false;
     }
-    m_liteApp->settings()->setValue("golangfmt/diff",diff);
-    m_liteApp->settings()->setValue("golangfmt/autofmt",autofmt);
+    m_liteApp->settings()->setValue(GOLANGFMT_USEGOIMPORTS,goimports);
+    m_liteApp->settings()->setValue(GOLANGFMT_USEDIFF,diff);
+    m_liteApp->settings()->setValue(GOLANGFMT_AUTOFMT,autofmt);
     int timeout = ui->timeoutLineEdit->text().toInt();
     if (timeout < 50) {
         timeout = 600;
     }
     ui->timeoutLineEdit->setText(QString("%1").arg(timeout));
-    m_liteApp->settings()->setValue("golangfmt/timeout",timeout);
+    m_liteApp->settings()->setValue(GOLANGFMT_TIMEOUT,timeout);
 }
