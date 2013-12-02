@@ -48,11 +48,6 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>版本:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="229"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;visualfc@gmail.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/liteapp/aboutdialog.ui" line="249"/>
         <source>Website:</source>
         <translation>网址:</translation>
@@ -71,12 +66,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="263"/>
         <source>Donate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="270"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://visualfc.github.com/donate&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://visualfc.github.com/donate&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>捐赠:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="297"/>
@@ -127,17 +117,6 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <location filename="src/liteapp/aboutdialog.ui" line="548"/>
         <source>License</source>
         <translation>许可协议</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="557"/>
-        <source>Copyright (c) 2011-2013 LiteIDE. All rights reserved.
-
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-
-In addition, as a special exception, that plugins developed for LiteIDE, are allowed to remain closed sourced and can be distributed under any license .These rights are included in the file LGPL_EXCEPTION.txt in this package.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="589"/>
@@ -1274,13 +1253,14 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>Golang 格式化</translation>
     </message>
     <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
+        <source>Use goimports for code format (https://github.com/bradfitz/goimports)</source>
+        <translation>使用goimports进行代码格式化(https://github.com/bradfitz/goimports)</translation>
+    </message>
+    <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="33"/>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
         <translation>使用diff工具进行快速格式化(要求diff程序位于PATH路径中)</translation>
-    </message>
-    <message>
-        <source>Display log window on error</source>
-        <translation type="obsolete">在log窗口中显示错误</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="49"/>
@@ -1358,12 +1338,12 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="248"/>
         <source>Present verify success</source>
-        <translation type="unfinished"></translation>
+        <translation>Present校验成功</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="250"/>
         <source>Present verify false</source>
-        <translation type="unfinished"></translation>
+        <translation>Present校验失败</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="256"/>
@@ -1485,11 +1465,6 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
         <source>Print Preview</source>
         <translation>打印预览</translation>
-    </message>
-    <message>
-        <source>Configuration</source>
-        <oldsource>Config</oldsource>
-        <translation type="obsolete">配置</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="81"/>
@@ -2211,12 +2186,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
         <source>Insert Line Before</source>
-        <translation type="unfinished"></translation>
+        <translation>行前插入</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="286"/>
         <source>Insert Line After</source>
-        <translation type="unfinished"></translation>
+        <translation>行后插入</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="290"/>
@@ -3296,10 +3271,6 @@ Do you want to replace it?</source>
         <source>Hide Sidebars</source>
         <oldsource>HideSideBar</oldsource>
         <translation>隐藏侧边栏</translation>
-    </message>
-    <message>
-        <source>&quot;%1&quot; Tool Window	ALT+%2</source>
-        <translation type="obsolete">&quot;%1&quot; 工具窗口\tALT+%2</translation>
     </message>
 </context>
 <context>

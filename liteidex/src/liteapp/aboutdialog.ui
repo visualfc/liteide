@@ -226,7 +226,7 @@ p, li { white-space: pre-wrap; }
           <item row="4" column="1">
            <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;visualfc@gmail.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string notr="true">visualfc@gmail.com</string>
             </property>
             <property name="textFormat">
              <enum>Qt::AutoText</enum>

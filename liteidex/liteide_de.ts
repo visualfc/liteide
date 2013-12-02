@@ -49,11 +49,6 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <translation>Version:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="229"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;visualfc@gmail.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/liteapp/aboutdialog.ui" line="249"/>
         <source>Website:</source>
         <translation>Webseite:</translation>
@@ -72,11 +67,6 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="263"/>
         <source>Donate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="270"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://visualfc.github.com/donate&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://visualfc.github.com/donate&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -128,17 +118,6 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/liteapp/aboutdialog.ui" line="548"/>
         <source>License</source>
         <translation>Lizenz</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="557"/>
-        <source>Copyright (c) 2011-2013 LiteIDE. All rights reserved.
-
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-
-In addition, as a special exception, that plugins developed for LiteIDE, are allowed to remain closed sourced and can be distributed under any license .These rights are included in the file LGPL_EXCEPTION.txt in this package.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="589"/>
@@ -1273,6 +1252,11 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="20"/>
         <source>Format Options</source>
         <oldsource>Golang Format</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
+        <source>Use goimports for code format (https://github.com/bradfitz/goimports)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
