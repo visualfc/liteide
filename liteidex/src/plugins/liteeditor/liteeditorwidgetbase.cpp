@@ -799,7 +799,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
         painter.fillRect(2,2,width-4,width-4,Qt::darkRed);
     }
     int count = this->blockCount();
-    int height = m_navigateArea->height()-m_navigateArea->width();
+    int height = this->viewport()->rect().height()-2*m_navigateArea->width();
     QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
     while(i.hasNext()) {
         i.next();
@@ -816,7 +816,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
 int LiteEditorWidgetBase::isInNavigateMark(const QPoint &pos, int *poffset)
 {
     int count = this->blockCount();
-    int height = m_navigateArea->height()-m_navigateArea->width();
+    int height = this->viewport()->rect().height()-2*m_navigateArea->width();
     int width = m_navigateArea->width();
     QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
     while(i.hasNext()) {
@@ -896,7 +896,7 @@ void LiteEditorWidgetBase::resizeEvent(QResizeEvent *e)
     m_navigateArea->setGeometry(
                 QStyle::visualRect(layoutDirection(), cr,
                                    QRect(cr.left()+extraAreaWidth()+viewport()->rect().width(), cr.top(), navigateAreaWidth(), cr.height())));
-
+    m_navigateArea->update();
 }
 
 
@@ -941,7 +941,6 @@ void LiteEditorWidgetBase::slotUpdateRequest(const QRect &r, int dy)
         //    viewport()->update(r.adjusted(-m, -m, m, m));
         //}
     }
-
     if (r.contains(viewport()->rect()))
         slotUpdateExtraAreaWidth();
 }
