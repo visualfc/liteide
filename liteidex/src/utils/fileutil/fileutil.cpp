@@ -346,21 +346,6 @@ bool GoExecute::exec(const QString &workPath, const QString &target, const QStri
 
 QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app)
 {
-    QProcessEnvironment env = LiteApi::getGoEnvironment(app);
-    QString goroot = env.value("GOROOT");
-    QString gobin = env.value("GOBIN");
-    if (!goroot.isEmpty() && gobin.isEmpty()) {
-        gobin = goroot+"/bin";
-    }
-    QString find = FileUtil::findExecute(gobin+"/"+bin);
-    if (find.isEmpty()) {
-        find = FileUtil::lookupLiteBin(bin,app);
-    }
-    return find;
-}
-
-QString FileUtil::lookupGoBinEx(const QString &bin, LiteApi::IApplication *app)
-{
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(app);
 #ifdef Q_OS_WIN
     QString sep = ";";
@@ -370,11 +355,13 @@ QString FileUtil::lookupGoBinEx(const QString &bin, LiteApi::IApplication *app)
 
     QString goos = env.value("GOOS");
     if (goos.isEmpty()) {
-        goos = LiteApi::getGOOS();
+        goos = LiteApi::getDefaultGOOS();
     }
     QString goarch = env.value("GOARCH");
     QString goroot = env.value("GOROOT");
-
+    if (goroot.isEmpty()) {
+        goroot = LiteApi::getDefaultGOROOT();
+    }
     QStringList pathList;
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
@@ -386,7 +373,7 @@ QString FileUtil::lookupGoBinEx(const QString &bin, LiteApi::IApplication *app)
     env.insert("GOPATH",pathList.join(sep));
 
     if (!goroot.isEmpty()) {
-        pathList.append(goroot);
+        pathList.prepend(goroot);
     }
 
     QStringList binList;

@@ -346,7 +346,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
     m_output->append(m_envManager->currentEnv()->orgEnvLines().join("\n")+"\n",Qt::black);
 
-    QString gobin = FileUtil::lookupGoBinEx("go",m_liteApp);
+    QString gobin = FileUtil::lookupGoBin("go",m_liteApp);
 
     this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false);
 }

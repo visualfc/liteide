@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include <QProcessEnvironment>
 #include <QDir>
+#include <QDebug>
 
 namespace LiteApi {
 
@@ -86,7 +87,7 @@ inline QProcessEnvironment getCurrentEnvironment(LiteApi::IApplication *app)
     return e;
 }
 
-inline QString getGOOS()
+inline QString getDefaultGOOS()
 {
 #ifdef Q_OS_WIN
     return "windows";
@@ -96,6 +97,15 @@ inline QString getGOOS()
 #endif
 #ifdef Q_OS_DARWIN
     return "darwin";
+#endif
+}
+
+inline QString getDefaultGOROOT()
+{
+#ifdef Q_OS_WIN
+    return "c:\\go";
+#else
+    return "/usr/local/go";
 #endif
 }
 
@@ -110,12 +120,16 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 
     QString goos = env.value("GOOS");
     if (goos.isEmpty()) {
-        goos = getGOOS();
+        goos = getDefaultGOOS();
     }
     QString goarch = env.value("GOARCH");
     QString goroot = env.value("GOROOT");
+    if (goroot.isEmpty()) {
+        goroot = getDefaultGOROOT();
+    }
 
     QStringList pathList;
+
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
@@ -126,7 +140,7 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     env.insert("GOPATH",pathList.join(sep));
 
     if (!goroot.isEmpty()) {
-        pathList.append(goroot);
+        pathList.prepend(goroot);
     }
 
     QStringList binList;    
