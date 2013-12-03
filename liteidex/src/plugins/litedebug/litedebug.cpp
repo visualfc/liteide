@@ -250,7 +250,7 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
     QString filePath = editor->filePath();
     bool ok;
     m_fileBpMap.remove(filePath);
-    foreach(QString bp, m_liteApp->settings()->value(QString("bp_%1").arg(filePath)).toStringList()) {
+    foreach(QString bp, m_liteApp->globalCookie().value(QString("bp_%1").arg(filePath)).toStringList()) {
         int i = bp.toInt(&ok);
         if (ok) {
             editorMark->addMark(i,LiteApi::BreakPointMark);
@@ -284,7 +284,7 @@ void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
     foreach(int bp, bpList) {
         save.append(QString("%1").arg(bp));
     }
-    m_liteApp->settings()->setValue(QString("bp_%1").arg(editor->filePath()),save);
+    m_liteApp->globalCookie().insert(QString("bp_%1").arg(editor->filePath()),save);
 }
 
 void LiteDebug::currentEditorChanged(IEditor *editor)
@@ -345,7 +345,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
             continue;
         }
         m_fileBpMap.remove(filePath);
-        foreach(QString bp,m_liteApp->settings()->value(QString("bp_%1").arg(filePath)).toStringList()) {
+        foreach(QString bp,m_liteApp->globalCookie().value(QString("bp_%1").arg(filePath)).toStringList()) {
             int i = bp.toInt(&ok);
             if (ok && i >= 0) {
                 m_fileBpMap.insert(filePath,i);

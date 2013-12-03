@@ -319,7 +319,7 @@ void GolangDoc::loadEnv()
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);//m_envManager->currentEnvironment();
     m_goroot = env.value("GOROOT");
 
-    m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp);
+    m_godocCmd = FileUtil::lookupGoBinEx("godoc",m_liteApp);
 
     m_godocViewCmd = FileUtil::lookupLiteBin("godocview",m_liteApp);
     m_goapiCmd = FileUtil::lookupLiteBin("goapi",m_liteApp);

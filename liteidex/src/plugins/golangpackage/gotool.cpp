@@ -89,7 +89,7 @@ bool GoTool::exists()
 void GoTool::reloadEnv()
 {
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    m_gotool = FileUtil::lookupGoBin("go",m_liteApp);
+    m_gotool = FileUtil::lookupGoBinEx("go",m_liteApp);
     m_process->setProcessEnvironment(env);
 }
 

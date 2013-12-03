@@ -359,6 +359,54 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app)
     return find;
 }
 
+QString FileUtil::lookupGoBinEx(const QString &bin, LiteApi::IApplication *app)
+{
+    QProcessEnvironment env = LiteApi::getCurrentEnvironment(app);
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+
+    QString goos = env.value("GOOS");
+    if (goos.isEmpty()) {
+        goos = LiteApi::getGOOS();
+    }
+    QString goarch = env.value("GOARCH");
+    QString goroot = env.value("GOROOT");
+
+    QStringList pathList;
+    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    env.insert("GOPATH",pathList.join(sep));
+
+    if (!goroot.isEmpty()) {
+        pathList.append(goroot);
+    }
+
+    QStringList binList;
+    QString gobin = env.value("GOBIN");
+    if (!gobin.isEmpty()) {
+        binList.append(gobin);
+    }
+    foreach (QString path, pathList) {
+        binList.append(QFileInfo(path,"bin").filePath());
+        binList.append(QFileInfo(path,"bin/"+goos+"_"+goarch).filePath());
+    }
+    foreach(QString path, binList) {
+        QString find = FileUtil::findExecute(path+"/"+bin);
+        if (!find.isEmpty()) {
+            return find;
+        }
+    }
+    return FileUtil::lookupLiteBin(bin,app);env;
+}
+
 QString FileUtil::lookupLiteBin(const QString &bin, LiteApi::IApplication *app)
 {
     QString find = FileUtil::findExecute(app->applicationPath()+"/"+bin);

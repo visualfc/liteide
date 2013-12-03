@@ -129,7 +129,11 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
         pathList.append(goroot);
     }
 
-    QStringList binList;
+    QStringList binList;    
+    QString gobin = env.value("GOBIN");
+    if (!gobin.isEmpty()) {
+        binList.append(gobin);
+    }
     foreach (QString path, pathList) {
         binList.append(QFileInfo(path,"bin").filePath());
         binList.append(QFileInfo(path,"bin/"+goos+"_"+goarch).filePath());
