@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2013.11.27 Ver x20
+### 2013.11.03 Ver x20
 * LiteIDE
 	* add new GolangPresent plugin
 	* add evilworks.qss style (by Vedran Vuk <vedranvuk82@gmail.com>)
@@ -18,6 +18,7 @@
 	* external cmd setting
 	* fix command input foucus
 * LiteEnv:
+	* auto set $PATH for GOROOT/bin and GOBIN and GOPATH/bin and GOPATH/bin/GOOS_GOARCH
 	* fix to use utf8 encoding
 * Markdown:
 	* add new Github_Style.css (by Slene <vslene@gmail.com>)
