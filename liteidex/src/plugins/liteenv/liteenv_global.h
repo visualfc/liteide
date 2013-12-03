@@ -32,4 +32,6 @@
 #  define LITEENVSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define LITEENV_CURRENTENV "liteenv/currentenv"
+
 #endif // LITEENV_GLOBAL_H

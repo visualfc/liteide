@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "envmanager.h"
+#include "liteenv_global.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -31,6 +32,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QAction>
+#include <QSysInfo>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -147,7 +149,7 @@ EnvManager::~EnvManager()
         m_liteApp->actionManager()->removeToolBar(m_toolBar);
     }
     if (m_curEnv) {
-        m_liteApp->settings()->setValue("LiteEnv/current",m_curEnv->id());
+        m_liteApp->settings()->setValue(LITEENV_CURRENTENV,m_curEnv->id());
     }
 }
 
@@ -187,7 +189,7 @@ void EnvManager::setCurrentEnv(LiteApi::IEnv *env)
     m_curEnv = env;
     if (m_curEnv) {
         m_curEnv->reload();
-        m_liteApp->settings()->setValue("LiteEnv/current",m_curEnv->id());
+        m_liteApp->settings()->setValue(LITEENV_CURRENTENV,m_curEnv->id());
     }
     emit currentEnvChanged(m_curEnv);
 }
@@ -216,6 +218,31 @@ void EnvManager::loadEnvFiles(const QString &path)
     }
 }
 
+static QString defaultEnvid()
+{
+#ifdef Q_OS_WIN
+    if (QSysInfo::WordSize == 32) {
+        return "win32";
+    } else {
+        return "win64";
+    }
+#endif
+#ifdef Q_OS_LINUX
+    if (QSysInfo::WordSize == 32) {
+        return "linux32";
+    } else {
+        return "linux64";
+    }
+#endif
+#ifdef Q_OS_DARWIN
+    if (QSysInfo::WordSize == 32) {
+        return "darwin32";
+    } else {
+        return "darwin64";
+    }
+#endif
+}
+
 bool EnvManager::initWithApp(LiteApi::IApplication *app)
 {
     if (!LiteApi::IEnvManager::initWithApp(app)) {
@@ -242,7 +269,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
-    QString id = m_liteApp->settings()->value("LiteEnv/current","system").toString();
+    QString id = m_liteApp->settings()->value(LITEENV_CURRENTENV,defaultEnvid()).toString();
     if (!id.isEmpty()) {
         this->setCurrentEnvId(id);
     }
