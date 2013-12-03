@@ -57,7 +57,7 @@ var article_tmpl = `
 <html>
   <head>
     <title>{{.Title}}</title>
-    <link type="text/css" rel="stylesheet" href="./static/article.css">
+    <link type="text/css" rel="stylesheet" href="static/article.css">
     <meta charset='utf-8'>
   </head>
 
@@ -117,7 +117,7 @@ var slides_tmpl = `
   <head>
     <title>{{.Title}}</title>
     <meta charset='utf-8'>
-    <script src='./static/slides.js'></script>
+    <script src='static/slides.js'></script>
   </head>
 
   <body style='display: none'>

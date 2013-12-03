@@ -11,7 +11,7 @@ var PM_TOUCH_SENSITIVITY = 15;
 var curSlide;
 
 /* ---------------------------------------------------------------------- */
-/* classList polyfill by Eli Grey 
+/* classList polyfill by Eli Grey
  * (http://purl.eligrey.com/github/classList.js/blob/master/classList.js) */
 
 if (typeof document !== "undefined" && !("classList" in document.createElement("a"))) {
@@ -135,7 +135,7 @@ if (objCtr.defineProperty) {
 /* Slide movement */
 
 function getSlideEl(no) {
-  if ((no < 0) || (no >= slideEls.length)) { 
+  if ((no < 0) || (no >= slideEls.length)) {
     return null;
   } else {
     return slideEls[no];
@@ -144,15 +144,15 @@ function getSlideEl(no) {
 
 function updateSlideClass(slideNo, className) {
   var el = getSlideEl(slideNo);
-  
+
   if (!el) {
     return;
   }
-  
+
   if (className) {
     el.classList.add(className);
   }
-    
+
   for (var i in SLIDE_CLASSES) {
     if (className != SLIDE_CLASSES[i]) {
       el.classList.remove(SLIDE_CLASSES[i]);
@@ -169,14 +169,14 @@ function updateSlides() {
       case curSlide - 1:
         updateSlideClass(i, 'past');
         break;
-      case curSlide: 
+      case curSlide:
         updateSlideClass(i, 'current');
         break;
       case curSlide + 1:
-        updateSlideClass(i, 'next');      
+        updateSlideClass(i, 'next');
         break;
       case curSlide + 2:
-        updateSlideClass(i, 'far-next');      
+        updateSlideClass(i, 'far-next');
         break;
       default:
         updateSlideClass(i);
@@ -194,7 +194,7 @@ function updateSlides() {
 
   enableSlideFrames(curSlide - 1);
   enableSlideFrames(curSlide + 2);
-  
+
   updateHash();
 };
 
@@ -248,7 +248,7 @@ function triggerLeaveEvent(no) {
   var evt = document.createEvent('Event');
   evt.initEvent('slideleave', true, true);
   evt.slideNumber = no + 1; // Make it readable
-  
+
   el.dispatchEvent(evt);
 };
 
@@ -288,34 +288,14 @@ function handleTouchEnd(event) {
       nextSlide();
     }
   }
-  
+
   cancelTouch();
 };
 
 function cancelTouch() {
   document.body.removeEventListener('touchmove', handleTouchMove, true);
-  document.body.removeEventListener('touchend', handleTouchEnd, true);  
+  document.body.removeEventListener('touchend', handleTouchEnd, true);
 };
-
-/* Mouse wheel events */
-
-// Used to limit the number of slides advanced.
-var tooSoon = false;
-
-function handleMouseWheel(event) {
-  event.preventDefault();
-  if (tooSoon) return;
-
-  // FireFox exposes delta in detail, instead of wheelDelta.
-  var delta = event.wheelDelta ? event.wheelDelta : -event.detail;
-  // Scrolling down or left means next.
-  if (delta > 0) nextSlide();
-  // Scrolling up or right means previous.
-  if (delta < 0) prevSlide();
-
-  tooSoon = true;
-  setTimeout(function() { tooSoon = false;}, 250);
-}
 
 /* Preloading frames */
 
@@ -361,36 +341,30 @@ function setupFrames() {
     frame._src = frame.src;
     disableFrame(frame);
   }
-  
+
   enableSlideFrames(curSlide);
   enableSlideFrames(curSlide + 1);
-  enableSlideFrames(curSlide + 2);  
+  enableSlideFrames(curSlide + 2);
 };
 
 function setupInteraction() {
   /* Clicking and tapping */
-  
+
   var el = document.createElement('div');
   el.className = 'slide-area';
-  el.id = 'prev-slide-area';  
+  el.id = 'prev-slide-area';
   el.addEventListener('click', prevSlide, false);
   document.querySelector('section.slides').appendChild(el);
 
   var el = document.createElement('div');
   el.className = 'slide-area';
-  el.id = 'next-slide-area';  
+  el.id = 'next-slide-area';
   el.addEventListener('click', nextSlide, false);
-  document.querySelector('section.slides').appendChild(el);  
-  
+  document.querySelector('section.slides').appendChild(el);
+
   /* Swiping */
-  
+
   document.body.addEventListener('touchstart', handleTouchStart, false);
-
-  /* Scrolling */
-
-  document.body.addEventListener('mousewheel', handleMouseWheel, false);
-  // Needed for FireFox (Gecko)
-  document.body.addEventListener('DOMMouseScroll', handleMouseWheel, false);
 }
 
 /* Hash functions */
@@ -448,7 +422,7 @@ function handleBodyKeyDown(event) {
 };
 
 function addEventListeners() {
-  document.addEventListener('keydown', handleBodyKeyDown, false);  
+  document.addEventListener('keydown', handleBodyKeyDown, false);
 };
 
 /* Initialization */
@@ -469,12 +443,12 @@ function addGeneralStyle() {
   el.type = 'text/css';
   el.href = PERMANENT_URL_PREFIX + 'styles.css';
   document.body.appendChild(el);
-  
+
   var el = document.createElement('meta');
   el.name = 'viewport';
   el.content = 'width=1100,height=750';
   document.querySelector('head').appendChild(el);
-  
+
   var el = document.createElement('meta');
   el.name = 'apple-mobile-web-app-capable';
   el.content = 'yes';
