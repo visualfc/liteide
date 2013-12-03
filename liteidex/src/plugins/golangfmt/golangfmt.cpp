@@ -260,7 +260,7 @@ void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
         m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
     }
     if (!m_gofmtCmd.isEmpty()) {
-        m_liteApp->appendLog("GolangFmt",QString("found %1").arg(m_gofmtCmd),false);
+        m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
     }
     m_process->setProcessEnvironment(env);
 }

@@ -331,9 +331,9 @@ void GolangDoc::loadEnv()
     m_helpProcess->setEnvironment(env.toStringList());
 
     if (!m_godocCmd.isEmpty()) {
-        m_liteApp->appendLog("GolangDoc",QString("load godoc at %1").arg(m_godocCmd),false);
+        m_liteApp->appendLog("GolangDoc",QString("found godoc at %1").arg(m_godocCmd),false);
     } else {
-        m_liteApp->appendLog("GolangDoc",QString("not lookup godoc"),true);
+        m_liteApp->appendLog("GolangDoc",QString("Could not find godoc, (hint: is godoc installed?)"),true);
     }
 
     m_pathFileMap.clear();
