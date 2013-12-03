@@ -9,6 +9,7 @@
 *.so
 *.dll
 *.dylib
+*.7z
 
 # Qt-es
 
@@ -25,5 +26,8 @@ Makefile
 #liteide
 *.exe
 build*
+liteidex/bin
 liteidex/liteide
+liteidex/src/code.google.com
+liteidex/src/github.com
 

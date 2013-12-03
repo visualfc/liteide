@@ -1,0 +1,18 @@
+# http://godoc.org/code.google.com/p/go.tools/present
+# Present files have the following format. 
+# The first non-blank non-comment line is the title.
+# The subtitle, date, and tags lines are optional.
+Title of document
+Subtitle of document
+$DATETIME$
+Tags: foo, bar, baz
+
+Author Name
+Job title, Company
+joe@example.com
+http://url/
+@twitter_name
+
+* Section1
+
+* Section2

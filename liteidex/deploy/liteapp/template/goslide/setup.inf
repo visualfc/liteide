@@ -1,0 +1,7 @@
+[SETUP]
+NAME = "Go Present Slide File"
+AUTHOR = visualfc
+INFO = go slide file(*.slide)
+TYPE = file
+FILES = root.slide
+OPEN = root.slide

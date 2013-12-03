@@ -2,4 +2,5 @@ empty
 gosrc
 luasrc
 mdsrc
-slidesrc
+goslide
+goarticle
