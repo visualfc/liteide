@@ -588,7 +588,9 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
     if (url.scheme() != "pdoc") {
         return;
     }
-
+    if (m_godocCmd.isEmpty()) {
+        m_godocCmd = FileUtil::lookupGoBinEx("godoc",m_liteApp);
+    }
     if (m_godocCmd.isEmpty()) {
         m_liteApp->appendLog("GolangDoc",QString("not lookup godoc in PATH"),true);
         return;
