@@ -249,6 +249,8 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
         } else {
             m_editor->setNavigateHead(LiteApi::EditorNavigateError,tr("Present verify false")+"\n"+m_errorMsg.join("\n"));
         }
+    } else if (error || code != 0) {
+        m_liteApp->appendLog("GolangPresent",m_errorMsg.join(";"),true);
     }
     if (!error && code == 0) {
         if (exportType == EXPORT_TYPE_HTML) {
