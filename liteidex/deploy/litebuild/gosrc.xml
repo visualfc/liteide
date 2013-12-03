@@ -22,5 +22,8 @@
 		<action id="Fmt" menu="Test" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Vet" menu="Test" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
 		<target id="Target" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" work="$(EDITOR_DIR)"/>
+		<action id="TestCover" img="blue/cover.png" key="" task="Cover;CoverFunc" killold="true"/>
+		<action id="Cover" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="test -coverprofile cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="CoverFunc" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="tool cover -func=cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>		
 	</mime-type>
 </mime-info>
