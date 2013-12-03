@@ -75,7 +75,7 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     if (!m_diff) {
@@ -259,8 +259,10 @@ void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
     if (m_gofmtCmd.isEmpty()) {
         m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
     }
-    if (!m_gofmtCmd.isEmpty()) {
+    if (m_gofmtCmd.isEmpty()) {
         m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
+    } else {
+        m_liteApp->appendLog("GolangFmt",QString("Found %1").arg(m_gofmtCmd),false);
     }
     m_process->setProcessEnvironment(env);
 }
