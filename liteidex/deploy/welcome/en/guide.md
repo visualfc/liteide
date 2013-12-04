@@ -27,11 +27,11 @@ Example `win32.env`:
     #win32 environment
     
     GOROOT=c:\go
-    GOBIN=
+    #GOBIN=
     GOARCH=386
     GOOS=windows
     
-    PATH=%GOBIN%;%GOROOT%\bin;%PATH%
+    PATH=c:\mingw32\bin;%GOROOT%\bin;%PATH%
     
     LITEIDE_GDB=gdb
     LITEIDE_MAKE=mingw32-make
@@ -46,11 +46,11 @@ Example `linux32.env`:
     #linux32 environment
     
     GOROOT=$HOME/go
-    GOBIN=
+    #GOBIN=
     GOARCH=386
     GOOS=linux
     
-    PATH=$GOBIN:$GOROOT/bin:$PATH
+    PATH=$GOROOT/bin:$PATH
     
     LITEIDE_GDB=gdb
     LITEIDE_MAKE=make
@@ -128,6 +128,15 @@ Example configuration for cross-compiling 64-bit Linux binaries on Windows:
     
     PATH=%GOBIN%;%GOROOT%\bin;%PATH%
     ...
+	
+## Golang Code Format	
+Automatic formatting when saving.
+
+### Goimports
+LiteIDE View->Options->GolangFmt-> Use goimports instead of gofmt, for code format
+
+This tool updates your Go import lines, adding missing ones and
+removing unreferenced ones.
 
 ## Build System
 LiteIDE's build system is highly configurable, allowing you to define your own custom build actions using XML files.

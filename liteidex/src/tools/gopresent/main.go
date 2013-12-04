@@ -25,6 +25,7 @@ func abort(err error) {
 
 func main() {
 	flag.Parse()
+	isDoc(*input)
 	if *input == "" {
 		flag.Usage()
 		return

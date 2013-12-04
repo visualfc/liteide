@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
-    <height>300</height>
+    <width>475</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,11 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QCheckBox" name="checkBoxUseGoimports">
+        <property name="toolTip">
+         <string>Goimports updates your Go import lines, adding missing ones and removing unreferenced ones.</string>
+        </property>
         <property name="text">
-         <string>Use goimports for code format (https://github.com/bradfitz/goimports)</string>
+         <string>Use goimports instead of gofmt,for code formatting</string>
         </property>
        </widget>
       </item>

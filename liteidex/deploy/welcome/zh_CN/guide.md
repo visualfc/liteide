@@ -13,9 +13,9 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
 ![envselect.png](../images/envselect.png)
 
 主要系统的一些常用环境列表
-* Windows - system win64 win32
-* Linux - system linux64 linux32
-* MacOSX - system darwin64 darwin32
+* Windows - win64 win32
+* Linux - linux64 linux32
+* MacOSX - darwin64 darwin32
 
 可选择使用交叉编译环境，请参看下面的交叉编译设置。
 
@@ -31,11 +31,11 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
     #win32 environment
     
     GOROOT=c:\go
-    GOBIN=
+    #GOBIN=
     GOARCH=386
     GOOS=windows
     
-    PATH=%GOBIN%;%GOROOT%\bin;%PATH%
+    PATH=c:\mingw32\bin;%GOROOT%\bin;%PATH%
     
     LITEIDE_GDB=gdb
     LITEIDE_MAKE=mingw32-make
@@ -50,11 +50,11 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
     #linux32 environment
     
     GOROOT=$HOME/go
-    GOBIN=
+    #GOBIN=
     GOARCH=386
     GOOS=linux
     
-    PATH=$GOBIN:$GOROOT/bin:$PATH
+    PATH=$GOROOT/bin:$PATH
     
     LITEIDE_GDB=gdb
     LITEIDE_MAKE=make
@@ -119,6 +119,14 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
     > export CGO_ENABLED=0
     > cd $GOROOT/src
     > ./all.bash
+
+## Go语言代码格式化
+存盘时自动格式化	
+
+### Goimports
+LiteIDE 查看->选项->GolangFmt-> 使用Goimports代替gofmt进行代码格式化
+
+这个工具自动更新您的Go语言import行，增加缺少的pkg和移除未引用的pkg。
 
 ### 编译
 

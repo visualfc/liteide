@@ -462,18 +462,18 @@ LiteIDE это простая кросплатформенная среда ра
 <context>
     <name>EnvManager</name>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="226"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="253"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="233"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="260"/>
         <source>Environment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="236"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="263"/>
         <source>Edit Environment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1256,21 +1256,26 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
-        <source>Use goimports for code format (https://github.com/bradfitz/goimports)</source>
+        <source>Goimports updates your Go import lines, adding missing ones and removing unreferenced ones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="33"/>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="29"/>
+        <source>Use goimports instead of gofmt,for code formatting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="49"/>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="52"/>
         <source>Formatting timeout in milliseconds (50ms or more):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="40"/>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="43"/>
         <source>Automatically format code when saving</source>
         <oldsource>When the editor is saved automatically gofmt</oldsource>
         <translation type="unfinished"></translation>
@@ -1348,12 +1353,12 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="256"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
         <source>Select export html directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="274"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="276"/>
         <source>Export PDF</source>
         <translation type="unfinished">Экспортировать в PDF</translation>
     </message>
@@ -2790,56 +2795,56 @@ Success: %2.</oldsource>
         <translation>Расположение:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="125"/>
-        <location filename="src/liteapp/newfiledialog.cpp" line="176"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="125"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
         <source>Could not create the target directory: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="130"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="130"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Location %1 is not empty.
 Use the target directory anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="160"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>Overwrite File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="160"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="176"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
         <source>No files could be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="271"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="279"/>
         <source>File template details:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="273"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="281"/>
         <source>Project template details:</source>
         <oldsource>New project wizard:</oldsource>
         <translation type="unfinished">Мастер новых проектов:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="351"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="359"/>
         <source>Choose a directory for the new content:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3071,6 +3076,14 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="119"/>
         <source>Import Directory &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QJson::ParserRunnable</name>
+    <message>
+        <location filename="src/3rdparty/qjson/src/parserrunnable.cpp" line="64"/>
+        <source>An error occurred while parsing json: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
