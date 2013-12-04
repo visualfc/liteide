@@ -73,7 +73,7 @@ void FolderProject::openFolder(const QString &folder)
 
 void FolderProject::appendFolder(const QString &folder)
 {
-    m_widget->addPathList(folder);
+    m_widget->addRootPathList(QStringList() << folder);
 }
 
 void FolderProject::clear()
@@ -83,7 +83,7 @@ void FolderProject::clear()
 
 QStringList FolderProject::folderList() const
 {
-    return m_widget->pathList();
+    return m_widget->rootPathList();
 }
 
 QStringList FolderProject::fileNameList() const

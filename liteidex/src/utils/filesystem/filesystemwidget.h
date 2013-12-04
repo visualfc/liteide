@@ -40,9 +40,9 @@ public:
     explicit FileSystemWidget(LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~FileSystemWidget();
     QWidget *widget() { return this; }
-    void setPathList(const QStringList &pathList);
-    void addPathList(const QString &path);
-    QStringList pathList() const;
+    void setRootPathList(const QStringList &rootPathList);
+    void addRootPathList(const QStringList &path);
+    QStringList rootPathList() const;
     void setStartIndex(const QModelIndex &index);
     void setRootPath(const QString &path);
     QString startPath() const;
@@ -66,6 +66,7 @@ public slots:
     void openShell();
     void openExplorer();
     void viewGodoc();
+    void addFolder();
     void syncEditor(bool);
     void expandStartPath(QString);
 signals:
@@ -79,9 +80,9 @@ private:
     FileSystemModel *m_model;
     QFileInfo m_contextInfo;
     QModelIndex m_contextIndex;
-    QStringList m_pathList;
     QMenu   *m_fileMenu;
     QMenu   *m_folderMenu;
+    QMenu   *m_rootMenu;
     QAction *m_openEditorAct;
     QAction *m_newFileAct;
     QAction *m_newFileWizardAct;
@@ -93,6 +94,7 @@ private:
     QAction *m_openShellAct;
     QAction *m_openExplorerAct;
     QAction *m_viewGodocAct;
+    QAction *m_addFolderAct;
 protected:
     LiteApi::IApplication *m_litApp;
 };

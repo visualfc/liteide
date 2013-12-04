@@ -778,9 +778,6 @@ void LiteApp::saveSession(const QString &name)
 
     QStringList fileList;
     foreach (IEditor* ed,m_editorManager->sortedEditorList()) {
-//        if (ed->mimeType().indexOf("liteide/") == 0) {
-//            continue;
-//        }
         if (ed->filePath().isEmpty()) {
             continue;
         }

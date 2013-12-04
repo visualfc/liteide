@@ -43,6 +43,7 @@
 #include <QUrl>
 #include <QToolBar>
 #include <QFileSystemWatcher>
+#include <QFileDialog>
 #include <QDebug>
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -87,6 +88,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 
     m_fileMenu = new QMenu(this);
     m_folderMenu = new QMenu(this);
+    m_rootMenu = new QMenu(this);
 
     m_openEditorAct = new QAction(tr("Open File"),this);
     m_newFileAct = new QAction(tr("New File..."),this);
@@ -102,6 +104,8 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_openExplorerAct = new QAction(tr("Open Explorer Here"),this);
 
     m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
+
+    m_addFolderAct = new QAction(tr("Add Folder"),this);
 
     m_fileMenu->addAction(m_openEditorAct);
     m_fileMenu->addSeparator();
@@ -126,6 +130,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_folderMenu->addAction(m_openShellAct);
     m_folderMenu->addAction(m_openExplorerAct);
 
+    m_rootMenu->addAction(m_addFolderAct);
 
     connect(m_model->fileWatcher(),SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
@@ -139,6 +144,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
+    connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
 
     connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
 }
@@ -383,6 +389,15 @@ void FileSystemWidget::viewGodoc()
     }
 }
 
+void FileSystemWidget::addFolder()
+{
+    QString folder = QFileDialog::getExistingDirectory(this,tr("Add Folder"));
+    if (folder.isEmpty()) {
+        return;
+    }
+    this->addRootPathList(QStringList() << folder);
+}
+
 void FileSystemWidget::openShell()
 {
     QDir dir = contextDir();
@@ -400,36 +415,35 @@ void FileSystemWidget::openShell()
 
 void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
 {
-    QModelIndex index = m_tree->indexAt(pos);
-    if (!index.isValid()) {
-        return;
-    }
-    FileNode *node = m_model->nodeFromIndex(index);
-    if (!node) {
-        return;
-    }
-    m_contextInfo = node->fileInfo();
-    m_contextIndex = index;
     QMenu *contextMenu = 0;
-    if (node->isDir()) {
-        contextMenu = m_folderMenu;
+    QModelIndex index = m_tree->indexAt(pos);
+    if (index.isValid()) {
+        FileNode *node = m_model->nodeFromIndex(index);
+        if (node) {
+            m_contextInfo = node->fileInfo();
+            m_contextIndex = index;
+            if (node->isDir()) {
+                contextMenu = m_folderMenu;
+            } else {
+                contextMenu = m_fileMenu;
+            }
+        }
     } else {
-        contextMenu = m_fileMenu;
+        contextMenu = m_rootMenu;
     }
-
     if (contextMenu && contextMenu->actions().count() > 0) {
         contextMenu->popup(m_tree->mapToGlobal(pos));
     }
 }
 
-void FileSystemWidget::addPathList(const QString &path)
+void FileSystemWidget::addRootPathList(const QStringList &path)
 {
-    QStringList pathList = m_pathList;
+    QStringList pathList = m_model->rootPathList();
     pathList.append(path);
-    this->setPathList(pathList);
+    this->setRootPathList(pathList);
 }
 
-void FileSystemWidget::setPathList(const QStringList &pathList)
+void FileSystemWidget::setRootPathList(const QStringList &pathList)
 {
     m_model->setRootPathList(pathList);
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
@@ -441,11 +455,10 @@ void FileSystemWidget::setRootPath(const QString &path)
     m_tree->expand(m_model->startIndex());
 }
 
-QStringList FileSystemWidget::pathList() const
+QStringList FileSystemWidget::rootPathList() const
 {
-    return m_pathList;
+    return m_model->rootPathList();
 }
-
 
 void FileSystemWidget::setStartIndex(const QModelIndex &index)
 {
