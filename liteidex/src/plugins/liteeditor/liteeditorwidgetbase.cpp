@@ -547,8 +547,8 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette&,
     QColor textColor = m_extraForeground;
     QColor brushColor = m_extraBackground;
 
-    textColor.setAlpha(100);
-    brushColor.setAlpha(100);
+    textColor.setAlpha(128);
+    brushColor.setAlpha(128);
 
     QPolygon a;
     if (expanded) {
