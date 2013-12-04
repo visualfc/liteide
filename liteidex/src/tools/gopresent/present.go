@@ -5,13 +5,13 @@
 package main
 
 import (
-	"code.google.com/p/go.tools/present"
 	"fmt"
 	"html/template"
 	"io"
-	//"log"
 	"os"
 	"path/filepath"
+
+	"code.google.com/p/go.tools/present"
 )
 
 var extensions = map[string]string{

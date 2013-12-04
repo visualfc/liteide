@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangcode.h"
+#include "golangcode_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include <QProcess>
@@ -43,12 +44,14 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app),
     m_completer(0),
-    m_closeOnExit(true)
+    m_closeOnExit(true),
+    m_autoUpdatePkg(true)
 {
-    m_process = new QProcess(this);
+    m_gocodeProcess = new QProcess(this);
+    m_updatePkgProcess = new QProcess(this);
     m_breset = false;
-    connect(m_process,SIGNAL(started()),this,SLOT(started()));
-    connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
+    connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
+    connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
 
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
@@ -65,7 +68,8 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
 void GolangCode::applyOption(QString id)
 {
     if (id != "option/golangcode") return;
-    m_closeOnExit = m_liteApp->settings()->value("golangcode/close",true).toBool();
+    m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,true).toBool();
+    m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,true).toBool();
 }
 
 void GolangCode::broadcast(QString module,QString id,QString)
@@ -80,16 +84,16 @@ GolangCode::~GolangCode()
     if (m_closeOnExit && !m_gocodeCmd.isEmpty()) {
         ProcessEx::startDetachedEx(m_gocodeCmd,QStringList() << "close");
     }
-    delete m_process;
+    delete m_gocodeProcess;
 }
 
 void GolangCode::resetGocode()
 {
     if (!m_gocodeCmd.isEmpty()) {
         m_breset = true;
-        m_process->setWorkingDirectory(m_liteApp->applicationPath());
-        m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-        m_process->start(m_gocodeCmd,QStringList() << "close");
+        m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
+        m_gocodeProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+        m_gocodeProcess->start(m_gocodeCmd,QStringList() << "close");
     }
 }
 
@@ -97,7 +101,9 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp);
-    m_process->setProcessEnvironment(env);
+    m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp);
+    m_updatePkgProcess->setProcessEnvironment(env);
+    m_gocodeProcess->setProcessEnvironment(env);
 
     if (m_gocodeCmd.isEmpty()) {
          m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
@@ -118,6 +124,8 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
         return;
     }
     m_fileInfo.setFile(filePath);
+    m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
+    m_updatePkgProcess->setWorkingDirectory(m_fileInfo.absolutePath());
 }
 
 void GolangCode::setCompleter(LiteApi::ICompleter *completer)
@@ -145,7 +153,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
         return;
     }
 
-    if (m_process->state() == QProcess::Running) {
+    if (m_gocodeProcess->state() != QProcess::NotRunning) {
         return;
     }
 
@@ -171,8 +179,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length());
     m_writeData = src.toUtf8();
     m_breset = false;
-    m_process->setWorkingDirectory(m_fileInfo.path());
-    m_process->start(m_gocodeCmd,args);
+    m_gocodeProcess->start(m_gocodeCmd,args);
 }
 
 void GolangCode::wordCompleted(QString,QString)
@@ -183,11 +190,11 @@ void GolangCode::wordCompleted(QString,QString)
 void GolangCode::started()
 {
     if (m_writeData.isEmpty()) {
-        m_process->closeWriteChannel();
+        m_gocodeProcess->closeWriteChannel();
         return;
     }
-    m_process->write(m_writeData);
-    m_process->closeWriteChannel();
+    m_gocodeProcess->write(m_writeData);
+    m_gocodeProcess->closeWriteChannel();
     m_writeData.clear();
 }
 
@@ -199,8 +206,8 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
 
     if (m_breset) {
         m_breset = false;
-        m_process->setWorkingDirectory(m_liteApp->applicationPath());
-        m_process->start(m_gocodeCmd);
+        m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
+        m_gocodeProcess->start(m_gocodeCmd);
         return;
     }
 
@@ -213,7 +220,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
         return;
     }
 
-    QByteArray read = m_process->readAllStandardOutput();
+    QByteArray read = m_gocodeProcess->readAllStandardOutput();
     QList<QByteArray> all = read.split('\n');
     //func,,Fprint,,func(w io.Writer, a ...interface{}) (n int, error os.Error)
     //type,,Formatter,,interface
@@ -261,5 +268,10 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     m_prefix.clear();
     if (n >= 1) {
         m_completer->show();
+    } else if (m_autoUpdatePkg && !m_gobinCmd.isEmpty()){
+        if (m_updatePkgProcess->state() != QProcess::NotRunning) {
+            return;
+        }
+        m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
     }
 }

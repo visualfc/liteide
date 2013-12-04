@@ -549,7 +549,6 @@ void LiteEditorWidgetBase::drawFoldingMarker(QPainter *painter, const QPalette&,
 
     textColor.setAlpha(128);
     brushColor.setAlpha(128);
-
     QPolygon a;
     if (expanded) {
         // down arrow

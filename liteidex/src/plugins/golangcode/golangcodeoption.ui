@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>370</width>
-    <height>222</height>
+    <height>121</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,13 +17,20 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Go API</string>
+      <string>Gocode</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="closeCheckBox">
+       <widget class="QCheckBox" name="exitCloseCheckBox">
         <property name="text">
          <string>Close gocode when exiting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="autoUpPkgCheckBox">
+        <property name="text">
+         <string>Auto update depends package</string>
         </property>
        </widget>
       </item>

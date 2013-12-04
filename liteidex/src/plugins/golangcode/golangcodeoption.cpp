@@ -22,6 +22,7 @@
 // Creator: Nik-U <niku@vaxxine.com>
 
 #include "golangcodeoption.h"
+#include "golangcode_global.h"
 #include "ui_golangcodeoption.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -41,8 +42,10 @@ GolangCodeOption::GolangCodeOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
-    bool close = m_liteApp->settings()->value("golangcode/close",true).toBool();
-    ui->closeCheckBox->setChecked(close);
+    bool close = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
+    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,true).toBool();
+    ui->exitCloseCheckBox->setChecked(close);
+    ui->autoUpPkgCheckBox->setChecked(uppkg);
 }
 
 GolangCodeOption::~GolangCodeOption()
@@ -68,6 +71,8 @@ QString GolangCodeOption::mimeType() const
 
 void GolangCodeOption::apply()
 {
-    bool close = ui->closeCheckBox->isChecked();
-    m_liteApp->settings()->setValue("golangcode/close",close);
+    bool close = ui->exitCloseCheckBox->isChecked();
+    bool uppkg = ui->autoUpPkgCheckBox->isChecked();
+    m_liteApp->settings()->setValue(GOLANGCODE_EXITCLOSE,close);
+    m_liteApp->settings()->setValue(GOLANGCODE_AUTOUPPKG,uppkg);
 }

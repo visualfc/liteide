@@ -51,17 +51,20 @@ public slots:
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ICompleter   *m_completer;
+    QString     m_gobinCmd;
     QString     m_preWord;
     QString     m_prefix;
     QString     m_lastPrefix;
     QFileInfo   m_fileInfo;
     bool        m_breset;
-    QProcess   *m_process;
+    QProcess   *m_gocodeProcess;
+    QProcess   *m_updatePkgProcess;
     QByteArray  m_writeData;
     LiteApi::IEnvManager *m_envManager;
     LiteApi::IGolangAst *m_golangAst;
     QString     m_gocodeCmd;
     bool        m_closeOnExit;
+    bool        m_autoUpdatePkg;
 };
 
 #endif // GOLANGCODE_H
