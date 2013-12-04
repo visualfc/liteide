@@ -127,13 +127,13 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
     process.start(m_gofmtCmd,args);
     if (!process.waitForStarted(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting gofmt").arg(timeout),false);
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
         return;
     }
     process.write(text.toUtf8());
     process.closeWriteChannel();
     if (!process.waitForFinished(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running gofmt").arg(timeout),false);
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout),false);
         return;
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
@@ -157,12 +157,12 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         }
         QString log = errmsg;
         errmsg.replace("<standard input>","");
-        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"gofmt error\n"+errmsg);
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
         log.replace("<standard input>",info.filePath());
-        m_liteApp->appendLog("gofmt error",log,false);
+        m_liteApp->appendLog("go code format error",log,false);
         return;
     }
-    liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"gofmt success");
+    liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
 
     QByteArray data = process.readAllStandardOutput();
     /*
