@@ -5,30 +5,40 @@
 
 ### 2013.12.03 Ver x20
 * LiteIDE
+	* add folders manager
+	* always open folder with new window (option)
+	* editor add navigate area for code format or build error
 	* add new GolangPresent plugin
-	* add evilworks.qss style (by Vedran Vuk <vedranvuk82@gmail.com>)
 	* tool windows use instantpopup
+	* update editor tab context menu
+	* add evilworks.qss style (by Vedran Vuk <vedranvuk82@gmail.com>)
 * LiteEditor
 	* add error navigate area
 	* update kate highlighter
 	* add gopresent.xml syntax
 	* add Visual Studio Theme (by William Kennedy <bill@ardanstudios.com>)
 	* fix goto match braces	
-* LiteDebug:
-	* external cmd setting
-	* fix command input foucus
 * LiteEnv:
 	* auto set $PATH for GOROOT/bin and GOBIN and GOPATH/bin and GOPATH/bin/GOOS_GOARCH
 	* fix to use utf8 encoding
+* GolangCode:
+	* auto update depends package (option)
+* GolangFmt:
+	* use goimports instead gofmt (option)		
+	* code format error show in editor navigate area
+* LiteDebug:
+	* external cmd setting
+	* fix command input foucus
 * Markdown:
 	* add new Github_Style.css (by Slene <vslene@gmail.com>)
 * FileBrowser:
 	* option show hidden files
 * LiteBuild:
 	* fix build menu enable	
+	* build error show in editor navigate area
 * GolangPresent:
 	* support golang present editor
-	* verify golang present
+	* verify present error show in editor navigate area
 	* export golang present to html
 * Welcome:
 	* update document
