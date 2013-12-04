@@ -21,8 +21,8 @@ private slots:
     void on_exportButton_clicked();
     void on_exportAndViewButton_clicked();
 private:
-    bool m_bView;
     Ui::ExportDialog *ui;
+    bool m_bView;
 };
 
 #endif // EXPORTDIALOG_H

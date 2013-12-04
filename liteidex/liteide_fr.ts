@@ -581,6 +581,11 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
+        <source>Open Folder in New Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="508"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
@@ -660,11 +665,6 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="211"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
-        <source>Load Folder Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -750,12 +750,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="332"/>
+        <location filename="src/liteapp/filemanager.cpp" line="334"/>
         <source>LiteIDE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="333"/>
+        <location filename="src/liteapp/filemanager.cpp" line="335"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -763,7 +763,7 @@ Do you want to load?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="243"/>
+        <location filename="src/liteapp/filemanager.cpp" line="245"/>
         <source>Open Project or File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -781,34 +781,34 @@ Do you want to load?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="256"/>
-        <location filename="src/liteapp/filemanager.cpp" line="274"/>
+        <location filename="src/liteapp/filemanager.cpp" line="258"/>
+        <location filename="src/liteapp/filemanager.cpp" line="276"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="464"/>
+        <location filename="src/liteapp/filemanager.cpp" line="468"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="465"/>
+        <location filename="src/liteapp/filemanager.cpp" line="469"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="466"/>
+        <location filename="src/liteapp/filemanager.cpp" line="470"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="467"/>
+        <location filename="src/liteapp/filemanager.cpp" line="471"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="655"/>
+        <location filename="src/liteapp/filemanager.cpp" line="659"/>
         <source>The following file has been deleted outside of LiteIDE:
 %1
 
@@ -816,13 +816,13 @@ Do you want to save the previous contents, close the file, or leave the contents
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="675"/>
+        <location filename="src/liteapp/filemanager.cpp" line="679"/>
         <source>%1
 This file has been modified outside of LiteIDE.  Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="288"/>
+        <location filename="src/liteapp/filemanager.cpp" line="290"/>
         <source>Open Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -832,12 +832,12 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="301"/>
+        <location filename="src/liteapp/filemanager.cpp" line="303"/>
         <source>Open Project</source>
         <translation type="unfinished">Ouvrir un projet</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="657"/>
+        <location filename="src/liteapp/filemanager.cpp" line="661"/>
         <source>LiteIDE X</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3125,11 +3125,6 @@ Do you want to replace it?</source>
 </context>
 <context>
     <name>ProjectManager</name>
-    <message>
-        <location filename="src/liteapp/projectmanager.cpp" line="80"/>
-        <source>Projects</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="95"/>
         <source>Project &lt;%1&gt;</source>

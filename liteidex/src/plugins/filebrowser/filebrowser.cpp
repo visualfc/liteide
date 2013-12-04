@@ -216,7 +216,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
 
-    m_loadFolderAct = new QAction(tr("Load Folder Project"),this);
+    m_openFolderInNewWindowAct = new QAction(tr("Open Folder in New Window"),this);
 
     m_fileMenu->addAction(m_openFileAct);
     //m_fileMenu->addAction(m_openEditorAct);
@@ -226,7 +226,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_fileMenu->addAction(m_renameFileAct);
     m_fileMenu->addAction(m_removeFileAct);
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_loadFolderAct);
+    m_fileMenu->addAction(m_openFolderInNewWindowAct);
     m_fileMenu->addAction(m_viewGodocAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_openShellAct);
@@ -240,7 +240,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_folderMenu->addAction(m_renameFolderAct);
     m_folderMenu->addAction(m_removeFolderAct);
     m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_loadFolderAct);
+    m_folderMenu->addAction(m_openFolderInNewWindowAct);
     m_folderMenu->addAction(m_viewGodocAct);
     m_folderMenu->addSeparator();
     m_folderMenu->addAction(m_openShellAct);
@@ -252,7 +252,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu->addAction(m_newFileWizardAct);
     m_rootMenu->addAction(m_newFolderAct);
     m_rootMenu->addSeparator();
-    m_rootMenu->addAction(m_loadFolderAct);
+    m_rootMenu->addAction(m_openFolderInNewWindowAct);
     m_rootMenu->addSeparator();
     m_rootMenu->addAction(m_openShellAct);
     m_rootMenu->addAction(m_openExplorerAct);
@@ -271,7 +271,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_cdupAct,SIGNAL(triggered()),this,SLOT(cdUp()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
-    connect(m_loadFolderAct,SIGNAL(triggered()),this,SLOT(loadFolderProject()));
+    connect(m_openFolderInNewWindowAct,SIGNAL(triggered()),this,SLOT(openFolderInNewWindow()));
 
     //QDockWidget *dock = m_liteApp->dockManager()->addDock(m_widget,tr("File Browser"));
     //connect(dock,SIGNAL(visibilityChanged(bool)),this,SLOT(visibilityChanged(bool)));
@@ -665,10 +665,10 @@ void FileBrowser::viewGodoc()
     }
 }
 
-void FileBrowser::loadFolderProject()
+void FileBrowser::openFolderInNewWindow()
 {
     QDir dir = contextDir();
-    m_liteApp->fileManager()->openFolderEx(dir.path());
+    m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
 }
 
 void FileBrowser::openShell()

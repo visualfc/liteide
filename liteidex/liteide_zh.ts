@@ -596,6 +596,11 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>重命名目录...</translation>
     </message>
     <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
+        <source>Open Folder in New Window</source>
+        <translation>在新窗口打开目录</translation>
+    </message>
+    <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="279"/>
         <source>Config</source>
         <translation>配置</translation>
@@ -666,11 +671,6 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation>打开上级目录</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
-        <source>Load Folder Project</source>
-        <translation>加载目录项目</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="284"/>
@@ -750,12 +750,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="332"/>
+        <location filename="src/liteapp/filemanager.cpp" line="334"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="333"/>
+        <location filename="src/liteapp/filemanager.cpp" line="335"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -763,7 +763,7 @@ Do you want to load?</oldsource>
         <translation>项目文件 &apos;%1&apos;已建立,是否加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="243"/>
+        <location filename="src/liteapp/filemanager.cpp" line="245"/>
         <source>Open Project or File</source>
         <translation>打开项目或文件</translation>
     </message>
@@ -786,34 +786,34 @@ Do you want to load?</oldsource>
         <translation>所有支持文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="256"/>
-        <location filename="src/liteapp/filemanager.cpp" line="274"/>
+        <location filename="src/liteapp/filemanager.cpp" line="258"/>
+        <location filename="src/liteapp/filemanager.cpp" line="276"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>选择目录:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="464"/>
+        <location filename="src/liteapp/filemanager.cpp" line="468"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="465"/>
+        <location filename="src/liteapp/filemanager.cpp" line="469"/>
         <source>Project</source>
         <translation>项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="466"/>
+        <location filename="src/liteapp/filemanager.cpp" line="470"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="467"/>
+        <location filename="src/liteapp/filemanager.cpp" line="471"/>
         <source>Folder</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="655"/>
+        <location filename="src/liteapp/filemanager.cpp" line="659"/>
         <source>The following file has been deleted outside of LiteIDE:
 %1
 
@@ -821,23 +821,23 @@ Do you want to save the previous contents, close the file, or leave the contents
         <translation>下面的文件在LiteIDE外被删除:\n%1\n请选择保存以前的内容,还是关闭文件,或者不保存?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="675"/>
+        <location filename="src/liteapp/filemanager.cpp" line="679"/>
         <source>%1
 This file has been modified outside of LiteIDE.  Do you want to reload it?</source>
         <translation>%1 文件在LiteIDE之外被修改,是否重新加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="288"/>
+        <location filename="src/liteapp/filemanager.cpp" line="290"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="301"/>
+        <location filename="src/liteapp/filemanager.cpp" line="303"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="657"/>
+        <location filename="src/liteapp/filemanager.cpp" line="661"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -3126,11 +3126,6 @@ Do you want to replace it?</source>
 </context>
 <context>
     <name>ProjectManager</name>
-    <message>
-        <location filename="src/liteapp/projectmanager.cpp" line="80"/>
-        <source>Projects</source>
-        <translation>项目</translation>
-    </message>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="95"/>
         <source>Project &lt;%1&gt;</source>
