@@ -41,6 +41,7 @@
 #include <QToolButton>
 #include <QComboBox>
 #include <QTextCodec>
+#include <QClipboard>
 #include <QDebug>
 #include "litetabwidget.h"
 #include "fileutil/fileutil.h"
@@ -59,7 +60,8 @@
 EditorManager::~EditorManager()
 {
     m_liteApp->settings()->setValue(LITEAPP_SHOWEDITTOOLBAR,m_editToolbarAct->isChecked());
-    delete m_tabContextMenu;
+    delete m_tabContextFileMenu;
+    delete m_tabContextNofileMenu;
     delete m_editorTabWidget;
     m_browserActionMap.clear();
     if (!m_nullMenu->parent()) {
@@ -103,7 +105,8 @@ bool EditorManager::initWithApp(IApplication *app)
     m_editorTabWidget->stackedWidget()->installEventFilter(this);
     m_editorTabWidget->tabBar()->installEventFilter(this);
 
-    m_tabContextMenu = new QMenu;
+    m_tabContextFileMenu = new QMenu;
+    m_tabContextNofileMenu = new QMenu;
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
     closeAct->setShortcut(QKeySequence("Ctrl+W"));    
@@ -113,19 +116,30 @@ bool EditorManager::initWithApp(IApplication *app)
     QAction *closeRightAct = new QAction(tr("Close Right Tabs"),this);
     QAction *closeSameFolderFiles = new QAction(tr("Close Files in Same Folder"),this);
     QAction *closeOtherFolderFiles = new QAction(tr("Close Files in Other Folders"),this);
+    QAction *copyPathToClipboard = new QAction(tr("Copy Full Path to Clipboard"),this);
+    QAction *showInExplorer = new QAction(tr("Show in Explorer"),this);
 
     QAction *moveToAct = new QAction(tr("Move to New Window"),this);
 
-    m_tabContextMenu->addAction(closeAct);
-    m_tabContextMenu->addAction(closeOthersAct);
-    m_tabContextMenu->addAction(closeLeftAct);
-    m_tabContextMenu->addAction(closeRightAct);
-    m_tabContextMenu->addAction(closeAllAct);
-    m_tabContextMenu->addSeparator();
-    m_tabContextMenu->addAction(closeSameFolderFiles);
-    m_tabContextMenu->addAction(closeOtherFolderFiles);
-    m_tabContextMenu->addSeparator();
-    m_tabContextMenu->addAction(moveToAct);
+    m_tabContextFileMenu->addAction(closeAct);
+    m_tabContextFileMenu->addAction(closeOthersAct);
+    m_tabContextFileMenu->addAction(closeLeftAct);
+    m_tabContextFileMenu->addAction(closeRightAct);
+    m_tabContextFileMenu->addAction(closeAllAct);
+    m_tabContextFileMenu->addSeparator();
+    m_tabContextFileMenu->addAction(closeSameFolderFiles);
+    m_tabContextFileMenu->addAction(closeOtherFolderFiles);
+    m_tabContextFileMenu->addSeparator();
+    m_tabContextFileMenu->addAction(copyPathToClipboard);
+    m_tabContextFileMenu->addAction(showInExplorer);
+    m_tabContextFileMenu->addSeparator();
+    m_tabContextFileMenu->addAction(moveToAct);
+
+    m_tabContextNofileMenu->addAction(closeAct);
+    m_tabContextNofileMenu->addAction(closeOthersAct);
+    m_tabContextNofileMenu->addAction(closeLeftAct);
+    m_tabContextNofileMenu->addAction(closeRightAct);
+    m_tabContextNofileMenu->addAction(closeAllAct);
 
     connect(closeAct,SIGNAL(triggered()),this,SLOT(tabContextClose()));
     connect(closeOthersAct,SIGNAL(triggered()),this,SLOT(tabContextCloseOthers()));
@@ -134,6 +148,8 @@ bool EditorManager::initWithApp(IApplication *app)
     connect(closeAllAct,SIGNAL(triggered()),this,SLOT(tabContextCloseAll()));
     connect(closeSameFolderFiles,SIGNAL(triggered()),this,SLOT(tabContextCloseSameFolderFiles()));
     connect(closeOtherFolderFiles,SIGNAL(triggered()),this,SLOT(tabContextCloseOtherFolderFiles()));
+    connect(copyPathToClipboard,SIGNAL(triggered()),this,SLOT(tabContextCopyPathToClipboard()));
+    connect(showInExplorer,SIGNAL(triggered()),this,SLOT(tabContextShowInExplorer()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
 
     return true;
@@ -256,7 +272,12 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
         if (ev->button() == Qt::RightButton) {
             m_tabContextIndex = m_editorTabWidget->tabBar()->tabAt(ev->pos());
             if (m_tabContextIndex >= 0) {
-                m_tabContextMenu->popup(ev->globalPos());
+                QString filePath = tabContextFilePath();
+                if (filePath.isEmpty()) {
+                    m_tabContextNofileMenu->popup(ev->globalPos());
+                } else {
+                    m_tabContextFileMenu->popup(ev->globalPos());
+                }
             }
         } else if (ev->button() == Qt::MiddleButton) {
             int index = m_editorTabWidget->tabBar()->tabAt(ev->pos());
@@ -266,6 +287,19 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
         }
     }
     return IEditorManager::eventFilter(target,event);
+}
+
+QString EditorManager::tabContextFilePath() const
+{
+    if (m_tabContextIndex < 0) {
+        return QString();
+    }
+    QWidget *w = m_editorTabWidget->widget(m_tabContextIndex);
+    IEditor *ed = m_widgetEditorMap.value(w,0);
+    if (!ed) {
+        return QString();
+    }
+    return ed->filePath();
 }
 
 QAction *EditorManager::registerBrowser(IEditor *editor)
@@ -749,17 +783,28 @@ void EditorManager::tabContextCloseAll()
     closeAllEditors();
 }
 
+void EditorManager::tabContextCopyPathToClipboard()
+{
+    QString filePath = tabContextFilePath();
+    if (filePath.isEmpty()) {
+        return;
+    }
+    qApp->clipboard()->setText(QDir::toNativeSeparators(filePath));
+}
+
+void EditorManager::tabContextShowInExplorer()
+{
+    QString filePath = tabContextFilePath();
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QFileInfo info(filePath);
+    QDesktopServices::openUrl(info.absolutePath());
+}
+
 void EditorManager::tabContextCloseOtherFolderFiles()
 {
-    if (m_tabContextIndex < 0) {
-        return;
-    }
-    QWidget *w = m_editorTabWidget->widget(m_tabContextIndex);
-    IEditor *ed = m_widgetEditorMap.value(w,0);
-    if (!ed) {
-        return;
-    }
-    QString filePath = ed->filePath();
+    QString filePath = tabContextFilePath();
     if (filePath.isEmpty()) {
         return;
     }
@@ -834,11 +879,7 @@ void EditorManager::moveToNewWindow()
     if (!ed) {
         return;
     }
-    LiteApi::ITextEditor *editor = getTextEditor(ed);
-    if (!editor) {
-        return;
-    }
-    QString filePath = editor->filePath();
+    QString filePath = ed->filePath();
     if (filePath.isEmpty()) {
         return;
     }
@@ -848,9 +889,4 @@ void EditorManager::moveToNewWindow()
         this->closeEditor(ed);
         app->fileManager()->openFolderEx(info.path());
     }
-//    QProcess process;
-//    if (process.startDetached(qApp->applicationFilePath(),
-//                          QStringList() << "-no-session" << filePath)) {
-//        this->closeEditor(ed);
-//    }
 }

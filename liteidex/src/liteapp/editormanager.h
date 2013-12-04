@@ -67,6 +67,7 @@ public:
 protected:
     void addEditor(IEditor *editor);
     bool eventFilter(QObject *target, QEvent *event);
+    QString tabContextFilePath() const;
 public:
     QList<IEditor*> sortedEditorList() const;
 public slots:
@@ -82,6 +83,8 @@ public slots:
     void tabContextCloseAll();
     void tabContextCloseOtherFolderFiles();
     void tabContextCloseSameFolderFiles();
+    void tabContextCopyPathToClipboard();
+    void tabContextShowInExplorer();
     void goBack();
     void goForward();
     void updateNavigatorActions();
@@ -109,7 +112,8 @@ protected:
     QAction     *m_goForwardAct;
     QAction     *m_editToolbarAct;
     QMenu       *m_editMenu;
-    QMenu       *m_tabContextMenu;
+    QMenu       *m_tabContextFileMenu;
+    QMenu       *m_tabContextNofileMenu;
     ColorStyleScheme *m_colorStyleScheme;
     int          m_tabContextIndex;
 };

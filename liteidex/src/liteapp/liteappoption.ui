@@ -144,7 +144,7 @@
           <item>
            <widget class="QCheckBox" name="openFolderInNewWindowCheckBox">
             <property name="text">
-             <string>Open folder in new window</string>
+             <string>Always open folder in new window</string>
             </property>
            </widget>
           </item>

@@ -61,7 +61,7 @@ bool FileManager::initWithApp(IApplication *app)
     }
 
     m_folderWidget = new FileSystemWidget(m_liteApp,0);
-    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folers"),false);
+    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folders"),false);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
