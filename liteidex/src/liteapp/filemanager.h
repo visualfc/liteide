@@ -96,6 +96,7 @@ protected:
     QMap<QString,QMenu*> m_schemeMenuMap;
     int         m_maxRecentFiles;
     QMenu       *m_recentMenu;
+    QAction     *m_toolWindowAct;
     QString      m_initPath;
 };
 

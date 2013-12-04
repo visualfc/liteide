@@ -61,7 +61,7 @@ bool FileManager::initWithApp(IApplication *app)
     }
 
     m_folderWidget = new FileSystemWidget(m_liteApp,0);
-    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folders"),false);
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folders"),false);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
@@ -190,11 +190,13 @@ void FileManager::setFolderList(const QStringList &folders)
     QStringList all = folders;
     all.removeDuplicates();
     m_folderWidget->setRootPathList(all);
+    m_toolWindowAct->setChecked(true);
 }
 
 void FileManager::addFolderList(const QStringList &folders)
 {
     m_folderWidget->addRootPathList(folders);
+    m_toolWindowAct->setChecked(true);
 }
 
 void FileManager::openFolderInNewWindow(const QString &folder)
@@ -431,10 +433,12 @@ void FileManager::openFolderEx(const QString &folder)
     } else {
         if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
             this->openFolderInNewWindow(folder);
+            return;
         } else {
             m_folderWidget->setRootPath(folder);
         }
     }
+    m_toolWindowAct->setChecked(true);
     addRecentFile(folder,"folder");
 }
 
