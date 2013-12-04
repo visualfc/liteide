@@ -198,7 +198,7 @@ LiteApp::LiteApp()
 
     m_optionManager->addFactory(m_liteAppOptionFactory);
 
-    m_projectManager->addFactory(new FolderProjectFactory(this,this));
+    //m_projectManager->addFactory(new FolderProjectFactory(this,this));
 
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
     connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideToolWindow()));
@@ -741,6 +741,8 @@ void LiteApp::loadSession(const QString &name)
     QString scheme = m_settings->value(session+"_scheme").toString();
     QString editorName = m_settings->value(session+"_cureditor").toString();
     QStringList fileList = m_settings->value(session+"_alleditor").toStringList();
+    QStringList folderList = m_settings->value(session+"_folderList").toStringList();
+    m_fileManager->setFolderList(folderList);
 
     if (!projectName.isEmpty()) {
         if (scheme.isEmpty()) {
@@ -792,6 +794,7 @@ void LiteApp::saveSession(const QString &name)
     m_settings->setValue(session+"_scheme",scheme);
     m_settings->setValue(session+"_cureditor",editorName);
     m_settings->setValue(session+"_alleditor",fileList);
+    m_settings->setValue(session+"_folderList",m_fileManager->folderList());
 }
 
 void LiteApp::dbclickLogOutput(QTextCursor cur)

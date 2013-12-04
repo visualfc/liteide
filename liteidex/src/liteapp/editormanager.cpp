@@ -846,7 +846,7 @@ void EditorManager::moveToNewWindow()
     QFileInfo info(filePath);
     if (app->fileManager()->openEditor(filePath)) {
         this->closeEditor(ed);
-        app->fileManager()->openFolderProject(info.path());
+        app->fileManager()->openFolderEx(info.path());
     }
 //    QProcess process;
 //    if (process.startDetached(qApp->applicationFilePath(),

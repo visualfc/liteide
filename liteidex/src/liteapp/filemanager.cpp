@@ -25,6 +25,7 @@
 #include "newfiledialog.h"
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
+#include "filesystem/filesystemwidget.h"
 #include "liteapp_global.h"
 
 #include <QMenu>
@@ -59,6 +60,9 @@ bool FileManager::initWithApp(IApplication *app)
         return false;
     }
 
+    m_folderWidget = new FileSystemWidget(m_liteApp,0);
+    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folers"),false);
+
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
 
@@ -79,6 +83,7 @@ bool FileManager::initWithApp(IApplication *app)
 
 FileManager::FileManager()
     : m_newFileDialog(0),
+      m_folderWidget(0),
       m_checkActivated(false)
 {
 }
@@ -91,6 +96,9 @@ FileManager::~FileManager()
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
     if (m_newFileDialog) {
         delete m_newFileDialog;
+    }
+    if (m_folderWidget) {
+        delete m_folderWidget;
     }
 }
 
@@ -172,6 +180,29 @@ QString FileManager::openEditorTypeFilter() const
     return filter.join(";;");
 }
 
+QStringList FileManager::folderList() const
+{
+    return m_folderWidget->rootPathList();
+}
+
+void FileManager::setFolderList(const QStringList &folders)
+{
+    QStringList all = folders;
+    all.removeDuplicates();
+    m_folderWidget->setRootPathList(all);
+}
+
+void FileManager::addFolderList(const QStringList &folders)
+{
+    m_folderWidget->addRootPathList(folders);
+}
+
+void FileManager::openFolderWithNewInstance(const QString &folder)
+{
+    IApplication *app = m_liteApp->newInstance(false);
+    app->fileManager()->openFolderEx(folder);
+}
+
 void FileManager::newFile()
 {
     QString projPath;
@@ -228,7 +259,7 @@ void FileManager::openFolder()
         if (dir.cdUp()) {
             m_initPath = dir.path();
         }
-        this->openFolderProject(folder);
+        this->openFolderEx(folder);
     }
 }
 
@@ -247,7 +278,7 @@ void FileManager::openFolderNewInstance()
            m_initPath = dir.path();
        }
        IApplication *app = m_liteApp->newInstance(false);
-       app->fileManager()->openFolderProject(folder);
+       app->fileManager()->openFolderEx(folder);
    }
 }
 
@@ -389,15 +420,22 @@ IProject *FileManager::openProject(const QString &_fileName)
     return proj;
 }
 
-IProject *FileManager::openFolderProject(const QString &folder)
+void FileManager::openFolderEx(const QString &folder)
 {
-    IProject *project = m_liteApp->projectManager()->openFolder(folder);
-    if (project) {
-        addRecentFile(folder,"folder");
-    } else {
-        removeRecentFile(folder,"folder");
+    QDir dir(folder);
+    if (!dir.exists()) {
+        return;
     }
-    return project;
+    if (m_folderWidget->rootPathList().isEmpty()) {
+        m_folderWidget->setRootPath(folder);
+    } else {
+        if (m_liteApp->settings()->value(LITEAPP_MULTIINSTANCE,true).toBool()) {
+            this->openFolderWithNewInstance(folder);
+        } else {
+            m_folderWidget->setRootPath(folder);
+        }
+    }
+    addRecentFile(folder,"folder");
 }
 
 IProject *FileManager::openProjectScheme(const QString &_fileName, const QString &scheme)
@@ -504,9 +542,11 @@ void FileManager::openRecentFile()
     }
     if (scheme == "file" || scheme == "proj") {
         this->openFile(fileName);
-        return;
+    } else if (scheme == "folder") {
+        this->openFolderWithNewInstance(fileName);
+    } else {
+        this->openProjectScheme(fileName,scheme);
     }
-    this->openProjectScheme(fileName,scheme);
 }
 
 QStringList FileManager::schemeList() const

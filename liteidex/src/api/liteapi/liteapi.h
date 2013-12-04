@@ -195,15 +195,18 @@ public:
     virtual IEditor *createEditor(const QString &contents, const QString &_mimeType) = 0;
     virtual IEditor *createEditor(const QString &fileName) = 0;
     virtual IProject *openProject(const QString &fileName) = 0;
-    virtual IProject *openFolderProject(const QString &folder) = 0;
     virtual IProject *openProjectScheme(const QString &fileName, const QString &scheme) = 0;
     // recent
     virtual QStringList schemeList() const = 0;
     virtual void addRecentFile(const QString &fileName, const QString &scheme) = 0;
     virtual void removeRecentFile(const QString &fileName, const QString &scheme) = 0;
     virtual QStringList recentFiles(const QString &scheme) const = 0;
-
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const = 0;
+    virtual void openFolderEx(const QString &folder) = 0;
+    virtual QStringList folderList() const = 0;
+    virtual void setFolderList(const QStringList &folders) = 0;
+    virtual void addFolderList(const QStringList &folders) = 0;
+    virtual void openFolderWithNewInstance(const QString &folder) = 0;
 signals:
     void fileListChanged();
     void recentFilesChanged(QString);

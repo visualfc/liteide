@@ -56,7 +56,7 @@ FileNode::FileNode(FileSystemModel *model, const QString &path, FileNode *parent
 {
     QFileInfo info(path);
     if (parent && parent->parent() == 0) {
-        m_text = info.filePath();
+        m_text = QDir::toNativeSeparators(info.filePath());
     } else {
         m_text = info.fileName();
     }
@@ -319,14 +319,17 @@ void FileSystemModel::setRootPathList(const QStringList &pathList)
     this->beginResetModel();
     m_rootNode->clear();
     m_pathList.clear();
-    foreach(QString path, pathList) {
-        QString spath = QDir::fromNativeSeparators(QDir::cleanPath(path));
-        m_pathList.append(spath);
-        m_rootNode->children()->append(new FileNode(this,spath,m_rootNode));
+    foreach (QString path, pathList) {
+        m_pathList.append(QDir::fromNativeSeparators(QDir::cleanPath(path)));
+    }
+    m_pathList.removeDuplicates();
+
+    foreach(QString path, m_pathList) {
+        m_rootNode->children()->append(new FileNode(this,path,m_rootNode));
     }
 
     if (m_startPath.isEmpty() && !pathList.isEmpty()) {
-        m_startPath = pathList.first();
+        //m_startPath = pathList.first();
     }
 
     this->endResetModel();
@@ -444,4 +447,9 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
 QFileSystemWatcher* FileSystemModel::fileWatcher() const
 {
     return m_fileWatcher;
+}
+
+bool FileSystemModel::isRootPathNode(FileNode *node) const
+{
+    return node->parent() == m_rootNode;
 }

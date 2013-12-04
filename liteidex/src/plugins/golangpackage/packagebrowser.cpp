@@ -288,7 +288,7 @@ bool PackageBrowser::loadPackageProjectHelper(QModelIndex index)
     }
     QDir dir(json.toMap().value("Dir").toString());
     if (dir.exists()) {
-        m_liteApp->fileManager()->openFolderProject(dir.path());
+        m_liteApp->fileManager()->openFolderEx(dir.path());
         /*
         PackageProject *proj = new PackageProject(m_liteApp);
         proj->setJson(json.toMap());

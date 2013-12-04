@@ -128,6 +128,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     QList<QUrl> urls = event->mimeData()->urls();
     if (urls.isEmpty())
         return;
+    QStringList folders;
     foreach (QUrl url, urls) {
         QString fileName = url.toLocalFile();
         if (fileName.isEmpty()) {
@@ -137,8 +138,11 @@ void MainWindow::dropEvent(QDropEvent *event)
         if (info.isFile()) {
             m_liteApp->fileManager()->openFile(fileName);
         } else if(info.isDir()) {
-            m_liteApp->fileManager()->openFolderProject(info.filePath());
+            folders.append(info.filePath());
         }
+    }
+    if (!folders.isEmpty()) {
+        m_liteApp->fileManager()->addFolderList(folders);
     }
 }
 

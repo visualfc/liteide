@@ -44,6 +44,7 @@
 #include <QToolBar>
 #include <QFileSystemWatcher>
 #include <QFileDialog>
+#include <QHeaderView>
 #include <QDebug>
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -64,6 +65,14 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 {
     m_tree = new SymbolTreeView;
     m_tree->setHeaderHidden(true);
+
+#if QT_VERSION >= 0x050000
+    m_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
+    m_tree->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
+    m_tree->header()->setStretchLastSection(false);
+
     m_model = new FileSystemModel(this);
 
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
@@ -106,6 +115,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
 
     m_addFolderAct = new QAction(tr("Add Folder"),this);
+    m_closeFolerAct = new QAction(tr("Close Folder"),this);
 
     m_fileMenu->addAction(m_openEditorAct);
     m_fileMenu->addSeparator();
@@ -124,6 +134,8 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_folderMenu->addAction(m_newFolderAct);
     m_folderMenu->addAction(m_renameFolderAct);
     m_folderMenu->addAction(m_removeFolderAct);
+    m_folderMenu->addSeparator();
+    m_folderMenu->addAction(m_closeFolerAct);
     m_folderMenu->addSeparator();
     m_folderMenu->addAction(m_viewGodocAct);
     m_folderMenu->addSeparator();
@@ -145,6 +157,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
     connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
+    connect(m_closeFolerAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
 
     connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
 }
@@ -398,6 +411,19 @@ void FileSystemWidget::addFolder()
     this->addRootPathList(QStringList() << folder);
 }
 
+void FileSystemWidget::closeFolder()
+{
+    QStringList pathList = m_model->rootPathList();
+    QStringList newPashList;
+    foreach (QString path, pathList) {
+        if (QFileInfo(path) == m_contextInfo) {
+            continue;
+        }
+        newPashList.append(path);
+    }
+    this->setRootPathList(newPashList);
+}
+
 void FileSystemWidget::openShell()
 {
     QDir dir = contextDir();
@@ -424,6 +450,13 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
             m_contextIndex = index;
             if (node->isDir()) {
                 contextMenu = m_folderMenu;
+                if (m_model->isRootPathNode(node)) {
+                    m_closeFolerAct->setVisible(true);
+                    m_removeFolderAct->setVisible(false);
+                } else {
+                    m_closeFolerAct->setVisible(false);
+                    m_removeFolderAct->setVisible(true);
+                }
             } else {
                 contextMenu = m_fileMenu;
             }
@@ -436,11 +469,16 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
     }
 }
 
-void FileSystemWidget::addRootPathList(const QStringList &path)
+void FileSystemWidget::addRootPathList(const QStringList &paths)
 {
     QStringList pathList = m_model->rootPathList();
-    pathList.append(path);
-    this->setRootPathList(pathList);
+    foreach (QString path, paths) {
+        pathList.append(QDir::fromNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    if (pathList != m_model->rootPathList()) {
+        this->setRootPathList(pathList);
+    }
 }
 
 void FileSystemWidget::setRootPathList(const QStringList &pathList)

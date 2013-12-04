@@ -67,6 +67,7 @@ public slots:
     void openExplorer();
     void viewGodoc();
     void addFolder();
+    void closeFolder();
     void syncEditor(bool);
     void expandStartPath(QString);
 signals:
@@ -95,6 +96,7 @@ private:
     QAction *m_openExplorerAct;
     QAction *m_viewGodocAct;
     QAction *m_addFolderAct;
+    QAction *m_closeFolerAct;
 protected:
     LiteApi::IApplication *m_litApp;
 };

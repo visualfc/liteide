@@ -668,7 +668,7 @@ void FileBrowser::viewGodoc()
 void FileBrowser::loadFolderProject()
 {
     QDir dir = contextDir();
-    m_liteApp->fileManager()->openFolderProject(dir.path());
+    m_liteApp->fileManager()->openFolderEx(dir.path());
 }
 
 void FileBrowser::openShell()

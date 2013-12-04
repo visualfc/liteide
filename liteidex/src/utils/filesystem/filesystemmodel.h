@@ -89,6 +89,7 @@ public:
     virtual QModelIndex index(int row, int column,const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
     QFileSystemWatcher* fileWatcher() const;
+    bool isRootPathNode(FileNode *node) const;
 public slots:
     void directoryChanged(const QString&);
 protected:

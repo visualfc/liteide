@@ -32,6 +32,8 @@ class NewFileDialog;
 class QFileSystemWatcher;
 struct FileStateItem;
 
+
+class FileSystemWidget;
 class FileManager : public IFileManager
 {
     Q_OBJECT
@@ -46,15 +48,18 @@ public:
     virtual IEditor *createEditor(const QString &contents, const QString &mimeType);
     virtual IEditor *createEditor(const QString &fileName);
     virtual IProject *openProject(const QString &fileName);
-    virtual IProject *openFolderProject(const QString &folder);
     virtual IProject *openProjectScheme(const QString &fileName, const QString &scheme);
 
     virtual QStringList schemeList() const;
     virtual void addRecentFile(const QString &fileName, const QString &scheme);
     virtual void removeRecentFile(const QString &fileName, const QString &scheme);
     virtual QStringList recentFiles(const QString &scheme) const;
-
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const;
+    virtual void openFolderEx(const QString &folder);
+    virtual QStringList folderList() const;
+    virtual void setFolderList(const QStringList &folders);
+    virtual void addFolderList(const QStringList &folders);
+    virtual void openFolderWithNewInstance(const QString &folder);
 public:
     QString openAllTypeFilter() const;
     QString openProjectTypeFilter() const;
@@ -82,13 +87,13 @@ public slots:
     void applyOption(QString);
 protected:
     NewFileDialog        *m_newFileDialog;
+    FileSystemWidget     *m_folderWidget;
     QFileSystemWatcher   *m_fileWatcher;
     QMap<QString,QDateTime> m_fileStateMap;
     QStringList          m_changedFiles;
     bool                 m_checkActivated;
     QAction              *m_recentSeparator;
     QMap<QString,QMenu*> m_schemeMenuMap;
-protected:    
     int         m_maxRecentFiles;
     QMenu       *m_recentMenu;
     QString      m_initPath;
