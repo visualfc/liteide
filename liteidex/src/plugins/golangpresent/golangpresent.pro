@@ -10,12 +10,17 @@ DEFINES += GOLANGPRESENT_LIBRARY
 
 SOURCES += \
     golangpresentedit.cpp \
-    golangpresentplugin.cpp
+    golangpresentplugin.cpp \
+    exportdialog.cpp
 
 HEADERS +=\
     golangpresent_global.h \
     golangpresentedit.h \
-    golangpresentplugin.h
+    golangpresentplugin.h \
+    exportdialog.h
 
 RESOURCES += \
     golangpresent.qrc
+
+FORMS += \
+    exportdialog.ui

@@ -26,6 +26,7 @@
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
 #include "liteeditorapi/liteeditorapi.h"
+#include "exportdialog.h"
 #include <QToolBar>
 #include <QMenu>
 #include <QAction>
@@ -254,23 +255,43 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
     }
     if (!error && code == 0) {
         if (exportType == EXPORT_TYPE_HTML) {
-            static QString init = QFileInfo(m_editor->filePath()).absolutePath();
-            QString outdir = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Select export html directory"),init);
-            if (outdir.isEmpty()) {
+            QFileInfo info(m_editor->filePath());
+            ExportDialog dlg(m_liteApp->mainWindow());
+            dlg.setWindowTitle(tr("Export HTML"));
+            dlg.setFileName(info.completeBaseName()+".html");
+            if (!m_exportName.isEmpty()) {
+                dlg.setFileName(m_exportName);
+            }
+            if (dlg.exec() == QDialog::Rejected) {
                 return;
             }
-            init = outdir;
-            QDir dir(outdir);
-            QFile file(QFileInfo(dir,QFileInfo(m_editor->filePath()).fileName()+".html").filePath());
+            QString exportFile = dlg.fileName();
+            if (exportFile.isEmpty()) {
+                return;
+            }
+            m_exportName = exportFile;
+            QFileInfo exportInfo(exportFile);
+            QString ext = exportInfo.suffix().toLower();
+            if (ext != "html" && ext != "htm") {
+                exportInfo = QFileInfo(exportFile += ".html");
+            }
+            if (!exportInfo.isAbsolute()) {
+                exportInfo = QFileInfo(info.absolutePath(),exportInfo.fileName());
+            }
+            QFile file(exportInfo.filePath());
             if (!file.open(QFile::WriteOnly)) {
                 return;
             }
             file.write(m_exportData);
+            QDir dir(exportInfo.absolutePath());
             dir.mkdir("static");
             dir.mkdir("js");
             FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/static",dir.path()+"/static");
             FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/js",dir.path()+"/js");
-            QDesktopServices::openUrl(QUrl::fromLocalFile(outdir));
+            m_liteApp->appendLog("GoPresent","export "+exportInfo.filePath(),false);
+            if (dlg.isExportAndView()) {
+                QDesktopServices::openUrl(QUrl::fromLocalFile(exportInfo.filePath()));
+            }
         } else if (exportType == EXPORT_TYPE_PDF) {
             QString init = QFileInfo(m_editor->filePath()).absolutePath()+"/"+QFileInfo(m_editor->filePath()).completeBaseName()+".pdf";
             m_pdfFileName = QFileDialog::getSaveFileName(m_liteApp->mainWindow(),tr("Export PDF"),init,"*.pdf");

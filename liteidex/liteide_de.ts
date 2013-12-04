@@ -479,6 +479,29 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="22"/>
+        <source>Name:</source>
+        <translation type="unfinished">Name:</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="49"/>
+        <source>Export</source>
+        <translation type="unfinished">Export Werkzeug</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="56"/>
+        <source>ExportAndView</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FiFoTty</name>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
@@ -1293,72 +1316,68 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>GolangPresentEdit</name>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="56"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="57"/>
         <source>Section (s1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="59"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="60"/>
         <source>Subsection (s2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="62"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="63"/>
         <source>Sub-subsection (s3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="65"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="66"/>
         <source>Bold</source>
         <translation type="unfinished">Fett</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="68"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="69"/>
         <source>Italic</source>
         <translation type="unfinished">Kursiv</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="71"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="72"/>
         <source>Inline Code</source>
         <translation type="unfinished">Eingebetteter Code</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="74"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="75"/>
         <source>Switch Bullets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="77"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="78"/>
         <source>Comment/Uncomment Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="80"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="81"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="260"/>
         <source>Export HTML</source>
         <translation type="unfinished">Exportiere HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="83"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="84"/>
         <source>Verify Present</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="248"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="249"/>
         <source>Present verify success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="250"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="251"/>
         <source>Present verify false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
-        <source>Select export html directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="276"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="297"/>
         <source>Export PDF</source>
         <translation type="unfinished"></translation>
     </message>

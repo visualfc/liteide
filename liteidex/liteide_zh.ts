@@ -478,6 +478,29 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>对话框</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="22"/>
+        <source>Name:</source>
+        <translation>名称:</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="49"/>
+        <source>Export</source>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpresent/exportdialog.ui" line="56"/>
+        <source>ExportAndView</source>
+        <translation>导出并查看</translation>
+    </message>
+</context>
+<context>
     <name>FiFoTty</name>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
@@ -1263,10 +1286,6 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>使用goimports代替gofmt进行代码格式化</translation>
     </message>
     <message>
-        <source>Use goimports for code format (https://github.com/bradfitz/goimports)</source>
-        <translation type="obsolete">使用goimports进行代码格式化(https://github.com/bradfitz/goimports)</translation>
-    </message>
-    <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
         <translation>使用diff工具进行快速格式化(要求diff程序位于PATH路径中)</translation>
@@ -1295,72 +1314,68 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>GolangPresentEdit</name>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="56"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="57"/>
         <source>Section (s1)</source>
         <translation>一级标题 (s1)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="59"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="60"/>
         <source>Subsection (s2)</source>
         <translation>二级标题 (s2)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="62"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="63"/>
         <source>Sub-subsection (s3)</source>
         <translation>三级标题 (s3)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="65"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="66"/>
         <source>Bold</source>
         <translation>加重</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="68"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="69"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="71"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="72"/>
         <source>Inline Code</source>
         <translation>内联代码</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="74"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="75"/>
         <source>Switch Bullets</source>
         <translation>切换列表</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="77"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="78"/>
         <source>Comment/Uncomment Selection</source>
         <translation>切换区域注释/反注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="80"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="81"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="260"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="83"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="84"/>
         <source>Verify Present</source>
         <translation>校验</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="248"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="249"/>
         <source>Present verify success</source>
         <translation>Present校验成功</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="250"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="251"/>
         <source>Present verify false</source>
         <translation>Present校验失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
-        <source>Select export html directory</source>
-        <translation>选择导出HTML目录</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="276"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="297"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>

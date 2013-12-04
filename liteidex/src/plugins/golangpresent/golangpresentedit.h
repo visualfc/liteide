@@ -66,6 +66,7 @@ protected:
     QByteArray             m_exportData;
     QStringList            m_errorMsg;
     QString                m_pdfFileName;
+    QString                m_exportName;
 };
 
 #endif // GOLANGPRESENTEDIT_H
