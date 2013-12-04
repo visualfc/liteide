@@ -117,6 +117,8 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_addFolderAct = new QAction(tr("Add Folder"),this);
     m_closeFolerAct = new QAction(tr("Close Folder"),this);
 
+    m_closeAllFoldersAct = new QAction(tr("Close All Folders"),this);
+
     m_fileMenu->addAction(m_openEditorAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_newFileAct);
@@ -143,6 +145,8 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_folderMenu->addAction(m_openExplorerAct);
 
     m_rootMenu->addAction(m_addFolderAct);
+    m_rootMenu->addSeparator();
+    m_rootMenu->addAction(m_closeAllFoldersAct);
 
     connect(m_model->fileWatcher(),SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
@@ -158,6 +162,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
     connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
     connect(m_closeFolerAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
+    connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
 
     connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
 }
@@ -422,6 +427,11 @@ void FileSystemWidget::closeFolder()
         newPashList.append(path);
     }
     this->setRootPathList(newPashList);
+}
+
+void FileSystemWidget::closeAllFolders()
+{
+    this->m_model->clear();
 }
 
 void FileSystemWidget::openShell()

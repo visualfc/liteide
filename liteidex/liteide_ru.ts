@@ -958,16 +958,16 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="278"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="284"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="283"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="289"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="294"/>
         <source>Rename File</source>
         <translation type="unfinished">Переименовать файл</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="106"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="303"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="308"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="313"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation type="unfinished">Удалить файл</translation>
@@ -979,21 +979,21 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished">Новая папка</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="304"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="309"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="344"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="353"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="349"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="358"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="363"/>
         <source>Rename Folder</source>
         <translation type="unfinished">Переименовать папку</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="372"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="379"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="377"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="384"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation type="unfinished">Удалить папку</translation>
@@ -1025,7 +1025,7 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="407"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="412"/>
         <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1035,74 +1035,79 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="237"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="247"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="120"/>
+        <source>Close All Folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="242"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="252"/>
         <source>Create File</source>
         <translation type="unfinished">Создание файла</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="238"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="243"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="248"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="253"/>
         <source>Failed to create the file!</source>
         <translation type="unfinished">Ошибка при создании файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="278"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="283"/>
         <source>New Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="295"/>
         <source>Failed to rename the file!</source>
         <translation type="unfinished">Ошибка при переименовании файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="373"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="378"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="309"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="314"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="327"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="330"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="332"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
         <source>Create Folder</source>
         <translation type="unfinished">Создание папки</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="328"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="333"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="331"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="336"/>
         <source>Failed to create the folder!</source>
         <translation type="unfinished">Ошибка при создании папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="344"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="349"/>
         <source>Folder Name</source>
         <translation type="unfinished">Имя папки</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="354"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="359"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="364"/>
         <source>Failed to rename the folder!</source>
         <translation type="unfinished">Ошибка при переименовании папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="385"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation type="unfinished">Ошибка при удалении папки!</translation>

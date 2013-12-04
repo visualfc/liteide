@@ -956,16 +956,16 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>新建文件向导...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="278"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="284"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="283"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="289"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="294"/>
         <source>Rename File</source>
         <translation>文件更名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="106"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="303"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="308"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="313"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation>删除文件</translation>
@@ -977,21 +977,21 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>新建目录...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="304"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="309"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="344"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="353"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="349"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="358"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="363"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="372"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="379"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="377"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="384"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation>删除目录</translation>
@@ -1023,7 +1023,7 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="407"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="412"/>
         <source>Add Folder</source>
         <translation>添加目录</translation>
     </message>
@@ -1033,74 +1033,79 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>关闭目录</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="237"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="247"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="120"/>
+        <source>Close All Folders</source>
+        <translation>关闭所有目录</translation>
+    </message>
+    <message>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="242"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="252"/>
         <source>Create File</source>
         <translation>建立文件</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="238"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="243"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
         <translation>文件已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="248"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="253"/>
         <source>Failed to create the file!</source>
         <translation>建立文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="278"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="283"/>
         <source>New Name:</source>
         <translation>新名称:</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="295"/>
         <source>Failed to rename the file!</source>
         <translation>重命名文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="373"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="378"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="309"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="314"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="327"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="330"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="332"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="328"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="333"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
         <translation>目录名已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="331"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="336"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="344"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="349"/>
         <source>Folder Name</source>
         <translation>目录名</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="354"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="359"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="364"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="385"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation>删除目录失败!</translation>

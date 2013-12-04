@@ -311,7 +311,7 @@ void FileSystemModel::clear()
 void FileSystemModel::setRootPath(const QString &path)
 {
     this->setRootPathList(QStringList() << path);
-    this->setStartPath(path);
+    //this->setStartPath(path);
 }
 
 void FileSystemModel::setRootPathList(const QStringList &pathList)

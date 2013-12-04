@@ -68,6 +68,7 @@ public slots:
     void viewGodoc();
     void addFolder();
     void closeFolder();
+    void closeAllFolders();
     void syncEditor(bool);
     void expandStartPath(QString);
 signals:
@@ -97,6 +98,7 @@ private:
     QAction *m_viewGodocAct;
     QAction *m_addFolderAct;
     QAction *m_closeFolerAct;
+    QAction *m_closeAllFoldersAct;
 protected:
     LiteApi::IApplication *m_litApp;
 };
