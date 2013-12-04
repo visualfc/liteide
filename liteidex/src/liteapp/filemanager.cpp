@@ -197,7 +197,7 @@ void FileManager::addFolderList(const QStringList &folders)
     m_folderWidget->addRootPathList(folders);
 }
 
-void FileManager::openFolderWithNewInstance(const QString &folder)
+void FileManager::openFolderInNewWindow(const QString &folder)
 {
     IApplication *app = m_liteApp->newInstance(false);
     app->fileManager()->openFolderEx(folder);
@@ -268,7 +268,7 @@ void FileManager::newInstance()
     m_liteApp->newInstance(false);
 }
 
-void FileManager::openFolderNewInstance()
+void FileManager::openFolderNewWindow()
 {
     QString folder = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),
           tr("Select a folder:"), m_initPath);
@@ -429,8 +429,8 @@ void FileManager::openFolderEx(const QString &folder)
     if (m_folderWidget->rootPathList().isEmpty()) {
         m_folderWidget->setRootPath(folder);
     } else {
-        if (m_liteApp->settings()->value(LITEAPP_MULTIINSTANCE,true).toBool()) {
-            this->openFolderWithNewInstance(folder);
+        if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
+            this->openFolderInNewWindow(folder);
         } else {
             m_folderWidget->setRootPath(folder);
         }
@@ -543,7 +543,7 @@ void FileManager::openRecentFile()
     if (scheme == "file" || scheme == "proj") {
         this->openFile(fileName);
     } else if (scheme == "folder") {
-        this->openFolderWithNewInstance(fileName);
+        this->openFolderInNewWindow(fileName);
     } else {
         this->openProjectScheme(fileName,scheme);
     }

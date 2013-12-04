@@ -47,7 +47,7 @@
 #define LITEAPP_FULLSCREEN "LiteApp/FullScreen"
 #define LITEAPP_WINSTATE   "LiteApp/WinState"
 #define LITEAPP_SHORTCUTS "keybord_shortcuts/"
-#define LITEAPP_MULTIINSTANCE "LiteApp/MultiInstance"
+#define LITEAPP_OPTNFOLDERINNEWWINDOW "LiteApp/OpenFolderInNewWindow"
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,

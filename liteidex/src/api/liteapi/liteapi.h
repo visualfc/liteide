@@ -206,7 +206,7 @@ public:
     virtual QStringList folderList() const = 0;
     virtual void setFolderList(const QStringList &folders) = 0;
     virtual void addFolderList(const QStringList &folders) = 0;
-    virtual void openFolderWithNewInstance(const QString &folder) = 0;
+    virtual void openFolderInNewWindow(const QString &folder) = 0;
 signals:
     void fileListChanged();
     void recentFilesChanged(QString);

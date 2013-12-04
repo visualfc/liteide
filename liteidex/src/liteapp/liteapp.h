@@ -115,6 +115,10 @@ protected slots:
     void cleanup();
     void aboutPlugins();
     void escape();
+    void newWindow();
+    void closeWindow();
+    void exit();
+    void applyOption(QString id);
 protected:
     QString         m_applicationPath;
     QString         m_pluginPath;
@@ -140,8 +144,9 @@ protected:
     QAction     *m_newAct;
     QAction     *m_openFileAct;
     QAction     *m_openFolderAct;
-    QAction     *m_openFolderNewInstanceAct;
-    QAction     *m_newInstance;
+    QAction     *m_openFolderNewWindowAct;
+    QAction     *m_newWindow;
+    QAction     *m_closeWindow;
     QAction     *m_closeAct;
     QAction     *m_closeAllAct;
     QAction     *m_openProjectAct;

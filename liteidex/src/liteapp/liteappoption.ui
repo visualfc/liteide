@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>545</width>
-    <height>272</height>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,6 +141,13 @@
           <string>Generic</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="openFolderInNewWindowCheckBox">
+            <property name="text">
+             <string>Open folder in new window</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QCheckBox" name="autoLoadLastSessionCheckBox">
             <property name="text">

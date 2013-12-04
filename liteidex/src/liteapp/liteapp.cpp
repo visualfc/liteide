@@ -171,6 +171,7 @@ LiteApp::LiteApp()
     connect(m_editorManager,SIGNAL(doubleClickedTab()),m_mainwindow,SLOT(showOrHideToolWindow()));
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_fileManager,SLOT(applyOption(QString)));
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_projectManager,SLOT(applyOption(QString)));
+    connect(m_optionManager,SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
     QAction *esc = new QAction(tr("Escape"),this);
     m_actionManager->getActionContext(this,"App")->regAction(esc,"Escape","ESC");
@@ -351,6 +352,30 @@ void LiteApp::escape()
     if (editor) {
         editor->onActive();
     }
+}
+
+void LiteApp::newWindow()
+{
+    LiteApp::newInstance(0);
+}
+
+void LiteApp::closeWindow()
+{
+    m_mainwindow->close();
+}
+
+void LiteApp::exit()
+{
+    qApp->closeAllWindows();
+}
+
+void LiteApp::applyOption(QString id)
+{
+    if (id != OPTION_LITEAPP) {
+        return;
+    }
+    bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
+    m_openFolderNewWindowAct->setVisible(!b);
 }
 
 bool LiteApp::hasGoProxy() const
@@ -554,11 +579,16 @@ void LiteApp::createActions()
     m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder..."),m_mainwindow);
     actionContext->regAction(m_openFolderAct,"OpenFolder","");
 
-    m_openFolderNewInstanceAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Instance..."),m_mainwindow);
-    actionContext->regAction(m_openFolderNewInstanceAct,"OpenFolderNewInstance","");
+    m_openFolderNewWindowAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Window..."),m_mainwindow);
+    bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
+    m_openFolderNewWindowAct->setVisible(!b);
+    actionContext->regAction(m_openFolderNewWindowAct,"OpenFolderNewWindow","");
 
-    m_newInstance = new QAction(tr("New Instance"),m_mainwindow);
-    actionContext->regAction(m_newInstance,"NewInstance","");
+    m_newWindow = new QAction(tr("New Window"),m_mainwindow);
+    actionContext->regAction(m_newWindow,"NewWindow","Ctrl+Shift+N");
+
+    m_closeWindow = new QAction(tr("Close Window"),m_mainwindow);
+    actionContext->regAction(m_closeWindow,"CloseWindow","Ctrl+Shift+W");
 
     m_closeAct = new QAction(QIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
     actionContext->regAction(m_closeAct,"CloseFile","Ctrl+W");
@@ -570,8 +600,8 @@ void LiteApp::createActions()
 
     m_saveProjectAct = new QAction(QIcon("icon:images/saveproject.png"),tr("Save Project"),m_mainwindow);
 
-    m_closeProjectAct = new QAction(QIcon("icon:images/closeproject.png"),tr("Close Folders"),m_mainwindow);
-    actionContext->regAction(m_closeProjectAct,"CloseFolders","");
+    m_closeProjectAct = new QAction(QIcon("icon:images/closeproject.png"),tr("Close Project"),m_mainwindow);
+    actionContext->regAction(m_closeProjectAct,"CloseProject","");
 
     m_saveAct = new QAction(QIcon("icon:images/save.png"),tr("Save File"),m_mainwindow);
     actionContext->regAction(m_saveAct,"SaveFile",QKeySequence::Save);
@@ -598,8 +628,9 @@ void LiteApp::createActions()
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));
     connect(m_openFileAct,SIGNAL(triggered()),m_fileManager,SLOT(openFiles()));
     connect(m_openFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolder()));
-    connect(m_openFolderNewInstanceAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolderNewInstance()));
-    connect(m_newInstance,SIGNAL(triggered()),m_fileManager,SLOT(newInstance()));
+    connect(m_openFolderNewWindowAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolderNewWindow()));
+    connect(m_newWindow,SIGNAL(triggered()),this,SLOT(newWindow()));
+    connect(m_closeWindow,SIGNAL(triggered()),this,SLOT(closeWindow()));
     connect(m_closeAct,SIGNAL(triggered()),m_editorManager,SLOT(closeEditor()));
     connect(m_closeAllAct,SIGNAL(triggered()),m_editorManager,SLOT(closeAllEditors()));
     connect(m_openProjectAct,SIGNAL(triggered()),m_fileManager,SLOT(openProjects()));
@@ -608,7 +639,7 @@ void LiteApp::createActions()
     connect(m_saveAct,SIGNAL(triggered()),m_editorManager,SLOT(saveEditor()));
     connect(m_saveAsAct,SIGNAL(triggered()),m_editorManager,SLOT(saveEditorAs()));
     connect(m_saveAllAct,SIGNAL(triggered()),m_editorManager,SLOT(saveAllEditors()));
-    connect(m_exitAct,SIGNAL(triggered()),m_mainwindow,SLOT(close()));
+    connect(m_exitAct,SIGNAL(triggered()),this,SLOT(exit()));
     connect(m_aboutAct,SIGNAL(triggered()),m_mainwindow,SLOT(about()));
     connect(m_aboutPluginsAct,SIGNAL(triggered()),this,SLOT(aboutPlugins()));
     connect(m_fullScreent,SIGNAL(toggled(bool)),m_mainwindow,SLOT(setFullScreen(bool)));
@@ -622,18 +653,19 @@ void LiteApp::createMenus()
 
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openFileAct);
-    m_fileMenu->addAction(m_closeAct);
-    m_fileMenu->addAction(m_closeAllAct);
+    m_fileMenu->addAction(m_openFolderAct);
+    m_fileMenu->addAction(m_openFolderNewWindowAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
     m_fileMenu->addAction(m_saveAllAct);
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_newInstance);
+    m_fileMenu->addAction(m_newWindow);
+    m_fileMenu->addAction(m_closeWindow);
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_openFolderAct);
-    m_fileMenu->addAction(m_openFolderNewInstanceAct);
-    m_fileMenu->addAction(m_closeProjectAct);
+    m_fileMenu->addAction(m_closeAct);
+    m_fileMenu->addAction(m_closeAllAct);
+    //m_fileMenu->addAction(m_closeProjectAct);
     //m_fileMenu->addAction(m_openProjectAct);
     //m_fileMenu->addAction(m_saveProjectAct);
     m_fileMenu->addSeparator();

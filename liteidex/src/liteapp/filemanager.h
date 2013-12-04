@@ -59,7 +59,7 @@ public:
     virtual QStringList folderList() const;
     virtual void setFolderList(const QStringList &folders);
     virtual void addFolderList(const QStringList &folders);
-    virtual void openFolderWithNewInstance(const QString &folder);
+    virtual void openFolderInNewWindow(const QString &folder);
 public:
     QString openAllTypeFilter() const;
     QString openProjectTypeFilter() const;
@@ -74,7 +74,7 @@ public slots:
     void newFile();
     void openFiles();
     void openFolder();
-    void openFolderNewInstance();
+    void openFolderNewWindow();
     void newInstance();
     void openEditors();
     void openProjects();
