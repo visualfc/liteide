@@ -36,6 +36,7 @@
 * LiteBuild:
 	* fix build menu enable	
 	* build error show in editor navigate area
+	* add gopm(Go Package Manager) tool <https://github.com/gpmgo/gopm>
 * GolangPresent:
 	* support golang present editor
 	* verify present error show in editor navigate area
