@@ -5,7 +5,7 @@ setlocal
 set BUILD_ROOT=%CD%
 if x%LITEIDE_ROOT%==x set LITEIDE_ROOT=%CD%\..\liteidex
 
-echo build liteide 
+echo build liteide
 echo QTDIR=%QTDIR%
 echo GOROOT=%GOROOT%
 echo BUILD_ROOT=%BUILD_ROOT%
@@ -52,6 +52,7 @@ go install -ldflags "-s" -v tools/goexec
 go install -ldflags "-s" -v tools/goapi
 go install -ldflags "-s" -v tools/gopresent
 go install -ldflags "-s" -v github.com/visualfc/goimports
+go install -ldflags "-s" -v github.com/nsf/gocode
 
 cd %BUILD_ROOT%
 
@@ -75,8 +76,8 @@ xcopy %LITEIDE_ROOT%\liteide\bin\* liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\* liteide\bin /y
 xcopy %LITEIDE_ROOT%\liteide\lib\liteide\plugins\*.dll liteide\lib\liteide\plugins /y
 
-xcopy %LITEIDE_ROOT%\deploy liteide\share\liteide /e /y /i 
-xcopy %LITEIDE_ROOT%\os_deploy\windows liteide\share\liteide  /e /y /i 
+xcopy %LITEIDE_ROOT%\deploy liteide\share\liteide /e /y /i
+xcopy %LITEIDE_ROOT%\os_deploy\windows liteide\share\liteide  /e /y /i
 
 goto end
 
