@@ -244,12 +244,12 @@ void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
     if (m_goimports) {
-        m_gofmtCmd = FileUtil::lookupGoBin("goimports",m_liteApp);
+        m_gofmtCmd = FileUtil::lookupGoBin("goimports",m_liteApp,true);
     } else {
-        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
+        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
     }
     if (m_gofmtCmd.isEmpty()) {
-        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp);
+        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
     }
     if (m_gofmtCmd.isEmpty()) {
         m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);

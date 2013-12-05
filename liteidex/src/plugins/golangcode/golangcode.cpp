@@ -100,8 +100,8 @@ void GolangCode::resetGocode()
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp);
-    m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp);
+    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
+    m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);
     m_updatePkgProcess->setProcessEnvironment(env);
     m_gocodeProcess->setProcessEnvironment(env);
 

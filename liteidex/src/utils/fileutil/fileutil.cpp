@@ -344,8 +344,14 @@ bool GoExecute::exec(const QString &workPath, const QString &target, const QStri
 #endif
 }
 
-QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app)
+QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, bool bLiteAppPriority)
 {
+    if (bLiteAppPriority) {
+        QString find = FileUtil::findExecute(app->applicationPath()+"/"+bin);
+        if (!find.isEmpty()) {
+            return find;
+        }
+    }
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(app);
 #ifdef Q_OS_WIN
     QString sep = ";";
@@ -391,7 +397,7 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app)
             return find;
         }
     }
-    return FileUtil::lookupLiteBin(bin,app);env;
+    return FileUtil::lookupLiteBin(bin,app);
 }
 
 QString FileUtil::lookupLiteBin(const QString &bin, LiteApi::IApplication *app)

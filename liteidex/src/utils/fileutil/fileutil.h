@@ -41,7 +41,7 @@ struct FileUtil
     static QString canExec(QString file, QStringList exts = QStringList());
     static QString lookPath(const QString &fileName,const QProcessEnvironment &env, bool bLocalPriority);
     static QString lookPathInDir(const QString &fileName,const QString &dir);
-    static QString lookupGoBin(const QString &bin, LiteApi::IApplication *app);
+    static QString lookupGoBin(const QString &bin, LiteApi::IApplication *app, bool bLiteAppPriority);
     static QString lookupLiteBin(const QString &bin, LiteApi::IApplication *app);
     static bool CopyDirectory(const QString &src, const QString &dest);
 };
