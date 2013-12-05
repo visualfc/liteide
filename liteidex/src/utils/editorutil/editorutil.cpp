@@ -22,6 +22,9 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "editorutil.h"
+#include <QTextBlock>
+#include <QTextCursor>
+#include <QPlainTextEdit>
 
 typedef void (*EnumEditorProc)(QTextCursor &cursor, QTextBlock &block, void *param);
 
