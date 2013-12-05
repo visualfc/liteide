@@ -1,0 +1,39 @@
+#!/bin/sh
+
+export BUILD_ROOT=$PWD
+
+if [ -z $LITEIDE_ROOT ]; then
+	export LITEIDE_ROOT=$PWD/../liteidex
+fi
+
+echo GOROOT=$GOROOT
+echo BUILD_ROOT=$BUILD_ROOT
+echo LITEIDE_ROOT=$LITEIDE_ROOT
+echo .
+
+if [ -z $QTDIR ]; then
+	echo 'error, QTDIR is null'
+	exit 1
+fi
+
+export PATH=$QTDIR/bin:$PATH
+
+go version
+if [ $? -ge 1 ]; then
+	echo 'error, not find go in PATH'
+	exit 1
+fi
+
+echo update liteide tools ...
+cd $LITEIDE_ROOT
+export GOPATH=$PWD
+
+go get -u github.com/visualfc/goimports
+go get -u github.com/nsf/gocode
+
+if [ $? -ge 1 ]; then
+	echo 'error, go install fail'
+	exit 1
+fi
+
+cd $BUILD_ROOT
