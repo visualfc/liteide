@@ -130,13 +130,14 @@ namespace yy
    ** \param ostr the destination output stream
    ** \param pos a reference to the position to redirect
    */
-  inline std::ostream&
-  operator<< (std::ostream& ostr, const position& pos)
+  inline std::ostream&  operator<< (std::ostream& ostr, const position& pos)
   {
-    if (pos.filename)
-      ostr << *pos.filename << ':';
+    if (pos.filename) {
+      ostr << (*pos.filename).c_str();
+      ostr << ':';
+    }
     return ostr << pos.line << '.' << pos.column;
   }
-
 }
+
 #endif // not BISON_POSITION_HH
