@@ -67,7 +67,7 @@ public slots:
     void reloadAll();
     void setupGopath();
     void loadPackageDoc();
-    void loadPackageProject();
+    void loadPackageFolder();
     void finished(int,QProcess::ExitStatus);
     void error(QProcess::ProcessError);
     void customContextMenuRequested(QPoint);
@@ -76,7 +76,7 @@ public slots:
     void copyPackageName();
     void fileWizardFinished(const QString &type, const QString &scheme, const QString &location);
 protected:
-    bool loadPackageProjectHelper(QModelIndex index);
+    bool loadPackageFolderHelper(QModelIndex index);
 protected:
     QStringList m_taskList;
     QList<PathData> m_taskData;
@@ -94,7 +94,7 @@ protected:
     QAction     *m_reloadAct;
     QAction     *m_setupGopathAct;
     QAction     *m_godocAct;
-    QAction     *m_editPackageAct;
+    QAction     *m_loadPackageFolderAct;
     QAction     *m_openSrcAct;
     QAction     *m_copyNameAct;
     QAction     *m_toolWindowAct;

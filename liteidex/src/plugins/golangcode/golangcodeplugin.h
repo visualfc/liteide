@@ -60,7 +60,7 @@ public:
         m_info->appendDepend("plugin/golangast");
         m_info->setName("GolangCode");
         m_info->setAnchor("visualfc");
-        m_info->setVer("x18.1");
+        m_info->setVer("x20");
         m_info->setInfo("Golang Gocode Util");
     }
 };

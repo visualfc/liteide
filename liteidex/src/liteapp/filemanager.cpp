@@ -190,7 +190,9 @@ void FileManager::setFolderList(const QStringList &folders)
     QStringList all = folders;
     all.removeDuplicates();
     m_folderWidget->setRootPathList(all);
-    m_toolWindowAct->setChecked(true);
+    if (!m_folderWidget->rootPathList().isEmpty()) {
+        m_toolWindowAct->setChecked(true);
+    }
 }
 
 void FileManager::addFolderList(const QStringList &folders)
@@ -199,10 +201,11 @@ void FileManager::addFolderList(const QStringList &folders)
     m_toolWindowAct->setChecked(true);
 }
 
-void FileManager::openFolderInNewWindow(const QString &folder)
+IApplication* FileManager::openFolderInNewWindow(const QString &folder)
 {
     IApplication *app = m_liteApp->newInstance(false);
     app->fileManager()->openFolderEx(folder);
+    return app;
 }
 
 void FileManager::newFile()
@@ -284,6 +287,16 @@ void FileManager::openFolderNewWindow()
    }
 }
 
+void FileManager::addFolder()
+{
+    m_folderWidget->addFolder();
+}
+
+void FileManager::closeAllFolders()
+{
+    m_folderWidget->closeAllFolders();
+}
+
 void FileManager::openEditors()
 {
     QStringList fileNames = QFileDialog::getOpenFileNames(m_liteApp->mainWindow(),
@@ -339,8 +352,14 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
                                     QMessageBox::Yes);
         if (ret == QMessageBox::Yes) {
             QString scheme = m_newFileDialog->scheme();
-            if (!scheme.isEmpty()) {
-                m_liteApp->fileManager()->openProjectScheme(m_newFileDialog->openPath(),scheme);
+            if (scheme == "folder") {
+                LiteApi::IApplication *app = openFolderEx(m_newFileDialog->openPath());
+                if (app != m_liteApp) {
+                    foreach(QString file, m_newFileDialog->openFiles()) {
+                        app->fileManager()->openFile(file);
+                    }
+                    return;
+                }
             }
             foreach(QString file, m_newFileDialog->openFiles()) {
                 this->openFile(file);
@@ -422,24 +441,24 @@ IProject *FileManager::openProject(const QString &_fileName)
     return proj;
 }
 
-void FileManager::openFolderEx(const QString &folder)
+IApplication* FileManager::openFolderEx(const QString &folder)
 {
     QDir dir(folder);
     if (!dir.exists()) {
-        return;
+        return m_liteApp;
     }
     if (m_folderWidget->rootPathList().isEmpty()) {
         m_folderWidget->setRootPath(folder);
     } else {
         if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
-            this->openFolderInNewWindow(folder);
-            return;
+            return this->openFolderInNewWindow(folder);
         } else {
             m_folderWidget->setRootPath(folder);
         }
     }
     m_toolWindowAct->setChecked(true);
     addRecentFile(folder,"folder");
+    return m_liteApp;
 }
 
 IProject *FileManager::openProjectScheme(const QString &_fileName, const QString &scheme)

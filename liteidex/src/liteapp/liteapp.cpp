@@ -584,6 +584,12 @@ void LiteApp::createActions()
     m_openFolderNewWindowAct->setVisible(!b);
     actionContext->regAction(m_openFolderNewWindowAct,"OpenFolderNewWindow","");
 
+    m_addFolderAct = new QAction(tr("Add Folder..."),m_mainwindow);
+    actionContext->regAction(m_addFolderAct,"AddFolder","");
+
+    m_closeAllFolderAct = new QAction(tr("Close All Folders"),m_mainwindow);
+    actionContext->regAction(m_closeAllFolderAct,"CloseAllFolders","");
+
     m_newWindow = new QAction(tr("New Window"),m_mainwindow);
     actionContext->regAction(m_newWindow,"NewWindow","Ctrl+Shift+N");
 
@@ -629,6 +635,8 @@ void LiteApp::createActions()
     connect(m_openFileAct,SIGNAL(triggered()),m_fileManager,SLOT(openFiles()));
     connect(m_openFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolder()));
     connect(m_openFolderNewWindowAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolderNewWindow()));
+    connect(m_addFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(addFolder()));
+    connect(m_closeAllFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(closeAllFolders()));
     connect(m_newWindow,SIGNAL(triggered()),this,SLOT(newWindow()));
     connect(m_closeWindow,SIGNAL(triggered()),this,SLOT(closeWindow()));
     connect(m_closeAct,SIGNAL(triggered()),m_editorManager,SLOT(closeEditor()));
@@ -655,6 +663,7 @@ void LiteApp::createMenus()
     m_fileMenu->addAction(m_openFileAct);
     m_fileMenu->addAction(m_openFolderAct);
     m_fileMenu->addAction(m_openFolderNewWindowAct);
+    m_fileMenu->addAction(m_addFolderAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
@@ -665,6 +674,7 @@ void LiteApp::createMenus()
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_closeAct);
     m_fileMenu->addAction(m_closeAllAct);
+    m_fileMenu->addAction(m_closeAllFolderAct);
     //m_fileMenu->addAction(m_closeProjectAct);
     //m_fileMenu->addAction(m_openProjectAct);
     //m_fileMenu->addAction(m_saveProjectAct);

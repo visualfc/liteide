@@ -1053,10 +1053,8 @@ void GolangDoc::appLoaded()
     if (info.exists()) {
         m_golangApiThread->loadFile(info.filePath());
     }
-    if (!m_toolWindowAct->isChecked()) {
-        return;
-    }
-    this->loadApi();
+    m_toolWindowAct->setChecked(false);
+    //this->loadApi();
 }
 
 void GolangDoc::triggeredToolWindow(bool b)

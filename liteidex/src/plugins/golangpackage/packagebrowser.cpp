@@ -86,7 +86,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_setupGopathAct,"SetupGOPATH","");
 
     m_godocAct = new QAction(tr("View Documentation"),this);
-    m_editPackageAct = new QAction(tr("Load as Project"),this);
+    m_loadPackageFolderAct = new QAction(tr("Load Package in New Window"),this);
     m_openSrcAct = new QAction(tr("Open Source File"),this);
     m_copyNameAct = new QAction(tr("Copy Name to Clipboard"),this);
 
@@ -95,7 +95,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu->addAction(m_reloadAct);
     m_rootMenu->addAction(m_setupGopathAct);
 
-    m_pkgMenu->addAction(m_editPackageAct);
+    m_pkgMenu->addAction(m_loadPackageFolderAct);
     m_pkgMenu->addAction(m_godocAct);
     m_pkgMenu->addAction(m_copyNameAct);
     m_pkgMenu->addSeparator();
@@ -117,7 +117,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reloadAll()));
     connect(m_setupGopathAct,SIGNAL(triggered()),this,SLOT(setupGopath()));
     connect(m_godocAct,SIGNAL(triggered()),this,SLOT(loadPackageDoc()));
-    connect(m_editPackageAct,SIGNAL(triggered()),this,SLOT(loadPackageProject()));
+    connect(m_loadPackageFolderAct,SIGNAL(triggered()),this,SLOT(loadPackageFolder()));
     connect(m_openSrcAct,SIGNAL(triggered()),this,SLOT(doubleClicked()));
     connect(m_copyNameAct,SIGNAL(triggered()),this,SLOT(copyPackageName()));
 
@@ -153,10 +153,8 @@ PackageBrowser::~PackageBrowser()
 
 void PackageBrowser::appLoaded()
 {
-    if (!m_toolWindowAct->isChecked()) {
-        return;
-    }
-    QTimer::singleShot(1000, this, SLOT(reloadAll()));
+    m_toolWindowAct->setChecked(false);
+    //QTimer::singleShot(1000, this, SLOT(reloadAll()));
 }
 
 void PackageBrowser::triggeredToolWindow(bool b)
@@ -260,16 +258,16 @@ void PackageBrowser::copyPackageName()
     QApplication::clipboard()->setText(name);
 }
 
-void PackageBrowser::loadPackageProject()
+void PackageBrowser::loadPackageFolder()
 {
     QModelIndex index = m_treeView->currentIndex();
     if (!index.isValid()) {
         return;
     }
-    loadPackageProjectHelper(index);
+    loadPackageFolderHelper(index);
 }
 
-bool PackageBrowser::loadPackageProjectHelper(QModelIndex index)
+bool PackageBrowser::loadPackageFolderHelper(QModelIndex index)
 {
     if (!index.isValid()) {
         return false;
@@ -288,14 +286,7 @@ bool PackageBrowser::loadPackageProjectHelper(QModelIndex index)
     }
     QDir dir(json.toMap().value("Dir").toString());
     if (dir.exists()) {
-        m_liteApp->fileManager()->openFolderEx(dir.path());
-        /*
-        PackageProject *proj = new PackageProject(m_liteApp);
-        proj->setJson(json.toMap());
-        proj->setPath(dir.path());
-        m_liteApp->projectManager()->setCurrentProject(proj);;
-        m_liteApp->fileManager()->addRecentFile(dir.path(),"gopkg");
-        */
+        m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
         return true;
     }
     return false;
@@ -315,7 +306,7 @@ void PackageBrowser::doubleClicked()
             m_liteApp->fileManager()->openEditor(path);
         }
     } else if (type == PackageType::ITEM_PACKAGE) {
-        if (loadPackageProjectHelper(index)) {
+        if (loadPackageFolderHelper(index)) {
             return;
         }
     }

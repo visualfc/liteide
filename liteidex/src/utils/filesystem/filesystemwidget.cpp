@@ -114,7 +114,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 
     m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
 
-    m_addFolderAct = new QAction(tr("Add Folder"),this);
+    m_addFolderAct = new QAction(tr("Add Folder..."),this);
     m_closeFolerAct = new QAction(tr("Close Folder"),this);
 
     m_closeAllFoldersAct = new QAction(tr("Close All Folders"),this);
@@ -146,7 +146,7 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 
     m_rootMenu->addAction(m_addFolderAct);
     m_rootMenu->addSeparator();
-    m_rootMenu->addAction(m_closeAllFoldersAct);
+    //m_rootMenu->addAction(m_closeAllFoldersAct);
 
     connect(m_model->fileWatcher(),SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
@@ -409,11 +409,20 @@ void FileSystemWidget::viewGodoc()
 
 void FileSystemWidget::addFolder()
 {
-    QString folder = QFileDialog::getExistingDirectory(this,tr("Add Folder"));
+#if QT_VERSION >= 0x050000
+        static QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#else
+        static QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
+    QString folder = QFileDialog::getExistingDirectory(this,tr("Add Folder"),home);
     if (folder.isEmpty()) {
         return;
     }
     this->addRootPathList(QStringList() << folder);
+    QDir dir(folder);
+    if (dir.cdUp()) {
+        home = dir.path();
+    }
 }
 
 void FileSystemWidget::closeFolder()

@@ -45,7 +45,6 @@ class QSettings;
 class QSplitter;
 class LiteAppOptionFactory;
 
-
 class LiteApp : public IApplication
 {
     Q_OBJECT
@@ -145,6 +144,8 @@ protected:
     QAction     *m_openFileAct;
     QAction     *m_openFolderAct;
     QAction     *m_openFolderNewWindowAct;
+    QAction     *m_addFolderAct;
+    QAction     *m_closeAllFolderAct;
     QAction     *m_newWindow;
     QAction     *m_closeWindow;
     QAction     *m_closeAct;

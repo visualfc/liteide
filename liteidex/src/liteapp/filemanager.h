@@ -55,11 +55,11 @@ public:
     virtual void removeRecentFile(const QString &fileName, const QString &scheme);
     virtual QStringList recentFiles(const QString &scheme) const;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const;
-    virtual void openFolderEx(const QString &folder);
+    virtual IApplication* openFolderEx(const QString &folder);
     virtual QStringList folderList() const;
     virtual void setFolderList(const QStringList &folders);
     virtual void addFolderList(const QStringList &folders);
-    virtual void openFolderInNewWindow(const QString &folder);
+    virtual IApplication* openFolderInNewWindow(const QString &folder);
 public:
     QString openAllTypeFilter() const;
     QString openProjectTypeFilter() const;
@@ -75,6 +75,8 @@ public slots:
     void openFiles();
     void openFolder();
     void openFolderNewWindow();
+    void addFolder();
+    void closeAllFolders();
     void newInstance();
     void openEditors();
     void openProjects();

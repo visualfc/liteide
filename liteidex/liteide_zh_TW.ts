@@ -751,12 +751,12 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="334"/>
+        <location filename="src/liteapp/filemanager.cpp" line="347"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="335"/>
+        <location filename="src/liteapp/filemanager.cpp" line="348"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -764,7 +764,7 @@ Do you want to load?</oldsource>
         <translation type="unfinished">專案 &apos;%1&apos;已建立,是否要載入?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="245"/>
+        <location filename="src/liteapp/filemanager.cpp" line="248"/>
         <source>Open Project or File</source>
         <translation>開啟專案或文件</translation>
     </message>
@@ -782,34 +782,34 @@ Do you want to load?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="258"/>
-        <location filename="src/liteapp/filemanager.cpp" line="276"/>
+        <location filename="src/liteapp/filemanager.cpp" line="261"/>
+        <location filename="src/liteapp/filemanager.cpp" line="279"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="468"/>
+        <location filename="src/liteapp/filemanager.cpp" line="487"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="469"/>
+        <location filename="src/liteapp/filemanager.cpp" line="488"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="470"/>
+        <location filename="src/liteapp/filemanager.cpp" line="489"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="471"/>
+        <location filename="src/liteapp/filemanager.cpp" line="490"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="659"/>
+        <location filename="src/liteapp/filemanager.cpp" line="678"/>
         <source>The following file has been deleted outside of LiteIDE:
 %1
 
@@ -817,13 +817,13 @@ Do you want to save the previous contents, close the file, or leave the contents
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="679"/>
+        <location filename="src/liteapp/filemanager.cpp" line="698"/>
         <source>%1
 This file has been modified outside of LiteIDE.  Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="290"/>
+        <location filename="src/liteapp/filemanager.cpp" line="303"/>
         <source>Open Files</source>
         <translation>開啟文件</translation>
     </message>
@@ -833,12 +833,12 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="303"/>
+        <location filename="src/liteapp/filemanager.cpp" line="316"/>
         <source>Open Project</source>
         <translation>開啟專案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="661"/>
+        <location filename="src/liteapp/filemanager.cpp" line="680"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1023,14 +1023,18 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished">查看GODOC</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="412"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="417"/>
         <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="118"/>
         <source>Close Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
+        <source>Add Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1582,32 +1586,32 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="593"/>
+        <location filename="src/liteapp/liteapp.cpp" line="599"/>
         <source>Close File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="596"/>
+        <location filename="src/liteapp/liteapp.cpp" line="602"/>
         <source>Close All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="606"/>
+        <location filename="src/liteapp/liteapp.cpp" line="612"/>
         <source>Save File</source>
         <translation type="unfinished">儲存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="609"/>
+        <location filename="src/liteapp/liteapp.cpp" line="615"/>
         <source>Save File As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="612"/>
+        <location filename="src/liteapp/liteapp.cpp" line="618"/>
         <source>Save All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="599"/>
+        <location filename="src/liteapp/liteapp.cpp" line="605"/>
         <source>Open Project</source>
         <translation>開啟專案</translation>
     </message>
@@ -1633,41 +1637,51 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="587"/>
-        <source>New Window</source>
+        <source>Add Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="590"/>
+        <source>Close All Folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteapp.cpp" line="593"/>
+        <source>New Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteapp.cpp" line="596"/>
         <source>Close Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="601"/>
+        <location filename="src/liteapp/liteapp.cpp" line="607"/>
         <source>Save Project</source>
         <translation>儲存專案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="603"/>
+        <location filename="src/liteapp/liteapp.cpp" line="609"/>
         <source>Close Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="615"/>
+        <location filename="src/liteapp/liteapp.cpp" line="621"/>
         <source>Exit</source>
         <translation>離開</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="618"/>
+        <location filename="src/liteapp/liteapp.cpp" line="624"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="622"/>
+        <location filename="src/liteapp/liteapp.cpp" line="628"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">關於 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="625"/>
+        <location filename="src/liteapp/liteapp.cpp" line="631"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2827,38 +2841,38 @@ Success: %2.</oldsource>
         <translation>建立新專案或文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="59"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="124"/>
         <source>Browse...</source>
         <translation type="unfinished">瀏覽</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="72"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="24"/>
         <source>GOPATH:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="86"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="38"/>
         <source>Template:</source>
         <oldsource>Template</oldsource>
         <translation type="unfinished">類別</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="100"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="54"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="113"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="73"/>
         <source>Information</source>
         <translation>資訊</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="20"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="87"/>
         <source>Name:</source>
         <translation>名稱:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.ui" line="47"/>
+        <location filename="src/liteapp/newfiledialog.ui" line="114"/>
         <source>Location:</source>
         <translation>位置:</translation>
     </message>
@@ -2966,8 +2980,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="89"/>
-        <source>Load as Project</source>
-        <oldsource>Load Package Project</oldsource>
+        <source>Load Package in New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2988,13 +3001,13 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="192"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="190"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="197"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="195"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation type="unfinished"></translation>
