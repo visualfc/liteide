@@ -45,14 +45,14 @@ GolangFmtOption::GolangFmtOption(LiteApi::IApplication *app,QObject *parent) :
     bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
     bool diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     bool autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
-    int timeout = m_liteApp->settings()->value(GOLANGFMT_TIMEOUT,600).toInt();
+    //int timeout = m_liteApp->settings()->value(GOLANGFMT_TIMEOUT,600).toInt();
     if (!diff) {
         autofmt = false;
     }
     ui->checkBoxUseGoimports->setChecked(goimports);
     ui->checkBoxDiff->setChecked(diff);
     ui->checkBoxAutoFmt->setChecked(autofmt);
-    ui->timeoutLineEdit->setText(QString("%1").arg(timeout));
+    //ui->timeoutLineEdit->setText(QString("%1").arg(timeout));
 
     connect(ui->checkBoxDiff,SIGNAL(toggled(bool)),ui->checkBoxAutoFmt,SLOT(setEnabled(bool)));
     connect(ui->checkBoxDiff,SIGNAL(clicked(bool)),ui->checkBoxAutoFmt,SLOT(setChecked(bool)));
@@ -90,10 +90,10 @@ void GolangFmtOption::apply()
     m_liteApp->settings()->setValue(GOLANGFMT_USEGOIMPORTS,goimports);
     m_liteApp->settings()->setValue(GOLANGFMT_USEDIFF,diff);
     m_liteApp->settings()->setValue(GOLANGFMT_AUTOFMT,autofmt);
-    int timeout = ui->timeoutLineEdit->text().toInt();
-    if (timeout < 50) {
-        timeout = 600;
-    }
-    ui->timeoutLineEdit->setText(QString("%1").arg(timeout));
-    m_liteApp->settings()->setValue(GOLANGFMT_TIMEOUT,timeout);
+    //int timeout = ui->timeoutLineEdit->text().toInt();
+    //if (timeout < 50) {
+    //    timeout = 600;
+    //}
+    //ui->timeoutLineEdit->setText(QString("%1").arg(timeout));
+    //m_liteApp->settings()->setValue(GOLANGFMT_TIMEOUT,timeout);
 }

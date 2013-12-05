@@ -202,39 +202,31 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     if (!editor) {
         return;
     }
-    QString fileName = editor->filePath();
-    if (fileName.isEmpty()) {
+    if (editor->filePath().isEmpty()) {
         return;
     }
-
-    QFileInfo info(fileName);
+    QFileInfo info(editor->filePath());
     if (info.suffix() != "go") {
         return;
     }
-
-    if (m_process->isRunning()) {
-        return;
-    }
-
     if (m_gofmtCmd.isEmpty()) {
         return;
     }
-
-    QPlainTextEdit *edit = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+    if (m_process->isRunning()) {
+        return;
+    }
+    QPlainTextEdit *edit = LiteApi::getPlainTextEdit(editor);
     if (!edit) {
         return;
     }
-
-    QString text = edit->toPlainText();
-
     QStringList args;
     if (m_diff) {
         args << "-d";
     }
     m_data.clear();;
     m_errData.clear();
-    m_process->setUserData(0,fileName);
-    m_process->setUserData(1,text);
+    m_process->setUserData(0,editor->filePath());
+    m_process->setUserData(1,edit->toPlainText());
     m_process->setUserData(2,save);
     m_process->start(m_gofmtCmd,args);
 }
@@ -244,8 +236,8 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
     if (!m_autofmt) {
         return;
     }
-    //fmtEditor(editor,true);
-    syncfmtEditor(editor,true);
+    fmtEditor(editor,true);
+    //syncfmtEditor(editor,true);
 }
 
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
@@ -273,7 +265,9 @@ void GolangFmt::gofmt()
     if (!editor) {
         return;
     }
-    syncfmtEditor(editor,false,true,2000);
+    m_liteApp->editorManager()->saveEditor(editor,false);
+    fmtEditor(editor,true);
+    //syncfmtEditor(editor,false,true,2000);
 }
 
 void GolangFmt::fmtStarted()
@@ -294,76 +288,76 @@ void GolangFmt::fmtOutput(QByteArray data,bool stdErr)
 
 void GolangFmt::fmtFinish(bool error,int code,QString)
 {
+    QString fileName = m_process->userData(0).toString();
+    if (fileName.isEmpty()) {
+        return;
+    }
+    bool save = m_process->userData(2).toBool();
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
+    if (!editor) {
+        return;
+    }
+    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+    if (!liteEditor) {
+        return;
+    }
+    QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
+    if (!ed) {
+        return;
+    }
+    qDebug() << ed->document()->isModified();
+    if (ed->document()->isModified()) {
+        return;
+    }
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (!error && code == 0) {
-        QString fileName = m_process->userData(0).toString();
-        bool save = m_process->userData(2).toBool();
-        if (!fileName.isEmpty()) {
-            LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
-            if (editor) {
-                QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
-                QTextCodec *codec = QTextCodec::codecForName("utf-8");
-                if (ed && codec) {
-                    int vpos = -1;
-                    QScrollBar *bar = ed->verticalScrollBar();
-                    if (bar) {
-                        vpos = bar->sliderPosition();
-                    }
-                    QTextCursor cur = ed->textCursor();
-                    int pos = cur.position();
-                    cur.beginEditBlock();
-                    if (m_diff) {
-                        loadDiff(cur,codec->toUnicode(m_data));
-                    } else {
-                        cur.select(QTextCursor::Document);
-                        cur.removeSelectedText();
-                        cur.insertText(codec->toUnicode(m_data));
-                    }
-                    cur.setPosition(pos);
-                    cur.endEditBlock();
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
+        int vpos = -1;
+        QScrollBar *bar = ed->verticalScrollBar();
+        if (bar) {
+            vpos = bar->sliderPosition();
+        }
+        QTextCursor cur = ed->textCursor();
+        int pos = cur.position();
+        cur.beginEditBlock();
+        if (m_diff) {
+            loadDiff(cur,codec->toUnicode(m_data));
+        } else {
+            cur.select(QTextCursor::Document);
+            cur.removeSelectedText();
+            cur.insertText(codec->toUnicode(m_data));
+        }
+        cur.setPosition(pos);
+        cur.endEditBlock();
 
-                    ed->setTextCursor(cur);
-                    if (vpos != -1) {
-                        bar->setSliderPosition(vpos);
+        ed->setTextCursor(cur);
+        if (vpos != -1) {
+            bar->setSliderPosition(vpos);
+        }
+        if (save) {
+            m_liteApp->editorManager()->saveEditor(editor,false);
+        }
+    } else if (!m_errData.isEmpty()) {
+        QString errmsg = codec->toUnicode(m_errData);
+        if (!errmsg.isEmpty()) {
+            //<standard input>:23:1: expected declaration, found 'INT' 1
+            foreach(QString msg,errmsg.split("\n")) {
+                QRegExp re(":(\\d+):");
+                if (re.indexIn(msg,16) >= 0) {
+                    bool ok = false;
+                    int line = re.cap(1).toInt(&ok);
+                    if (ok) {
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16));
                     }
-                }
-                if (save) {
-                    m_liteApp->editorManager()->saveEditor(editor,false);
                 }
             }
         }
-    } else if (!m_errData.isEmpty()){
-        QTextCodec *codec = QTextCodec::codecForName("utf-8");
-        QString filename = m_process->userData(0).toString();
-        QString data = codec->toUnicode(m_errData);
-        m_errData.clear();
-        data.replace("<standard input>",filename);
-        m_liteApp->appendLog("gofmt","\n"+data,true);
-        //goto error line
-        QRegExp rep("([\\w\\d_\\\\/\\.]+):(\\d+):");
-
-        int index = rep.indexIn(data);
-        if (index < 0)
-            return;
-        QStringList capList = rep.capturedTexts();
-
-        if (capList.count() < 3)
-            return;
-        QString fileName = capList[1];
-        QString fileLine = capList[2];
-
-        bool ok = false;
-        int line = fileLine.toInt(&ok);
-        if (!ok)
-            return;
-
-        LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName);
-        if (editor) {
-            editor->widget()->setFocus();
-            LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-            if (textEditor) {
-                textEditor->gotoLine(line,0,true);
-            }
-        }
+        QString log = errmsg;
+        errmsg.replace("<standard input>","");
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
+        log.replace("<standard input>",fileName);
+        m_liteApp->appendLog("go code format error",log,false);
     }
     m_data.clear();
 }

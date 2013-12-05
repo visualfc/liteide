@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2013.11.03 Ver x20
+### 2013.11.05 Ver x20
 * LiteIDE
 	* add folders manager
 	* always open folder with new window (option)
@@ -24,6 +24,7 @@
 * GolangCode:
 	* auto update depends package (option)
 * GolangFmt:
+	* use async code format
 	* use goimports instead gofmt (option)		
 	* code format error show in editor navigate area
 * LiteDebug:

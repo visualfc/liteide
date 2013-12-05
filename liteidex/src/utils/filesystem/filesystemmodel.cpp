@@ -433,6 +433,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
         return node->text();
     case Qt::DecorationRole:
         return m_iconProvider->icon(node->fileInfo());
+/*
     case Qt::FontRole: {
         QFont font;
         if (node->path() == m_startPath) {
@@ -440,6 +441,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
         }
         return font;
     }
+*/
     }
     return QVariant();
 }

@@ -79,6 +79,11 @@ QStringList GolangFmtPlugin::dependPluginList() const{
 void GolangFmtPlugin::goplayFmt()
 {
     m_fmt->syncfmtEditor(m_playEditor,false,false,2000);
+    /*
+    QPlainTextEdit* ed=LiteApi::getPlainTextEdit(m_playEditor);
+    ed->document()->setModified(false);
+    m_fmt->fmtEditor(m_playEditor,false);
+    */
 }
 
 void GolangFmtPlugin::appLoaded()
