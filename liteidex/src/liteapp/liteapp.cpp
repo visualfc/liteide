@@ -277,7 +277,8 @@ void LiteApp::load(bool bUseSession, IApplication *baseApp)
     loadState();
     if (baseApp) {
         if (baseApp->mainWindow()->isMaximized()) {
-            m_mainwindow->showNormal();
+            m_mainwindow->resize(800,600);
+            m_mainwindow->show();
         } else {
             QRect rc = baseApp->mainWindow()->geometry();
             rc.adjust(20,20,20,20);
