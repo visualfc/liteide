@@ -142,7 +142,7 @@ removing unreferenced ones.
 Code completion use gocode <https://github.com/nsf/gocode>.gocode works .a file is read from the project dependencies, so please update project libraries can not rely on code completion.
 
 ### update depends packages
-update depends packages for gocode, click build menu `Get`(go get)
+update depends packages for gocode, click build menu or toolbar `Get`(go get)
 
 ### auto update depends packages
 LiteIDE View->Options->Gocode-> auto update depends packages

@@ -132,7 +132,7 @@ LiteIDE 查看->选项->GolangFmt-> 使用Goimports代替gofmt进行代码格式
 Go语言代码完成使用gocode <https://github.com/nsf/gocode>，gocode的工作原理是从项目的依赖库.a文件中读取，所以不能代码完成时请更新项目的依赖库。
 
 ### 更新依赖库
-更新当前项目的依赖库, 点击编译菜单`Get`(go get)
+更新当前项目的依赖库, 点击编译菜单或工具栏`Get`(go get)
 
 ### 自动更新依赖库
 LiteIDE 查看->选项->Gocode-> 自动更新依赖库
