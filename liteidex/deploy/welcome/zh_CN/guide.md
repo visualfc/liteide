@@ -128,6 +128,15 @@ LiteIDE 查看->选项->GolangFmt-> 使用Goimports代替gofmt进行代码格式
 
 这个工具自动更新您的Go语言import行，增加缺少的pkg和移除未引用的pkg。
 
+## Gocode代码完成
+Go语言代码完成使用gocode <https://github.com/nsf/gocode>，gocode的工作原理是从项目的依赖库.a文件中读取，所以不能代码完成时请更新项目的依赖库。
+
+### 更新依赖库
+更新当前项目的依赖库, 点击编译菜单`Get`(go get)
+
+### 自动更新依赖库
+LiteIDE 查看->选项->Gocode-> 自动更新依赖库
+
 ### 编译
 
 在LiteIDE中执行交叉编译，通过选择上述相应的交叉编译环境。并且确保环境已经设置了正确的变量。包括 `GOARCH`，`GOOS`，`GOARM`和`CGO_ENABLED`，如上面所述。

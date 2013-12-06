@@ -138,6 +138,15 @@ LiteIDE View->Options->GolangFmt-> Use goimports instead of gofmt, for code form
 This tool updates your Go import lines, adding missing ones and
 removing unreferenced ones.
 
+## Gocode
+Code completion use gocode <https://github.com/nsf/gocode>.gocode works .a file is read from the project dependencies, so please update project libraries can not rely on code completion.
+
+### update depends packages
+update depends packages for gocode, click build menu `Get`(go get)
+
+### auto update depends packages
+LiteIDE View->Options->Gocode-> auto update depends packages
+
 ## Build System
 LiteIDE's build system is highly configurable, allowing you to define your own custom build actions using XML files.
 
