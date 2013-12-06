@@ -35,6 +35,7 @@ class WebViewHtmlWidget : public IHtmlWidget
     Q_OBJECT
 public:
     WebViewHtmlWidget(QObject *parent);
+    ~WebViewHtmlWidget();
 public:
     virtual QWidget *widget() const;
     virtual QString className() const;

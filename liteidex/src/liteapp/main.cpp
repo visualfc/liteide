@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    IApplication *liteApp = LiteApp::NewApplication(true);
+    IApplication *liteApp = LiteApp::NewApplication(true,0);
 
     if (fileList.size() == 1) {
         QString file = fileList.at(0);

@@ -48,7 +48,7 @@ ActionManager::ActionManager(QObject *parent) :
 
 ActionManager::~ActionManager()
 {
-    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while(it.hasNext()) {
         it.next();
         delete it.value();
@@ -202,7 +202,7 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
 
 IActionContext *ActionManager::getActionContext(QObject *obj, const QString &name)
 {
-    ActionContext *context = m_objContextMap.value(obj);
+    IActionContext *context = m_objContextMap.value(obj);
     if (!context) {
         context = new ActionContext(m_liteApp,name);
         connect(obj,SIGNAL(destroyed(QObject*)),this,SLOT(removeActionContext(QObject*)));
@@ -214,7 +214,7 @@ IActionContext *ActionManager::getActionContext(QObject *obj, const QString &nam
 QStringList ActionManager::actionKeys() const
 {
     QStringList keys;
-    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while(it.hasNext()) {
         it.next();
         keys.append(it.value()->actionKeys());
@@ -225,7 +225,7 @@ QStringList ActionManager::actionKeys() const
 
 ActionInfo *ActionManager::actionInfo(const QString &id) const
 {
-    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while (it.hasNext()) {
         it.next();
         ActionInfo *info = it.value()->actionInfo(id);
@@ -283,7 +283,7 @@ QString ActionManager::formatShortcutsString(const QString &ks)
 
 void ActionManager::setActionShourtcuts(const QString &id, const QString &shortcuts)
 {
-    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while(it.hasNext()) {
         it.next();
         it.value()->setActionShourtcuts(id,shortcuts);
@@ -293,7 +293,7 @@ void ActionManager::setActionShourtcuts(const QString &id, const QString &shortc
 QStringList ActionManager::actionContextNameList() const
 {
     QStringList nameList;
-    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while(it.hasNext()) {
         it.next();
         nameList.append(it.value()->contextName());
@@ -304,7 +304,7 @@ QStringList ActionManager::actionContextNameList() const
 
 IActionContext *ActionManager::actionContextForName(const QString &name)
 {
-    QMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while(it.hasNext()) {
         it.next();
         if (it.value()->contextName().compare(name,Qt::CaseInsensitive) == 0) {
@@ -316,7 +316,7 @@ IActionContext *ActionManager::actionContextForName(const QString &name)
 
 void ActionManager::removeActionContext(QObject *obj)
 {
-    QMutableMapIterator<QObject*,ActionContext*> it(m_objContextMap);
+    QMutableMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while (it.hasNext()) {
         it.next();
         if (it.key() == obj) {
@@ -342,8 +342,10 @@ ActionContext::~ActionContext()
     QMapIterator<QString,ActionInfo*> it(m_actionInfoMap);
     while(it.hasNext()) {
         it.next();
-        delete it.value();
+        ActionInfo* info = it.value();
+        delete info;
     }
+    m_actionInfoMap.clear();
 }
 
 void ActionContext::regAction(QAction *act, const QString &id, const QString &defks, bool standard)
@@ -361,6 +363,8 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
             act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
         }
         info->action = act;
+    } else {
+        info->action = 0;
     }
     m_actionInfoMap.insert(id,info);
 }

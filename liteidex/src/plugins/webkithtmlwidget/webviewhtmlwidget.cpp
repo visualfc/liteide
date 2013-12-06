@@ -47,6 +47,13 @@ WebViewHtmlWidget::WebViewHtmlWidget(QObject *parent) :
     connect(m_widget->page()->mainFrame(),SIGNAL(contentsSizeChanged(QSize)),this,SIGNAL(contentsSizeChanged()));
 }
 
+WebViewHtmlWidget::~WebViewHtmlWidget()
+{
+ //   if (m_widget) {
+ //       delete m_widget;
+ //   }
+}
+
 QWidget *WebViewHtmlWidget::widget() const
 {
     return m_widget;

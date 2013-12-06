@@ -262,6 +262,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_toolBar->addWidget(m_envCmb);
     QAction *editAct = new QAction(QIcon("icon:liteenv/images/setenv.png"),tr("Edit Environment"),this);
     m_toolBar->addAction(editAct);
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolWindowPos,editAct);
 
     foreach (LiteApi::IEnv *env, m_envList) {
         m_envCmb->addItem(env->id());

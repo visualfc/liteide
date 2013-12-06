@@ -101,10 +101,10 @@ QString LiteApp::getStoragePath()
     return root+"/liteide";
 }
 
-IApplication* LiteApp::NewApplication(bool loadSession)
+IApplication* LiteApp::NewApplication(bool loadSession, IApplication *baseApp)
 {
     LiteApp *app = new LiteApp;
-    app->load(loadSession);
+    app->load(loadSession,baseApp);
     return app;
 }
 
@@ -242,7 +242,7 @@ static QImage makeSplashImage(LiteApi::IApplication *app)
     return image;
 }
 
-void LiteApp::load(bool bUseSession)
+void LiteApp::load(bool bUseSession, IApplication *baseApp)
 {
     QSplashScreen *splash = 0;
     bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
@@ -274,9 +274,19 @@ void LiteApp::load(bool bUseSession)
     }
 
     qApp->processEvents();
-
     loadState();
-    m_mainwindow->show();
+    if (baseApp) {
+        if (baseApp->mainWindow()->isMaximized()) {
+            m_mainwindow->showNormal();
+        } else {
+            QRect rc = baseApp->mainWindow()->geometry();
+            rc.adjust(20,20,0,0);
+            m_mainwindow->setGeometry(rc);
+            m_mainwindow->show();
+        }
+    } else {
+        m_mainwindow->show();
+    }
 
     emit loaded();
     m_projectManager->setCurrentProject(0);
@@ -327,11 +337,11 @@ void LiteApp::cleanup()
     delete m_htmlWidgetManager;
     delete m_liteAppOptionFactory;
     delete m_fileManager;
-    delete m_actionManager;
     delete m_mimeTypeManager;
     delete m_optionManager;
     delete m_logOutput;
     delete m_toolWindowManager;
+    delete m_actionManager;
     delete m_extension;
     delete m_settings;
 }
@@ -390,7 +400,7 @@ IGoProxy *LiteApp::createGoProxy(QObject *parent)
 
 IApplication *LiteApp::newInstance(bool loadSession)
 {
-    return LiteApp::NewApplication(loadSession);
+    return LiteApp::NewApplication(loadSession,this);
 }
 
 IEditorManager *LiteApp::editorManager()

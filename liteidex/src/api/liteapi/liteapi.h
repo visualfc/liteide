@@ -506,6 +506,7 @@ struct ActionInfo {
 
 class IActionContext {
 public:
+    virtual ~IActionContext() {}
     virtual QString contextName() const = 0;
     virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false) = 0;
     virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
