@@ -280,7 +280,7 @@ void LiteApp::load(bool bUseSession, IApplication *baseApp)
             m_mainwindow->showNormal();
         } else {
             QRect rc = baseApp->mainWindow()->geometry();
-            rc.adjust(20,20,0,0);
+            rc.adjust(20,20,20,20);
             m_mainwindow->setGeometry(rc);
             m_mainwindow->show();
         }
@@ -773,7 +773,7 @@ void LiteApp::loadState()
     if (!geometry.isEmpty()) {
         m_mainwindow->restoreGeometry(geometry);
     } else {
-        m_mainwindow->resize(640,480);
+        m_mainwindow->resize(800,600);
     }
     m_mainwindow->restoreState(m_settings->value("liteapp/state").toByteArray());
 }
