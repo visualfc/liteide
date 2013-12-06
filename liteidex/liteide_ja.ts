@@ -554,16 +554,16 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="482"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="488"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="493"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="492"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="497"/>
         <source>Rename File</source>
         <translation>ファイル名を変更</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="207"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="507"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="512"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="511"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="516"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation type="unfinished">ファイルを削除</translation>
@@ -601,46 +601,51 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="279"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="220"/>
+        <source>Add to Folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="283"/>
         <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="508"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="512"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="513"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="517"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="532"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="536"/>
         <source>A folder with that name already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="557"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="562"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="552"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="561"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="566"/>
         <source>Rename Folder</source>
         <translation>フォルダ名を変更</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="577"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="581"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="582"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="586"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="212"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="576"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="581"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="580"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="585"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation type="unfinished">フォルダを削除</translation>
@@ -661,8 +666,8 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="441"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="451"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="445"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="455"/>
         <source>Create File</source>
         <translation>ファイルを作成</translation>
     </message>
@@ -673,46 +678,46 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="284"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="288"/>
         <source>File System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="442"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="446"/>
         <source>A file with that name already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="452"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="456"/>
         <source>Failed to create the file!</source>
         <translation>ファイルの作成に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="482"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="552"/>
         <source>New Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="494"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="493"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="498"/>
         <source>Failed to rename the file!</source>
         <translation>ファイル名の変更に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="531"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="534"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="535"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="538"/>
         <source>Create Folder</source>
         <translation>フォルダを作成</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="535"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
         <source>Failed to create the folder!</source>
         <translation>フォルダの作成に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="558"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="563"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="562"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="567"/>
         <source>Failed to rename the folder!</source>
         <translation>フォルダ名の変更に失敗しました!</translation>
     </message>
@@ -3005,29 +3010,34 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="90"/>
-        <source>Open Source File</source>
+        <source>Add Package to Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
+        <source>Open Source File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="111"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="114"/>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="190"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="194"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="195"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="199"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation type="unfinished"></translation>

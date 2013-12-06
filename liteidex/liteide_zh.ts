@@ -554,16 +554,16 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>新建文件向导...</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="482"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="488"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="493"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="492"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="497"/>
         <source>Rename File</source>
         <translation>文件更名</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="207"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="507"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="512"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="511"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="516"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation>删除文件</translation>
@@ -601,46 +601,51 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>在新窗口打开目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="279"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="220"/>
+        <source>Add to Folders</source>
+        <translation>添加到目录列表</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="283"/>
         <source>Config</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="508"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="512"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="513"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="517"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="532"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="536"/>
         <source>A folder with that name already exists!</source>
         <translation>这个目录已存在!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="557"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="562"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="552"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="561"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="566"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="577"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="581"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="582"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="586"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="212"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="576"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="581"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="580"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="585"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation>删除目录</translation>
@@ -661,8 +666,8 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>查看GODOC</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="441"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="451"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="445"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="455"/>
         <source>Create File</source>
         <translation>建立文件</translation>
     </message>
@@ -673,46 +678,46 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>打开上级目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="284"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="288"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="442"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="446"/>
         <source>A file with that name already exists!</source>
         <translation>文件已存在!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="452"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="456"/>
         <source>Failed to create the file!</source>
         <translation>建立文件失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="482"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="548"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="552"/>
         <source>New Name:</source>
         <translation>新名称:</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="494"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="493"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="498"/>
         <source>Failed to rename the file!</source>
         <translation>重命名文件失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="531"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="534"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="535"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="538"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="535"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="558"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="563"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="562"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="567"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
@@ -3009,29 +3014,34 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="90"/>
+        <source>Add Package to Folders</source>
+        <translation>添加Package到目录列表</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
         <source>Open Source File</source>
         <translation>打开源文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
         <translation>复制名字到剪切板</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="111"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="114"/>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
         <translation>Package浏览</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="190"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="194"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation>无法找到GO安装.</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="195"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="199"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation>正在加载go package列表...</translation>

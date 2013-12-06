@@ -2,6 +2,11 @@
 
 # LiteIDE Feature Guide
 
+## Multiple Window Mode Setup
+LiteIDE setup allows open folder in new windows.
+
+Options->View->LiteApp-> allows open folder in new windows.
+
 ## Environments
 The LiteIDE environment setup plugin allows you to quickly switch between multiple system environments for your build.  Each environment has its own set of environment variables that can be used to control the build process.
 
