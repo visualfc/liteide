@@ -25,8 +25,8 @@
 		<action id="TestCover" img="blue/cover.png" key="" task="Cover;CoverFunc" killold="true"/>
 		<action id="Cover" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="test -coverprofile cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="CoverFunc" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="tool cover -func=cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>		
-		<action id="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Gopm Gen" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="gen" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Gopm Help" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="help" save="" output="true" codec="utf-8"/>
+		<action id="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Gopm Gen" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm gen" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Gopm Help" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm help" save="" output="true" codec="utf-8"/>
 	</mime-type>
 </mime-info>

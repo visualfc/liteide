@@ -86,7 +86,7 @@ void GolangFmt::applyOption(QString id)
         m_goimports = goimports;
         currentEnvChanged(0);
     }
-    m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,false).toBool();
+    m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
     m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
 }
 

@@ -56,7 +56,7 @@
       <item>
        <widget class="QCheckBox" name="enableSyncCheckBox">
         <property name="text">
-         <string>Enable Synchronous code formatting</string>
+         <string> Synchronous code formatting</string>
         </property>
        </widget>
       </item>
