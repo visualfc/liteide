@@ -43,7 +43,7 @@ GolangCodeOption::GolangCodeOption(LiteApi::IApplication *app,QObject *parent) :
     ui->setupUi(m_widget);
 
     bool close = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,true).toBool();
+    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,false).toBool();
     ui->exitCloseCheckBox->setChecked(close);
     ui->autoUpPkgCheckBox->setChecked(uppkg);
 }

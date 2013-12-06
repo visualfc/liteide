@@ -50,7 +50,7 @@
 GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_goimports(true),
+    m_goimports(false),
     m_diff(true),
     m_autofmt(true),
     m_syncfmt(false),
@@ -76,7 +76,7 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     if (!m_diff) {
