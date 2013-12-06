@@ -744,19 +744,19 @@ LiteIDE это простая кросплатформенная среда ра
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="137"/>
-        <location filename="src/liteapp/filemanager.cpp" line="158"/>
-        <location filename="src/liteapp/filemanager.cpp" line="179"/>
+        <location filename="src/liteapp/filemanager.cpp" line="136"/>
+        <location filename="src/liteapp/filemanager.cpp" line="157"/>
+        <location filename="src/liteapp/filemanager.cpp" line="178"/>
         <source>All Files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="347"/>
+        <location filename="src/liteapp/filemanager.cpp" line="346"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="348"/>
+        <location filename="src/liteapp/filemanager.cpp" line="347"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -765,52 +765,52 @@ Do you want to load?</oldsource>
 Вы хотите его открыть?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="248"/>
+        <location filename="src/liteapp/filemanager.cpp" line="247"/>
         <source>Open Project or File</source>
         <translation>Открыть файл или проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="64"/>
+        <location filename="src/liteapp/filemanager.cpp" line="63"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="134"/>
-        <location filename="src/liteapp/filemanager.cpp" line="155"/>
-        <location filename="src/liteapp/filemanager.cpp" line="176"/>
+        <location filename="src/liteapp/filemanager.cpp" line="133"/>
+        <location filename="src/liteapp/filemanager.cpp" line="154"/>
+        <location filename="src/liteapp/filemanager.cpp" line="175"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="261"/>
-        <location filename="src/liteapp/filemanager.cpp" line="279"/>
+        <location filename="src/liteapp/filemanager.cpp" line="260"/>
+        <location filename="src/liteapp/filemanager.cpp" line="278"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="487"/>
+        <location filename="src/liteapp/filemanager.cpp" line="486"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="488"/>
+        <location filename="src/liteapp/filemanager.cpp" line="487"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="489"/>
+        <location filename="src/liteapp/filemanager.cpp" line="488"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="490"/>
+        <location filename="src/liteapp/filemanager.cpp" line="489"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="678"/>
+        <location filename="src/liteapp/filemanager.cpp" line="677"/>
         <source>The following file has been deleted outside of LiteIDE:
 %1
 
@@ -818,28 +818,28 @@ Do you want to save the previous contents, close the file, or leave the contents
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="698"/>
+        <location filename="src/liteapp/filemanager.cpp" line="697"/>
         <source>%1
 This file has been modified outside of LiteIDE.  Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="303"/>
+        <location filename="src/liteapp/filemanager.cpp" line="302"/>
         <source>Open Files</source>
         <translation>Открыть файлы...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="72"/>
+        <location filename="src/liteapp/filemanager.cpp" line="71"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="316"/>
+        <location filename="src/liteapp/filemanager.cpp" line="315"/>
         <source>Open Project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="680"/>
+        <location filename="src/liteapp/filemanager.cpp" line="679"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -1336,8 +1336,18 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="52"/>
-        <source>Formatting timeout in milliseconds (50ms or more):</source>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
+        <source>Synchronous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="59"/>
+        <source>Enable Synchronous code formatting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="68"/>
+        <source>Synchronous code formatting timeout in milliseconds (500ms or more):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1359,68 +1369,68 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>GolangPresentEdit</name>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="57"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="66"/>
         <source>Section (s1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="60"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="69"/>
         <source>Subsection (s2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="63"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="72"/>
         <source>Sub-subsection (s3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="66"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="75"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="69"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="78"/>
         <source>Italic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="72"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="81"/>
         <source>Inline Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="75"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="84"/>
         <source>Switch Bullets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="78"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="87"/>
         <source>Comment/Uncomment Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="81"/>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="260"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="90"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="269"/>
         <source>Export HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="84"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="93"/>
         <source>Verify Present</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="249"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
         <source>Present verify success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="251"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="260"/>
         <source>Present verify false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="297"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="306"/>
         <source>Export PDF</source>
         <translation type="unfinished">Экспортировать в PDF</translation>
     </message>
@@ -3380,12 +3390,12 @@ Do you want to replace it?</source>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="57"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="66"/>
         <source>Navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="117"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="126"/>
         <source>False load %1 !</source>
         <translation type="unfinished"></translation>
     </message>

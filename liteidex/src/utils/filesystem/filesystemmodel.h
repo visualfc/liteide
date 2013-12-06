@@ -68,9 +68,11 @@ public:
     explicit FileSystemModel(QObject *parent = 0);
     ~FileSystemModel();
     void clear();
+    void reload();
     void setFilter(QDir::Filters filters);
     void setSort(QDir::SortFlags flags);
     QDir::Filters filter() const;
+    bool isShowHideFiles() const;
     QDir::SortFlags sort() const;
     void setRootPathList(const QStringList &pathList);
     void setRootPath(const QString &path);

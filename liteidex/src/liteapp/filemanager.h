@@ -28,11 +28,8 @@
 
 using namespace LiteApi;
 
-class NewFileDialog;
 class QFileSystemWatcher;
-struct FileStateItem;
-
-
+class NewFileDialog;
 class FileSystemWidget;
 class FileManager : public IFileManager
 {
@@ -87,6 +84,7 @@ public slots:
     void checkForReload();
     void cleanRecent();
     void applyOption(QString);
+    void showHideFiles(bool);
 protected:
     NewFileDialog        *m_newFileDialog;
     FileSystemWidget     *m_folderWidget;
@@ -100,6 +98,8 @@ protected:
     QMenu       *m_recentMenu;
     QAction     *m_toolWindowAct;
     QString      m_initPath;
+    QMenu*      m_configMenu;
+    QAction*     m_showHideFilesAct;
 };
 
 #endif // FILEMANAGER_H

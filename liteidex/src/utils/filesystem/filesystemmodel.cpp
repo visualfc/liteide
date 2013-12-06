@@ -85,6 +85,9 @@ QList<FileNode*>* FileNode::children()
             if (info.isDir()) {
                 QDir dir(m_path);
                 foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->sort())) {
+                    if (!this->m_model->isShowHideFiles() && childInfo.isDir() && childInfo.fileName().startsWith(".")) {
+                       continue;
+                    }
                     m_children->append(new FileNode(this->m_model,childInfo.filePath(),this));
                 }
             }
@@ -160,6 +163,9 @@ void FileNode::reload()
         if (info.isDir()) {
             QDir dir(m_path);
             foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->sort())) {
+                if (!this->m_model->isShowHideFiles() && childInfo.isDir() && childInfo.fileName().startsWith(".")) {
+                   continue;
+                }
                 m_children->append(new FileNode(this->m_model,childInfo.filePath(),this));
             }
         }
@@ -277,7 +283,7 @@ void FileSystemModel::setFilter(QDir::Filters filters)
 {
     if (m_filters != filters) {
         m_filters = filters;
-        m_rootNode->reload();
+        this->reload();
     }
 }
 
@@ -285,13 +291,18 @@ void FileSystemModel::setSort(QDir::SortFlags flags)
 {
     if (m_sorts != flags) {
         m_sorts = flags;
-        m_rootNode->reload();
+        this->reload();
     }
 }
 
 QDir::Filters FileSystemModel::filter() const
 {
     return m_filters;
+}
+
+bool FileSystemModel::isShowHideFiles() const
+{
+    return m_filters & QDir::Hidden;
 }
 
 QDir::SortFlags FileSystemModel::sort() const
@@ -306,6 +317,11 @@ void FileSystemModel::clear()
     m_pathList.clear();
     m_startPath.clear();
     this->endResetModel();
+}
+
+void FileSystemModel::reload()
+{
+    this->setRootPathList(this->rootPathList());
 }
 
 void FileSystemModel::setRootPath(const QString &path)

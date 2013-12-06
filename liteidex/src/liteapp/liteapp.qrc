@@ -50,5 +50,6 @@
         <file>images/liteide64.png</file>
         <file>images/liteide128.png</file>
         <file>images/liteide-logo128.png</file>
+        <file>images/config.png</file>
     </qresource>
 </RCC>

@@ -743,19 +743,19 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="137"/>
-        <location filename="src/liteapp/filemanager.cpp" line="158"/>
-        <location filename="src/liteapp/filemanager.cpp" line="179"/>
+        <location filename="src/liteapp/filemanager.cpp" line="136"/>
+        <location filename="src/liteapp/filemanager.cpp" line="157"/>
+        <location filename="src/liteapp/filemanager.cpp" line="178"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="347"/>
+        <location filename="src/liteapp/filemanager.cpp" line="346"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="348"/>
+        <location filename="src/liteapp/filemanager.cpp" line="347"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -763,57 +763,57 @@ Do you want to load?</oldsource>
         <translation>项目文件 &apos;%1&apos;已建立,是否加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="248"/>
+        <location filename="src/liteapp/filemanager.cpp" line="247"/>
         <source>Open Project or File</source>
         <translation>打开项目或文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="64"/>
+        <location filename="src/liteapp/filemanager.cpp" line="63"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="72"/>
+        <location filename="src/liteapp/filemanager.cpp" line="71"/>
         <source>Clear History</source>
         <translation>清除历史</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="134"/>
-        <location filename="src/liteapp/filemanager.cpp" line="155"/>
-        <location filename="src/liteapp/filemanager.cpp" line="176"/>
+        <location filename="src/liteapp/filemanager.cpp" line="133"/>
+        <location filename="src/liteapp/filemanager.cpp" line="154"/>
+        <location filename="src/liteapp/filemanager.cpp" line="175"/>
         <source>All Support Files (%1)</source>
         <translation>所有支持文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="261"/>
-        <location filename="src/liteapp/filemanager.cpp" line="279"/>
+        <location filename="src/liteapp/filemanager.cpp" line="260"/>
+        <location filename="src/liteapp/filemanager.cpp" line="278"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>选择目录:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="487"/>
+        <location filename="src/liteapp/filemanager.cpp" line="486"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="488"/>
+        <location filename="src/liteapp/filemanager.cpp" line="487"/>
         <source>Project</source>
         <translation>项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="489"/>
+        <location filename="src/liteapp/filemanager.cpp" line="488"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="490"/>
+        <location filename="src/liteapp/filemanager.cpp" line="489"/>
         <source>Folder</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="678"/>
+        <location filename="src/liteapp/filemanager.cpp" line="677"/>
         <source>The following file has been deleted outside of LiteIDE:
 %1
 
@@ -821,23 +821,23 @@ Do you want to save the previous contents, close the file, or leave the contents
         <translation>下面的文件在LiteIDE外被删除:\n%1\n请选择保存以前的内容,还是关闭文件,或者不保存?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="698"/>
+        <location filename="src/liteapp/filemanager.cpp" line="697"/>
         <source>%1
 This file has been modified outside of LiteIDE.  Do you want to reload it?</source>
         <translation>%1 文件在LiteIDE之外被修改,是否重新加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="303"/>
+        <location filename="src/liteapp/filemanager.cpp" line="302"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="316"/>
+        <location filename="src/liteapp/filemanager.cpp" line="315"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="680"/>
+        <location filename="src/liteapp/filemanager.cpp" line="679"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1334,9 +1334,23 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
         <translation>使用diff工具进行快速格式化(要求diff程序位于PATH路径中)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="52"/>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
+        <source>Synchronous</source>
+        <translation>同步</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="59"/>
+        <source>Enable Synchronous code formatting</source>
+        <translation>允许同步代码格式化</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="68"/>
+        <source>Synchronous code formatting timeout in milliseconds (500ms or more):</source>
+        <translation type="unfinished">同步代码格式化超时时间(500毫秒以上):</translation>
+    </message>
+    <message>
         <source>Formatting timeout in milliseconds (50ms or more):</source>
-        <translation>格式化超时设置(50毫秒或者更多):</translation>
+        <translation type="obsolete">格式化超时设置(50毫秒或者更多):</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="43"/>
@@ -1357,68 +1371,68 @@ This file has been modified outside of LiteIDE.  Do you want to reload it?</sour
 <context>
     <name>GolangPresentEdit</name>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="57"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="66"/>
         <source>Section (s1)</source>
         <translation>一级标题 (s1)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="60"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="69"/>
         <source>Subsection (s2)</source>
         <translation>二级标题 (s2)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="63"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="72"/>
         <source>Sub-subsection (s3)</source>
         <translation>三级标题 (s3)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="66"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="75"/>
         <source>Bold</source>
         <translation>加重</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="69"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="78"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="72"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="81"/>
         <source>Inline Code</source>
         <translation>内联代码</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="75"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="84"/>
         <source>Switch Bullets</source>
         <translation>切换列表</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="78"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="87"/>
         <source>Comment/Uncomment Selection</source>
         <translation>切换区域注释/反注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="81"/>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="260"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="90"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="269"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="84"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="93"/>
         <source>Verify Present</source>
         <translation>校验</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="249"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
         <source>Present verify success</source>
         <translation>Present校验成功</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="251"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="260"/>
         <source>Present verify false</source>
         <translation>Present校验失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="297"/>
+        <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="306"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
@@ -3379,12 +3393,12 @@ Do you want to replace it?</source>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="57"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="66"/>
         <source>Navigation</source>
         <translation>导航</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="117"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="126"/>
         <source>False load %1 !</source>
         <translation>加载失败 %1 !</translation>
     </message>

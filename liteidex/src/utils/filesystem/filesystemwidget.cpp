@@ -191,6 +191,7 @@ void FileSystemWidget::showHideFiles(bool b)
         filters ^= QDir::Hidden;
     }
     m_model->setFilter(filters);
+    m_tree->expandToDepth(0);
 }
 
 bool FileSystemWidget::isShowHideFiles() const
@@ -497,19 +498,21 @@ void FileSystemWidget::addRootPathList(const QStringList &paths)
     pathList.removeDuplicates();
     if (pathList != m_model->rootPathList()) {
         this->setRootPathList(pathList);
+        m_tree->expandToDepth(0);
     }
 }
 
 void FileSystemWidget::setRootPathList(const QStringList &pathList)
 {
     m_model->setRootPathList(pathList);
+    m_tree->expandToDepth(0);
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
 
 void FileSystemWidget::setRootPath(const QString &path)
 {
     m_model->setRootPath(path);
-    m_tree->expand(m_model->startIndex());
+    m_tree->expandToDepth(0);
 }
 
 QStringList FileSystemWidget::rootPathList() const

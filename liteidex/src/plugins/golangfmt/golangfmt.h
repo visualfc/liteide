@@ -57,6 +57,7 @@ protected:
     bool m_goimports;
     bool m_diff;
     bool m_autofmt;
+    bool m_syncfmt;
     int  m_timeout;
 };
 

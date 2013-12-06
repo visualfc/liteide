@@ -30,10 +30,8 @@
 namespace Ui {
     class NewFileDialog;
 }
-
 class QStandardItemModel;
 class QStringListModel;
-
 class TemplateInfo
 {
 public:
