@@ -97,7 +97,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu->addAction(m_setupGopathAct);
 
     m_pkgMenu->addAction(m_loadPackageFolderAct);
-    m_pkgMenu->addMenu(m_addToFoldersAct);
+    m_pkgMenu->addAction(m_addToFoldersAct);
     m_pkgMenu->addSeparator();
     m_pkgMenu->addAction(m_godocAct);
     m_pkgMenu->addAction(m_copyNameAct);

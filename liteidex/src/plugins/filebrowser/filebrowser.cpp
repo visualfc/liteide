@@ -227,6 +227,9 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_fileMenu->addAction(m_renameFileAct);
     m_fileMenu->addAction(m_removeFileAct);
     m_fileMenu->addSeparator();
+    m_fileMenu->addAction(m_openFolderInNewWindowAct);
+    m_fileMenu->addAction(m_addToFoldersAct);
+    m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_viewGodocAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_openShellAct);

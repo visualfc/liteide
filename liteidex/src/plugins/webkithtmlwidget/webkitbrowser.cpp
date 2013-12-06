@@ -86,6 +86,13 @@ WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QWidget *parent) :
     this->setLayout(layout);
 }
 
+WebKitBrowser::~WebKitBrowser()
+{
+    if (m_progressBar) {
+        delete m_progressBar;
+    }
+}
+
 static QByteArray html_data =
 "<html>"
 "<head>"

@@ -28,6 +28,8 @@
 #include "docbrowserapi/docbrowserapi.h"
 #include <QStack>
 #include <QUrl>
+#include <QComboBox>
+#include <QDir>
 
 #define DOCUMENT_FONTSIZE "Documents/FontSize"
 #define DOCUMENT_FONTZOOM "Documents/FontZoom"

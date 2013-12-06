@@ -35,6 +35,8 @@
 #include <QDockWidget>
 #include <QFlags>
 #include <QUrl>
+#include <QDir>
+#include <QFileInfo>
 #include <QDesktopServices>
 
 class ColorStyle;
