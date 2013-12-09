@@ -37,6 +37,15 @@
 #include <QDesktopServices>
 #include <QRegExp>
 #include <QDebug>
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
 GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
     QObject(parent), m_liteApp(app), m_htmldoc(0), m_process(0)
@@ -46,9 +55,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         return;
     }
     m_ed = LiteApi::getPlainTextEdit(editor);
-    if (m_ed) {
-        m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-    }
+    m_editor->setWordWrap(true);
 
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
 

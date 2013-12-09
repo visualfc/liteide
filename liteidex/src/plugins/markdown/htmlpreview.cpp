@@ -127,6 +127,9 @@ HtmlPreview::~HtmlPreview()
     m_liteApp->settings()->setValue("markdown/syncswitch",m_syncSwitchAct->isChecked());
     delete m_configMenu;
     delete m_cssMenu;
+    if (m_widget) {
+        delete m_widget;
+    }
 }
 
 static QByteArray defcss_data =

@@ -37,6 +37,7 @@ class WebKitBrowser : public QWidget
     Q_OBJECT
 public:
     explicit WebKitBrowser(LiteApi::IApplication *app, QWidget *parent = 0);
+    ~WebKitBrowser();
 public slots:
     void changeLocation();
     void adjustLocation();

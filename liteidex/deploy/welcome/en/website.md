@@ -4,7 +4,7 @@
 ### LiteIDE
 * [LiteIDE Source](https://github.com/visualfc/liteide)
 * [LiteIDE Download](http://code.google.com/p/golangide)
-* [LiteIDE Donate](http://visualfc.github.io/donate/)
+* [Support LiteIDE](http://visualfc.github.com/support)
 
 ### LiteIDE Markdown
 * Markdown parser from [sundown](https://github.com/vmg/sundown)

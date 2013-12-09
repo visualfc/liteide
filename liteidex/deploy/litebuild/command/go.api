@@ -14,5 +14,8 @@ go build -ldflags "-H windowsgui"
 go build -ldflags "-H windowsgui -r ."
 go build -ldflags "-w -s"
 go build -gcflags "
-gopm build
-gopm bin
+gopm --noterm get
+gopm --noterm install
+gopm --noterm build
+gopm --noterm bin
+gopm --noterm help

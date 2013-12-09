@@ -51,5 +51,5 @@ _LiteIDE是一个简单，开源，跨平台的Go语言IDE._
 	* <https://code.google.com/p/golangide>
 * Google用户组
 	* <https://groups.google.com/group/liteide-dev>
-* 捐赠
-	* <http://visualfc.github.com/donate>
+* 支持LiteIDE
+	* <http://visualfc.github.com/support>

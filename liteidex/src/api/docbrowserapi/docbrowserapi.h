@@ -27,8 +27,9 @@
 #include "liteapi/liteapi.h"
 #include "liteapi/litehtml.h"
 #include <QTextBrowser>
+#include <QComboBox>
+#include <QToolBar>
 
-class QComboBox;
 namespace LiteApi {
 
 class IDocumentBrowser : public IBrowserEditor

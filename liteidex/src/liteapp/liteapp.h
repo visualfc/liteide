@@ -53,7 +53,7 @@ public:
     static QString getPluginPath();
     static QString getResoucePath();
     static QString getStoragePath();
-    static IApplication* NewApplication(bool loadSession);
+    static IApplication* NewApplication(bool loadSession, IApplication *base = 0);
     static PluginManager *pluginManager();
 public:
     LiteApp();    
@@ -95,7 +95,7 @@ public:
     virtual void appendLog(const QString &model, const QString &log = QString(), bool error = false);
     virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString());
 public:
-    void load(bool bUseSession);
+    void load(bool bUseSession, IApplication *baseApp);
     void createActions();
     void createMenus();
     void createToolBars();

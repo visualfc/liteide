@@ -35,6 +35,7 @@
 #define GOLANGFMT_USEGOIMPORTS "golangfmt/goimports"
 #define GOLANGFMT_USEDIFF "golangfmt/diff"
 #define GOLANGFMT_AUTOFMT "golangfmt/autofmt"
-#define GOLANGFMT_TIMEOUT "golangfmt/timeout"
+#define GOLANGFMT_USESYNCFMT "golangfmt/syncfmt"
+#define GOLANGFMT_SYNCTIMEOUT "golangfmt/synctimeout"
 
 #endif // GOLANGFMT_GLOBAL_H

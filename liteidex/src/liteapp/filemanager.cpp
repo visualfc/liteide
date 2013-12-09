@@ -53,7 +53,6 @@
 #endif
 //lite_memory_check_end
 
-
 bool FileManager::initWithApp(IApplication *app)
 {
     if (!IFileManager::initWithApp(app)) {
@@ -61,7 +60,24 @@ bool FileManager::initWithApp(IApplication *app)
     }
 
     m_folderWidget = new FileSystemWidget(m_liteApp,0);
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folders"),false);
+
+    bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
+    m_folderWidget->showHideFiles(bShowHiddenFiles);
+
+    m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
+    m_showHideFilesAct->setCheckable(true);
+    if (bShowHiddenFiles) {
+        m_showHideFilesAct->setChecked(true);
+    }
+    connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
+
+    QList<QAction*> actions;
+    m_configMenu = new QMenu(tr("Config"));
+    m_configMenu->setIcon(QIcon("icon:images/config.png"));
+    m_configMenu->addAction(m_showHideFilesAct);
+    actions << m_configMenu->menuAction();
+
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folders"),false,actions);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
@@ -94,12 +110,14 @@ FileManager::~FileManager()
     m_liteApp->actionManager()->removeMenu(m_recentMenu);
     delete m_fileWatcher;
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
     if (m_newFileDialog) {
         delete m_newFileDialog;
     }
     if (m_folderWidget) {
         delete m_folderWidget;
-    }
+    }    
+    delete m_configMenu;
 }
 
 bool FileManager::findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const
@@ -195,9 +213,9 @@ void FileManager::setFolderList(const QStringList &folders)
     }
 }
 
-void FileManager::addFolderList(const QStringList &folders)
+void FileManager::addFolder(const QString &folder)
 {
-    m_folderWidget->addRootPathList(folders);
+    m_folderWidget->addRootPath(folder);
     m_toolWindowAct->setChecked(true);
 }
 
@@ -523,6 +541,11 @@ void FileManager::applyOption(QString id)
         m_liteApp->settings()->setValue(key, files);
         emit recentFilesChanged(scheme);
     }
+}
+
+void FileManager::showHideFiles(bool b)
+{
+    m_folderWidget->showHideFiles(b);
 }
 
 void FileManager::updateRecentFileActions(const QString &scheme)

@@ -142,7 +142,9 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     if (!folders.isEmpty()) {
-        m_liteApp->fileManager()->addFolderList(folders);
+        foreach (QString folder, folders) {
+            m_liteApp->fileManager()->addFolder(folder);
+        }
     }
 }
 

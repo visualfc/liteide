@@ -25,6 +25,7 @@
 #define MARKDOWNBATCHBROWSER_H
 
 #include "liteapi/liteapi.h"
+#include <QFileDialog>
 
 namespace Ui {
     class MarkdownBatchWidget;

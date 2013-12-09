@@ -883,7 +883,7 @@ void EditorManager::moveToNewWindow()
     if (filePath.isEmpty()) {
         return;
     }
-    IApplication *app = LiteApp::NewApplication(false);
+    IApplication *app = LiteApp::NewApplication(false,m_liteApp);
     QFileInfo info(filePath);
     if (app->fileManager()->openEditor(filePath)) {
         this->closeEditor(ed);

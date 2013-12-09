@@ -101,10 +101,10 @@ QString LiteApp::getStoragePath()
     return root+"/liteide";
 }
 
-IApplication* LiteApp::NewApplication(bool loadSession)
+IApplication* LiteApp::NewApplication(bool loadSession, IApplication *baseApp)
 {
     LiteApp *app = new LiteApp;
-    app->load(loadSession);
+    app->load(loadSession,baseApp);
     return app;
 }
 
@@ -242,10 +242,13 @@ static QImage makeSplashImage(LiteApi::IApplication *app)
     return image;
 }
 
-void LiteApp::load(bool bUseSession)
+void LiteApp::load(bool bUseSession, IApplication *baseApp)
 {
     QSplashScreen *splash = 0;
     bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
+    if (baseApp) {
+        bSplash = false;
+    }
     if (bSplash) {
         splash = new QSplashScreen(QPixmap::fromImage(makeSplashImage(this)),Qt::WindowStaysOnTopHint);
     }
@@ -274,9 +277,20 @@ void LiteApp::load(bool bUseSession)
     }
 
     qApp->processEvents();
-
     loadState();
-    m_mainwindow->show();
+    if (baseApp) {
+        if (baseApp->mainWindow()->isMaximized()) {
+            m_mainwindow->resize(800,600);
+            m_mainwindow->show();
+        } else {
+            QRect rc = baseApp->mainWindow()->geometry();
+            rc.adjust(20,20,20,20);
+            m_mainwindow->setGeometry(rc);
+            m_mainwindow->show();
+        }
+    } else {
+        m_mainwindow->show();
+    }
 
     emit loaded();
     m_projectManager->setCurrentProject(0);
@@ -327,11 +341,11 @@ void LiteApp::cleanup()
     delete m_htmlWidgetManager;
     delete m_liteAppOptionFactory;
     delete m_fileManager;
-    delete m_actionManager;
     delete m_mimeTypeManager;
     delete m_optionManager;
     delete m_logOutput;
     delete m_toolWindowManager;
+    delete m_actionManager;
     delete m_extension;
     delete m_settings;
 }
@@ -390,7 +404,7 @@ IGoProxy *LiteApp::createGoProxy(QObject *parent)
 
 IApplication *LiteApp::newInstance(bool loadSession)
 {
-    return LiteApp::NewApplication(loadSession);
+    return LiteApp::NewApplication(loadSession,this);
 }
 
 IEditorManager *LiteApp::editorManager()
@@ -763,7 +777,7 @@ void LiteApp::loadState()
     if (!geometry.isEmpty()) {
         m_mainwindow->restoreGeometry(geometry);
     } else {
-        m_mainwindow->resize(640,480);
+        m_mainwindow->resize(800,600);
     }
     m_mainwindow->restoreState(m_settings->value("liteapp/state").toByteArray());
 }

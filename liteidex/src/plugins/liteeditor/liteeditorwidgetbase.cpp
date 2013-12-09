@@ -877,11 +877,11 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
     }
 }
 
-void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent *e)
+void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent */*e*/)
 {
 }
 
-void LiteEditorWidgetBase::navigateAreaEnterEvent(QEvent *e)
+void LiteEditorWidgetBase::navigateAreaEnterEvent(QEvent */*e*/)
 {
 }
 
@@ -1198,6 +1198,11 @@ void LiteEditorWidgetBase::setWordWrap(bool wrap)
     setLineWrapMode(wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
     m_wordWrap = wrap;
     emit wordWrapChanged(wrap);
+}
+
+bool LiteEditorWidgetBase::isWordWrap() const
+{
+    return this->lineWrapMode() != QPlainTextEdit::NoWrap;
 }
 
 void LiteEditorWidgetBase::setWordWrapOverride(bool wrap)

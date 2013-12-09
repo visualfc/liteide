@@ -79,7 +79,7 @@ protected:
     QMenu *m_viewToolMenu;
     QAction *m_baseToolBarAct;
     QAction *m_baseBrowserAct;
-    QMap<QObject*,ActionContext*> m_objContextMap;
+    QMap<QObject*,IActionContext*> m_objContextMap;
 };
 
 #endif // ACTIONMANAGER_H

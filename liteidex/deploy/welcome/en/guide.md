@@ -2,6 +2,11 @@
 
 # LiteIDE Feature Guide
 
+## Multiple Window Mode Setup
+LiteIDE setup allows open folder in new windows.
+
+Options->View->LiteApp-> allows open folder in new windows.
+
 ## Environments
 The LiteIDE environment setup plugin allows you to quickly switch between multiple system environments for your build.  Each environment has its own set of environment variables that can be used to control the build process.
 
@@ -137,6 +142,15 @@ LiteIDE View->Options->GolangFmt-> Use goimports instead of gofmt, for code form
 
 This tool updates your Go import lines, adding missing ones and
 removing unreferenced ones.
+
+## Gocode
+Code completion use gocode <https://github.com/nsf/gocode>.gocode works .a file is read from the project dependencies, so please update project libraries can not rely on code completion.
+
+### update depends packages
+update depends packages for gocode, click build menu or toolbar `Get`(go get)
+
+### auto update depends packages
+LiteIDE View->Options->Gocode-> auto update depends packages
 
 ## Build System
 LiteIDE's build system is highly configurable, allowing you to define your own custom build actions using XML files.

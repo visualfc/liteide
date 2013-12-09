@@ -50,10 +50,11 @@
 GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_goimports(true),
+    m_goimports(false),
     m_diff(true),
     m_autofmt(true),
-    m_timeout(500)
+    m_syncfmt(false),
+    m_timeout(600)
 {
     m_process = new ProcessEx(this);
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(fmtOutput(QByteArray,bool)));
@@ -75,7 +76,7 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     if (!m_diff) {
@@ -85,7 +86,8 @@ void GolangFmt::applyOption(QString id)
         m_goimports = goimports;
         currentEnvChanged(0);
     }
-    m_timeout = m_liteApp->settings()->value(GOLANGFMT_TIMEOUT,500).toInt();
+    m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
+    m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
 }
 
 void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
@@ -236,8 +238,11 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
     if (!m_autofmt) {
         return;
     }
-    fmtEditor(editor,true);
-    //syncfmtEditor(editor,true);
+    if (m_syncfmt) {
+        syncfmtEditor(editor,true);
+    } else {
+        fmtEditor(editor,true);
+    }
 }
 
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
@@ -266,8 +271,7 @@ void GolangFmt::gofmt()
         return;
     }
     m_liteApp->editorManager()->saveEditor(editor,false);
-    fmtEditor(editor,true);
-    //syncfmtEditor(editor,false,true,2000);
+    syncfmtEditor(editor,false,true,-1);
 }
 
 void GolangFmt::fmtStarted()

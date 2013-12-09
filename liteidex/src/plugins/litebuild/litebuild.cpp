@@ -834,7 +834,7 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                         }
                     }
 
-                    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName,true);
+                    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
                     if (editor) {
                         LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
                         if (liteEditor) {

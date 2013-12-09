@@ -87,6 +87,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_godocAct = new QAction(tr("View Documentation"),this);
     m_loadPackageFolderAct = new QAction(tr("Load Package in New Window"),this);
+    m_addToFoldersAct = new QAction(tr("Add Package to Folders"),this);
     m_openSrcAct = new QAction(tr("Open Source File"),this);
     m_copyNameAct = new QAction(tr("Copy Name to Clipboard"),this);
 
@@ -96,6 +97,8 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu->addAction(m_setupGopathAct);
 
     m_pkgMenu->addAction(m_loadPackageFolderAct);
+    m_pkgMenu->addAction(m_addToFoldersAct);
+    m_pkgMenu->addSeparator();
     m_pkgMenu->addAction(m_godocAct);
     m_pkgMenu->addAction(m_copyNameAct);
     m_pkgMenu->addSeparator();
@@ -118,6 +121,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_setupGopathAct,SIGNAL(triggered()),this,SLOT(setupGopath()));
     connect(m_godocAct,SIGNAL(triggered()),this,SLOT(loadPackageDoc()));
     connect(m_loadPackageFolderAct,SIGNAL(triggered()),this,SLOT(loadPackageFolder()));
+    connect(m_addToFoldersAct,SIGNAL(triggered()),this,SLOT(addPackageToFolders()));
     connect(m_openSrcAct,SIGNAL(triggered()),this,SLOT(doubleClicked()));
     connect(m_copyNameAct,SIGNAL(triggered()),this,SLOT(copyPackageName()));
 
@@ -267,7 +271,16 @@ void PackageBrowser::loadPackageFolder()
     loadPackageFolderHelper(index);
 }
 
-bool PackageBrowser::loadPackageFolderHelper(QModelIndex index)
+void PackageBrowser::addPackageToFolders()
+{
+    QModelIndex index = m_treeView->currentIndex();
+    if (!index.isValid()) {
+        return;
+    }
+    loadPackageFolderHelper(index,true);
+}
+
+bool PackageBrowser::loadPackageFolderHelper(QModelIndex index, bool add)
 {
     if (!index.isValid()) {
         return false;
@@ -286,7 +299,11 @@ bool PackageBrowser::loadPackageFolderHelper(QModelIndex index)
     }
     QDir dir(json.toMap().value("Dir").toString());
     if (dir.exists()) {
-        m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
+        if (add) {
+            m_liteApp->fileManager()->addFolder(dir.path());
+        } else {
+            m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
+        }
         return true;
     }
     return false;

@@ -49,6 +49,7 @@ public slots:
     void broadcast(QString,QString,QString);
     void applyOption(QString);
 protected:
+    static  int g_gocodeInstCount;
     LiteApi::IApplication *m_liteApp;
     LiteApi::ICompleter   *m_completer;
     QString     m_gobinCmd;

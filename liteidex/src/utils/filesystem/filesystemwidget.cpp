@@ -191,6 +191,7 @@ void FileSystemWidget::showHideFiles(bool b)
         filters ^= QDir::Hidden;
     }
     m_model->setFilter(filters);
+    m_tree->expandToDepth(0);
 }
 
 bool FileSystemWidget::isShowHideFiles() const
@@ -418,7 +419,7 @@ void FileSystemWidget::addFolder()
     if (folder.isEmpty()) {
         return;
     }
-    this->addRootPathList(QStringList() << folder);
+    this->addRootPath(folder);
     QDir dir(folder);
     if (dir.cdUp()) {
         home = dir.path();
@@ -427,15 +428,10 @@ void FileSystemWidget::addFolder()
 
 void FileSystemWidget::closeFolder()
 {
-    QStringList pathList = m_model->rootPathList();
-    QStringList newPashList;
-    foreach (QString path, pathList) {
-        if (QFileInfo(path) == m_contextInfo) {
-            continue;
-        }
-        newPashList.append(path);
+    if (!m_contextInfo.isDir()) {
+        return;
     }
-    this->setRootPathList(newPashList);
+    this->m_model->removeRootPath(m_contextInfo.filePath());
 }
 
 void FileSystemWidget::closeAllFolders()
@@ -488,28 +484,28 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
     }
 }
 
-void FileSystemWidget::addRootPathList(const QStringList &paths)
+void FileSystemWidget::addRootPath(const QString &path)
 {
-    QStringList pathList = m_model->rootPathList();
-    foreach (QString path, paths) {
-        pathList.append(QDir::fromNativeSeparators(path));
-    }
-    pathList.removeDuplicates();
-    if (pathList != m_model->rootPathList()) {
-        this->setRootPathList(pathList);
+    if (m_model->addRootPath(path)) {
+        m_liteApp->fileManager()->addRecentFile(path,"folder");
+        QModelIndex index = m_model->index(m_model->rowCount()-1,0,QModelIndex());
+        if (index.isValid()) {
+            m_tree->expand(index);
+        }
     }
 }
 
 void FileSystemWidget::setRootPathList(const QStringList &pathList)
 {
     m_model->setRootPathList(pathList);
+    m_tree->expandToDepth(0);
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
 
 void FileSystemWidget::setRootPath(const QString &path)
 {
     m_model->setRootPath(path);
-    m_tree->expand(m_model->startIndex());
+    m_tree->expandToDepth(0);
 }
 
 QStringList FileSystemWidget::rootPathList() const
