@@ -264,7 +264,7 @@ void LiteEditor::createActions()
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
     m_gotoLineAct = new QAction(tr("Go To Line"),this);
-    actionContext->regAction(m_gotoLineAct,"GotoLine","Ctrl+G");
+    actionContext->regAction(m_gotoLineAct,"GotoLine","Ctrl+L");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
     m_lockAct->setEnabled(false);
