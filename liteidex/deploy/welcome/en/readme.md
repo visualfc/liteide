@@ -51,5 +51,6 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* <https://code.google.com/p/golangide>
 * Google group
 	* <https://groups.google.com/group/liteide-dev>
-* Donate
-	* <http://visualfc.github.com/donate>
+	
+### Support LiteIDE
+	* <http://visualfc.github.com/support>
