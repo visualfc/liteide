@@ -456,7 +456,7 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_increaseFontSizeAct);
     subMenu->addAction(m_decreaseFontSizeAct);
     subMenu->addAction(m_resetFontSizeAct);
-    m_editMenu->addSeparator();
+    subMenu->addSeparator();
     subMenu->addAction(m_cleanWhitespaceAct);
     subMenu->addAction(m_wordWrapAct);
 #ifndef QT_NO_PRINTER

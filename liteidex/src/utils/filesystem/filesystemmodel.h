@@ -74,6 +74,8 @@ public:
     QDir::Filters filter() const;
     bool isShowHideFiles() const;
     QDir::SortFlags sort() const;
+    bool removeRootPath(const QString &path);
+    bool addRootPath(const QString &path);
     void setRootPathList(const QStringList &pathList);
     void setRootPath(const QString &path);
     QStringList rootPathList() const;

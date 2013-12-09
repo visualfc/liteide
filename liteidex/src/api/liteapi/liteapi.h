@@ -207,7 +207,7 @@ public:
     virtual IApplication* openFolderEx(const QString &folder) = 0;
     virtual QStringList folderList() const = 0;
     virtual void setFolderList(const QStringList &folders) = 0;
-    virtual void addFolderList(const QStringList &folders) = 0;
+    virtual void addFolder(const QString &folders) = 0;
     virtual IApplication* openFolderInNewWindow(const QString &folder) = 0;
 signals:
     void fileListChanged();

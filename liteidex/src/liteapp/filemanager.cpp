@@ -213,9 +213,9 @@ void FileManager::setFolderList(const QStringList &folders)
     }
 }
 
-void FileManager::addFolderList(const QStringList &folders)
+void FileManager::addFolder(const QString &folder)
 {
-    m_folderWidget->addRootPathList(folders);
+    m_folderWidget->addRootPath(folder);
     m_toolWindowAct->setChecked(true);
 }
 

@@ -300,7 +300,7 @@ bool PackageBrowser::loadPackageFolderHelper(QModelIndex index, bool add)
     QDir dir(json.toMap().value("Dir").toString());
     if (dir.exists()) {
         if (add) {
-            m_liteApp->fileManager()->addFolderList(QStringList() << dir.path());
+            m_liteApp->fileManager()->addFolder(dir.path());
         } else {
             m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
         }

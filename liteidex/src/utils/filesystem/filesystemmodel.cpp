@@ -327,7 +327,45 @@ void FileSystemModel::reload()
 void FileSystemModel::setRootPath(const QString &path)
 {
     this->setRootPathList(QStringList() << path);
-    //this->setStartPath(path);
+}
+
+bool FileSystemModel::removeRootPath(const QString &path)
+{
+    QString pathName = QDir::fromNativeSeparators(path);
+    FileNode *node = 0;
+    int index = -1;
+    for (int i = 0; i < m_rootNode->childCount(); i++) {
+        node = m_rootNode->children()->at(i);
+        if (node && node->path() == pathName) {
+            index = i;
+            break;
+        }
+    }
+    if (index == -1) {
+        return false;
+    }
+    if (!m_pathList.removeAll(pathName)) {
+        return false;
+    }
+    this->beginRemoveRows(QModelIndex(),index,index);
+    m_rootNode->children()->removeAt(index);
+    delete node;
+    this->endRemoveRows();
+    return true;
+}
+
+
+bool FileSystemModel::addRootPath(const QString &path)
+{
+    QString pathName = QDir::fromNativeSeparators(path);
+    if (m_pathList.contains(pathName)) {
+        return false;
+    }
+    this->beginInsertRows(QModelIndex(),m_rootNode->childCount(),m_rootNode->childCount());
+    m_pathList.append(pathName);
+    m_rootNode->children()->append(new FileNode(this,pathName,m_rootNode));
+    this->endInsertRows();
+    return true;
 }
 
 void FileSystemModel::setRootPathList(const QStringList &pathList)
@@ -345,7 +383,7 @@ void FileSystemModel::setRootPathList(const QStringList &pathList)
     }
 
     if (m_startPath.isEmpty() && !pathList.isEmpty()) {
-        //m_startPath = pathList.first();
+        m_startPath = pathList.first();
     }
 
     this->endResetModel();

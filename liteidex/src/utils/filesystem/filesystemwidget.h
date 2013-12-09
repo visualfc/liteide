@@ -41,7 +41,7 @@ public:
     virtual ~FileSystemWidget();
     QWidget *widget() { return this; }
     void setRootPathList(const QStringList &rootPathList);
-    void addRootPathList(const QStringList &path);
+    void addRootPath(const QString &path);
     QStringList rootPathList() const;
     void setStartIndex(const QModelIndex &index);
     void setRootPath(const QString &path);

@@ -55,7 +55,7 @@ public:
     virtual IApplication* openFolderEx(const QString &folder);
     virtual QStringList folderList() const;
     virtual void setFolderList(const QStringList &folders);
-    virtual void addFolderList(const QStringList &folders);
+    virtual void addFolder(const QString &folder);
     virtual IApplication* openFolderInNewWindow(const QString &folder);
 public:
     QString openAllTypeFilter() const;

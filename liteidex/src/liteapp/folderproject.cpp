@@ -73,7 +73,7 @@ void FolderProject::openFolder(const QString &folder)
 
 void FolderProject::appendFolder(const QString &folder)
 {
-    m_widget->addRootPathList(QStringList() << folder);
+    m_widget->addRootPath(folder);
 }
 
 void FolderProject::clear()
