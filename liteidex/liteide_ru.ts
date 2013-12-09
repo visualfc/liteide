@@ -49,11 +49,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Версия:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="249"/>
-        <source>Website:</source>
-        <translation>Веб-сайт:</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/aboutdialog.ui" line="242"/>
         <source>Build:</source>
         <translation type="unfinished"></translation>
@@ -65,8 +60,14 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="249"/>
+        <source>Source Code:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/liteapp/aboutdialog.ui" line="263"/>
-        <source>Donate:</source>
+        <source>Support LiteIDE:</source>
+        <oldsource>Support</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -555,16 +556,16 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="492"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="497"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="495"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="500"/>
         <source>Rename File</source>
         <translation>Переименовать файл</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="207"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="511"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="516"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="514"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="519"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation type="unfinished">Удалить файл</translation>
@@ -607,46 +608,46 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="283"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="286"/>
         <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="512"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="517"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="520"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="536"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
         <source>A folder with that name already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="552"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="561"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="566"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="564"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="569"/>
         <source>Rename Folder</source>
         <translation>Переименовать папку</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="581"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="584"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="586"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="589"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="212"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="580"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="585"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="583"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="588"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation type="unfinished">Удалить папку</translation>
@@ -667,8 +668,8 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="445"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="455"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="448"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="458"/>
         <source>Create File</source>
         <translation>Создание файла</translation>
     </message>
@@ -679,46 +680,46 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="288"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="291"/>
         <source>File System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="446"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="449"/>
         <source>A file with that name already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="456"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="459"/>
         <source>Failed to create the file!</source>
         <translation>Ошибка при создании файла!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="486"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="552"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
         <source>New Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="493"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="498"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="496"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="501"/>
         <source>Failed to rename the file!</source>
         <translation>Ошибка при переименовании файла!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="535"/>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="538"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="541"/>
         <source>Create Folder</source>
         <translation>Создание папки</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="542"/>
         <source>Failed to create the folder!</source>
         <translation>Ошибка при создании папки!</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="562"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="567"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="565"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="570"/>
         <source>Failed to rename the folder!</source>
         <translation>Ошибка при переименовании папки!</translation>
     </message>
@@ -1546,13 +1547,13 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="377"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="380"/>
         <source>Export Html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="409"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="412"/>
         <source>Export PDF</source>
         <translation type="unfinished">Экспортировать в PDF</translation>
     </message>
@@ -1572,12 +1573,12 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="164"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="167"/>
         <source>Plain HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="385"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="388"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1594,7 +1595,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="386"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation type="unfinished"></translation>
@@ -1613,102 +1614,102 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="599"/>
+        <location filename="src/liteapp/liteapp.cpp" line="610"/>
         <source>Close File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="602"/>
+        <location filename="src/liteapp/liteapp.cpp" line="613"/>
         <source>Close All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="612"/>
+        <location filename="src/liteapp/liteapp.cpp" line="623"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="615"/>
+        <location filename="src/liteapp/liteapp.cpp" line="626"/>
         <source>Save File As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="618"/>
+        <location filename="src/liteapp/liteapp.cpp" line="629"/>
         <source>Save All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="605"/>
+        <location filename="src/liteapp/liteapp.cpp" line="616"/>
         <source>Open Project</source>
         <translation>Открыть проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="573"/>
+        <location filename="src/liteapp/liteapp.cpp" line="584"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="576"/>
+        <location filename="src/liteapp/liteapp.cpp" line="587"/>
         <source>Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="579"/>
+        <location filename="src/liteapp/liteapp.cpp" line="590"/>
         <source>Open Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="582"/>
+        <location filename="src/liteapp/liteapp.cpp" line="593"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="587"/>
+        <location filename="src/liteapp/liteapp.cpp" line="598"/>
         <source>Add Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="590"/>
+        <location filename="src/liteapp/liteapp.cpp" line="601"/>
         <source>Close All Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="593"/>
+        <location filename="src/liteapp/liteapp.cpp" line="604"/>
         <source>New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="596"/>
+        <location filename="src/liteapp/liteapp.cpp" line="607"/>
         <source>Close Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="607"/>
+        <location filename="src/liteapp/liteapp.cpp" line="618"/>
         <source>Save Project</source>
         <translation>Сохранить проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="609"/>
+        <location filename="src/liteapp/liteapp.cpp" line="620"/>
         <source>Close Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="621"/>
+        <location filename="src/liteapp/liteapp.cpp" line="632"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="624"/>
+        <location filename="src/liteapp/liteapp.cpp" line="635"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="628"/>
+        <location filename="src/liteapp/liteapp.cpp" line="639"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">О программе Liteide</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="631"/>
+        <location filename="src/liteapp/liteapp.cpp" line="642"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2194,27 +2195,42 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="747"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="440"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="478"/>
+        <source>Code Folding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="483"/>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="752"/>
         <source>Export HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="755"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="760"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="756"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="761"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="775"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="780"/>
         <source>Export PDF</source>
         <translation>Экспортировать в PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="800"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="805"/>
         <source>Print Document</source>
         <translation>Печать документа</translation>
     </message>
@@ -2258,7 +2274,6 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="478"/>
         <source>Fold</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2279,7 +2294,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="852"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="857"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -2340,12 +2355,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="817"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="822"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2356,7 +2366,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="852"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="857"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3416,7 +3426,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="126"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="133"/>
         <source>False load %1 !</source>
         <translation type="unfinished"></translation>
     </message>
