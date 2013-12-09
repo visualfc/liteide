@@ -434,40 +434,40 @@ void LiteEditor::createMenu()
     m_editMenu->addAction(m_cutAct);
     m_editMenu->addAction(m_copyAct);
     m_editMenu->addAction(m_pasteAct);
-    m_editMenu->addAction(m_duplicateAct);
-    m_editMenu->addAction(m_deleteLineAct);
-    m_editMenu->addAction(m_insertLineBeforeAct);
-    m_editMenu->addAction(m_insertLineAfterAct);
-    m_editMenu->addAction(m_cleanWhitespaceAct);
-    m_editMenu->addSeparator();
-    QMenu *expMenu = m_editMenu->addMenu(tr("Print"));
-    //expMenu->addAction(m_exportHtmlAct);
-#ifndef QT_NO_PRINTER
-    expMenu->addAction(m_exportPdfAct);
-    expMenu->addSeparator();
-    expMenu->addAction(m_filePrintPreviewAct);
-    expMenu->addAction(m_filePrintAct);
-#endif
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_foldAct);
-    m_editMenu->addAction(m_unfoldAct);
-    m_editMenu->addAction(m_foldAllAct);
-    m_editMenu->addAction(m_unfoldAllAct);
     m_editMenu->addSeparator();
     m_editMenu->addAction(m_selectAllAct);
-    m_editMenu->addAction(m_selectBlockAct);
+    m_editMenu->addSeparator();
+    QMenu * subMenu = m_editMenu->addMenu(tr("Advanced"));
+    subMenu->addAction(m_duplicateAct);
+    subMenu->addAction(m_deleteLineAct);
+    subMenu->addAction(m_insertLineBeforeAct);
+    subMenu->addAction(m_insertLineAfterAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_foldAct);
+    subMenu->addAction(m_unfoldAct);
+    subMenu->addAction(m_foldAllAct);
+    subMenu->addAction(m_unfoldAllAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_selectBlockAct);
+    subMenu->addAction(m_gotoMatchBraceAct);
+    subMenu->addAction(m_gotoPrevBlockAct);
+    subMenu->addAction(m_gotoNextBlockAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_increaseFontSizeAct);
+    subMenu->addAction(m_decreaseFontSizeAct);
+    subMenu->addAction(m_resetFontSizeAct);
+    m_editMenu->addSeparator();
+    subMenu->addAction(m_cleanWhitespaceAct);
+    subMenu->addAction(m_wordWrapAct);
+#ifndef QT_NO_PRINTER
+    subMenu->addSeparator();
+    subMenu->addAction(m_exportPdfAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_filePrintPreviewAct);
+    subMenu->addAction(m_filePrintAct);
+#endif
+    m_editMenu->addSeparator();
     m_editMenu->addAction(m_gotoLineAct);
-    m_editMenu->addAction(m_gotoMatchBraceAct);
-    m_editMenu->addAction(m_gotoPrevBlockAct);
-    m_editMenu->addAction(m_gotoNextBlockAct);
-
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_increaseFontSizeAct);
-    m_editMenu->addAction(m_decreaseFontSizeAct);
-    m_editMenu->addAction(m_resetFontSizeAct);
-
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_wordWrapAct);
 
     //context menu
     m_contextMenu->addAction(m_cutAct);
@@ -475,11 +475,16 @@ void LiteEditor::createMenu()
     m_contextMenu->addAction(m_pasteAct);
     m_contextMenu->addAction(m_duplicateAct);
     m_contextMenu->addSeparator();
-    QMenu *sub = m_contextMenu->addMenu(tr("Fold"));
-    sub->addAction(m_foldAct);
-    sub->addAction(m_unfoldAct);
-    sub->addAction(m_foldAllAct);
-    sub->addAction(m_unfoldAllAct);
+    subMenu = m_contextMenu->addMenu(tr("Code Folding"));
+    subMenu->addAction(m_foldAct);
+    subMenu->addAction(m_unfoldAct);
+    subMenu->addAction(m_foldAllAct);
+    subMenu->addAction(m_unfoldAllAct);
+    subMenu = m_contextMenu->addMenu(tr("Line"));
+    subMenu->addAction(m_duplicateAct);
+    subMenu->addAction(m_deleteLineAct);
+    subMenu->addAction(m_insertLineBeforeAct);
+    subMenu->addAction(m_insertLineAfterAct);
 }
 
 #ifdef LITEEDITOR_FIND
