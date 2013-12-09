@@ -877,11 +877,11 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
     }
 }
 
-void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent *e)
+void LiteEditorWidgetBase::navigateAreaLeaveEvent(QEvent */*e*/)
 {
 }
 
-void LiteEditorWidgetBase::navigateAreaEnterEvent(QEvent *e)
+void LiteEditorWidgetBase::navigateAreaEnterEvent(QEvent */*e*/)
 {
 }
 

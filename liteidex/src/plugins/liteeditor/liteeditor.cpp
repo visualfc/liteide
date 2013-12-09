@@ -928,7 +928,7 @@ void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, 
     m_editorWidget->insertNavigateMark(line,type,msg);
 }
 
-void LiteEditor::clearNavigateMarak(int line)
+void LiteEditor::clearNavigateMarak(int /*line*/)
 {
 }
 
