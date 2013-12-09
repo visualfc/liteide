@@ -38,5 +38,4 @@ public:
     QStringList m_mimeTypes;
 };
 
-
 #endif // FOLDERPROJECTFACTORY_H
