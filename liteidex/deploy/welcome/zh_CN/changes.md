@@ -24,6 +24,7 @@
 	* fix to use utf8 encoding
 * GolangCode:
 	* auto update depends package (option)
+	* fix close gocode on last window close
 * GolangFmt:
 	* use sync code format (option)
 	* use goimports instead gofmt (option)

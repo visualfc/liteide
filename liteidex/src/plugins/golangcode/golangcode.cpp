@@ -40,6 +40,8 @@
 #endif
 //lite_memory_check_end
 
+int GolangCode::g_gocodeInstCount = 0;
+
 GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app),
@@ -47,6 +49,7 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_closeOnExit(true),
     m_autoUpdatePkg(false)
 {
+    g_gocodeInstCount++;
     m_gocodeProcess = new QProcess(this);
     m_updatePkgProcess = new QProcess(this);
     m_breset = false;
@@ -81,7 +84,8 @@ void GolangCode::broadcast(QString module,QString id,QString)
 
 GolangCode::~GolangCode()
 {
-    if (m_closeOnExit && !m_gocodeCmd.isEmpty()) {
+    g_gocodeInstCount--;
+    if (g_gocodeInstCount == 0 && m_closeOnExit && !m_gocodeCmd.isEmpty()) {
         ProcessEx::startDetachedEx(m_gocodeCmd,QStringList() << "close");
     }
     delete m_gocodeProcess;

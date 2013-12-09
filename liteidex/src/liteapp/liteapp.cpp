@@ -246,6 +246,9 @@ void LiteApp::load(bool bUseSession, IApplication *baseApp)
 {
     QSplashScreen *splash = 0;
     bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
+    if (baseApp) {
+        bSplash = false;
+    }
     if (bSplash) {
         splash = new QSplashScreen(QPixmap::fromImage(makeSplashImage(this)),Qt::WindowStaysOnTopHint);
     }
