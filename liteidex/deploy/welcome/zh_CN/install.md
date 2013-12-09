@@ -25,6 +25,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	> set QTDIR=c:\Qt\Qt484
 	> set MINGWDIR=c:\Qt\MinGW
 	> cd liteide/build
+	> update_pkg.cmd
 	> build_mingw.cmd
 	> deploy_qt4.8_webkit.cmd
 
@@ -32,6 +33,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
 	$ cd liteide/build
+	$ ./update_pkg.sh
 	$ ./build_linux.sh
 	$ ./deploy_linux_qt4.8_webkit.sh
 
@@ -39,6 +41,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
 	$ cd liteide/build
+	$ ./update_pkg.sh
 	$ ./build_osx.sh
 	$ ./deploy_osx_qt4.sh
 
