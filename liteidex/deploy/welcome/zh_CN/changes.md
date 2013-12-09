@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2013.11.06 Ver x20
+### 2013.11.09 Ver x20
 * LiteIDE
 	* add folders manager
 	* always open folder with new window (option)
@@ -18,6 +18,7 @@
 	* add gopresent.xml syntax
 	* add Visual Studio Theme (by William Kennedy <bill@ardanstudios.com>)
 	* fix goto match braces	
+	* update editor menu
 * LiteEnv:
 	* auto set $PATH for GOROOT/bin and GOBIN and GOPATH/bin and GOPATH/bin/GOOS_GOARCH
 	* fix to use utf8 encoding
