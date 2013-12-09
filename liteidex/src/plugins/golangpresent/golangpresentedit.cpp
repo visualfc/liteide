@@ -55,9 +55,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
         return;
     }
     m_ed = LiteApi::getPlainTextEdit(editor);
-    if (m_ed) {
-        m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-    }
+    m_editor->setWordWrap(true);
 
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
 

@@ -633,6 +633,16 @@ QByteArray LiteEditor::utf8Data() const {
     return src.toUtf8();
 }
 
+void LiteEditor::setWordWrap(bool wrap)
+{
+    m_editorWidget->setWordWrapOverride(wrap);
+}
+
+bool LiteEditor::wordWrap() const
+{
+    return m_editorWidget->isWordWrap();
+}
+
 void LiteEditor::gotoLine(int line, int column, bool center)
 {
     m_editorWidget->setFocus();

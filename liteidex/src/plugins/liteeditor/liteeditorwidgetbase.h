@@ -187,7 +187,7 @@ public:
     bool indentLineVisible() const {
         return m_indentLineVisible;
     }
-
+    bool isWordWrap() const;
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,

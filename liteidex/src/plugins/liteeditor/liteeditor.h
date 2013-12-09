@@ -90,6 +90,8 @@ public:
     virtual int column() const;
     virtual int utf8Position() const;
     virtual QByteArray utf8Data() const;
+    virtual void setWordWrap(bool wrap);
+    virtual bool wordWrap() const;
     virtual void gotoLine(int line, int column, bool center);
     virtual QString textCodec() const;
     virtual void setTextCodec(const QString &codec);

@@ -1200,6 +1200,11 @@ void LiteEditorWidgetBase::setWordWrap(bool wrap)
     emit wordWrapChanged(wrap);
 }
 
+bool LiteEditorWidgetBase::isWordWrap() const
+{
+    return this->lineWrapMode() != QPlainTextEdit::NoWrap;
+}
+
 void LiteEditorWidgetBase::setWordWrapOverride(bool wrap)
 {
     m_wordWrapOverridden = true;

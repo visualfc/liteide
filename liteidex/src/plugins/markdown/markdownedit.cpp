@@ -74,7 +74,7 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     if (!m_ed) {
         return;
     }
-    m_ed->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+    m_editor->setWordWrap(true);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Markdown");
 

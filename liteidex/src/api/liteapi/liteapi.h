@@ -272,6 +272,8 @@ public:
     virtual int column() const = 0;
     virtual int utf8Position() const = 0;
     virtual QByteArray utf8Data() const = 0;
+    virtual void setWordWrap(bool wrap) = 0;
+    virtual bool wordWrap() const = 0;
     virtual void gotoLine(int line, int column, bool center = false) = 0;
     virtual void setFindOption(FindOption *opt) = 0;
 };
@@ -723,7 +725,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X18")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X20")
 
 
 #endif //__LITEAPI_H__
