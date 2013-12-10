@@ -593,7 +593,7 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
     const int extraAreaWidth = m_extraArea->width() - collapseColumnWidth;
 
     painter.fillRect(e->rect(), pal.color(QPalette::Base));
-    painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), m_extraArea->height())),
+    painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), INT_MAX)),
                      m_extraBackground);
 
     //painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
@@ -2380,6 +2380,4 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }
-    //update extra
-    m_extraArea->update();
 }
