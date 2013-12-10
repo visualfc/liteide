@@ -3,6 +3,9 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2012.12.10 Ver x20.1
+* Fix editor
+
 ### 2013.12.09 Ver x20
 * LiteIDE
 	* add folders manager

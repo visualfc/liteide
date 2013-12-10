@@ -16,12 +16,20 @@ FileRun=Alt+F6
 Fmt=
 Get=
 Install=Ctrl+F8
-Run=Alt+F5
+Run="Alt+F5; Ctrl+R"
 RunTerm=Alt+Shift+F5
 Stop=
 Test=Ctrl+T
 Vet=
 ExecuteFile="Ctrl+,"
+BuildTests=
+Cover=
+CoverFunc=
+Get%20Force=
+Gopm%20Build=
+Gopm%20Gen=
+Gopm%20Help=
+TestCover=
 
 [Editor]
 DecreaseFontSize=Ctrl+-
@@ -40,6 +48,9 @@ SelectBlock=Ctrl+U
 Unfold=Ctrl+>
 UnfoldAll=
 CleanWhitespace=
+InsertLineAfter=Ctrl+Return
+InsertLineBefore=Ctrl+Shift+Return
+WordWrap=
 
 [Document]
 DecreaseFontSize=Ctrl+-
@@ -52,14 +63,27 @@ AboutPlugins=
 Backward=Alt+Left
 CloseAllFiles=
 CloseFile=Ctrl+W
-CloseFolders=
 Forward=Alt+Right
 FullScreen=Ctrl+Shift+F11
-NewInstance=
 OpenFolder=
-OpenFolderNewInstance=
 SaveAllFiles=
-Esacpe=Esc
+AddFolder=
+CloseAllFolders=
+CloseProject=
+CloseWindow=Ctrl+Shift+W
+Escape=Esc
+NewWindow=Ctrl+Shift+N
+OpenFolderNewWindow=
+ToolWindow_HtmlPreview=Alt+6
+ToolWindow_WebKitBrowser=Alt+5
+ToolWindow_buildoutput=Alt+2
+ToolWindow_classview=Alt+3
+ToolWindow_debugoutput=Alt+7
+ToolWindow_eventlog=Alt+1
+ToolWindow_folders=Alt+0
+ToolWindow_godocfind=Alt+9
+ToolWindow_gopackbrowser=Alt+8
+ToolWindow_outline=Alt+4
 
 [GoPkg]
 SetupGOPATH=
@@ -79,6 +103,7 @@ StartDebugExternal=
 StepInfo=F11
 StepOut=Shift+F11
 StopDebug=Shift+F5
+StartDebugTests=F6
 
 [GoFmt]
 Gofmt=Shift+F7
