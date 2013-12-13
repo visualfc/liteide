@@ -45,7 +45,11 @@ bool FileUtil::compareFile(const QString &fileName1, const QString &fileName2, b
         return false;
     }
     if (canonical) {
+#if defined(WIN32)
+        return (QFileInfo(fileName1).canonicalFilePath().compare(QFileInfo(fileName2).canonicalFilePath(), Qt::CaseInsensitive) == 0);
+#else
         return QFileInfo(fileName1).canonicalFilePath() == QFileInfo(fileName2).canonicalFilePath();
+#endif
     }
     return QFileInfo(fileName1).filePath() == QFileInfo(fileName2).filePath();
 }
