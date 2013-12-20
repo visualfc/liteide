@@ -3,9 +3,7 @@
 export QTDIR=/usr/share/qt4
 
 echo
-
 echo "Using QTDIR=$QTDIR here."
-
 echo
 
 export BUILD_ROOT=$PWD
