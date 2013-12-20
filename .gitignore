@@ -25,7 +25,6 @@ Makefile
 
 #liteide
 *.exe
-build*
 liteidex/bin
 liteidex/liteide
 liteidex/src/code.google.com
