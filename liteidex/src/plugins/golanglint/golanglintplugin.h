@@ -18,39 +18,54 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litettyplugin.h
+// Module: golanglintplugin.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITETTYPLUGIN_H
-#define LITETTYPLUGIN_H
+#ifndef GOLANGLINTPLUGIN_H
+#define GOLANGLINTPLUGIN_H
 
-#include "litetty_global.h"
+#include "golanglint_global.h"
 #include "liteapi/liteapi.h"
+#include <QtPlugin>
 
-class LiteTtyPlugin : public LiteApi::IPlugin
+class GolangLint;
+class QToolButton;
+class GolangLintPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
-    LiteTtyPlugin();
+    GolangLintPlugin();
     virtual bool load(LiteApi::IApplication *app);
+    virtual QStringList dependPluginList() const;
+protected slots:
+    void editorCreated(LiteApi::IEditor*);
+    void appLoaded();
+    void goplayLint();
+protected:
+    LiteApi::IApplication *m_liteApp;
+    QAction   *m_golintAct;
+    QAction   *m_goplayAct;
+    LiteApi::IEditor *m_playEditor;
+    QToolButton *m_lintBtn;
+    GolangLint *m_lint;
 };
 
-class PluginFactory : public LiteApi::PluginFactoryT<LiteTtyPlugin>
+class PluginFactory : public LiteApi::PluginFactoryT<GolangLintPlugin>
 {
     Q_OBJECT
     Q_INTERFACES(LiteApi::IPluginFactory)
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.LiteTtyPlugin")
+    Q_PLUGIN_METADATA(IID "liteidex.GolangLintPlugin")
 #endif
 public:
     PluginFactory() {
-        m_info->setId("plugin/LiteTty");
-        m_info->setVer("x19");
-        m_info->setName("LiteTty");
-        m_info->setAuthor("visualfc");
-        m_info->setInfo("LiteIDE tty Util");
-        //m_info->appendDepend("plugin/liteenv");
+        m_info->setId("plugin/golanglint");
+        m_info->setName("GolangLint");
+        m_info->setAuthor("Hai Thanh Nguyen");
+        m_info->setVer("0.1");
+        m_info->setInfo("Golang Golint Util");
     }
 };
 
 
-#endif // LITETTYPLUGIN_H
+#endif // GOLANGLINTPLUGIN_H

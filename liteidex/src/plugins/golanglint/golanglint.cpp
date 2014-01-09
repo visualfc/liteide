@@ -18,11 +18,11 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangfmt.cpp
+// Module: golanglint.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "golangfmt.h"
-#include "golangfmt_global.h"
+#include "golanglint.h"
+#include "golanglint_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "litebuildapi/litebuildapi.h"
@@ -45,52 +45,53 @@
      #define new DEBUG_NEW
 #endif
 //lite_memory_check_end
-#define GOFMT_TAG "gofmt"
 
-GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
+
+GolangLint::GolangLint(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
     m_goimports(false),
     m_diff(true),
-    m_autofmt(true),
-    m_syncfmt(false),
+    m_autolint(true),
+    m_synclint(false),
     m_timeout(600)
 {
     m_process = new ProcessEx(this);
-    connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(fmtOutput(QByteArray,bool)));
-    connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
-    connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(fmtFinish(bool,int,QString)));
+    connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(lintOutput(QByteArray,bool)));
+    connect(m_process,SIGNAL(started()),this,SLOT(started()));
+    connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(lintFinish(bool,int,QString)));
 
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
+
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
         currentEnvChanged(m_envManager->currentEnv());
     }
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToSave(LiteApi::IEditor*)),this,SLOT(editorAboutToSave(LiteApi::IEditor*)));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
-    applyOption("option/golangfmt");
+    applyOption("option/golanglint");
 }
 
-void GolangFmt::applyOption(QString id)
+void GolangLint::applyOption(QString id)
 {
-    if (id != "option/golangfmt") {
+    if (id != "option/golanglint") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
-    m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
-    m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
-    if (!m_diff) {
-        m_autofmt = false;
-    }
-    if (goimports != m_goimports) {
-        m_goimports = goimports;
-        currentEnvChanged(0);
-    }
-    m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
-    m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
+    // bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
+    // m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
+    // m_autolint = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
+    // if (!m_diff) {
+    //     m_autolint = false;
+    // }
+    // if (goimports != m_goimports) {
+    //     m_goimports = goimports;
+    //     currentEnvChanged(0);
+    // }
+    m_synclint = true;
+    // m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
 }
 
-void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
+void GolangLint::syncLintEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
 {
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!textEditor) {
@@ -117,89 +118,56 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
 
     QStringList args;
-    if (m_diff) {
-        args << "-d";
-    }
+    args << editor->filePath();
 
     if (timeout < 0) {
         timeout = m_timeout;
     }
 
-    QProcess process;
-    process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
-    process.start(m_gofmtCmd,args);
-    if (!process.waitForStarted(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
-        return;
-    }
-    process.write(text.toUtf8());
-    process.closeWriteChannel();
-    if (!process.waitForFinished(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout),false);
-        return;
-    }
-    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
-    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOFMT_TAG);
-    QTextCodec *codec = QTextCodec::codecForName("utf-8");
-    if (process.exitCode() != 0) {
-        QByteArray error = process.readAllStandardError();
-        QString errmsg = codec->toUnicode(error);
-        if (!errmsg.isEmpty()) {
-            //<standard input>:23:1: expected declaration, found 'INT' 1
-             foreach(QString msg,errmsg.split("\n")) {
-                QRegExp re(":(\\d+):");
-                if (re.indexIn(msg,16) >= 0) {
-                    bool ok = false;
-                    int line = re.cap(1).toInt(&ok);
-                    if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16), GOFMT_TAG);
-                    }
-                }
-            }
-        }
-        QString log = errmsg;
-        errmsg.replace("<standard input>","");
-        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
-        log.replace("<standard input>",info.filePath());
-        m_liteApp->appendLog("go code format error",log,false);
-        return;
-    }
-    liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
-
-    QByteArray data = process.readAllStandardOutput();
-    /*
-    int vpos = -1;
-    QScrollBar *bar = ed->verticalScrollBar();
-    if (bar) {
-        vpos = bar->sliderPosition();
-    }
-    */
-    QByteArray state = editor->saveState();
-    QTextCursor cur = ed->textCursor();
-    //int pos = cur.position();
-    cur.beginEditBlock();
-    if (m_diff) {
-        loadDiff(cur,codec->toUnicode(data));
-    } else {
-        cur.select(QTextCursor::Document);
-        cur.removeSelectedText();
-        cur.insertText(codec->toUnicode(data));
-    }
-    //cur.setPosition(pos);
-    cur.endEditBlock();
-    ed->setTextCursor(cur);
-    editor->restoreState(state);
-
-    //ed->setTextCursor(cur);
-    //if (vpos != -1) {
-    //    bar->setSliderPosition(vpos);
-    //}
     if (save) {
         m_liteApp->editorManager()->saveEditor(editor,false);
     }
+
+    QProcess process;
+    process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
+    process.start(m_golintCmd,args);
+
+    if (!process.waitForStarted(timeout)) {
+        // m_liteApp->appendLog("golint",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
+        return;
+    }
+    if (!process.waitForFinished(timeout)) {
+        // m_liteApp->appendLog("golint",QString("Timed out after %1ms while running go code format").arg(timeout),false);
+        return;
+    }
+    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+    // liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLINT_TAG);
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
+    QByteArray error = process.readAllStandardOutput();
+    QString errmsg = codec->toUnicode(error);
+    if (!errmsg.isEmpty()) {
+        //<standard input>:23:1: expected declaration, found 'INT' 1
+         foreach(QString msg,errmsg.split("\n")) {
+            QRegExp re(":(\\d+):\\d+:");
+            int idx = re.indexIn(msg);
+            if (idx >= 0) {
+                bool ok = false;
+                int line = re.cap(1).toInt(&ok);
+                if (ok) {
+                    liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWaring,msg.mid(idx+re.matchedLength()), GOLINT_TAG);
+                }
+            }
+        }
+
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code lint output\n"+errmsg);
+        m_liteApp->appendLog("go lint suggestions: ",errmsg,false);
+        return;
+    }
+
+    liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
 }
 
-void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
+void GolangLint::lintEditor(LiteApi::IEditor *editor, bool save)
 {
     if (!editor) {
         return;
@@ -211,7 +179,7 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     if (info.suffix() != "go") {
         return;
     }
-    if (m_gofmtCmd.isEmpty()) {
+    if (m_golintCmd.isEmpty()) {
         return;
     }
     if (m_process->isRunning()) {
@@ -223,74 +191,63 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     }
     QStringList args;
     if (m_diff) {
-        args << "-d";
+        args << editor->filePath();
     }
     m_data.clear();;
     m_errData.clear();
-    m_process->setUserData(0,editor->filePath());
-    m_process->setUserData(1,edit->toPlainText());
-    m_process->setUserData(2,save);
-    m_process->start(m_gofmtCmd,args);
+    m_process->start(m_golintCmd,args);
 }
 
-void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
+void GolangLint::editorAboutToSave(LiteApi::IEditor* editor)
 {
-    if (!m_autofmt) {
+    if (!m_autolint) {
         return;
     }
-    if (m_syncfmt) {
-        syncfmtEditor(editor,true);
+    if (m_synclint) {
+        syncLintEditor(editor,true);
     } else {
-        fmtEditor(editor,true);
+        lintEditor(editor,true);
     }
 }
 
-void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
+void GolangLint::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
-    if (m_goimports) {
-        m_gofmtCmd = FileUtil::lookupGoBin("goimports",m_liteApp,true);
+
+    m_golintCmd = FileUtil::lookupGoBin("golint",m_liteApp,false);
+
+    if (m_golintCmd.isEmpty()) {
+        m_liteApp->appendLog("GolangLint",QString("Could not find %1").arg(m_golintCmd),false);
     } else {
-        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
-    }
-    if (m_gofmtCmd.isEmpty()) {
-        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
-    }
-    if (m_gofmtCmd.isEmpty()) {
-        m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
-    } else {
-        m_liteApp->appendLog("GolangFmt",QString("Found %1").arg(m_gofmtCmd),false);
+        m_liteApp->appendLog("GolangLint",QString("Found %1").arg(m_golintCmd),false);
     }
     m_process->setProcessEnvironment(env);
 }
 
-void GolangFmt::gofmt()
+void GolangLint::golint()
 {
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (!editor) {
         return;
     }
     m_liteApp->editorManager()->saveEditor(editor,false);
-    syncfmtEditor(editor,false,true,-1);
+    syncLintEditor(editor,false,true,-1);
 }
 
-void GolangFmt::fmtStarted()
+void GolangLint::started()
 {
-    QString text = m_process->userData(1).toString();
-    m_process->write(text.toUtf8());
-    m_process->closeWriteChannel();
+    // QString text = m_process->userData(1).toString();
+    // m_process->write(text.toUtf8());
+    // m_process->closeWriteChannel();
 }
 
-void GolangFmt::fmtOutput(QByteArray data,bool stdErr)
+void GolangLint::lintOutput(QByteArray data,bool stdErr)
 {
-    if (stdErr) {
-        m_errData.append(data);
-        return;
-    }
+    m_errData.append(data);
     m_data.append(data);
 }
 
-void GolangFmt::fmtFinish(bool error,int code,QString)
+void GolangLint::lintFinish(bool error,int code,QString)
 {
     QString fileName = m_process->userData(0).toString();
     if (fileName.isEmpty()) {
@@ -309,36 +266,15 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     if (!ed) {
         return;
     }
-    qDebug() << ed->document()->isModified();
+
     if (ed->document()->isModified()) {
         return;
     }
-    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOFMT_TAG);
+
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (!error && code == 0) {
-        liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
-        int vpos = -1;
-        QScrollBar *bar = ed->verticalScrollBar();
-        if (bar) {
-            vpos = bar->sliderPosition();
-        }
-        QTextCursor cur = ed->textCursor();
-        int pos = cur.position();
-        cur.beginEditBlock();
-        if (m_diff) {
-            loadDiff(cur,codec->toUnicode(m_data));
-        } else {
-            cur.select(QTextCursor::Document);
-            cur.removeSelectedText();
-            cur.insertText(codec->toUnicode(m_data));
-        }
-        cur.setPosition(pos);
-        cur.endEditBlock();
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code lint success");
 
-        ed->setTextCursor(cur);
-        if (vpos != -1) {
-            bar->setSliderPosition(vpos);
-        }
         if (save) {
             m_liteApp->editorManager()->saveEditor(editor,false);
         }
@@ -352,7 +288,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
                     bool ok = false;
                     int line = re.cap(1).toInt(&ok);
                     if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16), GOFMT_TAG);
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWaring,msg.mid(16),GOLINT_TAG);
                     }
                 }
             }
@@ -366,7 +302,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     m_data.clear();
 }
 
-void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
+void GolangLint::loadDiff(QTextCursor &cursor, const QString &diff)
 {
     QRegExp reg("@@\\s+\\-(\\d+),(\\d+)\\s+\\+(\\d+),(\\d+)\\s+@@");
     QTextBlock block;

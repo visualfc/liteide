@@ -37,7 +37,7 @@ GolangToolPlugin::GolangToolPlugin()
 {
     m_info->setId("plugin/GolangTool");
     m_info->setName("GolangTool");
-    m_info->setAnchor("visualfc");
+    m_info->setAuthor("visualfc");
     m_info->setInfo("Golang Tool Plugin");
 }
 

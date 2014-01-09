@@ -51,7 +51,7 @@ public:
         m_info->setId("plugin/GoPresent");
         m_info->setVer("x20");
         m_info->setName("GolangPresent");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setInfo("Golang Present Editor");
         m_info->appendDepend("plugin/liteeditor");
     }

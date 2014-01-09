@@ -46,7 +46,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/GolangPackage");
         m_info->setName("GolangPackage");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x18");
         m_info->setInfo("Golang Packages Browser");
         m_info->appendDepend("plugin/liteenv");

@@ -366,6 +366,7 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
     } else {
         info->action = 0;
     }
+
     m_actionInfoMap.insert(id,info);
 }
 

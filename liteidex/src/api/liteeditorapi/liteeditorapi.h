@@ -148,9 +148,9 @@ public:
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
-    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg) = 0;
+    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const char *tag) = 0;
     virtual void clearNavigateMarak(int line) = 0;
-    virtual void clearAllNavigateMark(EditorNaviagteType types) = 0;
+    virtual void clearAllNavigateMark(EditorNaviagteType types, const char *tag) = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
 };
 

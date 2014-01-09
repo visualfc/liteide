@@ -46,7 +46,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/liteeditor");
         m_info->setName("LiteEditor");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x20");
         m_info->setInfo("Core Editor");
         m_info->appendDepend("plugin/litebuild");

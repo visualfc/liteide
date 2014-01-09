@@ -18,39 +18,24 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litettyplugin.h
+// Module: golanglint_global.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITETTYPLUGIN_H
-#define LITETTYPLUGIN_H
+#ifndef GOLANGLINT_GLOBAL_H
+#define GOLANGLINT_GLOBAL_H
 
-#include "litetty_global.h"
-#include "liteapi/liteapi.h"
+#include <QtCore/qglobal.h>
 
-class LiteTtyPlugin : public LiteApi::IPlugin
-{
-public:
-    LiteTtyPlugin();
-    virtual bool load(LiteApi::IApplication *app);
-};
-
-class PluginFactory : public LiteApi::PluginFactoryT<LiteTtyPlugin>
-{
-    Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.LiteTtyPlugin")
+#if defined(GOLANGLINT_LIBRARY)
+#  define GOLANGLINTSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define GOLANGLINTSHARED_EXPORT Q_DECL_IMPORT
 #endif
-public:
-    PluginFactory() {
-        m_info->setId("plugin/LiteTty");
-        m_info->setVer("x19");
-        m_info->setName("LiteTty");
-        m_info->setAuthor("visualfc");
-        m_info->setInfo("LiteIDE tty Util");
-        //m_info->appendDepend("plugin/liteenv");
-    }
-};
 
+#define GOLANGLINT_USEGOIMPORTS "golanglint/goimports"
+#define GOLANGLINT_USEDIFF "golanglint/diff"
+#define GOLANGLINT_AUTOFMT "golanglint/autofmt"
+#define GOLANGLINT_USESYNCFMT "golanglint/syncfmt"
+#define GOLANGLINT_SYNCTIMEOUT "golanglint/synctimeout"
 
-#endif // LITETTYPLUGIN_H
+#endif // GOLANGLINT_GLOBAL_H

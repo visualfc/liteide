@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/golanglint">
+        <file>images/gofmt.png</file>
+    </qresource>
+</RCC>

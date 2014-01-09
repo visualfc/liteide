@@ -240,7 +240,6 @@ void LiteCompleter::show()
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
-
 }
 
 void LiteCompleter::setSearchSeparator(bool b)

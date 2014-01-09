@@ -46,7 +46,7 @@ public:
         m_info->setVer("x19");
         m_info->setId("plugin/WebKitHtmlWidget");
         m_info->setName("WebKitHtmlWidget");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setInfo("QtWebKit Support");
     }
 };
