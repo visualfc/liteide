@@ -153,7 +153,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    bool isShortcut = ((e->modifiers() & Qt::ControlModifier));
+    bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
     if (!m_completer || !isShortcut) // do not process the shortcut when we have a completer
         LiteEditorWidgetBase::keyPressEvent(e);
 

@@ -18,12 +18,13 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanglintplugin.cpp
-// Creator: visualfc <visualfc@gmail.com>
+// Module: golanglint.cpp
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
 #include "golanglintplugin.h"
 #include "golanglint.h"
 #include "fileutil/fileutil.h"
+#include "golanglintoptionfactory.h"
 
 #include <QMenu>
 #include <QAction>
@@ -50,17 +51,17 @@ bool GolangLintPlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
 
-    // app->optionManager()->addFactory(new GolangLintOptionFactory(app,this));
+    app->optionManager()->addFactory(new GolangLintOptionFactory(app,this));
 
     m_lint = new GolangLint(app,this);
     m_golintAct = new QAction(QIcon("icon:golanglint/images/golint.png"),tr("Lint Code"),this);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoLint");
 
-    actionContext->regAction(m_golintAct,"GoLint","Shift+F7");
+    actionContext->regAction(m_golintAct,"GoLint","Ctrl+Shift+F7");
 
-    m_goplayAct = new QAction(QIcon("icon:golanglint/images/golint.png"),tr("Format Code"),this);
-    actionContext->regAction(m_goplayAct,"GoplayLint","Shift+F7");
+    m_goplayAct = new QAction(QIcon("icon:golanglint/images/golint.png"),tr("Lint Code"),this);
+    actionContext->regAction(m_goplayAct,"GoplayLint","Ctrl+Shift+F7");
 
     connect(m_golintAct,SIGNAL(triggered()),m_lint,SLOT(golint()));
     connect(m_goplayAct,SIGNAL(triggered()),this,SLOT(goplayLint()));

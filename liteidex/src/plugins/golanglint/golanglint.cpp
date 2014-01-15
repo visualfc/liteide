@@ -19,7 +19,7 @@
 **
 **************************************************************************/
 // Module: golanglint.cpp
-// Creator: visualfc <visualfc@gmail.com>
+// Creator: Hai Thanh Nguyen <visualfc@gmail.com>
 
 #include "golanglint.h"
 #include "golanglint_global.h"
@@ -50,11 +50,10 @@
 GolangLint::GolangLint(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_goimports(false),
-    m_diff(true),
     m_autolint(true),
     m_synclint(false),
-    m_timeout(600)
+    m_timeout(600),
+    m_confidence(50)
 {
     m_process = new ProcessEx(this);
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(lintOutput(QByteArray,bool)));
@@ -77,18 +76,10 @@ void GolangLint::applyOption(QString id)
     if (id != "option/golanglint") {
         return;
     }
-    // bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
-    // m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
-    // m_autolint = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
-    // if (!m_diff) {
-    //     m_autolint = false;
-    // }
-    // if (goimports != m_goimports) {
-    //     m_goimports = goimports;
-    //     currentEnvChanged(0);
-    // }
+
+    m_confidence = m_liteApp->settings()->value(GOLANGLINT_CONFIDENCE,false).toInt();
     m_synclint = true;
-    // m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
+    m_timeout = m_liteApp->settings()->value(GOLANGLINT_SYNCTIMEOUT,500).toInt();
 }
 
 void GolangLint::syncLintEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
@@ -118,6 +109,7 @@ void GolangLint::syncLintEditor(LiteApi::IEditor *editor, bool save, bool check,
     }
 
     QStringList args;
+    args << QString("-min_confidence=%1").arg(m_confidence/100);
     args << editor->filePath();
 
     if (timeout < 0) {
@@ -141,33 +133,31 @@ void GolangLint::syncLintEditor(LiteApi::IEditor *editor, bool save, bool check,
         return;
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
-    // liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLINT_TAG);
+    // liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGLINT_TAG);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     QByteArray error = process.readAllStandardOutput();
     QString errmsg = codec->toUnicode(error);
     if (!errmsg.isEmpty()) {
         //<standard input>:23:1: expected declaration, found 'INT' 1
-         foreach(QString msg,errmsg.split("\n")) {
+        foreach(QString msg,errmsg.split("\n")) {
             QRegExp re(":(\\d+):\\d+:");
             int idx = re.indexIn(msg);
             if (idx >= 0) {
                 bool ok = false;
                 int line = re.cap(1).toInt(&ok);
                 if (ok) {
-                    liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWaring,msg.mid(idx+re.matchedLength()), GOLINT_TAG);
+                    liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWarning,msg.mid(idx+re.matchedLength()), GOLANGLINT_TAG);
                 }
             }
         }
 
-        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code lint output\n"+errmsg);
+        liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code lint output\n"+errmsg);
         m_liteApp->appendLog("go lint suggestions: ",errmsg,false);
         return;
     }
-
-    liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
 }
 
-void GolangLint::lintEditor(LiteApi::IEditor *editor, bool save)
+void GolangLint::lintEditor(LiteApi::IEditor *editor, bool)
 {
     if (!editor) {
         return;
@@ -190,9 +180,8 @@ void GolangLint::lintEditor(LiteApi::IEditor *editor, bool save)
         return;
     }
     QStringList args;
-    if (m_diff) {
-        args << editor->filePath();
-    }
+    args << QString("-min_confidence=%1").arg(m_confidence/100);
+    args << editor->filePath();
     m_data.clear();;
     m_errData.clear();
     m_process->start(m_golintCmd,args);
@@ -241,7 +230,7 @@ void GolangLint::started()
     // m_process->closeWriteChannel();
 }
 
-void GolangLint::lintOutput(QByteArray data,bool stdErr)
+void GolangLint::lintOutput(QByteArray data,bool)
 {
     m_errData.append(data);
     m_data.append(data);
@@ -280,6 +269,7 @@ void GolangLint::lintFinish(bool error,int code,QString)
         }
     } else if (!m_errData.isEmpty()) {
         QString errmsg = codec->toUnicode(m_errData);
+
         if (!errmsg.isEmpty()) {
             //<standard input>:23:1: expected declaration, found 'INT' 1
             foreach(QString msg,errmsg.split("\n")) {
@@ -288,63 +278,12 @@ void GolangLint::lintFinish(bool error,int code,QString)
                     bool ok = false;
                     int line = re.cap(1).toInt(&ok);
                     if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWaring,msg.mid(16),GOLINT_TAG);
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWarning,msg.mid(16),GOLANGLINT_TAG);
                     }
                 }
             }
         }
         QString log = errmsg;
-        errmsg.replace("<standard input>","");
-        liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
-        log.replace("<standard input>",fileName);
-        m_liteApp->appendLog("go code format error",log,false);
     }
     m_data.clear();
-}
-
-void GolangLint::loadDiff(QTextCursor &cursor, const QString &diff)
-{
-    QRegExp reg("@@\\s+\\-(\\d+),(\\d+)\\s+\\+(\\d+),(\\d+)\\s+@@");
-    QTextBlock block;
-    int line = -1;
-    int line_add = 0;
-    foreach(QString s, diff.split('\n')) {
-        if (s.length() == 0) {
-            continue;
-        }
-        QChar ch = s.at(0);
-        if (ch == '@') {
-            if (reg.indexIn(s) == 0) {
-                int s1 = reg.cap(1).toInt();
-                int s2 = reg.cap(2).toInt();
-                //int n1 = reg.cap(3).toInt();
-                int n2 = reg.cap(4).toInt();
-                line = line_add+s1;
-                block = cursor.document()->findBlockByNumber(line-1);
-                line_add += n2-s2;//n2+n1-(s2+s1);
-                continue;
-            }
-        }
-        if (line == -1) {
-            continue;
-        }
-        if (ch == '+') {
-            cursor.setPosition(block.position());
-            cursor.insertText(s.right(s.length()-1)+"\n");
-            block = cursor.block();
-            //break;
-        } else if (ch == '-') {
-            cursor.setPosition(block.position());
-            if (block.next().isValid()) {
-                cursor.setPosition(block.next().position(), QTextCursor::KeepAnchor);
-            } else {
-                cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-            }
-            cursor.removeSelectedText();
-            block = cursor.block();
-        } else if (ch == ' ') {
-            block = block.next();
-        } else if (ch == '\\') {
-        }
-    }
 }

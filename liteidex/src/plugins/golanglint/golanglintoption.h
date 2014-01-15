@@ -18,23 +18,36 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanglint.cpp
+// Module: golanglintoption.h
 // Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
-#ifndef GOLANGLINT_GLOBAL_H
-#define GOLANGLINT_GLOBAL_H
+#ifndef GOLANGLINTOPTION_H
+#define GOLANGLINTOPTION_H
 
-#include <QtCore/qglobal.h>
+#include "liteapi/liteapi.h"
 
-#if defined(GOLANGLINT_LIBRARY)
-#  define GOLANGLINTSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define GOLANGLINTSHARED_EXPORT Q_DECL_IMPORT
-#endif
+namespace Ui {
+    class GolangLintOption;
+}
 
-#define GOLANGLINT_CONFIDENCE "golanglint/confidence"
-#define GOLANGLINT_AUTOLINT "golanglint/confidence"
-#define GOLANGLINT_SYNCTIMEOUT "golanglint/synctimeout"
-#define GOLANGLINT_TAG "golanglint/navigatetag"
+class GolangLintOption : public LiteApi::IOption
+{
+    Q_OBJECT
 
-#endif // GOLANGLINT_GLOBAL_H
+public:
+    explicit GolangLintOption(LiteApi::IApplication *app, QObject *parent = 0);
+    ~GolangLintOption();
+    virtual QWidget *widget();
+    virtual QString name() const;
+    virtual QString mimeType() const;
+    virtual void apply();
+private slots:
+    void on_confidenceSlider_valueChanged(int value);
+
+private:
+    LiteApi::IApplication   *m_liteApp;
+    QWidget           *m_widget;
+    Ui::GolangLintOption *ui;
+};
+
+#endif // GOLANGLINTOPTION_H

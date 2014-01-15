@@ -18,8 +18,8 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanglint.h
-// Creator: visualfc <visualfc@gmail.com>
+// Module: golanglint.cpp
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
 #ifndef GOLANGLINT_H
 #define GOLANGLINT_H
@@ -29,8 +29,6 @@
 
 #include "liteapi/liteapi.h"
 #include "liteenvapi/liteenvapi.h"
-
-#define GOLINT_TAG "golint"
 
 class ProcessEx;
 class GolangLint : public QObject
@@ -44,7 +42,6 @@ public slots:
     void currentEnvChanged(LiteApi::IEnv*);
     void lintOutput(QByteArray,bool);
     void lintFinish(bool,int,QString);
-    void loadDiff(QTextCursor &cursor, const QString &diff);
     void editorAboutToSave(LiteApi::IEditor*);
     void applyOption(QString);
     void lintEditor(LiteApi::IEditor*,bool);
@@ -56,11 +53,11 @@ protected:
     QString m_golintCmd;
     QByteArray m_data;
     QByteArray m_errData;
-    bool m_goimports;
-    bool m_diff;
+
     bool m_autolint;
     bool m_synclint;
     int  m_timeout;
+    int  m_confidence;
 };
 
 #endif // GOLANGLINT_H

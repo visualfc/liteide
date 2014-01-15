@@ -18,23 +18,22 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanglint.cpp
+// Module: golanglintoptionfactory.h
 // Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
-#ifndef GOLANGLINT_GLOBAL_H
-#define GOLANGLINT_GLOBAL_H
+#ifndef GOLANGLINTOPTIONFACTORY_H
+#define GOLANGLINTOPTIONFACTORY_H
 
-#include <QtCore/qglobal.h>
+#include "liteapi/liteapi.h"
 
-#if defined(GOLANGLINT_LIBRARY)
-#  define GOLANGLINTSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define GOLANGLINTSHARED_EXPORT Q_DECL_IMPORT
-#endif
+class GolangLintOptionFactory : public LiteApi::IOptionFactory
+{
+public:
+    GolangLintOptionFactory(LiteApi::IApplication *app, QObject *parent);
+    virtual QStringList mimeTypes() const;
+    virtual LiteApi::IOption *create(const QString &mimeType);
+protected:
+    LiteApi::IApplication *m_liteApp;
+};
 
-#define GOLANGLINT_CONFIDENCE "golanglint/confidence"
-#define GOLANGLINT_AUTOLINT "golanglint/confidence"
-#define GOLANGLINT_SYNCTIMEOUT "golanglint/synctimeout"
-#define GOLANGLINT_TAG "golanglint/navigatetag"
-
-#endif // GOLANGLINT_GLOBAL_H
+#endif // GOLANGLINTOPTIONFACTORY_H

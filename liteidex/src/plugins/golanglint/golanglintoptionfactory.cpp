@@ -18,23 +18,36 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanglint.cpp
+// Module: golanglintoptionfactory.cpp
 // Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
-#ifndef GOLANGLINT_GLOBAL_H
-#define GOLANGLINT_GLOBAL_H
-
-#include <QtCore/qglobal.h>
-
-#if defined(GOLANGLINT_LIBRARY)
-#  define GOLANGLINTSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define GOLANGLINTSHARED_EXPORT Q_DECL_IMPORT
+#include "golanglintoption.h"
+#include "golanglintoptionfactory.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
 #endif
+//lite_memory_check_end
 
-#define GOLANGLINT_CONFIDENCE "golanglint/confidence"
-#define GOLANGLINT_AUTOLINT "golanglint/confidence"
-#define GOLANGLINT_SYNCTIMEOUT "golanglint/synctimeout"
-#define GOLANGLINT_TAG "golanglint/navigatetag"
+GolangLintOptionFactory::GolangLintOptionFactory(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IOptionFactory(parent),
+      m_liteApp(app)
+{
+}
 
-#endif // GOLANGLINT_GLOBAL_H
+QStringList GolangLintOptionFactory::mimeTypes() const
+{
+    return QStringList() << "option/golanglint";
+}
+
+LiteApi::IOption *GolangLintOptionFactory::create(const QString &mimeType)
+{
+    if (mimeType == "option/golanglint") {
+        return new GolangLintOption(m_liteApp,this);
+    }
+    return 0;
+}

@@ -18,8 +18,8 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanglintplugin.h
-// Creator: visualfc <visualfc@gmail.com>
+// Module: golanglint.cpp
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
 #ifndef GOLANGLINTPLUGIN_H
 #define GOLANGLINTPLUGIN_H
