@@ -25,6 +25,9 @@ echo get gocode ...
 go get -v -u "github.com/nsf/gocode"
 echo get gopm ...
 go get -v -u "github.com/gpmgo/gopm"
+echo get golint...
+go get -v -u "github.com/golang/lint/golint"
+
 
 cd %BUILD_ROOT%
 
