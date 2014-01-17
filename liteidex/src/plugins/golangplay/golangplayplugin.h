@@ -46,7 +46,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/golangplay");
         m_info->setName("GolangPlay");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x18");
         m_info->setInfo("Golang Playground");
         m_info->appendDepend("plugin/liteeditor");

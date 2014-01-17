@@ -18,39 +18,36 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litettyplugin.h
-// Creator: visualfc <visualfc@gmail.com>
+// Module: golanglintoption.h
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
-#ifndef LITETTYPLUGIN_H
-#define LITETTYPLUGIN_H
+#ifndef GOLANGLINTOPTION_H
+#define GOLANGLINTOPTION_H
 
-#include "litetty_global.h"
 #include "liteapi/liteapi.h"
 
-class LiteTtyPlugin : public LiteApi::IPlugin
-{
-public:
-    LiteTtyPlugin();
-    virtual bool load(LiteApi::IApplication *app);
-};
+namespace Ui {
+    class GolangLintOption;
+}
 
-class PluginFactory : public LiteApi::PluginFactoryT<LiteTtyPlugin>
+class GolangLintOption : public LiteApi::IOption
 {
     Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.LiteTtyPlugin")
-#endif
+
 public:
-    PluginFactory() {
-        m_info->setId("plugin/LiteTty");
-        m_info->setVer("x19");
-        m_info->setName("LiteTty");
-        m_info->setAuthor("visualfc");
-        m_info->setInfo("LiteIDE tty Util");
-        //m_info->appendDepend("plugin/liteenv");
-    }
+    explicit GolangLintOption(LiteApi::IApplication *app, QObject *parent = 0);
+    ~GolangLintOption();
+    virtual QWidget *widget();
+    virtual QString name() const;
+    virtual QString mimeType() const;
+    virtual void apply();
+private slots:
+    void on_confidenceSlider_valueChanged(int value);
+
+private:
+    LiteApi::IApplication   *m_liteApp;
+    QWidget           *m_widget;
+    Ui::GolangLintOption *ui;
 };
 
-
-#endif // LITETTYPLUGIN_H
+#endif // GOLANGLINTOPTION_H

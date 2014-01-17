@@ -923,18 +923,18 @@ void LiteEditor::setNavigateHead(LiteApi::EditorNaviagteType type, const QString
     m_editorWidget->setNavigateHead(type,msg);
 }
 
-void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg )
+void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
 {
-    m_editorWidget->insertNavigateMark(line,type,msg);
+    m_editorWidget->insertNavigateMark(line,type,msg, tag);
 }
 
 void LiteEditor::clearNavigateMarak(int /*line*/)
 {
 }
 
-void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types)
+void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
 {
-    m_editorWidget->clearAllNavigateMark(types);
+    m_editorWidget->clearAllNavigateMark(types, tag);
 }
 
 void LiteEditor::selectNextParam()

@@ -49,7 +49,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/LiteEnv");
         m_info->setName("LiteEnv");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x20");
         m_info->setInfo("Environment Manager");
         m_info->setMustLoad(true);

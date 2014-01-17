@@ -53,7 +53,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/golangdoc");
         m_info->setName("GolangDoc");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x18");
         m_info->setInfo("Golang Documents Browser");
         m_info->appendDepend("plugin/liteenv");

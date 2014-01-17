@@ -36,7 +36,7 @@ LiteShellPlugin::LiteShellPlugin()
 {
     m_info->setId("plugin/LiteShell");
     m_info->setName("LiteShell");
-    m_info->setAnchor("visualfc");
+    m_info->setAuthor("visualfc");
     m_info->setInfo("LiteShell Plugin");
 }
 

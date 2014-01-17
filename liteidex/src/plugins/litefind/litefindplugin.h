@@ -66,7 +66,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/LiteFind");
         m_info->setName("LiteFind");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x19");
         m_info->setInfo("Find/Replace Util");
         m_info->setMustLoad(true);

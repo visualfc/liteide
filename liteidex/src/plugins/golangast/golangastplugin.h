@@ -47,7 +47,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/golangast");
         m_info->setName("GolangAst");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x15.3");
         m_info->setInfo("Golang Ast View");
     }

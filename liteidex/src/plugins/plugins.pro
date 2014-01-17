@@ -22,3 +22,4 @@ SUBDIRS = \
     gdbdebugger \
     markdown \
     webkithtmlwidget \
+    golanglint \

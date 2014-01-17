@@ -239,7 +239,7 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
             int line = re.cap(2).toInt(&ok);
             if (ok) {
                 QString errmsg = re.cap(0)+"\n"+msg.mid(re.cap(0).length()).trimmed();
-                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,errmsg);
+                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,errmsg, GOPRESENT_TAG);
                 m_errorMsg.append(errmsg);
             }
         } else {
@@ -355,7 +355,7 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     m_exportData.clear();
     m_errorMsg.clear();
     m_process->setUserData(0,type);
-    m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOPRESENT_TAG);
     if (type == EXPORT_TYPE_VERIFY) {
         m_process->startEx(cmd,"-v -i "+info.fileName().toUtf8());
     } else {

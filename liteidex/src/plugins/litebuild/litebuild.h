@@ -30,6 +30,8 @@
 
 #include <QTextCursor>
 
+#define LITEBUILD_TAG "lightbuild/navtag"
+
 class BuildManager;
 class QComboBox;
 class ProcessEx;

@@ -28,6 +28,8 @@
 #include "liteeditorapi/liteeditorapi.h"
 #include "processex/processex.h"
 
+#define GOPRESENT_TAG "gopresent/navtag"
+
 class GolangPresentEdit : public QObject
 {
     Q_OBJECT

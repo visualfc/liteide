@@ -51,7 +51,7 @@ public:
         m_info->setId("plugin/Markdown");
         m_info->setVer("x19");
         m_info->setName("Markdown");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setInfo("Markdown Editor");
         m_info->appendDepend("plugin/liteeditor");
     }

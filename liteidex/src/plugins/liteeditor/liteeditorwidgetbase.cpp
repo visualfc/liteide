@@ -44,6 +44,11 @@
 #endif
 //lite_memory_check_end
 
+const int PRIORITYLIST_LENGTH = 5;
+const LiteApi::EditorNaviagteType MARKTYPE_PRIORITYLIST[PRIORITYLIST_LENGTH] = {
+        LiteApi::EditorNavigateError, LiteApi::EditorNavigateBad, LiteApi::EditorNavigateWarning, LiteApi::EditorNavigateNormal
+    };
+
 struct NavigateMark
 {
     NavigateMark() {}
@@ -58,12 +63,28 @@ struct NavigateMark
     struct Node {
         LiteApi::EditorNaviagteType type;
         QString msg;
+        QString tag;
+
+        QColor markColor() {
+            switch(type) {
+            case LiteApi::EditorNavigateBad:
+            case LiteApi::EditorNavigateError:
+                return Qt::darkRed;
+            case LiteApi::EditorNavigateWarning:
+                //Returns orange color
+                return QColor::fromRgb(255, 125, 0);
+            case LiteApi::EditorNavigateNormal:
+                return Qt::darkGreen;
+            }
+            return Qt::darkRed;
+        }
     };
-    void addNode(LiteApi::EditorNaviagteType type, const QString & msg)
+    void addNode(LiteApi::EditorNaviagteType type, const QString & msg, const char* tag = "")
     {
         Node *node = new Node;
         node->type = type;
         node->msg = msg;
+        node->tag = QString(tag);
         m_nodeList.append(node);
     }
     Node* findNode(LiteApi::EditorNaviagteType type)
@@ -75,12 +96,12 @@ struct NavigateMark
         }
         return 0;
     }
-    void removeNode(LiteApi::EditorNaviagteType types)
+    void removeNode(LiteApi::EditorNaviagteType types, const char* tag = "")
     {
         QMutableListIterator<Node*> i(m_nodeList);
         while (i.hasNext()) {
             Node *node = i.next();
-            if (node->type&types) {
+            if ((node->type&types) && (QString(tag).isEmpty() || QString(tag) == node->tag)) {
                 i.remove();
                 delete node;
             }
@@ -106,12 +127,12 @@ public:
     {
         clearAll();
     }
-    void insertMark(int line, const QString &msg, LiteApi::EditorNaviagteType type)
+    void insertMark(int line, const QString &msg, LiteApi::EditorNaviagteType type, const char* tag = "")
     {
          NavigateMarkMap::iterator it = markMap.find(line);
          if (it == markMap.end()) {
              NavigateMark *mark = new NavigateMark;
-             mark->addNode(type,msg);
+             mark->addNode(type, msg, tag);
              markMap.insert(line,mark);
          } else {
              NavigateMark *mark = it.value();
@@ -123,13 +144,13 @@ public:
              }
          }
     }
-    void clearAllNavigateMark(LiteApi::EditorNaviagteType types)
+    void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char* tag = "")
     {
         QMutableMapIterator<int,NavigateMark*> i(markMap);
         while (i.hasNext()) {
             i.next();
             NavigateMark *mark = i.value();
-            mark->removeNode(types);
+            mark->removeNode(types, tag);
             if (mark->isEmpty()) {
                 delete mark;
                 i.remove();
@@ -804,9 +825,15 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
         i.next();
         if (!i.value()->isEmpty()) {
             int pos = i.key()*height*1.0/count;
-            NavigateMark::Node *node = i.value()->findNode(LiteApi::EditorNavigateError);
-            if (node) {
-                painter.fillRect(2,width+pos,width-4,4,Qt::darkRed);
+            QColor markColor;
+            NavigateMark::Node *node;
+            const LiteApi::EditorNaviagteType * pList = MARKTYPE_PRIORITYLIST;
+            for (int j=0; j<PRIORITYLIST_LENGTH; j++) {
+                node = i.value()->findNode(pList[j]);
+                if (node) {
+                    painter.fillRect(2,width+pos,width-4,4,node->markColor());
+                    break;
+                }
             }
         }
     }
@@ -863,11 +890,21 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
             int line = isInNavigateMark(e->pos(),&offset);
             if (line != -1) {
                 NavigateMark *mark = m_navigateManager->markMap.value(line);
-                NavigateMark::Node *node = mark->findNode(LiteApi::EditorNavigateError);
-                if (node) {
-                    tooltip = true;
-                    QPoint pos(1,offset);
-                    QToolTip::showText(m_navigateArea->mapToGlobal(pos),node->msg,this->m_navigateArea);
+//                NavigateMark::Node *node = mark->findNode(LiteApi::EditorNavigateError);
+//                if (node) {
+//                    tooltip = true;
+//                    QPoint pos(1,offset);
+//                    QToolTip::showText(m_navigateArea->mapToGlobal(pos),node->msg,this->m_navigateArea);
+//                }
+                const LiteApi::EditorNaviagteType * pList = MARKTYPE_PRIORITYLIST;
+                for (int j=0; j<PRIORITYLIST_LENGTH; j++) {
+                    NavigateMark::Node *node = mark->findNode(pList[j]);
+                    if (node) {
+                        tooltip = true;
+                        QPoint pos(1,offset);
+                        QToolTip::showText(m_navigateArea->mapToGlobal(pos),node->msg,this->m_navigateArea);
+                        break;
+                    }
                 }
             }
         }
@@ -1793,15 +1830,15 @@ void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, con
     m_navigateArea->update();
 }
 
-void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg)
+void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
 {
-    m_navigateManager->insertMark(line,msg,type);
+    m_navigateManager->insertMark(line,msg,type,tag);
     m_navigateArea->update();
 }
 
-void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types)
+void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
 {
-    m_navigateManager->clearAllNavigateMark(types);
+    m_navigateManager->clearAllNavigateMark(types, tag);
 }
 
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)

@@ -65,7 +65,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/litebuild");
         m_info->setName("LiteBuilder");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x20");
         m_info->setInfo("Core Build");
         m_info->appendDepend("plugin/liteenv");

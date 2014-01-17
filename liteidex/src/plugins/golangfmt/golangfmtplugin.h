@@ -61,7 +61,7 @@ public:
     PluginFactory() {
         m_info->setId("plugin/golangfmt");
         m_info->setName("GolangFmt");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setVer("x20");
         m_info->setInfo("Golang Gofmt Util");
     }

@@ -18,39 +18,46 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litettyplugin.h
-// Creator: visualfc <visualfc@gmail.com>
+// Module: golanglint.cpp
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
-#ifndef LITETTYPLUGIN_H
-#define LITETTYPLUGIN_H
+#ifndef GOLANGLINT_H
+#define GOLANGLINT_H
 
-#include "litetty_global.h"
+#include <QObject>
+#include <QTextCursor>
+
 #include "liteapi/liteapi.h"
+#include "liteenvapi/liteenvapi.h"
 
-class LiteTtyPlugin : public LiteApi::IPlugin
-{
-public:
-    LiteTtyPlugin();
-    virtual bool load(LiteApi::IApplication *app);
-};
-
-class PluginFactory : public LiteApi::PluginFactoryT<LiteTtyPlugin>
+class ProcessEx;
+class GolangLint : public QObject
 {
     Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.LiteTtyPlugin")
-#endif
 public:
-    PluginFactory() {
-        m_info->setId("plugin/LiteTty");
-        m_info->setVer("x19");
-        m_info->setName("LiteTty");
-        m_info->setAuthor("visualfc");
-        m_info->setInfo("LiteIDE tty Util");
-        //m_info->appendDepend("plugin/liteenv");
-    }
+    explicit GolangLint(LiteApi::IApplication *app,QObject *parent = 0);
+public slots:
+    void started();
+    void golint();
+    void currentEnvChanged(LiteApi::IEnv*);
+    void lintOutput(QByteArray,bool);
+    void lintFinish(bool,int,QString);
+    void editorAboutToSave(LiteApi::IEditor*);
+    void applyOption(QString);
+    void lintEditor(LiteApi::IEditor*,bool);
+    void syncLintEditor(LiteApi::IEditor *, bool save, bool check = true, int timeout = -1);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    ProcessEx *m_process;
+    LiteApi::IEnvManager *m_envManager;
+    QString m_golintCmd;
+    QByteArray m_data;
+    QByteArray m_errData;
+
+    bool m_autolint;
+    bool m_synclint;
+    int  m_timeout;
+    int  m_confidence;
 };
 
-
-#endif // LITETTYPLUGIN_H
+#endif // GOLANGLINT_H

@@ -839,7 +839,7 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                         LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
                         if (liteEditor) {
                             liteEditor->setNavigateHead(LiteApi::EditorNavigateError,m_process->userData(ID_ACTIONID).toString()+" Error");
-                            liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err);
+                            liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err, LITEBUILD_TAG);
                         }
                     }
                 }
@@ -1073,7 +1073,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
             LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
             if (liteEditor) {
-                liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+                liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, LITEBUILD_TAG);
                 liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"Normal");
             }
         }

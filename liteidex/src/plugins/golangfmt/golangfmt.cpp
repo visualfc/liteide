@@ -46,7 +46,6 @@
 #endif
 //lite_memory_check_end
 
-
 GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
@@ -139,7 +138,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         return;
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
-    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGFMT_TAG);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (process.exitCode() != 0) {
         QByteArray error = process.readAllStandardError();
@@ -152,7 +151,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
                     bool ok = false;
                     int line = re.cap(1).toInt(&ok);
                     if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16));
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16), GOLANGFMT_TAG);
                     }
                 }
             }
@@ -313,7 +312,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     if (ed->document()->isModified()) {
         return;
     }
-    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGFMT_TAG);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (!error && code == 0) {
         liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
@@ -352,7 +351,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
                     bool ok = false;
                     int line = re.cap(1).toInt(&ok);
                     if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16));
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16), GOLANGFMT_TAG);
                     }
                 }
             }

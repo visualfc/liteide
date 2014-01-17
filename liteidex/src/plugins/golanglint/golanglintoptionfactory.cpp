@@ -18,39 +18,36 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: litettyplugin.h
-// Creator: visualfc <visualfc@gmail.com>
+// Module: golanglintoptionfactory.cpp
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
-#ifndef LITETTYPLUGIN_H
-#define LITETTYPLUGIN_H
-
-#include "litetty_global.h"
-#include "liteapi/liteapi.h"
-
-class LiteTtyPlugin : public LiteApi::IPlugin
-{
-public:
-    LiteTtyPlugin();
-    virtual bool load(LiteApi::IApplication *app);
-};
-
-class PluginFactory : public LiteApi::PluginFactoryT<LiteTtyPlugin>
-{
-    Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.LiteTtyPlugin")
+#include "golanglintoption.h"
+#include "golanglintoptionfactory.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
 #endif
-public:
-    PluginFactory() {
-        m_info->setId("plugin/LiteTty");
-        m_info->setVer("x19");
-        m_info->setName("LiteTty");
-        m_info->setAuthor("visualfc");
-        m_info->setInfo("LiteIDE tty Util");
-        //m_info->appendDepend("plugin/liteenv");
+//lite_memory_check_end
+
+GolangLintOptionFactory::GolangLintOptionFactory(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IOptionFactory(parent),
+      m_liteApp(app)
+{
+}
+
+QStringList GolangLintOptionFactory::mimeTypes() const
+{
+    return QStringList() << "option/golanglint";
+}
+
+LiteApi::IOption *GolangLintOptionFactory::create(const QString &mimeType)
+{
+    if (mimeType == "option/golanglint") {
+        return new GolangLintOption(m_liteApp,this);
     }
-};
-
-
-#endif // LITETTYPLUGIN_H
+    return 0;
+}

@@ -93,7 +93,7 @@ void PluginsDialog::appendInfo(const LiteApi::PluginInfo *info)
     }
     items.append(load);
     items.append(new QStandardItem(info->info()));
-    items.append(new QStandardItem(info->anchor()));
+    items.append(new QStandardItem(info->author()));
     items.append(new QStandardItem(info->ver()));
     items.append(new QStandardItem(QFileInfo(info->filePath()).fileName()));
     items.at(5)->setToolTip(info->filePath());

@@ -37,7 +37,7 @@ QSqlEditorPlugin::QSqlEditorPlugin()
 {
     m_info->setId("plugin/QSqlEditor");
     m_info->setName("QSqlEditor");
-    m_info->setAnchor("visualfc");
+    m_info->setAuthor("visualfc");
     m_info->setInfo("QtSql Editor Plugin");
 }
 

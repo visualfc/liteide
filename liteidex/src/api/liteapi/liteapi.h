@@ -606,7 +606,7 @@ public:
     PluginInfo() : m_mustLoad(false)
     {}
     virtual ~PluginInfo() {}
-    QString anchor() const { return m_anchor; }
+    QString author() const { return m_author; }
     QString info() const { return m_info; }
     QString id() const { return m_id; }
     QString name() const { return m_name; }
@@ -614,7 +614,7 @@ public:
     QStringList dependList() const { return m_dependList; }
     QString filePath() const { return m_filePath; }
     bool isMustLoad() const { return m_mustLoad; }
-    void setAnchor(const QString &anchor) { m_anchor = anchor; }
+    void setAuthor(const QString &author) { m_author = author; }
     void setInfo(const QString &info) { m_info = info; }
     void setId(const QString &id) { m_id = id.toLower(); }
     void setName(const QString &name) { m_name = name; }
@@ -624,7 +624,7 @@ public:
     void appendDepend(const QString &depend) { m_dependList.append(depend); }
     void setMustLoad(bool b) { m_mustLoad = b; }
 protected:
-    QString m_anchor;
+    QString m_author;
     QString m_info;
     QString m_id;
     QString m_name;
