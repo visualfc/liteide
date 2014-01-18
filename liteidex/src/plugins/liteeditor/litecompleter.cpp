@@ -391,7 +391,8 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         extra = text;
         wordText = text;
     }
-    if (kind == "func" && tc.block().text().at(tc.positionInBlock()) != '(') {
+
+    if (kind == "func" && tc.block().text().at(tc.positionInBlock()-1) != '(') {
         extra += "()";
         tc.insertText(extra);
         if (!info.startsWith("func()")) {
