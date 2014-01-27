@@ -19,7 +19,7 @@
 **
 **************************************************************************/
 // Module: golanglint.cpp
-// Creator: Hai Thanh Nguyen <visualfc@gmail.com>
+// Creator: Hai Thanh Nguyen <phaikawl@gmail.com>
 
 #include "golanglint.h"
 #include "golanglint_global.h"
