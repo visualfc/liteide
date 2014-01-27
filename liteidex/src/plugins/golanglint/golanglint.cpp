@@ -50,7 +50,7 @@
 GolangLint::GolangLint(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_autolint(true),
+    m_autolint(false),
     m_synclint(false),
     m_timeout(600),
     m_confidence(50)
@@ -77,7 +77,8 @@ void GolangLint::applyOption(QString id)
         return;
     }
 
-    m_confidence = m_liteApp->settings()->value(GOLANGLINT_CONFIDENCE,false).toInt();
+    m_autolint = m_liteApp->settings()->value(GOLANGLINT_AUTOLINT,false).toBool();
+    m_confidence = m_liteApp->settings()->value(GOLANGLINT_CONFIDENCE,0).toInt();
     m_synclint = true;
     m_timeout = m_liteApp->settings()->value(GOLANGLINT_SYNCTIMEOUT,500).toInt();
 }

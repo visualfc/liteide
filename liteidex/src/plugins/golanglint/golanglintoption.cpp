@@ -42,9 +42,9 @@ GolangLintOption::GolangLintOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
-    int confidence = m_liteApp->settings()->value(GOLANGLINT_CONFIDENCE,false).toInt();
+    int confidence = m_liteApp->settings()->value(GOLANGLINT_CONFIDENCE,0).toInt();
     int timeout = m_liteApp->settings()->value(GOLANGLINT_SYNCTIMEOUT,500).toInt();
-    bool autolint = m_liteApp->settings()->value(GOLANGLINT_AUTOLINT,true).toBool();
+    bool autolint = m_liteApp->settings()->value(GOLANGLINT_AUTOLINT,false).toBool();
 
     ui->checkBoxAutoLint->setChecked(autolint);
     ui->syncTimeoutLineEdit->setText(QString("%1").arg(timeout));
