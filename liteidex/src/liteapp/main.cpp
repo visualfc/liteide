@@ -66,10 +66,22 @@ int main(int argc, char *argv[])
 
     QTranslator translator;
     QTranslator qtTranslator;
-    const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
-    QString locale = QLocale::system().name();
-    locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
+
     QString resPath = LiteApp::getResoucePath();
+    QString locale = QLocale::system().name();
+    QString qss;
+    QSettings global(resPath+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    if (storeLocal) {
+        const QSettings settings(resPath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
+        locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
+        qss = settings.value(LITEAPP_QSS,"default.qss").toString();
+    } else {
+        const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
+        locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
+        qss = settings.value(LITEAPP_QSS,"default.qss").toString();
+    }
+
     if (!locale.isEmpty()) {
         const QString &liteideTrPath = resPath+"/translations";
         if (translator.load(QLatin1String("liteide_") + locale, liteideTrPath)) {
@@ -83,7 +95,6 @@ int main(int argc, char *argv[])
             app.setProperty("liteide_locale", locale);
         }
     }
-    QString qss = settings.value(LITEAPP_QSS,"default.qss").toString();
     if (!qss.isEmpty()) {
         QFile f(resPath+"/liteapp/qss/"+qss);
         if (f.open(QFile::ReadOnly)) {
