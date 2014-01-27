@@ -133,7 +133,7 @@ void GolangLint::syncLintEditor(LiteApi::IEditor *editor, bool save, bool check,
         return;
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
-    // liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGLINT_TAG);
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGLINT_TAG);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     QByteArray error = process.readAllStandardOutput();
     QString errmsg = codec->toUnicode(error);
