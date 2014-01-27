@@ -52,6 +52,10 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
+    QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    ui->storeLocalCheckBox->setChecked(storeLocal);
+
     const QString &liteideTrPath = m_liteApp->resourcePath()+"/translations";
     QLocale eng(QLocale::English);
     ui->langComboBox->addItem(QLocale::languageToString(QLocale::English),eng.name());
@@ -156,6 +160,10 @@ QString LiteAppOption::mimeType() const
 }
 void LiteAppOption::apply()
 {
+    bool storeLocal = ui->storeLocalCheckBox->isChecked();
+    QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
+    global.setValue(LITEIDE_STORELOCAL,storeLocal);
+
     int index = ui->langComboBox->currentIndex();
     if (index >= 0 && index < ui->langComboBox->count()) {
         QString lc = ui->langComboBox->itemData(index).toString();

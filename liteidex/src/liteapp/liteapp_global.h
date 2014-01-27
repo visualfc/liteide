@@ -32,6 +32,8 @@
 #  define LITEIDESHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define LITEIDE_STORELOCAL "LiteIDE/StoreLocal"
+
 #define OPTION_LITEAPP "option/liteapp"
 
 #define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFiles"

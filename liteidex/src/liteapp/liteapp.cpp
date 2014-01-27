@@ -120,19 +120,26 @@ LiteApp::LiteApp()
     : m_applicationPath(QApplication::applicationDirPath()),
       m_pluginPath(LiteApp::getPluginPath()),
       m_resourcePath(LiteApp::getResoucePath()),
-      m_storagePath(LiteApp::getStoragePath()),
-      m_settings(new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this)),
-      m_extension(new Extension),
-      m_mainwindow(new MainWindow(this)),
-      m_toolWindowManager(new ToolWindowManager),
-      m_htmlWidgetManager(new HtmlWidgetManager),
-      m_actionManager(new ActionManager),
-      m_projectManager(new ProjectManager),
-      m_editorManager(new EditorManager),
-      m_fileManager(new FileManager),
-      m_mimeTypeManager(new MimeTypeManager),
-      m_optionManager(new OptionManager)
+      m_storagePath(LiteApp::getStoragePath())
 {    
+    QSettings global(m_resourcePath+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    if (storeLocal) {
+        m_settings = new QSettings(m_resourcePath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
+    } else {
+        m_settings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this);
+    }
+    m_extension = new Extension;
+    m_mainwindow = new MainWindow(this);
+    m_toolWindowManager = new ToolWindowManager;
+    m_htmlWidgetManager = new HtmlWidgetManager;
+    m_actionManager = new ActionManager;
+    m_projectManager = new ProjectManager;
+    m_editorManager = new EditorManager;
+    m_fileManager = new FileManager;
+    m_mimeTypeManager = new MimeTypeManager;
+    m_optionManager = new OptionManager;
+
     m_goProxy = new GoProxy(this);
     m_actionManager->initWithApp(this);
     m_toolWindowManager->initWithApp(this);
