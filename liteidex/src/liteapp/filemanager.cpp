@@ -701,18 +701,16 @@ void FileManager::checkForReload()
                         // The file has been deleted.
                         // If the buffer is modified, ask the user what he wants to do.
                         // Otherwise, apply the default action : close the editor.
-                        int ret = QMessageBox::Close;
+                        int ret = QMessageBox::Yes;
                         if ( editor->isModified() ) {
-                            QString text = QString(tr("%1\nThis file has been deleted outside of LiteIDE.\n"
-                                "\nDo you want to save the previous contents, close the file, or leave the contents unsaved?")).arg(fileName);
-                            ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Save |QMessageBox::Close | QMessageBox::Cancel,QMessageBox::Save);
+                            QString text = QString(tr("%1\nThis file has been deleted from the drive,\n"
+                                "but you have unsaved modifications in your LiteIDE editor.\n"
+                                "\nDo you want to close the editor ?"
+                                "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                            ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                         }
 
-                        if (ret == QMessageBox::Save) {
-                            if (m_liteApp->editorManager()->saveEditor(editor)) {
-                                m_fileWatcher->addPath(fileName);
-                            }
-                        } else if (ret == QMessageBox::Close) {
+                        if (ret == QMessageBox::Yes) {
                             m_liteApp->editorManager()->closeEditor(editor);
                         }
                     }
@@ -727,8 +725,11 @@ void FileManager::checkForReload()
                     // Otherwise, apply the default action : reload the new content in the editor.
                     int ret = QMessageBox::Yes;
                     if (editor->isModified()){
-                        QString text = QString(tr("%1\nThis file has been modified outside of LiteIDE.  Do you want to reload it?")).arg(fileName);
-                        ret = QMessageBox::question(m_liteApp->mainWindow(),"LiteIDE X",text,QMessageBox::Yes|QMessageBox::No);
+                        QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
+                            "but you have unsaved modifications in your LiteIDE editor.\n"
+                            "\nDo you want to reload the file from disk ?"
+                            "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                        ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                     }
 
                     if (ret == QMessageBox::Yes) {
