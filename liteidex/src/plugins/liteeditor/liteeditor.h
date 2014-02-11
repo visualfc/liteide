@@ -103,6 +103,7 @@ public:
     virtual void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
     virtual void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag);
     virtual void clearNavigateMarak(int line);
+    virtual void clearAllNavigateMarks();
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
     LiteEditorWidget *editorWidget() const;
 signals:

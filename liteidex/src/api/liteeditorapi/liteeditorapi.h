@@ -137,6 +137,7 @@ enum EditorNaviagteType{
     EditorNavigateNormal = 1,
     EditorNavigateWarning = 2,
     EditorNavigateError = 4,
+    EditorNavigateReload = 8,
     EditorNavigateBad = EditorNavigateWarning|EditorNavigateError
 };
 

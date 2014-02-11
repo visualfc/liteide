@@ -46,8 +46,24 @@
 
 const int PRIORITYLIST_LENGTH = 5;
 const LiteApi::EditorNaviagteType MARKTYPE_PRIORITYLIST[PRIORITYLIST_LENGTH] = {
-        LiteApi::EditorNavigateError, LiteApi::EditorNavigateBad, LiteApi::EditorNavigateWarning, LiteApi::EditorNavigateNormal
+        LiteApi::EditorNavigateError, LiteApi::EditorNavigateBad, LiteApi::EditorNavigateWarning, LiteApi::EditorNavigateReload, LiteApi::EditorNavigateNormal
     };
+
+inline QColor markTypeColor(LiteApi::EditorNaviagteType type) {
+    switch(type) {
+    case LiteApi::EditorNavigateBad:
+    case LiteApi::EditorNavigateError:
+        return Qt::darkRed;
+    case LiteApi::EditorNavigateWarning:
+        //Returns orange color
+        return QColor::fromRgb(255, 125, 0);
+    case LiteApi::EditorNavigateNormal:
+        return Qt::darkGreen;
+    case LiteApi::EditorNavigateReload:
+        return Qt::darkBlue;
+    }
+    return Qt::darkGreen;
+}
 
 struct NavigateMark
 {
@@ -58,7 +74,7 @@ struct NavigateMark
             delete node;
         }
         m_nodeList.clear();
-    }
+    }    
 
     struct Node {
         LiteApi::EditorNaviagteType type;
@@ -66,17 +82,7 @@ struct NavigateMark
         QString tag;
 
         QColor markColor() {
-            switch(type) {
-            case LiteApi::EditorNavigateBad:
-            case LiteApi::EditorNavigateError:
-                return Qt::darkRed;
-            case LiteApi::EditorNavigateWarning:
-                //Returns orange color
-                return QColor::fromRgb(255, 125, 0);
-            case LiteApi::EditorNavigateNormal:
-                return Qt::darkGreen;
-            }
-            return Qt::darkRed;
+            return markTypeColor(type);
         }
     };
     void addNode(LiteApi::EditorNaviagteType type, const QString & msg, const char* tag = "")
@@ -155,7 +161,6 @@ public:
                 delete mark;
                 i.remove();
             }
-
         }
     }
     void clearAll()
@@ -169,6 +174,10 @@ public:
     {
         m_type = type;
         m_msg = msg;
+    }
+    QColor headMarkColor()
+    {
+        return markTypeColor(m_type);
     }
 public:
     NavigateMarkMap markMap;
@@ -813,11 +822,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     painter.fillRect(e->rect().intersected(QRect(0, 0, m_navigateArea->width(), m_navigateArea->height())),
                      m_extraBackground);
     int width = this->navigateAreaWidth();
-    if (m_navigateManager->m_type == LiteApi::EditorNavigateNormal) {
-        painter.fillRect(2,2,width-4,width-4,Qt::darkGreen);
-    } else {
-        painter.fillRect(2,2,width-4,width-4,Qt::darkRed);
-    }
+    painter.fillRect(2,2,width-4,width-4,m_navigateManager->headMarkColor());
     int count = this->blockCount();
     int height = this->viewport()->rect().height()-2*m_navigateArea->width();
     QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
@@ -825,7 +830,7 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
         i.next();
         if (!i.value()->isEmpty()) {
             int pos = i.key()*height*1.0/count;
-            QColor markColor;
+            //QColor markColor;
             NavigateMark::Node *node;
             const LiteApi::EditorNaviagteType * pList = MARKTYPE_PRIORITYLIST;
             for (int j=0; j<PRIORITYLIST_LENGTH; j++) {
@@ -1839,6 +1844,11 @@ void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteT
 void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
 {
     m_navigateManager->clearAllNavigateMark(types, tag);
+}
+
+void LiteEditorWidgetBase::clearAllNavigateMarks()
+{
+    m_navigateManager->clearAll();
 }
 
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)

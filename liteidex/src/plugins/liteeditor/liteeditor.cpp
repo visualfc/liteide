@@ -540,8 +540,12 @@ bool LiteEditor::open(const QString &fileName,const QString &mimeType)
 
 bool LiteEditor::reload()
 {
+    QByteArray state = this->saveState();
     bool success = open(filePath(),mimeType());
     if (success) {
+        this->clearAllNavigateMarks();
+        this->setNavigateHead(LiteApi::EditorNavigateReload,tr("Reload File"));
+        this->restoreState(state);
         emit reloaded();
     }
     return success;
@@ -930,6 +934,11 @@ void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, 
 
 void LiteEditor::clearNavigateMarak(int /*line*/)
 {
+}
+
+void LiteEditor::clearAllNavigateMarks()
+{
+    m_editorWidget->clearAllNavigateMarks();
 }
 
 void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
