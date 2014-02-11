@@ -712,6 +712,7 @@ void FileManager::checkForReload()
 
                         if (ret == QMessageBox::Yes) {
                             m_liteApp->editorManager()->closeEditor(editor);
+                            m_liteApp->appendLog("EditorManager",fileName+" remove",false);
                         }
                     }
                 }
@@ -738,6 +739,7 @@ void FileManager::checkForReload()
                         QDateTime modified = m_fileStateMap.value(fileName);
                         if (lastModified != modified) {
                             editor->reload();
+                            m_liteApp->appendLog("EditorManager",fileName+" reload",false);
                         }
                     }
                 }
