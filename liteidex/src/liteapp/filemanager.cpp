@@ -698,9 +698,16 @@ void FileManager::checkForReload()
                 if (!fileName.isEmpty()) {
                     LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,false);
                     if (editor) {
-                        QString text = QString(tr("The following file has been deleted outside of LiteIDE:\n%1\n"
-							"\nDo you want to save the previous contents, close the file, or leave the contents unsaved?")).arg(fileName);
-                        int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Save |QMessageBox::Close | QMessageBox::Cancel,QMessageBox::Save);
+                        // The file has been deleted.
+                        // If the buffer is modified, ask the user what he wants to do.
+                        // Otherwise, apply the default action : close the editor.
+                        int ret = QMessageBox::Close;
+                        if ( editor->isModified() ) {
+                            QString text = QString(tr("%1\nThis file has been deleted outside of LiteIDE.\n"
+                                "\nDo you want to save the previous contents, close the file, or leave the contents unsaved?")).arg(fileName);
+                            ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Save |QMessageBox::Close | QMessageBox::Cancel,QMessageBox::Save);
+                        }
+
                         if (ret == QMessageBox::Save) {
                             if (m_liteApp->editorManager()->saveEditor(editor)) {
                                 m_fileWatcher->addPath(fileName);
@@ -715,12 +722,20 @@ void FileManager::checkForReload()
             if (m_fileStateMap.contains(fileName)) {
                 LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
                 if (editor) {
-                    QDateTime lastModified = QFileInfo(fileName).lastModified();
-                    QDateTime modified = m_fileStateMap.value(fileName);
-                    if (lastModified > modified) {
+                    // The file has been modified.
+                    // If the buffer is modified, ask the user what he wants to do.
+                    // Otherwise, apply the default action : reload the new content in the editor.
+                    int ret = QMessageBox::Yes;
+                    if (editor->isModified()){
                         QString text = QString(tr("%1\nThis file has been modified outside of LiteIDE.  Do you want to reload it?")).arg(fileName);
-                        int ret = QMessageBox::question(m_liteApp->mainWindow(),"LiteIDE X",text,QMessageBox::Yes|QMessageBox::No);
-                        if (ret == QMessageBox::Yes) {
+                        ret = QMessageBox::question(m_liteApp->mainWindow(),"LiteIDE X",text,QMessageBox::Yes|QMessageBox::No);
+                    }
+
+                    if (ret == QMessageBox::Yes) {
+                        // If the file modification is the result of an internal Ctrl+S, do not reload
+                        QDateTime lastModified = QFileInfo(fileName).lastModified();
+                        QDateTime modified = m_fileStateMap.value(fileName);
+                        if (lastModified != modified) {
                             editor->reload();
                         }
                     }
