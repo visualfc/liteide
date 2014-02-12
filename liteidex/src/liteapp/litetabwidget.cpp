@@ -54,6 +54,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_tabBar->setDocumentMode(true);
     m_tabBar->setDrawBase(false);
     m_tabBar->setUsesScrollButtons(true);
+    m_tabBar->setMovable(true);
 
     m_headerToolBar = new QToolBar;
     m_headerToolBar->setObjectName("toolbar.tabs");
@@ -86,6 +87,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
 
     connect(m_tabBar,SIGNAL(currentChanged(int)),this,SLOT(tabCurrentChanged(int)));
     connect(m_tabBar,SIGNAL(tabCloseRequested(int)),this,SIGNAL(tabCloseRequested(int)));
+    connect(m_tabBar,SIGNAL(tabMoved(int,int)),this,SLOT(tabMoved(int,int)));
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrentTab()));
     connect(m_addTabAct,SIGNAL(triggered()),this,SIGNAL(tabAddRequest()));
     connect(m_listActGroup,SIGNAL(triggered(QAction*)),this,SLOT(selectListActGroup(QAction*)));
@@ -237,4 +239,9 @@ void LiteTabWidget::tabCurrentChanged(int index)
 void LiteTabWidget::setCurrentIndex(int index)
 {    
     m_tabBar->setCurrentIndex(index);
+}
+
+void LiteTabWidget::tabMoved(int from, int to)
+{
+    m_widgetList.swap(from,to);
 }

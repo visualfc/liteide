@@ -64,6 +64,7 @@ signals:
 public slots:
     void setCurrentWidget(QWidget *w);
     void setCurrentIndex(int index);
+    void tabMoved(int,int);
 public slots:
     void closeCurrentTab();
     void selectListActGroup(QAction*);
