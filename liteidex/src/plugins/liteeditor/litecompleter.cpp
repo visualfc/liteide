@@ -112,6 +112,7 @@ LiteCompleter::LiteCompleter(QObject *parent) :
     m_completer->setCompletionMode(QCompleter::PopupCompletion);
     m_completer->setCaseSensitivity(Qt::CaseSensitive);
     m_completer->setSeparator(".");
+    m_completer->setWrapAround(true);
     m_stop = '(';
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));

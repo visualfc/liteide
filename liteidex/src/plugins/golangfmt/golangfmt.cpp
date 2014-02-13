@@ -133,8 +133,8 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
     process.write(text.toUtf8());
     process.closeWriteChannel();
-    if (!process.waitForFinished(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout),false);
+    if (!process.waitForFinished(timeout*4)) {
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout*4),false);
         return;
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
