@@ -60,6 +60,7 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(fmtFinish(bool,int,QString)));
 
+    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
@@ -125,7 +126,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
 
     QProcess process;
-    process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
+    process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     process.start(m_gofmtCmd,args);
     if (!process.waitForStarted(timeout)) {
         m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
