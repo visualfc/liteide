@@ -4,8 +4,9 @@
   Based on Gist Github
   Improvements are welcome
   Public Domain, Ardan Studios, 2014
+	f8f8ff
   -->
-  <style name="Text" foreground="#000000" background="#f8f8ff"/>
+  <style name="Text" foreground="#000000" background="#ffffff"/>
   <style name="Extra" foreground="#008B8B" background=""/>
   <style name="Selection" background="#ADD6FF"/>
   <style name="CurrentLine" background="#B4C8C8"/>
@@ -18,7 +19,7 @@
   <style name="Float" foreground="#099" bold="true"/>
   <style name="Char" foreground="#d14"/>
   <style name="String" foreground="#d14"/>
-  <style name="Comment" foreground="#7a7a6c"/>
+  <style name="Comment" foreground="#7a7a6c" italic="true"/>
   <style name="Alert" foreground="#ff0000"/>
   <style name="Error" foreground="#ff0000"/>
   <style name="Function" foreground="#000000"/>
