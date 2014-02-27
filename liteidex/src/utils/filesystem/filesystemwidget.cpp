@@ -498,7 +498,7 @@ void FileSystemWidget::addRootPath(const QString &path)
 void FileSystemWidget::setRootPathList(const QStringList &pathList)
 {
     m_model->setRootPathList(pathList);
-    m_tree->expandToDepth(0);
+    //m_tree->expandToDepth(0);
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
 

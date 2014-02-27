@@ -180,7 +180,7 @@ void SymbolTreeView::saveState(SymbolTreeState *state)
 void SymbolTreeView::loadState(QAbstractItemModel *model,SymbolTreeState *state)
 {
     //load state
-    this->expandToDepth(0);
+    //this->expandToDepth(0);
 
     QListIterator<QStringList> ie(state->expands);
     while (ie.hasNext()) {
