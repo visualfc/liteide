@@ -1,4 +1,5 @@
 @echo on
+
 copy LICENSE.LGPL liteide
 copy LGPL_EXCEPTION.TXT liteide
 copy ..\README.md liteide
