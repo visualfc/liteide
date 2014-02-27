@@ -7,6 +7,7 @@
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
 		<custom id="BuildArgs" name="BUILDARGS" value=""/>
 		<custom id="InstallArgs" name="INSTALLARGS" value=""/>
+		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
 		<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Install" menu="Build" img="blue/install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="BuildTests" menu="Build" img="blue/buildtest.png" cmd="$(GO)" args="test -c -gcflags &quot;-N -l&quot;" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)"/>
@@ -27,7 +28,7 @@
 		<action id="Utils" folder="true" img="blue/folder.png"/>
 		<action id="Fmt" menu="Utils" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Vet" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Lint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(EDITOR_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
+		<action id="Lint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
 		<action id="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Gopm Gen" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm gen" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Gopm Help" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm help" save="" output="true" codec="utf-8"/>
