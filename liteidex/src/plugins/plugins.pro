@@ -19,7 +19,6 @@ SUBDIRS = \
     golangdoc \
     golangplay \
     golangpackage \
-    golanglint \
     gdbdebugger \
     markdown \
     webkithtmlwidget \

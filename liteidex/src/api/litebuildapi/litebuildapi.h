@@ -37,7 +37,9 @@ public:
         m_readline(false),
         m_separator(false),
         m_killold(false),
-        m_navigate(false)
+        m_navigate(false),
+        m_folder(false),
+        m_takeall(false)
     {}
     void setId(const QString &id) { m_id = id; }
     void setMenu(const QString &menu) { m_menu = menu; }
@@ -61,6 +63,12 @@ public:
     void setNavigate(const QString &text) {
         m_navigate = QVariant(text).toBool();
     }
+    void setFolder(const QString &text) {
+        m_folder = QVariant(text).toBool();
+    }
+    void setTakeall(const QString &text) {
+        m_takeall = QVariant(text).toBool();
+    }
     void setWork(const QString &work) { m_work = work; }
     void setCodec(const QString &codec) { m_codec = codec; }
     void setRegex(const QString &regex) { m_regex = regex; }
@@ -77,8 +85,10 @@ public:
     bool isOutput() const { return m_output; }
     bool isReadline() const {return m_readline; }
     bool isSeparator() const { return m_separator; }
+    bool isFolder() const { return m_folder; }
     bool isKillOld() const { return m_killold; }
     bool isNavigate() const { return m_navigate; }
+    bool isTakeall() const { return m_takeall; }
     QString codec() const { return m_codec; }
     QString regex() const { return m_regex; }
     QString img() const { return m_img; }
@@ -97,6 +107,8 @@ public:
         m_readline = false;
         m_separator = false;
         m_killold = false;
+        m_folder = false;
+        m_takeall = false;
     }
     bool isEmpty() {
         return m_id.isEmpty();
@@ -120,6 +132,8 @@ protected:
     bool    m_separator;
     bool    m_killold;
     bool    m_navigate;
+    bool    m_folder;
+    bool    m_takeall;
 };
 
 class BuildLookup

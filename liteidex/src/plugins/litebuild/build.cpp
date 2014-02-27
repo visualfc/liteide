@@ -128,8 +128,7 @@ void Build::make()
     }
 
     foreach(LiteApi::BuildAction *ba,m_actionList) {
-        QAction *act = this->makeAction(ba);
-        act->setObjectName(ba->id());
+        QAction *act = this->makeAction(ba);        
         QString idMenu = ba->menu();
         if (idMenu.isEmpty()) {
             QMenu *menu = m_idMenuMap.value(ba->id());
@@ -139,8 +138,10 @@ void Build::make()
                 menuAction->setText(act->text());
                 //menuAction->setToolTip(act->toolTip());
                 menuAction->setIcon(act->icon());
-                connect(menuAction,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
-                menu->addAction(act);
+                if (!ba->isFolder()) {
+                    connect(menuAction,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
+                    menu->addAction(act);
+                }
                 m_actions.append(menuAction);
             } else {
                 m_actions.append(act);
@@ -177,8 +178,10 @@ QAction *Build::makeAction(BuildAction *ba)
                 act->setIcon(icon);
             }
         }
+        if (!ba->isFolder()) {
+            connect(act,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
+        }
     }
-    connect(act,SIGNAL(triggered()),this,SLOT(slotBuildAction()));
     return act;
 }
 
@@ -289,6 +292,8 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 act->setKillold(attrs.value("killold").toString());
                 act->setSeparator(attrs.value("separator").toString());
                 act->setNavigate(attrs.value("navigate").toString());
+                act->setFolder(attrs.value("folder").toString());
+                act->setTakeall(attrs.value("takeall").toString());
                 QString img = attrs.value("img").toString();
                 if (!img.isEmpty()) {
                     if (img.at(0) != ':') {

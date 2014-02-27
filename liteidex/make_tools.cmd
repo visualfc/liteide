@@ -2,13 +2,11 @@
 
 set GOPATH=%CD%
 
-cd src\liteidex
-windres -o liteide-res.syso liteide.rc
-go install -ldflags "-s -H windowsgui" -v liteidex
-del liteide-res.syso
-cd ..\..
-
-go install -v -ldflags -s tools/goastview
-go install -v -ldflags -s tools/godocview
-go install -v -ldflags -s tools/goexec
-go install -v -ldflags -s tools/goapi
+go install -ldflags "-s" -v tools/goastview
+go install -ldflags "-s" -v tools/godocview
+go install -ldflags "-s" -v tools/goexec
+go install -ldflags "-s" -v tools/goapi
+go install -ldflags "-s" -v tools/gopresent
+go install -ldflags "-s" -v github.com/visualfc/goimports
+go install -ldflags "-s" -v github.com/nsf/gocode
+go install -ldflags "-s" -v github.com/gpmgo/gopm

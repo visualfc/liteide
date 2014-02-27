@@ -69,7 +69,8 @@ enum {
     ID_INPUTTYPE = 6, //action - 0, command - 1
     ID_NAVIGATE = 7,
     ID_REGEXP = 8,
-    ID_ACTIONID = 9
+    ID_ACTIONID = 9,
+    ID_TAKEALL = 10
 };
 
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
@@ -806,12 +807,16 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
     QString msg = codec->toUnicode(data);
     m_output->append(msg);
 
-    if (bError && m_process->userData(ID_NAVIGATE).toBool() ) {
+    if (!m_process->userData(ID_NAVIGATE).toBool()) {
+        return;
+    }
+    if (bError || m_process->userData(ID_TAKEALL).toBool() ) {
         QString regexp = m_process->userData(ID_REGEXP).toString();
         if (regexp.isEmpty()) {
             return;
         }
         QRegExp re(regexp);
+        bool bSetHead = false;
         foreach (QString err, msg.split("\n",QString::SkipEmptyParts)) {
             if (re.indexIn(err) >= 0 && re.captureCount() >= 2) {
                 QString fileName = re.cap(1);
@@ -838,7 +843,16 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                     if (editor) {
                         LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
                         if (liteEditor) {
-                            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,m_process->userData(ID_ACTIONID).toString()+" Error");
+                            if (!bSetHead) {
+                                bSetHead = true;
+                                QString str = m_process->userData(ID_ACTIONID).toString();
+                                if (bError) {
+                                    str += " Error";
+                                } else {
+                                    str += " Export";
+                                }
+                                liteEditor->setNavigateHead(LiteApi::EditorNavigateError,str);
+                            }
                             liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err, LITEBUILD_TAG);
                         }
                     }
@@ -1068,6 +1082,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     m_process->setEnvironment(sysenv.toStringList());
     m_process->setUserData(ID_NAVIGATE,ba->isNavigate());
     m_process->setUserData(ID_ACTIONID,ba->id());
+    m_process->setUserData(ID_TAKEALL,ba->isTakeall());
 
     if (ba->isNavigate()) {
         foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
