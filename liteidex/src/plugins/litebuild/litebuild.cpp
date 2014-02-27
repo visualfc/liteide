@@ -816,7 +816,6 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
             return;
         }
         QRegExp re(regexp);
-        bool bSetHead = false;
         foreach (QString err, msg.split("\n",QString::SkipEmptyParts)) {
             if (re.indexIn(err) >= 0 && re.captureCount() >= 2) {
                 QString fileName = re.cap(1);
@@ -843,15 +842,13 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                     if (editor) {
                         LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
                         if (liteEditor) {
-                            if (!bSetHead) {
-                                bSetHead = true;
-                                QString str = m_process->userData(ID_ACTIONID).toString();
-                                if (bError) {
-                                    str += " Error";
-                                } else {
-                                    str += " Export";
-                                }
+                            QString str = m_process->userData(ID_ACTIONID).toString();
+                            if (bError) {
+                                str += " Error";
                                 liteEditor->setNavigateHead(LiteApi::EditorNavigateError,str);
+                            } else {
+                                str += " Export";
+                                liteEditor->setNavigateHead(LiteApi::EditorNavigateWarning,str);
                             }
                             liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err, LITEBUILD_TAG);
                         }
@@ -859,6 +856,7 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                 }
             }
         }
+
     }
 }
 
@@ -1088,7 +1086,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
             LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
             if (liteEditor) {
-                liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, LITEBUILD_TAG);
+                liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
                 liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"Normal");
             }
         }
