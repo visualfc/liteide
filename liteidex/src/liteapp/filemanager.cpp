@@ -371,13 +371,7 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
         if (ret == QMessageBox::Yes) {
             QString scheme = m_newFileDialog->scheme();
             if (scheme == "folder") {
-                LiteApi::IApplication *app = openFolderEx(m_newFileDialog->openPath());
-                if (app != m_liteApp) {
-                    foreach(QString file, m_newFileDialog->openFiles()) {
-                        app->fileManager()->openFile(file);
-                    }
-                    return;
-                }
+                this->addFolder(m_newFileDialog->openPath());
             }
             foreach(QString file, m_newFileDialog->openFiles()) {
                 this->openFile(file);
