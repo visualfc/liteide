@@ -816,8 +816,8 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
             return;
         }
         QRegExp re(regexp);
-        foreach (QString err, msg.split("\n",QString::SkipEmptyParts)) {
-            if (re.indexIn(err) >= 0 && re.captureCount() >= 2) {
+        foreach (QString info, msg.split("\n",QString::SkipEmptyParts)) {
+            if (re.indexIn(info) >= 0 && re.captureCount() >= 2) {
                 QString fileName = re.cap(1);
                 QString fileLine = re.cap(2);
 
@@ -846,11 +846,12 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                             if (bError) {
                                 str += " Error";
                                 liteEditor->setNavigateHead(LiteApi::EditorNavigateError,str);
+                                liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,info, LITEBUILD_TAG);
                             } else {
                                 str += " Export";
                                 liteEditor->setNavigateHead(LiteApi::EditorNavigateWarning,str);
+                                liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWarning,info, LITEBUILD_TAG);
                             }
-                            liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err, LITEBUILD_TAG);
                         }
                     }
                 }
