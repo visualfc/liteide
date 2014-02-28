@@ -52,10 +52,10 @@ public:
     virtual void removeRecentFile(const QString &fileName, const QString &scheme);
     virtual QStringList recentFiles(const QString &scheme) const;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const;
-    virtual IApplication* openFolderEx(const QString &folder);
+    //virtual IApplication* openFolderEx(const QString &folder);
     virtual QStringList folderList() const;
     virtual void setFolderList(const QStringList &folders);
-    virtual void addFolder(const QString &folder);
+    virtual void addFolderList(const QString &folder);
     virtual IApplication* openFolderInNewWindow(const QString &folder);
 public:
     QString openAllTypeFilter() const;

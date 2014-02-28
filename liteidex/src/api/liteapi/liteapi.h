@@ -204,10 +204,10 @@ public:
     virtual void removeRecentFile(const QString &fileName, const QString &scheme) = 0;
     virtual QStringList recentFiles(const QString &scheme) const = 0;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const = 0;
-    virtual IApplication* openFolderEx(const QString &folder) = 0;
+    //virtual IApplication* openFolderEx(const QString &folder) = 0;
     virtual QStringList folderList() const = 0;
     virtual void setFolderList(const QStringList &folders) = 0;
-    virtual void addFolder(const QString &folders) = 0;
+    virtual void addFolderList(const QString &folders) = 0;
     virtual IApplication* openFolderInNewWindow(const QString &folder) = 0;
 signals:
     void fileListChanged();
@@ -725,7 +725,7 @@ inline QSize getToolBarIconSize() {
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X20")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X20.2")
 
 
 #endif //__LITEAPI_H__

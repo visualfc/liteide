@@ -681,7 +681,7 @@ void FileBrowser::openFolderInNewWindow()
 void FileBrowser::addToFolders()
 {
     QDir dir = contextDir();
-    m_liteApp->fileManager()->addFolder(dir.path());
+    m_liteApp->fileManager()->addFolderList(dir.path());
 }
 
 void FileBrowser::openShell()

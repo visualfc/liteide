@@ -395,8 +395,8 @@ void LiteApp::applyOption(QString id)
     if (id != OPTION_LITEAPP) {
         return;
     }
-    bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
-    m_openFolderNewWindowAct->setVisible(!b);
+    //bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
+    //m_openFolderNewWindowAct->setVisible(!b);
 }
 
 bool LiteApp::hasGoProxy() const
@@ -491,7 +491,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X20.1";
+    return "X20.2";
 }
 
 QString LiteApp::ideFullName() const
@@ -507,7 +507,7 @@ QString LiteApp::ideName() const
 QString LiteApp::ideCopyright() const
 {
     static QString s_info =
-    "2011-2013(c)\n"
+    "2011-2014(c)\n"
     "visualfc@gmail.com\n"
     "\n"
     "https://github.com/visualfc/liteide\n"
@@ -601,8 +601,8 @@ void LiteApp::createActions()
     actionContext->regAction(m_openFolderAct,"OpenFolder","");
 
     m_openFolderNewWindowAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Window..."),m_mainwindow);
-    bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
-    m_openFolderNewWindowAct->setVisible(!b);
+    //bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
+    //m_openFolderNewWindowAct->setVisible(!b);
     actionContext->regAction(m_openFolderNewWindowAct,"OpenFolderNewWindow","");
 
     m_addFolderAct = new QAction(tr("Add Folder..."),m_mainwindow);
@@ -682,9 +682,9 @@ void LiteApp::createMenus()
 
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openFileAct);
+    m_fileMenu->addAction(m_addFolderAct);
     m_fileMenu->addAction(m_openFolderAct);
     m_fileMenu->addAction(m_openFolderNewWindowAct);
-    m_fileMenu->addAction(m_addFolderAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);

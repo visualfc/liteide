@@ -86,7 +86,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_setupGopathAct,"SetupGOPATH","");
 
     m_godocAct = new QAction(tr("View Documentation"),this);
-    m_loadPackageFolderAct = new QAction(tr("Load Package in New Window"),this);
+    m_loadPackageInNewWindowAct = new QAction(tr("Load Package in New Window"),this);
     m_addToFoldersAct = new QAction(tr("Add Package to Folders"),this);
     m_openSrcAct = new QAction(tr("Open Source File"),this);
     m_copyNameAct = new QAction(tr("Copy Name to Clipboard"),this);
@@ -96,7 +96,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootMenu->addAction(m_reloadAct);
     m_rootMenu->addAction(m_setupGopathAct);
 
-    m_pkgMenu->addAction(m_loadPackageFolderAct);
+    m_pkgMenu->addAction(m_loadPackageInNewWindowAct);
     m_pkgMenu->addAction(m_addToFoldersAct);
     m_pkgMenu->addSeparator();
     m_pkgMenu->addAction(m_godocAct);
@@ -120,7 +120,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reloadAll()));
     connect(m_setupGopathAct,SIGNAL(triggered()),this,SLOT(setupGopath()));
     connect(m_godocAct,SIGNAL(triggered()),this,SLOT(loadPackageDoc()));
-    connect(m_loadPackageFolderAct,SIGNAL(triggered()),this,SLOT(loadPackageFolder()));
+    connect(m_loadPackageInNewWindowAct,SIGNAL(triggered()),this,SLOT(loadPackageInNewWindow()));
     connect(m_addToFoldersAct,SIGNAL(triggered()),this,SLOT(addPackageToFolders()));
     connect(m_openSrcAct,SIGNAL(triggered()),this,SLOT(doubleClicked()));
     connect(m_copyNameAct,SIGNAL(triggered()),this,SLOT(copyPackageName()));
@@ -262,13 +262,13 @@ void PackageBrowser::copyPackageName()
     QApplication::clipboard()->setText(name);
 }
 
-void PackageBrowser::loadPackageFolder()
+void PackageBrowser::loadPackageInNewWindow()
 {
     QModelIndex index = m_treeView->currentIndex();
     if (!index.isValid()) {
         return;
     }
-    loadPackageFolderHelper(index);
+    loadPackageFolderHelper(index,false);
 }
 
 void PackageBrowser::addPackageToFolders()
@@ -300,7 +300,7 @@ bool PackageBrowser::loadPackageFolderHelper(QModelIndex index, bool add)
     QDir dir(json.toMap().value("Dir").toString());
     if (dir.exists()) {
         if (add) {
-            m_liteApp->fileManager()->addFolder(dir.path());
+            m_liteApp->fileManager()->addFolderList(dir.path());
         } else {
             m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
         }
@@ -323,7 +323,7 @@ void PackageBrowser::doubleClicked()
             m_liteApp->fileManager()->openEditor(path);
         }
     } else if (type == PackageType::ITEM_PACKAGE) {
-        if (loadPackageFolderHelper(index)) {
+        if (loadPackageFolderHelper(index,true)) {
             return;
         }
     }

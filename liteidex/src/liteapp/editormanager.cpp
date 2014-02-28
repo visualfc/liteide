@@ -887,6 +887,6 @@ void EditorManager::moveToNewWindow()
     QFileInfo info(filePath);
     if (app->fileManager()->openEditor(filePath)) {
         this->closeEditor(ed);
-        app->fileManager()->openFolderEx(info.path());
+        app->fileManager()->addFolderList(info.path());
     }
 }

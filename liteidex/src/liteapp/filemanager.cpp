@@ -213,16 +213,17 @@ void FileManager::setFolderList(const QStringList &folders)
     }
 }
 
-void FileManager::addFolder(const QString &folder)
+void FileManager::addFolderList(const QString &folder)
 {
     m_folderWidget->addRootPath(folder);
     m_toolWindowAct->setChecked(true);
+    addRecentFile(folder,"folder");
 }
 
 IApplication* FileManager::openFolderInNewWindow(const QString &folder)
 {
     IApplication *app = m_liteApp->newInstance(false);
-    app->fileManager()->openFolderEx(folder);
+    app->fileManager()->setFolderList(QStringList() << folder);
     return app;
 }
 
@@ -282,7 +283,7 @@ void FileManager::openFolder()
         if (dir.cdUp()) {
             m_initPath = dir.path();
         }
-        this->openFolderEx(folder);
+        this->addFolderList(folder);
     }
 }
 
@@ -301,7 +302,7 @@ void FileManager::openFolderNewWindow()
            m_initPath = dir.path();
        }
        IApplication *app = m_liteApp->newInstance(false);
-       app->fileManager()->openFolderEx(folder);
+       app->fileManager()->setFolderList(QStringList() << folder);
    }
 }
 
@@ -371,7 +372,7 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
         if (ret == QMessageBox::Yes) {
             QString scheme = m_newFileDialog->scheme();
             if (scheme == "folder") {
-                this->addFolder(m_newFileDialog->openPath());
+                this->addFolderList(m_newFileDialog->openPath());
             }
             foreach(QString file, m_newFileDialog->openFiles()) {
                 this->openFile(file);
@@ -453,25 +454,25 @@ IProject *FileManager::openProject(const QString &_fileName)
     return proj;
 }
 
-IApplication* FileManager::openFolderEx(const QString &folder)
-{
-    QDir dir(folder);
-    if (!dir.exists()) {
-        return m_liteApp;
-    }
-    if (m_folderWidget->rootPathList().isEmpty()) {
-        m_folderWidget->setRootPath(folder);
-    } else {
-        if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
-            return this->openFolderInNewWindow(folder);
-        } else {
-            m_folderWidget->setRootPath(folder);
-        }
-    }
-    m_toolWindowAct->setChecked(true);
-    addRecentFile(folder,"folder");
-    return m_liteApp;
-}
+//IApplication* FileManager::openFolderEx(const QString &folder)
+//{
+//    QDir dir(folder);
+//    if (!dir.exists()) {
+//        return m_liteApp;
+//    }
+//    if (m_folderWidget->rootPathList().isEmpty()) {
+//        m_folderWidget->setRootPath(folder);
+//    } else {
+//        if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
+//            return this->openFolderInNewWindow(folder);
+//        } else {
+//            m_folderWidget->setRootPath(folder);
+//        }
+//    }
+//    m_toolWindowAct->setChecked(true);
+//    addRecentFile(folder,"folder");
+//    return m_liteApp;
+//}
 
 IProject *FileManager::openProjectScheme(const QString &_fileName, const QString &scheme)
 {

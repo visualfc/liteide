@@ -134,10 +134,10 @@ int main(int argc, char *argv[])
         QString file = fileList.at(0);
         QFileInfo f(file);
         if (f.isFile()) {
-            liteApp->fileManager()->openFolderEx(f.path());
+            liteApp->fileManager()->addFolderList(f.path());
             liteApp->fileManager()->openEditor(file);
         } else if (f.isDir()) {
-            liteApp->fileManager()->openFolderEx(file);
+            liteApp->fileManager()->addFolderList(file);
         }
     } else {
         foreach(QString file, fileList) {
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
             if (f.isFile()) {
                 liteApp->fileManager()->openEditor(file);
             } else if (f.isDir()) {
-                liteApp->fileManager()->openFolderEx(file);
+                liteApp->fileManager()->addFolderList(file);
             }
         }
     }
