@@ -757,12 +757,12 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="365"/>
+        <location filename="src/liteapp/filemanager.cpp" line="366"/>
         <source>LiteIDE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="366"/>
+        <location filename="src/liteapp/filemanager.cpp" line="367"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -771,7 +771,7 @@ Do you want to load?</oldsource>
 Soll es geladen werden?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="266"/>
+        <location filename="src/liteapp/filemanager.cpp" line="267"/>
         <source>Open Project or File</source>
         <translation>Projekt oder Datei öffnen</translation>
     </message>
@@ -804,34 +804,34 @@ Soll es geladen werden?</translation>
         <translation>Alle unterstützen Dateien (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="279"/>
-        <location filename="src/liteapp/filemanager.cpp" line="297"/>
+        <location filename="src/liteapp/filemanager.cpp" line="280"/>
+        <location filename="src/liteapp/filemanager.cpp" line="298"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished">Ordner öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="499"/>
+        <location filename="src/liteapp/filemanager.cpp" line="500"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="500"/>
+        <location filename="src/liteapp/filemanager.cpp" line="501"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="501"/>
+        <location filename="src/liteapp/filemanager.cpp" line="502"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="502"/>
+        <location filename="src/liteapp/filemanager.cpp" line="503"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="723"/>
+        <location filename="src/liteapp/filemanager.cpp" line="724"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -841,17 +841,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="321"/>
+        <location filename="src/liteapp/filemanager.cpp" line="322"/>
         <source>Open Files</source>
         <translation>Dateien öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="334"/>
+        <location filename="src/liteapp/filemanager.cpp" line="335"/>
         <source>Open Project</source>
         <translation>Projekt öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="700"/>
+        <location filename="src/liteapp/filemanager.cpp" line="701"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -861,8 +861,8 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="704"/>
-        <location filename="src/liteapp/filemanager.cpp" line="727"/>
+        <location filename="src/liteapp/filemanager.cpp" line="705"/>
+        <location filename="src/liteapp/filemanager.cpp" line="728"/>
         <source>LiteIDE X</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1735,7 +1735,8 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="36"/>
-        <source>Store settings to local ini file ( request restart liteide )</source>
+        <source>Store settings to local ini file ( request restart LiteIDE )</source>
+        <oldsource>Store settings to local ini file ( request restart liteide )</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1761,69 +1762,63 @@ Success: %2.</oldsource>
         <translation>Maximale Anzahl:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="163"/>
-        <source>Always open folder in new window</source>
-        <oldsource>Open folder in new window</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="219"/>
-        <location filename="src/liteapp/liteappoption.ui" line="225"/>
+        <location filename="src/liteapp/liteappoption.ui" line="212"/>
+        <location filename="src/liteapp/liteappoption.ui" line="218"/>
         <source>Display</source>
         <translation type="unfinished">Anzeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="231"/>
+        <location filename="src/liteapp/liteappoption.ui" line="224"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="238"/>
+        <location filename="src/liteapp/liteappoption.ui" line="231"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <location filename="src/liteapp/liteappoption.ui" line="238"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="255"/>
+        <location filename="src/liteapp/liteappoption.ui" line="248"/>
         <source>Toolbar Icon Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="328"/>
+        <location filename="src/liteapp/liteappoption.ui" line="321"/>
         <source>Keyboard</source>
         <translation>Tastatur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="334"/>
+        <location filename="src/liteapp/liteappoption.ui" line="327"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>Formatierung: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="346"/>
+        <location filename="src/liteapp/liteappoption.ui" line="339"/>
         <source>Hide standard commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="353"/>
+        <location filename="src/liteapp/liteappoption.ui" line="346"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="360"/>
+        <location filename="src/liteapp/liteappoption.ui" line="353"/>
         <source>Reset All</source>
         <translation>Alle zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="380"/>
+        <location filename="src/liteapp/liteappoption.ui" line="373"/>
         <source>Import...</source>
         <translation>Import...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="387"/>
+        <location filename="src/liteapp/liteappoption.ui" line="380"/>
         <source>Export...</source>
         <translation>Export...</translation>
     </message>
@@ -1839,19 +1834,19 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="177"/>
+        <location filename="src/liteapp/liteappoption.ui" line="170"/>
         <source>Close associated editor windows when closing a project</source>
         <oldsource>When Close Project, Project Editors Is Closed Automatically.</oldsource>
         <translation type="unfinished">Beim Schließen der Anwendung wird der Projekt Editor automatisch geschlossen.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="170"/>
+        <location filename="src/liteapp/liteappoption.ui" line="163"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Automatisch letzte Session laden.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="200"/>
+        <location filename="src/liteapp/liteappoption.ui" line="193"/>
         <source>Language changes will take effect after LiteIDE is restarted.</source>
         <oldsource>The language change will take effect after a restart of LiteIDE.</oldsource>
         <translation type="unfinished">Die Änderung der Sprache wird erst nach einem Neustart von LiteIDE angewendet.</translation>

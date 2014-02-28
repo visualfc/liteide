@@ -33,7 +33,7 @@
           <item>
            <widget class="QCheckBox" name="storeLocalCheckBox">
             <property name="text">
-             <string>Store settings to local ini file ( request restart liteide )</string>
+             <string>Store settings to local ini file ( request restart LiteIDE )</string>
             </property>
            </widget>
           </item>

@@ -29,6 +29,7 @@
 
 class WebKitHtmlWidgetPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     WebKitHtmlWidgetPlugin();
     virtual bool load(LiteApi::IApplication *app);

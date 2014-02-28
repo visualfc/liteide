@@ -756,12 +756,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="365"/>
+        <location filename="src/liteapp/filemanager.cpp" line="366"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="366"/>
+        <location filename="src/liteapp/filemanager.cpp" line="367"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -769,7 +769,7 @@ Do you want to load?</oldsource>
         <translation>项目文件 &apos;%1&apos;已建立,是否加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="266"/>
+        <location filename="src/liteapp/filemanager.cpp" line="267"/>
         <source>Open Project or File</source>
         <translation>打开项目或文件</translation>
     </message>
@@ -802,77 +802,73 @@ Do you want to load?</oldsource>
         <translation>所有支持文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="279"/>
-        <location filename="src/liteapp/filemanager.cpp" line="297"/>
+        <location filename="src/liteapp/filemanager.cpp" line="280"/>
+        <location filename="src/liteapp/filemanager.cpp" line="298"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>选择目录:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="499"/>
+        <location filename="src/liteapp/filemanager.cpp" line="500"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="500"/>
+        <location filename="src/liteapp/filemanager.cpp" line="501"/>
         <source>Project</source>
         <translation>项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="501"/>
+        <location filename="src/liteapp/filemanager.cpp" line="502"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="502"/>
+        <location filename="src/liteapp/filemanager.cpp" line="503"/>
         <source>Folder</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="723"/>
+        <location filename="src/liteapp/filemanager.cpp" line="724"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
 
 Do you want to reload the file from disk ?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The following file has been deleted outside of LiteIDE:
-%1
+        <translation>%1
+文件已经在磁盘上已经被改变，但LiteIDE上有您的未保存修改。
 
-Do you want to save the previous contents, close the file, or leave the contents unsaved?</source>
-        <translation type="vanished">下面的文件在LiteIDE外被删除:\n%1\n请选择保存以前的内容,还是关闭文件,或者不保存?</translation>
+您想要重新从磁盘读取？
+回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <source>%1
-This file has been modified outside of LiteIDE.  Do you want to reload it?</source>
-        <translation type="vanished">%1 文件在LiteIDE之外被修改,是否重新加载?</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/filemanager.cpp" line="321"/>
+        <location filename="src/liteapp/filemanager.cpp" line="322"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="334"/>
+        <location filename="src/liteapp/filemanager.cpp" line="335"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="700"/>
+        <location filename="src/liteapp/filemanager.cpp" line="701"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
 
 Do you want to close the editor ?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+文件已经在磁盘上已经被删除，但LiteIDE上有您的未保存修改。
+
+您想要重新从磁盘读取？
+回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="704"/>
-        <location filename="src/liteapp/filemanager.cpp" line="727"/>
+        <location filename="src/liteapp/filemanager.cpp" line="705"/>
+        <location filename="src/liteapp/filemanager.cpp" line="728"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1741,12 +1737,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="30"/>
         <source>Store</source>
-        <translation type="unfinished"></translation>
+        <translation>存储</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="36"/>
-        <source>Store settings to local ini file ( request restart liteide )</source>
-        <translation type="unfinished"></translation>
+        <source>Store settings to local ini file ( request restart LiteIDE )</source>
+        <oldsource>Store settings to local ini file ( request restart liteide )</oldsource>
+        <translation>存储配置到本地ini文件(需要重启LiteIDE)</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="46"/>
@@ -1771,69 +1768,63 @@ Success: %2.</oldsource>
         <translation>最大记录数:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="163"/>
-        <source>Always open folder in new window</source>
-        <oldsource>Open folder in new window</oldsource>
-        <translation>总是在新窗口打开目录</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="219"/>
-        <location filename="src/liteapp/liteappoption.ui" line="225"/>
+        <location filename="src/liteapp/liteappoption.ui" line="212"/>
+        <location filename="src/liteapp/liteappoption.ui" line="218"/>
         <source>Display</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="231"/>
+        <location filename="src/liteapp/liteappoption.ui" line="224"/>
         <source>Show splash screen on startup</source>
         <translation>启动时显示启动画面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="238"/>
+        <location filename="src/liteapp/liteappoption.ui" line="231"/>
         <source>Show welcome page on startup</source>
         <translation>启动时显示欢迎页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <location filename="src/liteapp/liteappoption.ui" line="238"/>
         <source>Show close buttons on each editor tab</source>
         <translation>在每个文档标签栏都显示关闭按钮</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="255"/>
+        <location filename="src/liteapp/liteappoption.ui" line="248"/>
         <source>Toolbar Icon Size</source>
         <translation>工具栏图标大小</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="328"/>
+        <location filename="src/liteapp/liteappoption.ui" line="321"/>
         <source>Keyboard</source>
         <translation>键盘</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="334"/>
+        <location filename="src/liteapp/liteappoption.ui" line="327"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="346"/>
+        <location filename="src/liteapp/liteappoption.ui" line="339"/>
         <source>Hide standard commands</source>
         <translation>隐藏标准命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="353"/>
+        <location filename="src/liteapp/liteappoption.ui" line="346"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="360"/>
+        <location filename="src/liteapp/liteappoption.ui" line="353"/>
         <source>Reset All</source>
         <translation>重置所有</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="380"/>
+        <location filename="src/liteapp/liteappoption.ui" line="373"/>
         <source>Import...</source>
         <translation>导入...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="387"/>
+        <location filename="src/liteapp/liteappoption.ui" line="380"/>
         <source>Export...</source>
         <translation>导出...</translation>
     </message>
@@ -1849,19 +1840,19 @@ Success: %2.</oldsource>
         <translation>主题:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="177"/>
+        <location filename="src/liteapp/liteappoption.ui" line="170"/>
         <source>Close associated editor windows when closing a project</source>
         <oldsource>When Close Project, Project Editors Is Closed Automatically.</oldsource>
         <translation>关闭项目时同时关闭项目内文件编辑窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="170"/>
+        <location filename="src/liteapp/liteappoption.ui" line="163"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation>启动时重新加载会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="200"/>
+        <location filename="src/liteapp/liteappoption.ui" line="193"/>
         <source>Language changes will take effect after LiteIDE is restarted.</source>
         <oldsource>The language change will take effect after a restart of LiteIDE.</oldsource>
         <translation>语言更改生效需要重启LiteIDE.</translation>
@@ -2384,7 +2375,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="547"/>
         <source>Reload File</source>
-        <translation type="unfinished"></translation>
+        <translation>重新读取文件</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="836"/>
