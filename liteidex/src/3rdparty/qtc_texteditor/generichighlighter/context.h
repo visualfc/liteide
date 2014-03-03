@@ -37,15 +37,13 @@
 #include "includerulesinstruction.h"
 #include "reuse.h"
 #include "dynamicrule.h"
+#include "highlightdefinition.h"
 #include <QtCore/QString>
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
 
 namespace TextEditor {
 namespace Internal {
-
-class Rule;
-class HighlightDefinition;
 
 class Context
 {

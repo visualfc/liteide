@@ -32,10 +32,6 @@
 **************************************************************************/
 
 #include "context.h"
-#include "rule.h"
-#include "reuse.h"
-#include "dynamicrule.h"
-#include "highlightdefinition.h"
 
 using namespace TextEditor;
 using namespace Internal;
