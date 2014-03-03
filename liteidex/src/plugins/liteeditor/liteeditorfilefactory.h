@@ -30,6 +30,7 @@
 class WordApiManager;
 class LiteEditorMarkTypeManager;
 class LiteEditor;
+
 class LiteEditorFileFactory : public LiteApi::IEditorFactory
 {
     Q_OBJECT

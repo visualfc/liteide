@@ -64,6 +64,8 @@ int main(int argc, char *argv[])
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
+    //QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
+
     QTranslator translator;
     QTranslator qtTranslator;
 

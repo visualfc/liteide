@@ -35,7 +35,8 @@
 #define CONTEXT_H
 
 #include "includerulesinstruction.h"
-
+#include "reuse.h"
+#include "dynamicrule.h"
 #include <QtCore/QString>
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
@@ -51,48 +52,108 @@ class Context
 public:
     Context();
     Context(const Context &context);
-    const Context &operator=(Context copy);
     ~Context();
+    const Context &operator=(Context copy)
+    {
+        swap(copy);
+        return *this;
+    }
+    void swap(Context &context)
+    {
+        qSwap(m_id, context.m_id);
+        qSwap(m_name, context.m_name);
+        qSwap(m_lineBeginContext, context.m_lineBeginContext);
+        qSwap(m_lineEndContext, context.m_lineEndContext);
+        qSwap(m_fallthroughContext, context.m_fallthroughContext);
+        qSwap(m_itemData, context.m_itemData);
+        qSwap(m_fallthrough, context.m_fallthrough);
+        qSwap(m_dynamic, context.m_dynamic);
+        qSwap(m_rules, context.m_rules);
+        qSwap(m_instructions, context.m_instructions);
+        qSwap(m_definition, context.m_definition);
+    }
 
-    void configureId(const int unique);
-    const QString &id() const;
+    void configureId(const int unique)
+    { m_id.append(QString::number(unique)); }
 
-    void setName(const QString &name);
-    const QString &name() const;
+    const QString &id() const
+    { return m_id; }
 
-    void setLineBeginContext(const QString &context);
-    const QString &lineBeginContext() const;
+    void setName(const QString &name)
+    {
+        m_name = name;
+        m_id = name;
+    }
 
-    void setLineEndContext(const QString &context);
-    const QString &lineEndContext() const;
+    const QString &name() const
+    { return m_name; }
 
-    void setFallthroughContext(const QString &context);
-    const QString &fallthroughContext() const;
+    void setLineBeginContext(const QString &context)
+    { m_lineBeginContext = context; }
 
-    void setItemData(const QString &itemData);
-    const QString &itemData() const;
+    const QString &lineBeginContext() const
+    { return m_lineBeginContext; }
 
-    void setFallthrough(const QString &fallthrough);
-    bool isFallthrough() const;
+    void setLineEndContext(const QString &context)
+    { m_lineEndContext = context; }
 
-    void setDynamic(const QString &dynamic);
-    bool isDynamic() const;
-    void updateDynamicRules(const QStringList &captures) const;
+    const QString &lineEndContext() const
+    { return m_lineEndContext; }
 
-    void addRule(const QSharedPointer<Rule> &rule);
-    void addRule(const QSharedPointer<Rule> &rule, int index);
-    const QList<QSharedPointer<Rule> > &rules() const;
+    void setFallthroughContext(const QString &context)
+    { m_fallthroughContext = context; }
 
-    void addIncludeRulesInstruction(const IncludeRulesInstruction &instruction);
-    const QList<IncludeRulesInstruction> &includeRulesInstructions() const;
-    void clearIncludeRulesInstructions();
+    const QString &fallthroughContext() const
+    { return m_fallthroughContext; }
 
-    void setDefinition(const QSharedPointer<HighlightDefinition> &definition);
-    const QSharedPointer<HighlightDefinition> &definition() const;
+    void setItemData(const QString &itemData)
+    { m_itemData = itemData; }
 
-    void swap(Context &context);
+    const QString &itemData() const
+    { return m_itemData; }
 
-private:
+    void setFallthrough(const QString &fallthrough)
+    { m_fallthrough = toBool(fallthrough); }
+
+    bool isFallthrough() const
+    { return m_fallthrough; }
+
+    void setDynamic(const QString &dynamic)
+    { m_dynamic = toBool(dynamic); }
+
+    bool isDynamic() const
+    { return m_dynamic; }
+
+    void updateDynamicRules(const QStringList &captures) const
+    {
+        TextEditor::Internal::updateDynamicRules(m_rules, captures);
+    }
+
+    void addRule(const QSharedPointer<Rule> &rule)
+    { m_rules.append(rule); }
+
+    void addRule(const QSharedPointer<Rule> &rule, int index)
+    { m_rules.insert(index, rule); }
+
+    const QList<QSharedPointer<Rule> > & rules() const
+    { return m_rules; }
+
+    void addIncludeRulesInstruction(const IncludeRulesInstruction &instruction)
+    { m_instructions.append(instruction); }
+
+    const QList<IncludeRulesInstruction> &includeRulesInstructions() const
+    { return m_instructions; }
+
+    void clearIncludeRulesInstructions()
+    { m_instructions.clear(); }
+
+    void setDefinition(const QSharedPointer<HighlightDefinition> &definition)
+    { m_definition = definition; }
+
+    const QSharedPointer<HighlightDefinition> &definition() const
+    { return m_definition; }
+
+protected:
     QString m_id;
     QString m_name;
     QString m_lineBeginContext;
@@ -107,6 +168,7 @@ private:
 
     QSharedPointer<HighlightDefinition> m_definition;
 };
+
 
 } // namespace Internal
 } // namespace TextEditor

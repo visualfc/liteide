@@ -158,7 +158,7 @@ void Highlighter::highlightBlock(const QString &text)
         }
     }
 
-    applyFormatToSpaces(text, m_creatorFormats.value(VisualWhitespace));
+    applyFormatToSpaces(text, m_creatorFormats[VisualWhitespace]);
 }
 
 void Highlighter::setupDataForBlock(const QString &text)
@@ -439,12 +439,13 @@ void Highlighter::applyFormat(int offset,
     if (formatId == Normal && !itemData->isCustomized()) {
         return;
     }
-    //if (formatId != Normal) {
-        QHash<TextFormatId, QTextCharFormat>::const_iterator cit =
-            m_creatorFormats.constFind(formatId);
-        if (cit != m_creatorFormats.constEnd()) {
-            QTextCharFormat format = cit.value();
-            if (itemData->isCustomized()) {
+//    if (formatId != Normal) {
+//        QHash<TextFormatId, QTextCharFormat>::const_iterator cit =
+//            m_creatorFormats.constFind(formatId);
+//        if (cit != m_creatorFormats.constEnd()) {
+//            QTextCharFormat format = cit.value();
+            QTextCharFormat format = m_creatorFormats[formatId];
+            //if (itemData->isCustomized()) {
                 // Please notice that the following are applied every time for item datas which have
                 // customizations. The configureFormats method could be used to provide a "one time"
                 // configuration, but it would probably require to traverse all item datas from all
@@ -462,9 +463,9 @@ void Highlighter::applyFormat(int offset,
                     format.setFontUnderline(itemData->isUnderlined());
                 if (itemData->isStrikeOutSpecified())
                     format.setFontStrikeOut(itemData->isStrikeOut());
-            }
+            //}
             setFormat(offset, count, format);
-        }
+        //}
     //}
 }
 
