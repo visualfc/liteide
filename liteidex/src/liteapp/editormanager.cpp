@@ -109,7 +109,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextNofileMenu = new QMenu;
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
-    closeAct->setShortcut(QKeySequence("Ctrl+W"));    
+    closeAct->setShortcut(QKeySequence("Ctrl+W"));
     QAction *closeOthersAct = new QAction(tr("Close Others"),this);
     QAction *closeAllAct = new QAction(tr("Close All"),this);
     QAction *closeLeftAct = new QAction(tr("Close Left Tabs"),this);

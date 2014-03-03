@@ -719,8 +719,12 @@ void FileManager::checkForReload()
                     // The file has been modified.
                     // If the buffer is modified, ask the user what he wants to do.
                     // Otherwise, apply the default action : reload the new content in the editor.
+
+                    QDateTime lastModified = QFileInfo(fileName).lastModified();
+                    QDateTime modified = m_fileStateMap.value(fileName);
                     int ret = QMessageBox::Yes;
-                    if (editor->isModified()){
+                    if (editor->isModified() && lastModified != modified) {
+                        qDebug() << modified << lastModified;
                         QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
                             "but you have unsaved modifications in your LiteIDE editor.\n"
                             "\nDo you want to reload the file from disk ?"

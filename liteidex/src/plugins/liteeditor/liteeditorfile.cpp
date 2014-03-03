@@ -213,7 +213,6 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
             }
         }
     }
-
     m_document->setPlainText(text);
     return true;
 }
