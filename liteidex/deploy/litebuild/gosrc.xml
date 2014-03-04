@@ -26,11 +26,9 @@
 		<action id="Cover" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="test -coverprofile cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="CoverFunc" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="tool cover -func=cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>		
 		<action id="Utils" folder="true" img="blue/folder.png"/>
-		<action id="Fmt" menu="Utils" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Vet" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Lint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
-		<action id="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Gopm Gen" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm gen" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Gopm Help" menu="Gopm Build" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm help" save="" output="true" codec="utf-8"/>
+		<action id="GoFmt" menu="Utils" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="GoVet" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="GoLint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
+		<action id="Gopm Build" menu="Utils" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 	</mime-type>
 </mime-info>

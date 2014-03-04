@@ -202,7 +202,7 @@ func (p *PackageView) PrintTypes(w io.Writer, types []*doc.Type, level int) {
 			continue
 		}
 		typespec := d.Decl.Specs[0].(*ast.TypeSpec)
-		var tag string = tag_type
+		var tag = tag_type
 		if _, ok := typespec.Type.(*ast.InterfaceType); ok {
 			tag = tag_interface
 		} else if _, ok := typespec.Type.(*ast.StructType); ok {
@@ -310,7 +310,7 @@ func (p *PackageView) PrintPackage(w io.Writer, level int) {
 	p.PrintTypes(w, p.pdoc.Types, level)
 }
 
-// level:tag:name:x:y
+// level,tag,pos@info
 func (p *PackageView) PrintTree(w io.Writer) {
 	p.PrintPackage(w, 0)
 }

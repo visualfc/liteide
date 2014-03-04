@@ -15,7 +15,7 @@ var (
 	flagInputSrc   = flag.String("src", "", "input go source file")
 	flagStdin      = flag.Bool("stdin", false, "input source data from stdin")
 	flagInputFiles = flag.String("files", "", "input go files")
-	flagExpr	   = flag.Bool("expr", true, "print expr string")
+	flagExpr       = flag.Bool("expr", true, "print expr string")
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	if len(*flagInputFiles) > 0 {
-		var files []string = strings.Split(*flagInputFiles, " ")
+		files := strings.Split(*flagInputFiles, " ")
 		err := PrintFilesTree(files, os.Stdout, *flagExpr)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
