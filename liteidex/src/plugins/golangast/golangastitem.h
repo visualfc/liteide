@@ -25,6 +25,7 @@
 #define GOLANGASTITEM_H
 
 #include <QStandardItem>
+#include "golangastapi/golangastapi.h"
 
 struct AstItemPos {
     QString fileName;
@@ -35,9 +36,23 @@ struct AstItemPos {
 class GolangAstItem : public QStandardItem
 {
 public:
-    QList<AstItemPos> m_posList;
-    QString m_tagName;
-    QString m_tipInfo;
+    QList<AstItemPos>   m_posList;
+    QString             m_tagName;
+    QString             m_tipInfo;
+    LiteApi::ASTTAG_ENUM m_tagFlag;
+public:
+    bool isFolder() const {
+        switch (m_tagFlag) {
+        case LiteApi::TagConstFolder:
+        case LiteApi::TagValueFolder:
+        case LiteApi::TagImportFolder:
+        case LiteApi::TagFuncFolder:
+            return true;
+        default:
+            return false;
+        }
+        return false;
+    }
 };
 
 #endif // GOLANGASTITEM_H

@@ -116,6 +116,10 @@ QIcon GolangAstIconPublic::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) const
 {
     if (tag == LiteApi::TagPackage)
         return iconPackage;
+    else if (tag == LiteApi::TagImportFolder)
+        return iconImports;
+    else if (tag == LiteApi::TagImport)
+        return iconImport;
     else if (tag == LiteApi::TagType)
         return iconType;
     else if (tag == LiteApi::TagInterface)
@@ -202,6 +206,10 @@ QIcon GolangAstIconPrivate::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) cons
 {
     if (tag == LiteApi::TagPackage)
         return iconPackage;
+    else if (tag == LiteApi::TagImportFolder)
+        return iconImports;
+    else if (tag == LiteApi::TagImport)
+        return iconImport;
     else if (tag == LiteApi::TagType)
         return iconType;
     else if (tag == LiteApi::TagInterface)

@@ -82,7 +82,6 @@ GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     connect(m_timer,SIGNAL(timeout()),this,SLOT(updateAstNow()));
     connect(m_processFile,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finishedProcessFile(int,QProcess::ExitStatus)));
     connect(m_timerFile,SIGNAL(timeout()),this,SLOT(updateAstNowFile()));
-    connect(m_projectAstWidget,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedTree(QModelIndex)));
 
     m_liteApp->extension()->addObject("LiteApi.IGolangAst",this);
 }
@@ -259,7 +258,6 @@ void GolangAst::editorCreated(LiteApi::IEditor *editor)
             if (info.suffix() == "go") {
                 AstWidget *w = new AstWidget(true,m_liteApp);
                 w->setWorkPath(info.absolutePath());
-                connect(w,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedTree(QModelIndex)));
                 m_stackedWidget->addWidget(w);
                 m_editorAstWidgetMap.insert(editor,w);
             }
@@ -401,35 +399,4 @@ void GolangAst::finishedProcessFile(int code,QProcess::ExitStatus status)
     } else {
         //qDebug() << m_process->readAllStandardError();
     }
-}
-
-void GolangAst::doubleClickedTree(QModelIndex index)
-{
-    AstWidget *w = (AstWidget*)sender();
-    if (!w) {
-        return;
-    }
-    GolangAstItem *item = w->astItemFromIndex(index);
-    if (item == NULL)
-        return;
-    if (item->m_posList.isEmpty()) {
-        if (w->tree()->isExpanded(index)) {
-            w->tree()->collapse(index);
-        } else {
-            w->tree()->expand(index);
-        }
-        return;
-    }
-    AstItemPos pos = item->m_posList.at(0);
-    QFileInfo info(QDir(w->workPath()),pos.fileName);
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
-    if (!editor) {
-        return;
-    }
-    editor->widget()->setFocus();
-    LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-    if (!textEditor) {
-        return;
-    }
-    textEditor->gotoLine(pos.line-1,pos.column,true);
 }

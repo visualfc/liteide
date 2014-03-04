@@ -49,6 +49,8 @@ const (
 enum ASTTAG_ENUM {
     TagNone = 0,
     TagPackage,
+    TagImport,
+    TagImportFolder,
     TagType,
     TagStruct,
     TagInterface,

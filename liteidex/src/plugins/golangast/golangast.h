@@ -62,7 +62,6 @@ public slots:
     void updateAstNow();
     void updateAstFile();
     void updateAstNowFile();
-    void doubleClickedTree(QModelIndex);
 protected:
     LiteApi::IApplication *m_liteApp;
     QTimer  *m_timer;

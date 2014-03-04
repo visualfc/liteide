@@ -24,7 +24,10 @@
 #include "astwidget.h"
 #include "golangastitem.h"
 #include "golangasticon.h"
+#include "golangdocapi/golangdocapi.h"
 
+#include <QAction>
+#include <QMenu>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QFont>
@@ -66,9 +69,20 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
 
     m_tree->setModel(proxyModel);
     m_tree->setExpandsOnDoubleClick(false);
+    m_tree->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SIGNAL(doubleClicked(QModelIndex)));
+    m_gotoPosAct = new QAction(tr("Go To Definition"),this);
+    m_importDocAct = new QAction(tr("View Import Document"),this);
+    m_contextMenu = new QMenu(this);
+    m_contextMenu->addAction(m_gotoPosAct);
+    m_contextMenu->addAction(m_importDocAct);
+
+    m_contextItem = 0;
+    connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     connect(m_filterEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
+    connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeContextMenuRequested(QPoint)));
+    connect(m_gotoPosAct,SIGNAL(triggered()),this,SLOT(gotoDefinition()));
+    connect(m_importDocAct,SIGNAL(triggered()),this,SLOT(viewImportDoc()));
 }
 
 void AstWidget::clear()
@@ -169,6 +183,69 @@ void AstWidget::filterChanged(QString filter)
     }
 }
 
+void AstWidget::treeContextMenuRequested(QPoint pt)
+{
+    QModelIndex index =  m_tree->indexAt(pt);
+    if (!index.isValid()) {
+        return;
+    }
+    GolangAstItem *item = astItemFromIndex(index);
+    if (item->isFolder()) {
+        return;
+    }
+    m_contextItem = item;
+    m_importDocAct->setVisible(item->m_tagFlag == LiteApi::TagImport);
+    m_contextMenu->popup(m_tree->mapToGlobal(pt));
+}
+
+void AstWidget::gotoDefinition()
+{
+    gotoItemDefinition(m_contextItem);
+}
+
+void AstWidget::viewImportDoc()
+{
+    LiteApi::IGolangDoc *doc = LiteApi::getGolangDoc(m_liteApp);
+    if (!doc) {
+        return;
+    }
+    doc->openUrl(QString("pdoc:%1").arg(m_contextItem->text()));
+    doc->activeBrowser();
+}
+
+void AstWidget::doubleClicked(QModelIndex index)
+{
+    GolangAstItem *item = astItemFromIndex(index);
+    if (item->isFolder()) {
+        if (m_tree->isExpanded(index)) {
+            m_tree->collapse(index);
+        } else {
+            m_tree->expand(index);
+        }
+    } else {
+        gotoItemDefinition(item);
+    }
+}
+
+void AstWidget::gotoItemDefinition(GolangAstItem *item)
+{
+    if (item->m_posList.isEmpty()) {
+         return;
+    }
+    AstItemPos pos = item->m_posList.at(0);
+    QFileInfo info(QDir(m_workPath),pos.fileName);
+    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
+    if (!editor) {
+        return;
+    }
+    editor->widget()->setFocus();
+    LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+    if (!textEditor) {
+        return;
+    }
+    textEditor->gotoLine(pos.line-1,pos.column,false);
+}
+
 GolangAstItem *AstWidget::astItemFromIndex(QModelIndex index)
 {
     QModelIndex i = proxyModel->mapToSource(index);
@@ -178,28 +255,29 @@ GolangAstItem *AstWidget::astItemFromIndex(QModelIndex index)
     return (GolangAstItem*)m_model->itemFromIndex(i);
 }
 
-static QString tagName(const QString &tag)
+/*
+tools/goastview/packageview.go
+const (
+    tag_package        = "p"
+    tag_imports_folder = "+m"
+    tag_import         = "mm"
+    tag_type           = "t"
+    tag_struct         = "s"
+    tag_interface      = "i"
+    tag_value          = "v"
+    tag_const          = "c"
+    tag_func           = "f"
+    tag_value_folder   = "+v"
+    tag_const_folder   = "+c"
+    tag_func_folder    = "+f"
+    tag_type_method    = "tm"
+    tag_type_factor    = "tf"
+    tag_type_value     = "tv"
+)
+*/
+
+static QString tagInfo(const QString &tag)
 {
-    /*
-    tools/goastview/packageview.go
-    const (
-        tag_package        = "p"
-        tag_imports_folder = "+m"
-        tag_import         = "mm"
-        tag_type           = "t"
-        tag_struct         = "s"
-        tag_interface      = "i"
-        tag_value          = "v"
-        tag_const          = "c"
-        tag_func           = "f"
-        tag_value_folder   = "+v"
-        tag_const_folder   = "+c"
-        tag_func_folder    = "+f"
-        tag_type_method    = "tm"
-        tag_type_factor    = "tf"
-        tag_type_value     = "tv"
-    )
-    */
     if (tag == "p") {
         return "package";
     } else if (tag == "+m") {
@@ -232,6 +310,42 @@ static QString tagName(const QString &tag)
         return "field";
     }
     return QString();
+}
+
+static LiteApi::ASTTAG_ENUM toTagFlag(const QString &tag)
+{
+    if (tag == "p") {
+        return LiteApi::TagPackage;
+    } else if (tag == "+m") {
+        return LiteApi::TagImportFolder;
+    } else if (tag == "mm") {
+        return LiteApi::TagImport;
+    } else if (tag == "t") {
+        return LiteApi::TagType;
+    } else if (tag == "s") {
+        return LiteApi::TagStruct;
+    } else if (tag == "i") {
+        return LiteApi::TagInterface;
+    } else if (tag == "v") {
+        return LiteApi::TagValue;
+    } else if (tag == "c") {
+        return LiteApi::TagConst;
+    } else if (tag == "f") {
+        return LiteApi::TagFunc;
+    } else if (tag == "+v") {
+        return LiteApi::TagValueFolder;
+    } else if (tag == "+c") {
+        return LiteApi::TagConstFolder;
+    } else if (tag == "+f") {
+        return LiteApi::TagFuncFolder;
+    } else if (tag == "tm") {
+        return LiteApi::TagTypeMethod;
+    } else if (tag == "tf") {
+        return LiteApi::TagTypeFactor;
+    } else if (tag == "tv") {
+        return LiteApi::TagTypeValue;
+    }
+    return LiteApi::TagNone;
 }
 
 // level,tag,name,pos,@info
@@ -299,6 +413,7 @@ void AstWidget::updateModel(const QByteArray &data)
             level1NameItemMap.insert(name,item);
         }
         item->m_tagName = tag;
+        item->m_tagFlag = toTagFlag(tag);
         item->setText(name);
         if (!bmain && (name.at(0).isLower() || name.at(0) == '_')) {
             item->setIcon(GolangAstIcon::instance()->iconFromTag(tag,false));
@@ -308,9 +423,9 @@ void AstWidget::updateModel(const QByteArray &data)
         if (!tip.isEmpty()) {
             item->setToolTip(tip);
         } else if (tag.at(0) == '+') {
-            item->setToolTip(QString("%1").arg(tagName(tag)));
+            item->setToolTip(QString("%1").arg(tagInfo(tag)));
         } else {
-            item->setToolTip(QString("%1 %2").arg(tagName(tag)).arg(name));
+            item->setToolTip(QString("%1 %2").arg(tagInfo(tag)).arg(name));
         }
         if (info.size() >= 4) {
             foreach (QByteArray pos, info[3].split(';')) {
