@@ -45,7 +45,6 @@ public:
     virtual QIcon iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub) const;
 public:
     void setEnable(bool b);
-    void updateModel(const QByteArray &data);
     void loadProject(LiteApi::IProject *project);
     void loadProjectPath(const QString &path);
 public slots:

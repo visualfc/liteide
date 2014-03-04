@@ -26,5 +26,7 @@
         <file>images/type_var.png</file>
         <file>images/type_factor.png</file>
         <file>images/type_factor_p.png</file>
+        <file>images/import.png</file>
+        <file>images/imports.png</file>
     </qresource>
 </RCC>

@@ -26,47 +26,18 @@
 
 #include <QStandardItem>
 
+struct AstItemPos {
+    QString fileName;
+    int     line;
+    int     column;
+};
+
 class GolangAstItem : public QStandardItem
 {
 public:
-    void setTagName(const QString &tagName)
-    {
-        m_tagName = tagName;
-    }
-    QString tagName() const
-    {
-        return m_tagName;
-    }
-    void setFileName(const QString &fileName)
-    {
-        m_fileName = fileName;
-    }
-    QString fileName() const
-    {
-        return m_fileName;
-    }
-    void setLine(int line)
-    {
-        m_line = line;
-    }
-    void setCol(int col)
-    {
-        m_col = col;
-    }
-    int line() const
-    {
-        return m_line;
-    }
-    int col() const
-    {
-        return m_col;
-    }
-protected:
+    QList<AstItemPos> m_posList;
     QString m_tagName;
-    QString m_fileName;
-    int     m_line;
-    int     m_col;
+    QString m_tipInfo;
 };
-
 
 #endif // GOLANGASTITEM_H

@@ -412,8 +412,7 @@ void GolangAst::doubleClickedTree(QModelIndex index)
     GolangAstItem *item = w->astItemFromIndex(index);
     if (item == NULL)
         return;
-    QString fileName = item->fileName();
-    if (fileName.isEmpty()) {
+    if (item->m_posList.isEmpty()) {
         if (w->tree()->isExpanded(index)) {
             w->tree()->collapse(index);
         } else {
@@ -421,7 +420,8 @@ void GolangAst::doubleClickedTree(QModelIndex index)
         }
         return;
     }
-    QFileInfo info(QDir(w->workPath()),fileName);
+    AstItemPos pos = item->m_posList.at(0);
+    QFileInfo info(QDir(w->workPath()),pos.fileName);
     LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
     if (!editor) {
         return;
@@ -431,5 +431,5 @@ void GolangAst::doubleClickedTree(QModelIndex index)
     if (!textEditor) {
         return;
     }
-    textEditor->gotoLine(item->line()-1,item->col(),true);
+    textEditor->gotoLine(pos.line-1,pos.column,true);
 }

@@ -35,6 +35,8 @@ public:
     QIcon iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub = true) const;
 protected:
     QIcon   iconPackage;
+    QIcon   iconImport;
+    QIcon   iconImports;
     QIcon   iconType;
     QIcon   iconStruct;
     QIcon   iconInterface;
@@ -61,6 +63,8 @@ public:
     QIcon iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub = true) const;
 protected:
     QIcon   iconPackage;
+    QIcon   iconImport;
+    QIcon   iconImports;
     QIcon   iconType;
     QIcon   iconStruct;
     QIcon   iconInterface;
