@@ -40,12 +40,6 @@ echo .
 cd %LITEIDE_ROOT%
 set GOPATH=%CD%;%GOPATH%
 
-REM cd src\liteidex
-REM windres -o liteide-res.syso liteide.rc
-REM go install -ldflags "-s -H windowsgui" -v liteidex
-REM del liteide-res.syso
-REM cd ..\..
-
 go install -ldflags "-s" -v tools/goastview
 go install -ldflags "-s" -v tools/godocview
 go install -ldflags "-s" -v tools/goexec
@@ -53,7 +47,6 @@ go install -ldflags "-s" -v tools/goapi
 go install -ldflags "-s" -v tools/gopresent
 go install -ldflags "-s" -v github.com/visualfc/goimports
 go install -ldflags "-s" -v github.com/nsf/gocode
-go install -ldflags "-s" -v github.com/gpmgo/gopm
 
 cd %BUILD_ROOT%
 

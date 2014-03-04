@@ -62,7 +62,6 @@ go install -ldflags "-s" -v tools/goapi
 go install -ldflags "-s" -v tools/gopresent
 go install -ldflags "-s" -v github.com/visualfc/goimports
 go install -ldflags "-s" -v github.com/nsf/gocode
-go install -ldflags "-s" -v github.com/gpmgo/gopm
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'
