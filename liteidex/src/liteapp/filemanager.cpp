@@ -94,6 +94,9 @@ bool FileManager::initWithApp(IApplication *app)
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
     connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
+
+    m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+
     return true;
 }
 
@@ -525,8 +528,9 @@ void FileManager::applyOption(QString id)
     if (id != OPTION_LITEAPP) {
         return;
     }
-    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
 
+    m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
     foreach (QString scheme, this->schemeList()) {
         QString key = schemeKey(scheme);
         QStringList files = m_liteApp->settings()->value(key).toStringList();
@@ -685,7 +689,7 @@ void FileManager::checkForReload()
     if (m_checkActivated) {
         return;
     }
-    m_checkActivated = true;
+    m_checkActivated = true;    
     foreach (QString fileName, m_changedFiles) {
         if (!QFile::exists(fileName)) {
             //remove
@@ -697,11 +701,17 @@ void FileManager::checkForReload()
                         // If the buffer is modified, ask the user what he wants to do.
                         // Otherwise, apply the default action : close the editor.
                         int ret = QMessageBox::Yes;
-                        if ( editor->isModified() ) {
+                        if (m_autoReloadFile) {
+                            if (editor->isModified() ) {
+                                QString text = QString(tr("%1\nThis file has been deleted from the drive,\n"
+                                    "but you have unsaved modifications in your LiteIDE editor.\n"
+                                    "\nDo you want to close the editor ?"
+                                    "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
+                            }
+                        } else {
                             QString text = QString(tr("%1\nThis file has been deleted from the drive,\n"
-                                "but you have unsaved modifications in your LiteIDE editor.\n"
-                                "\nDo you want to close the editor ?"
-                                "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                                "\nDo you want to close the editor ?")).arg(fileName);
                             ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                         }
 
@@ -719,26 +729,32 @@ void FileManager::checkForReload()
                     // The file has been modified.
                     // If the buffer is modified, ask the user what he wants to do.
                     // Otherwise, apply the default action : reload the new content in the editor.
-
                     QDateTime lastModified = QFileInfo(fileName).lastModified();
                     QDateTime modified = m_fileStateMap.value(fileName);
-                    int ret = QMessageBox::Yes;
-                    if (editor->isModified() && lastModified != modified) {
-                        qDebug() << modified << lastModified;
-                        QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
-                            "but you have unsaved modifications in your LiteIDE editor.\n"
-                            "\nDo you want to reload the file from disk ?"
-                            "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
-                        ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
-                    }
+                    if (lastModified > modified) {
+                        int ret = QMessageBox::Yes;
+                        if (m_autoReloadFile) {
+                            if (editor->isModified()) {
+                                QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
+                                    "but you have unsaved modifications in your LiteIDE editor.\n"
+                                    "\nDo you want to reload the file from disk ?"
+                                    "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
+                            }
+                        } else {
+                            QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
+                                "\nDo you want to reload the file from disk ?")).arg(fileName);
+                            ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
+                        }
 
-                    if (ret == QMessageBox::Yes) {
-                        // If the file modification is the result of an internal Ctrl+S, do not reload
-                        QDateTime lastModified = QFileInfo(fileName).lastModified();
-                        QDateTime modified = m_fileStateMap.value(fileName);
-                        if (lastModified != modified) {
-                            editor->reload();
-                            m_liteApp->appendLog("EditorManager",fileName+" reload",false);
+                        if (ret == QMessageBox::Yes) {
+                            // If the file modification is the result of an internal Ctrl+S, do not reload
+                            QDateTime lastModified = QFileInfo(fileName).lastModified();
+                            QDateTime modified = m_fileStateMap.value(fileName);
+                            if (lastModified != modified) {
+                                editor->reload();
+                                m_liteApp->appendLog("EditorManager",fileName+" reload",false);
+                            }
                         }
                     }
                 }

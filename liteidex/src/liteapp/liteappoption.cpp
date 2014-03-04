@@ -109,8 +109,8 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
     ui->editorTabsClosableCheckBox->setChecked(b4);
 
-    //bool b5 = m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
-    //ui->openFolderInNewWindowCheckBox->setChecked(b5);
+    bool b5 = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+    ui->autoReloadFileCheck->setChecked(b5);
 
     int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
@@ -181,8 +181,8 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,b3);
     bool b4 = ui->editorTabsClosableCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_EDITTABSCLOSABLE,b4);
-    //bool b5 = ui->openFolderInNewWindowCheckBox->isChecked();
-    //m_liteApp->settings()->setValue(LITEAPP_OPTNFOLDERINNEWWINDOW,b5);
+    bool b5 = ui->autoReloadFileCheck->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_AUTORELOADFILE,b5);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {
