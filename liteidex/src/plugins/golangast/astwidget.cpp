@@ -148,7 +148,8 @@ void AstWidget::filterChanged(QString filter)
 {
     if (filter.isEmpty()) {
         clearFilter(m_tree->rootIndex());
-        //m_tree->expandToDepth(0);
+        m_tree->expandToDepth(0);
+        /*
         for(int i = 0; i < proxyModel->rowCount(); i++) {
             QModelIndex index = proxyModel->index(i,0);
             m_tree->expand(index);
@@ -158,6 +159,7 @@ void AstWidget::filterChanged(QString filter)
                 }
             }
         }
+        */
     } else {
         QModelIndex first;
         filterModel(filter,m_tree->rootIndex(),first);

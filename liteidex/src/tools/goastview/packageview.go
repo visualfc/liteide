@@ -31,6 +31,7 @@ const (
 	tag_value_folder   = "+v"
 	tag_const_folder   = "+c"
 	tag_func_folder    = "+f"
+	tag_factor_folder  = "+tf"
 	tag_type_method    = "tm"
 	tag_type_factor    = "tf"
 	tag_type_value     = "tv"
@@ -157,11 +158,7 @@ func NewFilePackageSource(filename string, f *os.File) (*PackageView, error) {
 	return p, nil
 }
 
-func (p *PackageView) PrintFuncs(w io.Writer, funcs []*doc.Func, level int, tag string, tag_folder string) {
-	if len(tag_folder) > 0 && len(funcs) > 0 {
-		fmt.Fprintf(w, "%d,%s,Functions\n", level, tag_folder)
-		level++
-	}
+func (p *PackageView) printFuncsHelper(w io.Writer, funcs []*doc.Func, level int, tag string, tag_folder string) {
 	for _, f := range funcs {
 		pos := p.fset.Position(f.Decl.Pos())
 		if p.expr {
@@ -214,8 +211,8 @@ func (p *PackageView) PrintTypes(w io.Writer, types []*doc.Type, level int) {
 		pos := p.fset.Position(d.Decl.Pos())
 		fmt.Fprintf(w, "%d,%s,%s,%s\n", level, tag, d.Name, p.posText(pos))
 		p.PrintTypeFields(w, d.Decl, level+1)
-		p.PrintFuncs(w, d.Funcs, level+1, tag_type_factor, "")
-		p.PrintFuncs(w, d.Methods, level+1, tag_type_method, "")
+		p.printFuncsHelper(w, d.Funcs, level+1, tag_type_factor, "")
+		p.printFuncsHelper(w, d.Methods, level+1, tag_type_method, "")
 		p.PrintVars(w, d.Vars, level, tag_value, tag_value_folder)
 	}
 }
@@ -277,13 +274,39 @@ func (p *PackageView) PrintImports(w io.Writer, level int, tag, tag_folder strin
 	}
 }
 
+func (p *PackageView) PrintFuncs(w io.Writer, level int, tag_folder string) {
+	hasFolder := false
+	if len(p.pdoc.Funcs) > 0 {
+		hasFolder = true
+	}
+	if !hasFolder {
+		for _, d := range p.pdoc.Types {
+			if len(d.Funcs) > 0 {
+				hasFolder = true
+				break
+			}
+		}
+	}
+	if !hasFolder {
+		return
+	}
+	if len(tag_folder) > 0 {
+		fmt.Fprintf(w, "%d,%s,Functions\n", level, tag_folder)
+		level++
+	}
+	for _, d := range p.pdoc.Types {
+		p.printFuncsHelper(w, d.Funcs, level, tag_type_factor, "")
+	}
+	p.printFuncsHelper(w, p.pdoc.Funcs, level, tag_func, tag_func_folder)
+}
+
 func (p *PackageView) PrintPackage(w io.Writer, level int) {
 	p.PrintHeader(w, level)
 	level++
 	p.PrintImports(w, level, tag_import, tag_imports_folder)
 	p.PrintVars(w, p.pdoc.Vars, level, tag_value, tag_value_folder)
 	p.PrintVars(w, p.pdoc.Consts, level, tag_const, tag_const_folder)
-	p.PrintFuncs(w, p.pdoc.Funcs, level, tag_func, tag_func_folder)
+	p.PrintFuncs(w, level, tag_func_folder)
 	p.PrintTypes(w, p.pdoc.Types, level)
 }
 
