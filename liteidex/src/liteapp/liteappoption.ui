@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>565</width>
+    <width>655</width>
     <height>380</height>
    </rect>
   </property>
@@ -183,7 +183,7 @@
           <item>
            <widget class="QCheckBox" name="autoReloadFileCheck">
             <property name="text">
-             <string>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</string>
+             <string>Auto reload or close editor buffer,if underlying file is modified/deleted.</string>
             </property>
            </widget>
           </item>

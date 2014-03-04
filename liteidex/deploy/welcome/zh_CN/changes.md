@@ -7,7 +7,8 @@
 * LiteIDE
 	* fast highlighter for MacOS X 10.9
 	* add auto reload files option, if modified on the drive.
-	* remove x20 always open in new window mode.
+	* add store setting to local ini file option.
+	* remove x20 always open in new window mode.	
 	* fix folder expand state
 	* fix for case sensitive path comparison on windows
 * GolangAst

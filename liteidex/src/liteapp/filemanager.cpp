@@ -710,7 +710,7 @@ void FileManager::checkForReload()
                                 ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                             }
                         } else {
-                            QString text = QString(tr("%1\nThis file has been deleted from the drive,\n"
+                            QString text = QString(tr("%1\nThis file has been deleted from the drive.\n"
                                 "\nDo you want to close the editor ?")).arg(fileName);
                             ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                         }
@@ -742,7 +742,7 @@ void FileManager::checkForReload()
                                 ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                             }
                         } else {
-                            QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
+                            QString text = QString(tr("%1\nThis file has been modified on the drive.\n"
                                 "\nDo you want to reload the file from disk ?")).arg(fileName);
                             ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Yes|QMessageBox::No);
                         }
