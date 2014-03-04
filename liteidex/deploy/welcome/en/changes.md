@@ -3,8 +3,28 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2013.12.10 Ver x20.1
-* Fix editor
+### 2014.03.06 Ver x21
+* LiteIDE
+	* fast highlighter for MacOS X 10.9
+	* add auto reload files option, if modified on the drive.
+	* remove x20 always open in new window mode.
+	* fix folder expand state
+	* fix for case sensitive path comparison on windows
+* GolangAst
+	* add type factor to funcs
+	* add import symbol, and view document menu
+	* add context menu
+	* add symbol extra info
+* LiteBuild
+	* add golint support
+* LiteEnv
+	* recreate system.env
+* LiteEditor
+	* fix if/else fold
+	* new color scheme gist-github (thanks William Kennedy <bill@ardanstudios.com>)
+* GolangFmt
+	* fix timeout
+	* fix GOPATH
 
 ### 2013.12.09 Ver x20
 * LiteIDE

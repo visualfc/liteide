@@ -48,7 +48,7 @@ public:
         m_info->setId("plugin/golangast");
         m_info->setName("GolangAst");
         m_info->setAuthor("visualfc");
-        m_info->setVer("x20.2");
+        m_info->setVer("x21");
         m_info->setInfo("Golang Ast View");
     }
 };
