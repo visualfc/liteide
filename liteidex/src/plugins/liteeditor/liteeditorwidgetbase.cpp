@@ -622,10 +622,10 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
     const int collapseColumnWidth = m_codeFoldingVisible ? foldBoxWidth(fm): 0;
     const int extraAreaWidth = m_extraArea->width() - collapseColumnWidth;
 
-    painter.fillRect(e->rect(), pal.color(QPalette::Base));
-    painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), INT_MAX)),
-                     m_extraBackground);
-
+//    painter.fillRect(e->rect(), pal.color(QPalette::Base));
+//    painter.fillRect(e->rect().intersected(QRect(0, 0, m_extraArea->width(), INT_MAX)),
+//                     m_extraBackground);
+    painter.fillRect(e->rect(),m_extraBackground);
     //painter.setPen(QPen(m_extraForeground,1,Qt::DotLine));
    // painter.drawLine(extraAreaWidth - 3, e->rect().top(), extraAreaWidth - 3, e->rect().bottom());
     //painter.drawLine(e->rect().width()-1, e->rect().top(), e->rect().width()-1, e->rect().bottom());
@@ -818,9 +818,11 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     pal.setCurrentColorGroup(QPalette::Active);
     QPainter painter(m_navigateArea);
 
-    painter.fillRect(e->rect(), pal.color(QPalette::Base));
-    painter.fillRect(e->rect().intersected(QRect(0, 0, m_navigateArea->width(), m_navigateArea->height())),
-                     m_extraBackground);
+    //painter.fillRect(e->rect(), pal.color(QPalette::Base));
+    //painter.fillRect(e->rect().intersected(QRect(0, 0, m_navigateArea->width(), m_navigateArea->height())),
+    //                 m_extraBackground);
+    painter.fillRect(e->rect(),m_extraBackground);
+
     int width = this->navigateAreaWidth();
     painter.fillRect(2,2,width-4,width-4,m_navigateManager->headMarkColor());
     int count = this->blockCount();

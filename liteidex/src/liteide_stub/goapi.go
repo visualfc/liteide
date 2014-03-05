@@ -11,7 +11,6 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"flag"
 	"fmt"
 	"go/ast"
 	"go/build"
@@ -78,7 +77,7 @@ func runApi(cmd *Command, args []string) {
 	var pkgs []string
 	if len(args) > 0 {
 		if args[0] == "std" || args[0] == "all" {
-			out, err := exec.Command("go", "list", "-e", flag.Arg(0)).Output()
+			out, err := exec.Command("go", "list", "-e", args[0]).Output()
 			if err != nil {
 				log.Fatal(err)
 			}
