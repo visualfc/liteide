@@ -89,6 +89,7 @@ func (c *Command) Runnable() bool {
 var commands = []*Command{
 	cmdVersion,
 	cmdExec,
+	cmdAstView,
 }
 
 var exitStatus = 0

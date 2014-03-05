@@ -48,7 +48,7 @@ func runExec(cmd *Command, args []string) {
 		exit()
 	}
 
-	fmt.Println("Starting Process", filePath, strings.Join(args[1:], " "))
+	fmt.Println("Starting Process", filePath, strings.Join(args[1:], " "), "...")
 
 	command := exec.Command(filePath, args[1:]...)
 	command.Dir = execWorkPath
