@@ -32,4 +32,7 @@
 #  define LITEBUILDSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define LITEBUILD_OPTION   "option/litebuild"
+#define LITEBUILD_ENVCHECK "litebuild/envcheck"
+
 #endif // LITEBUILD_GLOBAL_H

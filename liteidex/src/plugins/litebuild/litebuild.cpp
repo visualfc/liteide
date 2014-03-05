@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "litebuild.h"
+#include "litebuild_global.h"
 #include "buildmanager.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
@@ -70,7 +71,8 @@ enum {
     ID_NAVIGATE = 7,
     ID_REGEXP = 8,
     ID_ACTIONID = 9,
-    ID_TAKEALL = 10
+    ID_TAKEALL = 10,
+    ID_ACTIVATEOUTPUT_CHECK = 11
 };
 
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
@@ -339,17 +341,23 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
 
-    bool b = m_liteApp->settings()->value("litebuild/goenvcheck",false).toBool();
+    bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     if (!b) {
         return;
     }
-    m_output->updateExistsTextColor();
-    m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
-    m_output->append(m_envManager->currentEnv()->orgEnvLines().join("\n")+"\n",Qt::black);
 
     QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
-
-    this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false);
+    if (gobin.isEmpty()) {
+        m_output->updateExistsTextColor();
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        m_output->append("go bin not found!",Qt::red);
+        return;
+    }
+    if (!m_process->isRunning()) {
+        m_output->updateExistsTextColor();
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false,false);
+    }
 }
 
 void LiteBuild::loadProjectInfo(const QString &filePath)
@@ -797,7 +805,9 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
         return;
     }
     //m_liteApp->outputManager()->setCurrentOutput(m_output);
-    m_outputAct->setChecked(true);
+    if (m_process->userData(ID_ACTIVATEOUTPUT_CHECK).toBool()) {
+        m_outputAct->setChecked(true);
+    }
 
     QString codecName = m_process->userData(2).toString();
     QTextCodec *codec = QTextCodec::codecForLocale();
@@ -903,12 +913,14 @@ void LiteBuild::stopAction()
     }
 }
 
-void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor)
+void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor, bool activateOutputCheck)
 {
     if (updateExistsTextColor) {
         m_output->updateExistsTextColor();
     }
-    m_outputAct->setChecked(true);
+    if (activateOutputCheck) {
+        m_outputAct->setChecked(activateOutputCheck);
+    }
     if (m_process->isRunning()) {
         m_output->append(tr("A process is currently running.  Stop the current action first.")+"\n",Qt::red);
         return;
@@ -922,7 +934,7 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     m_process->setUserData(ID_CODEC,"utf-8");
     m_process->setUserData(ID_INPUTTYPE,INPUT_COMMAND);
     m_process->setUserData(ID_NAVIGATE,false);
-
+    m_process->setUserData(ID_ACTIVATEOUTPUT_CHECK,activateOutputCheck);
     QString shell = FileUtil::lookPathInDir(cmd,workDir);
     if (shell.isEmpty()) {
         shell = FileUtil::lookPath(cmd,sysenv,false);
@@ -974,6 +986,7 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
     m_output->updateExistsTextColor();
     m_process->setUserData(ID_MIMETYPE,mime);
     m_process->setUserData(ID_EDITOR,editor);
+    m_process->setUserData(ID_ACTIVATEOUTPUT_CHECK,true);
     if (ba->task().isEmpty()) {
         execAction(mime,id);
     } else {
