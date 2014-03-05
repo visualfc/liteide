@@ -36,7 +36,7 @@ class ToolDockWidget : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit ToolDockWidget(QWidget *parent = 0);
+    explicit ToolDockWidget(QSize iconSize, QWidget *parent = 0);
     QAction *addWidget(QWidget *widget);
     void setWindowTitle(const QString &text);
     QList<QAction *> actions() const;

@@ -78,7 +78,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
-    m_editorTabWidget = new LiteTabWidget;
+    m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,false).toBool());
 

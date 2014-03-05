@@ -46,7 +46,7 @@
 //lite_memory_check_end
 
 
-LiteTabWidget::LiteTabWidget(QObject *parent) :
+LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     QObject(parent)
 {
     m_tabBar = new QTabBar;
@@ -58,7 +58,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
 
     m_headerToolBar = new QToolBar;
     m_headerToolBar->setObjectName("toolbar.tabs");
-    m_headerToolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_headerToolBar->setIconSize(iconSize);
 
     m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close tab"),this);
     m_listButton = new QToolButton(m_headerToolBar);

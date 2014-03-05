@@ -55,7 +55,7 @@ class ActionToolBar : public QObject
 {
     Q_OBJECT
 public:
-    ActionToolBar(QWidget *parent, Qt::DockWidgetArea area);
+    ActionToolBar(QSize iconSize, QWidget *parent, Qt::DockWidgetArea area);
     ToolDockWidget *dock(bool split) const;
     void addAction(QAction *action, const QString &title, bool split);
     void removeAction(QAction *action, bool split);
@@ -96,7 +96,7 @@ class ToolMainWindow : public QMainWindow
 {
     Q_OBJECT    
 public:
-    ToolMainWindow(QWidget *parent = 0);
+    ToolMainWindow(QSize iconSize, QWidget *parent = 0);
     ~ToolMainWindow();
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);

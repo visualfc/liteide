@@ -98,7 +98,7 @@ void ActionGroup::actionChanged()
     }
 }
 
-ActionToolBar::ActionToolBar(QWidget *parent, Qt::DockWidgetArea _area)
+ActionToolBar::ActionToolBar(QSize iconSize, QWidget *parent, Qt::DockWidgetArea _area)
     : QObject(parent), area(_area), bHideToolBar(false)
 {
     toolBar = new QToolBar;
@@ -114,14 +114,14 @@ ActionToolBar::ActionToolBar(QWidget *parent, Qt::DockWidgetArea _area)
     spacer2->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     toolBar->addWidget(spacer2);
 
-    dock1 = new ToolDockWidget(parent);
+    dock1 = new ToolDockWidget(iconSize, parent);
     dock1->setObjectName(QString("dock_%1").arg(area));
     dock1->setWindowTitle(QString("dock_%1").arg(area));
     dock1->setFeatures(QDockWidget::DockWidgetClosable);
     dock1->hide();
     dock1->createMenu(area,false);
 
-    dock2 = new ToolDockWidget(parent);
+    dock2 = new ToolDockWidget(iconSize,parent);
     dock2->setObjectName(QString("dock_%1_split").arg(area));
     dock2->setWindowTitle(QString("dock_%1_split").arg(area));
     dock2->setFeatures(QDockWidget::DockWidgetClosable);
@@ -211,13 +211,13 @@ void ActionToolBar::dock2Visible(bool b)
 }
 
 
-ToolMainWindow::ToolMainWindow(QWidget *parent)
+ToolMainWindow::ToolMainWindow(QSize iconSize, QWidget *parent)
     : QMainWindow(parent)
 {
-    m_areaToolBar.insert(Qt::TopDockWidgetArea,new ActionToolBar(this,Qt::TopDockWidgetArea));
-    m_areaToolBar.insert(Qt::BottomDockWidgetArea,new ActionToolBar(this,Qt::BottomDockWidgetArea));
-    m_areaToolBar.insert(Qt::LeftDockWidgetArea,new ActionToolBar(this,Qt::LeftDockWidgetArea));
-    m_areaToolBar.insert(Qt::RightDockWidgetArea,new ActionToolBar(this,Qt::RightDockWidgetArea));
+    m_areaToolBar.insert(Qt::TopDockWidgetArea,new ActionToolBar(iconSize, this,Qt::TopDockWidgetArea));
+    m_areaToolBar.insert(Qt::BottomDockWidgetArea,new ActionToolBar(iconSize, this,Qt::BottomDockWidgetArea));
+    m_areaToolBar.insert(Qt::LeftDockWidgetArea,new ActionToolBar(iconSize, this,Qt::LeftDockWidgetArea));
+    m_areaToolBar.insert(Qt::RightDockWidgetArea,new ActionToolBar(iconSize, this,Qt::RightDockWidgetArea));
 
     QMapIterator<Qt::DockWidgetArea,ActionToolBar*> it(m_areaToolBar);
     while(it.hasNext()) {

@@ -78,7 +78,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     QVBoxLayout *layout = new QVBoxLayout;    
     QToolBar *widgetToolBar = new QToolBar;
-    widgetToolBar->setIconSize(LiteApi::getToolBarIconSize());
+    widgetToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     layout->setMargin(0);
     layout->setSpacing(0);
 

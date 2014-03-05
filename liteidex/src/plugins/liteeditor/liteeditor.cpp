@@ -380,11 +380,11 @@ void LiteEditor::findCodecs()
 void LiteEditor::createToolBars()
 {
     m_toolBar = new QToolBar("editor",m_widget);
-    m_toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     m_infoToolBar = new QToolBar("info",m_widget);
-    m_infoToolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_infoToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     //editor toolbar
     m_toolBar->addAction(m_undoAct);

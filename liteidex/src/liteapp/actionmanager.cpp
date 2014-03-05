@@ -131,7 +131,7 @@ QToolBar *ActionManager::insertToolBar(const QString &id, const QString &title, 
     }
     toolBar = new QToolBar(title, m_liteApp->mainWindow());
     toolBar->setObjectName(id);
-    toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     QToolBar *m = 0;
     if (!idBefore.isEmpty()) {
@@ -151,7 +151,7 @@ void ActionManager::insertToolBar(QToolBar *toolBar, const QString &idBefore)
 {
     QString id = toolBar->objectName();
 
-    toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     QToolBar *m = 0;
     if (!idBefore.isEmpty()) {

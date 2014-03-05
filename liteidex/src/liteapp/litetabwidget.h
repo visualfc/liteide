@@ -44,7 +44,7 @@ class LiteTabWidget : public QObject
 {
     Q_OBJECT
 public:
-    explicit LiteTabWidget(QObject *parent = 0);
+    explicit LiteTabWidget(QSize iconSize, QObject *parent = 0);
     virtual ~LiteTabWidget();
     int addTab(QWidget *w,const QString & label, const QString &tip);
     int addTab(QWidget *w,const QIcon & icon, const QString & label,const QString &tip);

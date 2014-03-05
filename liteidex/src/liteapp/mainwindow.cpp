@@ -55,7 +55,7 @@
 
 
 MainWindow::MainWindow(IApplication *app,QWidget *parent)
-    : ToolMainWindow(parent),
+    : ToolMainWindow(LiteApi::getToolBarIconSize(app),parent),
       m_liteApp(app)
 {
     this->setAttribute(Qt::WA_DeleteOnClose);

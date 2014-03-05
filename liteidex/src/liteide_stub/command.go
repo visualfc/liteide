@@ -73,8 +73,10 @@ func (c *Command) Name() string {
 }
 
 func (c *Command) Usage() {
-	fmt.Fprintf(os.Stderr, "usage: %s\n\n", c.UsageLine)
-	fmt.Fprintf(os.Stderr, "%s\n", strings.TrimSpace(c.Long))
+	fmt.Fprintf(os.Stderr, "usage: liteide_stub %s\n", c.UsageLine)
+	c.Flag.SetOutput(os.Stderr)
+	c.Flag.PrintDefaults()
+	//fmt.Fprintf(os.Stderr, "%s\n", strings.TrimSpace(c.Long))
 	os.Exit(2)
 }
 
@@ -113,6 +115,10 @@ func main_app() {
 
 	args := flag.Args()
 	if len(args) < 1 {
+		usage()
+	}
+
+	if len(args) == 1 && strings.TrimSpace(args[0]) == "" {
 		usage()
 	}
 
