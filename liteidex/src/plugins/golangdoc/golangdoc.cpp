@@ -386,7 +386,7 @@ void GolangDoc::listCmd()
 {
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "docview" << "-mode=lite" << "-list=cmd";
+    args << "docview" << "-mode" << "lite" << "-list"<<"cmd";
     m_findData.clear();
     m_findProcess->start(cmd,args);
 }
@@ -559,7 +559,7 @@ void GolangDoc::openUrlList(const QUrl &url)
     }
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-mode=html"<< QString("-list=%1").arg(url.path());
+    args << "docview" << "-mode=html"<< QString("-list=%1").arg(url.path());
     m_godocData.clear();
     m_godocProcess->start(cmd,args);
 }
