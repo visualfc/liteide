@@ -144,6 +144,8 @@ protected:
     QAction *m_toolWindowAct;
     QAction *m_findDocAct;
     QAction *m_jumpDeclAct;
+    QMenu   *m_configMenu;
+    QAction *m_rebuildApi;
     QString m_docFind;
 };
 

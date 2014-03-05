@@ -124,8 +124,14 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     mainLayout->addWidget(m_tagInfo);
     m_widget->setLayout(mainLayout);
 
-    //m_liteApp->dockManager()->addDock(m_widget,tr("Golang Document Find"),Qt::LeftDockWidgetArea);
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"godocfind",tr("Godoc Search"),true);
+//    m_rebuildApi = new QAction(tr("Rebuild Api"),this);
+//    m_configMenu = new QMenu(tr("Config"),m_widget);
+//    m_configMenu->setIcon(QIcon("icon:images/config.png"));
+//    m_configMenu->addAction(m_rebuildApi);
+
+    QList<QAction*> actions;
+//    actions << m_configMenu->menuAction();
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"godocfind",tr("Godoc Search"),true,actions);
 
     m_docBrowser = new DocumentBrowser(m_liteApp,this);
     m_docBrowser->setName(tr("Godoc Viewer"));
