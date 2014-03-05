@@ -15,7 +15,7 @@ import (
 
 var cmdDocView = &Command{
 	Run:       runDocView,
-	UsageLine: "docview [mode] [list | find <name> ]",
+	UsageLine: "docview [-mode] [-list|-find]",
 	Short:     "golang docview util",
 	Long:      `golang docview util`,
 }
@@ -27,11 +27,11 @@ var docViewMode string
 func init() {
 	cmdDocView.Flag.StringVar(&docViewFind, "find", "", "find package list, :pkg flag is best match")
 	cmdDocView.Flag.StringVar(&docViewList, "list", "", "Print go packages list [pkg|cmd]")
-	cmdDocView.Flag.StringVar(&docViewFind, "mode", "text", "Print mode [text|html|lite]")
+	cmdDocView.Flag.StringVar(&docViewMode, "mode", "text", "Print mode [text|html|lite]")
 }
 
 func runDocView(cmd *Command, args []string) {
-	if len(docViewFind) == 0 && len(docViewList) == 0 {
+	if docViewFind == "" && docViewList == "" {
 		cmd.Usage()
 	}
 

@@ -64,6 +64,9 @@ func init() {
 }
 
 func runApi(cmd *Command, args []string) {
+	if len(args) == 0 {
+		cmd.Usage()
+	}
 	if apiVerbose {
 		now := time.Now()
 		defer func() {
@@ -73,7 +76,7 @@ func runApi(cmd *Command, args []string) {
 
 	var pkgs []string
 
-	if flag.Arg(0) == "std" || flag.Arg(0) == "all" {
+	if args[0] == "std" || args[0] == "all" {
 		out, err := exec.Command("go", "list", "-e", flag.Arg(0)).Output()
 		if err != nil {
 			log.Fatal(err)

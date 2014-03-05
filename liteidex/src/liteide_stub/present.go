@@ -16,7 +16,7 @@ import (
 
 var cmdPresent = &Command{
 	Run:       runPresent,
-	UsageLine: "present [mode] [list | find <name> ]",
+	UsageLine: "present",
 	Short:     "golang present util",
 	Long:      `golang present util`,
 }
