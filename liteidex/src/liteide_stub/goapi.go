@@ -3,7 +3,8 @@
 // license that can be found in the LICENSE file.
 
 // Api computes the exported API of a set of Go packages.
-//
+
+//modify 2013-2014 visualfc
 
 package main
 
