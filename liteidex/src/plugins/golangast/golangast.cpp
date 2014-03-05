@@ -332,19 +332,10 @@ void GolangAst::updateAstNow()
     if (m_updateFileNames.isEmpty()) {
         return;
     }
-#ifdef Q_OS_WIN
-    QString goastview = "goastview.exe";
-#else
-    QString goastview = "goastview";
-#endif
-    QString cmd = m_liteApp->applicationPath();
-    cmd += "/";
-    cmd += goastview;
-
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-files";
-    args << m_updateFileNames.join(" ");
-
+    args << "astview";
+    args << m_updateFileNames;
     m_process->start(cmd,args);
 }
 
@@ -361,16 +352,9 @@ void GolangAst::updateAstNowFile()
     if (m_editorFileName.isEmpty()) {
         return;
     }
-#ifdef Q_OS_WIN
-    QString goastview = "goastview.exe";
-#else
-    QString goastview = "goastview";
-#endif
-    QString cmd = m_liteApp->applicationPath();
-    cmd += "/";
-    cmd += goastview;
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-files";
+    args << "astview";
     args << m_editorFileName;
     m_processFile->start(cmd,args);
 }

@@ -334,11 +334,7 @@ void GolangPresentEdit::loadHtmlFinished(bool b)
 bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
 {
     m_liteApp->editorManager()->saveEditor(m_editor);
-    QString cmd = FileUtil::lookupLiteBin("gopresent",m_liteApp);
-    if (cmd.isEmpty()) {
-        m_liteApp->appendLog("GolangPresent","Not find gopresent",true);
-        return false;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QFileInfo info(m_editor->filePath());
     if (!m_process) {
         m_process = new ProcessEx(this);
@@ -357,9 +353,9 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     m_process->setUserData(0,type);
     m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOPRESENT_TAG);
     if (type == EXPORT_TYPE_VERIFY) {
-        m_process->startEx(cmd,"-v -i "+info.fileName().toUtf8());
+        m_process->startEx(cmd,"present -v -i "+info.fileName().toUtf8());
     } else {
-        m_process->startEx(cmd,"-stdout -i "+info.fileName().toUtf8());
+        m_process->startEx(cmd,"present -stdout -i "+info.fileName().toUtf8());
     }
     return true;
 }

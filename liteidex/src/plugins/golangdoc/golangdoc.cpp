@@ -229,12 +229,12 @@ void GolangDoc::editorJumpToDecl()
         return;
     }
     //m_liteApp->editorManager()->saveEditor(editor,false);
-
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     m_srcData = textEditor->utf8Data();
     m_lookupData.clear();
     QFileInfo info(textEditor->filePath());
     m_lookupProcess->setWorkingDirectory(info.path());
-    m_lookupProcess->startEx(m_goapiCmd,QString("-cursor_std -cursor_info %1:%2 .").
+    m_lookupProcess->startEx(cmd,QString("api -cursor_std -cursor_info %1:%2 .").
                              arg(info.fileName()).
                              arg(textEditor->utf8Position()));
 }
@@ -251,13 +251,14 @@ void GolangDoc::editorFindDoc()
         return;
     }
     //m_liteApp->editorManager()->saveEditor(editor,false);
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     m_srcData = textEditor->utf8Data();
     m_lastCursor = ed->textCursor();
     m_lastEditor = editor;
     m_helpData.clear();
     QFileInfo info(textEditor->filePath());
     m_helpProcess->setWorkingDirectory(info.path());
-    m_helpProcess->startEx(m_goapiCmd,QString("-cursor_std -cursor_info %1:%2 .").
+    m_helpProcess->startEx(cmd,QString("api -cursor_std -cursor_info %1:%2 .").
                              arg(info.fileName()).
                              arg(textEditor->utf8Position()));
 }
@@ -289,20 +290,20 @@ void GolangDoc::loadApi()
     m_bApiLoaded = true;
     m_goapiData.clear();
 
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
     bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
-    QString args;
+    QStringList args;
+    args << "api";
     if (defctx) {
-        args += "-default_ctx=true";
-        args += " ";
+        args << "-default_ctx=true";
     }
     if (std) {
-        args += "std";
+        args << "std";
     } else {
-        args += "all";
+        args << "all";
     }
-
-    m_goapiProcess->startEx(m_goapiCmd,args);
+    m_goapiProcess->startEx(cmd,args.join(" "));
 }
 
 void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
@@ -320,9 +321,6 @@ void GolangDoc::loadEnv()
     m_goroot = env.value("GOROOT");
 
     m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
-
-    m_godocViewCmd = FileUtil::lookupLiteBin("godocview",m_liteApp);
-    m_goapiCmd = FileUtil::lookupLiteBin("goapi",m_liteApp);
 
     m_findProcess->setEnvironment(env.toStringList());
     m_godocProcess->setEnvironment(env.toStringList());
@@ -371,24 +369,20 @@ void GolangDoc::activeBrowser()
 
 void GolangDoc::listPkg()
 {
-    if (m_godocViewCmd.isEmpty()) {
-        return;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-mode=lite" << "-list=pkg";
+    args << "docview" << "-mode=lite" << "-list=pkg";
     m_findData.clear();
-    m_findProcess->start(m_godocViewCmd,args);
+    m_findProcess->start(cmd,args);
 }
 
 void GolangDoc::listCmd()
 {
-    if (m_godocViewCmd.isEmpty()) {
-        return;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-mode=lite" << "-list=cmd";
+    args << "docview" << "-mode=lite" << "-list=cmd";
     m_findData.clear();
-    m_findProcess->start(m_godocViewCmd,args);
+    m_findProcess->start(cmd,args);
 }
 
 void GolangDoc::godocFindPackage(QString pkgname)
@@ -413,13 +407,11 @@ void GolangDoc::findPackage(QString pkgname)
     if (pkgname.isEmpty()) {
         return;
     }
-    if (m_godocViewCmd.isEmpty()) {
-        return;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-mode=lite" << "-find" << pkgname;
+    args << "docview" << "-mode=lite" << "-find" << pkgname;
     m_findData.clear();
-    m_findProcess->start(m_godocViewCmd,args);
+    m_findProcess->start(cmd,args);
 }
 
 void GolangDoc::findOutput(QByteArray data,bool bStderr)
@@ -559,13 +551,11 @@ void GolangDoc::openUrlList(const QUrl &url)
     if (url.scheme() != "list") {
         return;
     }
-    if (m_godocViewCmd.isEmpty()) {
-        return;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
     args << "-mode=html"<< QString("-list=%1").arg(url.path());
     m_godocData.clear();
-    m_godocProcess->start(m_godocViewCmd,args);
+    m_godocProcess->start(cmd,args);
 }
 
 void GolangDoc::openUrlFind(const QUrl &url)
@@ -573,13 +563,11 @@ void GolangDoc::openUrlFind(const QUrl &url)
     if (url.scheme() != "find") {
         return;
     }
-    if (m_godocViewCmd.isEmpty()) {
-        return;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-mode=html" << "-find" << url.path();
+    args << "docview" << "-mode=html" << "-find" << url.path();
     m_godocData.clear();
-    m_godocProcess->start(m_godocViewCmd,args);
+    m_godocProcess->start(cmd,args);
     return;
 }
 

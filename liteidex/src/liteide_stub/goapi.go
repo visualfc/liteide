@@ -64,7 +64,7 @@ func init() {
 }
 
 func runApi(cmd *Command, args []string) {
-	if len(args) == 0 {
+	if len(args) == 0 && apiLookupInfo == "" {
 		cmd.Usage()
 	}
 	if apiVerbose {
@@ -75,15 +75,16 @@ func runApi(cmd *Command, args []string) {
 	}
 
 	var pkgs []string
-
-	if args[0] == "std" || args[0] == "all" {
-		out, err := exec.Command("go", "list", "-e", flag.Arg(0)).Output()
-		if err != nil {
-			log.Fatal(err)
+	if len(args) > 0 {
+		if args[0] == "std" || args[0] == "all" {
+			out, err := exec.Command("go", "list", "-e", flag.Arg(0)).Output()
+			if err != nil {
+				log.Fatal(err)
+			}
+			pkgs = strings.Fields(string(out))
+		} else {
+			pkgs = args
 		}
-		pkgs = strings.Fields(string(out))
-	} else {
-		pkgs = flag.Args()
 	}
 	var curinfo CursorInfo
 	if apiLookupInfo != "" {

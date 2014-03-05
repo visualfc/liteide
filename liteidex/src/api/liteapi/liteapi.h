@@ -722,6 +722,15 @@ inline QSize getToolBarIconSize(LiteApi::IApplication *app) {
     return QSize(16,16);
 }
 
+inline QString liteide_stub_cmd(LiteApi::IApplication *app)
+{
+#ifdef Q_OS_WIN
+    return app->applicationPath()+"/liteide_stub.exe";
+#else
+    return app->applicationPath()+"/liteide_stub";
+#endif
+}
+
 } //namespace LiteApi
 
 Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X21")
