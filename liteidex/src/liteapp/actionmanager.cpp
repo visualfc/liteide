@@ -350,7 +350,11 @@ ActionContext::~ActionContext()
 
 void ActionContext::regAction(QAction *act, const QString &id, const QString &defks, bool standard)
 {
-    ActionInfo *info = new ActionInfo;
+    ActionInfo *info = m_actionInfoMap.value(id);
+    if (info == 0) {
+        info = new ActionInfo;
+        m_actionInfoMap.insert(id,info);
+    }
     info->standard = standard;
     info->defks = ActionManager::formatShortcutsString(defks);
     info->ks = m_liteApp->settings()->value(LITEAPP_SHORTCUTS+id,info->defks).toString();
@@ -366,8 +370,6 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
     } else {
         info->action = 0;
     }
-
-    m_actionInfoMap.insert(id,info);
 }
 
 void ActionContext::regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def)

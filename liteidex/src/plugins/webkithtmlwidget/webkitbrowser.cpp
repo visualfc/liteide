@@ -45,15 +45,16 @@
 #endif
 //lite_memory_check_end
 
-WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QWidget *parent) :
-    QWidget(parent), m_liteApp(app)
+WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
+    QObject(parent), m_liteApp(app)
 {        
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
+    m_widget = new QWidget;
     m_view = new QWebView;
     m_view->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    m_locationEdit = new QLineEdit(this);
+    m_locationEdit = new QLineEdit;
     m_locationEdit->setSizePolicy(QSizePolicy::Expanding, m_locationEdit->sizePolicy().verticalPolicy());
     connect(m_locationEdit, SIGNAL(returnPressed()), this,SLOT(changeLocation()));
     connect(m_view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
@@ -83,13 +84,16 @@ WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QWidget *parent) :
     layout->addWidget(m_view);
     layout->addWidget(m_progressBar);
 
-    this->setLayout(layout);
+    m_widget->setLayout(layout);
 }
 
 WebKitBrowser::~WebKitBrowser()
 {
     if (m_progressBar) {
         delete m_progressBar;
+    }
+    if (m_widget) {
+        delete m_widget;
     }
 }
 

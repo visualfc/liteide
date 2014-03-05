@@ -30,7 +30,7 @@
 
 
 class NavigateManager;
-class NavigateMark;
+struct NavigateMark;
 class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
