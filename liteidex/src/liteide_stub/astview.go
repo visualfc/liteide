@@ -118,7 +118,7 @@ func NewFilePackage(filename string) (*PackageView, error) {
 	return p, nil
 }
 
-func NewPackage(pkg *ast.Package, fset *token.FileSet, expr bool) (*PackageView, error) {
+func NewPackageView(pkg *ast.Package, fset *token.FileSet, expr bool) (*PackageView, error) {
 	p := new(PackageView)
 	p.fset = fset
 	p.pkg = pkg
@@ -161,7 +161,7 @@ func PrintFilesTree(filenames []string, w io.Writer, expr bool) error {
 		fmt.Fprintf(w, "@%s\n", AllFiles[i])
 	}
 	for _, pkg := range pkgs {
-		view, err := NewPackage(pkg, fset, expr)
+		view, err := NewPackageView(pkg, fset, expr)
 		if err != nil {
 			return err
 		}
