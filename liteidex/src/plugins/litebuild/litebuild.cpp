@@ -766,6 +766,7 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
                     btn->setPopupMode(QToolButton::InstantPopup);
                 } else {
                     btn->setPopupMode(QToolButton::MenuButtonPopup);
+                    btn->setDefaultAction(subMenu->menuAction());
                 }
                 toolBar->insertWidget(spacer,btn);
             }
