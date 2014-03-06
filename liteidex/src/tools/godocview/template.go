@@ -1,7 +1,6 @@
 package main
 
-var listHTML = 
-`<!-- Golang Package List -->
+var listHTML = `<!-- Golang Package List -->
 <p class="detail">
 Need more packages? The
 <a href="http://godashboard.appspot.com/package">Package Dashboard</a>
@@ -29,18 +28,15 @@ provides a list of <a href="/cmd/goinstall/">goinstallable</a> packages.
 	</p>
 {{end}}`
 
-var listText = 
-`$list
+var listText = `$list
 {{with .Dirs}}
 {{range .List}}{{.Path }}
 {{end}}
 {{end}}`
 
-var listLite = 
-`$list{{with .Dirs}}{{range .List}},{{.Path}}{{end}}{{end}}`
+var listLite = `$list{{with .Dirs}}{{range .List}},{{.Path}}{{end}}{{end}}`
 
-var findHTML =
-`<!-- Golang Package List -->
+var findHTML = `<!-- Golang Package List -->
 <p class="detail">
 Need more packages? The
 <a href="http://godashboard.appspot.com/package">Package Dashboard</a>
@@ -76,12 +72,10 @@ provides a list of <a href="/cmd/goinstall/">goinstallable</a> packages.
 	</p>
 {{end}}`
 
-var findText = 
-`$best
+var findText = `$best
 {{with .Best}}{{.Path}}{{end}}
 $list
 {{with .Dirs}}{{range .List}}{{.Path}}
 {{end}}{{end}}`
 
-var findLite = 
-`$find,{{with .Best}}{{.Path}}{{end}}{{with .Dirs}}{{range .List}},{{.Path}}{{end}}{{end}}`
+var findLite = `$find,{{with .Best}}{{.Path}}{{end}}{{with .Dirs}}{{range .List}},{{.Path}}{{end}}{{end}}`

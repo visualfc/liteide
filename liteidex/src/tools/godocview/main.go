@@ -2,11 +2,11 @@
 package main
 
 import (
-	"fmt"
 	"flag"
-	"runtime"
+	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 var (
@@ -28,14 +28,14 @@ func main() {
 	flag.Usage = usage
 	flag.Parse()
 
-	if len(*find) == 0 && len(*list) == 0{
+	if len(*find) == 0 && len(*list) == 0 {
 		flag.Usage()
 	}
 
 	var template string
 	var info *Info
 	if len(*list) > 0 {
-		info = NewListInfo(filepath.Join(*goroot,"src",*list))
+		info = NewListInfo(filepath.Join(*goroot, "src", *list))
 		switch *mode {
 		case "html":
 			template = listHTML
@@ -44,8 +44,8 @@ func main() {
 		case "text":
 			template = listText
 		default:
-			template = listText			
-		}	
+			template = listText
+		}
 	} else if len(*find) > 0 {
 		dir := NewSourceDir(*goroot)
 		info = dir.FindInfo(*find)
@@ -59,12 +59,12 @@ func main() {
 		default:
 			template = findText
 		}
-	} 
+	}
 	if info == nil {
-		fmt.Fprintf(os.Stderr,"<error>")
+		fmt.Fprintf(os.Stderr, "<error>")
 		os.Exit(2)
-	}	
-	contents := info.GetPkgList(*mode,template)
+	}
+	contents := info.GetPkgList(*mode, template)
 	fmt.Println(string(contents))
 
 	os.Exit(0)
