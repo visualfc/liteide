@@ -249,7 +249,8 @@ func (p *PackageView) PrintTypes(w io.Writer, types []*doc.Type, level int) {
 		p.PrintTypeFields(w, d.Decl, level+1)
 		p.printFuncsHelper(w, d.Funcs, level+1, tag_type_factor, "")
 		p.printFuncsHelper(w, d.Methods, level+1, tag_type_method, "")
-		p.PrintVars(w, d.Vars, level, tag_value, tag_value_folder)
+		p.PrintVars(w, d.Consts, level+1, tag_const, "")
+		p.PrintVars(w, d.Vars, level+1, tag_value, "")
 	}
 }
 
