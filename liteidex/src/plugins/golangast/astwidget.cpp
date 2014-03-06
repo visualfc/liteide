@@ -190,7 +190,7 @@ void AstWidget::treeContextMenuRequested(QPoint pt)
         return;
     }
     GolangAstItem *item = astItemFromIndex(index);
-    if (item->isFolder()) {
+    if (item->isFolder() || item->m_tagFlag == LiteApi::TagPackage) {
         return;
     }
     m_contextItem = item;
