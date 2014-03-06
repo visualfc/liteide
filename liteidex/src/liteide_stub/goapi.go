@@ -424,6 +424,8 @@ const (
 	KindArray
 	KindMap
 	KindSlice
+	KindLabel
+	KindBranch
 )
 
 func (k Kind) String() string {
@@ -460,8 +462,12 @@ func (k Kind) String() string {
 		return "array"
 	case KindSlice:
 		return "slice"
+	case KindLabel:
+		return "label"
+	case KindBranch:
+		return "branch"
 	}
-	return fmt.Sprintf("unknown-%v", k)
+	return fmt.Sprint("unknown-kind")
 }
 
 //expression type
@@ -1168,6 +1174,18 @@ func inRange(node ast.Node, p token.Pos) bool {
 	return p >= node.Pos() && p <= node.End()
 }
 
+func (w *Walker) lookupLabel(body *ast.BlockStmt, name string) (*TypeInfo, error) {
+	for _, stmt := range body.List {
+		switch v := stmt.(type) {
+		case *ast.BlockStmt:
+			return w.lookupLabel(v, name)
+		case *ast.LabeledStmt:
+			return &TypeInfo{Kind: KindLabel, Name: v.Label.Name, T: v.Label}, nil
+		}
+	}
+	return nil, nil
+}
+
 func (w *Walker) lookupFile(file *ast.File, p token.Pos) (*TypeInfo, error) {
 	if inRange(file.Name, p) {
 		return &TypeInfo{Kind: KindPackage, X: file.Name, Name: file.Name.Name, Type: file.Name.Name, T: file.Name}, nil
@@ -1180,7 +1198,11 @@ func (w *Walker) lookupFile(file *ast.File, p token.Pos) (*TypeInfo, error) {
 			}
 		case *ast.FuncDecl:
 			if inRange(d, p) {
-				return w.lookupDecl(d, p, false)
+				info, err := w.lookupDecl(d, p, false)
+				if info != nil && info.Kind == KindBranch {
+					return w.lookupLabel(d.Body, info.Name)
+				}
+				return info, err
 			}
 			if d.Body != nil && inRange(d.Body, p) {
 				return w.lookupStmt(d.Body, p)
@@ -1234,7 +1256,7 @@ func (w *Walker) lookupStmt(vi ast.Stmt, p token.Pos) (*TypeInfo, error) {
 		//
 	case *ast.LabeledStmt:
 		if inRange(v.Label, p) {
-			return &TypeInfo{Kind: KindBuiltin, Name: v.Label.Name, Type: "string"}, nil
+			return &TypeInfo{Kind: KindBuiltin, Name: v.Label.Name, Type: "label"}, nil
 		}
 		return w.lookupStmt(v.Stmt, p)
 		//
@@ -1332,7 +1354,7 @@ func (w *Walker) lookupStmt(vi ast.Stmt, p token.Pos) (*TypeInfo, error) {
 		}
 	case *ast.BranchStmt:
 		if inRange(v.Label, p) {
-			return &TypeInfo{Kind: KindBuiltin, Name: v.Label.Name, Type: "string"}, nil
+			return &TypeInfo{Kind: KindBranch, Name: v.Label.Name, Type: "label", T: v.Label}, nil
 		}
 		//
 	case *ast.CaseClause:
@@ -1433,11 +1455,18 @@ func (w *Walker) lookupStmt(vi ast.Stmt, p token.Pos) (*TypeInfo, error) {
 	case *ast.RangeStmt:
 		if inRange(v.X, p) {
 			return w.lookupExprInfo(v.X, p)
+		} else if inRange(v.Key, p) {
+			return &TypeInfo{Kind: KindBuiltin, Name: w.nodeString(v.Key), Type: "int"}, nil
+		} else if inRange(v.Value, p) {
+			typ, err := w.lookupExprInfo(v.X, p)
+			if typ != nil {
+				typ.Name = w.nodeString(v.Value)
+				return typ, err
+			}
 		} else {
 			typ, err := w.varValueType(v.X, 0)
 			//check is type
 			if t := w.isType(typ); t != nil {
-				log.Println(t)
 				typ = t.T
 			}
 			if err == nil {
