@@ -6,6 +6,7 @@
 ### 2014.03.06 Ver x21
 * LiteIDE
 	* fast highlighter for MacOS X 10.9
+	* fast expression lookup F1/F2
 	* cancel x20 always open in new window mode.	
 	* add new JsonEdit plugin.
 	* add reload/close dialog YesToAll, if modified on the drive.
@@ -22,13 +23,16 @@
 	* new color scheme gist-github (thanks William Kennedy <bill@ardanstudios.com>)
 	* fix if/else syntax fold
 * GolangAst
-	* add type factor to funcs
+	* add type factor to funcs folder
+	* add type const
 	* add import symbol, and view document menu
 	* add context menu
-	* add symbol extra info	
+	* add symbol extra info		
 * GolangFmt
 	* fix timeout
 	* fix GOPATH
+* GolangDoc
+	* fast expression lookup F1/F2
 
 ### 2013.12.09 Ver x20
 * LiteIDE
