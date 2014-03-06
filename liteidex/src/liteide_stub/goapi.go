@@ -57,7 +57,7 @@ func init() {
 	cmdApi.Flag.BoolVar(&apiShowpos, "pos", false, "addition token position")
 	cmdApi.Flag.StringVar(&apiSeparate, "sep", ", ", "setup separators")
 	cmdApi.Flag.BoolVar(&apiImportParser, "dep", true, "parser package imports")
-	cmdApi.Flag.BoolVar(&apiDefaultCtx, "default_ctx", false, "extract for default context")
+	cmdApi.Flag.BoolVar(&apiDefaultCtx, "default_ctx", true, "extract for default context")
 	cmdApi.Flag.StringVar(&apiCustomCtx, "custom_ctx", "", "optional comma-separated list of <goos>-<goarch>[-cgo] to override default contexts.")
 	cmdApi.Flag.StringVar(&apiLookupInfo, "cursor_info", "", "lookup cursor node info\"file.go:pos\"")
 	cmdApi.Flag.BoolVar(&apiLookupStdin, "cursor_std", false, "cursor_info use stdin")
@@ -857,7 +857,7 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 		w.packageState[ctxName] = loaded
 	}()
 
-	sname := name[strings.LastIndex(name, "/")+1:]
+	sname := name[strings.LastIndexAny(name, ".-/\\")+1:]
 
 	apkg := &ast.Package{
 		Files: make(map[string]*ast.File),
@@ -904,6 +904,7 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 	}
 
 	files := append(append([]string{}, bp.GoFiles...), bp.CgoFiles...)
+
 	if w.cursorInfo != nil && w.cursorInfo.pkg == name {
 		files = append(files, bp.TestGoFiles...)
 		for _, v := range bp.XTestGoFiles {
@@ -925,6 +926,7 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 		return
 	}
 	var deps []string
+
 	for _, file := range files {
 		var src interface{} = nil
 		if w.cursorInfo != nil &&
@@ -1015,7 +1017,7 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 	}
 
 	if apiVerbose {
-		log.Printf("package %s => %s", ctxName, curName)
+		log.Printf("package %s => %s, %v", ctxName, curName, w.wantedPkg[curName])
 	}
 	pop := w.pushScope("pkg " + name)
 	defer pop()
@@ -1039,6 +1041,9 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 	for _, afile := range apkg.Files {
 		for _, di := range afile.Decls {
 			if d, ok := di.(*ast.FuncDecl); ok {
+				if !w.isExtract(d.Name.Name) {
+					continue
+				}
 				w.peekFuncDecl(d)
 			}
 		}
@@ -1088,7 +1093,7 @@ func (w *Walker) WalkPackageDir(name string, dir string, bp *build.Package) {
 	if apiAllmethods {
 		mode |= doc.AllMethods
 	}
-	if apiAlldecls {
+	if apiAlldecls && w.wantedPkg[w.ctxName] {
 		mode |= doc.AllDecls
 	}
 
@@ -1185,6 +1190,13 @@ func (w *Walker) lookupFile(file *ast.File, p token.Pos) (*TypeInfo, error) {
 		}
 	}
 	return nil, fmt.Errorf("un find cursor %v", w.fset.Position(p))
+}
+
+func (w *Walker) isExtract(name string) bool {
+	if w.wantedPkg[w.curPackageName] || apiAlldecls {
+		return true
+	}
+	return ast.IsExported(name)
 }
 
 func (w *Walker) isType(typ string) *ExprType {
@@ -1494,7 +1506,7 @@ func (w *Walker) lookupVar(vs *ast.ValueSpec, p token.Pos, local bool) (*TypeInf
 				typ, err := w.varValueType(vs.Values[n], n)
 				if err != nil {
 					if apiVerbose {
-						log.Printf("unknown type of variable %q, type %T, error = %v, pos=%s",
+						log.Printf("unknown type of variable2 %q, type %T, error = %v, pos=%s",
 							ident.Name, vs.Values[n], err, w.fset.Position(vs.Pos()))
 					}
 					typ = "unknown-type"
@@ -1516,7 +1528,7 @@ func (w *Walker) lookupVar(vs *ast.ValueSpec, p token.Pos, local bool) (*TypeInf
 				typ, err := w.varValueType(vs.Values[0], n)
 				if err != nil {
 					if apiVerbose {
-						log.Printf("unknown type of variable %q, type %T, error = %v, pos=%s",
+						log.Printf("unknown type of variable3 %q, type %T, error = %v, pos=%s",
 							ident.Name, vs.Values[0], err, w.fset.Position(vs.Pos()))
 					}
 					typ = "unknown-type"
@@ -2179,7 +2191,11 @@ func (w *Walker) walkFile(file *ast.File) {
 					if err != nil {
 						log.Fatal(err)
 					}
-					name := path.Base(fpath)
+					//name := path.Base(fpath)
+					name := fpath
+					if i := strings.LastIndexAny(name, ".-/\\"); i > 0 {
+						name = name[i+1:]
+					}
 					if is.Name != nil {
 						name = is.Name.Name
 					}
@@ -2404,7 +2420,7 @@ func (w *Walker) findStructField(st ast.Expr, name string) (*ast.Ident, ast.Expr
 					return n, fi.Type
 				}
 			}
-			log.Println("->", w.nodeString(typ))
+			//log.Println("->", w.nodeString(typ))
 			if fi.Names == nil {
 				switch v := typ.(type) {
 				case *ast.Ident:
@@ -2467,6 +2483,12 @@ func (w *Walker) findStructField(st ast.Expr, name string) (*ast.Ident, ast.Expr
 
 func (w *Walker) lookupFunction(name, sel string) (*TypeInfo, error) {
 	name = strings.TrimLeft(name, "*")
+	if p := w.findPackage(name); p != nil {
+		fn := p.findCallFunc(sel)
+		if fn != nil {
+			return &TypeInfo{Kind: KindFunc, X: fn, Name: name + "." + sel, T: fn, Type: w.nodeString(w.namelessType(fn))}, nil
+		}
+	}
 	pos := strings.Index(name, ".")
 	if pos != -1 {
 		pkg := name[:pos]
@@ -2476,7 +2498,7 @@ func (w *Walker) lookupFunction(name, sel string) (*TypeInfo, error) {
 				return &TypeInfo{Kind: KindMethod, X: fn, Name: name + "." + sel, T: ident, Type: w.nodeString(w.namelessType(fn))}, nil
 			}
 		}
-		return nil, fmt.Errorf("not lookup pkg type function pkg: %s.%s.%s", pkg, typ, sel)
+		return nil, fmt.Errorf("not lookup pkg type function pkg: %s, %s. %s. %s", name, pkg, typ, sel)
 	}
 
 	//find local var.func()
@@ -2528,7 +2550,7 @@ func (w *Walker) lookupFunction(name, sel string) (*TypeInfo, error) {
 		if fn != nil {
 			return &TypeInfo{Kind: KindFunc, X: fn, Name: name + "." + sel, T: fn, Type: w.nodeString(w.namelessType(fn))}, nil
 		}
-		return nil, fmt.Errorf("not find pkg func %v.%v", p.name, sel)
+		return nil, fmt.Errorf("not find pkg func0 %v.%v", p.name, sel)
 	}
 	return nil, fmt.Errorf("not lookup func %v.%v", name, sel)
 }
@@ -2602,7 +2624,8 @@ func (w *Walker) varFunctionType(name, sel string, index int) (string, error) {
 		if typ != nil {
 			return w.pkgRetType(p.name, w.nodeString(w.namelessType(typ))), nil
 		}
-		return "", fmt.Errorf("not find pkg func %v.%v", p.name, sel)
+		//log.Println("->", p.functions)
+		return "", fmt.Errorf("not find pkg func1 %v . %v", p.name, sel)
 	}
 	return "", fmt.Errorf("not find func %v.%v", name, sel)
 }
@@ -3023,7 +3046,9 @@ func (w *Walker) varValueType(vi ast.Expr, index int) (string, error) {
 		typ, err := w.varValueType(v.X, index)
 		typ = strings.TrimLeft(typ, "*")
 		if err == nil {
-			if index == 1 {
+			if index == 0 {
+				return typ, nil
+			} else if index == 1 {
 				return "bool", nil
 			}
 			if strings.HasPrefix(typ, "[]") {
@@ -3039,7 +3064,7 @@ func (w *Walker) varValueType(vi ast.Expr, index int) (string, error) {
 				}
 			}
 		}
-		return "", fmt.Errorf("unknown index %v", err)
+		return "", fmt.Errorf("unknown index %v %v %v %v", typ, v.X, index, err)
 	case *ast.SliceExpr:
 		return w.varValueType(v.X, index)
 	case *ast.ChanType:
@@ -3098,6 +3123,9 @@ const constDepPrefix = "const-dependency:"
 
 func (w *Walker) walkConst(vs *ast.ValueSpec) {
 	for _, ident := range vs.Names {
+		if !w.isExtract(ident.Name) {
+			continue
+		}
 		litType := ""
 		if vs.Type != nil {
 			litType = w.nodeString(vs.Type)
@@ -3176,10 +3204,13 @@ func (w *Walker) walkVar(vs *ast.ValueSpec) {
 		}
 	} else if len(vs.Names) == len(vs.Values) {
 		for n, ident := range vs.Names {
+			if !w.isExtract(ident.Name) {
+				continue
+			}
 			typ, err := w.varValueType(vs.Values[n], n)
 			if err != nil {
 				if apiVerbose {
-					log.Printf("unknown type of variable %q, type %T, error = %v, pos=%s",
+					log.Printf("unknown type of variable0 %q, type %T, error = %v, pos=%s",
 						ident.Name, vs.Values[n], err, w.fset.Position(vs.Pos()))
 				}
 				typ = "unknown-type"
@@ -3191,10 +3222,13 @@ func (w *Walker) walkVar(vs *ast.ValueSpec) {
 		}
 	} else if len(vs.Values) == 1 {
 		for n, ident := range vs.Names {
+			if !w.isExtract(ident.Name) {
+				continue
+			}
 			typ, err := w.varValueType(vs.Values[0], n)
 			if err != nil {
 				if apiVerbose {
-					log.Printf("unknown type of variable %q, type %T, error = %v, pos=%s",
+					log.Printf("unknown type of variable1 %q, type %T, error = %v, pos=%s",
 						ident.Name, vs.Values[0], err, w.fset.Position(vs.Pos()))
 				}
 				typ = "unknown-type"
@@ -3445,7 +3479,7 @@ func (w *Walker) peekFuncDecl(f *ast.FuncDecl) {
 }
 
 func (w *Walker) walkFuncDecl(f *ast.FuncDecl) {
-	if !isExtract(f.Name.Name) {
+	if !w.isExtract(f.Name.Name) {
 		return
 	}
 	if f.Recv != nil {

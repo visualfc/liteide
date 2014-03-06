@@ -171,6 +171,7 @@ void GolangAst::loadProjectPath(const QString &path)
     if (m_projectAstWidget->isHidden()) {
         return;
     }
+
     m_updateFileNames.clear();
     m_updateFilePaths.clear();
     QDir dir(path);
@@ -291,16 +292,13 @@ void GolangAst::editorChanged(LiteApi::IEditor *editor)
         if (!fileName.isEmpty()) {
             QFileInfo info(fileName);
             m_workPath = info.absolutePath();
-            m_processFile->setWorkingDirectory(info.absolutePath());
             if (info.suffix() == "go") {
+                m_processFile->setWorkingDirectory(info.absolutePath());
                 m_editorFileName.append(info.fileName());
                 m_editorFilePath.append(info.filePath());
+                loadProjectPath(info.path());
             }
-        }
-        updateAstFile();
-        if (!fileName.isEmpty()) {
-            QFileInfo info(fileName);
-            loadProjectPath(info.path());
+            updateAstFile();
         }
     }
 }
