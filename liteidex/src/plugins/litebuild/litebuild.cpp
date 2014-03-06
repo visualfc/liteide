@@ -752,7 +752,27 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     toolBar->insertSeparator(spacer);
     toolBar->insertAction(spacer,m_configAct);
     toolBar->insertSeparator(spacer);
-    toolBar->insertActions(spacer,actions);
+    //toolBar->insertActions(spacer,actions);
+    foreach (QAction *act, actions) {
+        QMenu *subMenu = act->menu();
+        if (subMenu) {
+            BuildAction *ba = build->findAction(subMenu->menuAction()->objectName());
+            if (ba) {
+                QToolButton *btn = new QToolButton(toolBar);
+                btn->setIcon(subMenu->menuAction()->icon());
+                btn->setText(subMenu->title());
+                btn->setMenu(subMenu);
+                if (ba->isFolder()) {
+                    btn->setPopupMode(QToolButton::InstantPopup);
+                } else {
+                    btn->setPopupMode(QToolButton::MenuButtonPopup);
+                }
+                toolBar->insertWidget(spacer,btn);
+            }
+        } else {
+            toolBar->insertAction(spacer,act);
+        }
+    }
 
     QMenu *menu = new QMenu(editor->widget());
 
