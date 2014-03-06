@@ -1180,7 +1180,7 @@ func (w *Walker) lookupLabel(body *ast.BlockStmt, name string) (*TypeInfo, error
 		case *ast.BlockStmt:
 			return w.lookupLabel(v, name)
 		case *ast.LabeledStmt:
-			return &TypeInfo{Kind: KindLabel, Name: v.Label.Name, T: v.Label}, nil
+			return &TypeInfo{Kind: KindLabel, Name: v.Label.Name, Type: "branch", T: v.Label}, nil
 		}
 	}
 	return nil, nil
@@ -1256,7 +1256,7 @@ func (w *Walker) lookupStmt(vi ast.Stmt, p token.Pos) (*TypeInfo, error) {
 		//
 	case *ast.LabeledStmt:
 		if inRange(v.Label, p) {
-			return &TypeInfo{Kind: KindBuiltin, Name: v.Label.Name, Type: "label"}, nil
+			return &TypeInfo{Kind: KindLabel, Name: v.Label.Name}, nil
 		}
 		return w.lookupStmt(v.Stmt, p)
 		//

@@ -859,7 +859,8 @@ void LiteEditor::editPositionChanged()
      }
 */
      //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
-     m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
+     //m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
+     m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
 }
 
 void LiteEditor::gotoLine()
