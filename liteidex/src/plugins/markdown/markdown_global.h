@@ -32,4 +32,7 @@
 #  define MARKDOWNSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define  MARKDOWN_SYNCVIEWHTML "markdown/syncviewhtml"
+#define  MARKDOWN_SYNCSCROLLHTML "markdown/syncsscrollhtml"
+
 #endif // MARKDOWN_GLOBAL_H

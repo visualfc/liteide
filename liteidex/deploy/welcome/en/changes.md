@@ -6,23 +6,25 @@
 ### 2014.03.06 Ver x21
 * LiteIDE
 	* fast highlighter for MacOS X 10.9
+	* cancel x20 always open in new window mode.	
+	* add new JsonEdit plugin.
+	* add reload/close dialog YesToAll, if modified on the drive.
 	* add auto reload files option, if modified on the drive.
 	* add store setting to local ini file option.
-	* remove x20 always open in new window mode.
 	* fix folder expand state
 	* fix for case sensitive path comparison on windows
-* GolangAst
-	* add type factor to funcs
-	* add import symbol, and view document menu
-	* add context menu
-	* add symbol extra info
 * LiteBuild
 	* add golint support
 * LiteEnv
 	* recreate system.env
 * LiteEditor
-	* fix if/else fold
 	* new color scheme gist-github (thanks William Kennedy <bill@ardanstudios.com>)
+	* fix if/else syntax fold
+* GolangAst
+	* add type factor to funcs
+	* add import symbol, and view document menu
+	* add context menu
+	* add symbol extra info	
 * GolangFmt
 	* fix timeout
 	* fix GOPATH
