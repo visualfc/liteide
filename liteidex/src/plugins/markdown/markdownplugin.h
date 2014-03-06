@@ -49,7 +49,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<MarkdownPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/Markdown");
-        m_info->setVer("x19");
+        m_info->setVer("x21");
         m_info->setName("Markdown");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Markdown Editor");

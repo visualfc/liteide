@@ -13,6 +13,7 @@
 	* add store setting to local ini file option.
 	* fix folder expand state
 	* fix for case sensitive path comparison on windows
+	* fix memory leak
 * LiteBuild
 	* add golint support
 * LiteEnv
