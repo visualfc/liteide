@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!--
+  This file is part of KDE's kate project.
+
+  Copyright 2004 Alexander Neundorf (neundorf@kde.org)
+  Copyright 2005 Dominik Haumann (dhdev@gmx.de)
+  Copyright 2007,2008 Matthew Woehlke (mw_triad@users.sourceforge.net)
+
+ **********************************************************************
+ * This library is free software; you can redistribute it and/or      *
+ * modify it under the terms of the GNU Lesser General Public         *
+ * License as published by the Free Software Foundation; either       *
+ * version 2 of the License, or (at your option) any later version.   *
+ *                                                                    *
+ * This library is distributed in the hope that it will be useful,    *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of     *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  *
+ * Lesser General Public License for more details.                    *
+ *                                                                    *
+ * You should have received a copy of the GNU Lesser General Public   *
+ * License along with this library; if not, write to the              *
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,   *
+ * Boston, MA  02110-1301, USA.                                       *
+ **********************************************************************
+ -->
+<!-- generated for "cmake version 2.8.10.2" -->
+<language name="CMake" version="1.14" kateversion="2.4" section="Other" extensions="CMakeLists.txt;*.cmake;" mimetype="" author="Alexander Neundorf (neundorf@kde.org)" license="LGPL">
+  <highlighting>
+
+    <list name = "commands">
+      <!-- generated list -->
+      <item> add_custom_command </item>
+      <item> add_custom_target </item>
+      <item> add_definitions </item>
+      <item> add_dependencies </item>
+      <item> add_executable </item>
+      <item> add_library </item>
+      <item> add_subdirectory </item>
+      <item> add_test </item>
+      <item> aux_source_directory </item>
+      <item> break </item>
+      <item> build_command </item>
+      <item> build_name </item>
+      <item> cmake_minimum_required </item>
+      <item> cmake_policy </item>
+      <item> configure_file </item>
+      <item> create_test_sourcelist </item>
+      <item> define_property </item>
+      <item> else </item>
+      <item> elseif </item>
+      <item> enable_language </item>
+      <item> enable_testing </item>
+      <item> endforeach </item>
+      <item> endfunction </item>
+      <item> endif </item>
+      <item> endmacro </item>
+      <item> endwhile </item>
+      <item> exec_program </item>
+      <item> execute_process </item>
+      <item> export </item>
+      <item> export_library_dependencies </item>
+      <item> file </item>
+      <item> find_file </item>
+      <item> find_library </item>
+      <item> find_package </item>
+      <item> find_path </item>
+      <item> find_program </item>
+      <item> fltk_wrap_ui </item>
+      <item> foreach </item>
+      <item> function </item>
+      <item> get_cmake_property </item>
+      <item> get_directory_property </item>
+      <item> get_filename_component </item>
+      <item> get_property </item>
+      <item> get_source_file_property </item>
+      <item> get_target_property </item>
+      <item> get_test_property </item>
+      <item> if </item>
+      <item> include </item>
+      <item> include_directories </item>
+      <item> include_external_msproject </item>
+      <item> include_regular_expression </item>
+      <item> install </item>
+      <item> install_files </item>
+      <item> install_programs </item>
+      <item> install_targets </item>
+      <item> link_directories </item>
+      <item> link_libraries </item>
+      <item> list </item>
+      <item> load_cache </item>
+      <item> load_command </item>
+      <item> macro </item>
+      <item> make_directory </item>
+      <item> mark_as_advanced </item>
+      <item> math </item>
+      <item> message </item>
+      <item> option </item>
+      <item> output_required_files </item>
+      <item> project </item>
+      <item> qt_wrap_cpp </item>
+      <item> qt_wrap_ui </item>
+      <item> remove </item>
+      <item> remove_definitions </item>
+      <item> return </item>
+      <item> separate_arguments </item>
+      <item> set </item>
+      <item> set_directory_properties </item>
+      <item> set_property </item>
+      <item> set_source_files_properties </item>
+      <item> set_target_properties </item>
+      <item> set_tests_properties </item>
+      <item> site_name </item>
+      <item> source_group </item>
+      <item> string </item>
+      <item> subdir_depends </item>
+      <item> subdirs </item>
+      <item> target_link_libraries </item>
+      <item> try_compile </item>
+      <item> try_run </item>
+      <item> unset </item>
+      <item> use_mangled_mesa </item>
+      <item> utility_source </item>
+      <item> variable_requires </item>
+      <item> variable_watch </item>
+      <item> while </item>
+      <item> write_file </item>
+    </list>
+
+    <list name="itkvtk_commands">
+      <item> itk_wrap_tcl </item>
+      <item> vtk_make_instantiator </item>
+      <item> vtk_wrap_java </item>
+      <item> vtk_wrap_python </item>
+      <item> vtk_wrap_tcl </item>
+    </list>
+
+    <list name="special_args">
+      <!-- generated list -->
+      <item> A </item>
+      <item> ABSOLUTE </item>
+      <item> AFTER </item>
+      <item> ALL </item>
+      <item> ALPHABET </item>
+      <item> AND </item>
+      <item> APPEND </item>
+      <item> APPEND_STRING </item>
+      <item> ARCHIVE </item>
+      <item> ARGS </item>
+      <item> ASCII </item>
+      <item> AUTHOR_WARNING </item>
+      <item> B </item>
+      <item> BEFORE </item>
+      <item> BRIEF_DOCS </item>
+      <item> BUNDLE </item>
+      <item> CACHE </item>
+      <item> CLEAR </item>
+      <item> CMAKE_FIND_ROOT_PATH_BOTH </item>
+      <item> CMAKE_FLAGS </item>
+      <item> CODE </item>
+      <item> COMMAND </item>
+      <item> COMMAND_NAME </item>
+      <item> COMMENT </item>
+      <item> COMPARE </item>
+      <item> COMPILE_DEFINITIONS </item>
+      <item> COMPILE_OUTPUT_VARIABLE </item>
+      <item> COMPILE_RESULT_VAR </item>
+      <item> COMPONENT </item>
+      <item> COMPONENTS </item>
+      <item> CONFIG </item>
+      <item> CONFIGS </item>
+      <item> CONFIGURATION </item>
+      <item> CONFIGURATIONS </item>
+      <item> CONFIGURE </item>
+      <item> COPYONLY </item>
+      <item> COPY_FILE </item>
+      <item> CRLF </item>
+      <item> DEFINED </item>
+      <item> DEFINITION </item>
+      <item> DEPENDS </item>
+      <item> DESTINATION </item>
+      <item> DIRECTORY </item>
+      <item> DIRECTORY_PERMISSIONS </item>
+      <item> DOC </item>
+      <item> DOS </item>
+      <item> DOWNLOAD </item>
+      <item> ENV </item>
+      <item> EQUAL </item>
+      <item> ERROR_FILE </item>
+      <item> ERROR_QUIET </item>
+      <item> ERROR_STRIP_TRAILING_WHITESPACE </item>
+      <item> ERROR_VARIABLE </item>
+      <item> ESCAPE_QUOTES </item>
+      <item> EXACT </item>
+      <item> EXCLUDE </item>
+      <item> EXCLUDE_FROM_ALL </item>
+      <item> EXISTS </item>
+      <item> EXPECTED_HASH </item>
+      <item> EXPECTED_MD5 </item>
+      <item> EXPORT </item>
+      <item> EXPR </item>
+      <item> EXT </item>
+      <item> EXTRA_INCLUDE </item>
+      <item> FATAL_ERROR </item>
+      <item> FILE </item>
+      <item> FILES </item>
+      <item> FILES_MATCHING </item>
+      <item> FILE_PERMISSIONS </item>
+      <item> FIND </item>
+      <item> FOLLOW_SYMLINKS </item>
+      <item> FOO </item>
+      <item> FORCE </item>
+      <item> FRAMEWORK </item>
+      <item> FULL_DOCS </item>
+      <item> FUNCTION </item>
+      <item> GET </item>
+      <item> GLOB </item>
+      <item> GLOBAL </item>
+      <item> GLOB_RECURSE </item>
+      <item> GREATER </item>
+      <item> GROUP_EXECUTE </item>
+      <item> GROUP_READ </item>
+      <item> GUID </item>
+      <item> HEX </item>
+      <item> HINTS </item>
+      <item> IMPLICIT_DEPENDS </item>
+      <item> IMPORTED </item>
+      <item> IN </item>
+      <item> INACTIVITY_TIMEOUT </item>
+      <item> INCLUDE_INTERNALS </item>
+      <item> INHERITED </item>
+      <item> INPUT_FILE </item>
+      <item> INSERT </item>
+      <item> IS_ABSOLUTE </item>
+      <item> IS_DIRECTORY </item>
+      <item> IS_NEWER_THAN </item>
+      <item> IS_SYMLINK </item>
+      <item> ITEMS </item>
+      <item> LENGTH </item>
+      <item> LENGTH_MAXIMUM </item>
+      <item> LENGTH_MINIMUM </item>
+      <item> LESS </item>
+      <item> LF </item>
+      <item> LIBRARY </item>
+      <item> LIMIT </item>
+      <item> LIMIT_COUNT </item>
+      <item> LIMIT_INPUT </item>
+      <item> LIMIT_OUTPUT </item>
+      <item> LINK_INTERFACE_LIBRARIES </item>
+      <item> LISTS </item>
+      <item> LOG </item>
+      <item> MACOSX_BUNDLE </item>
+      <item> MAIN_DEPENDENCY </item>
+      <item> MAKE_DIRECTORY </item>
+      <item> MATCH </item>
+      <item> MATCHALL </item>
+      <item> MATCHES </item>
+      <item> MODULE </item>
+      <item> NAME </item>
+      <item> NAMELINK_ONLY </item>
+      <item> NAMELINK_SKIP </item>
+      <item> NAMES </item>
+      <item> NAMESPACE </item>
+      <item> NAME_WE </item>
+      <item> NEW </item>
+      <item> NEWLINE_CONSUME </item>
+      <item> NEWLINE_STYLE </item>
+      <item> NOT </item>
+      <item> NOTEQUAL </item>
+      <item> NO_CMAKE_BUILDS_PATH </item>
+      <item> NO_CMAKE_ENVIRONMENT_PATH </item>
+      <item> NO_CMAKE_FIND_ROOT_PATH </item>
+      <item> NO_CMAKE_PACKAGE_REGISTRY </item>
+      <item> NO_CMAKE_PATH </item>
+      <item> NO_CMAKE_SYSTEM_PACKAGE_REGISTRY </item>
+      <item> NO_CMAKE_SYSTEM_PATH </item>
+      <item> NO_DEFAULT_PATH </item>
+      <item> NO_HEX_CONVERSION </item>
+      <item> NO_MODULE </item>
+      <item> NO_POLICY_SCOPE </item>
+      <item> NO_SOURCE_PERMISSIONS </item>
+      <item> NO_SYSTEM_ENVIRONMENT_PATH </item>
+      <item> OBJECT </item>
+      <item> OFFSET </item>
+      <item> OLD </item>
+      <item> ONLY_CMAKE_FIND_ROOT_PATH </item>
+      <item> OPTIONAL </item>
+      <item> OPTIONAL_COMPONENTS </item>
+      <item> OR </item>
+      <item> OUTPUT </item>
+      <item> OUTPUT_DIRECTORY </item>
+      <item> OUTPUT_FILE </item>
+      <item> OUTPUT_QUIET </item>
+      <item> OUTPUT_STRIP_TRAILING_WHITESPACE </item>
+      <item> OUTPUT_VARIABLE </item>
+      <item> OWNER_EXECUTE </item>
+      <item> OWNER_READ </item>
+      <item> OWNER_WRITE </item>
+      <item> PACKAGE </item>
+      <item> PARENT_SCOPE </item>
+      <item> PATH </item>
+      <item> PATHS </item>
+      <item> PATH_SUFFIXES </item>
+      <item> PATH_TO_MESA </item>
+      <item> PATTERN </item>
+      <item> PERMISSIONS </item>
+      <item> PLATFORM </item>
+      <item> POLICY </item>
+      <item> POP </item>
+      <item> POST_BUILD </item>
+      <item> PREORDER </item>
+      <item> PRE_BUILD </item>
+      <item> PRE_LINK </item>
+      <item> PRIVATE_HEADER </item>
+      <item> PROGRAM </item>
+      <item> PROGRAMS </item>
+      <item> PROGRAM_ARGS </item>
+      <item> PROJECT_NAME </item>
+      <item> PROPERTIES </item>
+      <item> PROPERTY </item>
+      <item> PUBLIC_HEADER </item>
+      <item> PUSH </item>
+      <item> QUIET </item>
+      <item> RANDOM </item>
+      <item> RANDOM_SEED </item>
+      <item> RANGE </item>
+      <item> READ </item>
+      <item> READ_WITH_PREFIX </item>
+      <item> REALPATH </item>
+      <item> REGEX </item>
+      <item> REGULAR_EXPRESSION </item>
+      <item> RELATIVE </item>
+      <item> RELATIVE_PATH </item>
+      <item> REMOVE </item>
+      <item> REMOVE_AT </item>
+      <item> REMOVE_DUPLICATES </item>
+      <item> REMOVE_ITEM </item>
+      <item> REMOVE_RECURSE </item>
+      <item> RENAME </item>
+      <item> REPLACE </item>
+      <item> REQUIRED </item>
+      <item> REQUIRED_VARIABLE1 </item>
+      <item> REQUIRED_VARIABLE2 </item>
+      <item> RESOURCE </item>
+      <item> RESULT_VAR </item>
+      <item> RESULT_VARIABLE </item>
+      <item> RETURN_VALUE </item>
+      <item> REVERSE </item>
+      <item> RUNTIME </item>
+      <item> RUNTIME_DIRECTORY </item>
+      <item> RUN_OUTPUT_VARIABLE </item>
+      <item> RUN_RESULT_VAR </item>
+      <item> SCRIPT </item>
+      <item> SEND_ERROR </item>
+      <item> SET </item>
+      <item> SHA1 </item>
+      <item> SHA224 </item>
+      <item> SHA256 </item>
+      <item> SHA384 </item>
+      <item> SHARED </item>
+      <item> SHOW_PROGRESS </item>
+      <item> SORT </item>
+      <item> SOURCE </item>
+      <item> SOURCES </item>
+      <item> STATIC </item>
+      <item> STATUS </item>
+      <item> STREQUAL </item>
+      <item> STRGREATER </item>
+      <item> STRINGS </item>
+      <item> STRIP </item>
+      <item> STRLESS </item>
+      <item> SUBSTRING </item>
+      <item> SYSTEM </item>
+      <item> TARGET </item>
+      <item> TARGETS </item>
+      <item> TEST </item>
+      <item> TEST_VARIABLE </item>
+      <item> TIMEOUT </item>
+      <item> TLS_CAINFO </item>
+      <item> TLS_VERIFY </item>
+      <item> TOLOWER </item>
+      <item> TOUPPER </item>
+      <item> TO_CMAKE_PATH </item>
+      <item> TO_NATIVE_PATH </item>
+      <item> TYPE </item>
+      <item> UNIX </item>
+      <item> UPLOAD </item>
+      <item> USE_SOURCE_PERMISSIONS </item>
+      <item> VALUE </item>
+      <item> VAR </item>
+      <item> VAR2 </item>
+      <item> VARIABLE </item>
+      <item> VERBATIM </item>
+      <item> VERSION </item>
+      <item> VERSION_EQUAL </item>
+      <item> VERSION_GREATER </item>
+      <item> VERSION_LESS </item>
+      <item> WARNING </item>
+      <item> WIN32 </item>
+      <item> WORKING_DIRECTORY </item>
+      <item> WRITE </item>
+    </list>
+
+    <!-- these are "special" and don't show up in the generated lists -->
+    <list name="extra_special_args">
+      <item> GLOBAL </item>
+      <item> INTERNAL </item>
+    </list>
+
+    <list name="properties">
+      <!-- generated list -->
+      <item> ABSTRACT </item>
+      <item> ADDITIONAL_MAKE_CLEAN_FILES </item>
+      <item> ADVANCED </item>
+      <item> ALLOW_DUPLICATE_CUSTOM_TARGETS </item>
+      <item> ARCHIVE_OUTPUT_DIRECTORY </item>
+      <item> ARCHIVE_OUTPUT_NAME </item>
+      <item> ATTACHED_FILES </item>
+      <item> ATTACHED_FILES_ON_FAIL </item>
+      <item> AUTOMOC </item>
+      <item> AUTOMOC_MOC_OPTIONS </item>
+      <item> BUILD_WITH_INSTALL_RPATH </item>
+      <item> BUNDLE </item>
+      <item> BUNDLE_EXTENSION </item>
+      <item> CACHE_VARIABLES </item>
+      <item> CLEAN_NO_CUSTOM </item>
+      <item> COMPILE_DEFINITIONS </item>
+      <item> COMPILE_FLAGS </item>
+      <item> COST </item>
+      <item> DEBUG_CONFIGURATIONS </item>
+      <item> DEBUG_POSTFIX </item>
+      <item> DEFINE_SYMBOL </item>
+      <item> DEFINITIONS </item>
+      <item> DEPENDS </item>
+      <item> DISABLED_FEATURES </item>
+      <item> ENABLED_FEATURES </item>
+      <item> ENABLED_LANGUAGES </item>
+      <item> ENABLE_EXPORTS </item>
+      <item> ENVIRONMENT </item>
+      <item> EXCLUDE_FROM_ALL </item>
+      <item> EXTERNAL_OBJECT </item>
+      <item> EchoString </item>
+      <item> FAIL_REGULAR_EXPRESSION </item>
+      <item> FIND_LIBRARY_USE_LIB64_PATHS </item>
+      <item> FIND_LIBRARY_USE_OPENBSD_VERSIONING </item>
+      <item> FOLDER </item>
+      <item> FRAMEWORK </item>
+      <item> Fortran_FORMAT </item>
+      <item> Fortran_MODULE_DIRECTORY </item>
+      <item> GENERATED </item>
+      <item> GENERATOR_FILE_NAME </item>
+      <item> GLOBAL_DEPENDS_DEBUG_MODE </item>
+      <item> GLOBAL_DEPENDS_NO_CYCLES </item>
+      <item> GNUtoMS </item>
+      <item> HAS_CXX </item>
+      <item> HEADER_FILE_ONLY </item>
+      <item> HELPSTRING </item>
+      <item> IMPLICIT_DEPENDS_INCLUDE_TRANSFORM </item>
+      <item> IMPORTED </item>
+      <item> IMPORTED_CONFIGURATIONS </item>
+      <item> IMPORTED_IMPLIB </item>
+      <item> IMPORTED_LINK_DEPENDENT_LIBRARIES </item>
+      <item> IMPORTED_LINK_INTERFACE_LANGUAGES </item>
+      <item> IMPORTED_LINK_INTERFACE_LIBRARIES </item>
+      <item> IMPORTED_LINK_INTERFACE_MULTIPLICITY </item>
+      <item> IMPORTED_LOCATION </item>
+      <item> IMPORTED_NO_SONAME </item>
+      <item> IMPORTED_SONAME </item>
+      <item> IMPORT_PREFIX </item>
+      <item> IMPORT_SUFFIX </item>
+      <item> INCLUDE_DIRECTORIES </item>
+      <item> INCLUDE_REGULAR_EXPRESSION </item>
+      <item> INSTALL_NAME_DIR </item>
+      <item> INSTALL_RPATH </item>
+      <item> INSTALL_RPATH_USE_LINK_PATH </item>
+      <item> INTERPROCEDURAL_OPTIMIZATION </item>
+      <item> IN_TRY_COMPILE </item>
+      <item> KEEP_EXTENSION </item>
+      <item> LABELS </item>
+      <item> LANGUAGE </item>
+      <item> LIBRARY_OUTPUT_DIRECTORY </item>
+      <item> LIBRARY_OUTPUT_NAME </item>
+      <item> LINKER_LANGUAGE </item>
+      <item> LINK_DEPENDS </item>
+      <item> LINK_DIRECTORIES </item>
+      <item> LINK_FLAGS </item>
+      <item> LINK_INTERFACE_LIBRARIES </item>
+      <item> LINK_INTERFACE_MULTIPLICITY </item>
+      <item> LINK_SEARCH_END_STATIC </item>
+      <item> LINK_SEARCH_START_STATIC </item>
+      <item> LISTFILE_STACK </item>
+      <item> LOCATION </item>
+      <item> MACOSX_BUNDLE </item>
+      <item> MACOSX_BUNDLE_INFO_PLIST </item>
+      <item> MACOSX_FRAMEWORK_INFO_PLIST </item>
+      <item> MACOSX_PACKAGE_LOCATION </item>
+      <item> MACROS </item>
+      <item> MEASUREMENT </item>
+      <item> MODIFIED </item>
+      <item> NO_SONAME </item>
+      <item> OBJECT_DEPENDS </item>
+      <item> OBJECT_OUTPUTS </item>
+      <item> OSX_ARCHITECTURES </item>
+      <item> OUTPUT_NAME </item>
+      <item> PACKAGES_FOUND </item>
+      <item> PACKAGES_NOT_FOUND </item>
+      <item> PARENT_DIRECTORY </item>
+      <item> PASS_REGULAR_EXPRESSION </item>
+      <item> PDB_NAME </item>
+      <item> PDB_OUTPUT_DIRECTORY </item>
+      <item> POSITION_INDEPENDENT_CODE </item>
+      <item> POST_INSTALL_SCRIPT </item>
+      <item> PREDEFINED_TARGETS_FOLDER </item>
+      <item> PREFIX </item>
+      <item> PRE_INSTALL_SCRIPT </item>
+      <item> PRIVATE_HEADER </item>
+      <item> PROCESSORS </item>
+      <item> PROJECT_LABEL </item>
+      <item> PUBLIC_HEADER </item>
+      <item> REPORT_UNDEFINED_PROPERTIES </item>
+      <item> REQUIRED_FILES </item>
+      <item> RESOURCE </item>
+      <item> RESOURCE_LOCK </item>
+      <item> RULE_LAUNCH_COMPILE </item>
+      <item> RULE_LAUNCH_CUSTOM </item>
+      <item> RULE_LAUNCH_LINK </item>
+      <item> RULE_MESSAGES </item>
+      <item> RUNTIME_OUTPUT_DIRECTORY </item>
+      <item> RUNTIME_OUTPUT_NAME </item>
+      <item> RUN_SERIAL </item>
+      <item> SKIP_BUILD_RPATH </item>
+      <item> SOURCES </item>
+      <item> SOVERSION </item>
+      <item> STATIC_LIBRARY_FLAGS </item>
+      <item> STRINGS </item>
+      <item> SUFFIX </item>
+      <item> SYMBOLIC </item>
+      <item> TARGET_ARCHIVES_MAY_BE_SHARED_LIBS </item>
+      <item> TARGET_SUPPORTS_SHARED_LIBS </item>
+      <item> TEST_INCLUDE_FILE </item>
+      <item> TIMEOUT </item>
+      <item> TYPE </item>
+      <item> USE_FOLDERS </item>
+      <item> VALUE </item>
+      <item> VARIABLES </item>
+      <item> VERSION </item>
+      <item> VS_DOTNET_REFERENCES </item>
+      <item> VS_GLOBAL_KEYWORD </item>
+      <item> VS_GLOBAL_PROJECT_TYPES </item>
+      <item> VS_KEYWORD </item>
+      <item> VS_SCC_AUXPATH </item>
+      <item> VS_SCC_LOCALPATH </item>
+      <item> VS_SCC_PROJECTNAME </item>
+      <item> VS_SCC_PROVIDER </item>
+      <item> VS_WINRT_EXTENSIONS </item>
+      <item> VS_WINRT_REFERENCES </item>
+      <item> WILL_FAIL </item>
+      <item> WIN32_EXECUTABLE </item>
+      <item> WORKING_DIRECTORY </item>
+      <item> WRAP_EXCLUDE </item>
+      <item> __CMAKE_DELETE_CACHE_CHANGE_VARS_ </item>
+    </list>
+
+    <!-- these are "special" and don't show up in the generated lists -->
+    <list name="extra_properties">
+      <item> COMMANDS </item> <!-- WARNING: this one looks like a cmake bug, watch for it to migrate to the generated list! -->
+      <item> DEFINITION </item>
+    </list>
+
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Normal Text">
+        <DetectSpaces/>
+        <keyword attribute="Commands" context="Command Args" String="commands" insensitive="true"/>
+        <keyword attribute="Third-Party Commands" context="#stay" String="itkvtk_commands" insensitive="true"/>
+        <RegExpr attribute="Region Marker" context="#stay" String="#\s*BEGIN.*$" beginRegion="block" firstNonSpace="true"/>
+        <RegExpr attribute="Region Marker" context="#stay" String="#\s*END.*$" endRegion="block" firstNonSpace="true"/>
+        <DetectChar attribute="Comment" context="Comment" char="#"/>
+        <IncludeRules context="Detect Variables"/>
+        <RegExpr attribute="Macros" context="Macro Args" String="\w+\s*(?=\()"/>
+      </context>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Detect Variables">
+        <RegExpr attribute="Environment Variable" context="#stay" String="\$ENV\{\s*\w+\s*\}"/>
+        <RegExpr attribute="CMake Variable" context="#stay" String="\$\{\s*\w+\s*\}"/>
+      </context>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Command Args">
+        <keyword attribute="Special Args" context="#stay" String="special_args"/>
+        <keyword attribute="Special Args" context="#stay" String="extra_special_args"/>
+        <keyword attribute="Properties" context="#stay" String="properties"/>
+        <keyword attribute="Properties" context="#stay" String="extra_properties"/>
+        <IncludeRules context="Macro Args"/>
+      </context>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Macro Args">
+        <DetectChar attribute="Normal Text" context="#pop" char=")"/>
+        <StringDetect attribute="Escapes" context="#stay" String="\&quot;"/>
+        <DetectChar attribute="Strings" context="String" char="&quot;"/>
+        <RegExpr attribute="Comment" context="#stay" String="#.*$"/>
+        <IncludeRules context="Detect Variables"/>
+      </context>
+      <context attribute="Comment" lineEndContext="#pop" name="Comment">
+        <IncludeRules context="##Alerts" />
+      </context>
+      <context attribute="Strings" lineEndContext="#stay" name="String">
+        <RegExpr attribute="Strings" context="#pop" String="&quot;(?=[ );]|$)" />
+        <RegExpr attribute="Escapes" context="#stay" String="\\[&quot;$n\\]" />
+        <IncludeRules context="Detect Variables"/>
+      </context>
+
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="Special Args" defStyleNum="dsOthers"/>
+      <itemData name="Properties" defStyleNum="dsOthers"/>
+      <itemData name="Commands" defStyleNum="dsKeyword"/>
+      <itemData name="Third-Party Commands" defStyleNum="dsFunction"/>
+      <itemData name="Macros"  defStyleNum="dsFunction"/>
+      <itemData name="Strings" defStyleNum="dsString"/>
+      <itemData name="Escapes" defStyleNum="dsChar"/>
+      <itemData name="CMake Variable" defStyleNum="dsDecVal"/>
+      <itemData name="Environment Variable" defStyleNum="dsFloat"/>
+      <itemData name="Comment" defStyleNum="dsComment"/>
+      <itemData name="Region Marker" defStyleNum="dsRegionMarker"/>
+    </itemDatas>
+  </highlighting>
+
+  <general>
+    <comments>
+      <comment name="singleLine" start="#"/>
+    </comments>
+    <keywords casesensitive="1"/>
+  </general>
+</language>

@@ -336,7 +336,7 @@ void FileBrowser::doubleClickedTreeView(QModelIndex proxyIndex)
     }
     QFileInfo info(fileName);
     QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
-    if (mimeType.startsWith("text/")) {
+    if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
         m_liteApp->fileManager()->openEditor(fileName);
         return;
     }

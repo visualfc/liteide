@@ -37,5 +37,4 @@ public:
     }
 };
 
-
 #endif // MACSUPPORT_H

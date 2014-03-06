@@ -33,6 +33,7 @@ namespace Ui {
 }
 
 class QListWidgetItem;
+
 class OptionsBrowser : public LiteApi::IBrowserEditor
 {
     Q_OBJECT

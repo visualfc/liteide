@@ -554,7 +554,7 @@ void FileSystemWidget::openPathIndex(const QModelIndex &index)
     if (node->isFile()) {
         QFileInfo info(node->path());
         QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(node->path());
-        if (mimeType.startsWith("text/")) {
+        if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
             m_liteApp->fileManager()->openEditor(node->path());
             return;
         }
