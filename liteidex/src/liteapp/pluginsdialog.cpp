@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -93,7 +93,7 @@ void PluginsDialog::appendInfo(const LiteApi::PluginInfo *info)
     }
     items.append(load);
     items.append(new QStandardItem(info->info()));
-    items.append(new QStandardItem(info->anchor()));
+    items.append(new QStandardItem(info->author()));
     items.append(new QStandardItem(info->ver()));
     items.append(new QStandardItem(QFileInfo(info->filePath()).fileName()));
     items.at(5)->setToolTip(info->filePath());

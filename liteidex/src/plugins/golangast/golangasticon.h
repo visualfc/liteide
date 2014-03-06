@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -35,6 +35,8 @@ public:
     QIcon iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub = true) const;
 protected:
     QIcon   iconPackage;
+    QIcon   iconImport;
+    QIcon   iconImports;
     QIcon   iconType;
     QIcon   iconStruct;
     QIcon   iconInterface;
@@ -61,6 +63,8 @@ public:
     QIcon iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub = true) const;
 protected:
     QIcon   iconPackage;
+    QIcon   iconImport;
+    QIcon   iconImports;
     QIcon   iconType;
     QIcon   iconStruct;
     QIcon   iconInterface;

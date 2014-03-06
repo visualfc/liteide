@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!-- Author: Anders Lund <anders@alweb.dk> //-->
+<!-- Minor changes: Joseph Wenninger <jowenn@kde.org> //-->
+<!-- Full JavaScript 1.0 support by Whitehawk Stormchaser //-->
+<language name="JavaScript" version="1.18" kateversion="2.4" section="Scripts" extensions="*.js"
+          mimetype="text/x-javascript;application/x-javascript" indenter="cstyle"
+          author="Anders Lund (anders@alweb.dk), Joseph Wenninger (jowenn@kde.org), Whitehawk Stormchaser (zerokode@gmx.net)" license="">
+  <highlighting>
+    <list name="keywords">
+        <item> if </item>
+        <item> else </item>
+        <item> for </item>
+        <item> in </item>
+        <item> while </item>
+        <item> do </item>
+        <item> continue </item>
+        <item> break </item>
+        <item> with </item>
+        <item> try </item>
+        <item> catch </item>
+        <item> finally </item>
+        <item> switch </item>
+        <item> case </item>
+        <item> new </item>
+        <item> var </item>
+        <item> function </item>
+        <item> return </item>
+        <item> delete </item>
+        <item> true </item>
+        <item> false </item>
+        <item> void </item>
+        <item> throw </item>
+        <item> typeof </item>
+        <item> const </item>
+        <item> default </item>
+    </list>
+    <list name="functions">
+        <item> escape </item>
+        <item> isFinite </item>
+        <item> isNaN </item>
+        <item> Number </item>
+        <item> parseFloat </item>
+        <item> parseInt </item>
+        <item> reload </item>
+        <item> taint </item>
+        <item> unescape </item>
+        <item> untaint </item>
+        <item> write </item>
+        </list>
+    <list name="objects">
+        <item>Anchor</item>
+        <item>Applet</item>
+        <item>Area</item>
+        <item>Array</item>
+        <item>Boolean</item>
+        <item>Button</item>
+        <item>Checkbox</item>
+        <item>Date</item>
+        <item>document</item>
+        <item>window</item>
+        <item>Image</item>
+        <item>FileUpload</item>
+        <item>Form</item>
+        <item>Frame</item>
+        <item>Function</item>
+        <item>Hidden</item>
+        <item>Link</item>
+        <item>MimeType</item>
+        <item>Math</item>
+        <item>Max</item>
+        <item>Min</item>
+        <item>Layer</item>
+        <item>navigator</item>
+        <item>Object</item>
+        <item>Password</item>
+        <item>Plugin</item>
+        <item>Radio</item>
+        <item>RegExp</item>
+        <item>Reset</item>
+        <item>Screen</item>
+        <item>Select</item>
+        <item>String</item>
+        <item>Text</item>
+        <item>Textarea</item>
+        <item>this</item>
+        <item>Window</item>
+        </list>
+    <list name="math">
+        <item> abs </item>
+        <item> acos </item>
+        <item> asin </item>
+        <item> atan </item>
+        <item> atan2 </item>
+        <item> ceil </item>
+        <item> cos </item>
+        <item> ctg </item>
+        <item> E </item>
+        <item> exp </item>
+        <item> floor </item>
+        <item> LN2 </item>
+        <item> LN10 </item>
+        <item> log </item>
+        <item> LOG2E </item>
+        <item> LOG10E </item>
+        <item> PI </item>
+        <item> pow </item>
+        <item> round </item>
+        <item> sin </item>
+        <item> sqrt </item>
+        <item> SQRT1_2 </item>
+        <item> SQRT2 </item>
+        <item> tan </item>
+    </list>
+    <list name="events">
+         <item>onAbort</item>
+         <item>onBlur</item>
+         <item>onChange</item>
+         <item>onClick</item>
+         <item>onError</item>
+         <item>onFocus</item>
+         <item>onLoad</item>
+         <item>onMouseOut</item>
+         <item>onMouseOver</item>
+         <item>onReset</item>
+         <item>onSelect</item>
+         <item>onSubmit</item>
+         <item>onUnload</item>
+    </list>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Normal">
+	<DetectSpaces/>
+        <StringDetect attribute="Region Marker" context="region_marker" String="//BEGIN" beginRegion="Region1"/>
+        <StringDetect attribute="Region Marker" context="region_marker" String="//END" endRegion="Region1"/>
+        <Float attribute="Float" context="#stay" />
+        <Int attribute="Decimal" context="#stay" />
+        <RegExpr attribute="JSON" context="#stay" String="\b[\w\.]+\b\s*(?=:)" />
+
+        <keyword attribute="Keyword" context="#stay" String="keywords" />
+        <keyword attribute="Function" context="#stay" String="functions" />
+        <keyword attribute="Objects" context="#stay" String="objects" />
+        <keyword attribute="Math" context="#stay" String="math" />
+        <keyword attribute="Events" context="#stay" String="events" />
+
+        <DetectChar context="ObjectMember" char="." />
+        <RegExpr attribute="Objects" context="ObjectMember" String="\b[\w\.]+(?=\.)" />
+
+	<DetectIdentifier/>
+        <DetectChar attribute="String" context="String" char="&quot;"/>
+        <DetectChar attribute="String Char" context="String 1" char="'"/>
+        <Detect2Chars attribute="Comment" context="Comment" char="/" char1="/"/>
+        <Detect2Chars attribute="Comment" context="Multi/inline Comment" char="/" char1="*" beginRegion="Comment"/>
+        <RegExpr attribute="Normal Text" context="(Internal regex catch)" String="[=?:]" />
+        <RegExpr attribute="Normal Text" context="(Internal regex catch)" String="\(" />
+        <DetectChar attribute="Symbol" context="#stay" char="{" beginRegion="Brace1" />
+        <DetectChar attribute="Symbol" context="#stay" char="}" endRegion="Brace1" />
+        <AnyChar attribute="Symbol" context="#stay" String=":!%&amp;+,-/.*&lt;=&gt;?[]|~^&#59;"/>
+      </context>
+
+      <context attribute="String" lineEndContext="#pop" name="String">
+	<DetectIdentifier/>
+        <HlCStringChar attribute="String Char" context="#stay"/>
+        <LineContinue attribute="String" context="#stay"/>
+        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+      </context>
+      <context attribute="String Char" lineEndContext="#pop" name="String 1">
+        <DetectIdentifier/>
+        <HlCStringChar attribute="String Char" context="#stay"/>
+        <LineContinue attribute="String" context="#stay"/>
+        <DetectChar attribute="String Char" context="#pop" char="'"/>
+      </context>
+
+      <context attribute="Comment" lineEndContext="#pop" name="Comment">
+        <DetectSpaces />
+        <IncludeRules context="##Alerts" />
+        <DetectIdentifier />
+      </context>
+      <context attribute="Comment" lineEndContext="#stay" name="Multi/inline Comment">
+        <IncludeRules context="##Alerts" />
+        <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment"/>
+      </context>
+
+      <context attribute="Regular Expression" lineEndContext="#stay" name="Regular Expression">
+        <RegExpr attribute="Regular Expression" context="#pop#pop#pop" String="/[ig]{0,2}" />
+        <RegExpr attribute="Pattern Internal Operator" context="#stay" String="\{[\d, ]+\}" />
+        <RegExpr attribute="Pattern Internal Operator" context="#stay" String="\\[bB]" />
+        <RegExpr attribute="Pattern Character Class" context="#stay" String="\\[nrtvfDdSsWw]" />
+        <DetectChar attribute="Pattern Character Class" context="(charclass caret first check)" char="[" />
+        <RegExpr attribute="Pattern Internal Operator" context="#stay" String="\\." />
+        <RegExpr attribute="Pattern Internal Operator" context="#stay" String="\$(?=/)" />
+        <AnyChar attribute="Pattern Internal Operator" context="#stay" String="?+*()|" />
+      </context>
+      <context attribute="Normal Text" lineEndContext="#stay" name="(Internal regex catch)" fallthrough="true" fallthroughContext="#pop">
+        <RegExpr attribute="Normal Text" context="#stay" String="\s*" />
+        <RegExpr attribute="Regular Expression" context="#pop" String="//(?=;)" />
+        <Detect2Chars attribute="Comment" context="Comment" char="/" char1="/" />
+        <Detect2Chars attribute="Comment" context="Multi/inline Comment" char="/" char1="*" />
+        <DetectChar attribute="Regular Expression" context="(regex caret first check)" char="/" />
+      </context>
+      <context attribute="Pattern Character Class" lineEndContext="#stay" name="Regular Expression Character Class">
+        <RegExpr attribute="Pattern Character Class" context="#stay" String="\\[\[\]]" />
+        <RegExpr attribute="Pattern Internal Operator" context="#stay" String="\\." />
+        <DetectChar attribute="Pattern Character Class" context="#pop#pop" char="]" />
+      </context>
+      <context attribute="Pattern Internal Operator" lineEndContext="#pop" name="(regex caret first check)" fallthrough="true" fallthroughContext="Regular Expression">
+        <DetectChar attribute="Pattern Internal Operator" context="Regular Expression" char="^" />
+      </context>
+      <context attribute="Pattern Internal Operator" lineEndContext="#pop" name="(charclass caret first check)" fallthrough="true" fallthroughContext="Regular Expression Character Class">
+        <DetectChar attribute="Pattern Internal Operator" context="Regular Expression Character Class" char="^" />
+      </context>
+
+      <context name="region_marker" attribute="Region Marker" lineEndContext="#pop" >
+	<DetectIdentifier />
+	<DetectSpaces />
+      </context>
+
+      <context name="ObjectMember" attribute="Normal Text" lineEndContext="#stay">
+        <DetectChar context="#stay" char="." />
+        <DetectIdentifier attribute="Object Member" />
+        <DetectSpaces context="#pop" />
+        <AnyChar lookAhead="true" context="#pop" String="(){}:!%&amp;+,-/.*&lt;=&gt;?[]|~^&#59;"/>
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text"  defStyleNum="dsNormal"  spellChecking="false"/>
+      <itemData name="Keyword"      defStyleNum="dsKeyword" spellChecking="false"/>
+      <itemData name="Function" defStyleNum="dsFunction" spellChecking="false"/>
+      <itemData name="Objects" defStyleNum="dsKeyword" color="#008000" selColor="#00ffff" bold="0" italic="0" spellChecking="false"/>
+      <itemData name="Object Member" defStyleNum="dsFunction" spellChecking="false"/>
+      <itemData name="Math" defStyleNum="dsKeyword" color="#DBA716" selColor="#00ffff" bold="0" italic="0" spellChecking="false"/>
+      <itemData name="Events" defStyleNum="dsKeyword" color="#F766D5" selColor="#00ffff" bold="0" italic="0" spellChecking="false"/>
+      <itemData name="Decimal"      defStyleNum="dsDecVal" spellChecking="false"/>
+      <itemData name="Float"        defStyleNum="dsFloat" spellChecking="false"/>
+      <itemData name="Char"         defStyleNum="dsChar" spellChecking="false"/>
+      <itemData name="String"       defStyleNum="dsString"/>
+      <itemData name="String Char"  defStyleNum="dsChar" spellChecking="false"/>
+      <itemData name="Comment"      defStyleNum="dsComment"/>
+      <itemData name="Symbol"       defStyleNum="dsNormal" spellChecking="false"/>
+      <itemData name="Regular Expression" defStyleNum="dsOthers" spellChecking="false"/>
+      <itemData name="Pattern Internal Operator" defStyleNum="dsFloat" spellChecking="false"/>
+      <itemData name="Pattern Character Class" defStyleNum="dsBaseN" spellChecking="false"/>
+      <itemData name="Region Marker" defStyleNum="dsRegionMarker" spellChecking="false"/>
+      <itemData name="JSON" defStyleNum="dsDataType" spellChecking="false"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="//" />
+      <comment name="multiLine" start="/*" end="*/" />
+    </comments>
+    <keywords casesensitive="1" />
+  </general>
+</language>

@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -135,9 +135,10 @@ signals:
 
 enum EditorNaviagteType{
     EditorNavigateNormal = 1,
-    EditorNavigateWaring = 2,
+    EditorNavigateWarning = 2,
     EditorNavigateError = 4,
-    EditorNavigateBad = EditorNavigateWaring|EditorNavigateError
+    EditorNavigateReload = 8,
+    EditorNavigateBad = EditorNavigateWarning|EditorNavigateError
 };
 
 class ILiteEditor : public ITextEditor
@@ -148,9 +149,10 @@ public:
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
-    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg) = 0;
+    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const char *tag) = 0;
     virtual void clearNavigateMarak(int line) = 0;
-    virtual void clearAllNavigateMark(EditorNaviagteType types) = 0;
+    virtual void clearAllNavigateMarks() = 0;
+    virtual void clearAllNavigateMark(EditorNaviagteType types, const char *tag = "") = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
 };
 

@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "litebuildoption.h"
+#include "litebuild_global.h"
 #include "ui_litebuildoption.h"
 #include <QFileSystemModel>
 #include <QFileInfo>
@@ -54,7 +55,7 @@ LiteBuildOption::LiteBuildOption(LiteApi::IApplication *app,QObject *parent) :
 #else
     ui->fileTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
-    bool b = m_liteApp->settings()->value("litebuild/goenvcheck",false).toBool();
+    bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     ui->goenvCheckBox->setChecked(b);
     connect(ui->fileTreeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFile(QModelIndex)));
 }
@@ -83,7 +84,7 @@ QString LiteBuildOption::mimeType() const
 void LiteBuildOption::apply()
 {
     bool b = ui->goenvCheckBox->isChecked();
-    m_liteApp->settings()->setValue("litebuild/goenvcheck",b);
+    m_liteApp->settings()->setValue(LITEBUILD_ENVCHECK,b);
 }
 
 void LiteBuildOption::doubleClickedFile(QModelIndex index)

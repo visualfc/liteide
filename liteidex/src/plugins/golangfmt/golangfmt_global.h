@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -37,5 +37,6 @@
 #define GOLANGFMT_AUTOFMT "golangfmt/autofmt"
 #define GOLANGFMT_USESYNCFMT "golangfmt/syncfmt"
 #define GOLANGFMT_SYNCTIMEOUT "golangfmt/synctimeout"
+#define GOLANGFMT_TAG "golangfmt/navtag"
 
 #endif // GOLANGFMT_GLOBAL_H

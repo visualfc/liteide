@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -64,12 +64,26 @@ int main(int argc, char *argv[])
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
+    //QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
+
     QTranslator translator;
     QTranslator qtTranslator;
-    const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
-    QString locale = QLocale::system().name();
-    locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
+
     QString resPath = LiteApp::getResoucePath();
+    QString locale = QLocale::system().name();
+    QString qss;
+    QSettings global(resPath+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    if (storeLocal) {
+        const QSettings settings(resPath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
+        locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
+        qss = settings.value(LITEAPP_QSS,"default.qss").toString();
+    } else {
+        const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
+        locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
+        qss = settings.value(LITEAPP_QSS,"default.qss").toString();
+    }
+
     if (!locale.isEmpty()) {
         const QString &liteideTrPath = resPath+"/translations";
         if (translator.load(QLatin1String("liteide_") + locale, liteideTrPath)) {
@@ -83,7 +97,6 @@ int main(int argc, char *argv[])
             app.setProperty("liteide_locale", locale);
         }
     }
-    QString qss = settings.value(LITEAPP_QSS,"default.qss").toString();
     if (!qss.isEmpty()) {
         QFile f(resPath+"/liteapp/qss/"+qss);
         if (f.open(QFile::ReadOnly)) {
@@ -123,10 +136,10 @@ int main(int argc, char *argv[])
         QString file = fileList.at(0);
         QFileInfo f(file);
         if (f.isFile()) {
-            liteApp->fileManager()->openFolderEx(f.path());
+            liteApp->fileManager()->addFolderList(f.path());
             liteApp->fileManager()->openEditor(file);
         } else if (f.isDir()) {
-            liteApp->fileManager()->openFolderEx(file);
+            liteApp->fileManager()->addFolderList(file);
         }
     } else {
         foreach(QString file, fileList) {
@@ -134,7 +147,7 @@ int main(int argc, char *argv[])
             if (f.isFile()) {
                 liteApp->fileManager()->openEditor(file);
             } else if (f.isDir()) {
-                liteApp->fileManager()->openFolderEx(file);
+                liteApp->fileManager()->addFolderList(file);
             }
         }
     }

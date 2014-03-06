@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "litebuild.h"
+#include "litebuild_global.h"
 #include "buildmanager.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
@@ -69,7 +70,9 @@ enum {
     ID_INPUTTYPE = 6, //action - 0, command - 1
     ID_NAVIGATE = 7,
     ID_REGEXP = 8,
-    ID_ACTIONID = 9
+    ID_ACTIONID = 9,
+    ID_TAKEALL = 10,
+    ID_ACTIVATEOUTPUT_CHECK = 11
 };
 
 LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
@@ -338,17 +341,23 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
 
-    bool b = m_liteApp->settings()->value("litebuild/goenvcheck",false).toBool();
+    bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     if (!b) {
         return;
     }
-    m_output->updateExistsTextColor();
-    m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
-    m_output->append(m_envManager->currentEnv()->orgEnvLines().join("\n")+"\n",Qt::black);
 
     QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
-
-    this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false);
+    if (gobin.isEmpty()) {
+        m_output->updateExistsTextColor();
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        m_output->append("go bin not found!",Qt::red);
+        return;
+    }
+    if (!m_process->isRunning()) {
+        m_output->updateExistsTextColor();
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false,false);
+    }
 }
 
 void LiteBuild::loadProjectInfo(const QString &filePath)
@@ -743,7 +752,28 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     toolBar->insertSeparator(spacer);
     toolBar->insertAction(spacer,m_configAct);
     toolBar->insertSeparator(spacer);
-    toolBar->insertActions(spacer,actions);
+    //toolBar->insertActions(spacer,actions);
+    foreach (QAction *act, actions) {
+        QMenu *subMenu = act->menu();
+        if (subMenu) {
+            BuildAction *ba = build->findAction(subMenu->menuAction()->objectName());
+            if (ba) {
+                QToolButton *btn = new QToolButton(toolBar);
+                btn->setIcon(subMenu->menuAction()->icon());
+                btn->setText(subMenu->title());
+                btn->setMenu(subMenu);
+                if (ba->isFolder()) {
+                    btn->setPopupMode(QToolButton::InstantPopup);
+                } else {
+                    btn->setPopupMode(QToolButton::MenuButtonPopup);
+                    btn->setDefaultAction(subMenu->menuAction());
+                }
+                toolBar->insertWidget(spacer,btn);
+            }
+        } else {
+            toolBar->insertAction(spacer,act);
+        }
+    }
 
     QMenu *menu = new QMenu(editor->widget());
 
@@ -796,7 +826,9 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
         return;
     }
     //m_liteApp->outputManager()->setCurrentOutput(m_output);
-    m_outputAct->setChecked(true);
+    if (m_process->userData(ID_ACTIVATEOUTPUT_CHECK).toBool()) {
+        m_outputAct->setChecked(true);
+    }
 
     QString codecName = m_process->userData(2).toString();
     QTextCodec *codec = QTextCodec::codecForLocale();
@@ -806,14 +838,17 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
     QString msg = codec->toUnicode(data);
     m_output->append(msg);
 
-    if (bError && m_process->userData(ID_NAVIGATE).toBool() ) {
+    if (!m_process->userData(ID_NAVIGATE).toBool()) {
+        return;
+    }
+    if (bError || m_process->userData(ID_TAKEALL).toBool() ) {
         QString regexp = m_process->userData(ID_REGEXP).toString();
         if (regexp.isEmpty()) {
             return;
         }
         QRegExp re(regexp);
-        foreach (QString err, msg.split("\n",QString::SkipEmptyParts)) {
-            if (re.indexIn(err) >= 0 && re.captureCount() >= 2) {
+        foreach (QString info, msg.split("\n",QString::SkipEmptyParts)) {
+            if (re.indexIn(info) >= 0 && re.captureCount() >= 2) {
                 QString fileName = re.cap(1);
                 QString fileLine = re.cap(2);
 
@@ -838,13 +873,22 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
                     if (editor) {
                         LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
                         if (liteEditor) {
-                            liteEditor->setNavigateHead(LiteApi::EditorNavigateError,m_process->userData(ID_ACTIONID).toString()+" Error");
-                            liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,err);
+                            QString str = m_process->userData(ID_ACTIONID).toString();
+                            if (bError) {
+                                str += " Error";
+                                liteEditor->setNavigateHead(LiteApi::EditorNavigateError,str);
+                                liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,info, LITEBUILD_TAG);
+                            } else {
+                                str += " Export";
+                                liteEditor->setNavigateHead(LiteApi::EditorNavigateWarning,str);
+                                liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateWarning,info, LITEBUILD_TAG);
+                            }
                         }
                     }
                 }
             }
         }
+
     }
 }
 
@@ -890,12 +934,14 @@ void LiteBuild::stopAction()
     }
 }
 
-void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor)
+void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor, bool activateOutputCheck)
 {
     if (updateExistsTextColor) {
         m_output->updateExistsTextColor();
     }
-    m_outputAct->setChecked(true);
+    if (activateOutputCheck) {
+        m_outputAct->setChecked(activateOutputCheck);
+    }
     if (m_process->isRunning()) {
         m_output->append(tr("A process is currently running.  Stop the current action first.")+"\n",Qt::red);
         return;
@@ -909,7 +955,7 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     m_process->setUserData(ID_CODEC,"utf-8");
     m_process->setUserData(ID_INPUTTYPE,INPUT_COMMAND);
     m_process->setUserData(ID_NAVIGATE,false);
-
+    m_process->setUserData(ID_ACTIVATEOUTPUT_CHECK,activateOutputCheck);
     QString shell = FileUtil::lookPathInDir(cmd,workDir);
     if (shell.isEmpty()) {
         shell = FileUtil::lookPath(cmd,sysenv,false);
@@ -961,6 +1007,7 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
     m_output->updateExistsTextColor();
     m_process->setUserData(ID_MIMETYPE,mime);
     m_process->setUserData(ID_EDITOR,editor);
+    m_process->setUserData(ID_ACTIVATEOUTPUT_CHECK,true);
     if (ba->task().isEmpty()) {
         execAction(mime,id);
     } else {
@@ -1068,6 +1115,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     m_process->setEnvironment(sysenv.toStringList());
     m_process->setUserData(ID_NAVIGATE,ba->isNavigate());
     m_process->setUserData(ID_ACTIONID,ba->id());
+    m_process->setUserData(ID_TAKEALL,ba->isTakeall());
 
     if (ba->isNavigate()) {
         foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {

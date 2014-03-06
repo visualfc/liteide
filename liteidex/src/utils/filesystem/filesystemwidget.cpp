@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -498,7 +498,7 @@ void FileSystemWidget::addRootPath(const QString &path)
 void FileSystemWidget::setRootPathList(const QStringList &pathList)
 {
     m_model->setRootPathList(pathList);
-    m_tree->expandToDepth(0);
+    //m_tree->expandToDepth(0);
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
 
@@ -554,7 +554,7 @@ void FileSystemWidget::openPathIndex(const QModelIndex &index)
     if (node->isFile()) {
         QFileInfo info(node->path());
         QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(node->path());
-        if (mimeType.startsWith("text/")) {
+        if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
             m_liteApp->fileManager()->openEditor(node->path());
             return;
         }

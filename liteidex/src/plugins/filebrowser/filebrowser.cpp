@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -336,7 +336,7 @@ void FileBrowser::doubleClickedTreeView(QModelIndex proxyIndex)
     }
     QFileInfo info(fileName);
     QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
-    if (mimeType.startsWith("text/")) {
+    if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
         m_liteApp->fileManager()->openEditor(fileName);
         return;
     }
@@ -681,7 +681,7 @@ void FileBrowser::openFolderInNewWindow()
 void FileBrowser::addToFolders()
 {
     QDir dir = contextDir();
-    m_liteApp->fileManager()->addFolder(dir.path());
+    m_liteApp->fileManager()->addFolderList(dir.path());
 }
 
 void FileBrowser::openShell()

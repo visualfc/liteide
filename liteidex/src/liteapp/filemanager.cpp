@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -94,6 +94,9 @@ bool FileManager::initWithApp(IApplication *app)
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
     connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
+
+    m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+
     return true;
 }
 
@@ -213,16 +216,17 @@ void FileManager::setFolderList(const QStringList &folders)
     }
 }
 
-void FileManager::addFolder(const QString &folder)
+void FileManager::addFolderList(const QString &folder)
 {
     m_folderWidget->addRootPath(folder);
     m_toolWindowAct->setChecked(true);
+    addRecentFile(folder,"folder");
 }
 
 IApplication* FileManager::openFolderInNewWindow(const QString &folder)
 {
     IApplication *app = m_liteApp->newInstance(false);
-    app->fileManager()->openFolderEx(folder);
+    app->fileManager()->setFolderList(QStringList() << folder);
     return app;
 }
 
@@ -282,7 +286,7 @@ void FileManager::openFolder()
         if (dir.cdUp()) {
             m_initPath = dir.path();
         }
-        this->openFolderEx(folder);
+        this->addFolderList(folder);
     }
 }
 
@@ -301,7 +305,7 @@ void FileManager::openFolderNewWindow()
            m_initPath = dir.path();
        }
        IApplication *app = m_liteApp->newInstance(false);
-       app->fileManager()->openFolderEx(folder);
+       app->fileManager()->setFolderList(QStringList() << folder);
    }
 }
 
@@ -371,13 +375,7 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
         if (ret == QMessageBox::Yes) {
             QString scheme = m_newFileDialog->scheme();
             if (scheme == "folder") {
-                LiteApi::IApplication *app = openFolderEx(m_newFileDialog->openPath());
-                if (app != m_liteApp) {
-                    foreach(QString file, m_newFileDialog->openFiles()) {
-                        app->fileManager()->openFile(file);
-                    }
-                    return;
-                }
+                this->addFolderList(m_newFileDialog->openPath());
             }
             foreach(QString file, m_newFileDialog->openFiles()) {
                 this->openFile(file);
@@ -459,25 +457,25 @@ IProject *FileManager::openProject(const QString &_fileName)
     return proj;
 }
 
-IApplication* FileManager::openFolderEx(const QString &folder)
-{
-    QDir dir(folder);
-    if (!dir.exists()) {
-        return m_liteApp;
-    }
-    if (m_folderWidget->rootPathList().isEmpty()) {
-        m_folderWidget->setRootPath(folder);
-    } else {
-        if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
-            return this->openFolderInNewWindow(folder);
-        } else {
-            m_folderWidget->setRootPath(folder);
-        }
-    }
-    m_toolWindowAct->setChecked(true);
-    addRecentFile(folder,"folder");
-    return m_liteApp;
-}
+//IApplication* FileManager::openFolderEx(const QString &folder)
+//{
+//    QDir dir(folder);
+//    if (!dir.exists()) {
+//        return m_liteApp;
+//    }
+//    if (m_folderWidget->rootPathList().isEmpty()) {
+//        m_folderWidget->setRootPath(folder);
+//    } else {
+//        if (m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool()) {
+//            return this->openFolderInNewWindow(folder);
+//        } else {
+//            m_folderWidget->setRootPath(folder);
+//        }
+//    }
+//    m_toolWindowAct->setChecked(true);
+//    addRecentFile(folder,"folder");
+//    return m_liteApp;
+//}
 
 IProject *FileManager::openProjectScheme(const QString &_fileName, const QString &scheme)
 {
@@ -530,8 +528,9 @@ void FileManager::applyOption(QString id)
     if (id != OPTION_LITEAPP) {
         return;
     }
-    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
 
+    m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
     foreach (QString scheme, this->schemeList()) {
         QString key = schemeKey(scheme);
         QStringList files = m_liteApp->settings()->value(key).toStringList();
@@ -680,33 +679,52 @@ void FileManager::fileChanged(QString fileName)
     if (!m_changedFiles.contains(fileName)) {
         m_changedFiles.append(fileName);
     }
-    if (wasempty && !m_changedFiles.isEmpty()) {
+    if (wasempty && !m_changedFiles.isEmpty() && !m_checkActivated) {
+        m_checkActivated = true;
         QTimer::singleShot(200, this, SLOT(checkForReload()));
     }
 }
 
 void FileManager::checkForReload()
 {
-    if (m_checkActivated) {
-        return;
-    }
-    m_checkActivated = true;
-    foreach (QString fileName, m_changedFiles) {
+    int lastReloadRet = QMessageBox::Yes;
+    int lastCloseRet = QMessageBox::Yes;
+begin:
+    QStringList files = m_changedFiles;
+    m_changedFiles.clear();
+    foreach (QString fileName, files) {
         if (!QFile::exists(fileName)) {
             //remove
             if (m_fileStateMap.contains(fileName)) {
                 if (!fileName.isEmpty()) {
                     LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,false);
                     if (editor) {
-                        QString text = QString(tr("The following file has been deleted outside of LiteIDE:\n%1\n"
-							"\nDo you want to save the previous contents, close the file, or leave the contents unsaved?")).arg(fileName);
-                        int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::Save |QMessageBox::Close | QMessageBox::Cancel,QMessageBox::Save);
-                        if (ret == QMessageBox::Save) {
-                            if (m_liteApp->editorManager()->saveEditor(editor)) {
-                                m_fileWatcher->addPath(fileName);
+                        // The file has been deleted.
+                        // If the buffer is modified, ask the user what he wants to do.
+                        // Otherwise, apply the default action : close the editor.
+                        int ret = QMessageBox::Yes;
+                        if (lastCloseRet != QMessageBox::YesToAll) {
+                            if (m_autoReloadFile) {
+                                if (editor->isModified() ) {
+                                    QString text = QString(tr("%1\nThis file has been deleted from the drive,\n"
+                                                              "but you have unsaved modifications in your LiteIDE editor.\n"
+                                                              "\nDo you want to close the editor ?"
+                                                              "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                                    ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                                }
+                            } else {
+                                QString text = QString(tr("%1\nThis file has been deleted from the drive.\n"
+                                                          "\nDo you want to close the editor ?")).arg(fileName);
+                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
                             }
-                        } else if (ret == QMessageBox::Close) {
+                        }
+
+                        if (ret == QMessageBox::Yes || ret == QMessageBox::YesToAll) {
                             m_liteApp->editorManager()->closeEditor(editor);
+                            m_liteApp->appendLog("EditorManager",fileName+" remove",false);
+                        }
+                        if (ret == QMessageBox::YesToAll) {
+                            lastCloseRet = QMessageBox::YesToAll;
                         }
                     }
                 }
@@ -715,20 +733,48 @@ void FileManager::checkForReload()
             if (m_fileStateMap.contains(fileName)) {
                 LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
                 if (editor) {
+                    // The file has been modified.
+                    // If the buffer is modified, ask the user what he wants to do.
+                    // Otherwise, apply the default action : reload the new content in the editor.
                     QDateTime lastModified = QFileInfo(fileName).lastModified();
                     QDateTime modified = m_fileStateMap.value(fileName);
                     if (lastModified > modified) {
-                        QString text = QString(tr("%1\nThis file has been modified outside of LiteIDE.  Do you want to reload it?")).arg(fileName);
-                        int ret = QMessageBox::question(m_liteApp->mainWindow(),"LiteIDE X",text,QMessageBox::Yes|QMessageBox::No);
-                        if (ret == QMessageBox::Yes) {
-                            editor->reload();
+                        int ret = QMessageBox::Yes;
+                        if (lastReloadRet != QMessageBox::YesToAll) {
+                            if (m_autoReloadFile) {
+                                if (editor->isModified()) {
+                                    QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
+                                        "but you have unsaved modifications in your LiteIDE editor.\n"
+                                        "\nDo you want to reload the file from disk ?"
+                                        "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
+                                    ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                                }
+                            } else {
+                                QString text = QString(tr("%1\nThis file has been modified on the drive.\n"
+                                    "\nDo you want to reload the file from disk ?")).arg(fileName);
+                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                            }
+                        }
+                        if (ret == QMessageBox::YesToAll || ret == QMessageBox::Yes) {
+                            // If the file modification is the result of an internal Ctrl+S, do not reload
+                            QDateTime lastModified = QFileInfo(fileName).lastModified();
+                            QDateTime modified = m_fileStateMap.value(fileName);
+                            if (lastModified != modified) {
+                                editor->reload();
+                                m_liteApp->appendLog("EditorManager",fileName+" reload",false);
+                            }
+                        }
+                        if (ret == QMessageBox::YesToAll) {
+                            lastReloadRet = QMessageBox::YesToAll;
                         }
                     }
                 }
             }
         }
     }
-    m_changedFiles.clear();
+    if (!m_changedFiles.isEmpty()) {
+        goto begin;
+    }
     m_checkActivated = false;
 }
 

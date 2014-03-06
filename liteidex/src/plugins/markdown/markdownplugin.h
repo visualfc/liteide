@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -49,9 +49,9 @@ class PluginFactory : public LiteApi::PluginFactoryT<MarkdownPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/Markdown");
-        m_info->setVer("x19");
+        m_info->setVer("x21");
         m_info->setName("Markdown");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setInfo("Markdown Editor");
         m_info->appendDepend("plugin/liteeditor");
     }

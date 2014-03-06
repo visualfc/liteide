@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -46,7 +46,6 @@
 #endif
 //lite_memory_check_end
 
-
 GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
@@ -61,6 +60,7 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(fmtFinish(bool,int,QString)));
 
+    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
@@ -126,7 +126,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
 
     QProcess process;
-    process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
+    process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     process.start(m_gofmtCmd,args);
     if (!process.waitForStarted(timeout)) {
         m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
@@ -134,12 +134,12 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
     process.write(text.toUtf8());
     process.closeWriteChannel();
-    if (!process.waitForFinished(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout),false);
+    if (!process.waitForFinished(timeout*4)) {
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout*4),false);
         return;
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
-    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGFMT_TAG);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (process.exitCode() != 0) {
         QByteArray error = process.readAllStandardError();
@@ -152,7 +152,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
                     bool ok = false;
                     int line = re.cap(1).toInt(&ok);
                     if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16));
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16), GOLANGFMT_TAG);
                     }
                 }
             }
@@ -313,7 +313,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     if (ed->document()->isModified()) {
         return;
     }
-    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGFMT_TAG);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (!error && code == 0) {
         liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
@@ -352,7 +352,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
                     bool ok = false;
                     int line = re.cap(1).toInt(&ok);
                     if (ok) {
-                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16));
+                        liteEditor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,msg.mid(16), GOLANGFMT_TAG);
                     }
                 }
             }

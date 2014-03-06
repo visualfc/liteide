@@ -1,8 +1,0 @@
-TARGET = gopromake
-DESTDIR = ../../../liteide/bin	
-
-GOFILES = \
-	promake.go \
-	gobin.go \  
-	depparser.go \
-	main.go

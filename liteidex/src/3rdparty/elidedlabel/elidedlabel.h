@@ -56,7 +56,7 @@ class ElidedLabel : public QFrame
 
 public:
     ElidedLabel(QWidget *parent = 0);
-    ElidedLabel(const QString &text = QString(), QWidget *parent = 0);
+    ElidedLabel(const QString &text, QWidget *parent = 0);
 
     void setText(const QString &text);
     const QString & text() const { return content; }

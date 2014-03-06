@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -32,6 +32,8 @@
 #  define LITEIDESHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define LITEIDE_STORELOCAL "LiteIDE/StoreLocal"
+
 #define OPTION_LITEAPP "option/liteapp"
 
 #define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFiles"
@@ -49,6 +51,7 @@
 #define LITEAPP_SHORTCUTS "keybord_shortcuts/"
 #define LITEAPP_OPTNFOLDERINNEWWINDOW "LiteApp/OpenFolderInNewWindow"
 #define LITEAPP_FOLDERSHOWHIDENFILES "LiteApp/FolderShowHidenFiles"
+#define LITEAPP_AUTORELOADFILE   "LiteApp/AutoReloadFile"
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,

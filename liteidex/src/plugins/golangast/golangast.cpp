@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -82,7 +82,6 @@ GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     connect(m_timer,SIGNAL(timeout()),this,SLOT(updateAstNow()));
     connect(m_processFile,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finishedProcessFile(int,QProcess::ExitStatus)));
     connect(m_timerFile,SIGNAL(timeout()),this,SLOT(updateAstNowFile()));
-    connect(m_projectAstWidget,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedTree(QModelIndex)));
 
     m_liteApp->extension()->addObject("LiteApi.IGolangAst",this);
 }
@@ -172,6 +171,7 @@ void GolangAst::loadProjectPath(const QString &path)
     if (m_projectAstWidget->isHidden()) {
         return;
     }
+
     m_updateFileNames.clear();
     m_updateFilePaths.clear();
     QDir dir(path);
@@ -259,7 +259,6 @@ void GolangAst::editorCreated(LiteApi::IEditor *editor)
             if (info.suffix() == "go") {
                 AstWidget *w = new AstWidget(true,m_liteApp);
                 w->setWorkPath(info.absolutePath());
-                connect(w,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedTree(QModelIndex)));
                 m_stackedWidget->addWidget(w);
                 m_editorAstWidgetMap.insert(editor,w);
             }
@@ -293,16 +292,13 @@ void GolangAst::editorChanged(LiteApi::IEditor *editor)
         if (!fileName.isEmpty()) {
             QFileInfo info(fileName);
             m_workPath = info.absolutePath();
-            m_processFile->setWorkingDirectory(info.absolutePath());
             if (info.suffix() == "go") {
+                m_processFile->setWorkingDirectory(info.absolutePath());
                 m_editorFileName.append(info.fileName());
                 m_editorFilePath.append(info.filePath());
+                loadProjectPath(info.path());
             }
-        }
-        updateAstFile();
-        if (!fileName.isEmpty()) {
-            QFileInfo info(fileName);
-            loadProjectPath(info.path());
+            updateAstFile();
         }
     }
 }
@@ -334,19 +330,10 @@ void GolangAst::updateAstNow()
     if (m_updateFileNames.isEmpty()) {
         return;
     }
-#ifdef Q_OS_WIN
-    QString goastview = "goastview.exe";
-#else
-    QString goastview = "goastview";
-#endif
-    QString cmd = m_liteApp->applicationPath();
-    cmd += "/";
-    cmd += goastview;
-
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-files";
-    args << m_updateFileNames.join(" ");
-
+    args << "astview";
+    args << m_updateFileNames;
     m_process->start(cmd,args);
 }
 
@@ -363,16 +350,9 @@ void GolangAst::updateAstNowFile()
     if (m_editorFileName.isEmpty()) {
         return;
     }
-#ifdef Q_OS_WIN
-    QString goastview = "goastview.exe";
-#else
-    QString goastview = "goastview";
-#endif
-    QString cmd = m_liteApp->applicationPath();
-    cmd += "/";
-    cmd += goastview;
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QStringList args;
-    args << "-files";
+    args << "astview";
     args << m_editorFileName;
     m_processFile->start(cmd,args);
 }
@@ -401,35 +381,4 @@ void GolangAst::finishedProcessFile(int code,QProcess::ExitStatus status)
     } else {
         //qDebug() << m_process->readAllStandardError();
     }
-}
-
-void GolangAst::doubleClickedTree(QModelIndex index)
-{
-    AstWidget *w = (AstWidget*)sender();
-    if (!w) {
-        return;
-    }
-    GolangAstItem *item = w->astItemFromIndex(index);
-    if (item == NULL)
-        return;
-    QString fileName = item->fileName();
-    if (fileName.isEmpty()) {
-        if (w->tree()->isExpanded(index)) {
-            w->tree()->collapse(index);
-        } else {
-            w->tree()->expand(index);
-        }
-        return;
-    }
-    QFileInfo info(QDir(w->workPath()),fileName);
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
-    if (!editor) {
-        return;
-    }
-    editor->widget()->setFocus();
-    LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-    if (!textEditor) {
-        return;
-    }
-    textEditor->gotoLine(item->line()-1,item->col(),true);
 }

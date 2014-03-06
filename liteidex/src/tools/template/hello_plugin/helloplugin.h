@@ -23,7 +23,7 @@ public:
         m_info->setId("plugin/Hello");
         m_info->setVer("x18");
         m_info->setName("Hello");
-        m_info->setAnchor("visualfc");
+        m_info->setAuthor("visualfc");
         m_info->setInfo("Hello");
         //m_info->appendDepend("plugin/liteenv");
     }

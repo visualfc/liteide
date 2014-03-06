@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -51,6 +51,10 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::LiteAppOption)
 {
     ui->setupUi(m_widget);
+
+    QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    ui->storeLocalCheckBox->setChecked(storeLocal);
 
     const QString &liteideTrPath = m_liteApp->resourcePath()+"/translations";
     QLocale eng(QLocale::English);
@@ -105,8 +109,8 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
     ui->editorTabsClosableCheckBox->setChecked(b4);
 
-    bool b5 = m_liteApp->settings()->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
-    ui->openFolderInNewWindowCheckBox->setChecked(b5);
+    bool b5 = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+    ui->autoReloadFileCheck->setChecked(b5);
 
     int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
@@ -156,6 +160,10 @@ QString LiteAppOption::mimeType() const
 }
 void LiteAppOption::apply()
 {
+    bool storeLocal = ui->storeLocalCheckBox->isChecked();
+    QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
+    global.setValue(LITEIDE_STORELOCAL,storeLocal);
+
     int index = ui->langComboBox->currentIndex();
     if (index >= 0 && index < ui->langComboBox->count()) {
         QString lc = ui->langComboBox->itemData(index).toString();
@@ -173,8 +181,8 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,b3);
     bool b4 = ui->editorTabsClosableCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_EDITTABSCLOSABLE,b4);
-    bool b5 = ui->openFolderInNewWindowCheckBox->isChecked();
-    m_liteApp->settings()->setValue(LITEAPP_OPTNFOLDERINNEWWINDOW,b5);
+    bool b5 = ui->autoReloadFileCheck->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_AUTORELOADFILE,b5);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {

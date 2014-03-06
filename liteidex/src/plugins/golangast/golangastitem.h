@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -25,48 +25,34 @@
 #define GOLANGASTITEM_H
 
 #include <QStandardItem>
+#include "golangastapi/golangastapi.h"
+
+struct AstItemPos {
+    QString fileName;
+    int     line;
+    int     column;
+};
 
 class GolangAstItem : public QStandardItem
 {
 public:
-    void setTagName(const QString &tagName)
-    {
-        m_tagName = tagName;
+    QList<AstItemPos>   m_posList;
+    QString             m_tagName;
+    QString             m_tipInfo;
+    LiteApi::ASTTAG_ENUM m_tagFlag;
+public:
+    bool isFolder() const {
+        switch (m_tagFlag) {
+        case LiteApi::TagConstFolder:
+        case LiteApi::TagValueFolder:
+        case LiteApi::TagImportFolder:
+        case LiteApi::TagFuncFolder:
+            return true;
+        default:
+            return false;
+        }
+        return false;
     }
-    QString tagName() const
-    {
-        return m_tagName;
-    }
-    void setFileName(const QString &fileName)
-    {
-        m_fileName = fileName;
-    }
-    QString fileName() const
-    {
-        return m_fileName;
-    }
-    void setLine(int line)
-    {
-        m_line = line;
-    }
-    void setCol(int col)
-    {
-        m_col = col;
-    }
-    int line() const
-    {
-        return m_line;
-    }
-    int col() const
-    {
-        return m_col;
-    }
-protected:
-    QString m_tagName;
-    QString m_fileName;
-    int     m_line;
-    int     m_col;
 };
-
 
 #endif // GOLANGASTITEM_H

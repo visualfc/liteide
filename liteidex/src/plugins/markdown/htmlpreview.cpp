@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -21,6 +21,7 @@
 // Module: htmlpreview.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
+#include "markdown_global.h"
 #include "htmlpreview.h"
 #include "sundown/mdtohtml.h"
 #include <QScrollBar>
@@ -112,8 +113,8 @@ HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reload()));
     connect(m_htmlUpdateTimer,SIGNAL(timeout()),this,SLOT(htmlUpdate()));
 
-    m_syncScrollAct->setChecked(m_liteApp->settings()->value("markdown/syncscroll",true).toBool());
-    m_syncSwitchAct->setChecked(m_liteApp->settings()->value("markdown/syncswitch",true).toBool());
+    m_syncScrollAct->setChecked(m_liteApp->settings()->value(MARKDOWN_SYNCSCROLLHTML,true).toBool());
+    m_syncSwitchAct->setChecked(m_liteApp->settings()->value(MARKDOWN_SYNCVIEWHTML,false).toBool());
 }
 
 HtmlPreview::~HtmlPreview()
@@ -123,8 +124,8 @@ HtmlPreview::~HtmlPreview()
     if (act != 0) {
         m_liteApp->settings()->setValue("markdown/css",act->text());
     }
-    m_liteApp->settings()->setValue("markdown/syncscroll",m_syncScrollAct->isChecked());
-    m_liteApp->settings()->setValue("markdown/syncswitch",m_syncSwitchAct->isChecked());
+    m_liteApp->settings()->setValue(MARKDOWN_SYNCSCROLLHTML,m_syncScrollAct->isChecked());
+    m_liteApp->settings()->setValue(MARKDOWN_SYNCVIEWHTML,m_syncSwitchAct->isChecked());
     delete m_configMenu;
     delete m_cssMenu;
     if (m_widget) {

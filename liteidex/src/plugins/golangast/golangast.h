@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -45,7 +45,6 @@ public:
     virtual QIcon iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool pub) const;
 public:
     void setEnable(bool b);
-    void updateModel(const QByteArray &data);
     void loadProject(LiteApi::IProject *project);
     void loadProjectPath(const QString &path);
 public slots:
@@ -63,7 +62,6 @@ public slots:
     void updateAstNow();
     void updateAstFile();
     void updateAstNowFile();
-    void doubleClickedTree(QModelIndex);
 protected:
     LiteApi::IApplication *m_liteApp;
     QTimer  *m_timer;

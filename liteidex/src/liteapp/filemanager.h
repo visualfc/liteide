@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -52,10 +52,10 @@ public:
     virtual void removeRecentFile(const QString &fileName, const QString &scheme);
     virtual QStringList recentFiles(const QString &scheme) const;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const;
-    virtual IApplication* openFolderEx(const QString &folder);
+    //virtual IApplication* openFolderEx(const QString &folder);
     virtual QStringList folderList() const;
     virtual void setFolderList(const QStringList &folders);
-    virtual void addFolder(const QString &folder);
+    virtual void addFolderList(const QString &folder);
     virtual IApplication* openFolderInNewWindow(const QString &folder);
 public:
     QString openAllTypeFilter() const;
@@ -92,6 +92,7 @@ protected:
     QMap<QString,QDateTime> m_fileStateMap;
     QStringList          m_changedFiles;
     bool                 m_checkActivated;
+    bool                 m_autoReloadFile;
     QAction              *m_recentSeparator;
     QMap<QString,QMenu*> m_schemeMenuMap;
     int         m_maxRecentFiles;

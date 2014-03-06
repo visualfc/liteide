@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -36,24 +36,28 @@
 /*
 tools/goastview/packageview.go
 const (
-        tag_package      = "p"
-        tag_type         = "t"
-        tag_struct       = "s"
-        tag_interface    = "i"
-        tag_value        = "v"
-        tag_const        = "c"
-        tag_func         = "f"
-        tag_value_folder = "+v"
-        tag_const_folder = "+c"
-        tag_func_folder  = "+f"
-        tag_type_method  = "tm"
-        tag_type_factor  = "tf"
-        tag_type_value   = "tv"
+    tag_package      = "p"
+    tag_imports_folder	 = "+m"
+    tag_import		 = "mm"
+    tag_type         = "t"
+    tag_struct       = "s"
+    tag_interface    = "i"
+    tag_value        = "v"
+    tag_const        = "c"
+    tag_func         = "f"
+    tag_value_folder = "+v"
+    tag_const_folder = "+c"
+    tag_func_folder  = "+f"
+    tag_type_method  = "tm"
+    tag_type_factor  = "tf"
+    tag_type_value   = "tv"
 )
 */
 
 GolangAstIconPublic::GolangAstIconPublic() :
     iconPackage(QIcon("icon:golangast/images/package.png")),
+    iconImport(QIcon("icon:golangast/images/import.png")),
+    iconImports(QIcon("icon:golangast/images/imports.png")),
     iconType(QIcon("icon:golangast/images/type.png")),
     iconStruct(QIcon("icon:golangast/images/struct.png")),
     iconInterface(QIcon("icon:golangast/images/interface.png")),
@@ -77,6 +81,10 @@ QIcon GolangAstIconPublic::iconFromTag(const QString &tag) const
 {
     if (tag == "p")
         return iconPackage;
+    else if (tag == "+m")
+        return iconImports;
+    else if (tag == "mm")
+        return iconImport;
     else if (tag == "t")
         return iconType;
     else if (tag == "i")
@@ -108,6 +116,10 @@ QIcon GolangAstIconPublic::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) const
 {
     if (tag == LiteApi::TagPackage)
         return iconPackage;
+    else if (tag == LiteApi::TagImportFolder)
+        return iconImports;
+    else if (tag == LiteApi::TagImport)
+        return iconImport;
     else if (tag == LiteApi::TagType)
         return iconType;
     else if (tag == LiteApi::TagInterface)
@@ -137,6 +149,8 @@ QIcon GolangAstIconPublic::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) const
 
 GolangAstIconPrivate::GolangAstIconPrivate() :
     iconPackage(QIcon("icon:golangast/images/package.png")),
+    iconImport(QIcon("icon:golangast/images/import.png")),
+    iconImports(QIcon("icon:golangast/images/imports.png")),
     iconType(QIcon("icon:golangast/images/type_p.png")),
     iconStruct(QIcon("icon:golangast/images/struct_p.png")),
     iconInterface(QIcon("icon:golangast/images/interface_p.png")),
@@ -157,6 +171,10 @@ QIcon GolangAstIconPrivate::iconFromTag(const QString &tag) const
 {
     if (tag == "p")
         return iconPackage;
+    else if (tag == "+m")
+        return iconImports;
+    else if (tag == "mm")
+        return iconImport;
     else if (tag == "t")
         return iconType;
     else if (tag == "i")
@@ -188,6 +206,10 @@ QIcon GolangAstIconPrivate::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) cons
 {
     if (tag == LiteApi::TagPackage)
         return iconPackage;
+    else if (tag == LiteApi::TagImportFolder)
+        return iconImports;
+    else if (tag == LiteApi::TagImport)
+        return iconImport;
     else if (tag == LiteApi::TagType)
         return iconType;
     else if (tag == LiteApi::TagInterface)

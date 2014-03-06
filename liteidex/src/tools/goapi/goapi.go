@@ -509,14 +509,14 @@ type Package struct {
 	interfaces       map[string]*ast.InterfaceType //interface
 	structs          map[string]*ast.StructType    //struct
 	types            map[string]ast.Expr           //type
-	functions        map[string]method             //function 
+	functions        map[string]method             //function
 	consts           map[string]*ExprType          //const => type
 	vars             map[string]*ExprType          //var => type
 	name             string
 	dir              string
 	sep              string
 	deps             []string
-	features         map[string](token.Pos) // set	
+	features         map[string](token.Pos) // set
 }
 
 func NewPackage() *Package {

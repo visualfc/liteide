@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -27,6 +27,8 @@
 #include "liteapi/liteapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "processex/processex.h"
+
+#define GOPRESENT_TAG "gopresent/navtag"
 
 class GolangPresentEdit : public QObject
 {

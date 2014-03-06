@@ -1,4 +1,4 @@
-// Copyright 2011-2012 visualfc <visualfc@gmail.com>. All rights reserved.
+// Copyright 2011-2014 visualfc <visualfc@gmail.com>. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -13,8 +13,9 @@ import (
 
 var (
 	flagInputSrc   = flag.String("src", "", "input go source file")
-	flagStdin      = flag.Bool("stdin", false, "input by stdin")
+	flagStdin      = flag.Bool("stdin", false, "input source data from stdin")
 	flagInputFiles = flag.String("files", "", "input go files")
+	flagExpr       = flag.Bool("expr", true, "print expr string")
 )
 
 func main() {
@@ -25,8 +26,8 @@ func main() {
 	}
 
 	if len(*flagInputFiles) > 0 {
-		var files []string = strings.Split(*flagInputFiles, " ")
-		err := PrintFilesTree(files, os.Stdout)
+		files := strings.Split(*flagInputFiles, " ")
+		err := PrintFilesTree(files, os.Stdout, *flagExpr)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
 			os.Exit(1)

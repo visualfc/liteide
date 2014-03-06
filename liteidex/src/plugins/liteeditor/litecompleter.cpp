@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -112,6 +112,7 @@ LiteCompleter::LiteCompleter(QObject *parent) :
     m_completer->setCompletionMode(QCompleter::PopupCompletion);
     m_completer->setCaseSensitivity(Qt::CaseSensitive);
     m_completer->setSeparator(".");
+    m_completer->setWrapAround(true);
     m_stop = '(';
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));
@@ -240,7 +241,6 @@ void LiteCompleter::show()
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
-
 }
 
 void LiteCompleter::setSearchSeparator(bool b)
@@ -392,7 +392,8 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         extra = text;
         wordText = text;
     }
-    if (kind == "func" && tc.block().text().at(tc.positionInBlock()) != '(') {
+
+    if (kind == "func" && tc.block().text().at(tc.positionInBlock()-1) != '(') {
         extra += "()";
         tc.insertText(extra);
         if (!info.startsWith("func()")) {

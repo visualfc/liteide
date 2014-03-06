@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -154,14 +154,22 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     }
 
     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
-    if (!m_completer || !isShortcut) // do not process the shortcut when we have a completer
-        LiteEditorWidgetBase::keyPressEvent(e);
+    bool hasControl = e->modifiers() & Qt::ControlModifier;
+    if (!m_completer || !isShortcut) {// do not process the shortcut when we have a completer
+        if (!hasControl) {
+            LiteEditorWidgetBase::keyPressEvent(e);
+        } else {
+            QKeyEvent *evt = new QKeyEvent(e->type(), e->key(), e->modifiers(), "");
+            QPlainTextEdit::keyPressEvent(evt);
+            delete evt;
+        }
+    }
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
     if (!m_completer || (ctrlOrShift && e->text().isEmpty()))
         return;
 
-    if (e->modifiers() & Qt::ControlModifier) {
+    if (hasControl) {
         m_completer->popup()->hide();
         return;
     }

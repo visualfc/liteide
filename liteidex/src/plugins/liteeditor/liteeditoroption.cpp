@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -147,7 +147,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
 #endif
 
     foreach(QString mime, m_liteApp->editorManager()->mimeTypeList()) {
-        if (mime.startsWith("text/")) {
+        if (mime.startsWith("text/") || mime.startsWith("application/")) {
             QStandardItem *item = new QStandardItem(mime);
             item->setEditable(false);
             QString tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,"4").toString();

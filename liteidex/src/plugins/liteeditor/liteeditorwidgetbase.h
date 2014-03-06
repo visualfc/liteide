@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -30,7 +30,7 @@
 
 
 class NavigateManager;
-class NavigateMark;
+struct NavigateMark;
 class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
@@ -71,8 +71,9 @@ public:
     void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
     void ensureFinalNewLine(QTextCursor& cursor);
     void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
-    void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg);
-    void clearAllNavigateMark(LiteApi::EditorNaviagteType types);
+    void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag);
+    void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
+    void clearAllNavigateMarks();
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);

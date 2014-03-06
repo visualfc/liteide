@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -78,7 +78,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
-    m_editorTabWidget = new LiteTabWidget;
+    m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,false).toBool());
 
@@ -109,7 +109,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextNofileMenu = new QMenu;
     m_tabContextIndex = -1;
     QAction *closeAct = new QAction(tr("Close"),this);
-    closeAct->setShortcut(QKeySequence("Ctrl+W"));    
+    closeAct->setShortcut(QKeySequence("Ctrl+W"));
     QAction *closeOthersAct = new QAction(tr("Close Others"),this);
     QAction *closeAllAct = new QAction(tr("Close All"),this);
     QAction *closeLeftAct = new QAction(tr("Close Left Tabs"),this);
@@ -887,6 +887,6 @@ void EditorManager::moveToNewWindow()
     QFileInfo info(filePath);
     if (app->fileManager()->openEditor(filePath)) {
         this->closeEditor(ed);
-        app->fileManager()->openFolderEx(info.path());
+        app->fileManager()->addFolderList(info.path());
     }
 }

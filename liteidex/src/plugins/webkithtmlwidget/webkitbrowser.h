@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -32,12 +32,13 @@ class QWebView;
 class QToolBar;
 class QLineEdit;
 class QProgressBar;
-class WebKitBrowser : public QWidget
+class WebKitBrowser : public QObject
 {
     Q_OBJECT
 public:
-    explicit WebKitBrowser(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit WebKitBrowser(LiteApi::IApplication *app, QObject *parent = 0);
     ~WebKitBrowser();
+    QWidget* widget() const {return m_widget;}
 public slots:
     void changeLocation();
     void adjustLocation();
@@ -50,6 +51,7 @@ public slots:
     void loadProgress(int);
 protected:
     LiteApi::IApplication *m_liteApp;
+    QWidget  *m_widget;
     QToolBar *m_toolBar;
     QLineEdit *m_locationEdit;
     QWebView *m_view;

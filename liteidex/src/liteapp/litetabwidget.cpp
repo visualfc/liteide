@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -46,7 +46,7 @@
 //lite_memory_check_end
 
 
-LiteTabWidget::LiteTabWidget(QObject *parent) :
+LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     QObject(parent)
 {
     m_tabBar = new QTabBar;
@@ -54,10 +54,11 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
     m_tabBar->setDocumentMode(true);
     m_tabBar->setDrawBase(false);
     m_tabBar->setUsesScrollButtons(true);
+    m_tabBar->setMovable(true);
 
     m_headerToolBar = new QToolBar;
     m_headerToolBar->setObjectName("toolbar.tabs");
-    m_headerToolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_headerToolBar->setIconSize(iconSize);
 
     m_closeTabAct = new QAction(QIcon("icon:images/closepage.png"),tr("Close tab"),this);
     m_listButton = new QToolButton(m_headerToolBar);
@@ -86,6 +87,7 @@ LiteTabWidget::LiteTabWidget(QObject *parent) :
 
     connect(m_tabBar,SIGNAL(currentChanged(int)),this,SLOT(tabCurrentChanged(int)));
     connect(m_tabBar,SIGNAL(tabCloseRequested(int)),this,SIGNAL(tabCloseRequested(int)));
+    connect(m_tabBar,SIGNAL(tabMoved(int,int)),this,SLOT(tabMoved(int,int)));
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrentTab()));
     connect(m_addTabAct,SIGNAL(triggered()),this,SIGNAL(tabAddRequest()));
     connect(m_listActGroup,SIGNAL(triggered(QAction*)),this,SLOT(selectListActGroup(QAction*)));
@@ -237,4 +239,9 @@ void LiteTabWidget::tabCurrentChanged(int index)
 void LiteTabWidget::setCurrentIndex(int index)
 {    
     m_tabBar->setCurrentIndex(index);
+}
+
+void LiteTabWidget::tabMoved(int from, int to)
+{
+    m_widgetList.swap(from,to);
 }

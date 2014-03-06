@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -204,10 +204,10 @@ public:
     virtual void removeRecentFile(const QString &fileName, const QString &scheme) = 0;
     virtual QStringList recentFiles(const QString &scheme) const = 0;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const = 0;
-    virtual IApplication* openFolderEx(const QString &folder) = 0;
+    //virtual IApplication* openFolderEx(const QString &folder) = 0;
     virtual QStringList folderList() const = 0;
     virtual void setFolderList(const QStringList &folders) = 0;
-    virtual void addFolder(const QString &folders) = 0;
+    virtual void addFolderList(const QString &folders) = 0;
     virtual IApplication* openFolderInNewWindow(const QString &folder) = 0;
 signals:
     void fileListChanged();
@@ -606,7 +606,7 @@ public:
     PluginInfo() : m_mustLoad(false)
     {}
     virtual ~PluginInfo() {}
-    QString anchor() const { return m_anchor; }
+    QString author() const { return m_author; }
     QString info() const { return m_info; }
     QString id() const { return m_id; }
     QString name() const { return m_name; }
@@ -614,7 +614,7 @@ public:
     QStringList dependList() const { return m_dependList; }
     QString filePath() const { return m_filePath; }
     bool isMustLoad() const { return m_mustLoad; }
-    void setAnchor(const QString &anchor) { m_anchor = anchor; }
+    void setAuthor(const QString &author) { m_author = author; }
     void setInfo(const QString &info) { m_info = info; }
     void setId(const QString &id) { m_id = id.toLower(); }
     void setName(const QString &name) { m_name = name; }
@@ -624,7 +624,7 @@ public:
     void appendDepend(const QString &depend) { m_dependList.append(depend); }
     void setMustLoad(bool b) { m_mustLoad = b; }
 protected:
-    QString m_anchor;
+    QString m_author;
     QString m_info;
     QString m_id;
     QString m_name;
@@ -705,9 +705,8 @@ inline void gotoLine(IApplication *app, const QString &fileName, int line, int c
     }
 }
 
-inline QSize getToolBarIconSize() {
-    const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
-    int v = settings.value("General/ToolBarIconSize",0).toInt();
+inline QSize getToolBarIconSize(LiteApi::IApplication *app) {
+    int v = app->settings()->value("General/ToolBarIconSize",0).toInt();
     switch (v) {
     case 0:
         return QSize(16,16);
@@ -723,9 +722,18 @@ inline QSize getToolBarIconSize() {
     return QSize(16,16);
 }
 
+inline QString liteide_stub_cmd(LiteApi::IApplication *app)
+{
+#ifdef Q_OS_WIN
+    return app->applicationPath()+"/liteide_stub.exe";
+#else
+    return app->applicationPath()+"/liteide_stub";
+#endif
+}
+
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X20")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X21")
 
 
 #endif //__LITEAPI_H__

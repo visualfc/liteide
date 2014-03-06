@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -67,7 +67,7 @@ public slots:
     void reloadAll();
     void setupGopath();
     void loadPackageDoc();
-    void loadPackageFolder();
+    void loadPackageInNewWindow();
     void addPackageToFolders();
     void finished(int,QProcess::ExitStatus);
     void error(QProcess::ProcessError);
@@ -95,7 +95,7 @@ protected:
     QAction     *m_reloadAct;
     QAction     *m_setupGopathAct;
     QAction     *m_godocAct;
-    QAction     *m_loadPackageFolderAct;
+    QAction     *m_loadPackageInNewWindowAct;
     QAction     *m_addToFoldersAct;
     QAction     *m_openSrcAct;
     QAction     *m_copyNameAct;

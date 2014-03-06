@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -131,7 +131,7 @@ QToolBar *ActionManager::insertToolBar(const QString &id, const QString &title, 
     }
     toolBar = new QToolBar(title, m_liteApp->mainWindow());
     toolBar->setObjectName(id);
-    toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     QToolBar *m = 0;
     if (!idBefore.isEmpty()) {
@@ -151,7 +151,7 @@ void ActionManager::insertToolBar(QToolBar *toolBar, const QString &idBefore)
 {
     QString id = toolBar->objectName();
 
-    toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     QToolBar *m = 0;
     if (!idBefore.isEmpty()) {
@@ -350,7 +350,11 @@ ActionContext::~ActionContext()
 
 void ActionContext::regAction(QAction *act, const QString &id, const QString &defks, bool standard)
 {
-    ActionInfo *info = new ActionInfo;
+    ActionInfo *info = m_actionInfoMap.value(id);
+    if (info == 0) {
+        info = new ActionInfo;
+        m_actionInfoMap.insert(id,info);
+    }
     info->standard = standard;
     info->defks = ActionManager::formatShortcutsString(defks);
     info->ks = m_liteApp->settings()->value(LITEAPP_SHORTCUTS+id,info->defks).toString();
@@ -366,7 +370,6 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
     } else {
         info->action = 0;
     }
-    m_actionInfoMap.insert(id,info);
 }
 
 void ActionContext::regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def)

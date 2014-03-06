@@ -23,8 +23,7 @@ echo get goimports ...
 go get -v -u "github.com/visualfc/goimports"
 echo get gocode ...
 go get -v -u "github.com/nsf/gocode"
-echo get gopm ...
-go get -v -u "github.com/gpmgo/gopm"
+
 
 cd %BUILD_ROOT%
 

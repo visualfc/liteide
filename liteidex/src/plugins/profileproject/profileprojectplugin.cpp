@@ -38,7 +38,7 @@ ProfileProjectPlugin::ProfileProjectPlugin()
 {
     m_info->setId("plugin/profileproject");
     m_info->setName("ProfileProject");
-    m_info->setAnchor("visualfc");
+    m_info->setAuthor("visualfc");
     m_info->setVer("x2");
     m_info->setInfo("Project Profile Plugin");
 }

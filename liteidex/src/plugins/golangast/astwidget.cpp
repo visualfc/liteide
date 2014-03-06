@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -24,7 +24,10 @@
 #include "astwidget.h"
 #include "golangastitem.h"
 #include "golangasticon.h"
+#include "golangdocapi/golangdocapi.h"
 
+#include <QAction>
+#include <QMenu>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QFont>
@@ -66,9 +69,20 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
 
     m_tree->setModel(proxyModel);
     m_tree->setExpandsOnDoubleClick(false);
+    m_tree->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SIGNAL(doubleClicked(QModelIndex)));
+    m_gotoPosAct = new QAction(tr("Go To Definition"),this);
+    m_importDocAct = new QAction(tr("View Import Document"),this);
+    m_contextMenu = new QMenu(this);
+    m_contextMenu->addAction(m_gotoPosAct);
+    m_contextMenu->addAction(m_importDocAct);
+
+    m_contextItem = 0;
+    connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     connect(m_filterEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
+    connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeContextMenuRequested(QPoint)));
+    connect(m_gotoPosAct,SIGNAL(triggered()),this,SLOT(gotoDefinition()));
+    connect(m_importDocAct,SIGNAL(triggered()),this,SLOT(viewImportDoc()));
 }
 
 void AstWidget::clear()
@@ -99,7 +113,7 @@ void  AstWidget::clearFilter(QModelIndex parent)
         if (!item) {
             continue;
         }
-        if (item->tagName().indexOf("+") >= 0) {
+        if (item->m_tagName.indexOf("+") >= 0) {
             continue;
         }
         QFont font = item->font();
@@ -117,7 +131,7 @@ bool AstWidget::filterModel(QString filter, QModelIndex parent, QModelIndex &fir
         if (!item) {
             continue;
         }
-        if (item->tagName().indexOf("+") < 0) {
+        if (item->m_tagName.indexOf("+") < 0) {
             QFont font = item->font();
             if (index.data().toString().indexOf(filter,0,Qt::CaseInsensitive) >= 0) {
                 font.setBold(true);
@@ -148,7 +162,8 @@ void AstWidget::filterChanged(QString filter)
 {
     if (filter.isEmpty()) {
         clearFilter(m_tree->rootIndex());
-        //m_tree->expandToDepth(0);
+        m_tree->expandToDepth(0);
+        /*
         for(int i = 0; i < proxyModel->rowCount(); i++) {
             QModelIndex index = proxyModel->index(i,0);
             m_tree->expand(index);
@@ -158,6 +173,7 @@ void AstWidget::filterChanged(QString filter)
                 }
             }
         }
+        */
     } else {
         QModelIndex first;
         filterModel(filter,m_tree->rootIndex(),first);
@@ -165,6 +181,69 @@ void AstWidget::filterChanged(QString filter)
             m_tree->scrollTo(first);
         }
     }
+}
+
+void AstWidget::treeContextMenuRequested(QPoint pt)
+{
+    QModelIndex index =  m_tree->indexAt(pt);
+    if (!index.isValid()) {
+        return;
+    }
+    GolangAstItem *item = astItemFromIndex(index);
+    if (item->isFolder() || item->m_tagFlag == LiteApi::TagPackage) {
+        return;
+    }
+    m_contextItem = item;
+    m_importDocAct->setVisible(item->m_tagFlag == LiteApi::TagImport);
+    m_contextMenu->popup(m_tree->mapToGlobal(pt));
+}
+
+void AstWidget::gotoDefinition()
+{
+    gotoItemDefinition(m_contextItem);
+}
+
+void AstWidget::viewImportDoc()
+{
+    LiteApi::IGolangDoc *doc = LiteApi::getGolangDoc(m_liteApp);
+    if (!doc) {
+        return;
+    }
+    doc->openUrl(QString("pdoc:%1").arg(m_contextItem->text()));
+    doc->activeBrowser();
+}
+
+void AstWidget::doubleClicked(QModelIndex index)
+{
+    GolangAstItem *item = astItemFromIndex(index);
+    if (item->isFolder()) {
+        if (m_tree->isExpanded(index)) {
+            m_tree->collapse(index);
+        } else {
+            m_tree->expand(index);
+        }
+    } else {
+        gotoItemDefinition(item);
+    }
+}
+
+void AstWidget::gotoItemDefinition(GolangAstItem *item)
+{
+    if (item->m_posList.isEmpty()) {
+         return;
+    }
+    AstItemPos pos = item->m_posList.at(0);
+    QFileInfo info(QDir(m_workPath),pos.fileName);
+    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
+    if (!editor) {
+        return;
+    }
+    editor->widget()->setFocus();
+    LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+    if (!textEditor) {
+        return;
+    }
+    textEditor->gotoLine(pos.line-1,pos.column,false);
 }
 
 GolangAstItem *AstWidget::astItemFromIndex(QModelIndex index)
@@ -176,28 +255,35 @@ GolangAstItem *AstWidget::astItemFromIndex(QModelIndex index)
     return (GolangAstItem*)m_model->itemFromIndex(i);
 }
 
-static QString tagName(const QString &tag)
+/*
+tools/goastview/packageview.go
+const (
+    tag_package        = "p"
+    tag_imports_folder = "+m"
+    tag_import         = "mm"
+    tag_type           = "t"
+    tag_struct         = "s"
+    tag_interface      = "i"
+    tag_value          = "v"
+    tag_const          = "c"
+    tag_func           = "f"
+    tag_value_folder   = "+v"
+    tag_const_folder   = "+c"
+    tag_func_folder    = "+f"
+    tag_type_method    = "tm"
+    tag_type_factor    = "tf"
+    tag_type_value     = "tv"
+)
+*/
+
+static QString tagInfo(const QString &tag)
 {
-    /*
-    tools/goastview/packageview.go
-    const (
-            tag_package      = "p"
-            tag_type         = "t"
-            tag_struct       = "s"
-            tag_interface    = "i"
-            tag_value        = "v"
-            tag_const        = "c"
-            tag_func         = "f"
-            tag_value_folder = "+v"
-            tag_const_folder = "+c"
-            tag_func_folder  = "+f"
-            tag_type_method  = "tm"
-            tag_type_factor  = "tf"
-            tag_type_value   = "tv"
-    )
-    */
     if (tag == "p") {
         return "package";
+    } else if (tag == "+m") {
+        return "imports folder";
+    } else if (tag == "mm") {
+        return "import";
     } else if (tag == "t") {
         return "type";
     } else if (tag == "s") {
@@ -211,11 +297,11 @@ static QString tagName(const QString &tag)
     } else if (tag == "f") {
         return "func";
     } else if (tag == "+v") {
-        return "value folder";
+        return "values folder";
     } else if (tag == "+c") {
         return "const folder";
     } else if (tag == "+f") {
-        return "func folder";
+        return "funcs folder";
     } else if (tag == "tm") {
         return "method";
     } else if (tag == "tf") {
@@ -226,7 +312,43 @@ static QString tagName(const QString &tag)
     return QString();
 }
 
-// level,tag,name,index,x,y
+static LiteApi::ASTTAG_ENUM toTagFlag(const QString &tag)
+{
+    if (tag == "p") {
+        return LiteApi::TagPackage;
+    } else if (tag == "+m") {
+        return LiteApi::TagImportFolder;
+    } else if (tag == "mm") {
+        return LiteApi::TagImport;
+    } else if (tag == "t") {
+        return LiteApi::TagType;
+    } else if (tag == "s") {
+        return LiteApi::TagStruct;
+    } else if (tag == "i") {
+        return LiteApi::TagInterface;
+    } else if (tag == "v") {
+        return LiteApi::TagValue;
+    } else if (tag == "c") {
+        return LiteApi::TagConst;
+    } else if (tag == "f") {
+        return LiteApi::TagFunc;
+    } else if (tag == "+v") {
+        return LiteApi::TagValueFolder;
+    } else if (tag == "+c") {
+        return LiteApi::TagConstFolder;
+    } else if (tag == "+f") {
+        return LiteApi::TagFuncFolder;
+    } else if (tag == "tm") {
+        return LiteApi::TagTypeMethod;
+    } else if (tag == "tf") {
+        return LiteApi::TagTypeFactor;
+    } else if (tag == "tv") {
+        return LiteApi::TagTypeValue;
+    }
+    return LiteApi::TagNone;
+}
+
+// level,tag,name,pos,@info
 void AstWidget::updateModel(const QByteArray &data)
 {
     //save state
@@ -242,10 +364,17 @@ void AstWidget::updateModel(const QByteArray &data)
     bool bmain = false;
     QMap<QString,GolangAstItem*> level1NameItemMap;
     foreach (QByteArray line, array) {
-        QList<QByteArray> info = line.split(',');
-        if (info.size() == 2 && info.at(0) == "@") {
-            indexFiles.append(info.at(1));
+        int pos = line.indexOf('@');
+        QString tip;
+        if (pos == 0) {
+            indexFiles.append(line.mid(1));
+            continue;
+        } else if (pos >= 1) {
+            tip = line.mid(pos+1);
+            line = line.left(pos);
         }
+        line.trimmed();
+        QList<QByteArray> info = line.split(',');
         if (info.size() < 3) {
             continue;
         }
@@ -283,30 +412,38 @@ void AstWidget::updateModel(const QByteArray &data)
         if (level == 1) {
             level1NameItemMap.insert(name,item);
         }
-        item->setTagName(tag);
+        item->m_tagName = tag;
+        item->m_tagFlag = toTagFlag(tag);
         item->setText(name);
         if (!bmain && (name.at(0).isLower() || name.at(0) == '_')) {
             item->setIcon(GolangAstIcon::instance()->iconFromTag(tag,false));
         } else {
             item->setIcon(GolangAstIcon::instance()->iconFromTag(tag));
         }
-        if (tag.at(0) == '+') {
-            item->setToolTip(QString("%1").arg(tagName(tag)));
+        if (!tip.isEmpty()) {
+            item->setToolTip(tip);
+        } else if (tag.at(0) == '+') {
+            item->setToolTip(QString("%1").arg(tagInfo(tag)));
         } else {
-            item->setToolTip(QString("%1 : %2").arg(tagName(tag)).arg(name));
+            item->setToolTip(QString("%1 %2").arg(tagInfo(tag)).arg(name));
         }
-        if (info.size() >= 6) {
-            int index = info[3].toInt(&ok);
-            if (ok && index >= 0 && index < indexFiles.size()) {
-                item->setFileName(indexFiles.at(index));
-            }
-            int line = info[4].toInt(&ok);
-            if (ok) {
-                item->setLine(line);
-            }
-            int col = info[5].toInt(&ok);
-            if (ok) {
-                item->setCol(col);
+        if (info.size() >= 4) {
+            foreach (QByteArray pos, info[3].split(';')) {
+                QList<QByteArray> ar = pos.split(':');
+                if (ar.size() == 3) {
+                    bool ok = false;
+                    int index = ar[0].toInt(&ok);
+                    if (ok && index >= 0 && index < indexFiles.size()) {
+                        int line = ar[1].toInt(&ok);
+                        if (ok) {
+                            int col = ar[2].toInt(&ok);
+                            if (ok) {
+                                AstItemPos pos = {indexFiles[index],line,col};
+                                item->m_posList.append(pos);
+                            }
+                        }
+                    }
+                }
             }
         }
         QStandardItem *parent = items.value(level-1,0);
@@ -319,8 +456,11 @@ void AstWidget::updateModel(const QByteArray &data)
     }
 
     //load state
+    if (!m_tree->isExpanded(m_tree->rootIndex())) {
+        m_tree->expandToDepth(0);
+    }
     m_tree->loadState(proxyModel,&state);
-
+    /*
     if (m_bOutline && m_bFirst) {
         //m_tree->expandToDepth(1);
         for(int i = 0; i < proxyModel->rowCount(); i++) {
@@ -332,6 +472,7 @@ void AstWidget::updateModel(const QByteArray &data)
         }
         m_bFirst = false;
     }
+    */
     QString text = m_filterEdit->text().trimmed();
     if (!text.isEmpty()) {
         this->filterChanged(text);

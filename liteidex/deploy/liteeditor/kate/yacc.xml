@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!--
+========================================================================
+YACC.XML supports syntax highlighting for Yacc/Bison source under Kate.
+
+Copyright (C) 2004, Jan Villat <jan.villat@net2000.ch>
+This code is released under the LGPL as part of kdelibs/kate.
+========================================================================
+
+
+== UPDATE HISTORY ==
+2007-10-01 // Sebastian Pipping <webmaster@hartwork.org>
+
+  Added: Extension "*.yy" for Bison
+
+2004-05-26 // Jan Villat <jan.villat@net2000.ch>
+
+  YACC.XML 1.00 - First released.
+
+
+== TODO ==
+- Add a mime type (cannot find it !?)
+
+
+========================================================================
+-->
+<language name="Yacc/Bison" version="1.03" kateversion="2.4" section="Sources" extensions="*.y;*.yy" author="Jan Villat (jan.villat@net2000.ch)" license="LGPL">
+
+<highlighting>
+<contexts>
+  <context name="Pre Start" attribute="Normal Text" lineEndContext="#stay">
+    <IncludeRules context="Comment" />
+    <DetectSpaces />
+    <Detect2Chars attribute="Content-Type Delimiter" context="C Declarations" char="%" char1="{" beginRegion="cdeclarations" column="0" />
+    <RegExpr attribute="Normal Text" context="Declarations" String="." beginRegion="declarations" lookAhead="true" />
+  </context>
+
+  <context name="C Declarations" attribute="Normal Text" lineEndContext="#stay">
+    <IncludeRules context="Comment" />
+    <Detect2Chars attribute="Content-Type Delimiter" context="#pop" char="%" char1="}" endRegion="cdeclarations" column="0" />
+    <IncludeRules context="##C++" />
+  </context>
+
+  <context name="Declarations" attribute="Normal Text" lineEndContext="#stay">
+    <IncludeRules context="Comment" />
+    <StringDetect attribute="Directive" context="Union Start" String="%union" />
+    <Detect2Chars attribute="Content-Type Delimiter" context="Rules" char="%" char1="%" beginRegion="rules" endRegion="declarations" />
+
+    <!-- not sure that strict yacc allows that ... but it is commonly used -->
+    <Detect2Chars attribute="Content-Type Delimiter" context="C Declarations" char="%" char1="{" beginRegion="cdeclarations" column="0" />
+
+    <DetectChar attribute="Directive" context="Percent Command" char="%" />
+  </context>
+
+  <context name="Union Start" attribute="Normal Text" lineEndContext="#stay">
+    <IncludeRules context="Comment" />
+    <DetectSpaces />
+    <DetectChar attribute="Normal Text" context="Union In" char="{" beginRegion="union" />
+    <RegExpr attribute="Alert" context="#pop" String="." />
+  </context>
+  <context name="Union In" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Normal Text" context="Union InIn" char="{" />
+    <DetectChar attribute="Normal Text" context="#pop#pop" char="}" endRegion="union" />
+    <IncludeRules context="##C++" />
+  </context>
+  <context name="Union InIn" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Normal Text" context="Union InIn" char="{" />
+    <DetectChar attribute="Normal Text" context="#pop" char="}" />
+    <IncludeRules context="##C++" />
+  </context>
+
+  <context name="Rules" attribute="Rule" lineEndContext="#stay">
+    <IncludeRules context="Comment" />
+    <Detect2Chars attribute="Content-Type Delimiter" context="User Code" char="%" char1="%" beginRegion="code" endRegion="rules" />
+    <DetectChar attribute="Normal Text" context="Rule In" char=":" beginRegion="rule" />
+  </context>
+
+  <context name="Rule In" attribute="Definition" lineEndContext="#stay">
+    <IncludeRules context="Comment" />
+    <DetectChar attribute="Normal Text" context="#pop" char=";" endRegion="rule" />
+    <DetectChar attribute="Normal Text" context="Normal C Bloc" char="{" beginRegion="bloc" />
+    <DetectChar attribute="Normal Text" context="#stay" char="|" />
+    <IncludeRules context="StringOrChar" />
+  </context>
+
+  <context name="User Code" attribute="Normal Text" lineEndContext="#stay">
+    <IncludeRules context="##C++" />
+  </context>
+
+  <context name="Percent Command" attribute="Directive" lineEndContext="#pop">
+    <IncludeRules context="Comment" />
+    <RegExpr attribute="Normal Text" context="Percent Command In" String="\W" lookAhead="true" />
+  </context>
+  <context name="Percent Command In" attribute="NormalText" lineEndContext="#pop#pop">
+    <IncludeRules context="StringOrChar" />
+    <DetectChar attribute="Data Type" context="PC type" char="&lt;" />
+  </context>
+  <context name="PC type" attribute="Data Type" lineEndContext="#pop#pop#pop">
+    <DetectChar attribute="Data Type" context="#pop" char="&gt;" />
+  </context>
+
+  <context name="Comment" attribute="Comment">
+    <Detect2Chars attribute="Comment" context="CommentStar" char="/" char1="*" />
+    <!-- not sure that strict yacc allows that ... but I saw it in some sources ... -->
+    <Detect2Chars attribute="Comment" context="CommentSlash" char="/" char1="/" />
+  </context>
+  <context name="CommentStar" attribute="Comment" lineEndContext="#stay">
+    <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" />
+  </context>
+  <context name="CommentSlash" attribute="Comment" lineEndContext="#stay">
+    <RegExpr attribute="Comment" context="#pop" String="[^\\]$" />
+  </context>
+
+  <context name="StringOrChar" attribute="NormalText">
+    <DetectChar attribute="String Char" context="Char" char="'" />
+    <DetectChar attribute="String" context="String" char="&quot;" />
+  </context>
+  <context name="String" attribute="String" lineEndContext="#pop">
+    <RegExpr attribute="Backslash Code" context="#stay" String="\\." />
+    <DetectChar attribute="String" context="#pop" char="&quot;" />
+  </context>
+  <context name="Char" attribute="String Char" lineEndContext="#pop">
+    <RegExpr attribute="Backslash Code" context="#stay" String="\\." />
+    <DetectChar attribute="String Char" context="#pop" char="'" />
+  </context>
+
+  <context name="Normal C Bloc" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Normal Text" context="Normal C Bloc" char="{" beginRegion="bloc" />
+    <DetectChar attribute="Normal Text" context="#pop" char="}" endRegion="bloc" />
+    <IncludeRules context="##C++" />
+    <DetectChar attribute="Directive" context="Dol" char="$" />
+  </context>
+  <context name="Dol" attribute="Normal Text" fallthrough="true" fallthroughContext="DolEnd">
+    <RegExpr attribute="Data Type" context="DolEnd" String="&lt;[^&gt;]+&gt;" />
+  </context>
+  <context name="DolEnd" attribute="Normal Text">
+    <RegExpr attribute="Directive" context="#pop#pop" String="\d+" />
+    <DetectChar attribute="Directive" context="#pop#pop" char="$" />
+  </context>
+</contexts>
+
+<itemDatas>
+  <itemData name="Normal Text" defStyleNum="dsNormal" />
+  <itemData name="Definition" defStyleNum="dsNormal" />
+  <itemData name="Comment" defStyleNum="dsComment" />
+  <itemData name="Content-Type Delimiter" defStyleNum="dsBaseN" bold="1" />
+  <itemData name="Directive" defStyleNum="dsKeyword"/>
+  <itemData name="Rule" defStyleNum="dsString" />
+  <itemData name="Backslash Code" defStyleNum="dsString" bold="1" />
+  <itemData name="Alert" defStyleNum="dsAlert" />
+  <itemData name="String" defStyleNum="dsString"/>
+  <itemData name="String Char" defStyleNum="dsChar"/>
+  <itemData name="Data Type" defStyleNum="dsDataType"/>
+</itemDatas>
+
+</highlighting>
+<general>
+  <comments>
+    <comment name="multiLine" start="/*" end="*/" />
+  </comments>
+</general>
+</language>
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->

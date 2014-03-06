@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -41,7 +41,7 @@
 #endif
 //lite_memory_check_end
 
-ToolDockWidget::ToolDockWidget(QWidget *parent) :
+ToolDockWidget::ToolDockWidget(QSize iconSize, QWidget *parent) :
     QDockWidget(parent), current(0)
 {
     m_comboBox = new QComboBox;
@@ -50,7 +50,7 @@ ToolDockWidget::ToolDockWidget(QWidget *parent) :
 
     m_toolBar = new QToolBar(this);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
-    m_toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_toolBar->setIconSize(iconSize);
     //m_toolBar->setFixedHeight(24);
     m_toolBar->addWidget(m_comboBox);
 

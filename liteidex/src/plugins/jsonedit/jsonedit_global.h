@@ -1,0 +1,12 @@
+#ifndef JSONEDIT_GLOBAL_H
+#define JSONEDIT_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(JSONEDIT_LIBRARY)
+#  define JSONEDITSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define JSONEDITSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // JSONEDIT_GLOBAL_H

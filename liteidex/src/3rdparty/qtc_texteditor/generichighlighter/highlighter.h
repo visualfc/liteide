@@ -67,7 +67,7 @@ public:
     virtual ~Highlighter();
 
     enum TextFormatId {
-        Normal,
+        Normal = 1,
         VisualWhitespace,
         Keyword,
         DataType,
@@ -88,6 +88,7 @@ public:
         FuncDecl,
         Placeholder,
         ToDo,
+        TextFormatId_MAX
     };
 
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
@@ -146,7 +147,8 @@ private:
         QHash<QString, TextFormatId> m_ids;
     };
     static const KateFormatMap m_kateFormats;
-    QHash<TextFormatId, QTextCharFormat> m_creatorFormats;
+    //QHash<TextFormatId, QTextCharFormat> m_creatorFormats;
+    QTextCharFormat m_creatorFormats[TextFormatId_MAX];
 public:
     struct BlockData : TextBlockUserData
     {

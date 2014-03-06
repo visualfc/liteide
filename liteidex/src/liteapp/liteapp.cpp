@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -120,19 +120,26 @@ LiteApp::LiteApp()
     : m_applicationPath(QApplication::applicationDirPath()),
       m_pluginPath(LiteApp::getPluginPath()),
       m_resourcePath(LiteApp::getResoucePath()),
-      m_storagePath(LiteApp::getStoragePath()),
-      m_settings(new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this)),
-      m_extension(new Extension),
-      m_mainwindow(new MainWindow(this)),
-      m_toolWindowManager(new ToolWindowManager),
-      m_htmlWidgetManager(new HtmlWidgetManager),
-      m_actionManager(new ActionManager),
-      m_projectManager(new ProjectManager),
-      m_editorManager(new EditorManager),
-      m_fileManager(new FileManager),
-      m_mimeTypeManager(new MimeTypeManager),
-      m_optionManager(new OptionManager)
+      m_storagePath(LiteApp::getStoragePath())
 {    
+    QSettings global(m_resourcePath+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    if (storeLocal) {
+        m_settings = new QSettings(m_resourcePath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
+    } else {
+        m_settings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this);
+    }
+    m_extension = new Extension;
+    m_mainwindow = new MainWindow(this);
+    m_toolWindowManager = new ToolWindowManager;
+    m_htmlWidgetManager = new HtmlWidgetManager;
+    m_actionManager = new ActionManager;
+    m_projectManager = new ProjectManager;
+    m_editorManager = new EditorManager;
+    m_fileManager = new FileManager;
+    m_mimeTypeManager = new MimeTypeManager;
+    m_optionManager = new OptionManager;
+
     m_goProxy = new GoProxy(this);
     m_actionManager->initWithApp(this);
     m_toolWindowManager->initWithApp(this);
@@ -388,8 +395,8 @@ void LiteApp::applyOption(QString id)
     if (id != OPTION_LITEAPP) {
         return;
     }
-    bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
-    m_openFolderNewWindowAct->setVisible(!b);
+    //bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
+    //m_openFolderNewWindowAct->setVisible(!b);
 }
 
 bool LiteApp::hasGoProxy() const
@@ -484,7 +491,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X20.1";
+    return "X21";
 }
 
 QString LiteApp::ideFullName() const
@@ -500,7 +507,7 @@ QString LiteApp::ideName() const
 QString LiteApp::ideCopyright() const
 {
     static QString s_info =
-    "2011-2013(c)\n"
+    "2011-2014(c)\n"
     "visualfc@gmail.com\n"
     "\n"
     "https://github.com/visualfc/liteide\n"
@@ -594,8 +601,8 @@ void LiteApp::createActions()
     actionContext->regAction(m_openFolderAct,"OpenFolder","");
 
     m_openFolderNewWindowAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Window..."),m_mainwindow);
-    bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
-    m_openFolderNewWindowAct->setVisible(!b);
+    //bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
+    //m_openFolderNewWindowAct->setVisible(!b);
     actionContext->regAction(m_openFolderNewWindowAct,"OpenFolderNewWindow","");
 
     m_addFolderAct = new QAction(tr("Add Folder..."),m_mainwindow);
@@ -675,9 +682,9 @@ void LiteApp::createMenus()
 
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openFileAct);
+    m_fileMenu->addAction(m_addFolderAct);
     m_fileMenu->addAction(m_openFolderAct);
     m_fileMenu->addAction(m_openFolderNewWindowAct);
-    m_fileMenu->addAction(m_addFolderAct);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);

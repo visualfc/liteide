@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
-    <height>294</height>
+    <width>655</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_7">
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -23,7 +23,23 @@
       <attribute name="title">
        <string>Generic</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Store</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="storeLocalCheckBox">
+            <property name="text">
+             <string>Store settings to local ini file ( request restart LiteIDE )</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
@@ -142,13 +158,6 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QCheckBox" name="openFolderInNewWindowCheckBox">
-            <property name="text">
-             <string>Always open folder in new window</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="autoLoadLastSessionCheckBox">
             <property name="text">
              <string>Reload session on startup</string>
@@ -159,6 +168,22 @@
            <widget class="QCheckBox" name="autoCloseProjecEditorsCheckBox">
             <property name="text">
              <string>Close associated editor windows when closing a project</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
+          <string>Monitoring files for modifications</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="autoReloadFileCheck">
+            <property name="text">
+             <string>Auto reload or close editor buffer,if underlying file is modified/deleted.</string>
             </property>
            </widget>
           </item>
@@ -196,6 +221,8 @@
       <zorder>groupBox_2</zorder>
       <zorder>groupBox</zorder>
       <zorder>groupBox_3</zorder>
+      <zorder>groupBox_4</zorder>
+      <zorder>groupBox_5</zorder>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">

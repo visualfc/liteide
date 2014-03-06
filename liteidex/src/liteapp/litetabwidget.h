@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -44,7 +44,7 @@ class LiteTabWidget : public QObject
 {
     Q_OBJECT
 public:
-    explicit LiteTabWidget(QObject *parent = 0);
+    explicit LiteTabWidget(QSize iconSize, QObject *parent = 0);
     virtual ~LiteTabWidget();
     int addTab(QWidget *w,const QString & label, const QString &tip);
     int addTab(QWidget *w,const QIcon & icon, const QString & label,const QString &tip);
@@ -64,6 +64,7 @@ signals:
 public slots:
     void setCurrentWidget(QWidget *w);
     void setCurrentIndex(int index);
+    void tabMoved(int,int);
 public slots:
     void closeCurrentTab();
     void selectListActGroup(QAction*);

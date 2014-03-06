@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -55,7 +55,7 @@ class ActionToolBar : public QObject
 {
     Q_OBJECT
 public:
-    ActionToolBar(QWidget *parent, Qt::DockWidgetArea area);
+    ActionToolBar(QSize iconSize, QWidget *parent, Qt::DockWidgetArea area);
     ToolDockWidget *dock(bool split) const;
     void addAction(QAction *action, const QString &title, bool split);
     void removeAction(QAction *action, bool split);
@@ -92,16 +92,11 @@ struct InitToolSate
     bool               checked;
 };
 
-class ToolWindowBar : public QObject
-{
-
-};
-
 class ToolMainWindow : public QMainWindow
 {
     Q_OBJECT    
 public:
-    ToolMainWindow(QWidget *parent = 0);
+    ToolMainWindow(QSize iconSize, QWidget *parent = 0);
     ~ToolMainWindow();
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);

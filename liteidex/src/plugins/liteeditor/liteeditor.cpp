@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -380,11 +380,11 @@ void LiteEditor::findCodecs()
 void LiteEditor::createToolBars()
 {
     m_toolBar = new QToolBar("editor",m_widget);
-    m_toolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     m_toolBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     m_infoToolBar = new QToolBar("info",m_widget);
-    m_infoToolBar->setIconSize(LiteApi::getToolBarIconSize());
+    m_infoToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     //editor toolbar
     m_toolBar->addAction(m_undoAct);
@@ -540,8 +540,12 @@ bool LiteEditor::open(const QString &fileName,const QString &mimeType)
 
 bool LiteEditor::reload()
 {
+    QByteArray state = this->saveState();
     bool success = open(filePath(),mimeType());
     if (success) {
+        this->clearAllNavigateMarks();
+        this->setNavigateHead(LiteApi::EditorNavigateReload,tr("Reload File"));
+        this->restoreState(state);
         emit reloaded();
     }
     return success;
@@ -855,7 +859,8 @@ void LiteEditor::editPositionChanged()
      }
 */
      //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
-     m_lineInfo->setText(QString("%1:%2 ").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     //m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
+     m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
 }
 
 void LiteEditor::gotoLine()
@@ -923,18 +928,23 @@ void LiteEditor::setNavigateHead(LiteApi::EditorNaviagteType type, const QString
     m_editorWidget->setNavigateHead(type,msg);
 }
 
-void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg )
+void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
 {
-    m_editorWidget->insertNavigateMark(line,type,msg);
+    m_editorWidget->insertNavigateMark(line,type,msg, tag);
 }
 
 void LiteEditor::clearNavigateMarak(int /*line*/)
 {
 }
 
-void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types)
+void LiteEditor::clearAllNavigateMarks()
 {
-    m_editorWidget->clearAllNavigateMark(types);
+    m_editorWidget->clearAllNavigateMarks();
+}
+
+void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
+{
+    m_editorWidget->clearAllNavigateMark(types, tag);
 }
 
 void LiteEditor::selectNextParam()
@@ -1060,7 +1070,16 @@ void LiteEditor::loadColorStyleScheme()
                 .arg(p.highlightedText().color().name())
                 .arg(p.highlight().color().name());
     m_editorWidget->setPalette(p);
+#ifdef Q_OS_MAC
+    #if QT_VERSION >= 0x050000
+        m_editorWidget->setStyleSheet(sheet);
+    #else
+        if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_8) {
+            m_editorWidget->setStyleSheet(sheet);
+        }
+    #endif
+#else
     m_editorWidget->setStyleSheet(sheet);
-
+#endif
     emit colorStyleChanged();
 }

@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -239,7 +239,7 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
             int line = re.cap(2).toInt(&ok);
             if (ok) {
                 QString errmsg = re.cap(0)+"\n"+msg.mid(re.cap(0).length()).trimmed();
-                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,errmsg);
+                m_editor->insertNavigateMark(line-1,LiteApi::EditorNavigateError,errmsg, GOPRESENT_TAG);
                 m_errorMsg.append(errmsg);
             }
         } else {
@@ -334,11 +334,7 @@ void GolangPresentEdit::loadHtmlFinished(bool b)
 bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
 {
     m_liteApp->editorManager()->saveEditor(m_editor);
-    QString cmd = FileUtil::lookupLiteBin("gopresent",m_liteApp);
-    if (cmd.isEmpty()) {
-        m_liteApp->appendLog("GolangPresent","Not find gopresent",true);
-        return false;
-    }
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QFileInfo info(m_editor->filePath());
     if (!m_process) {
         m_process = new ProcessEx(this);
@@ -355,11 +351,11 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     m_exportData.clear();
     m_errorMsg.clear();
     m_process->setUserData(0,type);
-    m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad);
+    m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOPRESENT_TAG);
     if (type == EXPORT_TYPE_VERIFY) {
-        m_process->startEx(cmd,"-v -i "+info.fileName().toUtf8());
+        m_process->startEx(cmd,"present -v -i "+info.fileName().toUtf8());
     } else {
-        m_process->startEx(cmd,"-stdout -i "+info.fileName().toUtf8());
+        m_process->startEx(cmd,"present -stdout -i "+info.fileName().toUtf8());
     }
     return true;
 }

@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -36,7 +36,7 @@ class ToolDockWidget : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit ToolDockWidget(QWidget *parent = 0);
+    explicit ToolDockWidget(QSize iconSize, QWidget *parent = 0);
     QAction *addWidget(QWidget *widget);
     void setWindowTitle(const QString &text);
     QList<QAction *> actions() const;

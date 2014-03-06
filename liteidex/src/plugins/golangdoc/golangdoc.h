@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2013 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -138,14 +138,14 @@ protected:
     LiteApi::IEnvManager *m_envManager;
     GolangApiThread *m_golangApiThread;
     QString m_godocCmd;
-    QString m_godocViewCmd;
-    QString m_goapiCmd;
     bool    m_bApiLoaded;
     QStringList m_targetList;
     QMap<QString,QString> m_pathFileMap;
     QAction *m_toolWindowAct;
     QAction *m_findDocAct;
     QAction *m_jumpDeclAct;
+    QMenu   *m_configMenu;
+    QAction *m_rebuildApi;
     QString m_docFind;
 };
 
