@@ -199,6 +199,14 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     m_completer->complete(cr); // popup it up!
 }
 
+void LiteEditorWidget::inputMethodEvent(QInputMethodEvent *e)
+{
+    if (!e->commitString().isEmpty() && m_completer->popup()->isVisible()) {
+        m_completer->popup()->hide();
+    }
+    LiteEditorWidgetBase::inputMethodEvent(e);
+}
+
 static void convertToPlainText(QString &txt)
 {
     QChar *uc = txt.data();
