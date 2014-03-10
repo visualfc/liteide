@@ -153,23 +153,13 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
-    bool hasControl = e->modifiers() & Qt::ControlModifier;
-    if (!m_completer || !isShortcut) {// do not process the shortcut when we have a completer
-        if (!hasControl) {
-            LiteEditorWidgetBase::keyPressEvent(e);
-        } else {
-            QKeyEvent *evt = new QKeyEvent(e->type(), e->key(), e->modifiers(), "");
-            QPlainTextEdit::keyPressEvent(evt);
-            delete evt;
-        }
-    }
+    LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
     if (!m_completer || (ctrlOrShift && e->text().isEmpty()))
         return;
 
-    if (hasControl) {
+    if (e->modifiers() & Qt::ControlModifier) {
         m_completer->popup()->hide();
         return;
     }
@@ -179,23 +169,17 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     //static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
     static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
-    QString completionPrefix = textUnderCursor(textCursor());    
+    QString completionPrefix = textUnderCursor(textCursor());
     if (completionPrefix.startsWith(".")) {
         completionPrefix.insert(0,'@');
     }
 
-    if (!isShortcut && (hasModifier || e->text().isEmpty()||
+    if (hasModifier || e->text().isEmpty()||
                         ( completionPrefix.length() < m_completionPrefixMin && completionPrefix.right(1) != ".")
-                        || eow.contains(e->text().right(1)))) {
+                        || eow.contains(e->text().right(1))) {
         m_completer->popup()->hide();
         return;
     }
-
-    // Do not pass data to the completer when we're in a spell-checked region
-    if (m_bSpellCheckZoneDontComplete && isSpellCheckingAt(textCursor())) {
-        return;
-    }
-
     emit completionPrefixChanged(completionPrefix);
 
     if (completionPrefix != m_completer->completionPrefix()) {
