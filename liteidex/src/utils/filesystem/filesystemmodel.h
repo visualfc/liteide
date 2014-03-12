@@ -45,6 +45,7 @@ public:
     QString path() const;
     QString text() const;
     QFileInfo fileInfo() const;
+    bool isExist() const;
     bool isDir() const;
     bool isFile() const;
     void clear();
@@ -94,6 +95,7 @@ public:
     virtual QVariant data(const QModelIndex &index, int role) const;
     QFileSystemWatcher* fileWatcher() const;
     bool isRootPathNode(FileNode *node) const;
+    bool isRootPathNodeFillPath() const;
 public slots:
     void directoryChanged(const QString&);
 protected:

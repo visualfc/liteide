@@ -428,9 +428,9 @@ void FileSystemWidget::addFolder()
 
 void FileSystemWidget::closeFolder()
 {
-    if (!m_contextInfo.isDir()) {
-        return;
-    }
+//    if (m_contextInfo.exists() && !m_contextInfo.isDir()) {
+//        return;
+//    }
     this->m_model->removeRootPath(m_contextInfo.filePath());
 }
 
@@ -463,15 +463,14 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         if (node) {
             m_contextInfo = node->fileInfo();
             m_contextIndex = index;
-            if (node->isDir()) {
+            if (m_model->isRootPathNode(node)) {
                 contextMenu = m_folderMenu;
-                if (m_model->isRootPathNode(node)) {
-                    m_closeFolerAct->setVisible(true);
-                    m_removeFolderAct->setVisible(false);
-                } else {
-                    m_closeFolerAct->setVisible(false);
-                    m_removeFolderAct->setVisible(true);
-                }
+                m_closeFolerAct->setVisible(true);
+                m_removeFolderAct->setVisible(false);
+            } else if (node->isDir()) {
+                contextMenu = m_folderMenu;
+                m_closeFolerAct->setVisible(false);
+                m_removeFolderAct->setVisible(true);
             } else {
                 contextMenu = m_fileMenu;
             }
