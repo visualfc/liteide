@@ -97,6 +97,7 @@ var commands = []*Command{
 	cmdDocView,
 	cmdPresent,
 	cmdApi,
+	cmdDoc,
 }
 
 var exitStatus = 0
