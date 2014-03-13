@@ -19,13 +19,15 @@ DEFINES += GOLANGDOC_LIBRARY
 SOURCES += golangdocplugin.cpp \
     golangdoc.cpp \
     golangdocoptionfactory.cpp \
-    golangdocoption.cpp
+    golangdocoption.cpp \
+    finddocwidget.cpp
 
 HEADERS += golangdocplugin.h\
         golangdoc_global.h \
     golangdoc.h \
     golangdocoptionfactory.h \
-    golangdocoption.h
+    golangdocoption.h \
+    finddocwidget.h
 
 FORMS += \
     golangdocoption.ui

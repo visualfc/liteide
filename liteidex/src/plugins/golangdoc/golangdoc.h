@@ -45,7 +45,7 @@ class ProcessEx;
 class DocumentBrowser;
 class QSortFilterProxyModel;
 class GolangApi;
-class GolangApiThread;
+class FindDocWidget;
 
 class ListViewEx : public QListView
 {
@@ -78,7 +78,7 @@ public slots:
     void currentEnvChanged(LiteApi::IEnv*);
     void listCmd();
     void listPkg();
-    void findPackage(QString name = QString());
+    //void findPackage(QString name = QString());
     void findOutput(QByteArray,bool);
     void findFinish(bool,int,QString);
     void godocFindPackage(QString name);
@@ -92,13 +92,13 @@ public slots:
     void helpStarted();
     void helpOutput(QByteArray,bool);
     void helpFinish(bool,int,QString);
-    void doubleClickListView(QModelIndex);
-    void currentIndexChanged(QModelIndex);
+    //void doubleClickListView(QModelIndex);
+    //void currentIndexChanged(QModelIndex);
     //void findTag(const QString &tag);
     void highlighted(const QUrl &url);
     void documentLoaded();
-    void filterTextChanged(QString);
-    void findDoc();
+    //void filterTextChanged(QString);
+    //void findDoc();
 protected:
     QUrl parserUrl(const QUrl &url);
     void openUrlList(const QUrl &url);
@@ -112,17 +112,17 @@ protected:
     QUrl    m_openUrl;
     QUrl    m_lastUrl;
     QString m_lastPath;
-    QWidget *m_widget;
+    FindDocWidget *m_widget;
     DocumentBrowser *m_docBrowser;
     QComboBox *m_godocFindComboBox;
-    QStringListModel *m_findResultModel;
-    QSortFilterProxyModel *m_findFilterModel;
-    ListViewEx *m_findResultListView;
-    Utils::FancyLineEdit *m_findDocEdit;
-    QLabel     *m_tagInfo;
+    //QStringListModel *m_findResultModel;
+    //QSortFilterProxyModel *m_findFilterModel;
+    //ListViewEx *m_findResultListView;
+    //Utils::FancyLineEdit *m_findDocEdit;
+    //QLabel     *m_tagInfo;
     ProcessEx  *m_findProcess;
     ProcessEx  *m_godocProcess;
-    //ProcessEx  *m_goapiProcess;
+    //ProcessEx  *m_findDocProcess;
     ProcessEx  *m_lookupProcess;
     ProcessEx  *m_helpProcess;
     QAction *m_browserAct;
