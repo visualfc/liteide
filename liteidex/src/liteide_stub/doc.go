@@ -110,6 +110,15 @@ func init() {
 	cmdDoc.Flag.BoolVar(&structFlag, "struct", false, "show doc for structs only")
 	cmdDoc.Flag.BoolVar(&typeFlag, "type", false, "show doc for types only")
 	cmdDoc.Flag.BoolVar(&variableFlag, "var", false, "show  doc for vars only")
+
+	cmdDoc.Flag.BoolVar(&constantFlag, "c", false, "alias for -const")
+	cmdDoc.Flag.BoolVar(&functionFlag, "f", false, "alias for -func")
+	cmdDoc.Flag.BoolVar(&interfaceFlag, "i", false, "alias for -interface")
+	cmdDoc.Flag.BoolVar(&methodFlag, "m", false, "alias for -method")
+	cmdDoc.Flag.BoolVar(&packageFlag, "pkg", false, "alias for -package")
+	cmdDoc.Flag.BoolVar(&structFlag, "s", false, "alias for -struct")
+	cmdDoc.Flag.BoolVar(&typeFlag, "t", false, "alias for -type")
+	cmdDoc.Flag.BoolVar(&variableFlag, "v", false, "alias for -var")
 }
 
 func runDoc(cmd *Command, args []string) {

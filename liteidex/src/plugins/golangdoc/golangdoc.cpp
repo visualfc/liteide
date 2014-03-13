@@ -90,7 +90,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_helpProcess = new ProcessEx(this);
 
     m_lastEditor = 0;
-    m_bApiLoaded = false;
+    //m_bApiLoaded = false;
 
     m_widget = new QWidget;
     m_findResultModel = new QStringListModel(this);
@@ -107,7 +107,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_tagInfo->setWordWrap(true);
     //m_tagInfo->setScaledContents(true);
 
-    m_golangApiThread = new GolangApiThread(this);
+    //m_golangApiThread = new GolangApiThread(this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(1);
@@ -159,7 +159,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(triggeredToolWindow(bool)));
     connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
-    connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
+    //connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
 
     connect(m_docBrowser,SIGNAL(requestUrl(QUrl)),this,SLOT(openUrl(QUrl)));
     connect(m_docBrowser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlighted(QUrl)));
@@ -196,7 +196,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     this->loadEnv();
 
     m_liteApp->extension()->addObject("LiteApi.IGolangDoc",this);
-    m_liteApp->extension()->addObject("LiteApi.IGolangApi",m_golangApiThread);
+    //m_liteApp->extension()->addObject("LiteApi.IGolangApi",m_golangApiThread);
 
     QString path = m_liteApp->resourcePath()+"/golangdoc/godoc.html";
     QFile file(path);
@@ -218,7 +218,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
 
 GolangDoc::~GolangDoc()
 {
-    this->saveGolangApi();
+   // this->saveGolangApi();
     m_liteApp->settings()->setValue("golangdoc/goroot",m_goroot);
     if (m_docBrowser) {
         delete m_docBrowser;
@@ -291,34 +291,34 @@ void GolangDoc::editorCreated(LiteApi::IEditor *editor)
     }
 }
 
-void GolangDoc::loadApi()
-{
-    m_bApiLoaded = true;
-    m_goapiData.clear();
+//void GolangDoc::loadApi()
+//{
+//    m_bApiLoaded = true;
+//    m_goapiData.clear();
 
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
-    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
-    QStringList args;
-    args << "api";
-    if (defctx) {
-        args << "-default_ctx=true";
-    }
-    if (std) {
-        args << "std";
-    } else {
-        args << "all";
-    }
-    m_goapiProcess->startEx(cmd,args.join(" "));
-}
+//    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+//    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
+//    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
+//    QStringList args;
+//    args << "api";
+//    if (defctx) {
+//        args << "-default_ctx=true";
+//    }
+//    if (std) {
+//        args << "std";
+//    } else {
+//        args << "all";
+//    }
+//    m_goapiProcess->startEx(cmd,args.join(" "));
+//}
 
 void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 {
     loadEnv();
-    if (!m_bApiLoaded) {
-        return;
-    }
-    loadApi();
+//    if (!m_bApiLoaded) {
+//        return;
+//    }
+    //loadApi();
 }
 
 void GolangDoc::loadEnv()
@@ -848,28 +848,29 @@ void GolangDoc::openUrl(const QUrl &_url)
     }
 }
 
-void GolangDoc::findTag(const QString &tag)
-{
-    if (!tag.isEmpty()){
-        QStringList urlList = m_golangApiThread->api()->findDocUrl(tag);
-        if (!urlList.isEmpty()) {
-            if (urlList.size() >= 2) {
-                m_docFind = urlList.at(1);
-            } else {
-                m_docFind.clear();
-            }
-            QString text = urlList.at(0);
-            if (!text.isEmpty()) {
-                activeBrowser();
-                QUrl url(QString("pdoc:%1").arg(text));
-                openUrl(url);
-            }
-        }
-    }
-}
+//void GolangDoc::findTag(const QString &tag)
+//{
+//    if (!tag.isEmpty()){
+//        QStringList urlList = m_golangApiThread->api()->findDocUrl(tag);
+//        if (!urlList.isEmpty()) {
+//            if (urlList.size() >= 2) {
+//                m_docFind = urlList.at(1);
+//            } else {
+//                m_docFind.clear();
+//            }
+//            QString text = urlList.at(0);
+//            if (!text.isEmpty()) {
+//                activeBrowser();
+//                QUrl url(QString("pdoc:%1").arg(text));
+//                openUrl(url);
+//            }
+//        }
+//    }
+//}
 
 void GolangDoc::doubleClickListView(QModelIndex index)
 {
+    //TODO
     if (!index.isValid()) {
         return;
     }
@@ -879,7 +880,7 @@ void GolangDoc::doubleClickListView(QModelIndex index)
     }
     QString tag = m_findResultModel->data(src,Qt::DisplayRole).toString();
     if (!tag.isEmpty()){
-        QStringList urlList = m_golangApiThread->api()->findDocUrl(tag);
+        QStringList urlList;// = m_golangApiThread->api()->findDocUrl(tag);
         if (!urlList.isEmpty()) {
             if (urlList.size() >= 2) {
                 m_docFind = urlList.at(1);
@@ -907,7 +908,7 @@ void GolangDoc::currentIndexChanged(QModelIndex index)
     }
     QString tag = m_findResultModel->data(src,Qt::DisplayRole).toString();
     if (!tag.isEmpty()){
-        m_tagInfo->setText(m_golangApiThread->api()->findDocInfo(tag));
+        //m_tagInfo->setText(m_golangApiThread->api()->findDocInfo(tag));
     }
 }
 
@@ -938,26 +939,26 @@ void GolangDoc::filterTextChanged(QString str)
     }
 }
 
-void GolangDoc::goapiOutput(QByteArray data,bool bError)
-{
-    if (bError) {
-        return;
-    }
-    m_goapiData.append(data);
-}
+//void GolangDoc::goapiOutput(QByteArray data,bool bError)
+//{
+//    if (bError) {
+//        return;
+//    }
+//    m_goapiData.append(data);
+//}
 
-void GolangDoc::goapiFinish(bool error,int code,QString)
-{
-    if (!error && code == 0) {
-        m_liteApp->globalCookie().insert("goalngdoc.goapi.data",m_goapiData);
-        m_golangApiThread->loadData(m_goapiData);
-    }
-}
+//void GolangDoc::goapiFinish(bool error,int code,QString)
+//{
+//    if (!error && code == 0) {
+//        m_liteApp->globalCookie().insert("goalngdoc.goapi.data",m_goapiData);
+//        m_golangApiThread->loadData(m_goapiData);
+//    }
+//}
 
-void GolangDoc::loadApiFinished()
-{
-    m_findResultModel->setStringList(m_golangApiThread->all());
-}
+//void GolangDoc::loadApiFinished()
+//{
+//    m_findResultModel->setStringList(m_golangApiThread->all());
+//}
 
 void GolangDoc::lookupStarted()
 {
@@ -1037,36 +1038,36 @@ void GolangDoc::helpFinish(bool error, int code, QString)
 
 void GolangDoc::appLoaded()
 {
-    m_goapiData = m_liteApp->globalCookie().value("goalngdoc.goapi.data").toByteArray();
-    if (!m_goapiData.isEmpty()) {
-        m_golangApiThread->loadData(m_goapiData);
-        return;
-    }
+//    m_goapiData = m_liteApp->globalCookie().value("goalngdoc.goapi.data").toByteArray();
+//    if (!m_goapiData.isEmpty()) {
+//        m_golangApiThread->loadData(m_goapiData);
+//        return;
+//    }
 
-    QFileInfo info(m_liteApp->storagePath(),"golangapi.txt");
-    if (info.exists()) {
-        m_golangApiThread->loadFile(info.filePath());
-    }
-    m_toolWindowAct->setChecked(false);
+//    QFileInfo info(m_liteApp->storagePath(),"golangapi.txt");
+//    if (info.exists()) {
+//        m_golangApiThread->loadFile(info.filePath());
+//    }
+//    m_toolWindowAct->setChecked(false);
     //this->loadApi();
 }
 
 void GolangDoc::triggeredToolWindow(bool b)
 {
-    if (b && !m_bApiLoaded) {
-        this->loadApi();
-    }
+//    if (b && !m_bApiLoaded) {
+//        //this->loadApi();
+//    }
 }
 
-void GolangDoc::saveGolangApi()
-{
-    if (m_golangApiThread->data().isEmpty()) {
-        return;
-    }
-    QFileInfo info(m_liteApp->storagePath(),"golangapi.txt");
-    QFile f(info.filePath());
-    if (f.open(QFile::WriteOnly|QFile::Truncate)) {
-        f.write(m_golangApiThread->data());
-    }
-    f.close();
-}
+//void GolangDoc::saveGolangApi()
+//{
+//    if (m_golangApiThread->data().isEmpty()) {
+//        return;
+//    }
+//    QFileInfo info(m_liteApp->storagePath(),"golangapi.txt");
+//    QFile f(info.filePath());
+//    if (f.open(QFile::WriteOnly|QFile::Truncate)) {
+//        f.write(m_golangApiThread->data());
+//    }
+//    f.close();
+//}

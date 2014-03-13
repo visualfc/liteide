@@ -68,13 +68,13 @@ public slots:
 public slots:
     void appLoaded();
     void triggeredToolWindow(bool);
-    void saveGolangApi();
+    //void saveGolangApi();
     void editorFindDoc();
     void editorJumpToDecl();
     void editorCreated(LiteApi::IEditor *editor);
-    void loadApi();
+    //void loadApi();
     void loadEnv();
-    void loadApiFinished();
+    //void loadApiFinished();
     void currentEnvChanged(LiteApi::IEnv*);
     void listCmd();
     void listPkg();
@@ -84,8 +84,8 @@ public slots:
     void godocFindPackage(QString name);
     void godocOutput(QByteArray,bool);
     void godocFinish(bool,int,QString);
-    void goapiOutput(QByteArray,bool);
-    void goapiFinish(bool,int,QString);
+//    void goapiOutput(QByteArray,bool);
+//    void goapiFinish(bool,int,QString);
     void lookupStarted();
     void lookupOutput(QByteArray,bool);
     void lookupFinish(bool,int,QString);
@@ -94,7 +94,7 @@ public slots:
     void helpFinish(bool,int,QString);
     void doubleClickListView(QModelIndex);
     void currentIndexChanged(QModelIndex);
-    void findTag(const QString &tag);
+    //void findTag(const QString &tag);
     void highlighted(const QUrl &url);
     void documentLoaded();
     void filterTextChanged(QString);
@@ -127,7 +127,7 @@ protected:
     QAction *m_browserAct;
     QString m_goroot;
     QByteArray  m_godocData;
-    QByteArray  m_goapiData;
+    //QByteArray  m_goapiData;
     QByteArray  m_lookupData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;
@@ -136,9 +136,9 @@ protected:
     QByteArray  m_findData;
     QString  m_templateData;
     LiteApi::IEnvManager *m_envManager;
-    GolangApiThread *m_golangApiThread;
+    //GolangApiThread *m_golangApiThread;
     QString m_godocCmd;
-    bool    m_bApiLoaded;
+    //bool    m_bApiLoaded;
     QStringList m_targetList;
     QMap<QString,QString> m_pathFileMap;
     QAction *m_toolWindowAct;
