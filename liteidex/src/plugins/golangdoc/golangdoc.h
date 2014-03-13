@@ -29,7 +29,7 @@
 #include "liteenvapi/liteenvapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "golangdocapi/golangdocapi.h"
-#include "qtc_editutil/filterlineedit.h"
+#include "qtc_editutil/fancylineedit.h"
 
 #include <QUrl>
 #include <QModelIndex>
@@ -98,6 +98,7 @@ public slots:
     void highlighted(const QUrl &url);
     void documentLoaded();
     void filterTextChanged(QString);
+    void findDoc();
 protected:
     QUrl parserUrl(const QUrl &url);
     void openUrlList(const QUrl &url);
@@ -117,11 +118,11 @@ protected:
     QStringListModel *m_findResultModel;
     QSortFilterProxyModel *m_findFilterModel;
     ListViewEx *m_findResultListView;
-    Utils::FilterLineEdit *m_findEdit;
+    Utils::FancyLineEdit *m_findDocEdit;
     QLabel     *m_tagInfo;
     ProcessEx  *m_findProcess;
     ProcessEx  *m_godocProcess;
-    ProcessEx  *m_goapiProcess;
+    //ProcessEx  *m_goapiProcess;
     ProcessEx  *m_lookupProcess;
     ProcessEx  *m_helpProcess;
     QAction *m_browserAct;

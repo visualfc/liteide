@@ -85,7 +85,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
 {
     m_findProcess = new ProcessEx(this);
     m_godocProcess = new ProcessEx(this);
-    m_goapiProcess = new ProcessEx(this);
+    //m_goapiProcess = new ProcessEx(this);
     m_lookupProcess = new ProcessEx(this);
     m_helpProcess = new ProcessEx(this);
 
@@ -102,7 +102,19 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_findResultListView->setEditTriggers(0);
     m_findResultListView->setModel(m_findFilterModel);
 
-    m_findEdit = new Utils::FilterLineEdit(500);
+    m_findDocEdit = new Utils::FancyLineEdit;
+    QIcon icon = QIcon::fromTheme(m_findDocEdit->layoutDirection() == Qt::LeftToRight ?
+                     QLatin1String("edit-clear-locationbar-rtl") :
+                     QLatin1String("edit-clear-locationbar-ltr"),
+                     QIcon::fromTheme(QLatin1String("edit-clear"), QIcon(QLatin1String("icon:images/editclear.png"))));
+
+    m_findDocEdit->setButtonPixmap(Utils::FancyLineEdit::Right, icon.pixmap(16));
+    m_findDocEdit->setButtonVisible(Utils::FancyLineEdit::Right, true);
+    m_findDocEdit->setPlaceholderText(tr("Search"));
+    m_findDocEdit->setButtonToolTip(Utils::FancyLineEdit::Right, tr("Clear Search"));
+    m_findDocEdit->setAutoHideButton(Utils::FancyLineEdit::Right, true);    
+    connect(m_findDocEdit, SIGNAL(rightButtonClicked()), m_findDocEdit, SLOT(clear()));
+
     m_tagInfo = new QLabel;
     m_tagInfo->setWordWrap(true);
     //m_tagInfo->setScaledContents(true);
@@ -116,7 +128,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     QHBoxLayout *findLayout = new QHBoxLayout;
     findLayout->setMargin(2);
     findLayout->addWidget(new QLabel("Find"));
-    findLayout->addWidget(m_findEdit);
+    findLayout->addWidget(m_findDocEdit);
     //findLayout->addWidget(findBtn);
 
     mainLayout->addLayout(findLayout);
@@ -166,12 +178,13 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     connect(m_docBrowser,SIGNAL(documentLoaded()),this,SLOT(documentLoaded()));
     connect(m_godocFindComboBox,SIGNAL(activated(QString)),this,SLOT(godocFindPackage(QString)));
     //connect(m_findEdit,SIGNAL(filterChanged(QString)),m_findFilterModel,setFilterFixedString(QString)));
-    connect(m_findEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterTextChanged(QString)));//setFilterFixedString(QString)));
+    //connect(m_findEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterTextChanged(QString)));//setFilterFixedString(QString)));
+    connect(m_findDocEdit,SIGNAL(returnPressed()),this,SLOT(findDoc()));
     //connect(m_findEdit,SIGNAL(activated(QString)),this,SLOT(findPackage(QString)));
     connect(m_godocProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(godocOutput(QByteArray,bool)));
     connect(m_godocProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(godocFinish(bool,int,QString)));
-    connect(m_goapiProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(goapiOutput(QByteArray,bool)));
-    connect(m_goapiProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(goapiFinish(bool,int,QString)));
+    //connect(m_goapiProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(goapiOutput(QByteArray,bool)));
+    //connect(m_goapiProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(goapiFinish(bool,int,QString)));
     connect(m_lookupProcess,SIGNAL(started()),this,SLOT(lookupStarted()));
     connect(m_lookupProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(lookupOutput(QByteArray,bool)));
     connect(m_lookupProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(lookupFinish(bool,int,QString)));
@@ -330,7 +343,7 @@ void GolangDoc::loadEnv()
 
     m_findProcess->setEnvironment(env.toStringList());
     m_godocProcess->setEnvironment(env.toStringList());
-    m_goapiProcess->setEnvironment(env.toStringList());
+    //m_goapiProcess->setEnvironment(env.toStringList());
     m_lookupProcess->setEnvironment(env.toStringList());
     m_helpProcess->setEnvironment(env.toStringList());
 
@@ -408,7 +421,7 @@ void GolangDoc::godocFindPackage(QString pkgname)
 void GolangDoc::findPackage(QString pkgname)
 {
     if (pkgname.isEmpty()) {
-        pkgname = m_findEdit->text();
+        pkgname = m_findDocEdit->text();
     }
     if (pkgname.isEmpty()) {
         return;
@@ -939,6 +952,11 @@ void GolangDoc::filterTextChanged(QString str)
     }
 }
 
+void GolangDoc::findDoc()
+{
+
+}
+
 //void GolangDoc::goapiOutput(QByteArray data,bool bError)
 //{
 //    if (bError) {
@@ -1017,7 +1035,7 @@ void GolangDoc::helpFinish(bool error, int code, QString)
             if (line.startsWith("help,")) {
                 //m_toolAct->setChecked(true);
                 QString help = line.mid(5).trimmed();
-                m_findEdit->setText(help);
+                m_findDocEdit->setText(help);
             } else if (line.startsWith("info,")) {
                 info = line.mid(5).trimmed();
             }
