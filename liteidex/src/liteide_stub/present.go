@@ -31,7 +31,7 @@ var presentOutput string
 func init() {
 	cmdPresent.Flag.BoolVar(&presentVerifyOnly, "v", false, "verify present only")
 	cmdPresent.Flag.BoolVar(&presentStdout, "stdout", false, "output use std output")
-	cmdPresent.Flag.StringVar(&presentInput, "input", "i", "input golang present file")
+	cmdPresent.Flag.StringVar(&presentInput, "i", "", "input golang present file")
 	cmdPresent.Flag.StringVar(&presentOutput, "o", "", "output html file name")
 }
 
