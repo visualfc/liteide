@@ -114,7 +114,7 @@ void FindDocWidget::findDoc()
         args << "-r";
     }
     if (!findFlag.isEmpty()) {
-        args << findFlag;
+        args << "-"+findFlag;
     }
     args << text;
 
@@ -170,7 +170,7 @@ func Println(args ...interface{})
             //\code.google.com\p\go.tools\cmd\vet\#Println
             int pos = sz.indexOf("#");
             if (pos != -1) {
-                QString pkg = sz.left(pos);
+                QString pkg = sz.left(pos);            
                 pkg = QDir::fromNativeSeparators(pkg);
                 if (pkg.startsWith("/")) {
                     pkg = pkg.mid(1);
@@ -181,7 +181,15 @@ func Println(args ...interface{})
                 sz = pkg+sz.mid(pos);
                 findName = sz;
             } else {
-                findName.clear();
+                QString pkg = sz;
+                pkg = QDir::fromNativeSeparators(pkg);
+                if (pkg.startsWith("/")) {
+                    pkg = pkg.mid(1);
+                }
+                if (pkg.endsWith("/")) {
+                    pkg = pkg.left(pkg.length()-1);
+                }
+                findName = pkg;
             }
         } else if (flag == 3) {
             if (lastFlag == 1) {
