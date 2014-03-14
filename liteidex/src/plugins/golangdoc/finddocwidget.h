@@ -5,6 +5,7 @@
 #include "qtc_editutil/filterlineedit.h"
 #include "processex/processex.h"
 
+class QPlainTextEdit;
 class FindDocWidget : public QWidget
 {
     Q_OBJECT
@@ -23,6 +24,7 @@ protected:
     bool    m_bUseRegexp;
     QAction* m_useRegexpCheckAct;
     ProcessEx *m_process;
+    QPlainTextEdit *m_browser;
 };
 
 #endif // FINDDOCWIDGET_H

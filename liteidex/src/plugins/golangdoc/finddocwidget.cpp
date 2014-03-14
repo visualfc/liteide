@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QActionGroup>
 #include <QAction>
+#include <QPlainTextEdit>
 
 FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     QWidget(parent), m_liteApp(app)
@@ -26,7 +27,11 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     findBtn->setText("Find");
     findLayout->addWidget(findBtn);
 
+    m_browser = new QPlainTextEdit;
+    m_browser->setReadOnly(true);
+
     mainLayout->addLayout(findLayout);
+    mainLayout->addWidget(m_browser);
 
     QAction *findAll = new QAction(tr("Find All"),this);
     QAction *findConst = new QAction(tr("Find const"),this);
@@ -75,6 +80,7 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_process = new ProcessEx(this);
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
+    connect(m_findEdit,SIGNAL(returnPressed()),findAll,SIGNAL(triggered()));
 }
 
 FindDocWidget::~FindDocWidget()
@@ -103,7 +109,7 @@ void FindDocWidget::findDoc()
 
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     QStringList args;
-    args << "doc" << "-src";
+    args << "doc";
     if (m_useRegexpCheckAct->isChecked()) {
         args << "-r";
     }
@@ -112,6 +118,7 @@ void FindDocWidget::findDoc()
     }
     args << text;
 
+    m_browser->clear();
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     m_process->start(cmd,args);
 }
@@ -123,9 +130,79 @@ void FindDocWidget::extOutput(QByteArray data, bool error)
         return;
     }
     QString findText = QString::fromUtf8(data);
+/*
+http://golang.org/pkg\fmt\#Println
+c:\go\src\pkg\log\log.go:169:
+// Println calls l.Output to print to the logger.
+// Arguments are handled in the manner of fmt.Println.
+func (l *Logger) Println(v ...interface{})
+
+http://godoc.org\code.google.com\p\go.tools\cmd\vet\#Println
+F:\vfc\liteide-git\liteidex\src\code.google.com\p\go.tools\cmd\vet\main.go:375:
+// Println is fmt.Println guarded by -v.
+func Println(args ...interface{})
+*/
+    QStringList array;
+    int lastFlag = 0;
+    QString findName;
+    QString findPos;
+    QString findComment;
+    foreach (QString sz, findText.split('\n')) {
+        int flag = 0;
+        if (sz.isEmpty()) {
+            flag = 4;
+        } else if (sz.startsWith("http://golang.org/pkg")) {
+            flag = 1;
+            sz = sz.mid(21);
+        } else if (sz.startsWith("http://golang.org/cmd")) {
+            flag = 1;
+            sz = sz.mid(21);
+        } else if (sz.startsWith("http://godoc.org")) {
+            flag = 1;
+            sz = sz.mid(16);
+        } else if (sz.startsWith("//")) {
+            flag = 2;
+            sz = sz.mid(2);
+        } else {
+            flag = 3;
+        }
+        if (flag == 1) {
+            //\code.google.com\p\go.tools\cmd\vet\#Println
+            int pos = sz.indexOf("#");
+            if (pos != -1) {
+                QString pkg = sz.left(pos);
+                pkg = QDir::fromNativeSeparators(pkg);
+                if (pkg.startsWith("/")) {
+                    pkg = pkg.mid(1);
+                }
+                if (pkg.endsWith("/")) {
+                    pkg = pkg.left(pkg.length()-1);
+                }
+                sz = pkg+sz.mid(pos);
+                findName = sz;
+            } else {
+                findName.clear();
+            }
+        } else if (flag == 3) {
+            if (lastFlag == 1) {
+                findPos = sz;
+                array.push_back(QString("<h3><a href=\"%1\">%2</a></h3>").arg(findPos).arg(findName));
+            }  else {
+                array.push_back(QString("<b>%1</b>").arg(sz));
+                if (!findComment.isEmpty()) {
+                    array.push_back(QString("<p>%1</p>").arg(findComment));
+                }
+                findComment.clear();
+            }
+        } else if (flag == 2) {
+            findComment += sz.trimmed();
+        } else if (flag == 4) {
+        }
+        lastFlag = flag;
+    }
+    m_browser->appendHtml(array.join("\n"));
 }
 
 void FindDocWidget::extFinish(bool, int, QString)
 {
-
 }

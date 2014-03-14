@@ -481,6 +481,16 @@ func (f *File) packageURL() string {
 	return f.urlPrefix + s
 }
 
+func (f *File) packageName() string {
+	s := strings.TrimPrefix(f.name, f.pathPrefix)
+	// Now we have a path with a final file name. Drop it.
+	if i := strings.LastIndex(s, slash); i > 0 {
+		s = s[:i+1]
+	}
+	s = strings.Trim(s, slash)
+	return filepath.ToSlash(s)
+}
+
 func (f *File) sourcePos(posn token.Position) string {
 	if !srcFlag {
 		return ""
