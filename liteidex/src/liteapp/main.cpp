@@ -65,7 +65,6 @@ int main(int argc, char *argv[])
 #endif
 
     //QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
-
     QTranslator translator;
     QTranslator qtTranslator;
 

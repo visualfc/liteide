@@ -95,9 +95,11 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
     connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(openPathIndex(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
-    m_fileMenu = new QMenu(this);
-    m_folderMenu = new QMenu(this);
-    m_rootMenu = new QMenu(this);
+//    m_fileMenu = new QMenu(this);
+//    m_folderMenu = new QMenu(this);
+//    m_rootMenu = new QMenu(this);
+
+    m_executeFileAct = new QAction(tr("Execute File Here"),this);
 
     m_openEditorAct = new QAction(tr("Open File"),this);
     m_newFileAct = new QAction(tr("New File..."),this);
@@ -119,37 +121,39 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 
     m_closeAllFoldersAct = new QAction(tr("Close All Folders"),this);
 
-    m_fileMenu->addAction(m_openEditorAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_newFileAct);
-    m_fileMenu->addAction(m_newFileWizardAct);
-    m_fileMenu->addAction(m_renameFileAct);
-    m_fileMenu->addAction(m_removeFileAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_viewGodocAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_openShellAct);
-    m_fileMenu->addAction(m_openExplorerAct);
+//    m_fileMenu->addAction(m_executeFileAct);
+//    m_fileMenu->addAction(m_openEditorAct);
+//    m_fileMenu->addSeparator();
+//    m_fileMenu->addAction(m_newFileAct);
+//    m_fileMenu->addAction(m_newFileWizardAct);
+//    m_fileMenu->addAction(m_renameFileAct);
+//    m_fileMenu->addAction(m_removeFileAct);
+//    m_fileMenu->addSeparator();
+//    m_fileMenu->addAction(m_viewGodocAct);
+//    m_fileMenu->addSeparator();
+//    m_fileMenu->addAction(m_openShellAct);
+//    m_fileMenu->addAction(m_openExplorerAct);
 
-    m_folderMenu->addAction(m_newFileAct);
-    m_folderMenu->addAction(m_newFileWizardAct);
-    m_folderMenu->addAction(m_newFolderAct);
-    m_folderMenu->addAction(m_renameFolderAct);
-    m_folderMenu->addAction(m_removeFolderAct);
-    m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_closeFolerAct);
-    m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_viewGodocAct);
-    m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_openShellAct);
-    m_folderMenu->addAction(m_openExplorerAct);
+//    m_folderMenu->addAction(m_newFileAct);
+//    m_folderMenu->addAction(m_newFileWizardAct);
+//    m_folderMenu->addAction(m_newFolderAct);
+//    m_folderMenu->addAction(m_renameFolderAct);
+//    m_folderMenu->addAction(m_removeFolderAct);
+//    m_folderMenu->addSeparator();
+//    m_folderMenu->addAction(m_closeFolerAct);
+//    m_folderMenu->addSeparator();
+//    m_folderMenu->addAction(m_viewGodocAct);
+//    m_folderMenu->addSeparator();
+//    m_folderMenu->addAction(m_openShellAct);
+//    m_folderMenu->addAction(m_openExplorerAct);
 
-    m_rootMenu->addAction(m_addFolderAct);
-    m_rootMenu->addSeparator();
+//    m_rootMenu->addAction(m_addFolderAct);
+//    m_rootMenu->addSeparator();
     //m_rootMenu->addAction(m_closeAllFoldersAct);
 
     connect(m_model->fileWatcher(),SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
+    connect(m_executeFileAct,SIGNAL(triggered()),this,SLOT(executeFile()));
     connect(m_newFileAct,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(m_newFileWizardAct,SIGNAL(triggered()),this,SLOT(newFileWizard()));
     connect(m_renameFileAct,SIGNAL(triggered()),this,SLOT(renameFile()));
@@ -456,7 +460,10 @@ void FileSystemWidget::openShell()
 
 void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
 {
-    QMenu *contextMenu = 0;
+    //QMenu *pop = new QMenu(this);
+    //connect(pop,SIGNAL(destroyed()),this,SLOT(destroy2()));
+    QMenu menu(m_tree);
+    FILESYSTEM_CONTEXT_FLAG flag = FILESYSTEM_ROOT;
     QModelIndex index = m_tree->indexAt(pos);
     if (index.isValid()) {
         FileNode *node = m_model->nodeFromIndex(index);
@@ -464,22 +471,100 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
             m_contextInfo = node->fileInfo();
             m_contextIndex = index;
             if (m_model->isRootPathNode(node)) {
-                contextMenu = m_folderMenu;
-                m_closeFolerAct->setVisible(true);
-                m_removeFolderAct->setVisible(false);
+                //contextMenu = m_folderMenu;
+                flag = FILESYSTEM_ROOTFOLDER;
+                //m_closeFolerAct->setVisible(true);
+                //m_removeFolderAct->setVisible(false);
             } else if (node->isDir()) {
-                contextMenu = m_folderMenu;
-                m_closeFolerAct->setVisible(false);
-                m_removeFolderAct->setVisible(true);
+                //contextMenu = m_folderMenu;
+                flag = FILESYSTEM_FOLDER;
+                //m_closeFolerAct->setVisible(false);
+                //m_removeFolderAct->setVisible(true);
             } else {
-                contextMenu = m_fileMenu;
+                //contextMenu = m_fileMenu;
+                flag = FILESYSTEM_FILES;
             }
         }
-    } else {
-        contextMenu = m_rootMenu;
     }
-    if (contextMenu && contextMenu->actions().count() > 0) {
-        contextMenu->popup(m_tree->mapToGlobal(pos));
+    bool hasGo = false;
+    if (flag != FILESYSTEM_ROOT) {
+        foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
+            if (info.suffix() == "go") {
+                hasGo = true;
+            }
+        }
+    }
+    bool hasExec = false;
+    if (flag == FILESYSTEM_FILES) {
+        QString cmd = FileUtil::lookPathInDir(m_contextInfo.fileName(),m_contextInfo.path());
+        if (cmd == m_contextInfo.filePath()) {
+            LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
+            if (build) {
+                hasExec = true;
+            }
+        }
+    }
+    //root folder
+    if (flag == FILESYSTEM_ROOT) {
+        menu.addAction(m_addFolderAct);
+    } else if (flag == FILESYSTEM_ROOTFOLDER) {
+        menu.addAction(m_newFileAct);
+        menu.addAction(m_newFileWizardAct);
+        menu.addAction(m_newFolderAct);
+        menu.addAction(m_renameFolderAct);
+        menu.addAction(m_closeFolerAct);
+        menu.addSeparator();
+        if (hasGo) {
+            menu.addAction(m_viewGodocAct);
+            menu.addSeparator();
+        }
+        menu.addAction(m_openShellAct);
+        menu.addAction(m_openExplorerAct);
+    } else if (flag == FILESYSTEM_FOLDER) {
+        menu.addAction(m_newFileAct);
+        menu.addAction(m_newFileWizardAct);
+        menu.addAction(m_newFolderAct);
+        menu.addAction(m_renameFolderAct);
+        menu.addAction(m_removeFolderAct);
+        menu.addSeparator();
+        if (hasGo) {
+            menu.addAction(m_viewGodocAct);
+            menu.addSeparator();
+        }
+        menu.addAction(m_openShellAct);
+        menu.addAction(m_openExplorerAct);
+    } else if (flag == FILESYSTEM_FILES) {
+        if (hasExec) {
+            menu.addAction(m_executeFileAct);
+        }
+        menu.addAction(m_openEditorAct);
+        menu.addSeparator();
+        menu.addAction(m_newFileAct);
+        menu.addAction(m_newFileWizardAct);
+        menu.addAction(m_renameFileAct);
+        menu.addAction(m_removeFileAct);
+        menu.addSeparator();
+        if (hasGo) {
+            menu.addAction(m_viewGodocAct);
+            menu.addSeparator();
+        }
+        menu.addAction(m_openShellAct);
+        menu.addAction(m_openExplorerAct);
+
+    }
+    menu.exec(m_tree->mapToGlobal(pos));
+}
+
+void FileSystemWidget::executeFile()
+{
+    if (m_contextInfo.isFile()) {
+        QString cmd = FileUtil::lookPathInDir(m_contextInfo.fileName(),m_contextInfo.path());
+        if (cmd == m_contextInfo.filePath()) {
+            LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
+            if (build) {
+                build->executeCommand(m_contextInfo.fileName(),QString(),m_contextInfo.path());
+            }
+        }
     }
 }
 
@@ -551,20 +636,20 @@ void FileSystemWidget::openPathIndex(const QModelIndex &index)
         return;
     }
     if (node->isFile()) {
-        QFileInfo info(node->path());
+        //QFileInfo info(node->path());
         QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(node->path());
         if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
             m_liteApp->fileManager()->openEditor(node->path());
             return;
         }
-        QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
-        if (cmd == node->path()) {
-            LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
-            if (build) {
-                build->executeCommand(info.fileName(),QString(),info.path());
-                return;
-            }
-        }
+//        QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
+//        if (cmd == node->path()) {
+//            LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
+//            if (build) {
+//                build->executeCommand(info.fileName(),QString(),info.path());
+//                return;
+//            }
+//        }
         m_liteApp->fileManager()->openEditor(node->path(),true);
     }
 }

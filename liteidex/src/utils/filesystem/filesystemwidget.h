@@ -33,6 +33,13 @@
 #include <QDir>
 #include <QLabel>
 
+enum FILESYSTEM_CONTEXT_FLAG {
+    FILESYSTEM_ROOT = 0,
+    FILESYSTEM_ROOTFOLDER,
+    FILESYSTEM_FOLDER,
+    FILESYSTEM_FILES
+};
+
 class FileSystemWidget : public QWidget
 {
     Q_OBJECT
@@ -55,6 +62,7 @@ public slots:
     void openPathIndex(const QModelIndex &index);
     void currentEditorChanged(LiteApi::IEditor*);
     void treeViewContextMenuRequested(const QPoint &pos);
+    void executeFile();
     void openEditor();
     void newFile();
     void newFileWizard();
@@ -82,9 +90,9 @@ private:
     FileSystemModel *m_model;
     QFileInfo m_contextInfo;
     QModelIndex m_contextIndex;
-    QMenu   *m_fileMenu;
-    QMenu   *m_folderMenu;
-    QMenu   *m_rootMenu;
+//    QMenu   *m_fileMenu;
+//    QMenu   *m_folderMenu;
+//    QMenu   *m_rootMenu;
     QAction *m_openEditorAct;
     QAction *m_newFileAct;
     QAction *m_newFileWizardAct;
@@ -99,6 +107,7 @@ private:
     QAction *m_addFolderAct;
     QAction *m_closeFolerAct;
     QAction *m_closeAllFoldersAct;
+    QAction *m_executeFileAct;
 protected:
     LiteApi::IApplication *m_litApp;
 };
