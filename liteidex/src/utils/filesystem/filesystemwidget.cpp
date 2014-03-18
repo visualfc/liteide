@@ -463,7 +463,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
     //QMenu *pop = new QMenu(this);
     //connect(pop,SIGNAL(destroyed()),this,SLOT(destroy2()));
     QMenu menu(m_tree);
-    FILESYSTEM_CONTEXT_FLAG flag = FILESYSTEM_ROOT;
+    LiteApi::FILESYSTEM_CONTEXT_FLAG flag = LiteApi::FILESYSTEM_ROOT;
     QModelIndex index = m_tree->indexAt(pos);
     if (index.isValid()) {
         FileNode *node = m_model->nodeFromIndex(index);
@@ -472,22 +472,22 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
             m_contextIndex = index;
             if (m_model->isRootPathNode(node)) {
                 //contextMenu = m_folderMenu;
-                flag = FILESYSTEM_ROOTFOLDER;
+                flag = LiteApi::FILESYSTEM_ROOTFOLDER;
                 //m_closeFolerAct->setVisible(true);
                 //m_removeFolderAct->setVisible(false);
             } else if (node->isDir()) {
                 //contextMenu = m_folderMenu;
-                flag = FILESYSTEM_FOLDER;
+                flag = LiteApi::FILESYSTEM_FOLDER;
                 //m_closeFolerAct->setVisible(false);
                 //m_removeFolderAct->setVisible(true);
             } else {
                 //contextMenu = m_fileMenu;
-                flag = FILESYSTEM_FILES;
+                flag = LiteApi::FILESYSTEM_FILES;
             }
         }
     }
     bool hasGo = false;
-    if (flag != FILESYSTEM_ROOT) {
+    if (flag != LiteApi::FILESYSTEM_ROOT) {
         foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
             if (info.suffix() == "go") {
                 hasGo = true;
@@ -495,7 +495,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         }
     }
     bool hasExec = false;
-    if (flag == FILESYSTEM_FILES) {
+    if (flag == LiteApi::FILESYSTEM_FILES) {
         QString cmd = FileUtil::lookPathInDir(m_contextInfo.fileName(),m_contextInfo.path());
         if (cmd == m_contextInfo.filePath()) {
             LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
@@ -505,9 +505,9 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         }
     }
     //root folder
-    if (flag == FILESYSTEM_ROOT) {
+    if (flag == LiteApi::FILESYSTEM_ROOT) {
         menu.addAction(m_addFolderAct);
-    } else if (flag == FILESYSTEM_ROOTFOLDER) {
+    } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
         menu.addAction(m_newFolderAct);
@@ -520,7 +520,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         }
         menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
-    } else if (flag == FILESYSTEM_FOLDER) {
+    } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
         menu.addAction(m_newFolderAct);
@@ -533,7 +533,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         }
         menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
-    } else if (flag == FILESYSTEM_FILES) {
+    } else if (flag == LiteApi::FILESYSTEM_FILES) {
         if (hasExec) {
             menu.addAction(m_executeFileAct);
         }
@@ -552,6 +552,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         menu.addAction(m_openExplorerAct);
 
     }
+    emit aboutToShowContextMenu(&menu,flag,m_contextInfo);
     menu.exec(m_tree->mapToGlobal(pos));
 }
 

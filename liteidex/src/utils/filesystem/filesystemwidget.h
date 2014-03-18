@@ -33,13 +33,6 @@
 #include <QDir>
 #include <QLabel>
 
-enum FILESYSTEM_CONTEXT_FLAG {
-    FILESYSTEM_ROOT = 0,
-    FILESYSTEM_ROOTFOLDER,
-    FILESYSTEM_FOLDER,
-    FILESYSTEM_FILES
-};
-
 class FileSystemWidget : public QWidget
 {
     Q_OBJECT
@@ -80,6 +73,7 @@ public slots:
     void syncEditor(bool);
     void expandStartPath(QString);
 signals:
+    void aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void startPathChanged(const QString& path);
 protected:
     QFileInfo contextFileInfo() const;

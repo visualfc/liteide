@@ -94,6 +94,7 @@ bool FileManager::initWithApp(IApplication *app)
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
     connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
+    connect(m_folderWidget,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 
     m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
 
