@@ -53,7 +53,7 @@ public:
     virtual QString envValue(LiteApi::IBuild *build, const QString &value);
     virtual LiteApi::IBuildManager *buildManager() const;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true);
-    virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true, bool activateOutputCheck = true);
+    virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true);
     virtual bool buildTests();
     QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
 
@@ -85,6 +85,7 @@ public slots:
     void config();
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void fmctxExecuteFile();
+    void fmctxGoTool();
 protected:
     QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;
@@ -104,6 +105,10 @@ protected:
     QAction     *m_clearAct;
     QAction     *m_outputAct;
     QAction     *m_fmctxExecuteFileAct;
+    QAction     *m_fmctxGoBuildAct;
+    QAction     *m_fmctxGoInstallAct;
+    QAction     *m_fmctxGoTestAct;
+    QAction     *m_fmctxGoCleanAct;
     QFileInfo   m_fmctxInfo;
     QString     m_outputRegex;
     QString     m_buildTag;

@@ -131,6 +131,19 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxExecuteFileAct = new QAction(tr("Execute File"),this);
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
+    m_fmctxGoBuildAct = new QAction(tr("Go Build"),this);
+    m_fmctxGoBuildAct->setData("build");
+    m_fmctxGoInstallAct = new QAction(tr("Go Install"),this);
+    m_fmctxGoInstallAct->setData("install");
+    m_fmctxGoTestAct = new QAction(tr("Go Test"),this);
+    m_fmctxGoTestAct->setData("test");
+    m_fmctxGoCleanAct = new QAction(tr("Go Clean"),this);
+    m_fmctxGoCleanAct->setData("clean");
+    connect(m_fmctxGoBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoInstallAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoTestAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoCleanAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+
     connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
     connect(m_clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
 
@@ -350,6 +363,32 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
             menu->insertAction(act,m_fmctxExecuteFileAct);
             menu->insertSeparator(act);
         }
+    } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+        bool hasGo = false;
+        bool hasTest = false;
+        foreach(QFileInfo info, QDir(info.filePath()).entryInfoList(QDir::Files)) {
+            if (info.fileName().endsWith("_test.go")) {
+                hasGo = true;
+                hasTest = true;
+                break;
+            }
+            if (info.suffix() == "go") {
+                hasGo = true;
+            }
+        }
+        if (hasGo) {
+            QAction *act = 0;
+            if (!menu->actions().isEmpty()) {
+                act = menu->actions().at(0);
+            }
+            menu->insertAction(act,m_fmctxGoBuildAct);
+            menu->insertAction(act,m_fmctxGoInstallAct);
+            if (hasTest) {
+                menu->insertAction(act,m_fmctxGoTestAct);
+            }
+            menu->insertAction(act,m_fmctxGoCleanAct);
+            menu->insertSeparator(act);
+        }
     }
 }
 
@@ -358,7 +397,25 @@ void LiteBuild::fmctxExecuteFile()
     QString cmd = FileUtil::lookPathInDir(m_fmctxInfo.fileName(),m_fmctxInfo.path());
     if (!cmd.isEmpty()) {
         this->stopAction();
-        this->executeCommand(cmd,QString(),m_fmctxInfo.path());
+        this->executeCommand(cmd,QString(),m_fmctxInfo.path(),true,true,false);
+    }
+}
+
+void LiteBuild::fmctxGoTool()
+{
+    QAction *act = (QAction*)sender();
+    if (!act) {
+        return;
+    }
+    // build install test clean
+    QString args = act->data().toString();
+    QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
+    m_process->setUserData(ID_REGEXP,m_outputRegex);
+    if (!cmd.isEmpty()) {
+        m_liteApp->editorManager()->saveAllEditors();
+        this->stopAction();
+        this->executeCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
     }
 }
 
@@ -964,7 +1021,7 @@ void LiteBuild::stopAction()
     }
 }
 
-void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor, bool activateOutputCheck)
+void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor, bool activateOutputCheck, bool navigate, bool command)
 {
     if (updateExistsTextColor) {
         m_output->updateExistsTextColor();
@@ -983,8 +1040,8 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     m_process->setUserData(ID_CMD,cmd);
     m_process->setUserData(ID_ARGS,args);
     m_process->setUserData(ID_CODEC,"utf-8");
-    m_process->setUserData(ID_INPUTTYPE,INPUT_COMMAND);
-    m_process->setUserData(ID_NAVIGATE,false);
+    m_process->setUserData(ID_INPUTTYPE,command ? INPUT_COMMAND: INPUT_ACTION);
+    m_process->setUserData(ID_NAVIGATE,navigate);
     m_process->setUserData(ID_ACTIVATEOUTPUT_CHECK,activateOutputCheck);
     QString shell = FileUtil::lookPathInDir(cmd,workDir);
     if (shell.isEmpty()) {
@@ -993,7 +1050,7 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
     if (!shell.isEmpty()) {
         cmd = shell;
     }
-
+    m_workDir = workDir;
     m_process->setWorkingDirectory(workDir);
     m_output->appendTag(QString("%1 %2 [%3]\n")
                          .arg(cmd).arg(args).arg(workDir));
@@ -1200,7 +1257,8 @@ void LiteBuild::enterTextBuildOutput(QString text)
 void LiteBuild::dbclickBuildOutput(const QTextCursor &cur)
 {
     if (m_outputRegex.isEmpty()) {
-        m_outputRegex = "([\\w\\d_\\\\/\\.]+):(\\d+):";
+        //m_outputRegex = "([\\w\\d_\\\\/\\.]+):(\\d+):";
+        m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
     }
     QRegExp rep(m_outputRegex);//"([\\w\\d:_\\\\/\\.]+):(\\d+)");
 
