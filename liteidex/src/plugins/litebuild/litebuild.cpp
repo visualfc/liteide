@@ -128,6 +128,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
     actionContext->regAction(m_clearAct,"ClearOutput","");
 
+    m_fmctxExecuteFileAct = new QAction(tr("Execute File"),this);
+    connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
+
     connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
     connect(m_clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
 
@@ -154,6 +157,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_output,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickBuildOutput(QTextCursor)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterTextBuildOutput(QString)));
     connect(m_configAct,SIGNAL(triggered()),this,SLOT(config()));
+    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 
     m_liteAppInfo.insert("LITEAPPDIR",m_liteApp->applicationPath());
 
@@ -330,6 +334,31 @@ void LiteBuild::config()
                 m_liteApp->settings()->setValue(key+"#"+name->text(),value->text());
             }
         }
+    }
+}
+
+void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
+{
+    m_fmctxInfo = info;
+    if (flag == LiteApi::FILESYSTEM_FILES) {
+        QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
+        if (!cmd.isEmpty()) {
+            QAction *act = 0;
+            if (!menu->actions().isEmpty()) {
+                act = menu->actions().at(0);
+            }
+            menu->insertAction(act,m_fmctxExecuteFileAct);
+            menu->insertSeparator(act);
+        }
+    }
+}
+
+void LiteBuild::fmctxExecuteFile()
+{
+    QString cmd = FileUtil::lookPathInDir(m_fmctxInfo.fileName(),m_fmctxInfo.path());
+    if (!cmd.isEmpty()) {
+        this->stopAction();
+        this->executeCommand(cmd,QString(),m_fmctxInfo.path());
     }
 }
 
@@ -931,6 +960,7 @@ void LiteBuild::stopAction()
         if (!m_process->waitForFinished(100)) {
             m_process->kill();
         }
+        m_process->waitForFinished(100);
     }
 }
 

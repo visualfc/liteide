@@ -99,8 +99,6 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 //    m_folderMenu = new QMenu(this);
 //    m_rootMenu = new QMenu(this);
 
-    m_executeFileAct = new QAction(tr("Execute File Here"),this);
-
     m_openEditorAct = new QAction(tr("Open File"),this);
     m_newFileAct = new QAction(tr("New File..."),this);
     m_newFileWizardAct = new QAction(tr("New File Wizard..."),this);
@@ -153,7 +151,6 @@ FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) 
 
     connect(m_model->fileWatcher(),SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
-    connect(m_executeFileAct,SIGNAL(triggered()),this,SLOT(executeFile()));
     connect(m_newFileAct,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(m_newFileWizardAct,SIGNAL(triggered()),this,SLOT(newFileWizard()));
     connect(m_renameFileAct,SIGNAL(triggered()),this,SLOT(renameFile()));
@@ -494,16 +491,6 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
             }
         }
     }
-    bool hasExec = false;
-    if (flag == LiteApi::FILESYSTEM_FILES) {
-        QString cmd = FileUtil::lookPathInDir(m_contextInfo.fileName(),m_contextInfo.path());
-        if (cmd == m_contextInfo.filePath()) {
-            LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
-            if (build) {
-                hasExec = true;
-            }
-        }
-    }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
         menu.addAction(m_addFolderAct);
@@ -534,9 +521,6 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
-        if (hasExec) {
-            menu.addAction(m_executeFileAct);
-        }
         menu.addAction(m_openEditorAct);
         menu.addSeparator();
         menu.addAction(m_newFileAct);
@@ -554,19 +538,6 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
     }
     emit aboutToShowContextMenu(&menu,flag,m_contextInfo);
     menu.exec(m_tree->mapToGlobal(pos));
-}
-
-void FileSystemWidget::executeFile()
-{
-    if (m_contextInfo.isFile()) {
-        QString cmd = FileUtil::lookPathInDir(m_contextInfo.fileName(),m_contextInfo.path());
-        if (cmd == m_contextInfo.filePath()) {
-            LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
-            if (build) {
-                build->executeCommand(m_contextInfo.fileName(),QString(),m_contextInfo.path());
-            }
-        }
-    }
 }
 
 void FileSystemWidget::addRootPath(const QString &path)

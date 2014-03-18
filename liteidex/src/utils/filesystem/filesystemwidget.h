@@ -55,7 +55,6 @@ public slots:
     void openPathIndex(const QModelIndex &index);
     void currentEditorChanged(LiteApi::IEditor*);
     void treeViewContextMenuRequested(const QPoint &pos);
-    void executeFile();
     void openEditor();
     void newFile();
     void newFileWizard();
@@ -101,7 +100,6 @@ private:
     QAction *m_addFolderAct;
     QAction *m_closeFolerAct;
     QAction *m_closeAllFoldersAct;
-    QAction *m_executeFileAct;
 protected:
     LiteApi::IApplication *m_litApp;
 };

@@ -83,6 +83,8 @@ public slots:
     void dbclickBuildOutput(const QTextCursor &cur);
     void enterTextBuildOutput(QString);
     void config();
+    void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
+    void fmctxExecuteFile();
 protected:
     QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;
@@ -100,7 +102,9 @@ protected:
     QAction     *m_configAct;
     QAction     *m_stopAct;
     QAction     *m_clearAct;
-    QAction    *m_outputAct;
+    QAction     *m_outputAct;
+    QAction     *m_fmctxExecuteFileAct;
+    QFileInfo   m_fmctxInfo;
     QString     m_outputRegex;
     QString     m_buildTag;
     bool        m_bProjectBuild;
