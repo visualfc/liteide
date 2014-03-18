@@ -49,6 +49,7 @@ var apiDefaultCtx bool
 var apiCustomCtx string
 var apiLookupInfo string
 var apiLookupStdin bool
+var apiOutput string
 
 func init() {
 	cmdApi.Flag.BoolVar(&apiVerbose, "v", false, "verbose debugging")
@@ -61,6 +62,7 @@ func init() {
 	cmdApi.Flag.StringVar(&apiCustomCtx, "custom_ctx", "", "optional comma-separated list of <goos>-<goarch>[-cgo] to override default contexts.")
 	cmdApi.Flag.StringVar(&apiLookupInfo, "cursor_info", "", "lookup cursor node info\"file.go:pos\"")
 	cmdApi.Flag.BoolVar(&apiLookupStdin, "cursor_std", false, "cursor_info use stdin")
+	cmdApi.Flag.StringVar(&apiOutput, "o", "", "output file")
 }
 
 func runApi(cmd *Command, args []string) {
@@ -130,6 +132,30 @@ func runApi(cmd *Command, args []string) {
 
 		for _, pkg := range pkgs {
 			w.WalkPackage(pkg)
+		}
+		if w.cursorInfo != nil {
+			goto lookup
+		} else {
+			var file io.Writer
+			if apiOutput != "" {
+				var err error
+				file, err = os.Create(apiOutput)
+				if err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				file = os.Stdout
+			}
+			bw := bufio.NewWriter(file)
+			defer bw.Flush()
+			for _, p := range w.packageMap {
+				if w.wantedPkg[p.name] {
+					for _, f := range p.Features() {
+						fmt.Fprintf(bw, "%s\n", f)
+					}
+				}
+			}
+			return
 		}
 		features = w.Features("")
 	} else {

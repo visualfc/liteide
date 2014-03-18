@@ -141,6 +141,7 @@ void FancyLineEdit::setButtonVisible(Side side, bool visible)
     m_d->m_iconbutton[side]->setVisible(visible);
     m_d->m_iconEnabled[side] = visible;
     updateMargins();
+    updateButtonPositions();
 }
 
 bool FancyLineEdit::isButtonVisible(Side side) const

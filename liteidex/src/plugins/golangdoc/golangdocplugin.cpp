@@ -49,8 +49,7 @@ GolangDocPlugin::~GolangDocPlugin()
 bool GolangDocPlugin::load(LiteApi::IApplication *app)
 {
     m_golangDoc = new GolangDoc(app,this);
-    app->optionManager()->addFactory(new GolangDocOptionFactory(app,this));
-
+    //app->optionManager()->addFactory(new GolangDocOptionFactory(app,this));
     return true;
 }
 

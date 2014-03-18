@@ -86,6 +86,7 @@ void WebViewHtmlWidget::clear()
 void WebViewHtmlWidget::scrollToAnchor(const QString &anchor)
 {
     m_widget->page()->mainFrame()->scrollToAnchor(anchor);
+    emit anchorChanged(anchor);
 }
 
 void WebViewHtmlWidget::setScrollBarValue(Qt::Orientation orientation, int value)

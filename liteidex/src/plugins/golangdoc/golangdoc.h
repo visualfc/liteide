@@ -46,6 +46,7 @@ class DocumentBrowser;
 class QSortFilterProxyModel;
 class GolangApi;
 class FindDocWidget;
+class FindApiWidget;
 
 class ListViewEx : public QListView
 {
@@ -66,39 +67,31 @@ public slots:
     virtual void openUrl(const QUrl &url);
     virtual void activeBrowser();
 public slots:
+    void rebuildApiData();
     void appLoaded();
-    void triggeredToolWindow(bool);
-    //void saveGolangApi();
+    void triggeredToolWindow(bool);    
     void editorFindDoc();
     void editorJumpToDecl();
     void editorCreated(LiteApi::IEditor *editor);
-    //void loadApi();
     void loadEnv();
-    //void loadApiFinished();
     void currentEnvChanged(LiteApi::IEnv*);
     void listCmd();
     void listPkg();
-    //void findPackage(QString name = QString());
     void findOutput(QByteArray,bool);
     void findFinish(bool,int,QString);
     void godocFindPackage(QString name);
     void godocOutput(QByteArray,bool);
     void godocFinish(bool,int,QString);
-//    void goapiOutput(QByteArray,bool);
-//    void goapiFinish(bool,int,QString);
     void lookupStarted();
     void lookupOutput(QByteArray,bool);
     void lookupFinish(bool,int,QString);
     void helpStarted();
     void helpOutput(QByteArray,bool);
     void helpFinish(bool,int,QString);
-    //void doubleClickListView(QModelIndex);
-    //void currentIndexChanged(QModelIndex);
-    //void findTag(const QString &tag);
     void highlighted(const QUrl &url);
     void documentLoaded();
-    //void filterTextChanged(QString);
-    //void findDoc();
+    void anchorChanged(const QString &anchor);
+    void openApiUrl(QStringList);
 protected:
     QUrl parserUrl(const QUrl &url);
     void openUrlList(const QUrl &url);
@@ -112,23 +105,17 @@ protected:
     QUrl    m_openUrl;
     QUrl    m_lastUrl;
     QString m_lastPath;
-    FindDocWidget *m_widget;
+    FindDocWidget *m_findDocWidget;
+    FindApiWidget *m_findApiWidget;
     DocumentBrowser *m_docBrowser;
     QComboBox *m_godocFindComboBox;
-    //QStringListModel *m_findResultModel;
-    //QSortFilterProxyModel *m_findFilterModel;
-    //ListViewEx *m_findResultListView;
-    //Utils::FancyLineEdit *m_findDocEdit;
-    //QLabel     *m_tagInfo;
     ProcessEx  *m_findProcess;
     ProcessEx  *m_godocProcess;
-    //ProcessEx  *m_findDocProcess;
     ProcessEx  *m_lookupProcess;
     ProcessEx  *m_helpProcess;
     QAction *m_browserAct;
     QString m_goroot;
     QByteArray  m_godocData;
-    //QByteArray  m_goapiData;
     QByteArray  m_lookupData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;
@@ -137,16 +124,13 @@ protected:
     QByteArray  m_findData;
     QString  m_templateData;
     LiteApi::IEnvManager *m_envManager;
-    //GolangApiThread *m_golangApiThread;
     QString m_godocCmd;
-    //bool    m_bApiLoaded;
     QStringList m_targetList;
     QMap<QString,QString> m_pathFileMap;
     QAction *m_toolWindowAct;
     QAction *m_findDocAct;
     QAction *m_jumpDeclAct;
     QMenu   *m_configMenu;
-    QAction *m_rebuildApi;
     QString m_docFind;
 };
 

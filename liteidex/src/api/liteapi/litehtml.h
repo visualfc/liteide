@@ -60,6 +60,7 @@ public slots:
 signals:
     void contentsSizeChanged();
     void loadFinished(bool);
+    void anchorChanged(const QString & anchor);
     void linkClicked(const QUrl & url);
     void linkHovered(const QUrl & url);
 };

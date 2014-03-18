@@ -26,6 +26,8 @@
 #include <QScrollBar>
 #include <QFileInfo>
 #include <QFile>
+#include <QTextCursor>
+#include <QTextBlock>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -92,6 +94,7 @@ void TextBrowserHtmlWidget::clear()
 void TextBrowserHtmlWidget::scrollToAnchor(const QString &anchor)
 {
     m_widget->scrollToAnchor(anchor);
+    emit anchorChanged(anchor);
 }
 
 void TextBrowserHtmlWidget::setScrollBarValue(Qt::Orientation orientation, int value)
@@ -135,7 +138,27 @@ QString TextBrowserHtmlWidget::selectedText() const
 
 bool TextBrowserHtmlWidget::findText(const QString &exp, QTextDocument::FindFlags options)
 {
-    return m_widget->find(exp,options);
+    QTextDocument *doc = m_widget->document();
+    if (!doc) {
+        return false;
+    }
+    QTextCursor cursor = m_widget->cursorForPosition(QPoint(0,0));
+    int from = cursor.position();
+    if (cursor.hasSelection()) {
+        if (options & QTextDocument::FindBackward) {
+            from = cursor.selectionStart();
+        } else {
+            from = cursor.selectionEnd();
+        }
+    }
+    QTextCursor find;
+    find = doc->find(exp,from,options);
+    if (!find.isNull()) {
+        m_widget->setTextCursor(find);
+        m_widget->ensureCursorVisible();
+        return true;
+    }
+    return false;
 }
 
 #ifndef QT_NO_PRINTER
