@@ -179,7 +179,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
-    connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(triggeredToolWindow(bool)));
+    connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(triggeredToolWindow(bool)));
     connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     //connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
@@ -1092,12 +1092,11 @@ void GolangDoc::helpFinish(bool error, int code, QString)
 
 void GolangDoc::appLoaded()
 {
-    rebuildApiData();
 }
 
-void GolangDoc::triggeredToolWindow(bool /*b*/)
+void GolangDoc::triggeredToolWindow(bool b)
 {
-//    if (!b) {
-//        return;
-//    }
+    if (b) {
+        rebuildApiData();
+    }
 }
