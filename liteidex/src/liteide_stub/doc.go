@@ -86,6 +86,7 @@ var (
 	srcFlag       bool
 	urlFlag       bool
 	regexpFlag    bool
+	fuzzyFlag     bool
 	constantFlag  bool
 	functionFlag  bool
 	interfaceFlag bool
@@ -101,6 +102,7 @@ func init() {
 	cmdDoc.Flag.BoolVar(&srcFlag, "src", false, "restrict output to source file only")
 	cmdDoc.Flag.BoolVar(&urlFlag, "url", false, "restrict output to godoc URL only")
 	cmdDoc.Flag.BoolVar(&regexpFlag, "r", false, "single argument is a regular expression for a name")
+	cmdDoc.Flag.BoolVar(&fuzzyFlag, "fuzzy", true, "fuzzy search for a name")
 
 	cmdDoc.Flag.BoolVar(&constantFlag, "const", false, "show doc for consts only")
 	cmdDoc.Flag.BoolVar(&functionFlag, "func", false, "show doc for funcs only")
@@ -225,6 +227,9 @@ func lookInDirectory(directory, name string) {
 	fset := token.NewFileSet()
 	pkgs, _ := parser.ParseDir(fset, directory, nil, parser.ParseComments) // Ignore the error.
 	for _, pkg := range pkgs {
+		if pkg.Name == "main" || strings.HasSuffix(pkg.Name, "_test") {
+			continue
+		}
 		doPackage(pkg, fset, name)
 	}
 }
@@ -427,6 +432,9 @@ func (f *File) match(name string) bool {
 	// name must  be exported.
 	if !ast.IsExported(name) {
 		return false
+	}
+	if fuzzyFlag {
+		return strings.Contains(name, f.ident)
 	}
 	if f.regexp == nil {
 		return strings.ToLower(name) == strings.ToLower(f.ident)
