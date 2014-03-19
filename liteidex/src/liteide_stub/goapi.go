@@ -49,6 +49,7 @@ var apiDefaultCtx bool
 var apiCustomCtx string
 var apiLookupInfo string
 var apiLookupStdin bool
+var apiOutput string
 
 func init() {
 	cmdApi.Flag.BoolVar(&apiVerbose, "v", false, "verbose debugging")
@@ -61,6 +62,7 @@ func init() {
 	cmdApi.Flag.StringVar(&apiCustomCtx, "custom_ctx", "", "optional comma-separated list of <goos>-<goarch>[-cgo] to override default contexts.")
 	cmdApi.Flag.StringVar(&apiLookupInfo, "cursor_info", "", "lookup cursor node info\"file.go:pos\"")
 	cmdApi.Flag.BoolVar(&apiLookupStdin, "cursor_std", false, "cursor_info use stdin")
+	cmdApi.Flag.StringVar(&apiOutput, "o", "", "output file")
 }
 
 func runApi(cmd *Command, args []string) {
@@ -130,6 +132,30 @@ func runApi(cmd *Command, args []string) {
 
 		for _, pkg := range pkgs {
 			w.WalkPackage(pkg)
+		}
+		if w.cursorInfo != nil {
+			goto lookup
+		} else {
+			var file io.Writer
+			if apiOutput != "" {
+				var err error
+				file, err = os.Create(apiOutput)
+				if err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				file = os.Stdout
+			}
+			bw := bufio.NewWriter(file)
+			defer bw.Flush()
+			for _, p := range w.packageMap {
+				if w.wantedPkg[p.name] {
+					for _, f := range p.Features() {
+						fmt.Fprintf(bw, "%s\n", f)
+					}
+				}
+			}
+			return
 		}
 		features = w.Features("")
 	} else {
@@ -487,11 +513,11 @@ type ExprType struct {
 type Package struct {
 	dpkg             *doc.Package
 	apkg             *ast.Package
-	interfaceMethods map[string]([]method)
+	interfaceMethods map[string]([]typeMethod)
 	interfaces       map[string]*ast.InterfaceType //interface
 	structs          map[string]*ast.StructType    //struct
 	types            map[string]ast.Expr           //type
-	functions        map[string]method             //function
+	functions        map[string]typeMethod         //function
 	consts           map[string]*ExprType          //const => type
 	vars             map[string]*ExprType          //var => type
 	name             string
@@ -503,11 +529,11 @@ type Package struct {
 
 func NewPackage() *Package {
 	return &Package{
-		interfaceMethods: make(map[string]([]method)),
+		interfaceMethods: make(map[string]([]typeMethod)),
 		interfaces:       make(map[string]*ast.InterfaceType),
 		structs:          make(map[string]*ast.StructType),
 		types:            make(map[string]ast.Expr),
-		functions:        make(map[string]method),
+		functions:        make(map[string]typeMethod),
 		consts:           make(map[string]*ExprType),
 		vars:             make(map[string]*ExprType),
 		features:         make(map[string](token.Pos)),
@@ -3347,8 +3373,8 @@ func (w *Walker) walkStructType(name string, t *ast.StructType) {
 	}
 }
 
-// method is a method of an interface.
-type method struct {
+// typeMethod is a method of an interface.
+type typeMethod struct {
 	name string // "Read"
 	sig  string // "([]byte) (int, error)", from funcSigString
 	ft   *ast.FuncType
@@ -3361,7 +3387,7 @@ type method struct {
 // interface has no unexported methods).
 // pkg is the complete package name ("net/http")
 // iname is the interface name.
-func (w *Walker) interfaceMethods(pkg, iname string) (methods []method, complete bool) {
+func (w *Walker) interfaceMethods(pkg, iname string) (methods []typeMethod, complete bool) {
 	t, ok := w.interfaces[pkgSymbol{pkg, iname}]
 	if !ok {
 		if apiVerbose {
@@ -3378,7 +3404,7 @@ func (w *Walker) interfaceMethods(pkg, iname string) (methods []method, complete
 			for _, mname := range f.Names {
 				if isExtract(mname.Name) {
 					ft := typ.(*ast.FuncType)
-					methods = append(methods, method{
+					methods = append(methods, typeMethod{
 						name: mname.Name,
 						sig:  w.funcSigString(ft),
 						ft:   ft,
@@ -3391,7 +3417,7 @@ func (w *Walker) interfaceMethods(pkg, iname string) (methods []method, complete
 		case *ast.Ident:
 			embedded := typ.(*ast.Ident).Name
 			if embedded == "error" {
-				methods = append(methods, method{
+				methods = append(methods, typeMethod{
 					name: "Error",
 					sig:  "() string",
 					ft: &ast.FuncType{
@@ -3497,7 +3523,7 @@ func (w *Walker) peekFuncDecl(f *ast.FuncDecl) {
 	// Record return type for later use.
 	//if f.Type.Results != nil && len(f.Type.Results.List) >= 1 {
 	// record all function
-	w.curPackage.functions[fname] = method{
+	w.curPackage.functions[fname] = typeMethod{
 		name: fname,
 		sig:  w.funcSigString(f.Type),
 		ft:   f.Type,

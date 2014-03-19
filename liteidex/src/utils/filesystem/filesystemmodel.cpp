@@ -55,7 +55,7 @@ FileNode::FileNode(FileSystemModel *model, const QString &path, FileNode *parent
     m_path(path)
 {
     QFileInfo info(path);
-    if (parent && parent->parent() == 0) {
+    if (m_model->isRootPathNodeFillPath() && parent && parent->parent() == 0) {
         m_text = QDir::toNativeSeparators(info.filePath());
     } else {
         m_text = info.fileName();
@@ -142,6 +142,11 @@ bool FileNode::isFile() const
 QFileInfo FileNode::fileInfo() const
 {
     return QFileInfo(m_path);
+}
+
+bool FileNode::isExist() const
+{
+    return QFileInfo(m_path).exists();
 }
 
 void FileNode::clear()
@@ -485,6 +490,8 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
     switch(role) {
     case Qt::DisplayRole:
         return node->text();
+    case Qt::ToolTipRole:
+        return QDir::toNativeSeparators(node->path());
     case Qt::DecorationRole:
         return m_iconProvider->icon(node->fileInfo());
 /*
@@ -508,4 +515,9 @@ QFileSystemWatcher* FileSystemModel::fileWatcher() const
 bool FileSystemModel::isRootPathNode(FileNode *node) const
 {
     return node->parent() == m_rootNode;
+}
+
+bool FileSystemModel::isRootPathNodeFillPath() const
+{
+    return false;
 }

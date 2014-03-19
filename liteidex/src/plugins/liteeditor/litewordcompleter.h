@@ -38,7 +38,7 @@ class LiteWordCompleter : public LiteCompleter
 public:
     explicit LiteWordCompleter(QObject *parent = 0);
 public slots:
-    virtual void completionPrefixChanged(QString);
+    virtual void completionPrefixChanged(QString,bool force);
 protected:
     virtual QString textUnderCursor(QTextCursor tc) const;
     QSet<QString>   m_wordSet;

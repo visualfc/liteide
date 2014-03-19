@@ -174,6 +174,7 @@ public:
     QAction *m_lockAct;
     QAction *m_cleanWhitespaceAct;
     QAction *m_wordWrapAct;
+    QAction *m_codeCompleteAct;
     LiteEditorFile *m_file;
     QMenu   *m_editMenu;
     QMenu   *m_contextMenu;

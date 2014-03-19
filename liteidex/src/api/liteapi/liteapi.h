@@ -185,6 +185,13 @@ public:
     virtual bool findTargetInfo(const QString &fileName, const QString &mimetype, QMap<QString,QString>& targetInfo) const = 0;
 };
 
+enum FILESYSTEM_CONTEXT_FLAG {
+    FILESYSTEM_ROOT = 0,
+    FILESYSTEM_ROOTFOLDER,
+    FILESYSTEM_FOLDER,
+    FILESYSTEM_FILES
+};
+
 class IFileManager : public IManager
 {
     Q_OBJECT
@@ -213,6 +220,7 @@ signals:
     void fileListChanged();
     void recentFilesChanged(QString);
     void fileWizardFinished(const QString &type, const QString &scheme, const QString &location);
+    void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
 public slots:
     virtual void newFile() = 0;
     virtual void openFiles() = 0;

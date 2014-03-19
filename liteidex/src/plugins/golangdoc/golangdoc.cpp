@@ -29,6 +29,8 @@
 #include "golangapi/golangapi.h"
 #include "documentbrowser/documentbrowser.h"
 #include "qjson/include/QJson/Parser"
+#include "finddocwidget.h"
+#include "findapiwidget.h"
 
 #include <QListView>
 #include <QStringListModel>
@@ -62,6 +64,7 @@
 #include <QTextBlock>
 #include <QToolTip>
 #include <QTimer>
+#include <QDateTime>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -85,56 +88,76 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
 {
     m_findProcess = new ProcessEx(this);
     m_godocProcess = new ProcessEx(this);
-    m_goapiProcess = new ProcessEx(this);
+    //m_goapiProcess = new ProcessEx(this);
+    //m_findDocProcess = new ProcessEx(this);
     m_lookupProcess = new ProcessEx(this);
     m_helpProcess = new ProcessEx(this);
 
     m_lastEditor = 0;
-    m_bApiLoaded = false;
+    //m_bApiLoaded = false;
 
-    m_widget = new QWidget;
-    m_findResultModel = new QStringListModel(this);
-    m_findFilterModel = new QSortFilterProxyModel(this);
-    m_findFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    m_findFilterModel->setSourceModel(m_findResultModel);
+//    m_widget = new QWidget;
+//    m_findResultModel = new QStringListModel(this);
+//    m_findFilterModel = new QSortFilterProxyModel(this);
+//    m_findFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+//    m_findFilterModel->setSourceModel(m_findResultModel);
 
-    m_findResultListView = new ListViewEx;
-    m_findResultListView->setEditTriggers(0);
-    m_findResultListView->setModel(m_findFilterModel);
+//    m_findResultListView = new ListViewEx;
+//    m_findResultListView->setEditTriggers(0);
+//    m_findResultListView->setModel(m_findFilterModel);
 
-    m_findEdit = new Utils::FilterLineEdit(500);
-    m_tagInfo = new QLabel;
-    m_tagInfo->setWordWrap(true);
-    //m_tagInfo->setScaledContents(true);
+//    m_findDocEdit = new Utils::FancyLineEdit;
+//    QIcon icon = QIcon::fromTheme(m_findDocEdit->layoutDirection() == Qt::LeftToRight ?
+//                     QLatin1String("edit-clear-locationbar-rtl") :
+//                     QLatin1String("edit-clear-locationbar-ltr"),
+//                     QIcon::fromTheme(QLatin1String("edit-clear"), QIcon(QLatin1String("icon:images/editclear.png"))));
 
-    m_golangApiThread = new GolangApiThread(this);
+//    m_findDocEdit->setButtonPixmap(Utils::FancyLineEdit::Right, icon.pixmap(16));
+//    m_findDocEdit->setButtonVisible(Utils::FancyLineEdit::Right, true);
+//    m_findDocEdit->setPlaceholderText(tr("Search"));
+//    m_findDocEdit->setButtonToolTip(Utils::FancyLineEdit::Right, tr("Clear Search"));
+//    m_findDocEdit->setAutoHideButton(Utils::FancyLineEdit::Right, true);
+//    connect(m_findDocEdit, SIGNAL(rightButtonClicked()), m_findDocEdit, SLOT(clear()));
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(1);
-    mainLayout->setSpacing(1);
+//    m_tagInfo = new QLabel;
+//    m_tagInfo->setWordWrap(true);
+//    //m_tagInfo->setScaledContents(true);
 
-    QHBoxLayout *findLayout = new QHBoxLayout;
-    findLayout->setMargin(2);
-    findLayout->addWidget(new QLabel("Find"));
-    findLayout->addWidget(m_findEdit);
-    //findLayout->addWidget(findBtn);
+//    //m_golangApiThread = new GolangApiThread(this);
 
-    mainLayout->addLayout(findLayout);
-    mainLayout->addWidget(m_findResultListView);
-    mainLayout->addWidget(m_tagInfo);
-    m_widget->setLayout(mainLayout);
+//    QVBoxLayout *mainLayout = new QVBoxLayout;
+//    mainLayout->setMargin(1);
+//    mainLayout->setSpacing(1);
+
+//    QHBoxLayout *findLayout = new QHBoxLayout;
+//    findLayout->setMargin(2);
+//    findLayout->addWidget(new QLabel("Find"));
+//    findLayout->addWidget(m_findDocEdit);
+//    //findLayout->addWidget(findBtn);
+
+//    mainLayout->addLayout(findLayout);
+//    mainLayout->addWidget(m_findResultListView);
+//    mainLayout->addWidget(m_tagInfo);
+//    m_widget->setLayout(mainLayout);
 
 //    m_rebuildApi = new QAction(tr("Rebuild Api"),this);
 //    m_configMenu = new QMenu(tr("Config"),m_widget);
 //    m_configMenu->setIcon(QIcon("icon:images/config.png"));
 //    m_configMenu->addAction(m_rebuildApi);
 
-    QList<QAction*> actions;
+    m_findDocWidget = new FindDocWidget(m_liteApp);
+    //connect(m_widget,SIGNAL(openApiUrl(QStringList)),this,SLOT(openApiUrl(QStringList)));
+    //QList<QAction*> actions;
 //    actions << m_configMenu->menuAction();
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"godocfind",tr("Godoc Search"),true,actions);
+    m_docSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findDocWidget,"godoc/search",tr("Golang Doc Search"),true);
+
+    m_findApiWidget = new FindApiWidget(m_liteApp);
+
+    m_apiSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findApiWidget,"godoc/api",tr("Golang Api Index"),true);
+    connect(m_findApiWidget,SIGNAL(openApiUrl(QStringList)),this,SLOT(openApiUrl(QStringList)));
 
     m_docBrowser = new DocumentBrowser(m_liteApp,this);
-    m_docBrowser->setName(tr("Godoc Viewer"));
+    m_docBrowser->setName(tr("Godoc Search"));
 
     QStringList paths;
     paths << m_liteApp->resourcePath()+"/golangdoc";
@@ -156,22 +179,25 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
-    connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(triggeredToolWindow(bool)));
+    connect(m_apiSearchWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledApiSearchWindow(bool)));
+    connect(m_docSearchWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledDocSearchWindow(bool)));
     connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
-    connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
+    //connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
 
     connect(m_docBrowser,SIGNAL(requestUrl(QUrl)),this,SLOT(openUrl(QUrl)));
     connect(m_docBrowser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlighted(QUrl)));
     connect(m_docBrowser,SIGNAL(documentLoaded()),this,SLOT(documentLoaded()));
+    connect(m_docBrowser,SIGNAL(anchorChanged(QString)),this,SLOT(anchorChanged(QString)));
     connect(m_godocFindComboBox,SIGNAL(activated(QString)),this,SLOT(godocFindPackage(QString)));
     //connect(m_findEdit,SIGNAL(filterChanged(QString)),m_findFilterModel,setFilterFixedString(QString)));
-    connect(m_findEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterTextChanged(QString)));//setFilterFixedString(QString)));
+    //connect(m_findEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterTextChanged(QString)));//setFilterFixedString(QString)));
+    //connect(m_findDocEdit,SIGNAL(returnPressed()),this,SLOT(findDoc()));
     //connect(m_findEdit,SIGNAL(activated(QString)),this,SLOT(findPackage(QString)));
     connect(m_godocProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(godocOutput(QByteArray,bool)));
     connect(m_godocProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(godocFinish(bool,int,QString)));
-    connect(m_goapiProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(goapiOutput(QByteArray,bool)));
-    connect(m_goapiProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(goapiFinish(bool,int,QString)));
+    //connect(m_findDocProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDocOutput(QByteArray,bool)));
+    //connect(m_findDocProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDocFinish(bool,int,QString)));
     connect(m_lookupProcess,SIGNAL(started()),this,SLOT(lookupStarted()));
     connect(m_lookupProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(lookupOutput(QByteArray,bool)));
     connect(m_lookupProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(lookupFinish(bool,int,QString)));
@@ -180,8 +206,8 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     connect(m_helpProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(helpFinish(bool,int,QString)));
     connect(m_findProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findOutput(QByteArray,bool)));
     connect(m_findProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findFinish(bool,int,QString)));
-    connect(m_findResultListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickListView(QModelIndex)));
-    connect(m_findResultListView,SIGNAL(currentIndexChanged(QModelIndex)),this,SLOT(currentIndexChanged(QModelIndex)));
+//    connect(m_findResultListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickListView(QModelIndex)));
+//    connect(m_findResultListView,SIGNAL(currentIndexChanged(QModelIndex)),this,SLOT(currentIndexChanged(QModelIndex)));
     //connect(m_findAct,SIGNAL(triggered()),this,SLOT(findPackage()));
     //connect(m_listPkgAct,SIGNAL(triggered()),this,SLOT(listPkg()));
     //connect(m_listCmdAct,SIGNAL(triggered()),this,SLOT(listCmd()));
@@ -196,7 +222,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     this->loadEnv();
 
     m_liteApp->extension()->addObject("LiteApi.IGolangDoc",this);
-    m_liteApp->extension()->addObject("LiteApi.IGolangApi",m_golangApiThread);
+    //m_liteApp->extension()->addObject("LiteApi.IGolangApi",m_golangApiThread);
 
     QString path = m_liteApp->resourcePath()+"/golangdoc/godoc.html";
     QFile file(path);
@@ -218,13 +244,12 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
 
 GolangDoc::~GolangDoc()
 {
-    this->saveGolangApi();
     m_liteApp->settings()->setValue("golangdoc/goroot",m_goroot);
     if (m_docBrowser) {
         delete m_docBrowser;
     }
-    //delete m_findMenu;
-    delete m_widget;
+    delete m_findDocWidget;
+    delete m_findApiWidget;
 }
 
 void GolangDoc::editorJumpToDecl()
@@ -291,34 +316,34 @@ void GolangDoc::editorCreated(LiteApi::IEditor *editor)
     }
 }
 
-void GolangDoc::loadApi()
-{
-    m_bApiLoaded = true;
-    m_goapiData.clear();
+//void GolangDoc::loadApi()
+//{
+//    m_bApiLoaded = true;
+//    m_goapiData.clear();
 
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
-    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
-    QStringList args;
-    args << "api";
-    if (defctx) {
-        args << "-default_ctx=true";
-    }
-    if (std) {
-        args << "std";
-    } else {
-        args << "all";
-    }
-    m_goapiProcess->startEx(cmd,args.join(" "));
-}
+//    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+//    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
+//    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
+//    QStringList args;
+//    args << "api";
+//    if (defctx) {
+//        args << "-default_ctx=true";
+//    }
+//    if (std) {
+//        args << "std";
+//    } else {
+//        args << "all";
+//    }
+//    m_goapiProcess->startEx(cmd,args.join(" "));
+//}
 
 void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 {
     loadEnv();
-    if (!m_bApiLoaded) {
-        return;
-    }
-    loadApi();
+//    if (!m_bApiLoaded) {
+//        return;
+//    }
+    //loadApi();
 }
 
 void GolangDoc::loadEnv()
@@ -330,7 +355,7 @@ void GolangDoc::loadEnv()
 
     m_findProcess->setEnvironment(env.toStringList());
     m_godocProcess->setEnvironment(env.toStringList());
-    m_goapiProcess->setEnvironment(env.toStringList());
+    //m_goapiProcess->setEnvironment(env.toStringList());
     m_lookupProcess->setEnvironment(env.toStringList());
     m_helpProcess->setEnvironment(env.toStringList());
 
@@ -373,6 +398,21 @@ void GolangDoc::activeBrowser()
     m_liteApp->editorManager()->activeBrowser(m_docBrowser);
 }
 
+void GolangDoc::rebuildApiData()
+{
+    if (!m_liteApp->globalCookie().value("golangdoc.goapi.rebuild").toBool()) {
+        QFileInfo info(m_findApiWidget->apiDataFile());
+        if (!info.exists()) {
+            m_findApiWidget->rebuildApiData();
+        }
+        QDateTime dt = info.lastModified();
+        if (dt.toLocalTime().date() < QDate::currentDate()) {
+            m_findApiWidget->rebuildApiData();
+        }
+        m_liteApp->globalCookie().value("golangdoc.goapi.rebuild",true);
+    }
+}
+
 void GolangDoc::listPkg()
 {
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
@@ -405,20 +445,20 @@ void GolangDoc::godocFindPackage(QString pkgname)
     openUrl(url);
 }
 
-void GolangDoc::findPackage(QString pkgname)
-{
-    if (pkgname.isEmpty()) {
-        pkgname = m_findEdit->text();
-    }
-    if (pkgname.isEmpty()) {
-        return;
-    }
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    QStringList args;
-    args << "docview" << "-mode=lite" << "-find" << pkgname;
-    m_findData.clear();
-    m_findProcess->start(cmd,args);
-}
+//void GolangDoc::findPackage(QString pkgname)
+//{
+//    if (pkgname.isEmpty()) {
+//        pkgname = m_findDocEdit->text();
+//    }
+//    if (pkgname.isEmpty()) {
+//        return;
+//    }
+//    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+//    QStringList args;
+//    args << "docview" << "-mode=lite" << "-find" << pkgname;
+//    m_findData.clear();
+//    m_findProcess->start(cmd,args);
+//}
 
 void GolangDoc::findOutput(QByteArray data,bool bStderr)
 {
@@ -444,18 +484,18 @@ void GolangDoc::findFinish(bool error,int code,QString /*msg*/)
                 url.setPath(best);
                 openUrl(url);
             }
-            if (array.isEmpty()) {
-                m_findResultModel->setStringList(QStringList() << "<nofind>");
-            } else {
-                m_findResultModel->setStringList(array);
-            }
-        } else if (array.size() >= 1 && array.at(0) == "$list") {
-            array.removeFirst();
+//            if (array.isEmpty()) {
+//                m_findResultModel->setStringList(QStringList() << "<nofind>");
+//            } else {
+//                m_findResultModel->setStringList(array);
+//            }
+        }/* else if (array.size() >= 1 && array.at(0) == "$list") {
+            //array.removeFirst();
             m_findResultModel->setStringList(array);
-        }
-    } else {
+        }*/
+    } /*else {
         m_findResultModel->setStringList(QStringList() << "<error>");
-    }
+    }*/
 }
 
 void GolangDoc::godocOutput(QByteArray data,bool bStderr)
@@ -602,13 +642,7 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
             local = false;
         }
     }
-//    QStringList pathList = LiteApi::getGopathList(m_liteApp,false);
-//    if (additional) {
-//        pathList << ".";
-//    }
-//    if (!pathList.isEmpty()) {
-//        args << "-path" << pathList.join(":");
-//    }
+
     if (local) {
         m_godocProcess->setWorkingDirectory(url.path());
         args << "-html=true" << ".";
@@ -848,116 +882,137 @@ void GolangDoc::openUrl(const QUrl &_url)
     }
 }
 
-void GolangDoc::findTag(const QString &tag)
-{
-    if (!tag.isEmpty()){
-        QStringList urlList = m_golangApiThread->api()->findDocUrl(tag);
-        if (!urlList.isEmpty()) {
-            if (urlList.size() >= 2) {
-                m_docFind = urlList.at(1);
-            } else {
-                m_docFind.clear();
-            }
-            QString text = urlList.at(0);
-            if (!text.isEmpty()) {
-                activeBrowser();
-                QUrl url(QString("pdoc:%1").arg(text));
-                openUrl(url);
-            }
-        }
-    }
-}
+//void GolangDoc::findTag(const QString &tag)
+//{
+//    if (!tag.isEmpty()){
+//        QStringList urlList = m_golangApiThread->api()->findDocUrl(tag);
+//        if (!urlList.isEmpty()) {
+//            if (urlList.size() >= 2) {
+//                m_docFind = urlList.at(1);
+//            } else {
+//                m_docFind.clear();
+//            }
+//            QString text = urlList.at(0);
+//            if (!text.isEmpty()) {
+//                activeBrowser();
+//                QUrl url(QString("pdoc:%1").arg(text));
+//                openUrl(url);
+//            }
+//        }
+//    }
+//}
 
-void GolangDoc::doubleClickListView(QModelIndex index)
-{
-    if (!index.isValid()) {
-        return;
-    }
-    QModelIndex src =  m_findFilterModel->mapToSource(index);
-    if (!src.isValid()) {
-        return;
-    }
-    QString tag = m_findResultModel->data(src,Qt::DisplayRole).toString();
-    if (!tag.isEmpty()){
-        QStringList urlList = m_golangApiThread->api()->findDocUrl(tag);
-        if (!urlList.isEmpty()) {
-            if (urlList.size() >= 2) {
-                m_docFind = urlList.at(1);
-            } else {
-                m_docFind.clear();
-            }
-            QString text = urlList.at(0);
-            if (!text.isEmpty()) {
-                activeBrowser();
-                QUrl url(QString("pdoc:%1").arg(text));
-                openUrl(url);
-            }
-        }
-    }
-}
+//void GolangDoc::doubleClickListView(QModelIndex index)
+//{
+//    //TODO
+//    if (!index.isValid()) {
+//        return;
+//    }
+//    QModelIndex src =  m_findFilterModel->mapToSource(index);
+//    if (!src.isValid()) {
+//        return;
+//    }
+//    QString tag = m_findResultModel->data(src,Qt::DisplayRole).toString();
+//    if (!tag.isEmpty()){
+//        QStringList urlList;// = m_golangApiThread->api()->findDocUrl(tag);
+//        if (!urlList.isEmpty()) {
+//            if (urlList.size() >= 2) {
+//                m_docFind = urlList.at(1);
+//            } else {
+//                m_docFind.clear();
+//            }
+//            QString text = urlList.at(0);
+//            if (!text.isEmpty()) {
+//                activeBrowser();
+//                QUrl url(QString("pdoc:%1").arg(text));
+//                openUrl(url);
+//            }
+//        }
+//    }
+//}
 
-void GolangDoc::currentIndexChanged(QModelIndex index)
-{
-    if (!index.isValid()) {
-        return;
-    }
-    QModelIndex src =  m_findFilterModel->mapToSource(index);
-    if (!src.isValid()) {
-        return;
-    }
-    QString tag = m_findResultModel->data(src,Qt::DisplayRole).toString();
-    if (!tag.isEmpty()){
-        m_tagInfo->setText(m_golangApiThread->api()->findDocInfo(tag));
-    }
-}
+//void GolangDoc::currentIndexChanged(QModelIndex index)
+//{
+//    if (!index.isValid()) {
+//        return;
+//    }
+//    QModelIndex src =  m_findFilterModel->mapToSource(index);
+//    if (!src.isValid()) {
+//        return;
+//    }
+//    QString tag = m_findResultModel->data(src,Qt::DisplayRole).toString();
+//    if (!tag.isEmpty()){
+//        //m_tagInfo->setText(m_golangApiThread->api()->findDocInfo(tag));
+//    }
+//}
 
 void GolangDoc::documentLoaded()
 {
+}
+
+void GolangDoc::anchorChanged(const QString &/*anchor*/)
+{
     if (!m_docFind.isEmpty()) {
-          m_docBrowser->htmlWidget()->findText(m_docFind,QTextDocument::FindCaseSensitively|QTextDocument::FindWholeWords);
-//        QTextCursor from = m_docBrowser->htmlWidget()->cursorForPosition(QPoint(0,0));
-//        QTextDocument *doc = m_docBrowser->htmlWidget()->document();
-//        QTextCursor find = doc->find(m_docFind,from,QTextDocument::FindCaseSensitively | QTextDocument::FindWholeWords);
-
-//        if (!find.isNull()) {
-//            m_docBrowser->htmlWidget()->setTextCursor(find);
-//        }
-//        m_docFind.clear();
+        m_docBrowser->htmlWidget()->findText(m_docFind,QTextDocument::FindCaseSensitively|QTextDocument::FindWholeWords);
+        m_docFind.clear();
     }
 }
 
-void GolangDoc::filterTextChanged(QString str)
+void GolangDoc::openApiUrl(QStringList urlList)
 {
-    if (str.isEmpty()) {
+    if (urlList.isEmpty()) {
         return;
     }
-    m_findFilterModel->setFilterFixedString(str);
-    m_findResultListView->verticalScrollBar()->setValue(0);
-    if (m_findFilterModel->rowCount() > 0) {
-        m_findResultListView->setCurrentIndex(m_findFilterModel->index(0,0));
+    if (urlList.size() >= 2) {
+        m_docFind = urlList.at(1);
+    } else {
+        m_docFind.clear();
+    }
+    QString text = urlList.at(0);
+    if (!text.isEmpty()) {
+        activeBrowser();
+        QUrl url(QString("pdoc:%1").arg(text));
+        openUrl(url);
     }
 }
 
-void GolangDoc::goapiOutput(QByteArray data,bool bError)
-{
-    if (bError) {
-        return;
-    }
-    m_goapiData.append(data);
-}
+//void GolangDoc::filterTextChanged(QString str)
+//{
+//    if (str.isEmpty()) {
+//        return;
+//    }
+//    m_findFilterModel->setFilterFixedString(str);
+//    m_findResultListView->verticalScrollBar()->setValue(0);
+//    if (m_findFilterModel->rowCount() > 0) {
+//        m_findResultListView->setCurrentIndex(m_findFilterModel->index(0,0));
+//    }
+//}
 
-void GolangDoc::goapiFinish(bool error,int code,QString)
-{
-    if (!error && code == 0) {
-        m_liteApp->globalCookie().insert("goalngdoc.goapi.data",m_goapiData);
-        m_golangApiThread->loadData(m_goapiData);
-    }
-}
+//void GolangDoc::findDoc()
+//{
 
-void GolangDoc::loadApiFinished()
-{
-    m_findResultModel->setStringList(m_golangApiThread->all());
-}
+//}
+
+//void GolangDoc::goapiOutput(QByteArray data,bool bError)
+//{
+//    if (bError) {
+//        return;
+//    }
+//    m_goapiData.append(data);
+//}
+
+//void GolangDoc::goapiFinish(bool error,int code,QString)
+//{
+//    if (!error && code == 0) {
+//        m_liteApp->globalCookie().insert("goalngdoc.goapi.data",m_goapiData);
+//        m_golangApiThread->loadData(m_goapiData);
+//    }
+//}
+
+//void GolangDoc::loadApiFinished()
+//{
+//    m_findResultModel->setStringList(m_golangApiThread->all());
+//}
 
 void GolangDoc::lookupStarted()
 {
@@ -1016,7 +1071,8 @@ void GolangDoc::helpFinish(bool error, int code, QString)
             if (line.startsWith("help,")) {
                 //m_toolAct->setChecked(true);
                 QString help = line.mid(5).trimmed();
-                m_findEdit->setText(help);
+                //TODO FIXME
+                //m_findDocEdit->setText(help);
             } else if (line.startsWith("info,")) {
                 info = line.mid(5).trimmed();
             }
@@ -1037,36 +1093,15 @@ void GolangDoc::helpFinish(bool error, int code, QString)
 
 void GolangDoc::appLoaded()
 {
-    m_goapiData = m_liteApp->globalCookie().value("goalngdoc.goapi.data").toByteArray();
-    if (!m_goapiData.isEmpty()) {
-        m_golangApiThread->loadData(m_goapiData);
-        return;
-    }
-
-    QFileInfo info(m_liteApp->storagePath(),"golangapi.txt");
-    if (info.exists()) {
-        m_golangApiThread->loadFile(info.filePath());
-    }
-    m_toolWindowAct->setChecked(false);
-    //this->loadApi();
 }
 
-void GolangDoc::triggeredToolWindow(bool b)
+void GolangDoc::toggledApiSearchWindow(bool b)
 {
-    if (b && !m_bApiLoaded) {
-        this->loadApi();
+    if (b) {
+        rebuildApiData();
     }
 }
 
-void GolangDoc::saveGolangApi()
+void GolangDoc::toggledDocSearchWindow(bool /*b*/)
 {
-    if (m_golangApiThread->data().isEmpty()) {
-        return;
-    }
-    QFileInfo info(m_liteApp->storagePath(),"golangapi.txt");
-    QFile f(info.filePath());
-    if (f.open(QFile::WriteOnly|QFile::Truncate)) {
-        f.write(m_golangApiThread->data());
-    }
-    f.close();
 }

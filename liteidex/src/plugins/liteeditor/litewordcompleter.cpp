@@ -62,9 +62,9 @@ QString LiteWordCompleter::textUnderCursor(QTextCursor tc) const
     return text.right(reg.matchedLength());
 }
 
-void LiteWordCompleter::completionPrefixChanged(QString prefix)
+void LiteWordCompleter::completionPrefixChanged(QString prefix,bool force)
 {
-    LiteCompleter::completionPrefixChanged(prefix);
+    LiteCompleter::completionPrefixChanged(prefix,force);
 
     if (m_bExternalMode) {
         return;

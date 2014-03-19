@@ -32,6 +32,7 @@
 #include <QAbstractItemView>
 #include <QScrollBar>
 #include <QTextBlock>
+#include <QTimer>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -345,7 +346,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
     return bnew;
 }
 
-void LiteCompleter::completionPrefixChanged(QString prefix)
+void LiteCompleter::completionPrefixChanged(QString prefix, bool force)
 {
     if (!m_editor) {
         return;
@@ -353,8 +354,7 @@ void LiteCompleter::completionPrefixChanged(QString prefix)
     if (m_completer->widget() != m_editor) {
         return;
     }
-
-    emit prefixChanged(m_editor->textCursor(),prefix);
+    emit prefixChanged(m_editor->textCursor(),prefix, force);
 }
 
 void LiteCompleter::insertCompletion(QModelIndex index)

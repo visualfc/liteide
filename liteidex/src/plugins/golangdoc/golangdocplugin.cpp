@@ -49,8 +49,7 @@ GolangDocPlugin::~GolangDocPlugin()
 bool GolangDocPlugin::load(LiteApi::IApplication *app)
 {
     m_golangDoc = new GolangDoc(app,this);
-    app->optionManager()->addFactory(new GolangDocOptionFactory(app,this));
-
+    //app->optionManager()->addFactory(new GolangDocOptionFactory(app,this));
     return true;
 }
 
@@ -61,3 +60,4 @@ void GolangDocPlugin::currentEditorChanged(LiteApi::IEditor*)
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
 #endif
+

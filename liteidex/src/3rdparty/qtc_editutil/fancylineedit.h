@@ -99,7 +99,6 @@ public:
     // Set if icon should be hidden when text is empty
     void setAutoHideButton(Side side, bool h);
     bool hasAutoHideButton(Side side) const;
-
 signals:
     void buttonClicked(Utils::FancyLineEdit::Side side);
     void leftButtonClicked();

@@ -18,43 +18,50 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangpresentplugin.h
+// Module: finddocwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOLANGPRESENTPLUGIN_H
-#define GOLANGPRESENTPLUGIN_H
+#ifndef FINDDOCWIDGET_H
+#define FINDDOCWIDGET_H
 
-#include "golangpresent_global.h"
 #include "liteapi/liteapi.h"
+#include "qtc_editutil/filterlineedit.h"
+#include "qtc_editutil/fancylineedit.h"
+#include "qt_browser/chasewidget.h"
+#include "processex/processex.h"
 
-class GolangPresentPlugin : public LiteApi::IPlugin
+class SearchEdit;
+class QTextBrowser;
+
+class FindDocWidget : public QWidget
 {
     Q_OBJECT
 public:
-    GolangPresentPlugin();
-    virtual bool load(LiteApi::IApplication *app);
+    explicit FindDocWidget(LiteApi::IApplication *app, QWidget *parent = 0);
+    ~FindDocWidget();    
 protected slots:
-    void editorCreated(LiteApi::IEditor*);
+    void findDoc();
+    void extOutput(QByteArray,bool);    
+    void extFinish(bool,int,QString);
+    void abortFind();
+    void stateChanged(QProcess::ProcessState);
+    void openUrl(QUrl);
+    void showHelp();
 protected:
+    QStringList docToHtml(const QString &url,const QString &file,const QStringList &comment);
+    QStringList parserDoc(QString findText);
+    QStringList parserPkgDoc(QString findText);
     LiteApi::IApplication *m_liteApp;
+    SearchEdit            *m_findEdit;
+    ChaseWidget           *m_chaseWidget;
+    QAction* m_matchWordCheckAct;
+    QAction* m_matchCaseCheckAct;
+    QAction* m_useRegexpCheckAct;
+    ProcessEx *m_process;
+    LiteApi::IHtmlWidget *m_browser;
+    QString    m_findFlag;
+    QString    m_templateData;
+    QString    m_htmlData;
 };
 
-class PluginFactory : public LiteApi::PluginFactoryT<GolangPresentPlugin>
-{
-    Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "liteidex.GoPresentPlugin")
-#endif
-public:
-    PluginFactory() {
-        m_info->setId("plugin/GoPresent");
-        m_info->setVer("x21.1");
-        m_info->setName("GolangPresent");
-        m_info->setAuthor("visualfc");
-        m_info->setInfo("Golang Present Editor");
-        m_info->appendDepend("plugin/liteeditor");
-    }
-};
-
-#endif // GOLANGPRESENTPLUGIN_H
+#endif // FINDDOCWIDGET_H

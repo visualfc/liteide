@@ -491,7 +491,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X21";
+    return "X21.1";
 }
 
 QString LiteApp::ideFullName() const
@@ -880,8 +880,7 @@ void LiteApp::dbclickLogOutput(QTextCursor cur)
 
     LiteApi::IEditor *editor = m_fileManager->openEditor(fileName);
     if (editor) {
-        editor->widget()->setFocus();
-        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+        LiteApi::ITextEditor *textEditor =  LiteApi::getTextEditor(editor);
         if (textEditor) {
             textEditor->gotoLine(line-1,0,true);
         }
