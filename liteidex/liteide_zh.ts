@@ -2158,7 +2158,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="134"/>
         <source>Go Build</source>
-        <translation> </translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="136"/>
@@ -3691,7 +3691,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/3rdparty/qtc_editutil/filterlineedit.cpp" line="52"/>
         <source>Clear text</source>
-        <translation>清除文件</translation>
+        <translation>清除文本</translation>
     </message>
 </context>
 <context>
