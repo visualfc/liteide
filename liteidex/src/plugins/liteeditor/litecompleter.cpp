@@ -32,6 +32,7 @@
 #include <QAbstractItemView>
 #include <QScrollBar>
 #include <QTextBlock>
+#include <QTimer>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -116,6 +117,9 @@ LiteCompleter::LiteCompleter(QObject *parent) :
     m_stop = '(';
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));
+    m_timer = new QTimer(this);
+    m_timer->setInterval(100);
+    connect(m_timer,SIGNAL(timeout()),this,SLOT(deployPrefixChanged()));
 }
 
 LiteCompleter::~LiteCompleter()
@@ -353,9 +357,24 @@ void LiteCompleter::completionPrefixChanged(QString prefix)
     if (m_completer->widget() != m_editor) {
         return;
     }
-
+    //m_lastTextCursor = m_editor->textCursor();
+    //m_lastPrefix = prefix;
     emit prefixChanged(m_editor->textCursor(),prefix);
+    //m_timer->start(100);
 }
+
+void LiteCompleter::deployPrefixChanged()
+{
+    m_timer->stop();
+    if (m_completer->widget() != m_editor) {
+        return;
+    }
+    if (m_editor->textCursor().position() != m_lastTextCursor.position()) {
+        return;
+    }
+    emit prefixChanged(m_editor->textCursor(),m_lastPrefix);
+}
+
 
 void LiteCompleter::insertCompletion(QModelIndex index)
 {   

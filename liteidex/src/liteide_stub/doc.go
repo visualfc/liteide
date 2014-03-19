@@ -86,7 +86,8 @@ var (
 	srcFlag       bool
 	urlFlag       bool
 	regexpFlag    bool
-	fuzzyFlag     bool
+	matchWordFlag bool
+	matchCaseFlag bool
 	constantFlag  bool
 	functionFlag  bool
 	interfaceFlag bool
@@ -102,7 +103,8 @@ func init() {
 	cmdDoc.Flag.BoolVar(&srcFlag, "src", false, "restrict output to source file only")
 	cmdDoc.Flag.BoolVar(&urlFlag, "url", false, "restrict output to godoc URL only")
 	cmdDoc.Flag.BoolVar(&regexpFlag, "r", false, "single argument is a regular expression for a name")
-	cmdDoc.Flag.BoolVar(&fuzzyFlag, "fuzzy", true, "fuzzy search for a name")
+	cmdDoc.Flag.BoolVar(&matchWordFlag, "word", false, "search match whole word")
+	cmdDoc.Flag.BoolVar(&matchCaseFlag, "case", false, "search match case")
 
 	cmdDoc.Flag.BoolVar(&constantFlag, "const", false, "show doc for consts only")
 	cmdDoc.Flag.BoolVar(&functionFlag, "func", false, "show doc for funcs only")
@@ -249,6 +251,7 @@ type File struct {
 	fset       *token.FileSet
 	name       string // Name of file.
 	ident      string // Identifier we are searching for.
+	lowerIdent string // lower ident
 	regexp     *regexp.Regexp
 	pathPrefix string // Prefix from GOROOT/GOPATH.
 	urlPrefix  string // Start of corresponding URL for golang.org or godoc.org.
@@ -272,13 +275,14 @@ func doPackage(pkg *ast.Package, fset *token.FileSet, ident string) {
 			continue
 		}
 		file := &File{
-			fset:     fset,
-			name:     name,
-			ident:    ident,
-			file:     astFile,
-			comments: ast.NewCommentMap(fset, astFile, astFile.Comments),
+			fset:       fset,
+			name:       name,
+			ident:      ident,
+			lowerIdent: strings.ToLower(ident),
+			file:       astFile,
+			comments:   ast.NewCommentMap(fset, astFile, astFile.Comments),
 		}
-		if regexp.QuoteMeta(ident) != ident {
+		if regexpFlag && regexp.QuoteMeta(ident) != ident {
 			// It's a regular expression.
 			var err error
 			file.regexp, err = regexp.Compile("^(?i:" + ident + ")$")
@@ -433,11 +437,18 @@ func (f *File) match(name string) bool {
 	if !ast.IsExported(name) {
 		return false
 	}
-	if fuzzyFlag {
-		return strings.Contains(name, f.ident)
-	}
 	if f.regexp == nil {
-		return strings.ToLower(name) == strings.ToLower(f.ident)
+		if matchWordFlag {
+			if matchCaseFlag {
+				return name == f.ident
+			}
+			return strings.ToLower(name) == f.lowerIdent
+		} else {
+			if matchCaseFlag {
+				return strings.Contains(name, f.ident)
+			}
+			return strings.Contains(strings.ToLower(name), f.lowerIdent)
+		}
 	}
 	return f.regexp.MatchString(name)
 }

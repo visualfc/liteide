@@ -56,12 +56,16 @@ public:
     virtual void setExternalMode(bool b);
     virtual bool externalMode() const;
 public slots:
+    void deployPrefixChanged();
     virtual void completionPrefixChanged(QString);
     virtual void insertCompletion(QModelIndex);
 protected:
     TreeModelCompleter *m_completer;
     QStandardItemModel *m_model;
     QPlainTextEdit *m_editor;
+    QTimer         *m_timer;
+    QTextCursor     m_lastTextCursor;
+    QString         m_lastPrefix;
     QChar           m_stop;
     bool            m_bSearchSeparator;
     bool            m_bExternalMode;

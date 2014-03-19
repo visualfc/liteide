@@ -187,6 +187,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length());
     m_writeData = src.toUtf8();
     m_breset = false;
+    m_gocodeProcess->setWorkingDirectory(m_fileInfo.path());
     m_gocodeProcess->start(m_gocodeCmd,args);
 }
 
