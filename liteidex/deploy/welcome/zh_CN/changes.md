@@ -3,6 +3,19 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.03.20 Ver x21.1
+* LiteIDE
+	* reduce application memory usage
+	* add new golang doc search (modification from rspace doc tool)<http://code.google.com/p/rspace.cmd/doc>
+	* update golang api index
+	* folder add go build context menu
+	* short folder name
+	* optimization litide_stub api tool
+	* add kate solarsooty.xml thanks for Unknown <https://github.com/Unknwon>
+	* add code complete short key (ctrl+space)
+	* fix gocode automatically plugin
+	* fix golang present verify plugin
+	
 ### 2014.03.06 Ver x21
 * LiteIDE
 	* fast highlighter for MacOS X 10.9

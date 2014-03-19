@@ -190,7 +190,7 @@ void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
 
     m_extension->addObject("LiteApi.ICompleter",complter);
 
-    connect(m_editorWidget,SIGNAL(completionPrefixChanged(QString)),m_completer,SLOT(completionPrefixChanged(QString)));
+    connect(m_editorWidget,SIGNAL(completionPrefixChanged(QString,bool)),m_completer,SLOT(completionPrefixChanged(QString,bool)));
     connect(m_completer,SIGNAL(wordCompleted(QString,QString)),this,SLOT(updateTip(QString,QString)));
 }
 
@@ -303,6 +303,9 @@ void LiteEditor::createActions()
     m_wordWrapAct->setCheckable(true);
     actionContext->regAction(m_wordWrapAct,"WordWrap","");
 
+    m_codeCompleteAct = new QAction(tr("Code Complete"),this);
+    actionContext->regAction(m_codeCompleteAct,"CodeComplete","Ctrl+Space");
+    connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
 //    m_widget->addAction(m_gotoLineAct);
@@ -467,6 +470,7 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_filePrintAct);
 #endif
     m_editMenu->addSeparator();
+    m_editMenu->addAction(m_codeCompleteAct);
     m_editMenu->addAction(m_gotoLineAct);
 
     //context menu

@@ -2429,42 +2429,42 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="440"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="478"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="482"/>
         <source>Code Folding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="483"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="487"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="766"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="770"/>
         <source>Export HTML</source>
         <translation>Exporter en HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="774"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="778"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="775"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="779"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="794"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="798"/>
         <source>Export PDF</source>
         <translation>Exporter en PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="819"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="823"/>
         <source>Print Document</source>
         <translation>Imprimer le document</translation>
     </message>
@@ -2528,7 +2528,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="872"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -2584,17 +2584,22 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="421"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
+        <source>Code Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="424"/>
         <source>Close Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="547"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="551"/>
         <source>Reload File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="836"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="840"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2605,7 +2610,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="872"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>

@@ -142,7 +142,7 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
         if (!m_gocodeCmd.isEmpty()) {
             m_completer->setSearchSeparator(false);
             m_completer->setExternalMode(true);
-            connect(m_completer,SIGNAL(prefixChanged(QTextCursor,QString)),this,SLOT(prefixChanged(QTextCursor,QString)));
+            connect(m_completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(prefixChanged(QTextCursor,QString,bool)));
             connect(m_completer,SIGNAL(wordCompleted(QString,QString)),this,SLOT(wordCompleted(QString,QString)));
         } else {
             m_completer->setSearchSeparator(true);
@@ -151,7 +151,7 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
     }
 }
 
-void GolangCode::prefixChanged(QTextCursor cur,QString pre)
+void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
 {
     if (m_gocodeCmd.isEmpty()) {
         return;
@@ -170,14 +170,21 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre)
     } else if (pre.length() == 1) {
         m_preWord.clear();
     } else {
-        return;
+        if (!force) {
+            return;
+        }
+        m_preWord.clear();
+        int index = pre.lastIndexOf(".");
+        if (index != -1) {
+            m_preWord = pre.left(index);
+        }
     }
 
     m_prefix = pre;
     m_lastPrefix = m_prefix;
 
     if (!m_preWord.isEmpty()) {
-        m_completer->clearItemChilds(m_prefix);
+        m_completer->clearItemChilds(m_preWord);
     }
 
     QString src = cur.document()->toPlainText();

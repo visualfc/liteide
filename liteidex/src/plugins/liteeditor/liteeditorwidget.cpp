@@ -77,6 +77,33 @@ QCompleter *LiteEditorWidget::completer() const
     return m_completer;
 }
 
+void LiteEditorWidget::codeCompleter()
+{
+    QString completionPrefix = textUnderCursor(textCursor());
+    if (completionPrefix.startsWith(".")) {
+        completionPrefix.insert(0,'@');
+    }
+
+    m_completer->setCompletionPrefix("");
+    emit completionPrefixChanged(completionPrefix,true);
+
+    if (completionPrefix != m_completer->completionPrefix()) {
+        m_completer->setCompletionPrefix(completionPrefix);
+        m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
+    }
+
+    if (m_completer->currentCompletion() == completionPrefix) {
+        m_completer->popup()->hide();
+        return;
+    }
+
+    QRect cr = cursorRect();
+    cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
+                + m_completer->popup()->verticalScrollBar()->sizeHint().width());
+
+    m_completer->complete(cr); // popup it up!
+}
+
 QString LiteEditorWidget::wordUnderCursor() const
 {
     QTextCursor tc = textCursor();
@@ -180,7 +207,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         m_completer->popup()->hide();
         return;
     }
-    emit completionPrefixChanged(completionPrefix);
+    emit completionPrefixChanged(completionPrefix,false);
 
     if (completionPrefix != m_completer->completionPrefix()) {
         m_completer->setCompletionPrefix(completionPrefix);

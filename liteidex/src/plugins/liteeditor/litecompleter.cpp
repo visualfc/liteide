@@ -117,9 +117,6 @@ LiteCompleter::LiteCompleter(QObject *parent) :
     m_stop = '(';
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));
-    m_timer = new QTimer(this);
-    m_timer->setInterval(100);
-    connect(m_timer,SIGNAL(timeout()),this,SLOT(deployPrefixChanged()));
 }
 
 LiteCompleter::~LiteCompleter()
@@ -349,7 +346,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
     return bnew;
 }
 
-void LiteCompleter::completionPrefixChanged(QString prefix)
+void LiteCompleter::completionPrefixChanged(QString prefix, bool force)
 {
     if (!m_editor) {
         return;
@@ -357,24 +354,8 @@ void LiteCompleter::completionPrefixChanged(QString prefix)
     if (m_completer->widget() != m_editor) {
         return;
     }
-    //m_lastTextCursor = m_editor->textCursor();
-    //m_lastPrefix = prefix;
-    emit prefixChanged(m_editor->textCursor(),prefix);
-    //m_timer->start(100);
+    emit prefixChanged(m_editor->textCursor(),prefix, force);
 }
-
-void LiteCompleter::deployPrefixChanged()
-{
-    m_timer->stop();
-    if (m_completer->widget() != m_editor) {
-        return;
-    }
-    if (m_editor->textCursor().position() != m_lastTextCursor.position()) {
-        return;
-    }
-    emit prefixChanged(m_editor->textCursor(),m_lastPrefix);
-}
-
 
 void LiteCompleter::insertCompletion(QModelIndex index)
 {   

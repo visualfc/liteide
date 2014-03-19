@@ -56,8 +56,7 @@ public:
     virtual void setExternalMode(bool b);
     virtual bool externalMode() const;
 public slots:
-    void deployPrefixChanged();
-    virtual void completionPrefixChanged(QString);
+    virtual void completionPrefixChanged(QString,bool force);
     virtual void insertCompletion(QModelIndex);
 protected:
     TreeModelCompleter *m_completer;

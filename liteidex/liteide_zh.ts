@@ -2447,42 +2447,42 @@ Success: %2.</oldsource>
         <translation>选择所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="440"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="478"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="482"/>
         <source>Code Folding</source>
         <translation>代码折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="483"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="487"/>
         <source>Line</source>
         <translation>行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="766"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="770"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="774"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="778"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="775"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="779"/>
         <source>Could not open %1 for writing.</source>
         <translation>无法写入文件 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="794"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="798"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="819"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="823"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
@@ -2546,7 +2546,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="872"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>跳转到行</translation>
@@ -2602,17 +2602,22 @@ Success: %2.</oldsource>
         <translation>自动换行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="421"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
+        <source>Code Complete</source>
+        <translation>代码完成</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="424"/>
         <source>Close Document</source>
         <translation>关闭文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="547"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="551"/>
         <source>Reload File</source>
         <translation>重新读取文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="836"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="840"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>您想要放弃未保存的修改并重新载入%1?</translation>
     </message>
@@ -2623,7 +2628,7 @@ Success: %2.</oldsource>
         <translation>移动光标到下一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="872"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>

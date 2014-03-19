@@ -51,6 +51,7 @@ protected:
     void wheelEvent(QWheelEvent *e);
     virtual QMimeData *createMimeDataFromSelection() const;
 public slots:
+    void codeCompleter();
     void zoomIn(int range = 1);
     void zoomOut(int range = 1);
 signals:
@@ -58,7 +59,7 @@ signals:
 public:
     QString cursorToHtml(QTextCursor cursor) const;
 signals:
-    void completionPrefixChanged(QString);
+    void completionPrefixChanged(QString,bool);
 public:
     QString wordUnderCursor() const;
     QString textUnderCursor(QTextCursor tc) const;

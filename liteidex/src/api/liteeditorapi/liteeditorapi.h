@@ -106,7 +106,7 @@ public:
     virtual void setExternalMode(bool b) = 0;
     virtual bool externalMode() const = 0;
 signals:
-    void prefixChanged(QTextCursor,QString);
+    void prefixChanged(QTextCursor,QString,bool force);
     void wordCompleted(const QString &func, const QString &args);
 };
 
