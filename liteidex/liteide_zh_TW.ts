@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -763,19 +763,19 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="158"/>
-        <location filename="src/liteapp/filemanager.cpp" line="179"/>
-        <location filename="src/liteapp/filemanager.cpp" line="200"/>
+        <location filename="src/liteapp/filemanager.cpp" line="159"/>
+        <location filename="src/liteapp/filemanager.cpp" line="180"/>
+        <location filename="src/liteapp/filemanager.cpp" line="201"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="369"/>
+        <location filename="src/liteapp/filemanager.cpp" line="370"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="370"/>
+        <location filename="src/liteapp/filemanager.cpp" line="371"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -783,7 +783,7 @@ Do you want to load?</oldsource>
         <translation type="unfinished">專案 &apos;%1&apos;已建立,是否要載入?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="270"/>
+        <location filename="src/liteapp/filemanager.cpp" line="271"/>
         <source>Open Project or File</source>
         <translation>開啟專案或文件</translation>
     </message>
@@ -804,41 +804,41 @@ Do you want to load?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="155"/>
-        <location filename="src/liteapp/filemanager.cpp" line="176"/>
-        <location filename="src/liteapp/filemanager.cpp" line="197"/>
+        <location filename="src/liteapp/filemanager.cpp" line="156"/>
+        <location filename="src/liteapp/filemanager.cpp" line="177"/>
+        <location filename="src/liteapp/filemanager.cpp" line="198"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="283"/>
-        <location filename="src/liteapp/filemanager.cpp" line="301"/>
+        <location filename="src/liteapp/filemanager.cpp" line="284"/>
+        <location filename="src/liteapp/filemanager.cpp" line="302"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="503"/>
+        <location filename="src/liteapp/filemanager.cpp" line="504"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="504"/>
+        <location filename="src/liteapp/filemanager.cpp" line="505"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="505"/>
+        <location filename="src/liteapp/filemanager.cpp" line="506"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="506"/>
+        <location filename="src/liteapp/filemanager.cpp" line="507"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="713"/>
+        <location filename="src/liteapp/filemanager.cpp" line="717"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -850,7 +850,7 @@ Do you want to close the editor ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="738"/>
+        <location filename="src/liteapp/filemanager.cpp" line="747"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -860,7 +860,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="745"/>
+        <location filename="src/liteapp/filemanager.cpp" line="754"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -872,7 +872,7 @@ Do you want to reload the file from disk ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="325"/>
+        <location filename="src/liteapp/filemanager.cpp" line="326"/>
         <source>Open Files</source>
         <translation>開啟文件</translation>
     </message>
@@ -882,12 +882,12 @@ Do you want to reload the file from disk ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="338"/>
+        <location filename="src/liteapp/filemanager.cpp" line="339"/>
         <source>Open Project</source>
         <translation>開啟專案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="706"/>
+        <location filename="src/liteapp/filemanager.cpp" line="710"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -897,10 +897,10 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="710"/>
-        <location filename="src/liteapp/filemanager.cpp" line="715"/>
-        <location filename="src/liteapp/filemanager.cpp" line="742"/>
-        <location filename="src/liteapp/filemanager.cpp" line="747"/>
+        <location filename="src/liteapp/filemanager.cpp" line="714"/>
+        <location filename="src/liteapp/filemanager.cpp" line="719"/>
+        <location filename="src/liteapp/filemanager.cpp" line="751"/>
+        <location filename="src/liteapp/filemanager.cpp" line="756"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1019,16 +1019,16 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished">新建文件精靈</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="284"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="295"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="291"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="296"/>
         <source>Rename File</source>
         <translation type="unfinished">文件更名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="106"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="309"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="314"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="310"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="315"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation type="unfinished">刪除文件</translation>
@@ -1040,21 +1040,21 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished">新建目錄</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="310"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="350"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="359"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="364"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="360"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="365"/>
         <source>Rename Folder</source>
         <translation type="unfinished">目錄更名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="378"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="385"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="379"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation type="unfinished">刪除目錄</translation>
@@ -1085,7 +1085,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished">查看GODOC</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="418"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="419"/>
         <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1105,77 +1105,182 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="243"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="253"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="244"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="254"/>
         <source>Create File</source>
         <translation type="unfinished">建立文件</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="244"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="245"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="254"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="255"/>
         <source>Failed to create the file!</source>
         <translation type="unfinished">建立文件失敗!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="284"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <source>New Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="291"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="296"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="292"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="297"/>
         <source>Failed to rename the file!</source>
         <translation type="unfinished">重命名文件失敗!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="379"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="315"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
         <translation type="unfinished">刪除文件失敗!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="333"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="336"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="334"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="337"/>
         <source>Create Folder</source>
         <translation type="unfinished">建立目錄</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="334"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
         <translation type="unfinished">目錄名稱已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="337"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="338"/>
         <source>Failed to create the folder!</source>
         <translation type="unfinished">建立目錄失敗!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="350"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
         <source>Folder Name</source>
         <translation type="unfinished">目錄名稱</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="360"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="365"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="361"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="366"/>
         <source>Failed to rename the folder!</source>
         <translation type="unfinished">重命名目錄失敗!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="387"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation type="unfinished">刪除目錄失敗!</translation>
+    </message>
+</context>
+<context>
+    <name>FindApiEdit</name>
+    <message>
+        <location filename="src/plugins/golangdoc/findapiwidget.h" line="69"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/findapiwidget.h" line="70"/>
+        <source>Stop Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FindApiWidget</name>
+    <message>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="269"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="282"/>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="315"/>
+        <source>Find</source>
+        <translation type="unfinished">搜尋</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="313"/>
+        <source>Rebuild database</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FindDocWidget</name>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="94"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="102"/>
+        <source>Find</source>
+        <translation type="unfinished">搜尋</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="121"/>
+        <source>Find All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="122"/>
+        <source>Find const</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="124"/>
+        <source>Find func</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="126"/>
+        <source>Find interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="128"/>
+        <source>Find pkg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="130"/>
+        <source>Find struct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="132"/>
+        <source>Find type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="134"/>
+        <source>Find var</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="136"/>
+        <source>Use Regexp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="138"/>
+        <source>Match Case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="140"/>
+        <source>Match Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="167"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1323,23 +1428,28 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>GolangDoc</name>
     <message>
-        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="128"/>
+        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="160"/>
         <source>Godoc Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="131"/>
-        <source>Godoc Viewer</source>
+        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="152"/>
+        <source>Golang Doc Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="147"/>
+        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="156"/>
+        <source>Golang Api Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="176"/>
         <source>View Expression Information</source>
         <oldsource>View Expression Infomation</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="150"/>
+        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="179"/>
         <source>Jump to Declaration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1581,69 +1691,107 @@ Success: %2.</oldsource>
 <context>
     <name>HtmlPreview</name>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="70"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="71"/>
         <source>Page Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="75"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
         <source>Reload</source>
         <translation type="unfinished">刷新</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="380"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
         <source>Export Html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="412"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="413"/>
         <source>Export PDF</source>
         <translation type="unfinished">匯出PDF文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
         <source>Print Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="81"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="82"/>
         <source>Synchronize preview and code scrollbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="87"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
         <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="167"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="168"/>
         <source>Plain HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="388"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="84"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="85"/>
         <source>Automatically display preview</source>
         <oldsource>Automatically Display Preview</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="98"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="99"/>
         <source>HTML Preview</source>
         <oldsource>Html Preview</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation type="unfinished">無法寫入文件 %1</translation>
+    </message>
+</context>
+<context>
+    <name>JsonEdit</name>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="46"/>
+        <source>Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="56"/>
+        <source>IndentNone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="57"/>
+        <source>IndentCompact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="58"/>
+        <source>IndentMinimum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="59"/>
+        <source>IndentMedium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="60"/>
+        <source>IndentFull</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="62"/>
+        <source>Format</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1950,109 +2098,135 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="95"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="97"/>
         <source>&amp;Build</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="101"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="105"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="109"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="103"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="107"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="111"/>
         <source>Name</source>
         <translation>名稱</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="102"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="106"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="110"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="104"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="108"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="112"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="114"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="116"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation type="unfinished">建置設定</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="121"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="123"/>
         <source>Stop Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="125"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="127"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="141"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="131"/>
+        <source>Execute File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="134"/>
+        <source>Go Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="136"/>
+        <source>Go Install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="138"/>
+        <source>Go Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="140"/>
+        <source>Go Clean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="159"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>編譯輸出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="347"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="438"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="444"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="875"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="992"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="878"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="995"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="880"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="997"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="913"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="961"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1033"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1081"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="954"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1074"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="957"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1077"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1054"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1175"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1100"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1221"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1100"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1221"/>
         <source>Failed to start process</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2355,7 +2529,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="871"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="872"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -2432,7 +2606,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="871"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="872"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3273,6 +3447,19 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>SearchEdit</name>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="81"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="82"/>
+        <source>Stop Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SelectExternalDialog</name>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="14"/>
@@ -3488,12 +3675,12 @@ Do you want to replace it?</source>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="66"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="67"/>
         <source>Navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="133"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="137"/>
         <source>False load %1 !</source>
         <translation type="unfinished"></translation>
     </message>
