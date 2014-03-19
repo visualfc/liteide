@@ -69,7 +69,8 @@ public slots:
 public slots:
     void rebuildApiData();
     void appLoaded();
-    void triggeredToolWindow(bool);    
+    void toggledApiSearchWindow(bool);
+    void toggledDocSearchWindow(bool);
     void editorFindDoc();
     void editorJumpToDecl();
     void editorCreated(LiteApi::IEditor *editor);
@@ -127,7 +128,8 @@ protected:
     QString m_godocCmd;
     QStringList m_targetList;
     QMap<QString,QString> m_pathFileMap;
-    QAction *m_toolWindowAct;
+    QAction *m_apiSearchWindowAct;
+    QAction *m_docSearchWindowAct;
     QAction *m_findDocAct;
     QAction *m_jumpDeclAct;
     QMenu   *m_configMenu;

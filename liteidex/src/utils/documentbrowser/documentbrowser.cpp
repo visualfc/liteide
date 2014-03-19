@@ -406,7 +406,6 @@ void DocumentBrowser::resetFontSize()
     QFont font = widget->font();
     font.setPointSize(fontSize);
     widget->setFont(font);
-
 }
 
 void DocumentBrowser::requestFontZoom(int zoom)

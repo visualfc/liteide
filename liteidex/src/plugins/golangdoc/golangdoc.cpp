@@ -149,11 +149,11 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     //connect(m_widget,SIGNAL(openApiUrl(QStringList)),this,SLOT(openApiUrl(QStringList)));
     //QList<QAction*> actions;
 //    actions << m_configMenu->menuAction();
-    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findDocWidget,"godoc/search",tr("Golang Doc Search"),true);
+    m_docSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findDocWidget,"godoc/search",tr("Golang Doc Search"),true);
 
     m_findApiWidget = new FindApiWidget(m_liteApp);
 
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findApiWidget,"godoc/api",tr("Golang Api Index"),true);
+    m_apiSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findApiWidget,"godoc/api",tr("Golang Api Index"),true);
     connect(m_findApiWidget,SIGNAL(openApiUrl(QStringList)),this,SLOT(openApiUrl(QStringList)));
 
     m_docBrowser = new DocumentBrowser(m_liteApp,this);
@@ -179,7 +179,8 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
-    connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(triggeredToolWindow(bool)));
+    connect(m_apiSearchWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledApiSearchWindow(bool)));
+    connect(m_docSearchWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledDocSearchWindow(bool)));
     connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     //connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
@@ -1094,9 +1095,13 @@ void GolangDoc::appLoaded()
 {
 }
 
-void GolangDoc::triggeredToolWindow(bool b)
+void GolangDoc::toggledApiSearchWindow(bool b)
 {
     if (b) {
         rebuildApiData();
     }
+}
+
+void GolangDoc::toggledDocSearchWindow(bool /*b*/)
+{
 }

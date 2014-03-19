@@ -42,6 +42,30 @@
 #endif
 //lite_memory_check_end
 
+static char help[] =
+"<b>Serach Format</b>"
+"<pre>"
+"fmt.\n"
+"    Extracts all fmt pkg symbol document\n"
+"fmt.Println or fmt Println\n"
+"    Extracts fmt.Println document\n"
+"fmt.Print or fmt Print\n"
+"    Extracts fmt.Print fmt.Printf fmt.Println etc\n"
+"Println\n"
+"    Extracts fmt.Println log.Println log.Logger.Println etc"
+"</pre>"
+"<b>Serach Option</b>"
+"<pre>"
+"Match Word.\n"
+"    Match whole world only\n"
+"Match Case\n"
+"    Match case sensitive\n"
+"Use Regexp\n"
+"    Use regexp for search\n"
+"    example fmt p.*\n"
+"</pre>"
+;
+
 class SearchEdit : public Utils::FancyLineEdit
 {
 public:
@@ -83,7 +107,7 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     findLayout->addWidget(findBtn);
     findLayout->addWidget(m_chaseWidget);
 
-    m_browser =  m_liteApp->htmlWidgetManager()->createByName(this,"QTextBrowser");
+    m_browser = m_liteApp->htmlWidgetManager()->createByName(this,"QTextBrowser");
     QStringList paths;
     paths << m_liteApp->resourcePath()+"/golangdoc";
     m_browser->setSearchPaths(paths);
@@ -123,7 +147,7 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     QMenu *menu = new QMenu(findBtn);
     menu->addActions(QList<QAction*>()
                      << findAll
-                     << findPkg
+                     //<< findPkg
                      );
     menu->addSeparator();
     menu->addActions(QList<QAction*>()
@@ -139,7 +163,11 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     menu->addAction(m_matchCaseCheckAct);
     menu->addAction(m_useRegexpCheckAct);
     findBtn->setMenu(menu);
-    //findBtn->setDefaultAction(findAll);
+
+    QAction *helpAct = new QAction(tr("Help"),this);
+    menu->addSeparator();
+    menu->addAction(helpAct);
+    connect(helpAct,SIGNAL(triggered()),this,SLOT(showHelp()));
 
     this->setLayout(mainLayout);    
 
@@ -168,6 +196,12 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
         m_templateData = file.readAll();
         file.close();
     }
+
+    //QFont font = m_browser->widget()->font();
+    //font.setPointSize(12);
+    //m_browser->widget()->setFont(font);
+
+    showHelp();
 }
 
 FindDocWidget::~FindDocWidget()
@@ -194,7 +228,7 @@ void FindDocWidget::findDoc()
     abortFind();
 
     QStringList args;
-    args << "doc";
+    args << "doc" << "-urltag" << "<liteide_doc>";
     if (m_matchWordCheckAct->isChecked()) {
        args << "-word";
     }
@@ -217,6 +251,12 @@ void FindDocWidget::findDoc()
     m_process->start(cmd,args);
 }
 
+struct doc_comment {
+    QString     url;
+    QString     file;
+    QStringList comment;
+};
+
 void FindDocWidget::extOutput(QByteArray data, bool error)
 {
     if (error) {
@@ -235,12 +275,42 @@ F:\vfc\liteide-git\liteidex\src\code.google.com\p\go.tools\cmd\vet\main.go:375:
 // Println is fmt.Println guarded by -v.
 func Println(args ...interface{})
 */
-    QStringList array;
-    if (m_findFlag == "pkg") {
-        array = parserPkgDoc(QString::fromUtf8(data));
-    } else {
-        array = parserDoc(QString::fromUtf8(data));
+    QList<doc_comment> dc_array;
+    doc_comment dc;
+    int flag = 0;
+    foreach (QString line, QString::fromUtf8(data).split("\n")) {
+        if (line.startsWith("<liteide_doc>")) {
+            flag = 1;
+            if (!dc.url.isEmpty()) {
+                dc_array.push_back(dc);
+            }
+            dc.url = line.mid(13);
+            dc.file.clear();
+            dc.comment.clear();
+            continue;
+        }
+        if (flag == 1) {
+            dc.file = line;
+            flag = 2;
+            continue;
+        }
+        if (flag == 2) {
+            dc.comment.push_back(line);
+        }
     }
+    if (!dc.url.isEmpty()) {
+        dc_array.push_back(dc);
+    }
+    QStringList array;
+    foreach (doc_comment dc, dc_array) {
+        array.append(docToHtml(dc.url,dc.file,dc.comment));
+    }
+ //   qDebug() << array.join("\n");
+//    if (m_findFlag == "pkg") {
+//        array = parserPkgDoc(QString::fromUtf8(data));
+//    } else {
+//        array = parserDoc(QString::fromUtf8(data));
+//    }
 
     m_htmlData.append(array.join("\n"));
     QString html = m_templateData;
@@ -303,6 +373,104 @@ void FindDocWidget::openUrl(QUrl url)
             textEditor->gotoLine(line-1,0,true);
         }
     }
+}
+
+void FindDocWidget::showHelp()
+{
+    QString data = m_templateData;
+    data.replace("{content}",help);
+    m_browser->setHtml(data,QUrl());
+}
+
+static QString escape(const QString &text) {
+#if QT_VERSION >= 0x050000
+    return QString(text).toHtmlEscaped();
+#else
+    return Qt::escape(text);
+#endif
+}
+
+QStringList FindDocWidget::docToHtml(const QString &url, const QString &file, const QStringList &comment)
+{
+    QString sz;
+    QString pkgName;
+    QString findName;
+    if (url.startsWith("http://golang.org/pkg")) {
+        sz = url.mid(21);
+    } else if (url.startsWith("http://golang.org/cmd")) {
+        sz = url.mid(21);
+    } else if (url.startsWith("http://godoc.org")) {
+        sz = url.mid(16);
+    }
+    //\code.google.com\p\go.tools\cmd\vet\#Println
+    int pos = sz.indexOf("#");
+    if (pos != -1) {
+        pkgName = QDir::fromNativeSeparators(sz.left(pos));
+        if (pkgName.startsWith("/")) {
+            pkgName = pkgName.mid(1);
+        }
+        if (pkgName.endsWith("/")) {
+            pkgName = pkgName.left(pkgName.length()-1);
+        }
+        findName = sz.mid(pos+1);
+    }
+    QStringList array;
+    array.push_back(QString("<h4><b>%2</b>&nbsp;&nbsp;<a href=\"file:%1\">%3</a></h4>")
+                    .arg(QDir::fromNativeSeparators(escape(file))).arg(pkgName).arg(findName));
+    if (!comment.isEmpty() &&
+            (  comment.first().startsWith("const (") ||
+               comment.first().startsWith("var (")) ) {
+        array.push_back("<pre>");
+        QString head = "const ";
+        if (comment.first().startsWith("var (")) {
+            head = "var ";
+        }
+        QStringList incmd;
+        foreach (QString sz, comment) {
+            if (sz.trimmed().startsWith("//")) {
+                incmd.push_back(escape(sz.trimmed()));
+            } else if (sz.indexOf(findName) >= 0) {
+                array.append(incmd);
+                array.push_back(escape(head+sz.replace("\t"," ").trimmed()));
+            } else {
+                incmd.clear();
+            }
+        }
+        array.push_back("</pre>");
+        return array;
+    }
+
+    int flag = 0;
+    QString lastTag;
+    foreach (QString sz, comment) {
+        if (sz.startsWith("//")) {
+            if (flag != 1) {
+                if (!lastTag.isEmpty()) array.push_back(lastTag);
+                array.push_back("<p>");
+                lastTag = "</p>";
+            }
+            flag = 1;
+            if (sz.mid(2).trimmed().isEmpty()) {
+                array.push_back("</p><p>");
+            } else {
+                array.push_back(escape(sz.mid(2)));
+            }
+        } else {
+            if (sz.trimmed().isEmpty()) {
+                continue;
+            }
+            if (flag != 3) {
+                if (!lastTag.isEmpty()) array.push_back(lastTag);
+                array.push_back("<pre>");
+                lastTag = "</pre>";
+            }
+            flag = 3;
+            array.push_back(escape(sz.replace("\t","    ")));
+        }
+    }
+    if (!lastTag.isEmpty()) array.push_back(lastTag);
+    array.push_back("<p></p>");
+    return array;
 }
 
 QStringList FindDocWidget::parserDoc(QString findText)

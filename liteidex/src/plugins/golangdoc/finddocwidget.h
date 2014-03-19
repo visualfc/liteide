@@ -38,7 +38,7 @@ class FindDocWidget : public QWidget
     Q_OBJECT
 public:
     explicit FindDocWidget(LiteApi::IApplication *app, QWidget *parent = 0);
-    ~FindDocWidget();
+    ~FindDocWidget();    
 protected slots:
     void findDoc();
     void extOutput(QByteArray,bool);    
@@ -46,7 +46,9 @@ protected slots:
     void abortFind();
     void stateChanged(QProcess::ProcessState);
     void openUrl(QUrl);
+    void showHelp();
 protected:
+    QStringList docToHtml(const QString &url,const QString &file,const QStringList &comment);
     QStringList parserDoc(QString findText);
     QStringList parserPkgDoc(QString findText);
     LiteApi::IApplication *m_liteApp;
