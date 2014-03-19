@@ -32,4 +32,8 @@
 #  define GOLANGDOCSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define GODOCFIND_MATCHWORD "godocfind/matchword"
+#define GODOCFIND_MATCHCASE "godocfind/matchcase"
+#define GODOCFIND_USEREGEXP "godocfind/useregexp"
+
 #endif // GOLANGDOC_GLOBAL_H

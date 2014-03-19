@@ -52,6 +52,8 @@ protected:
     LiteApi::IApplication *m_liteApp;
     SearchEdit            *m_findEdit;
     ChaseWidget           *m_chaseWidget;
+    QAction* m_matchWordCheckAct;
+    QAction* m_matchCaseCheckAct;
     QAction* m_useRegexpCheckAct;
     ProcessEx *m_process;
     LiteApi::IHtmlWidget *m_browser;

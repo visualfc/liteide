@@ -96,6 +96,7 @@ var (
 	structFlag    bool
 	typeFlag      bool
 	variableFlag  bool
+	urlHeadTag    string
 )
 
 func init() {
@@ -123,6 +124,8 @@ func init() {
 	cmdDoc.Flag.BoolVar(&structFlag, "s", false, "alias for -struct")
 	cmdDoc.Flag.BoolVar(&typeFlag, "t", false, "alias for -type")
 	cmdDoc.Flag.BoolVar(&variableFlag, "v", false, "alias for -var")
+
+	cmdDoc.Flag.StringVar(&urlHeadTag, "urltag", "", "url head tag, liteide provate")
 }
 
 func runDoc(cmd *Command, args []string) {
@@ -263,8 +266,6 @@ type File struct {
 	allFiles   []*File // All files in the package.
 }
 
-const godocOrg = "http://godoc.org"
-
 // doPackage analyzes the single package constructed from the named files, looking for
 // the definition of ident.
 func doPackage(pkg *ast.Package, fset *token.FileSet, ident string) {
@@ -299,7 +300,7 @@ func doPackage(pkg *ast.Package, fset *token.FileSet, ident string) {
 			file.urlPrefix = "http://golang.org/cmd"
 			file.pathPrefix = goRootSrcCmd
 		default:
-			file.urlPrefix = godocOrg
+			file.urlPrefix = "http://godoc.org"
 			for _, path := range goPaths {
 				p := filepath.Join(path, "src")
 				if strings.HasPrefix(name, p) {
@@ -308,6 +309,7 @@ func doPackage(pkg *ast.Package, fset *token.FileSet, ident string) {
 				}
 			}
 		}
+		file.urlPrefix = urlHeadTag + file.urlPrefix
 		files = append(files, file)
 		if found {
 			continue

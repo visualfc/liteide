@@ -23,6 +23,7 @@
 
 #include "finddocwidget.h"
 #include "liteenvapi/liteenvapi.h"
+#include "golangdoc_global.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -110,6 +111,14 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     findVar->setData("var");
     m_useRegexpCheckAct = new QAction(tr("Use Regexp"),this);
     m_useRegexpCheckAct->setCheckable(true);
+    m_matchCaseCheckAct = new QAction(tr("Match Case"),this);
+    m_matchCaseCheckAct->setCheckable(true);
+    m_matchWordCheckAct = new QAction(tr("Match Word"),this);
+    m_matchWordCheckAct->setCheckable(true);
+
+    m_useRegexpCheckAct->setChecked(m_liteApp->settings()->value(GODOCFIND_USEREGEXP,false).toBool());
+    m_matchCaseCheckAct->setChecked(m_liteApp->settings()->value(GODOCFIND_MATCHCASE,true).toBool());
+    m_matchWordCheckAct->setChecked(m_liteApp->settings()->value(GODOCFIND_MATCHWORD,false).toBool());
 
     QMenu *menu = new QMenu(findBtn);
     menu->addActions(QList<QAction*>()
@@ -126,6 +135,8 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
                      << findVar
                      );
     menu->addSeparator();
+    menu->addAction(m_matchWordCheckAct);
+    menu->addAction(m_matchCaseCheckAct);
     menu->addAction(m_useRegexpCheckAct);
     findBtn->setMenu(menu);
     //findBtn->setDefaultAction(findAll);
@@ -161,6 +172,10 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
 
 FindDocWidget::~FindDocWidget()
 {
+    m_liteApp->settings()->setValue(GODOCFIND_MATCHCASE,m_matchCaseCheckAct->isChecked());
+    m_liteApp->settings()->setValue(GODOCFIND_MATCHWORD,m_matchWordCheckAct->isChecked());
+    m_liteApp->settings()->setValue(GODOCFIND_USEREGEXP,m_useRegexpCheckAct->isChecked());
+
     abortFind();
     delete m_process;
 }
@@ -180,6 +195,12 @@ void FindDocWidget::findDoc()
 
     QStringList args;
     args << "doc";
+    if (m_matchWordCheckAct->isChecked()) {
+       args << "-word";
+    }
+    if (m_matchCaseCheckAct->isChecked()) {
+        args << "-case";
+    }
     if (m_useRegexpCheckAct->isChecked()) {
         args << "-r";
     }
