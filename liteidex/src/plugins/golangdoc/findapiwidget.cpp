@@ -299,7 +299,7 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_findThread->setFileName(m_liteApp->storagePath()+"/golangapi.txt");
     connect(m_findThread,SIGNAL(findApiOut(QString,QString,QStringList)),this,SLOT(findApiOut(QString,QString,QStringList)));
     connect(m_findThread,SIGNAL(finished()),this,SLOT(findApiFinished()));
-    connect(m_findThread,SIGNAL(terminated()),this,SLOT(findApiTerminated()));
+    //connect(m_findThread,SIGNAL(terminated()),this,SLOT(findApiTerminated()));
     //connect(findBtn,SIGNAL(clicked()),this,SLOT(findApi()));
     connect(m_findEdit,SIGNAL(returnPressed()),this,SLOT(findApi()));
     connect(m_findEdit,SIGNAL(rightButtonClicked()),m_findThread,SLOT(terminate()));
@@ -357,12 +357,6 @@ void FindApiWidget::findApiOut(QString api, QString text, QStringList url)
 }
 
 void FindApiWidget::findApiFinished()
-{
-    m_chaseWidget->setAnimated(false);
-    m_findEdit->showStopButton(false);
-}
-
-void FindApiWidget::findApiTerminated()
 {
     m_chaseWidget->setAnimated(false);
     m_findEdit->showStopButton(false);

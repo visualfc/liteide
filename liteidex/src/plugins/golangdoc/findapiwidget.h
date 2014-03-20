@@ -87,7 +87,6 @@ public slots:
     void findApi();
     void findApiOut(QString,QString,QStringList);
     void findApiFinished();
-    void findApiTerminated();
     void doubleClickedApi(QModelIndex);
     void rebuildApiData();
 public:
