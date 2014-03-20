@@ -181,6 +181,7 @@ public:
     QString  m_colorStyle;
     QPalette m_defEditorPalette;
     bool       m_bReadOnly;
+    bool     m_offsetVisible;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
     QAction *m_closeEditorAct;

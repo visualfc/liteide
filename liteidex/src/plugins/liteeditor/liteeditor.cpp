@@ -680,6 +680,8 @@ void LiteEditor::applyOption(QString id)
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
 
+    m_offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
+
     m_editorWidget->setAutoIndent(autoIndent);
     m_editorWidget->setAutoBraces0(autoBraces0);
     m_editorWidget->setAutoBraces1(autoBraces1);
@@ -863,8 +865,11 @@ void LiteEditor::editPositionChanged()
      }
 */
      //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
-     //m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
-     m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     if (m_offsetVisible) {
+         m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
+     } else {
+         m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     }
 }
 
 void LiteEditor::gotoLine()

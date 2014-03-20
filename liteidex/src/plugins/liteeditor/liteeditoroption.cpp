@@ -104,6 +104,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool outputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     bool wheelZoom = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
+    bool offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
 
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
@@ -127,6 +128,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->indentLineCheckBox->setChecked(indentLineVisible);
     ui->outputUseColorSchemeCheck->setChecked(outputUseColor);
     ui->wheelZoomingCheckBox->setChecked(wheelZoom);
+    ui->offsetCheckBox->setChecked(offsetVisible);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
@@ -237,6 +239,7 @@ void LiteEditorOption::apply()
     if (min < 0 || min > 10) {
         min = 1;
     }
+    bool offsetVisible = ui->offsetCheckBox->isChecked();
 
     m_liteApp->settings()->setValue(EDITOR_NOPRINTCHECK,noprintCheck);
     m_liteApp->settings()->setValue(EDITOR_FAMILY,m_fontFamily);
@@ -257,6 +260,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_CLEANWHITESPACEONSAVE,cleanWhitespaceOnSave);
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);
     m_liteApp->settings()->setValue(EDITOR_WHEEL_SCROLL,wheelZoom);
+    m_liteApp->settings()->setValue(EDITOR_OFFSETVISIBLE,offsetVisible);
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }

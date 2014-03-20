@@ -1912,7 +1912,6 @@ func (w *Walker) lookupExpr(vi ast.Expr, p token.Pos) (string, *TypeInfo, error)
 				return w.lookupExpr(arg, p)
 			}
 		}
-		//log.Printf("%v %T", w.nodeString(v), v.Fun)
 		switch ft := v.Fun.(type) {
 		case *ast.Ident:
 			if typ, ok := w.localvar[ft.Name]; ok {
@@ -2010,6 +2009,18 @@ func (w *Walker) lookupExpr(vi ast.Expr, p token.Pos) (string, *TypeInfo, error)
 				if inRange(st, p) {
 					return w.lookupExpr(st, p)
 				}
+				if info, err := w.lookupExprInfo(st, p); err == nil {
+					if fn, ok := info.X.(*ast.FuncType); ok {
+						if fn.Results.NumFields() == 1 {
+							info, err := w.lookupFunction(w.nodeString(fn.Results.List[0].Type), ft.Sel.Name)
+							if err == nil {
+								return info.Name, info, err
+							}
+							return "", nil, err
+						}
+					}
+				}
+				//w.lookupFunction(w.nodeString(info.X))
 				typ, err := w.varValueType(st, 0)
 				if err != nil {
 					return "", nil, err
@@ -2466,6 +2477,39 @@ func (w *Walker) findStructFieldType(st ast.Expr, name string) ast.Expr {
 	return expr
 }
 
+func (w *Walker) findStructFieldFunction(st ast.Expr, name string) (*TypeInfo, error) {
+	if s, ok := st.(*ast.StructType); ok {
+		for _, fi := range s.Fields.List {
+			typ := fi.Type
+			if fi.Names == nil {
+				switch v := typ.(type) {
+				case *ast.Ident:
+					if t := w.curPackage.findType(v.Name); t != nil {
+						return w.lookupFunction(v.Name, name)
+					}
+				case *ast.SelectorExpr:
+					pt := w.nodeString(typ)
+					pos := strings.Index(pt, ".")
+					if pos != -1 {
+						if p := w.findPackage(pt[:pos]); p != nil {
+							if t := p.findType(pt[pos+1:]); t != nil {
+								return w.lookupFunction(pt, name)
+							}
+						}
+					}
+				case *ast.StarExpr:
+					return w.findStructFieldFunction(v.X, name)
+				default:
+					if apiVerbose {
+						log.Printf("unable to handle embedded %T", typ)
+					}
+				}
+			}
+		}
+	}
+	return nil, nil
+}
+
 func (w *Walker) findStructField(st ast.Expr, name string) (*ast.Ident, ast.Expr) {
 	if s, ok := st.(*ast.StructType); ok {
 		for _, fi := range s.Fields.List {
@@ -2475,7 +2519,6 @@ func (w *Walker) findStructField(st ast.Expr, name string) (*ast.Ident, ast.Expr
 					return n, fi.Type
 				}
 			}
-			//log.Println("->", w.nodeString(typ))
 			if fi.Names == nil {
 				switch v := typ.(type) {
 				case *ast.Ident:
@@ -2585,6 +2628,9 @@ func (w *Walker) lookupFunction(name, sel string) (*TypeInfo, error) {
 	if typ, ok := w.curPackage.structs[name]; ok {
 		if fn, ok := w.curPackage.functions[name+"."+sel]; ok {
 			return &TypeInfo{Kind: KindMethod, X: fn.ft, Name: name + "." + sel, T: fn.ft, Type: w.nodeString(w.namelessType(fn.ft))}, nil
+		}
+		if info, err := w.findStructFieldFunction(typ, sel); err == nil {
+			return info, nil
 		}
 		// struct field is type function
 		if ft := w.findStructFieldType(typ, sel); ft != nil {
@@ -2753,7 +2799,6 @@ func (w *Walker) lookupSelector(name string, sel string) (*TypeInfo, error) {
 			return &TypeInfo{Kind: KindType, X: typ, Name: name + "." + sel, T: typ, Type: w.pkgRetType(p.name, w.nodeString(w.namelessType(typ)))}, nil
 		}
 	}
-
 	t := w.curPackage.findType(name)
 	if t != nil {
 		typ := w.findStructFieldType(t, sel)
@@ -2917,7 +2962,7 @@ func (w *Walker) varValueType(vi ast.Expr, index int) (string, error) {
 		case *ast.CompositeLit:
 			typ, err := w.varValueType(st.Type, 0)
 			if err == nil {
-				log.Println(typ, v.Sel.Name)
+				//log.Println(typ, v.Sel.Name)
 				t, err := w.varSelectorType(typ, v.Sel.Name)
 				if err == nil {
 					return t, nil
