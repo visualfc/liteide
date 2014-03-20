@@ -304,7 +304,11 @@ void LiteEditor::createActions()
     actionContext->regAction(m_wordWrapAct,"WordWrap","");
 
     m_codeCompleteAct = new QAction(tr("Code Complete"),this);
+#ifdef Q_OS_MAC
+    actionContext->regAction(m_codeCompleteAct,"CodeComplete","Meta+Space");
+#else
     actionContext->regAction(m_codeCompleteAct,"CodeComplete","Ctrl+Space");
+#endif
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
