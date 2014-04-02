@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>655</width>
-    <height>380</height>
+    <height>414</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -99,6 +99,22 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
+          <string>Monitoring files for modifications</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="fileWatcherAutoReloadCheckBox">
+            <property name="text">
+             <string>Auto reload or close editor buffer,if underlying file is modified/deleted.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Recent Files</string>
@@ -154,7 +170,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_3">
          <property name="title">
-          <string>Generic</string>
+          <string>Session</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
@@ -165,27 +181,58 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="autoCloseProjecEditorsCheckBox">
-            <property name="text">
-             <string>Close associated editor windows when closing a project</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="startupReloadFoldersCheckBox">
+              <property name="text">
+               <string>Reload folders on startup</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_5">
-         <property name="title">
-          <string>Monitoring files for modifications</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QCheckBox" name="autoReloadFileCheck">
-            <property name="text">
-             <string>Auto reload or close editor buffer,if underlying file is modified/deleted.</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="startupReloadFilesCheckBox">
+              <property name="text">
+               <string>Reload files on startup</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

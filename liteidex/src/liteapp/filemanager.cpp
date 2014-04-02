@@ -96,7 +96,7 @@ bool FileManager::initWithApp(IApplication *app)
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
     connect(m_folderWidget,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 
-    m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+    m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
 
     return true;
 }
@@ -530,7 +530,7 @@ void FileManager::applyOption(QString id)
         return;
     }
 
-    m_autoReloadFile = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
+    m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
     m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
     foreach (QString scheme, this->schemeList()) {
         QString key = schemeKey(scheme);
@@ -589,7 +589,7 @@ void FileManager::openRecentFile()
     if (scheme == "file" || scheme == "proj") {
         this->openFile(fileName);
     } else if (scheme == "folder") {
-        this->openFolderInNewWindow(fileName);
+        this->addFolderList(fileName);
     } else {
         this->openProjectScheme(fileName,scheme);
     }
@@ -705,7 +705,7 @@ begin:
                         // Otherwise, apply the default action : close the editor.
                         int ret = QMessageBox::Yes;
                         if (lastCloseRet != QMessageBox::YesToAll) {
-                            if (m_autoReloadFile) {
+                            if (m_fileWatcherAutoReload) {
                                 if (editor->isModified() ) {
                                     QString text = QString(tr("%1\nThis file has been deleted from the drive,\n"
                                                               "but you have unsaved modifications in your LiteIDE editor.\n"
@@ -742,7 +742,7 @@ begin:
                     if (lastModified > modified) {
                         int ret = QMessageBox::Yes;
                         if (lastReloadRet != QMessageBox::YesToAll) {
-                            if (m_autoReloadFile) {
+                            if (m_fileWatcherAutoReload) {
                                 if (editor->isModified()) {
                                     QString text = QString(tr("%1\nThis file has been modified on the drive,\n"
                                         "but you have unsaved modifications in your LiteIDE editor.\n"

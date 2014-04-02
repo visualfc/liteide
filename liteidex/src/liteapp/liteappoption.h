@@ -52,6 +52,7 @@ public slots:
     void resetShortcuts();
     void importShortcuts();
     void exportShortcuts();
+    void autoLoadLastSessionToggled(bool b);
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;

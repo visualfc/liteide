@@ -510,8 +510,7 @@ QString LiteApp::ideCopyright() const
     "2011-2014(c)\n"
     "visualfc@gmail.com\n"
     "\n"
-    "https://github.com/visualfc/liteide\n"
-    "https://code.google.com/p/golangide";
+    "https://github.com/visualfc/liteide\n";
     return s_info;
 }
 
@@ -805,7 +804,10 @@ void LiteApp::loadSession(const QString &name)
     QString editorName = m_settings->value(session+"_cureditor").toString();
     QStringList fileList = m_settings->value(session+"_alleditor").toStringList();
     QStringList folderList = m_settings->value(session+"_folderList").toStringList();
-    m_fileManager->setFolderList(folderList);
+
+    if (m_settings->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool()) {
+        m_fileManager->setFolderList(folderList);
+    }
 
     if (!projectName.isEmpty()) {
         if (scheme.isEmpty()) {
@@ -817,13 +819,15 @@ void LiteApp::loadSession(const QString &name)
         m_projectManager->closeProject();
     }
 
-    foreach(QString fileName, fileList) {
-        m_fileManager->openEditor(fileName,false);
-    }
-    if (!editorName.isEmpty()) {
-        m_fileManager->openEditor(editorName,true);
-    } else if (!fileList.isEmpty()){
-        m_fileManager->openEditor(fileList.last(),true);
+    if (m_settings->value(LITEAPP_STARTUPRELOADFILES,true).toBool()) {
+        foreach(QString fileName, fileList) {
+            m_fileManager->openEditor(fileName,false);
+        }
+        if (!editorName.isEmpty()) {
+            m_fileManager->openEditor(editorName,true);
+        } else if (!fileList.isEmpty()){
+            m_fileManager->openEditor(fileList.last(),true);
+        }
     }
 }
 
