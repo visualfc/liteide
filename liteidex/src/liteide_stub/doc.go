@@ -260,7 +260,7 @@ type File struct {
 	urlPrefix  string // Start of corresponding URL for golang.org or godoc.org.
 	file       *ast.File
 	comments   ast.CommentMap
-	objs       map[*ast.Ident]types.Object
+	defs       map[*ast.Ident]types.Object
 	doPrint    bool
 	found      bool
 	allFiles   []*File // All files in the package.
@@ -329,18 +329,13 @@ func doPackage(pkg *ast.Package, fset *token.FileSet, ident string) {
 		return
 	}
 
-	// Type check to build map from name to type.
-	defs := make(map[*ast.Ident]types.Object)
-	uses := make(map[*ast.Ident]types.Object)
-
 	// By providing the Context with our own error function, it will continue
 	// past the first error. There is no need for that function to do anything.
 	config := types.Config{
 		Error: func(error) {},
 	}
 	info := &types.Info{
-		Defs: defs,
-		Uses: uses,
+		Defs: make(map[*ast.Ident]types.Object),
 	}
 	path := ""
 	var astFiles []*ast.File
@@ -358,7 +353,7 @@ func doPackage(pkg *ast.Package, fset *token.FileSet, ident string) {
 	}
 	for _, file := range files {
 		file.doPrint = true
-		file.objs = uses
+		file.defs = info.Defs
 		if packageFlag {
 			file.pkgComments()
 		} else {
@@ -408,10 +403,10 @@ func (f *File) Visit(node ast.Node) ast.Visitor {
 							}
 						}
 					}
-					if f.doPrint && f.objs[spec.Name] != nil && f.objs[spec.Name].Type() != nil {
-						ms := types.NewMethodSet(f.objs[spec.Name].Type()) //.Type().MethodSet()
+					if f.doPrint && f.defs[spec.Name] != nil && f.defs[spec.Name].Type() != nil {
+						ms := types.NewMethodSet(f.defs[spec.Name].Type()) //.Type().MethodSet()
 						if ms.Len() == 0 {
-							ms = types.NewMethodSet(types.NewPointer(f.objs[spec.Name].Type())) //.MethodSet()
+							ms = types.NewMethodSet(types.NewPointer(f.defs[spec.Name].Type())) //.MethodSet()
 						}
 						f.methodSet(ms)
 					}
