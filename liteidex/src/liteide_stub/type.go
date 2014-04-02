@@ -35,9 +35,9 @@ liteide_stub type -v ...
 
 var cmdType = &Command{
 	Run:       runType,
-	UsageLine: "types",
-	Short:     "golang types util",
-	Long:      `golang types util`,
+	UsageLine: "type",
+	Short:     "golang type util",
+	Long:      `golang type util`,
 }
 
 var (
