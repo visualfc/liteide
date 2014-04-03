@@ -71,9 +71,6 @@ public slots:
     void appLoaded();
     void toggledApiSearchWindow(bool);
     void toggledDocSearchWindow(bool);
-    void editorFindDoc();
-    void editorJumpToDecl();
-    void editorCreated(LiteApi::IEditor *editor);
     void loadEnv();
     void currentEnvChanged(LiteApi::IEnv*);
     void listCmd();
@@ -83,12 +80,6 @@ public slots:
     void godocFindPackage(QString name);
     void godocOutput(QByteArray,bool);
     void godocFinish(bool,int,QString);
-    void lookupStarted();
-    void lookupOutput(QByteArray,bool);
-    void lookupFinish(bool,int,QString);
-    void helpStarted();
-    void helpOutput(QByteArray,bool);
-    void helpFinish(bool,int,QString);
     void highlighted(const QUrl &url);
     void documentLoaded();
     void anchorChanged(const QString &anchor);
@@ -112,16 +103,9 @@ protected:
     QComboBox *m_godocFindComboBox;
     ProcessEx  *m_findProcess;
     ProcessEx  *m_godocProcess;
-    ProcessEx  *m_lookupProcess;
-    ProcessEx  *m_helpProcess;
     QAction *m_browserAct;
     QString m_goroot;
     QByteArray  m_godocData;
-    QByteArray  m_lookupData;
-    QByteArray  m_srcData;
-    QTextCursor m_lastCursor;
-    LiteApi::IEditor *m_lastEditor;
-    QByteArray  m_helpData;
     QByteArray  m_findData;
     QString  m_templateData;
     LiteApi::IEnvManager *m_envManager;
@@ -130,8 +114,6 @@ protected:
     QMap<QString,QString> m_pathFileMap;
     QAction *m_apiSearchWindowAct;
     QAction *m_docSearchWindowAct;
-    QAction *m_findDocAct;
-    QAction *m_jumpDeclAct;
     QMenu   *m_configMenu;
     QString m_docFind;
 };

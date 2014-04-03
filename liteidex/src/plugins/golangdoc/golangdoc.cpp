@@ -81,74 +81,14 @@ void ListViewEx::currentChanged(const QModelIndex &current, const QModelIndex&)
     emit currentIndexChanged(current);
 }
 
-
 GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IGolangDoc(parent),
     m_liteApp(app)
 {
     m_findProcess = new ProcessEx(this);
     m_godocProcess = new ProcessEx(this);
-    //m_goapiProcess = new ProcessEx(this);
-    //m_findDocProcess = new ProcessEx(this);
-    m_lookupProcess = new ProcessEx(this);
-    m_helpProcess = new ProcessEx(this);
-
-    m_lastEditor = 0;
-    //m_bApiLoaded = false;
-
-//    m_widget = new QWidget;
-//    m_findResultModel = new QStringListModel(this);
-//    m_findFilterModel = new QSortFilterProxyModel(this);
-//    m_findFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-//    m_findFilterModel->setSourceModel(m_findResultModel);
-
-//    m_findResultListView = new ListViewEx;
-//    m_findResultListView->setEditTriggers(0);
-//    m_findResultListView->setModel(m_findFilterModel);
-
-//    m_findDocEdit = new Utils::FancyLineEdit;
-//    QIcon icon = QIcon::fromTheme(m_findDocEdit->layoutDirection() == Qt::LeftToRight ?
-//                     QLatin1String("edit-clear-locationbar-rtl") :
-//                     QLatin1String("edit-clear-locationbar-ltr"),
-//                     QIcon::fromTheme(QLatin1String("edit-clear"), QIcon(QLatin1String("icon:images/editclear.png"))));
-
-//    m_findDocEdit->setButtonPixmap(Utils::FancyLineEdit::Right, icon.pixmap(16));
-//    m_findDocEdit->setButtonVisible(Utils::FancyLineEdit::Right, true);
-//    m_findDocEdit->setPlaceholderText(tr("Search"));
-//    m_findDocEdit->setButtonToolTip(Utils::FancyLineEdit::Right, tr("Clear Search"));
-//    m_findDocEdit->setAutoHideButton(Utils::FancyLineEdit::Right, true);
-//    connect(m_findDocEdit, SIGNAL(rightButtonClicked()), m_findDocEdit, SLOT(clear()));
-
-//    m_tagInfo = new QLabel;
-//    m_tagInfo->setWordWrap(true);
-//    //m_tagInfo->setScaledContents(true);
-
-//    //m_golangApiThread = new GolangApiThread(this);
-
-//    QVBoxLayout *mainLayout = new QVBoxLayout;
-//    mainLayout->setMargin(1);
-//    mainLayout->setSpacing(1);
-
-//    QHBoxLayout *findLayout = new QHBoxLayout;
-//    findLayout->setMargin(2);
-//    findLayout->addWidget(new QLabel("Find"));
-//    findLayout->addWidget(m_findDocEdit);
-//    //findLayout->addWidget(findBtn);
-
-//    mainLayout->addLayout(findLayout);
-//    mainLayout->addWidget(m_findResultListView);
-//    mainLayout->addWidget(m_tagInfo);
-//    m_widget->setLayout(mainLayout);
-
-//    m_rebuildApi = new QAction(tr("Rebuild Api"),this);
-//    m_configMenu = new QMenu(tr("Config"),m_widget);
-//    m_configMenu->setIcon(QIcon("icon:images/config.png"));
-//    m_configMenu->addAction(m_rebuildApi);
 
     m_findDocWidget = new FindDocWidget(m_liteApp);
-    //connect(m_widget,SIGNAL(openApiUrl(QStringList)),this,SLOT(openApiUrl(QStringList)));
-    //QList<QAction*> actions;
-//    actions << m_configMenu->menuAction();
     m_docSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findDocWidget,"godoc/search",tr("Golang Doc Search"),true);
 
     m_findApiWidget = new FindApiWidget(m_liteApp);
@@ -171,47 +111,18 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_browserAct = m_liteApp->editorManager()->registerBrowser(m_docBrowser);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_browserAct);
 
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoDoc");
-
-    m_findDocAct = new QAction(tr("View Expression Information"),this);
-    actionContext->regAction(m_findDocAct,"ViewInfo",QKeySequence::HelpContents);
-
-    m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
-    actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
-
     connect(m_apiSearchWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledApiSearchWindow(bool)));
     connect(m_docSearchWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledDocSearchWindow(bool)));
-    connect(m_findDocAct,SIGNAL(triggered()),this,SLOT(editorFindDoc()));
-    connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
-    //connect(m_golangApiThread,SIGNAL(finished()),this,SLOT(loadApiFinished()));
 
     connect(m_docBrowser,SIGNAL(requestUrl(QUrl)),this,SLOT(openUrl(QUrl)));
     connect(m_docBrowser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlighted(QUrl)));
     connect(m_docBrowser,SIGNAL(documentLoaded()),this,SLOT(documentLoaded()));
     connect(m_docBrowser,SIGNAL(anchorChanged(QString)),this,SLOT(anchorChanged(QString)));
     connect(m_godocFindComboBox,SIGNAL(activated(QString)),this,SLOT(godocFindPackage(QString)));
-    //connect(m_findEdit,SIGNAL(filterChanged(QString)),m_findFilterModel,setFilterFixedString(QString)));
-    //connect(m_findEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterTextChanged(QString)));//setFilterFixedString(QString)));
-    //connect(m_findDocEdit,SIGNAL(returnPressed()),this,SLOT(findDoc()));
-    //connect(m_findEdit,SIGNAL(activated(QString)),this,SLOT(findPackage(QString)));
     connect(m_godocProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(godocOutput(QByteArray,bool)));
     connect(m_godocProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(godocFinish(bool,int,QString)));
-    //connect(m_findDocProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDocOutput(QByteArray,bool)));
-    //connect(m_findDocProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDocFinish(bool,int,QString)));
-    connect(m_lookupProcess,SIGNAL(started()),this,SLOT(lookupStarted()));
-    connect(m_lookupProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(lookupOutput(QByteArray,bool)));
-    connect(m_lookupProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(lookupFinish(bool,int,QString)));
-    connect(m_helpProcess,SIGNAL(started()),this,SLOT(helpStarted()));
-    connect(m_helpProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(helpOutput(QByteArray,bool)));
-    connect(m_helpProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(helpFinish(bool,int,QString)));
     connect(m_findProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findOutput(QByteArray,bool)));
     connect(m_findProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findFinish(bool,int,QString)));
-//    connect(m_findResultListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickListView(QModelIndex)));
-//    connect(m_findResultListView,SIGNAL(currentIndexChanged(QModelIndex)),this,SLOT(currentIndexChanged(QModelIndex)));
-    //connect(m_findAct,SIGNAL(triggered()),this,SLOT(findPackage()));
-    //connect(m_listPkgAct,SIGNAL(triggered()),this,SLOT(listPkg()));
-    //connect(m_listCmdAct,SIGNAL(triggered()),this,SLOT(listCmd()));
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
@@ -252,90 +163,6 @@ GolangDoc::~GolangDoc()
     delete m_findApiWidget;
 }
 
-void GolangDoc::editorJumpToDecl()
-{
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (!textEditor) {
-        return;
-    }
-    //m_liteApp->editorManager()->saveEditor(editor,false);
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    m_srcData = textEditor->utf8Data();
-    m_lookupData.clear();
-    QFileInfo info(textEditor->filePath());
-    m_lookupProcess->setWorkingDirectory(info.path());
-    m_lookupProcess->startEx(cmd,QString("api -cursor_std -cursor_info %1:%2 .").
-                             arg(info.fileName()).
-                             arg(textEditor->utf8Position()));
-}
-
-void GolangDoc::editorFindDoc()
-{
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (!textEditor) {
-        return;
-    }
-    QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
-    if (!ed) {
-        return;
-    }
-    //m_liteApp->editorManager()->saveEditor(editor,false);
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    m_srcData = textEditor->utf8Data();
-    m_lastCursor = ed->textCursor();
-    m_lastEditor = editor;
-    m_helpData.clear();
-    QFileInfo info(textEditor->filePath());
-    m_helpProcess->setWorkingDirectory(info.path());
-    m_helpProcess->startEx(cmd,QString("api -cursor_std -cursor_info %1:%2 .").
-                             arg(info.fileName()).
-                             arg(textEditor->utf8Position()));
-}
-
-void GolangDoc::editorCreated(LiteApi::IEditor *editor)
-{
-    if (!editor) {
-        return;
-    }
-    if (editor->mimeType() != "text/x-gosrc") {
-        return;
-    }
-    QMenu *menu = LiteApi::getEditMenu(editor);
-    if (menu) {
-        menu->addSeparator();
-        menu->addAction(m_findDocAct);
-        menu->addAction(m_jumpDeclAct);
-    }
-    menu = LiteApi::getContextMenu(editor);
-    if (menu) {
-        menu->addSeparator();
-        menu->addAction(m_findDocAct);
-        menu->addAction(m_jumpDeclAct);
-    }
-}
-
-//void GolangDoc::loadApi()
-//{
-//    m_bApiLoaded = true;
-//    m_goapiData.clear();
-
-//    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-//    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
-//    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
-//    QStringList args;
-//    args << "api";
-//    if (defctx) {
-//        args << "-default_ctx=true";
-//    }
-//    if (std) {
-//        args << "std";
-//    } else {
-//        args << "all";
-//    }
-//    m_goapiProcess->startEx(cmd,args.join(" "));
-//}
 
 void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 {
@@ -355,9 +182,6 @@ void GolangDoc::loadEnv()
 
     m_findProcess->setEnvironment(env.toStringList());
     m_godocProcess->setEnvironment(env.toStringList());
-    //m_goapiProcess->setEnvironment(env.toStringList());
-    m_lookupProcess->setEnvironment(env.toStringList());
-    m_helpProcess->setEnvironment(env.toStringList());
 
     if (!m_godocCmd.isEmpty()) {
         m_liteApp->appendLog("GolangDoc",QString("found godoc at %1").arg(m_godocCmd),false);
@@ -973,121 +797,6 @@ void GolangDoc::openApiUrl(QStringList urlList)
         activeBrowser();
         QUrl url(QString("pdoc:%1").arg(text));
         openUrl(url);
-    }
-}
-
-//void GolangDoc::filterTextChanged(QString str)
-//{
-//    if (str.isEmpty()) {
-//        return;
-//    }
-//    m_findFilterModel->setFilterFixedString(str);
-//    m_findResultListView->verticalScrollBar()->setValue(0);
-//    if (m_findFilterModel->rowCount() > 0) {
-//        m_findResultListView->setCurrentIndex(m_findFilterModel->index(0,0));
-//    }
-//}
-
-//void GolangDoc::findDoc()
-//{
-
-//}
-
-//void GolangDoc::goapiOutput(QByteArray data,bool bError)
-//{
-//    if (bError) {
-//        return;
-//    }
-//    m_goapiData.append(data);
-//}
-
-//void GolangDoc::goapiFinish(bool error,int code,QString)
-//{
-//    if (!error && code == 0) {
-//        m_liteApp->globalCookie().insert("goalngdoc.goapi.data",m_goapiData);
-//        m_golangApiThread->loadData(m_goapiData);
-//    }
-//}
-
-//void GolangDoc::loadApiFinished()
-//{
-//    m_findResultModel->setStringList(m_golangApiThread->all());
-//}
-
-void GolangDoc::lookupStarted()
-{
-    m_lookupProcess->write(m_srcData);
-    m_lookupProcess->closeWriteChannel();
-}
-
-void GolangDoc::lookupOutput(QByteArray data, bool bStdErr)
-{
-    if (!bStdErr) {
-        m_lookupData.append(data);
-    }
-}
-
-void GolangDoc::lookupFinish(bool error, int code, QString)
-{
-    if (!error && code == 0) {
-        QTextStream s(&m_lookupData);
-        while (!s.atEnd()) {
-            QString line = s.readLine();
-            if (line.startsWith("pos,")) {
-                QString info = line.mid(4).trimmed();
-                QRegExp reg(":(\\d+):(\\d+)");
-                int pos = reg.lastIndexIn(info);
-                if (pos >= 0) {
-                    QString fileName = info.left(pos);
-                    int line = reg.cap(1).toInt();
-                    int col = reg.cap(2).toInt();                    
-                    LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1);
-                }
-            }
-        }
-    }
-}
-
-void GolangDoc::helpStarted()
-{
-    m_helpProcess->write(m_srcData);
-    m_helpProcess->closeWriteChannel();
-}
-
-void GolangDoc::helpOutput(QByteArray data, bool bStdErr)
-{
-    if (!bStdErr) {
-        m_helpData.append(data);
-    }
-}
-
-void GolangDoc::helpFinish(bool error, int code, QString)
-{
-    if (!error && code == 0) {
-        QTextStream s(&m_helpData);
-        QString info;
-        while (!s.atEnd()) {
-            QString line = s.readLine();
-            if (line.startsWith("help,")) {
-                //m_toolAct->setChecked(true);
-                QString help = line.mid(5).trimmed();
-                //TODO FIXME
-                //m_findDocEdit->setText(help);
-            } else if (line.startsWith("info,")) {
-                info = line.mid(5).trimmed();
-            }
-        }
-        if (!info.isEmpty()) {
-            LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-            if (editor && editor == m_lastEditor) {
-                QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
-                if (ed && ed->textCursor() == m_lastCursor) {
-                    QRect rc = ed->cursorRect(m_lastCursor);
-                    QPoint pt = ed->mapToGlobal(rc.topRight());
-                    QToolTip::showText(pt,info,ed);
-                }
-            }
-        }
     }
 }
 
