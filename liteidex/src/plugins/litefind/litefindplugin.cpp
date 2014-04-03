@@ -24,6 +24,7 @@
 #include "litefindplugin.h"
 #include "findeditor.h"
 #include "filesearch.h"
+#include "filesearchmanager.h"
 
 #include <QMenu>
 #include <QAction>
@@ -39,16 +40,12 @@
 //lite_memory_check_end
 
 LiteFindPlugin::LiteFindPlugin()
-    : m_findEditor(0),
-      m_fileSearch(0)
+    : m_findEditor(0)
 {
 }
 
 LiteFindPlugin::~LiteFindPlugin()
 {
-    if (m_fileSearch) {
-        delete m_fileSearch;
-    }
 }
 
 bool LiteFindPlugin::load(LiteApi::IApplication *app)
@@ -99,24 +96,19 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     connect(m_findNextAct,SIGNAL(triggered()),m_findEditor,SLOT(findNext()));
     connect(m_findPrevAct,SIGNAL(triggered()),m_findEditor,SLOT(findPrev()));
     connect(m_replaceAct,SIGNAL(triggered()),this,SLOT(replace()));
-    connect(m_fileSearchAct,SIGNAL(triggered()),this,SLOT(fileSearch()));
 
     connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFind()));
-    connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(hideFileSearch()));
 
+    FileSearchManager *manager = new FileSearchManager(m_liteApp,this);
+    FileSearch *fileSearch = new FileSearch(m_liteApp,manager);
+    manager->addFileSearch(fileSearch);
+    connect(m_fileSearchAct,SIGNAL(triggered()),manager,SLOT(newSearch()));
     return true;
 }
 
 void LiteFindPlugin::hideFind()
 {
     m_findEditor->setVisible(false);
-}
-
-void LiteFindPlugin::hideFileSearch()
-{
-    if (m_fileSearch) {
-        m_fileSearch->setVisible(false);
-    }
 }
 
 void LiteFindPlugin::find()
@@ -129,14 +121,6 @@ void LiteFindPlugin::replace()
 {
     m_findEditor->setReplaceMode(true);
     m_findEditor->setVisible(true);
-}
-
-void LiteFindPlugin::fileSearch()
-{
-    if (m_fileSearch == 0) {
-        m_fileSearch = new FileSearch(m_liteApp,this);
-    }
-    m_fileSearch->setVisible(true);
 }
 
 #if QT_VERSION < 0x050000

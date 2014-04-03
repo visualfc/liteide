@@ -25,27 +25,11 @@
 #define FILESEARCH_H
 
 #include "liteapi/liteapi.h"
+#include "litefindapi/litefindapi.h"
 #include "textoutput/terminaledit.h"
 #include "textoutput/textoutput.h"
 #include <QStringList>
 #include <QThread>
-
-class FileSearchResult
-{
-public:
-    FileSearchResult() {}
-    FileSearchResult(QString fileName, int lineNumber, QString matchingLine)
-            : fileName(fileName),
-            lineNumber(lineNumber),
-            matchingLine(matchingLine)
-    {
-    }
-    QString fileName;
-    int lineNumber;
-    QString matchingLine;
-};
-
-Q_DECLARE_METATYPE(FileSearchResult)
 
 class FindThread : public QThread
 {
@@ -59,7 +43,7 @@ protected:
     void findDir(const QRegExp &reg, const QString &path);
     void findFile(const QRegExp &reg, const QString &fileName);
 signals:
-    void findResult(const FileSearchResult &result);
+    void findResult(const LiteApi::FileSearchResult &result);
 public:
     bool useRegExp;
     bool matchWord;
@@ -92,26 +76,28 @@ protected:
 };
 
 
-class FileSearch : QObject
+class FileSearch : public LiteApi::IFileSearch
 {
     Q_OBJECT
 public:
     FileSearch(LiteApi::IApplication *app, QObject *parent = 0);
     ~FileSearch();
     void setVisible(bool b);
+    virtual QString mimeType() const;
+    virtual QString displayName() const;
+    virtual QWidget* widget() const;
+    virtual void start();
+    virtual void cancel();
+    virtual void activate();
+    virtual QString searchText() const;
 public slots:
     void findInFiles();
-    void findResult(const FileSearchResult &result);
-    void findStarted();
-    void findFinished();
     void dbclickOutput(const QTextCursor &cur);
     void browser();
     void currentDir();
 protected:
     LiteApi::IApplication *m_liteApp;
     FindThread *m_thread;
-    QAction     *m_outputAct;
-    QTabWidget  *m_tab;
     QWidget     *m_findWidget;
     QComboBox   *m_findCombo;
     QComboBox   *m_findPathCombo;
@@ -122,8 +108,6 @@ protected:
     QCheckBox   *m_useRegexCheckBox;
     QPushButton *m_findButton;
     QPushButton *m_stopButton;
-    ResultTextEdit *m_resultOutput;
-    QList<FileSearchResult> m_resultList;
 };
 
 //static QList<FileSearchResult> findInFile(const QString &text, bool useRegExp, bool matchWord, bool matchCase, const QString &fileName);

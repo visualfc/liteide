@@ -58,7 +58,7 @@ func init() {
 	cmdType.Flag.StringVar(&typeFileCursor, "cursor", "", "file cursor \"file.go:pos\"")
 	cmdType.Flag.BoolVar(&typeFileCursorStdin, "cursor_stdin", false, "cursor file use stdin")
 	cmdType.Flag.BoolVar(&typeFindInfo, "info", false, "find cursor info")
-	cmdType.Flag.BoolVar(&typeFindDef, "def", false, "find cursor def")
+	cmdType.Flag.BoolVar(&typeFindDef, "def", false, "find cursor define")
 	cmdType.Flag.BoolVar(&typeFindUse, "use", false, "find cursor usages")
 }
 

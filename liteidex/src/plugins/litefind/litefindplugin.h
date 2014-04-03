@@ -42,12 +42,9 @@ public slots:
     void find();
     void replace();
     void hideFind();
-    void hideFileSearch();
-    void fileSearch();
 protected:
     LiteApi::IApplication *m_liteApp;
     FindEditor *m_findEditor;
-    FileSearch  *m_fileSearch;
     QAction *m_findAct;
     QAction *m_findNextAct;
     QAction *m_findPrevAct;

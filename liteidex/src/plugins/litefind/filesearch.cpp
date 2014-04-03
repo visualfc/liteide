@@ -60,7 +60,7 @@ FindThread::FindThread(QObject *parent) :
     matchCase(true),
     findSub(true)
 {
-    qRegisterMetaType<FileSearchResult>("FileSearchResult");
+    qRegisterMetaType<LiteApi::FileSearchResult>("LiteApi::FileSearchResult");
 }
 
 void FindThread::findDir(const QRegExp &reg, const QString &path)
@@ -84,14 +84,10 @@ void FindThread::findDir(const QRegExp &reg, const QString &path)
             }
         }
     }
-
-
 }
 
 void FindThread::findFile(const QRegExp &reg, const QString &fileName)
 {
-    QList<FileSearchResult> results;
-
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
         return;
@@ -103,19 +99,15 @@ void FindThread::findFile(const QRegExp &reg, const QString &fileName)
     int lineNr = 1;
     while (!stream.atEnd()) {
         line = stream.readLine();
-        int pos = reg.indexIn(line);
-        if (pos >= 0) {
-            emit findResult(FileSearchResult(fileName, lineNr, line));
-        }
-        /*
+//        int pos = reg.indexIn(line);
+//        if (pos >= 0) {
+//            emit findResult(LiteApi::FileSearchResult(fileName, line,lineNr, line,pos,reg.matchedLength()));
+//        }
         int pos = 0;
         while ((pos = reg.indexIn(line, pos)) != -1) {
-            emit findResult(FileSearchResult(fileName, lineNr, line,
-                                          pos, reg.matchedLength(),
-                                          reg.capturedTexts()));
+            emit findResult(LiteApi::FileSearchResult(fileName, line,lineNr,pos, reg.matchedLength()));
             pos += reg.matchedLength();
         }
-        */
         lineNr++;
         if (!finding) {
             break;
@@ -184,12 +176,10 @@ void ResultTextEdit::mouseDoubleClickEvent(QMouseEvent *e)
 }
 
 FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
-    QObject(parent),
+    LiteApi::IFileSearch(parent),
     m_liteApp(app)
 {
     m_thread = new FindThread;
-
-    m_tab = new QTabWidget;
 
     m_findWidget = new QWidget;
 
@@ -255,18 +245,8 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
 
     m_findWidget->setLayout(topLayout);
 
-    m_resultOutput = new ResultTextEdit;
-    m_resultOutput->setReadOnly(true);
-
-    m_tab->addTab(m_findWidget,tr("Search"));
-    m_tab->addTab(m_resultOutput,tr("Results"));
-
     QAction *clearAct = new QAction(tr("Clear"),this);
     clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
-
-    m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,
-                                                                m_tab,"filesearch",tr("File Search"),true,
-                                                                QList<QAction*>() << clearAct);
 
     m_findPathCombo->setEditText(QDir::homePath());
     m_liteApp->settings()->beginGroup("findfiles");
@@ -278,13 +258,11 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
 
     connect(browserBtn,SIGNAL(clicked()),this,SLOT(browser()));
     connect(currentBtn,SIGNAL(clicked()),this,SLOT(currentDir()));
-    connect(clearAct,SIGNAL(triggered()),m_resultOutput,SLOT(clear()));
     connect(m_findButton,SIGNAL(clicked()),this,SLOT(findInFiles()));
     connect(m_stopButton,SIGNAL(clicked()),m_thread,SLOT(stop()));
-    connect(m_thread,SIGNAL(started()),this,SLOT(findStarted()));
-    connect(m_thread,SIGNAL(finished()),this,SLOT(findFinished()));
-    connect(m_thread,SIGNAL(findResult(FileSearchResult)),this,SLOT(findResult(FileSearchResult)));
-    connect(m_resultOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickOutput(QTextCursor)));
+    connect(m_thread,SIGNAL(started()),this,SIGNAL(findStarted()));
+    connect(m_thread,SIGNAL(finished()),this,SIGNAL(findFinished()));
+    connect(m_thread,SIGNAL(findResult(LiteApi::FileSearchResult)),this,SIGNAL(findResult(LiteApi::FileSearchResult)));
     connect(m_findCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findInFiles()));
 }
 
@@ -301,14 +279,13 @@ FileSearch::~FileSearch()
         m_thread->stop();
         delete m_thread;
     }
-    if (m_tab) {
-        delete m_tab;
+    if (m_findWidget) {
+        delete m_findWidget;
     }
 }
 
 void FileSearch::setVisible(bool b)
 {
-    m_outputAct->setChecked(b);
     if (b) {
         LiteApi::IProject *proj = m_liteApp->projectManager()->currentProject();
         if (proj && !LiteApi::mimeIsFolder(proj->mimeType())) {
@@ -318,7 +295,6 @@ void FileSearch::setVisible(bool b)
             else
                 m_findPathCombo->setEditText(info.path());
         }
-        m_tab->setCurrentWidget(m_findWidget);
         m_findCombo->setFocus();
         m_findCombo->lineEdit()->selectAll();
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -344,6 +320,70 @@ void FileSearch::setVisible(bool b)
     }
 }
 
+QString FileSearch::mimeType() const
+{
+    return "search/filesystem";
+}
+
+QString FileSearch::displayName() const
+{
+    return tr("Files on File System");
+}
+
+QWidget *FileSearch::widget() const
+{
+    return m_findWidget;
+}
+
+void FileSearch::start()
+{
+    this->findInFiles();
+}
+
+void FileSearch::cancel()
+{
+    m_thread->stop();
+}
+
+void FileSearch::activate()
+{
+    LiteApi::IProject *proj = m_liteApp->projectManager()->currentProject();
+    if (proj && !LiteApi::mimeIsFolder(proj->mimeType())) {
+        QFileInfo info(proj->filePath());
+        if (info.isDir())
+            m_findPathCombo->setEditText(info.filePath());
+        else
+            m_findPathCombo->setEditText(info.path());
+    }
+    m_findCombo->setFocus();
+    m_findCombo->lineEdit()->selectAll();
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        QString text;
+        QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+        if (ed) {
+            text = ed->textCursor().selectedText();
+        } else {
+            QTextBrowser *ed = LiteApi::findExtensionObject<QTextBrowser*>(editor,"LiteApi.QTextBrowser");
+            if (ed) {
+                text = ed->textCursor().selectedText();
+            }
+        }
+        if (!text.isEmpty()) {
+            this->m_findCombo->setEditText(text);
+        }
+        if (editor && !editor->filePath().isEmpty()) {
+            QFileInfo info(editor->filePath());
+            m_findPathCombo->setEditText(info.path());
+        }
+    }
+}
+
+QString FileSearch::searchText() const
+{
+    return m_thread->findText;
+}
+
 void FileSearch::findInFiles()
 {
     if (m_thread->isRunning()) {
@@ -361,9 +401,6 @@ void FileSearch::findInFiles()
     m_thread->matchWord = m_matchWordCheckBox->isChecked();
     m_thread->findSub = m_findSubCheckBox->isChecked();
     m_thread->nameFilter = m_filterCombo->currentText().split(";");
-    m_resultOutput->clear();
-    m_resultOutput->appendPlainText(QString(tr("Searching for '%1'...").arg(m_findCombo->currentText())));
-    m_resultList.clear();
     m_thread->start(QThread::LowPriority);
     if (m_findCombo->findText(text) < 0) {
         m_findCombo->addItem(text);
@@ -371,13 +408,6 @@ void FileSearch::findInFiles()
     if (m_findPathCombo->findText(path) < 0) {
         m_findPathCombo->addItem(path);
     }
-}
-
-void FileSearch::findStarted()
-{
-    m_findButton->setEnabled(false);
-    m_stopButton->setEnabled(true);
-    m_tab->setCurrentWidget(m_resultOutput);
 }
 
 void FileSearch::currentDir()
@@ -410,63 +440,40 @@ void FileSearch::browser()
     }
 }
 
-void FileSearch::findFinished()
-{
-    m_findButton->setEnabled(true);
-    m_stopButton->setEnabled(false);
-    m_resultOutput->appendPlainText(QString(tr("%1 occurrence(s) have been found.").arg(m_resultList.count())));
-}
-
-void FileSearch::findResult(const FileSearchResult &result)
-{
-    QString text = result.matchingLine;
-    int max = text.length();
-    if (max > 128) {
-        max = 128;
-    }
-    for (int i = 0; i < 128; i++) {
-        if (!text[i].isPrint() && !text[i].isSpace()) {
-            text[i] = '.';
-        }
-    }
-    m_resultOutput->appendPlainText(QString("%1:%2:%3").arg(result.fileName).arg(result.lineNumber).arg(text.left(max)));
-    m_resultList.append(result);
-}
-
 void FileSearch::dbclickOutput(const QTextCursor &cur)
 {
-    int index = cur.blockNumber()-1;
-    if (index < 0 || index >= m_resultList.count()) {
-        return;
-    }
-    QString fileName = m_resultList.at(index).fileName;
-    int line = m_resultList.at(index).lineNumber;
-    /*
-    QRegExp rep("([:-\\w\\d_\\\\/\\.]+):(\\d+):");
+//    int index = cur.blockNumber()-1;
+//    if (index < 0 || index >= m_resultList.count()) {
+//        return;
+//    }
+//    QString fileName = m_resultList.at(index).fileName;
+//    int line = m_resultList.at(index).lineNumber;
+//    /*
+//    QRegExp rep("([:-\\w\\d_\\\\/\\.]+):(\\d+):");
 
-    int index = rep.indexIn(cur.block().text());
-    if (index < 0)
-        return;
-    QStringList capList = rep.capturedTexts();
+//    int index = rep.indexIn(cur.block().text());
+//    if (index < 0)
+//        return;
+//    QStringList capList = rep.capturedTexts();
 
-    qDebug() << cur.block().text() << capList;
+//    qDebug() << cur.block().text() << capList;
 
-    if (capList.count() < 3)
-        return;
-    QString fileName = capList[1];
-    QString fileLine = capList[2];
+//    if (capList.count() < 3)
+//        return;
+//    QString fileName = capList[1];
+//    QString fileLine = capList[2];
 
-    bool ok = false;
-    int line = fileLine.toInt(&ok);
-    if (!ok)
-        return;
-    */
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName);
-    if (editor) {
-        editor->widget()->setFocus();
-        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-        if (textEditor) {
-            textEditor->gotoLine(line-1,0,true);
-        }
-    }
+//    bool ok = false;
+//    int line = fileLine.toInt(&ok);
+//    if (!ok)
+//        return;
+//    */
+//    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName);
+//    if (editor) {
+//        editor->widget()->setFocus();
+//        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+//        if (textEditor) {
+//            textEditor->gotoLine(line-1,0,true);
+//        }
+//    }
 }
