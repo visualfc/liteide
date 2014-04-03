@@ -430,8 +430,8 @@ func (w *PkgWalker) LookupImport(pkg *types.Package, pkgInfo *types.Info, cursor
 		fbase = fpath[pos+1:]
 	}
 	fid := fpath + "." + fbase
-	kind := ObjPkgName
-	fmt.Println(kind, true)
+	//kind := ObjPkgName
+	//fmt.Println(kind, true)
 
 	if typeFindDef {
 		fmt.Println(w.fset.Position(is.Pos()))
@@ -504,6 +504,7 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 			break
 		}
 	}
+	_ = cursorObjIsDef
 	if cursorObj == nil {
 		for id, obj := range pkgInfo.Uses {
 			if cursor.pos >= id.Pos() && cursor.pos <= id.End() {
@@ -581,7 +582,7 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 		}
 	}
 
-	fmt.Println(kind, cursorObjIsDef)
+	//fmt.Println(kind, cursorObjIsDef)
 
 	if typeFindDef {
 		fmt.Println(w.fset.Position(cursorPos))
