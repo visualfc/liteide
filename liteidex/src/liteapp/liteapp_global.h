@@ -51,7 +51,9 @@
 #define LITEAPP_SHORTCUTS "keybord_shortcuts/"
 #define LITEAPP_OPTNFOLDERINNEWWINDOW "LiteApp/OpenFolderInNewWindow"
 #define LITEAPP_FOLDERSHOWHIDENFILES "LiteApp/FolderShowHidenFiles"
-#define LITEAPP_AUTORELOADFILE   "LiteApp/AutoReloadFile"
+#define LITEAPP_STARTUPRELOADFILES   "LiteApp/StartupReloadFiles"
+#define LITEAPP_STARTUPRELOADFOLDERS   "LiteApp/StartupReloadFolders"
+#define LITEAPP_FILEWATCHERAUTORELOAD "LiteApp/FileWatcherAutoReload"
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,

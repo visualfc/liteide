@@ -97,8 +97,8 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
 
     int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
     ui->maxRecentLineEdit->setText(QString("%1").arg(max));
-    bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
-    ui->autoCloseProjecEditorsCheckBox->setChecked(b);
+    //bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
+    //ui->autoCloseProjecEditorsCheckBox->setChecked(b);
     bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
     ui->autoLoadLastSessionCheckBox->setChecked(b1);
     bool b2 = m_liteApp->settings()->value(LITEAPP_SPLASHVISIBLE,true).toBool();
@@ -109,8 +109,14 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
     ui->editorTabsClosableCheckBox->setChecked(b4);
 
-    bool b5 = m_liteApp->settings()->value(LITEAPP_AUTORELOADFILE,false).toBool();
-    ui->autoReloadFileCheck->setChecked(b5);
+    bool b5 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool();
+    ui->startupReloadFoldersCheckBox->setChecked(b5);
+
+    bool b6 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFILES,true).toBool();
+    ui->startupReloadFilesCheckBox->setChecked(b6);
+
+    bool b7 = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
+    ui->fileWatcherAutoReloadCheckBox->setChecked(b7);
 
     int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
@@ -136,6 +142,8 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->importButton,SIGNAL(clicked()),this,SLOT(importShortcuts()));
     connect(ui->exportButton,SIGNAL(clicked()),this,SLOT(exportShortcuts()));
     connect(ui->standardCheckBox,SIGNAL(toggled(bool)),this,SLOT(reloadShortcuts()));
+    connect(ui->autoLoadLastSessionCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoLoadLastSessionToggled(bool)));
+    autoLoadLastSessionToggled(ui->autoLoadLastSessionCheckBox->isChecked());
 }
 
 LiteAppOption::~LiteAppOption()
@@ -171,8 +179,8 @@ void LiteAppOption::apply()
     }
     QString max = ui->maxRecentLineEdit->text();
     m_liteApp->settings()->setValue(LITEAPP_MAXRECENTFILES,max);
-    bool b = ui->autoCloseProjecEditorsCheckBox->isChecked();
-    m_liteApp->settings()->setValue(LITEAPP_AUTOCLOSEPROEJCTFILES,b);
+    //bool b = ui->autoCloseProjecEditorsCheckBox->isChecked();
+   // m_liteApp->settings()->setValue(LITEAPP_AUTOCLOSEPROEJCTFILES,b);
     bool b1 = ui->autoLoadLastSessionCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_AUTOLOADLASTSESSION,b1);
     bool b2 = ui->splashVisibleCheckBox->isChecked();
@@ -181,8 +189,12 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,b3);
     bool b4 = ui->editorTabsClosableCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_EDITTABSCLOSABLE,b4);
-    bool b5 = ui->autoReloadFileCheck->isChecked();
-    m_liteApp->settings()->setValue(LITEAPP_AUTORELOADFILE,b5);
+    bool b5 = ui->startupReloadFilesCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_STARTUPRELOADFILES,b5);
+    bool b6 = ui->startupReloadFoldersCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_STARTUPRELOADFOLDERS,b6);
+    bool b7 = ui->fileWatcherAutoReloadCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_FILEWATCHERAUTORELOAD,b7);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {
@@ -439,4 +451,10 @@ void LiteAppOption::exportShortcuts()
             write.setValue(root->text()+"/"+id->text(),bind->text());
         }
     }
+}
+
+void LiteAppOption::autoLoadLastSessionToggled(bool b)
+{
+    ui->startupReloadFoldersCheckBox->setEnabled(b);
+    ui->startupReloadFilesCheckBox->setEnabled(b);
 }

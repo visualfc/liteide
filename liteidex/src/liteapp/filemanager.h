@@ -92,7 +92,7 @@ protected:
     QMap<QString,QDateTime> m_fileStateMap;
     QStringList          m_changedFiles;
     bool                 m_checkActivated;
-    bool                 m_autoReloadFile;
+    bool                 m_fileWatcherAutoReload;
     QAction              *m_recentSeparator;
     QMap<QString,QMenu*> m_schemeMenuMap;
     int         m_maxRecentFiles;

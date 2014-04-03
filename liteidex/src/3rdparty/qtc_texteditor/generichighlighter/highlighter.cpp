@@ -287,17 +287,17 @@ void Highlighter::iterateThroughRules(const QString &text,
                         if (m_lastRegionDepth > m_regionDepth) {
                             detlaDeptn = true;
                         }
-                        if (!m_stringOrComment && progress->isClosingBraceMatchAtNonEnd()) {
-                            --blockData(currentBlockUserData())->m_foldingIndentDelta;
-                        }
+//                        if (!m_stringOrComment && progress->isClosingBraceMatchAtNonEnd()) {
+//                            --blockData(currentBlockUserData())->m_foldingIndentDelta;
+//                        }
                     }
                 }
                 if (!rule->beginRegion().isEmpty()) {
                     blockData(currentBlockUserData())->m_foldingRegions.push(rule->beginRegion());
                     ++m_regionDepth;                    
-                    if (!m_stringOrComment && progress->isOpeningBraceMatchAtFirstNonSpace()) {
-                        ++blockData(currentBlockUserData())->m_foldingIndentDelta;
-                    }
+//                    if (!m_stringOrComment && progress->isOpeningBraceMatchAtFirstNonSpace()) {
+//                        ++blockData(currentBlockUserData())->m_foldingIndentDelta;
+//                    }
                 }
                 progress->clearBracesMatches();
             }
@@ -352,9 +352,19 @@ void Highlighter::iterateThroughRules(const QString &text,
             progress->incrementOffset();
         }
     }
-    if (detlaDeptn && m_lastRegionDepth == m_regionDepth) {
-        blockData(currentBlockUserData())->m_foldingIndentDelta--;
+
+    if (m_lastRegionDepth == m_regionDepth) {
+        if (detlaDeptn || (
+                    blockData(currentBlockUserData())->hasParentheses() &&
+                    ( blockData(currentBlockUserData())->parentheses().last().type == Parenthesis::Opened)
+                    ) ) {
+            blockData(currentBlockUserData())->m_foldingIndentDelta--;
+        }
     }
+
+//    if (detlaDeptn && (m_lastRegionDepth == m_regionDepth)) {
+//        blockData(currentBlockUserData())->m_foldingIndentDelta--;
+//    }
 }
 
 bool Highlighter::contextChangeRequired(const QString &contextName) const
