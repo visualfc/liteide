@@ -98,6 +98,9 @@ inline QString getDefaultGOOS()
 #ifdef Q_OS_DARWIN
     return "darwin";
 #endif
+#ifdef Q_OS_FREEBSD
+    return "freebsd";
+#endif
 }
 
 inline QString getDefaultGOROOT()
