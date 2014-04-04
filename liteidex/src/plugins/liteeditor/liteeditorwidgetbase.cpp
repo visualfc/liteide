@@ -425,7 +425,6 @@ void LiteEditorWidgetBase::gotoMatchBrace()
 
 void LiteEditorWidgetBase::highlightCurrentLine()
 {    
-    QList<QTextEdit::ExtraSelection> extraSelections;
 
     QTextCursor cur = textCursor();
     if (!cur.block().isVisible()) {
@@ -437,9 +436,10 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         full.format.setBackground(m_currentLineBackground);
         full.format.setProperty(QTextFormat::FullWidthSelection, true);
         full.cursor = this->textCursor();
-        extraSelections.append(full);
+        setExtraSelections(LiteApi::CurrentLineSelection,QList<QTextEdit::ExtraSelection>() << full );
     }
 
+    QList<QTextEdit::ExtraSelection> extraSelections;
     MatchBracePos mb;
     if (findMatchBrace(cur,mb)) {
         if (mb.matchType == TextEditor::TextBlockUserData::Match) {
@@ -469,20 +469,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             extraSelections.append(selection);
         }
     }
-    QList<QTextEdit::ExtraSelection> all = this->extraSelections();
-    QMutableListIterator<QTextEdit::ExtraSelection> i(all);
-    while(i.hasNext()) {
-        i.next();
-        foreach(QTextEdit::ExtraSelection sel, m_extraSelections) {
-            if (sel.cursor == i.value().cursor && sel.format == i.value().format) {
-                i.remove();
-                break;
-            }
-        }
-    }
-    m_extraSelections = extraSelections;
-    all.append(extraSelections);
-    setExtraSelections(all);
+    setExtraSelections(LiteApi::ParenthesesMatchingSelection,extraSelections);
 }
 
 static int foldBoxWidth(const QFontMetrics &fm)
@@ -2026,11 +2013,22 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     sel.cursor.setPosition(link.linkTextEnd, QTextCursor::KeepAnchor);
     sel.format.setForeground(Qt::blue);
     sel.format.setFontUnderline(true);
-    m_extraSelections << sel;
-    setExtraSelections(m_extraSelections);
+    setExtraSelections(LiteApi::LinkSelection,QList<QTextEdit::ExtraSelection>() << sel);
     viewport()->setCursor(Qt::PointingHandCursor);
     m_currentLink = link;
     m_linkPressed = false;
+}
+
+void LiteEditorWidgetBase::setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections)
+{
+    m_extralSelectionMap[kind] = selections;
+    QList<QTextEdit::ExtraSelection> all;
+    QMapIterator<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > i(m_extralSelectionMap);
+    while(i.hasNext()) {
+        i.next();
+        all += i.value();
+    }
+    QPlainTextEdit::setExtraSelections(all);
 }
 
 void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)

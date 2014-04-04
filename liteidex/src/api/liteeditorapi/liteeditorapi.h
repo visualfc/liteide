@@ -141,6 +141,12 @@ enum EditorNaviagteType{
     EditorNavigateBad = EditorNavigateWarning|EditorNavigateError
 };
 
+enum ExtraSelectionKind {
+    CurrentLineSelection,
+    ParenthesesMatchingSelection,
+    LinkSelection,
+};
+
 struct Link
 {
     Link(const QString &fileName = QString(), int line = 0, int column = 0)

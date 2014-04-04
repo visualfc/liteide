@@ -40,11 +40,7 @@ public:
         MatchBrace = QTextFormat::UserProperty+1,
         CurrentLine
     };
-    enum ExtraSelectionKind {
-        CurrentLineSelection,
-        ParenthesesMatchingSelection,
-        LinkSelection,
-    };
+
     LiteEditorWidgetBase(QWidget *parent = 0);
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
@@ -213,13 +209,14 @@ protected:
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
     bool isSpellCheckingAt(QTextCursor cur) const;
     void showLink(const LiteApi::Link &link);
+    void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
 protected:
     QWidget *m_extraArea;
     QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
     LiteApi::Link       m_currentLink;
     bool                m_linkPressed;
-    QList<QTextEdit::ExtraSelection> m_extraSelections;
+    QMap<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > m_extralSelectionMap;
     QTextCursor m_lastSelection;
     QColor  m_extraForeground;
     QColor  m_extraBackground;
