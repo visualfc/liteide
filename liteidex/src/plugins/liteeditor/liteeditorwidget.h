@@ -63,7 +63,7 @@ signals:
 public:
     QString wordUnderCursor() const;
     QString textUnderCursor(QTextCursor tc) const;
-protected:
+protected:    
     QCompleter *m_completer;
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;

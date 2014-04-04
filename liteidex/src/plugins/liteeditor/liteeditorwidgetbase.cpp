@@ -2015,6 +2015,24 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
     return data->shouldSpellCheck(cur.positionInBlock());
 }
 
+void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
+{
+    if (m_currentLink == link)
+        return;
+
+    QTextEdit::ExtraSelection sel;
+    sel.cursor = textCursor();
+    sel.cursor.setPosition(link.linkTextStart);
+    sel.cursor.setPosition(link.linkTextEnd, QTextCursor::KeepAnchor);
+    sel.format.setForeground(Qt::blue);
+    sel.format.setFontUnderline(true);
+    m_extraSelections << sel;
+    setExtraSelections(m_extraSelections);
+    viewport()->setCursor(Qt::PointingHandCursor);
+    m_currentLink = link;
+    m_linkPressed = false;
+}
+
 void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton) {

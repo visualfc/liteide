@@ -63,9 +63,6 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findInfoProcess,SIGNAL(started()),this,SLOT(findInfoStarted()));
     connect(m_findInfoProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoOutput(QByteArray,bool)));
     connect(m_findInfoProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findInfoFinish(bool,int,QString)));
-//    foreach (QKeySequence ks, m_findInfoAct->shortcuts()) {
-//        connect(ks,SIGNAL())
-//    }
 }
 
 bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
