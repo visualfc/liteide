@@ -34,6 +34,9 @@ class GolangEdit : public QObject
     Q_OBJECT
 public:
     explicit GolangEdit(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual bool eventFilter(QObject *obj, QEvent *event);
+    void findEditorCursorInfo(LiteApi::ITextEditor *editor, const QTextCursor &cursor);
+    QTextCursor textCursorForPos(const QPoint &globalPos);
 public slots:
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
