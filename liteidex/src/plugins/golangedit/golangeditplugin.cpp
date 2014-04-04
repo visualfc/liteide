@@ -40,18 +40,8 @@ GolangEditPlugin::GolangEditPlugin()
 
 bool GolangEditPlugin::load(LiteApi::IApplication *app)
 {
-    m_liteApp = app;
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
-
+    new GolangEdit(app,this);
     return true;
-}
-
-void GolangEditPlugin::editorCreated(LiteApi::IEditor *editor)
-{
-    if (!editor || editor->mimeType() != "text/x-gosrc") {
-        return;
-    }
-    new GolangEdit(m_liteApp,editor,this);
 }
 
 #if QT_VERSION < 0x050000

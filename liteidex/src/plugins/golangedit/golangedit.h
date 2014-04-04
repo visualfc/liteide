@@ -33,8 +33,10 @@ class GolangEdit : public QObject
 {
     Q_OBJECT
 public:
-    explicit GolangEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
+    explicit GolangEdit(LiteApi::IApplication *app, QObject *parent = 0);
 public slots:
+    void editorCreated(LiteApi::IEditor*);
+    void currentEditorChanged(LiteApi::IEditor*);
     void editorFindInfo();
     void editorJumpToDecl();
     void findDefStarted();

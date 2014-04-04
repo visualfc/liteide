@@ -37,12 +37,9 @@
 #endif
 //lite_memory_check_end
 
-GolangEdit::GolangEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent) :
+GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent), m_liteApp(app)
 {
-    m_editor = LiteApi::getTextEditor(editor);
-    m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
-
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangEdit");
 
     m_findInfoAct = new QAction(tr("View Expression Information"),this);
@@ -51,6 +48,27 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QOb
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
+    m_findDefProcess = new ProcessEx(this);
+    m_findInfoProcess = new ProcessEx(this);
+
+    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+
+    connect(m_findInfoAct,SIGNAL(triggered()),this,SLOT(editorFindInfo()));
+    connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
+    connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
+    connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
+    connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
+    connect(m_findInfoProcess,SIGNAL(started()),this,SLOT(findInfoStarted()));
+    connect(m_findInfoProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoOutput(QByteArray,bool)));
+    connect(m_findInfoProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findInfoFinish(bool,int,QString)));
+}
+
+void GolangEdit::editorCreated(LiteApi::IEditor *editor)
+{
+    if (!editor || editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
@@ -63,23 +81,19 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QOb
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
     }
+}
 
-    m_findDefProcess = new ProcessEx(this);
-    m_findInfoProcess = new ProcessEx(this);
-
-    connect(m_findInfoAct,SIGNAL(triggered()),this,SLOT(editorFindInfo()));
-    connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
-    connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
-    connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
-    connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
-    connect(m_findInfoProcess,SIGNAL(started()),this,SLOT(findInfoStarted()));
-    connect(m_findInfoProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoOutput(QByteArray,bool)));
-    connect(m_findInfoProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findInfoFinish(bool,int,QString)));
+void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
+{
+    if (!editor || editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
+    m_editor = LiteApi::getTextEditor(editor);
+    m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
 }
 
 void GolangEdit::editorJumpToDecl()
 {
-    //m_liteApp->editorManager()->saveEditor(editor,false);
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     m_srcData = m_editor->utf8Data();
     m_findDefData.clear();
@@ -113,17 +127,17 @@ void GolangEdit::findDefStarted()
 
 void GolangEdit::findDefOutput(QByteArray data, bool bStdErr)
 {
-    if (!bStdErr) {
-        //m_findDefData.append(data);
-        QString info = QString::fromUtf8(data).trimmed();
-        QRegExp reg(":(\\d+):(\\d+)");
-        int pos = reg.lastIndexIn(info);
-        if (pos >= 0) {
-            QString fileName = info.left(pos);
-            int line = reg.cap(1).toInt();
-            int col = reg.cap(2).toInt();
-            LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1);
-        }
+    if (bStdErr) {
+        return;
+    }
+    QString info = QString::fromUtf8(data).trimmed();
+    QRegExp reg(":(\\d+):(\\d+)");
+    int pos = reg.lastIndexIn(info);
+    if (pos >= 0) {
+        QString fileName = info.left(pos);
+        int line = reg.cap(1).toInt();
+        int col = reg.cap(2).toInt();
+        LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1);
     }
 }
 
@@ -156,13 +170,15 @@ void GolangEdit::findInfoStarted()
 
 void GolangEdit::findInfoOutput(QByteArray data, bool bStdErr)
 {
-    if (!bStdErr) {
+    if (bStdErr) {
+        return;
+    }
+    if ( (m_editor == m_liteApp->editorManager()->currentEditor()) &&
+         (m_plainTextEdit->textCursor() == m_lastCursor) ) {
         QString info = QString::fromUtf8(data).trimmed();
-        if (m_plainTextEdit->textCursor() == m_lastCursor) {
-            QRect rc = m_plainTextEdit->cursorRect(m_lastCursor);
-            QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
-            QToolTip::showText(pt,info,m_plainTextEdit);
-        }
+        QRect rc = m_plainTextEdit->cursorRect(m_lastCursor);
+        QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
+        QToolTip::showText(pt,info,m_plainTextEdit);
     }
 }
 

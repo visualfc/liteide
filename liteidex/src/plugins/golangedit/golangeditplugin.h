@@ -33,10 +33,6 @@ class GolangEditPlugin : public LiteApi::IPlugin
 public:
     GolangEditPlugin();
     virtual bool load(LiteApi::IApplication *app);
-public slots:
-    void editorCreated(LiteApi::IEditor*);
-protected:
-    LiteApi::IApplication *m_liteApp;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GolangEditPlugin>
