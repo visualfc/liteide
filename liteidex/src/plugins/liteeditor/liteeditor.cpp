@@ -710,6 +710,8 @@ void LiteEditor::applyOption(QString id)
     QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #elif defined(Q_OS_MAC)
     QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
+#else
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #endif
     int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
     int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();    
