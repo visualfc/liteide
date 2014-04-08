@@ -31,7 +31,7 @@ class LiteEditorWidget : public LiteEditorWidgetBase
 {
     Q_OBJECT
 public:
-    explicit LiteEditorWidget(QWidget *parent = 0);
+    explicit LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent = 0);
     void setContextMenu(QMenu *contextMenu);
     void setCompleter(QCompleter *m_completer);
     QCompleter *completer() const;

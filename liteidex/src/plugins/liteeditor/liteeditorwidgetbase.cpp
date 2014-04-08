@@ -256,8 +256,9 @@ protected:
     LiteEditorWidgetBase *textEdit;
 };
 
-LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
+LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *parent)
     : QPlainTextEdit(parent),
+      m_liteApp(app),
       m_editorMark(0),
       m_contentsChanged(false),
       m_lastCursorChangeWasInteresting(false)
@@ -470,6 +471,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         }
     }
     setExtraSelections(LiteApi::ParenthesesMatchingSelection,extraSelections);
+    clearLink();
 }
 
 static int foldBoxWidth(const QFontMetrics &fm)
@@ -1584,6 +1586,20 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     QPlainTextEdit::keyPressEvent(e);
 }
 
+void LiteEditorWidgetBase::keyReleaseEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Control) {
+        clearLink();
+    }
+    QPlainTextEdit::keyReleaseEvent(e);
+}
+
+void LiteEditorWidgetBase::leaveEvent(QEvent *e)
+{
+    clearLink();
+    QPlainTextEdit::leaveEvent(e);
+}
+
 void LiteEditorWidgetBase::indentBlock(QTextBlock block, bool bIndent)
 {
     QTextCursor cursor(block);
@@ -2016,7 +2032,33 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     setExtraSelections(LiteApi::LinkSelection,QList<QTextEdit::ExtraSelection>() << sel);
     viewport()->setCursor(Qt::PointingHandCursor);
     m_currentLink = link;
-    m_linkPressed = false;
+}
+
+void LiteEditorWidgetBase::clearLink()
+{
+    if (!m_currentLink.hasValidLinkText())
+        return;
+
+    setExtraSelections(LiteApi::LinkSelection, QList<QTextEdit::ExtraSelection>());
+    viewport()->setCursor(Qt::IBeamCursor);
+    m_currentLink = LiteApi::Link();
+}
+
+bool LiteEditorWidgetBase::openLink(const LiteApi::Link &_link)
+{
+    if (!_link.hasValidTarget()) {
+        return false;
+    }
+    LiteApi::Link link = _link;
+    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(link.targetFileName);
+    if (editor) {
+         LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+        if (textEditor) {
+            textEditor->gotoLine(link.targetLine,link.targetColumn,true);
+            return true;
+        }
+    }
+    return false;
 }
 
 void LiteEditorWidgetBase::setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections)
@@ -2039,9 +2081,36 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             toggleBlockVisible(foldedBlock);
             viewport()->setCursor(Qt::IBeamCursor);
         }
+        if (e->modifiers() & Qt::ControlModifier
+            && !(e->modifiers() & Qt::ShiftModifier) &&
+                m_currentLink.hasValidLinkText()) {
+            if (openLink(m_currentLink)) {
+                clearLink();
+                return;
+            }
+        }
     }
-
     QPlainTextEdit::mousePressEvent(e);
+}
+
+void LiteEditorWidgetBase::mouseReleaseEvent(QMouseEvent *e)
+{
+//    if (m_linkPressed
+//            && e->modifiers() & Qt::ControlModifier
+//            && !(e->modifiers() & Qt::ShiftModifier)
+//            && e->button() == Qt::LeftButton
+//            ) {
+//        QTextCursor cursor = cursorForPosition(e->pos());
+//        cursor.select(QTextCursor::WordUnderCursor);
+//        if (cursor.selectionStart() == m_currentLink.linkTextStart &&
+//                cursor.selectionEnd() == m_currentLink.linkTextEnd) {
+//            if (openLink(m_currentLink)) {
+//                cleanLink();
+//                return;
+//            }
+//        }
+//    }
+    QPlainTextEdit::mouseReleaseEvent(e);
 }
 
 void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)

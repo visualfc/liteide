@@ -105,6 +105,8 @@ public:
     virtual void clearNavigateMarak(int line);
     virtual void clearAllNavigateMarks();
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
+    virtual void showLink(const LiteApi::Link &link);
+    virtual void clearLink();
     LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();

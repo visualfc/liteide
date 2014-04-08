@@ -80,7 +80,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
       m_bReadOnly(false)
 {
     m_widget = new QWidget;
-    m_editorWidget = new LiteEditorWidget(m_widget);
+    m_editorWidget = new LiteEditorWidget(app,m_widget);
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
 
@@ -958,6 +958,16 @@ void LiteEditor::clearAllNavigateMarks()
 void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
 {
     m_editorWidget->clearAllNavigateMark(types, tag);
+}
+
+void LiteEditor::showLink(const LiteApi::Link &link)
+{
+    m_editorWidget->showLink(link);
+}
+
+void LiteEditor::clearLink()
+{
+    m_editorWidget->clearLink();
 }
 
 void LiteEditor::selectNextParam()

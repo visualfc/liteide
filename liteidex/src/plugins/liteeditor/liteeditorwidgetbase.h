@@ -41,7 +41,7 @@ public:
         CurrentLine
     };
 
-    LiteEditorWidgetBase(QWidget *parent = 0);
+    LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
     void setTabSize(int n);
@@ -190,16 +190,24 @@ public:
         return m_indentLineVisible;
     }
     bool isWordWrap() const;
+    void setWordWrap(bool wrap);
+    void maybeSelectLine();
+    bool isSpellCheckingAt(QTextCursor cur) const;
+    void showLink(const LiteApi::Link &link);
+    void clearLink();
+    bool openLink(const LiteApi::Link &link);
+    void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
                            bool expanded) const;
-    void maybeSelectLine();
-    void setWordWrap(bool wrap);
     bool event(QEvent *e);
     void keyPressEvent(QKeyEvent *e);
+    void keyReleaseEvent(QKeyEvent *e);
+    void leaveEvent(QEvent *e);
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void indentBlock(QTextBlock block, bool bIndent);
     void indentCursor(QTextCursor cur, bool bIndent);
@@ -207,15 +215,12 @@ protected:
     void indentEnter(QTextCursor cur);
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
-    bool isSpellCheckingAt(QTextCursor cur) const;
-    void showLink(const LiteApi::Link &link);
-    void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
 protected:
+    LiteApi::IApplication *m_liteApp;
     QWidget *m_extraArea;
     QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
     LiteApi::Link       m_currentLink;
-    bool                m_linkPressed;
     QMap<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > m_extralSelectionMap;
     QTextCursor m_lastSelection;
     QColor  m_extraForeground;

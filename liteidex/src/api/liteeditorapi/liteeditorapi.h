@@ -187,6 +187,8 @@ public:
     virtual void clearAllNavigateMarks() = 0;
     virtual void clearAllNavigateMark(EditorNaviagteType types, const char *tag = "") = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
+    virtual void showLink(const Link &link) = 0;
+    virtual void clearLink() = 0;
 };
 
 inline ILiteEditor *getLiteEditor(IEditor *editor)

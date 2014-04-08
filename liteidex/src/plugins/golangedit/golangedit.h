@@ -48,14 +48,18 @@ public slots:
     void findInfoStarted();
     void findInfoOutput(QByteArray,bool);
     void findInfoFinish(bool,int,QString);
+    void findLinkStarted();
+    void findLinkOutput(QByteArray,bool);
+    void findLinkFinish(bool,int,QString);
 protected:
     LiteApi::IApplication *m_liteApp;
-    LiteApi::ITextEditor  *m_editor;
+    LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
     QAction *m_findInfoAct;
     QAction *m_jumpDeclAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;
+    ProcessEx  *m_findLinkProcess;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;
