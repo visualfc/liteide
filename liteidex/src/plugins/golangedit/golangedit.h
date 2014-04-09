@@ -55,6 +55,7 @@ protected:
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
     QTextCursor m_linkCursor;
+    LiteApi::Link m_lastLink;
     QAction *m_findInfoAct;
     QAction *m_jumpDeclAct;
     ProcessEx  *m_findDefProcess;

@@ -141,9 +141,6 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
 
 void GolangEdit::updateLink(const QTextCursor &_cursor)
 {
-    if (m_findLinkProcess->isRunning()) {
-        return;
-    }
     QTextCursor cursor = _cursor;
     cursor.select(QTextCursor::WordUnderCursor);
     if (cursor.selectionStart() == cursor.selectionEnd()) {
@@ -151,9 +148,16 @@ void GolangEdit::updateLink(const QTextCursor &_cursor)
     }
     if (m_linkCursor.selectionStart() == cursor.selectionStart() &&
             m_linkCursor.selectionEnd() == cursor.selectionEnd()) {
+        if (m_lastLink.hasValidTarget()) {
+            m_editor->showLink(m_lastLink);
+        }
+        return;
+    }
+    if (m_findLinkProcess->isRunning()) {
         return;
     }
     m_linkCursor = cursor;
+    m_lastLink = LiteApi::Link();
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QString src = cursor.document()->toPlainText();
     m_srcData = src.toUtf8();
@@ -276,6 +280,7 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
                         m_lastCursor.select(QTextCursor::WordUnderCursor);
                         link.linkTextStart = m_linkCursor.selectionStart();
                         link.linkTextEnd = m_linkCursor.selectionEnd();
+                        m_lastLink = link;
                         m_editor->showLink(link);
                     }
                 }
