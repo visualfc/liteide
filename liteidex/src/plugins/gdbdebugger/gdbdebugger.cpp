@@ -341,6 +341,21 @@ void GdbDebugger::removeWatchByName(const QString &name, bool children)
     command(cmd);
 }
 
+void GdbDebugger::showFrame(QModelIndex index)
+{
+    QStandardItem* file = m_framesModel->item( index.row(), 3 );
+    QStandardItem* line = m_framesModel->item( index.row(), 4 );
+    if( !file || !line ) {
+        return;
+    }
+    QString filename = file->text();
+    int lineno = line->text().toInt();
+    if( lineno <= 0 ) {
+        return;
+    }
+    emit setCurrentLine( filename, lineno - 1 );
+}
+
 void GdbDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
 {
     QStandardItem *parent = 0;
