@@ -51,25 +51,6 @@ var (
 	typeFindDoc         bool
 )
 
-type ma struct {
-	os.FileInfo
-	m1 int
-}
-
-type mb struct {
-	ma
-	m2 int
-}
-
-func test() {
-	var m mb
-	fmt.Println(m.IsDir())
-}
-
-func (b *mb) test() {
-
-}
-
 //func init
 func init() {
 	cmdType.Flag.BoolVar(&typeVerbose, "v", false, "verbose debugging")
@@ -621,6 +602,13 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 	kind, err := parserObjKind(cursorObj)
 	if err != nil {
 		log.Fatalln(err)
+	}
+	if kind == ObjField {
+		if cursorObj.(*types.Var).Anonymous() {
+			if named, ok := cursorObj.Type().(*types.Named); ok {
+				cursorObj = named.Obj()
+			}
+		}
 	}
 	cursorPkg := cursorObj.Pkg()
 	cursorPos := cursorObj.Pos()
