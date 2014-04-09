@@ -2054,8 +2054,8 @@ bool LiteEditorWidgetBase::openLink(const LiteApi::Link &_link)
     LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(link.targetFileName);
     if (editor) {
          LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-        if (textEditor) {
-            textEditor->gotoLine(link.targetLine,link.targetColumn,true);
+        if (textEditor) {            
+            textEditor->gotoLine(link.targetLine,link.targetColumn,false);
             return true;
         }
     }
@@ -2081,7 +2081,7 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
         const QTextCursor cursor = cursorForPosition(e->pos());
 
         // Check that the mouse was actually on the text somewhere
-        bool onText = cursorRect(cursor).right() >= e->x();
+        bool onText = cursorRect(cursor).contains(e->pos());// e->x();
         if (onText) {
             emit updateLink(cursor);
         }
