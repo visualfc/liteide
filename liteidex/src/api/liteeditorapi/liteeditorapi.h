@@ -189,6 +189,8 @@ public:
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
     virtual void showLink(const Link &link) = 0;
     virtual void clearLink() = 0;
+signals:
+    void updateLink(const QTextCursor &cursor);
 };
 
 inline ILiteEditor *getLiteEditor(IEditor *editor)

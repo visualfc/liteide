@@ -34,12 +34,11 @@ class GolangEdit : public QObject
     Q_OBJECT
 public:
     explicit GolangEdit(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual bool eventFilter(QObject *obj, QEvent *event);
-    void findEditorCursorInfo(LiteApi::ITextEditor *editor, const QTextCursor &cursor);
     QTextCursor textCursorForPos(const QPoint &globalPos);
 public slots:
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
+    void updateLink(const QTextCursor &cursor);
     void editorFindInfo();
     void editorJumpToDecl();
     void findDefStarted();
@@ -55,6 +54,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
+    QTextCursor m_linkCursor;
     QAction *m_findInfoAct;
     QAction *m_jumpDeclAct;
     ProcessEx  *m_findDefProcess;
@@ -63,6 +63,7 @@ protected:
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;
+    QTextCursor m_findLastCursor;
     QByteArray  m_findInfoData;
 };
 

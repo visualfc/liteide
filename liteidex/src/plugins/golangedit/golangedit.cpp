@@ -69,47 +69,32 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findLinkProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findLinkFinish(bool,int,QString)));
 }
 
-bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
-{
-    if (obj == m_plainTextEdit && event->type() == QEvent::ShortcutOverride) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-//        int key = keyEvent->key();
-//        Qt::KeyboardModifiers modifiers = keyEvent->modifiers();
-//        if (modifiers & Qt::ShiftModifier) {
-//            key += Qt::SHIFT;
+//bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
+//{
+//    if (obj == m_plainTextEdit && event->type() == QEvent::ShortcutOverride) {
+//        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+////        int key = keyEvent->key();
+////        Qt::KeyboardModifiers modifiers = keyEvent->modifiers();
+////        if (modifiers & Qt::ShiftModifier) {
+////            key += Qt::SHIFT;
+////        }
+////        if (modifiers & Qt::ControlModifier) {
+////            key += Qt::CTRL;
+////        }
+////        if (modifiers & Qt::AltModifier) {
+////            key += Qt::ALT;
+////        }
+////        QKeySequence ks(key);
+////        if (m_findInfoAct->shortcuts().contains(ks)) {
+////            event->accept();
+////        }
+//        if ((mouseEvent->modifiers() & Qt::ControlModifier)) {
+//            //findEditorCursorInfo(m_editor,this->textCursorForPos(QCursor::pos()));
+//            return true;
 //        }
-//        if (modifiers & Qt::ControlModifier) {
-//            key += Qt::CTRL;
-//        }
-//        if (modifiers & Qt::AltModifier) {
-//            key += Qt::ALT;
-//        }
-//        QKeySequence ks(key);
-//        if (m_findInfoAct->shortcuts().contains(ks)) {
-//            event->accept();
-//        }
-        if ((keyEvent->modifiers() & Qt::ControlModifier) && keyEvent->text().isEmpty()) {
-            findEditorCursorInfo(m_editor,this->textCursorForPos(QCursor::pos()));
-        }
-        return true;
-    }
-    return QObject::eventFilter(obj,event);
-}
-
-void GolangEdit::findEditorCursorInfo(LiteApi::ITextEditor *editor, const QTextCursor &cursor)
-{
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    QString src = cursor.document()->toPlainText();
-    m_srcData = src.toUtf8();
-    int offset = src.left(cursor.position()).length();
-    m_lastCursor = cursor;
-    QFileInfo info(editor->filePath());
-    m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    m_findLinkProcess->setWorkingDirectory(info.path());
-    m_findLinkProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def -info .").
-                             arg(info.fileName()).
-                               arg(offset));
-}
+//    }
+//    return QObject::eventFilter(obj,event);
+//}
 
 QTextCursor GolangEdit::textCursorForPos(const QPoint &globalPos)
 {
@@ -127,11 +112,6 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     if (!editor || editor->mimeType() != "text/x-gosrc") {
         return;
     }
-    QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
-    if (ed) {
-        ed->installEventFilter(this);
-    }
-
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
@@ -144,6 +124,10 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
     }
+    m_editor = LiteApi::getLiteEditor(editor);
+    if (m_editor) {
+        connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
+    }
 }
 
 void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
@@ -153,6 +137,33 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
     }
     m_editor = LiteApi::getLiteEditor(editor);
     m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
+}
+
+void GolangEdit::updateLink(const QTextCursor &_cursor)
+{
+    if (m_findLinkProcess->isRunning()) {
+        return;
+    }
+    QTextCursor cursor = _cursor;
+    cursor.select(QTextCursor::WordUnderCursor);
+    if (cursor.selectionStart() == cursor.selectionEnd()) {
+        return;
+    }
+    if (m_linkCursor.selectionStart() == cursor.selectionStart() &&
+            m_linkCursor.selectionEnd() == cursor.selectionEnd()) {
+        return;
+    }
+    m_linkCursor = cursor;
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString src = cursor.document()->toPlainText();
+    m_srcData = src.toUtf8();
+    int offset = src.left(cursor.position()).length();
+    QFileInfo info(m_editor->filePath());
+    m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_findLinkProcess->setWorkingDirectory(info.path());
+    m_findLinkProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def -info .").
+                             arg(info.fileName()).
+                               arg(offset));
 }
 
 void GolangEdit::editorJumpToDecl()
@@ -174,9 +185,9 @@ void GolangEdit::editorFindInfo()
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
     m_lastCursor = m_plainTextEdit->textCursor();
-    m_findDefProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    m_findDefProcess->setWorkingDirectory(info.path());
-    m_findDefProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -info .").
+    m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_findInfoProcess->setWorkingDirectory(info.path());
+    m_findInfoProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -info .").
                              arg(info.fileName()).
                              arg(m_editor->utf8Position()));
 }
@@ -249,7 +260,9 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
 
     if ( m_editor == m_liteApp->editorManager()->currentEditor()) {
         QTextCursor cur = this->textCursorForPos(QCursor::pos());
-        if (cur == m_lastCursor) {
+        cur.select(QTextCursor::WordUnderCursor);
+        if (cur.selectionStart() == m_linkCursor.selectionStart() &&
+                cur.selectionEnd() == m_linkCursor.selectionEnd()) {
             QStringList info = QString::fromUtf8(data).trimmed().split("\n");
             if (info.size() == 2) {
                 if (info[0] != "-") {
@@ -261,12 +274,12 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
                         int col = reg.cap(2).toInt();
                         LiteApi::Link link(fileName,line-1,col-1);
                         m_lastCursor.select(QTextCursor::WordUnderCursor);
-                        link.linkTextStart = m_lastCursor.selectionStart();
-                        link.linkTextEnd = m_lastCursor.selectionEnd();
+                        link.linkTextStart = m_linkCursor.selectionStart();
+                        link.linkTextEnd = m_linkCursor.selectionEnd();
                         m_editor->showLink(link);
                     }
                 }
-                QRect rc = m_plainTextEdit->cursorRect(m_lastCursor);
+                QRect rc = m_plainTextEdit->cursorRect(m_linkCursor);
                 QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
                 QToolTip::showText(pt,info[1],m_plainTextEdit);
             }

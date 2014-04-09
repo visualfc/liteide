@@ -79,6 +79,7 @@ signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
     void wordWrapChanged(bool);
+    void updateLink(const QTextCursor &curosr);
 public:
     bool restoreState(const QByteArray &state);
     QByteArray saveState() const;
@@ -197,6 +198,7 @@ public:
     void clearLink();
     bool openLink(const LiteApi::Link &link);
     void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
+    void testUpdateLink(QMouseEvent *e);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -249,6 +251,7 @@ protected:
     bool m_autoBraces4; //"
     bool m_bLastBraces;
     bool m_bTabUseSpace;
+    bool m_mouseNavigation;
     int  m_nTabSize;
     QString m_lastBraces;
     int m_lastSaveRevision;

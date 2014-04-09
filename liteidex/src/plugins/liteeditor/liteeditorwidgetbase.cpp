@@ -293,6 +293,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
+    m_mouseNavigation = true;
     setTabSize(4);
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
@@ -2073,6 +2074,20 @@ void LiteEditorWidgetBase::setExtraSelections(LiteApi::ExtraSelectionKind kind, 
     QPlainTextEdit::setExtraSelections(all);
 }
 
+void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
+{
+    if (m_mouseNavigation && e->modifiers() & Qt::ControlModifier) {
+        // Link emulation behaviour for 'go to definition'
+        const QTextCursor cursor = cursorForPosition(e->pos());
+
+        // Check that the mouse was actually on the text somewhere
+        bool onText = cursorRect(cursor).right() >= e->x();
+        if (onText) {
+            emit updateLink(cursor);
+        }
+    }
+}
+
 void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton) {
@@ -2081,9 +2096,10 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             toggleBlockVisible(foldedBlock);
             viewport()->setCursor(Qt::IBeamCursor);
         }
-        if (e->modifiers() & Qt::ControlModifier
-            && !(e->modifiers() & Qt::ShiftModifier) &&
-                m_currentLink.hasValidLinkText()) {
+        if (m_mouseNavigation
+                && e->modifiers() & Qt::ControlModifier
+                && !(e->modifiers() & Qt::ShiftModifier)
+                && m_currentLink.hasValidLinkText()) {
             if (openLink(m_currentLink)) {
                 clearLink();
                 return;
@@ -2115,6 +2131,8 @@ void LiteEditorWidgetBase::mouseReleaseEvent(QMouseEvent *e)
 
 void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
 {
+    testUpdateLink(e);
+
     if (e->buttons() == Qt::NoButton) {
         const QTextBlock collapsedBlock = foldedBlockAt(e->pos());
         if (collapsedBlock.isValid() && !m_mouseOnFoldedMarker) {

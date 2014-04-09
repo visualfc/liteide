@@ -189,7 +189,7 @@ func runType(cmd *Command, args []string) {
 					Uses: make(map[*ast.Ident]types.Object),
 					Defs: make(map[*ast.Ident]types.Object),
 					//Types : make(map[ast.Expr]types.TypeAndValue)
-					//Selections : make(map[*ast.SelectorExpr]*types.Selection)
+					Selections: make(map[*ast.SelectorExpr]*types.Selection),
 					//Scopes : make(map[ast.Node]*types.Scope)
 					//Implicits : make(map[ast.Node]types.Object)
 				}
@@ -495,6 +495,7 @@ func parserObjKind(obj types.Object) (ObjKind, error) {
 
 func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, cursor *FileCursor) {
 	var cursorObj types.Object
+	var cursorSelection *types.Selection
 	var cursorObjIsDef bool
 	//lookup defs
 	for id, obj := range pkgInfo.Defs {
@@ -505,6 +506,16 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 		}
 	}
 	_ = cursorObjIsDef
+	if cursorObj == nil {
+		for sel, obj := range pkgInfo.Selections {
+			if cursor.pos >= sel.Sel.Pos() && cursor.pos <= sel.Sel.End() {
+				cursorObj = obj.Obj()
+				cursorSelection = obj
+				break
+			}
+		}
+	}
+	_ = cursorSelection
 	if cursorObj == nil {
 		for id, obj := range pkgInfo.Uses {
 			if cursor.pos >= id.Pos() && cursor.pos <= id.End() {
