@@ -51,6 +51,25 @@ var (
 	typeFindDoc         bool
 )
 
+type ma struct {
+	os.FileInfo
+	m1 int
+}
+
+type mb struct {
+	ma
+	m2 int
+}
+
+func test() {
+	var m mb
+	fmt.Println(m.IsDir())
+}
+
+func (b *mb) test() {
+
+}
+
 //func init
 func init() {
 	cmdType.Flag.BoolVar(&typeVerbose, "v", false, "verbose debugging")
@@ -493,24 +512,96 @@ func parserObjKind(obj types.Object) (ObjKind, error) {
 	return kind, nil
 }
 
+func (w *PkgWalker) LookupStructFromField(info *types.Info, cursorPkg *types.Package, cursorObj types.Object, cursorPos token.Pos) types.Object {
+	if info == nil {
+		conf := &PkgConfig{
+			IgnoreFuncBodies: true,
+			AllowBinary:      true,
+			Info: &types.Info{
+				Defs: make(map[*ast.Ident]types.Object),
+			},
+		}
+		w.imported[cursorPkg.Path()] = nil
+		pkg, _ := w.Import("", cursorPkg.Path(), conf)
+		if pkg != nil {
+			info = conf.Info
+		}
+	}
+	for _, obj := range info.Defs {
+		if obj == nil {
+			continue
+		}
+		if _, ok := obj.(*types.TypeName); ok {
+			if t, ok := obj.Type().Underlying().(*types.Struct); ok {
+				for i := 0; i < t.NumFields(); i++ {
+					if t.Field(i).Pos() == cursorPos {
+						return obj
+					}
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (w *PkgWalker) lookupNamedMethod(named *types.Named, name string) (types.Object, *types.Named) {
+	if iface, ok := named.Underlying().(*types.Interface); ok {
+		for i := 0; i < iface.NumMethods(); i++ {
+			fn := iface.Method(i)
+			if fn.Name() == name {
+				return fn, named
+			}
+		}
+		for i := 0; i < iface.NumEmbeddeds(); i++ {
+			if obj, na := w.lookupNamedMethod(iface.Embedded(i), name); obj != nil {
+				return obj, na
+			}
+		}
+		return nil, nil
+	}
+	if istruct, ok := named.Underlying().(*types.Struct); ok {
+		for i := 0; i < named.NumMethods(); i++ {
+			fn := named.Method(i)
+			if fn.Name() == name {
+				return fn, named
+			}
+		}
+		for i := 0; i < istruct.NumFields(); i++ {
+			field := istruct.Field(i)
+			if !field.Anonymous() {
+				continue
+			}
+			if typ, ok := field.Type().(*types.Named); ok {
+				if obj, na := w.lookupNamedMethod(typ, name); obj != nil {
+					return obj, na
+				}
+			}
+		}
+	}
+	return nil, nil
+}
+
 func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, cursor *FileCursor) {
 	var cursorObj types.Object
 	var cursorSelection *types.Selection
 	var cursorObjIsDef bool
 	//lookup defs
-	for id, obj := range pkgInfo.Defs {
-		if cursor.pos >= id.Pos() && cursor.pos <= id.End() {
-			cursorObj = obj
-			cursorObjIsDef = true
-			break
-		}
-	}
+
 	_ = cursorObjIsDef
 	if cursorObj == nil {
 		for sel, obj := range pkgInfo.Selections {
 			if cursor.pos >= sel.Sel.Pos() && cursor.pos <= sel.Sel.End() {
 				cursorObj = obj.Obj()
 				cursorSelection = obj
+				break
+			}
+		}
+	}
+	if cursorObj == nil {
+		for id, obj := range pkgInfo.Defs {
+			if cursor.pos >= id.Pos() && cursor.pos <= id.End() {
+				cursorObj = obj
+				cursorObjIsDef = true
 				break
 			}
 		}
@@ -538,6 +629,24 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 	if cursorPkg == pkg {
 		fieldTypeInfo = pkgInfo
 	}
+	cursorIsInterfaceMethod := false
+	var cursorInterfaceTypeName string
+	if kind == ObjMethod && cursorSelection != nil && cursorSelection.Recv() != nil {
+		sig := cursorObj.(*types.Func).Type().Underlying().(*types.Signature)
+		if _, ok := sig.Recv().Type().Underlying().(*types.Interface); ok {
+			named := cursorSelection.Recv().(*types.Named)
+			obj, typ := w.lookupNamedMethod(named, cursorObj.Name())
+			if obj != nil {
+				cursorObj = obj
+			}
+			if typ != nil {
+				cursorPkg = typ.Obj().Pkg()
+				cursorInterfaceTypeName = typ.Obj().Name()
+			}
+			cursorIsInterfaceMethod = true
+		}
+	}
+
 	if cursorPkg != nil && cursorPkg != pkg &&
 		kind != ObjPkgName && w.isBinaryPkg(cursorPkg.Path()) {
 		conf := &PkgConfig{
@@ -549,52 +658,40 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 		}
 		pkg, _ := w.Import("", cursorPkg.Path(), conf)
 		if pkg != nil {
-			for _, obj := range conf.Info.Defs {
-				if obj != nil && obj.String() == cursorObj.String() {
-					cursorPos = obj.Pos()
-					break
-				}
-			}
-		}
-		if kind == ObjField {
-			fieldTypeInfo = conf.Info
-		}
-	}
-	if kind == ObjField {
-		if fieldTypeInfo == nil {
-			conf := &PkgConfig{
-				IgnoreFuncBodies: true,
-				AllowBinary:      true,
-				Info: &types.Info{
-					Defs: make(map[*ast.Ident]types.Object),
-				},
-			}
-			w.imported[cursorPkg.Path()] = nil
-			pkg, _ := w.Import("", cursorPkg.Path(), conf)
-			if pkg != nil {
-				fieldTypeInfo = conf.Info
-			}
-		}
-	loop:
-		for _, obj := range fieldTypeInfo.Defs {
-			if obj == nil {
-				continue
-			}
-			if _, ok := obj.(*types.TypeName); ok {
-				if t, ok := obj.Type().Underlying().(*types.Struct); ok {
-					for i := 0; i < t.NumFields(); i++ {
-						if t.Field(i).Pos() == cursorPos {
-							fieldTypeObj = obj
-							break loop
+			if cursorIsInterfaceMethod {
+				for _, obj := range conf.Info.Defs {
+					if obj == nil {
+						continue
+					}
+					if fn, ok := obj.(*types.Func); ok {
+						if fn.Name() == cursorObj.Name() {
+							if sig, ok := fn.Type().Underlying().(*types.Signature); ok {
+								if named, ok := sig.Recv().Type().(*types.Named); ok {
+									if named.Obj() != nil && named.Obj().Name() == cursorInterfaceTypeName {
+										cursorPos = obj.Pos()
+										break
+									}
+								}
+							}
 						}
+					}
+				}
+			} else {
+				for _, obj := range conf.Info.Defs {
+					if obj != nil && obj.String() == cursorObj.String() {
+						cursorPos = obj.Pos()
+						break
 					}
 				}
 			}
 		}
+		if kind == ObjField || cursorIsInterfaceMethod {
+			fieldTypeInfo = conf.Info
+		}
 	}
-
-	//fmt.Println(kind, cursorObjIsDef)
-
+	if kind == ObjField {
+		fieldTypeObj = w.LookupStructFromField(fieldTypeInfo, cursorPkg, cursorObj, cursorPos)
+	}
 	if typeFindDef {
 		fmt.Println(w.fset.Position(cursorPos))
 	}
@@ -607,6 +704,8 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 			fmt.Println(typeName, simpleType(cursorObj.String()))
 		} else if kind == ObjBuiltin {
 			fmt.Println(builtinInfo(cursorObj.Name()))
+		} else if cursorIsInterfaceMethod {
+			fmt.Println(strings.Replace(simpleType(cursorObj.String()), "(interface)", cursorPkg.Name()+"."+cursorInterfaceTypeName, 1))
 		} else {
 			fmt.Println(simpleType(cursorObj.String()))
 		}
@@ -673,24 +772,6 @@ func (w *PkgWalker) CheckIsImport(cursor *FileCursor) *ast.ImportSpec {
 	return nil
 }
 
-// func (w *PkgWalker) LookupInfo(pkg *types.Package, info *typeFileCursor) {
-//	file, _ := w.parseFile(info.fileDir, info.fileName, info.src)
-//	if file == nil {
-//		return
-//	}
-//	log.Println("looup info", info)
-
-//	log.Println(pkg.Scope().Child(0).Child(0).Child(0).Names())
-
-//	f := w.fset.File(file.Pos())
-//	typeInfo, err := w.lookupFile(pkg, file, token.Pos(f.Base())+info.pos-1)
-//	if typeInfo == nil {
-//		log.Println("error lookup", err)
-//	} else {
-//		log.Println(typeInfo, w.fset.Position(typeInfo.Obj.Pos()), err)
-//	}
-//}
-
 func (w *PkgWalker) nodeString(node interface{}) string {
 	if node == nil {
 		return ""
@@ -699,249 +780,3 @@ func (w *PkgWalker) nodeString(node interface{}) string {
 	printer.Fprint(&b, w.fset, node)
 	return b.String()
 }
-
-//type TypeObj struct {
-//	Kind     Kind           //type kind
-//	Name     string         //expr name
-//	TypeName string         //type name
-//	Expr     ast.Expr       //expr
-//	Pkg      *types.Package //expr package
-//	Obj      types.Object   //object
-//	TypeObj  types.Object   //type object
-//	IsType   bool
-//}
-
-//func (i *TypeObj) String() string {
-//	return i.Name + "," + i.TypeName
-//}
-
-//func (w *PkgWalker) lookupFile(pkg *types.Package, file *ast.File, p token.Pos) (*TypeObj, error) {
-//	if inRange(file.Name, p) {
-//		return &TypeObj{Kind: KindPackage,
-//			Name:     file.Name.Name,
-//			TypeName: "package",
-//			Expr:     file.Name,
-//			Obj:      nil,
-//			TypeObj:  nil,
-//			Pkg:      pkg}, nil
-//	}
-//	for _, di := range file.Decls {
-//		switch d := di.(type) {
-//		case *ast.GenDecl:
-//			if inRange(d, p) {
-//				return w.lookupDecl(pkg, file, d, p, false)
-//			}
-//		case *ast.FuncDecl:
-//			//if inRange(d, p) {
-//			//	info, err := w.lookupDecl(d, p, false)
-//			//	if info != nil && info.Kind == KindBranch {
-//			//		return w.lookupLabel(d.Body, info.Name)
-//			//	}
-//			//	return info, err
-//			//}
-//			//if d.Body != nil && inRange(d.Body, p) {
-//			//	return w.lookupStmt(d.Body, p)
-//			//}
-//		default:
-//			return nil, fmt.Errorf("un parser decl %T", di)
-//		}
-//	}
-//	return nil, fmt.Errorf("lookupFile %v", w.fset.Position(p))
-//}
-
-//func (w *PkgWalker) lookupDecl(pkg *types.Package, file *ast.File, di ast.Decl, p token.Pos, local bool) (*TypeObj, error) {
-//	switch d := di.(type) {
-//	case *ast.GenDecl:
-//		switch d.Tok {
-//		case token.IMPORT:
-//			for _, sp := range d.Specs {
-//				is := sp.(*ast.ImportSpec)
-//				fpath, err := strconv.Unquote(is.Path.Value)
-//				if err != nil {
-//					return nil, err
-//				}
-//				if inRange(sp, p) {
-//					importPkg, _ := w.Import("", fpath, true, true, nil)
-//					return &TypeObj{Kind: KindImport,
-//						Name:     fpath,
-//						TypeName: "import",
-//						Expr:     is.Path,
-//						Obj:      nil,
-//						TypeObj:  nil,
-//						Pkg:      importPkg}, nil
-//				}
-//			}
-//		case token.CONST:
-//			for _, sp := range d.Specs {
-//				if inRange(sp, p) {
-//					return w.lookupConst(pkg, file, sp.(*ast.ValueSpec), p, local)
-//				}
-//			}
-//			return nil, nil
-//		case token.TYPE:
-//			for _, sp := range d.Specs {
-//				if inRange(sp, p) {
-//					return w.lookupType(pkg, sp.(*ast.TypeSpec), p, local)
-//				} else {
-//					w.lookupType(pkg, sp.(*ast.TypeSpec), p, local)
-//				}
-//			}
-//		case token.VAR:
-//			for _, sp := range d.Specs {
-//				if inRange(sp, p) {
-//					return w.lookupVar(pkg, sp.(*ast.ValueSpec), p, local)
-//				} else {
-//					w.lookupVar(pkg, sp.(*ast.ValueSpec), p, local)
-//				}
-//			}
-//			return nil, nil
-//		default:
-//			return nil, fmt.Errorf("unknown token type %d %T in GenDecl", d.Tok, d)
-//		}
-//	case *ast.FuncDecl:
-//		//if d.Type.Params != nil {
-//		//	for _, fd := range d.Type.Params.List {
-//		//		if inRange(fd, p) {
-//		//			return w.lookupExprInfo(fd.Type, p)
-//		//		}
-//		//		for _, ident := range fd.Names {
-//		//			if inRange(ident, p) {
-//		//				info, err := w.lookupExprInfo(fd.Type, p)
-//		//				if err == nil {
-//		//					return &TypeInfo{Kind: KindParam, X: ident, Name: ident.Name, T: info.T, Type: info.Type}, nil
-//		//				}
-//		//			}
-//		//			typ, err := w.varValueType(fd.Type, 0)
-//		//			if err == nil {
-//		//				w.localvar[ident.Name] = &ExprType{T: typ, X: ident}
-//		//			} else if apiVerbose {
-//		//				log.Println(err)
-//		//			}
-//		//		}
-//		//	}
-//		//}
-//		//if d.Type.Results != nil {
-//		//	for _, fd := range d.Type.Results.List {
-//		//		if inRange(fd, p) {
-//		//			return w.lookupExprInfo(fd.Type, p)
-//		//		}
-//		//		for _, ident := range fd.Names {
-//		//			typ, err := w.varValueType(fd.Type, 0)
-//		//			if err == nil {
-//		//				w.localvar[ident.Name] = &ExprType{T: typ, X: ident}
-//		//			}
-//		//		}
-//		//	}
-//		//}
-//		//if d.Recv != nil {
-//		//	for _, fd := range d.Recv.List {
-//		//		if inRange(fd, p) {
-//		//			return w.lookupExprInfo(fd.Type, p)
-//		//		}
-//		//		for _, ident := range fd.Names {
-//		//			w.localvar[ident.Name] = &ExprType{T: w.nodeString(fd.Type), X: ident}
-//		//		}
-//		//	}
-//		//}
-//		//if inRange(d.Body, p) {
-//		//	return w.lookupStmt(d.Body, p)
-//		//}
-//		//var fname = d.Name.Name
-//		//kind := KindFunc
-//		//if d.Recv != nil {
-//		//	recvTypeName, imp := baseTypeName(d.Recv.List[0].Type)
-//		//	if imp {
-//		//		return nil, nil
-//		//	}
-//		//	fname = recvTypeName + "." + d.Name.Name
-//		//	kind = KindMethod
-//		//}
-//		//return &TypeInfo{Kind: kind, X: d.Name, Name: fname, T: d.Type, Type: w.nodeString(w.namelessType(d.Type))}, nil
-//	default:
-//		return nil, fmt.Errorf("unhandled %T, %#v\n", di, di)
-//	}
-//	return nil, fmt.Errorf("not lookupDecl %v %T", w.nodeString(di), di)
-//}
-
-//func (w *PkgWalker) lookupImportPath(file *ast.File, name string) string {
-//	for _, is := range file.Imports {
-//		fpath, _ := strconv.Unquote(is.Path.Value)
-//		if (is.Name != nil && is.Name.Name == name) || path.Base(fpath) == name {
-//			return fpath
-//		}
-//	}
-//	return ""
-//}
-
-//func (w *PkgWalker) lookupConstType(pkg *types.Package, file *ast.File, vs *ast.ValueSpec) types.Object {
-//	switch expr := vs.Type.(type) {
-//	case *ast.Ident:
-//		return pkg.Scope().Lookup(types.ExprString(expr))
-//	case *ast.SelectorExpr:
-//		importPath := w.lookupImportPath(file, types.ExprString(expr.X))
-//		importPkg, _ := w.Import("", importPath, true, true, nil)
-//		if importPkg != nil {
-//			return importPkg.Scope().Lookup(expr.Sel.Name)
-//		}
-//	default:
-//		log.Fatalf("lookupConst type %T", vs.Type)
-//	}
-//	return nil
-//}
-
-//func (w *PkgWalker) lookupConst(pkg *types.Package, file *ast.File, vs *ast.ValueSpec, p token.Pos, local bool) (*TypeObj, error) {
-//	if inRange(vs.Type, p) {
-//		//return w.lookupExprInfo(vs.Type, p)
-//		obj := w.lookupConstType(pkg, file, vs)
-//		return &TypeObj{Kind: KindConst,
-//			Name:     types.ExprString(vs.Type),
-//			TypeName: obj.Name(),
-//			Expr:     vs.Type,
-//			Obj:      obj,
-//			TypeObj:  obj,
-//			Pkg:      pkg,
-//			IsType:   true}, nil
-//	}
-//	for _, ident := range vs.Names {
-//		if inRange(ident, p) {
-//			obj := pkg.Scope().Lookup(ident.Name)
-//			typeObj := w.lookupConstType(pkg, file, vs)
-//			if obj != nil {
-//				return &TypeObj{Kind: KindConst,
-//					Name:     ident.Name,
-//					TypeName: types.ExprString(vs.Type),
-//					Expr:     ident,
-//					Obj:      obj,
-//					TypeObj:  typeObj,
-//					Pkg:      pkg}, nil
-
-//			}
-//		}
-//	}
-//	for _, expr := range vs.Values {
-//		if inRange(expr, p) {
-//			return w.lookupExpr(pkg, expr, p, local)
-//		}
-//	}
-//	return nil, fmt.Errorf("error looup const %v", w.fset.Position(p))
-//}
-
-//func (w *PkgWalker) lookupVar(pkg *types.Package, vs *ast.ValueSpec, p token.Pos, local bool) (*TypeObj, error) {
-//	return nil, nil
-//}
-
-//func (w *PkgWalker) lookupType(pkg *types.Package, vs *ast.TypeSpec, p token.Pos, local bool) (*TypeObj, error) {
-//	return nil, nil
-//}
-
-//func (w *PkgWalker) lookupExpr(pkg *types.Package, expr ast.Expr, p token.Pos, local bool) (*TypeObj, error) {
-//	switch v := expr.(type) {
-//	case *ast.Ident:
-//		obj := pkg.Scope().Lookup(v.Name)
-//		if obj == nil {
-//			obj = types.Universe.Lookup(v.Name)
-//		}
-//		log.Println(obj, v.Name)
-//	}
-//	return nil, fmt.Errorf("error lookupExpr %v %T", w.nodeString(expr), expr)
-//}
