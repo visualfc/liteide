@@ -187,15 +187,21 @@ void GolangEdit::updateLink(const QTextCursor &_cursor)
 
 void GolangEdit::editorJumpToDecl()
 {
+    bool moveLeft = false;
+    QString text = LiteApi::wordUnderCursor(m_plainTextEdit->textCursor(),&moveLeft);
+    if (text.isEmpty()) {
+        return;
+    }
+    m_lastCursor = m_plainTextEdit->textCursor();
+    int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     m_srcData = m_editor->utf8Data();
-    m_findDefData.clear();
     QFileInfo info(m_editor->filePath());
     m_findDefProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findDefProcess->setWorkingDirectory(info.path());
     m_findDefProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def .").
                              arg(info.fileName()).
-                              arg(m_editor->utf8Position()));
+                              arg(offset));
 }
 
 void GolangEdit::editorFindUsages()
@@ -209,12 +215,18 @@ void GolangEdit::editorFindInfo()
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
+    bool moveLeft = false;
+    QString text = LiteApi::wordUnderCursor(m_plainTextEdit->textCursor(),&moveLeft);
+    if (text.isEmpty()) {
+        return;
+    }
     m_lastCursor = m_plainTextEdit->textCursor();
+    int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
     m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
     m_findInfoProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -info .").
                              arg(info.fileName()).
-                             arg(m_editor->utf8Position()));
+                             arg(offset));
 }
 
 void GolangEdit::findDefStarted()
