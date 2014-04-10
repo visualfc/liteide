@@ -98,8 +98,10 @@ FileSearchManager::~FileSearchManager()
 void FileSearchManager::addFileSearch(LiteApi::IFileSearch *search)
 {
     m_fileSearchList.push_back(search);
-    m_searchItemStackedWidget->addWidget(search->widget());
-    m_searchItemCombox->addItem(search->displayName(),search->mimeType());
+    if (search->widget()) {
+        m_searchItemStackedWidget->addWidget(search->widget());
+        m_searchItemCombox->addItem(search->displayName(),search->mimeType());
+    }
     connect(search,SIGNAL(findStarted()),this,SLOT(findStarted()));
     connect(search,SIGNAL(findFinished(bool)),this,SLOT(findFinished(bool)));
     connect(search,SIGNAL(findResult(LiteApi::FileSearchResult)),this,SLOT(findResult(LiteApi::FileSearchResult)));
@@ -118,6 +120,17 @@ LiteApi::IFileSearch *FileSearchManager::findFileSearch(const QString &mime)
 QList<LiteApi::IFileSearch *> FileSearchManager::fileSearchList() const
 {
     return m_fileSearchList;
+}
+
+void FileSearchManager::setCurrentSearch(LiteApi::IFileSearch *search)
+{
+    if (m_currentSearch == search) {
+        return;
+    }
+    m_currentSearch = search;
+    if (m_currentSearch->widget()) {
+        m_searchItemStackedWidget->setCurrentWidget(search->widget());
+    }
 }
 
 void FileSearchManager::activated(const Find::SearchResultItem &item)
@@ -139,8 +152,8 @@ void FileSearchManager::activated(const Find::SearchResultItem &item)
 
 void FileSearchManager::newSearch()
 {
-    m_widget->setCurrentWidget(m_searchWidget);
     m_toolAct->setChecked(true);
+    m_widget->setCurrentWidget(m_searchWidget);
     if (m_currentSearch) {
         m_currentSearch->activate();
     }
@@ -161,6 +174,7 @@ void FileSearchManager::currentSearchItemChanged(int item)
 
 void FileSearchManager::findStarted()
 {
+    m_toolAct->setChecked(true);
     m_widget->setCurrentWidget(m_searchResultWidget);
     m_searchResultWidget->restart();
     m_searchResultWidget->setInfo(m_currentSearch->displayName()+":",QString(),m_currentSearch->searchText());

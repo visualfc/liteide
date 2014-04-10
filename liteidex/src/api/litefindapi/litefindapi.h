@@ -65,11 +65,15 @@ signals:
 
 class IFileSearchManager : public IManager
 {
+    Q_OBJECT
 public:
     IFileSearchManager(QObject *parent = 0) : IManager(parent) {}
     virtual void addFileSearch(IFileSearch* search) = 0;
     virtual IFileSearch *findFileSearch(const QString &mime) = 0;
     virtual QList<IFileSearch*> fileSearchList() const = 0;
+    virtual void setCurrentSearch(LiteApi::IFileSearch *search) = 0;
+public slots:
+    virtual void newSearch() = 0;
 };
 
 inline IFileSearchManager* getFileSearchManager(LiteApi::IApplication *app)

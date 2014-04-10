@@ -39,9 +39,10 @@ public:
     virtual void addFileSearch(LiteApi::IFileSearch* search);
     virtual LiteApi::IFileSearch* findFileSearch(const QString &mime);
     virtual QList<LiteApi::IFileSearch*> fileSearchList() const;
+    virtual void setCurrentSearch(LiteApi::IFileSearch *search);
 public slots:
+    virtual void newSearch();
     void activated(const Find::SearchResultItem &item);
-    void newSearch();
     void currentSearchItemChanged(int);
     void findStarted();
     void findFinished(bool);

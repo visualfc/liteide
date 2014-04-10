@@ -244,10 +244,8 @@ void GolangEdit::findInfoOutput(QByteArray data, bool bStdErr)
     }
 }
 
-void GolangEdit::findInfoFinish(bool error, int code, QString)
+void GolangEdit::findInfoFinish(bool /*error*/, int /*code*/, QString)
 {
-//    if (!error && code == 0) {
-//    }
 }
 
 void GolangEdit::findLinkStarted()
@@ -292,9 +290,7 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
     }
 }
 
-void GolangEdit::findLinkFinish(bool error, int code, QString)
+void GolangEdit::findLinkFinish(bool /*error*/, int /*code*/, QString)
 {
-//    if (!error && code == 0) {
-//    }
 }
 
