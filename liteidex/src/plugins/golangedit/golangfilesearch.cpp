@@ -37,6 +37,7 @@ GolangFileSearch::GolangFileSearch(LiteApi::IApplication *app, QObject *parent) 
     LiteApi::IFileSearch(parent), m_liteApp(app)
 {
     m_process = new ProcessEx(this);
+    m_replaceMode = false;
     connect(m_process,SIGNAL(started()),this,SLOT(findUsagesStarted()));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findUsagesOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findUsagesFinish(bool,int,QString)));
@@ -77,7 +78,12 @@ QString GolangFileSearch::searchText() const
     return m_searchText;
 }
 
-void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor)
+bool GolangFileSearch::replaceMode() const
+{
+    return m_replaceMode;
+}
+
+void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool replace)
 {
     if (m_process->isRunning()) {
         return;
@@ -97,6 +103,7 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     if (!manager) {
         return;
     }
+    this->m_replaceMode = replace;
     manager->setCurrentSearch(this);
 
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);

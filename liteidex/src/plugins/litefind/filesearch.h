@@ -90,6 +90,7 @@ public:
     virtual void cancel();
     virtual void activate();
     virtual QString searchText() const;
+    virtual bool replaceMode() const { return false; }
 public slots:
     void findInFiles();
     void browser();

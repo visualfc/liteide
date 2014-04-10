@@ -41,7 +41,8 @@ public:
     virtual void cancel();
     virtual void activate();
     virtual QString searchText() const;
-    void findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor);
+    virtual bool replaceMode() const;
+    void findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool replace = false);
 public slots:
     void findUsagesStarted();
     void findUsagesOutput(QByteArray,bool);
@@ -53,6 +54,7 @@ protected:
     QString m_searchText;
     QString m_lastLineText;
     int     m_lastLine;
+    bool    m_replaceMode;
 };
 
 #endif // GOLANGFILESEARCH_H

@@ -207,7 +207,7 @@ void GolangEdit::editorJumpToDecl()
 void GolangEdit::editorFindUsages()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor);
+    m_fileSearch->findUsages(m_editor,cursor,true);
 }
 
 void GolangEdit::editorFindInfo()

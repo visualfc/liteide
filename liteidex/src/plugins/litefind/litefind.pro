@@ -11,10 +11,12 @@ DEFINES += LITEFIND_LIBRARY
 SOURCES += litefindplugin.cpp \
     filesearch.cpp \
     findeditor.cpp \
-    filesearchmanager.cpp
+    filesearchmanager.cpp \
+    replacedocument.cpp
 
 HEADERS += litefindplugin.h\
         litefind_global.h \
     filesearch.h \
     findeditor.h \
-    filesearchmanager.h
+    filesearchmanager.h \
+    replacedocument.h

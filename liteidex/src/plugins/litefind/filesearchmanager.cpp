@@ -23,11 +23,13 @@
 
 #include "filesearchmanager.h"
 #include "qtc_searchresult/searchresultcolor.h"
+#include "replacedocument.h"
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QComboBox>
+#include <QMessageBox>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -85,6 +87,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     connect(newSearch,SIGNAL(triggered()),this,SLOT(newSearch()));
     connect(m_searchItemCombox,SIGNAL(currentIndexChanged(int)),this,SLOT(currentSearchItemChanged(int)));
     connect(m_searchResultWidget,SIGNAL(activated(Find::SearchResultItem)),this,SLOT(activated(Find::SearchResultItem)));
+    connect(m_searchResultWidget,SIGNAL(replaceButtonClicked(QString,QList<Find::SearchResultItem>,bool)),this,SLOT(doReplace(QString,QList<Find::SearchResultItem>,bool)));
 }
 
 FileSearchManager::~FileSearchManager()
@@ -125,13 +128,12 @@ QList<LiteApi::IFileSearch *> FileSearchManager::fileSearchList() const
 
 void FileSearchManager::setCurrentSearch(LiteApi::IFileSearch *search)
 {
-    if (m_currentSearch == search) {
-        return;
-    }
     m_currentSearch = search;
     if (m_currentSearch->widget()) {
         m_searchItemStackedWidget->setCurrentWidget(search->widget());
     }
+    m_searchResultWidget->setShowReplaceUI(m_currentSearch->replaceMode());
+    m_currentSearch->activate();
 }
 
 void FileSearchManager::activated(const Find::SearchResultItem &item)
@@ -163,11 +165,7 @@ void FileSearchManager::currentSearchItemChanged(int item)
     QString mimeType = m_searchItemCombox->itemData(item,Qt::UserRole).toString();
     LiteApi::IFileSearch *search = this->findFileSearch(mimeType);
     if (search) {
-        m_currentSearch = search;
-        if (m_searchItemStackedWidget->currentWidget() != search->widget()) {
-            m_searchItemStackedWidget->setCurrentWidget(search->widget());
-        }
-        search->activate();
+        setCurrentSearch(search);
     }
 }
 
@@ -191,4 +189,43 @@ void FileSearchManager::findResult(const LiteApi::FileSearchResult &result)
                                     result.lineText,
                                     result.col,
                                     result.len);
+}
+
+void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchResultItem> &items, bool preserveCase)
+{
+    if (items.isEmpty()) {
+        return;
+    }
+    QHash<QString, QList<Find::SearchResultItem> > changes;
+    foreach (const Find::SearchResultItem &item, items)
+        changes[QDir::fromNativeSeparators(item.path.first())].append(item);
+
+    // Checking for files without write permissions
+    QHashIterator<QString, QList<Find::SearchResultItem> > it(changes);
+    QStringList roFiles;
+    while (it.hasNext()) {
+        it.next();
+        const QFileInfo fileInfo(it.key());
+        if (!fileInfo.isWritable()) {
+            roFiles.append(it.key());
+        }
+    }
+    if (!roFiles.isEmpty()) {
+        QString text = tr("The following files have no write permissions. Do you want to change the permissions?");
+        text += "\n";
+        text += roFiles.join("\n");
+        int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("File is readonly"),text,QMessageBox::Yes|QMessageBox::Cancel,QMessageBox::Cancel);
+        if (ret != QMessageBox::Yes) {
+            return;
+        }
+        foreach(QString fileName, roFiles) {
+            QFile::setPermissions(fileName, QFile::permissions(fileName) | QFile::WriteUser);
+        }
+    }
+    it.toFront();
+    while(it.hasNext()) {
+        it.next();
+        ReplaceDocument doc;
+        doc.replace(it.key(),text,it.value());
+    }
 }
