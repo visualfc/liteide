@@ -92,7 +92,6 @@ public:
     virtual QString searchText() const;
 public slots:
     void findInFiles();
-    void dbclickOutput(const QTextCursor &cur);
     void browser();
     void currentDir();
 protected:

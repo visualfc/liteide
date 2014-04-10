@@ -435,11 +435,11 @@ bool EditorManager::saveEditorAs(IEditor *editor)
     return true;
 }
 
-bool EditorManager::saveAllEditors()
+bool EditorManager::saveAllEditors(bool emitAboutSave)
 {
     QList<IEditor*> editorList = m_widgetEditorMap.values();
     foreach (IEditor *editor, editorList) {
-        saveEditor(editor);
+        saveEditor(editor,emitAboutSave);
     }
     return true;
 }
