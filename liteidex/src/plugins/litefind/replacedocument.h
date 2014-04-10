@@ -31,8 +31,14 @@ class ReplaceDocument : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReplaceDocument(QObject *parent = 0);
-    void replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items);
+    explicit ReplaceDocument(LiteApi::IApplication *app, QObject *parent = 0);
+    ~ReplaceDocument();
+    bool replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items);
+    QTextDocument* fileDocument(const QString &fileName);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    QTextDocument *m_document;
+    QTextCursor    m_cursor;
 };
 
 #endif // REPLACEDOCUMENT_H

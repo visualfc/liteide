@@ -225,7 +225,7 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
     it.toFront();
     while(it.hasNext()) {
         it.next();
-        ReplaceDocument doc;
+        ReplaceDocument doc(m_liteApp);
         doc.replace(it.key(),text,it.value());
     }
 }

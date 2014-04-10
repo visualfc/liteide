@@ -32,12 +32,43 @@
 #endif
 //lite_memory_check_end
 
-ReplaceDocument::ReplaceDocument(QObject *parent) :
-    QObject(parent)
+ReplaceDocument::ReplaceDocument(LiteApi::IApplication *app, QObject *parent) :
+    QObject(parent), m_liteApp(app), m_document(0)
 {
 }
 
-void ReplaceDocument::replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items)
+ReplaceDocument::~ReplaceDocument()
 {
+    if (m_document) {
+        delete m_document;
+    }
+}
 
+bool ReplaceDocument::replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items)
+{
+    QTextDocument *doc = fileDocument(fileName);
+    if (!doc) {
+        return false;
+    }
+    return false;
+}
+
+QTextDocument *ReplaceDocument::fileDocument(const QString &fileName)
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
+    if (editor) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
+        if (ed) {
+            m_cursor = ed->textCursor();
+            return ed->document();
+        }
+    }
+    QFile file(fileName);
+    if (file.open(QFile::ReadOnly)) {
+        QByteArray data = file.readAll();
+        m_document = new QTextDocument(QString::fromUtf8(data));
+        m_cursor = QTextCursor(m_document);
+        return m_document;
+    }
+    return 0;
 }
