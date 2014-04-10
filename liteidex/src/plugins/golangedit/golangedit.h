@@ -28,6 +28,7 @@
 #include <liteeditorapi/liteeditorapi.h>
 #include <liteenvapi/liteenvapi.h>
 #include "processex/processex.h"
+#include "golangfilesearch.h"
 
 class GolangEdit : public QObject
 {
@@ -41,6 +42,7 @@ public slots:
     void updateLink(const QTextCursor &cursor);
     void editorFindInfo();
     void editorJumpToDecl();
+    void editorFindUsages();
     void findDefStarted();
     void findDefOutput(QByteArray,bool);
     void findDefFinish(bool,int,QString);
@@ -58,6 +60,7 @@ protected:
     LiteApi::Link m_lastLink;
     QAction *m_findInfoAct;
     QAction *m_jumpDeclAct;
+    QAction *m_findUseAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;
     ProcessEx  *m_findLinkProcess;
@@ -66,6 +69,7 @@ protected:
     QTextCursor m_lastCursor;
     QTextCursor m_findLastCursor;
     QByteArray  m_findInfoData;
+    GolangFileSearch *m_fileSearch;
 };
 
 #endif // GOLANGEDIT_H

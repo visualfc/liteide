@@ -49,6 +49,16 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
+    m_findUseAct = new QAction(tr("Find Usages"),this);
+    actionContext->regAction(m_findUseAct,"FindUsages","");
+
+    m_fileSearch = new GolangFileSearch(app,this);
+
+    LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
+    if (manager) {
+        manager->addFileSearch(m_fileSearch);
+    }
+
     m_findDefProcess = new ProcessEx(this);
     m_findInfoProcess = new ProcessEx(this);
     m_findLinkProcess = new ProcessEx(this);
@@ -58,6 +68,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     connect(m_findInfoAct,SIGNAL(triggered()),this,SLOT(editorFindInfo()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
+    connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
     connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
     connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
     connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
@@ -117,12 +128,14 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
+        menu->addAction(m_findUseAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
+        menu->addAction(m_findUseAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -142,10 +155,12 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
 void GolangEdit::updateLink(const QTextCursor &_cursor)
 {
     QTextCursor cursor = _cursor;
-    cursor.select(QTextCursor::WordUnderCursor);
+    LiteApi::selectWordUnderCursor(cursor);
+
     if (cursor.selectionStart() == cursor.selectionEnd()) {
         return;
     }
+
     if (m_linkCursor.selectionStart() == cursor.selectionStart() &&
             m_linkCursor.selectionEnd() == cursor.selectionEnd()) {
         if (m_lastLink.hasValidTarget()) {
@@ -161,7 +176,7 @@ void GolangEdit::updateLink(const QTextCursor &_cursor)
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QString src = cursor.document()->toPlainText();
     m_srcData = src.toUtf8();
-    int offset = src.left(cursor.position()).length();
+    int offset = src.left(cursor.selectionStart()).length();
     QFileInfo info(m_editor->filePath());
     m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
@@ -180,7 +195,13 @@ void GolangEdit::editorJumpToDecl()
     m_findDefProcess->setWorkingDirectory(info.path());
     m_findDefProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def .").
                              arg(info.fileName()).
-                             arg(m_editor->utf8Position()));
+                              arg(m_editor->utf8Position()));
+}
+
+void GolangEdit::editorFindUsages()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_fileSearch->findUsages(m_editor,cursor);
 }
 
 void GolangEdit::editorFindInfo()

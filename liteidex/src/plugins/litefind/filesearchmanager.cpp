@@ -61,6 +61,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     m_searchWidget->setLayout(vbox);;
 
     m_searchResultWidget = new Find::Internal::SearchResultWidget(m_widget);
+    m_searchResultWidget->setAutoExpandResults(true);
 
     QPalette pal = m_searchResultWidget->palette();
     Find::Internal::SearchResultColor color;

@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include <QTextCursor>
+#include <QTextBlock>
 #include <QCompleter>
 #include <QStandardItem>
 
@@ -200,6 +201,40 @@ inline ILiteEditor *getLiteEditor(IEditor *editor)
     }
     return 0;
 }
+
+inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0)
+{
+    QString text = tc.block().text();
+    int pos = tc.positionInBlock();
+    if (pos > 0 && pos < text.length()) {
+        QChar ch = text.at(pos-1);
+        if (ch.isLetterOrNumber() || ch == '_') {
+            tc.movePosition(QTextCursor::Left);
+            if (moveLeft) {
+                *moveLeft = true;
+            }
+        }
+    }
+    tc.select(QTextCursor::WordUnderCursor);
+    return tc.selectedText();
+}
+
+inline void selectWordUnderCursor(QTextCursor &tc, bool *moveLeft = 0)
+{
+    QString text = tc.block().text();
+    int pos = tc.positionInBlock();
+    if (pos > 0 && pos < text.length()) {
+        QChar ch = text.at(pos-1);
+        if (ch.isLetterOrNumber() || ch == '_') {
+            tc.movePosition(QTextCursor::Left);
+            if (moveLeft) {
+                *moveLeft = true;
+            }
+        }
+    }
+    tc.select(QTextCursor::WordUnderCursor);
+}
+
 
 } //namespace LiteApi
 
