@@ -50,7 +50,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
 
     m_findUseAct = new QAction(tr("Find Usages"),this);
-    actionContext->regAction(m_findUseAct,"FindUsages","");
+    actionContext->regAction(m_findUseAct,"FindUsages","CTRL+SHIFT+U");
 
     m_fileSearch = new GolangFileSearch(app,this);
 

@@ -155,9 +155,7 @@ void FileSearchManager::newSearch()
 {
     m_toolAct->setChecked(true);
     m_widget->setCurrentWidget(m_searchWidget);
-    if (m_currentSearch) {
-        m_currentSearch->activate();
-    }
+    currentSearchItemChanged(0);
 }
 
 void FileSearchManager::currentSearchItemChanged(int item)

@@ -49,7 +49,7 @@ QString GolangFileSearch::mimeType() const
 
 QString GolangFileSearch::displayName() const
 {
-    return tr("GolangFileSearch");
+    return tr("Golang Find Usages");
 }
 
 QWidget *GolangFileSearch::widget() const
