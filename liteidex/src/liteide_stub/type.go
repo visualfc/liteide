@@ -318,7 +318,6 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg 
 			var f *ast.File
 			if cursor != nil && cursor.fileName == file {
 				f, err = w.parseFile(bp.Dir, file, cursor.src)
-				token.Position
 				cursor.pos = token.Pos(w.fset.File(f.Pos()).Base()) + token.Pos(cursor.cursorPos)
 				cursor.fileDir = bp.Dir
 			} else {
