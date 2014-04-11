@@ -44,10 +44,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangEdit");
 
     m_findInfoAct = new QAction(tr("View Expression Information"),this);
-    actionContext->regAction(m_findInfoAct,"ViewInfo",QKeySequence::HelpContents);
+    actionContext->regAction(m_findInfoAct,"ViewInfo","CTRL+SHIFT+I;F1");
 
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
-    actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","F2");
+    actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration","CTRL+SHIFT+J;F2");
 
     m_findUseAct = new QAction(tr("Find Usages"),this);
     actionContext->regAction(m_findUseAct,"FindUsages","CTRL+SHIFT+U");

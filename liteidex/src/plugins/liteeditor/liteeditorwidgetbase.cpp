@@ -293,7 +293,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
-    m_mouseNavigation = true;
+    m_mouseNavigation = false;
     setTabSize(4);
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
