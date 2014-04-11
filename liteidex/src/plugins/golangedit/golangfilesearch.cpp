@@ -97,7 +97,7 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
 
     m_liteApp->editorManager()->saveAllEditors(false);
 
-    int offset = moveLeft ? editor->utf8Position()-1: editor->utf8Position();
+    int offset = moveLeft ? editor->utf8Position(true)-1: editor->utf8Position(true);
 
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);
     if (!manager) {

@@ -72,6 +72,8 @@ public:
     QString textToReplace() const;
     void setShowReplaceUI(bool visible);
 
+    void setInfoWidgetLabel(const QString &infoText);
+
     bool hasFocusInternally() const;
     void setFocusInternally();
     bool canFocusInternally() const;
@@ -91,7 +93,7 @@ public:
 
     void setSearchAgainSupported(bool supported);
     void setSearchAgainEnabled(bool enabled);
-
+    void setPreserveCaseSupported(bool enabled);
 public slots:
     void finishSearch(bool canceled);
     void sendRequestPopup();
@@ -133,11 +135,14 @@ private:
     QToolButton *m_searchAgainButton;
     QCheckBox *m_preserveCaseCheck;
     bool m_searchAgainSupported;
+    bool m_preserveCaseSupported;
     QWidget *m_descriptionContainer;
     QLabel *m_label;
     QLabel *m_searchTerm;
     QToolButton *m_cancelButton;
     QLabel *m_matchesFoundLabel;
+    QFrame *m_infoWidget;
+    QLabel *m_infoLabel;
 };
 
 } // Internal

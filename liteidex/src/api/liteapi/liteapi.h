@@ -278,7 +278,7 @@ public:
     ITextEditor(QObject *parent = 0) : IEditor(parent) {}
     virtual int line() const = 0;
     virtual int column() const = 0;
-    virtual int utf8Position() const = 0;
+    virtual int utf8Position(bool file = false) const = 0;
     virtual QByteArray utf8Data() const = 0;
     virtual void setWordWrap(bool wrap) = 0;
     virtual bool wordWrap() const = 0;

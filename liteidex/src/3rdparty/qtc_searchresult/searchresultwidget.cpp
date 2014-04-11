@@ -80,7 +80,8 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     QWidget(parent),
     m_count(0),
     m_isShowingReplaceUI(false),
-    m_searchAgainSupported(false)
+    m_searchAgainSupported(false),
+    m_preserveCaseSupported(false)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -99,6 +100,22 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     topLayout->setMargin(2);
     topWidget->setLayout(topLayout);
     layout->addWidget(topWidget);
+
+    m_infoWidget = new QFrame;
+    pal = m_infoWidget->palette();
+    pal.setColor(QPalette::Window, QColor(255, 255, 225));
+    pal.setColor(QPalette::WindowText, Qt::black);
+    m_infoWidget->setPalette(pal);
+    m_infoWidget->setFrameStyle(QFrame::Panel | QFrame::Raised);
+    m_infoWidget->setLineWidth(1);
+    m_infoWidget->setAutoFillBackground(true);
+
+    QHBoxLayout *infoLayout = new QHBoxLayout(m_infoWidget);
+    infoLayout->setMargin(2);
+    m_infoLabel = new QLabel();
+    infoLayout->addWidget(m_infoLabel);
+    layout->addWidget(m_infoWidget);
+
 
     m_messageWidget = new QFrame;
     pal.setColor(QPalette::Window, QColor(255, 255, 225));
@@ -299,8 +316,14 @@ void SearchResultWidget::setShowReplaceUI(bool visible)
     m_replaceLabel->setVisible(visible);
     m_replaceTextEdit->setVisible(visible);
     m_replaceButton->setVisible(visible);
-    m_preserveCaseCheck->setVisible(visible);
+    m_preserveCaseCheck->setVisible(m_preserveCaseSupported && visible);
     m_isShowingReplaceUI = visible;
+    m_infoWidget->setVisible(visible);
+}
+
+void SearchResultWidget::setInfoWidgetLabel(const QString &infoText)
+{
+    m_infoLabel->setText(infoText);
 }
 
 bool SearchResultWidget::hasFocusInternally() const
@@ -401,6 +424,12 @@ void SearchResultWidget::setSearchAgainSupported(bool supported)
 void SearchResultWidget::setSearchAgainEnabled(bool enabled)
 {
     m_searchAgainButton->setEnabled(enabled);
+}
+
+void SearchResultWidget::setPreserveCaseSupported(bool supported)
+{
+    m_preserveCaseSupported = supported;
+    m_preserveCaseCheck->setVisible(supported);
 }
 
 void SearchResultWidget::finishSearch(bool canceled)

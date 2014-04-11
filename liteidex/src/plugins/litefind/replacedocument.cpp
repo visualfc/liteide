@@ -22,6 +22,9 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "replacedocument.h"
+#include <QTextBlock>
+#include <QTextCursor>
+#include <QTextDocument>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -46,28 +49,76 @@ ReplaceDocument::~ReplaceDocument()
 
 bool ReplaceDocument::replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items)
 {
-    QTextDocument *doc = fileDocument(fileName);
+    QTextCursor cursor;
+    bool crlf = false;
+    QTextDocument *doc = fileDocument(fileName,cursor,crlf);
     if (!doc) {
         return false;
+    }
+    cursor.movePosition(QTextCursor::Start);
+    cursor.beginEditBlock();
+    QTextBlock block = cursor.block();
+    int offset = 0;
+    foreach(Find::SearchResultItem item, items) {
+        if (!block.isValid()) {
+            break;
+        }
+        while (block.blockNumber() < item.lineNumber-1 ) {
+            block = block.next();
+            offset = 0;
+            if (!block.isValid()) {
+                break;
+            }
+        }
+        cursor.setPosition(block.position());
+        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,offset+item.textMarkPos);
+        cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,item.textMarkLength);
+        cursor.removeSelectedText();
+        cursor.insertText(text);
+        offset += text.length()-item.textMarkLength;
+    }
+    cursor.endEditBlock();
+    if (m_document) {
+        QFile f(fileName);
+        if (!f.open(QFile::WriteOnly)) {
+            return false;
+        }
+        QString text = m_document->toPlainText();
+        if (crlf) {
+            text.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
+        }
+        f.write(text.toUtf8());
     }
     return false;
 }
 
-QTextDocument *ReplaceDocument::fileDocument(const QString &fileName)
+QTextDocument *ReplaceDocument::fileDocument(const QString &fileName, QTextCursor &cursor, bool &crlf)
 {
     LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
     if (editor) {
         QPlainTextEdit *ed = LiteApi::getPlainTextEdit(editor);
         if (ed) {
-            m_cursor = ed->textCursor();
+            cursor = ed->textCursor();
             return ed->document();
         }
     }
     QFile file(fileName);
     if (file.open(QFile::ReadOnly)) {
         QByteArray data = file.readAll();
-        m_document = new QTextDocument(QString::fromUtf8(data));
-        m_cursor = QTextCursor(m_document);
+        QString text = QString::fromUtf8(data);
+        int lf = text.indexOf('\n');
+        if (lf <= 0) {
+            crlf = false;
+        } else {
+            lf = text.indexOf(QRegExp("[^\r]\n"),lf-1);
+            if (lf >= 0) {
+                crlf = false;
+            } else {
+                crlf = true;
+            }
+        }
+        m_document = new QTextDocument(text);
+        cursor = QTextCursor(m_document);
         return m_document;
     }
     return 0;

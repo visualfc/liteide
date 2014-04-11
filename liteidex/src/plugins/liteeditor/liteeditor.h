@@ -88,7 +88,7 @@ public:
     virtual LiteApi::IFile *file();
     virtual int line() const;
     virtual int column() const;
-    virtual int utf8Position() const;
+    virtual int utf8Position(bool file) const;
     virtual QByteArray utf8Data() const;
     virtual void setWordWrap(bool wrap);
     virtual bool wordWrap() const;

@@ -63,7 +63,10 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     m_searchWidget->setLayout(vbox);;
 
     m_searchResultWidget = new Find::Internal::SearchResultWidget(m_widget);
+    m_searchResultWidget->setPreserveCaseSupported(false);
+    m_searchResultWidget->setSearchAgainSupported(false);
     m_searchResultWidget->setAutoExpandResults(true);
+    m_searchResultWidget->setInfoWidgetLabel(tr("This change cannot be undone."));
 
     QPalette pal = m_searchResultWidget->palette();
     Find::Internal::SearchResultColor color;
@@ -175,6 +178,7 @@ void FileSearchManager::findStarted()
     m_widget->setCurrentWidget(m_searchResultWidget);
     m_searchResultWidget->restart();
     m_searchResultWidget->setInfo(m_currentSearch->displayName()+":",QString(),m_currentSearch->searchText());
+    m_searchResultWidget->setTextToReplace(m_currentSearch->searchText());
 }
 
 void FileSearchManager::findFinished(bool)
@@ -191,8 +195,11 @@ void FileSearchManager::findResult(const LiteApi::FileSearchResult &result)
                                     result.len);
 }
 
-void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchResultItem> &items, bool preserveCase)
+void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchResultItem> &items, bool /*preserveCase*/)
 {
+    if (text.trimmed().isEmpty()) {
+        return;
+    }
     if (items.isEmpty()) {
         return;
     }
@@ -222,6 +229,8 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
             QFile::setPermissions(fileName, QFile::permissions(fileName) | QFile::WriteUser);
         }
     }
+
+    m_toolAct->setChecked(false);
     it.toFront();
     while(it.hasNext()) {
         it.next();
