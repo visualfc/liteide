@@ -105,7 +105,8 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     }
     this->m_replaceMode = replace;
     manager->setCurrentSearch(this);
-
+    m_lastLine = 0;
+    m_file.close();
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QFileInfo info(editor->filePath());
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
@@ -134,10 +135,10 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
             int fileLine = reg.cap(1).toInt();
             int fileCol = reg.cap(2).toInt();
             if (m_file.fileName() != fileName) {
-                if (m_file.isOpen()) {
-                    m_file.close();
-                }
+                m_file.close();
                 m_file.setFileName(fileName);
+            }
+            if (!m_file.isOpen()) {
                 m_file.open(QFile::ReadOnly);
                 m_lastLine = 0;
             }
@@ -160,8 +161,7 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
 
 void GolangFileSearch::findUsagesFinish(bool b, int, QString)
 {
-    if (m_file.isOpen()) {
-        m_file.close();
-    }
+    m_file.close();
+    m_lastLine = 0;
     emit findFinished(b);
 }
