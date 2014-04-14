@@ -66,7 +66,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     m_searchResultWidget->setPreserveCaseSupported(false);
     m_searchResultWidget->setSearchAgainSupported(false);
     m_searchResultWidget->setAutoExpandResults(true);
-    m_searchResultWidget->setInfoWidgetLabel(tr("This change cannot be undone."));
+    m_searchResultWidget->setInfoWidgetLabel(tr("This file change cannot be undone!"));
 
     QPalette pal = m_searchResultWidget->palette();
     Find::Internal::SearchResultColor color;

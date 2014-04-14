@@ -61,7 +61,7 @@ public:
         m_info->setName("GolangCode");
         m_info->setAuthor("visualfc");
         m_info->setVer("x21.1");
-        m_info->setInfo("Golang Gocode Util");
+        m_info->setInfo("Golang Gocode Support");
     }
 };
 

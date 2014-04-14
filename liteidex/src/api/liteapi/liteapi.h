@@ -741,7 +741,7 @@ inline QString liteide_stub_cmd(LiteApi::IApplication *app)
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X21")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X22")
 
 
 #endif //__LITEAPI_H__

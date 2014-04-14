@@ -63,7 +63,7 @@ public:
         m_info->setName("GolangFmt");
         m_info->setAuthor("visualfc");
         m_info->setVer("x21");
-        m_info->setInfo("Golang Gofmt Util");
+        m_info->setInfo("Golang Format Support");
     }
 };
 

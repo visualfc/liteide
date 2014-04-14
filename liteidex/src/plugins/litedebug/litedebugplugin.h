@@ -52,8 +52,8 @@ public:
         m_info->setId("plugin/LiteDebug");
         m_info->setName("LiteDebug");
         m_info->setAuthor("visualfc");
-        m_info->setVer("x18");
-        m_info->setInfo("Debug Manager");
+        m_info->setVer("x22");
+        m_info->setInfo("Core Debug Manager");
         m_info->appendDepend("plugin/litebuild");
         m_info->appendDepend("plugin/litefind");
         m_info->setMustLoad(true);

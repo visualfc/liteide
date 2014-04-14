@@ -52,7 +52,7 @@ public:
         m_info->setVer("x21");
         m_info->setName("Markdown");
         m_info->setAuthor("visualfc");
-        m_info->setInfo("Markdown Editor");
+        m_info->setInfo("Markdown Editor Support");
         m_info->appendDepend("plugin/liteeditor");
     }
 };
