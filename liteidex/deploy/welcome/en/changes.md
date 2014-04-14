@@ -8,6 +8,7 @@
 	* add golang find usage support
 	* add golang code refactor support
 	* fast jump to declaration
+	* add reload folder/files option on startup.
 * LiteIDE
 	* fix code fold bug
 * LiteDebug
