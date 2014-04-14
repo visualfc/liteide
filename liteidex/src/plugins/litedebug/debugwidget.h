@@ -59,6 +59,7 @@ public slots:
     void setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded);
     void watchCreated(QString,QString);
     void watchRemoved(QString);
+    void stackClicked(QModelIndex);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;

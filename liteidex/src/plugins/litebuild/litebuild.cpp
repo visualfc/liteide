@@ -132,13 +132,13 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
     m_fmctxGoBuildAct = new QAction(tr("Go Build"),this);
-    m_fmctxGoBuildAct->setData("build");
+    m_fmctxGoBuildAct->setData("build -v ./...");
     m_fmctxGoInstallAct = new QAction(tr("Go Install"),this);
-    m_fmctxGoInstallAct->setData("install");
+    m_fmctxGoInstallAct->setData("install -v ./...");
     m_fmctxGoTestAct = new QAction(tr("Go Test"),this);
-    m_fmctxGoTestAct->setData("test");
+    m_fmctxGoTestAct->setData("test -v ./...");
     m_fmctxGoCleanAct = new QAction(tr("Go Clean"),this);
-    m_fmctxGoCleanAct->setData("clean");
+    m_fmctxGoCleanAct->setData("clean -i -x ./...");
     connect(m_fmctxGoBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoInstallAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoTestAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
