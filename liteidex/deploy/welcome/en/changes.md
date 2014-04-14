@@ -21,6 +21,8 @@
 	* new golang editor support plugin
 	* find usages
 	* rename symbol under cursor
+* MarkdownEdit
+	* add Github_Word.css, thanks github.com/lixiaolong
 
 ### 2014.03.20 Ver x21.1
 * LiteIDE
