@@ -60,6 +60,8 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #elif defined(Q_OS_MAC)
     m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
+#else
+    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #endif
     m_fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
 
