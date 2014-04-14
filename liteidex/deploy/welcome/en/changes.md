@@ -3,6 +3,24 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.04.14 Ver x22
+* LiteIDE
+	* add golang find usage support
+	* add golang code refactor support
+	* fast jump to declaration
+* LiteIDE
+	* fix code fold bug
+* LiteDebug
+	* add call frame goto line
+* LiteEnv
+	* add freebsd env
+* LiteFind
+	* new find result view from QtCteator
+* GolangEdit
+	* new golang editor support plugin
+	* find usages
+	* rename symbol under cursor
+
 ### 2014.03.20 Ver x21.1
 * LiteIDE
 	* reduce application memory usage
