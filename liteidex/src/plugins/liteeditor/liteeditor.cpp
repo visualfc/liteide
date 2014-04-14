@@ -80,7 +80,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
       m_bReadOnly(false)
 {
     m_widget = new QWidget;
-    m_editorWidget = new LiteEditorWidget(m_widget);
+    m_editorWidget = new LiteEditorWidget(app,m_widget);
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
 
@@ -146,6 +146,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
     connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
     connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
+    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor)),this,SIGNAL(updateLink(QTextCursor)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 }
@@ -304,7 +305,11 @@ void LiteEditor::createActions()
     actionContext->regAction(m_wordWrapAct,"WordWrap","");
 
     m_codeCompleteAct = new QAction(tr("Code Complete"),this);
+#ifdef Q_OS_MAC
+    actionContext->regAction(m_codeCompleteAct,"CodeComplete","Meta+Space");
+#else
     actionContext->regAction(m_codeCompleteAct,"CodeComplete","Ctrl+Space");
+#endif
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
@@ -622,14 +627,14 @@ int LiteEditor::column() const
     return m_editorWidget->textCursor().columnNumber();
 }
 
-int LiteEditor::utf8Position() const
+int LiteEditor::utf8Position(bool file) const
 {
     QTextCursor cur = m_editorWidget->textCursor();
     QString src = cur.document()->toPlainText().left(cur.position());
     int offset = 0;
-//    if (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator) {
-//       offset = cur.blockNumber();
-//    }
+    if (file && (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator)) {
+       offset = cur.blockNumber();
+    }
     return src.toUtf8().length()+offset+1;
 }
 
@@ -680,6 +685,8 @@ void LiteEditor::applyOption(QString id)
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
 
+    m_offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
+
     m_editorWidget->setAutoIndent(autoIndent);
     m_editorWidget->setAutoBraces0(autoBraces0);
     m_editorWidget->setAutoBraces1(autoBraces1);
@@ -704,6 +711,8 @@ void LiteEditor::applyOption(QString id)
     QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #elif defined(Q_OS_MAC)
     QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
+#else
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
 #endif
     int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
     int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();    
@@ -863,8 +872,11 @@ void LiteEditor::editPositionChanged()
      }
 */
      //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
-     //m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
-     m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     if (m_offsetVisible) {
+         m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
+     } else {
+         m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     }
 }
 
 void LiteEditor::gotoLine()
@@ -949,6 +961,16 @@ void LiteEditor::clearAllNavigateMarks()
 void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
 {
     m_editorWidget->clearAllNavigateMark(types, tag);
+}
+
+void LiteEditor::showLink(const LiteApi::Link &link)
+{
+    m_editorWidget->showLink(link);
+}
+
+void LiteEditor::clearLink()
+{
+    m_editorWidget->clearLink();
 }
 
 void LiteEditor::selectNextParam()

@@ -88,7 +88,7 @@ public:
     virtual LiteApi::IFile *file();
     virtual int line() const;
     virtual int column() const;
-    virtual int utf8Position() const;
+    virtual int utf8Position(bool file) const;
     virtual QByteArray utf8Data() const;
     virtual void setWordWrap(bool wrap);
     virtual bool wordWrap() const;
@@ -105,6 +105,8 @@ public:
     virtual void clearNavigateMarak(int line);
     virtual void clearAllNavigateMarks();
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
+    virtual void showLink(const LiteApi::Link &link);
+    virtual void clearLink();
     LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();
@@ -181,6 +183,7 @@ public:
     QString  m_colorStyle;
     QPalette m_defEditorPalette;
     bool       m_bReadOnly;
+    bool     m_offsetVisible;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
     QAction *m_closeEditorAct;

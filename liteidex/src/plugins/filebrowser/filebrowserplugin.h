@@ -52,7 +52,7 @@ public:
         m_info->setName("FileBrowser");
         m_info->setAuthor("visualfc");
         m_info->setVer("x20");
-        m_info->setInfo("File Browser");
+        m_info->setInfo("File System Browser");
     }
 };
 

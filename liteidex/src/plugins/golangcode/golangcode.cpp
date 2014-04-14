@@ -157,10 +157,10 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
         return;
     }
 
-    if (m_completer->completer()->completionPrefix().startsWith(pre)) {
-        return;
-    }
-
+//    if (m_completer->completer()->completionPrefix().startsWith(pre)) {
+//       // qDebug() << pre << m_completer->completer()->completionPrefix();
+//       // return;
+//    }
     if (m_gocodeProcess->state() != QProcess::NotRunning) {
         return;
     }

@@ -20,4 +20,4 @@ fi
 
 export PATH=$QTDIR/bin:$PATH
 
-macdeployqt liteide/LiteIDE.app -no-plugins
+macdeployqt liteide/LiteIDE.app

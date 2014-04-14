@@ -256,8 +256,9 @@ protected:
     LiteEditorWidgetBase *textEdit;
 };
 
-LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
+LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *parent)
     : QPlainTextEdit(parent),
+      m_liteApp(app),
       m_editorMark(0),
       m_contentsChanged(false),
       m_lastCursorChangeWasInteresting(false)
@@ -292,6 +293,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(QWidget *parent)
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
+    m_mouseNavigation = false;
     setTabSize(4);
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
@@ -425,7 +427,6 @@ void LiteEditorWidgetBase::gotoMatchBrace()
 
 void LiteEditorWidgetBase::highlightCurrentLine()
 {    
-    QList<QTextEdit::ExtraSelection> extraSelections;
 
     QTextCursor cur = textCursor();
     if (!cur.block().isVisible()) {
@@ -437,9 +438,10 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         full.format.setBackground(m_currentLineBackground);
         full.format.setProperty(QTextFormat::FullWidthSelection, true);
         full.cursor = this->textCursor();
-        extraSelections.append(full);
+        setExtraSelections(LiteApi::CurrentLineSelection,QList<QTextEdit::ExtraSelection>() << full );
     }
 
+    QList<QTextEdit::ExtraSelection> extraSelections;
     MatchBracePos mb;
     if (findMatchBrace(cur,mb)) {
         if (mb.matchType == TextEditor::TextBlockUserData::Match) {
@@ -469,20 +471,8 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             extraSelections.append(selection);
         }
     }
-    QList<QTextEdit::ExtraSelection> all = this->extraSelections();
-    QMutableListIterator<QTextEdit::ExtraSelection> i(all);
-    while(i.hasNext()) {
-        i.next();
-        foreach(QTextEdit::ExtraSelection sel, m_extraSelections) {
-            if (sel.cursor == i.value().cursor && sel.format == i.value().format) {
-                i.remove();
-                break;
-            }
-        }
-    }
-    m_extraSelections = extraSelections;
-    all.append(extraSelections);
-    setExtraSelections(all);
+    setExtraSelections(LiteApi::ParenthesesMatchingSelection,extraSelections);
+    clearLink();
 }
 
 static int foldBoxWidth(const QFontMetrics &fm)
@@ -1597,6 +1587,20 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     QPlainTextEdit::keyPressEvent(e);
 }
 
+void LiteEditorWidgetBase::keyReleaseEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Control) {
+        clearLink();
+    }
+    QPlainTextEdit::keyReleaseEvent(e);
+}
+
+void LiteEditorWidgetBase::leaveEvent(QEvent *e)
+{
+    clearLink();
+    QPlainTextEdit::leaveEvent(e);
+}
+
 void LiteEditorWidgetBase::indentBlock(QTextBlock block, bool bIndent)
 {
     QTextCursor cursor(block);
@@ -2015,6 +2019,75 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
     return data->shouldSpellCheck(cur.positionInBlock());
 }
 
+void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
+{
+    if (m_currentLink == link)
+        return;
+
+    QTextEdit::ExtraSelection sel;
+    sel.cursor = textCursor();
+    sel.cursor.setPosition(link.linkTextStart);
+    sel.cursor.setPosition(link.linkTextEnd, QTextCursor::KeepAnchor);
+    sel.format.setForeground(Qt::blue);
+    sel.format.setFontUnderline(true);
+    setExtraSelections(LiteApi::LinkSelection,QList<QTextEdit::ExtraSelection>() << sel);
+    viewport()->setCursor(Qt::PointingHandCursor);
+    m_currentLink = link;
+}
+
+void LiteEditorWidgetBase::clearLink()
+{
+    if (!m_currentLink.hasValidLinkText())
+        return;
+
+    setExtraSelections(LiteApi::LinkSelection, QList<QTextEdit::ExtraSelection>());
+    viewport()->setCursor(Qt::IBeamCursor);
+    m_currentLink = LiteApi::Link();
+}
+
+bool LiteEditorWidgetBase::openLink(const LiteApi::Link &_link)
+{
+    if (!_link.hasValidTarget()) {
+        return false;
+    }
+    LiteApi::Link link = _link;
+    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(link.targetFileName);
+    if (editor) {
+         LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+        if (textEditor) {            
+            textEditor->gotoLine(link.targetLine,link.targetColumn,false);
+            return true;
+        }
+    }
+    return false;
+}
+
+void LiteEditorWidgetBase::setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections)
+{
+    m_extralSelectionMap[kind] = selections;
+    QList<QTextEdit::ExtraSelection> all;
+    QMapIterator<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > i(m_extralSelectionMap);
+    while(i.hasNext()) {
+        i.next();
+        all += i.value();
+    }
+    QPlainTextEdit::setExtraSelections(all);
+}
+
+void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
+{
+    if (m_mouseNavigation && e->modifiers() & Qt::ControlModifier) {
+        // Link emulation behaviour for 'go to definition'
+        const QTextCursor cursor = cursorForPosition(e->pos());
+
+        // Check that the mouse was actually on the text somewhere
+        bool onText = cursorRect(cursor).contains(e->pos());// e->x();
+        if (onText) {
+            emit updateLink(cursor);
+        }
+    }
+}
+
 void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton) {
@@ -2023,13 +2096,43 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             toggleBlockVisible(foldedBlock);
             viewport()->setCursor(Qt::IBeamCursor);
         }
+        if (m_mouseNavigation
+                && e->modifiers() & Qt::ControlModifier
+                && !(e->modifiers() & Qt::ShiftModifier)
+                && m_currentLink.hasValidLinkText()) {
+            if (openLink(m_currentLink)) {
+                clearLink();
+                return;
+            }
+        }
     }
-
     QPlainTextEdit::mousePressEvent(e);
+}
+
+void LiteEditorWidgetBase::mouseReleaseEvent(QMouseEvent *e)
+{
+//    if (m_linkPressed
+//            && e->modifiers() & Qt::ControlModifier
+//            && !(e->modifiers() & Qt::ShiftModifier)
+//            && e->button() == Qt::LeftButton
+//            ) {
+//        QTextCursor cursor = cursorForPosition(e->pos());
+//        cursor.select(QTextCursor::WordUnderCursor);
+//        if (cursor.selectionStart() == m_currentLink.linkTextStart &&
+//                cursor.selectionEnd() == m_currentLink.linkTextEnd) {
+//            if (openLink(m_currentLink)) {
+//                cleanLink();
+//                return;
+//            }
+//        }
+//    }
+    QPlainTextEdit::mouseReleaseEvent(e);
 }
 
 void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
 {
+    testUpdateLink(e);
+
     if (e->buttons() == Qt::NoButton) {
         const QTextBlock collapsedBlock = foldedBlockAt(e->pos());
         if (collapsedBlock.isValid() && !m_mouseOnFoldedMarker) {

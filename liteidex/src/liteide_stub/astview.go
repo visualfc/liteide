@@ -104,8 +104,8 @@ func (p *PackageView) posText(pos token.Position) (s string) {
 func NewFilePackage(filename string) (*PackageView, error) {
 	p := new(PackageView)
 	p.fset = token.NewFileSet()
-	file, err := parser.ParseFile(p.fset, filename, nil, 0)
-	if err != nil {
+	file, err := parser.ParseFile(p.fset, filename, nil, parser.AllErrors)
+	if file == nil {
 		return nil, err
 	}
 	m := make(map[string]*ast.File)
@@ -131,7 +131,7 @@ func NewPackageView(pkg *ast.Package, fset *token.FileSet, expr bool) (*PackageV
 func ParseFiles(fset *token.FileSet, filenames []string, mode parser.Mode) (pkgs map[string]*ast.Package, pkgsfiles []string, first error) {
 	pkgs = make(map[string]*ast.Package)
 	for _, filename := range filenames {
-		if src, err := parser.ParseFile(fset, filename, nil, mode); err == nil {
+		if src, err := parser.ParseFile(fset, filename, nil, mode); src != nil {
 			name := src.Name.Name
 			pkg, found := pkgs[name]
 			if !found {
@@ -153,7 +153,7 @@ func ParseFiles(fset *token.FileSet, filenames []string, mode parser.Mode) (pkgs
 
 func PrintFilesTree(filenames []string, w io.Writer, expr bool) error {
 	fset := token.NewFileSet()
-	pkgs, pkgsfiles, err := ParseFiles(fset, filenames, 0)
+	pkgs, pkgsfiles, err := ParseFiles(fset, filenames, parser.AllErrors)
 	if err != nil {
 		return err
 	}

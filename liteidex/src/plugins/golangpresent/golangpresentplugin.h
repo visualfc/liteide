@@ -52,7 +52,7 @@ public:
         m_info->setVer("x21.1");
         m_info->setName("GolangPresent");
         m_info->setAuthor("visualfc");
-        m_info->setInfo("Golang Present Editor");
+        m_info->setInfo("Golang Present Edit Support");
         m_info->appendDepend("plugin/liteeditor");
     }
 };

@@ -179,7 +179,7 @@ void ProcessEx::startEx(const QString &cmd, const QString &args)
 bool ProcessEx::startDetachedEx(const QString& cmd, const QStringList &args)
 {
 #ifdef Q_OS_WIN
-    return (int)ShellExecuteW(NULL, NULL, (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), NULL, SW_HIDE) > 32;
+    return (intptr_t)ShellExecuteW(NULL, NULL, (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), NULL, SW_HIDE) > 32;
 #else
     return QProcess::startDetached(cmd, args);
 #endif

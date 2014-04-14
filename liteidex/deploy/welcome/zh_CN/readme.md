@@ -7,7 +7,7 @@ LiteIDE X
 
 _LiteIDE是一个简单，开源，跨平台的Go语言IDE._
 
-* 版本: X21.1
+* 版本: X22
 * 作者: [七叶 (visualfc)](mailto:visualfc@gmail.com)
 
 
@@ -26,8 +26,10 @@ _LiteIDE是一个简单，开源，跨平台的Go语言IDE._
 	* 文件浏览
 	* [Gocode](https://github.com/nsf/gocode)代码自动完成支持
 	* Go API检索
+	* 查找代码表达式
 	* 跳转到声明
-	* 当前代码表达式
+	* 查找使用
+	* 代码重构
 	* Go playground
 * Markdown支持
 	* 实时预览和同步滚动

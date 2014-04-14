@@ -49,8 +49,8 @@ public:
         m_info->setId("plugin/GdbDebugger");
         m_info->setName("GdbDebugger");
         m_info->setAuthor("visualfc");
-        m_info->setVer("x19");
-        m_info->setInfo("Gdb Debugger");
+        m_info->setVer("x22");
+        m_info->setInfo("Core Gdb Debugger");
         m_info->setMustLoad(true);
     }
 };

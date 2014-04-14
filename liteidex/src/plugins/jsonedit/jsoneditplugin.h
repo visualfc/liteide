@@ -52,7 +52,7 @@ public:
         m_info->setVer("x21");
         m_info->setName("JsonEdit");
         m_info->setAuthor("visualfc");
-        m_info->setInfo("JsonEdit");
+        m_info->setInfo("Json Edit Support");
         m_info->appendDepend("plugin/liteeditor");
     }
 };
