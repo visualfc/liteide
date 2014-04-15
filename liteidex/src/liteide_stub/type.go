@@ -259,6 +259,13 @@ func (w *PkgWalker) isBinaryPkg(pkg string) bool {
 }
 
 func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg *types.Package, err error) {
+	defer func() {
+		err := recover()
+		if err != nil && typeVerbose {
+			log.Println(err)
+		}
+	}()
+
 	if strings.HasPrefix(name, ".") && parentDir != "" {
 		name = filepath.Join(parentDir, name)
 	}
@@ -338,7 +345,6 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg 
 		FakeImportC:      true,
 		Packages:         w.gcimporter,
 		Import: func(imports map[string]*types.Package, name string) (pkg *types.Package, err error) {
-			pkg = w.imported[name]
 			if pkg != nil {
 				return pkg, nil
 			}
