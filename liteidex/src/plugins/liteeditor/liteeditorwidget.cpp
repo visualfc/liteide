@@ -180,12 +180,11 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 
     //always break if ctrl is pressed and there's a key
-    if (!m_completer || ((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty())) {
+    if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty()) || !m_completer) {
         return;
     }
 
@@ -197,6 +196,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     if (e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) {
         return;
     }
+    LiteEditorWidgetBase::keyPressEvent(e);
 
     //static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
     static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
