@@ -31,7 +31,7 @@ class LiteEditorWidget : public LiteEditorWidgetBase
 {
     Q_OBJECT
 public:
-    explicit LiteEditorWidget(QWidget *parent = 0);
+    explicit LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent = 0);
     void setContextMenu(QMenu *contextMenu);
     void setCompleter(QCompleter *m_completer);
     QCompleter *completer() const;
@@ -63,7 +63,7 @@ signals:
 public:
     QString wordUnderCursor() const;
     QString textUnderCursor(QTextCursor tc) const;
-protected:
+protected:    
     QCompleter *m_completer;
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;

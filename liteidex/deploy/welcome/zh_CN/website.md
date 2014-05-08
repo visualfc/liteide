@@ -3,7 +3,7 @@
 
 ### LiteIDE
 * [LiteIDE Source](https://github.com/visualfc/liteide)
-* [LiteIDE Download](http://code.google.com/p/golangide)
+* [LiteIDE Download](http://sourceforge.net/projects/liteide/files)
 * [Support LiteIDE](http://visualfc.github.com/support)
 
 ### LiteIDE Markdown

@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include <QTextCursor>
+#include <QTextBlock>
 #include <QCompleter>
 #include <QStandardItem>
 
@@ -141,6 +142,39 @@ enum EditorNaviagteType{
     EditorNavigateBad = EditorNavigateWarning|EditorNavigateError
 };
 
+enum ExtraSelectionKind {
+    CurrentLineSelection,
+    ParenthesesMatchingSelection,
+    LinkSelection,
+};
+
+struct Link
+{
+    Link(const QString &fileName = QString(), int line = 0, int column = 0)
+        : linkTextStart(-1)
+        , linkTextEnd(-1)
+        , targetFileName(fileName)
+        , targetLine(line)
+        , targetColumn(column)
+    {}
+
+    bool hasValidTarget() const
+    { return !targetFileName.isEmpty(); }
+
+    bool hasValidLinkText() const
+    { return linkTextStart != linkTextEnd; }
+
+    bool operator==(const Link &other) const
+    { return linkTextStart == other.linkTextStart && linkTextEnd == other.linkTextEnd; }
+
+    int linkTextStart;
+    int linkTextEnd;
+
+    QString targetFileName;
+    int targetLine;
+    int targetColumn;
+};
+
 class ILiteEditor : public ITextEditor
 {
     Q_OBJECT
@@ -154,6 +188,10 @@ public:
     virtual void clearAllNavigateMarks() = 0;
     virtual void clearAllNavigateMark(EditorNaviagteType types, const char *tag = "") = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
+    virtual void showLink(const Link &link) = 0;
+    virtual void clearLink() = 0;
+signals:
+    void updateLink(const QTextCursor &cursor);
 };
 
 inline ILiteEditor *getLiteEditor(IEditor *editor)
@@ -163,6 +201,40 @@ inline ILiteEditor *getLiteEditor(IEditor *editor)
     }
     return 0;
 }
+
+inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0)
+{
+    QString text = tc.block().text();
+    int pos = tc.positionInBlock();
+    if (pos > 0 && pos < text.length()) {
+        QChar ch = text.at(pos-1);
+        if (ch.isLetterOrNumber() || ch == '_') {
+            tc.movePosition(QTextCursor::Left);
+            if (moveLeft) {
+                *moveLeft = true;
+            }
+        }
+    }
+    tc.select(QTextCursor::WordUnderCursor);
+    return tc.selectedText();
+}
+
+inline void selectWordUnderCursor(QTextCursor &tc, bool *moveLeft = 0)
+{
+    QString text = tc.block().text();
+    int pos = tc.positionInBlock();
+    if (pos > 0 && pos < text.length()) {
+        QChar ch = text.at(pos-1);
+        if (ch.isLetterOrNumber() || ch == '_') {
+            tc.movePosition(QTextCursor::Left);
+            if (moveLeft) {
+                *moveLeft = true;
+            }
+        }
+    }
+    tc.select(QTextCursor::WordUnderCursor);
+}
+
 
 } //namespace LiteApi
 

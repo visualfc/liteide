@@ -309,7 +309,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     if (!ed) {
         return;
     }
-    qDebug() << ed->document()->isModified();
+    //qDebug() << ed->document()->isModified();
     if (ed->document()->isModified()) {
         return;
     }

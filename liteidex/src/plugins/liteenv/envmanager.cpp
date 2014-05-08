@@ -241,6 +241,13 @@ static QString defaultEnvid()
         return "darwin64";
     }
 #endif
+#ifdef Q_OS_FREEBSD
+    if (QSysInfo::WordSize == 32) {
+        return "freebsd32";
+    } else {
+        return "freebsd64";
+    }
+#endif
 }
 
 bool EnvManager::initWithApp(LiteApi::IApplication *app)

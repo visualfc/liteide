@@ -7,6 +7,7 @@ CONFIG   += ordered
 SUBDIRS = \
     liteapi \
     liteenvapi  \
+    litefindapi \
     litebuildapi \
     liteeditorapi \
     litedebugapi \

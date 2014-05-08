@@ -31,6 +31,7 @@
 
 class NavigateManager;
 struct NavigateMark;
+
 class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
@@ -40,7 +41,7 @@ public:
         CurrentLine
     };
 
-    LiteEditorWidgetBase(QWidget *parent = 0);
+    LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~LiteEditorWidgetBase();
     void initLoadDocument();
     void setTabSize(int n);
@@ -78,6 +79,7 @@ signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
     void wordWrapChanged(bool);
+    void updateLink(const QTextCursor &curosr);
 public:
     bool restoreState(const QByteArray &state);
     QByteArray saveState() const;
@@ -189,16 +191,25 @@ public:
         return m_indentLineVisible;
     }
     bool isWordWrap() const;
+    void setWordWrap(bool wrap);
+    void maybeSelectLine();
+    bool isSpellCheckingAt(QTextCursor cur) const;
+    void showLink(const LiteApi::Link &link);
+    void clearLink();
+    bool openLink(const LiteApi::Link &link);
+    void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
+    void testUpdateLink(QMouseEvent *e);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
                            bool expanded) const;
-    void maybeSelectLine();
-    void setWordWrap(bool wrap);
     bool event(QEvent *e);
     void keyPressEvent(QKeyEvent *e);
+    void keyReleaseEvent(QKeyEvent *e);
+    void leaveEvent(QEvent *e);
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void indentBlock(QTextBlock block, bool bIndent);
     void indentCursor(QTextCursor cur, bool bIndent);
@@ -206,12 +217,13 @@ protected:
     void indentEnter(QTextCursor cur);
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
-    bool isSpellCheckingAt(QTextCursor cur) const;
 protected:
+    LiteApi::IApplication *m_liteApp;
     QWidget *m_extraArea;
     QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
-    QList<QTextEdit::ExtraSelection> m_extraSelections;
+    LiteApi::Link       m_currentLink;
+    QMap<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > m_extralSelectionMap;
     QTextCursor m_lastSelection;
     QColor  m_extraForeground;
     QColor  m_extraBackground;
@@ -239,6 +251,7 @@ protected:
     bool m_autoBraces4; //"
     bool m_bLastBraces;
     bool m_bTabUseSpace;
+    bool m_mouseNavigation;
     int  m_nTabSize;
     QString m_lastBraces;
     int m_lastSaveRevision;

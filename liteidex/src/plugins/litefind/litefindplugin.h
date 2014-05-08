@@ -42,12 +42,9 @@ public slots:
     void find();
     void replace();
     void hideFind();
-    void hideFileSearch();
-    void fileSearch();
 protected:
     LiteApi::IApplication *m_liteApp;
     FindEditor *m_findEditor;
-    FileSearch  *m_fileSearch;
     QAction *m_findAct;
     QAction *m_findNextAct;
     QAction *m_findPrevAct;
@@ -67,8 +64,8 @@ public:
         m_info->setId("plugin/LiteFind");
         m_info->setName("LiteFind");
         m_info->setAuthor("visualfc");
-        m_info->setVer("x19");
-        m_info->setInfo("Find/Replace Util");
+        m_info->setVer("x22");
+        m_info->setInfo("Core Find/Replace");
         m_info->setMustLoad(true);
     }
 };

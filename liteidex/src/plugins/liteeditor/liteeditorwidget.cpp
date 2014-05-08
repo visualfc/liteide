@@ -49,8 +49,8 @@
 //lite_memory_check_end
 
 
-LiteEditorWidget::LiteEditorWidget(QWidget *parent) :
-    LiteEditorWidgetBase(parent),
+LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) :
+    LiteEditorWidgetBase(app,parent),
     m_completer(0),
     m_contextMenu(0),
     m_completionPrefixMin(3),

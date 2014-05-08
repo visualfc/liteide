@@ -278,7 +278,7 @@ public:
     ITextEditor(QObject *parent = 0) : IEditor(parent) {}
     virtual int line() const = 0;
     virtual int column() const = 0;
-    virtual int utf8Position() const = 0;
+    virtual int utf8Position(bool file = false) const = 0;
     virtual QByteArray utf8Data() const = 0;
     virtual void setWordWrap(bool wrap) = 0;
     virtual bool wordWrap() const = 0;
@@ -346,7 +346,7 @@ public:
 public slots:
     virtual bool saveEditor(IEditor *editor = 0, bool emitAboutSave = true) = 0;
     virtual bool saveEditorAs(IEditor *editor = 0) = 0;
-    virtual bool saveAllEditors() = 0;
+    virtual bool saveAllEditors(bool emitAboutSave = true) = 0;
     virtual bool closeEditor(IEditor *editor = 0) = 0;
     virtual bool closeAllEditors() = 0;
 signals:
@@ -741,7 +741,7 @@ inline QString liteide_stub_cmd(LiteApi::IApplication *app)
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X21")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X22")
 
 
 #endif //__LITEAPI_H__
