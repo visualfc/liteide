@@ -20,7 +20,7 @@
 		<action id="Get" img="blue/get.png" cmd="$(GO)" args="get -v ." save="all" output="true" codec="utf-8"/>
 		<action id="Get Force" menu="Get" img="blue/get.png" cmd="$(GO)" args="get -u -v ." save="all" output="true" codec="utf-8"/>
 		<action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="$(GO)" args="test -v" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
-                <action id="Test File" menu="Test" img="blue/test.png" key = "Ctrl+Shift+T" cmd="$(GO)" args="test -v $(EDITOR_NAME)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>		        <action id="Bench" menu="Test" img="blue/testbench.png" cmd="$(GO)" args="test -test.bench=.*" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Bench" menu="Test" img="blue/testbench.png" cmd="$(GO)" args="test -test.bench=.*" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<target id="Target" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" work="$(EDITOR_DIR)"/>
 		<action id="TestCover" img="blue/cover.png" key="" task="Cover;CoverFunc" killold="true"/>
 		<action id="Cover" menu="TestCover" img="blue/cover.png" key = "" cmd="$(GO)" args="test -coverprofile cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
