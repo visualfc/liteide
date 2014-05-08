@@ -974,22 +974,6 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished">Фильтр:</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="src/plugins/litefind/filesearch.cpp" line="216"/>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="261"/>
-        <source>Search</source>
-        <translation type="unfinished">Поиск</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="217"/>
-        <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="262"/>
-        <source>Results</source>
-        <translation type="unfinished">Результаты</translation>
-=======
         <location filename="src/plugins/litefind/filesearch.cpp" line="330"/>
         <source>Files on File System</source>
         <translation type="unfinished"></translation>
@@ -997,13 +981,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="206"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="207"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
->>>>>>> parent/master
+        <translation type="unfinished">Отменить</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="248"/>
@@ -1011,26 +994,6 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished">Очистить</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="src/plugins/litefind/filesearch.cpp" line="268"/>
-        <source>File Search</source>
-        <translation type="unfinished">Поиск файлов</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="365"/>
-        <source>Searching for &apos;%1&apos;...</source>
-        <translation type="unfinished">Поиск &apos;%1&apos;...</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="405"/>
-        <source>Open Directory</source>
-        <translation type="unfinished">Открыть папку</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="417"/>
-        <source>%1 occurrence(s) have been found.</source>
-        <translation type="unfinished">Найдено: %1.</translation>
-=======
         <location filename="src/plugins/litefind/filesearch.cpp" line="435"/>
         <source>Open Directory</source>
         <translation type="unfinished"></translation>
@@ -1068,7 +1031,6 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="224"/>
         <source>File is readonly</source>
         <translation type="unfinished"></translation>
->>>>>>> parent/master
     </message>
 </context>
 <context>
@@ -2201,17 +2163,7 @@ Success: %2.</oldsource>
         <translation type="unfinished">Тема:</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="src/liteapp/liteappoption.ui" line="170"/>
-        <source>Close associated editor windows when closing a project</source>
-        <oldsource>When Close Project, Project Editors Is Closed Automatically.</oldsource>
-        <translation type="unfinished">Закрывать соответствующие окна редактора при закрытии проекта</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="163"/>
-=======
         <location filename="src/liteapp/liteappoption.ui" line="179"/>
->>>>>>> parent/master
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Загружать последнюю сессию при старте</translation>
