@@ -51,64 +51,64 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="242"/>
         <source>Build:</source>
-        <translation type="unfinished"></translation>
+        <translation>Сборка:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="215"/>
         <source>Based on Qt</source>
         <oldsource>Based on Qt Version</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>На основе Qt</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="249"/>
         <source>Source Code:</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный код:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="263"/>
         <source>Support LiteIDE:</source>
         <oldsource>Support</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Поддержка LiteIDE:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="297"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработчики</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="400"/>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевод</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="412"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Китайский</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="426"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Японский</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="440"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Русский</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="454"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Французский</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="468"/>
         <source>Traditional Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Китайский традиционный</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="482"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Немецкий</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="513"/>
@@ -128,7 +128,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/liteapp/aboutdialog.cpp" line="43"/>
         <source>Based on Qt %1 (%2 bit)</source>
-        <translation type="unfinished"></translation>
+        <translation>Основано на Qt %1 (%2 бит)</translation>
     </message>
 </context>
 <context>
@@ -141,7 +141,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="65"/>
         <source>&amp;Recent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Последние</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="66"/>
@@ -152,7 +152,7 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/liteapp/actionmanager.cpp" line="67"/>
         <source>F&amp;ind</source>
         <oldsource>&amp;Find</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Найти</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="68"/>
@@ -162,7 +162,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="69"/>
         <source>Tool Windows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Панели инструментов</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="74"/>
@@ -181,12 +181,12 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="74"/>
         <source>Go To Definition</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перейти к определению</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
         <source>View Import Document</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Документация</translation>
     </message>
 </context>
 <context>
@@ -195,18 +195,18 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="14"/>
         <source>Build Configuration</source>
         <oldsource>Build Config Dialog</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметры сборки</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="26"/>
         <source>Build ID</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Идентификатор сборки</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="52"/>
         <source>Build Path</source>
         <oldsource>Build File</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Цель сборки</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="85"/>
@@ -217,13 +217,13 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="95"/>
         <source>Build</source>
         <oldsource>Build Config</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сборка</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="105"/>
         <source>Custom</source>
         <oldsource>Build Custom</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметры</translation>
     </message>
 </context>
 <context>
@@ -232,18 +232,18 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/filebrowser/createdirdialog.ui" line="14"/>
         <source>Create Directory</source>
         <oldsource>Create Directory Dialog</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Создание папки</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createdirdialog.ui" line="22"/>
         <source>Parent:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Расположение:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createdirdialog.ui" line="36"/>
         <source>Child Path:</source>
         <oldsource>Path Name:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Путь:</translation>
     </message>
 </context>
 <context>
@@ -257,27 +257,27 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="22"/>
         <source>Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Папка:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="36"/>
         <source>File Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя файла:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="76"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Создать</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="83"/>
         <source>Create and Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Создать и редактировать</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="90"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отменить</translation>
     </message>
 </context>
 <context>
@@ -291,24 +291,24 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="81"/>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переменные</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="82"/>
         <source>Watch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Просмотр</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
         <source>Call Stack</source>
         <oldsource>CallStack</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стек вызовов</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
         <source>Libraries</source>
         <oldsource>Library</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Библиотеки</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
@@ -319,33 +319,33 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="94"/>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="258"/>
         <source>Add Global Watch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить глобально</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="95"/>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="270"/>
         <source>Add Local Watch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить локально</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="96"/>
         <source>Remove Watch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
         <source>Remove All Watches</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить все</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="258"/>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выражение (например main.var os.Stdout):</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="270"/>
         <source>Watch expression (e.g. s1.str):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выражение (например s1.str):</translation>
     </message>
 </context>
 <context>
@@ -354,32 +354,32 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="67"/>
         <source>Back</source>
         <oldsource>Backward</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Назад</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вперед</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Обновить</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="75"/>
         <source>Increase Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Увеличить размер шрифта</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="78"/>
         <source>Decrease Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Уменьшить размер шрифта</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
         <source>Reset Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стандартный размер шрифта</translation>
     </message>
 </context>
 <context>
@@ -393,7 +393,7 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/liteapp/editormanager.cpp" line="122"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть в новом окне</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="162"/>
@@ -405,67 +405,67 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/liteapp/editormanager.cpp" line="172"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вперед</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="113"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть другие</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="114"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть все</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="115"/>
         <source>Close Left Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть вкладки слева</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="116"/>
         <source>Close Right Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть вкладки справа</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="117"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть файлы в этой папке</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="118"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть файлы в других папках</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скопировать полный путь в буфер</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Show in Explorer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показать в проводнике</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="167"/>
         <source>Navigate Backward</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Назад</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="185"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактировать</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="340"/>
         <source>Save changes to %1?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить изменения в %1?</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="341"/>
@@ -490,17 +490,17 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/liteenv/envmanager.cpp" line="253"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Панель конфигурации</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="260"/>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Конфигурация</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="263"/>
         <source>Edit Environment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактировать конфигурацию</translation>
     </message>
 </context>
 <context>
@@ -531,17 +531,17 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
         <source>Cannot create temporary file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка создания временного файла: %1</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="97"/>
         <source>Cannot create FiFo %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка создания FiFo %1: %2</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="104"/>
         <source>Cannot open FiFo %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка открытия FiFo %1: %2</translation>
     </message>
 </context>
 <context>
@@ -549,7 +549,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="129"/>
         <source>Synchronize with editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Синхронизировать с редактором</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="202"/>
@@ -566,7 +566,7 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="205"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Мастер создания файла...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
@@ -586,18 +586,18 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="132"/>
         <source>Show Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показать скрытые файлы</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="206"/>
         <source>Rename File...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переименовать файл...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="209"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Установить как корневую папку</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="210"/>
@@ -608,27 +608,27 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="211"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переименовать папку...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
         <source>Open Folder in New Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку в новом окне</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="220"/>
         <source>Add to Folders</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить в папки</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="286"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Конфигурация</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="520"/>
@@ -638,7 +638,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
         <source>A folder with that name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Папка уже существует!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
@@ -650,7 +650,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="584"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="589"/>
@@ -673,12 +673,12 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="215"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку в проводнике</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="217"/>
         <source>View Godoc Here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть Godoc</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="448"/>
@@ -690,17 +690,17 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="155"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вверх</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="291"/>
         <source>File System</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файловая система</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="449"/>
         <source>A file with that name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файл уже существует!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="459"/>
@@ -711,7 +711,7 @@ LiteIDE это простая кросплатформенная среда ра
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Новое имя:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="496"/>
@@ -791,52 +791,52 @@ Do you want to load?</oldsource>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="67"/>
         <source>Show Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показать скрытые файлы</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="75"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Конфигурация</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="80"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Папки</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="156"/>
         <location filename="src/liteapp/filemanager.cpp" line="177"/>
         <location filename="src/liteapp/filemanager.cpp" line="198"/>
         <source>All Support Files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Все поддерживаемые типы файлов (%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="284"/>
         <location filename="src/liteapp/filemanager.cpp" line="302"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбрать папку</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="504"/>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сессия</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="505"/>
         <source>Project</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проект</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="506"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файл</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="507"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Папка</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="717"/>
@@ -848,7 +848,10 @@ Do you want to close the editor ?</source>
 This file has been deleted from the drive,
 
 Do you want to close the editor ?</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1
+Файл был удален с диска.
+
+Закрыть файл в редакторе ?</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="747"/>
@@ -858,7 +861,12 @@ but you have unsaved modifications in your LiteIDE editor.
 
 Do you want to reload the file from disk ?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1
+Файл был изменен на диске, вместе с тем
+имеются несохраненные изменения в редакторе LiteIDE.
+
+Перезагрузить файл ?
+При ответе &quot;Да&quot; все несохраненные изменения будут утеряны.</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="754"/>
@@ -870,7 +878,10 @@ Do you want to reload the file from disk ?</source>
 This file has been modified on the drive,
 
 Do you want to reload the file from disk ?</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1
+Файл был изменен на диске,
+
+Перезагрузить файл ?</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="326"/>
@@ -880,7 +891,7 @@ Do you want to reload the file from disk ?</oldsource>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="88"/>
         <source>Clear History</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Очистить историю</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="339"/>
@@ -895,7 +906,12 @@ but you have unsaved modifications in your LiteIDE editor.
 
 Do you want to close the editor ?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1
+Файл был удален с диска, вместе с тем
+имеются несохраненные изменения в редакторе LiteIDE.
+
+Закрыть файл в редакторе ?
+При ответе &quot;Да&quot; все несохраненные изменения будут утеряны.</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="714"/>
@@ -912,66 +928,66 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/litefind/filesearch.cpp" line="204"/>
         <source>Match whole word</source>
         <oldsource>Match word</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Слово целиком</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="205"/>
         <source>Match case</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Учет регистра</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="206"/>
         <source>Regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Регулярное выражение</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="207"/>
         <source>Scan subdirectories</source>
         <oldsource>Look in subdirs</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Найти рекурсивно</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="227"/>
         <source>Search for:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="229"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметры:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="235"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть...</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="236"/>
         <source>Use Current</source>
         <oldsource>Current</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Текущая</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="253"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Фильтр:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="216"/>
         <location filename="src/plugins/litefind/filesearch.cpp" line="261"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="217"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отменить</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="262"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Результаты</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="264"/>
@@ -981,22 +997,22 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="268"/>
         <source>File Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск файлов</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="365"/>
         <source>Searching for &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск &apos;%1&apos;...</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="405"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="417"/>
         <source>%1 occurrence(s) have been found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Найдено: %1.</translation>
     </message>
 </context>
 <context>
@@ -1017,7 +1033,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="104"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Мастер создания файла...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
@@ -1043,7 +1059,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
@@ -1063,12 +1079,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
         <source>Rename File...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переименовать файл...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="109"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переименовать папку...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="112"/>
@@ -1078,32 +1094,32 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="113"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку в проводнике</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="115"/>
         <source>View Godoc Here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть Godoc</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="419"/>
         <source>Add Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить папку</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="118"/>
         <source>Close Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть папку</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
         <source>Add Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="120"/>
         <source>Close All Folders</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть все папки</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="244"/>
@@ -1115,7 +1131,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="245"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файл уже существует!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="255"/>
@@ -1125,7 +1141,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Новое имя:</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="292"/>
@@ -1136,7 +1152,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
@@ -1154,7 +1170,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Папка уже существует!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="338"/>
@@ -1184,12 +1200,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.h" line="69"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.h" line="70"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Остановить поиск</translation>
     </message>
 </context>
 <context>
@@ -1197,18 +1213,18 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="269"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="282"/>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="315"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="313"/>
         <source>Rebuild database</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перестроить базу данных</translation>
     </message>
 </context>
 <context>
@@ -1216,72 +1232,72 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="94"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="102"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="121"/>
         <source>Find All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать все</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="122"/>
         <source>Find const</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать const</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="124"/>
         <source>Find func</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать func</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="126"/>
         <source>Find interface</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать interface</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="128"/>
         <source>Find pkg</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать pkg</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="130"/>
         <source>Find struct</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать struct</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="132"/>
         <source>Find type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать type</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="134"/>
         <source>Find var</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Искать var</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="136"/>
         <source>Use Regexp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Регулярное выражение</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="138"/>
         <source>Match Case</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Учет регистра</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="140"/>
         <source>Match Word</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Слово целиком</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="167"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Помощь</translation>
     </message>
 </context>
 <context>
@@ -1289,55 +1305,55 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="63"/>
         <source>Match case</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Учет регистра</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="64"/>
         <source>Regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Регулярное выражение</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="65"/>
         <source>Wrap around</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Продолжить сначала</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="56"/>
         <source>Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Найти следующее</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="57"/>
         <source>Find Previous</source>
         <oldsource>Find Prev</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Найти предыдущее</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="58"/>
         <source>Replace With:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заменить на:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="59"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заменить</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="60"/>
         <source>Replace All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заменить все</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="62"/>
         <source>Match whole word only</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Слово целиком</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="234"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="437"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Готово</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="81"/>
@@ -1347,19 +1363,19 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="99"/>
         <source>Find What:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Найти:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="110"/>
         <source>Options:</source>
         <oldsource>Find Option:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметры:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="205"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="360"/>
         <source>Not find</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не найдено</translation>
     </message>
 </context>
 <context>
@@ -1372,7 +1388,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/gdbdebugger/gdbdebuggeroption.ui" line="20"/>
         <source>Enable --tty for program being debugged.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Разрешить --tty для отлаживаемой программы.</translation>
     </message>
 </context>
 <context>
@@ -1380,17 +1396,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="57"/>
         <source>No outline available</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дерево недоступно</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="71"/>
         <source>Class View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пакет</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файл</translation>
     </message>
 </context>
 <context>
@@ -1409,12 +1425,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="26"/>
         <source>Close gocode when exiting</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть gocode при выходе</translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
         <source>Auto update depends package</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматически обновлять зависимые пакеты</translation>
     </message>
 </context>
 <context>
@@ -1423,7 +1439,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangcode/golangcodeplugin.cpp" line="53"/>
         <source>Comment/Uncomment Selection</source>
         <oldsource>Toggle Comment Selection</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Комментировать/Раскомментировать</translation>
     </message>
 </context>
 <context>
@@ -1431,28 +1447,28 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="160"/>
         <source>Godoc Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск Godoc</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="152"/>
         <source>Golang Doc Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Документация Golang</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="156"/>
         <source>Golang Api Index</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Индекс Golang API</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="176"/>
         <source>View Expression Information</source>
         <oldsource>View Expression Infomation</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Информация о выражении</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="179"/>
         <source>Jump to Declaration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перейти к определению</translation>
     </message>
 </context>
 <context>
@@ -1470,13 +1486,13 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="26"/>
         <source>Use default context (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Использовать контекст по-умолчанию (быстро)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="33"/>
         <source>Only load standard API documentation</source>
         <oldsource>Only load standard api</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загрузить только документацию по стандартному API</translation>
     </message>
 </context>
 <context>
@@ -1490,44 +1506,45 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="20"/>
         <source>Format Options</source>
         <oldsource>Golang Format</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметры форматирования</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
         <source>Goimports updates your Go import lines, adding missing ones and removing unreferenced ones.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Goimports обновляет декларации импорта Go, добавляя пропущенные и удаляя ненужные.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="29"/>
         <source>Use goimports instead of gofmt,for code formatting</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Использовать goimports вместо gofmt для форматирования кода</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Использовать diff для более быстрого форматирования (требует diff в PATH)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Синхронное форматирования</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="59"/>
         <source> Synchronous code formatting</source>
         <oldsource>Enable Synchronous code formatting</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Синхронное форматирование кода</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="68"/>
         <source>Synchronous code formatting timeout in milliseconds (500ms or more):</source>
+        <source>Тайм-аут синхронного форматирования кода в миллисекундах (500мс или больше):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="43"/>
         <source>Automatically format code when saving</source>
         <oldsource>When the editor is saved automatically gofmt</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматически форматировать код при сохранении</translation>
     </message>
 </context>
 <context>
@@ -1536,7 +1553,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="57"/>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="63"/>
         <source>Format Code</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Форматирование кода</translation>
     </message>
 </context>
 <context>
@@ -1544,63 +1561,63 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="64"/>
         <source>Section (s1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Секция (s1)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="67"/>
         <source>Subsection (s2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Подсекция (s2)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="70"/>
         <source>Sub-subsection (s3)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Под-подсекция (s2)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="73"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Полужирный</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="76"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Курсив</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="79"/>
         <source>Inline Code</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Исходный код</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="82"/>
         <source>Switch Bullets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Список</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="85"/>
         <source>Comment/Uncomment Selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Комментировать/раскомментировать</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="88"/>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="267"/>
         <source>Export HTML</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="91"/>
         <source>Verify Present</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проверить презентацию</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="256"/>
         <source>Present verify success</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проверка презентации прошла успешно</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
         <source>Present verify false</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проверка презентации прошла неудачно</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="304"/>
@@ -1614,12 +1631,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="85"/>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="150"/>
         <source>Go Playground</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Песочница Go</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="87"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выполнить</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="88"/>
@@ -1634,17 +1651,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="90"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загрузить...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="91"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="92"/>
         <source>Explore Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку в проводнике</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="173"/>
@@ -1652,41 +1669,41 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <oldsource>Running...
 
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запуск...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="197"/>
         <source>Error: %1.</source>
         <oldsource>
 Error: %1.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка: %1.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="199"/>
         <source>Success: %2.</source>
         <oldsource>
 Success: %2.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Успешно: %2.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="249"/>
         <source>Load File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загрузить файл</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="249"/>
         <source>Select a file to load:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выберите файл:</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="265"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить файл</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="265"/>
         <source>New File Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя файла:</translation>
     </message>
 </context>
 <context>
@@ -1694,18 +1711,18 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="71"/>
         <source>Page Style</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стиль</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Обновить</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
         <source>Export Html</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
@@ -1716,45 +1733,45 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
         <source>Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Предварительный просмотр страницы</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="82"/>
         <source>Synchronize preview and code scrollbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Синхронизировать с прокруткой кода</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Конфигурация</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="168"/>
         <source>Plain HTML</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Чистый HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
         <source>Export Failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт завершился неудачно</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="85"/>
         <source>Automatically display preview</source>
         <oldsource>Automatically Display Preview</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматически показывать HTML просмотр</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="99"/>
         <source>HTML Preview</source>
         <oldsource>Html Preview</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Просмотр HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Невозможно открыть %1 для записи!</translation>
     </message>
 </context>
 <context>
@@ -1800,7 +1817,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="196"/>
         <source>Event Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Журнал</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="183"/>
@@ -1810,27 +1827,27 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="620"/>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть файл</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="623"/>
         <source>Close All Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть все файлы</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="633"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить файл</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="636"/>
         <source>Save File As...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить файл как...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="639"/>
         <source>Save All Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить все файлы</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="626"/>
@@ -1840,42 +1857,42 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="594"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Новый...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="597"/>
         <source>Open File...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть файл...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="600"/>
         <source>Open Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="603"/>
         <source>Open Folder in New Window...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Открыть папку в новом окне...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="608"/>
         <source>Add Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="611"/>
         <source>Close All Folders</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть все папки</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="614"/>
         <source>New Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Новое окно</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="617"/>
         <source>Close Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть окно</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="628"/>
@@ -1885,7 +1902,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="630"/>
         <source>Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть проект</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="642"/>
@@ -1895,7 +1912,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="645"/>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Полный экран</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="649"/>
@@ -1905,7 +1922,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="652"/>
         <source>About Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">О расширениях</translation>
     </message>
 </context>
 <context>
@@ -1918,13 +1935,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="30"/>
         <source>Store</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Хранение</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="36"/>
         <source>Store settings to local ini file ( request restart LiteIDE )</source>
         <oldsource>Store settings to local ini file ( request restart liteide )</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Хранить настройки в локальном ini файле ( требует перезапуска LiteIDE )</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="46"/>
@@ -1946,102 +1963,102 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="110"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Максимальное количество:</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="180"/>
         <source>Monitoring files for modifications</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отслеживать внешние изменения файлов</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="186"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматически перезагружать или закрывать окно редактирования, если файл был изменен/удален</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="229"/>
         <location filename="src/liteapp/liteappoption.ui" line="235"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вид</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="241"/>
         <source>Show splash screen on startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать заставку при старте</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="248"/>
         <source>Show welcome page on startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать страницу "Добро пожаловать" на старте</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="255"/>
         <source>Show close buttons on each editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать кнопку закрытия на каждой вкладке редактора</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="265"/>
         <source>Toolbar Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Размер иконок в панели инструментов</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="338"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Клавиатура</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="344"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Формат: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="356"/>
         <source>Hide standard commands</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Спрятать стандартные команды</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="363"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сбросить</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="370"/>
         <source>Reset All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сбросить все</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="390"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импорт...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="397"/>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="24"/>
         <location filename="src/liteapp/liteappoption.ui" line="157"/>
         <source>Generic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Общие</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="78"/>
         <source>Theme:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тема:</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="170"/>
         <source>Close associated editor windows when closing a project</source>
         <oldsource>When Close Project, Project Editors Is Closed Automatically.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрывать соответствующие окна редактора при закрытии проекта</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="163"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загружать последнюю сессию при старте</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="209"/>
@@ -2052,48 +2069,48 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="121"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Команда</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="122"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="123"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Комбинация клавиш</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="124"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стандартная</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="378"/>
         <source>Import Keyboard Mapping Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импорт комбинаций клавиатуры</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="378"/>
         <location filename="src/liteapp/liteappoption.cpp" line="412"/>
         <source>Keyboard Mapping Scheme (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файл комбинаций клавиатуры (%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="385"/>
         <source>Could not read scheme from %1!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка чтения комбинаций клавиатуры из %1!</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="412"/>
         <source>Export Keyboard Mapping Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт комбинаций клавиатуры</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="423"/>
         <source>Could not write scheme to %1!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка записи комбинаций клавиатуры в %1!</translation>
     </message>
 </context>
 <context>
@@ -2101,7 +2118,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="97"/>
         <source>&amp;Build</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Сборка</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="103"/>
@@ -2115,29 +2132,29 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="108"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="112"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Значение</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="116"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметры сборки...</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="123"/>
         <source>Stop Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прервать</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="127"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Очистить журнал</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="131"/>
         <source>Execute File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выполнить команду</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="134"/>
@@ -2163,32 +2180,32 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="159"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
-        <translation type="unfinished">LiteBuild</translation>
+        <translation type="unfinished">Сборка</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="438"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="444"/>
         <source>Current environment change id &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Идентификатор конфигурации &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="992"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка: %1.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="995"/>
         <source>Command exited with code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Команда завершилась с кодом %1.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="997"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Успех: %1.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1033"/>
@@ -2196,40 +2213,40 @@ Success: %2.</oldsource>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Процесс уже выполняется. Требуется его прервать (меню Сборка/Прервать).</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1074"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Остановка процесса...</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1077"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не удалось остановить существующий процесс!</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1175"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&gt; Не удалось распознать действие &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1221"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Процесс стартовал успешно</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1221"/>
         <source>Failed to start process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ошибка старта процесса</translation>
     </message>
 </context>
 <context>
@@ -2243,17 +2260,17 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="20"/>
         <source>Recheck Go installation when changing environments</source>
         <oldsource>Recheck go env if enviroment changed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проверить инсталляцию Go после смены конфигурации окружения</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="27"/>
         <source>Build command configuration files:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Файлы конфигурации сборки:</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="40"/>
         <source>Build configuration changes will take effect after LiteIDE is restarted.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изменения в конфигурации сборки будут применены после перезапуска LiteIDE.</translation>
     </message>
 </context>
 <context>
@@ -2267,13 +2284,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="103"/>
         <source>Execute:</source>
         <oldsource>Exec:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выполнить:</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="110"/>
         <source>Execute File</source>
         <oldsource>Execute</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выполнить команду</translation>
     </message>
 </context>
 <context>
@@ -2291,24 +2308,24 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="115"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Продолжить</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="121"/>
         <source>Show Current Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показать точку исполнения</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="196"/>
         <source>Debug Output</source>
         <oldsource>Debug</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отладка</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="105"/>
         <source>Start Debugging External Application...</source>
         <oldsource>Start Debugging External Application</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отладка внешнего приложения...</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="93"/>
@@ -2318,47 +2335,47 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="108"/>
         <source>Start Debugging</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запустить отладку</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="111"/>
         <source>Start Debugging Tests</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запустить отладку тестов</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="124"/>
         <source>Step Into</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шаг с заходом</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="127"/>
         <source>Step Over</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шаг с обходом</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="130"/>
         <source>Step Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шаг с выходом</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="133"/>
         <source>Run to Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выполнить до позиции курсора</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="136"/>
         <source>Insert/Remove Breakpoint</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вставить/Удалить точку останова</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="139"/>
         <source>Remove All Breakpoints</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить все точки останова</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="158"/>
         <source>&amp;Debug</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Отладка</translation>
     </message>
 </context>
 <context>
@@ -2371,13 +2388,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="20"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отладка</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
         <source>Rebuild before debugging</source>
         <oldsource>Debug before rebuild</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пересобрать перед отладкой</translation>
     </message>
 </context>
 <context>
@@ -2386,7 +2403,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litedebug/litedebugplugin.cpp" line="58"/>
         <source>Debug Window</source>
         <oldsource>Debug</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Окно отладки</translation>
     </message>
 </context>
 <context>
@@ -2395,7 +2412,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Документация LiteIDE</translation>
     </message>
 </context>
 <context>
@@ -2428,42 +2445,42 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="227"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбрать все</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дополнительно</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="482"/>
         <source>Code Folding</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Свертка кода</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="487"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Строка</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="770"/>
         <source>Export HTML</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт в HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="778"/>
         <source>Export Failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт завершился неудачно</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="779"/>
         <source>Could not open %1 for writing.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Невозможно открыть %1 для записи.</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="798"/>
         <source>Export PDF</source>
-        <translation>Экспортировать в PDF</translation>
+        <translation>Экспорт в PDF</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="823"/>
@@ -2484,137 +2501,137 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
         <source>Export PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт в PDF...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="233"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Печать...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="236"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перейти к предыдущему блоку</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Select Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбрать блок</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перейти к соответствующей фигурной скобке</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
         <source>Fold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Свернуть</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
         <source>Unfold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Развернуть</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="255"/>
         <source>Fold All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Свернуть все</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="258"/>
         <source>Unfold All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Развернуть все</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перейти к строке</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заблокировано</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дублировать</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="277"/>
         <source>Delete Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить строку</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
         <source>Insert Line Before</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вставить строку до</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="286"/>
         <source>Insert Line After</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вставить строку после</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="290"/>
         <source>Increase Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Увеличить размер шрифта</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
         <source>Decrease Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Уменьшить размер шрифта</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="296"/>
         <source>Reset Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стандартный размер шрифта</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="299"/>
         <source>Clean Whitespace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Очистить рабочую область</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="302"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перенос слов</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
         <source>Code Complete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автодополнение кода</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="424"/>
         <source>Close Document</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть документ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="551"/>
         <source>Reload File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перезагрузить файл</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="840"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перезагрузить %1 с утратой несохраненных изменений?</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="239"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перейти к следующему блоку</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Line: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Строка:</translation>
     </message>
 </context>
 <context>
@@ -2627,12 +2644,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="331"/>
         <source>Load File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загрузка файла</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="337"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проверять и конвертировать неотображаемые символы в &apos;.&apos;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="30"/>
@@ -2642,7 +2659,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="24"/>
         <source>Font &amp;&amp; Colors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шрифты &amp;&amp; Цвета</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="36"/>
@@ -2657,7 +2674,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="70"/>
         <source>Zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Масштаб:</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="77"/>
@@ -2667,7 +2684,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="96"/>
         <source>Antialias</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Антиалиасинг</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="119"/>
@@ -2689,18 +2706,18 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="166"/>
         <source>Apply color scheme to text output widgets</source>
         <oldsource>Output widget use color scheme</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Применить цветовую схему к виджетам вывода текста</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="196"/>
         <source>Syntax Auto-completion</source>
         <oldsource>Auto complete brackets</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматическое добавление закрывающих элементов</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="294"/>
         <source>Clean whitespace when saving files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалять избыточные пробелы при сохранении файлов</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="301"/>
@@ -2710,38 +2727,38 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
         <source>Word wrap by default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перенос слов</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="435"/>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Типы файлов</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="190"/>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="240"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поведение</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="353"/>
         <source>Display EOF</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать символ конца файлы (EOF)</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
         <source>Display line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать номера строк</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="374"/>
         <source>Display indent guide </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать отступы</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="383"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать линию </translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="246"/>
@@ -3362,12 +3379,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="52"/>
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Разрешен</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="53"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Детали</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="55"/>
@@ -3387,47 +3404,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="46"/>
         <source>process exited with code %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">процесс завершен с кодом %1</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="49"/>
         <source>process crashed or was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">процесс завершился аварийно или был завершен извне</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="52"/>
         <source>process exited with an unknown status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">процесс завершился с неизвестным статусом</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="62"/>
         <source>process failed to start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">процесс не удалось запустить</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="65"/>
         <source>process crashed or was terminated while running</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">процесс завершился аварийно или был завершен извне</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="68"/>
         <source>timed out waiting for process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">тайм-аут ожидания процесса</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="71"/>
         <source>couldn&apos;t read from the process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">не удалось прочитать из процесса</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="74"/>
         <source>couldn&apos;t write to the process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">не удалось записать в процесс</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="78"/>
         <source>an unknown error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">произошла неизвестная ошибка</translation>
     </message>
 </context>
 <context>
@@ -3435,12 +3452,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="95"/>
         <source>Project &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проект &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="119"/>
         <source>Import Directory &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импорт папки &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -3456,12 +3473,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="81"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="82"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Остановить поиск</translation>
     </message>
 </context>
 <context>
