@@ -180,6 +180,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
+    LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 
@@ -196,7 +197,6 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     if (e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) {
         return;
     }
-    LiteEditorWidgetBase::keyPressEvent(e);
 
     //static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
     static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
