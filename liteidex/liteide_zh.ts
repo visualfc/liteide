@@ -1451,7 +1451,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="205"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="360"/>
-        <source>Not find</source>
+        <source>Not found</source>
         <translation>没有找到</translation>
     </message>
 </context>
