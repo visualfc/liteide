@@ -32,13 +32,15 @@ class QWebView;
 class QToolBar;
 class QLineEdit;
 class QProgressBar;
-class WebKitBrowser : public QObject
+class WebKitBrowser : public LiteApi::IBrowserEditor
 {
     Q_OBJECT
 public:
     explicit WebKitBrowser(LiteApi::IApplication *app, QObject *parent = 0);
     ~WebKitBrowser();
-    QWidget* widget() const {return m_widget;}
+    virtual QWidget *widget();
+    virtual QString name() const;
+    virtual QString mimeType() const;
 public slots:
     void changeLocation();
     void adjustLocation();

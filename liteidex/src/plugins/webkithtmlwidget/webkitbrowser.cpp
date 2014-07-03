@@ -46,7 +46,7 @@
 //lite_memory_check_end
 
 WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
-    QObject(parent), m_liteApp(app)
+    LiteApi::IBrowserEditor(parent), m_liteApp(app)
 {        
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
@@ -95,6 +95,21 @@ WebKitBrowser::~WebKitBrowser()
     if (m_widget) {
         delete m_widget;
     }
+}
+
+QWidget *WebKitBrowser::widget()
+{
+    return m_widget;
+}
+
+QString WebKitBrowser::name() const
+{
+    return tr("WebKitBrowser");
+}
+
+QString WebKitBrowser::mimeType() const
+{
+    return "browser/webkit";
 }
 
 static QByteArray html_data =

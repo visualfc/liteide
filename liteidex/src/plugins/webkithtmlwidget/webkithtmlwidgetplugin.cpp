@@ -44,11 +44,15 @@ bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
     LiteApi::IHtmlWidgetFactory *factory = new WebViewHtmlWidgetFactory(this);
     app->htmlWidgetManager()->addFactory(factory);
     app->htmlWidgetManager()->setDefaultClassName(factory->className());
-
+    /*
     WebKitBrowser *wb = new WebKitBrowser(app,this);
     app->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,
                                             wb->widget(),"WebKitBrowser",tr("WebKitBrowser"),
                                             false);
+    */
+    WebKitBrowser *browser = new WebKitBrowser(app,this);
+    QAction *act = app->editorManager()->registerBrowser(browser);
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,act);
 
     return true;
 }
