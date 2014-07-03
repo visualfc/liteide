@@ -192,6 +192,7 @@ protected:
 
     int m_regionDepth;
     int m_lastRegionDepth;
+    int m_lastRegionChanged;
     bool m_indentationBasedFolding;
     //const TabSettings *m_tabSettings;
     int m_tabSize;

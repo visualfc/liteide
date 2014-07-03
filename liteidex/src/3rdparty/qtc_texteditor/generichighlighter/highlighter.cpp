@@ -137,6 +137,7 @@ void Highlighter::highlightBlock(const QString &text)
 
             ProgressData progress;
             const int length = text.length();
+            m_lastRegionChanged = -1;
             while (progress.offset() < length)
                 iterateThroughRules(text, length, &progress, false, m_currentContext->rules());
 
@@ -353,7 +354,9 @@ void Highlighter::iterateThroughRules(const QString &text,
         }
     }
 
-    if (m_lastRegionDepth == m_regionDepth) {
+    if (m_lastRegionDepth == m_regionDepth &&
+        m_lastRegionChanged != m_lastRegionDepth) {
+        m_lastRegionChanged = m_lastRegionDepth;
         if (detlaDeptn || (
                     blockData(currentBlockUserData())->hasParentheses() &&
                     ( blockData(currentBlockUserData())->parentheses().last().type == Parenthesis::Opened)
