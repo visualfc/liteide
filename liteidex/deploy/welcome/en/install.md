@@ -8,7 +8,7 @@ Use LiteIDE development golang need to install the Go language development envir
 Begin by installing the Go language runtime.  Detailed instructions can be found at <http://golang.org/doc/install.html>.  Testing your installation before continuing is highly recommended.
 
 ## Install from binary
-<http://code.google.com/p/golangide>
+<http://sourceforge.net/projects/liteide/files>
 
 ### Windows
 Download the archive and extract it into c:\
