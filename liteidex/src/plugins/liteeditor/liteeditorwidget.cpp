@@ -179,10 +179,18 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
             break;
         }
     }
-
+    
+    const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
+    
+    
+     if (!e->text().isEmpty() && ctrlOrShift) {
+        e->ignore();
+        return;
+    }
+    
     LiteEditorWidgetBase::keyPressEvent(e);
 
-    const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
+  
 
     //always break if ctrl is pressed and there's a key
     if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty()) || !m_completer) {
