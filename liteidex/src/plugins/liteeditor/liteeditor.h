@@ -47,6 +47,7 @@ class QLabel;
 class QToolButton;
 class LiteCompleter;
 class ColorStyleScheme;
+class CallTip;
 
 class QLabelEx : public QLabel
 {

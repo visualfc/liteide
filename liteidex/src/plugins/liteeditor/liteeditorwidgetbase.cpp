@@ -427,7 +427,6 @@ void LiteEditorWidgetBase::gotoMatchBrace()
 
 void LiteEditorWidgetBase::highlightCurrentLine()
 {    
-
     QTextCursor cur = textCursor();
     if (!cur.block().isVisible()) {
         unfold();

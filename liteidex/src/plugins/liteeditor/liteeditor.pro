@@ -29,7 +29,8 @@ SOURCES += liteeditorplugin.cpp \
     wordapimanager.cpp \
     liteeditormark.cpp \
     snippet.cpp \
-    snippetmanager.cpp
+    snippetmanager.cpp \
+    calltip.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
@@ -46,7 +47,8 @@ HEADERS += liteeditorplugin.h\
     wordapimanager.h \
     liteeditormark.h \
     snippet.h \
-    snippetmanager.h
+    snippetmanager.h \
+    calltip.h
 
 FORMS += \
     liteeditoroption.ui

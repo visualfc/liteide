@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "liteeditorwidget.h"
-
+#include "calltip.h"
 #include <QCompleter>
 #include <QKeyEvent>
 #include <QAbstractItemView>
@@ -57,6 +57,7 @@ LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_scrollWheelZooming(true),
     m_bSpellCheckZoneDontComplete(false)
 {
+    m_callTip = new CallTip(this);
 }
 
 void LiteEditorWidget::setContextMenu(QMenu *contextMenu)
@@ -75,6 +76,22 @@ void LiteEditorWidget::setCompleter(QCompleter *completer)
 QCompleter *LiteEditorWidget::completer() const
 {
     return m_completer;
+}
+
+CallTip *LiteEditorWidget::callTip() const
+{
+    return m_callTip;
+}
+
+void LiteEditorWidget::CallTipStart(QString text)
+{
+    QRect rc = cursorRect();
+    rc.setLeft(rc.left()+viewport()->x());
+    QFontMetrics fm(m_callTip->widget()->font());
+    QRect rc2 = fm.boundingRect(text);
+    rc.setWidth(rc2.width()+24);
+    rc.setHeight(rc2.height());
+    m_callTip->CallTipStart(0,rc,text,this);
 }
 
 void LiteEditorWidget::codeCompleter()
@@ -96,11 +113,17 @@ void LiteEditorWidget::codeCompleter()
         m_completer->popup()->hide();
         return;
     }
-
-    QRect cr = cursorRect();
+    QTextCursor cursor = textCursor();
+    int offset = completionPrefix.length();
+    int pos = completionPrefix.indexOf(".");
+    if (pos != -1) {
+        offset -= pos+1;
+    }
+    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
+    QRect cr = cursorRect(cursor);
+    cr.setLeft(cr.left()+this->viewport()->x()-24);
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
-
     m_completer->complete(cr); // popup it up!
 }
 
@@ -173,11 +196,34 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Escape:
         case Qt::Key_Tab:
         case Qt::Key_Backtab:
+        case Qt::Key_Shift:
             e->ignore();
             return; // let the completer do default behavior
         default:
             break;
         }
+    } else {
+        if (m_callTip->InCallTipMode()) {
+            if (
+                    (e->key() != Qt::Key_Left) &&
+                    //(e->key() != Qt::Key_Left&&Qt::Key_Shift) &&
+                    (e->key() != Qt::Key_Right) &&
+                    //(e->key() != Qt::Key_Right&&Qt::Key_Shift) &&
+                    (e->key() != Qt::Key_Insert) &&
+                    (e->key() != Qt::Key_Backspace)
+                    ) {
+                m_callTip->CallTipCancel();
+            }
+            if ((e->key() == Qt::Key_Backspace)) {
+                if (this->textCursor().position() <= m_callTip->posStartCallTip()) {
+                    m_callTip->CallTipCancel();
+                }
+            }
+        }
+    }
+
+    if (e->key() == Qt::Key_Comma) {
+        m_callTip->ShowTip();
     }
 
     LiteEditorWidgetBase::keyPressEvent(e);
@@ -224,10 +270,20 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    QRect cr = cursorRect();
+    if (m_completer->popup()->isVisible()) {
+        //return;
+    }
+    QTextCursor cursor = textCursor();
+    int offset = completionPrefix.length();
+    int pos = completionPrefix.indexOf(".");
+    if (pos != -1) {
+        offset -= pos+1;
+    }
+    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
+    QRect cr = cursorRect(cursor);
+    cr.setLeft(cr.left()+this->viewport()->x()-24);
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
-
     m_completer->complete(cr); // popup it up!
 }
 
@@ -327,4 +383,15 @@ void LiteEditorWidget::zoomIn(int range)
 void LiteEditorWidget::zoomOut(int range)
 {
     emit requestFontZoom(-range*10);
+}
+
+void LiteEditorWidget::updateFont(const QFont &font)
+{
+    this->setFont(font);
+    this->extraArea()->setFont(font);
+    this->updateTabWidth();
+    this->slotUpdateExtraAreaWidth();
+    if (this->m_completer) {
+        this->m_completer->popup()->setFont(font);
+    }
 }

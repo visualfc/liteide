@@ -27,6 +27,7 @@
 #include "liteeditorwidgetbase.h"
 
 class QCompleter;
+class CallTip;
 class LiteEditorWidget : public LiteEditorWidgetBase
 {
     Q_OBJECT
@@ -35,6 +36,7 @@ public:
     void setContextMenu(QMenu *contextMenu);
     void setCompleter(QCompleter *m_completer);
     QCompleter *completer() const;
+    CallTip *callTip() const;
     void setPrefixMin(int min) {m_completionPrefixMin = min; }
     void setSpellCheckZoneDontComplete(bool b) {m_bSpellCheckZoneDontComplete = b; }
     int prefixMin() const{
@@ -43,6 +45,7 @@ public:
     void setScrollWheelZooming(bool b) {
         m_scrollWheelZooming = b;
     }
+    void CallTipStart(QString text);
 protected:
     void contextMenuEvent(QContextMenuEvent *);
     void keyPressEvent(QKeyEvent *e);
@@ -57,6 +60,7 @@ public slots:
 signals:
     void requestFontZoom(int);
 public:
+    void updateFont(const QFont &font);
     QString cursorToHtml(QTextCursor cursor) const;
 signals:
     void completionPrefixChanged(QString,bool);
@@ -65,6 +69,7 @@ public:
     QString textUnderCursor(QTextCursor tc) const;
 protected:    
     QCompleter *m_completer;
+    CallTip    *m_callTip;
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;
     bool m_scrollWheelZooming;

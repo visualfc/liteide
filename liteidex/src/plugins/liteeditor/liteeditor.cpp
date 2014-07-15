@@ -29,6 +29,7 @@
 #include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
+#include "calltip.h"
 
 #include <QFileInfo>
 #include <QVBoxLayout>
@@ -83,7 +84,6 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget = new LiteEditorWidget(app,m_widget);
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
-
     m_defEditorPalette = m_editorWidget->palette();
 
     createActions();
@@ -725,9 +725,10 @@ void LiteEditor::applyOption(QString id)
     } else {
         font.setStyleStrategy(QFont::NoAntialias);
     }
-    m_editorWidget->setFont(font);
-    m_editorWidget->extraArea()->setFont(font);
-    m_editorWidget->slotUpdateExtraAreaWidth();
+//    m_editorWidget->setFont(font);
+//    m_editorWidget->extraArea()->setFont(font);
+//    m_editorWidget->slotUpdateExtraAreaWidth();
+    m_editorWidget->updateFont(font);
 
     QString mime = this->m_file->mimeType();
     int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
@@ -744,7 +745,7 @@ void LiteEditor::updateTip(QString func,QString args)
         return;
     }
     QString tip = QString("%1 %2").arg(func).arg(args);
-    //m_liteApp->outputManager()->setStatusInfo(tip);
+    m_editorWidget->CallTipStart(tip);
 }
 
 void LiteEditor::filePrintPreview()
@@ -1009,10 +1010,11 @@ void LiteEditor::resetFontSize()
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,100);
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize);
-    m_editorWidget->setFont(font);
-    m_editorWidget->extraArea()->setFont(font);
-    m_editorWidget->updateTabWidth();
-    m_editorWidget->slotUpdateExtraAreaWidth();
+//    m_editorWidget->setFont(font);
+//    m_editorWidget->extraArea()->setFont(font);
+//    m_editorWidget->updateTabWidth();
+//    m_editorWidget->slotUpdateExtraAreaWidth();
+    m_editorWidget->updateFont(font);
 }
 
 void LiteEditor::setEditToolbarVisible(bool visible)
@@ -1046,10 +1048,11 @@ void LiteEditor::requestFontZoom(int zoom)
 
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize*fontZoom/100.0);
-    m_editorWidget->setFont(font);
-    m_editorWidget->extraArea()->setFont(font);
-    m_editorWidget->updateTabWidth();
-    m_editorWidget->slotUpdateExtraAreaWidth();
+//    m_editorWidget->setFont(font);
+//    m_editorWidget->extraArea()->setFont(font);
+//    m_editorWidget->updateTabWidth();
+//    m_editorWidget->slotUpdateExtraAreaWidth();
+    m_editorWidget->updateFont(font);
 }
 
 void LiteEditor::loadColorStyleScheme()
