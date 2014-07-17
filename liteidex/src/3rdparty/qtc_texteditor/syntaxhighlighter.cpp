@@ -232,6 +232,43 @@ void SyntaxHighlighterPrivate::reformatBlock(const QTextBlock &block, int from, 
     currentBlock = QTextBlock();
 }
 
+const SyntaxHighlighter::KateFormatMap SyntaxHighlighter::m_kateFormats;
+
+SyntaxHighlighter::KateFormatMap::KateFormatMap()
+{
+    m_ids.insert(QLatin1String("dsNormal"), SyntaxHighlighter::Normal);
+    m_ids.insert(QLatin1String("dsKeyword"), SyntaxHighlighter::Keyword);
+    m_ids.insert(QLatin1String("dsDataType"), SyntaxHighlighter::DataType);
+    m_ids.insert(QLatin1String("dsDecVal"), SyntaxHighlighter::Decimal);
+    m_ids.insert(QLatin1String("dsBaseN"), SyntaxHighlighter::BaseN);
+    m_ids.insert(QLatin1String("dsFloat"), SyntaxHighlighter::Float);
+    m_ids.insert(QLatin1String("dsChar"), SyntaxHighlighter::Char);
+    m_ids.insert(QLatin1String("dsString"), SyntaxHighlighter::String);
+    m_ids.insert(QLatin1String("dsComment"), SyntaxHighlighter::Comment);
+    m_ids.insert(QLatin1String("dsOthers"), SyntaxHighlighter::Others);
+    m_ids.insert(QLatin1String("dsAlert"), SyntaxHighlighter::Alert);
+    m_ids.insert(QLatin1String("dsFunction"), SyntaxHighlighter::Function);
+    m_ids.insert(QLatin1String("dsRegionMarker"), SyntaxHighlighter::RegionMarker);
+    m_ids.insert(QLatin1String("dsError"), SyntaxHighlighter::Error);
+    m_ids.insert(QLatin1String("dsSymbol"),SyntaxHighlighter::Symbol);
+    m_ids.insert(QLatin1String("dsBuiltinFunc"), SyntaxHighlighter::BuiltinFunc);
+    m_ids.insert(QLatin1String("dsPredeclared"), SyntaxHighlighter::Predeclared);
+    m_ids.insert(QLatin1String("dsFuncDecl"), SyntaxHighlighter::FuncDecl);
+    m_ids.insert(QLatin1String("dsPlaceholder"), SyntaxHighlighter::Placeholder);
+    m_ids.insert(QLatin1String("dsToDo"), SyntaxHighlighter::ToDo);
+    m_ids.insert(QLatin1String("dsPreprocessorFormat"),SyntaxHighlighter::PreprocessorFormat);
+}
+
+void SyntaxHighlighter::configureFormat(TextFormatId id, const QTextCharFormat &format)
+{
+    m_creatorFormats[id] = format;
+}
+
+void SyntaxHighlighter::setTabSize(int tabSize)
+{
+}
+
+
 /*!
     \class SyntaxHighlighter
     \reentrant

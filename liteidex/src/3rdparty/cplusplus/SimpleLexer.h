@@ -26,32 +26,53 @@
 ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
 **
 ****************************************************************************/
+#ifndef CPLUSPLUS_SIMPLELEXER_H
+#define CPLUSPLUS_SIMPLELEXER_H
 
-#ifndef GOLANGHIGHLIGHTER_H
-#define GOLANGHIGHLIGHTER_H
+#include "Token.h"
 
-#include "qtc_texteditor/syntaxhighlighter.h"
+#include <QString>
+#include <QList>
 
-#include <QTextCharFormat>
+namespace CPlusPlus {
 
-class GolangHighlighter : public TextEditor::SyntaxHighlighter
+class SimpleLexer;
+class Token;
+
+class SimpleLexer
 {
-    Q_OBJECT
-
 public:
-    GolangHighlighter(QTextDocument *document = 0);
-    virtual ~GolangHighlighter();
-    virtual void highlightBlock(const QString &text);
+    SimpleLexer();
+    ~SimpleLexer();
+
+    bool skipComments() const;
+    void setSkipComments(bool skipComments);
+
+    LanguageFeatures languageFeatures() const { return _languageFeatures; }
+    void setLanguageFeatures(LanguageFeatures features) { _languageFeatures = features; }
+
+    bool endedJoined() const;
+
+    QList<Token> operator()(const QString &text, int state = 0);
+
+    int state() const
+    { return _lastState; }
+
+    static int tokenAt(const QList<Token> &tokens, unsigned offset);
+    static Token tokenAt(const QString &text,
+                         unsigned offset,
+                         int state,
+                         bool qtMocRunEnabled = false);
+
+    static int tokenBefore(const QList<Token> &tokens, unsigned offset);
 
 private:
-    void highlightWord(QStringRef word, int position, int length);
-    void highlightLine(const QString &line, int position, int length,
-                       const QTextCharFormat &format);
-
-    void highlightDoxygenComment(const QString &text, int position,
-                                 int length);
-
-    bool isPPKeyword(const QStringRef &text) const;
+    int _lastState;
+    LanguageFeatures _languageFeatures;
+    bool _skipComments: 1;
+    bool _endedJoined: 1;
 };
 
-#endif // GOLANGHIGHLIGHTER_H
+} // namespace CPlusPlus
+
+#endif // CPLUSPLUS_SIMPLELEXER_H

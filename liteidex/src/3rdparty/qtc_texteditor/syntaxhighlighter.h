@@ -66,6 +66,32 @@ class TEXTEDITOR_EXPORT SyntaxHighlighter : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(SyntaxHighlighter)
 public:
+    enum TextFormatId {
+        Normal = 1,
+        VisualWhitespace,
+        Keyword,
+        DataType,
+        Decimal,
+        BaseN,
+        Float,
+        Char,
+        String,
+        Comment,
+        Alert,
+        Error,
+        Function,
+        RegionMarker,
+        Others,
+        Symbol,
+        BuiltinFunc,
+        Predeclared,
+        FuncDecl,
+        Placeholder,
+        ToDo,
+        PreprocessorFormat,
+        TextFormatId_MAX
+    };
+public:
     SyntaxHighlighter(QObject *parent);
     SyntaxHighlighter(QTextDocument *parent);
     SyntaxHighlighter(QTextEdit *parent);
@@ -75,6 +101,8 @@ public:
     QTextDocument *document() const;
 
     void setExtraAdditionalFormats(const QTextBlock& block, const QList<QTextLayout::FormatRange> &formats);
+    void configureFormat(TextFormatId id, const QTextCharFormat &format);
+    virtual void setTabSize(int tabSize);
 signals:
     void foldIndentChanged(QTextBlock block);
 public Q_SLOTS:
@@ -99,7 +127,14 @@ protected:
     QTextBlockUserData *currentBlockUserData() const;
 
     QTextBlock currentBlock() const;
-
+protected:
+    struct KateFormatMap
+    {
+        KateFormatMap();
+        QHash<QString, TextFormatId> m_ids;
+    };
+    static const KateFormatMap m_kateFormats;
+    QTextCharFormat m_creatorFormats[TextFormatId_MAX];
 private:
     Q_DISABLE_COPY(SyntaxHighlighter)
     Q_PRIVATE_SLOT(d_ptr, void _q_reformatBlocks(int from, int charsRemoved, int charsAdded))

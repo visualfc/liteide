@@ -13,4 +13,5 @@ SUBDIRS = \
     qjson \
     elidedlabel \
     sundown \
+    cplusplus \
 

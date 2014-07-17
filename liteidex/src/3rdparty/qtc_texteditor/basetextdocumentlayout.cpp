@@ -612,3 +612,70 @@ QSizeF BaseTextDocumentLayout::documentSize() const
     size.setWidth(qMax((qreal)m_requiredWidth, size.width()));
     return size;
 }
+
+BaseTextDocumentLayout::FoldValidator::FoldValidator()
+    : m_layout(0)
+    , m_requestDocUpdate(false)
+    , m_insideFold(0)
+{}
+
+void BaseTextDocumentLayout::FoldValidator::setup(BaseTextDocumentLayout *layout)
+{
+    m_layout = layout;
+}
+
+void BaseTextDocumentLayout::FoldValidator::reset()
+{
+    m_insideFold = 0;
+    m_requestDocUpdate = false;
+}
+
+void BaseTextDocumentLayout::FoldValidator::process(QTextBlock block)
+{
+    if (!m_layout)
+        return;
+
+    const QTextBlock &previous = block.previous();
+    if (!previous.isValid())
+        return;
+
+    if ((BaseTextDocumentLayout::isFolded(previous)
+            && !BaseTextDocumentLayout::canFold(previous))
+            || (!BaseTextDocumentLayout::isFolded(previous)
+                && BaseTextDocumentLayout::canFold(previous)
+                && !block.isVisible())) {
+        BaseTextDocumentLayout::setFolded(previous, !BaseTextDocumentLayout::isFolded(previous));
+    }
+
+    if (BaseTextDocumentLayout::isFolded(previous) && !m_insideFold)
+        m_insideFold = BaseTextDocumentLayout::foldingIndent(block);
+
+    bool toggleVisibility = false;
+    if (m_insideFold) {
+        if (BaseTextDocumentLayout::foldingIndent(block) >= m_insideFold) {
+            if (block.isVisible())
+                toggleVisibility = true;
+        } else {
+            m_insideFold = 0;
+            if (!block.isVisible())
+                toggleVisibility = true;
+        }
+    } else if (!block.isVisible()) {
+        toggleVisibility = true;
+    }
+
+    if (toggleVisibility) {
+        block.setVisible(!block.isVisible());
+        block.setLineCount(block.isVisible() ? qMax(1, block.layout()->lineCount()) : 0);
+        m_requestDocUpdate = true;
+    }
+}
+
+void BaseTextDocumentLayout::FoldValidator::finalize()
+{
+    if (m_requestDocUpdate && m_layout) {
+        m_layout->requestUpdate();
+        m_layout->emitDocumentSizeChanged();
+    }
+}
+

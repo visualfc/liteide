@@ -12,6 +12,7 @@ include (../../utils/colorstyle/colorstyle.pri)
 include (../../3rdparty/qtc_texteditor/qtc_texteditor.pri)
 include (../../3rdparty/treemodelcompleter/treemodelcompleter.pri)
 include (../../3rdparty/elidedlabel/elidedlabel.pri)
+include (../../3rdparty/cplusplus/cplusplus.pri)
 
 DEFINES += LITEEDITOR_LIBRARY
 

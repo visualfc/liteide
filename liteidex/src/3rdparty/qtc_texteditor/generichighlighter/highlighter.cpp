@@ -55,8 +55,6 @@ namespace {
     static const QLatin1Char kHash('#');
 }
 
-const Highlighter::KateFormatMap Highlighter::m_kateFormats;
-
 Highlighter::Highlighter(QTextDocument *parent) :
     TextEditor::SyntaxHighlighter(parent),
     m_regionDepth(0),
@@ -77,35 +75,6 @@ Highlighter::BlockData::BlockData() : m_foldingIndentDelta(0), m_originalObserva
 
 Highlighter::BlockData::~BlockData()
 {}
-
-Highlighter::KateFormatMap::KateFormatMap()
-{
-    m_ids.insert(QLatin1String("dsNormal"), Highlighter::Normal);
-    m_ids.insert(QLatin1String("dsKeyword"), Highlighter::Keyword);
-    m_ids.insert(QLatin1String("dsDataType"), Highlighter::DataType);
-    m_ids.insert(QLatin1String("dsDecVal"), Highlighter::Decimal);
-    m_ids.insert(QLatin1String("dsBaseN"), Highlighter::BaseN);
-    m_ids.insert(QLatin1String("dsFloat"), Highlighter::Float);
-    m_ids.insert(QLatin1String("dsChar"), Highlighter::Char);
-    m_ids.insert(QLatin1String("dsString"), Highlighter::String);
-    m_ids.insert(QLatin1String("dsComment"), Highlighter::Comment);
-    m_ids.insert(QLatin1String("dsOthers"), Highlighter::Others);
-    m_ids.insert(QLatin1String("dsAlert"), Highlighter::Alert);
-    m_ids.insert(QLatin1String("dsFunction"), Highlighter::Function);
-    m_ids.insert(QLatin1String("dsRegionMarker"), Highlighter::RegionMarker);
-    m_ids.insert(QLatin1String("dsError"), Highlighter::Error);
-    m_ids.insert(QLatin1String("dsSymbol"),Highlighter::Symbol);
-    m_ids.insert(QLatin1String("dsBuiltinFunc"), Highlighter::BuiltinFunc);
-    m_ids.insert(QLatin1String("dsPredeclared"), Highlighter::Predeclared);
-    m_ids.insert(QLatin1String("dsFuncDecl"), Highlighter::FuncDecl);
-    m_ids.insert(QLatin1String("dsPlaceholder"), Highlighter::Placeholder);
-    m_ids.insert(QLatin1String("dsToDo"), Highlighter::ToDo);
-}
-
-void Highlighter::configureFormat(TextFormatId id, const QTextCharFormat &format)
-{
-    m_creatorFormats[id] = format;
-}
 
 void  Highlighter::setDefaultContext(const QSharedPointer<Context> &defaultContext)
 {

@@ -137,7 +137,13 @@ LiteApi::IEditor *LiteEditorFileFactory::create(const QString &contents, const Q
 LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const QString &mimeType)
 {
     QTextDocument *doc = editor->m_editorWidget->document();
-    TextEditor::SyntaxHighlighter *h = m_kate->create(doc,mimeType);
+
+    TextEditor::SyntaxHighlighter *h = 0;
+    if (mimeType == "text/x-gosrc") {
+        h = new GolangHighlighter(doc);
+    } else {
+        h = m_kate->create(doc,mimeType);
+    }
     if (h) {
         editor->extension()->addObject("TextEditor::SyntaxHighlighter",h);
         connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));

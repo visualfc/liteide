@@ -195,6 +195,21 @@ public:
         return data;
     }
 
+    class TEXTEDITOR_EXPORT FoldValidator
+    {
+    public:
+        FoldValidator();
+
+        void setup(BaseTextDocumentLayout *layout);
+        void reset();
+        void process(QTextBlock block);
+        void finalize();
+
+    private:
+        BaseTextDocumentLayout *m_layout;
+        bool m_requestDocUpdate;
+        int m_insideFold;
+    };
 
     void emitDocumentSizeChanged() { emit documentSizeChanged(documentSize()); }
     int lastSaveRevision;
