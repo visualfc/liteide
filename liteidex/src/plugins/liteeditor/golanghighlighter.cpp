@@ -105,12 +105,10 @@ void GolangHighlighter::highlightBlock(const QString &text)
     Parentheses parentheses;
     parentheses.reserve(20); // assume wizard level ;-)
 
-    bool expectPreprocessorKeyword = false;
-    bool onlyHighlightComments = false;
-
+    //bool expectPreprocessorKeyword = false;
+    //bool onlyHighlightComments = false;
     for (int i = 0; i < tokens.size(); ++i) {
         const Token &tk = tokens.at(i);
-
         unsigned previousTokenEnd = 0;
         if (i != 0) {
             // mark the whitespaces
@@ -148,7 +146,7 @@ void GolangHighlighter::highlightBlock(const QString &text)
                 }
             }
         }
-
+        /*
         bool highlightCurrentWordAsPreprocessor = expectPreprocessorKeyword;
 
         if (expectPreprocessorKeyword)
@@ -169,8 +167,11 @@ void GolangHighlighter::highlightBlock(const QString &text)
                     || ppKeyword == QLatin1String("pragma")) {
                 onlyHighlightComments = true;
             }
-        } else if (tk.is(T_NUMERIC_LITERAL)) {
+        } else */
+        if (tk.is(T_NUMERIC_LITERAL)) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Decimal]);
+        } else if (tk.isOperator()) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::RegionMarker]);
         } else if (tk.is(T_RAW_STRING_LITERAL)) {
             const int startPosition = initialLexerState ? previousTokenEnd : tk.begin();
             highlightLine(text, startPosition, tk.end() - startPosition, m_creatorFormats[SyntaxHighlighter::String]);
@@ -194,10 +195,7 @@ void GolangHighlighter::highlightBlock(const QString &text)
             highlightLine(text, tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::String]);
         } else if (tk.isComment()) {
             const int startPosition = initialLexerState ? previousTokenEnd : tk.begin();
-            if (tk.is(T_COMMENT) || tk.is(T_CPP_COMMENT))
-                highlightLine(text, startPosition, tk.end() - startPosition, m_creatorFormats[SyntaxHighlighter::Comment]);
-            else // a doxygen comment
-                highlightDoxygenComment(text, startPosition, tk.end() - startPosition);
+            highlightLine(text, startPosition, tk.end() - startPosition, m_creatorFormats[SyntaxHighlighter::Comment]);
             // we need to insert a close comment parenthesis, if
             //  - the line starts in a C Comment (initalState != 0)
             //  - the first token of the line is a T_COMMENT (i == 0 && tk.is(T_COMMENT))
@@ -218,12 +216,36 @@ void GolangHighlighter::highlightBlock(const QString &text)
 
         } else if (tk.isGoKeyword()) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Keyword]);
+            if (tk.is(T_GO_FUNC)) {
+                int size = tokens.size()-1;
+                int n = i+1;
+                if (n < size) {
+                    if (tokens[n].is(T_LPAREN)) {
+                        while(++n < size) {
+                            if (tokens[n+1].is(T_RPAREN)) {
+                                setFormat(tokens[n].begin(), tokens[n].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else if (tk.is(T_GO_TYPE)) {
+                int size = tokens.size()-1;
+                int n = i+1;
+                if (n < size && tokens[n].is(T_IDENTIFIER)) {
+                    setFormat(tokens[n].begin(), tokens[n].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+                }
+            } else if (tk.is(T_GO_VAR)) {
+
+            }
         } else if (tk.isGoTyped()) {
-            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+            if ((i+1 == tokens.size()) || !tokens[i+1].is(T_DOT)) {
+                setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+            }
         } else if (i == 0 && tokens.size() > 1 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::String]);
         } else if (tk.is(T_IDENTIFIER)) {
-            highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
+           // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
         }
     }
 
@@ -392,36 +414,3 @@ void GolangHighlighter::highlightWord(QStringRef word, int position, int length)
         }
     }
 }
-
-void GolangHighlighter::highlightDoxygenComment(const QString &text, int position, int)
-{
-//    int initial = position;
-
-//    const QChar *uc = text.unicode();
-//    const QChar *it = uc + position;
-
-//    const QTextCharFormat &format = formatForCategory(CppDoxygenCommentFormat);
-//    const QTextCharFormat &kwFormat = formatForCategory(CppDoxygenTagFormat);
-
-//    while (!it->isNull()) {
-//        if (it->unicode() == QLatin1Char('\\') ||
-//            it->unicode() == QLatin1Char('@')) {
-//            ++it;
-
-//            const QChar *start = it;
-//            while (it->isLetterOrNumber() || it->unicode() == '_')
-//                ++it;
-
-//            int k = CppTools::classifyDoxygenTag(start, it - start);
-//            if (k != CppTools::T_DOXY_IDENTIFIER) {
-//                highlightLine(text, initial, start - uc - initial, format);
-//                setFormat(start - uc - 1, it - start + 1, kwFormat);
-//                initial = it - uc;
-//            }
-//        } else
-//            ++it;
-//    }
-
-//    highlightLine(text, initial, it - uc - initial, format);
-}
-
