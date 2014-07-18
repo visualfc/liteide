@@ -51,11 +51,13 @@ public:
     explicit CallTip(QObject *parent = 0);
     ~CallTip();
     QWidget* widget();
-    void CallTipStart(int pos, const QRect& rect, QString text, QWidget *parent);
-    void ShowTip();
-    bool InCallTipMode() const { return m_inCallTipMode; }
+    void callTipStart(int pos, const QRect& rect, QString text, QWidget *parent);
+    void showTip();
+    bool inCallTipMode() const { return m_inCallTipMode; }
     int posStartCallTip() const { return m_pos; }
     void showPopup(const QRect& rect, QWidget *parent);
+    bool isEnable() const;
+    void setEnable(bool b);
 signals:
 public slots:
     void CallTipCancel();
@@ -63,6 +65,7 @@ protected:
     CallTipWidget *popup;
     bool     m_inCallTipMode;
     int      m_pos;
+    bool     m_bEnable;
 };
 
 #endif // CALLTIP_H

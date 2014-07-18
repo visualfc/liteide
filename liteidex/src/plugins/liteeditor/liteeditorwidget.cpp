@@ -85,13 +85,16 @@ CallTip *LiteEditorWidget::callTip() const
 
 void LiteEditorWidget::CallTipStart(QString text)
 {
+    if (!m_callTip->isEnable()) {
+        return;
+    }
     QRect rc = cursorRect();
     rc.setLeft(rc.left()+viewport()->x());
     QFontMetrics fm(m_callTip->widget()->font());
     QRect rc2 = fm.boundingRect(text);
     rc.setWidth(rc2.width()+24);
     rc.setHeight(rc2.height());
-    m_callTip->CallTipStart(0,rc,text,this);
+    m_callTip->callTipStart(0,rc,text,this);
 }
 
 void LiteEditorWidget::codeCompleter()
@@ -206,8 +209,8 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         default:
             break;
         }
-    } else {
-        if (m_callTip->InCallTipMode()) {
+    } else if (m_callTip->isEnable()){
+        if (m_callTip->inCallTipMode()) {
             if (
                     (e->key() != Qt::Key_Left) &&
                     //(e->key() != Qt::Key_Left&&Qt::Key_Shift) &&
@@ -224,10 +227,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
                 }
             }
         }
-    }
-
-    if (e->key() == Qt::Key_Comma) {
-        m_callTip->ShowTip();
+        if (e->key() == Qt::Key_Comma) {
+            m_callTip->showTip();
+        }
     }
 
     LiteEditorWidgetBase::keyPressEvent(e);

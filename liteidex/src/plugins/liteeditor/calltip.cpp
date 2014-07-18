@@ -39,6 +39,7 @@ CallTip::CallTip(QObject *parent) :
     popup = new CallTipWidget;
     m_inCallTipMode = false;
     m_pos = 0;
+    m_bEnable = false;
     connect(popup,SIGNAL(mouseClick()),this,SLOT(CallTipCancel()));
 }
 
@@ -54,7 +55,7 @@ QWidget *CallTip::widget()
     return popup;
 }
 
-void CallTip::CallTipStart(int pos, const QRect& rect, QString text, QWidget *parent)
+void CallTip::callTipStart(int pos, const QRect& rect, QString text, QWidget *parent)
 {
     m_inCallTipMode = true;
     m_pos = pos;
@@ -68,7 +69,7 @@ void CallTip::CallTipStart(int pos, const QRect& rect, QString text, QWidget *pa
         popup->show();
 }
 
-void CallTip::ShowTip()
+void CallTip::showTip()
 {
     m_inCallTipMode = true;
     if (!popup->isVisible())
@@ -121,6 +122,16 @@ void CallTip::showPopup(const QRect& rect, QWidget *widget)
 
     if (!popup->isVisible())
         popup->show();
+}
+
+bool CallTip::isEnable() const
+{
+    return m_bEnable;
+}
+
+void CallTip::setEnable(bool b)
+{
+    m_bEnable = b;
 }
 
 
