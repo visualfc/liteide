@@ -30,6 +30,10 @@
 #include <QCompleter>
 #include <QStandardItem>
 
+namespace TextEditor {
+class AutoCompleter;
+}
+
 namespace LiteApi {
 
 class IWordApi
@@ -182,6 +186,7 @@ public:
     ILiteEditor(QObject *parent = 0) : ITextEditor(parent) {}
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
+    virtual void setAutoCompleter(TextEditor::AutoCompleter *autoCompleter) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
     virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const char *tag) = 0;
     virtual void clearNavigateMarak(int line) = 0;

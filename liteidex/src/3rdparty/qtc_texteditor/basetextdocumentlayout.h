@@ -37,6 +37,7 @@
 #include "texteditor_global.h"
 
 #include "itexteditor.h"
+#include "tabsettings.h"
 
 #include <QTextBlockUserData>
 #include <QPlainTextDocumentLayout>
@@ -217,6 +218,7 @@ public:
     double maxMarkWidthFactor;
 
     int m_requiredWidth;
+    TabSettings m_tabSettings;
     void setRequiredWidth(int width);
 
     QSizeF documentSize() const;

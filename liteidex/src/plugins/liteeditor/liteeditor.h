@@ -68,6 +68,7 @@ public:
     virtual ~LiteEditor();
     virtual void setCompleter(LiteApi::ICompleter *complter);
     virtual void setEditorMark(LiteApi::IEditorMark *mark);
+    virtual void setAutoCompleter(TextEditor::AutoCompleter *autoCompleter);
     void createActions();
     void createToolBars();
     void createMenu();

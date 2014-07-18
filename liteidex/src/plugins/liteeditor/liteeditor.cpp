@@ -175,6 +175,11 @@ void LiteEditor::setEditorMark(LiteApi::IEditorMark *mark)
     m_extension->addObject("LiteApi.IEditorMark",mark);
 }
 
+void LiteEditor::setAutoCompleter(TextEditor::AutoCompleter *autoCompleter)
+{
+    m_editorWidget->setAutoCompleter(autoCompleter);
+}
+
 void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
 {
     if (m_completer) {

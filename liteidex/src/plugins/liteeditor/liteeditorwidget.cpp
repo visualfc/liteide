@@ -188,6 +188,10 @@ void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
 
 void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 {
+    if (!m_autoCompleter->contextAllowsElectricCharacters(this->textCursor())) {
+        LiteEditorWidgetBase::keyPressEvent(e);
+        return;
+    }
     if (m_completer && m_completer->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
         switch (e->key()) {

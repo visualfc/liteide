@@ -8,7 +8,8 @@ HEADERS += \
     cppassert.h \
     Lexer.h \
     SimpleLexer.h \
-    Token.h
+    Token.h \
+    BackwardsScanner.h
 
 SOURCES += \
     gokeyword.cpp \
@@ -16,4 +17,5 @@ SOURCES += \
     Keywords.cpp \
     Lexer.cpp \
     SimpleLexer.cpp \
-    Token.cpp
+    Token.cpp \
+    BackwardsScanner.cpp

@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangedit.h"
+#include "golangautocompleter.h"
 #include <QMenu>
 #include <QToolBar>
 #include <QAction>
@@ -148,6 +149,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
+        m_editor->setAutoCompleter(new GolangAutoCompleter());
         connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
     }
 }

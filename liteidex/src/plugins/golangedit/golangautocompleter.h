@@ -18,51 +18,24 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: calltip.h
+// Module: golangautocompleter.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef CALLTIP_H
-#define CALLTIP_H
+#ifndef GOLANGAUTOCOMPLETER_H
+#define GOLANGAUTOCOMPLETER_H
 
-#include <QObject>
-#include <QWidget>
+#include "qtc_texteditor/autocompleter.h"
+#include "cplusplus/Token.h"
 
-class CallTipWidget : public QWidget
+class GolangAutoCompleter : public TextEditor::AutoCompleter
 {
-    Q_OBJECT
 public:
-    explicit CallTipWidget(QWidget *parent = 0);
-    ~CallTipWidget();
-    void setInfo(QString info);
-    void showPopup(QRect rc);
-signals:
-    void mouseClick();
-protected:
-    virtual void paintEvent(QPaintEvent *e);
-    virtual void mousePressEvent(QMouseEvent *event);
-protected:
-    QString m_info;
+    GolangAutoCompleter();
+    virtual bool contextAllowsElectricCharacters(const QTextCursor &cursor) const;
+    virtual bool isInComment(const QTextCursor &cursor) const;
+private:
+    bool isInCommentHelper(const QTextCursor &cursor, CPlusPlus::Token *retToken = 0) const;
+    const CPlusPlus::Token tokenAtPosition(const QList<CPlusPlus::Token> &tokens, const unsigned pos) const;
 };
 
-class CallTip : public QObject
-{
-    Q_OBJECT
-public:
-    explicit CallTip(QObject *parent = 0);
-    ~CallTip();
-    QWidget* widget();
-    void CallTipStart(int pos, const QRect& rect, QString text, QWidget *parent);
-    void ShowTip();
-    bool InCallTipMode() const { return m_inCallTipMode; }
-    int posStartCallTip() const { return m_pos; }
-    void showPopup(const QRect& rect, QWidget *parent);
-signals:
-public slots:
-    void CallTipCancel();
-protected:
-    CallTipWidget *popup;
-    bool     m_inCallTipMode;
-    int      m_pos;
-};
-
-#endif // CALLTIP_H
+#endif // GOLANGAUTOCOMPLETER_H
