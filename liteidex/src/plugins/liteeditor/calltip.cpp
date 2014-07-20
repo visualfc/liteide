@@ -23,7 +23,9 @@
 
 #include "calltip.h"
 #include <QPainter>
-//lite_memory_check_begin
+#include <QApplication>
+#include <QDesktopWidget>
+
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
      #include <stdlib.h>
