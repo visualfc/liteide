@@ -38,12 +38,10 @@ public:
     virtual QStringList dependPluginList() const;
 protected slots:
     void appLoaded();
-    void editorComment();
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
 protected:
     LiteApi::IApplication *m_liteApp;
-    QAction    *m_commentAct;
     GolangCode *m_code;
 };
 

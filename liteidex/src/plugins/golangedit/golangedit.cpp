@@ -23,6 +23,7 @@
 
 #include "golangedit.h"
 #include "golangautocompleter.h"
+#include "qtc_editutil/uncommentselection.h"
 #include <QMenu>
 #include <QToolBar>
 #include <QAction>
@@ -58,6 +59,9 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     m_fileSearch = new GolangFileSearch(app,this);
 
+    m_commentAct = new QAction(tr("Comment/Uncomment Selection"),this);
+    actionContext->regAction(m_commentAct,"Comment","CTRL+/");
+
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
     if (manager) {
         manager->addFileSearch(m_fileSearch);
@@ -74,6 +78,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
     connect(m_renameSymbolAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbol()));
+    connect(m_commentAct,SIGNAL(triggered()),this,SLOT(editorComment()));
     connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
     connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
     connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
@@ -128,6 +133,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     if (!editor || editor->mimeType() != "text/x-gosrc") {
         return;
     }
+    //editor->widget()->addAction(m_commentAct);
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
@@ -136,6 +142,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findUseAct);
         menu->addSeparator();
         menu->addAction(m_renameSymbolAct);
+        menu->addSeparator();
+        menu->addAction(m_commentAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -146,6 +154,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         QMenu *sub = menu->addMenu(tr("Refactor"));
         sub->addAction(m_renameSymbolAct);
+        menu->addSeparator();
+        menu->addAction(m_commentAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -225,6 +235,21 @@ void GolangEdit::editorRenameSymbol()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
     m_fileSearch->findUsages(m_editor,cursor,true);
+}
+
+void GolangEdit::editorComment()
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    QPlainTextEdit *textEdit = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
+    if (!textEdit) {
+        return;
+    }
+    Utils::CommentDefinition cd;
+    cd.setAfterWhiteSpaces(true);
+    Utils::unCommentSelection(textEdit,cd);
 }
 
 void GolangEdit::editorFindInfo()
