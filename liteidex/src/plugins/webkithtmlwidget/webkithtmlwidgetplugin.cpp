@@ -25,6 +25,8 @@
 #include "webviewhtmlwidget.h"
 #include "webkitbrowser.h"
 #include <QtPlugin>
+#include <QFileDialog>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -41,6 +43,7 @@ WebKitHtmlWidgetPlugin::WebKitHtmlWidgetPlugin()
 
 bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
 {
+    m_liteApp = app;
     LiteApi::IHtmlWidgetFactory *factory = new WebViewHtmlWidgetFactory(this);
     app->htmlWidgetManager()->addFactory(factory);
     app->htmlWidgetManager()->setDefaultClassName(factory->className());
@@ -50,11 +53,31 @@ bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
                                             wb->widget(),"WebKitBrowser",tr("WebKitBrowser"),
                                             false);
     */
-    WebKitBrowser *browser = new WebKitBrowser(app,this);
-    QAction *act = app->editorManager()->registerBrowser(browser);
-    app->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,act);
-
+    m_browser = new WebKitBrowser(app,this);
+    m_browserAct = app->editorManager()->registerBrowser(m_browser);
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_browserAct);
+    //
+//    QMenu *fileMenu = app->actionManager()->loadMenu("menu/file");
+//    IActionContext *actionContext =  app->actionManager()->getActionContext(app,"App");
+//    LiteApi::ActionInfo *info = actionContext->actionInfo("AddFolder");
+//    if (fileMenu && info && info->action) {
+//        QAction *openUrl = new QAction(tr("Open File With WebKit ..."),this);
+//        connect(openUrl,SIGNAL(triggered()),this,SLOT(openHtmlWithWebkit()));
+//        fileMenu->insertAction(info->action,openUrl);
+//    }
     return true;
+}
+
+void WebKitHtmlWidgetPlugin::openHtmlWithWebkit()
+{
+    QString dir = m_liteApp->settings()->value("WebKitBrowser/home","").toString();
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown Files"),dir,
+                                                    "Html or Markdown Files (*.html *.htm *.md *.markdown);;Html Files (*.html *.htm);; Markdown Files (*.md *.markdown)");
+    if (!filePath.isEmpty()) {
+        m_liteApp->settings()->setValue("WebKitBrowser/home",QFileInfo(filePath).absolutePath());
+        m_liteApp->editorManager()->activeBrowser(m_browser);
+        m_browser->loadUrl(QUrl::fromLocalFile(filePath));
+    }
 }
 
 #if QT_VERSION < 0x050000

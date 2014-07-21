@@ -32,7 +32,7 @@ class QWebView;
 class QToolBar;
 class QLineEdit;
 class QProgressBar;
-class WebKitBrowser : public LiteApi::IBrowserEditor
+class WebKitBrowser : public LiteApi::IWebKitBrowser
 {
     Q_OBJECT
 public:
@@ -41,16 +41,19 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
+    virtual void openUrl(const QUrl &url);
 public slots:
     void changeLocation();
     void adjustLocation();
-    void loadFinished(bool);
+    void loadUrlFinished(bool);
     void linkClicked(QUrl);
     void loadUrl(const QUrl &url);
     void linkHovered(const QString & link, const QString & title, const QString & textContent);
     void statusBarMessage(const QString &msg);
     void loadStarted();
     void loadProgress(int);
+    void openHtmlFile();
+    void reloadUrl();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget  *m_widget;

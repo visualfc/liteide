@@ -379,6 +379,16 @@ public:
     virtual void onActive(){}
 };
 
+class IWebKitBrowser : public IBrowserEditor
+{
+    Q_OBJECT
+public:
+    IWebKitBrowser(QObject *parent = 0)  : IBrowserEditor(parent) {}
+    virtual void openUrl(const QUrl &url) = 0;
+signals:
+    void loadFinished(bool);
+};
+
 class IProject : public IView
 {
     Q_OBJECT
@@ -728,6 +738,11 @@ inline QSize getToolBarIconSize(LiteApi::IApplication *app) {
         return QSize(24,24);
     }
     return QSize(16,16);
+}
+
+inline IWebKitBrowser *getWebKitBrowser(LiteApi::IApplication *app)
+{
+    return static_cast<IWebKitBrowser*>(app->extension()->findObject("LiteApp.IWebKitBrowser"));
 }
 
 inline QString liteide_stub_cmd(LiteApi::IApplication *app)
