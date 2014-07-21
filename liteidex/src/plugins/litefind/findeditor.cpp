@@ -202,7 +202,7 @@ void FindEditor::findHelper(FindOption *opt)
         }
     }
     if (find.isNull()) {
-        m_status->setText(tr("Not find"));
+        m_status->setText(tr("Not found"));
     } else {
         m_status->setText(QString("Ln:%1 Col:%2").
                               arg(find.blockNumber()+1).
@@ -357,7 +357,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
                                       arg(find.blockNumber()+1).
                                       arg(find.columnNumber()+1));
             } else {
-                m_status->setText(tr("Not find"));
+                m_status->setText(tr("Not found"));
             }
             break;
         }
