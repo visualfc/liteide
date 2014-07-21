@@ -66,9 +66,10 @@ class LiteEditor : public LiteApi::ILiteEditor
 public:
     LiteEditor(LiteApi::IApplication *app);
     virtual ~LiteEditor();
+    virtual QTextDocument* document() const;
     virtual void setCompleter(LiteApi::ICompleter *complter);
     virtual void setEditorMark(LiteApi::IEditorMark *mark);
-    virtual void setAutoCompleter(TextEditor::AutoCompleter *autoCompleter);
+    virtual void setTextLexer(LiteApi::ITextLexer *lexer);
     void createActions();
     void createToolBars();
     void createMenu();

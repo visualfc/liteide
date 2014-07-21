@@ -164,6 +164,11 @@ LiteEditor::~LiteEditor()
     delete m_file;
 }
 
+QTextDocument *LiteEditor::document() const
+{
+    return m_editorWidget->document();
+}
+
 LiteEditorWidget *LiteEditor::editorWidget() const
 {
     return m_editorWidget;
@@ -175,9 +180,9 @@ void LiteEditor::setEditorMark(LiteApi::IEditorMark *mark)
     m_extension->addObject("LiteApi.IEditorMark",mark);
 }
 
-void LiteEditor::setAutoCompleter(TextEditor::AutoCompleter *autoCompleter)
+void LiteEditor::setTextLexer(LiteApi::ITextLexer *lexer)
 {
-    m_editorWidget->setAutoCompleter(autoCompleter);
+    m_editorWidget->setTextLexer(lexer);
 }
 
 void LiteEditor::setCompleter(LiteApi::ICompleter *complter)

@@ -191,7 +191,7 @@ void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
 
 void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 {
-    if (!m_autoCompleter->contextAllowsElectricCharacters(this->textCursor())) {
+    if (!m_textLexer->isCanCodeCompleter(this->textCursor())) {
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
     }

@@ -15,14 +15,14 @@ DEFINES += GOLANGEDIT_LIBRARY
 SOURCES += golangeditplugin.cpp \
     golangedit.cpp \
     golangfilesearch.cpp \
-    golangautocompleter.cpp \
     golanghighlighter.cpp \
-    golanghighlighterfactory.cpp
+    golanghighlighterfactory.cpp \
+    golangtextlexer.cpp
 
 HEADERS += golangeditplugin.h\
         golangedit_global.h \
     golangedit.h \
     golangfilesearch.h \
-    golangautocompleter.h \
     golanghighlighter.h \
-    golanghighlighterfactory.h
+    golanghighlighterfactory.h \
+    golangtextlexer.h

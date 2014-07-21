@@ -49,7 +49,7 @@ public:
     void updateTabWidth();
     void setTabUseSpace(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
-    void setAutoCompleter(TextEditor::AutoCompleter *autoCompleter);
+    void setTextLexer(LiteApi::ITextLexer *lexer);
 public:
     QWidget* extraArea();
     QWidget* navigateArea();
@@ -223,7 +223,7 @@ protected:
     QWidget *m_extraArea;
     QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
-    QScopedPointer<TextEditor::AutoCompleter> m_autoCompleter;
+    QScopedPointer<LiteApi::ITextLexer> m_textLexer;
     LiteApi::Link       m_currentLink;
     QMap<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > m_extralSelectionMap;
     QTextCursor m_lastSelection;

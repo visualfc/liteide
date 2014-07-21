@@ -100,6 +100,13 @@ public:
     void setDocument(QTextDocument *doc);
     QTextDocument *document() const;
 
+    void setContextData(const QString &id, const QString &value) {
+        m_contextMap[id] = value;
+    }
+    QString contextData(const QString &id) {
+        return m_contextMap[id];
+    }
+
     void setExtraAdditionalFormats(const QTextBlock& block, const QList<QTextLayout::FormatRange> &formats);
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
     virtual void setTabSize(int tabSize);
@@ -127,6 +134,7 @@ protected:
     QTextBlockUserData *currentBlockUserData() const;
 
     QTextBlock currentBlock() const;
+    QMap<QString,QString> m_contextMap;
 protected:
     struct KateFormatMap
     {

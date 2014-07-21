@@ -212,17 +212,17 @@ public:
         int m_insideFold;
     };
 
+public:
     void emitDocumentSizeChanged() { emit documentSizeChanged(documentSize()); }
+    void setRequiredWidth(int width);
+    QSizeF documentSize() const;
+public:
     int lastSaveRevision;
     bool hasMarks;
     double maxMarkWidthFactor;
 
     int m_requiredWidth;
     TabSettings m_tabSettings;
-    void setRequiredWidth(int width);
-
-    QSizeF documentSize() const;
-
 };
 
 } // namespace TextEditor

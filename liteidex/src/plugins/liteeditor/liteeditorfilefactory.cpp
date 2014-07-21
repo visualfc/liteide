@@ -145,8 +145,7 @@ LiteApi::IEditor *LiteEditorFileFactory::create(const QString &contents, const Q
 
 LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const QString &mimeType)
 {
-    QTextDocument *doc = editor->m_editorWidget->document();
-
+    QTextDocument *doc = editor->document();
     LiteApi::IHighlighterFactory *factory = m_highlighterManager->findFactory(mimeType);
     if (factory) {
         TextEditor::SyntaxHighlighter *h = factory->create(doc,mimeType);

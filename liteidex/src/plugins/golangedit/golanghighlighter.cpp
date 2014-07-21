@@ -29,6 +29,7 @@
 #include "cplusplus/Lexer.h"
 
 #include <QTextDocument>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -216,7 +217,12 @@ void GolangHighlighter::highlightBlock(const QString &text)
 
         } else if (tk.isGoKeyword()) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Keyword]);
-            if (tk.is(T_GO_FUNC)) {
+            if (tk.is(T_GO_PACKAGE)) {
+                int n = i+1;
+                if (n < tokens.size() && tokens[n].is(T_IDENTIFIER)) {
+                    setContextData("go.package",text.mid(tokens[n].begin(),tokens[n].length()));
+                }
+            } else if (tk.is(T_GO_FUNC)) {
                 int size = tokens.size()-1;
                 int n = i+1;
                 if (n < size) {

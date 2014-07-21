@@ -18,24 +18,26 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangautocompleter.h
+// Module: golangtextlexer.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOLANGAUTOCOMPLETER_H
-#define GOLANGAUTOCOMPLETER_H
+#ifndef GOLANGTEXTLEXER_H
+#define GOLANGTEXTLEXER_H
 
-#include "qtc_texteditor/autocompleter.h"
+#include "liteeditorapi/liteeditorapi.h"
 #include "cplusplus/Token.h"
 
-class GolangAutoCompleter : public TextEditor::AutoCompleter
+class GolangTextLexer : public LiteApi::ITextLexer
 {
 public:
-    GolangAutoCompleter();
-    virtual bool contextAllowsElectricCharacters(const QTextCursor &cursor) const;
+    GolangTextLexer();
     virtual bool isInComment(const QTextCursor &cursor) const;
-private:
+    virtual bool isInString(const QTextCursor &cursor) const;
+    virtual bool isCanCodeCompleter(const QTextCursor &cursor) const;
+    virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
+protected:
     bool isInCommentHelper(const QTextCursor &cursor, CPlusPlus::Token *retToken = 0) const;
     const CPlusPlus::Token tokenAtPosition(const QList<CPlusPlus::Token> &tokens, const unsigned pos) const;
 };
 
-#endif // GOLANGAUTOCOMPLETER_H
+#endif // GOLANGTEXTLEXER_H

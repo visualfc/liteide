@@ -31,7 +31,6 @@
 #include <QStandardItem>
 
 namespace TextEditor {
-class AutoCompleter;
 class SyntaxHighlighter;
 }
 
@@ -180,14 +179,57 @@ struct Link
     int targetColumn;
 };
 
+class ITextLexer
+{
+public:
+    ITextLexer()
+    {}
+    ~ITextLexer()
+    {}
+    virtual bool isInComment(const QTextCursor &cursor) const = 0;
+    virtual bool isInString(const QTextCursor &cursor) const = 0;
+    virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
+    virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
+};
+
+class BaseTextLexer : public ITextLexer
+{
+public:
+    BaseTextLexer() : m_bAC(true), m_bCC(true)
+    {
+    }
+    virtual bool isInComment(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isInString(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isCanCodeCompleter(const QTextCursor &/*cursor*/) const {
+        return m_bCC;
+    }
+    virtual bool isCanAutoCompleter(const QTextCursor &/*cursor*/) const {
+        return m_bAC;
+    }
+    virtual void setCanCodeCompleter(bool b) {
+        m_bCC = b;
+    }
+    virtual void setCanAutoCompleter(bool b) {
+        m_bAC = b;
+    }
+protected:
+    bool m_bAC;
+    bool m_bCC;
+};
+
 class ILiteEditor : public ITextEditor
 {
     Q_OBJECT
 public:
     ILiteEditor(QObject *parent = 0) : ITextEditor(parent) {}
+    virtual QTextDocument* document() const = 0;
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
-    virtual void setAutoCompleter(TextEditor::AutoCompleter *autoCompleter) = 0;
+    virtual void setTextLexer(ITextLexer *lexer) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
     virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const char *tag) = 0;
     virtual void clearNavigateMarak(int line) = 0;

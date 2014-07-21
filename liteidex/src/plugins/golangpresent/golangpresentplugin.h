@@ -49,7 +49,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangPresentPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/GoPresent");
-        m_info->setVer("x21.1");
+        m_info->setVer("x23");
         m_info->setName("GolangPresent");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Golang Present Edit Support");

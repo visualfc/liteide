@@ -58,7 +58,6 @@ public:
     void showPopup(const QRect& rect, QWidget *parent);
     bool isEnable() const;
     void setEnable(bool b);
-signals:
 public slots:
     void CallTipCancel();
 protected:

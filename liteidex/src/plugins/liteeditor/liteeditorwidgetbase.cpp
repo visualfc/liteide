@@ -260,7 +260,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     : QPlainTextEdit(parent),
       m_liteApp(app),
       m_editorMark(0),
-      m_autoCompleter(new TextEditor::AutoCompleter),
+      m_textLexer(new LiteApi::BaseTextLexer()),
       m_contentsChanged(false),
       m_lastCursorChangeWasInteresting(false)
 {
@@ -330,9 +330,9 @@ void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
     }
 }
 
-void LiteEditorWidgetBase::setAutoCompleter(TextEditor::AutoCompleter *autoCompleter)
+void LiteEditorWidgetBase::setTextLexer(LiteApi::ITextLexer *lexer)
 {
-    m_autoCompleter.reset(autoCompleter);
+    m_textLexer.reset(lexer);
 }
 
 void LiteEditorWidgetBase::setTabSize(int n)
@@ -1472,7 +1472,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     }
     bool ro = isReadOnly();
 
-    if (m_autoCompleter->contextAllowsElectricCharacters(this->textCursor())) {
+    if (m_textLexer->isCanAutoCompleter(this->textCursor())) {
         QString keyText = e->text();
         if (m_bLastBraces == true && keyText == m_lastBraces) {
             QTextCursor cursor = textCursor();
