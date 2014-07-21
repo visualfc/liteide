@@ -20,7 +20,6 @@ SOURCES += liteeditorplugin.cpp \
     liteeditor.cpp \
     liteeditorfile.cpp \
     liteeditorfilefactory.cpp \
-    golanghighlighter.cpp \
     liteeditoroption.cpp \
     liteeditoroptionfactory.cpp \
     liteeditorwidgetbase.cpp \
@@ -31,14 +30,15 @@ SOURCES += liteeditorplugin.cpp \
     liteeditormark.cpp \
     snippet.cpp \
     snippetmanager.cpp \
-    calltip.cpp
+    calltip.cpp \
+    highlightermanager.cpp \
+    katehighlighterfactory.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
     liteeditor.h \
     liteeditorfile.h \
     liteeditorfilefactory.h \
-    golanghighlighter.h \
     liteeditoroption.h \
     liteeditoroptionfactory.h \
     liteeditorwidgetbase.h \
@@ -49,7 +49,9 @@ HEADERS += liteeditorplugin.h\
     liteeditormark.h \
     snippet.h \
     snippetmanager.h \
-    calltip.h
+    calltip.h \
+    highlightermanager.h \
+    katehighlighterfactory.h
 
 FORMS += \
     liteeditoroption.ui

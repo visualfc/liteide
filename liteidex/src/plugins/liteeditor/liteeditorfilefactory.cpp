@@ -24,11 +24,11 @@
 #include "liteeditorfilefactory.h"
 #include "liteeditor.h"
 #include "liteeditorwidget.h"
-#include "golanghighlighter.h"
 #include "litewordcompleter.h"
 #include "wordapimanager.h"
 #include "liteeditormark.h"
 #include "liteeditor_global.h"
+#include "katehighlighterfactory.h"
 #include <QDir>
 #include <QFileInfo>
 #include "mimetype/mimetype.h"
@@ -51,20 +51,29 @@ LiteEditorFileFactory::LiteEditorFileFactory(LiteApi::IApplication *app, QObject
     m_mimeTypes.append("text/x-gosrc");
     m_mimeTypes.append("text/x-lua");
     m_mimeTypes.append("liteide/default.editor");
-    QDir dir(m_liteApp->resourcePath()+"/liteeditor/kate");
-    if (dir.exists()) {
-        m_kate->loadPath(dir.absolutePath());
-        foreach (QString type, m_kate->mimeTypes()) {
-            if (!m_liteApp->mimeTypeManager()->findMimeType(type)) {
-                MimeType *mimeType = new MimeType;
-                mimeType->setType(type);
-                foreach(QString pattern, m_kate->mimeTypePatterns(type)) {
-                    mimeType->appendGlobPatterns(pattern);
+
+    m_highlighterManager = new HighlighterManager(this);
+    if (m_highlighterManager->initWithApp(app)) {
+        m_liteApp->extension()->addObject("LiteApi.IHighlighterManager",m_highlighterManager);
+        QDir dir(m_liteApp->resourcePath()+"/liteeditor/kate");
+        if (dir.exists()) {
+            KateHighlighterFactory *factory = new KateHighlighterFactory(this);
+            factory->loadPath(dir.absolutePath());
+            m_highlighterManager->addFactory(factory);
+
+            KateHighlighter *kate = factory->kate();
+            foreach (QString type, kate->mimeTypes()) {
+                if (!m_liteApp->mimeTypeManager()->findMimeType(type)) {
+                    MimeType *mimeType = new MimeType;
+                    mimeType->setType(type);
+                    foreach(QString pattern, kate->mimeTypePatterns(type)) {
+                        mimeType->appendGlobPatterns(pattern);
+                    }
+                    mimeType->setComment(kate->mimeTypeName(type));
+                    m_liteApp->mimeTypeManager()->addMimeType(mimeType);
                 }
-                mimeType->setComment(m_kate->mimeTypeName(type));
-                m_liteApp->mimeTypeManager()->addMimeType(mimeType);
+                m_mimeTypes.append(type);
             }
-            m_mimeTypes.append(type);
         }
     }
     m_mimeTypes.removeDuplicates();
@@ -93,7 +102,7 @@ void LiteEditorFileFactory::colorStyleChanged()
     }
     TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
     if (h) {
-        m_kate->setColorStyle(h,m_liteApp->editorManager()->colorStyleScheme());
+        m_highlighterManager->setColorStyle(h,m_liteApp->editorManager()->colorStyleScheme());
     }
 }
 
@@ -105,7 +114,7 @@ void LiteEditorFileFactory::tabSettingChanged(int tabSize)
     }
     TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
     if (h) {
-        m_kate->setTabSize(h,tabSize);
+        m_highlighterManager->setTabSize(h,tabSize);
     }
 }
 
@@ -138,17 +147,15 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
 {
     QTextDocument *doc = editor->m_editorWidget->document();
 
-    TextEditor::SyntaxHighlighter *h = 0;
-    if (mimeType == "text/x-gosrc") {
-        h = new GolangHighlighter(doc);
-    } else {
-        h = m_kate->create(doc,mimeType);
-    }
-    if (h) {
-        editor->extension()->addObject("TextEditor::SyntaxHighlighter",h);
-        connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
-        connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
-        connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
+    LiteApi::IHighlighterFactory *factory = m_highlighterManager->findFactory(mimeType);
+    if (factory) {
+        TextEditor::SyntaxHighlighter *h = factory->create(doc,mimeType);
+        if (h) {
+            editor->extension()->addObject("TextEditor::SyntaxHighlighter",h);
+            connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
+            connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
+            connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
+        }
     }
 
     LiteWordCompleter *wordCompleter = new LiteWordCompleter(editor);

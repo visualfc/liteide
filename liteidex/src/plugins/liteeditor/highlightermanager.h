@@ -18,37 +18,28 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteeditorfilefactory.h
+// Module: highlightermanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITEEDITORFILEFACTORY_H
-#define LITEEDITORFILEFACTORY_H
+#ifndef HIGHLIGHTERMANAGER_H
+#define HIGHLIGHTERMANAGER_H
 
-#include "liteapi/liteapi.h"
-#include "highlightermanager.h"
+#include "liteeditorapi/liteeditorapi.h"
 
-class WordApiManager;
-class LiteEditorMarkTypeManager;
-class LiteEditor;
-
-class LiteEditorFileFactory : public LiteApi::IEditorFactory
+class HighlighterManager : public LiteApi::IHighlighterManager
 {
-    Q_OBJECT
 public:
-    LiteEditorFileFactory(LiteApi::IApplication *app, QObject *parent);
-    virtual QStringList mimeTypes() const;
-    virtual LiteApi::IEditor *open(const QString &fileName, const QString &mimeType);
-    virtual LiteApi::IEditor *create(const QString &contents,const QString &mimeType);
-    LiteApi::IEditor *setupEditor(LiteEditor *editor,const QString &mimeType);
-public slots:
-    void colorStyleChanged();
-    void tabSettingChanged(int);
+    HighlighterManager(QObject *parent);
+    virtual void addFactory(LiteApi::IHighlighterFactory *factory);
+    virtual void removeFactory(LiteApi::IHighlighterFactory *factory);
+    virtual QList<LiteApi::IHighlighterFactory*> factoryList() const;
+    virtual QStringList mimeTypeList() const;
+    virtual LiteApi::IHighlighterFactory *findFactory(const QString &mimeType) const;
+public:
+    void setColorStyle(TextEditor::SyntaxHighlighter *highlighter,const ColorStyleScheme *scheme);
+    void setTabSize(TextEditor::SyntaxHighlighter *highlighter, int tabSize);
 protected:
-    LiteApi::IApplication *m_liteApp;
-    WordApiManager *m_wordApiManager;
-    LiteEditorMarkTypeManager *m_markTypeManager;
-    HighlighterManager *m_highlighterManager;
-    QStringList m_mimeTypes;
+    QList<LiteApi::IHighlighterFactory*> m_factoryList;
 };
 
-#endif // LITEEDITORFILEFACTORY_H
+#endif // HIGHLIGHTERMANAGER_H

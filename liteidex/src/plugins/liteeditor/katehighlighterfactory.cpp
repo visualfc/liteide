@@ -18,37 +18,37 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteeditorfilefactory.h
+// Module: katehighlighterfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITEEDITORFILEFACTORY_H
-#define LITEEDITORFILEFACTORY_H
+#include "katehighlighterfactory.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
-#include "liteapi/liteapi.h"
-#include "highlightermanager.h"
-
-class WordApiManager;
-class LiteEditorMarkTypeManager;
-class LiteEditor;
-
-class LiteEditorFileFactory : public LiteApi::IEditorFactory
+KateHighlighterFactory::KateHighlighterFactory(QObject *parent) :
+    LiteApi::IHighlighterFactory(parent)
 {
-    Q_OBJECT
-public:
-    LiteEditorFileFactory(LiteApi::IApplication *app, QObject *parent);
-    virtual QStringList mimeTypes() const;
-    virtual LiteApi::IEditor *open(const QString &fileName, const QString &mimeType);
-    virtual LiteApi::IEditor *create(const QString &contents,const QString &mimeType);
-    LiteApi::IEditor *setupEditor(LiteEditor *editor,const QString &mimeType);
-public slots:
-    void colorStyleChanged();
-    void tabSettingChanged(int);
-protected:
-    LiteApi::IApplication *m_liteApp;
-    WordApiManager *m_wordApiManager;
-    LiteEditorMarkTypeManager *m_markTypeManager;
-    HighlighterManager *m_highlighterManager;
-    QStringList m_mimeTypes;
-};
+    m_kate = new KateHighlighter(this);
+}
 
-#endif // LITEEDITORFILEFACTORY_H
+QStringList KateHighlighterFactory::mimeTypes() const
+{
+    return m_kate->mimeTypes();
+}
+
+TextEditor::SyntaxHighlighter *KateHighlighterFactory::create(QTextDocument *doc, const QString &mimeType)
+{
+    return m_kate->create(doc,mimeType);
+}
+
+void KateHighlighterFactory::loadPath(const QString &dir)
+{
+    m_kate->loadPath(dir);
+}

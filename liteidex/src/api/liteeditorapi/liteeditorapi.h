@@ -32,6 +32,7 @@
 
 namespace TextEditor {
 class AutoCompleter;
+class SyntaxHighlighter;
 }
 
 namespace LiteApi {
@@ -205,6 +206,34 @@ inline ILiteEditor *getLiteEditor(IEditor *editor)
         return findExtensionObject<ILiteEditor*>(editor->extension(),"LiteApi.ILiteEditor");
     }
     return 0;
+}
+
+class IHighlighterFactory : public QObject
+{
+    Q_OBJECT
+public:
+    IHighlighterFactory(QObject *parent) : QObject(parent)
+    {}
+    virtual QStringList mimeTypes() const = 0;
+    virtual TextEditor::SyntaxHighlighter* create(QTextDocument *doc, const QString &mimeType) = 0;
+};
+
+class IHighlighterManager :public IManager
+{
+    Q_OBJECT
+public:
+    IHighlighterManager(QObject *parent) : IManager(parent)
+    {}
+    virtual void addFactory(IHighlighterFactory *factroy) = 0;
+    virtual void removeFactory(IHighlighterFactory *factory) = 0;
+    virtual QList<IHighlighterFactory*> factoryList() const = 0;
+    virtual QStringList mimeTypeList() const = 0;
+    virtual IHighlighterFactory *findFactory(const QString &mimeType) const = 0;
+};
+
+inline IHighlighterManager *getHighlighterManager(LiteApi::IApplication *app)
+{
+    return static_cast<IHighlighterManager*>(app->extension()->findObject("LiteApi.IHighlighterManager"));
 }
 
 inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0)

@@ -18,37 +18,26 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: liteeditorfilefactory.h
+// Module: katehighlighterfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITEEDITORFILEFACTORY_H
-#define LITEEDITORFILEFACTORY_H
+#ifndef KATEHIGHLIGHTERFACTORY_H
+#define KATEHIGHLIGHTERFACTORY_H
 
-#include "liteapi/liteapi.h"
-#include "highlightermanager.h"
+#include "liteeditorapi/liteeditorapi.h"
+#include "qtc_texteditor/katehighlighter.h"
 
-class WordApiManager;
-class LiteEditorMarkTypeManager;
-class LiteEditor;
-
-class LiteEditorFileFactory : public LiteApi::IEditorFactory
+class KateHighlighterFactory : public LiteApi::IHighlighterFactory
 {
     Q_OBJECT
 public:
-    LiteEditorFileFactory(LiteApi::IApplication *app, QObject *parent);
+    KateHighlighterFactory(QObject *parent);
     virtual QStringList mimeTypes() const;
-    virtual LiteApi::IEditor *open(const QString &fileName, const QString &mimeType);
-    virtual LiteApi::IEditor *create(const QString &contents,const QString &mimeType);
-    LiteApi::IEditor *setupEditor(LiteEditor *editor,const QString &mimeType);
-public slots:
-    void colorStyleChanged();
-    void tabSettingChanged(int);
+    virtual TextEditor::SyntaxHighlighter* create(QTextDocument *doc, const QString &mimeType);
+    void loadPath(const QString &dir);
+    KateHighlighter *kate() const { return m_kate; }
 protected:
-    LiteApi::IApplication *m_liteApp;
-    WordApiManager *m_wordApiManager;
-    LiteEditorMarkTypeManager *m_markTypeManager;
-    HighlighterManager *m_highlighterManager;
-    QStringList m_mimeTypes;
+    KateHighlighter *m_kate;
 };
 
-#endif // LITEEDITORFILEFACTORY_H
+#endif // KATEHIGHLIGHTERFACTORY_H
