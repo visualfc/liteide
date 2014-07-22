@@ -29,7 +29,8 @@ TARGET = $$qtLibraryName(liteapp)
 
 contains(DEFINES, LITEAPP_LIBRARY) {
     TEMPLATE = lib
-    DESTDIR = $$IDE_BIN_PATH
+    DESTDIR = $$IDE_LIBRARY_PATH
+    DLLDESTDIR = $$IDE_BIN_PATH
 }
 
 LIBS += -L$$IDE_LIBRARY_PATH

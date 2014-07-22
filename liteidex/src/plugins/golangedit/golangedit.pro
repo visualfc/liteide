@@ -17,7 +17,8 @@ SOURCES += golangeditplugin.cpp \
     golangfilesearch.cpp \
     golanghighlighter.cpp \
     golanghighlighterfactory.cpp \
-    golangtextlexer.cpp
+    golangtextlexer.cpp \
+    functiontooltip.cpp
 
 HEADERS += golangeditplugin.h\
         golangedit_global.h \
@@ -25,4 +26,5 @@ HEADERS += golangeditplugin.h\
     golangfilesearch.h \
     golanghighlighter.h \
     golanghighlighterfactory.h \
-    golangtextlexer.h
+    golangtextlexer.h \
+    functiontooltip.h

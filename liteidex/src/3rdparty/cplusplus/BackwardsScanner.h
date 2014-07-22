@@ -42,7 +42,8 @@ class BackwardsScanner
     enum { MAX_BLOCK_COUNT = 10 };
 
 public:
-    explicit BackwardsScanner(const QTextCursor &cursor,
+    explicit BackwardsScanner(LanguageFeatures features,
+                              const QTextCursor &cursor,
                               int maxBlockCount = MAX_BLOCK_COUNT,
                               const QString &suffix = QString(),
                               bool skipComments = true);

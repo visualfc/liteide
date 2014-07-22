@@ -36,7 +36,8 @@
 
 using namespace CPlusPlus;
 
-BackwardsScanner::BackwardsScanner(const QTextCursor &cursor,
+BackwardsScanner::BackwardsScanner(LanguageFeatures features,
+                                   const QTextCursor &cursor,
                                    int maxBlockCount,
                                    const QString &suffix,
                                    bool skipComments)
@@ -46,11 +47,6 @@ BackwardsScanner::BackwardsScanner(const QTextCursor &cursor,
     , _maxBlockCount(maxBlockCount)
 {
     // FIXME: Why these defaults?
-    LanguageFeatures features;
-    features.qtMocRunEnabled = true;
-    features.qtEnabled = true;
-    features.qtKeywordsEnabled = true;
-    features.objCEnabled = true;
     _tokenize.setLanguageFeatures(features);
     _tokenize.setSkipComments(skipComments);
     _text = _block.text().left(cursor.position() - cursor.block().position());

@@ -35,6 +35,9 @@ public:
     virtual bool isInString(const QTextCursor &cursor) const;
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
+    virtual bool isCallTipEnable() const;
+    virtual int startOfFunctionCall(const QTextCursor &cursor) const;
+    virtual void showToolTip(LiteApi::ITextEditor *editor,int startPosition, const QString &args);
 protected:
     bool isInCommentHelper(const QTextCursor &cursor, CPlusPlus::Token *retToken = 0) const;
     const CPlusPlus::Token tokenAtPosition(const QList<CPlusPlus::Token> &tokens, const unsigned pos) const;

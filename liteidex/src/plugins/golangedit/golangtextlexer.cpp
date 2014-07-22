@@ -24,6 +24,7 @@
 #include "golangtextlexer.h"
 #include "cplusplus/BackwardsScanner.h"
 #include "cplusplus/SimpleLexer.h"
+#include "functiontooltip.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -88,6 +89,49 @@ bool GolangTextLexer::isCanAutoCompleter(const QTextCursor &cursor) const
             return false;
     }
     return true;
+}
+
+bool GolangTextLexer::isCallTipEnable() const
+{
+    return true;
+}
+
+int GolangTextLexer::startOfFunctionCall(const QTextCursor &cursor) const
+{
+    LanguageFeatures features;
+    features.golangEnable = true;
+
+    BackwardsScanner scanner(features,cursor);
+
+    int index = scanner.startToken();
+    forever {
+        const Token &tk = scanner[index - 1];
+        if (tk.is(T_EOF_SYMBOL)) {
+            break;
+        } else if (tk.is(T_LPAREN)) {
+            return scanner.startPosition() + tk.begin();
+        } else if (tk.is(T_RPAREN)) {
+            int matchingBrace = scanner.startOfMatchingBrace(index);
+
+            if (matchingBrace == index) // If no matching brace found
+                return -1;
+
+            index = matchingBrace;
+        } else {
+            --index;
+        }
+    }
+    return -1;
+}
+
+void GolangTextLexer::showToolTip(LiteApi::ITextEditor *editor, int startPosition, const QString &args)
+{
+    FunctionArgumentWidget *fw = LiteApi::findExtensionObject<FunctionArgumentWidget*>(editor,"LiteApi.FunctionArgumentWidget");
+    if (!fw) {
+        fw = new FunctionArgumentWidget(editor);
+        editor->extension()->addObject("LiteApi.FunctionArgumentWidget",fw);
+    }
+    fw->showFunctionHint(QList<Function>() << Function(args),startPosition);
 }
 
 bool GolangTextLexer::isInCommentHelper(const QTextCursor &cursor, Token *retToken) const

@@ -190,6 +190,8 @@ public:
     virtual bool isInString(const QTextCursor &cursor) const = 0;
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
+    virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
+    virtual void showToolTip(LiteApi::ITextEditor *editor,int startPosition, const QString &args) = 0;
 };
 
 class BaseTextLexer : public ITextLexer
@@ -215,6 +217,12 @@ public:
     }
     virtual void setCanAutoCompleter(bool b) {
         m_bAC = b;
+    }
+    virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
+        return -1;
+    }
+    virtual void showToolTip(LiteApi::ITextEditor */*editor*/,int /*startPosition*/, const QString &/*args*/)
+    {
     }
 protected:
     bool m_bAC;

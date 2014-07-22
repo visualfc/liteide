@@ -57,7 +57,6 @@ LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_scrollWheelZooming(true),
     m_bSpellCheckZoneDontComplete(false)
 {
-    m_callTip = new CallTip(this);
 }
 
 void LiteEditorWidget::setContextMenu(QMenu *contextMenu)
@@ -76,25 +75,6 @@ void LiteEditorWidget::setCompleter(QCompleter *completer)
 QCompleter *LiteEditorWidget::completer() const
 {
     return m_completer;
-}
-
-CallTip *LiteEditorWidget::callTip() const
-{
-    return m_callTip;
-}
-
-void LiteEditorWidget::CallTipStart(QString text)
-{
-    if (!m_callTip->isEnable()) {
-        return;
-    }
-    QRect rc = cursorRect();
-    rc.setLeft(rc.left()+viewport()->x());
-    QFontMetrics fm(m_callTip->widget()->font());
-    QRect rc2 = fm.boundingRect(text);
-    rc.setWidth(rc2.width()+24);
-    rc.setHeight(rc2.height());
-    m_callTip->callTipStart(0,rc,text,this);
 }
 
 void LiteEditorWidget::codeCompleter()
@@ -208,27 +188,6 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
             return; // let the completer do default behavior
         default:
             break;
-        }
-    } else if (m_callTip->isEnable()){
-        if (m_callTip->inCallTipMode()) {
-            if (
-                    (e->key() != Qt::Key_Left) &&
-                    //(e->key() != Qt::Key_Left&&Qt::Key_Shift) &&
-                    (e->key() != Qt::Key_Right) &&
-                    //(e->key() != Qt::Key_Right&&Qt::Key_Shift) &&
-                    (e->key() != Qt::Key_Insert) &&
-                    (e->key() != Qt::Key_Backspace)
-                    ) {
-                m_callTip->CallTipCancel();
-            }
-            if ((e->key() == Qt::Key_Backspace)) {
-                if (this->textCursor().position() <= m_callTip->posStartCallTip()) {
-                    m_callTip->CallTipCancel();
-                }
-            }
-        }
-        if (e->key() == Qt::Key_Comma) {
-            m_callTip->showTip();
         }
     }
 

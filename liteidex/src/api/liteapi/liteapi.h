@@ -275,6 +275,13 @@ class ITextEditor : public IEditor
 {
     Q_OBJECT
 public:
+    enum PositionOperation {
+        Current = 1,
+        EndOfLine = 2,
+        StartOfLine = 3,
+        Anchor = 4,
+        EndOfDoc = 5
+    };
     ITextEditor(QObject *parent = 0) : IEditor(parent) {}
     virtual int line() const = 0;
     virtual int column() const = 0;
@@ -284,6 +291,9 @@ public:
     virtual bool wordWrap() const = 0;
     virtual void gotoLine(int line, int column, bool center = false) = 0;
     virtual void setFindOption(FindOption *opt) = 0;
+    virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
+    virtual QString textAt(int pos, int length) const = 0;
+    virtual QRect cursorRect(int pos = -1) const = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)

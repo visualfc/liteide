@@ -96,6 +96,9 @@ public:
     virtual void setWordWrap(bool wrap);
     virtual bool wordWrap() const;
     virtual void gotoLine(int line, int column, bool center);
+    virtual int position(PositionOperation posOp = Current, int at = -1) const;
+    virtual QString textAt(int pos, int length) const;
+    virtual QRect cursorRect(int pos = -1) const;
     virtual QString textCodec() const;
     virtual void setTextCodec(const QString &codec);
     virtual QByteArray saveState() const;

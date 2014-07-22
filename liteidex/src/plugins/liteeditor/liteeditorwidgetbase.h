@@ -200,6 +200,9 @@ public:
     bool openLink(const LiteApi::Link &link);
     void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
     void testUpdateLink(QMouseEvent *e);
+    LiteApi::ITextLexer * textLexer() const {
+        return m_textLexer.data();
+    }
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,

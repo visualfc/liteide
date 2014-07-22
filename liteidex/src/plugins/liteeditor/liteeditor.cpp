@@ -672,6 +672,63 @@ void LiteEditor::gotoLine(int line, int column, bool center)
     m_editorWidget->gotoLine(line,column,center);
 }
 
+int LiteEditor::position(LiteApi::ITextEditor::PositionOperation posOp, int at) const
+{
+    QTextCursor tc = m_editorWidget->textCursor();
+
+    if (at != -1)
+        tc.setPosition(at);
+
+    if (posOp == ITextEditor::Current)
+        return tc.position();
+
+    switch (posOp) {
+    case ITextEditor::EndOfLine:
+        tc.movePosition(QTextCursor::EndOfLine);
+        return tc.position();
+    case ITextEditor::StartOfLine:
+        tc.movePosition(QTextCursor::StartOfLine);
+        return tc.position();
+    case ITextEditor::Anchor:
+        if (tc.hasSelection())
+            return tc.anchor();
+        break;
+    case ITextEditor::EndOfDoc:
+        tc.movePosition(QTextCursor::End);
+        return tc.position();
+    default:
+        break;
+    }
+
+    return -1;
+}
+
+QString LiteEditor::textAt(int pos, int length) const
+{
+    QTextCursor c = m_editorWidget->textCursor();
+
+    if (pos < 0)
+        pos = 0;
+    c.movePosition(QTextCursor::End);
+    if (pos + length > c.position())
+        length = c.position() - pos;
+
+    c.setPosition(pos);
+    c.setPosition(pos + length, QTextCursor::KeepAnchor);
+
+    return c.selectedText();
+}
+
+QRect LiteEditor::cursorRect(int pos) const
+{
+    QTextCursor tc = m_editorWidget->textCursor();
+    if (pos >= 0)
+        tc.setPosition(pos);
+    QRect result = m_editorWidget->cursorRect(tc);
+    result.moveTo(m_editorWidget->viewport()->mapToGlobal(result.topLeft()));
+    return result;
+}
+
 void LiteEditor::applyOption(QString id)
 {
     if (id != OPTION_LITEEDITOR) {
@@ -753,9 +810,8 @@ void LiteEditor::updateTip(QString func,QString args)
 {
     if (args.isEmpty()) {
         return;
-    }
-    QString tip = QString("%1 %2").arg(func).arg(args);
-    m_editorWidget->CallTipStart(tip);
+    }    
+    m_editorWidget->textLexer()->showToolTip(this,this->position(),args);
 }
 
 void LiteEditor::filePrintPreview()

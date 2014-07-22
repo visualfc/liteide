@@ -30,7 +30,6 @@ SOURCES += liteeditorplugin.cpp \
     liteeditormark.cpp \
     snippet.cpp \
     snippetmanager.cpp \
-    calltip.cpp \
     highlightermanager.cpp \
     katehighlighterfactory.cpp
 
@@ -49,7 +48,6 @@ HEADERS += liteeditorplugin.h\
     liteeditormark.h \
     snippet.h \
     snippetmanager.h \
-    calltip.h \
     highlightermanager.h \
     katehighlighterfactory.h
 

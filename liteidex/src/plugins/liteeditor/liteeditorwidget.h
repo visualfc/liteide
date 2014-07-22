@@ -45,7 +45,6 @@ public:
     void setScrollWheelZooming(bool b) {
         m_scrollWheelZooming = b;
     }
-    void CallTipStart(QString text);
 protected:
     void contextMenuEvent(QContextMenuEvent *);
     void keyPressEvent(QKeyEvent *e);
@@ -69,7 +68,6 @@ public:
     QString textUnderCursor(QTextCursor tc) const;
 protected:    
     QCompleter *m_completer;
-    CallTip    *m_callTip;
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;
     bool m_scrollWheelZooming;
