@@ -67,34 +67,29 @@ bool GolangTextLexer::isInString(const QTextCursor &cursor) const
     return false;
 }
 
-bool GolangTextLexer::isCanCodeCompleter(const QTextCursor &cursor) const
+bool GolangTextLexer::isInStringOrComment(const QTextCursor &cursor) const
 {
     Token token;
 
     if (isInCommentHelper(cursor, &token))
-        return false;
+        return true;
 
     if (token.isStringLiteral() || token.isCharLiteral()) {
         const unsigned pos = cursor.selectionEnd() - cursor.block().position();
         if (pos <= token.end())
-            return false;
+            return true;
     }
-    return true;
+    return false;
+}
+
+bool GolangTextLexer::isCanCodeCompleter(const QTextCursor &cursor) const
+{
+    return !isInStringOrComment(cursor);
 }
 
 bool GolangTextLexer::isCanAutoCompleter(const QTextCursor &cursor) const
 {
-    Token token;
-
-    if (isInCommentHelper(cursor, &token))
-        return false;
-
-    if (token.isStringLiteral() || token.isCharLiteral()) {
-        const unsigned pos = cursor.selectionEnd() - cursor.block().position();
-        if (pos <= token.end())
-            return false;
-    }
-    return true;
+    return !isInStringOrComment(cursor);
 }
 
 int GolangTextLexer::startOfFunctionCall(const QTextCursor &cursor) const
@@ -151,6 +146,11 @@ bool GolangTextLexer::isInCommentHelper(const QTextCursor &cursor, Token *retTok
         if (tk.is(T_CPP_COMMENT) || tk.is(T_CPP_DOXY_COMMENT))
             return true;
         if (tk.is(T_RAW_STRING_LITERAL) && (cursor.block().userState() & 0xFF) ) {
+            if (retToken)
+                *retToken = tk;
+            return false;
+        }
+        if (tk.isStringLiteral() || tk.isCharLiteral()) {
             if (retToken)
                 *retToken = tk;
             return false;

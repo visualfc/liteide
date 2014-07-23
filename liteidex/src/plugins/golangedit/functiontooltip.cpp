@@ -99,12 +99,10 @@ void FunctionTooltip::showFunctionHint(int startPosition, const QString &tip)
 bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
 {
     switch (e->type()) {
-    case QEvent::ShortcutOverride: {
-            QKeyEvent *ke = static_cast<QKeyEvent*>(e);
-            if (m_popup->isVisible() && ke->key() == Qt::Key_Escape) {
-                hide();
-                ke->accept();
-            }
+    case QEvent::ShortcutOverride:
+        if (m_popup->isVisible() && static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+            m_escapePressed = true;
+            e->accept();
         }
         break;
     case QEvent::KeyPress:
@@ -115,14 +113,12 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
     case QEvent::KeyRelease: {
             QKeyEvent *ke = static_cast<QKeyEvent*>(e);
             if (ke->key() == Qt::Key_Escape && m_escapePressed) {
-                if (m_popup->isVisible()) {
-                    hide();
-                    ke->accept();
-                }
-                break;
-            }
-            if (ke->key() == Qt::Key_Comma ||
+                hide();
+            } else if (ke->key() == Qt::Key_Comma ||
                     ke->text() == "(") {
+                if (m_lexer->isInStringOrComment(m_editor->textCursor())) {
+                    return false;
+                }
                 int pos = m_lexer->startOfFunctionCall(m_editor->textCursor());
                 if (pos != -1 && pos+1 != m_startpos) {
                     m_startpos = pos+1;
@@ -134,8 +130,7 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
                     }
                     return false;
                 }
-            }
-            if (m_popup->isVisible()) {
+            } else if (m_popup->isVisible()) {
                 updateArgumentHighlight();
             }
         }
