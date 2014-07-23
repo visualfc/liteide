@@ -65,7 +65,7 @@ class FunctionTooltip : public QObject
 {
     Q_OBJECT
 public:
-    FunctionTooltip(QObject *parent = 0);
+    FunctionTooltip(int maxTipCount = 20, QObject *parent = 0);
     ~FunctionTooltip();
     void showFunctionHint(LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int startPosition, const QString &tip);
 protected:
@@ -86,7 +86,8 @@ protected:
     int                  m_currentarg;
     int                  m_startpos;
     int                  m_startFuncitonPos;
-    bool                 m_escapePressed;
+    int                  m_maxTipCount;
+    bool                 m_escapePressed;    
 };
 
 

@@ -61,8 +61,8 @@ void FakeToolTipFrame::resizeEvent(QResizeEvent *)
         setMask(frameMask.region);
 }
 
-FunctionTooltip::FunctionTooltip(QObject *parent)
-    : QObject(parent), m_popup(0),m_editor(0), m_lexer(0)
+FunctionTooltip::FunctionTooltip(int maxTipCount, QObject *parent)
+    : QObject(parent), m_popup(0),m_editor(0), m_lexer(0), m_maxTipCount(maxTipCount)
 {
     qApp->installEventFilter(this);
 }
@@ -262,25 +262,25 @@ void FunctionTooltip::hide()
 
 void FunctionTooltip::saveTip(int startPos, const QString &text)
 {
-    QList<FunctionInfo> &infoList = m_infoMap[m_editor];
-    QMutableListIterator<FunctionInfo> it(infoList);
+    QList<TipInfo> &infoList = m_infoMap[m_editor];
+    QMutableListIterator<TipInfo> it(infoList);
     while(it.hasNext()) {
-        FunctionInfo &info = it.next();
+        TipInfo &info = it.next();
         if (info.startPos == startPos) {
             info.tip = text;
             return;
         }
     }
-    infoList.append(FunctionInfo(startPos,text));
-    if (infoList.size() >= 20) {
+    infoList.append(TipInfo(startPos,text));
+    if (infoList.size() >= m_maxTipCount) {
         infoList.removeFirst();
     }
 }
 
 bool FunctionTooltip::restoreTip(int startpos)
 {
-    QList<FunctionInfo> &infoList = m_infoMap[m_editor];
-    foreach(FunctionInfo info, infoList) {
+    QList<TipInfo> &infoList = m_infoMap[m_editor];
+    foreach(TipInfo info, infoList) {
         if (info.startPos == startpos) {
             m_tip = info.tip;
             return true;
