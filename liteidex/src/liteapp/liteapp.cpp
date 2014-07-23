@@ -368,10 +368,15 @@ void LiteApp::aboutPlugins()
 
 void LiteApp::escape()
 {
-    emit key_escape();
     IEditor *editor = m_editorManager->currentEditor();
-    if (editor) {
+    if (!editor) {
+        return;
+    }
+    bool bFocus = editor->widget()->isAncestorOf(qApp->focusWidget());
+    if (!bFocus) {
         editor->onActive();
+    } else {
+        emit key_escape();
     }
 }
 

@@ -168,11 +168,6 @@ QTextDocument *LiteEditor::document() const
     return m_editorWidget->document();
 }
 
-LiteEditorWidget *LiteEditor::editorWidget() const
-{
-    return m_editorWidget;
-}
-
 void LiteEditor::setEditorMark(LiteApi::IEditorMark *mark)
 {
     m_editorWidget->setEditorMark(mark);
@@ -728,6 +723,13 @@ QRect LiteEditor::cursorRect(int pos) const
     return result;
 }
 
+
+
+QWidget *LiteEditor::editorWidget() const
+{
+    return m_editorWidget;
+}
+
 QTextCursor LiteEditor::textCursor() const
 {
     return m_editorWidget->textCursor();
@@ -816,7 +818,7 @@ void LiteEditor::updateTip(QString func,QString args)
         return;
     }    
     QString tip = func+" "+args;
-    m_editorWidget->textLexer()->showToolTip(this,this->position(),tip);
+    m_editorWidget->textLexer()->showToolTip(this->position(),tip);
 }
 
 void LiteEditor::filePrintPreview()
@@ -1088,6 +1090,11 @@ void LiteEditor::setEditToolbarVisible(bool visible)
 {
     m_toolBar->setVisible(visible);
     m_infoToolBar->setVisible(visible);
+}
+
+void LiteEditor::foldIndentChanged(QTextBlock block)
+{
+    m_editorWidget->foldIndentChanged(block);
 }
 
 

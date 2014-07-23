@@ -61,13 +61,14 @@ struct TipInfo
     QString tip;
 };
 
+class QPlainTextEdit;
 class FunctionTooltip : public QObject
 {
     Q_OBJECT
 public:
-    FunctionTooltip(int maxTipCount = 20, QObject *parent = 0);
+    FunctionTooltip(LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount = 20, QObject *parent = 0);
     ~FunctionTooltip();
-    void showFunctionHint(LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int startPosition, const QString &tip);
+    void showFunctionHint(int startPosition, const QString &tip);
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
     void updateArgumentHighlight();
@@ -77,11 +78,11 @@ protected:
     void saveTip(int startPos, const QString &text);
     bool restoreTip(int startpos);
 protected:
-    QWidget              *m_popup;
     LiteApi::ITextEditor *m_editor;
     LiteApi::ITextLexer *m_lexer;
+    QWidget              *m_popup;
     QLabel               *m_label;
-    QMap<LiteApi::ITextEditor*,QList<TipInfo> > m_infoMap;
+    QList<TipInfo>       m_infoList;
     QString              m_tip;
     int                  m_currentarg;
     int                  m_startpos;

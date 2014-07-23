@@ -100,6 +100,7 @@ public:
     virtual QString textAt(int pos, int length) const;
     virtual QRect cursorRect(int pos = -1) const;
     virtual QTextCursor textCursor() const;
+    virtual QWidget *editorWidget() const;
     virtual QString textCodec() const;
     virtual void setTextCodec(const QString &codec);
     virtual QByteArray saveState() const;
@@ -114,7 +115,6 @@ public:
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
     virtual void showLink(const LiteApi::Link &link);
     virtual void clearLink();
-    LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
@@ -141,6 +141,7 @@ public slots:
     void decreaseFontSize();
     void resetFontSize();
     void setEditToolbarVisible(bool visible);
+    void foldIndentChanged(QTextBlock);
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;

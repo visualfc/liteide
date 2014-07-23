@@ -27,7 +27,6 @@
 #include "liteeditorwidgetbase.h"
 
 class QCompleter;
-class CallTip;
 class LiteEditorWidget : public LiteEditorWidgetBase
 {
     Q_OBJECT
@@ -36,7 +35,6 @@ public:
     void setContextMenu(QMenu *contextMenu);
     void setCompleter(QCompleter *m_completer);
     QCompleter *completer() const;
-    CallTip *callTip() const;
     void setPrefixMin(int min) {m_completionPrefixMin = min; }
     void setSpellCheckZoneDontComplete(bool b) {m_bSpellCheckZoneDontComplete = b; }
     int prefixMin() const{

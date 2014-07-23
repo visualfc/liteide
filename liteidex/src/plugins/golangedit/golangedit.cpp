@@ -159,7 +159,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
-        m_editor->setTextLexer(new GolangTextLexer());
+        m_editor->setTextLexer(new GolangTextLexer(m_editor));
         connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
     }
 }
