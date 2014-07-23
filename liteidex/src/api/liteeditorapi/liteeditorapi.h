@@ -184,14 +184,14 @@ class ITextLexer
 public:
     ITextLexer()
     {}
-    ~ITextLexer()
+    virtual ~ITextLexer()
     {}
     virtual bool isInComment(const QTextCursor &cursor) const = 0;
     virtual bool isInString(const QTextCursor &cursor) const = 0;
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
-    virtual void showToolTip(LiteApi::ITextEditor *editor,int startPosition, const QString &args) = 0;
+    virtual void showToolTip(LiteApi::ITextEditor *editor,int startPosition, const QString &tip) = 0;
 };
 
 class BaseTextLexer : public ITextLexer
@@ -221,7 +221,7 @@ public:
     virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
         return -1;
     }
-    virtual void showToolTip(LiteApi::ITextEditor */*editor*/,int /*startPosition*/, const QString &/*args*/)
+    virtual void showToolTip(LiteApi::ITextEditor */*editor*/,int /*startPosition*/, const QString &/*tip*/)
     {
     }
 protected:

@@ -1,3 +1,26 @@
+/**************************************************************************
+** This file is part of LiteIDE
+**
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
+**
+** This library is free software; you can redistribute it and/or
+** modify it under the terms of the GNU Lesser General Public
+** License as published by the Free Software Foundation; either
+** version 2.1 of the License, or (at your option) any later version.
+**
+** This library is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Lesser General Public License for more details.
+**
+** In addition, as a special exception,  that plugins developed for LiteIDE,
+** are allowed to remain closed sourced and can be distributed under any license .
+** These rights are included in the file LGPL_EXCEPTION.txt in this package.
+**
+**************************************************************************/
+// Module: functiontooltip.cpp
+// Creator: visualfc <visualfc@gmail.com>
+
 #include "functiontooltip.h"
 #include "cplusplus/SimpleLexer.h"
 
@@ -6,6 +29,17 @@
 #include <QStylePainter>
 #include <QStyleOptionFrame>
 #include <QToolButton>
+#include <QHBoxLayout>
+#include <QDebug>
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
 using namespace CPlusPlus;
 
@@ -27,99 +61,124 @@ void FakeToolTipFrame::resizeEvent(QResizeEvent *)
         setMask(frameMask.region);
 }
 
-
-FunctionArgumentWidget::FunctionArgumentWidget(LiteApi::ITextEditor *editor):
-    m_startpos(-1),
-    m_current(0),
-    m_escapePressed(false)
+FunctionTooltip::FunctionTooltip(QObject *parent)
+    : QObject(parent), m_popup(0),m_editor(0), m_lexer(0)
 {
-    m_editor = editor;
-
-    m_popupFrame = new FakeToolTipFrame(m_editor->widget());
-
-    QToolButton *downArrow = new QToolButton;
-    downArrow->setArrowType(Qt::DownArrow);
-    downArrow->setFixedSize(16, 16);
-    downArrow->setAutoRaise(true);
-
-    QToolButton *upArrow = new QToolButton;
-    upArrow->setArrowType(Qt::UpArrow);
-    upArrow->setFixedSize(16, 16);
-    upArrow->setAutoRaise(true);
-
-    setParent(m_popupFrame);
-    setFocusPolicy(Qt::NoFocus);
-
-    m_pager = new QWidget;
-    QHBoxLayout *hbox = new QHBoxLayout(m_pager);
-    hbox->setMargin(0);
-    hbox->setSpacing(0);
-    hbox->addWidget(upArrow);
-    m_numberLabel = new QLabel;
-    hbox->addWidget(m_numberLabel);
-    hbox->addWidget(downArrow);
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->setMargin(0);
-    layout->setSpacing(0);
-    layout->addWidget(m_pager);
-    layout->addWidget(this);
-    m_popupFrame->setLayout(layout);
-
-    connect(upArrow, SIGNAL(clicked()), SLOT(previousPage()));
-    connect(downArrow, SIGNAL(clicked()), SLOT(nextPage()));
-
-    setTextFormat(Qt::RichText);
-    setMargin(1);
-
     qApp->installEventFilter(this);
 }
 
-void FunctionArgumentWidget::showFunctionHint(QList<Function> functionSymbols,
-                                              int startPosition)
+FunctionTooltip::~FunctionTooltip()
 {
-    Q_ASSERT(!functionSymbols.isEmpty());
+    delete m_popup;
+}
 
-    if (m_startpos == startPosition)
+void FunctionTooltip::showFunctionHint(LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int startPosition, const QString &tip)
+{
+    if (!editor) {
         return;
-
-    m_pager->setVisible(functionSymbols.size() > 1);
-
-    m_items = functionSymbols;
-    m_startpos = startPosition;
-    m_current = 0;
-    m_escapePressed = false;
-
-    // update the text
+    }
+    if (!m_popup) {
+        m_popup = new FakeToolTipFrame(editor->widget());
+        QHBoxLayout *hbox = new QHBoxLayout;
+        hbox->setContentsMargins(4,1,4,1);
+        hbox->setSpacing(0);
+        m_label = new QLabel;
+        hbox->addWidget(m_label);
+        m_popup->setLayout(hbox);
+    }
+    if (m_editor != editor) {
+        m_popup->setParent(editor->widget());
+    }
+    m_editor = editor;
+    m_lexer = lexer;
     m_currentarg = -1;
+
+    m_tip = tip;
+    m_escapePressed = false;
+    m_startpos = startPosition;
+
+    saveTip(startPosition,tip);
+
     updateArgumentHighlight();
 
-    m_popupFrame->show();
+    showPopup(m_startpos);
 }
 
-void FunctionArgumentWidget::nextPage()
+bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
 {
-    m_current = (m_current + 1) % m_items.size();
-    updateHintText();
+    if (!m_editor ) {
+        return false;
+    }
+    switch (e->type()) {
+    case QEvent::ShortcutOverride:
+        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+            m_escapePressed = true;
+        }
+        break;
+    case QEvent::KeyPress:
+        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+            m_escapePressed = true;
+        }
+        break;
+    case QEvent::KeyRelease: {
+            if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape && m_escapePressed) {
+                hide();
+                return false;
+            }
+            QWidget *widget = qobject_cast<QWidget *>(obj);
+            if (! (m_editor->widget()->isAncestorOf(widget))) {
+                return false;
+            }
+            if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Comma) {
+                int pos = m_lexer->startOfFunctionCall(m_editor->textCursor());
+                if (pos != -1 && pos+1 != m_startpos) {
+                    m_startpos = pos+1;
+                    if (restoreTip(m_startpos)) {
+                        updateArgumentHighlight();
+                        showPopup(m_startpos);
+                    } else {
+                        hide();
+                    }
+                    return false;
+                }
+            }
+            if (m_popup->isVisible()) {
+                updateArgumentHighlight();
+            }
+        }
+        break;
+    case QEvent::WindowDeactivate:
+    case QEvent::FocusOut:
+    case QEvent::Resize:
+    case QEvent::Move:
+        if (obj != m_editor->widget())
+            break;
+        hide();
+        break;
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::Wheel: {
+            QWidget *widget = qobject_cast<QWidget *>(obj);
+            if (! (widget == m_label || m_popup->isAncestorOf(widget))) {
+                hide();
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    return false;
 }
 
-void FunctionArgumentWidget::previousPage()
-{
-    if (m_current == 0)
-        m_current = m_items.size() - 1;
-    else
-        --m_current;
-
-    updateHintText();
-}
-
-void FunctionArgumentWidget::updateArgumentHighlight()
+void FunctionTooltip::updateArgumentHighlight()
 {
     int curpos = m_editor->position();
     if (curpos < m_startpos) {
-        m_popupFrame->close();
+        hide();
         return;
     }
+
     QString str = m_editor->textAt(m_startpos, curpos - m_startpos);
     int argnr = 0;
     int parcount = 0;
@@ -146,96 +205,31 @@ void FunctionArgumentWidget::updateArgumentHighlight()
     }
 
     if (parcount < 0)
-        m_popupFrame->close();
+        hide();
 }
 
-bool FunctionArgumentWidget::eventFilter(QObject *obj, QEvent *e)
+void FunctionTooltip::updateHintText()
 {
-    if (!m_popupFrame->isVisible()) {
-        return false;
-    }
-    switch (e->type()) {
-    case QEvent::ShortcutOverride:
-        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
-            m_escapePressed = true;
-        }
-        break;
-    case QEvent::KeyPress:
-        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
-            m_escapePressed = true;
-        }
-        if (m_items.size() > 1) {
-            QKeyEvent *ke = static_cast<QKeyEvent*>(e);
-            if (ke->key() == Qt::Key_Up) {
-                previousPage();
-                return true;
-            } else if (ke->key() == Qt::Key_Down) {
-                nextPage();
-                return true;
-            }
-            return false;
-        }
-        break;
-    case QEvent::KeyRelease:
-        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape && m_escapePressed) {
-            m_popupFrame->close();
-            return false;
-        }
-        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Return) {
-            return false;
-        }
-        updateArgumentHighlight();
-        break;
-    case QEvent::WindowDeactivate:
-    case QEvent::FocusOut:
-    case QEvent::Resize:
-    case QEvent::Move:
-        if (obj != m_editor->widget())
-            break;
-        m_popupFrame->close();
-        break;
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseButtonRelease:
-    case QEvent::MouseButtonDblClick:
-    case QEvent::Wheel: {
-            QWidget *widget = qobject_cast<QWidget *>(obj);
-            if (! (widget == this || m_popupFrame->isAncestorOf(widget))) {
-                m_popupFrame->close();
-            }
-        }
-        break;
-    default:
-        break;
-    }
-    return false;
-}
-
-void FunctionArgumentWidget::updateHintText()
-{
-//    Overview overview;
-//    overview.setShowReturnTypes(true);
-//    overview.setShowArgumentNames(true);
-//    overview.setMarkedArgument(m_currentarg + 1);
-//    Function *f = currentFunction();
-
-//    const QString prettyMethod = overview(f->type(), f->name());
-//    const int begin = overview.markedArgumentBegin();
-//    const int end = overview.markedArgumentEnd();
-
-    Function fn = currentFunction();
-
     QString hintText;
-    hintText += fn.args.join(",");
-//    hintText += Qt::escape(prettyMethod.left(begin));
-//    hintText += "<b>";
-//    hintText += Qt::escape(prettyMethod.mid(begin, end - begin));
-//    hintText += "</b>";
-//    hintText += Qt::escape(prettyMethod.mid(end));
-    setText(hintText);
+    hintText = m_tip;
+    /*
+    for (int i = 0; i < m_args.size(); i++) {
+        if (i != 0) {
+            hintText += ",";
+        }
+        if (i == m_currentarg) {
+            hintText += "<b>"+Qt::escape(m_args[i])+"</b>";
+        } else {
+            hintText += Qt::escape(m_args[i]);
+        }
+    }
+    */
+    m_label->setText(hintText);
+}
 
-    m_numberLabel->setText(tr("%1 of %2").arg(m_current + 1).arg(m_items.size()));
-
-    m_popupFrame->setFixedWidth(m_popupFrame->minimumSizeHint().width());
+void FunctionTooltip::showPopup(int startpos)
+{
+    m_popup->setFixedWidth(m_popup->minimumSizeHint().width());
 
     const QDesktopWidget *desktop = QApplication::desktop();
 #ifdef Q_WS_MAC
@@ -244,12 +238,54 @@ void FunctionArgumentWidget::updateHintText()
     const QRect screen = desktop->screenGeometry(desktop->screenNumber(m_editor->widget()));
 #endif
 
-    const QSize sz = m_popupFrame->sizeHint();
-    QPoint pos = m_editor->cursorRect(m_startpos).topLeft();
+    const QSize sz = m_popup->sizeHint();
+    QPoint pos = m_editor->cursorRect(startpos).topLeft();
     pos.setY(pos.y() - sz.height() - 1);
 
     if (pos.x() + sz.width() > screen.right())
         pos.setX(screen.right() - sz.width());
 
-    m_popupFrame->move(pos);
+    m_popup->move(pos);
+    if (!m_popup->isVisible()) {
+        m_popup->show();
+    }
 }
+
+void FunctionTooltip::hide()
+{
+    if (!m_popup->isVisible()) {
+        return;
+    }
+    m_popup->hide();
+    m_startpos = -1;
+}
+
+void FunctionTooltip::saveTip(int startPos, const QString &text)
+{
+    QList<FunctionInfo> &infoList = m_infoMap[m_editor];
+    QMutableListIterator<FunctionInfo> it(infoList);
+    while(it.hasNext()) {
+        FunctionInfo &info = it.next();
+        if (info.startPos == startPos) {
+            info.tip = text;
+            return;
+        }
+    }
+    infoList.append(FunctionInfo(startPos,text));
+    if (infoList.size() >= 20) {
+        infoList.removeFirst();
+    }
+}
+
+bool FunctionTooltip::restoreTip(int startpos)
+{
+    QList<FunctionInfo> &infoList = m_infoMap[m_editor];
+    foreach(FunctionInfo info, infoList) {
+        if (info.startPos == startpos) {
+            m_tip = info.tip;
+            return true;
+        }
+    }
+    return false;
+}
+

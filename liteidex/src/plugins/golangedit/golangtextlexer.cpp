@@ -39,6 +39,12 @@ using namespace CPlusPlus;
 
 GolangTextLexer::GolangTextLexer()
 {
+    m_fnTip = new FunctionTooltip;
+}
+
+GolangTextLexer::~GolangTextLexer()
+{
+    delete m_fnTip;
 }
 
 bool GolangTextLexer::isInComment(const QTextCursor &cursor) const
@@ -124,14 +130,9 @@ int GolangTextLexer::startOfFunctionCall(const QTextCursor &cursor) const
     return -1;
 }
 
-void GolangTextLexer::showToolTip(LiteApi::ITextEditor *editor, int startPosition, const QString &args)
+void GolangTextLexer::showToolTip(LiteApi::ITextEditor *editor, int startPosition, const QString &tip)
 {
-    FunctionArgumentWidget *fw = LiteApi::findExtensionObject<FunctionArgumentWidget*>(editor,"LiteApi.FunctionArgumentWidget");
-    if (!fw) {
-        fw = new FunctionArgumentWidget(editor);
-        editor->extension()->addObject("LiteApi.FunctionArgumentWidget",fw);
-    }
-    fw->showFunctionHint(QList<Function>() << Function(args),startPosition);
+    m_fnTip->showFunctionHint(editor,this,startPosition,tip);
 }
 
 bool GolangTextLexer::isInCommentHelper(const QTextCursor &cursor, Token *retToken) const

@@ -29,7 +29,6 @@
 #include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
-#include "calltip.h"
 
 #include <QFileInfo>
 #include <QVBoxLayout>
@@ -729,6 +728,11 @@ QRect LiteEditor::cursorRect(int pos) const
     return result;
 }
 
+QTextCursor LiteEditor::textCursor() const
+{
+    return m_editorWidget->textCursor();
+}
+
 void LiteEditor::applyOption(QString id)
 {
     if (id != OPTION_LITEEDITOR) {
@@ -811,7 +815,8 @@ void LiteEditor::updateTip(QString func,QString args)
     if (args.isEmpty()) {
         return;
     }    
-    m_editorWidget->textLexer()->showToolTip(this,this->position(),args);
+    QString tip = func+" "+args;
+    m_editorWidget->textLexer()->showToolTip(this,this->position(),tip);
 }
 
 void LiteEditor::filePrintPreview()
@@ -1076,10 +1081,6 @@ void LiteEditor::resetFontSize()
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,100);
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize);
-//    m_editorWidget->setFont(font);
-//    m_editorWidget->extraArea()->setFont(font);
-//    m_editorWidget->updateTabWidth();
-//    m_editorWidget->slotUpdateExtraAreaWidth();
     m_editorWidget->updateFont(font);
 }
 

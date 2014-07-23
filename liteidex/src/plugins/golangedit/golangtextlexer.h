@@ -26,11 +26,13 @@
 
 #include "liteeditorapi/liteeditorapi.h"
 #include "cplusplus/Token.h"
+#include "functiontooltip.h"
 
 class GolangTextLexer : public LiteApi::ITextLexer
 {
 public:
     GolangTextLexer();
+    ~GolangTextLexer();
     virtual bool isInComment(const QTextCursor &cursor) const;
     virtual bool isInString(const QTextCursor &cursor) const;
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const;
@@ -41,6 +43,8 @@ public:
 protected:
     bool isInCommentHelper(const QTextCursor &cursor, CPlusPlus::Token *retToken = 0) const;
     const CPlusPlus::Token tokenAtPosition(const QList<CPlusPlus::Token> &tokens, const unsigned pos) const;
+protected:
+    FunctionTooltip  *m_fnTip;
 };
 
 #endif // GOLANGTEXTLEXER_H

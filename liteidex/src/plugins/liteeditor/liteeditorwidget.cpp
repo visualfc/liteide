@@ -22,7 +22,6 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "liteeditorwidget.h"
-#include "calltip.h"
 #include <QCompleter>
 #include <QKeyEvent>
 #include <QAbstractItemView>

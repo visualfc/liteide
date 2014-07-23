@@ -38,6 +38,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDesktopServices>
+#include <QTextCursor>
 
 class ColorStyle;
 class ColorStyleScheme;
@@ -294,6 +295,7 @@ public:
     virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
     virtual QString textAt(int pos, int length) const = 0;
     virtual QRect cursorRect(int pos = -1) const = 0;
+    virtual QTextCursor textCursor() const = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)
