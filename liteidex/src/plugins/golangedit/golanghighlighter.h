@@ -41,8 +41,11 @@ private:
     void highlightWord(QStringRef word, int position, int length);
     void highlightLine(const QString &line, int position, int length,
                        const QTextCharFormat &format);
+    void highlightCommentLine(const QString &line, int position, int length);
 
     bool isPPKeyword(const QStringRef &text) const;
+protected:
+    QStringList m_todoList;
 };
 
 #endif // GOLANGHIGHLIGHTER_H

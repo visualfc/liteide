@@ -46,6 +46,7 @@ using namespace CPlusPlus;
 GolangHighlighter::GolangHighlighter(QTextDocument *document) :
     TextEditor::SyntaxHighlighter(document)
 {
+    m_todoList = QString("TODO,BUG,FIXME,NOTE,SECBUG").split(",");
 }
 
 GolangHighlighter::~GolangHighlighter()
@@ -196,7 +197,11 @@ void GolangHighlighter::highlightBlock(const QString &text)
             highlightLine(text, tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::String]);
         } else if (tk.isComment()) {
             const int startPosition = initialLexerState ? previousTokenEnd : tk.begin();
-            highlightLine(text, startPosition, tk.end() - startPosition, m_creatorFormats[SyntaxHighlighter::Comment]);
+            if (tk.is(T_CPP_COMMENT)) {
+                highlightCommentLine(text, startPosition, tk.end() - startPosition);
+            } else {
+                highlightLine(text, startPosition, tk.end() - startPosition, m_creatorFormats[SyntaxHighlighter::Comment]);
+            }
             // we need to insert a close comment parenthesis, if
             //  - the line starts in a C Comment (initalState != 0)
             //  - the first token of the line is a T_COMMENT (i == 0 && tk.is(T_COMMENT))
@@ -400,6 +405,46 @@ void GolangHighlighter::highlightLine(const QString &text, int position, int len
             setFormat(start, tokenLength, visualSpaceFormat);
         else if (format.isValid())
             setFormat(start, tokenLength, format);
+    }
+}
+
+void GolangHighlighter::highlightCommentLine(const QString &text, int position, int length)
+{
+    QTextCharFormat format = m_creatorFormats[SyntaxHighlighter::Comment];
+    QTextCharFormat todoFormat = m_creatorFormats[SyntaxHighlighter::ToDo];
+    QTextCharFormat visualSpaceFormat = m_creatorFormats[SyntaxHighlighter::VisualWhitespace];
+    visualSpaceFormat.setBackground(format.background());
+
+    if (text.startsWith("//")) {
+        setFormat(position, 2, format);
+        position += 2;
+        length -= 2;
+    }
+
+    const int end = position + length;
+    int index = position;
+
+    int first = true;
+    while (index != end) {
+        const bool isSpace = text.at(index).isSpace();
+        const int start = index;
+
+        do { ++index; }
+        while (index != end && text.at(index).isSpace() == isSpace);
+
+        const int tokenLength = index - start;
+        if (isSpace) {
+            setFormat(start, tokenLength, visualSpaceFormat);
+        } else if (format.isValid()) {
+            if (first) {
+                first = false;
+                if (m_todoList.contains(text.mid(start,tokenLength))) {
+                    setFormat(start,tokenLength,todoFormat);
+                    continue;
+                }
+            }
+            setFormat(start, tokenLength, format);
+        }
     }
 }
 
