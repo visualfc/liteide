@@ -69,7 +69,7 @@ WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
     QToolBar *toolBar = new QToolBar(tr("Navigation"));
     toolBar->setIconSize(QSize(16,16));
 
-    QAction *openFile = new QAction(tr("Open Html"),this);
+    QAction *openFile = new QAction(tr("Open Html File"),this);
     openFile->setIcon(QIcon("icon:images/openfile.png"));
     connect(openFile,SIGNAL(triggered()),this,SLOT(openHtmlFile()));
     toolBar->addAction(openFile);
@@ -253,8 +253,8 @@ void WebKitBrowser::loadProgress(int value)
 void WebKitBrowser::openHtmlFile()
 {    
     QString dir = m_liteApp->settings()->value("WebKitBrowser/home","").toString();
-    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown Files"),dir,
-                                                    "Html or Markdown Files (*.html *.htm *.md *.markdown);;Html Files (*.html *.htm);; Markdown Files (*.md *.markdown)");
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown File"),dir,
+                                                    "Html or Markdown File (*.html *.htm *.md *.markdown);;Html File (*.html *.htm);; Markdown File (*.md *.markdown)");
     if (!filePath.isEmpty()) {
         m_liteApp->settings()->setValue("WebKitBrowser/home",QFileInfo(filePath).absolutePath());
         loadUrl(QUrl::fromLocalFile(filePath));

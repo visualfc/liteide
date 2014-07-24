@@ -71,8 +71,8 @@ bool WebKitHtmlWidgetPlugin::load(LiteApi::IApplication *app)
 void WebKitHtmlWidgetPlugin::openHtmlWithWebkit()
 {
     QString dir = m_liteApp->settings()->value("WebKitBrowser/home","").toString();
-    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown Files"),dir,
-                                                    "Html or Markdown Files (*.html *.htm *.md *.markdown);;Html Files (*.html *.htm);; Markdown Files (*.md *.markdown)");
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown File"),dir,
+                                                    "Html or Markdown File (*.html *.htm *.md *.markdown);;Html File (*.html *.htm);; Markdown File (*.md *.markdown)");
     if (!filePath.isEmpty()) {
         m_liteApp->settings()->setValue("WebKitBrowser/home",QFileInfo(filePath).absolutePath());
         m_liteApp->editorManager()->activeBrowser(m_browser);
