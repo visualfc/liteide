@@ -61,8 +61,8 @@ void FakeToolTipFrame::resizeEvent(QResizeEvent *)
         setMask(frameMask.region);
 }
 
-FunctionTooltip::FunctionTooltip(LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount, QObject *parent)
-    : QObject(parent), m_editor(editor), m_lexer(lexer), m_maxTipCount(maxTipCount)
+FunctionTooltip::FunctionTooltip(LiteApi::IApplication *app, LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount, QObject *parent)
+    : QObject(parent), m_liteApp(app), m_editor(editor), m_lexer(lexer), m_maxTipCount(maxTipCount)
 {
     m_popup = new FakeToolTipFrame(editor->widget());
     QHBoxLayout *hbox = new QHBoxLayout;
@@ -142,11 +142,15 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
             break;
         hide();
         break;
+    case QEvent::Move:
+        if (obj != m_liteApp->mainWindow())
+            break;
+        hide();
+        break;
     case QEvent::MouseButtonPress:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseButtonDblClick:
-    case QEvent::Wheel:
-    case QEvent::Move: {
+    case QEvent::Wheel: {
             QWidget *widget = qobject_cast<QWidget *>(obj);
             if (! (widget == m_label || m_popup->isAncestorOf(widget))) {
                 hide();

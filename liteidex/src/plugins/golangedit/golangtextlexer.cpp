@@ -37,9 +37,9 @@
 
 using namespace CPlusPlus;
 
-GolangTextLexer::GolangTextLexer(LiteApi::ITextEditor *editor)
+GolangTextLexer::GolangTextLexer(LiteApi::IApplication *app, LiteApi::ITextEditor *editor)
 {
-     m_fnTip = new FunctionTooltip(editor,this,20);
+     m_fnTip = new FunctionTooltip(app,editor,this,20);
 }
 
 GolangTextLexer::~GolangTextLexer()

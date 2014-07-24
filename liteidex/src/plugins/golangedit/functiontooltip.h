@@ -66,7 +66,7 @@ class FunctionTooltip : public QObject
 {
     Q_OBJECT
 public:
-    FunctionTooltip(LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount = 20, QObject *parent = 0);
+    FunctionTooltip(LiteApi::IApplication *app, LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount = 20, QObject *parent = 0);
     ~FunctionTooltip();
     void showFunctionHint(int startPosition, const QString &tip);
 protected:
@@ -78,6 +78,7 @@ protected:
     void saveTip(int startPos, const QString &text);
     bool restoreTip(int startpos);
 protected:
+    LiteApi::IApplication *m_liteApp;
     LiteApi::ITextEditor *m_editor;
     LiteApi::ITextLexer *m_lexer;
     QWidget              *m_popup;

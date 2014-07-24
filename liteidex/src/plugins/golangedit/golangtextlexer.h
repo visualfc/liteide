@@ -31,7 +31,7 @@
 class GolangTextLexer : public LiteApi::ITextLexer
 {
 public:
-    GolangTextLexer(LiteApi::ITextEditor *editor);
+    GolangTextLexer(LiteApi::IApplication *app, LiteApi::ITextEditor *editor);
     ~GolangTextLexer();
     virtual bool isInComment(const QTextCursor &cursor) const;
     virtual bool isInString(const QTextCursor &cursor) const;
