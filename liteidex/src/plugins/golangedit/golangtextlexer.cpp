@@ -120,9 +120,15 @@ int GolangTextLexer::startOfFunctionCall(const QTextCursor &cursor) const
     return -1;
 }
 
-void GolangTextLexer::showToolTip(int startPosition, const QString &tip)
+void GolangTextLexer::showToolTip(int startPosition, const QString &func, const QString &kind, const QString &info)
 {
-    m_fnTip->showFunctionHint(startPosition,tip);
+    if (kind != "func") {
+        return;
+    }
+    if (info.startsWith("func()")) {
+        return;
+    }
+    m_fnTip->showFunctionHint(startPosition,func+" "+info);
 }
 
 bool GolangTextLexer::isInCommentHelper(const QTextCursor &cursor, Token *retToken) const

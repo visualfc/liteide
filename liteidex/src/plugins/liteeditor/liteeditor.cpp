@@ -196,7 +196,7 @@ void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
     m_extension->addObject("LiteApi.ICompleter",complter);
 
     connect(m_editorWidget,SIGNAL(completionPrefixChanged(QString,bool)),m_completer,SLOT(completionPrefixChanged(QString,bool)));
-    connect(m_completer,SIGNAL(wordCompleted(QString,QString)),this,SLOT(updateTip(QString,QString)));
+    connect(m_completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(updateTip(QString,QString,QString)));
 }
 
 void LiteEditor::clipbordDataChanged()
@@ -812,13 +812,9 @@ void LiteEditor::applyOption(QString id)
     emit tabSettingChanged(tabWidth);
 }
 
-void LiteEditor::updateTip(QString func,QString args)
+void LiteEditor::updateTip(const QString &func,const QString &kind,const QString &info)
 {
-    if (args.isEmpty()) {
-        return;
-    }    
-    QString tip = func+" "+args;
-    m_editorWidget->textLexer()->showToolTip(this->position(),tip);
+    m_editorWidget->textLexer()->showToolTip(this->position(),func,kind,info);
 }
 
 void LiteEditor::filePrintPreview()

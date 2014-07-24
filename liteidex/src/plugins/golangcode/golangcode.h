@@ -43,7 +43,7 @@ public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
     void prefixChanged(QTextCursor,QString,bool froce);
-    void wordCompleted(QString,QString);
+    void wordCompleted(QString,QString,QString);
     void started();
     void finished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);

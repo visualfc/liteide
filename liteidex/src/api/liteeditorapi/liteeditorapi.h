@@ -112,7 +112,7 @@ public:
     virtual bool externalMode() const = 0;
 signals:
     void prefixChanged(QTextCursor,QString,bool force);
-    void wordCompleted(const QString &func, const QString &args);
+    void wordCompleted(const QString &func, const QString &kind, const QString &info);
 };
 
 // priopity by type value
@@ -192,7 +192,7 @@ public:
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
-    virtual void showToolTip(int startPosition, const QString &tip) = 0;
+    virtual void showToolTip(int startPosition, const QString &func, const QString &kind, const QString &info) = 0;
 };
 
 class BaseTextLexer : public ITextLexer
@@ -225,7 +225,7 @@ public:
     virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
         return -1;
     }
-    virtual void showToolTip(int /*startPosition*/, const QString &/*tip*/)
+    virtual void showToolTip(int /*startPosition*/, const QString &/*func*/, const QString &/*kind*/, const QString &/*info*/)
     {
     }
 protected:

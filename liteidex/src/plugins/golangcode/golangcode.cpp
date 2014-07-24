@@ -143,7 +143,7 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
             m_completer->setSearchSeparator(false);
             m_completer->setExternalMode(true);
             connect(m_completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(prefixChanged(QTextCursor,QString,bool)));
-            connect(m_completer,SIGNAL(wordCompleted(QString,QString)),this,SLOT(wordCompleted(QString,QString)));
+            connect(m_completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(wordCompleted(QString,QString,QString)));
         } else {
             m_completer->setSearchSeparator(true);
             m_completer->setExternalMode(false);
@@ -198,7 +198,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     m_gocodeProcess->start(m_gocodeCmd,args);
 }
 
-void GolangCode::wordCompleted(QString,QString)
+void GolangCode::wordCompleted(QString,QString,QString)
 {
     m_prefix.clear();
 }
