@@ -32,22 +32,7 @@
 class FakeToolTipFrame : public QWidget
 {
 public:
-    FakeToolTipFrame(QWidget *parent = 0) :
-        QWidget(parent, Qt::ToolTip | Qt::WindowStaysOnTopHint)
-    {
-        setFocusPolicy(Qt::NoFocus);
-        //setAttribute(Qt::WA_DeleteOnClose);
-
-        QPalette p = palette();
-        const QColor toolTipTextColor = p.color(QPalette::Inactive, QPalette::ToolTipText);
-        p.setColor(QPalette::Inactive, QPalette::WindowText, toolTipTextColor);
-        p.setColor(QPalette::Inactive, QPalette::ButtonText, toolTipTextColor);
-        setPalette(p);
-
-        const int margin = 1 + style()->pixelMetric(QStyle::PM_ToolTipLabelFrameWidth, 0, this);
-        setContentsMargins(margin + 1, margin, margin, margin);
-        setWindowOpacity(style()->styleHint(QStyle::SH_ToolTipLabel_Opacity, 0, this) / 255.0);
-    }
+    FakeToolTipFrame(QWidget *parent = 0);
 
 protected:
     void paintEvent(QPaintEvent *e);
