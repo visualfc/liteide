@@ -8,7 +8,7 @@
 	* add golang simple lexer for editor
 	* add golang code complete tooltip
 	* golang code complete disable on comment or strings
-	* fix bug
+	* fix escape return editor
 * LiteEditor
 	* add IHighlighterManager interface
 	* add ITextLexer interface
