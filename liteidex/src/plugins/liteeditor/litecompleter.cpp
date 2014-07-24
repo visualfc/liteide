@@ -412,5 +412,5 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     }
     tc.endEditBlock();
     m_editor->setTextCursor(tc);
-    emit wordCompleted(wordText,index.data(WordItem::InfoRole).toString());
+    emit wordCompleted(wordText,kind,info);
 }

@@ -126,7 +126,7 @@ public slots:
 #ifdef LITEEDITOR_FIND
     void findNextText();
 #endif
-    void updateTip(QString,QString);
+    void updateTip(const QString &func,const QString &kind,const QString &info);
     void exportPdf();
     void exportHtml();
     void filePrint();
