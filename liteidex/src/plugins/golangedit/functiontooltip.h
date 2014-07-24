@@ -38,13 +38,15 @@ public:
         setFocusPolicy(Qt::NoFocus);
         //setAttribute(Qt::WA_DeleteOnClose);
 
-        // Set the window and button text to the tooltip text color, since this
-        // widget draws the background as a tooltip.
         QPalette p = palette();
         const QColor toolTipTextColor = p.color(QPalette::Inactive, QPalette::ToolTipText);
         p.setColor(QPalette::Inactive, QPalette::WindowText, toolTipTextColor);
         p.setColor(QPalette::Inactive, QPalette::ButtonText, toolTipTextColor);
         setPalette(p);
+
+        const int margin = 1 + style()->pixelMetric(QStyle::PM_ToolTipLabelFrameWidth, 0, this);
+        setContentsMargins(margin + 1, margin, margin, margin);
+        setWindowOpacity(style()->styleHint(QStyle::SH_ToolTipLabel_Opacity, 0, this) / 255.0);
     }
 
 protected:
@@ -83,6 +85,7 @@ protected:
     LiteApi::ITextLexer *m_lexer;
     QWidget              *m_popup;
     QLabel               *m_label;
+    QWidget              *m_editWidget;
     QList<TipInfo>       m_infoList;
     QString              m_tip;
     int                  m_currentarg;

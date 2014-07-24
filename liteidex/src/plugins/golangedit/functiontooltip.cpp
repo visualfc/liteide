@@ -64,15 +64,15 @@ void FakeToolTipFrame::resizeEvent(QResizeEvent *)
 FunctionTooltip::FunctionTooltip(LiteApi::IApplication *app, LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount, QObject *parent)
     : QObject(parent), m_liteApp(app), m_editor(editor), m_lexer(lexer), m_maxTipCount(maxTipCount)
 {
-    m_popup = new FakeToolTipFrame(editor->widget());
+    m_editWidget = LiteApi::getPlainTextEdit(editor);
+    m_popup = new FakeToolTipFrame(m_editWidget);
     QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->setContentsMargins(4,1,4,1);
+    hbox->setMargin(0);
     hbox->setSpacing(0);
     m_label = new QLabel;
     hbox->addWidget(m_label);
     m_popup->setLayout(hbox);
 
-    //editor->editorWidget()->installEventFilter(this);
     qApp->installEventFilter(this);
 }
 
@@ -103,6 +103,8 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
         if (m_popup->isVisible() && static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
             m_escapePressed = true;
             e->accept();
+        } else if (static_cast<QKeyEvent*>(e)->modifiers() & Qt::ControlModifier) {
+            hide();
         }
         break;
     case QEvent::KeyPress:
@@ -135,10 +137,10 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
             }
         }
         break;
-    case QEvent::WindowDeactivate:
     case QEvent::FocusOut:
+    case QEvent::WindowDeactivate:
     case QEvent::Resize:
-        if (obj != m_editor->widget())
+        if (obj != m_editWidget)
             break;
         hide();
         break;
