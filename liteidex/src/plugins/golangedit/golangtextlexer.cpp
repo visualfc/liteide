@@ -125,7 +125,7 @@ void GolangTextLexer::showToolTip(int startPosition, const QString &func, const 
     if (kind != "func") {
         return;
     }
-    if (info == "func()") {
+    if (info.startsWith("func()")) {
         return;
     }
     m_fnTip->showFunctionHint(startPosition,func+" "+info);
