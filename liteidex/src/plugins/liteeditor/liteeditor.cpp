@@ -725,7 +725,7 @@ QRect LiteEditor::cursorRect(int pos) const
 
 
 
-QWidget *LiteEditor::editorWidget() const
+LiteEditorWidget *LiteEditor::editorWidget() const
 {
     return m_editorWidget;
 }
@@ -1091,12 +1091,6 @@ void LiteEditor::setEditToolbarVisible(bool visible)
     m_toolBar->setVisible(visible);
     m_infoToolBar->setVisible(visible);
 }
-
-void LiteEditor::foldIndentChanged(QTextBlock block)
-{
-    m_editorWidget->foldIndentChanged(block);
-}
-
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
     QLabel(text,parent)

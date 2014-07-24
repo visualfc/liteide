@@ -138,7 +138,7 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
     case QEvent::WindowDeactivate:
     case QEvent::FocusOut:
     case QEvent::Resize:
-        if (obj != m_editor->editorWidget())
+        if (obj != m_editor->widget())
             break;
         hide();
         break;
