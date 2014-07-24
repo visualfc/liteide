@@ -30,6 +30,7 @@
 #include "buildconfigdialog.h"
 #include "litedebugapi/litedebugapi.h"
 #include "liteeditorapi/liteeditorapi.h"
+#include "qtc_texteditor/basetextdocumentlayout.h"
 #include <QToolBar>
 #include <QComboBox>
 #include <QAction>

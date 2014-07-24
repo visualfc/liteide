@@ -3,6 +3,27 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.07.24 Ver x23
+* LiteIDE
+	* add golang simple lexer for editor
+	* add golang code complete tooltip
+	* golang code complete disable on comment or strings
+	* fix escape return editor
+* LiteEditor
+	* add IHighlighterManager interface
+	* add ITextLexer interface
+	* add new color scheme carbon from William Kennedy <bill@ardanstudios.com>
+	* fix kate code fold
+	* fix code completer offset 
+* GolangEdit
+	* add golang simple lexer
+	* add golang highlighter parser
+	* add tooltip for complete
+* GolangPresent
+	* view by QtWebKit
+* WebKitHtmlWidget
+	* change to browser view mode
+
 ### 2014.04.14 Ver x22
 * LiteIDE
 	* add golang find usage support

@@ -297,7 +297,13 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
             FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/js",dir.path()+"/js");
             m_liteApp->appendLog("GoPresent","export "+exportInfo.filePath(),false);
             if (dlg.isExportAndView()) {
-                QDesktopServices::openUrl(QUrl::fromLocalFile(exportInfo.filePath()));
+                LiteApi::IWebKitBrowser *browser = LiteApi::getWebKitBrowser(m_liteApp);
+                if (browser) {
+                    m_liteApp->editorManager()->activeBrowser(browser);
+                    browser->openUrl(QUrl::fromLocalFile(exportInfo.filePath()));
+                } else {
+                    QDesktopServices::openUrl(QUrl::fromLocalFile(exportInfo.filePath()));
+                }
             }
         } else if (exportType == EXPORT_TYPE_PDF) {
             QString init = QFileInfo(m_editor->filePath()).absolutePath()+"/"+QFileInfo(m_editor->filePath()).completeBaseName()+".pdf";

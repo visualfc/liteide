@@ -25,7 +25,7 @@
 #define LITEEDITORFILEFACTORY_H
 
 #include "liteapi/liteapi.h"
-#include "qtc_texteditor/katehighlighter.h"
+#include "highlightermanager.h"
 
 class WordApiManager;
 class LiteEditorMarkTypeManager;
@@ -47,8 +47,8 @@ protected:
     LiteApi::IApplication *m_liteApp;
     WordApiManager *m_wordApiManager;
     LiteEditorMarkTypeManager *m_markTypeManager;
+    HighlighterManager *m_highlighterManager;
     QStringList m_mimeTypes;
-    KateHighlighter *m_kate;
 };
 
 #endif // LITEEDITORFILEFACTORY_H

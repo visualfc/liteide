@@ -44,6 +44,7 @@ public slots:
     void editorJumpToDecl();
     void editorFindUsages();
     void editorRenameSymbol();
+    void editorComment();
     void findDefStarted();
     void findDefOutput(QByteArray,bool);
     void findDefFinish(bool,int,QString);
@@ -63,6 +64,7 @@ protected:
     QAction *m_jumpDeclAct;
     QAction *m_findUseAct;
     QAction *m_renameSymbolAct;
+    QAction *m_commentAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;
     ProcessEx  *m_findLinkProcess;

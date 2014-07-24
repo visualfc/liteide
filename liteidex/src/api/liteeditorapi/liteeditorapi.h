@@ -30,6 +30,10 @@
 #include <QCompleter>
 #include <QStandardItem>
 
+namespace TextEditor {
+class SyntaxHighlighter;
+}
+
 namespace LiteApi {
 
 class IWordApi
@@ -175,13 +179,69 @@ struct Link
     int targetColumn;
 };
 
+class ITextLexer
+{
+public:
+    ITextLexer()
+    {}
+    virtual ~ITextLexer()
+    {}
+    virtual bool isInComment(const QTextCursor &cursor) const = 0;
+    virtual bool isInString(const QTextCursor &cursor) const = 0;
+    virtual bool isInStringOrComment(const QTextCursor &cursor) const = 0;
+    virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
+    virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
+    virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
+    virtual void showToolTip(int startPosition, const QString &tip) = 0;
+};
+
+class BaseTextLexer : public ITextLexer
+{
+public:
+    BaseTextLexer() : m_bAC(true), m_bCC(true)
+    {
+    }
+    virtual bool isInComment(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isInString(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isInStringOrComment(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isCanCodeCompleter(const QTextCursor &/*cursor*/) const {
+        return m_bCC;
+    }
+    virtual bool isCanAutoCompleter(const QTextCursor &/*cursor*/) const {
+        return m_bAC;
+    }
+    virtual void setCanCodeCompleter(bool b) {
+        m_bCC = b;
+    }
+    virtual void setCanAutoCompleter(bool b) {
+        m_bAC = b;
+    }
+    virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
+        return -1;
+    }
+    virtual void showToolTip(int /*startPosition*/, const QString &/*tip*/)
+    {
+    }
+protected:
+    bool m_bAC;
+    bool m_bCC;
+};
+
 class ILiteEditor : public ITextEditor
 {
     Q_OBJECT
 public:
     ILiteEditor(QObject *parent = 0) : ITextEditor(parent) {}
+    virtual QTextDocument* document() const = 0;
     virtual void setCompleter(ICompleter *complter) = 0;
     virtual void setEditorMark(IEditorMark *mark) = 0;
+    virtual void setTextLexer(ITextLexer *lexer) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
     virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const char *tag) = 0;
     virtual void clearNavigateMarak(int line) = 0;
@@ -200,6 +260,34 @@ inline ILiteEditor *getLiteEditor(IEditor *editor)
         return findExtensionObject<ILiteEditor*>(editor->extension(),"LiteApi.ILiteEditor");
     }
     return 0;
+}
+
+class IHighlighterFactory : public QObject
+{
+    Q_OBJECT
+public:
+    IHighlighterFactory(QObject *parent) : QObject(parent)
+    {}
+    virtual QStringList mimeTypes() const = 0;
+    virtual TextEditor::SyntaxHighlighter* create(QTextDocument *doc, const QString &mimeType) = 0;
+};
+
+class IHighlighterManager :public IManager
+{
+    Q_OBJECT
+public:
+    IHighlighterManager(QObject *parent) : IManager(parent)
+    {}
+    virtual void addFactory(IHighlighterFactory *factroy) = 0;
+    virtual void removeFactory(IHighlighterFactory *factory) = 0;
+    virtual QList<IHighlighterFactory*> factoryList() const = 0;
+    virtual QStringList mimeTypeList() const = 0;
+    virtual IHighlighterFactory *findFactory(const QString &mimeType) const = 0;
+};
+
+inline IHighlighterManager *getHighlighterManager(LiteApi::IApplication *app)
+{
+    return static_cast<IHighlighterManager*>(app->extension()->findObject("LiteApi.IHighlighterManager"));
 }
 
 inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0)

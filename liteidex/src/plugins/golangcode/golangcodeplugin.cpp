@@ -50,9 +50,6 @@ bool GolangCodePlugin::load(LiteApi::IApplication *app)
     m_liteApp = app;
     m_code = new GolangCode(app,this);
     app->optionManager()->addFactory(new GolangCodeOptionFactory(app,this));
-    m_commentAct = new QAction(tr("Comment/Uncomment Selection"),this);
-    m_commentAct->setShortcut(QKeySequence("CTRL+/"));
-    connect(m_commentAct,SIGNAL(triggered()),this,SLOT(editorComment()));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
@@ -71,37 +68,11 @@ void GolangCodePlugin::appLoaded()
 void GolangCodePlugin::editorCreated(LiteApi::IEditor *editor)
 {
     if (editor && editor->mimeType() == "text/x-gosrc") {
-        editor->widget()->addAction(m_commentAct);
-        QMenu *menu = LiteApi::getEditMenu(editor);
-        if (menu) {
-            menu->addSeparator();
-            menu->addAction(m_commentAct);
-        }
-        menu = LiteApi::getContextMenu(editor);
-        if (menu) {
-            menu->addSeparator();
-            menu->addAction(m_commentAct);
-        }
         LiteApi::ILiteEditor *liteEdit = LiteApi::getLiteEditor(editor);
         if (liteEdit) {
             liteEdit->setSpellCheckZoneDontComplete(true);
         }
     }
-}
-
-void GolangCodePlugin::editorComment()
-{
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (!editor) {
-        return;
-    }
-    QPlainTextEdit *textEdit = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
-    if (!textEdit) {
-        return;
-    }
-    Utils::CommentDefinition cd;
-    cd.setAfterWhiteSpaces(true);
-    Utils::unCommentSelection(textEdit,cd);
 }
 
 void GolangCodePlugin::currentEditorChanged(LiteApi::IEditor *editor)

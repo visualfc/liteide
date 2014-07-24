@@ -23,6 +23,7 @@
 
 #include "golangeditplugin.h"
 #include "golangedit.h"
+#include "golanghighlighterfactory.h"
 #include <QtPlugin>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -40,6 +41,10 @@ GolangEditPlugin::GolangEditPlugin()
 
 bool GolangEditPlugin::load(LiteApi::IApplication *app)
 {
+    LiteApi::IHighlighterManager *manager = LiteApi::getHighlighterManager(app);
+    if (manager) {
+        manager->addFactory(new GolangHighlighterFactory(this));
+    }
     new GolangEdit(app,this);
     return true;
 }

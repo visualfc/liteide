@@ -47,6 +47,7 @@ class QLabel;
 class QToolButton;
 class LiteCompleter;
 class ColorStyleScheme;
+class CallTip;
 
 class QLabelEx : public QLabel
 {
@@ -65,8 +66,10 @@ class LiteEditor : public LiteApi::ILiteEditor
 public:
     LiteEditor(LiteApi::IApplication *app);
     virtual ~LiteEditor();
+    virtual QTextDocument* document() const;
     virtual void setCompleter(LiteApi::ICompleter *complter);
     virtual void setEditorMark(LiteApi::IEditorMark *mark);
+    virtual void setTextLexer(LiteApi::ITextLexer *lexer);
     void createActions();
     void createToolBars();
     void createMenu();
@@ -93,6 +96,11 @@ public:
     virtual void setWordWrap(bool wrap);
     virtual bool wordWrap() const;
     virtual void gotoLine(int line, int column, bool center);
+    virtual int position(PositionOperation posOp = Current, int at = -1) const;
+    virtual QString textAt(int pos, int length) const;
+    virtual QRect cursorRect(int pos = -1) const;
+    virtual QTextCursor textCursor() const;
+    virtual LiteEditorWidget *editorWidget() const;
     virtual QString textCodec() const;
     virtual void setTextCodec(const QString &codec);
     virtual QByteArray saveState() const;
@@ -107,7 +115,6 @@ public:
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
     virtual void showLink(const LiteApi::Link &link);
     virtual void clearLink();
-    LiteEditorWidget *editorWidget() const;
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);

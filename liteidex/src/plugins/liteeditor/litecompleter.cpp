@@ -238,7 +238,15 @@ void LiteCompleter::show()
     }
     m_completer->model()->sort(0);
     m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
-    QRect cr = m_editor->cursorRect();
+    QTextCursor cursor = m_editor->textCursor();
+    int offset = m_completer->completionPrefix().length();
+    int pos = m_completer->completionPrefix().indexOf(".");
+    if (pos != -1) {
+        offset -= pos+1;
+    }
+    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
+    QRect cr = m_editor->cursorRect(cursor);
+    cr.setLeft(cr.left()+m_editor->viewport()->x()-24);
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!

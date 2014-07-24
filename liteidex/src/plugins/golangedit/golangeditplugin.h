@@ -45,7 +45,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangEditPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/GolangEdit");
-        m_info->setVer("x22");
+        m_info->setVer("x23");
         m_info->setName("GolangEdit");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Golang Edit Support");

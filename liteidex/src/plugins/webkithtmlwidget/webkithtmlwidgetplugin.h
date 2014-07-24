@@ -27,12 +27,19 @@
 #include "webkithtmlwidget_global.h"
 #include "liteapi/liteapi.h"
 
+class WebKitBrowser;
 class WebKitHtmlWidgetPlugin : public LiteApi::IPlugin
 {
     Q_OBJECT
 public:
     WebKitHtmlWidgetPlugin();
     virtual bool load(LiteApi::IApplication *app);
+public slots:
+    void openHtmlWithWebkit();
+protected:
+    LiteApi::IApplication *m_liteApp;
+    WebKitBrowser *m_browser;
+    QAction *m_browserAct;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<WebKitHtmlWidgetPlugin>
@@ -44,7 +51,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<WebKitHtmlWidgetPlugin>
 #endif
 public:
     PluginFactory() {
-        m_info->setVer("x21");
+        m_info->setVer("x23");
         m_info->setId("plugin/WebKitHtmlWidget");
         m_info->setName("WebKitHtmlWidget");
         m_info->setAuthor("visualfc");

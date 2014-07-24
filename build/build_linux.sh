@@ -74,6 +74,7 @@ cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 
 cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/* liteide/bin
+cp -a -v $LITEIDE_ROOT/liteide/lib/liteide/libliteapp.* liteide/lib/liteide
 cp -a -v $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/lib/liteide/plugins
 
 cp -r -v $LITEIDE_ROOT/deploy/* liteide/share/liteide/

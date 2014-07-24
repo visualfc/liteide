@@ -57,6 +57,7 @@ public slots:
 signals:
     void requestFontZoom(int);
 public:
+    void updateFont(const QFont &font);
     QString cursorToHtml(QTextCursor cursor) const;
 signals:
     void completionPrefixChanged(QString,bool);

@@ -27,7 +27,7 @@
 #include <QPlainTextEdit>
 #include <QTextBlock>
 #include "liteeditorapi/liteeditorapi.h"
-
+#include "qtc_texteditor/autocompleter.h"
 
 class NavigateManager;
 struct NavigateMark;
@@ -49,6 +49,7 @@ public:
     void updateTabWidth();
     void setTabUseSpace(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
+    void setTextLexer(LiteApi::ITextLexer *lexer);
 public:
     QWidget* extraArea();
     QWidget* navigateArea();
@@ -199,6 +200,9 @@ public:
     bool openLink(const LiteApi::Link &link);
     void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
     void testUpdateLink(QMouseEvent *e);
+    LiteApi::ITextLexer * textLexer() const {
+        return m_textLexer.data();
+    }
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -222,6 +226,7 @@ protected:
     QWidget *m_extraArea;
     QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
+    QScopedPointer<LiteApi::ITextLexer> m_textLexer;
     LiteApi::Link       m_currentLink;
     QMap<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > m_extralSelectionMap;
     QTextCursor m_lastSelection;

@@ -31,7 +31,8 @@ HEADERS += \
     generichighlighter/context.h \
     katehighlighter.h \
     generichighlighter/manager2.h \
-    colorscheme.h
+    colorscheme.h \
+    autocompleter.h
 
 SOURCES += \
     tabsettings.cpp \
@@ -52,4 +53,5 @@ SOURCES += \
     generichighlighter/context.cpp \
     katehighlighter.cpp \
     generichighlighter/manager2.cpp \
-    colorscheme.cpp
+    colorscheme.cpp \
+    autocompleter.cpp

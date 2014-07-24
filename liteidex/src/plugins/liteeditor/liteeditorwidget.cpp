@@ -22,7 +22,6 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "liteeditorwidget.h"
-
 #include <QCompleter>
 #include <QKeyEvent>
 #include <QAbstractItemView>
@@ -96,11 +95,17 @@ void LiteEditorWidget::codeCompleter()
         m_completer->popup()->hide();
         return;
     }
-
-    QRect cr = cursorRect();
+    QTextCursor cursor = textCursor();
+    int offset = completionPrefix.length();
+    int pos = completionPrefix.indexOf(".");
+    if (pos != -1) {
+        offset -= pos+1;
+    }
+    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
+    QRect cr = cursorRect(cursor);
+    cr.setLeft(cr.left()+this->viewport()->x()-24);
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
-
     m_completer->complete(cr); // popup it up!
 }
 
@@ -165,6 +170,10 @@ void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
 
 void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 {
+    if (!m_textLexer->isCanCodeCompleter(this->textCursor())) {
+        LiteEditorWidgetBase::keyPressEvent(e);
+        return;
+    }
     if (m_completer && m_completer->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
         switch (e->key()) {
@@ -173,6 +182,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Escape:
         case Qt::Key_Tab:
         case Qt::Key_Backtab:
+        case Qt::Key_Shift:
             e->ignore();
             return; // let the completer do default behavior
         default:
@@ -183,16 +193,21 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
-    if (!m_completer || (ctrlOrShift && e->text().isEmpty()))
+
+    //always break if ctrl is pressed and there's a key
+    if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty()) || !m_completer) {
         return;
+    }
 
     if (e->modifiers() & Qt::ControlModifier) {
         m_completer->popup()->hide();
         return;
     }
+    
     if (e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) {
         return;
     }
+
     //static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
     static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
@@ -219,10 +234,20 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    QRect cr = cursorRect();
+    if (m_completer->popup()->isVisible()) {
+        //return;
+    }
+    QTextCursor cursor = textCursor();
+    int offset = completionPrefix.length();
+    int pos = completionPrefix.indexOf(".");
+    if (pos != -1) {
+        offset -= pos+1;
+    }
+    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
+    QRect cr = cursorRect(cursor);
+    cr.setLeft(cr.left()+this->viewport()->x()-24);
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
-
     m_completer->complete(cr); // popup it up!
 }
 
@@ -322,4 +347,15 @@ void LiteEditorWidget::zoomIn(int range)
 void LiteEditorWidget::zoomOut(int range)
 {
     emit requestFontZoom(-range*10);
+}
+
+void LiteEditorWidget::updateFont(const QFont &font)
+{
+    this->setFont(font);
+    this->extraArea()->setFont(font);
+    this->updateTabWidth();
+    this->slotUpdateExtraAreaWidth();
+    if (this->m_completer) {
+        this->m_completer->popup()->setFont(font);
+    }
 }

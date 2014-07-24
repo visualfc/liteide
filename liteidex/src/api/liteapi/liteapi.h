@@ -38,6 +38,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDesktopServices>
+#include <QTextCursor>
 
 class ColorStyle;
 class ColorStyleScheme;
@@ -275,6 +276,13 @@ class ITextEditor : public IEditor
 {
     Q_OBJECT
 public:
+    enum PositionOperation {
+        Current = 1,
+        EndOfLine = 2,
+        StartOfLine = 3,
+        Anchor = 4,
+        EndOfDoc = 5
+    };
     ITextEditor(QObject *parent = 0) : IEditor(parent) {}
     virtual int line() const = 0;
     virtual int column() const = 0;
@@ -284,6 +292,10 @@ public:
     virtual bool wordWrap() const = 0;
     virtual void gotoLine(int line, int column, bool center = false) = 0;
     virtual void setFindOption(FindOption *opt) = 0;
+    virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
+    virtual QString textAt(int pos, int length) const = 0;
+    virtual QRect cursorRect(int pos = -1) const = 0;
+    virtual QTextCursor textCursor() const = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)
@@ -377,6 +389,16 @@ public:
     virtual QByteArray saveState() const {return QByteArray(); }
     virtual bool restoreState(const QByteArray &) { return false; }
     virtual void onActive(){}
+};
+
+class IWebKitBrowser : public IBrowserEditor
+{
+    Q_OBJECT
+public:
+    IWebKitBrowser(QObject *parent = 0)  : IBrowserEditor(parent) {}
+    virtual void openUrl(const QUrl &url) = 0;
+signals:
+    void loadFinished(bool);
 };
 
 class IProject : public IView
@@ -728,6 +750,11 @@ inline QSize getToolBarIconSize(LiteApi::IApplication *app) {
         return QSize(24,24);
     }
     return QSize(16,16);
+}
+
+inline IWebKitBrowser *getWebKitBrowser(LiteApi::IApplication *app)
+{
+    return static_cast<IWebKitBrowser*>(app->extension()->findObject("LiteApp.IWebKitBrowser"));
 }
 
 inline QString liteide_stub_cmd(LiteApi::IApplication *app)

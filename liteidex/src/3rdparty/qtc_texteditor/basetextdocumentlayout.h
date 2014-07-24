@@ -37,6 +37,7 @@
 #include "texteditor_global.h"
 
 #include "itexteditor.h"
+#include "tabsettings.h"
 
 #include <QTextBlockUserData>
 #include <QPlainTextDocumentLayout>
@@ -195,17 +196,33 @@ public:
         return data;
     }
 
+    class TEXTEDITOR_EXPORT FoldValidator
+    {
+    public:
+        FoldValidator();
 
+        void setup(BaseTextDocumentLayout *layout);
+        void reset();
+        void process(QTextBlock block);
+        void finalize();
+
+    private:
+        BaseTextDocumentLayout *m_layout;
+        bool m_requestDocUpdate;
+        int m_insideFold;
+    };
+
+public:
     void emitDocumentSizeChanged() { emit documentSizeChanged(documentSize()); }
+    void setRequiredWidth(int width);
+    QSizeF documentSize() const;
+public:
     int lastSaveRevision;
     bool hasMarks;
     double maxMarkWidthFactor;
 
     int m_requiredWidth;
-    void setRequiredWidth(int width);
-
-    QSizeF documentSize() const;
-
+    TabSettings m_tabSettings;
 };
 
 } // namespace TextEditor

@@ -24,47 +24,28 @@
 #ifndef GOLANGHIGHLIGHTER_H
 #define GOLANGHIGHLIGHTER_H
 
-#include <QSyntaxHighlighter>
-#include <QVector>
+#include "qtc_texteditor/syntaxhighlighter.h"
+
 #include <QTextCharFormat>
-#include <QSet>
-#include <QSharedPointer>
 
-class QTextDocument;
-
-class GolangHighlighter: public QSyntaxHighlighter
+class GolangHighlighter : public TextEditor::SyntaxHighlighter
 {
     Q_OBJECT
-public:
-    GolangHighlighter(QTextDocument* document);
-protected:
-    enum
-    {
-        STATE_BACKQUOTES = 0x04,
-        STATE_SINGLELINE_COMMENT = 0x08,
-        STATE_MULTILINE_COMMENT = 0x10
-    };
-    virtual void highlightBlock(const QString &text);
-    bool highlightPreBlock(const QString &text, int &startPos, int &endPos);
-    int findQuotesEndPos(const QString &text, int startPos, const QChar &endChar);
-public:
-    QSharedPointer< QSet<QString> >   allWords;
-private:
-    struct HighlightingRule
-    {
-        QRegExp pattern;
-        QTextCharFormat format;
-    };
-    QVector<HighlightingRule> highlightingRules;
-    QRegExp         regexpQuotesAndComment;
-    QTextCharFormat functionFormat;
-    QTextCharFormat singleLineCommentFormat;
-    QTextCharFormat multiLineCommentFormat;
-    QTextCharFormat identFormat;
-    QTextCharFormat keywordFormat;
-    QTextCharFormat numberFormat;
-    QTextCharFormat quotesFormat;
-};
 
+public:
+    GolangHighlighter(QTextDocument *document = 0);
+    virtual ~GolangHighlighter();
+    virtual void highlightBlock(const QString &text);
+
+private:
+    void highlightWord(QStringRef word, int position, int length);
+    void highlightLine(const QString &line, int position, int length,
+                       const QTextCharFormat &format);
+    void highlightCommentLine(const QString &line, int position, int length);
+
+    bool isPPKeyword(const QStringRef &text) const;
+protected:
+    QStringList m_todoList;
+};
 
 #endif // GOLANGHIGHLIGHTER_H

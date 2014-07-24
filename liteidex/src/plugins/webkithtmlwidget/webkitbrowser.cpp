@@ -34,6 +34,7 @@
 #include <QProgressBar>
 #include <QRegExp>
 #include <QTextCodec>
+#include <QFileDialog>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -46,7 +47,7 @@
 //lite_memory_check_end
 
 WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
-    QObject(parent), m_liteApp(app)
+    LiteApi::IWebKitBrowser(parent), m_liteApp(app)
 {        
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
@@ -57,7 +58,8 @@ WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_locationEdit = new QLineEdit;
     m_locationEdit->setSizePolicy(QSizePolicy::Expanding, m_locationEdit->sizePolicy().verticalPolicy());
     connect(m_locationEdit, SIGNAL(returnPressed()), this,SLOT(changeLocation()));
-    connect(m_view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+    connect(m_view, SIGNAL(loadFinished(bool)), this,SIGNAL(loadFinished(bool)));
+    connect(m_view, SIGNAL(loadFinished(bool)), this, SLOT(loadUrlFinished(bool)));
     connect(m_view, SIGNAL(linkClicked(QUrl)),this, SLOT(linkClicked(QUrl)));
     connect(m_view->page(), SIGNAL(linkHovered(QString,QString,QString)),this,SLOT(linkHovered(QString,QString,QString)));
     connect(m_view,SIGNAL(statusBarMessage(QString)),this,SLOT(statusBarMessage(QString)));
@@ -66,9 +68,17 @@ WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     QToolBar *toolBar = new QToolBar(tr("Navigation"));
     toolBar->setIconSize(QSize(16,16));
+
+    QAction *openFile = new QAction(tr("Open Html File"),this);
+    openFile->setIcon(QIcon("icon:images/openfile.png"));
+    connect(openFile,SIGNAL(triggered()),this,SLOT(openHtmlFile()));
+    toolBar->addAction(openFile);
+    toolBar->addSeparator();
     toolBar->addAction(m_view->pageAction(QWebPage::Back));
     toolBar->addAction(m_view->pageAction(QWebPage::Forward));
-    toolBar->addAction(m_view->pageAction(QWebPage::Reload));
+    QAction *reload = m_view->pageAction(QWebPage::Reload);
+    toolBar->addAction(reload);
+    connect(reload,SIGNAL(triggered()),this,SLOT(reloadUrl()));
     toolBar->addAction(m_view->pageAction(QWebPage::Stop));
     toolBar->addWidget(m_locationEdit);
 
@@ -85,6 +95,8 @@ WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
     layout->addWidget(m_progressBar);
 
     m_widget->setLayout(layout);
+
+    m_liteApp->extension()->addObject("LiteApp.IWebKitBrowser",this);
 }
 
 WebKitBrowser::~WebKitBrowser()
@@ -95,6 +107,26 @@ WebKitBrowser::~WebKitBrowser()
     if (m_widget) {
         delete m_widget;
     }
+}
+
+QWidget *WebKitBrowser::widget()
+{
+    return m_widget;
+}
+
+QString WebKitBrowser::name() const
+{
+    return tr("WebKitBrowser");
+}
+
+QString WebKitBrowser::mimeType() const
+{
+    return "browser/webkit";
+}
+
+void WebKitBrowser::openUrl(const QUrl &url)
+{
+    loadUrl(url);
 }
 
 static QByteArray html_data =
@@ -127,7 +159,7 @@ void WebKitBrowser::adjustLocation()
     m_locationEdit->setText(m_view->url().toString());
 }
 
-void WebKitBrowser::loadFinished(bool b)
+void WebKitBrowser::loadUrlFinished(bool b)
 {
     m_progressBar->hide();
     QString url = m_view->url().toString();
@@ -156,7 +188,7 @@ void WebKitBrowser::loadUrl(const QUrl &url)
 {
     m_liteApp->mainWindow()->statusBar()->clearMessage();
     if (url.scheme() == "http" || url.scheme() == "https") {
-        m_view->setUrl(url);
+        m_view->load(url);
     } else if (url.scheme() == "file") {
         QFileInfo info(url.toLocalFile());
 #ifdef Q_OS_WIN
@@ -172,8 +204,9 @@ void WebKitBrowser::loadUrl(const QUrl &url)
                 QByteArray ba = file.readAll();
                 QString ext = info.suffix().toLower();
                 if (ext == "html" || ext == "htm") {
-                    QTextCodec *codec = QTextCodec::codecForHtml(ba,QTextCodec::codecForName("utf-8"));
-                    m_view->setHtml(codec->toUnicode(ba),url);
+                    //QTextCodec *codec = QTextCodec::codecForHtml(ba,QTextCodec::codecForName("utf-8"));
+                    //m_view->setHtml(codec->toUnicode(ba),url);
+                    m_view->load(url);
                 } else if (ext == "md") {
                     QString data = html_data;
                     data.replace("__HTML_TITLE__",info.fileName());
@@ -215,4 +248,20 @@ void WebKitBrowser::loadStarted()
 void WebKitBrowser::loadProgress(int value)
 {
     m_progressBar->setValue(value);
+}
+
+void WebKitBrowser::openHtmlFile()
+{    
+    QString dir = m_liteApp->settings()->value("WebKitBrowser/home","").toString();
+    QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown File"),dir,
+                                                    "Html or Markdown File (*.html *.htm *.md *.markdown);;Html File (*.html *.htm);; Markdown File (*.md *.markdown)");
+    if (!filePath.isEmpty()) {
+        m_liteApp->settings()->setValue("WebKitBrowser/home",QFileInfo(filePath).absolutePath());
+        loadUrl(QUrl::fromLocalFile(filePath));
+    }
+}
+
+void WebKitBrowser::reloadUrl()
+{
+    this->loadUrl(m_view->url());
 }

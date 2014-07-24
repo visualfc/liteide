@@ -12,6 +12,7 @@ include (../../utils/colorstyle/colorstyle.pri)
 include (../../3rdparty/qtc_texteditor/qtc_texteditor.pri)
 include (../../3rdparty/treemodelcompleter/treemodelcompleter.pri)
 include (../../3rdparty/elidedlabel/elidedlabel.pri)
+include (../../3rdparty/cplusplus/cplusplus.pri)
 
 DEFINES += LITEEDITOR_LIBRARY
 
@@ -19,7 +20,6 @@ SOURCES += liteeditorplugin.cpp \
     liteeditor.cpp \
     liteeditorfile.cpp \
     liteeditorfilefactory.cpp \
-    golanghighlighter.cpp \
     liteeditoroption.cpp \
     liteeditoroptionfactory.cpp \
     liteeditorwidgetbase.cpp \
@@ -29,14 +29,15 @@ SOURCES += liteeditorplugin.cpp \
     wordapimanager.cpp \
     liteeditormark.cpp \
     snippet.cpp \
-    snippetmanager.cpp
+    snippetmanager.cpp \
+    highlightermanager.cpp \
+    katehighlighterfactory.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
     liteeditor.h \
     liteeditorfile.h \
     liteeditorfilefactory.h \
-    golanghighlighter.h \
     liteeditoroption.h \
     liteeditoroptionfactory.h \
     liteeditorwidgetbase.h \
@@ -46,7 +47,9 @@ HEADERS += liteeditorplugin.h\
     wordapimanager.h \
     liteeditormark.h \
     snippet.h \
-    snippetmanager.h
+    snippetmanager.h \
+    highlightermanager.h \
+    katehighlighterfactory.h
 
 FORMS += \
     liteeditoroption.ui

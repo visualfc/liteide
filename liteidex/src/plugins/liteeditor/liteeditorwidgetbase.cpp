@@ -260,6 +260,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     : QPlainTextEdit(parent),
       m_liteApp(app),
       m_editorMark(0),
+      m_textLexer(new LiteApi::BaseTextLexer()),
       m_contentsChanged(false),
       m_lastCursorChangeWasInteresting(false)
 {
@@ -309,6 +310,9 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     QTextDocument *doc = this->document();
     if (doc) {
         TextEditor::BaseTextDocumentLayout *layout = new TextEditor::BaseTextDocumentLayout(doc);
+        layout->m_tabSettings.m_autoIndent = true;
+        layout->m_tabSettings.m_autoSpacesForTabs = m_bTabUseSpace;
+        layout->m_tabSettings.m_tabSize = m_nTabSize;
         doc->setDocumentLayout(layout);
         connect(layout,SIGNAL(updateBlock(QTextBlock)),this,SLOT(updateBlock(QTextBlock)));
     }
@@ -324,6 +328,11 @@ void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
     if (m_editorMark) {
         connect(m_editorMark,SIGNAL(markChanged()),m_extraArea,SLOT(update()));
     }
+}
+
+void LiteEditorWidgetBase::setTextLexer(LiteApi::ITextLexer *lexer)
+{
+    m_textLexer.reset(lexer);
 }
 
 void LiteEditorWidgetBase::setTabSize(int n)
@@ -427,7 +436,6 @@ void LiteEditorWidgetBase::gotoMatchBrace()
 
 void LiteEditorWidgetBase::highlightCurrentLine()
 {    
-
     QTextCursor cur = textCursor();
     if (!cur.block().isVisible()) {
         unfold();
@@ -1463,46 +1471,50 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         return;
     }
     bool ro = isReadOnly();
-    QString keyText = e->text();
-    if (m_bLastBraces == true && keyText == m_lastBraces) {
-        QTextCursor cursor = textCursor();
-        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
-        setTextCursor(cursor);
-        m_bLastBraces = false;
-        return;
-    }
 
-    m_bLastBraces = false;
-    QString mr;
-    QString mrList = " ";
-    if (m_autoBraces0 && keyText == "{") {
-        mr = "}";
-    } else if (m_autoBraces1 && keyText == "(") {
-        mr = ")";
-    } else if (m_autoBraces2 && keyText == "[") {
-        mr = "]";
-    } else if (m_autoBraces3 && keyText == "\'") {
-        mr = "\'";
-    } else if (m_autoBraces4 && keyText == "\"") {
-        mr = "\"";
-        mrList += "()[]{}";
-    }
-    if (!mr.isNull()) {
-        QPlainTextEdit::keyPressEvent(e);
-        QTextCursor cursor = textCursor();
-        int pos = cursor.positionInBlock();
-        QString text = cursor.block().text();
-        if (pos == text.length() || mrList.contains(text.at(pos))) {
-            cursor.beginEditBlock();
-            pos = cursor.position();
-            cursor.insertText(mr);
-            cursor.setPosition(pos);
-            cursor.endEditBlock();
+    if (m_textLexer->isCanAutoCompleter(this->textCursor())) {
+        QString keyText = e->text();
+        if (m_bLastBraces == true && keyText == m_lastBraces) {
+            QTextCursor cursor = textCursor();
+            cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
             setTextCursor(cursor);
-            m_bLastBraces = true;
-            m_lastBraces = mr;
+            m_bLastBraces = false;
+            return;
         }
-        return;
+        m_bLastBraces = false;
+        QString mr;
+        QString mrList = " ";
+        if (m_autoBraces0 && keyText == "{") {
+            mr = "}";
+        } else if (m_autoBraces1 && keyText == "(") {
+            mr = ")";
+        } else if (m_autoBraces2 && keyText == "[") {
+            mr = "]";
+        } else if (m_autoBraces3 && keyText == "\'") {
+            mr = "\'";
+        } else if (m_autoBraces4 && keyText == "\"") {
+            mr = "\"";
+            mrList += "()[]{}";
+        } else if (keyText == "`") {
+            mr = "`";
+        }
+        if (!mr.isNull()) {
+            QPlainTextEdit::keyPressEvent(e);
+            QTextCursor cursor = textCursor();
+            int pos = cursor.positionInBlock();
+            QString text = cursor.block().text();
+            if (pos == text.length() || mrList.contains(text.at(pos))) {
+                cursor.beginEditBlock();
+                pos = cursor.position();
+                cursor.insertText(mr);
+                cursor.setPosition(pos);
+                cursor.endEditBlock();
+                setTextCursor(cursor);
+                m_bLastBraces = true;
+                m_lastBraces = mr;
+            }
+            return;
+        }
     }
 
     if (e->modifiers() == Qt::NoModifier && ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return )) {

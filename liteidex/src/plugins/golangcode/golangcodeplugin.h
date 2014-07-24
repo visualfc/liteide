@@ -38,12 +38,10 @@ public:
     virtual QStringList dependPluginList() const;
 protected slots:
     void appLoaded();
-    void editorComment();
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
 protected:
     LiteApi::IApplication *m_liteApp;
-    QAction    *m_commentAct;
     GolangCode *m_code;
 };
 
@@ -60,7 +58,7 @@ public:
         m_info->appendDepend("plugin/golangast");
         m_info->setName("GolangCode");
         m_info->setAuthor("visualfc");
-        m_info->setVer("x21.1");
+        m_info->setVer("x23");
         m_info->setInfo("Golang Gocode Support");
     }
 };
