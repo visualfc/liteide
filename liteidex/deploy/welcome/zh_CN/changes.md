@@ -14,6 +14,7 @@
 	* add ITextLexer interface
 	* add new color scheme carbon from William Kennedy <bill@ardanstudios.com>
 	* fix kate code fold
+	* fix code completer offset 
 * GolangEdit
 	* add golang simple lexer
 	* add golang highlighter parser
