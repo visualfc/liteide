@@ -658,7 +658,7 @@ void Lexer::scanStringLiteral(Token *tok, unsigned char hint)
     scanUntilQuote(tok, '"');
 }
 
-void Lexer::scanGoRawStringLiteral(Token *tok, unsigned char hint)
+void Lexer::scanGoRawStringLiteral(Token *tok, unsigned char /*hint*/)
 {
     tok->f.kind = T_RAW_STRING_LITERAL;
 
@@ -754,9 +754,9 @@ void Lexer::scanUntilQuote(Token *tok, unsigned char quote, bool containNewLines
         while (_yychar
                && _yychar != quote
                && _yychar != '\n') {
-            //if (_yychar == '\\')
-            //    scanBackslash((Kind)tok->f.kind);
-            //else
+            if (_yychar == '\\')
+                scanBackslash((Kind)tok->f.kind);
+            else
                 yyinp();
         }
     }
