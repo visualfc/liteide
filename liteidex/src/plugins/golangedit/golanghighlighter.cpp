@@ -253,6 +253,10 @@ void GolangHighlighter::highlightBlock(const QString &text)
             if ((i+1 == tokens.size()) || !tokens[i+1].is(T_DOT)) {
                 setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
             }
+        } else if (tk.isGoBuiltin()) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::BuiltinFunc]);
+        } else if (tk.isGoPredecl()) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Predeclared]);
         } else if (i == 0 && tokens.size() > 1 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::String]);
         } else if (tk.is(T_IDENTIFIER)) {

@@ -9,7 +9,8 @@ HEADERS += \
     Lexer.h \
     SimpleLexer.h \
     Token.h \
-    BackwardsScanner.h
+    BackwardsScanner.h \
+    gopredecl.kwgen
 
 SOURCES += \
     gokeyword.cpp \
@@ -18,4 +19,6 @@ SOURCES += \
     Lexer.cpp \
     SimpleLexer.cpp \
     Token.cpp \
-    BackwardsScanner.cpp
+    BackwardsScanner.cpp \
+    gopredecl.cpp \
+    gobuiltin.cpp
