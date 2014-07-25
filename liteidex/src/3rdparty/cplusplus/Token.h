@@ -307,7 +307,7 @@ enum Kind {
     T_LAST_GO_PREDECL = T_GO_FALSE,
 
     T_FIRST_GO_BUILTIN,
-    T_GO_CAP,
+    T_GO_CAP = T_FIRST_GO_BUILTIN,
     T_GO_LEN,
     T_GO_NEW,
     T_GO_COPY,
@@ -420,7 +420,7 @@ public:
 public:
     struct Flags {
         // The token kind.
-        unsigned kind       : 8;
+        unsigned kind       : 10;
         // The token starts a new line.
         unsigned newline    : 1;
         // The token is preceded by whitespace(s).
@@ -440,7 +440,7 @@ public:
         // are generated.
         unsigned generated  : 1;
         // Unused...
-        unsigned pad        : 3;
+        unsigned pad        : 1;
         // The token length.
         unsigned length     : 16;
     };

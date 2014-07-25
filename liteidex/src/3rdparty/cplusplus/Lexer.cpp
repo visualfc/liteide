@@ -808,7 +808,7 @@ void Lexer::scanIdentifier(Token *tok, unsigned extraProcessedChars)
             if (tok->f.kind == T_IDENTIFIER) {
                 tok->f.kind = Lexer::golangBuiltinFunc(yytext,yylen);
                 if (tok->f.kind == T_IDENTIFIER) {
-                    tok->f.kind == Lexer::golangPredecl(yytext,yylen);
+                    tok->f.kind = Lexer::golangPredecl(yytext,yylen);
                 }
             }
         }
