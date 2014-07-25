@@ -197,6 +197,7 @@ LiteApp::LiteApp()
     connect(m_logOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickLogOutput(QTextCursor)));
     m_optionAct = m_editorManager->registerBrowser(m_optionManager->browser());
     //m_viewMenu->addAction(m_optionAct);
+    m_optionAct->setMenuRole(QAction::PreferencesRole);
     m_actionManager->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_optionAct);
     m_optionManager->setAction(m_optionAct);
 
@@ -496,7 +497,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X23";
+    return "X23.1";
 }
 
 QString LiteApp::ideFullName() const

@@ -73,6 +73,8 @@ private:
     static int classifyObjCAtKeyword(const char *s, int n);
     static int golangTypes(const char *s, int n);
     static int golangKeywords(const char *s, int n);
+    static int golangPredecl(const char *s, int n);
+    static int golangBuiltinFunc(const char *s, int n);
     static int classifyOperator(const char *string, int length);
 
     void scanStringLiteral(Token *tok, unsigned char hint = 0);

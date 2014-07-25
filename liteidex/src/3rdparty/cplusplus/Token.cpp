@@ -79,10 +79,23 @@ const char *token_names[] = {
     ("Q_PRIVATE_SLOT"), ("Q_DECLARE_INTERFACE"), ("Q_OBJECT"), ("Q_GADGET"),
 
     // Go keywords
-    ("break"),("default"),("func"),("interface"),("select"),("case"),("defer"),("go"),("map"),("struct"),("chan"),("else"),("goto"),("package"),("switch"),("const"),("fallthrough"),("if"),("range"),("type"),("continue"),("for"),("import"),("return"),("var"),
+    ("go"),("if"),("map"),("for"),("var"),("func"),
+    ("case"),("chan"),("else"),("goto"),("type"),("break"),
+    ("defer"),("const"),("range"),("select"),("struct"),("switch"),
+    ("import"),("return"),("default"),("package"),("continue"),("interface"),
+    ("fallthrough"),
 
     // Go typed
-    ("bool"),("uint8"),("uint16"),("uint32"),("uint64"),("int8"),("int16"),("int32"),("int64"),("float32"),("float64"),("complex64"),("complex128"),("byte"),("rune"),("uint"),("int"),("uintptr"),("true"),("false"),("nil"),("iota"),
+    ("int"),("bool"),("int8"),("byte"),("rune"),("uint"),
+    ("uint8"),("int16"),("int32"),("int64"),("error"),("uint16"),
+    ("uint32"),("uint64"),("string"),("float32"),("float64"),("uintptr"),
+    ("complex64"),("complex128"),
+    // Go predecl
+    ("nil"),("true"),("iota"),("false"),
+    // Go builtin
+    ("cap"),("len"),("new"),("copy"),("imag"),("make"),
+    ("real"),("close"),("panic"),("print"),("append"),("delete"),
+    ("complex"),("println"),("recover"),
 };
 
 void Token::reset()

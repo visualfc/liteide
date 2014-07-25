@@ -48,7 +48,6 @@ struct TipInfo
     QString tip;
 };
 
-class QPlainTextEdit;
 class FunctionTooltip : public QObject
 {
     Q_OBJECT

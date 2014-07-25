@@ -5,22 +5,20 @@
 
 /*
   T_GO_INT,
-  T_GO_NIL,
   T_GO_BOOL,
   T_GO_INT8,
   T_GO_BYTE,
   T_GO_RUNE,
   T_GO_UINT,
-  T_GO_TRUE,
-  T_GO_IOTA,
   T_GO_UINT8,
   T_GO_INT16,
   T_GO_INT32,
   T_GO_INT64,
-  T_GO_FALSE,
+  T_GO_ERROR,
   T_GO_UINT16,
   T_GO_UINT32,
   T_GO_UINT64,
+  T_GO_STRING,
   T_GO_FLOAT32,
   T_GO_FLOAT64,
   T_GO_UINTPTR,
@@ -29,10 +27,10 @@
 */
 
 /*
-("int"),("nil"),("bool"),("int8"),("byte"),("rune"),
-("uint"),("true"),("iota"),("uint8"),("int16"),("int32"),
-("int64"),("false"),("uint16"),("uint32"),("uint64"),("float32"),
-("float64"),("uintptr"),("complex64"),("complex128"),
+("int"),("bool"),("int8"),("byte"),("rune"),("uint"),
+("uint8"),("int16"),("int32"),("int64"),("error"),("uint16"),
+("uint32"),("uint64"),("string"),("float32"),("float64"),("uintptr"),
+("complex64"),("complex128"),
 */
 
 namespace CPlusPlus {
@@ -42,13 +40,6 @@ static inline int golangTypes3(const char *s) {
     if (s[1] == 'n') {
       if (s[2] == 't') {
         return T_GO_INT;
-      }
-    }
-  }
-  else if (s[0] == 'n') {
-    if (s[1] == 'i') {
-      if (s[2] == 'l') {
-        return T_GO_NIL;
       }
     }
   }
@@ -80,28 +71,12 @@ static inline int golangTypes4(const char *s) {
         }
       }
     }
-    else if (s[1] == 'o') {
-      if (s[2] == 't') {
-        if (s[3] == 'a') {
-          return T_GO_IOTA;
-        }
-      }
-    }
   }
   else if (s[0] == 'r') {
     if (s[1] == 'u') {
       if (s[2] == 'n') {
         if (s[3] == 'e') {
           return T_GO_RUNE;
-        }
-      }
-    }
-  }
-  else if (s[0] == 't') {
-    if (s[1] == 'r') {
-      if (s[2] == 'u') {
-        if (s[3] == 'e') {
-          return T_GO_TRUE;
         }
       }
     }
@@ -119,12 +94,12 @@ static inline int golangTypes4(const char *s) {
 }
 
 static inline int golangTypes5(const char *s) {
-  if (s[0] == 'f') {
-    if (s[1] == 'a') {
-      if (s[2] == 'l') {
-        if (s[3] == 's') {
-          if (s[4] == 'e') {
-            return T_GO_FALSE;
+  if (s[0] == 'e') {
+    if (s[1] == 'r') {
+      if (s[2] == 'r') {
+        if (s[3] == 'o') {
+          if (s[4] == 'r') {
+            return T_GO_ERROR;
           }
         }
       }
@@ -166,7 +141,20 @@ static inline int golangTypes5(const char *s) {
 }
 
 static inline int golangTypes6(const char *s) {
-  if (s[0] == 'u') {
+  if (s[0] == 's') {
+    if (s[1] == 't') {
+      if (s[2] == 'r') {
+        if (s[3] == 'i') {
+          if (s[4] == 'n') {
+            if (s[5] == 'g') {
+              return T_GO_STRING;
+            }
+          }
+        }
+      }
+    }
+  }
+  else if (s[0] == 'u') {
     if (s[1] == 'i') {
       if (s[2] == 'n') {
         if (s[3] == 't') {

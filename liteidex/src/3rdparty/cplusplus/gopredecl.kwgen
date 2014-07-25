@@ -1,0 +1,17 @@
+
+#include "Lexer.h"
+#include "Token.h"
+
+%token-prefix=T_GO_
+%toupper
+%no-enums
+%namespace=CPlusPlus
+%lexer-class=Lexer
+%classify_prefix=golangPredecl
+%identifier=T_IDENTIFIER
+
+%%
+true
+false
+nil
+iota
