@@ -480,6 +480,10 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         editor->onActive();
         QMenu *menu = LiteApi::getEditMenu(editor);
         if (menu) {
+#if defined(Q_OS_OSX)
+            // dirty trick to show the correct edit menu at the first time on Mac OS X
+            m_editMenu->setEnabled(false);
+#endif
             m_editMenu->menuAction()->setMenu(menu);
         } else {
             m_editMenu->menuAction()->setMenu(m_nullMenu);
