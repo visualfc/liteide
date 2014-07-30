@@ -605,6 +605,16 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
                     break;
                 }
             }
+        } else if (url.path().indexOf("/src/pkg/target/") == 0 && m_lastUrl.scheme() == "pdoc") {
+            QString name = url.path().right(url.path().length()-16);
+            foreach (QString path, m_targetList) {
+                QFileInfo info(path,name);
+                if (info.exists()) {
+                    url.setScheme("file");
+                    url.setPath(info.filePath());
+                    break;
+                }
+            }
         } else {
             QFileInfo info;
             info.setFile(url.path());
