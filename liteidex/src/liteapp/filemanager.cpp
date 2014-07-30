@@ -110,9 +110,6 @@ FileManager::FileManager()
 
 FileManager::~FileManager()
 {
-#ifndef Q_OS_OSX
-    qDeleteAll(m_schemeMenuMap);
-#endif
     m_liteApp->actionManager()->removeMenu(m_recentMenu);
     delete m_fileWatcher;
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
@@ -557,7 +554,7 @@ void FileManager::updateRecentFileActions(const QString &scheme)
 		QString name = schemeName(scheme);
         QAction *act = new QAction(name,this);
         m_recentMenu->insertAction(m_recentSeparator,act);
-        menu = new QMenu(scheme);
+        menu = new QMenu(scheme,m_recentMenu);
         act->setMenu(menu);
         m_schemeMenuMap.insert(scheme,menu);
     }
