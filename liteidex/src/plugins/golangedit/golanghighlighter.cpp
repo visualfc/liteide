@@ -230,11 +230,11 @@ void GolangHighlighter::highlightBlock(const QString &text)
             } else if (tk.is(T_GO_FUNC)) {
                 int size = tokens.size()-1;
                 int n = i+1;
-                if (n < size) {
+                if ((i == 0) && (n < size)) {
                     if (tokens[n].is(T_LPAREN)) {
-                        while(++n < size) {
-                            if (tokens[n+1].is(T_RPAREN)) {
-                                setFormat(tokens[n].begin(), tokens[n].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+                        while(n++ < size) {
+                            if (tokens[n].is(T_RPAREN)) {
+                                setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
                                 break;
                             }
                         }
