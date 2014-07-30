@@ -652,9 +652,15 @@ void LiteApp::createActions()
     actionContext->regAction(m_fullScreent,"FullScreen","Ctrl+Shift+F11");
 
     m_aboutAct = new QAction(tr("About LiteIDE"),m_mainwindow);
+#if defined(Q_OS_OSX)
+    m_aboutAct->setMenuRole(QAction::AboutRole);
+#endif
     actionContext->regAction(m_aboutAct,"About","");
 
     m_aboutPluginsAct = new QAction(tr("About Plugins"),m_mainwindow);
+#if defined(Q_OS_OSX)
+    m_aboutPluginsAct->setMenuRole(QAction::ApplicationSpecificRole);
+#endif
     actionContext->regAction(m_aboutPluginsAct,"AboutPlugins","");
 
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));

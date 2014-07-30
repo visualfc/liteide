@@ -110,7 +110,9 @@ FileManager::FileManager()
 
 FileManager::~FileManager()
 {
+#ifndef Q_OS_OSX
     qDeleteAll(m_schemeMenuMap);
+#endif
     m_liteApp->actionManager()->removeMenu(m_recentMenu);
     delete m_fileWatcher;
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);

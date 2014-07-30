@@ -896,6 +896,10 @@ void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
     LiteApi::IBuild *build = LiteApi::findExtensionObject<LiteApi::IBuild*>(editor,"LiteApi.IBuild");
     QMenu *menu = LiteApi::findExtensionObject<QMenu*>(editor,"LiteApi.Menu.Build");    
     if (menu) {
+#if defined(Q_OS_OSX)
+        // dirty trick to show the correct build menu at the first time on Mac OS X
+        m_buildMenu->setEnabled(false);
+#endif
         m_buildMenu->menuAction()->setMenu(menu);
     } else {
         m_buildMenu->menuAction()->setMenu(m_nullMenu);
