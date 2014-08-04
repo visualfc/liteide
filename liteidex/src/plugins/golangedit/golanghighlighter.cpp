@@ -257,8 +257,8 @@ void GolangHighlighter::highlightBlock(const QString &text)
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::BuiltinFunc]);
         } else if (tk.isGoPredecl()) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Predeclared]);
-        } else if (i == 0 && tokens.size() > 1 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
-            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::String]);
+        } else if (i == 0 && tokens.size() > 1 && tokens.at(0).begin() == 0 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
         } else if (tk.is(T_IDENTIFIER)) {
            // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
         }
