@@ -39,6 +39,7 @@ public:
     ~GolangCode();
     void setCompleter(LiteApi::ICompleter *completer);
     void resetGocode();
+    void cgoComplete();
 public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
