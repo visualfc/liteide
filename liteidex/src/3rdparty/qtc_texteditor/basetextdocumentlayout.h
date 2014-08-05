@@ -205,7 +205,7 @@ public:
         void reset();
         void process(QTextBlock block);
         void finalize();
-
+        bool requestDocUpdate() const { return m_requestDocUpdate; }
     private:
         BaseTextDocumentLayout *m_layout;
         bool m_requestDocUpdate;

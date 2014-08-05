@@ -61,8 +61,14 @@ void GolangHighlighter::highlightBlock(const QString &text)
         lexerState = previousBlockState_ & 0xff;
         initialBraceDepth = previousBlockState_ >> 8;
     }
+    //fix brace not matcher
+    if (initialBraceDepth < 0) {
+        initialBraceDepth = 0;
+    }
 
     int braceDepth = initialBraceDepth;
+
+    qDebug() << text << initialBraceDepth;
 
     LanguageFeatures features;
     features.golangEnable = true;
@@ -98,7 +104,8 @@ void GolangHighlighter::highlightBlock(const QString &text)
             else
                 setFormat(0, text.length(), m_creatorFormats[SyntaxHighlighter::VisualWhitespace]);
         }
-        BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+        //BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+        setFoldingIndent(currentBlock(), foldingIndent);
         return;
     }
 
@@ -287,8 +294,9 @@ void GolangHighlighter::highlightBlock(const QString &text)
         braceDepth = initialBraceDepth;
         foldingIndent = initialBraceDepth;
     }
-
-    BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+   // qDebug() << text << foldingIndent;
+    //BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+    setFoldingIndent(currentBlock(), foldingIndent);
 
     // optimization: if only the brace depth changes, we adjust subsequent blocks
     // to have QSyntaxHighlighter stop the rehighlighting
@@ -306,12 +314,21 @@ void GolangHighlighter::highlightBlock(const QString &text)
                 BaseTextDocumentLayout::changeFoldingIndent(block, delta);
                 foldValidor.process(block);
                 block = block.next();
-            }
+            }            
             foldValidor.finalize();
         }
     }
 
     setCurrentBlockState((braceDepth << 8) | tokenize.state());
+}
+
+void GolangHighlighter::setFoldingIndent(const QTextBlock &block, int indent)
+{
+    TextBlockUserData *userData = BaseTextDocumentLayout::userData(block);
+    if (userData->foldingIndent() != indent) {
+        userData->setFoldingIndent(indent);
+        emit foldIndentChanged(block);
+    }
 }
 
 bool GolangHighlighter::isPPKeyword(const QStringRef &text) const

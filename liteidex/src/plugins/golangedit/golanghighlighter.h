@@ -36,8 +36,8 @@ public:
     GolangHighlighter(QTextDocument *document = 0);
     virtual ~GolangHighlighter();
     virtual void highlightBlock(const QString &text);
-
 private:
+    void setFoldingIndent(const QTextBlock &block, int indent);
     void highlightWord(QStringRef word, int position, int length);
     void highlightLine(const QString &line, int position, int length,
                        const QTextCharFormat &format);
