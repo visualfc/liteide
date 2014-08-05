@@ -36,8 +36,15 @@
 
 
 OptionManager::OptionManager()
-    : m_browser(0), m_action(0)
+    : m_browser(0)
 {
+}
+
+OptionManager::~OptionManager()
+{
+    if (m_browser) {
+        delete m_browser;
+    }
 }
 
 bool OptionManager::initWithApp(IApplication *app)
@@ -45,28 +52,7 @@ bool OptionManager::initWithApp(IApplication *app)
     if (!IManager::initWithApp(app)) {
         return false;
     }
-    m_browser = new OptionsBrowser(app,this);
-    connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
-    connect(m_browser,SIGNAL(applyOption(QString)),this,SIGNAL(applyOption(QString)));
     return true;
-}
-
-void OptionManager::editorCreated(LiteApi::IEditor *editor)
-{
-    if (editor != m_browser) {
-        return;
-    }
-    disconnect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,0);
-
-    foreach (IOptionFactory *f, m_factoryList) {
-        QStringList mimeTypes = f->mimeTypes();
-        foreach (QString mimeType, mimeTypes) {
-            IOption *opt = f->create(mimeType);
-            if (opt) {
-                m_browser->addOption(opt);
-            }
-        }
-    }
 }
 
 void OptionManager::addFactory(IOptionFactory *factory)
@@ -84,24 +70,20 @@ QList<IOptionFactory*> OptionManager::factoryList() const
     return m_factoryList;
 }
 
-IEditor *OptionManager::browser()
-{
-    return m_browser;
-}
-
-void OptionManager::setAction(QAction *act)
-{
-    m_action = act;
-}
-
 void OptionManager::exec()
 {
-    if (!m_action) {
-        return;
+    if (m_browser == 0) {
+        m_browser = new OptionsBrowser(m_liteApp,m_liteApp->mainWindow());
+        connect(m_browser,SIGNAL(applyOption(QString)),this,SIGNAL(applyOption(QString)));
+        foreach (IOptionFactory *f, m_factoryList) {
+            QStringList mimeTypes = f->mimeTypes();
+            foreach (QString mimeType, mimeTypes) {
+                IOption *opt = f->create(mimeType);
+                if (opt) {
+                    m_browser->addOption(opt);
+                }
+            }
+        }
     }
-    if (!m_action->isChecked()) {
-        m_action->trigger();
-    } else {
-        m_liteApp->editorManager()->setCurrentEditor(m_browser);
-    }
+    m_browser->exec();
 }

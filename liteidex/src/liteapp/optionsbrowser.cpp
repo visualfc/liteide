@@ -36,26 +36,21 @@
 //lite_memory_check_end
 
 
-OptionsBrowser::OptionsBrowser(LiteApi::IApplication *app, QObject *parent) :
-    LiteApi::IBrowserEditor(parent),
+OptionsBrowser::OptionsBrowser(LiteApi::IApplication *app, QWidget *parent) :
+    QDialog(parent),
     m_liteApp(app),
-    m_widget(new QWidget),
     ui(new Ui::OptionsWidget)
 {
-    ui->setupUi(m_widget);
+    ui->setupUi(this);
     connect(ui->listWidget,SIGNAL(itemSelectionChanged()),this,SLOT(itemSelectionChanged()));
     connect(ui->applayButton,SIGNAL(clicked()),this,SLOT(applayButton()));
+    connect(ui->closeButton,SIGNAL(clicked()),this,SLOT(reject()));
 }
 
 OptionsBrowser::~OptionsBrowser()
 {
     delete ui;
-    delete m_widget;
-}
-
-QWidget *OptionsBrowser::widget()
-{
-    return m_widget;
+    //delete m_widget;
 }
 
 QString OptionsBrowser::name() const

@@ -402,7 +402,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="172"/>
+        <location filename="src/liteapp/editormanager.cpp" line="176"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished">Geh weiter</translation>
@@ -458,28 +458,28 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="185"/>
+        <location filename="src/liteapp/editormanager.cpp" line="193"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="340"/>
+        <location filename="src/liteapp/editormanager.cpp" line="348"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="341"/>
+        <location filename="src/liteapp/editormanager.cpp" line="349"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation type="unfinished">Änderungen speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="419"/>
+        <location filename="src/liteapp/editormanager.cpp" line="427"/>
         <source>All Files (*)</source>
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="421"/>
+        <location filename="src/liteapp/editormanager.cpp" line="429"/>
         <source>Save As</source>
         <translation>Speichern unter</translation>
     </message>
@@ -1933,6 +1933,11 @@ Success: %2.</oldsource>
         <translation>Projekt öffnen</translation>
     </message>
     <message>
+        <location filename="src/liteapp/liteapp.cpp" line="198"/>
+        <source>Options</source>
+        <translation type="unfinished">Optionen</translation>
+    </message>
+    <message>
         <location filename="src/liteapp/liteapp.cpp" line="599"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
@@ -3325,7 +3330,7 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsBrowser</name>
     <message>
-        <location filename="src/liteapp/optionsbrowser.cpp" line="63"/>
+        <location filename="src/liteapp/optionsbrowser.cpp" line="58"/>
         <source>Options</source>
         <oldsource>Options Page</oldsource>
         <translation>Optionen</translation>
@@ -3334,9 +3339,13 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsWidget</name>
     <message>
-        <location filename="src/liteapp/optionswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation type="obsolete">Formular</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/optionswidget.ui" line="14"/>
+        <source>Options</source>
+        <translation type="unfinished">Optionen</translation>
     </message>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="41"/>
@@ -3347,6 +3356,11 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionswidget.ui" line="79"/>
         <source>Apply</source>
         <translation>Anwenden</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/optionswidget.ui" line="86"/>
+        <source>Close</source>
+        <translation type="unfinished">Schließen</translation>
     </message>
 </context>
 <context>

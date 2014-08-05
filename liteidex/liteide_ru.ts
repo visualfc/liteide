@@ -402,7 +402,7 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished">Изменить</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="172"/>
+        <location filename="src/liteapp/editormanager.cpp" line="176"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished">Вперед</translation>
@@ -458,28 +458,28 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="185"/>
+        <location filename="src/liteapp/editormanager.cpp" line="193"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished">Редактировать</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="340"/>
+        <location filename="src/liteapp/editormanager.cpp" line="348"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished">Сохранить изменения в %1?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="341"/>
+        <location filename="src/liteapp/editormanager.cpp" line="349"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation type="unfinished">Сохранить изменения</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="419"/>
+        <location filename="src/liteapp/editormanager.cpp" line="427"/>
         <source>All Files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="421"/>
+        <location filename="src/liteapp/editormanager.cpp" line="429"/>
         <source>Save As</source>
         <translation>Сохранить как...</translation>
     </message>
@@ -1950,6 +1950,11 @@ Success: %2.</oldsource>
         <translation>Открыть проект...</translation>
     </message>
     <message>
+        <location filename="src/liteapp/liteapp.cpp" line="198"/>
+        <source>Options</source>
+        <translation type="unfinished">Параметры</translation>
+    </message>
+    <message>
         <location filename="src/liteapp/liteapp.cpp" line="599"/>
         <source>New...</source>
         <translation type="unfinished">Новый...</translation>
@@ -3342,7 +3347,7 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsBrowser</name>
     <message>
-        <location filename="src/liteapp/optionsbrowser.cpp" line="63"/>
+        <location filename="src/liteapp/optionsbrowser.cpp" line="58"/>
         <source>Options</source>
         <oldsource>Options Page</oldsource>
         <translation type="unfinished">Параметры</translation>
@@ -3351,9 +3356,13 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsWidget</name>
     <message>
-        <location filename="src/liteapp/optionswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="obsolete">Форма</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/optionswidget.ui" line="14"/>
+        <source>Options</source>
+        <translation type="unfinished">Параметры</translation>
     </message>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="41"/>
@@ -3364,6 +3373,11 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionswidget.ui" line="79"/>
         <source>Apply</source>
         <translation>Применить</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/optionswidget.ui" line="86"/>
+        <source>Close</source>
+        <translation type="unfinished">Закрыть</translation>
     </message>
 </context>
 <context>

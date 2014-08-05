@@ -5,9 +5,11 @@
 
 ### 2014.08.05 Ver x23.2
 * gocode add cgo basic completer
+* update option to dialog mode
 * fix godoc target for go1.3
 * fix golang highlighter, return to kate
-* fixed Qt5 build crash when exit on Mac OS X
+* fix short key for macosx
+* fixed Qt5 build crash when exit on macosx
 
 ### 2014.07.24 Ver x23
 * LiteIDE
