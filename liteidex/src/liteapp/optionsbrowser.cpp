@@ -78,9 +78,14 @@ void OptionsBrowser::addOption(LiteApi::IOption *opt)
     ui->listWidget->addItem(item);
     ui->stackedWidget->addWidget(opt->widget());
     m_widgetOptionMap.insert(item,opt);
-    if (ui->listWidget->count() == 1) {
-        ui->listWidget->setCurrentItem(item);
+}
+
+int OptionsBrowser::execute()
+{
+    if (ui->listWidget->count() >= 1) {
+        ui->listWidget->setCurrentItem(0);
     }
+    return exec();
 }
 
 void OptionsBrowser::itemSelectionChanged()

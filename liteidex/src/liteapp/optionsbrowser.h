@@ -44,6 +44,7 @@ public:
     virtual QString name() const;
     virtual QString mimeType() const;
     void addOption(LiteApi::IOption *opt);
+    int execute();
 signals:
     void applyOption(QString);
 protected slots:

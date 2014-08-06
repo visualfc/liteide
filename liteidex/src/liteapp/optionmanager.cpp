@@ -85,5 +85,5 @@ void OptionManager::exec()
             }
         }
     }
-    m_browser->exec();
+    m_browser->execute();
 }
