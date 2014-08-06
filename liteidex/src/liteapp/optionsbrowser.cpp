@@ -84,9 +84,7 @@ int OptionsBrowser::execute()
 {
     if (ui->listWidget->count() >= 1) {
         ui->listWidget->setCurrentItem(ui->listWidget->item(0));
-#ifdef Q_OS_MAC
         this->setMinimumHeight(600);
-#endif
     }
     return exec();
 }
