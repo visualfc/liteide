@@ -3367,8 +3367,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="86"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="obsolete">关闭</translation>
     </message>
 </context>
 <context>

@@ -44,7 +44,7 @@ OptionsBrowser::OptionsBrowser(LiteApi::IApplication *app, QWidget *parent) :
     ui->setupUi(this);
     connect(ui->listWidget,SIGNAL(itemSelectionChanged()),this,SLOT(itemSelectionChanged()));
     connect(ui->applayButton,SIGNAL(clicked()),this,SLOT(applayButton()));
-    connect(ui->closeButton,SIGNAL(clicked()),this,SLOT(reject()));
+    connect(ui->cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
 }
 
 OptionsBrowser::~OptionsBrowser()
@@ -84,6 +84,9 @@ int OptionsBrowser::execute()
 {
     if (ui->listWidget->count() >= 1) {
         ui->listWidget->setCurrentItem(ui->listWidget->item(0));
+#ifdef Q_OS_MAC
+        this->setMinimumHeight(600);
+#endif
     }
     return exec();
 }

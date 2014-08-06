@@ -1163,16 +1163,16 @@ void LiteEditor::loadColorStyleScheme()
                 .arg(p.highlightedText().color().name())
                 .arg(p.highlight().color().name());
     m_editorWidget->setPalette(p);
-#ifdef Q_OS_MAC
-    #if QT_VERSION >= 0x050000
-        m_editorWidget->setStyleSheet(sheet);
-    #else
-        if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_8) {
-            m_editorWidget->setStyleSheet(sheet);
-        }
-    #endif
-#else
+//#ifdef Q_OS_MAC
+//    #if QT_VERSION >= 0x050000
+//        m_editorWidget->setStyleSheet(sheet);
+//    #else
+//        if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_8) {
+//            m_editorWidget->setStyleSheet(sheet);
+//        }
+//    #endif
+//#else
     m_editorWidget->setStyleSheet(sheet);
-#endif
+//#endif
     emit colorStyleChanged();
 }
