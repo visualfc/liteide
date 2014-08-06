@@ -83,7 +83,7 @@ void OptionsBrowser::addOption(LiteApi::IOption *opt)
 int OptionsBrowser::execute()
 {
     if (ui->listWidget->count() >= 1) {
-        ui->listWidget->setCurrentItem(0);
+        ui->listWidget->setCurrentItem(ui->listWidget->item(0));
     }
     return exec();
 }
