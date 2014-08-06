@@ -99,6 +99,7 @@ void OptionsBrowser::itemSelectionChanged()
         opt->active();
         ui->stackedWidget->setCurrentWidget(opt->widget());
         ui->infoLabel->setText(QString("Name : %1    MimeType : %2").arg(opt->name()).arg(opt->mimeType()));
+        opt->widget()->updateGeometry();
     }
 }
 
