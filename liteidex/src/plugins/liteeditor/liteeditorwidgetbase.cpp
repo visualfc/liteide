@@ -315,6 +315,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
         layout->m_tabSettings.m_tabSize = m_nTabSize;
         doc->setDocumentLayout(layout);
         connect(layout,SIGNAL(updateBlock(QTextBlock)),this,SLOT(updateBlock(QTextBlock)));
+        connect(layout,SIGNAL(documentSizeChanged(QSizeF)),this,SLOT(documentSizeChanged(QSizeF)));
     }
 }
 
@@ -1902,6 +1903,11 @@ void LiteEditorWidgetBase::foldIndentChanged(QTextBlock block)
 }
 
 void LiteEditorWidgetBase::updateBlock(QTextBlock)
+{
+
+}
+
+void LiteEditorWidgetBase::documentSizeChanged(QSizeF)
 {
 
 }

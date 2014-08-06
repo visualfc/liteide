@@ -401,7 +401,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished">編集</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="172"/>
+        <location filename="src/liteapp/editormanager.cpp" line="176"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished"></translation>
@@ -457,28 +457,28 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="185"/>
+        <location filename="src/liteapp/editormanager.cpp" line="193"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="340"/>
+        <location filename="src/liteapp/editormanager.cpp" line="348"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="341"/>
+        <location filename="src/liteapp/editormanager.cpp" line="349"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation type="unfinished">変更を保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="419"/>
+        <location filename="src/liteapp/editormanager.cpp" line="427"/>
         <source>All Files (*)</source>
         <translation>全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="421"/>
+        <location filename="src/liteapp/editormanager.cpp" line="429"/>
         <source>Save As</source>
         <translation>名前を付けて保存...</translation>
     </message>
@@ -762,19 +762,19 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="159"/>
-        <location filename="src/liteapp/filemanager.cpp" line="180"/>
-        <location filename="src/liteapp/filemanager.cpp" line="201"/>
+        <location filename="src/liteapp/filemanager.cpp" line="158"/>
+        <location filename="src/liteapp/filemanager.cpp" line="179"/>
+        <location filename="src/liteapp/filemanager.cpp" line="200"/>
         <source>All Files (*)</source>
         <translation>全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="370"/>
+        <location filename="src/liteapp/filemanager.cpp" line="369"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="371"/>
+        <location filename="src/liteapp/filemanager.cpp" line="370"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -783,7 +783,7 @@ Do you want to load?</oldsource>
 読み込みますか?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="271"/>
+        <location filename="src/liteapp/filemanager.cpp" line="270"/>
         <source>Open Project or File</source>
         <translation>プロジェクトもしくはファイルを開く...</translation>
     </message>
@@ -804,41 +804,41 @@ Do you want to load?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="156"/>
-        <location filename="src/liteapp/filemanager.cpp" line="177"/>
-        <location filename="src/liteapp/filemanager.cpp" line="198"/>
+        <location filename="src/liteapp/filemanager.cpp" line="155"/>
+        <location filename="src/liteapp/filemanager.cpp" line="176"/>
+        <location filename="src/liteapp/filemanager.cpp" line="197"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="284"/>
-        <location filename="src/liteapp/filemanager.cpp" line="302"/>
+        <location filename="src/liteapp/filemanager.cpp" line="283"/>
+        <location filename="src/liteapp/filemanager.cpp" line="301"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="504"/>
+        <location filename="src/liteapp/filemanager.cpp" line="503"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="505"/>
+        <location filename="src/liteapp/filemanager.cpp" line="504"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="506"/>
+        <location filename="src/liteapp/filemanager.cpp" line="505"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="507"/>
+        <location filename="src/liteapp/filemanager.cpp" line="506"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="717"/>
+        <location filename="src/liteapp/filemanager.cpp" line="716"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -850,7 +850,7 @@ Do you want to close the editor ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="747"/>
+        <location filename="src/liteapp/filemanager.cpp" line="746"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -860,7 +860,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="754"/>
+        <location filename="src/liteapp/filemanager.cpp" line="753"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -872,7 +872,7 @@ Do you want to reload the file from disk ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="326"/>
+        <location filename="src/liteapp/filemanager.cpp" line="325"/>
         <source>Open Files</source>
         <translation>ファイルを開く...</translation>
     </message>
@@ -882,12 +882,12 @@ Do you want to reload the file from disk ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="339"/>
+        <location filename="src/liteapp/filemanager.cpp" line="338"/>
         <source>Open Project</source>
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="710"/>
+        <location filename="src/liteapp/filemanager.cpp" line="709"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -897,10 +897,10 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="714"/>
-        <location filename="src/liteapp/filemanager.cpp" line="719"/>
-        <location filename="src/liteapp/filemanager.cpp" line="751"/>
-        <location filename="src/liteapp/filemanager.cpp" line="756"/>
+        <location filename="src/liteapp/filemanager.cpp" line="713"/>
+        <location filename="src/liteapp/filemanager.cpp" line="718"/>
+        <location filename="src/liteapp/filemanager.cpp" line="750"/>
+        <location filename="src/liteapp/filemanager.cpp" line="755"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -1901,102 +1901,107 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="624"/>
+        <location filename="src/liteapp/liteapp.cpp" line="625"/>
         <source>Close File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="627"/>
+        <location filename="src/liteapp/liteapp.cpp" line="628"/>
         <source>Close All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="637"/>
+        <location filename="src/liteapp/liteapp.cpp" line="638"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="640"/>
+        <location filename="src/liteapp/liteapp.cpp" line="641"/>
         <source>Save File As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="643"/>
+        <location filename="src/liteapp/liteapp.cpp" line="644"/>
         <source>Save All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="630"/>
+        <location filename="src/liteapp/liteapp.cpp" line="631"/>
         <source>Open Project</source>
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="598"/>
+        <location filename="src/liteapp/liteapp.cpp" line="198"/>
+        <source>Options</source>
+        <translation type="unfinished">オプション</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteapp.cpp" line="599"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="601"/>
+        <location filename="src/liteapp/liteapp.cpp" line="602"/>
         <source>Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="604"/>
+        <location filename="src/liteapp/liteapp.cpp" line="605"/>
         <source>Open Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="607"/>
+        <location filename="src/liteapp/liteapp.cpp" line="608"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="612"/>
+        <location filename="src/liteapp/liteapp.cpp" line="613"/>
         <source>Add Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="615"/>
+        <location filename="src/liteapp/liteapp.cpp" line="616"/>
         <source>Close All Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="618"/>
+        <location filename="src/liteapp/liteapp.cpp" line="619"/>
         <source>New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="621"/>
+        <location filename="src/liteapp/liteapp.cpp" line="622"/>
         <source>Close Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="632"/>
+        <location filename="src/liteapp/liteapp.cpp" line="633"/>
         <source>Save Project</source>
         <translation>プロジェクトを保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="634"/>
+        <location filename="src/liteapp/liteapp.cpp" line="635"/>
         <source>Close Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="647"/>
         <source>Exit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="650"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="653"/>
+        <location filename="src/liteapp/liteapp.cpp" line="654"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Liteide について</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="656"/>
+        <location filename="src/liteapp/liteapp.cpp" line="660"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2273,62 +2278,62 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="993"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="997"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="996"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1000"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="998"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1002"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1034"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1082"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1038"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1086"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1075"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1079"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1078"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1082"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1176"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1180"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1222"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1226"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1222"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1226"/>
         <source>Failed to start process</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2547,27 +2552,27 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="853"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="849"/>
         <source>Export HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="861"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="857"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="862"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="858"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="881"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="877"/>
         <source>Export PDF</source>
         <translation>PDFへエクスポート</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="906"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="902"/>
         <source>Print Document</source>
         <translation>印刷</translation>
     </message>
@@ -2631,7 +2636,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="962"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -2702,7 +2707,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="923"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="919"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2713,7 +2718,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="962"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3323,7 +3328,7 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsBrowser</name>
     <message>
-        <location filename="src/liteapp/optionsbrowser.cpp" line="63"/>
+        <location filename="src/liteapp/optionsbrowser.cpp" line="58"/>
         <source>Options</source>
         <oldsource>Options Page</oldsource>
         <translation type="unfinished">オプション</translation>
@@ -3332,9 +3337,13 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsWidget</name>
     <message>
-        <location filename="src/liteapp/optionswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>フォーム</translation>
+        <translation type="obsolete">フォーム</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/optionswidget.ui" line="14"/>
+        <source>Options</source>
+        <translation type="unfinished">オプション</translation>
     </message>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="41"/>
@@ -3345,6 +3354,15 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionswidget.ui" line="79"/>
         <source>Apply</source>
         <translation>適用</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/optionswidget.ui" line="86"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">閉じる</translation>
     </message>
 </context>
 <context>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>OptionsWidget</class>
- <widget class="QWidget" name="OptionsWidget">
+ <widget class="QDialog" name="OptionsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>315</height>
+    <width>696</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Options</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,4">
    <item>
@@ -77,6 +77,13 @@
         <widget class="QPushButton" name="applayButton">
          <property name="text">
           <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cancelButton">
+         <property name="text">
+          <string>Cancel</string>
          </property>
         </widget>
        </item>

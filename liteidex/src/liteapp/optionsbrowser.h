@@ -25,6 +25,7 @@
 #define OPTIONSBROWSER_H
 
 #include <QWidget>
+#include <QDialog>
 
 #include "liteapi/liteapi.h"
 
@@ -34,16 +35,16 @@ namespace Ui {
 
 class QListWidgetItem;
 
-class OptionsBrowser : public LiteApi::IBrowserEditor
+class OptionsBrowser : public QDialog//LiteApi::IBrowserEditor
 {
     Q_OBJECT
 public:
-    explicit OptionsBrowser(LiteApi::IApplication *app, QObject *parent);
+    explicit OptionsBrowser(LiteApi::IApplication *app, QWidget *parent = 0);
     ~OptionsBrowser();
-    virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
     void addOption(LiteApi::IOption *opt);
+    int execute();
 signals:
     void applyOption(QString);
 protected slots:
@@ -53,7 +54,6 @@ private slots:
 
 private:
     LiteApi::IApplication   *m_liteApp;
-    QWidget *m_widget;
     Ui::OptionsWidget *ui;
     QMap<QListWidgetItem*,LiteApi::IOption*>    m_widgetOptionMap;
 };

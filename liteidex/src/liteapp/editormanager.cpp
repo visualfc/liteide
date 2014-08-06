@@ -167,11 +167,19 @@ void EditorManager::createActions()
     m_goBackAct = new QAction(tr("Navigate Backward"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
     IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+#ifdef Q_OS_MAC
+    actionContext->regAction(m_goBackAct,"Backward","Ctrl+Alt+Left");
+#else
     actionContext->regAction(m_goBackAct,"Backward","Alt+Left");
+#endif
 
     m_goForwardAct = new QAction(tr("Navigate Forward"),this);
     m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
+#ifdef Q_OS_MAC
+    actionContext->regAction(m_goForwardAct,"Forward","Ctrl+Alt+Right");
+#else
     actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
+#endif
 
     updateNavigatorActions();
 
@@ -480,6 +488,10 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         editor->onActive();
         QMenu *menu = LiteApi::getEditMenu(editor);
         if (menu) {
+#if defined(Q_OS_OSX)
+            // dirty trick to show the correct edit menu at the first time on Mac OS X
+            m_editMenu->setEnabled(false);
+#endif
             m_editMenu->menuAction()->setMenu(menu);
         } else {
             m_editMenu->menuAction()->setMenu(m_nullMenu);

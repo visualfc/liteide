@@ -3,6 +3,14 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.08.05 Ver x23.2
+* gocode add cgo basic completer
+* update option to dialog mode
+* fix godoc target for go1.3
+* fix golang highlighter, return to kate
+* fix short key for macosx
+* fixed Qt5 build crash when exit on macosx
+
 ### 2014.07.24 Ver x23
 * LiteIDE
 	* add golang simple lexer for editor

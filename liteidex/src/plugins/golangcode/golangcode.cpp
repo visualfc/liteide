@@ -101,6 +101,28 @@ void GolangCode::resetGocode()
     }
 }
 
+void GolangCode::cgoComplete()
+{
+    QStandardItem *root= m_completer->findRoot(m_preWord);
+    QStringList types;
+    types << "int" << "uint"
+          << "short" << "ushort"
+          << "char" << "schar" << "uchar"
+          << "long" << "ulong"
+          << "longlong" << "ulonglong"
+          << "float" << "double";
+    QIcon icon = m_golangAst->iconFromTagEnum(LiteApi::TagType,true);
+    foreach(QString item, types) {
+        m_completer->appendChildItem(root,item,"type","",icon,true);
+    }
+    icon = m_golangAst->iconFromTagEnum(LiteApi::TagFunc,true);
+    m_completer->appendChildItem(root,"CString","func","func(string) *C.char",icon,true);
+    m_completer->appendChildItem(root,"GoString","func","func(*C.char) string",icon,true);
+    m_completer->appendChildItem(root,"GoStringN","func","func(*C.char, C.int) string",icon,true);
+    m_completer->appendChildItem(root,"GoBytes","func","func(unsafe.Pointer, C.int) []byte",icon,true);
+    m_completer->show();
+}
+
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
@@ -185,6 +207,11 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
 
     if (!m_preWord.isEmpty()) {
         m_completer->clearItemChilds(m_preWord);
+    }
+
+    if (m_preWord == "C.") {
+        cgoComplete();
+        return;
     }
 
     QString src = cur.document()->toPlainText();

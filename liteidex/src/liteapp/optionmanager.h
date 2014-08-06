@@ -35,19 +35,15 @@ class OptionManager : public IOptionManager
     Q_OBJECT
 public:
     OptionManager();
+    ~OptionManager();
     virtual bool initWithApp(IApplication *app);
     virtual void addFactory(IOptionFactory *factory);
     virtual void removeFactory(IOptionFactory *factory);
     virtual QList<IOptionFactory*> factoryList() const;
-    IEditor *browser();
-    void setAction(QAction *act);
 public slots:
     virtual void exec();
-protected slots:
-    void editorCreated(LiteApi::IEditor*);
 protected:
     OptionsBrowser  *m_browser;
-    QAction *m_action;
     QList<IOptionFactory*>  m_factoryList;
 };
 

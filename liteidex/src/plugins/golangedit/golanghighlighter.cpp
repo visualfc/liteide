@@ -61,8 +61,14 @@ void GolangHighlighter::highlightBlock(const QString &text)
         lexerState = previousBlockState_ & 0xff;
         initialBraceDepth = previousBlockState_ >> 8;
     }
+    //fix brace not matcher
+    if (initialBraceDepth < 0) {
+        initialBraceDepth = 0;
+    }
 
     int braceDepth = initialBraceDepth;
+
+    qDebug() << text << initialBraceDepth;
 
     LanguageFeatures features;
     features.golangEnable = true;
@@ -98,7 +104,8 @@ void GolangHighlighter::highlightBlock(const QString &text)
             else
                 setFormat(0, text.length(), m_creatorFormats[SyntaxHighlighter::VisualWhitespace]);
         }
-        BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+        //BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+        setFoldingIndent(currentBlock(), foldingIndent);
         return;
     }
 
@@ -230,11 +237,11 @@ void GolangHighlighter::highlightBlock(const QString &text)
             } else if (tk.is(T_GO_FUNC)) {
                 int size = tokens.size()-1;
                 int n = i+1;
-                if (n < size) {
+                if ((i == 0) && (n < size)) {
                     if (tokens[n].is(T_LPAREN)) {
-                        while(++n < size) {
-                            if (tokens[n+1].is(T_RPAREN)) {
-                                setFormat(tokens[n].begin(), tokens[n].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+                        while(n++ < size) {
+                            if (tokens[n].is(T_RPAREN)) {
+                                setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
                                 break;
                             }
                         }
@@ -257,8 +264,8 @@ void GolangHighlighter::highlightBlock(const QString &text)
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::BuiltinFunc]);
         } else if (tk.isGoPredecl()) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Predeclared]);
-        } else if (i == 0 && tokens.size() > 1 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
-            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::String]);
+        } else if (i == 0 && tokens.size() > 1 && tokens.at(0).begin() == 0 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
         } else if (tk.is(T_IDENTIFIER)) {
            // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
         }
@@ -287,8 +294,9 @@ void GolangHighlighter::highlightBlock(const QString &text)
         braceDepth = initialBraceDepth;
         foldingIndent = initialBraceDepth;
     }
-
-    BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+   // qDebug() << text << foldingIndent;
+    //BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
+    setFoldingIndent(currentBlock(), foldingIndent);
 
     // optimization: if only the brace depth changes, we adjust subsequent blocks
     // to have QSyntaxHighlighter stop the rehighlighting
@@ -306,12 +314,21 @@ void GolangHighlighter::highlightBlock(const QString &text)
                 BaseTextDocumentLayout::changeFoldingIndent(block, delta);
                 foldValidor.process(block);
                 block = block.next();
-            }
+            }            
             foldValidor.finalize();
         }
     }
 
     setCurrentBlockState((braceDepth << 8) | tokenize.state());
+}
+
+void GolangHighlighter::setFoldingIndent(const QTextBlock &block, int indent)
+{
+    TextBlockUserData *userData = BaseTextDocumentLayout::userData(block);
+    if (userData->foldingIndent() != indent) {
+        userData->setFoldingIndent(indent);
+        emit foldIndentChanged(block);
+    }
 }
 
 bool GolangHighlighter::isPPKeyword(const QStringRef &text) const

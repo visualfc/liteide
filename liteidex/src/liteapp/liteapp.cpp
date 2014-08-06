@@ -195,11 +195,11 @@ LiteApp::LiteApp()
     //m_outputManager->addOutuput(m_logOutput,tr("Console"));
     m_logAct = m_toolWindowManager->addToolWindow(Qt::BottomDockWidgetArea,m_logOutput,"eventlog",tr("Event Log"),true);
     connect(m_logOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickLogOutput(QTextCursor)));
-    m_optionAct = m_editorManager->registerBrowser(m_optionManager->browser());
-    //m_viewMenu->addAction(m_optionAct);
+    m_optionAct = new QAction(tr("Options"),this);
     m_optionAct->setMenuRole(QAction::PreferencesRole);
     m_actionManager->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_optionAct);
-    m_optionManager->setAction(m_optionAct);
+    connect(m_optionAct,SIGNAL(triggered()),m_optionManager,SLOT(exec()));
+
 
     this->appendLog("LiteApp","Initializing");
 
@@ -497,7 +497,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X23.1";
+    return "X23.2";
 }
 
 QString LiteApp::ideFullName() const
@@ -652,9 +652,15 @@ void LiteApp::createActions()
     actionContext->regAction(m_fullScreent,"FullScreen","Ctrl+Shift+F11");
 
     m_aboutAct = new QAction(tr("About LiteIDE"),m_mainwindow);
+#if defined(Q_OS_OSX)
+    m_aboutAct->setMenuRole(QAction::AboutRole);
+#endif
     actionContext->regAction(m_aboutAct,"About","");
 
     m_aboutPluginsAct = new QAction(tr("About Plugins"),m_mainwindow);
+#if defined(Q_OS_OSX)
+    m_aboutPluginsAct->setMenuRole(QAction::ApplicationSpecificRole);
+#endif
     actionContext->regAction(m_aboutPluginsAct,"AboutPlugins","");
 
     connect(m_newAct,SIGNAL(triggered()),m_fileManager,SLOT(newFile()));

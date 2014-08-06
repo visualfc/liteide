@@ -108,7 +108,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_build,"Build");
     QAction *execAct = new QAction(tr("Execute File"),this);
-    actionContext->regAction(execAct,"ExecuteFile","Ctrl+,");
+    actionContext->regAction(execAct,"ExecuteFile","Ctrl+`");
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,execAct);
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
