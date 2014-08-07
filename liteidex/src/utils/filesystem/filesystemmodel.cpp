@@ -362,7 +362,7 @@ bool FileSystemModel::removeRootPath(const QString &path)
 
 bool FileSystemModel::addRootPath(const QString &path)
 {
-    QString pathName = QDir::fromNativeSeparators(path);
+    QString pathName = QDir::fromNativeSeparators(QDir::cleanPath(path));
     if (m_pathList.contains(pathName)) {
         return false;
     }
