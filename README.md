@@ -3,6 +3,8 @@
 LiteIDE X
 =========
 
+![liteide-logo](liteidex/liteide-logo/liteide.png)
+
 ### Introduction
 
 _LiteIDE is a simple, open source, cross-platform Go IDE._
