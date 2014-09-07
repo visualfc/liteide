@@ -43,7 +43,7 @@
 //lite_memory_check_end
 
 static char help[] =
-"<b>Serach Format</b>"
+"<b>Search Format</b>"
 "<pre>"
 "fmt.\n"
 "    Extracts all fmt pkg symbol document\n"
@@ -54,7 +54,7 @@ static char help[] =
 "Println\n"
 "    Extracts fmt.Println log.Println log.Logger.Println etc"
 "</pre>"
-"<b>Serach Option</b>"
+"<b>Search Option</b>"
 "<pre>"
 "Match Word.\n"
 "    Match whole world only\n"
