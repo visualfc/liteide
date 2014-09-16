@@ -447,6 +447,7 @@ void FileSystemWidget::openShell()
     QString cmd = env.value("LITEIDE_TERM");
     QStringList args = env.value("LITEIDE_TERMARGS").split(" ");
     QString path = dir.path();
+    args.append(path);
 #ifdef Q_OS_WIN
     if (path.length() == 2 && path.right(1) == ":") {
         path += "/";
