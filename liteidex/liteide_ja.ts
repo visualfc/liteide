@@ -2398,24 +2398,24 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="115"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>続行</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="121"/>
         <source>Show Current Line</source>
-        <translation type="unfinished"></translation>
+        <translation>現在行を表示</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="196"/>
         <source>Debug Output</source>
         <oldsource>Debug</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>デバッグ出力</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="105"/>
         <source>Start Debugging External Application...</source>
         <oldsource>Start Debugging External Application</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>外部のアプリケーションをデバッグ起動</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="93"/>
@@ -2425,47 +2425,47 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="108"/>
         <source>Start Debugging</source>
-        <translation type="unfinished"></translation>
+        <translation>デバッグ開始</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="111"/>
         <source>Start Debugging Tests</source>
-        <translation type="unfinished"></translation>
+        <translation>テストをデバッグ開始</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="124"/>
         <source>Step Into</source>
-        <translation type="unfinished"></translation>
+        <translation>ステップ実行(入る)</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="127"/>
         <source>Step Over</source>
-        <translation type="unfinished"></translation>
+        <translation>ステップ実行(通過)</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="130"/>
         <source>Step Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ステップ実行(出る)</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="133"/>
         <source>Run to Line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定行まで実行</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="136"/>
         <source>Insert/Remove Breakpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>ブレイクポイントの追加と削除</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="139"/>
         <source>Remove All Breakpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのブレイクポイントを削除</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="158"/>
         <source>&amp;Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>デバッグ(&amp;D)</translation>
     </message>
 </context>
 <context>
@@ -2478,13 +2478,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="20"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>デバッグ</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
         <source>Rebuild before debugging</source>
         <oldsource>Debug before rebuild</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>デバッグの前にリビルド</translation>
     </message>
 </context>
 <context>
@@ -2493,7 +2493,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litedebug/litedebugplugin.cpp" line="58"/>
         <source>Debug Window</source>
         <oldsource>Debug</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>デバッグウィンドウ</translation>
     </message>
 </context>
 <context>
@@ -2535,37 +2535,37 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>全てを選択</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="452"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>高度な操作</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="491"/>
         <source>Code Folding</source>
-        <translation type="unfinished"></translation>
+        <translation>コードの折りたたみ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="496"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>行の操作</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="849"/>
         <source>Export HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTMLにエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="857"/>
         <source>Export Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートに失敗しました</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="858"/>
         <source>Could not open %1 for writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 を書き込み用に開けませんでした</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="877"/>
@@ -2586,126 +2586,126 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="235"/>
         <source>Export HTML...</source>
-        <translation type="unfinished"></translation>
+        <translation>HTMLにエクスポート...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="237"/>
         <source>Export PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>PDFにえすくぽーと...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="238"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>印刷...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="241"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>前のブロックに移動</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="248"/>
         <source>Select Block</source>
-        <translation type="unfinished"></translation>
+        <translation>ブロックを選択</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="251"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>対照へ移動</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
         <source>Fold</source>
-        <translation type="unfinished"></translation>
+        <translation>折りたたみ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="257"/>
         <source>Unfold</source>
-        <translation type="unfinished"></translation>
+        <translation>折りたたみを展開</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
         <source>Fold All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て折りたたみ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
         <source>Unfold All</source>
-        <translation type="unfinished"></translation>
+        <translation>全ての折りたたみを展開</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>指定行へ移動</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="274"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>ロック</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="277"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>重複</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
         <source>Delete Line</source>
-        <translation type="unfinished"></translation>
+        <translation>行を削除</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
         <source>Insert Line Before</source>
-        <translation type="unfinished"></translation>
+        <translation>前の行で挿入</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="291"/>
         <source>Insert Line After</source>
-        <translation type="unfinished"></translation>
+        <translation>後の行で挿入</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="295"/>
         <source>Increase Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズを増やす</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="298"/>
         <source>Decrease Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズを減らす</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
         <source>Reset Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズをリセット</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="304"/>
         <source>Clean Whitespace</source>
-        <translation type="unfinished"></translation>
+        <translation>空白を除去</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="307"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>折り返す</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="311"/>
         <source>Code Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>コード補完</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
         <source>Close Document</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントを閉じる</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="560"/>
         <source>Reload File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを再読み込み</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="919"/>
@@ -2716,12 +2716,12 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>次のブロックに移動</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
         <source>Line: </source>
-        <translation type="unfinished"></translation>
+        <translation>行: </translation>
     </message>
 </context>
 <context>
@@ -2734,7 +2734,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="331"/>
         <source>Load File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを読み込む</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="337"/>
@@ -2749,7 +2749,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="24"/>
         <source>Font &amp;&amp; Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントと色</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="36"/>
@@ -2764,17 +2764,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="70"/>
         <source>Zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>ズーム:</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="77"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="96"/>
         <source>Antialias</source>
-        <translation type="unfinished"></translation>
+        <translation>アンチエイリアス</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="119"/>
@@ -2807,12 +2807,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="294"/>
         <source>Clean whitespace when saving files</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル保存時に空白を除去</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="301"/>
         <source>Enable scroll wheel zooming</source>
-        <translation type="unfinished"></translation>
+        <translation>マウスホィールによるスクロールを許可</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
@@ -2827,18 +2827,18 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="442"/>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルタイプ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="190"/>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="240"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>動作</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="353"/>
         <source>Display EOF</source>
-        <translation type="unfinished"></translation>
+        <translation>EOF を表示</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
@@ -2853,25 +2853,25 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="383"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>右マージを表示</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="246"/>
         <source>Automatic indentation</source>
         <oldsource>Enable automatic indentation</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>自動インデント</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="253"/>
         <source>Case sensitive code completion</source>
         <oldsource>Completer case sensitive</oldsource>
-        <translation type="unfinished"></translation>
+		<translation>大文字/小文字を区別したコード補完</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="262"/>
         <source>Code completion prefix length:</source>
         <oldsource>Word Complete Prefix Length</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>コード補完を行う文字数:</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="325"/>
