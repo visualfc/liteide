@@ -1572,7 +1572,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="62"/>
         <source>Comment/Uncomment Selection</source>
-        <translation>セクションをコメント/コメント除去</translation>
+        <translation>選択をコメント/コメント除去</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="155"/>
