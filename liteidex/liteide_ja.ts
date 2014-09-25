@@ -7,7 +7,7 @@
         <location filename="src/liteapp/aboutdialog.ui" line="20"/>
         <source>About LiteIDE</source>
         <oldsource>About Liteide</oldsource>
-        <translation type="unfinished">Liteide について</translation>
+        <translation>Liteide について</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="156"/>
@@ -24,7 +24,7 @@
         <source>Welcome to LiteIDE X! LiteIDE is a simple, open source, cross-platform IDE.</source>
         <oldsource>Welcome to LiteIDE X!
 LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
-        <translation type="unfinished">LiteIDE X へようこそ!
+        <translation>LiteIDE X へようこそ!
 LiteIDE はシンプルでオープンソース、クロスプラットフォームなIDEです。</translation>
     </message>
     <message>
@@ -50,64 +50,64 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="242"/>
         <source>Build:</source>
-        <translation type="unfinished"></translation>
+        <translation>ビルド:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="215"/>
         <source>Based on Qt</source>
         <oldsource>Based on Qt Version</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="249"/>
         <source>Source Code:</source>
-        <translation type="unfinished"></translation>
+        <translation>ソースコード:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="263"/>
         <source>Support LiteIDE:</source>
         <oldsource>Support</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>LiteIDE をサポート:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="297"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>開発者</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="400"/>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>翻訳者</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="412"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>中国語</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="426"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>日本語</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="440"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>ロシア語</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="454"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>フランス語</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="468"/>
         <source>Traditional Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>繁体字</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="482"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>ドイツ語</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="513"/>
@@ -127,7 +127,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/liteapp/aboutdialog.cpp" line="43"/>
         <source>Based on Qt %1 (%2 bit)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -135,44 +135,44 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="64"/>
         <source>&amp;File</source>
-        <translation type="unfinished">ファイル(&amp;F)</translation>
+        <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="65"/>
         <source>&amp;Recent</source>
-        <translation type="unfinished"></translation>
+        <translation>最近使用した...(&amp;R)</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="66"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">編集</translation>
+        <translation>編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="67"/>
         <source>F&amp;ind</source>
         <oldsource>&amp;Find</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>検索(&amp;F)</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="68"/>
         <source>&amp;View</source>
-        <translation type="unfinished">表示(&amp;V)</translation>
+        <translation>表示(&amp;V)</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="69"/>
         <source>Tool Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールウィンドウ</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="74"/>
         <source>&amp;Help</source>
-        <translation type="unfinished">ヘルプ(&amp;H)</translation>
+        <translation>ヘルプ(&amp;H)</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="76"/>
         <source>Standard Toolbar</source>
         <oldsource>Standard ToolBar</oldsource>
-        <translation type="unfinished">標準ツールバー</translation>
+        <translation>標準ツールバー</translation>
     </message>
 </context>
 <context>
@@ -180,12 +180,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="74"/>
         <source>Go To Definition</source>
-        <translation type="unfinished"></translation>
+        <translation>定義へ移動</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
         <source>View Import Document</source>
-        <translation type="unfinished"></translation>
+        <translation>インポートドキュメントを表示</translation>
     </message>
 </context>
 <context>
@@ -194,35 +194,35 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="14"/>
         <source>Build Configuration</source>
         <oldsource>Build Config Dialog</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ビルド設定</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="26"/>
         <source>Build ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ビルドID</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="52"/>
         <source>Build Path</source>
         <oldsource>Build File</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ビルドパス</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="85"/>
         <source>LiteIDE</source>
-        <translation type="unfinished">LiteIDE</translation>
+        <translation>LiteIDE</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="95"/>
         <source>Build</source>
         <oldsource>Build Config</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ビルド</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="105"/>
         <source>Custom</source>
         <oldsource>Build Custom</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>カスタム</translation>
     </message>
 </context>
 <context>
@@ -231,18 +231,18 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/createdirdialog.ui" line="14"/>
         <source>Create Directory</source>
         <oldsource>Create Directory Dialog</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ディレクトリを作成</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createdirdialog.ui" line="22"/>
         <source>Parent:</source>
-        <translation type="unfinished"></translation>
+        <translation>親ディレクトリ</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createdirdialog.ui" line="36"/>
         <source>Child Path:</source>
         <oldsource>Path Name:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>パス</translation>
     </message>
 </context>
 <context>
@@ -251,32 +251,32 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="14"/>
         <source>Create File</source>
         <oldsource>Create File Dialog</oldsource>
-        <translation type="unfinished">ファイルを作成</translation>
+        <translation>ファイルを作成</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="22"/>
         <source>Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>ディレクトリ:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="36"/>
         <source>File Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="76"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>作成</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="83"/>
         <source>Create and Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>作成して編集</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/createfiledialog.ui" line="90"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -285,66 +285,66 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="80"/>
         <source>Async Record</source>
         <oldsource>AsyncRecord</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>レコードを同期</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="81"/>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>変数</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="82"/>
         <source>Watch</source>
-        <translation type="unfinished"></translation>
+        <translation>ウォッチ</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
         <source>Call Stack</source>
         <oldsource>CallStack</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>呼び出し履歴</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
         <source>Libraries</source>
         <oldsource>Library</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ライブラリ</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
         <source>Console</source>
-        <translation type="unfinished">コンソール</translation>
+        <translation>コンソール</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="94"/>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
         <source>Add Global Watch</source>
-        <translation type="unfinished"></translation>
+        <translation>グローバルウォッチを追加</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="95"/>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Add Local Watch</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカルウォッチを追加</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="96"/>
         <source>Remove Watch</source>
-        <translation type="unfinished"></translation>
+        <translation>ウォッチを削除</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
         <source>Remove All Watches</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのウォッチを削除</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
-        <translation type="unfinished"></translation>
+        <translation>式を監視(例: main.var os.Stdout)</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Watch expression (e.g. s1.str):</source>
-        <translation type="unfinished"></translation>
+        <translation>式を監視(例: st1.str)</translation>
     </message>
 </context>
 <context>
@@ -353,32 +353,32 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="67"/>
         <source>Back</source>
         <oldsource>Backward</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>進む</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>再読み込み</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="75"/>
         <source>Increase Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズを増やす</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="78"/>
         <source>Decrease Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズを減らす</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
         <source>Reset Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズをリセット</translation>
     </message>
 </context>
 <context>
@@ -386,91 +386,91 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="111"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="122"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>新しいウィンドウへ移動</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="162"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
-        <translation type="unfinished">編集</translation>
+        <translation>編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="176"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>進む</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="113"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>他を閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="114"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>全て閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="115"/>
         <source>Close Left Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>左のタブを閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="116"/>
         <source>Close Right Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>右のタブを閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="117"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>同じフォルダのファイルを閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="118"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>他のフォルダのファイルを閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>フルパスをクリップボードにコピーする</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Show in Explorer</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスプローラで表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="167"/>
         <source>Navigate Backward</source>
-        <translation type="unfinished"></translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="193"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>編集ツールバー</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="348"/>
         <source>Save changes to %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 へ変更を保存する</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="349"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
-        <translation type="unfinished">変更を保存</translation>
+		<translation>変更が保存されていない</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="427"/>
@@ -489,17 +489,17 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/liteenv/envmanager.cpp" line="260"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>環境ツールバー</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="267"/>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>環境</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="270"/>
         <source>Edit Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>環境を編集</translation>
     </message>
 </context>
 <context>
@@ -507,22 +507,22 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>ダイアログ</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished">名前:</translation>
+        <translation>名前:</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="49"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="56"/>
         <source>ExportAndView</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートして表示</translation>
     </message>
 </context>
 <context>
@@ -530,17 +530,17 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
         <source>Cannot create temporary file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>テンポラリファイルが作れません: %1</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="97"/>
         <source>Cannot create FiFo %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>FiFo %1 を作成出来ません: %2</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="104"/>
         <source>Cannot open FiFo %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>FiFo %1 を開けません: %2</translation>
     </message>
 </context>
 <context>
@@ -559,13 +559,13 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="204"/>
         <source>New File...</source>
         <oldsource>New File</oldsource>
-        <translation type="unfinished">新しいファイル</translation>
+        <translation>新しいファイル...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="205"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>新規ファイルウィザード</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
@@ -580,49 +580,49 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="519"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
-        <translation type="unfinished">ファイルを削除</translation>
+        <translation>ファイルを削除</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="132"/>
         <source>Show Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>非表示ファイルを表示</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="206"/>
         <source>Rename File...</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名を変更...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="209"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
-        <translation type="unfinished">フォルダをルートへ設定</translation>
+        <translation>フォルダをルートへ設定</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="210"/>
         <source>New Folder...</source>
         <oldsource>New Folder</oldsource>
-        <translation type="unfinished">新しいフォルダ</translation>
+        <translation>新しいフォルダ...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="211"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ名を変更...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
         <source>Open Folder in New Window</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいウィンドウでフォルダを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="220"/>
         <source>Add to Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを追加</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="286"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
@@ -632,12 +632,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="520"/>
         <source>Failed to delete the file!</source>
-        <translation type="unfinished">ファイルの削除に失敗しました!</translation>
+        <translation>ファイルの削除に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
         <source>A folder with that name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ名は既に使用されています!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
@@ -654,7 +654,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="589"/>
         <source>Failed to delete the folder!</source>
-        <translation type="unfinished">フォルダの削除に失敗しました!</translation>
+        <translation>フォルダの削除に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="212"/>
@@ -662,7 +662,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="588"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
-        <translation type="unfinished">フォルダを削除</translation>
+        <translation>フォルダを削除</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="214"/>
@@ -672,12 +672,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="215"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここでエクスプローラを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="217"/>
         <source>View Godoc Here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここでGodocを見る</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="448"/>
@@ -689,17 +689,17 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="155"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>親ディレクトリを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="291"/>
         <source>File System</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルシステム</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="449"/>
         <source>A file with that name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名は既に使用されています!</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="459"/>
@@ -710,7 +710,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい名前:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="496"/>
@@ -779,7 +779,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
 Do you want to load?</oldsource>
-        <translation type="unfinished">プロジェクト &apos;%1&apos; が作成されました。
+        <translation>プロジェクト &apos;%1&apos; が作成されました。
 読み込みますか?</translation>
     </message>
     <message>
@@ -790,52 +790,52 @@ Do you want to load?</oldsource>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="67"/>
         <source>Show Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>非表示ファイルを表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="75"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="80"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="155"/>
         <location filename="src/liteapp/filemanager.cpp" line="176"/>
         <location filename="src/liteapp/filemanager.cpp" line="197"/>
         <source>All Support Files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>サポートしている全てのファイル(%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="283"/>
         <location filename="src/liteapp/filemanager.cpp" line="301"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを選択:</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="503"/>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>セッション</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="504"/>
         <source>Project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクト</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="505"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="506"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="716"/>
@@ -879,7 +879,7 @@ Do you want to reload the file from disk ?</oldsource>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="88"/>
         <source>Clear History</source>
-        <translation type="unfinished"></translation>
+        <translation>履歴をクリア</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="338"/>
@@ -911,39 +911,39 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/litefind/filesearch.cpp" line="194"/>
         <source>Match whole word</source>
         <oldsource>Match word</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>単語にマッチ</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="195"/>
         <source>Match case</source>
-        <translation type="unfinished">大文字/小文字の区別</translation>
+        <translation>大文字/小文字の区別</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="196"/>
         <source>Regular expression</source>
-        <translation type="unfinished">正規表現</translation>
+        <translation>正規表現</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="197"/>
         <source>Scan subdirectories</source>
         <oldsource>Look in subdirs</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>サブディレクトリをスキャン</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="217"/>
         <source>Search for:</source>
-        <translation type="unfinished"></translation>
+        <translation>検索:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="219"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>オプション:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="225"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>開く...</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="226"/>
@@ -954,32 +954,32 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>フィルタ:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="330"/>
         <source>Files on File System</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルシステム上のファイル</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="206"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="207"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="248"/>
         <source>Clear</source>
-        <translation type="unfinished">クリア</translation>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="435"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>ディレクトリを開く</translation>
     </message>
 </context>
 <context>
@@ -987,7 +987,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="50"/>
         <source>Search Item:</source>
-        <translation type="unfinished"></translation>
+        <translation>検索対象</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="69"/>
@@ -998,12 +998,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="83"/>
         <source>New Search</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="86"/>
         <source>Search Result</source>
-        <translation type="unfinished"></translation>
+        <translation>検索結果</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="221"/>
@@ -1013,7 +1013,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="224"/>
         <source>File is readonly</source>
-        <translation type="unfinished"></translation>
+        <translation>読み取り専用ファイル</translation>
     </message>
 </context>
 <context>
@@ -1022,26 +1022,26 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="102"/>
         <source>Open File</source>
         <oldsource>Open Editor</oldsource>
-        <translation type="unfinished">ファイルを開く</translation>
+        <translation>ファイルを開く</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="103"/>
         <source>New File...</source>
         <oldsource>New File</oldsource>
-        <translation type="unfinished">新しいファイル</translation>
+        <translation>新しいファイル...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="104"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>新規ファイルウィザード</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="291"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="296"/>
         <source>Rename File</source>
-        <translation type="unfinished">ファイル名を変更</translation>
+        <translation>ファイル名を変更</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="106"/>
@@ -1049,13 +1049,13 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="315"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
-        <translation type="unfinished">ファイルを削除</translation>
+        <translation>ファイルを削除</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="108"/>
         <source>New Folder...</source>
         <oldsource>New Folder</oldsource>
-        <translation type="unfinished">新しいフォルダ</translation>
+        <translation>新しいフォルダ...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
@@ -1067,7 +1067,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="360"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="365"/>
         <source>Rename Folder</source>
-        <translation type="unfinished">フォルダ名を変更</translation>
+        <translation>フォルダ名を変更</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
@@ -1075,80 +1075,80 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
-        <translation type="unfinished">フォルダを削除</translation>
+        <translation>フォルダを削除</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
         <source>Rename File...</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名の変更...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="109"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ名の変更...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="112"/>
         <source>Open Terminal Here</source>
-        <translation type="unfinished">ここでターミナルを開く</translation>
+        <translation>ここでターミナルを開く</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="113"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここでエクスプローラを開く</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="115"/>
         <source>View Godoc Here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここでGodocを見る</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="419"/>
         <source>Add Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを追加</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="118"/>
         <source>Close Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを閉じる</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
         <source>Add Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを追加...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="120"/>
         <source>Close All Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのフォルダを閉じる</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="244"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="254"/>
         <source>Create File</source>
-        <translation type="unfinished">ファイルを作成</translation>
+        <translation>ファイルを作成</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="245"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名は既に使用されています!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="255"/>
         <source>Failed to create the file!</source>
-        <translation type="unfinished">ファイルの作成に失敗しました!</translation>
+        <translation>ファイルの作成に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい名前</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="292"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="297"/>
         <source>Failed to rename the file!</source>
-        <translation type="unfinished">ファイル名の変更に失敗しました!</translation>
+        <translation>ファイル名の変更に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
@@ -1159,13 +1159,13 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
-        <translation type="unfinished">ファイルの削除に失敗しました!</translation>
+        <translation>ファイルの削除に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="334"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="337"/>
         <source>Create Folder</source>
-        <translation type="unfinished">フォルダを作成</translation>
+        <translation>フォルダを作成</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
@@ -1176,24 +1176,24 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="338"/>
         <source>Failed to create the folder!</source>
-        <translation type="unfinished">フォルダの作成に失敗しました!</translation>
+        <translation>フォルダの作成に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
         <source>Folder Name</source>
-        <translation type="unfinished">フォルダ名</translation>
+        <translation>フォルダ名</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="361"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="366"/>
         <source>Failed to rename the folder!</source>
-        <translation type="unfinished">フォルダ名の変更に失敗しました!</translation>
+        <translation>フォルダ名の変更に失敗しました!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="387"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
-        <translation type="unfinished">フォルダの削除に失敗しました!</translation>
+        <translation>フォルダの削除に失敗しました!</translation>
     </message>
 </context>
 <context>
@@ -1201,12 +1201,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="130"/>
         <source>Search was canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>検索は中断されました</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="161"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="165"/>
@@ -1216,22 +1216,22 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="166"/>
         <source>Search again</source>
-        <translation type="unfinished"></translation>
+        <translation>再度検索</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="171"/>
         <source>Replace with:</source>
-        <translation type="unfinished"></translation>
+        <translation>置換:</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="177"/>
         <source>Replace all occurrences</source>
-        <translation type="unfinished"></translation>
+        <translation>全て置換</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="178"/>
         <source>Replace</source>
-        <translation type="unfinished">置換</translation>
+        <translation>置換</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="182"/>
@@ -1241,14 +1241,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="517"/>
         <source>No matches found.</source>
-        <translation type="unfinished"></translation>
+        <translation>見つかりませんでした</translation>
     </message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="519"/>
         <source>%n matches found.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
+        <translation>%d 件見つかりました</translation>
     </message>
 </context>
 <context>
@@ -1256,12 +1254,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.h" line="69"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.h" line="70"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索を中断</translation>
     </message>
 </context>
 <context>
@@ -1269,18 +1267,18 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="269"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="282"/>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="315"/>
         <source>Find</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="313"/>
         <source>Rebuild database</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースを再構成</translation>
     </message>
 </context>
 <context>
@@ -1288,72 +1286,72 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="94"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="102"/>
         <source>Find</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="121"/>
         <source>Find All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="122"/>
         <source>Find const</source>
-        <translation type="unfinished"></translation>
+        <translation>定数を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="124"/>
         <source>Find func</source>
-        <translation type="unfinished"></translation>
+        <translation>関数を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="126"/>
         <source>Find interface</source>
-        <translation type="unfinished"></translation>
+        <translation>インタフェースを検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="128"/>
         <source>Find pkg</source>
-        <translation type="unfinished"></translation>
+        <translation>パッケージを検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="130"/>
         <source>Find struct</source>
-        <translation type="unfinished"></translation>
+        <translation>構造体を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="132"/>
         <source>Find type</source>
-        <translation type="unfinished"></translation>
+        <translation>型を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="134"/>
         <source>Find var</source>
-        <translation type="unfinished"></translation>
+        <translation>変数を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="136"/>
         <source>Use Regexp</source>
-        <translation type="unfinished"></translation>
+        <translation>正規表現</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="138"/>
         <source>Match Case</source>
-        <translation type="unfinished"></translation>
+        <translation>大文字/小文字の区別</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="140"/>
         <source>Match Word</source>
-        <translation type="unfinished"></translation>
+        <translation>単語にマッチ</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="167"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ</translation>
     </message>
 </context>
 <context>
@@ -1361,77 +1359,77 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="63"/>
         <source>Match case</source>
-        <translation type="unfinished">大文字/小文字の区別</translation>
+        <translation>大文字/小文字の区別</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="64"/>
         <source>Regular expression</source>
-        <translation type="unfinished">正規表現</translation>
+        <translation>正規表現</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="65"/>
         <source>Wrap around</source>
-        <translation type="unfinished">1周する</translation>
+        <translation>折り返す</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="56"/>
         <source>Find Next</source>
-        <translation type="unfinished">次を検索</translation>
+        <translation>次を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="57"/>
         <source>Find Previous</source>
         <oldsource>Find Prev</oldsource>
-        <translation type="unfinished">前を検索</translation>
+        <translation>前を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="58"/>
         <source>Replace With:</source>
-        <translation type="unfinished"></translation>
+        <translation>置換:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="59"/>
         <source>Replace</source>
-        <translation type="unfinished">置換</translation>
+        <translation>置換</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="60"/>
         <source>Replace All</source>
-        <translation type="unfinished">全てを置換</translation>
+        <translation>全てを置換</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="62"/>
         <source>Match whole word only</source>
-        <translation type="unfinished">単語の検索</translation>
+        <translation>単語の検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="234"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="437"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>準備</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="99"/>
         <source>Find What:</source>
-        <translation type="unfinished"></translation>
+        <translation>検索:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="110"/>
         <source>Options:</source>
         <oldsource>Find Option:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>オプション:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="205"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="360"/>
         <source>Not found</source>
-        <translation type="unfinished"></translation>
+        <translation>見つかりませんでした</translation>
     </message>
 </context>
 <context>
@@ -1439,7 +1437,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/gdbdebugger/gdbdebuggeroption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/gdbdebugger/gdbdebuggeroption.ui" line="20"/>
@@ -1452,17 +1450,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="57"/>
         <source>No outline available</source>
-        <translation type="unfinished"></translation>
+        <translation>アウトラインが見つかりません</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="71"/>
         <source>Class View</source>
-        <translation type="unfinished"></translation>
+        <translation>クラス表示</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation>アウトライン</translation>
     </message>
 </context>
 <context>
@@ -1470,23 +1468,23 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="20"/>
         <source>Gocode</source>
         <oldsource>Go API</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="26"/>
         <source>Close gocode when exiting</source>
-        <translation type="unfinished"></translation>
+        <translation>終了時にgocodeを閉じる</translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
         <source>Auto update depends package</source>
-        <translation type="unfinished"></translation>
+        <translation>依存するパッケージを自動更新</translation>
     </message>
 </context>
 <context>
@@ -1494,17 +1492,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="100"/>
         <source>Godoc Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Godocを検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="92"/>
         <source>Golang Doc Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Golangドキュメント検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="96"/>
         <source>Golang Api Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Golang APIインデックス</translation>
     </message>
 </context>
 <context>
@@ -1512,12 +1510,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="20"/>
         <source>Go API</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="26"/>
@@ -1577,7 +1575,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="20"/>
@@ -1698,7 +1696,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="310"/>
         <source>Export PDF</source>
-        <translation type="unfinished">PDFへエクスポート</translation>
+        <translation>PDFへエクスポート</translation>
     </message>
 </context>
 <context>
@@ -1707,27 +1705,27 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="85"/>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="150"/>
         <source>Go Playground</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="87"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>実行</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="88"/>
         <source>Stop</source>
-        <translation type="unfinished">停止</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="89"/>
         <source>New</source>
-        <translation type="unfinished">新規</translation>
+        <translation>新規</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="90"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>読み込み...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="91"/>
@@ -1804,7 +1802,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="413"/>
         <source>Export PDF</source>
-        <translation type="unfinished">PDFへエクスポート</translation>
+        <translation>PDFへエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
@@ -1933,7 +1931,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="198"/>
         <source>Options</source>
-        <translation type="unfinished">オプション</translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="599"/>
@@ -1998,7 +1996,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="654"/>
         <source>About LiteIDE</source>
-        <translation type="unfinished">Liteide について</translation>
+        <translation>Liteide について</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="660"/>
@@ -2038,7 +2036,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="120"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
-        <translation type="unfinished">最近使用したファイル</translation>
+        <translation>最近使用したファイル</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="126"/>
@@ -2153,7 +2151,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="256"/>
         <source>Language changes will take effect after LiteIDE is restarted.</source>
         <oldsource>The language change will take effect after a restart of LiteIDE.</oldsource>
-        <translation type="unfinished">言語の変更は LiteIDE の再起動後に有効となります。</translation>
+        <translation>言語の変更は LiteIDE の再起動後に有効となります。</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="127"/>
@@ -2184,7 +2182,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.cpp" line="390"/>
         <location filename="src/liteapp/liteappoption.cpp" line="424"/>
         <source>Keyboard Mapping Scheme (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードマッピングスキーマ(%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="397"/>
@@ -2214,7 +2212,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="108"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="105"/>
@@ -2269,7 +2267,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="160"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
-        <translation type="unfinished">LiteBuild</translation>
+        <translation>ビルドオプション</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="439"/>
@@ -2367,7 +2365,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="100"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="103"/>
@@ -2387,12 +2385,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="118"/>
         <source>Stop</source>
-        <translation type="unfinished">停止</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="74"/>
         <source>Clear</source>
-        <translation type="unfinished">クリア</translation>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="115"/>
@@ -2419,7 +2417,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="93"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="108"/>
@@ -2472,7 +2470,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="20"/>
@@ -2501,7 +2499,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>LiteIDEドキュメントブラウザ</translation>
     </message>
 </context>
 <context>
@@ -2509,27 +2507,27 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="217"/>
         <source>Undo</source>
-        <translation type="unfinished">元に戻す</translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="220"/>
         <source>Redo</source>
-        <translation type="unfinished">やり直し</translation>
+        <translation>やり直し</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="223"/>
         <source>Cut</source>
-        <translation type="unfinished">切り取り</translation>
+        <translation>切り取り</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
         <source>Copy</source>
-        <translation type="unfinished">コピー</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="229"/>
         <source>Paste</source>
-        <translation type="unfinished">貼り付け</translation>
+        <translation>貼り付け</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
@@ -2580,7 +2578,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="239"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
-        <translation type="unfinished">印刷プレビュー</translation>
+        <translation>印刷プレビュー...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="235"/>
@@ -2779,7 +2777,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="119"/>
         <source>Editor Color Scheme</source>
         <oldsource>ColorStyle Scheme</oldsource>
-        <translation type="unfinished">色スタイルスキーム</translation>
+        <translation>カラースキームエディタ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="127"/>
@@ -2842,12 +2840,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
         <source>Display line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>行番号を表示</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="374"/>
         <source>Display indent guide </source>
-        <translation type="unfinished"></translation>
+        <translation>インデントガイドを表示</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="383"/>
@@ -2876,27 +2874,27 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="325"/>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="347"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="139"/>
         <source>MIME Type</source>
-        <translation type="unfinished"></translation>
+        <translation>MIMEタイプ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="140"/>
         <source>Tab Width</source>
-        <translation type="unfinished"></translation>
+        <translation>タブ幅</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="141"/>
         <source>Spaces as Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>タブをスペースで置き換え</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
         <source>File Extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルの拡張子</translation>
     </message>
 </context>
 <context>
@@ -2904,12 +2902,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteenv/liteenvoption.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/liteenvoption.ui" line="20"/>
         <source>Environment definition files:</source>
-        <translation type="unfinished"></translation>
+        <translation>環境定義ファイル:</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/liteenvoption.ui" line="33"/>
@@ -2922,32 +2920,32 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="60"/>
         <source>F&amp;ind</source>
-        <translation type="unfinished"></translation>
+        <translation>検索(&amp;i)</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="72"/>
         <source>Find</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="75"/>
         <source>Find Next</source>
-        <translation type="unfinished">次を検索</translation>
+        <translation>次を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="78"/>
         <source>Find Previous</source>
-        <translation type="unfinished">前を検索</translation>
+        <translation>前を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="81"/>
         <source>Replace</source>
-        <translation type="unfinished">置換</translation>
+        <translation>置換</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="84"/>
         <source>File Search</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル検索</translation>
     </message>
 </context>
 <context>
@@ -2956,18 +2954,18 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/litetabwidget.cpp" line="63"/>
         <source>Close tab</source>
         <oldsource>Close Page</oldsource>
-        <translation type="unfinished">ページを閉じる</translation>
+        <translation>タブを閉じる</translation>
     </message>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="65"/>
         <source>List all tabs</source>
         <oldsource>List Page</oldsource>
-        <translation type="unfinished">ページ一覧</translation>
+        <translation>タブ一覧</translation>
     </message>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="67"/>
         <source>Open a new tab</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいタブを開く</translation>
     </message>
 </context>
 <context>
@@ -2976,23 +2974,23 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="142"/>
         <source>Markdown Exporter</source>
         <oldsource>Markdown Batch</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Markdownエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="161"/>
         <source>All Files (*)</source>
-        <translation type="unfinished">全てのファイル (*)</translation>
+        <translation>全てのファイル (*)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="230"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Markdownファイルがあるフォルダを選択</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="241"/>
         <source>Select Markdown Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdownファイルを選択</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="289"/>
@@ -3003,13 +3001,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="302"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>マージしてHTMLにエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="377"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
-        <translation type="unfinished">PDFへエクスポート</translation>
+        <translation>PDFへエクスポート</translation>
     </message>
 </context>
 <context>
@@ -3017,66 +3015,66 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="20"/>
         <source>Markdown Source Files</source>
         <oldsource>Markdown Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Markdownソースファイル</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="38"/>
         <source>Import Folder...</source>
         <oldsource>Import Folder</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>フォルダをインポート...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="45"/>
         <source>Add Files...</source>
         <oldsource>Add Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを追加...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="52"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>上へ移動</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="59"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>下へ移動</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="66"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="73"/>
         <source>Remove All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て削除</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="98"/>
         <source>Options</source>
-        <translation type="unfinished">オプション</translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="106"/>
         <source>Export Folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートフォルダ:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="116"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>参照...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="127"/>
         <source>Use CSS</source>
-        <translation type="unfinished"></translation>
+        <translation>CSSを使用</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="137"/>
@@ -3094,48 +3092,48 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="169"/>
         <source>Export</source>
         <oldsource>Export Util</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>エクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="175"/>
         <source>Export Separated HTML</source>
         <oldsource>Separate Html</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>別のHTMLにエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="182"/>
         <source>Export Separated PDF</source>
         <oldsource>Separate PDF</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>別のPDFにエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="189"/>
         <source>Export Merged HTML...</source>
         <oldsource>Merge Html</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>HTMLにマージしてエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="196"/>
         <source>Export Merged PDF...</source>
         <oldsource>Merge PDF</oldsource>
-        <translation type="unfinished"></translation>
+		<translation>PDFにマージしてエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="203"/>
         <source>Print Preview Merged...</source>
         <oldsource>Merge Print Preview</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>マージして印刷プレビュー</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="210"/>
         <source>Print Merged</source>
         <oldsource>Merge Print</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>マージして印刷</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="233"/>
         <source>Log</source>
-        <translation type="unfinished"></translation>
+        <translation>ログ</translation>
     </message>
 </context>
 <context>
@@ -3144,87 +3142,87 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="81"/>
         <source>Header (h1)</source>
         <oldsource>Header &lt;h1&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ(h1)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="84"/>
         <source>Header (h2)</source>
         <oldsource>Header &lt;h2&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ(h2)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="87"/>
         <source>Header (h3)</source>
         <oldsource>Header &lt;h3&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ(h3)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="90"/>
         <source>Header (h4)</source>
         <oldsource>Header &lt;h4&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ(h4)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="93"/>
         <source>Header (h5)</source>
         <oldsource>Header &lt;h5&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ(h5)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="96"/>
         <source>Header (h6)</source>
         <oldsource>Header &lt;h6&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ(h6)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="99"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>太字</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="102"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>斜字</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="105"/>
         <source>Inline Code</source>
-        <translation type="unfinished"></translation>
+        <translation>コード</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="108"/>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>リンク</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="111"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>画像</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="114"/>
         <source>Unordered List</source>
-        <translation type="unfinished"></translation>
+        <translation>箇条書き</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="117"/>
         <source>Ordered List</source>
-        <translation type="unfinished"></translation>
+        <translation>一覧</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="120"/>
         <source>Blockquote</source>
-        <translation type="unfinished"></translation>
+        <translation>引用</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="123"/>
         <source>Horizontal Rule</source>
-        <translation type="unfinished"></translation>
+        <translation>区切り</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="131"/>
         <source>Heading</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘッダ</translation>
     </message>
 </context>
 <context>
@@ -3237,23 +3235,23 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="124"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>参照...</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="24"/>
         <source>GOPATH:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="38"/>
         <source>Template:</source>
         <oldsource>Template</oldsource>
-        <translation type="unfinished">カテゴリ</translation>
+        <translation>テンプレート:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="54"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>種別</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="73"/>
@@ -3274,17 +3272,17 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
         <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
         <source>Could not create the target directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ターゲットディレクトリが作成出来ませんでした: %1</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
@@ -3295,34 +3293,35 @@ Use the target directory anyway?</source>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>Overwrite File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルの上書き</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+		<translation>%1 は既に存在しています。
+置き換えますか?</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
         <source>No files could be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルが作成出来ませんでした</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="279"/>
         <source>File template details:</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルテンプレートの詳細:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="281"/>
         <source>Project template details:</source>
         <oldsource>New project wizard:</oldsource>
-        <translation type="unfinished">新規プロジェクトウィザード:</translation>
+        <translation>新規プロジェクトウィザード:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="359"/>
         <source>Choose a directory for the new content:</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいコンテンツを置くディレクトリ選択:</translation>
     </message>
 </context>
 <context>
@@ -3331,19 +3330,19 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionsbrowser.cpp" line="58"/>
         <source>Options</source>
         <oldsource>Options Page</oldsource>
-        <translation type="unfinished">オプション</translation>
+        <translation>オプション</translation>
     </message>
 </context>
 <context>
     <name>OptionsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="obsolete">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="14"/>
         <source>Options</source>
-        <translation type="unfinished">オプション</translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="41"/>
@@ -3358,11 +3357,11 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/optionswidget.ui" line="86"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="obsolete">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
 </context>
 <context>
@@ -3371,57 +3370,57 @@ Do you want to replace it?</source>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="82"/>
         <source>Manage GOPATH...</source>
         <oldsource>Setup GOPATH</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>GOPATHを管理...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="81"/>
         <source>Reload All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て再読み込み</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="88"/>
         <source>View Documentation</source>
         <oldsource>View Package Document</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントを表示</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="89"/>
         <source>Load Package in New Window</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいウィンドウでパッケージを読み込む</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="90"/>
         <source>Add Package to Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダにパッケージを追加</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
         <source>Open Source File</source>
-        <translation type="unfinished"></translation>
+        <translation>ソースファイルを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>名前をクリップボードにコピー</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="114"/>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>パッケージブラウザ</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="194"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Goのインストール先が見つかりません</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="199"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Goのパッケージリストを読み込み中...</translation>
     </message>
 </context>
 <context>
@@ -3429,34 +3428,34 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="76"/>
         <source>Reload Package</source>
-        <translation type="unfinished"></translation>
+        <translation>パッケージをリロード</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="77"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここでエクスプローラを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="78"/>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="300"/>
         <source>Add Source File</source>
-        <translation type="unfinished"></translation>
+        <translation>ソースファイルを追加</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル %1 は既に存在しています</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
         <source>Could not open %1 for writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 を書き込み用に開けませんでした</translation>
     </message>
 </context>
 <context>
@@ -3465,7 +3464,7 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/pluginsdialog.ui" line="14"/>
         <source>Installed Plugins</source>
         <oldsource>Install Plugins</oldsource>
-        <translation type="unfinished">プラグインをインストール</translation>
+        <translation>プラグインをインストール</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.ui" line="45"/>
@@ -3475,35 +3474,35 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="51"/>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="54"/>
         <source>Author</source>
         <oldsource>Anchor</oldsource>
-        <translation type="unfinished">作者</translation>
+        <translation>作者</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="52"/>
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>有効</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="53"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>詳細</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="55"/>
         <source>Version</source>
         <oldsource>Last Ver</oldsource>
-        <translation type="unfinished">バージョン</translation>
+        <translation>バージョン</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="56"/>
         <source>File Name</source>
         <oldsource>FileName</oldsource>
-        <translation type="unfinished">ファイル名</translation>
+        <translation>ファイル名</translation>
     </message>
 </context>
 <context>
@@ -3511,47 +3510,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="46"/>
         <source>process exited with code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスがコード %1 で終了しました</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="49"/>
         <source>process crashed or was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスがクラッシュしたか強制終了しました</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="52"/>
         <source>process exited with an unknown status</source>
-        <translation type="unfinished"></translation>
+        <translation>原因不明のステータスでプロセスが終了しました</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="62"/>
         <source>process failed to start</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスの起動に失敗しました</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="65"/>
         <source>process crashed or was terminated while running</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスがクラッシュしたか実行中に強制終了しました</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="68"/>
         <source>timed out waiting for process</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセス待機がタイムアウトしました</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="71"/>
         <source>couldn&apos;t read from the process</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスから読み込めませんでした</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="74"/>
         <source>couldn&apos;t write to the process</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスに書き込めませんでした</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="78"/>
         <source>an unknown error occurred</source>
-        <translation type="unfinished"></translation>
+		<translation>エラーが発生</translation>
     </message>
 </context>
 <context>
@@ -3559,12 +3558,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="95"/>
         <source>Project &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクト &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="119"/>
         <source>Import Directory &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>インポートディレクトリ &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -3572,7 +3571,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/3rdparty/qjson/src/parserrunnable.cpp" line="64"/>
         <source>An error occurred while parsing json: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>jsonの解析中にエラーが発生: %1</translation>
     </message>
 </context>
 <context>
@@ -3580,12 +3579,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="81"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="82"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索を中断</translation>
     </message>
 </context>
 <context>
@@ -3593,40 +3592,40 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="14"/>
         <source>Debug External Application</source>
-        <translation type="unfinished"></translation>
+        <translation>外部のアプリケーションをデバッグ</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="22"/>
         <source>Application:</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーション:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="29"/>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="56"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>参照...</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="36"/>
         <source>Arguments:</source>
-        <translation type="unfinished">引数:</translation>
+        <translation>引数:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="46"/>
         <source>Working directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>作業ディレクトリ:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="82"/>
         <source>Select Executable</source>
-        <translation type="unfinished"></translation>
+        <translation>実行ファイルを選択</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="92"/>
         <source>Select the working directory:</source>
         <oldsource>Select Working Directory</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>作業ディレクトリを選択</translation>
     </message>
 </context>
 <context>
@@ -3634,38 +3633,38 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="14"/>
         <source>Manage GOPATH</source>
-        <translation type="unfinished"></translation>
+        <translation>GOPATHを管理</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
         <source>System GOPATH</source>
-        <translation type="unfinished"></translation>
+        <translation>システムのGOPATH</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="35"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>再読み込み</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="60"/>
         <source>Custom Directories (one per line)</source>
-        <translation type="unfinished"></translation>
+        <translation>任意のディレクトリ(1行)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="71"/>
         <source>Add Directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>ディレクトリを追加...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="78"/>
         <source>Clear</source>
-        <translation type="unfinished">クリア</translation>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="74"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>GOPATHに追加するディレクトリを選択:</translation>
     </message>
 </context>
 <context>
@@ -3673,27 +3672,27 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="59"/>
         <source>Cut</source>
-        <translation type="unfinished">切り取り</translation>
+        <translation>切り取り</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="62"/>
         <source>Copy</source>
-        <translation type="unfinished">コピー</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="65"/>
         <source>Paste</source>
-        <translation type="unfinished">貼り付け</translation>
+        <translation>貼り付け</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="68"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て選択</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="71"/>
         <source>Clear All</source>
-        <translation type="unfinished"></translation>
+        <translation>全てクリア</translation>
     </message>
 </context>
 <context>
@@ -3709,74 +3708,74 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="62"/>
         <source>Hide</source>
-        <translation type="unfinished">非表示</translation>
+        <translation>非表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="63"/>
         <source>Hide Tool Window</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールウィンドウを非表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="80"/>
         <location filename="src/liteapp/tooldockwidget.cpp" line="140"/>
         <location filename="src/liteapp/tooldockwidget.cpp" line="141"/>
         <source>Move To</source>
-        <translation type="unfinished"></translation>
+        <translation>移動</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="82"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>一番上</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="86"/>
         <source>Top (Split)</source>
         <oldsource>Top : Split</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>一番上(分割)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="92"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>一番下</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="96"/>
         <source>Bottom (Split)</source>
         <oldsource>Bottom : Split</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>一番下(分割)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="102"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="106"/>
         <source>Left (Split)</source>
         <oldsource>Left : Split</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>左(分割)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="112"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="116"/>
         <source>Right (Split)</source>
         <oldsource>Right : Split</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>右(分割)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="124"/>
         <source>Unsplit</source>
         <oldsource>UnSplit</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>分割しない</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="129"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>分割</translation>
     </message>
 </context>
 <context>
@@ -3785,7 +3784,7 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/toolmainwindow.cpp" line="242"/>
         <source>Hide Sidebars</source>
         <oldsource>HideSideBar</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3793,12 +3792,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/3rdparty/qtc_editutil/filterlineedit.cpp" line="51"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>フィルタ</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_editutil/filterlineedit.cpp" line="52"/>
         <source>Clear text</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストをクリア</translation>
     </message>
 </context>
 <context>
@@ -3806,29 +3805,29 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="69"/>
         <source>Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>ナビゲーション</translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="72"/>
         <source>Open Html File</source>
         <oldsource>Open Html</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Htmlファイルを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="119"/>
         <source>WebKitBrowser</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="169"/>
         <source>False load %1 !</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 の読み込み失敗!</translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>HtmlもしくはMarkdownファイルを開く</translation>
     </message>
 </context>
 <context>
@@ -3836,8 +3835,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkithtmlwidgetplugin.cpp" line="74"/>
         <source>Open Html or Markdown File</source>
-        <oldsource>Open Html or Markdown Files</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>HtmlもしくはMarkdownファイルを開く</translation>
     </message>
 </context>
 <context>
@@ -3845,28 +3843,28 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="64"/>
         <source>New</source>
-        <translation type="unfinished">新規</translation>
+        <translation>新規</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="65"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>開く</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="66"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="67"/>
         <source>Options</source>
-        <translation type="unfinished">オプション</translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="216"/>
         <source>Welcome</source>
         <oldsource>Welcome Page</oldsource>
-        <translation type="unfinished">ようこそ</translation>
+        <translation>ようこそ</translation>
     </message>
 </context>
 <context>
@@ -3875,7 +3873,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/welcome/welcomeplugin.cpp" line="64"/>
         <source>Welcome</source>
         <oldsource>Home</oldsource>
-        <translation type="unfinished">ホーム</translation>
+        <translation>ホーム</translation>
     </message>
 </context>
 </TS>
