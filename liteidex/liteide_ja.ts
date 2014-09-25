@@ -847,7 +847,10 @@ Do you want to close the editor ?</source>
 This file has been deleted from the drive,
 
 Do you want to close the editor ?</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>%1
+このファイルは削除されました。
+
+エディタを終了しますか?</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="746"/>
@@ -857,7 +860,11 @@ but you have unsaved modifications in your LiteIDE editor.
 
 Do you want to reload the file from disk ?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+このファイルは変更さましたが、LiteIDE エディタで未保存な変更あります。
+
+ディスクからファイルを再読み込みしますか?
+&quot;はい&quot; を選択すると変更が破棄されます。</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="753"/>
@@ -869,7 +876,11 @@ Do you want to reload the file from disk ?</source>
 This file has been modified on the drive,
 
 Do you want to reload the file from disk ?</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>%1
+このファイルは変更されました。
+
+ファイルを再読み込みしますか?</source>
+		</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="325"/>
@@ -894,7 +905,12 @@ but you have unsaved modifications in your LiteIDE editor.
 
 Do you want to close the editor ?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+このファイルは削除されました。
+しかし LiteIDE エディタ上の変更が保存されていません。
+
+エディタを終了しますか?
+&quot;はい&quot; を選択すると変更が破棄されます。</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="713"/>
@@ -1171,7 +1187,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ名は既に使用されています!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="338"/>
@@ -1211,7 +1227,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="165"/>
         <source>Repeat the search with same parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>同じパラメータで検索を繰り返す</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="166"/>
@@ -1445,7 +1461,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/gdbdebugger/gdbdebuggeroption.ui" line="20"/>
         <source>Enable --tty for program being debugged.</source>
-        <translation type="unfinished"></translation>
+        <translation>プログラムのデバッグで --tty を有効にする</translation>
     </message>
 </context>
 <context>
@@ -1529,7 +1545,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="33"/>
         <source>Only load standard API documentation</source>
         <oldsource>Only load standard api</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>標準 API ドキュメントのみ読み込む</translation>
     </message>
 </context>
 <context>
@@ -1638,32 +1654,32 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="64"/>
         <source>Section (s1)</source>
-        <translation type="unfinished"></translation>
+        <translation>セクション(s1)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="67"/>
         <source>Subsection (s2)</source>
-        <translation type="unfinished"></translation>
+        <translation>セクション(s2)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="70"/>
         <source>Sub-subsection (s3)</source>
-        <translation type="unfinished"></translation>
+        <translation>セクション(s3)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="73"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>太字</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="76"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>斜字</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="79"/>
         <source>Inline Code</source>
-        <translation type="unfinished"></translation>
+        <translation>コード</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="82"/>
