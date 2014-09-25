@@ -1246,7 +1246,10 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="519"/>
         <source>%n matches found.</source>
-        <translation>%d 件見つかりました</translation>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
