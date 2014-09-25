@@ -879,8 +879,7 @@ Do you want to reload the file from disk ?</oldsource>
         <translation>%1
 このファイルは変更されました。
 
-ファイルを再読み込みしますか?</source>
-		</translation>
+ファイルを再読み込みしますか?</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="325"/>
