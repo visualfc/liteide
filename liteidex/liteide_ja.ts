@@ -964,7 +964,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/litefind/filesearch.cpp" line="226"/>
         <source>Use Current</source>
         <oldsource>Current</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>この設定を使用</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
@@ -1538,7 +1538,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="26"/>
         <source>Use default context (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトのコンテキストを使用する(高速)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="33"/>
@@ -1688,7 +1688,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="85"/>
         <source>Comment/Uncomment Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>選択をコメント/コメント解除</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="88"/>
@@ -1748,12 +1748,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="91"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>保存...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="92"/>
         <source>Explore Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを探索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="173"/>
@@ -1761,41 +1761,41 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <oldsource>Running...
 
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>起動中...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="197"/>
         <source>Error: %1.</source>
         <oldsource>
 Error: %1.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>エラー: %1</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="199"/>
         <source>Success: %2.</source>
         <oldsource>
 Success: %2.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>成功: %2</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="249"/>
         <source>Load File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを読み込む</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="249"/>
         <source>Select a file to load:</source>
-        <translation type="unfinished"></translation>
+        <translation>読み込むファイルを選択:</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="265"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを保存</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="265"/>
         <source>New File Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいファイルの名前:</translation>
     </message>
 </context>
 <context>
@@ -1814,7 +1814,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
         <source>Export Html</source>
-        <translation type="unfinished"></translation>
+        <translation>HTMLへエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
@@ -2060,7 +2060,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="126"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>最大個数:</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="104"/>
@@ -2076,48 +2076,48 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="173"/>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>セクション</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="204"/>
         <source>Reload folders on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時にフォルダを再読み込み</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="231"/>
         <source>Reload files on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時にファイルを再読み込み</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="276"/>
         <location filename="src/liteapp/liteappoption.ui" line="282"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="288"/>
         <source>Show splash screen on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時にスプラッシュ画面を表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="295"/>
         <source>Show welcome page on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時にようこそのページを表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="302"/>
         <source>Show close buttons on each editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation>タブ毎に閉じるボタンを表示</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="312"/>
         <source>Toolbar Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバーのアイコンサイズ</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="385"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボード</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="391"/>
@@ -2132,32 +2132,32 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="410"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>リセット</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="417"/>
         <source>Reset All</source>
-        <translation type="unfinished"></translation>
+        <translation>全てをリセット</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="437"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>インポート...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="444"/>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポート...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="24"/>
         <source>Generic</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="78"/>
         <source>Theme:</source>
-        <translation type="unfinished"></translation>
+        <translation>テーマ</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="179"/>
@@ -2174,48 +2174,48 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="127"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンド</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="128"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>ラベル</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="129"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカット</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="130"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>標準</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="390"/>
         <source>Import Keyboard Mapping Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードマッピングスキームをインポート</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="390"/>
         <location filename="src/liteapp/liteappoption.cpp" line="424"/>
         <source>Keyboard Mapping Scheme (%1)</source>
-        <translation>キーボードマッピングスキーマ(%1)</translation>
+        <translation>キーボードマッピングスキーム(%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="397"/>
         <source>Could not read scheme from %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 からスキームを読み込めません</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="424"/>
         <source>Export Keyboard Mapping Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードマッピングスキームをエクスポート</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="435"/>
         <source>Could not write scheme to %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>スキーム %1 を書き込めません!</translation>
     </message>
 </context>
 <context>
@@ -2237,7 +2237,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="109"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="113"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>値</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="117"/>
@@ -2303,7 +2303,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1000"/>
         <source>Command exited with code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドはコード %1 で終了しました</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1002"/>
@@ -2332,7 +2332,7 @@ Success: %2.</oldsource>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>起動中プロセスの停止に失敗しました</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1180"/>
@@ -2346,12 +2346,12 @@ Success: %2.</oldsource>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>プロセスの起動に成功しました</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1226"/>
         <source>Failed to start process</source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスの起動に失敗しました</translation>
     </message>
 </context>
 <context>
@@ -2389,7 +2389,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="103"/>
         <source>Execute:</source>
         <oldsource>Exec:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>実行:</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="110"/>
@@ -2725,7 +2725,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="919"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存な変更を破棄して %1 を再読み込みしますか?</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
@@ -2817,7 +2817,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="196"/>
         <source>Syntax Auto-completion</source>
         <oldsource>Auto complete brackets</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ブラケットを自動補完</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="294"/>
@@ -2832,7 +2832,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
         <source>Word wrap by default</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトで折り返す</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="418"/>
@@ -3013,7 +3013,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="289"/>
         <source>Select the folder to contain separated markdown exports:</source>
-        <translation type="unfinished"></translation>
+        <translation>分割してエクスポートされたmarkdownが含まれるフォルダを選択:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="302"/>
@@ -3306,7 +3306,8 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Location %1 is not empty.
 Use the target directory anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>場所 %1 は空です。
+それでもこのディレクトリを使用しますか?</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
@@ -3829,7 +3830,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="72"/>
         <source>Open Html File</source>
         <oldsource>Open Html</oldsource>
-        <translation>Htmlファイルを開く</translation>
+        <translation>HTMLファイルを開く</translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="119"/>
@@ -3845,7 +3846,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
-        <translation>HtmlもしくはMarkdownファイルを開く</translation>
+        <translation>HTMLもしくはMarkdownファイルを開く</translation>
     </message>
 </context>
 <context>
@@ -3853,7 +3854,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkithtmlwidgetplugin.cpp" line="74"/>
         <source>Open Html or Markdown File</source>
-        <translation>HtmlもしくはMarkdownファイルを開く</translation>
+        <translation>HTMLもしくはMarkdownファイルを開く</translation>
     </message>
 </context>
 <context>
