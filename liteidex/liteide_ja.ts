@@ -627,7 +627,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation>このファイルを完全に削除しますか?</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="520"/>
@@ -649,7 +649,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="584"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="589"/>
@@ -1008,7 +1008,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="69"/>
         <source>This file change cannot be undone!</source>
         <oldsource>This change cannot be undone.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>この変更は戻せません!</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="83"/>
@@ -1023,7 +1023,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="221"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
-        <translation type="unfinished"></translation>
+        <translation>以下のファイルは書き込み権限がありません。権限を変更しますか?</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="224"/>
@@ -1075,7 +1075,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation>このファイルを完全に削除しますか?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
@@ -1168,7 +1168,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
@@ -1604,12 +1604,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
         <source>Goimports updates your Go import lines, adding missing ones and removing unreferenced ones.</source>
-        <translation type="unfinished"></translation>
+        <translation>Goimports はインポート行を変更し、必要なインポートを追加したり不要なインポートを削除します。</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="29"/>
         <source>Use goimports instead of gofmt,for code formatting</source>
-        <translation type="unfinished"></translation>
+        <translation>gofmt の代わりに goimports を使用してコード整形を行う</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
@@ -1619,24 +1619,24 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>同期</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="59"/>
         <source> Synchronous code formatting</source>
         <oldsource>Enable Synchronous code formatting</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>コード整形を同期して行う</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="68"/>
         <source>Synchronous code formatting timeout in milliseconds (500ms or more):</source>
-        <translation type="unfinished"></translation>
+        <translation>同期コード整形時のタイムアウト(500ms もしくはそれ以上):</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="43"/>
         <source>Automatically format code when saving</source>
         <oldsource>When the editor is saved automatically gofmt</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>保存時に自動でコード整形を行う</translation>
     </message>
 </context>
 <context>
