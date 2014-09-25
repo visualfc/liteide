@@ -1614,7 +1614,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
-        <translation type="unfinished"></translation>
+        <translation>高速な整形に diff を使用する(PATH 内に diff が必要)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
@@ -1876,27 +1876,27 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="56"/>
         <source>IndentNone</source>
-        <translation type="unfinished"></translation>
+        <translation>インデントなし</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="57"/>
         <source>IndentCompact</source>
-        <translation type="unfinished"></translation>
+        <translation>コンパクトなインデント</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="58"/>
         <source>IndentMinimum</source>
-        <translation type="unfinished"></translation>
+        <translation>最少のインデント</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="59"/>
         <source>IndentMedium</source>
-        <translation type="unfinished"></translation>
+        <translation>中ぐらいのインデント</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="60"/>
         <source>IndentFull</source>
-        <translation type="unfinished"></translation>
+        <translation>最大のインデント</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="62"/>
@@ -2032,13 +2032,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="30"/>
         <source>Store</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="36"/>
         <source>Store settings to local ini file ( request restart LiteIDE )</source>
         <oldsource>Store settings to local ini file ( request restart liteide )</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>設定をローカルの ini ファイルに保存(再起動が必要)</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="46"/>
@@ -2065,7 +2065,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="104"/>
         <source>Monitoring files for modifications</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルの変更を監視</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="110"/>
@@ -2127,7 +2127,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="403"/>
         <source>Hide standard commands</source>
-        <translation type="unfinished"></translation>
+        <translation>標準コマンドを隠す</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="410"/>
@@ -2318,7 +2318,7 @@ Success: %2.</oldsource>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>プロセスが実行中です。まずアクションを停止して下さい。</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1079"/>
@@ -2339,7 +2339,7 @@ Success: %2.</oldsource>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&gt; アクション &apos;%1&apos; が解析出来ません</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1226"/>
@@ -2365,12 +2365,12 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="20"/>
         <source>Recheck Go installation when changing environments</source>
         <oldsource>Recheck go env if enviroment changed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>環境の変更時にGoのインストールを再チェックする</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="27"/>
         <source>Build command configuration files:</source>
-        <translation type="unfinished"></translation>
+        <translation>ビルドコマンドの設定ファイル:</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="40"/>
@@ -2754,7 +2754,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="337"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>不可視文字をチェックし &apos;.&apos; に変換する</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="30"/>
@@ -3098,13 +3098,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="137"/>
         <source>Insert horizontal line between merged files</source>
         <oldsource>Merge files insert split &lt;hr&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>マージされるファイルの間に区切り線を挿入する</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="144"/>
         <source>Insert page break between merged files</source>
         <oldsource>Merge files insert page break</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>マージされるファイルの間にページ区切りを挿入する</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="169"/>
