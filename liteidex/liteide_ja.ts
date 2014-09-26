@@ -1251,7 +1251,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="182"/>
         <source>Preserve case</source>
-        <translation type="unfinished"></translation>
+        <translation>大文字/小文字を維持する</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="517"/>
@@ -1585,7 +1585,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangedit/golangfilesearch.cpp" line="53"/>
         <source>Golang Find Usages</source>
-        <translation type="unfinished"></translation>
+        <translation>Golang の使用箇所を検索</translation>
     </message>
 </context>
 <context>
@@ -1683,7 +1683,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="82"/>
         <source>Switch Bullets</source>
-        <translation type="unfinished"></translation>
+        <translation>箇条書き</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="85"/>
@@ -1699,17 +1699,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="91"/>
         <source>Verify Present</source>
-        <translation type="unfinished"></translation>
+        <translation>プレゼンを検証</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="256"/>
         <source>Present verify success</source>
-        <translation type="unfinished"></translation>
+        <translation>プレゼンの検証が成功しました</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
         <source>Present verify false</source>
-        <translation type="unfinished"></translation>
+        <translation>プレゼンの検証が失敗しました</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="310"/>
@@ -2071,7 +2071,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="110"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>元のファイルが変更/削除された場合、自動でリロード/クローズする</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="173"/>
@@ -2122,7 +2122,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="391"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
-        <translation type="unfinished"></translation>
+        <translation>整形: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="403"/>
@@ -2163,7 +2163,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="179"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>起動時にセッションを再読み込み</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="256"/>
@@ -2291,7 +2291,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="439"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="445"/>
         <source>Current environment change id &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>現在の環境は id &quot;%1&quot; を変更します</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="997"/>
@@ -2375,7 +2375,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="40"/>
         <source>Build configuration changes will take effect after LiteIDE is restarted.</source>
-        <translation type="unfinished"></translation>
+        <translation>LiteIDE の再起動後に有効になる変更のビルドを行います</translation>
     </message>
 </context>
 <context>
@@ -2811,7 +2811,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="166"/>
         <source>Apply color scheme to text output widgets</source>
         <oldsource>Output widget use color scheme</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>テキスト出力ウィジェットにもカラースキームを適用する</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="196"/>
@@ -2930,7 +2930,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteenv/liteenvoption.ui" line="33"/>
         <source>Environment changes will take effect after switching environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>環境の変更は切り替え後に有効となります</translation>
     </message>
 </context>
 <context>
