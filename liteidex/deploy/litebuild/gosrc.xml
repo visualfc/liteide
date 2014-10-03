@@ -3,7 +3,7 @@
 	<mime-type type="text/x-gosrc" id="gosrc" work="$(EDITOR_DIR)" ver="1">
 		<config id="Go" name="GO" value="go"/>
 		<config id="LiteIDEStub" name="LITEIDESTUB" value="$(LITEAPPDIR)/liteide_stub"/>
-		<config id="ErrRegex" name="ERRREGEX" value="(\w?:?[\w\d_\-\\/\.]+):(\d+):"/>
+		<config id="ErrRegex" name="ERRREGEX" value="\b((?:[a-zA-Z]:)?[\w\d_\-\\/\.]+):(\d+)\b"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
 		<custom id="BuildArgs" name="BUILDARGS" value=""/>
 		<custom id="InstallArgs" name="INSTALLARGS" value=""/>
