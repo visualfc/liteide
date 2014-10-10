@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!--
+  This file is part of KDE's kate project.
+
+  copyright   : (C) 2004 by Dominik Haumann
+  email       : dhdev at gmx dot de
+
+ **********************************************************************
+ * This library is free software; you can redistribute it and/or      *
+ * modify it under the terms of the GNU Library General Public        *
+ * License as published by the Free Software Foundation; either       *
+ * version 2 of the License, or (at your option) any later version.   *
+ *                                                                    *
+ * This library is distributed in the hope that it will be useful,    *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of     *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  *
+ * Library General Public License for more details.                   *
+ *                                                                    *
+ * You should have received a copy of the GNU Library General Public  *
+ * License along with this library; if not, write to the              *
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,   *
+ * Boston, MA  02110-1301, USA.                                       *
+ **********************************************************************
+
+ This file is included in every file that highlights the "alerts" keywords.
+ That's why extensions and mimetype are empty.
+
+ Changes by Alex Turbov:
+  Introduce 3 alert levels and sort keywords according importance.
+  Few more keywords has been added.
+-->
+<language version="1.11" kateversion="3.1" name="Alerts" section="Other" extensions="" mimetype="" author="Dominik Haumann (dhdev@gmx.de)" license="LGPL" hidden="true">
+  <highlighting>
+    <list name="alerts_hi">
+      <item> ALERT </item>
+      <item> ATTENTION </item>
+      <item> DANGER </item>
+      <item> HACK </item>
+      <item> SECURITY </item>
+    </list>
+    <list name="alerts_mid">
+      <item> BUG </item>
+      <item> FIXME </item>
+      <item> DEPRECATED </item>
+      <item> TASK </item>
+      <item> TODO </item>
+      <item> TBD </item>
+      <item> WARNING </item>
+      <item> CAUTION </item>
+      <item> NOLINT </item>
+    </list>
+    <list name="alerts_lo">
+      <item> ### </item>
+      <item> NOTE </item>
+      <item> NOTICE </item>
+      <item> TEST </item>
+      <item> TESTING </item>
+    </list>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#pop" name="Normal Text" >
+        <StringDetect attribute="Region Marker" context="#stay" String="{{{" beginRegion="AlertRegion1" />
+        <StringDetect attribute="Region Marker" context="#stay" String="}}}" endRegion="AlertRegion1" />
+        <StringDetect attribute="Region Marker" context="#stay" String="BEGIN" beginRegion="AlertRegion2" />
+        <StringDetect attribute="Region Marker" context="#stay" String="END" endRegion="AlertRegion2" />
+        <keyword attribute="Alert Level 1" context="#stay" String="alerts_hi" />
+        <keyword attribute="Alert Level 2" context="#stay" String="alerts_mid" />
+        <keyword attribute="Alert Level 3" context="#stay" String="alerts_lo" />
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text"   defStyleNum="dsNormal"/>
+      <itemData name="Alert Level 1" defStyleNum="dsAlert" color="#e85848" selColor="#e85848" backgroundColor="#451e1a" />
+      <itemData name="Alert Level 2" defStyleNum="dsAlert" color="#ca9219" selColor="#ca9219" backgroundColor="#451e1a" />
+      <itemData name="Alert Level 3" defStyleNum="dsAlert" color="#81ca2d" selColor="#81ca2d" />
+      <itemData name="Region Marker" defStyleNum="dsRegionMarker"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <keywords casesensitive="1"/>
+  </general>
+</language>
+<!-- kate: indent-width 2; -->
