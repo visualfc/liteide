@@ -48,6 +48,7 @@
 #define EDITOR_AUTOBRACE3 "editor/autobraces3"
 #define EDITOR_AUTOBRACE4 "editor/autobraces4"
 #define EDITOR_AUTOBRACE5 "editor/autobraces5"
+#define EDITOR_AUTOBRACE6 "editor/autobraces6"
 #define EDITOR_COMPLETER_CASESENSITIVE "editor/completercasesensitive"
 #define EDITOR_LINENUMBERVISIBLE "editor/linenumbervisible"
 #define EDITOR_PREFIXLENGTH "editor/prefixlength"

@@ -150,6 +150,9 @@ public:
     void setAutoBraces4(bool b) {
         m_autoBraces4 = b;
     }
+    void setAutoBraces5(bool b) {
+        m_autoBraces5 = b;
+    }
     void setLineNumberVisible(bool b) {
         m_lineNumbersVisible = b;
         slotUpdateExtraAreaWidth();
@@ -204,6 +207,8 @@ public:
     LiteApi::ITextLexer * textLexer() const {
         return m_textLexer.data();
     }
+    QString autoCompleteSurroundText(QTextCursor &cursor, const QString &textToInsert) const;
+    bool checkIsSkipAutoComplete(QTextCursor &cursor, const QString &textToInsert) const;
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -255,11 +260,12 @@ protected:
     bool m_autoBraces2; //[
     bool m_autoBraces3; //'
     bool m_autoBraces4; //"
+    bool m_autoBraces5; //`
     bool m_bLastBraces;
     bool m_bTabUseSpace;
     bool m_mouseNavigation;
     int  m_nTabSize;
-    QString m_lastBraces;
+    QString m_lastBraceText;
     int m_lastSaveRevision;
     int m_extraAreaSelectionNumber;
     bool m_mouseOnFoldedMarker;

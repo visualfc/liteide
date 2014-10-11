@@ -220,14 +220,21 @@
           <item>
            <widget class="QCheckBox" name="autoBraces3CheckBox">
             <property name="text">
-             <string notr="true"> '</string>
+             <string notr="true">''</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="autoBraces4CheckBox">
             <property name="text">
-             <string notr="true">&quot;</string>
+             <string notr="true">&quot;&quot;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoBraces5CheckBox">
+            <property name="text">
+             <string>``</string>
             </property>
            </widget>
           </item>

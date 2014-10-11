@@ -747,6 +747,7 @@ void LiteEditor::applyOption(QString id)
     bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
     bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
     bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
@@ -766,6 +767,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setAutoBraces2(autoBraces2);
     m_editorWidget->setAutoBraces3(autoBraces3);
     m_editorWidget->setAutoBraces4(autoBraces4);
+    m_editorWidget->setAutoBraces5(autoBraces5);
     m_editorWidget->setLineNumberVisible(lineNumberVisible);
     m_editorWidget->setEofVisible(eofVisible);
     m_editorWidget->setIndentLineVisible(indentLineVisible);

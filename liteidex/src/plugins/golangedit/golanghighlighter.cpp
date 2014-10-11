@@ -68,7 +68,6 @@ void GolangHighlighter::highlightBlock(const QString &text)
 
     int braceDepth = initialBraceDepth;
 
-    qDebug() << text << initialBraceDepth;
 
     LanguageFeatures features;
     features.golangEnable = true;
@@ -87,6 +86,7 @@ void GolangHighlighter::highlightBlock(const QString &text)
         userData->setFoldingStartIncluded(false);
         userData->setFoldingEndIncluded(false);
     }
+
 
     if (tokens.isEmpty()) {
         setCurrentBlockState((braceDepth << 8) | lexerState);
@@ -300,24 +300,24 @@ void GolangHighlighter::highlightBlock(const QString &text)
 
     // optimization: if only the brace depth changes, we adjust subsequent blocks
     // to have QSyntaxHighlighter stop the rehighlighting
-    int currentState = currentBlockState();
-    if (currentState != -1) {
-        int oldState = currentState & 0xff;
-        int oldBraceDepth = currentState >> 8;
-        if (oldState == tokenize.state() && oldBraceDepth != braceDepth) {
-            BaseTextDocumentLayout::FoldValidator foldValidor;
-            foldValidor.setup(qobject_cast<BaseTextDocumentLayout *>(document()->documentLayout()));
-            int delta = braceDepth - oldBraceDepth;
-            QTextBlock block = currentBlock().next();
-            while (block.isValid() && block.userState() != -1) {
-                BaseTextDocumentLayout::changeBraceDepth(block, delta);
-                BaseTextDocumentLayout::changeFoldingIndent(block, delta);
-                foldValidor.process(block);
-                block = block.next();
-            }            
-            foldValidor.finalize();
-        }
-    }
+//    int currentState = currentBlockState();
+//    if (currentState != -1) {
+//        int oldState = currentState & 0xff;
+//        int oldBraceDepth = currentState >> 8;
+//        if (oldState == tokenize.state() && oldBraceDepth != braceDepth) {
+//            BaseTextDocumentLayout::FoldValidator foldValidor;
+//            foldValidor.setup(qobject_cast<BaseTextDocumentLayout *>(document()->documentLayout()));
+//            int delta = braceDepth - oldBraceDepth;
+//            QTextBlock block = currentBlock().next();
+//            while (block.isValid() && block.userState() != -1) {
+//                BaseTextDocumentLayout::changeBraceDepth(block, delta);
+//                BaseTextDocumentLayout::changeFoldingIndent(block, delta);
+//                foldValidor.process(block);
+//                block = block.next();
+//            }
+//            foldValidor.finalize();
+//        }
+//    }
 
     setCurrentBlockState((braceDepth << 8) | tokenize.state());
 }
@@ -326,8 +326,8 @@ void GolangHighlighter::setFoldingIndent(const QTextBlock &block, int indent)
 {
     TextBlockUserData *userData = BaseTextDocumentLayout::userData(block);
     if (userData->foldingIndent() != indent) {
-        userData->setFoldingIndent(indent);
         emit foldIndentChanged(block);
+        userData->setFoldingIndent(qMax(0,indent));
     }
 }
 

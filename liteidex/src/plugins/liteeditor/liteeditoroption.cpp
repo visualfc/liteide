@@ -97,6 +97,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
     bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
     bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
     bool cleanWhitespaceOnSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
@@ -119,6 +120,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->autoBraces2CheckBox->setChecked(autoBraces2);
     ui->autoBraces3CheckBox->setChecked(autoBraces3);
     ui->autoBraces4CheckBox->setChecked(autoBraces4);
+    ui->autoBraces5CheckBox->setChecked(autoBraces5);
     ui->lineNumberVisibleCheckBox->setChecked(lineNumberVisible);
     ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
     ui->preMinLineEdit->setText(QString("%1").arg(min));
@@ -227,6 +229,7 @@ void LiteEditorOption::apply()
     bool autoBraces2 = ui->autoBraces2CheckBox->isChecked();
     bool autoBraces3 = ui->autoBraces3CheckBox->isChecked();
     bool autoBraces4 = ui->autoBraces4CheckBox->isChecked();
+    bool autoBraces5 = ui->autoBraces5CheckBox->isChecked();
     bool lineNumberVisible = ui->lineNumberVisibleCheckBox->isChecked();
     bool caseSensitive = ui->completerCaseSensitiveCheckBox->isChecked();
     bool cleanWhitespaceOnSave = ui->cleanWhitespaceOnSaveCheckBox->isChecked();
@@ -253,6 +256,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE2,autoBraces2);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE3,autoBraces3);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE4,autoBraces4);
+    m_liteApp->settings()->setValue(EDITOR_AUTOBRACE5,autoBraces5);
     m_liteApp->settings()->setValue(EDITOR_LINENUMBERVISIBLE,lineNumberVisible);
     m_liteApp->settings()->setValue(EDITOR_EOFVISIBLE,eofVisible);
     m_liteApp->settings()->setValue(EDITOR_DEFAULTWORDWRAP,defaultWordWrap);
