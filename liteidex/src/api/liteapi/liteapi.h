@@ -576,6 +576,7 @@ class IGoProxy : public QObject
 public:
     IGoProxy(QObject *parent) : QObject(parent) {}
     virtual bool isValid() const = 0;
+    virtual bool isRunning(const QByteArray &id) const = 0;
 signals:
     void error(const QByteArray &id, int err);
     void done(const QByteArray &id, const QByteArray &args);
