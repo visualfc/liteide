@@ -1576,13 +1576,15 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     bool ro = isReadOnly();
 
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
-            m_textLexer->isCanAutoCompleter(this->textCursor())) {
+            (m_bLastBraces ||m_textLexer->isCanAutoCompleter(this->textCursor())) ) {
+
         if (m_bLastBraces) {
             if (e->text() == m_lastBraceText) {
                 QTextCursor cursor = textCursor();
                 cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
                 setTextCursor(cursor);
                 m_bLastBraces = false;
+                return;
             } else if (e->key() == Qt::Key_Backspace) {
                 QTextCursor cursor = textCursor();
                 cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
