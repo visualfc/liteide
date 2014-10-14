@@ -209,6 +209,8 @@ public:
     }
     QString autoCompleteSurroundText(QTextCursor &cursor, const QString &textToInsert) const;
     bool checkIsSkipAutoComplete(QTextCursor &cursor, const QString &textToInsert) const;
+    bool autoBackspace(QTextCursor &cursor);
+    void handleBackspaceKey();
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,

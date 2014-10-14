@@ -1566,6 +1566,67 @@ bool LiteEditorWidgetBase::checkIsSkipAutoComplete(QTextCursor &cursor, const QS
     return false;
 }
 
+bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
+{
+    int pos = cursor.position();
+    if (pos == 0)
+        return false;
+    QTextCursor c = cursor;
+    c.setPosition(pos - 1);
+
+    QTextDocument *doc = cursor.document();
+    const QChar lookAhead = doc->characterAt(pos);
+    const QChar lookBehind = doc->characterAt(pos - 1);
+    const QChar lookFurtherBehind = doc->characterAt(pos - 2);
+
+    const QChar character = lookBehind;
+    if (character == QLatin1Char('(') || character == QLatin1Char('[')) {
+        QTextCursor tmp = cursor;
+        TextEditor::TextBlockUserData::findPreviousBlockOpenParenthesis(&tmp);
+        int blockStart = tmp.isNull() ? 0 : tmp.position();
+        tmp = cursor;
+        TextEditor::TextBlockUserData::findNextBlockClosingParenthesis(&tmp);
+        int blockEnd = tmp.isNull() ? (cursor.document()->characterCount()-1) : tmp.position();
+        QChar openChar = character;
+        QChar closeChar = (character == QLatin1Char('(')) ? QLatin1Char(')') : QLatin1Char(']');
+
+        int errors = 0;
+        int stillopen = 0;
+        countBrackets(cursor, blockStart, blockEnd, openChar, closeChar, &errors, &stillopen);
+        int errorsBeforeDeletion = errors + stillopen;
+        errors = 0;
+        stillopen = 0;
+        countBrackets(cursor, blockStart, pos - 1, openChar, closeChar, &errors, &stillopen);
+        countBrackets(cursor, pos, blockEnd, openChar, closeChar, &errors, &stillopen);
+        int errorsAfterDeletion = errors + stillopen;
+
+        if (errorsAfterDeletion < errorsBeforeDeletion)
+            return false; // insertion fixes parentheses or bracket errors, do not auto complete
+    }
+    // ### this code needs to be generalized
+    if    ((lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')'))
+        || (lookBehind == QLatin1Char('[') && lookAhead == QLatin1Char(']'))
+        || (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`')
+               && lookFurtherBehind != QLatin1Char('\\'))
+        || (lookBehind == QLatin1Char('"') && lookAhead == QLatin1Char('"')
+            && lookFurtherBehind != QLatin1Char('\\'))
+        || (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')
+            && lookFurtherBehind != QLatin1Char('\\'))) {
+        if (! this->m_textLexer->isInComment(c)) {
+            cursor.beginEditBlock();
+            cursor.deleteChar();
+            cursor.deletePreviousChar();
+            cursor.endEditBlock();
+            return true;
+        }
+    }
+    return false;
+}
+
+void LiteEditorWidgetBase::handleBackspaceKey()
+{
+}
+
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Insert && e->modifiers() == Qt::NoModifier) {
@@ -1574,69 +1635,6 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         return;
     }
     bool ro = isReadOnly();
-
-    if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
-            (m_bLastBraces ||m_textLexer->isCanAutoCompleter(this->textCursor())) ) {
-
-        if (m_bLastBraces) {
-            if (e->text() == m_lastBraceText) {
-                QTextCursor cursor = textCursor();
-                cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
-                setTextCursor(cursor);
-                m_bLastBraces = false;
-                return;
-            } else if (e->key() == Qt::Key_Backspace) {
-                QTextCursor cursor = textCursor();
-                cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
-                cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,2);
-                cursor.removeSelectedText();
-                setTextCursor(cursor);
-                return;
-            }
-        }
-        m_bLastBraces = false;
-        QString keyText = e->text();
-        QTextCursor cursor = textCursor();
-        if (checkIsSkipAutoComplete(cursor,keyText)) {
-            QPlainTextEdit::keyPressEvent(e);
-            return;
-        }
-        QString mr;
-        QString mrList = " ";
-        if (m_autoBraces0 && keyText == "{") {
-            mr = "}";
-        } else if (m_autoBraces1 && keyText == "(") {
-            mr = ")";
-        } else if (m_autoBraces2 && keyText == "[") {
-            mr = "]";
-        } else if (m_autoBraces3 && keyText == "\'") {
-            mr = "\'";
-        } else if (m_autoBraces4 && keyText == "\"") {
-            mr = "\"";
-            mrList += "()[]{}";
-        } else if (m_autoBraces5 && keyText == "`") {
-            mr = "`";
-            mrList += "()[]{}";
-        }        
-        if (!mr.isNull()) {
-            QTextCursor cursor = textCursor();
-            int pos = cursor.positionInBlock();
-            QString text = cursor.block().text();
-            if (pos == text.length() || mrList.contains(text.at(pos))) {
-                cursor.beginEditBlock();
-                pos = cursor.position();
-                cursor.insertText(keyText+mr);
-                cursor.setPosition(pos+1);
-                cursor.endEditBlock();
-                setTextCursor(cursor);
-                m_bLastBraces = true;
-                m_lastBraceText = mr;
-                return;
-            }
-        }
-        QPlainTextEdit::keyPressEvent(e);
-        return;
-    }
 
     if (e->modifiers() == Qt::NoModifier && ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return )) {
         if (m_autoIndent) {
@@ -1689,6 +1687,18 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             return;
         }
         case Qt::Key_Backspace: {
+            QTextCursor cursor = this->textCursor();
+            if ((e->modifiers() & (Qt::ControlModifier
+                                   | Qt::ShiftModifier
+                                   | Qt::AltModifier
+                                   | Qt::MetaModifier)) == Qt::NoModifier
+                && !cursor.hasSelection()) {
+                if (this->autoBackspace(cursor)) {
+                    this->setTextCursor(cursor);
+                    e->accept();
+                    return;
+                }
+            }
             break;
         }
         case Qt::Key_Up:
@@ -1717,6 +1727,57 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             break;
         }
     }
+    if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
+            (m_bLastBraces ||m_textLexer->isCanAutoCompleter(this->textCursor())) ) {
+
+        if (m_bLastBraces) {
+            if (e->text() == m_lastBraceText) {
+                QTextCursor cursor = textCursor();
+                cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
+                setTextCursor(cursor);
+                m_bLastBraces = false;
+                return;
+            }/* else if (e->key() == Qt::Key_Backspace) {
+                QTextCursor cursor = textCursor();
+                cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor);
+                cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,2);
+                cursor.removeSelectedText();
+                setTextCursor(cursor);
+                return;
+            }*/
+        }
+        m_bLastBraces = false;
+        QString keyText = e->text();
+        QString mr;
+        if (m_autoBraces0 && keyText == "{") {
+            mr = "}";
+        } else if (m_autoBraces1 && keyText == "(") {
+            mr = ")";
+        } else if (m_autoBraces2 && keyText == "[") {
+            mr = "]";
+        } else if (m_autoBraces3 && keyText == "\'") {
+            mr = "\'";
+        } else if (m_autoBraces4 && keyText == "\"") {
+            mr = "\"";
+        } else if (m_autoBraces5 && keyText == "`") {
+            mr = "`";
+        }
+        if (!mr.isNull()) {
+            QTextCursor cursor = textCursor();
+            if (!this->checkIsSkipAutoComplete(cursor,keyText)) {
+                cursor.beginEditBlock();
+                int pos = cursor.position();
+                cursor.insertText(keyText+mr);
+                cursor.setPosition(pos+1);
+                cursor.endEditBlock();
+                setTextCursor(cursor);
+                m_bLastBraces = true;
+                m_lastBraceText = mr;
+                return;
+            }
+        }
+    }
+
     QPlainTextEdit::keyPressEvent(e);
 }
 
