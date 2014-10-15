@@ -55,7 +55,6 @@ bool GolangTextLexer::isInComment(const QTextCursor &cursor) const
 bool GolangTextLexer::isInString(const QTextCursor &cursor) const
 {
     Token token;
-
     if (isInCommentHelper(cursor, &token))
         return false;
 
@@ -63,6 +62,21 @@ bool GolangTextLexer::isInString(const QTextCursor &cursor) const
         const unsigned pos = cursor.selectionEnd() - cursor.block().position();
         if (pos <= token.end())
             return true;
+    }
+    return false;
+}
+
+bool GolangTextLexer::isInEmptyString(const QTextCursor &cursor) const
+{
+    Token token;
+    if (isInCommentHelper(cursor, &token))
+        return false;
+
+    if (token.isStringLiteral() || token.isCharLiteral()) {
+        const unsigned pos = cursor.selectionEnd() - cursor.block().position();
+        if (pos <= token.end()) {
+            return token.length() == 2;
+        }
     }
     return false;
 }

@@ -1571,13 +1571,32 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     int pos = cursor.position();
     if (pos == 0)
         return false;
+    if (this->m_textLexer->isInComment(cursor)) {
+        return false;
+    }
+
     QTextCursor c = cursor;
     c.setPosition(pos - 1);
 
     QTextDocument *doc = cursor.document();
     const QChar lookAhead = doc->characterAt(pos);
     const QChar lookBehind = doc->characterAt(pos - 1);
-    const QChar lookFurtherBehind = doc->characterAt(pos - 2);
+    //const QChar lookFurtherBehind = doc->characterAt(pos - 2);
+
+    if ( (lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')')) ||
+         (lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')')) ) {
+        if (m_textLexer->isInString(cursor)) {
+            return false;
+        }
+    } else if ( (lookBehind == QLatin1Char('\"') && lookAhead == QLatin1Char('\"')) ||
+               (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')) ||
+                (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`'))) {
+        if(!m_textLexer->isInEmptyString(cursor)) {
+             return false;
+        }
+    } else {
+        return false;
+    }
 
     const QChar character = lookBehind;
     if (character == QLatin1Char('(') || character == QLatin1Char('[')) {
@@ -1603,24 +1622,22 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
         if (errorsAfterDeletion < errorsBeforeDeletion)
             return false; // insertion fixes parentheses or bracket errors, do not auto complete
     }
-    // ### this code needs to be generalized
-    if    ((lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')'))
-        || (lookBehind == QLatin1Char('[') && lookAhead == QLatin1Char(']'))
-        || (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`')
-               && lookFurtherBehind != QLatin1Char('\\'))
-        || (lookBehind == QLatin1Char('"') && lookAhead == QLatin1Char('"')
-            && lookFurtherBehind != QLatin1Char('\\'))
-        || (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')
-            && lookFurtherBehind != QLatin1Char('\\'))) {
-        if (! this->m_textLexer->isInComment(c)) {
-            cursor.beginEditBlock();
-            cursor.deleteChar();
-            cursor.deletePreviousChar();
-            cursor.endEditBlock();
-            return true;
-        }
-    }
-    return false;
+
+
+//    if    ((lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')'))
+//        || (lookBehind == QLatin1Char('[') && lookAhead == QLatin1Char(']'))
+//        || (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`'))
+//        || (lookBehind == QLatin1Char('"') && lookAhead == QLatin1Char('"')
+//            && lookFurtherBehind != QLatin1Char('\\'))
+//        || (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')
+//            && lookFurtherBehind != QLatin1Char('\\'))) {
+         cursor.beginEditBlock();
+         cursor.deleteChar();
+         cursor.deletePreviousChar();
+         cursor.endEditBlock();
+         return true;
+//    }
+//    return false;
 }
 
 void LiteEditorWidgetBase::handleBackspaceKey()
