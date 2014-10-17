@@ -2,6 +2,7 @@
 #include <QListView>
 #include <QStandardItemModel>
 #include <QKeyEvent>
+#include <QDebug>
 
 CodeCompleter::CodeCompleter(QObject *parent) :
     QCompleter(parent)
@@ -15,6 +16,41 @@ CodeCompleter::~CodeCompleter()
 void CodeCompleter::setSeparator(const QString &separator)
 {
     m_seperator = separator;
+}
+
+bool CodeCompleter::eventFilter(QObject *o, QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::KeyPress: {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+        switch (ke->key()) {
+        case Qt::Key_Up:
+            if ( this->popup() && this->popup()->isVisible()) {
+                QModelIndex index = this->popup()->currentIndex();
+                if (index.isValid() && (index.row() == 0)) {
+                    this->popup()->setCurrentIndex(this->popup()->model()->index(this->popup()->model()->rowCount()-1,0));
+                    return true;
+                }
+            }
+            break;
+        case Qt::Key_Down:
+            if (this->popup() && this->popup()->isVisible()) {
+                QModelIndex index = this->popup()->currentIndex();
+                if (index.isValid() && (index.row() == this->popup()->model()->rowCount()-1)) {
+                    this->popup()->setCurrentIndex(this->popup()->model()->index(0,0));
+                    return true;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    return QCompleter::eventFilter(o,e);
 }
 
 QString CodeCompleter::separator() const

@@ -15,6 +15,7 @@ public:
     QString separator() const;
     void setSeparator(const QString &separator);
 protected:
+    virtual bool eventFilter(QObject *o, QEvent *e);
     virtual QStringList splitPath(const QString &path) const;
     virtual QString pathFromIndex(const QModelIndex &index) const;
 private:
