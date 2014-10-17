@@ -470,7 +470,7 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <location filename="src/liteapp/editormanager.cpp" line="349"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
-		<translation>変更が保存されていない</translation>
+        <translation>変更が保存されていない</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="427"/>
@@ -1262,7 +1262,6 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="519"/>
         <source>%n matches found.</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -2568,27 +2567,27 @@ Success: %2.</oldsource>
         <translation>行の操作</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="849"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="851"/>
         <source>Export HTML</source>
         <translation>HTMLへエクスポート</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="857"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="859"/>
         <source>Export Failed</source>
         <translation>エクスポートに失敗しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="858"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="860"/>
         <source>Could not open %1 for writing.</source>
         <translation>%1 を書き込み用に開けませんでした</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="877"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="879"/>
         <source>Export PDF</source>
         <translation>PDFへエクスポート</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="902"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="904"/>
         <source>Print Document</source>
         <translation>印刷</translation>
     </message>
@@ -2652,7 +2651,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="960"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>指定行へ移動</translation>
@@ -2723,7 +2722,7 @@ Success: %2.</oldsource>
         <translation>ファイルを再読み込み</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="919"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="921"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>未保存な変更を破棄して %1 を再読み込みしますか?</translation>
     </message>
@@ -2734,7 +2733,7 @@ Success: %2.</oldsource>
         <translation>次のブロックに移動</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="960"/>
         <source>Line: </source>
         <translation>行: </translation>
     </message>
@@ -2747,12 +2746,12 @@ Success: %2.</oldsource>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="331"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="338"/>
         <source>Load File</source>
         <translation>ファイルを読み込む</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="337"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="344"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
         <translation>不可視文字をチェックし &apos;.&apos; に変換する</translation>
     </message>
@@ -2820,97 +2819,102 @@ Success: %2.</oldsource>
         <translation>ブラケットを自動補完</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="294"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="237"/>
+        <source>``</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="301"/>
         <source>Clean whitespace when saving files</source>
         <translation>ファイル保存時に空白を除去</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="301"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="308"/>
         <source>Enable scroll wheel zooming</source>
         <translation>マウスホィールによるスクロールを許可</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
         <source>Word wrap by default</source>
         <translation>デフォルトで折り返す</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="418"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="425"/>
         <source>Display offset position</source>
         <translation>オフセット位置を表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="442"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="449"/>
         <source>File Types</source>
         <translation>ファイルタイプ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="190"/>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="240"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="247"/>
         <source>Behavior</source>
         <translation>動作</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="353"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
         <source>Display EOF</source>
         <translation>EOF を表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="374"/>
         <source>Display line numbers</source>
         <translation>行番号を表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="374"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="381"/>
         <source>Display indent guide </source>
         <translation>インデントガイドを表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="383"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="390"/>
         <source>Display right margin at column</source>
         <translation>右マージを表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="246"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="253"/>
         <source>Automatic indentation</source>
         <oldsource>Enable automatic indentation</oldsource>
         <translation>自動インデント</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="253"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="260"/>
         <source>Case sensitive code completion</source>
         <oldsource>Completer case sensitive</oldsource>
-		<translation>大文字/小文字を区別したコード補完</translation>
+        <translation>大文字/小文字を区別したコード補完</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="262"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="269"/>
         <source>Code completion prefix length:</source>
         <oldsource>Word Complete Prefix Length</oldsource>
         <translation>コード補完を行う文字数:</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="325"/>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="347"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="332"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="354"/>
         <source>Display</source>
         <translation>表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="139"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="141"/>
         <source>MIME Type</source>
         <translation>MIMEタイプ</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="140"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
         <source>Tab Width</source>
         <translation>タブ幅</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="141"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="143"/>
         <source>Spaces as Tabs</source>
         <translation>タブをスペースで置き換え</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="144"/>
         <source>File Extensions</source>
         <translation>ファイルの拡張子</translation>
     </message>
@@ -3134,7 +3138,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="196"/>
         <source>Export Merged PDF...</source>
         <oldsource>Merge PDF</oldsource>
-		<translation>PDFにマージしてエクスポート</translation>
+        <translation>PDFにマージしてエクスポート</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="203"/>
@@ -3318,7 +3322,7 @@ Use the target directory anyway?</source>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-		<translation>%1 は既に存在しています。
+        <translation>%1 は既に存在しています。
 置き換えますか?</translation>
     </message>
     <message>
@@ -3355,10 +3359,6 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsWidget</name>
     <message>
-        <source>Form</source>
-        <translation>フォーム</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/optionswidget.ui" line="14"/>
         <source>Options</source>
         <translation>オプション</translation>
@@ -3377,10 +3377,6 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionswidget.ui" line="86"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>閉じる</translation>
     </message>
 </context>
 <context>
@@ -3569,7 +3565,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="78"/>
         <source>an unknown error occurred</source>
-		<translation>エラーが発生</translation>
+        <translation>エラーが発生</translation>
     </message>
 </context>
 <context>
