@@ -28,9 +28,8 @@
 #include <QModelIndex>
 #include "liteeditorapi/liteeditorapi.h"
 
-class QCompleter;
+class CodeCompleter;
 class QPlainTextEdit;
-class TreeModelCompleter;
 class QStandardItemModel;
 
 class LiteCompleter : public LiteApi::ICompleter
@@ -40,7 +39,6 @@ public:
     explicit LiteCompleter(QObject *parent = 0);
     virtual ~LiteCompleter();
     virtual void setEditor(QPlainTextEdit *editor);
-    virtual QCompleter *completer() const;
     virtual QStandardItem *findRoot(const QString &name);
     virtual void clearChildItem(QStandardItem *root);
     virtual void appendChildItem(QStandardItem *root,QString name,const QString &kind, const QString &info,const QIcon &icon, bool temp);
@@ -50,16 +48,25 @@ public:
     virtual void clearItemChilds(const QString &name);
     virtual void clear();
     virtual void clearTemp();
-    virtual void show();
     virtual void setSearchSeparator(bool b);
     virtual bool searchSeparator() const;
     virtual void setExternalMode(bool b);
     virtual bool externalMode() const;
+    virtual void showPopup();
+    virtual void setCaseSensitivity(Qt::CaseSensitivity caseSensitivity);
+    virtual void setCompletionPrefix(const QString &prefix);
+    virtual QString completionPrefix() const;
+    virtual QAbstractItemView *popup() const;
+    virtual QModelIndex currentIndex() const;
+    virtual QString currentCompletion() const;
+    virtual QAbstractItemModel *model() const;
+    virtual QAbstractItemModel *completionModel() const;
+    virtual bool startCompleter(const QString &completionPrefix);
 public slots:
     virtual void completionPrefixChanged(QString,bool force);
     virtual void insertCompletion(QModelIndex);
 protected:
-    TreeModelCompleter *m_completer;
+    CodeCompleter     *m_completer;
     QStandardItemModel *m_model;
     QPlainTextEdit *m_editor;
     QTimer         *m_timer;

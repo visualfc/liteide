@@ -191,9 +191,9 @@ void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
         return;
     }
     m_completer->setEditor(m_editorWidget);
-    m_editorWidget->setCompleter(m_completer->completer());
+    m_editorWidget->setCompleter(m_completer);
 
-    m_extension->addObject("LiteApi.ICompleter",complter);
+    m_extension->addObject("LiteApi.ICompleter",m_completer);
 
     connect(m_editorWidget,SIGNAL(completionPrefixChanged(QString,bool)),m_completer,SLOT(completionPrefixChanged(QString,bool)));
     connect(m_completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(updateTip(QString,QString,QString)));
@@ -777,7 +777,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setScrollWheelZooming(wheelZooming);
 
     if (m_completer) {
-        m_completer->completer()->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+        m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
     }
 
 #if defined(Q_OS_WIN)

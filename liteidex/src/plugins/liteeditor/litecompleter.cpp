@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "litecompleter.h"
-#include "treemodelcompleter/treemodelcompleter.h"
+#include "codecompleter.h"
 
 #include <QCompleter>
 #include <QPlainTextEdit>
@@ -104,7 +104,7 @@ public:
 
 LiteCompleter::LiteCompleter(QObject *parent) :
     LiteApi::ICompleter(parent),
-    m_completer( new TreeModelCompleter(this)),
+    m_completer( new CodeCompleter(this)),
     m_model(new QStandardItemModel(this)),
     m_bSearchSeparator(true),
     m_bExternalMode(false)
@@ -129,11 +129,6 @@ void LiteCompleter::setEditor(QPlainTextEdit *editor)
 {
     m_editor = editor;
     m_completer->setWidget(m_editor);
-}
-
-QCompleter *LiteCompleter::completer() const
-{
-    return m_completer;
 }
 
 QStandardItem *LiteCompleter::findRoot(const QString &name)
@@ -231,7 +226,7 @@ void LiteCompleter::clearTemp()
     clearTempIndex(m_model,QModelIndex());
 }
 
-void LiteCompleter::show()
+void LiteCompleter::showPopup()
 {
     if (!m_editor) {
         return;
@@ -250,6 +245,61 @@ void LiteCompleter::show()
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
+}
+
+void LiteCompleter::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
+{
+    m_completer->setCaseSensitivity(caseSensitivity);
+}
+
+void LiteCompleter::setCompletionPrefix(const QString &prefix)
+{
+    m_completer->setCompletionPrefix(prefix);
+}
+
+QString LiteCompleter::completionPrefix() const
+{
+    return m_completer->completionPrefix();
+}
+
+QAbstractItemView *LiteCompleter::popup() const
+{
+    return m_completer->popup();
+}
+
+QModelIndex LiteCompleter::currentIndex() const
+{
+    return m_completer->currentIndex();
+}
+
+QString LiteCompleter::currentCompletion() const
+{
+    return m_completer->currentCompletion();
+}
+
+QAbstractItemModel *LiteCompleter::model() const
+{
+    return m_model;
+}
+
+QAbstractItemModel *LiteCompleter::completionModel() const
+{
+    return m_completer->completionModel();
+}
+
+bool LiteCompleter::startCompleter(const QString &completionPrefix)
+{
+    if (completionPrefix != this->completionPrefix()) {
+        this->setCompletionPrefix(completionPrefix);
+        this->popup()->setCurrentIndex(this->completionModel()->index(0, 0));
+    }
+
+    if (this->currentCompletion() == completionPrefix) {
+        this->popup()->hide();
+        return false;
+    }
+    this->showPopup();
+    return true;
 }
 
 void LiteCompleter::setSearchSeparator(bool b)

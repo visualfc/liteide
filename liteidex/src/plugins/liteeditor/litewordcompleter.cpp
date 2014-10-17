@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "litewordcompleter.h"
-#include "treemodelcompleter/treemodelcompleter.h"
+#include "codecompleter.h"
 #include <QPlainTextEdit>
 #include <QStandardItem>
 #include <QStandardItemModel>

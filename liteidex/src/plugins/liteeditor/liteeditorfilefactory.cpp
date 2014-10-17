@@ -174,7 +174,7 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
                 }
             }
             wordCompleter->appendItems(wordApi->expList(),"","",exp,false);
-            wordCompleter->completer()->model()->sort(0);
+            wordCompleter->model()->sort(0);
         }
     }
     editor->applyOption(OPTION_LITEEDITOR);

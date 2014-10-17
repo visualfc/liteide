@@ -95,7 +95,6 @@ class ICompleter : public QObject
 public:
     ICompleter(QObject *parent): QObject(parent) {}
     virtual void setEditor(QPlainTextEdit *editor) = 0;
-    virtual QCompleter *completer() const = 0;
     virtual QStandardItem *findRoot(const QString &name) = 0;
     virtual void clearChildItem(QStandardItem *root) = 0;
     virtual void appendChildItem(QStandardItem *root,QString name,const QString &kind, const QString &info,const QIcon &icon, bool temp) = 0;
@@ -105,11 +104,19 @@ public:
     virtual void clearItemChilds(const QString &name) = 0;
     virtual void clearTemp() = 0;
     virtual void clear() = 0;
-    virtual void show() = 0;
     virtual void setSearchSeparator(bool b) = 0;
     virtual bool searchSeparator() const = 0;
     virtual void setExternalMode(bool b) = 0;
     virtual bool externalMode() const = 0;
+    virtual void setCaseSensitivity(Qt::CaseSensitivity caseSensitivity) = 0;
+    virtual void setCompletionPrefix(const QString &prefix) = 0;
+    virtual QString completionPrefix() const = 0;
+    virtual void showPopup() = 0;
+    virtual QAbstractItemView *popup() const = 0;
+    virtual QModelIndex currentIndex() const = 0;
+    virtual QString currentCompletion() const = 0;
+    virtual QAbstractItemModel *completionModel() const = 0;
+    virtual bool startCompleter(const QString &completionPrefix) = 0;
 signals:
     void prefixChanged(QTextCursor,QString,bool force);
     void wordCompleted(const QString &func, const QString &kind, const QString &info);
