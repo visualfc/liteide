@@ -200,7 +200,8 @@ public:
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
-    virtual void showToolTip(int startPosition, const QString &func, const QString &kind, const QString &info) = 0;
+    virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info) = 0;
+    virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;
 };
 
 class BaseTextLexer : public ITextLexer
@@ -236,8 +237,13 @@ public:
     virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
         return -1;
     }
-    virtual void showToolTip(int /*startPosition*/, const QString &/*func*/, const QString &/*kind*/, const QString &/*info*/)
+    virtual QString fetchFunctionTip(const QString &/*func*/, const QString &/*kind*/, const QString &/*info*/)
     {
+        return QString();
+    }
+    virtual bool fetchFunctionArgs(const QString &/*str*/, int &/*argnr*/, int &/*parcount*/)
+    {
+        return false;
     }
 protected:
     bool m_bAC;

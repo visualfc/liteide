@@ -29,6 +29,7 @@
 #include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
+#include "functiontooltip.h"
 
 #include <QFileInfo>
 #include <QVBoxLayout>
@@ -77,6 +78,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     : m_liteApp(app),
       m_extension(new Extension),
       m_completer(0),
+      m_funcTip(0),
       m_bReadOnly(false)
 {
     m_widget = new QWidget;
@@ -154,6 +156,9 @@ LiteEditor::~LiteEditor()
 {
     if (m_completer) {
         delete m_completer;
+    }
+    if (m_funcTip) {
+        delete m_funcTip;
     }
     delete m_contextMenu;
     delete m_editMenu;
@@ -816,7 +821,15 @@ void LiteEditor::applyOption(QString id)
 
 void LiteEditor::updateTip(const QString &func,const QString &kind,const QString &info)
 {
-    m_editorWidget->textLexer()->showToolTip(this->position(),func,kind,info);
+    QString tip = m_editorWidget->textLexer()->fetchFunctionTip(func,kind,info);
+    if (tip.isEmpty()) {
+        return;
+    }
+    if (!m_funcTip) {
+        m_funcTip = new FunctionTooltip(m_liteApp,this,m_editorWidget->textLexer(),20);
+    }
+    m_funcTip->showFunctionHint(this->position(),tip);
+    //m_editorWidget->textLexer()->showToolTip(this->position(),func,kind,info);
 }
 
 void LiteEditor::filePrintPreview()

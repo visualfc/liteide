@@ -29,16 +29,6 @@
 #include <QWidget>
 #include <QLabel>
 
-class FakeToolTipFrame : public QWidget
-{
-public:
-    FakeToolTipFrame(QWidget *parent = 0);
-
-protected:
-    void paintEvent(QPaintEvent *e);
-    void resizeEvent(QResizeEvent *e);
-};
-
 struct TipInfo
 {
     TipInfo(int _pos, const QString &_tip) :

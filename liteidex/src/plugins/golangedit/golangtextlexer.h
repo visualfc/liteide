@@ -26,7 +26,6 @@
 
 #include "liteeditorapi/liteeditorapi.h"
 #include "cplusplus/Token.h"
-#include "functiontooltip.h"
 
 class GolangTextLexer : public LiteApi::ITextLexer
 {
@@ -40,12 +39,11 @@ public:
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const;
-    virtual void showToolTip(int startPosition, const QString &func, const QString &kind, const QString &info);
+    virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info);
+    virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount);
 protected:
     bool isInCommentHelper(const QTextCursor &cursor, CPlusPlus::Token *retToken = 0) const;
     const CPlusPlus::Token tokenAtPosition(const QList<CPlusPlus::Token> &tokens, const unsigned pos) const;
-protected:
-    FunctionTooltip  *m_fnTip;
 };
 
 #endif // GOLANGTEXTLEXER_H

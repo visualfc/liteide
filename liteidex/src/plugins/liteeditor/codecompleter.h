@@ -19,6 +19,7 @@ protected:
     virtual QStringList splitPath(const QString &path) const;
     virtual QString pathFromIndex(const QModelIndex &index) const;
 private:
+    QListView *m_popup;
     QString m_seperator;
 };
 

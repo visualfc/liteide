@@ -47,7 +47,7 @@ class QLabel;
 class QToolButton;
 class LiteCompleter;
 class ColorStyleScheme;
-class CallTip;
+class FunctionTooltip;
 
 class QLabelEx : public QLabel
 {
@@ -151,6 +151,7 @@ public:
     QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteApi::ICompleter *m_completer;
+    FunctionTooltip     *m_funcTip;
     QAction *m_undoAct;
     QAction *m_redoAct;
     QAction *m_cutAct;

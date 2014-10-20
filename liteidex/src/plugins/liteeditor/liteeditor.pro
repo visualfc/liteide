@@ -32,7 +32,9 @@ SOURCES += liteeditorplugin.cpp \
     snippetmanager.cpp \
     highlightermanager.cpp \
     katehighlighterfactory.cpp \
-    codecompleter.cpp
+    codecompleter.cpp \
+    functiontooltip.cpp \
+    faketooltip.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
@@ -51,7 +53,9 @@ HEADERS += liteeditorplugin.h\
     snippetmanager.h \
     highlightermanager.h \
     katehighlighterfactory.h \
-    codecompleter.h
+    codecompleter.h \
+    functiontooltip.h \
+    faketooltip.h
 
 FORMS += \
     liteeditoroption.ui

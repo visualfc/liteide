@@ -7,6 +7,13 @@
 CodeCompleter::CodeCompleter(QObject *parent) :
     QCompleter(parent)
 {
+    m_popup = new QListView;
+    m_popup->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_popup->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_popup->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_popup->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_popup->setModelColumn(0);
+    this->setPopup(m_popup);
 }
 
 CodeCompleter::~CodeCompleter()
