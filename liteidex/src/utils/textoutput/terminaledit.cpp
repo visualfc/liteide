@@ -50,6 +50,7 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
 {
     this->setCursorWidth(4);
     this->setAcceptDrops(false);
+    this->setWordWrapMode(QTextOption::NoWrap);
 
     m_contextMenu = new QMenu(this);
     m_contextRoMenu = new QMenu(this);
