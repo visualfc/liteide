@@ -64,6 +64,8 @@
 #endif
 //lite_memory_check_end
 
+#define LITEIDE_VERSION "X24"
+
 QString LiteApp::getRootPath()
 {
     QDir rootDir = QApplication::applicationDirPath();
@@ -497,7 +499,7 @@ QString LiteApp::storagePath() const
 
 QString LiteApp::ideVersion() const
 {
-    return "X23.2";
+    return LITEIDE_VERSION;
 }
 
 QString LiteApp::ideFullName() const

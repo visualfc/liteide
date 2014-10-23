@@ -36,14 +36,6 @@
 
 using namespace CPlusPlus;
 
-GolangTextLexer::GolangTextLexer(LiteApi::IApplication *app, LiteApi::ITextEditor *editor)
-{
-}
-
-GolangTextLexer::~GolangTextLexer()
-{
-}
-
 bool GolangTextLexer::isInComment(const QTextCursor &cursor) const
 {
     return isInCommentHelper(cursor);
