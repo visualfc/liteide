@@ -29,6 +29,7 @@
 #include "liteeditorapi/liteeditorapi.h"
 
 class CodeCompleter;
+class CodeCompleterEx;
 class QPlainTextEdit;
 class QStandardItemModel;
 
@@ -62,11 +63,12 @@ public:
     virtual QAbstractItemModel *model() const;
     virtual QAbstractItemModel *completionModel() const;
     virtual bool startCompleter(const QString &completionPrefix);
+    virtual void updateCompleterModel();
 public slots:
     virtual void completionPrefixChanged(QString,bool force);
     virtual void insertCompletion(QModelIndex);
 protected:
-    CodeCompleter     *m_completer;
+    CodeCompleterEx     *m_completer;
     QStandardItemModel *m_model;
     QPlainTextEdit *m_editor;
     QTimer         *m_timer;

@@ -120,6 +120,7 @@ void GolangCode::cgoComplete()
     m_completer->appendChildItem(root,"GoString","func","func(*C.char) string",icon,true);
     m_completer->appendChildItem(root,"GoStringN","func","func(*C.char, C.int) string",icon,true);
     m_completer->appendChildItem(root,"GoBytes","func","func(unsafe.Pointer, C.int) []byte",icon,true);
+    m_completer->updateCompleterModel();
     m_completer->showPopup();
 }
 
@@ -186,7 +187,6 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     if (m_gocodeProcess->state() != QProcess::NotRunning) {
         return;
     }
-
     if (pre.endsWith('.')) {
         m_preWord = pre;
     } else if (pre.length() == 1) {
@@ -310,6 +310,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     }
     m_prefix.clear();
     if (n >= 1) {
+        m_completer->updateCompleterModel();
         m_completer->showPopup();
     } else if (m_autoUpdatePkg && !m_gobinCmd.isEmpty()){
         if (m_updatePkgProcess->state() != QProcess::NotRunning) {

@@ -117,6 +117,7 @@ public:
     virtual QString currentCompletion() const = 0;
     virtual QAbstractItemModel *completionModel() const = 0;
     virtual bool startCompleter(const QString &completionPrefix) = 0;
+    virtual void updateCompleterModel() = 0;
 signals:
     void prefixChanged(QTextCursor,QString,bool force);
     void wordCompleted(const QString &func, const QString &kind, const QString &info);

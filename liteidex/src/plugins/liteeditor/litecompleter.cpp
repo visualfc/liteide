@@ -104,16 +104,14 @@ public:
 
 LiteCompleter::LiteCompleter(QObject *parent) :
     LiteApi::ICompleter(parent),
-    m_completer( new CodeCompleter(this)),
+    m_completer( new CodeCompleterEx(this)),
     m_model(new QStandardItemModel(this)),
     m_bSearchSeparator(true),
     m_bExternalMode(false)
 {
     m_completer->setModel(m_model);
-    m_completer->setCompletionMode(QCompleter::PopupCompletion);
     m_completer->setCaseSensitivity(Qt::CaseSensitive);
     m_completer->setSeparator(".");
-    m_completer->setWrapAround(true);
     m_stop = '(';
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));
@@ -300,6 +298,11 @@ bool LiteCompleter::startCompleter(const QString &completionPrefix)
     }
     this->showPopup();
     return true;
+}
+
+void LiteCompleter::updateCompleterModel()
+{
+    this->m_completer->updateFilter();
 }
 
 void LiteCompleter::setSearchSeparator(bool b)
