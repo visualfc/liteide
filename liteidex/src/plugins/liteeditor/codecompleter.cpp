@@ -200,8 +200,8 @@ QPoint CodeCompleterListView::infoFramePos() const
     const QRect &r = rectForIndex(currentIndex());
     int xoffset = this->frameWidth()+3;
     int yoffset = this->frameWidth()-verticalOffset();
-    QScrollBar *hsb = this->verticalScrollBar();
-    if (hsb && hsb->isVisible())
+    QScrollBar *vsb = this->verticalScrollBar();
+    if (vsb && vsb->isVisible())
         xoffset += this->horizontalScrollBar()->sizeHint().height();
     QPoint pt = this->mapToGlobal(r.topRight());
     pt.rx() += xoffset;
@@ -439,6 +439,13 @@ CodeCompleterEx::CodeCompleterEx(QObject *parent)
 
 }
 
+CodeCompleterEx::~CodeCompleterEx()
+{
+    if (m_popup) {
+        delete m_popup;
+    }
+}
+
 void CodeCompleterEx::setModel(QStandardItemModel *c)
 {
     m_proxy->setSourceModel(c);
@@ -531,7 +538,7 @@ void CodeCompleterEx::complete(const QRect &rect)
         if (top > bottom)
             pos.setY(pos.y() - h - rh + 2);
     }
-
+    w = qMax(w,200);
     m_popup->setGeometry(pos.x(), pos.y(), w, h);
 
     if (!m_popup->isVisible())

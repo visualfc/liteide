@@ -34,8 +34,6 @@ private:
     QString m_prefix;
 };
 
-class CodeCompleterListView;
-
 namespace LiteApi {
     enum CaseSensitivity {
         CaseInsensitive,
@@ -85,6 +83,7 @@ class CodeCompleterEx : public QObject
     Q_OBJECT
 public:
     CodeCompleterEx(QObject *parent = 0);
+    virtual ~CodeCompleterEx();
     void setModel(QStandardItemModel *c);
     QAbstractItemModel *model() const;
     void setSeparator(const QString &separator);
@@ -112,8 +111,8 @@ protected:
     QWidget              *m_widget;
     CodeCompleterListView     *m_popup;
     CodeCompleterProxyModel   *m_proxy;
-    QString               m_prefix;
-    Qt::CaseSensitivity  m_cs;
+    Qt::CaseSensitivity m_cs;
+    QString             m_prefix;
     int                 maxVisibleItems;
     bool                m_eatFocusOut;
     bool                m_hiddenBecauseNoMatch;
