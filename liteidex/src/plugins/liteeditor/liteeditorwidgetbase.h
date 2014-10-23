@@ -208,7 +208,7 @@ public:
         return m_textLexer.data();
     }
     QString autoCompleteSurroundText(QTextCursor &cursor, const QString &textToInsert) const;
-    bool checkIsSkipAutoComplete(QTextCursor &cursor, const QString &textToInsert) const;
+    bool checkIsMatchBraces(QTextCursor &cursor, const QString &textToInsert) const;
     bool autoBackspace(QTextCursor &cursor);
     void handleBackspaceKey();
 protected:
