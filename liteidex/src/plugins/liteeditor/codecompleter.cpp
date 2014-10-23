@@ -6,8 +6,10 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
+#include <QItemSelectionModel>
 #include <QDesktopWidget>
 #include <QItemDelegate>
+#include <QLabel>
 #include <QDebug>
 
 CodeCompleter::CodeCompleter(QObject *parent) :
@@ -117,19 +119,61 @@ QString CodeCompleter::pathFromIndex(const QModelIndex &index) const
     return dataList.join(m_seperator);
 }
 
-class CodeCompleterListView : public QListView
+class CodeCompleterInfo : public FakeToolTip
 {
 public:
-    CodeCompleterListView(QWidget *parent = 0);
+    CodeCompleterInfo(QWidget *parent = 0)
+        : FakeToolTip(parent), m_label(new QLabel(this))
+    {
+        QVBoxLayout *layout = new QVBoxLayout(this);
+        layout->setMargin(0);
+        layout->setSpacing(0);
+        layout->addWidget(m_label);
 
-    QSize calculateSize() const;
-    QPoint infoFramePos() const;
+        // Limit horizontal width
+        m_label->setSizePolicy(QSizePolicy::Fixed, m_label->sizePolicy().verticalPolicy());
+
+        m_label->setForegroundRole(QPalette::ToolTipText);
+        m_label->setBackgroundRole(QPalette::ToolTipBase);
+    }
+
+    void setText(const QString &text)
+    {
+        m_label->setText(text);
+    }
+
+    // Workaround QTCREATORBUG-11653
+    void calculateMaximumWidth()
+    {
+        const QDesktopWidget *desktopWidget = QApplication::desktop();
+        const int desktopWidth = desktopWidget->isVirtualDesktop()
+                ? desktopWidget->width()
+                : desktopWidget->availableGeometry(desktopWidget->primaryScreen()).width();
+        const QMargins widgetMargins = contentsMargins();
+        const QMargins layoutMargins = layout()->contentsMargins();
+        const int margins = widgetMargins.left() + widgetMargins.right()
+                + layoutMargins.left() + layoutMargins.right();
+        m_label->setMaximumWidth(desktopWidth - this->pos().x() - margins);
+    }
+
+private:
+    QLabel *m_label;
 };
 
 CodeCompleterListView::CodeCompleterListView(QWidget *parent)
     : QListView(parent)
 {
     setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
+    m_infoFrame = new CodeCompleterInfo(this);
+    m_infoTimer.setInterval(100);
+    m_infoTimer.setSingleShot(true);
+    connect(&m_infoTimer, SIGNAL(timeout()), SLOT(maybeShowInfoTip()));
+}
+
+void CodeCompleterListView::setModel(QAbstractItemModel *model)
+{
+    QListView::setModel(model);
+    connect(this->selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),&m_infoTimer,SLOT(start()));
 }
 
 QSize CodeCompleterListView::calculateSize() const
@@ -154,11 +198,49 @@ QSize CodeCompleterListView::calculateSize() const
 QPoint CodeCompleterListView::infoFramePos() const
 {
     const QRect &r = rectForIndex(currentIndex());
-    QPoint p((parentWidget()->mapToGlobal(
-                    parentWidget()->rect().topRight())).x() + 3,
-            mapToGlobal(r.topRight()).y() - verticalOffset()
-            );
-    return p;
+    int xoffset = this->frameWidth()+3;
+    int yoffset = this->frameWidth()-verticalOffset();
+    QScrollBar *hsb = this->verticalScrollBar();
+    if (hsb && hsb->isVisible())
+        xoffset += this->horizontalScrollBar()->sizeHint().height();
+    QPoint pt = this->mapToGlobal(r.topRight());
+    pt.rx() += xoffset;
+    pt.ry() += yoffset;
+    return pt;
+}
+
+void CodeCompleterListView::maybeShowInfoTip()
+{
+    const QModelIndex &current = this->currentIndex();
+    if (!current.isValid())
+        return;
+
+    if (!this->isVisible()) {
+        if (m_infoFrame->isVisible()) {
+            m_infoFrame->hide();
+        }
+        m_infoTimer.setInterval(100);
+        return;
+    }
+
+    const QString &infoTip = current.data(Qt::ToolTipRole).toString();
+    if (infoTip.isEmpty()) {
+        m_infoFrame->hide();
+        return;
+    }
+    m_infoFrame->move(this->infoFramePos());
+    m_infoFrame->setText(infoTip);
+    m_infoFrame->calculateMaximumWidth();
+    m_infoFrame->adjustSize();
+    m_infoFrame->show();
+    m_infoFrame->raise();
+    m_infoTimer.setInterval(0);
+}
+
+void CodeCompleterListView::hideEvent(QHideEvent *e)
+{
+    m_infoFrame->hide();
+    QListView::hideEvent(e);
 }
 
 class CodeCompleterItemDelegate : public QItemDelegate
@@ -194,6 +276,9 @@ QVariant CodeCompleterProxyModel::data(const QModelIndex &index, int role) const
     if (index.row() >= m_items.size())
         return QVariant();
     QStandardItem *item = m_items[index.row()];
+    if (role == Qt::DisplayRole) {
+        return item->text();
+    }
     return item->data(role);
 }
 

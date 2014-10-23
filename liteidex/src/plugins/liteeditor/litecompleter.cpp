@@ -50,32 +50,11 @@ class WordItem : public QStandardItem
 public:
     WordItem(const QString &text) : QStandardItem(text)
     {
-        this->setName(text);
     }
     enum {
-        NameRole = Qt::UserRole+2,
-        KindRole,
-        InfoRole,
+        KindRole = Qt::UserRole+2,
         TempRole
     };
-    virtual QVariant data(int role = Qt::UserRole + 1) const
-    {
-        if (role == Qt::DisplayRole) {
-            if (this->info().isEmpty()) {
-                return this->name();
-            }
-            return QString("%1\t%2").arg(this->name()).arg(this->info());
-        }
-        return QStandardItem::data(role);
-    }
-    void setName(const QString &word)
-    {
-        this->setData(word,NameRole);
-    }
-    QString name() const
-    {
-        return QStandardItem::data(NameRole).toString();
-    }
     void setKind(const QString &kind)
     {
         this->setData(kind,KindRole);
@@ -83,14 +62,6 @@ public:
     QString kind() const
     {
         return QStandardItem::data(KindRole).toString();
-    }
-    void setInfo(const QString &info)
-    {
-        this->setData(info,InfoRole);
-    }
-    QString info() const
-    {
-        return QStandardItem::data(InfoRole).toString();
     }
     void setTemp(bool temp)
     {
@@ -139,7 +110,7 @@ QStandardItem *LiteCompleter::findRoot(const QString &name)
         QModelIndex parent = m_model->indexFromItem(root);
         for (int i = 0; i < m_model->rowCount(parent); i++) {
             QModelIndex index = m_model->index(i,0,parent);
-            if (index.data(WordItem::NameRole).toString() == word) {
+            if (index.data().toString() == word) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -173,7 +144,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
         int count = m_model->rowCount(parent);
         while(count--) {
             QModelIndex index = m_model->index(count,0,parent);
-            if (index.data(WordItem::NameRole).toString() == name) {
+            if (index.data().toString() == name) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -188,7 +159,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
         }
         if (item && item->kind().isEmpty()) {
             item->setKind(kind);
-            item->setInfo(info);
+            item->setToolTip(info);
             item->setTemp(temp);
             item->setIcon(icon);
         }
@@ -196,7 +167,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
         WordItem *item = new WordItem(name);
         root->appendRow(item);
         item->setKind(kind);
-        item->setInfo(info);
+        item->setToolTip(info);
         item->setTemp(temp);
         item->setIcon(icon);
     }
@@ -357,7 +328,7 @@ void LiteCompleter::clearItemChilds(const QString &name)
         int count = m_model->rowCount(parent);
         while(count--) {
             QModelIndex index = m_model->index(count,0,parent);
-            if (index.data(WordItem::NameRole).toString() == word) {
+            if (index.data().toString() == word) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -382,7 +353,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
         QModelIndex parent = m_model->indexFromItem(root);
         for (int i = 0; i < m_model->rowCount(parent); i++) {
             QModelIndex index = m_model->index(i,0,parent);
-            if (index.data(WordItem::NameRole).toString() == word) {
+            if (index.data().toString() == word) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -400,7 +371,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
     }
     if (item && item->kind().isEmpty()) {
         item->setKind(kind);
-        item->setInfo(info);
+        item->setToolTip(info);
         item->setTemp(temp);
         item->setIcon(icon);
     }
@@ -429,9 +400,9 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         return;
     }
 
-    QString text = index.data(WordItem::NameRole).toString();
+    QString text = index.data().toString();
     QString kind = index.data(WordItem::KindRole).toString();
-    QString info = index.data(WordItem::InfoRole).toString();
+    QString info = index.data(Qt::ToolTipRole).toString();
     QString prefix = m_completer->completionPrefix();
     //IsAbs r.URL.
     int pos = prefix.lastIndexOf(m_completer->separator());

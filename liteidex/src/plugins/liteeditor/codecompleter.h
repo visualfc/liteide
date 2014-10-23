@@ -2,6 +2,8 @@
 #define CODECOMPLETER_H
 
 #include <QCompleter>
+#include <QTimer>
+#include <QListView>
 #include "liteapi/liteapi.h"
 
 class QListView;
@@ -42,6 +44,22 @@ namespace LiteApi {
     };
 }
 
+class CodeCompleterInfo;
+class CodeCompleterListView : public QListView
+{
+    Q_OBJECT
+public:
+    CodeCompleterListView(QWidget *parent = 0);
+    virtual void setModel(QAbstractItemModel *model);
+    QSize calculateSize() const;
+    QPoint infoFramePos() const;
+public slots:
+    void maybeShowInfoTip();
+protected:
+    virtual void hideEvent(QHideEvent *);
+    CodeCompleterInfo  *m_infoFrame;
+    QTimer              m_infoTimer;
+};
 
 class CodeCompleterProxyModel : public QAbstractListModel
 {
