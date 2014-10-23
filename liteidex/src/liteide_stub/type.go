@@ -163,14 +163,14 @@ func runType(cmd *Command, args []string) {
 		cursor = &cursorInfo
 	}
 	if args[0] == "..." {
-		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}
+		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: true}
 		for _, path := range paths("") {
-			w.Import("", path, conf, true)
+			w.Import("", path, conf)
 		}
 	} else if args[0] == "std" {
-		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}
+		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: true}
 		for _, path := range stdPkg {
-			w.Import("", path, conf, true)
+			w.Import("", path, conf)
 		}
 	} else {
 		for _, pkgName := range args {
@@ -181,7 +181,7 @@ func runType(cmd *Command, args []string) {
 				}
 				pkgName = pkgPath
 			}
-			conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}
+			conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: true}
 			if cursor != nil {
 				conf.Cursor = cursor
 				conf.IgnoreFuncBodies = false
@@ -194,7 +194,7 @@ func runType(cmd *Command, args []string) {
 					//Implicits : make(map[ast.Node]types.Object)
 				}
 			}
-			pkg, err := w.Import("", pkgName, conf, true)
+			pkg, err := w.Import("", pkgName, conf)
 			if pkg == nil {
 				log.Fatalln("error import path", err)
 			}
@@ -218,6 +218,7 @@ type FileCursor struct {
 type PkgConfig struct {
 	IgnoreFuncBodies bool
 	AllowBinary      bool
+	WithTestFiles    bool
 	Cursor           *FileCursor
 	Info             *types.Info
 	Files            map[string]*ast.File
@@ -258,7 +259,7 @@ func (w *PkgWalker) isBinaryPkg(pkg string) bool {
 	return isStdPkg(pkg)
 }
 
-func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig, withTests bool) (pkg *types.Package, err error) {
+func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg *types.Package, err error) {
 	defer func() {
 		err := recover()
 		if err != nil && typeVerbose {
@@ -306,7 +307,7 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig, withT
 	}
 
 	filenames := append(append([]string{}, bp.GoFiles...), bp.CgoFiles...)
-	if withTests {
+	if conf.WithTestFiles {
 		filenames = append(filenames, bp.TestGoFiles...)
 	}
 
@@ -361,7 +362,7 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig, withT
 					return
 				}
 			}
-			return w.Import(bp.Dir, name, &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}, false)
+			return w.Import(bp.Dir, name, &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: false})
 		},
 		Error: func(err error) {
 			if typeVerbose {
@@ -506,12 +507,13 @@ func (w *PkgWalker) LookupStructFromField(info *types.Info, cursorPkg *types.Pac
 		conf := &PkgConfig{
 			IgnoreFuncBodies: true,
 			AllowBinary:      true,
+			WithTestFiles:    true,
 			Info: &types.Info{
 				Defs: make(map[*ast.Ident]types.Object),
 			},
 		}
 		w.imported[cursorPkg.Path()] = nil
-		pkg, _ := w.Import("", cursorPkg.Path(), conf, true)
+		pkg, _ := w.Import("", cursorPkg.Path(), conf)
 		if pkg != nil {
 			info = conf.Info
 		}
@@ -648,11 +650,12 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 		conf := &PkgConfig{
 			IgnoreFuncBodies: true,
 			AllowBinary:      true,
+			WithTestFiles:    true,
 			Info: &types.Info{
 				Defs: make(map[*ast.Ident]types.Object),
 			},
 		}
-		pkg, _ := w.Import("", cursorPkg.Path(), conf, true)
+		pkg, _ := w.Import("", cursorPkg.Path(), conf)
 		if pkg != nil {
 			if cursorIsInterfaceMethod {
 				for _, obj := range conf.Info.Defs {
