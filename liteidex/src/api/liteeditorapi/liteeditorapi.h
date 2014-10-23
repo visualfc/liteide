@@ -197,6 +197,7 @@ public:
     virtual bool isInComment(const QTextCursor &cursor) const = 0;
     virtual bool isInString(const QTextCursor &cursor) const = 0;
     virtual bool isInEmptyString(const QTextCursor &cursor) const = 0;
+    virtual bool isEndOfString(const QTextCursor &cursor) const = 0;
     virtual bool isInStringOrComment(const QTextCursor &cursor) const = 0;
     virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
@@ -218,6 +219,9 @@ public:
         return false;
     }
     virtual bool isInEmptyString(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isEndOfString(const QTextCursor &/*cursor*/) const {
         return false;
     }
     virtual bool isInStringOrComment(const QTextCursor &/*cursor*/) const {

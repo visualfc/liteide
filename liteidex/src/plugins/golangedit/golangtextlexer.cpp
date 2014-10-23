@@ -70,6 +70,19 @@ bool GolangTextLexer::isInEmptyString(const QTextCursor &cursor) const
     return false;
 }
 
+bool GolangTextLexer::isEndOfString(const QTextCursor &cursor) const
+{
+    Token token;
+    if (isInCommentHelper(cursor, &token))
+        return false;
+
+    if (token.isStringLiteral() || token.isCharLiteral()) {
+        const unsigned pos = cursor.selectionEnd() - cursor.block().position();
+        return (token.end()-pos == 1);
+    }
+    return false;
+}
+
 bool GolangTextLexer::isInStringOrComment(const QTextCursor &cursor) const
 {
     Token token;
