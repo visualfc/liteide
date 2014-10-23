@@ -333,6 +333,84 @@ bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &pa
     return true;
 }
 
+//copy ContentLessThan from QtCreator source
+struct ContentLessThan
+{
+    ContentLessThan(const QString &prefix)
+        : m_prefix(prefix)
+    {}
+
+    bool operator()(const QStandardItem *a, const QStandardItem *b)
+    {
+        // The order is case-insensitive in principle, but case-sensitive when this
+        // would otherwise mean equality
+        const QString &lowera = a->text().toLower();
+        const QString &lowerb = b->text().toLower();
+
+        if (!m_prefix.isEmpty()) {
+            const QString &lowerprefix = m_prefix.toLower();
+
+            // All continuations should go before all fuzzy matches
+            if (int diff = lowera.startsWith(lowerprefix) - lowerb.startsWith(lowerprefix))
+                return diff > 0;
+            if (int diff = a->text().startsWith(m_prefix) - b->text().startsWith(m_prefix))
+                return diff > 0;
+        }
+        if (lowera == lowerb)
+            return lessThan(a->text(), b->text());
+        else
+            return lessThan(lowera, lowerb);
+    }
+
+    bool lessThan(const QString &a, const QString &b)
+    {
+        QString::const_iterator pa = a.begin();
+        QString::const_iterator pb = b.begin();
+
+        CharLessThan charLessThan;
+        enum { Letter, SmallerNumber, BiggerNumber } state = Letter;
+        for (; pa != a.end() && pb != b.end(); ++pa, ++pb) {
+            if (*pa == *pb)
+                continue;
+            if (state != Letter) {
+                if (!pa->isDigit() || !pb->isDigit())
+                    break;
+            } else if (pa->isDigit() && pb->isDigit()) {
+                if (charLessThan(*pa, *pb))
+                    state = SmallerNumber;
+                else
+                    state = BiggerNumber;
+            } else {
+                return charLessThan(*pa, *pb);
+            }
+        }
+
+        if (state == Letter)
+            return pa == a.end() && pb != b.end();
+        if (pa != a.end() && pa->isDigit())
+            return false;                   //more digits
+        if (pb != b.end() && pb->isDigit())
+            return true;                    //fewer digits
+        return state == SmallerNumber;      //same length, compare first different digit in the sequence
+    }
+
+    struct CharLessThan
+    {
+        bool operator()(const QChar &a, const QChar &b)
+        {
+            if (a == QLatin1Char('_'))
+                return false;
+            else if (b == QLatin1Char('_'))
+                return true;
+            else
+                return a < b;
+        }
+    };
+
+private:
+    QString m_prefix;
+};
+
 int CodeCompleterProxyModel::filter(const QString &filter, int cs)
 {
     if (!m_model) {
@@ -351,6 +429,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs)
             QStandardItem *item = m_model->itemFromIndex(index);
             m_items.append(item);
         }
+        qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
         return m_items.size();
     }
     QString keyRegExp;
@@ -394,6 +473,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs)
             m_items.append(item);
         }
     }
+    qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
     return m_items.size();
 }
 
