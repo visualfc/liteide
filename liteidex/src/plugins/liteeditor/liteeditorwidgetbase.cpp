@@ -1756,7 +1756,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
             m_textLexer->isEndOfString(this->textCursor())) {
         QString keyText = e->text();
-        if (keyText == "\"") {
+        if (keyText == "\"" || keyText == "\'" || keyText == "`") {
             QTextCursor cursor = textCursor();
             if (!cursor.atBlockEnd()) {
                 QString text = cursor.block().text();
