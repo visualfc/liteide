@@ -1,5 +1,6 @@
 #include "codecompleter.h"
 #include "faketooltip.h"
+#include <QApplication>
 #include <QListView>
 #include <QStandardItemModel>
 #include <QKeyEvent>

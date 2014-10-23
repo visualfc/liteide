@@ -1,5 +1,6 @@
 #include "faketooltip.h"
 #include <QStylePainter>
+#include <QStyleOptionFrame>
 
 FakeToolTip::FakeToolTip(QWidget *parent) :
     QWidget(parent, Qt::ToolTip | Qt::WindowStaysOnTopHint)
