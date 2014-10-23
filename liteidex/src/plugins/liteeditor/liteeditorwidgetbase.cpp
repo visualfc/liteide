@@ -1653,9 +1653,18 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     }
     bool ro = isReadOnly();
 
-    if (e->modifiers() == Qt::NoModifier && ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return )) {
-        if (m_autoIndent) {
-            indentEnter(textCursor());
+    if ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return ) {
+        if (e->modifiers() == Qt::NoModifier) {
+            if (m_autoIndent) {
+                indentEnter(textCursor());
+                return;
+            }
+        } else if (e->modifiers() & Qt::ControlModifier) {
+            if (e->modifiers() & Qt::ShiftModifier) {
+                insertLineBefore();
+            } else {
+                insertLineAfter();
+            }
             return;
         }
     }
