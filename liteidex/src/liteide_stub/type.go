@@ -163,12 +163,12 @@ func runType(cmd *Command, args []string) {
 		cursor = &cursorInfo
 	}
 	if args[0] == "..." {
-		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}
+		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: true}
 		for _, path := range paths("") {
 			w.Import("", path, conf)
 		}
 	} else if args[0] == "std" {
-		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}
+		conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: true}
 		for _, path := range stdPkg {
 			w.Import("", path, conf)
 		}
@@ -181,7 +181,7 @@ func runType(cmd *Command, args []string) {
 				}
 				pkgName = pkgPath
 			}
-			conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true}
+			conf := &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: true}
 			if cursor != nil {
 				conf.Cursor = cursor
 				conf.IgnoreFuncBodies = false
@@ -218,6 +218,7 @@ type FileCursor struct {
 type PkgConfig struct {
 	IgnoreFuncBodies bool
 	AllowBinary      bool
+	WithTestFiles    bool
 	Cursor           *FileCursor
 	Info             *types.Info
 	Files            map[string]*ast.File
@@ -306,7 +307,9 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg 
 	}
 
 	filenames := append(append([]string{}, bp.GoFiles...), bp.CgoFiles...)
-	filenames = append(filenames, bp.TestGoFiles...)
+	if conf.WithTestFiles {
+		filenames = append(filenames, bp.TestGoFiles...)
+	}
 
 	if name == "runtime" {
 		n := fmt.Sprintf("zgoos_%s.go", w.context.GOOS)
@@ -359,7 +362,7 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg 
 					return
 				}
 			}
-			return w.Import(bp.Dir, name, &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true})
+			return w.Import(bp.Dir, name, &PkgConfig{IgnoreFuncBodies: true, AllowBinary: true, WithTestFiles: false})
 		},
 		Error: func(err error) {
 			if typeVerbose {
@@ -504,6 +507,7 @@ func (w *PkgWalker) LookupStructFromField(info *types.Info, cursorPkg *types.Pac
 		conf := &PkgConfig{
 			IgnoreFuncBodies: true,
 			AllowBinary:      true,
+			WithTestFiles:    true,
 			Info: &types.Info{
 				Defs: make(map[*ast.Ident]types.Object),
 			},
@@ -646,6 +650,7 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 		conf := &PkgConfig{
 			IgnoreFuncBodies: true,
 			AllowBinary:      true,
+			WithTestFiles:    true,
 			Info: &types.Info{
 				Defs: make(map[*ast.Ident]types.Object),
 			},
