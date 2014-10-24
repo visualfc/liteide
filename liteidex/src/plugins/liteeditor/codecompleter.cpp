@@ -302,6 +302,11 @@ QStandardItem *CodeCompleterProxyModel::item(const QModelIndex &index) const
 
 bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &parent, QString &prefix)
 {
+    if (filter.isEmpty()) {
+        parent = QModelIndex();
+        prefix = filter;
+        return true;
+    }
     QStringList filterList = filter.split(".");
     if (filterList.size() == 1) {
         parent = QModelIndex();
@@ -549,9 +554,6 @@ QString CodeCompleterEx::separator() const
 
 void CodeCompleterEx::setCompletionPrefix(const QString &prefix)
 {
-    if (m_prefix == prefix) {
-        return;
-    }
     m_prefix = prefix;
     if (m_proxy->filter(prefix,m_cs) <= 0) {
         if (m_popup->isVisible()) {

@@ -262,8 +262,7 @@ bool LiteCompleter::startCompleter(const QString &completionPrefix)
         this->setCompletionPrefix(completionPrefix);
         this->popup()->setCurrentIndex(this->completionModel()->index(0, 0));
     }
-
-    if (this->currentCompletion() == completionPrefix) {
+    if (!completionPrefix.isEmpty() && this->currentCompletion() == completionPrefix) {
         this->popup()->hide();
         return false;
     }

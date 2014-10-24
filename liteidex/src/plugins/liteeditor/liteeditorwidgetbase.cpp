@@ -306,6 +306,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     //connect(this, SIGNAL(selectionChanged()),this,SLOT(updateSelection()));
     connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(slotUpdateRequest(QRect, int)));
     connect(this->document(),SIGNAL(contentsChange(int,int,int)),this,SLOT(editContentsChanged(int,int,int)));
+    connect(this,SIGNAL(selectionChanged()),this,SLOT(updateSelection()));
 
     QTextDocument *doc = this->document();
     if (doc) {
@@ -1106,7 +1107,6 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     }
     */
     highlightCurrentLine();
-    updateSelection();
 }
 
 void LiteEditorWidgetBase::updateSelection()
@@ -1122,6 +1122,7 @@ void LiteEditorWidgetBase::updateSelection()
             pattern = text;
         }
     }
+
     if (m_selectionExpression.pattern() != pattern) {
         m_selectionExpression.setPattern(pattern);
         viewport()->update();
@@ -2456,11 +2457,10 @@ static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {  
 //    QPlainTextEdit::paintEvent(e);
-
+//    return;
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
-
 
     const QFontMetrics fm(this->font());
     int averageCharWidth = fm.averageCharWidth();
@@ -2527,6 +2527,9 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
                 const int selStart = range.cursor.selectionStart() - blpos;
                 const int selEnd = range.cursor.selectionEnd() - blpos;
+                if (!hasSelection && range.cursor.selectionEnd() == selectionEnd) {
+                    continue;
+                }
                 if (selStart < bllen && selEnd > 0
                     && selEnd > selStart) {
                     QTextLayout::FormatRange o;

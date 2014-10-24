@@ -31,6 +31,7 @@
 #include "litedebugapi/litedebugapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"
+#include "../liteeditor/liteeditor_global.h"
 #include <QToolBar>
 #include <QComboBox>
 #include <QAction>
@@ -162,6 +163,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
                                                                 QList<QAction*>() << m_stopAct << m_clearAct);
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     //connect(m_liteApp->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -196,6 +198,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
             actionContext->regAction(act,act->objectName(),shortcuts.join(";"));
         }
     }    
+    applyOption(OPTION_LITEEDITOR);
 }
 
 LiteBuild::~LiteBuild()
@@ -417,6 +420,15 @@ void LiteBuild::fmctxGoTool()
         m_liteApp->editorManager()->saveAllEditors();
         this->stopAction();
         this->executeCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
+    }
+}
+
+void LiteBuild::applyOption(QString opt)
+{
+    if (opt == OPTION_LITEEDITOR) {
+        QFont font = m_output->font();
+        font.setFamily(m_liteApp->settings()->value(EDITOR_FAMILY,font.family()).toString());
+        m_output->setFont(font);
     }
 }
 

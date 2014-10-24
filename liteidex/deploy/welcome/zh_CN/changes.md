@@ -3,6 +3,28 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.10.24 Ver x24
+* LiteApp
+	* new codecompleter components
+	* log and build output no wrap
+	* update Japanese translation
+	* update German translation
+
+* LiteEditor
+	* new codecompleter components
+	* code completer match by strings.hp  => HasPrefix
+	* code completer sort by prefix
+	* code completer list use tooltip 
+	* smart () [] "" '' `` insert and backspace remove
+	* smart right ) ] " ' ` insert skip
+	* fix code completer up/down key
+	* fix ctrl+enter/ctrl+shift+enter to insert line after/berore
+	* fix selection highlight
+	
+* LiteBuild
+	* output font family use editor family
+	
+
 ### 2014.08.05 Ver x23.2
 * gocode add cgo basic completer
 * update option to dialog mode
