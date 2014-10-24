@@ -23,6 +23,7 @@
 	* fix selection highlight
 	
 * LiteBuild
+	* golang config custom add TESTARGS/BENCHMARKARGS
 	* output font family use editor family
 	
 
