@@ -744,6 +744,21 @@ bool CodeCompleterEx::eventFilter(QObject *o, QEvent *e)
             if (ke->modifiers() & Qt::ControlModifier)
                 return false;
             break;
+        case Qt::Key_N:
+        case Qt::Key_P:
+            // select next/previous completion
+            if (ke->modifiers() == Qt::ControlModifier) {
+                int change = (ke->key() == Qt::Key_N) ? 1 : -1;
+                int nrows = m_proxy->rowCount();
+                int row = m_popup->currentIndex().row();
+                int newRow = (row + change + nrows) % nrows;
+                if (newRow == row + change || !ke->isAutoRepeat()) {
+                    QModelIndex index = m_proxy->index(newRow, 0);
+                    m_popup->setCurrentIndex(index);
+                }
+                return true;
+            }
+            break;
 
         case Qt::Key_Up:
             if (curIndex.row() == 0) {
@@ -864,10 +879,21 @@ bool CodeCompleterEx::eventFilter(QObject *o, QEvent *e)
         return false;
 
     case QEvent::InputMethod:
-    case QEvent::ShortcutOverride:
         QApplication::sendEvent(m_widget, e);
         break;
-
+    case QEvent::ShortcutOverride:    {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+        switch (ke->key()) {
+        case Qt::Key_N:
+        case Qt::Key_P:
+            if (ke->modifiers() == Qt::ControlModifier) {
+                e->accept();
+                return true;
+            }
+        }
+        QApplication::sendEvent(m_widget, e);
+        break;
+        }
     default:
         return false;
     }

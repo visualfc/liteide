@@ -186,6 +186,12 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Shift:
             e->ignore();
             return; // let the completer do default behavior
+        case Qt::Key_N:
+        case Qt::Key_P:
+            if (e->modifiers() == Qt::ControlModifier) {
+                e->ignore();
+                return;
+            }
         default:
             break;
         }
@@ -201,7 +207,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     }
 
     if (e->modifiers() & Qt::ControlModifier) {
-        m_completer->popup()->hide();
+        if (!e->text().isEmpty()) {
+            m_completer->popup()->hide();
+        }
         return;
     }
     

@@ -15,6 +15,7 @@
 	* code completer match by strings.hp  => HasPrefix
 	* code completer sort by prefix
 	* code completer list use tooltip 
+	* code completer list updown use ctrl+n/ctrl+p short key
 	* smart () [] "" '' `` insert and backspace remove
 	* smart right ) ] " ' ` insert skip
 	* fix code completer up/down key
