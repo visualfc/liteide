@@ -413,16 +413,16 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     QString wordText = text;
     QTextCursor tc = m_editor->textCursor();
     tc.beginEditBlock();
-    if (m_completer->caseSensitivity() == Qt::CaseSensitive) {
-        extra = text.right(text.length()-length);
-        wordText = prefix+extra;
-    } else {
+//    if (m_completer->caseSensitivity() == Qt::CaseSensitive) {
+//        extra = text.right(text.length()-length);
+//        wordText = prefix+extra;
+//    } else {
         while (length--) {
             tc.deletePreviousChar();
         }
         extra = text;
         wordText = text;
-    }
+//    }
 
     if (kind == "func" && tc.block().text().at(tc.positionInBlock()-1) != '(') {
         extra += "()";
