@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!--
+  This file is part of KDE's kate project.
+
+  copyright   : (C) 2004 by Dominik Haumann
+  email       : dhdev at gmx dot de
+
+ **********************************************************************
+ * This library is free software; you can redistribute it and/or      *
+ * modify it under the terms of the GNU Library General Public        *
+ * License as published by the Free Software Foundation; either       *
+ * version 2 of the License, or (at your option) any later version.   *
+ *                                                                    *
+ * This library is distributed in the hope that it will be useful,    *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of     *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  *
+ * Library General Public License for more details.                   *
+ *                                                                    *
+ * You should have received a copy of the GNU Library General Public  *
+ * License along with this library; if not, write to the              *
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,   *
+ * Boston, MA  02110-1301, USA.                                       *
+ **********************************************************************
+
+ This file is included in every file that highlights the "alerts" keywords.
+ That's why extensions and mimetype are empty.
+-->
+<language version="1.10" kateversion="2.4" name="Alerts_indent" section="Other" extensions="" mimetype="" author="Dominik Haumann (dhdev@gmx.de)" license="LGPL" hidden="true">
+  <highlighting>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#pop" name="Normal Text" >
+        <IncludeRules context="##Alerts" />
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <folding indentationsensitive="1" />
+  </general>
+</language>

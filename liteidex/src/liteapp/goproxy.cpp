@@ -64,8 +64,14 @@ bool GoProxy::hasProxy()
     return godrv_call_fn != 0;
 }
 
+bool GoProxy::isRunning(const QByteArray &id) const
+{
+    return m_runMap[id];
+}
+
 void GoProxy::call(const QByteArray &id, const QByteArray &args)
 {    
+    m_runMap[id] = true;
     godrv_call(id,args,&cdrv_callback,this);
 }
 

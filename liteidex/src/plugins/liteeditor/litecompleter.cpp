@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "litecompleter.h"
-#include "treemodelcompleter/treemodelcompleter.h"
+#include "codecompleter.h"
 
 #include <QCompleter>
 #include <QPlainTextEdit>
@@ -50,32 +50,11 @@ class WordItem : public QStandardItem
 public:
     WordItem(const QString &text) : QStandardItem(text)
     {
-        this->setName(text);
     }
     enum {
-        NameRole = Qt::UserRole+2,
-        KindRole,
-        InfoRole,
+        KindRole = Qt::UserRole+2,
         TempRole
     };
-    virtual QVariant data(int role = Qt::UserRole + 1) const
-    {
-        if (role == Qt::DisplayRole) {
-            if (this->info().isEmpty()) {
-                return this->name();
-            }
-            return QString("%1\t%2").arg(this->name()).arg(this->info());
-        }
-        return QStandardItem::data(role);
-    }
-    void setName(const QString &word)
-    {
-        this->setData(word,NameRole);
-    }
-    QString name() const
-    {
-        return QStandardItem::data(NameRole).toString();
-    }
     void setKind(const QString &kind)
     {
         this->setData(kind,KindRole);
@@ -83,14 +62,6 @@ public:
     QString kind() const
     {
         return QStandardItem::data(KindRole).toString();
-    }
-    void setInfo(const QString &info)
-    {
-        this->setData(info,InfoRole);
-    }
-    QString info() const
-    {
-        return QStandardItem::data(InfoRole).toString();
     }
     void setTemp(bool temp)
     {
@@ -104,16 +75,14 @@ public:
 
 LiteCompleter::LiteCompleter(QObject *parent) :
     LiteApi::ICompleter(parent),
-    m_completer( new TreeModelCompleter(this)),
+    m_completer( new CodeCompleterEx(this)),
     m_model(new QStandardItemModel(this)),
     m_bSearchSeparator(true),
     m_bExternalMode(false)
 {
     m_completer->setModel(m_model);
-    m_completer->setCompletionMode(QCompleter::PopupCompletion);
     m_completer->setCaseSensitivity(Qt::CaseSensitive);
     m_completer->setSeparator(".");
-    m_completer->setWrapAround(true);
     m_stop = '(';
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));
@@ -131,11 +100,6 @@ void LiteCompleter::setEditor(QPlainTextEdit *editor)
     m_completer->setWidget(m_editor);
 }
 
-QCompleter *LiteCompleter::completer() const
-{
-    return m_completer;
-}
-
 QStandardItem *LiteCompleter::findRoot(const QString &name)
 {
     QStringList words = name.split(m_completer->separator(),QString::SkipEmptyParts);
@@ -146,7 +110,7 @@ QStandardItem *LiteCompleter::findRoot(const QString &name)
         QModelIndex parent = m_model->indexFromItem(root);
         for (int i = 0; i < m_model->rowCount(parent); i++) {
             QModelIndex index = m_model->index(i,0,parent);
-            if (index.data(WordItem::NameRole).toString() == word) {
+            if (index.data().toString() == word) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -180,7 +144,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
         int count = m_model->rowCount(parent);
         while(count--) {
             QModelIndex index = m_model->index(count,0,parent);
-            if (index.data(WordItem::NameRole).toString() == name) {
+            if (index.data().toString() == name) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -195,7 +159,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
         }
         if (item && item->kind().isEmpty()) {
             item->setKind(kind);
-            item->setInfo(info);
+            item->setToolTip(info);
             item->setTemp(temp);
             item->setIcon(icon);
         }
@@ -203,7 +167,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
         WordItem *item = new WordItem(name);
         root->appendRow(item);
         item->setKind(kind);
-        item->setInfo(info);
+        item->setToolTip(info);
         item->setTemp(temp);
         item->setIcon(icon);
     }
@@ -231,7 +195,7 @@ void LiteCompleter::clearTemp()
     clearTempIndex(m_model,QModelIndex());
 }
 
-void LiteCompleter::show()
+void LiteCompleter::showPopup()
 {
     if (!m_editor) {
         return;
@@ -250,6 +214,65 @@ void LiteCompleter::show()
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
+}
+
+void LiteCompleter::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
+{
+    m_completer->setCaseSensitivity(caseSensitivity);
+}
+
+void LiteCompleter::setCompletionPrefix(const QString &prefix)
+{
+    m_completer->setCompletionPrefix(prefix);
+}
+
+QString LiteCompleter::completionPrefix() const
+{
+    return m_completer->completionPrefix();
+}
+
+QAbstractItemView *LiteCompleter::popup() const
+{
+    return m_completer->popup();
+}
+
+QModelIndex LiteCompleter::currentIndex() const
+{
+    return m_completer->currentIndex();
+}
+
+QString LiteCompleter::currentCompletion() const
+{
+    return m_completer->currentCompletion();
+}
+
+QAbstractItemModel *LiteCompleter::model() const
+{
+    return m_model;
+}
+
+QAbstractItemModel *LiteCompleter::completionModel() const
+{
+    return m_completer->completionModel();
+}
+
+bool LiteCompleter::startCompleter(const QString &completionPrefix)
+{
+    if (completionPrefix != this->completionPrefix()) {
+        this->setCompletionPrefix(completionPrefix);
+        this->popup()->setCurrentIndex(this->completionModel()->index(0, 0));
+    }
+    if (!completionPrefix.isEmpty() && this->currentCompletion() == completionPrefix) {
+        this->popup()->hide();
+        return false;
+    }
+    this->showPopup();
+    return true;
+}
+
+void LiteCompleter::updateCompleterModel()
+{
+    this->m_completer->updateFilter();
 }
 
 void LiteCompleter::setSearchSeparator(bool b)
@@ -304,7 +327,7 @@ void LiteCompleter::clearItemChilds(const QString &name)
         int count = m_model->rowCount(parent);
         while(count--) {
             QModelIndex index = m_model->index(count,0,parent);
-            if (index.data(WordItem::NameRole).toString() == word) {
+            if (index.data().toString() == word) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -329,7 +352,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
         QModelIndex parent = m_model->indexFromItem(root);
         for (int i = 0; i < m_model->rowCount(parent); i++) {
             QModelIndex index = m_model->index(i,0,parent);
-            if (index.data(WordItem::NameRole).toString() == word) {
+            if (index.data().toString() == word) {
                 item = static_cast<WordItem*>(m_model->itemFromIndex(index));
                 break;
             }
@@ -347,7 +370,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
     }
     if (item && item->kind().isEmpty()) {
         item->setKind(kind);
-        item->setInfo(info);
+        item->setToolTip(info);
         item->setTemp(temp);
         item->setIcon(icon);
     }
@@ -376,9 +399,9 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         return;
     }
 
-    QString text = index.data(WordItem::NameRole).toString();
+    QString text = index.data().toString();
     QString kind = index.data(WordItem::KindRole).toString();
-    QString info = index.data(WordItem::InfoRole).toString();
+    QString info = index.data(Qt::ToolTipRole).toString();
     QString prefix = m_completer->completionPrefix();
     //IsAbs r.URL.
     int pos = prefix.lastIndexOf(m_completer->separator());
@@ -390,16 +413,16 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     QString wordText = text;
     QTextCursor tc = m_editor->textCursor();
     tc.beginEditBlock();
-    if (m_completer->caseSensitivity() == Qt::CaseSensitive) {
-        extra = text.right(text.length()-length);
-        wordText = prefix+extra;
-    } else {
+//    if (m_completer->caseSensitivity() == Qt::CaseSensitive) {
+//        extra = text.right(text.length()-length);
+//        wordText = prefix+extra;
+//    } else {
         while (length--) {
             tc.deletePreviousChar();
         }
         extra = text;
         wordText = text;
-    }
+//    }
 
     if (kind == "func" && tc.block().text().at(tc.positionInBlock()-1) != '(') {
         extra += "()";

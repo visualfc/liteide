@@ -29,6 +29,7 @@
 #include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
+#include "functiontooltip.h"
 
 #include <QFileInfo>
 #include <QVBoxLayout>
@@ -77,6 +78,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     : m_liteApp(app),
       m_extension(new Extension),
       m_completer(0),
+      m_funcTip(0),
       m_bReadOnly(false)
 {
     m_widget = new QWidget;
@@ -155,6 +157,9 @@ LiteEditor::~LiteEditor()
     if (m_completer) {
         delete m_completer;
     }
+    if (m_funcTip) {
+        delete m_funcTip;
+    }
     delete m_contextMenu;
     delete m_editMenu;
     delete m_extension;
@@ -191,9 +196,9 @@ void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
         return;
     }
     m_completer->setEditor(m_editorWidget);
-    m_editorWidget->setCompleter(m_completer->completer());
+    m_editorWidget->setCompleter(m_completer);
 
-    m_extension->addObject("LiteApi.ICompleter",complter);
+    m_extension->addObject("LiteApi.ICompleter",m_completer);
 
     connect(m_editorWidget,SIGNAL(completionPrefixChanged(QString,bool)),m_completer,SLOT(completionPrefixChanged(QString,bool)));
     connect(m_completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(updateTip(QString,QString,QString)));
@@ -747,6 +752,7 @@ void LiteEditor::applyOption(QString id)
     bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
     bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
     bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
@@ -766,6 +772,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setAutoBraces2(autoBraces2);
     m_editorWidget->setAutoBraces3(autoBraces3);
     m_editorWidget->setAutoBraces4(autoBraces4);
+    m_editorWidget->setAutoBraces5(autoBraces5);
     m_editorWidget->setLineNumberVisible(lineNumberVisible);
     m_editorWidget->setEofVisible(eofVisible);
     m_editorWidget->setIndentLineVisible(indentLineVisible);
@@ -775,7 +782,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setScrollWheelZooming(wheelZooming);
 
     if (m_completer) {
-        m_completer->completer()->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+        m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
     }
 
 #if defined(Q_OS_WIN)
@@ -814,7 +821,15 @@ void LiteEditor::applyOption(QString id)
 
 void LiteEditor::updateTip(const QString &func,const QString &kind,const QString &info)
 {
-    m_editorWidget->textLexer()->showToolTip(this->position(),func,kind,info);
+    QString tip = m_editorWidget->textLexer()->fetchFunctionTip(func,kind,info);
+    if (tip.isEmpty()) {
+        return;
+    }
+    if (!m_funcTip) {
+        m_funcTip = new FunctionTooltip(m_liteApp,this,m_editorWidget->textLexer(),20);
+    }
+    m_funcTip->showFunctionHint(this->position(),tip);
+    //m_editorWidget->textLexer()->showToolTip(this->position(),func,kind,info);
 }
 
 void LiteEditor::filePrintPreview()

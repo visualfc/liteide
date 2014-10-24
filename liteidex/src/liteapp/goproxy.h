@@ -25,6 +25,7 @@
 #define GOPROXY_H
 
 #include "liteapi/liteapi.h"
+#include <QMap>
 
 class GoProxy : public LiteApi::IGoProxy
 {
@@ -33,10 +34,13 @@ public:
     explicit GoProxy(QObject *parent = 0);
     virtual bool isValid() const;
     static bool hasProxy();
+    virtual bool isRunning(const QByteArray &id) const;
 public slots:
     virtual void call(const QByteArray &id, const QByteArray &args = QByteArray());
 public:
     void callback(char *id, char *reply, int len, int err);
+protected:
+    QMap<QByteArray,bool> m_runMap;
 };
 
 #endif // GOPROXY_H

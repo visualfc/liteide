@@ -63,17 +63,9 @@ void LiteEditorWidget::setContextMenu(QMenu *contextMenu)
     m_contextMenu = contextMenu;
 }
 
-void LiteEditorWidget::setCompleter(QCompleter *completer)
+void LiteEditorWidget::setCompleter(LiteApi::ICompleter *completer)
 {
-    if (m_completer)
-        QObject::disconnect(m_completer, 0, this, 0);
-
     m_completer = completer;
-}
-
-QCompleter *LiteEditorWidget::completer() const
-{
-    return m_completer;
 }
 
 void LiteEditorWidget::codeCompleter()
@@ -82,6 +74,12 @@ void LiteEditorWidget::codeCompleter()
     if (completionPrefix.startsWith(".")) {
         completionPrefix.insert(0,'@');
     }
+
+    m_completer->setCompletionPrefix("");
+    emit completionPrefixChanged(completionPrefix,true);
+
+    m_completer->startCompleter(completionPrefix);
+    /*
 
     m_completer->setCompletionPrefix("");
     emit completionPrefixChanged(completionPrefix,true);
@@ -107,6 +105,7 @@ void LiteEditorWidget::codeCompleter()
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
+    */
 }
 
 QString LiteEditorWidget::wordUnderCursor() const
@@ -138,8 +137,6 @@ QString LiteEditorWidget::textUnderCursor(QTextCursor tc) const
 
 void LiteEditorWidget::focusInEvent(QFocusEvent *e)
 {
-    if (m_completer)
-        m_completer->setWidget(this);
     LiteEditorWidgetBase::focusInEvent(e);
 }
 
@@ -170,11 +167,15 @@ void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
 
 void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 {
+    if (!m_completer) {
+        LiteEditorWidgetBase::keyPressEvent(e);
+        return;
+    }
     if (!m_textLexer->isCanCodeCompleter(this->textCursor())) {
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
     }
-    if (m_completer && m_completer->popup()->isVisible()) {
+    if (m_completer->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
         switch (e->key()) {
         case Qt::Key_Enter:
@@ -185,6 +186,12 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Shift:
             e->ignore();
             return; // let the completer do default behavior
+        case Qt::Key_N:
+        case Qt::Key_P:
+            if (e->modifiers() == Qt::ControlModifier) {
+                e->ignore();
+                return;
+            }
         default:
             break;
         }
@@ -195,12 +202,14 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 
     //always break if ctrl is pressed and there's a key
-    if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty()) || !m_completer) {
+    if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty())) {
         return;
     }
 
     if (e->modifiers() & Qt::ControlModifier) {
-        m_completer->popup()->hide();
+        if (!e->text().isEmpty()) {
+            m_completer->popup()->hide();
+        }
         return;
     }
     
@@ -223,7 +232,10 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
     emit completionPrefixChanged(completionPrefix,false);
+    m_completer->startCompleter(completionPrefix);
 
+    return;
+    /*
     if (completionPrefix != m_completer->completionPrefix()) {
         m_completer->setCompletionPrefix(completionPrefix);
         m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
@@ -249,6 +261,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
                 + m_completer->popup()->verticalScrollBar()->sizeHint().width());
     m_completer->complete(cr); // popup it up!
+    */
 }
 
 void LiteEditorWidget::inputMethodEvent(QInputMethodEvent *e)

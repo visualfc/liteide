@@ -57,7 +57,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/liteapp/aboutdialog.ui" line="215"/>
         <source>Based on Qt</source>
         <oldsource>Based on Qt Version</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">basierend auf Qt</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="249"/>
@@ -68,7 +68,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/liteapp/aboutdialog.ui" line="263"/>
         <source>Support LiteIDE:</source>
         <oldsource>Support</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unterstütze LiteIDE</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="297"/>
@@ -108,7 +108,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="482"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Deutsch</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="513"/>
@@ -128,7 +128,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/liteapp/aboutdialog.cpp" line="43"/>
         <source>Based on Qt %1 (%2 bit)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Basierend auf Qt %1 (%2 bit)</translation>
     </message>
 </context>
 <context>
@@ -181,7 +181,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="74"/>
         <source>Go To Definition</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gehe zu Definition</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
@@ -223,7 +223,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="105"/>
         <source>Custom</source>
         <oldsource>Build Custom</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Benutzerdefiniert</translation>
     </message>
 </context>
 <context>
@@ -308,7 +308,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
         <source>Libraries</source>
         <oldsource>Library</oldsource>
-        <translation type="unfinished">Bibliothek</translation>
+        <translation type="unfinished">Bibliotheken</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
@@ -340,12 +340,12 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beobachte expression (Bsp: main.var os.Stdout):</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Watch expression (e.g. s1.str):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beobachte expression:</translation>
     </message>
 </context>
 <context>
@@ -445,27 +445,27 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopiere vollständigen Pfad</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Show in Explorer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">In Explorer öffnen</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="167"/>
         <source>Navigate Backward</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zurücknavigieren</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="193"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Editiere Toolbar</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="348"/>
         <source>Save changes to %1?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Änderung an %1 speichern?</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="349"/>
@@ -531,17 +531,17 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
         <source>Cannot create temporary file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Temporärdatei kann nicht erstellt werden: %1</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="97"/>
         <source>Cannot create FiFo %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">FiFo kann nicht erstellt werden %1:%2</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="104"/>
         <source>Cannot open FiFo %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">FiFo kann nicht geöffnet werden %1:%2</translation>
     </message>
 </context>
 <context>
@@ -591,7 +591,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="206"/>
         <source>Rename File...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datei umbenennen...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="209"/>
@@ -608,27 +608,27 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="211"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ordner umbenennen...</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
         <source>Open Folder in New Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Öffne Ordner in neuem Fenster</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="220"/>
         <source>Add to Folders</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zu Ordner hinzufügen</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="286"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konfiguration</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sind Sie sicher das Sie diese Datei unwiederruflich löschen wollen?</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="520"/>
@@ -650,7 +650,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="584"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sind Sie sicher das Sie den ganzen Ordner und dessen Inhalt unwiederruflich löschen wollen?</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="589"/>
@@ -711,7 +711,7 @@ LiteIDE ist eine einfache, open source, cross-plattform IDE.</translation>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neuer Name:</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="496"/>
@@ -796,7 +796,7 @@ Soll es geladen werden?</translation>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="75"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konfiguration</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="80"/>
@@ -1061,7 +1061,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sind Sie sicher das Sie diese Datei unwiederruflich löschen wollen?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
@@ -1081,12 +1081,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
         <source>Rename File...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datei umbenennen...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="109"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ordner umbenennen...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="112"/>
@@ -1143,7 +1143,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neuer Name:</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="292"/>
@@ -1154,7 +1154,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sind Sie sicher das Sie den ganzen Ordner und dessen Inhalt unwiederruflich löschen wollen?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
@@ -1821,7 +1821,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konfiguration</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="168"/>
@@ -2554,27 +2554,27 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="849"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="851"/>
         <source>Export HTML</source>
         <translation>Exportiere HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="857"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="859"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="858"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="860"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="877"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="879"/>
         <source>Export PDF</source>
         <translation>Exportiere PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="902"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="904"/>
         <source>Print Document</source>
         <translation>Drucke Dokument</translation>
     </message>
@@ -2638,7 +2638,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="960"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished">Springe zu Zeile</translation>
@@ -2709,7 +2709,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="919"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="921"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2720,7 +2720,7 @@ Success: %2.</oldsource>
         <translation type="unfinished">Springe zu nächstem Block</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="958"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="960"/>
         <source>Line: </source>
         <translation>Zeile</translation>
     </message>
@@ -2733,12 +2733,12 @@ Success: %2.</oldsource>
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="331"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="338"/>
         <source>Load File</source>
         <translation>Datei laden</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="337"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="344"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
         <translation>Prüfe und konvertiere nicht druckbare Zeichen zu &apos;.&apos;</translation>
     </message>
@@ -2806,97 +2806,102 @@ Success: %2.</oldsource>
         <translation type="unfinished">Klammern automatisch vervollständigen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="294"/>
-        <source>Clean whitespace when saving files</source>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="237"/>
+        <source>``</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="301"/>
+        <source>Clean whitespace when saving files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="308"/>
         <source>Enable scroll wheel zooming</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
         <source>Word wrap by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="418"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="425"/>
         <source>Display offset position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="442"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="449"/>
         <source>File Types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="190"/>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="240"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="247"/>
         <source>Behavior</source>
         <translation>Verhalten</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="353"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="360"/>
         <source>Display EOF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="367"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="374"/>
         <source>Display line numbers</source>
         <translation>Zeilennummern anzeigen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="374"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="381"/>
         <source>Display indent guide </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="383"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="390"/>
         <source>Display right margin at column</source>
         <translation>Zeige rechten Einzug in Spalten</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="246"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="253"/>
         <source>Automatic indentation</source>
         <oldsource>Enable automatic indentation</oldsource>
         <translation type="unfinished">Aktiviere automatisches Einrücken</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="253"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="260"/>
         <source>Case sensitive code completion</source>
         <oldsource>Completer case sensitive</oldsource>
         <translation type="unfinished">Automatische Groß-/Kleinschreibung</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="262"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="269"/>
         <source>Code completion prefix length:</source>
         <oldsource>Word Complete Prefix Length</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="325"/>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="347"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="332"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="354"/>
         <source>Display</source>
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="139"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="141"/>
         <source>MIME Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="140"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
         <source>Tab Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="141"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="143"/>
         <source>Spaces as Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="144"/>
         <source>File Extensions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3339,10 +3344,6 @@ Do you want to replace it?</source>
 <context>
     <name>OptionsWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="obsolete">Formular</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/optionswidget.ui" line="14"/>
         <source>Options</source>
         <translation type="unfinished">Optionen</translation>
@@ -3361,10 +3362,6 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionswidget.ui" line="86"/>
         <source>Cancel</source>
         <translation type="unfinished">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Schließen</translation>
     </message>
 </context>
 <context>

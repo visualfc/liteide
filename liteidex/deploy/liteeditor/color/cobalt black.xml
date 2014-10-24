@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Cobalt (black)">
+  <!-- Cobalt blue variation
+       vcrobe@gmail.com
+   -->
+  <style name="Text" foreground="#bbbbbb" background="#000000"/>
+  <style name="Extra" foreground="#008B8B" background="#111111"/>
+  <style name="Selection" background="#505050"/>
+  <style name="CurrentLine" background="#252525"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#ff9d04" />
+  <style name="DataType" foreground="#70ffaa" /> 
+  <style name="Decimal" foreground="#00ffff"/>
+  <style name="BaseN" foreground="#ff55ff"/>
+  <style name="Float" foreground="#ff55ff"/>
+  <style name="Char" foreground="#55ff55"/>
+  <style name="String" foreground="#38d81b"/>
+  <style name="Comment" foreground="#0088ff"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ffff55"/>
+  <style name="Function" foreground="#ffff55"/>
+  <style name="RegionMarker" foreground="#bbbbbb"/>
+  <style name="Symbol" foreground="#bbbbbb"/>
+  <style name="BuiltinFunc" foreground="#aa00aa"/>
+  <style name="Predeclared" foreground="#ff0040"/>
+  <style name="FuncDecl" foreground="#ffffff"/>
+  <style name="Placeholder" foreground="#a75454"/>
+  <style name="ToDo" foreground="#5555ff" bold="true"/>
+</style-scheme>

@@ -122,7 +122,7 @@ LiteApi::IExtension *WelcomeBrowser::extension()
 
 void WelcomeBrowser::highlightedUrl(const QUrl &url)
 {
-    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString());
+    m_liteApp->mainWindow()->statusBar()->showMessage(url.toString(),2000);
 }
 
 void WelcomeBrowser::openUrl(const QUrl &url)

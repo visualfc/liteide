@@ -86,6 +86,7 @@ public slots:
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void fmctxExecuteFile();
     void fmctxGoTool();
+    void applyOption(QString);
 protected:
     QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;

@@ -264,7 +264,7 @@ void SyntaxHighlighter::configureFormat(TextFormatId id, const QTextCharFormat &
     m_creatorFormats[id] = format;
 }
 
-void SyntaxHighlighter::setTabSize(int tabSize)
+void SyntaxHighlighter::setTabSize(int /*tabSize*/)
 {
 }
 

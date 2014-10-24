@@ -27,14 +27,14 @@
 #include "liteeditorwidgetbase.h"
 
 class QCompleter;
+class LiteCompleter;
 class LiteEditorWidget : public LiteEditorWidgetBase
 {
     Q_OBJECT
 public:
     explicit LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent = 0);
     void setContextMenu(QMenu *contextMenu);
-    void setCompleter(QCompleter *m_completer);
-    QCompleter *completer() const;
+    void setCompleter(LiteApi::ICompleter *completer);
     void setPrefixMin(int min) {m_completionPrefixMin = min; }
     void setSpellCheckZoneDontComplete(bool b) {m_bSpellCheckZoneDontComplete = b; }
     int prefixMin() const{
@@ -64,8 +64,8 @@ signals:
 public:
     QString wordUnderCursor() const;
     QString textUnderCursor(QTextCursor tc) const;
-protected:    
-    QCompleter *m_completer;
+protected:
+    LiteApi::ICompleter *m_completer;
     QMenu      *m_contextMenu;
     int m_completionPrefixMin;
     bool m_scrollWheelZooming;

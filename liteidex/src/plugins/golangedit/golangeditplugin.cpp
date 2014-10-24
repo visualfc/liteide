@@ -41,10 +41,10 @@ GolangEditPlugin::GolangEditPlugin()
 
 bool GolangEditPlugin::load(LiteApi::IApplication *app)
 {
-//    LiteApi::IHighlighterManager *manager = LiteApi::getHighlighterManager(app);
-//    if (manager) {
-//        manager->addFactory(new GolangHighlighterFactory(this));
-//    }
+    LiteApi::IHighlighterManager *manager = LiteApi::getHighlighterManager(app);
+    if (manager) {
+        manager->addFactory(new GolangHighlighterFactory(this));
+    }
     new GolangEdit(app,this);
     return true;
 }

@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "functiontooltip.h"
-#include "cplusplus/SimpleLexer.h"
+#include "faketooltip.h"
 
 #include <QDesktopWidget>
 #include <QApplication>
@@ -41,48 +41,11 @@
 #endif
 //lite_memory_check_end
 
-using namespace CPlusPlus;
-
-FakeToolTipFrame::FakeToolTipFrame(QWidget *parent) :
-    QWidget(parent, Qt::ToolTip | Qt::WindowStaysOnTopHint)
-{
-    setFocusPolicy(Qt::NoFocus);
-    //setAttribute(Qt::WA_DeleteOnClose);
-
-    QPalette p = palette();
-    const QColor toolTipTextColor = p.color(QPalette::Inactive, QPalette::ToolTipText);
-    p.setColor(QPalette::Inactive, QPalette::WindowText, toolTipTextColor);
-    p.setColor(QPalette::Inactive, QPalette::ButtonText, toolTipTextColor);
-    setPalette(p);
-
-    const int margin = 1 + style()->pixelMetric(QStyle::PM_ToolTipLabelFrameWidth, 0, this);
-    setContentsMargins(margin + 1, margin, margin, margin);
-    setWindowOpacity(style()->styleHint(QStyle::SH_ToolTipLabel_Opacity, 0, this) / 255.0);
-}
-
-void FakeToolTipFrame::paintEvent(QPaintEvent *)
-{
-    QStylePainter p(this);
-    QStyleOptionFrame opt;
-    opt.init(this);
-    p.drawPrimitive(QStyle::PE_PanelTipLabel, opt);
-    p.end();
-}
-
-void FakeToolTipFrame::resizeEvent(QResizeEvent *)
-{
-    QStyleHintReturnMask frameMask;
-    QStyleOption option;
-    option.init(this);
-    if (style()->styleHint(QStyle::SH_ToolTip_Mask, &option, this, &frameMask))
-        setMask(frameMask.region);
-}
-
 FunctionTooltip::FunctionTooltip(LiteApi::IApplication *app, LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount, QObject *parent)
     : QObject(parent), m_liteApp(app), m_editor(editor), m_lexer(lexer), m_maxTipCount(maxTipCount)
 {
     m_editWidget = LiteApi::getPlainTextEdit(editor);
-    m_popup = new FakeToolTipFrame(m_editWidget);
+    m_popup = new FakeToolTip(m_editWidget);
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
     hbox->setSpacing(0);
@@ -194,21 +157,7 @@ void FunctionTooltip::updateArgumentHighlight()
     int argnr = 0;
     int parcount = 0;
 
-    LanguageFeatures features;
-    features.golangEnable = true;
-
-    SimpleLexer tokenize;
-    tokenize.setLanguageFeatures(features);
-    QList<Token> tokens = tokenize(str);
-    for (int i = 0; i < tokens.count(); ++i) {
-        const Token &tk = tokens.at(i);
-        if (tk.is(T_LPAREN))
-            ++parcount;
-        else if (tk.is(T_RPAREN))
-            --parcount;
-        else if (! parcount && tk.is(T_COMMA))
-            ++argnr;
-    }
+    m_lexer->fetchFunctionArgs(str,argnr,parcount);
 
     if (m_currentarg != argnr) {
         m_currentarg = argnr;

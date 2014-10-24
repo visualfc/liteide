@@ -576,6 +576,7 @@ class IGoProxy : public QObject
 public:
     IGoProxy(QObject *parent) : QObject(parent) {}
     virtual bool isValid() const = 0;
+    virtual bool isRunning(const QByteArray &id) const = 0;
 signals:
     void error(const QByteArray &id, int err);
     void done(const QByteArray &id, const QByteArray &args);
@@ -768,7 +769,7 @@ inline QString liteide_stub_cmd(LiteApi::IApplication *app)
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X22")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X24")
 
 
 #endif //__LITEAPI_H__
