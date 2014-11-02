@@ -12,13 +12,15 @@ DEFINES += GOLANGCODE_LIBRARY
 SOURCES += golangcodeplugin.cpp \
         golangcode.cpp \
         golangcodeoptionfactory.cpp \
-        golangcodeoption.cpp
+        golangcodeoption.cpp \
+    ../liteeditor/faketooltip.cpp
 
 HEADERS += golangcodeplugin.h\
         golangcode_global.h \
         golangcode.h \
         golangcodeoptionfactory.h \
-        golangcodeoption.h
+        golangcodeoption.h \
+    ../liteeditor/faketooltip.h
 
 FORMS += \
         golangcodeoption.ui

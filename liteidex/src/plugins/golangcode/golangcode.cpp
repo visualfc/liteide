@@ -25,6 +25,7 @@
 #include "golangcode_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
+#include "../liteeditor/faketooltip.h"
 #include <QProcess>
 #include <QTextDocument>
 #include <QAbstractItemView>
@@ -428,8 +429,8 @@ ImportPkgTip::ImportPkgTip(LiteApi::IApplication *app, QObject *parent)
     m_startPos = 0;
     m_escapePressed = false;
     m_enterPressed = false;
-    m_popup = new QWidget(0,Qt::ToolTip);
-    m_popup->setFocusPolicy(Qt::NoFocus);
+    m_popup = new FakeToolTip();
+    //m_popup->setFocusPolicy(Qt::NoFocus);
     m_label = new QLabel;
 
     QHBoxLayout *layout = new QHBoxLayout;
@@ -455,6 +456,8 @@ void ImportPkgTip::showPkgHint(int startpos, const QString &pkg, QPlainTextEdit 
 #endif
     m_pkg = pkg;
     m_startPos = startpos;
+    m_enterPressed = false;
+    m_escapePressed = false;
     const QSize sz = m_popup->sizeHint();
     QTextCursor cur = ed->textCursor();
     cur.setPosition(startpos);

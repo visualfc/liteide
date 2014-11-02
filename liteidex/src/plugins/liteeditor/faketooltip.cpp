@@ -16,7 +16,7 @@ FakeToolTip::FakeToolTip(QWidget *parent) :
 
     const int margin = 1 + style()->pixelMetric(QStyle::PM_ToolTipLabelFrameWidth, 0, this);
     setContentsMargins(margin + 1, margin, margin, margin);
-    setWindowOpacity(style()->styleHint(QStyle::SH_ToolTipLabel_Opacity, 0, this) / 255.0);
+    //setWindowOpacity(style()->styleHint(QStyle::SH_ToolTipLabel_Opacity, 0, this) / 255.0);
 }
 
 void FakeToolTip::paintEvent(QPaintEvent *)
