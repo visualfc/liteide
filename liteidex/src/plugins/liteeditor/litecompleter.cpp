@@ -200,7 +200,7 @@ void LiteCompleter::showPopup()
     if (!m_editor) {
         return;
     }
-    m_completer->model()->sort(0);
+    //m_completer->model()->sort(0);
     m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
     QTextCursor cursor = m_editor->textCursor();
     int offset = m_completer->completionPrefix().length();

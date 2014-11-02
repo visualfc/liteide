@@ -231,6 +231,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         m_completer->popup()->hide();
         return;
     }
+
     emit completionPrefixChanged(completionPrefix,false);
     m_completer->startCompleter(completionPrefix);
 
