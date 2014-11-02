@@ -187,8 +187,10 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     if (m_gocodeProcess->state() != QProcess::NotRunning) {
         return;
     }
+    int offset = -1;
     if (pre.endsWith('.')) {
         m_preWord = pre;
+        offset = 0;
     } else if (pre.length() == 1) {
         m_preWord.clear();
     } else {
@@ -218,7 +220,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     src = src.replace("\r\n","\n");
     m_writeData = src.left(cur.position()).toUtf8();
     QStringList args;
-    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length());
+    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length()+offset);
     m_writeData = src.toUtf8();
     m_breset = false;
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.path());
@@ -264,6 +266,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     }
 
     QByteArray read = m_gocodeProcess->readAllStandardOutput();
+
     QList<QByteArray> all = read.split('\n');
     //func,,Fprint,,func(w io.Writer, a ...interface{}) (n int, error os.Error)
     //type,,Formatter,,interface
