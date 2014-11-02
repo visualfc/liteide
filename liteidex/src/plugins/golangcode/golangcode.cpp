@@ -97,27 +97,41 @@ void GolangCode::import(const QString &import, int startPos)
         return;
     }
     QTextBlock block = ed->document()->firstBlock();
-    int line1 = -1;
-    int line2 = -1;
-    int pos = -1;
+    int pos1 = -1;
+    int pos2 = -1;
     while (block.isValid()) {
         QString text = block.text();
+        if (text.startsWith("/*")) {
+            block = block.next();
+            while(block.isValid()) {
+                if (block.text().endsWith("*/")) {
+                    break;
+                }
+                block = block.next();
+            }
+            if (!block.isValid()) {
+                break;
+            }
+        }
         if (text.startsWith("package ")) {
-            line1 = block.blockNumber();
-        } else if (line1 != -1 && text.startsWith("import (")) {
-            line2 = block.blockNumber();
-            pos = block.position()+block.length();
+            pos1 = block.position()+block.length();
+        } else if (pos1 != -1 && text.startsWith("import (")) {
+            pos2 = block.position()+block.length();
             break;
         }
         block = block.next();
     }
-    if (pos < 0) {
+    if (pos1 < 0) {
         return;
+    }
+    QString text = "\t\""+import+"\"\n";
+    if (pos2 < 0) {
+        pos2 = pos1;
+        text = "\nimport (\n\t\""+import+"\"\n)\n";
     }
     QTextCursor cur = ed->textCursor();
     int orgPos = cur.position();
-    cur.setPosition(pos);
-    QString text = "\n\t\""+import+"\"\n";
+    cur.setPosition(pos2);
     cur.insertText(text);
     cur.setPosition(orgPos+text.length());
     ed->setTextCursor(cur);
@@ -500,13 +514,13 @@ bool ImportPkgTip::eventFilter(QObject *obj, QEvent *e)
                 m_enterPressed = false;
                 hide();
                 emit import(m_pkg,m_startPos);
-            } else {
+            } else if (ke->text() != "."){
                 hide();
             }
         }
         break;
     case QEvent::FocusOut:
-    case QEvent::WindowDeactivate:
+    //case QEvent::WindowDeactivate:
     case QEvent::Resize:
         if (obj != m_editWidget)
             break;
