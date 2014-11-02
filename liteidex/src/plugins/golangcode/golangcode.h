@@ -30,6 +30,30 @@
 #include "golangastapi/golangastapi.h"
 
 class QProcess;
+class QLabel;
+class ImportPkgTip : public QObject
+{
+    Q_OBJECT
+public:
+    explicit ImportPkgTip(LiteApi::IApplication *app, QObject *parent = 0);
+    ~ImportPkgTip();
+    void showPkgHint(int startpos, const QString &pkg, QPlainTextEdit *ed);
+    void setWidget(QWidget *widget);
+    void hide();
+signals:
+    void import(QString,int);
+protected:
+    bool eventFilter(QObject *obj, QEvent *e);
+    LiteApi::IApplication *m_liteApp;
+    QWidget *m_editWidget;
+    QWidget *m_popup;
+    QLabel *m_label;
+    QString m_pkg;
+    int     m_startPos;
+    bool m_escapePressed;
+    bool m_enterPressed;
+};
+
 
 class GolangCode : public QObject
 {
@@ -40,6 +64,7 @@ public:
     void setCompleter(LiteApi::ICompleter *completer);
     void resetGocode();
     void cgoComplete();
+    void loadPkgList();
 public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
@@ -49,10 +74,16 @@ public slots:
     void finished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);
     void applyOption(QString);
+    void loaded();
+    void import(const QString &import, int startPos);
 protected:
     static  int g_gocodeInstCount;
     LiteApi::IApplication *m_liteApp;
+    LiteApi::ITextEditor  *m_editor;
     LiteApi::ICompleter   *m_completer;
+    QWidget *m_pkgWidget;
+    ImportPkgTip    *m_pkgImportTip;
+    QMap<QString,QString> m_pkgList;
     QString     m_gobinCmd;
     QString     m_preWord;
     QString     m_prefix;

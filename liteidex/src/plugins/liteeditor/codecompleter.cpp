@@ -327,8 +327,9 @@ bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &pa
         QModelIndex parent = m_model->indexFromItem(root);
         for (int i = 0; i < m_model->rowCount(parent); i++) {
             QModelIndex index = m_model->index(i,0,parent);
-            item = m_model->itemFromIndex(index);
-            if (item->text() == word) {
+            QStandardItem *tmp = m_model->itemFromIndex(index);
+            if (tmp->text() == word) {
+                item = tmp;
                 break;
             }
         }
@@ -435,14 +436,12 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs)
     if (!m_model) {
         return 0;
     }
+    clearItems();
     QModelIndex parentIndex;
     QString prefix;
     if (!splitFilter(filter,parentIndex,prefix)) {
         return 0;
     }
-
-    clearItems();
-
     if (prefix.isEmpty()) {
         int count = m_model->rowCount(parentIndex);
         for (int i = 0; i < count; i++) {

@@ -8,11 +8,11 @@ FakeToolTip::FakeToolTip(QWidget *parent) :
     setFocusPolicy(Qt::NoFocus);
     //setAttribute(Qt::WA_DeleteOnClose);
 
-    QPalette p = palette();
-    const QColor toolTipTextColor = p.color(QPalette::Inactive, QPalette::ToolTipText);
-    p.setColor(QPalette::Inactive, QPalette::WindowText, toolTipTextColor);
-    p.setColor(QPalette::Inactive, QPalette::ButtonText, toolTipTextColor);
-    setPalette(p);
+//    QPalette p = palette();
+//    const QColor toolTipTextColor = p.color(QPalette::Inactive, QPalette::ToolTipText);
+//    p.setColor(QPalette::Inactive, QPalette::WindowText, toolTipTextColor);
+//    p.setColor(QPalette::Inactive, QPalette::ButtonText, toolTipTextColor);
+//    setPalette(p);
 
     const int margin = 1 + style()->pixelMetric(QStyle::PM_ToolTipLabelFrameWidth, 0, this);
     setContentsMargins(margin + 1, margin, margin, margin);
