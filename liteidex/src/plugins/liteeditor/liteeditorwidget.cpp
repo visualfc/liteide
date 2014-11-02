@@ -228,10 +228,27 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     if (hasModifier || e->text().isEmpty()||
                         ( completionPrefix.length() < m_completionPrefixMin && completionPrefix.right(1) != ".")
                         || eow.contains(e->text().right(1))) {
-        m_completer->popup()->hide();
+        if (m_completer->popup()->isVisible()) {
+            m_completer->popup()->hide();
+            //fmt.Print( -> Print
+            if (e->text() == "(") {
+                QTextCursor cur = textCursor();
+                cur.movePosition(QTextCursor::Left);
+                QString lastPrefix = textUnderCursor(cur);
+                if (lastPrefix.startsWith(".")) {
+                    lastPrefix.insert(0,"@");
+                }
+                if (!lastPrefix.isEmpty() &&
+                        lastPrefix == m_completer->completionPrefix() ) {
+                    if (lastPrefix == m_completer->currentCompletion() ||
+                            lastPrefix.endsWith("."+m_completer->currentCompletion())) {
+                        m_completer->updateCompleteInfo(m_completer->currentIndex());
+                    }
+                }
+            }
+        }
         return;
     }
-
     emit completionPrefixChanged(completionPrefix,false);
     m_completer->startCompleter(completionPrefix);
 

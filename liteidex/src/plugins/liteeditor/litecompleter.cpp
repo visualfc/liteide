@@ -437,3 +437,20 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     m_editor->setTextCursor(tc);
     emit wordCompleted(wordText,kind,info);
 }
+
+void LiteCompleter::updateCompleteInfo(QModelIndex index)
+{
+    if (!m_editor) {
+        return;
+    }
+    if (m_completer->widget() != m_editor)
+        return;
+    if (!index.isValid()) {
+        return;
+    }
+
+    QString text = index.data().toString();
+    QString kind = index.data(WordItem::KindRole).toString();
+    QString info = index.data(Qt::ToolTipRole).toString();
+    emit wordCompleted(text,kind,info);
+}

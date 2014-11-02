@@ -26,8 +26,6 @@
 
 #include "liteeditorwidgetbase.h"
 
-class QCompleter;
-class LiteCompleter;
 class LiteEditorWidget : public LiteEditorWidgetBase
 {
     Q_OBJECT

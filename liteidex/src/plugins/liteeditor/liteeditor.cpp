@@ -829,7 +829,6 @@ void LiteEditor::updateTip(const QString &func,const QString &kind,const QString
         m_funcTip = new FunctionTooltip(m_liteApp,this,m_editorWidget->textLexer(),20);
     }
     m_funcTip->showFunctionHint(this->position(),tip);
-    //m_editorWidget->textLexer()->showToolTip(this->position(),func,kind,info);
 }
 
 void LiteEditor::filePrintPreview()
