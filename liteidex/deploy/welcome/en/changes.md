@@ -3,6 +3,15 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.11.03 Ver x24.1
+* LiteEditor
+	* fix codecompleter crash
+* GolangCode
+	* prompt pkg not find , enter key to auto import
+	* fix struct offset for gocode
+* GolangFmt
+	* merge goimports to liteide_stub
+
 ### 2014.10.24 Ver x24
 * LiteApp
 	* new codecompleter components
