@@ -100,6 +100,9 @@ void GolangCode::import(const QString &import, int startPos)
     QTextBlock block = ed->document()->firstBlock();
     int pos1 = -1;
     int pos2 = -1;
+    int pos3 = -1;
+    int pos4 = -1;
+    int offset = 0;
     while (block.isValid()) {
         QString text = block.text();
         if (text.startsWith("/*")) {
@@ -122,6 +125,13 @@ void GolangCode::import(const QString &import, int startPos)
         } else if (pos1 != -1 && text.startsWith("import (")) {
             pos2 = block.position()+block.length();
             break;
+        } else if (pos1 != -1 && text.startsWith("import ")) {
+            QString path = text.right(text.length()-7).trimmed();
+            if (!path.startsWith("\"C\"")) {
+                pos3 = block.position()+ 7;
+                pos4 = block.position()+block.length();
+                break;
+            }
         }
         block = block.next();
     }
@@ -129,15 +139,25 @@ void GolangCode::import(const QString &import, int startPos)
         return;
     }
     QString text = "\t\""+import+"\"\n";
-    if (pos2 < 0) {
-        pos2 = pos1;
-        text = "\nimport (\n\t\""+import+"\"\n)\n";
-    }
     QTextCursor cur = ed->textCursor();
     int orgPos = cur.position();
+    cur.beginEditBlock();
+    if (pos2 < 0) {
+        if (pos3 < 0) {
+            pos2 = pos1;
+            text = "\nimport (\n\t\""+import+"\"\n)\n";
+        } else {
+            cur.setPosition(pos3);
+            cur.insertText("(\n\t");
+            pos2 = pos4+3;
+            offset += 3;
+            text = "\t\""+import+"\"\n)\n";
+        }
+    }
     cur.setPosition(pos2);
     cur.insertText(text);
-    cur.setPosition(orgPos+text.length());
+    cur.setPosition(orgPos+text.length()+offset);
+    cur.endEditBlock();
     ed->setTextCursor(cur);
     if (orgPos == startPos) {
         prefixChanged(cur,m_lastPrefix,true);
