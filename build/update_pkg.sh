@@ -22,13 +22,9 @@ cd $LITEIDE_ROOT
 export GOPATH=$PWD
 
 echo get gocode ...
-go get -v -u "github.com/nsf/gocode"
-echo update liteide_stub ...
-go get -v -u "code.google.com/p/go.tools/astutil"
-go get -v -u "code.google.com/p/go.tools/go/exact"
-go get -v -u "code.google.com/p/go.tools/go/types"
-go get -v -u "code.google.com/p/go.tools/go/gcimporter"
-go get -v -u "code.google.com/p/go.tools/present"
+go get -v -u -ldflags "-s" "github.com/nsf/gocode"
+echo get liteide_stub ...
+go get -v -ldflags "-s" "liteide_stub"
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'

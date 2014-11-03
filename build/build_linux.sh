@@ -49,6 +49,12 @@ cd $LITEIDE_ROOT
 export GOPATH=$PWD
 
 go install -ldflags "-s" -v liteide_stub
+
+if [ $? -ge 1 ]; then
+	echo 'error, go install fail'
+	exit 1
+fi
+
 go install -ldflags "-s" -v github.com/nsf/gocode
 
 if [ $? -ge 1 ]; then
