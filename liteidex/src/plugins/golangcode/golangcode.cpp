@@ -119,7 +119,7 @@ void GolangCode::import(const QString &import, int startPos)
             break;
         } else if (text.startsWith("package ")) {
             pos1 = block.position()+block.length();
-        } else if (pos1 != -1 && text.startsWith("import ")) {
+        } else if (pos1 != -1 && text.startsWith("import (")) {
             pos2 = block.position()+block.length();
             break;
         }
