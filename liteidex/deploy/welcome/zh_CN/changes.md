@@ -11,6 +11,7 @@
 	* fix struct offset for gocode
 * GolangFmt
 	* merge goimports to liteide_stub
+	* default use goimports
 
 ### 2014.10.24 Ver x24
 * LiteApp
