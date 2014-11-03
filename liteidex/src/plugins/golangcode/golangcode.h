@@ -37,7 +37,7 @@ class ImportPkgTip : public QObject
 public:
     explicit ImportPkgTip(LiteApi::IApplication *app, QObject *parent = 0);
     ~ImportPkgTip();
-    void showPkgHint(int startpos, const QString &pkg, QPlainTextEdit *ed);
+    void showPkgHint(int startpos, const QStringList &pkg, QPlainTextEdit *ed);
     void setWidget(QWidget *widget);
     void hide();
 signals:
@@ -47,9 +47,11 @@ protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_editWidget;
     QWidget *m_popup;
-    QLabel *m_label;
-    QString m_pkg;
+    QLabel *m_infoLabel;
+    QLabel *m_pkgLabel;
+    QStringList m_pkg;
     int     m_startPos;
+    int     m_pkgIndex;
     bool m_escapePressed;
     bool m_enterPressed;
 };
@@ -76,6 +78,7 @@ public slots:
     void applyOption(QString);
     void loaded();
     void import(const QString &import, int startPos);
+    bool findImport(const QString &id);
 protected:
     static  int g_gocodeInstCount;
     LiteApi::IApplication *m_liteApp;
@@ -83,7 +86,7 @@ protected:
     LiteApi::ICompleter   *m_completer;
     QWidget *m_pkgWidget;
     ImportPkgTip    *m_pkgImportTip;
-    QMap<QString,QString> m_pkgList;
+    QMultiMap<QString,QString> m_pkgList;
     QString     m_gobinCmd;
     QString     m_preWord;
     QString     m_prefix;
