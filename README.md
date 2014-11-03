@@ -9,7 +9,7 @@ LiteIDE X
 
 _LiteIDE is a simple, open source, cross-platform Go IDE._
 
-* Version: X24.1
+* Version: X24.2
 * Author: [visualfc](mailto:visualfc@gmail.com)
 
 ### Features
