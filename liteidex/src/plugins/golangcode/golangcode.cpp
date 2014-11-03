@@ -651,7 +651,7 @@ bool ImportPkgTip::eventFilter(QObject *obj, QEvent *e)
         }
         break;
     case QEvent::FocusOut:
-    //case QEvent::WindowDeactivate:
+    case QEvent::WindowDeactivate:
     case QEvent::Resize:
         if (obj != m_editWidget)
             break;
