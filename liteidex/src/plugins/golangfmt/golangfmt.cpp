@@ -60,7 +60,7 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(fmtFinish(bool,int,QString)));
 
-    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
+    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
@@ -76,7 +76,7 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
     m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     if (!m_diff) {
@@ -116,18 +116,26 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         return;
     }
 
-    QStringList args;
-    if (m_diff) {
-        args << "-d";
-    }
-
     if (timeout < 0) {
         timeout = m_timeout;
     }
 
     QProcess process;
     process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    process.start(m_gofmtCmd,args);
+
+    QStringList args;
+    if (m_goimports) {
+        args << "goimports";
+    }
+    if (m_diff) {
+        args << "-d";
+    }
+    if (m_goimports) {
+        QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+        process.start(cmd,args);
+    } else {
+        process.start(m_gofmtCmd,args);
+    }
     if (!process.waitForStarted(timeout)) {
         m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
         return;
@@ -211,9 +219,6 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     if (info.suffix() != "go") {
         return;
     }
-    if (m_gofmtCmd.isEmpty()) {
-        return;
-    }
     if (m_process->isRunning()) {
         return;
     }
@@ -221,16 +226,25 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     if (!edit) {
         return;
     }
-    QStringList args;
-    if (m_diff) {
-        args << "-d";
-    }
     m_data.clear();;
     m_errData.clear();
     m_process->setUserData(0,editor->filePath());
     m_process->setUserData(1,edit->toPlainText());
     m_process->setUserData(2,save);
-    m_process->start(m_gofmtCmd,args);
+
+    QStringList args;
+    if (m_goimports) {
+        args << "goimports";
+    }
+    if (m_diff) {
+        args << "-d";
+    }
+    if (m_goimports) {
+        QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+        m_process->start(cmd,args);
+    } else {
+        m_process->start(m_gofmtCmd,args);
+    }
 }
 
 void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
@@ -248,18 +262,11 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
-    if (m_goimports) {
-        m_gofmtCmd = FileUtil::lookupGoBin("goimports",m_liteApp,true);
-    } else {
+    if (!m_goimports) {
         m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
-    }
-    if (m_gofmtCmd.isEmpty()) {
-        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
-    }
-    if (m_gofmtCmd.isEmpty()) {
-        m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
-    } else {
-        m_liteApp->appendLog("GolangFmt",QString("Found %1").arg(m_gofmtCmd),false);
+        if (m_gofmtCmd.isEmpty()) {
+            m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
+        }
     }
     m_process->setProcessEnvironment(env);
 }

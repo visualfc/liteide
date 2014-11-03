@@ -167,6 +167,10 @@ void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
 
 void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 {
+    if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
+        return;
+    }
+
     if (!m_completer) {
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
