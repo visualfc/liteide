@@ -119,7 +119,7 @@ void GolangCode::import(const QString &import, int startPos)
             break;
         } else if (text.startsWith("package ")) {
             pos1 = block.position()+block.length();
-        } else if (pos1 != -1 && text.startsWith("import ")) {
+        } else if (pos1 != -1 && text.startsWith("import (")) {
             pos2 = block.position()+block.length();
             break;
         }
@@ -142,6 +142,98 @@ void GolangCode::import(const QString &import, int startPos)
     if (orgPos == startPos) {
         prefixChanged(cur,m_lastPrefix,true);
     }
+}
+
+bool check_import(const QString &path, const QString &id)
+{
+    int start = path.indexOf("\"");
+    if (start >= 0) {
+        int end = path.indexOf("\"",start+1);
+        if (end > 0) {
+            QString name = path.left(start).trimmed();
+            if (!name.isEmpty()) {
+                if (name == id) {
+                    return true;
+                }
+            } else {
+                QString tmp = path.mid(start+1,end-start-1);
+                if (tmp == id) {
+                    return true;
+                }
+                if (tmp.endsWith("/"+id)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return  false;
+}
+
+bool GolangCode::findImport(const QString &id)
+{
+    QPlainTextEdit *ed = LiteApi::getPlainTextEdit(m_editor);
+    if (!ed) {
+        return false;
+    }
+    QTextBlock block = ed->document()->firstBlock();
+    int pos1 = -1;
+    while (block.isValid()) {
+        QString text = block.text().trimmed();
+        if (text.startsWith("/*")) {
+            block = block.next();
+            while(block.isValid()) {
+                if (block.text().endsWith("*/")) {
+                    break;
+                }
+                block = block.next();
+            }
+            if (!block.isValid()) {
+                break;
+            }
+        } else if (text.startsWith("var")) {
+            break;
+        } else if (text.startsWith("func")) {
+            break;
+        } else if (text.startsWith("package ")) {
+            pos1 = block.position()+block.length();
+        } else if (pos1 != -1 && text.startsWith("import (")) {
+            block = block.next();
+            while(block.isValid()) {
+                QString text = block.text().trimmed();
+                if (text.startsWith(")")) {
+                    break;
+                }
+                //skip
+                if (text.startsWith("/*")) {
+                    block = block.next();
+                    while(block.isValid()) {
+                        if (block.text().endsWith("*/")) {
+                            break;
+                        }
+                        block = block.next();
+                    }
+                    if (!block.isValid()) {
+                        break;
+                    }
+                }
+                if (text.startsWith("//")) {
+                    block = block.next();
+                    continue;
+                }
+                if (check_import(text,id)) {
+                    return true;
+                }
+                block = block.next();
+            }
+        } else if (pos1 != -1 && text.startsWith("import ")) {
+            QString path = text.right(text.length()-7);
+            if (check_import(path,id)) {
+                return true;
+            }
+        }
+        block = block.next();
+    }
+    return false;
 }
 
 void GolangCode::broadcast(QString module,QString id,QString)
@@ -411,12 +503,14 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
         }
     }
     if (n == 0 && m_lastPrefix.endsWith(".")) {
-        QString pkg = m_pkgList.value(m_lastPrefix.left(m_lastPrefix.length()-1));
-        if (!pkg.isEmpty()) {
+        QString id = m_lastPrefix.left(m_lastPrefix.length()-1);
+        QStringList pkgs = m_pkgList.values(id);
+        if (!pkgs.isEmpty() && !findImport(id)) {
             QPlainTextEdit *ed = LiteApi::getPlainTextEdit(m_editor);
             if (ed) {
                 int pos = ed->textCursor().position();
-                m_pkgImportTip->showPkgHint(pos,pkg,ed);
+                pkgs.sort();
+                m_pkgImportTip->showPkgHint(pos,pkgs,ed);
             }
         }
     }
@@ -427,15 +521,17 @@ ImportPkgTip::ImportPkgTip(LiteApi::IApplication *app, QObject *parent)
 {
     m_editWidget = 0;
     m_startPos = 0;
+    m_pkgIndex = 0;
     m_escapePressed = false;
     m_enterPressed = false;
     m_popup = new FakeToolTip();
     //m_popup->setFocusPolicy(Qt::NoFocus);
-    m_label = new QLabel;
-
+    m_infoLabel = new QLabel;
+    m_pkgLabel = new QLabel;
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(4);
-    layout->addWidget(m_label);
+    layout->addWidget(m_infoLabel);
+    layout->addWidget(m_pkgLabel);
     m_popup->setLayout(layout);
 
     qApp->installEventFilter(this);
@@ -446,7 +542,7 @@ ImportPkgTip::~ImportPkgTip()
     delete m_popup;
 }
 
-void ImportPkgTip::showPkgHint(int startpos, const QString &pkg, QPlainTextEdit *ed)
+void ImportPkgTip::showPkgHint(int startpos, const QStringList &pkg, QPlainTextEdit *ed)
 {
     const QDesktopWidget *desktop = QApplication::desktop();
 #ifdef Q_WS_MAC
@@ -458,16 +554,21 @@ void ImportPkgTip::showPkgHint(int startpos, const QString &pkg, QPlainTextEdit 
     m_startPos = startpos;
     m_enterPressed = false;
     m_escapePressed = false;
-    const QSize sz = m_popup->sizeHint();
+    m_pkgIndex = 0;
+    const QSize sz = m_popup->minimumSizeHint();
     QTextCursor cur = ed->textCursor();
     cur.setPosition(startpos);
     QPoint pos = ed->cursorRect(cur).topLeft();
     pos.setY(pos.y() - sz.height() - 1);
     pos = ed->mapToGlobal(pos);
-
     if (pos.x() + sz.width() > screen.right())
         pos.setX(screen.right() - sz.width());
-    m_label->setText(tr("warning, pkg not find, please enter to import :")+"\t\""+pkg+"\"");
+    m_infoLabel->setText(tr("warning, pkg not find, please enter to import :"));
+    if (m_pkg.size() == 1) {
+        m_pkgLabel->setText(m_pkg[0]);
+    } else {
+        m_pkgLabel->setText(QString("[%1/%2] \"%3\"").arg(m_pkgIndex+1).arg(m_pkg.size()).arg(m_pkg[m_pkgIndex]));
+    }
     m_popup->move(pos);
     if (!m_popup->isVisible()) {
         m_popup->show();
@@ -507,6 +608,26 @@ bool ImportPkgTip::eventFilter(QObject *obj, QEvent *e)
                 m_enterPressed = true;
                 e->accept();
                 return true;
+            } else if (ke->key() == Qt::Key_Up) {
+                if (m_pkg.size() > 1) {
+                    e->accept();
+                    m_pkgIndex--;
+                    if (m_pkgIndex < 0) {
+                        m_pkgIndex = m_pkg.size()-1;
+                    }
+                    m_pkgLabel->setText(QString("[%1/%2] \"%3\"").arg(m_pkgIndex+1).arg(m_pkg.size()).arg(m_pkg[m_pkgIndex]));
+                }
+                return true;
+            } else if (ke->key() == Qt::Key_Down) {
+                if (m_pkg.size() > 1) {
+                    e->accept();
+                    m_pkgIndex++;
+                    if (m_pkgIndex >= m_pkg.size()) {
+                        m_pkgIndex = 0;
+                    }
+                    m_pkgLabel->setText(QString("[%1/%2] \"%3\"").arg(m_pkgIndex+1).arg(m_pkg.size()).arg(m_pkg[m_pkgIndex]));
+                }
+                return true;
             }
         }
         break;
@@ -519,7 +640,11 @@ bool ImportPkgTip::eventFilter(QObject *obj, QEvent *e)
                 e->accept();
                 m_enterPressed = false;
                 hide();
-                emit import(m_pkg,m_startPos);
+                emit import(m_pkg[m_pkgIndex],m_startPos);
+            } else if (ke->key() == Qt::Key_Up) {
+                return true;
+            } else if (ke->key() == Qt::Key_Down) {
+                return true;
             } else if (ke->text() != "."){
                 hide();
             }
