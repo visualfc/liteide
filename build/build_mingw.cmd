@@ -41,8 +41,10 @@ cd %LITEIDE_ROOT%
 set GOPATH=%CD%;%GOPATH%
 
 go install -ldflags "-s" -v liteide_stub
-go install -ldflags "-s" -v github.com/visualfc/goimports
+if ERRORLEVEL 1 goto go_fail
+
 go install -ldflags "-s" -v github.com/nsf/gocode
+if ERRORLEVEL 1 goto go_fail
 
 cd %BUILD_ROOT%
 
@@ -63,7 +65,8 @@ xcopy %LITEIDE_ROOT%\..\README.MD liteide /y
 xcopy %LITEIDE_ROOT%\..\CONTRIBUTORS liteide /y
 
 xcopy %LITEIDE_ROOT%\liteide\bin\* liteide\bin /y
-xcopy %LITEIDE_ROOT%\bin\* liteide\bin /y
+xcopy %LITEIDE_ROOT%\bin\liteide_stub.exe liteide\bin /y
+xcopy %LITEIDE_ROOT%\bin\gocode.exe liteide\bin /y
 xcopy %LITEIDE_ROOT%\liteide\lib\liteide\plugins\*.dll liteide\lib\liteide\plugins /y
 
 xcopy %LITEIDE_ROOT%\deploy liteide\share\liteide /e /y /i

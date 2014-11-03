@@ -25,10 +25,17 @@
 #include "golangcode_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
+#include "../liteeditor/faketooltip.h"
 #include <QProcess>
 #include <QTextDocument>
 #include <QAbstractItemView>
 #include <QApplication>
+#include <QDesktopWidget>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QPlainTextEdit>
+#include <QTimer>
+#include <QScrollBar>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -45,6 +52,7 @@ int GolangCode::g_gocodeInstCount = 0;
 GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app),
+    m_editor(0),
     m_completer(0),
     m_closeOnExit(true),
     m_autoUpdatePkg(false)
@@ -62,9 +70,12 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
         currentEnvChanged(m_envManager->currentEnv());
     }
     m_golangAst = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
+    m_pkgImportTip = new ImportPkgTip(m_liteApp,this);
+    connect(m_pkgImportTip,SIGNAL(import(QString,int)),this,SLOT(import(QString,int)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(loaded()));
     applyOption("option/golangcode");
 }
 
@@ -73,6 +84,64 @@ void GolangCode::applyOption(QString id)
     if (id != "option/golangcode") return;
     m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
     m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,false).toBool();
+}
+
+void GolangCode::loaded()
+{
+    loadPkgList();
+}
+
+void GolangCode::import(const QString &import, int startPos)
+{
+    QPlainTextEdit *ed = LiteApi::getPlainTextEdit(m_editor);
+    if (!ed) {
+        return;
+    }
+    QTextBlock block = ed->document()->firstBlock();
+    int pos1 = -1;
+    int pos2 = -1;
+    while (block.isValid()) {
+        QString text = block.text();
+        if (text.startsWith("/*")) {
+            block = block.next();
+            while(block.isValid()) {
+                if (block.text().endsWith("*/")) {
+                    break;
+                }
+                block = block.next();
+            }
+            if (!block.isValid()) {
+                break;
+            }
+        } else if (text.startsWith("var")) {
+            break;
+        } else if (text.startsWith("func")) {
+            break;
+        } else if (text.startsWith("package ")) {
+            pos1 = block.position()+block.length();
+        } else if (pos1 != -1 && text.startsWith("import ")) {
+            pos2 = block.position()+block.length();
+            break;
+        }
+        block = block.next();
+    }
+    if (pos1 < 0) {
+        return;
+    }
+    QString text = "\t\""+import+"\"\n";
+    if (pos2 < 0) {
+        pos2 = pos1;
+        text = "\nimport (\n\t\""+import+"\"\n)\n";
+    }
+    QTextCursor cur = ed->textCursor();
+    int orgPos = cur.position();
+    cur.setPosition(pos2);
+    cur.insertText(text);
+    cur.setPosition(orgPos+text.length());
+    ed->setTextCursor(cur);
+    if (orgPos == startPos) {
+        prefixChanged(cur,m_lastPrefix,true);
+    }
 }
 
 void GolangCode::broadcast(QString module,QString id,QString)
@@ -124,6 +193,25 @@ void GolangCode::cgoComplete()
     m_completer->showPopup();
 }
 
+void GolangCode::loadPkgList()
+{
+    QString path = m_liteApp->resourcePath()+("/golang/pkglist");
+    QFile file(path);
+    if (file.open(QFile::ReadOnly)) {
+        QByteArray data = file.readAll();
+        QString ar = QString::fromUtf8(data);
+        ar.replace("\r\n","\n");
+        foreach(QString line, ar.split("\n")) {
+            line = line.trimmed();
+            if (line.isEmpty()) {
+                continue;
+            }
+            QStringList pathList = line.split("/");
+            m_pkgList.insert(pathList.last(),line);
+        }
+    }
+}
+
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
@@ -142,11 +230,12 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 
 void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
 {
-    LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
-    if (!ed) {
+    m_editor = LiteApi::getTextEditor(editor);
+    if (!m_editor) {
         return;
     }
-    QString filePath = ed->filePath();
+    m_pkgImportTip->setWidget(editor->widget());
+    QString filePath = m_editor->filePath();
     if (filePath.isEmpty()) {
         return;
     }
@@ -187,8 +276,10 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     if (m_gocodeProcess->state() != QProcess::NotRunning) {
         return;
     }
+    int offset = -1;
     if (pre.endsWith('.')) {
         m_preWord = pre;
+        offset = 0;
     } else if (pre.length() == 1) {
         m_preWord.clear();
     } else {
@@ -218,7 +309,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     src = src.replace("\r\n","\n");
     m_writeData = src.left(cur.position()).toUtf8();
     QStringList args;
-    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length());
+    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length()+offset);
     m_writeData = src.toUtf8();
     m_breset = false;
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.path());
@@ -264,6 +355,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     }
 
     QByteArray read = m_gocodeProcess->readAllStandardOutput();
+
     QList<QByteArray> all = read.split('\n');
     //func,,Fprint,,func(w io.Writer, a ...interface{}) (n int, error os.Error)
     //type,,Formatter,,interface
@@ -308,14 +400,152 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
         m_completer->appendChildItem(root,word.at(1),kind,info,icon,true);
         n++;
     }
+    m_lastPrefix = m_prefix;
     m_prefix.clear();
     if (n >= 1) {
         m_completer->updateCompleterModel();
         m_completer->showPopup();
     } else if (m_autoUpdatePkg && !m_gobinCmd.isEmpty()){
-        if (m_updatePkgProcess->state() != QProcess::NotRunning) {
-            return;
+        if (m_updatePkgProcess->state() == QProcess::NotRunning) {
+            m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
         }
-        m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
     }
+    if (n == 0 && m_lastPrefix.endsWith(".")) {
+        QString pkg = m_pkgList.value(m_lastPrefix.left(m_lastPrefix.length()-1));
+        if (!pkg.isEmpty()) {
+            QPlainTextEdit *ed = LiteApi::getPlainTextEdit(m_editor);
+            if (ed) {
+                int pos = ed->textCursor().position();
+                m_pkgImportTip->showPkgHint(pos,pkg,ed);
+            }
+        }
+    }
+}
+
+ImportPkgTip::ImportPkgTip(LiteApi::IApplication *app, QObject *parent)
+    : QObject(parent), m_liteApp(app)
+{
+    m_editWidget = 0;
+    m_startPos = 0;
+    m_escapePressed = false;
+    m_enterPressed = false;
+    m_popup = new FakeToolTip();
+    //m_popup->setFocusPolicy(Qt::NoFocus);
+    m_label = new QLabel;
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->setMargin(4);
+    layout->addWidget(m_label);
+    m_popup->setLayout(layout);
+
+    qApp->installEventFilter(this);
+}
+
+ImportPkgTip::~ImportPkgTip()
+{
+    delete m_popup;
+}
+
+void ImportPkgTip::showPkgHint(int startpos, const QString &pkg, QPlainTextEdit *ed)
+{
+    const QDesktopWidget *desktop = QApplication::desktop();
+#ifdef Q_WS_MAC
+    const QRect screen = desktop->availableGeometry(desktop->screenNumber(ed));
+#else
+    const QRect screen = desktop->screenGeometry(desktop->screenNumber(ed));
+#endif
+    m_pkg = pkg;
+    m_startPos = startpos;
+    m_enterPressed = false;
+    m_escapePressed = false;
+    const QSize sz = m_popup->sizeHint();
+    QTextCursor cur = ed->textCursor();
+    cur.setPosition(startpos);
+    QPoint pos = ed->cursorRect(cur).topLeft();
+    pos.setY(pos.y() - sz.height() - 1);
+    pos = ed->mapToGlobal(pos);
+
+    if (pos.x() + sz.width() > screen.right())
+        pos.setX(screen.right() - sz.width());
+    m_label->setText(tr("warning, pkg not find, please enter to import :")+"\t\""+pkg+"\"");
+    m_popup->move(pos);
+    if (!m_popup->isVisible()) {
+        m_popup->show();
+    }
+}
+
+void ImportPkgTip::hide()
+{
+    m_popup->hide();
+}
+
+void ImportPkgTip::setWidget(QWidget *widget)
+{
+    hide();
+    m_editWidget = widget;
+}
+
+bool ImportPkgTip::eventFilter(QObject *obj, QEvent *e)
+{
+    if (!m_popup->isVisible()) {
+        return QObject::eventFilter(obj,e);
+    }
+    switch (e->type()) {
+    case QEvent::ShortcutOverride:
+        if (m_popup->isVisible() && static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+            m_escapePressed = true;
+            e->accept();
+        } else if (static_cast<QKeyEvent*>(e)->modifiers() & Qt::ControlModifier) {
+            m_popup->hide();
+        }
+        break;
+    case QEvent::KeyPress: {
+            QKeyEvent *ke = static_cast<QKeyEvent*>(e);
+            if (ke->key() == Qt::Key_Escape) {
+                m_escapePressed = true;
+            } else if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter) {
+                m_enterPressed = true;
+                e->accept();
+                return true;
+            }
+        }
+        break;
+    case QEvent::KeyRelease: {
+            QKeyEvent *ke = static_cast<QKeyEvent*>(e);
+            if (ke->key() == Qt::Key_Escape && m_escapePressed) {
+                hide();
+            } else if ( (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter) &&
+                        m_enterPressed)            {
+                e->accept();
+                m_enterPressed = false;
+                hide();
+                emit import(m_pkg,m_startPos);
+            } else if (ke->text() != "."){
+                hide();
+            }
+        }
+        break;
+    case QEvent::FocusOut:
+    //case QEvent::WindowDeactivate:
+    case QEvent::Resize:
+        if (obj != m_editWidget)
+            break;
+        hide();
+        break;
+    case QEvent::Move:
+        if (obj != m_liteApp->mainWindow())
+            break;
+        hide();
+        break;
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::Wheel: {
+            hide();
+        }
+        break;
+    default:
+        break;
+    }
+    return false;
 }

@@ -32,8 +32,8 @@
 #  define GOLANGFMTSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define GOLANGFMT_USEGOIMPORTS "golangfmt/goimports"
-#define GOLANGFMT_USEDIFF "golangfmt/diff"
+#define GOLANGFMT_USEGOIMPORTS "golangfmt/usegoimports"
+#define GOLANGFMT_USEDIFF "golangfmt/usediff"
 #define GOLANGFMT_AUTOFMT "golangfmt/autofmt"
 #define GOLANGFMT_USESYNCFMT "golangfmt/syncfmt"
 #define GOLANGFMT_SYNCTIMEOUT "golangfmt/synctimeout"

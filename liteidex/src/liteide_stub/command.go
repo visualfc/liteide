@@ -99,6 +99,8 @@ var commands = []*Command{
 	cmdApi,
 	cmdDoc,
 	cmdType,
+	cmdImports,
+	cmdGoimports,
 }
 
 var exitStatus = 0

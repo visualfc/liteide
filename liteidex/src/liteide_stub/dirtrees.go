@@ -26,12 +26,12 @@ type Directory struct {
 	Dirs  []*Directory // subdirectories
 }
 
-func isGoFile(fi os.FileInfo) bool {
-	name := fi.Name()
-	return !fi.IsDir() &&
-		len(name) > 0 && name[0] != '.' && // ignore .files
-		filepath.Ext(name) == ".go"
-}
+//func isGoFile(fi os.FileInfo) bool {
+//	name := fi.Name()
+//	return !fi.IsDir() &&
+//		len(name) > 0 && name[0] != '.' && // ignore .files
+//		filepath.Ext(name) == ".go"
+//}
 
 func isPkgFile(fi os.FileInfo) bool {
 	return isGoFile(fi) &&

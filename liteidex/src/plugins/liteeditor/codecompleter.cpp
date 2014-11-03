@@ -267,6 +267,11 @@ CodeCompleterProxyModel::CodeCompleterProxyModel(QObject *parent)
     m_seperator = ".";
 }
 
+CodeCompleterProxyModel::~CodeCompleterProxyModel()
+{
+    clearItems();
+}
+
 int CodeCompleterProxyModel::rowCount(const QModelIndex &) const
 {
     return m_items.size();
@@ -322,8 +327,9 @@ bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &pa
         QModelIndex parent = m_model->indexFromItem(root);
         for (int i = 0; i < m_model->rowCount(parent); i++) {
             QModelIndex index = m_model->index(i,0,parent);
-            item = m_model->itemFromIndex(index);
-            if (item->text() == word) {
+            QStandardItem *tmp = m_model->itemFromIndex(index);
+            if (tmp->text() == word) {
+                item = tmp;
                 break;
             }
         }
@@ -337,6 +343,14 @@ bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &pa
     }
     parent = m_model->indexFromItem(item);
     return true;
+}
+
+void CodeCompleterProxyModel::clearItems()
+{
+    for (int i = 0; i < m_items.size(); i++) {
+        delete m_items[i];
+    }
+    m_items.clear();
 }
 
 //copy ContentLessThan from QtCreator source
@@ -422,22 +436,23 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs)
     if (!m_model) {
         return 0;
     }
+    clearItems();
     QModelIndex parentIndex;
     QString prefix;
     if (!splitFilter(filter,parentIndex,prefix)) {
         return 0;
     }
     if (prefix.isEmpty()) {
-        m_items.clear();
         int count = m_model->rowCount(parentIndex);
         for (int i = 0; i < count; i++) {
             QModelIndex index = m_model->index(i,0,parentIndex);
             QStandardItem *item = m_model->itemFromIndex(index);
-            m_items.append(item);
+            m_items.append(item->clone());
         }
         qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
         return m_items.size();
     }
+
     QString keyRegExp;
     keyRegExp += QLatin1Char('^');
     bool first = true;
@@ -445,7 +460,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs)
     const QLatin1String lowercaseWordContinuation("(?:[a-zA-Z0-9]*_)?");
     foreach (const QChar &c, prefix) {
         if (cs == LiteApi::CaseInsensitive ||
-            (cs == LiteApi::FirstLetterCaseSensitive && !first)) {
+                (cs == LiteApi::FirstLetterCaseSensitive && !first)) {
 
             keyRegExp += QLatin1String("(?:");
             if (!first)
@@ -470,16 +485,16 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs)
     }
     QRegExp regExp(keyRegExp);
 
-    m_items.clear();
     int count = m_model->rowCount(parentIndex);
     for (int i = 0; i < count; i++) {
         QModelIndex index = m_model->index(i,0,parentIndex);
         QStandardItem *item = m_model->itemFromIndex(index);
         if (regExp.indexIn(item->text()) == 0) {
-            m_items.append(item);
+            m_items.append(item->clone());
         }
     }
     qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
+
     return m_items.size();
 }
 

@@ -67,8 +67,9 @@ public:
 public slots:
     virtual void completionPrefixChanged(QString,bool force);
     virtual void insertCompletion(QModelIndex);
+    virtual void updateCompleteInfo(QModelIndex index);
 protected:
-    CodeCompleterEx     *m_completer;
+    CodeCompleterEx    *m_completer;
     QStandardItemModel *m_model;
     QPlainTextEdit *m_editor;
     QTimer         *m_timer;

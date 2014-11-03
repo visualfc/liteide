@@ -63,6 +63,7 @@ class CodeCompleterProxyModel : public QAbstractListModel
 {
 public:
     CodeCompleterProxyModel(QObject *parent = 0);
+    virtual ~CodeCompleterProxyModel();
     virtual int rowCount(const QModelIndex & index = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
     void setSourceModel(QStandardItemModel *sourceModel);
@@ -73,6 +74,7 @@ public:
     QString separator() const;
 protected:
     bool splitFilter(const QString &filter, QModelIndex &parent, QString &prefix);
+    void clearItems();
     QList<QStandardItem*> m_items;
     QStandardItemModel *m_model;
     QString             m_seperator;

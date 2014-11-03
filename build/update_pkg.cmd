@@ -19,11 +19,10 @@ echo update liteide tools ...
 cd %LITEIDE_ROOT%
 set GOPATH=%CD%;%GOPATH%
 
-echo get goimports ...
-go get -v -u "github.com/visualfc/goimports"
 echo get gocode ...
 go get -v -u "github.com/nsf/gocode"
-
+echo get liteide_stub ...
+go get -v "liteide_stub"
 
 cd %BUILD_ROOT%
 

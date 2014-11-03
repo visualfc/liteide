@@ -198,6 +198,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
            <widget class="QCheckBox" name="autoBraces0CheckBox">
+            <property name="toolTip">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string notr="true">{}</string>
             </property>
@@ -205,6 +208,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="autoBraces1CheckBox">
+            <property name="toolTip">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string notr="true"> ()</string>
             </property>
@@ -212,6 +218,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="autoBraces2CheckBox">
+            <property name="toolTip">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string notr="true">[]</string>
             </property>
@@ -219,6 +228,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="autoBraces3CheckBox">
+            <property name="toolTip">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string notr="true">''</string>
             </property>
@@ -226,6 +238,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="autoBraces4CheckBox">
+            <property name="toolTip">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string notr="true">&quot;&quot;</string>
             </property>
@@ -233,6 +248,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="autoBraces5CheckBox">
+            <property name="toolTip">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>``</string>
             </property>
