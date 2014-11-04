@@ -237,14 +237,20 @@ void GolangHighlighter::highlightBlock(const QString &text)
             } else if (tk.is(T_GO_FUNC)) {
                 int size = tokens.size()-1;
                 int n = i+1;
+                //func (sz *Size) Width()
                 if ((i == 0) && (n < size)) {
                     if (tokens[n].is(T_LPAREN)) {
                         while(n++ < size) {
                             if (tokens[n].is(T_RPAREN)) {
                                 setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+                                if ((n+1 < size) && tokens[n+1].is(T_IDENTIFIER)) {
+                                    setFormat(tokens[n+1].begin(),tokens[n+1].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
+                                }
                                 break;
                             }
                         }
+                    } else if (tokens[n].is(T_IDENTIFIER)) {
+                        setFormat(tokens[n].begin(),tokens[n].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
                     }
                 }
             } else if (tk.is(T_GO_TYPE)) {
