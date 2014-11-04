@@ -243,14 +243,31 @@ void GolangHighlighter::highlightBlock(const QString &text)
                         while(n++ < size) {
                             if (tokens[n].is(T_RPAREN)) {
                                 setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
-                                if ((n+1 < size) && tokens[n+1].is(T_IDENTIFIER)) {
-                                    setFormat(tokens[n+1].begin(),tokens[n+1].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
+                                n++;
+                                if ((n < size) && tokens[n].is(T_IDENTIFIER)) {
+                                    setFormat(tokens[n].begin(),tokens[n].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
+//                                    n++;
+//                                    if (n < size && tokens[n].is(T_LPAREN)) {
+//                                        while(n++ < size) {
+//                                            if (tokens[n].is(T_RPAREN) || tokens[n].is(T_COMMA)) {
+//                                                setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+//                                            }
+//                                        }
+//                                    }
                                 }
                                 break;
                             }
                         }
                     } else if (tokens[n].is(T_IDENTIFIER)) {
                         setFormat(tokens[n].begin(),tokens[n].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
+//                        n++;
+//                        if (n < size && tokens[n].is(T_LPAREN)) {
+//                            while(n++ < size) {
+//                                if (tokens[n].is(T_RPAREN) || tokens[n].is(T_COMMA)) {
+//                                    setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+//                                }
+//                            }
+//                        }
                     }
                 }
             } else if (tk.is(T_GO_TYPE)) {
