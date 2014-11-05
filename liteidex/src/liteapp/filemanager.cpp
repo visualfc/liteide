@@ -59,7 +59,7 @@ bool FileManager::initWithApp(IApplication *app)
         return false;
     }
 
-    m_folderWidget = new FileSystemWidget(m_liteApp,0);
+    m_folderWidget = new FileSystemWidget(true,m_liteApp);
 
     bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
     m_folderWidget->showHideFiles(bShowHiddenFiles);

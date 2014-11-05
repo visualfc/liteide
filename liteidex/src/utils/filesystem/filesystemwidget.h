@@ -37,7 +37,7 @@ class FileSystemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FileSystemWidget(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~FileSystemWidget();
     QWidget *widget() { return this; }
     void setRootPathList(const QStringList &rootPathList);
@@ -47,6 +47,9 @@ public:
     void setRootPath(const QString &path);
     QString startPath() const;
     void clear();
+    SymbolTreeView *treeView() const;
+    FileSystemModel *model() const;
+    QModelIndex rootIndex() const;
 public slots:
     void showHideFiles(bool b);
     bool isShowHideFiles() const;
@@ -101,6 +104,7 @@ private:
     QAction *m_closeFolerAct;
     QAction *m_closeAllFoldersAct;
 protected:
+    bool    m_bMultiDirMode;
     LiteApi::IApplication *m_litApp;
 };
 

@@ -90,6 +90,7 @@ public:
     }
 };
 
+
 FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app)
@@ -189,9 +190,13 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
         m_treeView->setColumnHidden(i,true);
     }
 
+    m_fileWidget = new FileSystemWidget(false,m_liteApp);
+    m_fileWidget->treeView()->setRootIsDecorated(true);
+
     mainLayout->addWidget(m_filterToolBar);
     mainLayout->addWidget(m_rootToolBar);
     mainLayout->addWidget(m_treeView);
+    mainLayout->addWidget(m_fileWidget);
     m_widget->setLayout(mainLayout);
 
     //create menu
@@ -371,6 +376,11 @@ void FileBrowser::currentEditorChanged(LiteApi::IEditor *editor)
     QFileInfo info(fileName);
 
     addFolderToRoot(info.path());
+
+    QModelIndex index2 = m_fileWidget->model()->findPath(fileName);
+    if (index2.isValid()) {
+        m_fileWidget->treeView()->setCurrentIndex(index2);
+    }
 
     //QString path = QFileInfo(fileName).filePath();
     QModelIndex index = m_fileModel->index(fileName);
@@ -728,6 +738,8 @@ void FileBrowser::activatedRoot(QString path)
     QModelIndex index = m_fileModel->setRootPath(path);
     QModelIndex proxyIndex = m_proxyModel->mapFromSource(index);
     m_treeView->setRootIndex(proxyIndex);
+    m_fileWidget->setRootPath(path);
+    m_fileWidget->treeView()->setRootIndex(m_fileWidget->rootIndex());
 }
 
 void FileBrowser::cdUp()

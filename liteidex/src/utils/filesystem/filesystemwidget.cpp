@@ -59,8 +59,9 @@
 //lite_memory_check_end
 #endif
 
-FileSystemWidget::FileSystemWidget(LiteApi::IApplication *app, QWidget *parent) :
+FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *app, QWidget *parent) :
     QWidget(parent),
+    m_bMultiDirMode(bMultiDirMode),
     m_liteApp(app)
 {
     m_tree = new SymbolTreeView;
@@ -178,6 +179,24 @@ FileSystemWidget::~FileSystemWidget()
 void FileSystemWidget::clear()
 {
     m_model->clear();
+}
+
+SymbolTreeView *FileSystemWidget::treeView() const
+{
+    return m_tree;
+}
+
+FileSystemModel *FileSystemWidget::model() const
+{
+    return m_model;
+}
+
+QModelIndex FileSystemWidget::rootIndex() const
+{
+    if (m_model->rowCount() == 0) {
+        return QModelIndex();
+    }
+    return m_model->index(0,0);
 }
 
 void FileSystemWidget::showHideFiles(bool b)
@@ -447,7 +466,9 @@ void FileSystemWidget::openShell()
     QString cmd = env.value("LITEIDE_TERM");
     QStringList args = env.value("LITEIDE_TERMARGS").split(" ");
     QString path = dir.path();
+#ifdef Q_OS_MAC
     args.append(path);
+#endif
 #ifdef Q_OS_WIN
     if (path.length() == 2 && path.right(1) == ":") {
         path += "/";
@@ -485,7 +506,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
         }
     }
     bool hasGo = false;
-    if (flag != LiteApi::FILESYSTEM_ROOT) {
+    if (!m_bMultiDirMode || (flag != LiteApi::FILESYSTEM_ROOT)) {
         foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
             if (info.suffix() == "go") {
                 hasGo = true;
@@ -494,7 +515,20 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
     }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
-        menu.addAction(m_addFolderAct);
+        if (m_bMultiDirMode) {
+            menu.addAction(m_addFolderAct);
+        } else {
+            menu.addAction(m_newFileAct);
+            menu.addAction(m_newFileWizardAct);
+            menu.addAction(m_newFolderAct);
+            menu.addSeparator();
+            if (hasGo) {
+                menu.addAction(m_viewGodocAct);
+                menu.addSeparator();
+            }
+            menu.addAction(m_openShellAct);
+            menu.addAction(m_openExplorerAct);
+        }
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);

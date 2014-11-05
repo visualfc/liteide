@@ -25,6 +25,7 @@
 #define FILEBROWSER_H
 
 #include "liteapi/liteapi.h"
+#include "filesystem/filesystemwidget.h"
 #include <QModelIndex>
 
 class QComboBox;
@@ -46,7 +47,6 @@ public:
     static QString getShellCmd(LiteApi::IApplication *app);
     static QStringList getShellArgs(LiteApi::IApplication *app);
 signals:
-
 public slots:
     void showHideFiles(bool b);
     bool isShowHideFiles() const;
@@ -85,6 +85,7 @@ protected:
     QWidget                 *m_widget;
     QTreeView               *m_treeView;
     QFileSystemModel        *m_fileModel;
+    FileSystemWidget        *m_fileWidget;
     QComboBox   *m_filterCombo;
     QComboBox   *m_rootCombo;
     QToolBar    *m_filterToolBar;

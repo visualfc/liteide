@@ -36,7 +36,7 @@
 FolderProject::FolderProject(IApplication *app) :
     m_liteApp(app), m_widget(0)
 {
-    m_widget = new FileSystemWidget(app);
+    m_widget = new FileSystemWidget(true,app);
 }
 
 FolderProject::~FolderProject()
