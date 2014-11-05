@@ -1,4 +1,4 @@
-#include "dockwindowstyle.h"
+#include "splitwindowstyle.h"
 #include "rotationtoolbutton.h"
 #include "tooldockwidget.h"
 #include <QToolBar>
@@ -187,7 +187,7 @@ void ActionToolBar::dock2Visible(bool b)
 }
 
 
-DockWindowStyle::DockWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent)
+SplitWindowStyle::SplitWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent)
     : IWindowStyle(parent), m_mainWindow(window)
 {
     m_areaToolBar.insert(Qt::TopDockWidgetArea,new ActionToolBar(iconSize, m_mainWindow,Qt::TopDockWidgetArea));
@@ -237,12 +237,12 @@ DockWindowStyle::DockWindowStyle(QSize iconSize, QMainWindow *window, QObject *p
     connect(m_hideSideAct,SIGNAL(toggled(bool)),this,SLOT(hideSideBar(bool)));
 }
 
-DockWindowStyle::~DockWindowStyle()
+SplitWindowStyle::~SplitWindowStyle()
 {
     qDeleteAll(m_actStateMap);
 }
 
-void DockWindowStyle::toggledAction(bool)
+void SplitWindowStyle::toggledAction(bool)
 {
     QAction *action = static_cast<QAction*>(sender());
     if (!action) {
@@ -267,7 +267,7 @@ void DockWindowStyle::toggledAction(bool)
     }
 }
 
-QAction *DockWindowStyle::findToolWindow(QWidget *widget)
+QAction *SplitWindowStyle::findToolWindow(QWidget *widget)
 {
     QMapIterator<QAction*,ActionState*> it(m_actStateMap);
     while (it.hasNext()) {
@@ -279,7 +279,7 @@ QAction *DockWindowStyle::findToolWindow(QWidget *widget)
     return NULL;
 }
 
-void DockWindowStyle::removeToolWindow(QAction *action)
+void SplitWindowStyle::removeToolWindow(QAction *action)
 {
     ActionState *state = m_actStateMap.value(action);
     if (!state) {
@@ -294,7 +294,7 @@ void DockWindowStyle::removeToolWindow(QAction *action)
     }
 }
 
-QAction *DockWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
+QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
 {
     QMap<QString,InitToolSate>::iterator it = m_initIdStateMap.find(id);
     if (it != m_initIdStateMap.end()) {
@@ -331,7 +331,7 @@ QAction *DockWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidge
     return action;
 }
 
-void DockWindowStyle::moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split)
+void SplitWindowStyle::moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split)
 {
     ActionState *state = m_actStateMap.value(action);
     if (!state) {
@@ -355,14 +355,14 @@ void DockWindowStyle::moveToolWindow(Qt::DockWidgetArea area,QAction *action,boo
     action->setChecked(true);
 }
 
-void DockWindowStyle::restoreToolWindows(){
+void SplitWindowStyle::restoreToolWindows(){
     foreach(QAction *action,m_hideActionList) {
         action->setChecked(true);
     }
     m_hideActionList.clear();
 }
 
-void DockWindowStyle::showOrHideToolWindow()
+void SplitWindowStyle::showOrHideToolWindow()
 {
     bool hide = false;
     foreach(QAction *action, m_actStateMap.keys()) {
@@ -378,7 +378,7 @@ void DockWindowStyle::showOrHideToolWindow()
     }
 }
 
-void DockWindowStyle::hideAllToolWindows()
+void SplitWindowStyle::hideAllToolWindows()
 {
     m_hideActionList.clear();
     foreach(QAction *action, m_actStateMap.keys()) {
@@ -389,7 +389,7 @@ void DockWindowStyle::hideAllToolWindows()
     }
 }
 
-void DockWindowStyle::hideSideBar(bool b)
+void SplitWindowStyle::hideSideBar(bool b)
 {
     QMapIterator<Qt::DockWidgetArea,ActionToolBar*> it(m_areaToolBar);
     while (it.hasNext()) {
@@ -402,7 +402,7 @@ void DockWindowStyle::hideSideBar(bool b)
 
 static int VersionMarker = 0xffe0;
 
-QByteArray DockWindowStyle::saveToolState(int version) const
+QByteArray SplitWindowStyle::saveToolState(int version) const
 {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
@@ -420,7 +420,7 @@ QByteArray DockWindowStyle::saveToolState(int version) const
     return data;
 }
 
-bool DockWindowStyle::restoreState(const QByteArray &state, int version)
+bool SplitWindowStyle::restoreState(const QByteArray &state, int version)
 {
     bool b = m_mainWindow->restoreState(state,version);
     QMapIterator<QAction*,ActionState*> it(m_actStateMap);
@@ -436,7 +436,7 @@ bool DockWindowStyle::restoreState(const QByteArray &state, int version)
     return b;
 }
 
-void DockWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
+void SplitWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
 {
     ActionToolBar *bar = m_areaToolBar.value(area);
     if (bar) {
@@ -445,7 +445,7 @@ void DockWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
     }
 }
 
-bool DockWindowStyle::loadInitToolState(const QByteArray &state, int version)
+bool SplitWindowStyle::loadInitToolState(const QByteArray &state, int version)
 {
     if (state.isEmpty())
         return false;

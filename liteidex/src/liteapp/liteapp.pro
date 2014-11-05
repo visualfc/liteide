@@ -74,7 +74,7 @@ SOURCES += main.cpp\
     goproxy.cpp \
     htmlwidgetmanager.cpp \
     textbrowserhtmlwidget.cpp \
-    dockwindowstyle.cpp
+    splitwindowstyle.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -104,7 +104,7 @@ HEADERS  += mainwindow.h \
     htmlwidgetmanager.h \
     textbrowserhtmlwidget.h \
     windowstyle.h \
-    dockwindowstyle.h
+    splitwindowstyle.h
 
 FORMS += \
     aboutdialog.ui \

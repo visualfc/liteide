@@ -40,7 +40,7 @@
 #ifdef Q_OS_MAC
 #include "macsupport.h"
 #endif
-#include "dockwindowstyle.h"
+#include "splitwindowstyle.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -133,7 +133,7 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
-    DockWindowStyle *style = new DockWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    SplitWindowStyle *style = new SplitWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
     m_mainwindow->setWindowStyle(style);
 
     m_toolWindowManager = new ToolWindowManager;

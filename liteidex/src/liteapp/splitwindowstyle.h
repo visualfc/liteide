@@ -70,12 +70,12 @@ struct InitToolSate
 };
 
 
-class DockWindowStyle : public IWindowStyle
+class SplitWindowStyle : public IWindowStyle
 {
     Q_OBJECT
 public:
-    DockWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent = 0);
-    ~DockWindowStyle();
+    SplitWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent = 0);
+    ~SplitWindowStyle();
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
