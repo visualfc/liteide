@@ -26,6 +26,22 @@
 
 #include "liteapi/liteapi.h"
 #include "toolmainwindow.h"
+#include "windowstyle.h"
+
+class IMainWindow : public QObject
+{
+    Q_OBJECT
+public:
+    IMainWindow(QObject *parent) : QObject(parent) {}
+    virtual QMainWindow *mainWindow() = 0;
+    virtual LiteApi::IToolWindowManager *toolWindowManager() = 0;
+signals:
+    void fullScreenStateChanged(bool b);
+public slots:
+    virtual void setFullScreen(bool b) = 0;
+    virtual void editorModifyChanged(bool b) = 0;
+    virtual void currentEditorChanged(LiteApi::IEditor *editor) = 0;
+};
 
 using namespace LiteApi;
 class QSplitter;
@@ -37,6 +53,7 @@ public:
     ~MainWindow();
 public:
     QSplitter *splitter();
+    void setWindowStyle(IWindowStyle *style);
 protected:
     virtual void closeEvent(QCloseEvent *event);
     virtual void dropEvent(QDropEvent *event);

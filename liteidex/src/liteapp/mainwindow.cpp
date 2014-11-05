@@ -54,8 +54,8 @@
 //lite_memory_check_end
 
 
-MainWindow::MainWindow(IApplication *app,QWidget *parent)
-    : ToolMainWindow(LiteApi::getToolBarIconSize(app),parent),
+MainWindow::MainWindow(IApplication *app, QWidget *parent)
+    : ToolMainWindow(parent),
       m_liteApp(app)
 {
     this->setAttribute(Qt::WA_DeleteOnClose);
@@ -72,13 +72,17 @@ MainWindow::MainWindow(IApplication *app,QWidget *parent)
 
     m_mainSplitter = new QSplitter(Qt::Vertical,this);
     setCentralWidget(m_mainSplitter);
-
-    loadInitToolState(m_liteApp->settings()->value("liteapp/toolState").toByteArray());
 }
 
 QSplitter *MainWindow::splitter()
 {
     return m_mainSplitter;
+}
+
+void MainWindow::setWindowStyle(IWindowStyle *style)
+{
+    ToolMainWindow::setWindowStyle(style);
+    loadInitToolState(m_liteApp->settings()->value("liteapp/toolState").toByteArray());
 }
 
 MainWindow::~MainWindow()

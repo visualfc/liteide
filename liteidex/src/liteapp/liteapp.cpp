@@ -40,7 +40,7 @@
 #ifdef Q_OS_MAC
 #include "macsupport.h"
 #endif
-
+#include "dockwindowstyle.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -133,6 +133,9 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
+    DockWindowStyle *style = new DockWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    m_mainwindow->setWindowStyle(style);
+
     m_toolWindowManager = new ToolWindowManager;
     m_htmlWidgetManager = new HtmlWidgetManager;
     m_actionManager = new ActionManager;
