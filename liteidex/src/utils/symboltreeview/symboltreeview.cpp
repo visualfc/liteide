@@ -91,9 +91,6 @@ SymbolTreeView::SymbolTreeView(QWidget *parent)
     setTextElideMode(Qt::ElideNone);
 //        setExpandsOnDoubleClick(false);
     setAttribute(Qt::WA_MacShowFocusRect, false);
-
-    connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(collapsedTree(QModelIndex)));
-    connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedTree(QModelIndex)));
 }
 
 void SymbolTreeView::focusInEvent(QFocusEvent *event)
@@ -127,32 +124,29 @@ QModelIndex SymbolTreeView::topViewIndex()
     return indexAt(QPoint(1,1));
 }
 
-void SymbolTreeView::expandedTree(const QModelIndex &index)
-{
-    m_expandIndexs.insert(index);
-}
-
-void SymbolTreeView::collapsedTree(const QModelIndex &index)
-{
-    m_expandIndexs.remove(index);
-}
-
 void SymbolTreeView::reset()
 {
     QTreeView::reset();
     //setRootIndex(model()->index(0,0));
     //this->setRootIndex(QModelIndex());
-    m_expandIndexs.clear();
 }
 
-const QSet<QModelIndex> & SymbolTreeView::expandIndexs() const
+void SymbolTreeView::getTreeExpands(const QModelIndex &parent, QList<QModelIndex> &list) const
 {
-    return m_expandIndexs;
+    for (int i = 0; i < this->model()->rowCount(parent); i++) {
+        QModelIndex index = this->model()->index(i,0,parent);
+        if (this->isExpanded(index)) {
+            list.append(index);
+            getTreeExpands(index,list);
+        }
+    }
 }
 
-QSet<QModelIndex> & SymbolTreeView::expandIndexs()
+QList<QModelIndex> SymbolTreeView::expandIndexs() const
 {
-    return m_expandIndexs;
+    QList<QModelIndex> expands;
+    getTreeExpands(QModelIndex(),expands);
+    return expands;
 }
 
 void SymbolTreeView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -167,14 +161,14 @@ void SymbolTreeView::saveState(SymbolTreeState *state)
         return;
     }
     state->expands.clear();
-    QSetIterator<QModelIndex> i(this->expandIndexs());
-    while (i.hasNext()) {
-        state->expands.append(stringListFromIndex(i.next()));
+
+    foreach (QModelIndex index, this->expandIndexs()) {
+        state->expands.append(stringListFromIndex(index));
     }
+
     state->cur = stringListFromIndex(this->currentIndex());
     state->vbar = verticalScrollBar()->value();
     state->hbar = horizontalScrollBar()->value();
-
 }
 
 void SymbolTreeView::loadState(QAbstractItemModel *model,SymbolTreeState *state)

@@ -544,7 +544,13 @@ void FileManager::applyOption(QString id)
 
 void FileManager::showHideFiles(bool b)
 {
-    m_folderWidget->showHideFiles(b);
+    QDir::Filters filters = m_folderWidget->model()->filter();
+    if (b) {
+        filters |= QDir::Hidden;
+    } else {
+        filters ^= QDir::Hidden;
+    }
+    m_folderWidget->model()->setFilter(filters);
 }
 
 void FileManager::updateRecentFileActions(const QString &scheme)

@@ -61,8 +61,9 @@
 
 FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *app, QWidget *parent) :
     QWidget(parent),
+    m_liteApp(app),
     m_bMultiDirMode(bMultiDirMode),
-    m_liteApp(app)
+    m_bHideRoot(false)
 {
     m_tree = new SymbolTreeView;
     m_tree->setHeaderHidden(true);
@@ -150,7 +151,7 @@ FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *ap
 //    m_rootMenu->addSeparator();
     //m_rootMenu->addAction(m_closeAllFoldersAct);
 
-    connect(m_model->fileWatcher(),SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
+    connect(m_model,SIGNAL(direcotryChanged(QString)),this,SLOT(reloadDirectory(QString)));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
     connect(m_newFileAct,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(m_newFileWizardAct,SIGNAL(triggered()),this,SLOT(newFileWizard()));
@@ -167,13 +168,27 @@ FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *ap
     connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
 
     connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
+    connect(m_model,SIGNAL(modelReset()),this,SLOT(modelReset()));
 }
 
 FileSystemWidget::~FileSystemWidget()
 {
 //    m_liteApp->settings()->setValue("GolangTool/synceditor",m_syncEditor->isChecked());
 //    m_liteApp->settings()->setValue("GolangTool/syncproject",m_syncProject->isChecked());
-//    m_liteApp->settings()->setValue("golangtool/gopath",m_pathList);
+    //    m_liteApp->settings()->setValue("golangtool/gopath",m_pathList);
+}
+
+void FileSystemWidget::setHideRoot(bool b)
+{
+    if (m_bMultiDirMode) {
+        return;
+    }
+    m_bHideRoot = b;
+}
+
+bool FileSystemWidget::isHideRoot() const
+{
+    return m_bHideRoot;
 }
 
 void FileSystemWidget::clear()
@@ -199,6 +214,13 @@ QModelIndex FileSystemWidget::rootIndex() const
     return m_model->index(0,0);
 }
 
+void FileSystemWidget::modelReset()
+{
+    if (m_bHideRoot && (m_model->rowCount() > 0)) {
+        m_tree->setRootIndex(m_model->index(0,0));
+    }
+}
+
 void FileSystemWidget::showHideFiles(bool b)
 {
     if (isShowHideFiles() == b) {
@@ -211,7 +233,11 @@ void FileSystemWidget::showHideFiles(bool b)
         filters ^= QDir::Hidden;
     }
     m_model->setFilter(filters);
-    m_tree->expandToDepth(0);
+    if (m_bHideRoot) {
+        m_tree->expand(this->rootIndex());
+    } else {
+        m_tree->expandToDepth(0);
+    }
 }
 
 bool FileSystemWidget::isShowHideFiles() const
@@ -219,11 +245,11 @@ bool FileSystemWidget::isShowHideFiles() const
     return m_model->filter() & QDir::Hidden;
 }
 
-void FileSystemWidget::directoryChanged(QString dir)
+void FileSystemWidget::reloadDirectory(QString dir)
 {
     SymbolTreeState state;
     m_tree->saveState(&state);
-    m_model->directoryChanged(dir);
+    m_model->reloadDirectory(dir);
     m_tree->loadState(m_model,&state);
 }
 
@@ -400,11 +426,11 @@ void FileSystemWidget::removeFolder()
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         QDir dir = info.dir();
-        m_model->fileWatcher()->removePath(info.filePath());
+        m_model->removeWatcher(info.filePath());
         if (!dir.rmdir(info.fileName())) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Delete Folder"),
                                      tr("Failed to delete the folder!"));
-            m_model->fileWatcher()->addPath(info.filePath());
+            m_model->addWatcher(info.filePath());
         }
     }
 }
@@ -504,6 +530,13 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
                 flag = LiteApi::FILESYSTEM_FILES;
             }
         }
+    } else if (!m_bMultiDirMode) {
+        m_contextIndex = this->rootIndex();
+        FileNode *node = m_model->nodeFromIndex(m_contextIndex);
+        if (node) {
+            m_contextInfo = node->fileInfo();
+        }
+        flag = LiteApi::FILESYSTEM_ROOTFOLDER;
     }
     bool hasGo = false;
     if (!m_bMultiDirMode || (flag != LiteApi::FILESYSTEM_ROOT)) {
@@ -589,14 +622,26 @@ void FileSystemWidget::addRootPath(const QString &path)
 void FileSystemWidget::setRootPathList(const QStringList &pathList)
 {
     m_model->setRootPathList(pathList);
-    //m_tree->expandToDepth(0);
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
 
 void FileSystemWidget::setRootPath(const QString &path)
 {
     m_model->setRootPath(path);
-    m_tree->expandToDepth(0);
+    if (m_bHideRoot) {
+        m_tree->expand(this->rootIndex());
+    } else {
+        m_tree->expandToDepth(0);
+    }
+}
+
+QString FileSystemWidget::rootPath() const
+{
+    QStringList paths = m_model->rootPathList();
+    if (!paths.isEmpty()) {
+        return paths.first();
+    }
+    return QString();
 }
 
 QStringList FileSystemWidget::rootPathList() const

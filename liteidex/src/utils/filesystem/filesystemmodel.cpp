@@ -29,7 +29,9 @@
 #include <QFont>
 #include <QFileIconProvider>
 #include <QFileSystemWatcher>
+#include <QMutexLocker>
 #include <QDebug>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -43,7 +45,8 @@
 FileNode::FileNode(FileSystemModel *model) :
     m_model(model),
     m_parent(0),
-    m_children(0)
+    m_children(0),
+    m_bWatcher(false)
 {
 
 }
@@ -52,7 +55,8 @@ FileNode::FileNode(FileSystemModel *model, const QString &path, FileNode *parent
     m_model(model),
     m_parent(parent),
     m_children(0),
-    m_path(path)
+    m_path(path),
+    m_bWatcher(false)
 {
     QFileInfo info(path);
     if (m_model->isRootPathNodeFillPath() && parent && parent->parent() == 0) {
@@ -60,19 +64,16 @@ FileNode::FileNode(FileSystemModel *model, const QString &path, FileNode *parent
     } else {
         m_text = info.fileName();
     }
-    if (info.isDir() && !m_path.isEmpty()) {
-        m_model->fileWatcher()->addPath(m_path);
-    }
 }
 
 FileNode::~FileNode()
 {
-    if (this->isDir() && !m_path.isEmpty())  {
-        m_model->fileWatcher()->removePath(m_path);
-    }
+    clear();
     if (m_children) {
-        qDeleteAll(m_children->begin(),m_children->end());
         delete m_children;
+    }
+    if (m_bWatcher)  {
+        m_model->removeWatcher(m_path);
     }
 }
 
@@ -80,18 +81,24 @@ QList<FileNode*>* FileNode::children()
 {
     if (m_children == 0) {
         m_children = new QList<FileNode*>();
+        bool isRoot = false;
         if (!m_path.isEmpty()) {
             QFileInfo info(m_path);
             if (info.isDir()) {
+                isRoot = info.isRoot();
                 QDir dir(m_path);
-                foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->sort())) {
+                foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->dirSort())) {
                     if (!this->m_model->isShowHideFiles() && childInfo.isDir() && childInfo.fileName().startsWith(".")) {
                        continue;
                     }
                     m_children->append(new FileNode(this->m_model,childInfo.filePath(),this));
                 }
             }
-        }
+       }
+       if (!m_children->isEmpty() && !m_bWatcher) {
+           m_bWatcher = true;
+           m_model->addWatcher(m_path);
+       }
     }
     return m_children;
 }
@@ -167,13 +174,17 @@ void FileNode::reload()
         QFileInfo info(m_path);
         if (info.isDir()) {
             QDir dir(m_path);
-            foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->sort())) {
+            foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->dirSort())) {
                 if (!this->m_model->isShowHideFiles() && childInfo.isDir() && childInfo.fileName().startsWith(".")) {
                    continue;
                 }
                 m_children->append(new FileNode(this->m_model,childInfo.filePath(),this));
             }
         }
+    }
+    if (!m_children->isEmpty() && !m_bWatcher) {
+        m_bWatcher = true;
+        m_model->addWatcher(m_path);
     }
 }
 
@@ -209,15 +220,14 @@ FileNode *FileNode::findPath(const QString &path)
     return parent;
 }
 
-
 FileSystemModel::FileSystemModel(QObject *parent) :
     QAbstractItemModel(parent),
     m_rootNode(new FileNode(this)),
     m_iconProvider(new QFileIconProvider),
-    m_fileWatcher(new QFileSystemWatcher(this))
+    m_fileWatcher(0)
 {
     m_filters = QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot;
-    m_sorts = QDir::DirsFirst | QDir::Name | QDir::Type;
+    m_sorts = QDir::DirsFirst | QDir::Name | QDir::IgnoreCase;// | QDir::Type;
    // connect(m_fileWatcher,SIGNAL(directoryChanged(QString)),this,SLOT(directoryChanged(QString)));
 }
 
@@ -225,9 +235,12 @@ FileSystemModel::~FileSystemModel()
 {
     delete m_rootNode;
     delete m_iconProvider;
+    if (m_fileWatcher) {
+        delete m_fileWatcher;
+    }
 }
 
-void FileSystemModel::directoryChanged(const QString &path)
+void FileSystemModel::reloadDirectory(const QString &path)
 {
     this->beginResetModel();
     QDir dir(path);
@@ -235,13 +248,11 @@ void FileSystemModel::directoryChanged(const QString &path)
     if (!b) {
         m_fileWatcher->removePath(path);
     }
-
     foreach(QModelIndex index,this->findPaths(path)) {
         FileNode *node = nodeFromIndex(index);
         if (b) {
             node->reload();
-        }
-        else {
+        } else {
             FileNode *parent = node->parent();
             if (parent) {
                 parent->reload();
@@ -292,7 +303,7 @@ void FileSystemModel::setFilter(QDir::Filters filters)
     }
 }
 
-void FileSystemModel::setSort(QDir::SortFlags flags)
+void FileSystemModel::setDirSort(QDir::SortFlags flags)
 {
     if (m_sorts != flags) {
         m_sorts = flags;
@@ -310,7 +321,7 @@ bool FileSystemModel::isShowHideFiles() const
     return m_filters & QDir::Hidden;
 }
 
-QDir::SortFlags FileSystemModel::sort() const
+QDir::SortFlags FileSystemModel::dirSort() const
 {
     return m_sorts;
 }
@@ -341,7 +352,7 @@ bool FileSystemModel::removeRootPath(const QString &path)
     int index = -1;
     for (int i = 0; i < m_rootNode->childCount(); i++) {
         node = m_rootNode->children()->at(i);
-        if (node && node->path() == pathName) {
+        if (node && (node->path() == pathName)) {
             index = i;
             break;
         }
@@ -377,7 +388,15 @@ void FileSystemModel::setRootPathList(const QStringList &pathList)
 {
     this->beginResetModel();
     m_rootNode->clear();
+    m_fileWatcherMap.clear();
     m_pathList.clear();
+    if (m_fileWatcher) {
+        disconnect(m_fileWatcher,0);
+        delete m_fileWatcher;
+    }
+    m_fileWatcher = new QFileSystemWatcher;
+    connect(m_fileWatcher,SIGNAL(directoryChanged(QString)),this,SIGNAL(direcotryChanged(QString)));
+
     foreach (QString path, pathList) {
         m_pathList.append(QDir::fromNativeSeparators(QDir::cleanPath(path)));
     }
@@ -507,11 +526,6 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QFileSystemWatcher* FileSystemModel::fileWatcher() const
-{
-    return m_fileWatcher;
-}
-
 bool FileSystemModel::isRootPathNode(FileNode *node) const
 {
     return node->parent() == m_rootNode;
@@ -520,4 +534,29 @@ bool FileSystemModel::isRootPathNode(FileNode *node) const
 bool FileSystemModel::isRootPathNodeFillPath() const
 {
     return false;
+}
+
+void FileSystemModel::addWatcher(const QString &path)
+{
+    QMutexLocker _(&m_mutex);
+    QString cpath = QDir::fromNativeSeparators(QDir::cleanPath(path));
+    int value = m_fileWatcherMap[cpath];
+    value++;
+    m_fileWatcherMap[cpath] = value;
+    if (value > 1) {
+        return;
+    }
+    m_fileWatcher->addPath(path);
+}
+
+void FileSystemModel::removeWatcher(const QString &path)
+{
+    QMutexLocker _(&m_mutex);
+    QString cpath = QDir::fromNativeSeparators(QDir::cleanPath(path));
+    int value = m_fileWatcherMap[cpath];
+    value--;
+    m_fileWatcherMap[cpath] = value;
+    if (value == 0) {
+        m_fileWatcher->removePath(cpath);
+    }
 }

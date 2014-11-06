@@ -44,8 +44,6 @@ FileBrowserOption::FileBrowserOption(LiteApi::IApplication *app,QObject *parent)
     ui(new Ui::FileBrowserOption)
 {
     ui->setupUi(m_widget);
-    ui->cmdLineEdit->setText(FileBrowser::getShellCmd(m_liteApp));
-    ui->argsLineEdit->setText(FileBrowser::getShellArgs(m_liteApp).join(" "));
 }
 
 FileBrowserOption::~FileBrowserOption()

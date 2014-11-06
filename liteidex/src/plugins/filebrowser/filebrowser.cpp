@@ -90,7 +90,6 @@ public:
     }
 };
 
-
 FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app)
@@ -100,9 +99,6 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
-    m_fileModel = new QFileSystemModel(this);
-    m_fileModel->setResolveSymlinks(false);
-    //m_fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable
                             | QDir::Executable /*| QDir::Hidden*/
@@ -116,16 +112,9 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 #ifdef Q_OS_WIN // Symlinked directories can cause file watcher warnings on Win32.
     filters |= QDir::NoSymLinks;
 #endif
-    m_fileModel->setFilter(filters);
-    m_proxyModel = new QSortFileSystemProxyModel(this);
-    m_proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    m_proxyModel->setDynamicSortFilter(true);
-    m_proxyModel->setSourceModel(m_fileModel);
-    m_proxyModel->sort(0);
-
     //create filter toolbar
-    m_filterToolBar = new QToolBar(m_widget);
-    m_filterToolBar->setIconSize(QSize(16,16));
+    //m_filterToolBar = new QToolBar(m_widget);
+    //m_filterToolBar->setIconSize(QSize(16,16));
 
     m_syncAct = new QAction(QIcon("icon:filebrowser/images/sync.png"),tr("Synchronize with editor"),this);
     m_syncAct->setCheckable(true);
@@ -137,17 +126,17 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     }
     connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
 
-    m_filterCombo = new QComboBox;
-    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_filterCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    m_filterCombo->setEditable(true);
-    m_filterCombo->addItem("*");
-    m_filterCombo->addItem("Makefile;*.go;*.cgo;*.s;*.goc;*.y;*.e64;*.pro");
-    m_filterCombo->addItem("*.sh;Makefile;*.go;*.cgo;*.s;*.goc;*.y;*.*.c;*.cpp;*.h;*.hpp;*.e64;*.pro");
+//    m_filterCombo = new QComboBox;
+//    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+//    m_filterCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+//    m_filterCombo->setEditable(true);
+//    m_filterCombo->addItem("*");
+//    m_filterCombo->addItem("Makefile;*.go;*.cgo;*.s;*.goc;*.y;*.e64;*.pro");
+//    m_filterCombo->addItem("*.sh;Makefile;*.go;*.cgo;*.s;*.goc;*.y;*.*.c;*.cpp;*.h;*.hpp;*.e64;*.pro");
 
     //m_filterToolBar->addAction(m_syncAct);
     //m_filterToolBar->addSeparator();
-    m_filterToolBar->addWidget(m_filterCombo);
+    //m_filterToolBar->addWidget(m_filterCombo);
 
     //create root toolbar
     m_rootToolBar = new QToolBar(m_widget);
@@ -159,134 +148,30 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     m_rootCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     m_rootCombo->setEditable(false);
-    m_rootCombo->addItem(m_fileModel->myComputer().toString());
 
     m_rootToolBar->addAction(m_cdupAct);
     m_rootToolBar->addSeparator();
     m_rootToolBar->addWidget(m_rootCombo);
 
-    //create treeview
-    m_treeView = new QTreeView;
-    m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_treeView->setModel(m_proxyModel);
-
-    m_treeView->setRootIsDecorated(true);
-    m_treeView->setUniformRowHeights(true);
-    m_treeView->setTextElideMode(Qt::ElideNone);
-    m_treeView->setAttribute(Qt::WA_MacShowFocusRect, false);
-
-    m_treeView->setHeaderHidden(true);
-    m_treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    // show horizontal scrollbar
-#if QT_VERSION >= 0x050000
-    m_treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-    m_treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
-    m_treeView->header()->setStretchLastSection(false);
-    //hide
-    int count = m_treeView->header()->count();
-    for (int i = 1; i < count; i++) {
-        m_treeView->setColumnHidden(i,true);
-    }
-
     m_fileWidget = new FileSystemWidget(false,m_liteApp);
+    m_fileWidget->setHideRoot(true);
     m_fileWidget->treeView()->setRootIsDecorated(true);
+    m_fileWidget->model()->setFilter(filters);
 
-    mainLayout->addWidget(m_filterToolBar);
+    //mainLayout->addWidget(m_filterToolBar);
     mainLayout->addWidget(m_rootToolBar);
-    mainLayout->addWidget(m_treeView);
     mainLayout->addWidget(m_fileWidget);
     m_widget->setLayout(mainLayout);
 
-    //create menu
-    m_fileMenu = new QMenu;
-    m_folderMenu = new QMenu;
-    m_rootMenu = new QMenu;
-
-    m_openFileAct = new QAction(tr("Open File"),this);
-    //m_openEditorAct = new QAction(tr("Open Editor"),this);
-    m_newFileAct = new QAction(tr("New File..."),this);
-    m_newFileWizardAct = new QAction(tr("New File Wizard..."),this);
-    m_renameFileAct = new QAction(tr("Rename File..."),this);
-    m_removeFileAct = new QAction(tr("Delete File"),this);
-
     m_setRootAct = new QAction(tr("Set As Root Folder"),this);
-    m_newFolderAct = new QAction(tr("New Folder..."),this);
-    m_renameFolderAct = new QAction(tr("Rename Folder..."),this);
-    m_removeFolderAct = new QAction(tr("Delete Folder"),this);
-
-    m_openShellAct = new QAction(tr("Open Terminal Here"),this);
-    m_openExplorerAct = new QAction(tr("Open Explorer Here"),this);
-
-    m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
-
     m_openFolderInNewWindowAct = new QAction(tr("Open Folder in New Window"),this);
     m_addToFoldersAct = new QAction(tr("Add to Folders"),this);
 
-    m_fileMenu->addAction(m_openFileAct);
-    //m_fileMenu->addAction(m_openEditorAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_newFileAct);
-    m_fileMenu->addAction(m_newFileWizardAct);
-    m_fileMenu->addAction(m_renameFileAct);
-    m_fileMenu->addAction(m_removeFileAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_openFolderInNewWindowAct);
-    m_fileMenu->addAction(m_addToFoldersAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_viewGodocAct);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_openShellAct);
-    m_fileMenu->addAction(m_openExplorerAct);
-
-    m_folderMenu->addAction(m_setRootAct);
-    m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_newFileAct);
-    m_folderMenu->addAction(m_newFileWizardAct);
-    m_folderMenu->addAction(m_newFolderAct);
-    m_folderMenu->addAction(m_renameFolderAct);
-    m_folderMenu->addAction(m_removeFolderAct);
-    m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_openFolderInNewWindowAct);
-    m_folderMenu->addAction(m_addToFoldersAct);
-    m_fileMenu->addSeparator();
-    m_folderMenu->addAction(m_viewGodocAct);
-    m_folderMenu->addSeparator();
-    m_folderMenu->addAction(m_openShellAct);
-    m_folderMenu->addAction(m_openExplorerAct);
-
-    m_rootMenu->addAction(m_cdupAct);
-    m_rootMenu->addSeparator();
-    m_rootMenu->addAction(m_newFileAct);
-    m_rootMenu->addAction(m_newFileWizardAct);
-    m_rootMenu->addAction(m_newFolderAct);
-    m_rootMenu->addSeparator();
-    m_rootMenu->addAction(m_openFolderInNewWindowAct);
-    m_rootMenu->addAction(m_addToFoldersAct);
-    m_rootMenu->addSeparator();
-    m_rootMenu->addAction(m_openShellAct);
-    m_rootMenu->addAction(m_openExplorerAct);
-
-    connect(m_openFileAct,SIGNAL(triggered()),this,SLOT(openFile()));
-    //connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));    
-    connect(m_newFileAct,SIGNAL(triggered()),this,SLOT(newFile()));
-    connect(m_newFileWizardAct,SIGNAL(triggered()),this,SLOT(newFileWizard()));
-    connect(m_renameFileAct,SIGNAL(triggered()),this,SLOT(renameFile()));
-    connect(m_removeFileAct,SIGNAL(triggered()),this,SLOT(removeFile()));
-    connect(m_newFolderAct,SIGNAL(triggered()),this,SLOT(newFolder()));
-    connect(m_renameFolderAct,SIGNAL(triggered()),this,SLOT(renameFolder()));
-    connect(m_removeFolderAct,SIGNAL(triggered()),this,SLOT(removeFolder()));
-    connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_setRootAct,SIGNAL(triggered()),this,SLOT(setFolderToRoot()));
     connect(m_cdupAct,SIGNAL(triggered()),this,SLOT(cdUp()));
-    connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
-    connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
     connect(m_openFolderInNewWindowAct,SIGNAL(triggered()),this,SLOT(openFolderInNewWindow()));
     connect(m_addToFoldersAct,SIGNAL(triggered()),this,SLOT(addToFolders()));
 
-    //QDockWidget *dock = m_liteApp->dockManager()->addDock(m_widget,tr("File Browser"));
-    //connect(dock,SIGNAL(visibilityChanged(bool)),this,SLOT(visibilityChanged(bool)));
     QList<QAction*> actions;
     m_configMenu = new QMenu(tr("Config"));
     m_configMenu->setIcon(QIcon("icon:markdown/images/config.png"));
@@ -295,15 +180,16 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"filesystem",tr("File System"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
-    connect(m_treeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedTreeView(QModelIndex)));
-    connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activatedFilter(QString)));
+    //connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activatedFilter(QString)));
     connect(m_rootCombo,SIGNAL(activated(QString)),this,SLOT(activatedRoot(QString)));
     connect(m_syncAct,SIGNAL(triggered(bool)),this,SLOT(syncFileModel(bool)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
+    connect(m_fileWidget,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 
-    QString root = m_liteApp->settings()->value("FileBrowser/root",m_fileModel->myComputer().toString()).toString();
-    addFolderToRoot(root);
+    QString root = m_liteApp->settings()->value("FileBrowser/root","").toString();
+    if (!root.isEmpty()) {
+        addFolderToRoot(root);
+    }
     bool b = m_liteApp->settings()->value("FileBrowser/synceditor",true).toBool();
     if (b) {
         m_syncAct->setChecked(true);
@@ -315,50 +201,12 @@ FileBrowser::~FileBrowser()
     QString root = m_rootCombo->currentText();
     m_liteApp->settings()->setValue("FileBrowser/root",root);
     m_liteApp->settings()->setValue("FileBrowser/synceditor",m_syncAct->isChecked());
-    delete m_fileMenu;
-    delete m_folderMenu;
-    delete m_rootMenu;
     delete m_configMenu;
     delete m_widget;
 }
 
 void FileBrowser::visibilityChanged(bool)
 {
-}
-
-void FileBrowser::doubleClickedTreeView(QModelIndex proxyIndex)
-{
-    QModelIndex index = m_proxyModel->mapToSource(proxyIndex);
-    if (!index.isValid()) {
-        return;
-    }
-    if (m_fileModel->isDir(index)) {
-        return;
-    }
-    QString fileName = m_fileModel->filePath(index);
-    if (fileName.isEmpty()) {
-        return;
-    }
-    QFileInfo info(fileName);
-    QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
-    if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
-        m_liteApp->fileManager()->openEditor(fileName);
-        return;
-    }
-    QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
-    if (cmd == fileName) {        
-        LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
-        if (build) {
-            build->executeCommand(info.fileName(),QString(),info.path());
-            return;
-        }
-    }
-    m_liteApp->fileManager()->openFile(fileName);
-}
-
-void FileBrowser::activatedFilter(QString filter)
-{
-    m_fileModel->setNameFilters(filter.split(";",QString::SkipEmptyParts));
 }
 
 void FileBrowser::currentEditorChanged(LiteApi::IEditor *editor)
@@ -377,19 +225,10 @@ void FileBrowser::currentEditorChanged(LiteApi::IEditor *editor)
 
     addFolderToRoot(info.path());
 
-    QModelIndex index2 = m_fileWidget->model()->findPath(fileName);
-    if (index2.isValid()) {
-        m_fileWidget->treeView()->setCurrentIndex(index2);
+    QModelIndex index = m_fileWidget->model()->findPath(fileName);
+    if (index.isValid()) {
+        m_fileWidget->treeView()->setCurrentIndex(index);
     }
-
-    //QString path = QFileInfo(fileName).filePath();
-    QModelIndex index = m_fileModel->index(fileName);
-    if (!index.isValid()) {
-        return;
-    }
-    QModelIndex proxyIndex = m_proxyModel->mapFromSource(index);
-    m_treeView->scrollTo(proxyIndex,QAbstractItemView::EnsureVisible);
-    m_treeView->setCurrentIndex(proxyIndex);
 }
 
 void FileBrowser::syncFileModel(bool b)
@@ -401,226 +240,18 @@ void FileBrowser::syncFileModel(bool b)
     }
 }
 
-void FileBrowser::treeViewContextMenuRequested(const QPoint &pos)
+void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &/*fileInfo*/)
 {
-    QModelIndex proxyIndex = m_treeView->indexAt(pos);
-    QModelIndex index = m_proxyModel->mapToSource(proxyIndex);
-    m_contextIndex = index;
-    QFileInfo info = m_fileModel->fileInfo(index);
-    showTreeViewContextMenu(m_treeView->mapToGlobal(pos),info);
-}
-
-void FileBrowser::showTreeViewContextMenu(const QPoint &globalPos, const QFileInfo &info)
-{
-    QMenu *contextMenu = 0;
-    if (info.isDir()) {
-        contextMenu = m_folderMenu;
-    } else if (info.isFile()) {
-        contextMenu = m_fileMenu;
-    } else {
-        contextMenu = m_rootMenu;
-    }
-
-    if (contextMenu && contextMenu->actions().count() > 0) {
-        contextMenu->popup(globalPos);
-    }
-}
-
-void FileBrowser::openFile()
-{
-    QString fileName = m_fileModel->filePath(m_contextIndex);
-    if (!fileName.isEmpty()) {
-        m_liteApp->fileManager()->openFile(fileName);
-    }
-}
-
-void FileBrowser::openEditor()
-{
-    QString fileName = m_fileModel->filePath(m_contextIndex);
-    if (!fileName.isEmpty()) {
-        m_liteApp->fileManager()->openEditor(fileName);
-    }
-}
-
-void FileBrowser::newFile()
-{
-    QDir dir = contextDir();
-
-    CreateFileDialog dlg;
-    dlg.setDirectory(dir.path());
-    if (dlg.exec() == QDialog::Rejected) {
-        return;
-    }
-    QString fileName = dlg.getFileName();
-    if (!fileName.isEmpty()) {
-        QString filePath = QFileInfo(dir,fileName).filePath();
-        if (QFile::exists(filePath)) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Create File"),
-                                     tr("A file with that name already exists!"));
+    if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+        menu->addSeparator();
+        if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+            menu->addAction(m_cdupAct);
         } else {
-            QFile file(filePath);
-            if (file.open(QIODevice::WriteOnly)) {
-                file.close();
-                if (dlg.isOpenEditor()) {
-                    m_liteApp->fileManager()->openEditor(filePath,true);
-                }
-            } else {
-                QMessageBox::information(m_liteApp->mainWindow(),tr("Create File"),
-                                         tr("Failed to create the file!"));
-            }
+            menu->addAction(m_setRootAct);
         }
+        menu->addAction(m_addToFoldersAct);
+        menu->addAction(m_openFolderInNewWindowAct);
     }
-}
-
-void FileBrowser::newFileWizard()
-{
-    QString filePath;
-    QString projPath;
-    QFileInfo info = contextFileInfo();
-    QDir dir = contextDir();
-    if (!info.isFile()) {
-        filePath = dir.absolutePath();
-        projPath = dir.absolutePath();
-    } else {
-        filePath = dir.absolutePath();
-        dir.cdUp();
-        projPath = dir.absolutePath();
-    }
-    m_liteApp->fileManager()->execFileWizard(projPath,filePath);
-}
-
-void FileBrowser::renameFile()
-{
-    QFileInfo info = contextFileInfo();
-    if (!info.isFile()) {
-        return;
-    }
-    QString fileName = QInputDialog::getText(m_liteApp->mainWindow(),
-                                             tr("Rename File"),tr("New Name:"),
-                                             QLineEdit::Normal,info.fileName());
-    if (!fileName.isEmpty() && fileName != info.fileName()) {
-        QDir dir = contextDir();
-#ifdef Q_OS_WIN
-        if (!MoveFileW(info.filePath().toStdWString().c_str(),QFileInfo(dir,fileName).filePath().toStdWString().c_str())) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Rename File"),
-                                     tr("Failed to rename the file!"));
-        }
-#else
-        if (!QFile::rename(info.filePath(),QFileInfo(dir,fileName).filePath())) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Rename File"),
-                                     tr("Failed to rename the file!"));
-        }
-#endif
-    }
-}
-
-void FileBrowser::removeFile()
-{
-    QFileInfo info = contextFileInfo();
-    if (!info.isFile()) {
-        return;
-    }
-
-    int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Delete File"),
-                          tr("Are you sure that you want to permanently delete this file?"),
-                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    if (ret == QMessageBox::Yes) {
-        if (!QFile::remove(info.filePath())) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Delete File"),
-                                     tr("Failed to delete the file!"));
-        }
-    }
-}
-
-void FileBrowser::newFolder()
-{
-    QDir dir = contextDir();
-
-    CreateDirDialog dlg;
-    dlg.setDirectory(dir.path());
-    if (dlg.exec() == QDialog::Rejected) {
-        return;
-    }
-
-    QString folderName = dlg.getDirPath();
-    if (!folderName.isEmpty()) {
-        if (!dir.entryList(QStringList() << folderName,QDir::Dirs).isEmpty()) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Create Folder"),
-                                     tr("A folder with that name already exists!"));
-        } else if (!dir.mkpath(folderName)) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Create Folder"),
-                                     tr("Failed to create the folder!"));
-        }
-    }
-}
-
-void FileBrowser::renameFolder()
-{
-    QFileInfo info = contextFileInfo();
-    if (!info.isDir()) {
-        return;
-    }
-
-    QString folderName = QInputDialog::getText(m_liteApp->mainWindow(),
-                                               tr("Rename Folder"),tr("New Name:"),
-                                               QLineEdit::Normal,info.fileName());
-    if (!folderName.isEmpty() && folderName != info.fileName()) {
-        QDir dir = contextDir();
-        dir.cdUp();
-#ifdef Q_OS_WIN
-        QString _old = info.filePath();
-        QString _new = dir.path()+"/"+folderName;
-        if (!MoveFileW(_old.toStdWString().c_str(),_new.toStdWString().c_str())) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Rename Folder"),
-                                     tr("Failed to rename the folder!"));
-        }
-#else
-        if (!dir.rename(info.fileName(),folderName)) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Rename Folder"),
-                                     tr("Failed to rename the folder!"));
-        }
-#endif
-    }
-}
-
-void FileBrowser::removeFolder()
-{
-    QFileInfo info = contextFileInfo();
-    if (!info.isDir()) {
-        return;
-    }
-
-    int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("Delete Folder"),
-                          tr("Are you sure that you want to permanently delete this folder and all of its contents?"),
-                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    if (ret == QMessageBox::Yes) {
-        if (!m_fileModel->rmdir(m_contextIndex)) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Delete Folder"),
-                                     tr("Failed to delete the folder!"));
-        }
-    }
-}
-
-QString FileBrowser::getShellCmd(LiteApi::IApplication *app)
-{
-    QString defCmd;
-#if defined(Q_OS_WIN)
-    defCmd = "cmd.exe";
-#elif defined(Q_OS_MAC)
-    defCmd = "/usr/bin/open";
-#else
-    defCmd = "/usr/bin/gnome-terminal";
-#endif
-    return app->settings()->value("filebrowser/shell_cmd",defCmd).toString();
-}
-
-QStringList FileBrowser::getShellArgs(LiteApi::IApplication *app)
-{
-    QStringList defArgs;
-#if defined(Q_OS_MAC)
-    defArgs << "-a" << "Terminal";
-#endif
-    return app->settings()->value("filebrowser/shell_args",defArgs).toStringList();
 }
 
 void FileBrowser::showHideFiles(bool b)
@@ -628,85 +259,31 @@ void FileBrowser::showHideFiles(bool b)
     if (isShowHideFiles() == b) {
         return;
     }
-    QDir::Filters filters = m_fileModel->filter();
+    QDir::Filters filters = m_fileWidget->model()->filter();
     if (b) {
         filters |= QDir::Hidden;
     } else {
         filters ^= QDir::Hidden;
     }
-    m_fileModel->setFilter(filters);
+    m_fileWidget->model()->setFilter(filters);
     m_liteApp->settings()->setValue(FILEBROWSER_SHOW_HIDDEN_FILES,b);
 }
 
 bool FileBrowser::isShowHideFiles() const
 {
-    return m_fileModel->filter() & QDir::Hidden;
-}
-
-QFileInfo FileBrowser::contextFileInfo() const
-{
-    if (m_contextIndex.isValid()) {
-        return m_fileModel->fileInfo(m_contextIndex);
-    }
-    return QFileInfo(m_fileModel->rootPath());
-}
-
-QDir FileBrowser::contextDir() const
-{
-    if (m_contextIndex.isValid()) {
-        if (m_fileModel->isDir(m_contextIndex)) {
-            return m_fileModel->filePath(m_contextIndex);
-        } else {
-            return m_fileModel->fileInfo(m_contextIndex).absoluteDir();
-        }
-    }
-    return m_fileModel->rootDirectory();
-}
-
-void FileBrowser::openExplorer()
-{
-    QDir dir = contextDir();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(dir.path()));
-}
-
-void FileBrowser::viewGodoc()
-{
-    QDir dir = contextDir();
-    LiteApi::IGolangDoc *doc = LiteApi::findExtensionObject<LiteApi::IGolangDoc*>(m_liteApp,"LiteApi.IGolangDoc");
-    if (doc) {
-        QUrl url;
-        url.setScheme("pdoc");
-        url.setPath(dir.path());
-        doc->openUrl(url);
-        doc->activeBrowser();
-    }
+    return m_fileWidget->model()->filter() & QDir::Hidden;
 }
 
 void FileBrowser::openFolderInNewWindow()
 {
-    QDir dir = contextDir();
+    QDir dir = m_fileWidget->contextDir();
     m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
 }
 
 void FileBrowser::addToFolders()
 {
-    QDir dir = contextDir();
+    QDir dir = m_fileWidget->contextDir();
     m_liteApp->fileManager()->addFolderList(dir.path());
-}
-
-void FileBrowser::openShell()
-{
-    QDir dir = contextDir();    
-    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
-    QString cmd = env.value("LITEIDE_TERM");
-    QStringList args = env.value("LITEIDE_TERMARGS").split(" ");
-    QString path = dir.path();
-#ifdef Q_OS_WIN
-    if (path.length() == 2 && path.right(1) == ":") {
-        path += "/";
-    }
-#endif
-    QProcess::startDetached(cmd,args,path);
 }
 
 void FileBrowser::addFolderToRoot(const QString &path)
@@ -729,22 +306,22 @@ void FileBrowser::addFolderToRoot(const QString &path)
 
 void FileBrowser::setFolderToRoot()
 {
-    QDir dir = contextDir();
+    QDir dir = m_fileWidget->contextDir();
     addFolderToRoot(dir.path());
 }
 
 void FileBrowser::activatedRoot(QString path)
 {
-    QModelIndex index = m_fileModel->setRootPath(path);
-    QModelIndex proxyIndex = m_proxyModel->mapFromSource(index);
-    m_treeView->setRootIndex(proxyIndex);
     m_fileWidget->setRootPath(path);
-    m_fileWidget->treeView()->setRootIndex(m_fileWidget->rootIndex());
 }
 
 void FileBrowser::cdUp()
 {
-    QDir dir = m_fileModel->rootDirectory();
+    QString path = m_fileWidget->rootPath();
+    if (path.isEmpty()) {
+        return;
+    }
+    QDir dir(path);
     if (!dir.path().isEmpty() && dir.cdUp()) {
         addFolderToRoot(dir.path());
     }
