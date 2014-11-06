@@ -99,7 +99,6 @@ var commands = []*Command{
 	cmdApi,
 	cmdDoc,
 	cmdType,
-	cmdImports,
 	cmdGoimports,
 }
 
