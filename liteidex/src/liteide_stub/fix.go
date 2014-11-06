@@ -155,6 +155,9 @@ func importPathToNameBasic(importPath string) (packageName string) {
 // importPathToNameGoPath finds out the actual package name, as declared in its .go files.
 // If there's a problem, it falls back to using importPathToNameBasic.
 func importPathToNameGoPath(importPath string) (packageName string) {
+	if isStdPkg(importPath) {
+		return path.Base(importPath)
+	}
 	if buildPkg, err := build.Import(importPath, "", 0); err == nil {
 		return buildPkg.Name
 	} else {
