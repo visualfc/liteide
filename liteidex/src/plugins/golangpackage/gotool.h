@@ -45,6 +45,7 @@ public:
     QString workDir() const;
     QString gotool() const { return m_gotool; }
     void start(const QStringList &args);
+    void start_list_json();
     QByteArray stdOutputData() const { return m_stdOutput; }
     QString stdOutputUtf8() const {
         return QString::fromUtf8(m_stdOutput,m_stdOutput.size());
