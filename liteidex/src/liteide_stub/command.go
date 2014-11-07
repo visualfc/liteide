@@ -100,6 +100,7 @@ var commands = []*Command{
 	cmdDoc,
 	cmdType,
 	cmdGoimports,
+	cmdPkgs,
 }
 
 var exitStatus = 0
