@@ -28,11 +28,11 @@ protected:
     QPointer<QAction> current;
 };
 
-class ActionToolBar : public QObject
+class SplitActionToolBar : public QObject
 {
     Q_OBJECT
 public:
-    ActionToolBar(QSize iconSize, QWidget *parent, Qt::DockWidgetArea area);
+    SplitActionToolBar(QSize iconSize, QWidget *parent, Qt::DockWidgetArea area);
     ToolDockWidget *dock(bool split) const;
     void addAction(QAction *action, const QString &title, bool split);
     void removeAction(QAction *action, bool split);
@@ -52,7 +52,7 @@ public:
     bool bHideToolBar;
 };
 
-struct ActionState
+struct SplitActionState
 {
     QWidget *widget;
     QList<QAction*> widgetActions;
@@ -62,7 +62,7 @@ struct ActionState
     QString  title;
 };
 
-struct InitToolSate
+struct SplitInitToolSate
 {
     Qt::DockWidgetArea area;
     bool               split;
@@ -93,9 +93,9 @@ protected slots:
     void toggledAction(bool);
 protected:
     QMainWindow *m_mainWindow;
-    QMap<Qt::DockWidgetArea,ActionToolBar*> m_areaToolBar;
-    QMap<QAction*,ActionState*> m_actStateMap;
-    QMap<QString,InitToolSate> m_initIdStateMap;
+    QMap<Qt::DockWidgetArea,SplitActionToolBar*> m_areaToolBar;
+    QMap<QAction*,SplitActionState*> m_actStateMap;
+    QMap<QString,SplitInitToolSate> m_initIdStateMap;
     QList<QString> m_initCheckedList;
     QStatusBar  *m_statusBar;
     QAction     *m_hideSideAct;
