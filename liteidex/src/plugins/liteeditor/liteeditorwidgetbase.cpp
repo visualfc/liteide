@@ -2601,6 +2601,10 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     }
                     findSelectionMark = true;
                     pos = cur.selectionEnd()-block.position();
+                    if (selectionStart == cur.selectionStart() &&
+                            selectionEnd == cur.selectionEnd()) {
+                        continue;
+                    }
                     QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
                     qreal left = l.cursorToX(cur.selectionStart()-blpos);
                     qreal right = l.cursorToX(cur.selectionEnd()-blpos);
