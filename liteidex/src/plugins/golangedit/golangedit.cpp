@@ -88,6 +88,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findLinkProcess,SIGNAL(started()),this,SLOT(findLinkStarted()));
     connect(m_findLinkProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findLinkOutput(QByteArray,bool)));
     connect(m_findLinkProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findLinkFinish(bool,int,QString)));
+    connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
 }
 
 //bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
@@ -372,5 +373,10 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
 
 void GolangEdit::findLinkFinish(bool /*error*/, int /*code*/, QString)
 {
+}
+
+void GolangEdit::searchTextChanged(const QString &word)
+{
+
 }
 

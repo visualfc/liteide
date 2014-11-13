@@ -453,7 +453,7 @@ func (w *PkgWalker) LookupImport(pkg *types.Package, pkgInfo *types.Info, cursor
 
 	if typeFindInfo {
 		if fname == fpath {
-			fmt.Printf("package %s", fname)
+			fmt.Printf("package %s\n", fname)
 		} else {
 			fmt.Printf("package %s (\"%s\")\n", fname, fpath)
 		}

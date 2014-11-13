@@ -38,6 +38,7 @@ GolangFileSearch::GolangFileSearch(LiteApi::IApplication *app, QObject *parent) 
 {
     m_process = new ProcessEx(this);
     m_replaceMode = false;
+    m_bParserHead = true;
     connect(m_process,SIGNAL(started()),this,SLOT(findUsagesStarted()));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findUsagesOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findUsagesFinish(bool,int,QString)));
@@ -106,12 +107,13 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     this->m_replaceMode = replace;
     manager->setCurrentSearch(this);
     m_lastLine = 0;
+    m_bParserHead = true;
     m_file.close();
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QFileInfo info(editor->filePath());
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->setWorkingDirectory(info.path());
-    m_process->startEx(cmd,QString("type -cursor %1:%2 -use .").
+    m_process->startEx(cmd,QString("type -cursor %1:%2 -info -use .").
                              arg(info.fileName()).arg(offset));
 
 }
@@ -129,6 +131,24 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
     QRegExp reg(":(\\d+):(\\d+)");
     foreach (QByteArray line, data.split('\n')) {
         QString info = QString::fromUtf8(line).trimmed();
+        if (m_bParserHead) {
+            m_bParserHead = false;
+            //package fmt
+            //package ast ("go/ast")
+            if (info.startsWith("package")) {
+                int n = info.indexOf("(");
+                if (n != -1) {
+                    info = info.left(n);
+                }
+                //change searchText
+                //m_searchText = info.mid(7).trimmed();
+                QString pkgName = info.mid(7).trimmed();
+                if (pkgName != m_searchText) {
+                    emit searchTextChanged(pkgName);
+                }
+            }
+            continue;
+        }
         int pos = reg.lastIndexIn(info);
         if (pos >= 0) {
             QString fileName = info.left(pos);

@@ -54,6 +54,7 @@ protected:
     QString m_searchText;
     QString m_lastLineText;
     int     m_lastLine;
+    bool    m_bParserHead;
     bool    m_replaceMode;
 };
 

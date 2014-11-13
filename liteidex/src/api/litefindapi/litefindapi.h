@@ -59,6 +59,7 @@ public:
     virtual QString searchText() const = 0;
     virtual bool replaceMode() const = 0;
 signals:
+    void searchTextChanged(const QString &text);
     void findStarted();
     void findFinished(bool b = true);
     void findResult(const LiteApi::FileSearchResult &result);
