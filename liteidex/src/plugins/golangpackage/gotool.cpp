@@ -130,6 +130,17 @@ void GoTool::start(const QStringList &args)
     m_process->start(m_gotool,args);
 }
 
+void GoTool::start_list_json()
+{
+    this->kill();
+    m_stdOutput.clear();
+    m_stdError.clear();
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QStringList args;
+    args << "pkgs" << "-list" << "-json";
+    m_process->start(cmd,args);
+}
+
 void GoTool::readError()
 {
     m_stdError.append(m_process->readAllStandardError());

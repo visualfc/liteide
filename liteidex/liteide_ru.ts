@@ -126,7 +126,7 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.cpp" line="43"/>
+        <location filename="src/liteapp/aboutdialog.cpp" line="42"/>
         <source>Based on Qt %1 (%2 bit)</source>
         <translation>Основано на Qt %1 (%2 бит)</translation>
     </message>
@@ -547,194 +547,51 @@ LiteIDE это простая кросплатформенная среда ра
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="129"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="116"/>
         <source>Synchronize with editor</source>
         <translation type="unfinished">Синхронизировать с редактором</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="202"/>
-        <source>Open File</source>
-        <translation>Открыть файл</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="204"/>
-        <source>New File...</source>
-        <oldsource>New File</oldsource>
-        <translation type="unfinished">Новый файл</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="205"/>
-        <source>New File Wizard...</source>
-        <oldsource>New File Wizard</oldsource>
-        <translation type="unfinished">Мастер создания файла...</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="495"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="500"/>
-        <source>Rename File</source>
-        <translation>Переименовать файл</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="207"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="514"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="519"/>
-        <source>Delete File</source>
-        <oldsource>Remove File</oldsource>
-        <translation type="unfinished">Удалить файл</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="132"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
         <source>Show Hidden Files</source>
         <translation type="unfinished">Показать скрытые файлы</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="206"/>
-        <source>Rename File...</source>
-        <translation type="unfinished">Переименовать файл...</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="209"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="166"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation type="unfinished">Установить как корневую папку</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="210"/>
-        <source>New Folder...</source>
-        <oldsource>New Folder</oldsource>
-        <translation type="unfinished">Новая папка</translation>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="126"/>
+        <source>Execute File</source>
+        <translation type="unfinished">Выполнить команду</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="211"/>
-        <source>Rename Folder...</source>
-        <translation type="unfinished">Переименовать папку...</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="219"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="167"/>
         <source>Open Folder in New Window</source>
         <translation type="unfinished">Открыть папку в новом окне</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="220"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="168"/>
         <source>Add to Folders</source>
         <translation type="unfinished">Добавить в папки</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="286"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="176"/>
         <source>Config</source>
         <translation type="unfinished">Конфигурация</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="515"/>
-        <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished">Удалить этот файл?</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="520"/>
-        <source>Failed to delete the file!</source>
-        <translation type="unfinished">Ошибка при удалении файла!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="539"/>
-        <source>A folder with that name already exists!</source>
-        <translation type="unfinished">Папка уже существует!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="564"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="569"/>
-        <source>Rename Folder</source>
-        <translation>Переименовать папку</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="584"/>
-        <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="589"/>
-        <source>Failed to delete the folder!</source>
-        <translation type="unfinished">Ошибка при удалении папки!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="212"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="583"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="588"/>
-        <source>Delete Folder</source>
-        <oldsource>Remove Folder</oldsource>
-        <translation type="unfinished">Удалить папку</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="214"/>
-        <source>Open Terminal Here</source>
-        <translation>Открыть терминал в этой папке</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="215"/>
-        <source>Open Explorer Here</source>
-        <translation type="unfinished">Открыть папку в проводнике</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="217"/>
-        <source>View Godoc Here</source>
-        <translation type="unfinished">Открыть Godoc</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="448"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="458"/>
-        <source>Create File</source>
-        <translation>Создание файла</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="155"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation type="unfinished">Вверх</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="291"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="181"/>
         <source>File System</source>
         <translation type="unfinished">Файловая система</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="449"/>
-        <source>A file with that name already exists!</source>
-        <translation type="unfinished">Файл уже существует!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="459"/>
-        <source>Failed to create the file!</source>
-        <translation>Ошибка при создании файла!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="489"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="555"/>
-        <source>New Name:</source>
-        <translation type="unfinished">Новое имя:</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="496"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="501"/>
-        <source>Failed to rename the file!</source>
-        <translation>Ошибка при переименовании файла!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="538"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="541"/>
-        <source>Create Folder</source>
-        <translation>Создание папки</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="542"/>
-        <source>Failed to create the folder!</source>
-        <translation>Ошибка при создании папки!</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="565"/>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="570"/>
-        <source>Failed to rename the folder!</source>
-        <translation>Ошибка при переименовании папки!</translation>
     </message>
 </context>
 <context>
@@ -839,7 +696,7 @@ Do you want to load?</oldsource>
         <translation type="unfinished">Папка</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="716"/>
+        <location filename="src/liteapp/filemanager.cpp" line="722"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -854,7 +711,7 @@ Do you want to close the editor ?</oldsource>
 Закрыть файл в редакторе ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="746"/>
+        <location filename="src/liteapp/filemanager.cpp" line="752"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -869,7 +726,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 При ответе &quot;Да&quot; все несохраненные изменения будут утеряны.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="753"/>
+        <location filename="src/liteapp/filemanager.cpp" line="759"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -899,7 +756,7 @@ Do you want to reload the file from disk ?</oldsource>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="709"/>
+        <location filename="src/liteapp/filemanager.cpp" line="715"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -914,10 +771,10 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 При ответе &quot;Да&quot; все несохраненные изменения будут утеряны.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="713"/>
-        <location filename="src/liteapp/filemanager.cpp" line="718"/>
-        <location filename="src/liteapp/filemanager.cpp" line="750"/>
-        <location filename="src/liteapp/filemanager.cpp" line="755"/>
+        <location filename="src/liteapp/filemanager.cpp" line="719"/>
+        <location filename="src/liteapp/filemanager.cpp" line="724"/>
+        <location filename="src/liteapp/filemanager.cpp" line="756"/>
+        <location filename="src/liteapp/filemanager.cpp" line="761"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -1023,12 +880,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="221"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="222"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="224"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="225"/>
         <source>File is readonly</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1036,178 +893,178 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FileSystemWidget</name>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="102"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="104"/>
         <source>Open File</source>
         <oldsource>Open Editor</oldsource>
         <translation type="unfinished">Открыть файл</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="103"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
         <source>New File...</source>
         <oldsource>New File</oldsource>
         <translation type="unfinished">Новый файл</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="104"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="106"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
         <translation type="unfinished">Мастер создания файла...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="291"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="296"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="330"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="336"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="341"/>
         <source>Rename File</source>
         <translation type="unfinished">Переименовать файл</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="106"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="310"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="315"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="108"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="355"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="360"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
         <translation type="unfinished">Удалить файл</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="108"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
         <source>New Folder...</source>
         <oldsource>New Folder</oldsource>
         <translation type="unfinished">Новая папка</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="311"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="356"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="360"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="365"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="396"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="405"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="410"/>
         <source>Rename Folder</source>
         <translation type="unfinished">Переименовать папку</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="379"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="112"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="424"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="431"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
         <translation type="unfinished">Удалить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="107"/>
         <source>Rename File...</source>
         <translation type="unfinished">Переименовать файл...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="109"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="111"/>
         <source>Rename Folder...</source>
         <translation type="unfinished">Переименовать папку...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="112"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="114"/>
         <source>Open Terminal Here</source>
         <translation type="unfinished">Открыть терминал в этой папке</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="113"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="115"/>
         <source>Open Explorer Here</source>
         <translation type="unfinished">Открыть папку в проводнике</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="115"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
         <source>View Godoc Here</source>
         <translation type="unfinished">Открыть Godoc</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="419"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="464"/>
         <source>Add Folder</source>
         <translation type="unfinished">Добавить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="118"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="120"/>
         <source>Close Folder</source>
         <translation type="unfinished">Закрыть папку</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="117"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="119"/>
         <source>Add Folder...</source>
         <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="120"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="122"/>
         <source>Close All Folders</source>
         <translation type="unfinished">Закрыть все папки</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="244"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="254"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="289"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="299"/>
         <source>Create File</source>
         <translation type="unfinished">Создание файла</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="245"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
         <source>A file with that name already exists!</source>
         <oldsource>The file already exists!</oldsource>
         <translation type="unfinished">Файл уже существует!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="255"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="300"/>
         <source>Failed to create the file!</source>
         <translation type="unfinished">Ошибка при создании файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="285"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="330"/>
         <source>New Name:</source>
         <translation type="unfinished">Новое имя:</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="292"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="297"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="337"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="342"/>
         <source>Failed to rename the file!</source>
         <translation type="unfinished">Ошибка при переименовании файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="425"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="316"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="361"/>
         <source>Failed to delete the file!</source>
         <oldsource>Failed to remove the file!</oldsource>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="334"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="337"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="379"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="382"/>
         <source>Create Folder</source>
         <translation type="unfinished">Создание папки</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="335"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="380"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
         <translation type="unfinished">Папка уже существует!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="338"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="383"/>
         <source>Failed to create the folder!</source>
         <translation type="unfinished">Ошибка при создании папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="396"/>
         <source>Folder Name</source>
         <translation type="unfinished">Имя папки</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="361"/>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="366"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="406"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="411"/>
         <source>Failed to rename the folder!</source>
         <translation type="unfinished">Ошибка при переименовании папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="387"/>
+        <location filename="src/utils/filesystem/filesystemwidget.cpp" line="432"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
@@ -1578,7 +1435,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished">Комментировать/раскомментировать</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="155"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="156"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1586,7 +1443,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>GolangFileSearch</name>
     <message>
-        <location filename="src/plugins/golangedit/golangfilesearch.cpp" line="53"/>
+        <location filename="src/plugins/golangedit/golangfilesearch.cpp" line="54"/>
         <source>Golang Find Usages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1872,7 +1729,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="470"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="586"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1918,117 +1775,117 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="198"/>
+        <location filename="src/liteapp/liteapp.cpp" line="201"/>
         <source>Event Log</source>
         <translation type="unfinished">Журнал</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="185"/>
+        <location filename="src/liteapp/liteapp.cpp" line="188"/>
         <source>Escape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="627"/>
+        <location filename="src/liteapp/liteapp.cpp" line="630"/>
         <source>Close File</source>
         <translation type="unfinished">Закрыть файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="630"/>
+        <location filename="src/liteapp/liteapp.cpp" line="633"/>
         <source>Close All Files</source>
         <translation type="unfinished">Закрыть все файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="640"/>
+        <location filename="src/liteapp/liteapp.cpp" line="643"/>
         <source>Save File</source>
         <translation type="unfinished">Сохранить файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="643"/>
+        <location filename="src/liteapp/liteapp.cpp" line="646"/>
         <source>Save File As...</source>
         <translation type="unfinished">Сохранить файл как...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="649"/>
         <source>Save All Files</source>
         <translation type="unfinished">Сохранить все файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="633"/>
+        <location filename="src/liteapp/liteapp.cpp" line="636"/>
         <source>Open Project</source>
         <translation>Открыть проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="200"/>
+        <location filename="src/liteapp/liteapp.cpp" line="203"/>
         <source>Options</source>
         <translation type="unfinished">Параметры</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="601"/>
+        <location filename="src/liteapp/liteapp.cpp" line="604"/>
         <source>New...</source>
         <translation type="unfinished">Новый...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="604"/>
+        <location filename="src/liteapp/liteapp.cpp" line="607"/>
         <source>Open File...</source>
         <translation type="unfinished">Открыть файл...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="607"/>
+        <location filename="src/liteapp/liteapp.cpp" line="610"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Открыть папку...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="610"/>
+        <location filename="src/liteapp/liteapp.cpp" line="613"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Открыть папку в новом окне...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="615"/>
+        <location filename="src/liteapp/liteapp.cpp" line="618"/>
         <source>Add Folder...</source>
         <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="618"/>
+        <location filename="src/liteapp/liteapp.cpp" line="621"/>
         <source>Close All Folders</source>
         <translation type="unfinished">Закрыть все папки</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="621"/>
+        <location filename="src/liteapp/liteapp.cpp" line="624"/>
         <source>New Window</source>
         <translation type="unfinished">Новое окно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="624"/>
+        <location filename="src/liteapp/liteapp.cpp" line="627"/>
         <source>Close Window</source>
         <translation type="unfinished">Закрыть окно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="635"/>
+        <location filename="src/liteapp/liteapp.cpp" line="638"/>
         <source>Save Project</source>
         <translation>Сохранить проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="637"/>
+        <location filename="src/liteapp/liteapp.cpp" line="640"/>
         <source>Close Project</source>
         <translation type="unfinished">Закрыть проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="652"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="652"/>
+        <location filename="src/liteapp/liteapp.cpp" line="655"/>
         <source>Full Screen</source>
         <translation type="unfinished">Полный экран</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="656"/>
+        <location filename="src/liteapp/liteapp.cpp" line="659"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">О программе Liteide</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="662"/>
+        <location filename="src/liteapp/liteapp.cpp" line="665"/>
         <source>About Plugins</source>
         <translation type="unfinished">О расширениях</translation>
     </message>
@@ -2831,11 +2688,6 @@ Success: %2.</oldsource>
         <translation type="unfinished">Автоматическое добавление закрывающих элементов</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="255"/>
-        <source>``</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="319"/>
         <source>Clean whitespace when saving files</source>
         <translation type="unfinished">Удалять избыточные пробелы при сохранении файлов</translation>
@@ -3436,13 +3288,13 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="194"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="196"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="199"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="201"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation type="unfinished"></translation>
@@ -3693,6 +3545,14 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>SplitWindowStyle</name>
+    <message>
+        <location filename="src/liteapp/splitwindowstyle.cpp" line="218"/>
+        <source>Hide Sidebars</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TerminalEdit</name>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="60"/>
@@ -3800,15 +3660,6 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="129"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ToolMainWindow</name>
-    <message>
-        <location filename="src/liteapp/toolmainwindow.cpp" line="242"/>
-        <source>Hide Sidebars</source>
-        <oldsource>HideSideBar</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

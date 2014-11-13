@@ -33,7 +33,6 @@
 #endif
 //lite_memory_check_end
 
-
 AboutDialog::AboutDialog(LiteApi::IApplication *app,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutDialog)

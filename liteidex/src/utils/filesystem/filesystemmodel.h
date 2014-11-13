@@ -29,14 +29,16 @@
 #include <QIcon>
 #include <QFileInfo>
 #include <QDir>
+#include <QMutex>
 
 class FileSystemModel;
+class QFileSystemWatcher;
 class FileNode
 {
 public:
     FileNode(FileSystemModel *model);
     FileNode(FileSystemModel *model,const QString &path, FileNode *parent);
-    ~FileNode();
+    virtual ~FileNode();
     FileNode* parent();
     FileNode* child(int row);
     int childCount();
@@ -57,6 +59,7 @@ protected:
     QList<FileNode*> *m_children;
     QString m_path;
     QString m_text;
+    bool    m_bWatcher;
 };
 
 class QFileIconProvider;
@@ -71,10 +74,10 @@ public:
     void clear();
     void reload();
     void setFilter(QDir::Filters filters);
-    void setSort(QDir::SortFlags flags);
+    void setDirSort(QDir::SortFlags flags);
     QDir::Filters filter() const;
     bool isShowHideFiles() const;
-    QDir::SortFlags sort() const;
+    QDir::SortFlags dirSort() const;
     bool removeRootPath(const QString &path);
     bool addRootPath(const QString &path);
     void setRootPathList(const QStringList &pathList);
@@ -93,21 +96,26 @@ public:
     virtual QModelIndex parent(const QModelIndex &child) const;
     virtual QModelIndex index(int row, int column,const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
-    QFileSystemWatcher* fileWatcher() const;
     bool isRootPathNode(FileNode *node) const;
     bool isRootPathNodeFillPath() const;
+    void addWatcher(const QString &path);
+    void removeWatcher(const QString &path);
+signals:
+    void direcotryChanged(QString);
 public slots:
-    void directoryChanged(const QString&);
+    void reloadDirectory(const QString &path);
 protected:
     QModelIndex findPathHelper(const QString &path, const QModelIndex &parentIndex) const;
     QStringList m_pathList;
-    FileNode *m_rootNode;
+    FileNode *m_rootNode;    
     QString   m_startPath;
     QFileIconProvider *m_iconProvider;
     QFileSystemWatcher *m_fileWatcher;
+    QMap<QString,int> m_fileWatcherMap;
     QTreeView *m_treeView;
     QDir::Filters m_filters;
     QDir::SortFlags m_sorts;
+    QMutex m_mutex;
 };
 
 #endif // FILESYSTEMMODEL_H

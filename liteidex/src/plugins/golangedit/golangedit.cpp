@@ -88,6 +88,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findLinkProcess,SIGNAL(started()),this,SLOT(findLinkStarted()));
     connect(m_findLinkProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findLinkOutput(QByteArray,bool)));
     connect(m_findLinkProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findLinkFinish(bool,int,QString)));
+    connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
 }
 
 //bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
@@ -179,6 +180,7 @@ void GolangEdit::updateLink(const QTextCursor &_cursor)
     LiteApi::selectWordUnderCursor(cursor);
 
     if (cursor.selectionStart() == cursor.selectionEnd()) {
+        m_editor->clearLink();
         return;
     }
 
@@ -189,11 +191,13 @@ void GolangEdit::updateLink(const QTextCursor &_cursor)
         }
         return;
     }
-    if (m_findLinkProcess->isRunning()) {
-        return;
-    }
     m_linkCursor = cursor;
     m_lastLink = LiteApi::Link();
+    if (m_findLinkProcess->isRunning()) {
+        m_findLinkProcess->kill();
+        m_findLinkProcess->waitForFinished(100);
+        //return;
+    }
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
     QString src = cursor.document()->toPlainText();
     m_srcData = src.toUtf8();
@@ -356,6 +360,8 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
                         m_lastLink = link;
                         m_editor->showLink(link);
                     }
+                } else {
+                    m_editor->clearLink();
                 }
                 QRect rc = m_plainTextEdit->cursorRect(m_linkCursor);
                 QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
@@ -367,5 +373,10 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
 
 void GolangEdit::findLinkFinish(bool /*error*/, int /*code*/, QString)
 {
+}
+
+void GolangEdit::searchTextChanged(const QString &word)
+{
+
 }
 

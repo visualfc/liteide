@@ -37,20 +37,29 @@ class FileSystemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FileSystemWidget(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~FileSystemWidget();
+    void setHideRoot(bool b);
+    bool isHideRoot() const;
     QWidget *widget() { return this; }
     void setRootPathList(const QStringList &rootPathList);
     void addRootPath(const QString &path);
     QStringList rootPathList() const;
     void setStartIndex(const QModelIndex &index);
     void setRootPath(const QString &path);
+    QString rootPath() const;
     QString startPath() const;
     void clear();
+    SymbolTreeView *treeView() const;
+    FileSystemModel *model() const;
+    QModelIndex rootIndex() const;
+signals:
+    void directoryChanged();
 public slots:
+    void modelReset();
     void showHideFiles(bool b);
     bool isShowHideFiles() const;
-    void directoryChanged(QString);
+    void reloadDirectory(QString);
     void pathIndexChanged(const QModelIndex & index);
     void openPathIndex(const QModelIndex &index);
     void currentEditorChanged(LiteApi::IEditor*);
@@ -74,7 +83,7 @@ public slots:
 signals:
     void aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void startPathChanged(const QString& path);
-protected:
+public:
     QFileInfo contextFileInfo() const;
     QDir contextDir() const;
 private:
@@ -101,7 +110,8 @@ private:
     QAction *m_closeFolerAct;
     QAction *m_closeAllFoldersAct;
 protected:
-    LiteApi::IApplication *m_litApp;
+    bool    m_bMultiDirMode;
+    bool    m_bHideRoot;
 };
 
 #endif // FILESYSTEMWIDGET_H

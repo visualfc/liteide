@@ -157,8 +157,10 @@ PackageBrowser::~PackageBrowser()
 
 void PackageBrowser::appLoaded()
 {
-    m_toolWindowAct->setChecked(false);
-    //QTimer::singleShot(1000, this, SLOT(reloadAll()));
+    //m_toolWindowAct->setChecked(false);
+    if (m_toolWindowAct->isChecked()) {
+        QTimer::singleShot(100, this, SLOT(reloadAll()));
+    }
 }
 
 void PackageBrowser::triggeredToolWindow(bool b)
@@ -199,20 +201,7 @@ void PackageBrowser::reloadAll()
         m_model->appendRow(new QStandardItem(tr("Loading Go package list...")));
     }
     QString root = LiteApi::getGoroot(m_liteApp);
-    m_taskList.clear();
-
-    foreach (QString path, LiteApi::getGopathList(m_liteApp,false)) {
-        if (QDir(path).exists()) {
-            m_taskList.append(path);
-        }
-    }
-
-    m_taskData.clear();
-    m_gopathList.clear();
-    m_gopathList.append(root);
-    m_gopathList.append(m_taskList);
-    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
-    env.insert("GOPATH","");
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_goTool->setProcessEnvironment(env);
     m_goTool->setWorkDir(root);
     m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
@@ -364,19 +353,8 @@ void PackageBrowser::error(QProcess::ProcessError code)
 void PackageBrowser::finished(int code,QProcess::ExitStatus)
 {
     if (code == 0) {
-        PathData data;
-        data.path = m_goTool->workDir();
-        data.data = m_goTool->stdOutputData();
-        m_taskData.append(data);
-        if (!m_taskList.isEmpty()) {
-            QString work = m_taskList.takeFirst();
-            m_goTool->setProcessEnvironment(LiteApi::getGoEnvironment(m_liteApp));
-            m_goTool->setWorkDir(work);
-            m_goTool->start(QStringList() << "list" << "-e" << "-json" << "./...");
-            //m_goTool->start(QStringList() << "list" << "-f" << "{{.ImportPath}}" << "./...");
-        } else {
-            resetTree();
-        }
+        QByteArray data = m_goTool->stdOutputData();
+        resetTree(data);
     } else {
         m_model->clear();
         QString goroot = LiteApi::getGoroot(m_liteApp);
@@ -384,98 +362,109 @@ void PackageBrowser::finished(int code,QProcess::ExitStatus)
     }
 }
 
-void PackageBrowser::resetTree()
+void PackageBrowser::resetTree(const QByteArray &data)
 {
-    QByteArray jsonData;
-
     //save state
     SymbolTreeState state;
     m_treeView->saveState(&state);
 
     m_model->clear();
-    QString root = LiteApi::getGoroot(m_liteApp);
-    foreach(PathData data, m_taskData) {
-        QStandardItem *item = new QStandardItem(QDir::toNativeSeparators(data.path));
+
+    QStringList rootList = LiteApi::getGopathList(m_liteApp,true);
+    foreach (QString root, rootList) {
+        QStandardItem *item = new QStandardItem(root);
         QStandardItem *cmd = new QStandardItem("cmd");
         item->appendRow(cmd);
         QStandardItem *pkg = new QStandardItem("pkg");
         item->appendRow(pkg);
         m_model->appendRow(item);
         m_treeView->expand(m_model->indexFromItem(item));
-
-        foreach(QByteArray line, data.data.split('\n')) {
-            //bool bRoot = (data.path == LiteApi::getGoroot(m_liteApp));
-            jsonData.append(line);
-            if (line == "}") {
-                QJson::Parser parser;
-                bool ok = false;
-                QVariant json = parser.parse(jsonData, &ok).toMap();
-                QVariantMap jsonMap = json.toMap();
-                //QString root = QDir(jsonMap.value("Root").toString()).path();
-                QStandardItem *parent = 0;
-                if (jsonMap.value("Name").toString() == "main") {
-                    parent = cmd;
-                } else {
-                    parent = pkg;
-                }
-                 //if (bRoot && pkgName.indexOf("_") == 0) {
-                //    parent = 0;
-                //}
-                if (parent) {
-                    QString pkgName = jsonMap.value("ImportPath").toString();
-                    QStandardItem *item = new QStandardItem(pkgName);
-                    item->setToolTip(pkgName);
-                    item->setData(PackageType::ITEM_PACKAGE,PackageType::RoleItem);
-                    m_pkgJson.insert(pkgName,json);
-                    QStandardItem *base = new QStandardItem("BaseInfo");
-                    item->appendRow(base);
-                    QDir dir(jsonMap.value("Dir").toString());
-                    foreach (QString key, jsonMap.keys()) {
-                        QVariant var = jsonMap.value(key);
-                        if (key.indexOf("Error") >= 0) {
-                            QString text = QString("%1 : true").arg(key);
-                            QStandardItem *ic = new QStandardItem(text);
-                            ic->setToolTip(text);
-                            base->appendRow(ic);
-                            continue;
-                        }
-                        if (var.type() == QVariant::String ||
-                                var.type() == QVariant::Bool) {
-                            QString text = QString("%1 : %2").arg(key).arg(var.toString());
-                            QStandardItem *ic = new QStandardItem(text);
-                            ic->setToolTip(text);
-                            base->appendRow(ic);
-                        } else if (var.type() == QVariant::List) {
-                            PackageType::ITEM_TYPE type = PackageType::ITEM_NONE;
-                            if (key.indexOf("Deps") >= 0) {
-                                type = PackageType::ITEM_DEP;
-                            } else if (key.indexOf("Imports") >= 0) {
-                                type = PackageType::ITEM_IMPORT;
-                            } else if (key.indexOf("Files") >= 0) {
-                                type = PackageType::ITEM_SOURCE;
-                            }
-                            QStandardItem *ic = new QStandardItem(key);
-
-                            foreach(QVariant v, var.toList()) {
-                                if (v.type() == QVariant::String) {
-                                    QStandardItem *iv = new QStandardItem(v.toString());
-                                    iv->setData(type,PackageType::RoleItem);
-                                    if (type == PackageType::ITEM_SOURCE) {
-                                        iv->setData(QFileInfo(dir,v.toString()).filePath(),PackageType::RolePath);
-                                    }
-                                    ic->appendRow(iv);
-                                }
-                            }
-                            item->appendRow(ic);
-                        }
-                    }
-                    parent->appendRow(item);
-                }
-                jsonData.clear();
+    }
+    QByteArray jsonData;
+    foreach(QByteArray line, data.split('\n')) {
+        //bool bRoot = (data.path == LiteApi::getGoroot(m_liteApp));
+        jsonData.append(line);
+        if (line == "}") {
+            QJson::Parser parser;
+            bool ok = false;
+            QVariant json = parser.parse(jsonData, &ok).toMap();
+            QVariantMap jsonMap = json.toMap();
+            QString root = QDir::toNativeSeparators(jsonMap.value("Root").toString());
+            if (root.isEmpty()) {
+                continue;
             }
+            QStandardItem *parent = 0;
+            for (int i = 0; i < m_model->rowCount(); i++) {
+                QModelIndex index = m_model->index(i,0);
+                if (index.data() == root) {
+                    parent = m_model->itemFromIndex(index);
+                    break;
+                }
+            }
+            if (parent == 0) {
+                continue;
+            }
+            if (jsonMap.value("Name").toString() == "main") {
+                parent = parent->child(0,0);
+            } else {
+                parent = parent->child(1,0);
+            }
+            //if (bRoot && pkgName.indexOf("_") == 0) {
+            //    parent = 0;
+            //}
+            if (parent) {
+                QString pkgName = jsonMap.value("ImportPath").toString();
+                QStandardItem *item = new QStandardItem(pkgName);
+                item->setToolTip(pkgName);
+                item->setData(PackageType::ITEM_PACKAGE,PackageType::RoleItem);
+                m_pkgJson.insert(pkgName,json);
+                QStandardItem *base = new QStandardItem("BaseInfo");
+                item->appendRow(base);
+                QDir dir(jsonMap.value("Dir").toString());
+                foreach (QString key, jsonMap.keys()) {
+                    QVariant var = jsonMap.value(key);
+                    if (key.indexOf("Error") >= 0) {
+                        QString text = QString("%1 : true").arg(key);
+                        QStandardItem *ic = new QStandardItem(text);
+                        ic->setToolTip(text);
+                        base->appendRow(ic);
+                        continue;
+                    }
+                    if (var.type() == QVariant::String ||
+                            var.type() == QVariant::Bool) {
+                        QString text = QString("%1 : %2").arg(key).arg(var.toString());
+                        QStandardItem *ic = new QStandardItem(text);
+                        ic->setToolTip(text);
+                        base->appendRow(ic);
+                    } else if (var.type() == QVariant::List) {
+                        PackageType::ITEM_TYPE type = PackageType::ITEM_NONE;
+                        if (key.indexOf("Deps") >= 0) {
+                            type = PackageType::ITEM_DEP;
+                        } else if (key.indexOf("Imports") >= 0) {
+                            type = PackageType::ITEM_IMPORT;
+                        } else if (key.indexOf("Files") >= 0) {
+                            type = PackageType::ITEM_SOURCE;
+                        }
+                        QStandardItem *ic = new QStandardItem(key);
+
+                        foreach(QVariant v, var.toList()) {
+                            if (v.type() == QVariant::String) {
+                                QStandardItem *iv = new QStandardItem(v.toString());
+                                iv->setData(type,PackageType::RoleItem);
+                                if (type == PackageType::ITEM_SOURCE) {
+                                    iv->setData(QFileInfo(dir,v.toString()).filePath(),PackageType::RolePath);
+                                }
+                                ic->appendRow(iv);
+                            }
+                        }
+                        item->appendRow(ic);
+                    }
+                }
+                parent->appendRow(item);
+            }
+            jsonData.clear();
         }
     }
-    m_taskData.clear();
     //load state
     m_treeView->loadState(m_model,&state);
 }

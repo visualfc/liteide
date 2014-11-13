@@ -172,6 +172,8 @@ QString FileUtil::lookPath(const QString &file, const QProcessEnvironment &env, 
             exts.append(ext.toLower());
         }
     }
+    exts << ".exe" << ".bat" << ".cmd";
+    exts.removeDuplicates();
 
     if (fileName.contains('\\') || fileName.contains('/')) {
         QString exec = canExec(fileName,exts);
@@ -219,7 +221,8 @@ QString FileUtil::lookPathInDir(const QString &file, const QString &dir)
             exts.append(ext.toLower());
         }
     }
-
+    exts << ".exe" << ".bat" << ".cmd";
+    exts.removeDuplicates();
     if (fileName.contains('\\') || fileName.contains('/')) {
         QString exec = canExec(fileName,exts);
         if (!exec.isEmpty()) {

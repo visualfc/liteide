@@ -1,5 +1,13 @@
 // +build ignore
 
+// Copyright 2013 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+// Command mkindex creates the file "pkgindex.go" containing an index of the Go
+// standard library. The file is intended to be built as part of the imports
+// package, so that the package may be used in environments where a GOROOT is
+// not available (such as App Engine).
 package main
 
 import (
@@ -85,7 +93,7 @@ func main() {
 	}
 }
 
-const pkgIndexHead = `package main
+const pkgIndexHead = `package imports
 
 func init() {
 	pkgIndexOnce.Do(func() {

@@ -39,7 +39,7 @@ public:
 public slots:
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    void updateLink(const QTextCursor &cursor);
+    void updateLink(const QTextCursor &cursor);    
     void editorFindInfo();
     void editorJumpToDecl();
     void editorFindUsages();
@@ -54,6 +54,7 @@ public slots:
     void findLinkStarted();
     void findLinkOutput(QByteArray,bool);
     void findLinkFinish(bool,int,QString);
+    void searchTextChanged(const QString &word);
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;

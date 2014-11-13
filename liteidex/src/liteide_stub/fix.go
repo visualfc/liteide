@@ -1,3 +1,7 @@
+// Copyright 2013 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -7,6 +11,7 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -41,7 +46,7 @@ func importGroup(importPath string) int {
 }
 
 func fixImports(fset *token.FileSet, f *ast.File) (added []string, err error) {
-	// refs are a set of possible package references currently unsatisified by imports.
+	// refs are a set of possible package references currently unsatisfied by imports.
 	// first key: either base package (e.g. "fmt") or renamed package
 	// second key: referenced package symbol (e.g. "Println")
 	refs := make(map[string]map[string]bool)
@@ -60,11 +65,7 @@ func fixImports(fset *token.FileSet, f *ast.File) (added []string, err error) {
 			if v.Name != nil {
 				decls[v.Name.Name] = v
 			} else {
-				//local := path.Base(strings.Trim(v.Path.Value, `\"`))
-				local := strings.Trim(v.Path.Value, `\"`)
-				if i := strings.LastIndexAny(local, ".-/\\"); i > 0 {
-					local = local[i+1:]
-				}
+				local := importPathToName(strings.Trim(v.Path.Value, `\"`))
 				decls[local] = v
 			}
 		case *ast.SelectorExpr:
@@ -92,6 +93,7 @@ func fixImports(fset *token.FileSet, f *ast.File) (added []string, err error) {
 	searches := 0
 	type result struct {
 		ipath string
+		name  string
 		err   error
 	}
 	results := make(chan result)
@@ -100,8 +102,12 @@ func fixImports(fset *token.FileSet, f *ast.File) (added []string, err error) {
 			continue // skip over packages already imported
 		}
 		go func(pkgName string, symbols map[string]bool) {
-			ipath, err := findImport(pkgName, symbols)
-			results <- result{ipath, err}
+			ipath, rename, err := findImport(pkgName, symbols)
+			r := result{ipath: ipath, err: err}
+			if rename {
+				r.name = pkgName
+			}
+			results <- r
 		}(pkgName, symbols)
 		searches++
 	}
@@ -111,7 +117,11 @@ func fixImports(fset *token.FileSet, f *ast.File) (added []string, err error) {
 			return nil, result.err
 		}
 		if result.ipath != "" {
-			astutil.AddImport(fset, f, result.ipath)
+			if result.name != "" {
+				astutil.AddNamedImport(fset, f, result.name, result.ipath)
+			} else {
+				astutil.AddImport(fset, f, result.ipath)
+			}
 			added = append(added, result.ipath)
 		}
 	}
@@ -134,6 +144,27 @@ func fixImports(fset *token.FileSet, f *ast.File) (added []string, err error) {
 	return added, nil
 }
 
+// importPathToName returns the package name for the given import path.
+var importPathToName = importPathToNameGoPath
+
+// importPathToNameBasic assumes the package name is the base of import path.
+func importPathToNameBasic(importPath string) (packageName string) {
+	return path.Base(importPath)
+}
+
+// importPathToNameGoPath finds out the actual package name, as declared in its .go files.
+// If there's a problem, it falls back to using importPathToNameBasic.
+func importPathToNameGoPath(importPath string) (packageName string) {
+	if isStdPkg(importPath) {
+		return path.Base(importPath)
+	}
+	if buildPkg, err := build.Import(importPath, "", 0); err == nil {
+		return buildPkg.Name
+	} else {
+		return importPathToNameBasic(importPath)
+	}
+}
+
 type pkg struct {
 	importpath string // full pkg import path, e.g. "net/http"
 	dir        string // absolute file path to pkg directory e.g. "/usr/lib/go/src/fmt"
@@ -146,6 +177,16 @@ var pkgIndex struct {
 	m map[string][]pkg // shortname => []pkg, e.g "http" => "net/http"
 }
 
+// gate is a semaphore for limiting concurrency.
+type gate chan struct{}
+
+func (g gate) enter() { g <- struct{}{} }
+func (g gate) leave() { <-g }
+
+// fsgate protects the OS & filesystem from too much concurrency.
+// Too much disk I/O -> too many threads -> swapping and bad scheduling.
+var fsgate = make(gate, 8)
+
 func loadPkgIndex() {
 	pkgIndex.Lock()
 	pkgIndex.m = make(map[string][]pkg)
@@ -153,13 +194,16 @@ func loadPkgIndex() {
 
 	var wg sync.WaitGroup
 	for _, path := range build.Default.SrcDirs() {
+		fsgate.enter()
 		f, err := os.Open(path)
 		if err != nil {
+			fsgate.leave()
 			fmt.Fprint(os.Stderr, err)
 			continue
 		}
 		children, err := f.Readdir(-1)
 		f.Close()
+		fsgate.leave()
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
 			continue
@@ -177,20 +221,12 @@ func loadPkgIndex() {
 	wg.Wait()
 }
 
-var fset = token.NewFileSet()
-
 func loadPkg(wg *sync.WaitGroup, root, pkgrelpath string) {
 	importpath := filepath.ToSlash(pkgrelpath)
-	shortName := filepath.Base(importpath)
-
 	dir := filepath.Join(root, importpath)
-	pkgIndex.Lock()
-	pkgIndex.m[shortName] = append(pkgIndex.m[shortName], pkg{
-		importpath: importpath,
-		dir:        dir,
-	})
-	pkgIndex.Unlock()
 
+	fsgate.enter()
+	defer fsgate.leave()
 	pkgDir, err := os.Open(dir)
 	if err != nil {
 		return
@@ -200,6 +236,11 @@ func loadPkg(wg *sync.WaitGroup, root, pkgrelpath string) {
 	if err != nil {
 		return
 	}
+	// hasGo tracks whether a directory actually appears to be a
+	// Go source code directory. If $GOPATH == $HOME, and
+	// $HOME/src has lots of other large non-Go projects in it,
+	// then the calls to importPathToName below can be expensive.
+	hasGo := false
 	for _, child := range children {
 		name := child.Name()
 		if name == "" {
@@ -207,6 +248,9 @@ func loadPkg(wg *sync.WaitGroup, root, pkgrelpath string) {
 		}
 		if c := name[0]; c == '.' || ('0' <= c && c <= '9') {
 			continue
+		}
+		if strings.HasSuffix(name, ".go") {
+			hasGo = true
 		}
 		if child.IsDir() {
 			wg.Add(1)
@@ -216,6 +260,16 @@ func loadPkg(wg *sync.WaitGroup, root, pkgrelpath string) {
 			}(root, filepath.Join(importpath, name))
 		}
 	}
+	if hasGo {
+		shortName := importPathToName(importpath)
+		pkgIndex.Lock()
+		pkgIndex.m[shortName] = append(pkgIndex.m[shortName], pkg{
+			importpath: importpath,
+			dir:        dir,
+		})
+		pkgIndex.Unlock()
+	}
+
 }
 
 // loadExports returns a list exports for a package.
@@ -228,18 +282,21 @@ func loadExportsGoPath(dir string) map[string]bool {
 		if strings.Contains(err.Error(), "no buildable Go source files in") {
 			return nil
 		}
-		fmt.Fprintf(os.Stderr, "could not import %q: %v", dir, err)
+		fmt.Fprintf(os.Stderr, "could not import %q: %v\n", dir, err)
 		return nil
 	}
-	for _, file := range buildPkg.GoFiles {
-		f, err := parser.ParseFile(fset, filepath.Join(dir, file), nil, 0)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "could not parse %q: %v", file, err)
-			continue
-		}
-		for name := range f.Scope.Objects {
-			if ast.IsExported(name) {
-				exports[name] = true
+	fset := token.NewFileSet()
+	for _, files := range [...][]string{buildPkg.GoFiles, buildPkg.CgoFiles} {
+		for _, file := range files {
+			f, err := parser.ParseFile(fset, filepath.Join(dir, file), nil, 0)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "could not parse %q: %v\n", file, err)
+				continue
+			}
+			for name := range f.Scope.Objects {
+				if ast.IsExported(name) {
+					exports[name] = true
+				}
 			}
 		}
 	}
@@ -252,7 +309,18 @@ func loadExportsGoPath(dir string) map[string]bool {
 // extended by adding a file with an init function.
 var findImport = findImportGoPath
 
-func findImportGoPath(pkgName string, symbols map[string]bool) (string, error) {
+func findImportGoPath(pkgName string, symbols map[string]bool) (string, bool, error) {
+	// Fast path for the standard library.
+	// In the common case we hopefully never have to scan the GOPATH, which can
+	// be slow with moving disks.
+	if pkg, rename, ok := findImportStdlib(pkgName, symbols); ok {
+		return pkg, rename, nil
+	}
+
+	// TODO(sameer): look at the import lines for other Go files in the
+	// local directory, since the user is likely to import the same packages
+	// in the current Go file.  Return rename=true when the other Go files
+	// use a renamed package that's also used in the current file.
 
 	pkgIndexOnce.Do(loadPkgIndex)
 
@@ -287,7 +355,7 @@ func findImportGoPath(pkgName string, symbols map[string]bool) (string, error) {
 		}
 	}
 	if len(pkgs) == 0 {
-		return "", nil
+		return "", false, nil
 	}
 
 	// If there are multiple candidate packages, the shortest one wins.
@@ -299,11 +367,26 @@ func findImportGoPath(pkgName string, symbols map[string]bool) (string, error) {
 			shortest = importPath
 		}
 	}
-	return shortest, nil
+	return shortest, false, nil
 }
 
 type visitFn func(node ast.Node) ast.Visitor
 
 func (fn visitFn) Visit(node ast.Node) ast.Visitor {
 	return fn(node)
+}
+
+func findImportStdlib(shortPkg string, symbols map[string]bool) (importPath string, rename, ok bool) {
+	for symbol := range symbols {
+		path := stdlib[shortPkg+"."+symbol]
+		if path == "" {
+			return "", false, false
+		}
+		if importPath != "" && importPath != path {
+			// Ambiguous. Symbols pointed to different things.
+			return "", false, false
+		}
+		importPath = path
+	}
+	return importPath, false, importPath != ""
 }

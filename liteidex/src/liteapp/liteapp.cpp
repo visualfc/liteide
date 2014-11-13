@@ -40,7 +40,7 @@
 #ifdef Q_OS_MAC
 #include "macsupport.h"
 #endif
-
+#include "splitwindowstyle.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -64,7 +64,7 @@
 #endif
 //lite_memory_check_end
 
-#define LITEIDE_VERSION "X24.2"
+#define LITEIDE_VERSION "X24.3"
 
 QString LiteApp::getRootPath()
 {
@@ -133,6 +133,9 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
+    SplitWindowStyle *style = new SplitWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    m_mainwindow->setWindowStyle(style);
+
     m_toolWindowManager = new ToolWindowManager;
     m_htmlWidgetManager = new HtmlWidgetManager;
     m_actionManager = new ActionManager;

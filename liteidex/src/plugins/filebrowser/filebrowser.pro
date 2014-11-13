@@ -2,7 +2,9 @@ TARGET = filebrowser
 TEMPLATE = lib
 
 include(../../liteideplugin.pri)
-include (../../utils/fileutil/fileutil.pri)
+include(../../utils/fileutil/fileutil.pri)
+include(../../utils/filesystem/filesystem.pri)
+include(../../utils/symboltreeview/symboltreeview.pri)
 include(../../api/litebuildapi/litebuildapi.pri)
 include(../../api/golangdocapi/golangdocapi.pri)
 

@@ -249,10 +249,10 @@
           <item>
            <widget class="QCheckBox" name="autoBraces5CheckBox">
             <property name="toolTip">
-             <string notr="true"/>
+             <string/>
             </property>
             <property name="text">
-             <string>``</string>
+             <string notr="true">``</string>
             </property>
            </widget>
           </item>

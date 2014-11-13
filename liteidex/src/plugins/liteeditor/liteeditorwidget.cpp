@@ -167,10 +167,6 @@ void LiteEditorWidget::contextMenuEvent(QContextMenuEvent *e)
 
 void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 {
-    if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
-        return;
-    }
-
     if (!m_completer) {
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
@@ -201,22 +197,22 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
+
     LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 
     //always break if ctrl is pressed and there's a key
-    if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty())) {
-        return;
-    }
-
+//    if (((e->modifiers() & Qt::ControlModifier) && !e->text().isEmpty())) {
+//        return;
+//    }
     if (e->modifiers() & Qt::ControlModifier) {
         if (!e->text().isEmpty()) {
             m_completer->popup()->hide();
         }
         return;
     }
-    
+
     if (e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) {
         return;
     }

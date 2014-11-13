@@ -112,6 +112,7 @@ void FileSearchManager::addFileSearch(LiteApi::IFileSearch *search)
     connect(search,SIGNAL(findStarted()),this,SLOT(findStarted()));
     connect(search,SIGNAL(findFinished(bool)),this,SLOT(findFinished(bool)));
     connect(search,SIGNAL(findResult(LiteApi::FileSearchResult)),this,SLOT(findResult(LiteApi::FileSearchResult)));
+    connect(search,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
 }
 
 LiteApi::IFileSearch *FileSearchManager::findFileSearch(const QString &mime)
@@ -237,4 +238,10 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
         ReplaceDocument doc(m_liteApp);
         doc.replace(it.key(),text,it.value());
     }
+}
+
+void FileSearchManager::searchTextChanged(const QString &text)
+{
+    m_searchResultWidget->setInfo(m_currentSearch->displayName()+":",QString(),text);
+    m_searchResultWidget->setTextToReplace(text);
 }

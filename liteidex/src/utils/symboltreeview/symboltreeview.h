@@ -40,16 +40,12 @@ class SymbolTreeView : public QTreeView
 public:
     SymbolTreeView(QWidget *parent = 0);
     QModelIndex topViewIndex();
-    const QSet<QModelIndex> & expandIndexs() const;
-    QSet<QModelIndex> & expandIndexs();
+    QList<QModelIndex> expandIndexs() const;
     virtual void reset();
     void saveState(SymbolTreeState *state);
     void loadState(QAbstractItemModel *model,SymbolTreeState *state);
 signals:
     void currentIndexChanged(const QModelIndex &current, const QModelIndex &previous);
-protected slots:
-    void expandedTree(const QModelIndex &index);
-    void collapsedTree(const QModelIndex &index);
 protected:
     void focusInEvent(QFocusEvent *event);
     void focusOutEvent(QFocusEvent *event);
@@ -57,8 +53,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 #endif
     void currentChanged(const QModelIndex &current, const QModelIndex &previous);
-protected:
-    QSet<QModelIndex>      m_expandIndexs;
+    void getTreeExpands(const QModelIndex &parent, QList<QModelIndex> &list) const;
 };
 
 #endif //SYMBOLTREEVIEW_H
