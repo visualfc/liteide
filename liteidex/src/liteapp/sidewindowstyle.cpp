@@ -28,17 +28,17 @@ void SideWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
 
 bool SideWindowStyle::restoreState(const QByteArray &state, int version)
 {
-
+    return true;
 }
 
 bool SideWindowStyle::loadInitToolState(const QByteArray &state, int version)
 {
-
+    return true;
 }
 
 QByteArray SideWindowStyle::saveToolState(int version) const
 {
-
+    return QByteArray();
 }
 
 void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea area, QAction *action, bool split)
@@ -48,7 +48,7 @@ void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea area, QAction *action, b
 
 QAction *SideWindowStyle::findToolWindow(QWidget *wiget)
 {
-
+    return 0;
 }
 
 void SideWindowStyle::removeToolWindow(QAction *action)
@@ -58,5 +58,5 @@ void SideWindowStyle::removeToolWindow(QAction *action)
 
 QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction *> widgetActions)
 {
-
+    return 0;
 }
