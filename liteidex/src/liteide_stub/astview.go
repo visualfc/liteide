@@ -7,7 +7,6 @@ package main
 import (
 	"fmt"
 	"go/ast"
-	"go/doc"
 	"go/parser"
 	"go/token"
 	"io"
@@ -74,7 +73,7 @@ const (
 
 type PackageView struct {
 	fset *token.FileSet
-	pdoc *doc.Package
+	pdoc *PackageDoc
 	pkg  *ast.Package
 	expr bool
 }
@@ -115,7 +114,7 @@ func NewFilePackage(filename string) (*PackageView, error) {
 		return nil, err
 	}
 	p.pkg = pkg
-	p.pdoc = doc.New(pkg, pkg.Name, doc.AllDecls)
+	p.pdoc = NewPackageDoc(pkg, pkg.Name, true)
 	return p, nil
 }
 
@@ -123,7 +122,7 @@ func NewPackageView(pkg *ast.Package, fset *token.FileSet, expr bool) (*PackageV
 	p := new(PackageView)
 	p.fset = fset
 	p.pkg = pkg
-	p.pdoc = doc.New(pkg, pkg.Name, doc.AllDecls)
+	p.pdoc = NewPackageDoc(pkg, pkg.Name, true)
 	p.expr = expr
 	return p, nil
 }
@@ -190,11 +189,11 @@ func NewFilePackageSource(filename string, f *os.File, expr bool) (*PackageView,
 		return nil, err
 	}
 
-	p.pdoc = doc.New(pkg, pkg.Name, doc.AllDecls)
+	p.pdoc = NewPackageDoc(pkg, pkg.Name, true)
 	return p, nil
 }
 
-func (p *PackageView) printFuncsHelper(w io.Writer, funcs []*doc.Func, level int, tag string, tag_folder string) {
+func (p *PackageView) printFuncsHelper(w io.Writer, funcs []*FuncDoc, level int, tag string, tag_folder string) {
 	for _, f := range funcs {
 		pos := p.fset.Position(f.Decl.Pos())
 		if p.expr {
@@ -205,7 +204,7 @@ func (p *PackageView) printFuncsHelper(w io.Writer, funcs []*doc.Func, level int
 	}
 }
 
-func (p *PackageView) PrintVars(w io.Writer, vars []*doc.Value, level int, tag string, tag_folder string) {
+func (p *PackageView) PrintVars(w io.Writer, vars []*ValueDoc, level int, tag string, tag_folder string) {
 	if len(tag_folder) > 0 && len(vars) > 0 {
 		if tag_folder == tag_value_folder {
 			fmt.Fprintf(w, "%d,%s,Variables\n", level, tag_folder)
@@ -232,7 +231,7 @@ func (p *PackageView) PrintVars(w io.Writer, vars []*doc.Value, level int, tag s
 		}
 	}
 }
-func (p *PackageView) PrintTypes(w io.Writer, types []*doc.Type, level int) {
+func (p *PackageView) PrintTypes(w io.Writer, types []*TypeDoc, level int) {
 	for _, d := range types {
 		if d.Decl == nil {
 			continue
@@ -245,7 +244,7 @@ func (p *PackageView) PrintTypes(w io.Writer, types []*doc.Type, level int) {
 			tag = tag_struct
 		}
 		pos := p.fset.Position(d.Decl.Pos())
-		fmt.Fprintf(w, "%d,%s,%s,%s\n", level, tag, d.Name, p.posText(pos))
+		fmt.Fprintf(w, "%d,%s,%s,%s\n", level, tag, d.Type.Name, p.posText(pos))
 		p.PrintTypeFields(w, d.Decl, level+1)
 		p.printFuncsHelper(w, d.Funcs, level+1, tag_type_factor, "")
 		p.printFuncsHelper(w, d.Methods, level+1, tag_type_method, "")
@@ -288,7 +287,7 @@ func (p *PackageView) PrintTypeFields(w io.Writer, decl *ast.GenDecl, level int)
 }
 
 func (p *PackageView) PrintHeader(w io.Writer, level int) {
-	fmt.Fprintf(w, "%d,%s,%s\n", level, tag_package, p.pdoc.Name)
+	fmt.Fprintf(w, "%d,%s,%s\n", level, tag_package, p.pdoc.PackageName)
 }
 
 func (p *PackageView) PrintImports(w io.Writer, level int, tag, tag_folder string) {
@@ -318,7 +317,7 @@ func (p *PackageView) PrintFuncs(w io.Writer, level int, tag_folder string) {
 	}
 	if !hasFolder {
 		for _, d := range p.pdoc.Types {
-			if len(d.Funcs) > 0 {
+			if len(d.Methods) > 0 {
 				hasFolder = true
 				break
 			}
