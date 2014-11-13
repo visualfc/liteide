@@ -50,6 +50,7 @@ protected slots:
     void cdUp();
     void openFolderInNewWindow();
     void addToFolders();
+    void executeFile();
 protected:
     void addFolderToRoot(const QString &path);
 protected:
@@ -71,6 +72,7 @@ protected:
     QAction *m_openExplorerAct;
     QAction *m_openFolderInNewWindowAct;
     QAction *m_addToFoldersAct;
+    QAction *m_executeFileAct;
 };
 
 #endif // FILEBROWSER_H

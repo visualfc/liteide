@@ -123,6 +123,9 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     }
     connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
 
+    m_executeFileAct = new QAction(tr("Execute File"),this);
+    connect(m_executeFileAct,SIGNAL(triggered()),this,SLOT(executeFile()));
+
 //    m_filterCombo = new QComboBox;
 //    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 //    m_filterCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
@@ -237,9 +240,19 @@ void FileBrowser::syncFileModel(bool b)
     }
 }
 
-void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &/*fileInfo*/)
+void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
 {
-    if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+    if (flag == LiteApi::FILESYSTEM_FILES) {
+        QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
+        if (!cmd.isEmpty()) {
+            QAction *act = 0;
+            if (!menu->actions().isEmpty()) {
+                act = menu->actions().at(0);
+            }
+            menu->insertAction(act,m_executeFileAct);
+            menu->insertSeparator(act);
+        }
+    } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
         menu->addSeparator();
         if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
             menu->addAction(m_cdupAct);
@@ -281,6 +294,18 @@ void FileBrowser::addToFolders()
 {
     QDir dir = m_fileWidget->contextDir();
     m_liteApp->fileManager()->addFolderList(dir.path());
+}
+
+void FileBrowser::executeFile()
+{
+    LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
+    if (build) {
+        QFileInfo info = m_fileWidget->contextFileInfo();
+        QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
+        if (!cmd.isEmpty()) {
+            build->executeCommand(cmd,QString(),info.path(),true,true,false);
+        }
+    }
 }
 
 void FileBrowser::addFolderToRoot(const QString &path)
