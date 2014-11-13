@@ -3,6 +3,24 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2014.11.13 Ver x24.3
+* liteide_stub
+	* merge and optimization code.google.com/p/goimports 
+	* fix astview for decl funcs
+	* fix import line find uses	
+* LiteApp
+	* update german translation, thanks Harald Leinders
+	* fix PATHEXT no default on windows
+	* fix treeview remove crash bug
+	* fix open terminal 
+* GolangEdit
+	* fix import find usages
+	* fix golang func decl syntax highlighter
+* GolangAst
+	* fix astview view missing funcs	
+* GolangCode
+	* fix goimports incorrectly removing certain no incorrectly removing no convention import paths
+
 ### 2014.11.04 Ver x24.2
 * GolangCode
 	* fix import style
