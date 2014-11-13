@@ -433,24 +433,37 @@ func (w *PkgWalker) LookupImport(pkg *types.Package, pkgInfo *types.Info, cursor
 	if err != nil {
 		return
 	}
+
+	if typeFindDef {
+		fmt.Println(w.fset.Position(is.Pos()))
+	}
+
 	fbase := fpath
 	pos := strings.LastIndexAny(fpath, "./-\\")
 	if pos != -1 {
 		fbase = fpath[pos+1:]
 	}
-	fid := fpath + "." + fbase
-	//kind := ObjPkgName
-	//fmt.Println(kind, true)
 
-	if typeFindDef {
-		fmt.Println(w.fset.Position(is.Pos()))
+	var fname string
+	if is.Name != nil {
+		fname = is.Name.Name
+	} else {
+		fname = fbase
 	}
+
 	if typeFindInfo {
-		fmt.Println("package", fpath)
+		if fname == fpath {
+			fmt.Printf("package %s", fname)
+		} else {
+			fmt.Printf("package %s (\"%s\")\n", fname, fpath)
+		}
 	}
+
 	if !typeFindUse {
 		return
 	}
+
+	fid := pkg.Path() + "." + fname
 	var usages []int
 	for id, obj := range pkgInfo.Uses {
 		if obj != nil && obj.Id() == fid { //!= nil && cursorObj.Pos() == obj.Pos() {
@@ -703,6 +716,8 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 			fmt.Println(typeName, simpleType(cursorObj.String()))
 		} else if kind == ObjBuiltin {
 			fmt.Println(builtinInfo(cursorObj.Name()))
+		} else if kind == ObjPkgName {
+			fmt.Println(cursorObj.String())
 		} else if cursorIsInterfaceMethod {
 			fmt.Println(strings.Replace(simpleType(cursorObj.String()), "(interface)", cursorPkg.Name()+"."+cursorInterfaceTypeName, 1))
 		} else {
