@@ -382,12 +382,16 @@ void PackageBrowser::resetTree(const QByteArray &data)
     }
     QByteArray jsonData;
     foreach(QByteArray line, data.split('\n')) {
-        //bool bRoot = (data.path == LiteApi::getGoroot(m_liteApp));
+        line = line.trimmed();
         jsonData.append(line);
         if (line == "}") {
             QJson::Parser parser;
             bool ok = false;
             QVariant json = parser.parse(jsonData, &ok).toMap();
+            jsonData.clear();
+            if (!ok) {
+                continue;
+            }
             QVariantMap jsonMap = json.toMap();
             QString root = QDir::toNativeSeparators(jsonMap.value("Root").toString());
             if (root.isEmpty()) {
@@ -462,7 +466,6 @@ void PackageBrowser::resetTree(const QByteArray &data)
                 }
                 parent->appendRow(item);
             }
-            jsonData.clear();
         }
     }
     //load state

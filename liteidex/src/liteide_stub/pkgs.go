@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"sort"
 	"strings"
 	"sync"
 )
@@ -26,11 +27,13 @@ var (
 	pkgsList bool
 	pkgsJson bool
 	pkgsFind string
+	pkgsStd  bool
 )
 
 func init() {
 	cmdPkgs.Flag.BoolVar(&pkgsList, "list", false, "list all package")
 	cmdPkgs.Flag.BoolVar(&pkgsJson, "json", false, "json format")
+	cmdPkgs.Flag.BoolVar(&pkgsStd, "std", false, "std library")
 	cmdPkgs.Flag.StringVar(&pkgsFind, "find", "", "find package by name")
 }
 
@@ -40,36 +43,42 @@ func runPkgs(cmd *Command, args []string) {
 		cmd.Usage()
 	}
 	//pkgIndexOnce.Do(loadPkgsList)
-	loadPkgsIndex()
+	var pp PathPkgsIndex
+	pp.LoadIndex()
+	pp.Sort()
 	if pkgsList {
-		for _, pkg := range pkgsIndex.pkgs {
-			if pkgsJson {
-				var p GoPackage
-				p.copyBuild(pkg)
-				b, err := json.MarshalIndent(p, "", "\t")
-				if err == nil {
-					os.Stdout.Write(b)
-					os.Stdout.Write([]byte{'\n'})
-				}
-			} else {
-				fmt.Println(pkg.ImportPath)
-			}
-		}
-	} else if pkgsFind != "" {
-		for _, pkg := range pkgsIndex.pkgs {
-			if pkg.Name == pkgsFind {
+		for _, pi := range pp.indexs {
+			for _, pkg := range pi.pkgs {
 				if pkgsJson {
 					var p GoPackage
 					p.copyBuild(pkg)
-					b, err := json.MarshalIndent(p, "", "\t")
+					b, err := json.MarshalIndent(&p, "", "\t")
 					if err == nil {
 						os.Stdout.Write(b)
 						os.Stdout.Write([]byte{'\n'})
 					}
 				} else {
-					fmt.Println(pkg.Name)
+					fmt.Println(pkg.ImportPath)
 				}
-				break
+			}
+		}
+	} else if pkgsFind != "" {
+		for _, pi := range pp.indexs {
+			for _, pkg := range pi.pkgs {
+				if pkg.Name == pkgsFind {
+					if pkgsJson {
+						var p GoPackage
+						p.copyBuild(pkg)
+						b, err := json.MarshalIndent(p, "", "\t")
+						if err == nil {
+							os.Stdout.Write(b)
+							os.Stdout.Write([]byte{'\n'})
+						}
+					} else {
+						fmt.Println(pkg.Name)
+					}
+					break
+				}
 			}
 		}
 	}
@@ -186,19 +195,35 @@ func (p *GoPackage) copyBuild(pp *build.Package) {
 	p.XTestImports = pp.XTestImports
 }
 
-var pkgsIndex struct {
-	sync.Mutex
-	pkgs []*build.Package
+type PathPkgsIndex struct {
+	indexs []*PkgsIndex
 }
 
-// pkgsgate protects the OS & filesystem from too much concurrency.
-// Too much disk I/O -> too many threads -> swapping and bad scheduling.
-// gate is a semaphore for limiting concurrency.
-var pkgsGate = make(gate, 8)
-
-func loadPkgsIndex() {
+func (p *PathPkgsIndex) LoadIndex() {
 	var wg sync.WaitGroup
-	for _, path := range build.Default.SrcDirs() {
+	var context = build.Default
+	if pkgsStd {
+		context.GOPATH = ""
+	}
+	var srcDirs []string
+	goroot := context.GOROOT
+	gopath := context.GOPATH
+	context.GOPATH = ""
+	for _, v := range context.SrcDirs() {
+		if strings.HasSuffix(v, "pkg") {
+			srcDirs = append(srcDirs, v[:len(v)-3]+"cmd")
+		}
+		srcDirs = append(srcDirs, v)
+	}
+	context.GOPATH = gopath
+	context.GOROOT = ""
+	for _, v := range context.SrcDirs() {
+		srcDirs = append(srcDirs, v)
+	}
+	context.GOROOT = goroot
+	for _, path := range srcDirs {
+		pi := &PkgsIndex{}
+		p.indexs = append(p.indexs, pi)
 		pkgsGate.enter()
 		f, err := os.Open(path)
 		if err != nil {
@@ -218,7 +243,7 @@ func loadPkgsIndex() {
 				wg.Add(1)
 				go func(path, name string) {
 					defer wg.Done()
-					loadPkgsPath(&wg, path, name)
+					pi.loadPkgsPath(&wg, path, name)
 				}(path, child.Name())
 			}
 		}
@@ -226,7 +251,46 @@ func loadPkgsIndex() {
 	wg.Wait()
 }
 
-func loadPkgsPath(wg *sync.WaitGroup, root, pkgrelpath string) {
+func (p *PathPkgsIndex) Sort() {
+	for _, v := range p.indexs {
+		v.sort()
+	}
+}
+
+type PkgsIndex struct {
+	sync.Mutex
+	pkgs []*build.Package
+}
+
+func (p *PkgsIndex) sort() {
+	sort.Sort(PkgSlice(p.pkgs))
+}
+
+type PkgSlice []*build.Package
+
+func (p PkgSlice) Len() int {
+	return len([]*build.Package(p))
+}
+
+func (p PkgSlice) Less(i, j int) bool {
+	if p[i].IsCommand() && !p[j].IsCommand() {
+		return true
+	} else if !p[i].IsCommand() && p[j].IsCommand() {
+		return false
+	}
+	return p[i].ImportPath < p[j].ImportPath
+}
+
+func (p PkgSlice) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
+
+// pkgsgate protects the OS & filesystem from too much concurrency.
+// Too much disk I/O -> too many threads -> swapping and bad scheduling.
+// gate is a semaphore for limiting concurrency.
+var pkgsGate = make(gate, 8)
+
+func (p *PkgsIndex) loadPkgsPath(wg *sync.WaitGroup, root, pkgrelpath string) {
 	importpath := filepath.ToSlash(pkgrelpath)
 	dir := filepath.Join(root, importpath)
 
@@ -258,19 +322,27 @@ func loadPkgsPath(wg *sync.WaitGroup, root, pkgrelpath string) {
 			hasGo = true
 		}
 		if child.IsDir() {
+			if strings.HasPrefix(name, ".") || strings.HasPrefix(name, "_") || name == "testdata" {
+				continue
+			}
 			wg.Add(1)
 			go func(root, name string) {
 				defer wg.Done()
-				loadPkgsPath(wg, root, name)
+				p.loadPkgsPath(wg, root, name)
 			}(root, filepath.Join(importpath, name))
 		}
 	}
 	if hasGo {
-		buildPkg, err := build.Import(importpath, "", 0)
+		buildPkg, err := build.ImportDir(dir, 0)
 		if err == nil {
-			pkgsIndex.Lock()
-			pkgsIndex.pkgs = append(pkgsIndex.pkgs, buildPkg)
-			pkgsIndex.Unlock()
+			if buildPkg.ImportPath == "." {
+				buildPkg.ImportPath = pkgrelpath
+				buildPkg.Root = root
+				buildPkg.Goroot = true
+			}
+			p.Lock()
+			p.pkgs = append(p.pkgs, buildPkg)
+			p.Unlock()
 		}
 	}
 }
