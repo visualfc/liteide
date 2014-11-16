@@ -382,7 +382,6 @@ void PackageBrowser::resetTree(const QByteArray &data)
     }
     QByteArray jsonData;
     foreach(QByteArray line, data.split('\n')) {
-        line = line.trimmed();
         jsonData.append(line);
         if (line == "}") {
             QJson::Parser parser;
@@ -390,6 +389,7 @@ void PackageBrowser::resetTree(const QByteArray &data)
             QVariant json = parser.parse(jsonData, &ok).toMap();
             jsonData.clear();
             if (!ok) {
+                qDebug() << jsonData;
                 continue;
             }
             QVariantMap jsonMap = json.toMap();
