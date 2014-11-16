@@ -1,8 +1,8 @@
 package main
 
 import (
-	"code.google.com/p/go.tools/present"
 	"fmt"
+	"golang.org/x/tools/present"
 	"os"
 	"path/filepath"
 )
