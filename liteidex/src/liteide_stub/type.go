@@ -22,8 +22,8 @@ import (
 	"strings"
 	"time"
 
-	"code.google.com/p/go.tools/go/gcimporter"
-	"code.google.com/p/go.tools/go/types"
+	"golang.org/x/tools/go/gcimporter"
+	"golang.org/x/tools/go/types"
 )
 
 /*

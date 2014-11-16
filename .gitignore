@@ -27,6 +27,6 @@ Makefile
 *.exe
 liteidex/bin
 liteidex/liteide
-liteidex/src/code.google.com
 liteidex/src/github.com
+liteidex/src/golang.org/
 

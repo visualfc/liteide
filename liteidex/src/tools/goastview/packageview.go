@@ -13,8 +13,8 @@ import (
 	"os"
 	//"tools/goastview/doc"
 	"go/doc"
+	"golang.org/x/tools/go/types"
 	"strings"
-	"code.google.com/p/go.tools/go/types"
 )
 
 const (
