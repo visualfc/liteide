@@ -205,6 +205,7 @@ void PackageBrowser::reloadAll()
     m_goTool->setProcessEnvironment(env);
     m_goTool->setWorkDir(root);
     m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
+    //m_goTool->start_list_json();
 }
 
 void PackageBrowser::setupGopath()

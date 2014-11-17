@@ -209,12 +209,21 @@ func (p *PathPkgsIndex) LoadIndex() {
 	goroot := context.GOROOT
 	gopath := context.GOPATH
 	context.GOPATH = ""
-	for _, v := range context.SrcDirs() {
-		if strings.HasSuffix(v, "pkg") {
-			srcDirs = append(srcDirs, v[:len(v)-3]+"cmd")
+
+	//go1.4 go/src/
+	//go1.3 go/src/pkg; go/src/cmd
+	_, err := os.Stat(filepath.Join(goroot, "src/pkg/runtime"))
+	if err == nil {
+		for _, v := range context.SrcDirs() {
+			if strings.HasSuffix(v, "pkg") {
+				srcDirs = append(srcDirs, v[:len(v)-3]+"cmd")
+			}
+			srcDirs = append(srcDirs, v)
 		}
-		srcDirs = append(srcDirs, v)
+	} else {
+		srcDirs = append(srcDirs, filepath.Join(goroot, "src"))
 	}
+
 	context.GOPATH = gopath
 	context.GOROOT = ""
 	for _, v := range context.SrcDirs() {
