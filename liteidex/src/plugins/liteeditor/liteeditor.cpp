@@ -359,9 +359,11 @@ void LiteEditor::createActions()
     connect(m_cleanWhitespaceAct,SIGNAL(triggered()),m_editorWidget,SLOT(cleanWhitespace()));
     connect(m_wordWrapAct,SIGNAL(triggered(bool)),m_editorWidget,SLOT(setWordWrapOverride(bool)));
 
+#ifdef Q_OS_WIN
     QClipboard *clipboard = QApplication::clipboard();
     connect(clipboard,SIGNAL(dataChanged()),this,SLOT(clipbordDataChanged()));
     clipbordDataChanged();
+#endif
 }
 
 void LiteEditor::findCodecs()
