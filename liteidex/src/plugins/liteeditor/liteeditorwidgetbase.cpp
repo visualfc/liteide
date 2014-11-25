@@ -1820,7 +1820,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             QTextCursor cursor = textCursor();
             if (!cursor.atBlockEnd()) {
                 QString text = cursor.block().text();
-                if (text.at(cursor.positionInBlock()).isLetter()) {
+                if (text.at(cursor.positionInBlock()).isLetterOrNumber()) {
                      QPlainTextEdit::keyPressEvent(e);
                      return;
                 }
