@@ -1,4 +1,4 @@
-#include "foldersview.h"
+#include "basefoldeview.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
 #include "golangdocapi/golangdocapi.h"
@@ -23,6 +23,7 @@
 #include <QFileDialog>
 #include <QHeaderView>
 #include <QDebug>
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 //lite_memory_check_begin
@@ -36,39 +37,10 @@
 //lite_memory_check_end
 #endif
 
-FoldersView::FoldersView(LiteApi::IApplication *app, QWidget *parent)
-    : QWidget(parent), m_liteApp(app)
+
+BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
+    QTreeView(parent), m_liteApp(app)
 {
-    m_bMultiDirMode = false;
-    m_tree = new SymbolTreeView;
-    m_tree->setHeaderHidden(true);
-
-#if QT_VERSION >= 0x050000
-    m_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-    m_tree->header()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
-    m_tree->header()->setStretchLastSection(false);
-
-    m_model = new FoldersModel(this);
-
-    QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
-                            | QDir::Readable| QDir::Writable
-                            | QDir::Executable/* | QDir::Hidden*/
-                            | QDir::NoDotAndDotDot;
-#ifdef Q_OS_WIN // Symlinked directories can cause file watcher warnings on Win32.
-    filters |= QDir::NoSymLinks;
-#endif
-    m_model->setFilter(filters);
-
-    m_tree->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_tree->setModel(m_model);
-
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
-    layout->addWidget(m_tree);
-    this->setLayout(layout);
-
     m_openEditorAct = new QAction(tr("Open File"),this);
     m_newFileAct = new QAction(tr("New File..."),this);
     m_newFileWizardAct = new QAction(tr("New File Wizard..."),this);
@@ -100,35 +72,12 @@ FoldersView::FoldersView(LiteApi::IApplication *app, QWidget *parent)
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
-    connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
-    connect(m_closeFolerAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
-    connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
-
-    connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeViewContextMenuRequested(QPoint)));
-    connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(openPathIndex(QModelIndex)));
-    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+//    connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
+//    connect(m_closeFolerAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
+//    connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
 }
 
-void FoldersView::showHideFiles(bool b)
-{
-    if (isShowHideFiles() == b) {
-        return;
-    }
-    QDir::Filters filters = m_model->filter();
-    if (b) {
-        filters |= QDir::Hidden;
-    } else {
-        filters ^= QDir::Hidden;
-    }
-    m_model->setFilter(filters);
-}
-
-bool FoldersView::isShowHideFiles() const
-{
-    return m_model->filter() & QDir::Hidden;
-}
-
-QDir FoldersView::contextDir() const
+QDir BaseFolderView::contextDir() const
 {
     if (m_contextInfo.isDir()) {
         return m_contextInfo.filePath();
@@ -136,19 +85,19 @@ QDir FoldersView::contextDir() const
     return m_contextInfo.dir();
 }
 
-QFileInfo FoldersView::contextFileInfo() const
+QFileInfo BaseFolderView::contextFileInfo() const
 {
     return m_contextInfo;
 }
 
-void FoldersView::openEditor()
+void BaseFolderView::openEditor()
 {
     if (m_contextInfo.isFile()) {
         m_liteApp->fileManager()->openEditor(m_contextInfo.filePath());
     }
 }
 
-void FoldersView::newFile()
+void BaseFolderView::newFile()
 {
     QDir dir = contextDir();
 
@@ -178,11 +127,11 @@ void FoldersView::newFile()
     }
 }
 
-void FoldersView::newFileWizard()
+void BaseFolderView::newFileWizard()
 {
     QString filePath;
     QString projPath;
-    QFileInfo info = contextFileInfo();
+    QFileInfo info = m_contextInfo;
     QDir dir = contextDir();
     if (!info.isFile()) {
         filePath = dir.absolutePath();
@@ -195,9 +144,9 @@ void FoldersView::newFileWizard()
     m_liteApp->fileManager()->execFileWizard(projPath,filePath);
 }
 
-void FoldersView::renameFile()
+void BaseFolderView::renameFile()
 {
-    QFileInfo info = contextFileInfo();
+    QFileInfo info = m_contextInfo;
     if (!info.isFile()) {
         return;
     }
@@ -220,9 +169,9 @@ void FoldersView::renameFile()
     }
 }
 
-void FoldersView::removeFile()
+void BaseFolderView::removeFile()
 {
-    QFileInfo info = contextFileInfo();
+    QFileInfo info = m_contextInfo;
     if (!info.isFile()) {
         return;
     }
@@ -238,7 +187,7 @@ void FoldersView::removeFile()
     }
 }
 
-void FoldersView::newFolder()
+void BaseFolderView::newFolder()
 {
     QDir dir = contextDir();
 
@@ -260,9 +209,9 @@ void FoldersView::newFolder()
     }
 }
 
-void FoldersView::renameFolder()
+void BaseFolderView::renameFolder()
 {
-    QFileInfo info = contextFileInfo();
+    QFileInfo info = m_contextInfo;
     if (!info.isDir()) {
         return;
     }
@@ -289,9 +238,9 @@ void FoldersView::renameFolder()
     }
 }
 
-void FoldersView::removeFolder()
+void BaseFolderView::removeFolder()
 {
-    QFileInfo info = contextFileInfo();
+    QFileInfo info = m_contextInfo;
     if (!info.isDir()) {
         return;
     }
@@ -308,13 +257,13 @@ void FoldersView::removeFolder()
     }
 }
 
-void FoldersView::openExplorer()
+void BaseFolderView::openExplorer()
 {
     QDir dir = contextDir();
     QDesktopServices::openUrl(QUrl::fromLocalFile(dir.path()));
 }
 
-void FoldersView::viewGodoc()
+void BaseFolderView::viewGodoc()
 {
     QDir dir = contextDir();
     LiteApi::IGolangDoc *doc = LiteApi::findExtensionObject<LiteApi::IGolangDoc*>(m_liteApp,"LiteApi.IGolangDoc");
@@ -327,38 +276,19 @@ void FoldersView::viewGodoc()
     }
 }
 
-void FoldersView::addFolder()
+void BaseFolderView::addFolder()
 {
-#if QT_VERSION >= 0x050000
-        static QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#else
-        static QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#endif
-    QString folder = QFileDialog::getExistingDirectory(this,tr("Add Folder"),home);
-    if (folder.isEmpty()) {
-        return;
-    }
-    m_model->addRootPath(folder);
-    QDir dir(folder);
-    if (dir.cdUp()) {
-        home = dir.path();
-    }
 }
 
-void FoldersView::closeFolder()
+void BaseFolderView::closeFolder()
 {
-//    if (m_contextInfo.exists() && !m_contextInfo.isDir()) {
-//        return;
-//    }
-    this->m_model->removeRootPath(m_contextInfo.filePath());
 }
 
-void FoldersView::closeAllFolders()
+void BaseFolderView::closeAllFolders()
 {
-    this->m_model->clear();
 }
 
-void FoldersView::openShell()
+void BaseFolderView::openShell()
 {
     QDir dir = contextDir();
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
@@ -388,7 +318,6 @@ void FoldersView::openShell()
     }
     QString cmd = env.value("LITEIDE_TERM");
     QStringList args = env.value("LITEIDE_TERMARGS").split(" ",QString::SkipEmptyParts);
-    qDebug() << cmd;
     QString path = dir.path();
 #ifdef Q_OS_MAC
     args.append(path);
@@ -399,196 +328,4 @@ void FoldersView::openShell()
     }
 #endif
     QProcess::startDetached(cmd,args,path);
-}
-
-QModelIndex FoldersView::rootIndex() const
-{
-    if (m_model->rowCount() == 0) {
-        return QModelIndex();
-    }
-    return m_model->index(0,0);
-}
-
-void FoldersView::treeViewContextMenuRequested(const QPoint &pos)
-{
-    QMenu menu(m_tree);
-    LiteApi::FILESYSTEM_CONTEXT_FLAG flag = LiteApi::FILESYSTEM_ROOT;
-    QModelIndex index = m_tree->indexAt(pos);
-    if (index.isValid()) {
-        m_contextInfo = m_model->fileInfo(index);
-        m_contextIndex = index;
-        if (m_model->isRootIndex(index)) {
-            flag = LiteApi::FILESYSTEM_ROOTFOLDER;
-        } else if (m_model->isDir(index)) {
-            flag = LiteApi::FILESYSTEM_FOLDER;
-        } else {
-            flag = LiteApi::FILESYSTEM_FILES;
-        }
-    } else if (!m_bMultiDirMode) {
-        m_contextIndex = this->rootIndex();
-        m_contextInfo = m_model->fileInfo(m_contextIndex);
-        flag = LiteApi::FILESYSTEM_ROOTFOLDER;
-    }
-    bool hasGo = false;
-    if (!m_bMultiDirMode || (flag != LiteApi::FILESYSTEM_ROOT)) {
-        foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
-            if (info.suffix() == "go") {
-                hasGo = true;
-            }
-        }
-    }
-    //root folder
-    if (flag == LiteApi::FILESYSTEM_ROOT) {
-        if (m_bMultiDirMode) {
-            menu.addAction(m_addFolderAct);
-        } else {
-            menu.addAction(m_newFileAct);
-            menu.addAction(m_newFileWizardAct);
-            menu.addAction(m_newFolderAct);
-            menu.addSeparator();
-            if (hasGo) {
-                menu.addAction(m_viewGodocAct);
-                menu.addSeparator();
-            }
-            menu.addAction(m_openShellAct);
-            menu.addAction(m_openExplorerAct);
-        }
-    } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
-        menu.addAction(m_newFileAct);
-        menu.addAction(m_newFileWizardAct);
-        menu.addAction(m_newFolderAct);
-        menu.addAction(m_renameFolderAct);
-        menu.addAction(m_closeFolerAct);
-        menu.addSeparator();
-        if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
-        }
-        menu.addAction(m_openShellAct);
-        menu.addAction(m_openExplorerAct);
-    } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
-        menu.addAction(m_newFileAct);
-        menu.addAction(m_newFileWizardAct);
-        menu.addAction(m_newFolderAct);
-        menu.addAction(m_renameFolderAct);
-        menu.addAction(m_removeFolderAct);
-        menu.addSeparator();
-        if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
-        }
-        menu.addAction(m_openShellAct);
-        menu.addAction(m_openExplorerAct);
-    } else if (flag == LiteApi::FILESYSTEM_FILES) {
-        menu.addAction(m_openEditorAct);
-        menu.addSeparator();
-        menu.addAction(m_newFileAct);
-        menu.addAction(m_newFileWizardAct);
-        menu.addAction(m_renameFileAct);
-        menu.addAction(m_removeFileAct);
-        menu.addSeparator();
-        if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
-        }
-        menu.addAction(m_openShellAct);
-        menu.addAction(m_openExplorerAct);
-
-    }
-    emit aboutToShowContextMenu(&menu,flag,m_contextInfo);
-    menu.exec(m_tree->mapToGlobal(pos));
-}
-
-bool FoldersView::addRootPath(const QString &path)
-{
-    QModelIndex index = m_model->addRootPath(path);
-    if (!index.isValid()) {
-        return false;
-    }
-    m_liteApp->fileManager()->addRecentFile(path,"folder");
-    m_tree->expand(index);
-    return true;
-}
-
-void FoldersView::setRootPathList(const QStringList &pathList)
-{
-    m_model->clear();
-    foreach (QString path, pathList) {
-        m_model->addRootPath(path);
-    }
-    //currentEditorChanged(m_liteApp->editorManager()->currentEditor());
-}
-
-void FoldersView::setRootPath(const QString &path)
-{
-    m_model->clear();
-    m_model->addRootPath(path);
-//    m_model->setRootPath(path);
-//    if (m_bHideRoot) {
-//        m_tree->expand(this->rootIndex());
-//    } else {
-//        m_tree->expandToDepth(0);
-//    }
-}
-
-QString FoldersView::rootPath() const
-{
-    QStringList paths = m_model->rootPathList();
-    if (!paths.isEmpty()) {
-        return paths.first();
-    }
-    return QString();
-}
-
-QStringList FoldersView::rootPathList() const
-{
-    return m_model->rootPathList();
-}
-
-SymbolTreeView *FoldersView::treeView() const
-{
-    return m_tree;
-}
-
-FoldersModel *FoldersView::model() const
-{
-    return m_model;
-}
-
-void FoldersView::openPathIndex(const QModelIndex &index)
-{
-    QFileInfo info = m_model->fileInfo(index);
-    if (!info.isFile()) {
-        return;
-    }
-    QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(info.filePath());
-    if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) {
-        m_liteApp->fileManager()->openEditor(info.filePath());
-    }
-}
-
-void FoldersView::currentEditorChanged(LiteApi::IEditor* /*editor*/)
-{
-    /*
-    if (!m_syncEditor->isChecked()) {
-        return;
-    }
-    if (editor && !editor->filePath().isEmpty()) {
-        QModelIndex index = m_model->findPath(editor->filePath());
-        if (index.isValid()) {
-            m_tree->setCurrentIndex(index);
-            m_tree->scrollTo(index,QAbstractItemView::EnsureVisible);
-            if (m_syncProject->isChecked()) {
-                setStartIndex(index.parent());
-            }
-        }
-    }
-    */
-}
-
-void FoldersView::syncEditor(bool b)
-{
-    if (!b) {
-       // m_syncProject->setChecked(false);
-    }
 }

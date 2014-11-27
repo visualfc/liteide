@@ -1,5 +1,5 @@
-#ifndef FOLDERSMODEL_H
-#define FOLDERSMODEL_H
+#ifndef FOLDERLISTMODEL_H
+#define FOLDERLISTMODEL_H
 
 #include <QAbstractItemModel>
 #include <QIdentityProxyModel>
@@ -10,12 +10,12 @@
 
 class QIdentityProxyModel;
 class QSortFilterProxyModel;
-class FoldersModel;
+class FolderListModel;
 class MyFileSystemModel : public QFileSystemModel
 {
 public:
     explicit MyFileSystemModel(QObject *parent = 0);
-    friend class FoldersModel;
+    friend class FolderListModel;
 };
 
 struct SourceModel
@@ -27,12 +27,12 @@ struct SourceModel
     QModelIndex  rootSourceIndex;
 };
 
-class FoldersModel : public QAbstractItemModel
+class FolderListModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit FoldersModel(QObject *parent = 0);
-    virtual ~FoldersModel();
+    explicit FolderListModel(QObject *parent = 0);
+    virtual ~FolderListModel();
     void clear();
     QModelIndex addRootPath(const QString &path);
     void removeRootPath(const QString &path);
@@ -56,10 +56,15 @@ public:
     void setResolveSymlinks(bool enable);
     bool resolveSymlinks() const;
     bool isRootIndex(const QModelIndex &index) const;
+    void setWatcherRoot(bool b);
+    bool isWatcherRoot() const;
+    QList<QModelIndex> indexForPath(const QString &path) const;
 protected:
     MyFileSystemModel *findSource(const QModelIndex &proxyIndex) const;
     QModelIndex mapFromSource(const QModelIndex& sourceIndex) const;
     QModelIndex mapToSource(const QModelIndex& proxyIndex) const;
+    QItemSelection mapSelectionToSource(const QItemSelection &proxySelection) const;
+    QItemSelection mapSelectionFromSource(const QItemSelection &sourceSelection) const;
     bool isRootSourceIndex(const QModelIndex &sourceIndex) const;
 public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -124,6 +129,7 @@ protected:
     QStringList         m_nameFilters;
     bool                m_resolveSymlinks;
     bool                m_nameFilterDisables;
+    bool                m_bWatcherRoot;
 };
 
-#endif // FOLDERSMODEL_H
+#endif // FOLDERLISTMODEL_H
