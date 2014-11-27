@@ -26,6 +26,7 @@
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
 #include "filesystem/filesystemwidget.h"
+#include "folderview/folderlistview.h"
 #include "liteapp_global.h"
 
 #include <QMenu>
@@ -59,10 +60,10 @@ bool FileManager::initWithApp(IApplication *app)
         return false;
     }
 
-    m_folderWidget = new FileSystemWidget(true,m_liteApp);
+    m_folderListView = new FolderListView(m_liteApp);
 
     bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
-    m_folderWidget->showHideFiles(bShowHiddenFiles);
+    this->showHideFiles(bShowHiddenFiles);
 
     m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
     m_showHideFilesAct->setCheckable(true);
@@ -77,7 +78,7 @@ bool FileManager::initWithApp(IApplication *app)
     m_configMenu->addAction(m_showHideFilesAct);
     actions << m_configMenu->menuAction();
 
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"folders",tr("Folders"),false,actions);
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"folders",tr("Folders"),false,actions);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
@@ -94,7 +95,8 @@ bool FileManager::initWithApp(IApplication *app)
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
     connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
-    connect(m_folderWidget,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
 
@@ -103,7 +105,7 @@ bool FileManager::initWithApp(IApplication *app)
 
 FileManager::FileManager()
     : m_newFileDialog(0),
-      m_folderWidget(0),
+      m_folderListView(0),
       m_checkActivated(false)
 {
 }
@@ -117,8 +119,8 @@ FileManager::~FileManager()
     if (m_newFileDialog) {
         delete m_newFileDialog;
     }
-    if (m_folderWidget) {
-        delete m_folderWidget;
+    if (m_folderListView) {
+        delete m_folderListView;
     }    
     delete m_configMenu;
 }
@@ -203,22 +205,22 @@ QString FileManager::openEditorTypeFilter() const
 
 QStringList FileManager::folderList() const
 {
-    return m_folderWidget->rootPathList();
+    return m_folderListView->rootPathList();
 }
 
 void FileManager::setFolderList(const QStringList &folders)
 {
     QStringList all = folders;
     all.removeDuplicates();
-    m_folderWidget->setRootPathList(all);
-    if (!m_folderWidget->rootPathList().isEmpty()) {
+    m_folderListView->setRootPathList(all);
+    if (!m_folderListView->rootPathList().isEmpty()) {
         m_toolWindowAct->setChecked(true);
     }
 }
 
 void FileManager::addFolderList(const QString &folder)
 {
-    m_folderWidget->addRootPath(folder);
+    m_folderListView->addRootPath(folder);
     m_toolWindowAct->setChecked(true);
     addRecentFile(folder,"folder");
 }
@@ -311,12 +313,12 @@ void FileManager::openFolderNewWindow()
 
 void FileManager::addFolder()
 {
-    m_folderWidget->addFolder();
+    m_folderListView->addFolder();
 }
 
 void FileManager::closeAllFolders()
 {
-    m_folderWidget->closeAllFolders();
+    m_folderListView->closeAllFolders();
 }
 
 void FileManager::openEditors()
@@ -542,15 +544,28 @@ void FileManager::applyOption(QString id)
     }
 }
 
+bool FileManager::isShowHideFiles() const
+{
+    return m_folderListView->model()->filter() & QDir::Hidden;
+}
+
 void FileManager::showHideFiles(bool b)
 {
-    QDir::Filters filters = m_folderWidget->model()->filter();
+    QDir::Filters filters = m_folderListView->model()->filter();
     if (b) {
         filters |= QDir::Hidden;
     } else {
         filters ^= QDir::Hidden;
     }
-    m_folderWidget->model()->setFilter(filters);
+    m_folderListView->model()->setFilter(filters);
+}
+
+void FileManager::doubleClickedFolderView(const QModelIndex &index)
+{
+    QFileInfo info = m_folderListView->model()->fileInfo(index);
+    if (info.isFile()) {
+        this->openEditor(info.filePath());
+    }
 }
 
 void FileManager::updateRecentFileActions(const QString &scheme)

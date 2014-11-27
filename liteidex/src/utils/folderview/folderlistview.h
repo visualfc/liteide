@@ -10,8 +10,10 @@ class FolderListView : public BaseFolderView
 public:
     explicit FolderListView(LiteApi::IApplication *app, QWidget *parent = 0);
     FolderListModel *model() const;
-signals:
-
+public:
+    void addRootPath(const QString &path);
+    void setRootPathList(const QStringList &pathList);
+    QStringList rootPathList() const;
 public slots:
     void customContextMenuRequested(const QPoint &pos);
     virtual void removeFolder();

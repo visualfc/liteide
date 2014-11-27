@@ -13,14 +13,37 @@
 
 FolderListView::FolderListView(LiteApi::IApplication *app, QWidget *parent) :
     BaseFolderView(app,parent)
-{
+{   
     m_model = new FolderListModel(this);
     this->setModel(m_model);
+
+    this->setHeaderHidden(true);
+
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
 }
 
 FolderListModel *FolderListView::model() const
 {
     return m_model;
+}
+
+void FolderListView::addRootPath(const QString &path)
+{
+    m_model->addRootPath(path);
+}
+
+void FolderListView::setRootPathList(const QStringList &pathList)
+{
+    m_model->clear();
+    foreach(QString path, pathList) {
+        m_model->addRootPath(path);
+    }
+}
+
+QStringList FolderListView::rootPathList() const
+{
+    return m_model->rootPathList();
 }
 
 void FolderListView::customContextMenuRequested(const QPoint &pos)
@@ -57,7 +80,6 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
         menu.addAction(m_newFolderAct);
-        menu.addAction(m_renameFolderAct);
         menu.addAction(m_closeFolerAct);
         menu.addSeparator();
         if (hasGo) {
@@ -155,10 +177,7 @@ void FolderListView::addFolder()
 
 void FolderListView::closeFolder()
 {
-//    if (m_contextInfo.exists() && !m_contextInfo.isDir()) {
-//        return;
-//    }
-    m_model->removeRootPath(m_contextInfo.filePath());
+    m_model->removeRoot(this->currentIndex());
 }
 
 void FolderListView::closeAllFolders()

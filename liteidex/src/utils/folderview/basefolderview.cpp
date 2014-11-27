@@ -72,9 +72,9 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
-//    connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
-//    connect(m_closeFolerAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
-//    connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
+    connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
+    connect(m_closeFolerAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
+    connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
 }
 
 QDir BaseFolderView::contextDir() const
