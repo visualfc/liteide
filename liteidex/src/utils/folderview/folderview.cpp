@@ -1,23 +1,11 @@
 #include "folderview.h"
-#include <QFileSystemModel>
+#include "filesystemmodelex.h"
 #include <QMessageBox>
-class MyFileSystemModel : public QFileSystemModel
-{
-public:
-    MyFileSystemModel(QObject *parent) :
-        QFileSystemModel(parent)
-    {
-    }
-    virtual int columnCount(const QModelIndex &parent) const
-    {
-        return 1;
-    }
-};
 
 FolderView::FolderView(LiteApi::IApplication *app, QWidget *parent) :
     BaseFolderView(app,parent)
 {
-    m_model = new MyFileSystemModel(this);
+    m_model = new FileSystemModelEx(this);
     this->setModel(m_model);
     this->setHeaderHidden(true);
 

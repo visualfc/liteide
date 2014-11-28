@@ -22,8 +22,6 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "filebrowser.h"
-#include "createfiledialog.h"
-#include "createdirdialog.h"
 #include "golangdocapi/golangdocapi.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
@@ -60,32 +58,6 @@
 #endif
 //lite_memory_check_end
 #endif
-
-//class QSortFileSystemProxyModel : public QSortFilterProxyModel
-//{
-//public:
-//    QSortFileSystemProxyModel(QObject *parent) :
-//        QSortFilterProxyModel(parent)
-//    {
-//    }
-//    virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const
-//    {
-//        QFileSystemModel *model = static_cast<QFileSystemModel*>(this->sourceModel());
-//        QFileInfo l = model->fileInfo(left);
-//        QFileInfo r = model->fileInfo(right);
-//        if (l.isDir() && r.isFile()) {
-//            return true;
-//        } else if (l.isFile() && r.isDir()) {
-//            return false;
-//        }
-//#ifdef Q_OS_WIN
-//        if (l.filePath().length() <= 3 || r.filePath().length() <= 3) {
-//            return l.filePath().at(0) < r.filePath().at(0);
-//        }
-//#endif
-//        return (l.fileName().compare(r.fileName(),Qt::CaseInsensitive) < 0);
-//    }
-//};
 
 FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),

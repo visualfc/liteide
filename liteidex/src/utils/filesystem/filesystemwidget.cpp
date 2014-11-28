@@ -26,8 +26,7 @@
 #include "litebuildapi/litebuildapi.h"
 #include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
-#include "../../plugins/filebrowser/createfiledialog.h"
-#include "../../plugins/filebrowser/createdirdialog.h"
+#include "../folderview/folderdialog.h"
 
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -277,7 +276,7 @@ void FileSystemWidget::newFile()
 {
     QDir dir = contextDir();
 
-    CreateFileDialog dlg;
+    CreateFileDialog dlg(m_liteApp->mainWindow());
     dlg.setDirectory(dir.path());
     if (dlg.exec() == QDialog::Rejected) {
         return;
@@ -367,13 +366,13 @@ void FileSystemWidget::newFolder()
 {
     QDir dir = contextDir();
 
-    CreateDirDialog dlg;
+    CreateDirDialog dlg(m_liteApp->mainWindow());
     dlg.setDirectory(dir.path());
     if (dlg.exec() == QDialog::Rejected) {
         return;
     }
 
-    QString folderName = dlg.getDirPath();
+    QString folderName = dlg.getDirName();
     if (!folderName.isEmpty()) {
         if (!dir.entryList(QStringList() << folderName,QDir::Dirs).isEmpty()) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Create Folder"),

@@ -2,25 +2,15 @@
 #define FOLDERLISTMODEL_H
 
 #include <QAbstractItemModel>
-#include <QIdentityProxyModel>
-#include <QSortFilterProxyModel>
 #include <QFileSystemModel>
 #include <QModelIndex>
-#include <QFileSystemWatcher>
+#include <QItemSelection>
 
-class QIdentityProxyModel;
-class QSortFilterProxyModel;
-class FolderListModel;
-class MyFileSystemModel : public QFileSystemModel
-{
-public:
-    explicit MyFileSystemModel(QObject *parent = 0);
-    friend class FolderListModel;
-};
+class QFileSystemWatcher;
 
 struct SourceModel
 {
-    MyFileSystemModel* model;
+    QFileSystemModel* model;
     QString      rootPath;
     QString      watchPath;
     QModelIndex  rootIndex;
@@ -60,7 +50,7 @@ public:
     bool isWatcherRoot() const;
     QList<QModelIndex> indexForPath(const QString &path) const;
 protected:
-    MyFileSystemModel *findSource(const QModelIndex &proxyIndex) const;
+    QFileSystemModel *findSource(const QModelIndex &proxyIndex) const;
     QModelIndex mapFromSource(const QModelIndex& sourceIndex) const;
     QModelIndex mapToSource(const QModelIndex& proxyIndex) const;
     QItemSelection mapSelectionToSource(const QItemSelection &proxySelection) const;

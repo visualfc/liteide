@@ -9,10 +9,14 @@ SOURCES += \
     folderview.cpp \
     basefolderview.cpp \
     folderlistview.cpp \
-    folderlistmodel.cpp
+    folderlistmodel.cpp \
+    filesystemmodelex.cpp \
+    folderdialog.cpp
 
 HEADERS += \
     folderview.h \
     basefoldeview.h \
     folderlistview.h \
-    folderlistmodel.h
+    folderlistmodel.h \
+    filesystemmodelex.h \
+    folderdialog.h

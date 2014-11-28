@@ -1,13 +1,7 @@
 #include "folderlistmodel.h"
-#include <QDateTime>
+#include "filesystemmodelex.h"
+#include <QFileSystemWatcher>
 #include <QDebug>
-
-MyFileSystemModel::MyFileSystemModel(QObject *parent)
-    : QFileSystemModel(parent)
-{
-
-}
-
 
 FolderListModel::FolderListModel(QObject *parent) :
     QAbstractItemModel(parent)
@@ -48,7 +42,7 @@ QModelIndex FolderListModel::addRootPath(const QString &path)
     if (!QDir(path).exists()) {
         return QModelIndex();
     }
-    MyFileSystemModel *model = new MyFileSystemModel(this);
+    FileSystemModelEx *model = new FileSystemModelEx(this);
     model->setFilter(m_filters);
     if (!m_nameFilters.isEmpty()) {
         model->setNameFilters(m_nameFilters);
@@ -187,9 +181,9 @@ QStringList FolderListModel::rootPathList() const
     return paths;
 }
 
-MyFileSystemModel *FolderListModel::findSource(const QModelIndex &proxyIndex) const
+QFileSystemModel *FolderListModel::findSource(const QModelIndex &proxyIndex) const
 {
-    return (MyFileSystemModel*)m_indexMap[proxyIndex.internalId()];
+    return (QFileSystemModel*)m_indexMap[proxyIndex.internalId()];
 }
 
 QItemSelection FolderListModel::mapSelectionToSource(const QItemSelection &proxySelection) const
@@ -247,7 +241,7 @@ QModelIndex FolderListModel::mapToSource(const QModelIndex &proxyIndex) const
             break;
         }
     }
-    MyFileSystemModel *model = findSource(proxyIndex);
+    FileSystemModelEx *model = (FileSystemModelEx*)findSource(proxyIndex);
     return model->createIndex(proxyIndex.row(), proxyIndex.column(), proxyIndex.internalPointer());
 }
 
@@ -257,7 +251,7 @@ QString FolderListModel::filePath(const QModelIndex &index) const
         return QString();
     }
     QModelIndex sourceIndex = mapToSource(index);
-    return ((MyFileSystemModel*)sourceIndex.model())->filePath(sourceIndex);
+    return ((FileSystemModelEx*)sourceIndex.model())->filePath(sourceIndex);
 }
 
 QString FolderListModel::fileName(const QModelIndex &index) const
@@ -266,7 +260,7 @@ QString FolderListModel::fileName(const QModelIndex &index) const
         return QString();
     }
     QModelIndex sourceIndex = mapToSource(index);
-    return ((MyFileSystemModel*)sourceIndex.model())->fileName(sourceIndex);
+    return ((FileSystemModelEx*)sourceIndex.model())->fileName(sourceIndex);
 }
 
 QFileInfo FolderListModel::fileInfo(const QModelIndex &index) const
@@ -275,7 +269,7 @@ QFileInfo FolderListModel::fileInfo(const QModelIndex &index) const
         return QFileInfo();
     }
     QModelIndex sourceIndex = mapToSource(index);
-    return ((MyFileSystemModel*)sourceIndex.model())->fileInfo(sourceIndex);
+    return ((FileSystemModelEx*)sourceIndex.model())->fileInfo(sourceIndex);
 }
 
 bool FolderListModel::isDir(const QModelIndex &index) const
@@ -284,7 +278,7 @@ bool FolderListModel::isDir(const QModelIndex &index) const
         return true;
     }
     QModelIndex sourceIndex = mapToSource(index);
-    return ((MyFileSystemModel*)sourceIndex.model())->isDir(sourceIndex);
+    return ((FileSystemModelEx*)sourceIndex.model())->isDir(sourceIndex);
 }
 
 QModelIndex FolderListModel::mkdir(const QModelIndex &parent, const QString &name)
@@ -293,7 +287,7 @@ QModelIndex FolderListModel::mkdir(const QModelIndex &parent, const QString &nam
         return QModelIndex();
     }
     QModelIndex sourceIndex = mapToSource(parent);
-    return ((MyFileSystemModel*)sourceIndex.model())->mkdir(sourceIndex,name);
+    return ((FileSystemModelEx*)sourceIndex.model())->mkdir(sourceIndex,name);
 }
 
 bool FolderListModel::rmdir(const QModelIndex &index)
@@ -302,7 +296,7 @@ bool FolderListModel::rmdir(const QModelIndex &index)
         return false;
     }
     QModelIndex sourceIndex = mapToSource(index);
-    return ((MyFileSystemModel*)sourceIndex.model())->rmdir(sourceIndex);
+    return ((FileSystemModelEx*)sourceIndex.model())->rmdir(sourceIndex);
 }
 
 bool FolderListModel::remove(const QModelIndex &index)
@@ -311,7 +305,7 @@ bool FolderListModel::remove(const QModelIndex &index)
         return false;
     }
     QModelIndex sourceIndex = mapToSource(index);
-    return ((MyFileSystemModel*)sourceIndex.model())->remove(sourceIndex);
+    return ((FileSystemModelEx*)sourceIndex.model())->remove(sourceIndex);
 }
 
 void FolderListModel::setFilter(QDir::Filters filters)
@@ -433,12 +427,12 @@ bool FolderListModel::isRootSourceIndex(const QModelIndex &sourceIndex) const
     return false;
 }
 
-int FolderListModel::columnCount(const QModelIndex &parent) const
+int FolderListModel::columnCount(const QModelIndex &/*parent*/) const
 {
     return 1;
 //    if (!parent.isValid()) {
 //        if (!m_modelList.isEmpty()) {
-//            return 4;
+//            return m_modelList[0].model->columnCount(m_modelList[0].rootSourceIndex);
 //        }
 //        return 1;
 //    }
@@ -485,43 +479,12 @@ int FolderListModel::rowCount(const QModelIndex &parent) const
     return sourceIndex.model()->rowCount(sourceIndex);
 }
 
-static QString fileSize(qint64 bytes)
-{
-    // According to the Si standard KB is 1000 bytes, KiB is 1024
-    // but on windows sizes are calculated by dividing by 1024 so we do what they do.
-    const qint64 kb = 1024;
-    const qint64 mb = 1024 * kb;
-    const qint64 gb = 1024 * mb;
-    const qint64 tb = 1024 * gb;
-    if (bytes >= tb)
-        return QFileSystemModel::tr("%1 TB").arg(QLocale().toString(qreal(bytes) / tb, 'f', 3));
-    if (bytes >= gb)
-        return QFileSystemModel::tr("%1 GB").arg(QLocale().toString(qreal(bytes) / gb, 'f', 2));
-    if (bytes >= mb)
-        return QFileSystemModel::tr("%1 MB").arg(QLocale().toString(qreal(bytes) / mb, 'f', 1));
-    if (bytes >= kb)
-        return QFileSystemModel::tr("%1 KB").arg(QLocale().toString(bytes / kb));
-    return QFileSystemModel::tr("%1 bytes").arg(QLocale().toString(bytes));
-}
-
 QVariant FolderListModel::data(const QModelIndex &proxyIndex, int role) const
 {
     if (!proxyIndex.isValid()) {
         return QVariant();
     }
     QModelIndex sourceIndex = mapToSource(proxyIndex);
-    if (role == Qt::ToolTipRole) {
-        MyFileSystemModel *model = (MyFileSystemModel*)sourceIndex.model();
-        if (model->isDir(sourceIndex)) {
-            return QDir::toNativeSeparators(model->filePath(sourceIndex));
-        } else {
-            QFileInfo info = model->fileInfo(sourceIndex);
-            return QString("%1\n%2\n%3")
-                    .arg(QDir::toNativeSeparators(info.filePath()))
-                    .arg(fileSize(info.size()))
-                    .arg(info.lastModified().toString(Qt::SystemLocaleDate));
-        }
-    }
     return sourceIndex.model()->data(sourceIndex,role);
 }
 
