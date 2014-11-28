@@ -16,7 +16,7 @@ echo .
 if x%QTDIR%==x goto qtdir_fail
 
 echo update translator files
-lupdate -no-obsolete %LITEIDE_ROOT%\liteidex.pro
+lupdate %LITEIDE_ROOT%\liteidex.pro
 
 goto end
 
