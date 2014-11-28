@@ -30,6 +30,9 @@ FolderListModel *FolderListView::model() const
 
 void FolderListView::addRootPath(const QString &path)
 {
+    if (m_model->isRootPath(path)) {
+        return;
+    }
     m_model->addRootPath(path);
 }
 
@@ -44,6 +47,11 @@ void FolderListView::setRootPathList(const QStringList &pathList)
 QStringList FolderListView::rootPathList() const
 {
     return m_model->rootPathList();
+}
+
+void FolderListView::clear()
+{
+    m_model->clear();
 }
 
 void FolderListView::customContextMenuRequested(const QPoint &pos)

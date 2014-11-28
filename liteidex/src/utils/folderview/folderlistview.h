@@ -14,6 +14,7 @@ public:
     void addRootPath(const QString &path);
     void setRootPathList(const QStringList &pathList);
     QStringList rootPathList() const;
+    void clear();
 public slots:
     void customContextMenuRequested(const QPoint &pos);
     virtual void removeFolder();
