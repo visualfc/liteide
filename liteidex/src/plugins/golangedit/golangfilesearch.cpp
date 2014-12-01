@@ -169,6 +169,9 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
                         m_lastLine++;
                         if (fileLine == m_lastLine) {
                             m_lastLineText = QString::fromUtf8(line);
+                            if (fileCol > 0) {
+                                fileCol = QString::fromUtf8(line.left(fileCol)).length();
+                            }
                             break;
                         }
                     }

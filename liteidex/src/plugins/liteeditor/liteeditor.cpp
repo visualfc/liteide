@@ -638,12 +638,12 @@ int LiteEditor::column() const
     return m_editorWidget->textCursor().columnNumber();
 }
 
-int LiteEditor::utf8Position(bool file) const
+int LiteEditor::utf8Position(bool realFile) const
 {
     QTextCursor cur = m_editorWidget->textCursor();
     QString src = cur.document()->toPlainText().left(cur.position());
     int offset = 0;
-    if (file && (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator)) {
+    if (realFile && (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator)) {
        offset = cur.blockNumber();
     }
     return src.toUtf8().length()+offset+1;
@@ -959,7 +959,7 @@ void LiteEditor::editPositionChanged()
 */
      //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
      if (m_offsetVisible) {
-         m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(cur.position()));
+         m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(this->utf8Position(true)));
      } else {
          m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
      }
