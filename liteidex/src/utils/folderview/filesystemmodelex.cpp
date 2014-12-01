@@ -1,5 +1,6 @@
 #include "filesystemmodelex.h"
 #include <QDateTime>
+#include <QLocale>
 
 QString FileSystemModelEx::fileSize(qint64 bytes)
 {
