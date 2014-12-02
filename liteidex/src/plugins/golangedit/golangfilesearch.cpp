@@ -126,6 +126,9 @@ void GolangFileSearch::findUsagesStarted()
 void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
 {
     if (bStdErr) {
+        QString info = QString::fromUtf8(data).trimmed();
+        emit findError(info);
+        m_liteApp->appendLog("find usage error",info,true);
         return;
     }
     QRegExp reg(":(\\d+):(\\d+)");
