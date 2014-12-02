@@ -46,7 +46,8 @@ ToolDockWidget::ToolDockWidget(QSize iconSize, QWidget *parent) :
 {
     m_comboBox = new QComboBox;
     m_comboBox->setMinimumContentsLength(4);
-    m_comboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+    //m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    m_comboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     m_toolBar = new QToolBar(this);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
@@ -55,7 +56,7 @@ ToolDockWidget::ToolDockWidget(QSize iconSize, QWidget *parent) :
     m_toolBar->addWidget(m_comboBox);
 
     QWidget *spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     m_toolBar->addSeparator();
     m_spacerAct = m_toolBar->addWidget(spacer);
 
@@ -132,6 +133,14 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         menu->addAction(splitAct);
     }
     menu->addAction(moveMenu->menuAction());
+
+    if (area == Qt::BottomDockWidgetArea || area == Qt::TopDockWidgetArea) {
+        m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+        m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        QWidget *spacer = new QWidget;
+        spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        m_toolBar->insertWidget(m_closeAct,spacer);
+    }
 
     QToolButton *btn = new QToolButton(m_toolBar);
     btn->setPopupMode(QToolButton::InstantPopup);
