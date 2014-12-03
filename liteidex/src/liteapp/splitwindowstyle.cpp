@@ -90,14 +90,14 @@ SplitActionToolBar::SplitActionToolBar(QSize iconSize, QWidget *parent, Qt::Dock
     spacer2->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     toolBar->addWidget(spacer2);
 
-    dock1 = new ToolDockWidget(iconSize, parent);
+    dock1 = new SplitDockWidget(iconSize, parent);
     dock1->setObjectName(QString("dock_%1").arg(area));
     dock1->setWindowTitle(QString("dock_%1").arg(area));
     dock1->setFeatures(QDockWidget::DockWidgetClosable);
     dock1->hide();
     dock1->createMenu(area,false);
 
-    dock2 = new ToolDockWidget(iconSize,parent);
+    dock2 = new SplitDockWidget(iconSize,parent);
     dock2->setObjectName(QString("dock_%1_split").arg(area));
     dock2->setWindowTitle(QString("dock_%1_split").arg(area));
     dock2->setFeatures(QDockWidget::DockWidgetClosable);
@@ -110,7 +110,7 @@ SplitActionToolBar::SplitActionToolBar(QSize iconSize, QWidget *parent, Qt::Dock
     connect(dock2,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)));
 }
 
-ToolDockWidget *SplitActionToolBar::dock(bool split) const
+SplitDockWidget *SplitActionToolBar::dock(bool split) const
 {
     return split?dock2:dock1;
 }
@@ -252,7 +252,7 @@ void SplitWindowStyle::toggledAction(bool)
     if (!state) {
         return;
     }
-    ToolDockWidget *dock = m_areaToolBar.value(state->area)->dock(state->split);
+    SplitDockWidget *dock = m_areaToolBar.value(state->area)->dock(state->split);
     if (action->isChecked()) {
         if (dock->isHidden()) {
             dock->show();
@@ -420,7 +420,7 @@ QByteArray SplitWindowStyle::saveToolState(int version) const
     return data;
 }
 
-bool SplitWindowStyle::restoreState(const QByteArray &state, int version)
+bool SplitWindowStyle::restoreToolsState(const QByteArray &state, int version)
 {
     bool b = m_mainWindow->restoreState(state,version);
     QMapIterator<QAction*,SplitActionState*> it(m_actStateMap);

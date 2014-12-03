@@ -86,17 +86,12 @@ QByteArray ToolMainWindow::saveToolState(int version) const
     return m_windowStyle->saveToolState(version);
 }
 
-bool ToolMainWindow::restoreState(const QByteArray &state, int version)
+bool ToolMainWindow::restoreToolState(const QByteArray &state, int version)
 {
-    return m_windowStyle->restoreState(state,version);
+    return m_windowStyle->restoreToolsState(state,version);
 }
 
 void ToolMainWindow::hideToolWindow(Qt::DockWidgetArea area)
 {
     m_windowStyle->hideToolWindow(area);
-}
-
-bool ToolMainWindow::loadInitToolState(const QByteArray &state, int version)
-{
-    return m_windowStyle->loadInitToolState(state,version);
 }

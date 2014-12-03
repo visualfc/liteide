@@ -38,8 +38,7 @@ public:
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
     QByteArray saveToolState(int version = 0) const;
-    bool loadInitToolState(const QByteArray &state, int version = 0);
-    bool restoreState(const QByteArray &state, int version = 0);
+    bool restoreToolState(const QByteArray &state, int version = 0);
 public slots:
     void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     void showOrHideToolWindow();

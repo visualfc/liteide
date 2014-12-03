@@ -10,7 +10,7 @@
 class ActionGroup;
 class QSplitter;
 class RotationToolButton;
-class ToolDockWidget;
+class SplitDockWidget;
 
 class ActionGroup : public QObject
 {
@@ -33,7 +33,7 @@ class SplitActionToolBar : public QObject
     Q_OBJECT
 public:
     SplitActionToolBar(QSize iconSize, QWidget *parent, Qt::DockWidgetArea area);
-    ToolDockWidget *dock(bool split) const;
+    SplitDockWidget *dock(bool split) const;
     void addAction(QAction *action, const QString &title, bool split);
     void removeAction(QAction *action, bool split);
     void setHideToolBar(bool b);
@@ -46,8 +46,8 @@ public:
     Qt::DockWidgetArea area;
     QToolBar *toolBar;
     QAction  *spacerAct;
-    ToolDockWidget *dock1;
-    ToolDockWidget *dock2;
+    SplitDockWidget *dock1;
+    SplitDockWidget *dock2;
     QMap<QAction*,QWidget*> m_actionWidgetMap;
     bool bHideToolBar;
 };
@@ -81,7 +81,7 @@ public:
     QAction *findToolWindow(QWidget *wiget);
     QByteArray saveToolState(int version = 0) const;
     bool loadInitToolState(const QByteArray &state, int version = 0);
-    bool restoreState(const QByteArray &state, int version = 0);
+    bool restoreToolsState(const QByteArray &state, int version = 0);
 public slots:
     void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     void showOrHideToolWindow();

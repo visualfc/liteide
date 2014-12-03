@@ -89,11 +89,11 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_godocProcess = new ProcessEx(this);
 
     m_findDocWidget = new FindDocWidget(m_liteApp);
-    m_docSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findDocWidget,"godoc/search",tr("Golang Doc Search"),true);
+    m_docSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_findDocWidget,"godoc/search",tr("Golang Doc Search"),true);
 
     m_findApiWidget = new FindApiWidget(m_liteApp);
 
-    m_apiSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_findApiWidget,"godoc/api",tr("Golang Api Index"),true);
+    m_apiSearchWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_findApiWidget,"godoc/api",tr("Golang Api Index"),true);
     connect(m_findApiWidget,SIGNAL(openApiUrl(QStringList)),this,SLOT(openApiUrl(QStringList)));
 
     m_docBrowser = new DocumentBrowser(m_liteApp,this);

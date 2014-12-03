@@ -3,16 +3,17 @@
 
 #include "windowstyle.h"
 
-class ToolDockWidget;
+class SideDockWidget;
+class OutputDockWidget;
+class QToolButton;
 
 struct SideActionState
 {
     QWidget *toolBtn;
-    ToolDockWidget *dock;
     QWidget *widget;
     QList<QAction*> widgetActions;
     QString id;
-    QString  title;
+    QString title;
 };
 
 class SideActionBar : public QObject
@@ -23,21 +24,24 @@ public:
     virtual ~SideActionBar();
     void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
     void removeAction(QAction *action);
-    void setHideToolBar(bool b);
     QAction *findToolAction(QWidget *widget);
 signals:
     void moveActionTo(Qt::DockWidgetArea,QAction*);
 protected slots:
+    void setHideToolBar(bool b);
     void dockVisible(bool);
     void toggledAction(bool b);
+    void currenActionChanged(QAction *org, QAction *act);
 public:
     QSize iconSize;
     QMainWindow *window;
     Qt::DockWidgetArea area;
     QToolBar *toolBar;
     QAction  *spacerAct;
+    QList<SideDockWidget*> m_dockList;
     QMap<QAction*,SideActionState*> m_actionStateMap;
     bool bHideToolBar;
+    void updateAction(QAction *action);
 };
 
 struct OutputActionState
@@ -55,7 +59,7 @@ class OutputActionBar : public QObject
 public:
     OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     virtual ~OutputActionBar();
-    ToolDockWidget *dockWidget() const;
+    OutputDockWidget *dockWidget() const;
     void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
     void removeAction(QAction *action);
     void setHideToolBar(bool b);
@@ -69,7 +73,7 @@ public:
     Qt::DockWidgetArea area;
     QToolBar *toolBar;
     QAction  *spacerAct;
-    ToolDockWidget *dock;
+    OutputDockWidget *dock;
     QMap<QAction*,OutputActionState*> m_actionStateMap;
     bool bHideToolBar;
 };
@@ -85,18 +89,24 @@ public:
     virtual QAction *findToolWindow(QWidget *widget);
     virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split);
     virtual QByteArray saveToolState(int version = 0) const;
-    virtual bool loadInitToolState(const QByteArray &state, int version = 0);
-    virtual bool restoreState(const QByteArray &state, int version = 0);
+    virtual bool restoreToolsState(const QByteArray &state, int version = 0);
+    void restoreHideToolWindows();
+    void restoreHideSideToolWindows();
+    void hideSideToolWindows();
 public slots:
     virtual void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     virtual void showOrHideToolWindow();
     virtual void hideAllToolWindows();
+    void hideSideBar(bool);
+    void toggledSideBar(bool);
 protected:
     QMainWindow *m_mainWindow;
     SideActionBar *m_sideBar;
     OutputActionBar *m_outputBar;
     QStatusBar  *m_statusBar;
     QAction     *m_hideSideAct;
+    QList<QAction*> m_hideActionList;
+    QList<QAction*> m_hideSideActionList;
 };
 
 #endif // SIDEWINDOWSTYLE_H
