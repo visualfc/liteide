@@ -8,6 +8,41 @@ class ToolDockWidget;
 struct SideActionState
 {
     QWidget *toolBtn;
+    ToolDockWidget *dock;
+    QWidget *widget;
+    QList<QAction*> widgetActions;
+    QString id;
+    QString  title;
+};
+
+class SideActionBar : public QObject
+{
+    Q_OBJECT
+public:
+    SideActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
+    virtual ~SideActionBar();
+    void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
+    void removeAction(QAction *action);
+    void setHideToolBar(bool b);
+    QAction *findToolAction(QWidget *widget);
+signals:
+    void moveActionTo(Qt::DockWidgetArea,QAction*);
+protected slots:
+    void dockVisible(bool);
+    void toggledAction(bool b);
+public:
+    QSize iconSize;
+    QMainWindow *window;
+    Qt::DockWidgetArea area;
+    QToolBar *toolBar;
+    QAction  *spacerAct;
+    QMap<QAction*,SideActionState*> m_actionStateMap;
+    bool bHideToolBar;
+};
+
+struct OutputActionState
+{
+    QWidget *toolBtn;
     QWidget *widget;
     QList<QAction*> widgetActions;
     QString id;
@@ -35,7 +70,7 @@ public:
     QToolBar *toolBar;
     QAction  *spacerAct;
     ToolDockWidget *dock;
-    QMap<QAction*,SideActionState*> m_actionStateMap;
+    QMap<QAction*,OutputActionState*> m_actionStateMap;
     bool bHideToolBar;
 };
 
@@ -58,7 +93,7 @@ public slots:
     virtual void hideAllToolWindows();
 protected:
     QMainWindow *m_mainWindow;
-    OutputActionBar *m_sideBar;
+    SideActionBar *m_sideBar;
     OutputActionBar *m_outputBar;
     QStatusBar  *m_statusBar;
     QAction     *m_hideSideAct;

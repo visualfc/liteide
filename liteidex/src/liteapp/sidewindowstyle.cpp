@@ -4,6 +4,134 @@
 
 #include <QStatusBar>
 
+SideActionBar::SideActionBar(QSize _iconSize, QMainWindow *_window, Qt::DockWidgetArea _area)
+    : QObject(_window), iconSize(_iconSize), window(_window),area(_area), bHideToolBar(false)
+{
+    toolBar = new QToolBar;
+    toolBar->hide();
+    toolBar->setObjectName(QString("side_tool_%1").arg(area));
+    toolBar->setMovable(false);
+
+    QWidget *spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    spacerAct = toolBar->addWidget(spacer);
+    toolBar->addSeparator();
+}
+
+SideActionBar::~SideActionBar()
+{
+    qDeleteAll(m_actionStateMap);
+}
+
+void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction *> widgetActions)
+{
+    RotationToolButton *btn = new RotationToolButton;
+    btn->setDefaultAction(action);
+    if (area == Qt::LeftDockWidgetArea) {
+        btn->setRotation(RotationToolButton::CounterClockwise);
+    } else if (area == Qt::RightDockWidgetArea) {
+        btn->setRotation(RotationToolButton::Clockwise);
+    }
+    ToolDockWidget *dock = new ToolDockWidget(iconSize, window);
+    dock->setObjectName(QString("side_dock_%1").arg(area));
+    dock->setWindowTitle(QString("side_dock_%1").arg(area));
+    dock->setFeatures(QDockWidget::DockWidgetClosable);
+    dock->hide();
+    dock->createMenu(area,false);
+
+    window->addDockWidget(area,dock);
+
+    connect(dock,SIGNAL(visibilityChanged(bool)),this,SLOT(dockVisible(bool)));
+    connect(dock,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)));
+
+    SideActionState *state = new SideActionState;
+    state->toolBtn = btn;
+    state->widget = widget;
+    state->dock = dock;
+    state->id = id;
+    state->title = title;
+    state->widgetActions = widgetActions;
+    m_actionStateMap.insert(action,state);
+    dock->addAction(action,title);
+    toolBar->insertWidget(spacerAct,btn);
+    if (toolBar->isHidden() && !bHideToolBar) {
+        toolBar->show();
+    }
+    connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledAction(bool)));
+}
+
+void SideActionBar::removeAction(QAction *action)
+{
+    SideActionState *state = m_actionStateMap.value(action);
+    if (state) {
+        delete state->toolBtn;
+    }
+    m_actionStateMap.remove(action);
+    delete state;
+//    dock->removeAction(action);
+//    if (dock->actions().isEmpty()) {
+//        toolBar->hide();
+//    }
+}
+
+void SideActionBar::setHideToolBar(bool b)
+{
+    bHideToolBar = b;
+    if (bHideToolBar) {
+        toolBar->hide();
+    } else {
+//        if (!dock->actions().isEmpty()){
+//            toolBar->show();
+//        }
+    }
+}
+
+QAction *SideActionBar::findToolAction(QWidget *widget)
+{
+    QMapIterator<QAction*,SideActionState*> i(m_actionStateMap);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value()->widget == widget) {
+            return i.key();
+        }
+    }
+    return 0;
+}
+
+void SideActionBar::dockVisible(bool b)
+{
+    ToolDockWidget *dock = (ToolDockWidget*)sender();
+    QAction *action = dock->checkedAction();
+    if (action) {
+        action->setChecked(dock->isVisible());
+    } else if (b && !dock->actions().isEmpty()) {
+        dock->actions().first()->setChecked(true);
+    }
+}
+
+void SideActionBar::toggledAction(bool b)
+{
+    QAction *action = (QAction*)sender();
+    SideActionState *state = m_actionStateMap.value(action);
+    if (!state) {
+        return;
+    }
+    ToolDockWidget *dock = state->dock;
+    if (action->isChecked()) {
+        if (dock->isHidden()) {
+            dock->show();
+        }
+        dock->setWidget(state->widget);
+        dock->setWidgetActions(state->widgetActions);
+        dock->setWindowTitle(state->title);
+    } else {
+        if (!dock->checkedAction()) {
+            dock->hide();
+        }
+    }
+}
+
+
 OutputActionBar::OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea _area)
     : QObject(window), area(_area), bHideToolBar(false)
 {
@@ -49,7 +177,7 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
     } else if (area == Qt::RightDockWidgetArea) {
         btn->setRotation(RotationToolButton::Clockwise);
     }
-    SideActionState *state = new SideActionState;
+    OutputActionState *state = new OutputActionState;
     state->toolBtn = btn;
     state->widget = widget;
     state->id = id;
@@ -66,7 +194,7 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
 
 void OutputActionBar::removeAction(QAction *action)
 {
-    SideActionState *state = m_actionStateMap.value(action);
+    OutputActionState *state = m_actionStateMap.value(action);
     if (state) {
         delete state->toolBtn;
     }
@@ -92,7 +220,7 @@ void OutputActionBar::setHideToolBar(bool b)
 
 QAction *OutputActionBar::findToolAction(QWidget *widget)
 {
-    QMapIterator<QAction*,SideActionState*> i(m_actionStateMap);
+    QMapIterator<QAction*,OutputActionState*> i(m_actionStateMap);
     while (i.hasNext()) {
         i.next();
         if (i.value()->widget == widget) {
@@ -115,7 +243,7 @@ void OutputActionBar::dockVisible(bool b)
 void OutputActionBar::toggledAction(bool b)
 {
     QAction *action = (QAction*)sender();
-    SideActionState *state = m_actionStateMap.value(action);
+    OutputActionState *state = m_actionStateMap.value(action);
     if (!state) {
         return;
     }
@@ -136,11 +264,11 @@ void OutputActionBar::toggledAction(bool b)
 SideWindowStyle::SideWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent)
     : IWindowStyle(parent),m_mainWindow(window)
 {
-    m_sideBar = new OutputActionBar(iconSize,window,Qt::LeftDockWidgetArea);
+    m_sideBar = new SideActionBar(iconSize,window,Qt::LeftDockWidgetArea);
     m_outputBar = new OutputActionBar(iconSize,window,Qt::BottomDockWidgetArea);
 
     m_mainWindow->addToolBar(Qt::LeftToolBarArea,m_sideBar->toolBar);
-    m_mainWindow->addDockWidget(Qt::LeftDockWidgetArea,m_sideBar->dock);
+    //m_mainWindow->addDockWidget(Qt::LeftDockWidgetArea,m_sideBar->dock);
 
     m_mainWindow->setCorner(Qt::BottomLeftCorner,Qt::LeftDockWidgetArea);
 
@@ -229,7 +357,6 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
     action->setText(title);
     action->setCheckable(true);
     action->setObjectName(id);
-
     if (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea) {
         m_outputBar->addAction(action,widget,id,title,widgetActions);
     } else {
