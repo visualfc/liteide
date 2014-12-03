@@ -41,6 +41,7 @@
 #include "macsupport.h"
 #endif
 #include "splitwindowstyle.h"
+#include "sidewindowstyle.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -133,7 +134,8 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
-    SplitWindowStyle *style = new SplitWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    //SplitWindowStyle *style = new SplitWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    SideWindowStyle *style = new SideWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
     m_mainwindow->setWindowStyle(style);
 
     m_toolWindowManager = new ToolWindowManager;

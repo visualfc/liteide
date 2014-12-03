@@ -1,5 +1,5 @@
-#ifndef DOCKWINDOWSTYLE_H
-#define DOCKWINDOWSTYLE_H
+#ifndef SPLITWINDOWSSTYLE_H
+#define SPLITWINDOWSSTYLE_H
 
 #include "windowstyle.h"
 
@@ -102,4 +102,4 @@ protected:
     QList<QAction*> m_hideActionList;
 };
 
-#endif // DOCKWINDOWSTYLE_H
+#endif // SPLITWINDOWSSTYLE_H
