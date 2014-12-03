@@ -492,6 +492,13 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
     action->setObjectName(id);
     if (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea) {
         m_outputBar->addAction(action,widget,id,title,widgetActions);
+        int index = m_outputBar->m_actionStateMap.size();
+        if (index <= 9) {
+            action->setText(QString("%1: %2").arg(index).arg(title));
+            QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Alt+%1").arg(index));
+            LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
+            actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
+        }
     } else {
         m_sideBar->addAction(action,widget,id,title,widgetActions);
         connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledSideBar(bool)));
