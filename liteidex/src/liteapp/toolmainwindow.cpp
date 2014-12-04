@@ -64,8 +64,9 @@ QByteArray ToolMainWindow::saveState(int version) const
 
 bool ToolMainWindow::restoreState(const QByteArray &state, int version)
 {
+    bool b = QMainWindow::restoreState(state,version);
     m_windowStyle->restoreToolsState();
-    return QMainWindow::restoreState(state,version);
+    return b;
 }
 
 void ToolMainWindow::removeToolWindow(QAction *action)

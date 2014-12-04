@@ -82,13 +82,13 @@ class SideWindowStyle : public IWindowStyle
 {
     Q_OBJECT
 public:
-    SideWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent = 0);
+    SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SideWindowStyle();
     virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     virtual void removeToolWindow(QAction *action);
     virtual QAction *findToolWindow(QWidget *widget);
     virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split);
-    virtual void saveToolState();
+    virtual void saveToolState() const;
     virtual void restoreToolsState();
     void restoreHideToolWindows();
     void restoreHideSideToolWindows();
@@ -101,6 +101,7 @@ public slots:
     void hideSideBar(bool);
     void toggledSideBar(bool);
 protected:
+    LiteApi::IApplication *m_liteApp;
     QMainWindow *m_mainWindow;
     SideActionBar *m_sideBar;
     OutputActionBar *m_outputBar;

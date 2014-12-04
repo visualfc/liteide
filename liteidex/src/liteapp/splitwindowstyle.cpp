@@ -410,7 +410,7 @@ void SplitWindowStyle::hideSideBar(bool b)
     }
 }
 
-void SplitWindowStyle::saveToolState()
+void SplitWindowStyle::saveToolState() const
 {
     QMapIterator<QAction*,SplitActionState*> i(m_actStateMap);
     while (i.hasNext()) {
@@ -420,11 +420,12 @@ void SplitWindowStyle::saveToolState()
         m_liteApp->settings()->setValue("split_split/"+state->id,state->split);
         m_liteApp->settings()->setValue("split_check/"+state->id,i.key()->isChecked());
     }
+    m_liteApp->settings()->setValue("split_side_hide",m_hideSideAct->isChecked());
 }
 
 void SplitWindowStyle::restoreToolsState()
 {
-    m_hideSideAct->setChecked(m_areaToolBar.value(Qt::LeftDockWidgetArea)->toolBar->isHidden());
+    m_hideSideAct->setChecked(m_liteApp->settings()->value("split_side_hide").toBool());
 }
 
 void SplitWindowStyle::hideToolWindow(Qt::DockWidgetArea area)

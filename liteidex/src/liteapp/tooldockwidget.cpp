@@ -412,7 +412,7 @@ void SideDockWidget::activeComboBoxIndex(int index)
     }
 }
 
-void SideDockWidget::setAction(QAction *action, const QString &title)
+void SideDockWidget::setCheckedAction(QAction *action)
 {
     current = action;
     for (int i = 0; i < m_comboBox->count(); i++) {

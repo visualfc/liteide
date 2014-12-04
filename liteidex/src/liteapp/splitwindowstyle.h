@@ -71,7 +71,7 @@ public:
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
-    void saveToolState();
+    void saveToolState() const;
     void restoreToolsState();
 public slots:
     void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);

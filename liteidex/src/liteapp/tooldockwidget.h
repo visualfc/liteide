@@ -93,7 +93,7 @@ class SideDockWidget : public BaseDockWidget
 public:
     explicit SideDockWidget(QSize iconSize, QWidget *parent = 0);
     void createMenu(Qt::DockWidgetArea area);
-    void setAction(QAction *action, const QString &title);
+    void setCheckedAction(QAction *action);
     void setActions(const QList<QAction*> &actions);
 signals:
     void moveActionTo(Qt::DockWidgetArea, QAction*);

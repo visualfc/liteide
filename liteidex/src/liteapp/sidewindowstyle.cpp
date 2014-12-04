@@ -34,8 +34,8 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     }
 
     SideDockWidget *dock = new SideDockWidget(iconSize, window);
-    dock->setObjectName(QString("side_dock_%1").arg(area));
-    dock->setWindowTitle(QString("side_dock_%1").arg(area));
+    dock->setObjectName(QString("side_dock_%1").arg(id));
+    dock->setWindowTitle(title);
     dock->setFeatures(QDockWidget::DockWidgetClosable);
     dock->hide();
     dock->createMenu(area);
@@ -53,7 +53,7 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     state->title = title;
     state->widgetActions = widgetActions;
     m_actionStateMap.insert(action,state);
-    dock->setAction(action,title);
+    dock->setCheckedAction(action);
     toolBar->insertWidget(spacerAct,btn);
     if (toolBar->isHidden() && !bHideToolBar) {
         toolBar->show();
@@ -120,6 +120,7 @@ void SideActionBar::updateAction(QAction *action)
                 }
                 dock->setWidget(state->widget);
                 dock->setWidgetActions(state->widgetActions);
+                dock->setObjectName(QString("side_dock_%1").arg(state->id));
                 dock->setWindowTitle(state->title);
             } else {
                 dock->hide();
@@ -144,13 +145,13 @@ void SideActionBar::currenActionChanged(QAction *org, QAction *act)
     SideDockWidget *curDock = (SideDockWidget*)sender();
     foreach (SideDockWidget *dock, m_dockList) {
         if ((dock->checkedAction() == act) && (dock != curDock)) {
-            dock->setAction(org,org->text());
+            dock->setCheckedAction(org);
             org->setChecked(act->isChecked());
             updateAction(org);
             break;
         }
     }
-    curDock->setAction(act,act->text());
+    curDock->setCheckedAction(act);
     act->setChecked(true);
     updateAction(act);
 }
@@ -285,9 +286,10 @@ void OutputActionBar::toggledAction(bool b)
     }
 }
 
-SideWindowStyle::SideWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent)
-    : IWindowStyle(parent),m_mainWindow(window)
+SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent)
+    : IWindowStyle(parent),m_liteApp(app),m_mainWindow(window)
 {
+    QSize iconSize = LiteApi::getToolBarIconSize(app);
     m_sideBar = new SideActionBar(iconSize,window,Qt::LeftDockWidgetArea);
     m_outputBar = new OutputActionBar(iconSize,window,Qt::BottomDockWidgetArea);
 
@@ -419,14 +421,13 @@ void SideWindowStyle::hideOutputWindow()
     }
 }
 
-void SideWindowStyle::saveToolState()
+void SideWindowStyle::saveToolState() const
 {
 }
 
 void SideWindowStyle::restoreToolsState()
 {
 }
-
 
 void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea area, QAction *action, bool split)
 {

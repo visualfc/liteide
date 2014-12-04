@@ -134,8 +134,8 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
-    SplitWindowStyle *style = new SplitWindowStyle(this,m_mainwindow);
-    //SideWindowStyle *style = new SideWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    //SplitWindowStyle *style = new SplitWindowStyle(this,m_mainwindow);
+    SideWindowStyle *style = new SideWindowStyle(this,m_mainwindow);
     m_mainwindow->setWindowStyle(style);
 
     m_toolWindowManager = new ToolWindowManager;
