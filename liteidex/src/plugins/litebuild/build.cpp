@@ -240,6 +240,7 @@ void Build::appendAction(BuildAction *act)
                     delete ba;
                 }
 #endif
+                return;
         }
     }
     m_actionList.append(act);

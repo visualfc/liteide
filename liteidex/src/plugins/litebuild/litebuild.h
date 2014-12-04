@@ -27,7 +27,6 @@
 #include "liteapi/liteapi.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
-
 #include <QTextCursor>
 
 #define LITEBUILD_TAG "lightbuild/navtag"
