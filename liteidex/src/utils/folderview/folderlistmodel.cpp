@@ -576,13 +576,6 @@ bool FolderListModel::setHeaderData(int section, Qt::Orientation orientation, co
     }
 }
 
-
-QModelIndex FolderListModel::buddy(const QModelIndex &index) const
-{
-    QModelIndex sourceIndex = mapToSource(index);
-    return mapFromSource(sourceIndex.model()->buddy(sourceIndex));
-}
-
 bool FolderListModel::insertColumns(int column, int count, const QModelIndex& parent)
 {
     Q_ASSERT(parent.isValid() ? parent.model() == this : true);
@@ -672,6 +665,11 @@ bool FolderListModel::hasChildren(const QModelIndex &parent) const
     }
     QModelIndex sourceIndex = mapToSource(parent);
     return sourceIndex.model()->hasChildren(sourceIndex);
+}
+
+QModelIndex FolderListModel::buddy(const QModelIndex &index) const
+{
+    return index;
 }
 
 void FolderListModel::sourceColumnsAboutToBeInserted(const QModelIndex &parent, int start, int end)

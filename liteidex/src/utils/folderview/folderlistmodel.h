@@ -28,6 +28,7 @@
 #include <QFileSystemModel>
 #include <QModelIndex>
 #include <QItemSelection>
+#include <QIdentityProxyModel>
 
 class QFileSystemWatcher;
 

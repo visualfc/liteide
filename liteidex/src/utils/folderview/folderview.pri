@@ -1,4 +1,4 @@
-LIBS *= -l$$qtLibraryName(foldersview)
+LIBS *= -l$$qtLibraryName(folderview)
 
 
 

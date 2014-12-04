@@ -1,4 +1,4 @@
-TARGET = foldersview
+TARGET = folderview
 TEMPLATE = lib
 CONFIG += staticlib
 

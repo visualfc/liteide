@@ -558,9 +558,11 @@ void FileManager::showHideFiles(bool b)
     }
     m_folderListView->model()->setFilter(filters);
 }
-
 void FileManager::doubleClickedFolderView(const QModelIndex &index)
 {
+    if (!index.isValid()) {
+        return;
+    }
     QFileInfo info = m_folderListView->model()->fileInfo(index);
     if (info.isFile()) {
         this->openEditor(info.filePath());
