@@ -184,7 +184,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         errmsg.replace("<standard input>","");
         liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
         log.replace("<standard input>",info.filePath());
-        m_liteApp->appendLog("go code format error",log,false);
+        m_liteApp->appendLog("go code format error",log,true);
         return;
     }
     liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
@@ -393,7 +393,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
         errmsg.replace("<standard input>","");
         liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
         log.replace("<standard input>",fileName);
-        m_liteApp->appendLog("go code format error",log,false);
+        m_liteApp->appendLog("go code format error",log,true);
     }
     m_data.clear();
 }
