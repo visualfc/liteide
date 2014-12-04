@@ -455,7 +455,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     if (!m_process->isRunning()) {
         m_output->updateExistsTextColor();
         m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
-        this->executeCommand(gobin,"env",LiteApi::getGoroot(m_liteApp),false,false);
+        this->executeCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
     }
 }
 

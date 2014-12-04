@@ -1073,7 +1073,7 @@ void GdbDebugger::initGdb()
     command("set auto-solib-add on");
     if (!m_runtimeFilePath.isEmpty()) {
 #ifdef Q_OS_WIN
-        QStringList pathList = LiteApi::getGopathList(m_liteApp,false);
+        QStringList pathList = LiteApi::getGOPATH(m_liteApp,false);
         QString paths;
         foreach(QString path, pathList) {
             paths += QDir::fromNativeSeparators(path)+"/src";

@@ -371,6 +371,7 @@ void PackageBrowser::resetTree(const QByteArray &data)
     m_model->clear();
     //load tree
     QStringList rootList = LiteApi::getGOPATH(m_liteApp,true);
+
     foreach (QString root, rootList) {
         QStandardItem *item = new QStandardItem(root);
         QStandardItem *cmd = new QStandardItem("cmd");

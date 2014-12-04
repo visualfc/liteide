@@ -104,20 +104,20 @@ void Env::loadGoEnv()
         m_process->waitForFinished(100);
     }
     m_goEnvMap.clear();
-    QString go = FileUtil::lookPath("go",m_env,false);
-    if (go.isEmpty()) {
+    QString gocmd = FileUtil::lookPath("go",m_env,false);
+    if (gocmd.isEmpty()) {
         QString goroot = m_env.value("GOROOT");
         if (goroot.isEmpty()) {
             goroot = LiteApi::getDefaultGOROOT();
         }
-        go = FileUtil::lookPathInDir("go",goroot+"/bin");
-        if (go.isEmpty()) {
+        gocmd = FileUtil::lookPathInDir("go",goroot+"/bin");
+        if (gocmd.isEmpty()) {
             emit goenvError(m_id,"cannot find go in PATH");
             return;
         }
     }
     m_process->setProcessEnvironment(m_env);
-    m_process->start("go",QStringList() << "env");
+    m_process->start(gocmd,QStringList() << "env");
 }
 
 void Env::loadEnvFile(QIODevice *dev)
