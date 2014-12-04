@@ -653,7 +653,7 @@ void GdbDebugger::handleStopped(const GdbMiValue &result)
             //file="C:/Users/ADMINI~1/AppData/Local/Temp/2/bindist308287094/go/src/pkg/fmt/print.go"
             int i = file.indexOf("/go/src/pkg");
             if (i > 0) {
-                QString fullname = LiteApi::getGoroot(m_liteApp)+file.right(file.length()-i-3);
+                QString fullname = LiteApi::getGOROOT(m_liteApp)+file.right(file.length()-i-3);
                 emit setCurrentLine(fullname,line.toInt()-1);
             }
         }

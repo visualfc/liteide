@@ -374,7 +374,7 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
     if (m_lastUrl.scheme() == "pdoc") {
         m_targetList.clear();
         QString pkgname = m_lastUrl.path();
-        QString goroot = LiteApi::getGoroot(m_liteApp);
+        QString goroot = LiteApi::getGOROOT(m_liteApp);
         QFileInfo i1(QFileInfo(goroot,"src/cmd").filePath(),pkgname);
         if (i1.exists()) {
             m_targetList.append(i1.filePath());
@@ -383,7 +383,7 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
         if (i2.exists()) {
             m_targetList.append(i2.filePath());
         }
-        foreach(QString path,LiteApi::getGopathList(m_liteApp,false)) {
+        foreach(QString path,LiteApi::getGOPATH(m_liteApp,false)) {
             QFileInfo info(QFileInfo(path,"src").filePath(),pkgname);
             if (info.exists()) {
                 m_targetList.append(info.filePath());

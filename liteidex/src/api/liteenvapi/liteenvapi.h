@@ -174,9 +174,9 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     return env;
 }
 
-inline QStringList getGopathList(LiteApi::IApplication *app, bool includeGoroot)
+inline QStringList getGOPATH(LiteApi::IApplication *app, bool includeGoroot)
 {
-    QProcessEnvironment env = getCurrentEnvironment(app);
+    QProcessEnvironment env = getGoEnvironment(app);
 #ifdef Q_OS_WIN
     QString sep = ";";
 #else
@@ -200,9 +200,9 @@ inline QStringList getGopathList(LiteApi::IApplication *app, bool includeGoroot)
     return pathList;
 }
 
-inline QString getGoroot(LiteApi::IApplication *app)
+inline QString getGOROOT(LiteApi::IApplication *app)
 {
-    return getCurrentEnvironment(app).value("GOROOT");
+    return getGoEnvironment(app).value("GOROOT");
 }
 
 

@@ -200,7 +200,7 @@ void PackageBrowser::reloadAll()
     if (m_model->rowCount() == 0) {
         m_model->appendRow(new QStandardItem(tr("Loading Go package list...")));
     }
-    QString root = LiteApi::getGoroot(m_liteApp);
+    QString root = LiteApi::getGOROOT(m_liteApp);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_goTool->setProcessEnvironment(env);
     m_goTool->setWorkDir(root);
@@ -347,7 +347,7 @@ void PackageBrowser::customContextMenuRequested(QPoint pos)
 void PackageBrowser::error(QProcess::ProcessError code)
 {
     m_model->clear();
-    QString goroot = LiteApi::getGoroot(m_liteApp);
+    QString goroot = LiteApi::getGOROOT(m_liteApp);
     m_model->appendRow(new QStandardItem(QString("Load Package Error %1\nGOROOT=%2\nGO=%3").arg(code).arg(goroot).arg(m_goTool->gotool())));
 }
 
@@ -358,7 +358,7 @@ void PackageBrowser::finished(int code,QProcess::ExitStatus)
         resetTree(data);
     } else {
         m_model->clear();
-        QString goroot = LiteApi::getGoroot(m_liteApp);
+        QString goroot = LiteApi::getGOROOT(m_liteApp);
         m_model->appendRow(new QStandardItem(QString("Load Package Error %1\nGOROOT=%2\nGO=%3").arg(code).arg(goroot).arg(m_goTool->gotool())));
     }
 }
@@ -368,10 +368,9 @@ void PackageBrowser::resetTree(const QByteArray &data)
     //save state
     SymbolTreeState state;
     m_treeView->saveState(&state);
-
     m_model->clear();
-
-    QStringList rootList = LiteApi::getGopathList(m_liteApp,true);
+    //load tree
+    QStringList rootList = LiteApi::getGOPATH(m_liteApp,true);
     foreach (QString root, rootList) {
         QStandardItem *item = new QStandardItem(root);
         QStandardItem *cmd = new QStandardItem("cmd");
