@@ -213,9 +213,9 @@ void FileManager::setFolderList(const QStringList &folders)
     QStringList all = folders;
     all.removeDuplicates();
     m_folderListView->setRootPathList(all);
-    if (!m_folderListView->rootPathList().isEmpty()) {
-        m_toolWindowAct->setChecked(true);
-    }
+//    if (!m_folderListView->rootPathList().isEmpty()) {
+//        m_toolWindowAct->setChecked(true);
+//    }
 }
 
 void FileManager::addFolderList(const QString &folder)

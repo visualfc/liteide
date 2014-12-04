@@ -134,9 +134,15 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
-    //SplitWindowStyle *style = new SplitWindowStyle(this,m_mainwindow);
-    SideWindowStyle *style = new SideWindowStyle(this,m_mainwindow);
-    m_mainwindow->setWindowStyle(style);
+
+    QString style = this->settings()->value(LITEAPP_STYLE,"sidebar").toString();
+    if (style == "splitter") {
+        SplitWindowStyle *style = new SplitWindowStyle(this,m_mainwindow);
+        m_mainwindow->setWindowStyle(style);
+    } else {
+        SideWindowStyle *style = new SideWindowStyle(this,m_mainwindow);
+        m_mainwindow->setWindowStyle(style);
+    }
 
     m_toolWindowManager = new ToolWindowManager;
     m_htmlWidgetManager = new HtmlWidgetManager;
