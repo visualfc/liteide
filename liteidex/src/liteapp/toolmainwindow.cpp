@@ -56,6 +56,18 @@ QAction *ToolMainWindow::findToolWindow(QWidget *widget)
     return m_windowStyle->findToolWindow(widget);
 }
 
+QByteArray ToolMainWindow::saveState(int version) const
+{
+    m_windowStyle->saveToolState();
+    return QMainWindow::saveState(version);
+}
+
+bool ToolMainWindow::restoreState(const QByteArray &state, int version)
+{
+    m_windowStyle->restoreToolsState();
+    return QMainWindow::restoreState(state,version);
+}
+
 void ToolMainWindow::removeToolWindow(QAction *action)
 {
     m_windowStyle->removeToolWindow(action);
@@ -76,22 +88,12 @@ void ToolMainWindow::showOrHideToolWindow()
     m_windowStyle->showOrHideToolWindow();
 }
 
+void ToolMainWindow::hideOutputWindow()
+{
+    m_windowStyle->hideOutputWindow();
+}
+
 void ToolMainWindow::hideAllToolWindows()
 {
     m_windowStyle->hideAllToolWindows();
-}
-
-QByteArray ToolMainWindow::saveToolState(int version) const
-{
-    return m_windowStyle->saveToolState(version);
-}
-
-bool ToolMainWindow::restoreToolState(const QByteArray &state, int version)
-{
-    return m_windowStyle->restoreToolsState(state,version);
-}
-
-void ToolMainWindow::hideToolWindow(Qt::DockWidgetArea area)
-{
-    m_windowStyle->hideToolWindow(area);
 }

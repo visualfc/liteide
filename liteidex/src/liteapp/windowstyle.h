@@ -12,10 +12,10 @@ public:
     virtual void removeToolWindow(QAction *action) = 0;
     virtual QAction *findToolWindow(QWidget *wiget) = 0;
     virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split) = 0;
-    virtual QByteArray saveToolState(int version = 0) const = 0;
-    virtual bool restoreToolsState(const QByteArray &state, int version = 0) = 0;
+    virtual void saveToolState() = 0;
+    virtual void restoreToolsState() = 0;
 public slots:
-    virtual void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea) = 0;
+    virtual void hideOutputWindow() = 0;
     virtual void showOrHideToolWindow() = 0;
     virtual void hideAllToolWindows() = 0;
 };

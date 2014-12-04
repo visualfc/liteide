@@ -410,58 +410,21 @@ void SideWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
 
 }
 
-static int VersionMarker = 0xffe1;
-
-QByteArray SideWindowStyle::saveToolState(int version) const
+void SideWindowStyle::hideOutputWindow()
 {
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << VersionMarker;
-    stream << version;
-    QMapIterator<QAction*,SideActionState*> it(m_sideBar->m_actionStateMap);
-    while (it.hasNext()) {
-        it.next();
-        SideActionState *state = it.value();
-        stream << state->id;
-        stream << it.key()->isChecked();
-    }
-    return data;
-}
-
-bool SideWindowStyle::restoreToolsState(const QByteArray &state, int version)
-{
-    if (state.isEmpty())
-        return false;
-
-    QByteArray sd = state;
-    QDataStream stream(&sd, QIODevice::ReadOnly);
-    int marker, v;
-    stream >> marker;
-    stream >> v;
-    if (stream.status() != QDataStream::Ok || marker != VersionMarker || v != version)
-        return false;
-
-    QString id;
-    bool checked = false;
-    QMap<QString,bool> idMap;
-    while(!stream.atEnd()) {
-        stream >> id;
-        stream >> checked;
-        idMap.insert(id,checked);
-    }
-    if (stream.status() != QDataStream::Ok) {
-        return false;
-    }
-    QMapIterator<QAction*,SideActionState*> it(m_sideBar->m_actionStateMap);
-    while (it.hasNext()) {
-        it.next();
-        SideActionState *state = it.value();
-        bool bcheck = idMap.value(state->id);
-        if (bcheck) {
-            it.key()->setChecked(bcheck);
+    foreach(QAction *act, m_outputBar->m_actionStateMap.keys()) {
+        if (act->isChecked()) {
+            act->setChecked(false);
         }
     }
-    return true;
+}
+
+void SideWindowStyle::saveToolState()
+{
+}
+
+void SideWindowStyle::restoreToolsState()
+{
 }
 
 

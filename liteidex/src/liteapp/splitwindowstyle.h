@@ -62,41 +62,32 @@ struct SplitActionState
     QString  title;
 };
 
-struct SplitInitToolSate
-{
-    Qt::DockWidgetArea area;
-    bool               split;
-    bool               checked;
-};
-
-
 class SplitWindowStyle : public IWindowStyle
 {
     Q_OBJECT
 public:
-    SplitWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent = 0);
+    SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SplitWindowStyle();
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
-    QByteArray saveToolState(int version = 0) const;
-    bool loadInitToolState(const QByteArray &state, int version = 0);
-    bool restoreToolsState(const QByteArray &state, int version = 0);
+    void saveToolState();
+    void restoreToolsState();
 public slots:
     void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     void showOrHideToolWindow();
     void hideAllToolWindows();
+    void hideOutputWindow();
     void restoreToolWindows();
     void hideSideBar(bool b);
     void moveToolWindow(Qt::DockWidgetArea area, QAction *action,bool split = false);
 protected slots:
     void toggledAction(bool);
 protected:
+    LiteApi::IApplication *m_liteApp;
     QMainWindow *m_mainWindow;
     QMap<Qt::DockWidgetArea,SplitActionToolBar*> m_areaToolBar;
     QMap<QAction*,SplitActionState*> m_actStateMap;
-    QMap<QString,SplitInitToolSate> m_initIdStateMap;
-    QList<QString> m_initCheckedList;
     QStatusBar  *m_statusBar;
     QAction     *m_hideSideAct;
     QList<QAction*> m_hideActionList;

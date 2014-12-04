@@ -187,9 +187,10 @@ void SplitActionToolBar::dock2Visible(bool b)
 }
 
 
-SplitWindowStyle::SplitWindowStyle(QSize iconSize, QMainWindow *window, QObject *parent)
-    : IWindowStyle(parent), m_mainWindow(window)
+SplitWindowStyle::SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent)
+    : IWindowStyle(parent), m_liteApp(app), m_mainWindow(window)
 {
+    QSize iconSize = LiteApi::getToolBarIconSize(app);
     m_areaToolBar.insert(Qt::TopDockWidgetArea,new SplitActionToolBar(iconSize, m_mainWindow,Qt::TopDockWidgetArea));
     m_areaToolBar.insert(Qt::BottomDockWidgetArea,new SplitActionToolBar(iconSize, m_mainWindow,Qt::BottomDockWidgetArea));
     m_areaToolBar.insert(Qt::LeftDockWidgetArea,new SplitActionToolBar(iconSize, m_mainWindow,Qt::LeftDockWidgetArea));
@@ -296,11 +297,14 @@ void SplitWindowStyle::removeToolWindow(QAction *action)
 
 QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
 {
-    QMap<QString,SplitInitToolSate>::iterator it = m_initIdStateMap.find(id);
-    if (it != m_initIdStateMap.end()) {
-        area = it.value().area;
-        split = it.value().split;
-    }
+//    QMap<QString,SplitInitToolSate>::iterator it = m_initIdStateMap.find(id);
+//    if (it != m_initIdStateMap.end()) {
+//        area = it.value().area;
+//        split = it.value().split;
+//    }
+    area = (Qt::DockWidgetArea)m_liteApp->settings()->value("split_area/"+id,area).toInt();
+    split = m_liteApp->settings()->value("split_split/"+id,split).toBool();
+
 
     SplitActionToolBar *actToolBar = m_areaToolBar.value(area);
     QAction *action = new QAction(this);
@@ -389,6 +393,12 @@ void SplitWindowStyle::hideAllToolWindows()
     }
 }
 
+void SplitWindowStyle::hideOutputWindow()
+{
+    this->hideToolWindow(Qt::TopDockWidgetArea);
+    this->hideToolWindow(Qt::BottomDockWidgetArea);
+}
+
 void SplitWindowStyle::hideSideBar(bool b)
 {
     QMapIterator<Qt::DockWidgetArea,SplitActionToolBar*> it(m_areaToolBar);
@@ -400,40 +410,21 @@ void SplitWindowStyle::hideSideBar(bool b)
     }
 }
 
-static int VersionMarker = 0xffe0;
-
-QByteArray SplitWindowStyle::saveToolState(int version) const
+void SplitWindowStyle::saveToolState()
 {
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << VersionMarker;
-    stream << version;
-    QMapIterator<QAction*,SplitActionState*> it(m_actStateMap);
-    while (it.hasNext()) {
-        it.next();
-        SplitActionState *state = it.value();
-        stream << state->id;
-        stream << (int)state->area;
-        stream << state->split;
-        stream << it.key()->isChecked();
+    QMapIterator<QAction*,SplitActionState*> i(m_actStateMap);
+    while (i.hasNext()) {
+        i.next();
+        SplitActionState *state = i.value();
+        m_liteApp->settings()->setValue("split_area/"+state->id,state->area);
+        m_liteApp->settings()->setValue("split_split/"+state->id,state->split);
+        m_liteApp->settings()->setValue("split_check/"+state->id,i.key()->isChecked());
     }
-    return data;
 }
 
-bool SplitWindowStyle::restoreToolsState(const QByteArray &state, int version)
+void SplitWindowStyle::restoreToolsState()
 {
-    bool b = m_mainWindow->restoreState(state,version);
-    QMapIterator<QAction*,SplitActionState*> it(m_actStateMap);
-    while(it.hasNext()) {
-        it.next();
-        QMap<QString,SplitInitToolSate>::iterator find = m_initIdStateMap.find(it.value()->id);
-        if (find != m_initIdStateMap.end()) {
-            it.key()->setChecked(find.value().checked);
-        }
-    }
-    m_initIdStateMap.clear();
     m_hideSideAct->setChecked(m_areaToolBar.value(Qt::LeftDockWidgetArea)->toolBar->isHidden());
-    return b;
 }
 
 void SplitWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
@@ -443,35 +434,4 @@ void SplitWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
         bar->dock1->close();
         bar->dock2->close();
     }
-}
-
-bool SplitWindowStyle::loadInitToolState(const QByteArray &state, int version)
-{
-    if (state.isEmpty())
-        return false;
-
-    QByteArray sd = state;
-    QDataStream stream(&sd, QIODevice::ReadOnly);
-    int marker, v;
-    stream >> marker;
-    stream >> v;
-    if (stream.status() != QDataStream::Ok || marker != VersionMarker || v != version)
-        return false;
-
-    QString id;
-    SplitInitToolSate value;
-    int area;
-    while(!stream.atEnd()) {
-        stream >> id;
-        stream >> area;
-        value.area = (Qt::DockWidgetArea)area;
-        stream >> value.split;
-        stream >> value.checked;
-        m_initIdStateMap.insert(id,value);
-    }
-    if (stream.status() != QDataStream::Ok) {
-        m_initIdStateMap.clear();
-        return false;
-    }
-    return true;
 }

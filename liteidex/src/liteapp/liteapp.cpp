@@ -134,8 +134,8 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
-    //SplitWindowStyle *style = new SplitWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
-    SideWindowStyle *style = new SideWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
+    SplitWindowStyle *style = new SplitWindowStyle(this,m_mainwindow);
+    //SideWindowStyle *style = new SideWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
     m_mainwindow->setWindowStyle(style);
 
     m_toolWindowManager = new ToolWindowManager;
@@ -217,7 +217,7 @@ LiteApp::LiteApp()
     //m_projectManager->addFactory(new FolderProjectFactory(this,this));
 
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
-    connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideToolWindow()));
+    connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideOutputWindow()));
     connect(m_mainwindow,SIGNAL(fullScreenStateChanged(bool)),m_fullScreent,SLOT(setChecked(bool)));
 }
 
@@ -805,14 +805,12 @@ void LiteApp::loadState()
         m_mainwindow->resize(800,600);
     }
     m_mainwindow->restoreState(m_settings->value("liteapp/state").toByteArray());
-    m_mainwindow->restoreToolState(m_settings->value("liteapp/toolState").toByteArray());
 }
 
 void LiteApp::saveState()
 {
     m_settings->setValue("liteapp/geometry",m_mainwindow->saveGeometry());
     m_settings->setValue("liteapp/state",m_mainwindow->saveState());
-    m_settings->setValue("liteapp/toolState",m_mainwindow->saveToolState());
 }
 
 
