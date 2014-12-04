@@ -13,6 +13,7 @@
 		<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
 		<action id="Run" img="blue/run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
 		<action id="RunTerm" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(LITEIDESTUB) exec $(EDITOR_DIRNAME_GO) $(TARGETARGS)" output="false" readline="true"/>
+		<action id="RunTerm" os="macosx" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="/usr/bin/open" args="$(EDITOR_DIRNAME_GO)" output="false" readline="true"/>
 		<action id="FileRun" img="blue/filerun.png" key="Shift+Alt+R;Alt+F6" cmd="$(GO)" args="run $(EDITOR_NAME)" save="editor" output="true" codec="utf-8" readline="true"/>
 		<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Install" menu="Build" img="blue/install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
