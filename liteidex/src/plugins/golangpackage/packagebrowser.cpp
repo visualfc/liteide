@@ -112,7 +112,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"gopackbrowser",tr("Package Browser"),true);
-    connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(triggeredToolWindow(bool)));
+    connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledToolWindow(bool)));
     connect(m_goTool,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     connect(m_goTool,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
@@ -163,7 +163,7 @@ void PackageBrowser::appLoaded()
     }
 }
 
-void PackageBrowser::triggeredToolWindow(bool b)
+void PackageBrowser::toggledToolWindow(bool b)
 {
     if (b && !m_bLoaded) {
         this->reloadAll();
@@ -205,6 +205,7 @@ void PackageBrowser::reloadAll()
     m_goTool->setProcessEnvironment(env);
     m_goTool->setWorkDir(root);
     m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
+    //m_goTool->start_list_json();
 }
 
 void PackageBrowser::setupGopath()
@@ -382,12 +383,15 @@ void PackageBrowser::resetTree(const QByteArray &data)
     }
     QByteArray jsonData;
     foreach(QByteArray line, data.split('\n')) {
-        //bool bRoot = (data.path == LiteApi::getGoroot(m_liteApp));
         jsonData.append(line);
         if (line == "}") {
             QJson::Parser parser;
             bool ok = false;
             QVariant json = parser.parse(jsonData, &ok).toMap();
+            jsonData.clear();
+            if (!ok) {
+                continue;
+            }
             QVariantMap jsonMap = json.toMap();
             QString root = QDir::toNativeSeparators(jsonMap.value("Root").toString());
             if (root.isEmpty()) {
@@ -462,7 +466,6 @@ void PackageBrowser::resetTree(const QByteArray &data)
                 }
                 parent->appendRow(item);
             }
-            jsonData.clear();
         }
     }
     //load state

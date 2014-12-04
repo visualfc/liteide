@@ -41,12 +41,13 @@
 #endif
 //lite_memory_check_end
 
-ToolDockWidget::ToolDockWidget(QSize iconSize, QWidget *parent) :
+BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     QDockWidget(parent), current(0)
 {
     m_comboBox = new QComboBox;
     m_comboBox->setMinimumContentsLength(4);
-    m_comboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+    //m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    m_comboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     m_toolBar = new QToolBar(this);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
@@ -55,7 +56,7 @@ ToolDockWidget::ToolDockWidget(QSize iconSize, QWidget *parent) :
     m_toolBar->addWidget(m_comboBox);
 
     QWidget *spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     m_toolBar->addSeparator();
     m_spacerAct = m_toolBar->addWidget(spacer);
 
@@ -75,7 +76,123 @@ ToolDockWidget::ToolDockWidget(QSize iconSize, QWidget *parent) :
 */
 }
 
-void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
+void BaseDockWidget::setWindowTitle(const QString &text)
+{
+    QDockWidget::setWindowTitle(text);
+}
+
+QAction *BaseDockWidget::addWidget(QWidget *widget)
+{
+   return m_toolBar->insertWidget(m_closeAct,widget);
+}
+
+void BaseDockWidget::setToolMenu(QMenu *menu)
+{
+    QToolButton *btn = new QToolButton;
+    btn->setPopupMode(QToolButton::InstantPopup);
+    btn->setMenu(menu);
+
+    m_toolBar->insertWidget(m_closeAct,btn);
+}
+
+void BaseDockWidget::setWidgetActions(QList<QAction*> actions)
+{
+    foreach(QAction *action, m_widgetActions) {
+        m_toolBar->removeAction(action);
+    }
+    m_widgetActions = actions;
+    m_spacerAct->setVisible(!m_widgetActions.isEmpty());
+    foreach(QAction *action, m_widgetActions) {
+        m_toolBar->insertAction(m_spacerAct,action);
+        if (action->menu() != 0) {
+            QWidget *w = m_toolBar->widgetForAction(action);
+            QToolButton *btn = qobject_cast<QToolButton*>(w);
+            if (btn) {
+                btn->setPopupMode(QToolButton::InstantPopup);
+            }
+        }
+    }
+}
+
+QList<QAction *> BaseDockWidget::actions() const
+{
+    return m_actions;
+}
+
+void BaseDockWidget::removeAction(QAction *action)
+{
+    if (m_actions.removeAll(action)) {
+        if (action == current)
+            current = 0;
+        int index = m_comboBox->findData(action->objectName());
+        if (index >= 0) {
+            m_comboBox->removeItem(index);
+        }
+        QObject::disconnect(action, SIGNAL(changed()), this, SLOT(actionChanged()));
+    }
+}
+
+QAction * BaseDockWidget::checkedAction () const
+{
+    return current;
+}
+
+void BaseDockWidget::actionChanged()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    Q_ASSERT_X(action != 0, "ActionGroup::actionChanged", "internal error");
+    if (action->isChecked()) {
+        if (action != current) {
+            if(current)
+                current->setChecked(false);
+            current = action;
+            int index = m_comboBox->findData(action->objectName());
+            if (index >= 0) {
+                m_comboBox->setCurrentIndex(index);
+            }
+        }
+    } else if (action == current) {
+        current = 0;
+    }
+}
+
+void BaseDockWidget::activeComboBoxIndex(int index)
+{
+    if (index < 0 || index >= m_comboBox->count()) {
+        return;
+    }
+    QString objName = m_comboBox->itemData(index).toString();
+    foreach(QAction *act, m_actions) {
+        if (act->objectName() == objName) {
+            if (!act->isChecked()) {
+                act->setChecked(true);
+            }
+            break;
+        }
+    }
+}
+
+void BaseDockWidget::addAction(QAction *action, const QString &title)
+{
+    if(!m_actions.contains(action)) {
+        m_actions.append(action);
+        m_comboBox->addItem(title,action->objectName());
+        QObject::connect(action, SIGNAL(changed()), this, SLOT(actionChanged()));
+    }
+    if (current && current->isChecked()) {
+        current->setChecked(false);
+    }
+    if (action->isChecked()) {
+        current = action;
+    }
+}
+
+SplitDockWidget::SplitDockWidget(QSize iconSize, QWidget *parent) :
+    BaseDockWidget(iconSize,parent)
+{
+}
+
+void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
 {
     QMenu *moveMenu = new QMenu(tr("Move To"),this);
     if (area != Qt::TopDockWidgetArea) {
@@ -133,6 +250,14 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     }
     menu->addAction(moveMenu->menuAction());
 
+    if (area == Qt::BottomDockWidgetArea || area == Qt::TopDockWidgetArea) {
+        m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+        m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        QWidget *spacer = new QWidget;
+        spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        m_toolBar->insertWidget(m_closeAct,spacer);
+    }
+
     QToolButton *btn = new QToolButton(m_toolBar);
     btn->setPopupMode(QToolButton::InstantPopup);
     btn->setIcon(QIcon("icon:images/movemenu.png"));
@@ -143,7 +268,7 @@ void ToolDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     m_toolBar->insertWidget(m_closeAct,btn);
 }
 
-void ToolDockWidget::moveAction()
+void SplitDockWidget::moveAction()
 {
     QAction *action = static_cast<QAction*>(sender());
     if (!action) {
@@ -153,7 +278,7 @@ void ToolDockWidget::moveAction()
     emit moveActionTo(area,current,false);
 }
 
-void ToolDockWidget::moveActionSplit()
+void SplitDockWidget::moveActionSplit()
 {
     QAction *action = static_cast<QAction*>(sender());
     if (!action) {
@@ -163,7 +288,7 @@ void ToolDockWidget::moveActionSplit()
     emit moveActionTo(area,current,true);
 }
 
-void ToolDockWidget::splitAction()
+void SplitDockWidget::splitAction()
 {
     QAction *action = static_cast<QAction*>(sender());
     if (!action) {
@@ -173,7 +298,7 @@ void ToolDockWidget::splitAction()
     emit moveActionTo(area,current,true);
 }
 
-void ToolDockWidget::unsplitAction()
+void SplitDockWidget::unsplitAction()
 {
     QAction *action = static_cast<QAction*>(sender());
     if (!action) {
@@ -184,87 +309,94 @@ void ToolDockWidget::unsplitAction()
 }
 
 
-void ToolDockWidget::setWindowTitle(const QString &text)
+OutputDockWidget::OutputDockWidget(QSize iconSize, QWidget *parent) :
+    BaseDockWidget(iconSize,parent)
 {
-    QDockWidget::setWindowTitle(text);
+    m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    QWidget *spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    m_toolBar->insertWidget(m_closeAct,spacer);
 }
 
-QAction *ToolDockWidget::addWidget(QWidget *widget)
-{
-   return m_toolBar->insertWidget(m_closeAct,widget);
+void OutputDockWidget::createMenu(Qt::DockWidgetArea area)
+{    
+//    QMenu *moveMenu = new QMenu(tr("Move To"),this);
+//    QAction *act = new QAction(tr("SideBar"),this);
+//    act->setData(area);
+//    moveMenu->addAction(act);
+//    connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
+
+//    QMenu *menu = new QMenu(this);
+//    menu->addAction(moveMenu->menuAction());
+
+//    m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+//    m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+//    QWidget *spacer = new QWidget;
+//    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    m_toolBar->insertWidget(m_closeAct,spacer);
+
+//    QToolButton *btn = new QToolButton(m_toolBar);
+//    btn->setPopupMode(QToolButton::InstantPopup);
+//    btn->setIcon(QIcon("icon:images/movemenu.png"));
+//    btn->setMenu(menu);
+//    btn->setText(tr("Move To"));
+//    btn->setToolTip(tr("Move To"));
+//    //btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
+//    m_toolBar->insertWidget(m_closeAct,btn);
 }
 
-void ToolDockWidget::setToolMenu(QMenu *menu)
+void OutputDockWidget::moveAction()
 {
-    QToolButton *btn = new QToolButton;
+    QAction *action = static_cast<QAction*>(sender());
+    if (!action) {
+        return;
+    }
+    Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
+    emit moveActionTo(area,current);
+}
+
+SideDockWidget::SideDockWidget(QSize iconSize, QWidget *parent) :
+    BaseDockWidget(iconSize,parent)
+{
+}
+
+void SideDockWidget::createMenu(Qt::DockWidgetArea area)
+{
+//    QMenu *moveMenu = new QMenu(tr("Move To"),this);
+//    QAction *act = new QAction(tr("OutputBar"),this);
+//    act->setData(area);
+//    moveMenu->addAction(act);
+//    connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
+
+    m_menu = new QMenu(this);
+
+    QToolButton *btn = new QToolButton(m_toolBar);
     btn->setPopupMode(QToolButton::InstantPopup);
-    btn->setMenu(menu);
-
+    btn->setIcon(QIcon("icon:images/movemenu.png"));
+    btn->setMenu(m_menu);
+    btn->setText(tr("SideBar"));
+    btn->setToolTip(tr("Show SideBar"));
+    //btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
     m_toolBar->insertWidget(m_closeAct,btn);
 }
 
-void ToolDockWidget::setWidgetActions(QList<QAction*> actions)
+void SideDockWidget::moveAction()
 {
-    foreach(QAction *action, m_widgetActions) {
-        m_toolBar->removeAction(action);
+    QAction *action = static_cast<QAction*>(sender());
+    if (!action) {
+        return;
     }
-    m_widgetActions = actions;
-    m_spacerAct->setVisible(!m_widgetActions.isEmpty());
-    foreach(QAction *action, m_widgetActions) {
-        m_toolBar->insertAction(m_spacerAct,action);
-        if (action->menu() != 0) {
-            QWidget *w = m_toolBar->widgetForAction(action);
-            QToolButton *btn = qobject_cast<QToolButton*>(w);
-            if (btn) {
-                btn->setPopupMode(QToolButton::InstantPopup);
-            }
-        }
-    }
+    Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
+    emit moveActionTo(area,current);
 }
 
-QList<QAction *> ToolDockWidget::actions() const
+void SideDockWidget::actionChanged()
 {
-    return m_actions;
+
 }
 
-void ToolDockWidget::removeAction(QAction *action)
-{
-    if (m_actions.removeAll(action)) {
-        if (action == current)
-            current = 0;
-        int index = m_comboBox->findData(action->objectName());
-        if (index >= 0) {
-            m_comboBox->removeItem(index);
-        }
-        QObject::disconnect(action, SIGNAL(changed()), this, SLOT(actionChanged()));
-    }
-}
-
-QAction * ToolDockWidget::checkedAction () const
-{
-    return current;
-}
-
-void ToolDockWidget::actionChanged()
-{
-    QAction *action = qobject_cast<QAction*>(sender());
-    Q_ASSERT_X(action != 0, "ActionGroup::actionChanged", "internal error");
-    if (action->isChecked()) {
-        if (action != current) {
-            if(current)
-                current->setChecked(false);
-            current = action;
-            int index = m_comboBox->findData(action->objectName());
-            if (index >= 0) {
-                m_comboBox->setCurrentIndex(index);
-            }
-        }
-    } else if (action == current) {
-        current = 0;
-    }
-}
-
-void ToolDockWidget::activeComboBoxIndex(int index)
+void SideDockWidget::activeComboBoxIndex(int index)
 {
     if (index < 0 || index >= m_comboBox->count()) {
         return;
@@ -272,27 +404,40 @@ void ToolDockWidget::activeComboBoxIndex(int index)
     QString objName = m_comboBox->itemData(index).toString();
     foreach(QAction *act, m_actions) {
         if (act->objectName() == objName) {
-            if (!act->isChecked()) {
-                act->setChecked(true);
-            }
+            QAction *org = current.data();
+            current = act;
+            emit currenActionChanged(org,act);
             break;
         }
     }
 }
 
-void ToolDockWidget::addAction(QAction *action, const QString &title)
+void SideDockWidget::setCheckedAction(QAction *action)
 {
-    if(!m_actions.contains(action)) {
-        m_actions.append(action);
-        m_comboBox->addItem(title,action->objectName());
-        QObject::connect(action, SIGNAL(changed()), this, SLOT(actionChanged()));
-    }
-    if (current && current->isChecked()) {
-        current->setChecked(false);
-    }
-    if (action->isChecked()) {
-        current = action;
+    current = action;
+    for (int i = 0; i < m_comboBox->count(); i++) {
+        if (m_comboBox->itemText(i) == action->text()) {
+            m_comboBox->setCurrentIndex(i);
+            break;
+        }
     }
 }
 
+void SideDockWidget::setActions(const QList<QAction *> &actions)
+{
+    m_actions = actions;
+    m_comboBox->clear();
+    int cur = 0;
+    int index = 0;
+    m_menu->clear();
+    foreach (QAction *act, actions) {
+        m_comboBox->addItem(act->text(),act->objectName());
+        m_menu->addAction(act);
+        if (current && (current->objectName() == act->objectName())) {
+            cur = index;
+        }
+        index++;
+    }
+    m_comboBox->setCurrentIndex(cur);    
+}
 

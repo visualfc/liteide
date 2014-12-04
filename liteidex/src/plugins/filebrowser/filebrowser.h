@@ -25,12 +25,11 @@
 #define FILEBROWSER_H
 
 #include "liteapi/liteapi.h"
-#include "filesystem/filesystemwidget.h"
+#include "folderview/folderview.h"
 #include <QModelIndex>
 
 class QComboBox;
 class QLineEdit;
-
 class FileBrowser : public QObject
 {
     Q_OBJECT
@@ -51,12 +50,13 @@ protected slots:
     void openFolderInNewWindow();
     void addToFolders();
     void executeFile();
+    void doubleClicked(const QModelIndex &index);
 protected:
     void addFolderToRoot(const QString &path);
 protected:
     LiteApi::IApplication   *m_liteApp;
     QWidget                 *m_widget;
-    FileSystemWidget        *m_fileWidget;
+    FolderView        *m_folderView;
     //QComboBox   *m_filterCombo;
     QComboBox   *m_rootCombo;
     //QToolBar    *m_filterToolBar;
@@ -65,7 +65,6 @@ protected:
     QAction *m_showHideFilesAct;
     QMenu   *m_configMenu;
 protected:
-    QModelIndex m_contextIndex;
     QAction *m_toolWindowAct;
     QAction *m_cdupAct;
     QAction *m_setRootAct;

@@ -39,15 +39,22 @@ public:
     virtual QString filePath() const;
     virtual QProcessEnvironment& environment();
     virtual QStringList orgEnvLines() const;
+    virtual QMap<QString,QString> goEnvMap() const;
     virtual void reload();
+    void loadGoEnv();
 public:
     void loadEnvFile(QIODevice *dev);
     static void loadEnv(EnvManager *manager, const QString &filePath);
+protected slots:
+    void readStdout();
+    void readStderr();
 protected:
     QString m_filePath;
     QStringList m_orgEnvLines;
     QString m_id;
     QProcessEnvironment m_env;
+    QMap<QString,QString> m_goEnvMap;
+    QProcess *m_process;
 };
 
 class EnvManager : public LiteApi::IEnvManager
@@ -67,6 +74,7 @@ protected slots:
     void envActivated(QString);
     void editCurrentEnv();
     void editorSaved(LiteApi::IEditor*);
+    void goenvError(const QString &id, const QString &msg);
 public:
     void setCurrentEnv(LiteApi::IEnv *env);
     void addEnv(LiteApi::IEnv *build);

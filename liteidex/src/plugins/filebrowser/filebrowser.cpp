@@ -22,8 +22,6 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "filebrowser.h"
-#include "createfiledialog.h"
-#include "createdirdialog.h"
 #include "golangdocapi/golangdocapi.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
@@ -60,32 +58,6 @@
 #endif
 //lite_memory_check_end
 #endif
-
-//class QSortFileSystemProxyModel : public QSortFilterProxyModel
-//{
-//public:
-//    QSortFileSystemProxyModel(QObject *parent) :
-//        QSortFilterProxyModel(parent)
-//    {
-//    }
-//    virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const
-//    {
-//        QFileSystemModel *model = static_cast<QFileSystemModel*>(this->sourceModel());
-//        QFileInfo l = model->fileInfo(left);
-//        QFileInfo r = model->fileInfo(right);
-//        if (l.isDir() && r.isFile()) {
-//            return true;
-//        } else if (l.isFile() && r.isDir()) {
-//            return false;
-//        }
-//#ifdef Q_OS_WIN
-//        if (l.filePath().length() <= 3 || r.filePath().length() <= 3) {
-//            return l.filePath().at(0) < r.filePath().at(0);
-//        }
-//#endif
-//        return (l.fileName().compare(r.fileName(),Qt::CaseInsensitive) < 0);
-//    }
-//};
 
 FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
@@ -153,14 +125,14 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootToolBar->addSeparator();
     m_rootToolBar->addWidget(m_rootCombo);
 
-    m_fileWidget = new FileSystemWidget(false,m_liteApp);
-    m_fileWidget->setHideRoot(true);
-    m_fileWidget->treeView()->setRootIsDecorated(true);
-    m_fileWidget->model()->setFilter(filters);
+    m_folderView = new FolderView(m_liteApp);
+    m_folderView->setRootIsDecorated(true);
+    m_folderView->model()->setFilter(filters);
 
+    //m_fileWidget->treeView()->header()->setIn
     //mainLayout->addWidget(m_filterToolBar);
     mainLayout->addWidget(m_rootToolBar);
-    mainLayout->addWidget(m_fileWidget);
+    mainLayout->addWidget(m_folderView);
     m_widget->setLayout(mainLayout);
 
     m_setRootAct = new QAction(tr("Set As Root Folder"),this);
@@ -184,7 +156,8 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_rootCombo,SIGNAL(activated(QString)),this,SLOT(activatedRoot(QString)));
     connect(m_syncAct,SIGNAL(triggered(bool)),this,SLOT(syncFileModel(bool)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_fileWidget,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_folderView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_folderView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
 
     QString root = m_liteApp->settings()->value("FileBrowser/root","").toString();
     if (!root.isEmpty()) {
@@ -225,10 +198,13 @@ void FileBrowser::currentEditorChanged(LiteApi::IEditor *editor)
 
     addFolderToRoot(info.path());
 
-    QModelIndex index = m_fileWidget->model()->findPath(fileName);
-    if (index.isValid()) {
-        m_fileWidget->treeView()->setCurrentIndex(index);
+    QFileSystemModel *model = m_folderView->model();
+    QModelIndex index = model->index(fileName);
+    if (!index.isValid()) {
+        return;
     }
+    m_folderView->scrollTo(index,QAbstractItemView::EnsureVisible);
+    m_folderView->setCurrentIndex(index);
 }
 
 void FileBrowser::syncFileModel(bool b)
@@ -269,30 +245,30 @@ void FileBrowser::showHideFiles(bool b)
     if (isShowHideFiles() == b) {
         return;
     }
-    QDir::Filters filters = m_fileWidget->model()->filter();
+    QDir::Filters filters = m_folderView->model()->filter();
     if (b) {
         filters |= QDir::Hidden;
     } else {
         filters ^= QDir::Hidden;
     }
-    m_fileWidget->model()->setFilter(filters);
+    m_folderView->model()->setFilter(filters);
     m_liteApp->settings()->setValue(FILEBROWSER_SHOW_HIDDEN_FILES,b);
 }
 
 bool FileBrowser::isShowHideFiles() const
 {
-    return m_fileWidget->model()->filter() & QDir::Hidden;
+    return m_folderView->model()->filter() & QDir::Hidden;
 }
 
 void FileBrowser::openFolderInNewWindow()
 {
-    QDir dir = m_fileWidget->contextDir();
+    QDir dir = m_folderView->contextDir();
     m_liteApp->fileManager()->openFolderInNewWindow(dir.path());
 }
 
 void FileBrowser::addToFolders()
 {
-    QDir dir = m_fileWidget->contextDir();
+    QDir dir = m_folderView->contextDir();
     m_liteApp->fileManager()->addFolderList(dir.path());
 }
 
@@ -300,11 +276,19 @@ void FileBrowser::executeFile()
 {
     LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
     if (build) {
-        QFileInfo info = m_fileWidget->contextFileInfo();
+        QFileInfo info = m_folderView->contextFileInfo();
         QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
         if (!cmd.isEmpty()) {
             build->executeCommand(cmd,QString(),info.path(),true,true,false);
         }
+    }
+}
+
+void FileBrowser::doubleClicked(const QModelIndex &index)
+{
+    QFileInfo info = m_folderView->model()->fileInfo(index);
+    if (info.isFile()) {
+        m_liteApp->fileManager()->openEditor(info.filePath());
     }
 }
 
@@ -328,18 +312,18 @@ void FileBrowser::addFolderToRoot(const QString &path)
 
 void FileBrowser::setFolderToRoot()
 {
-    QDir dir = m_fileWidget->contextDir();
+    QDir dir = m_folderView->contextDir();
     addFolderToRoot(dir.path());
 }
 
 void FileBrowser::activatedRoot(QString path)
 {
-    m_fileWidget->setRootPath(path);
+    m_folderView->setRootPath(path);
 }
 
 void FileBrowser::cdUp()
 {
-    QString path = m_fileWidget->rootPath();
+    QString path = m_folderView->rootPath();
     if (path.isEmpty()) {
         return;
     }

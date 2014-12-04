@@ -549,7 +549,7 @@ ImportPkgTip::ImportPkgTip(LiteApi::IApplication *app, QObject *parent)
     m_infoLabel = new QLabel;
     m_pkgLabel = new QLabel;
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->setMargin(4);
+    layout->setMargin(0);
     layout->addWidget(m_infoLabel);
     layout->addWidget(m_pkgLabel);
     m_popup->setLayout(layout);

@@ -82,7 +82,7 @@ QSplitter *MainWindow::splitter()
 void MainWindow::setWindowStyle(IWindowStyle *style)
 {
     ToolMainWindow::setWindowStyle(style);
-    loadInitToolState(m_liteApp->settings()->value("liteapp/toolState").toByteArray());
+    //loadInitToolState(m_liteApp->settings()->value("liteapp/toolState").toByteArray());
 }
 
 MainWindow::~MainWindow()

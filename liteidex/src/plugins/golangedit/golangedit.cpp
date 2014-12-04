@@ -268,6 +268,7 @@ void GolangEdit::editorFindInfo()
     }
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
+
     m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
     m_findInfoProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -info .").

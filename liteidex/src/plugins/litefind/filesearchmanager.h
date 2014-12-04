@@ -46,6 +46,7 @@ public slots:
     void currentSearchItemChanged(int);
     void findStarted();
     void findFinished(bool);
+    void findError(const QString &error);
     void findResult(const LiteApi::FileSearchResult &result);
     void doReplace(const QString &text, const QList<Find::SearchResultItem> &items, bool preserveCase);
     void searchTextChanged(const QString &text);

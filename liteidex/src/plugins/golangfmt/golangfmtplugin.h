@@ -44,6 +44,7 @@ protected slots:
 protected:
     LiteApi::IApplication *m_liteApp;
     QAction   *m_gofmtAct;
+    QAction   *m_goimportsAct;
     QAction   *m_goplayAct;
     LiteApi::IEditor *m_playEditor;
     QToolButton *m_fmtBtn;
@@ -62,7 +63,7 @@ public:
         m_info->setId("plugin/golangfmt");
         m_info->setName("GolangFmt");
         m_info->setAuthor("visualfc");
-        m_info->setVer("x24.1");
+        m_info->setVer("X25");
         m_info->setInfo("Golang Format Support");
     }
 };

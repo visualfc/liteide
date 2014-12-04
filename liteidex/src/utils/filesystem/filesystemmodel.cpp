@@ -81,11 +81,11 @@ QList<FileNode*>* FileNode::children()
 {
     if (m_children == 0) {
         m_children = new QList<FileNode*>();
-        bool isRoot = false;
+        //bool isRoot = false;
         if (!m_path.isEmpty()) {
             QFileInfo info(m_path);
             if (info.isDir()) {
-                isRoot = info.isRoot();
+            //    isRoot = info.isRoot();
                 QDir dir(m_path);
                 foreach(QFileInfo childInfo, dir.entryInfoList(this->m_model->filter(),this->m_model->dirSort())) {
                     if (!this->m_model->isShowHideFiles() && childInfo.isDir() && childInfo.fileName().startsWith(".")) {

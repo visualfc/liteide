@@ -63,6 +63,7 @@ signals:
     void findStarted();
     void findFinished(bool b = true);
     void findResult(const LiteApi::FileSearchResult &result);
+    void findError(const QString &error);
 };
 
 class IFileSearchManager : public IManager

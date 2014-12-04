@@ -34,21 +34,21 @@
 //lite_memory_check_end
 
 FolderProject::FolderProject(IApplication *app) :
-    m_liteApp(app), m_widget(0)
+    m_liteApp(app), m_folderView(0)
 {
-    m_widget = new FileSystemWidget(true,app);
+    m_folderView = new FolderListView(app);
 }
 
 FolderProject::~FolderProject()
 {
-    if (m_widget) {
-        delete m_widget;
+    if (m_folderView) {
+        delete m_folderView;
     }
 }
 
 QWidget *FolderProject::widget()
 {
-    return m_widget;
+    return m_folderView;
 }
 
 QString FolderProject::name() const
@@ -58,7 +58,11 @@ QString FolderProject::name() const
 
 QString FolderProject::filePath() const
 {
-    return m_widget->startPath();
+    QStringList paths = m_folderView->rootPathList();
+    if (!paths.isEmpty()) {
+        return paths[0];
+    }
+    return QString();
 }
 
 QString FolderProject::mimeType() const
@@ -68,22 +72,22 @@ QString FolderProject::mimeType() const
 
 void FolderProject::openFolder(const QString &folder)
 {
-    m_widget->setRootPath(folder);
+    m_folderView->setRootPathList(QStringList() << folder);
 }
 
 void FolderProject::appendFolder(const QString &folder)
 {
-    m_widget->addRootPath(folder);
+    m_folderView->addRootPath(folder);
 }
 
 void FolderProject::clear()
 {
-    m_widget->clear();
+    m_folderView->clear();
 }
 
 QStringList FolderProject::folderList() const
 {
-    return m_widget->rootPathList();
+    return m_folderView->rootPathList();
 }
 
 QStringList FolderProject::fileNameList() const

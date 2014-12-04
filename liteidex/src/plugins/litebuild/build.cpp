@@ -213,6 +213,36 @@ void Build::setWork(const QString &work)
 
 void Build::appendAction(BuildAction *act)
 {
+    for (int i = 0; i < m_actionList.size(); i++) {
+        BuildAction *ba = m_actionList[i];
+        if (ba->id() == act->id()) {
+#ifdef Q_OS_MAC
+                if (act->os().contains("macosx",Qt::CaseInsensitive)) {
+                    m_actionList[i] = act;
+                    delete ba;
+                }
+#endif
+#ifdef Q_OS_WIN
+                if (act->os().contains("windows",Qt::CaseInsensitive)) {
+                    m_actionList[i] = act;
+                    delete ba;
+                }
+#endif
+#ifdef Q_OS_LINUX
+                if (act->os().contains("linux",Qt::CaseInsensitive)) {
+                    m_actionList[i] = act;
+                    delete ba;
+                }
+#endif
+#ifdef Q_OS_FREEBSD
+                if (act->os().contains("freebsd",Qt::CaseInsensitive)) {
+                    m_actionList[i] = act;
+                    delete ba;
+                }
+#endif
+                return;
+        }
+    }
     m_actionList.append(act);
 }
 
@@ -278,6 +308,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
             } else if (reader.name() == "action" && act == 0 && build != 0) {
                 act = new BuildAction;
                 act->setId(attrs.value("id").toString());
+                act->setOs(attrs.value("os").toString());
                 act->setMenu(attrs.value("menu").toString());
                 act->setKey(attrs.value("key").toString());
                 act->setCmd(attrs.value("cmd").toString());

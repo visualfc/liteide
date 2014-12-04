@@ -49,7 +49,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<JsonEditPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/JsonEdit");
-        m_info->setVer("x21");
+        m_info->setVer("X21");
         m_info->setName("JsonEdit");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Json Edit Support");

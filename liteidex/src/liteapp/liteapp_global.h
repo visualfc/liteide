@@ -40,6 +40,7 @@
 #define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
 #define LITEAPP_AUTOLOADLASTSESSION "LiteApp/AutoLoadLastSession"
 #define LITEAPP_LANGUAGE "General/Language"
+#define LITEAPP_STYLE "LiteApp/WindowStyle"
 #define LITEAPP_SPLASHVISIBLE "LiteApp/SplashVisible"
 #define LITEAPP_WELCOMEPAGEVISIBLE "General/WelcomePageVisible"
 #define LITEAPP_TOOLBARICONSIZE "General/ToolBarIconSize"

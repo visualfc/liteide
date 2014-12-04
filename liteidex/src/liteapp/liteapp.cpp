@@ -41,6 +41,7 @@
 #include "macsupport.h"
 #endif
 #include "splitwindowstyle.h"
+#include "sidewindowstyle.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -64,7 +65,7 @@
 #endif
 //lite_memory_check_end
 
-#define LITEIDE_VERSION "X24.3"
+#define LITEIDE_VERSION "X25"
 
 QString LiteApp::getRootPath()
 {
@@ -133,8 +134,15 @@ LiteApp::LiteApp()
     }
     m_extension = new Extension;
     m_mainwindow = new MainWindow(this);
-    SplitWindowStyle *style = new SplitWindowStyle(LiteApi::getToolBarIconSize(this),m_mainwindow);
-    m_mainwindow->setWindowStyle(style);
+
+    QString style = this->settings()->value(LITEAPP_STYLE,"sidebar").toString();
+    if (style == "splitter") {
+        SplitWindowStyle *style = new SplitWindowStyle(this,m_mainwindow);
+        m_mainwindow->setWindowStyle(style);
+    } else {
+        SideWindowStyle *style = new SideWindowStyle(this,m_mainwindow);
+        m_mainwindow->setWindowStyle(style);
+    }
 
     m_toolWindowManager = new ToolWindowManager;
     m_htmlWidgetManager = new HtmlWidgetManager;
@@ -215,7 +223,7 @@ LiteApp::LiteApp()
     //m_projectManager->addFactory(new FolderProjectFactory(this,this));
 
     connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
-    connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideToolWindow()));
+    connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideOutputWindow()));
     connect(m_mainwindow,SIGNAL(fullScreenStateChanged(bool)),m_fullScreent,SLOT(setChecked(bool)));
 }
 
@@ -809,7 +817,6 @@ void LiteApp::saveState()
 {
     m_settings->setValue("liteapp/geometry",m_mainwindow->saveGeometry());
     m_settings->setValue("liteapp/state",m_mainwindow->saveState());
-    m_settings->setValue("liteapp/toolState",m_mainwindow->saveToolState());
 }
 
 

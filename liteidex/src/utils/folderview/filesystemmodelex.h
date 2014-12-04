@@ -18,35 +18,24 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: createfiledialog.h
+// Module: filesystemmodelex.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef CREATEFILEDIALOG_H
-#define CREATEFILEDIALOG_H
+#ifndef FILESYSTEMMODELEX_H
+#define FILESYSTEMMODELEX_H
 
-#include <QDialog>
+#include <QFileSystemModel>
 
-namespace Ui {
-    class CreateFileDialog;
-}
-
-class CreateFileDialog : public QDialog
+class FolderListModel;
+class FileSystemModelEx : public QFileSystemModel
 {
     Q_OBJECT
-
 public:
-    explicit CreateFileDialog(QWidget *parent = 0);
-    ~CreateFileDialog();
-    void setDirectory(const QString &path);
-    QString getFileName() const;
-    bool isOpenEditor() const { return m_bOpenEditor; }
-private slots:
-    void on_createButton_clicked();
-    void on_editButton_clicked();
-    void on_cancelButton_clicked();
-private:
-    Ui::CreateFileDialog *ui;
-    bool    m_bOpenEditor;
+    explicit FileSystemModelEx(QObject *parent = 0);
+    int columnCount(const QModelIndex &) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    friend class FolderListModel;
+    static QString fileSize(qint64 bytes);
 };
 
-#endif // CREATEFILEDIALOG_H
+#endif // FILESYSTEMMODELEX_H

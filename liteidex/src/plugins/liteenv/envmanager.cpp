@@ -23,6 +23,7 @@
 
 #include "envmanager.h"
 #include "liteenv_global.h"
+#include "fileutil/fileutil.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -33,6 +34,7 @@
 #include <QLabel>
 #include <QAction>
 #include <QSysInfo>
+#include <QProcess>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -48,6 +50,7 @@ Env::Env(QObject *parent) :
     LiteApi::IEnv(parent)
 {
     m_env = QProcessEnvironment::systemEnvironment();
+    m_process = 0;
 }
 
 QString Env::id() const
@@ -70,6 +73,11 @@ QStringList Env::orgEnvLines() const
     return m_orgEnvLines;
 }
 
+QMap<QString, QString> Env::goEnvMap() const
+{
+    return m_goEnvMap;
+}
+
 void Env::reload()
 {
     if (m_filePath.isEmpty()) {
@@ -81,6 +89,35 @@ void Env::reload()
     }
     loadEnvFile(&f);
     f.close();
+    loadGoEnv();
+}
+
+void Env::loadGoEnv()
+{
+    if (!m_process) {
+        m_process = new QProcess(this);
+        connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdout()));
+        connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStderr()));
+    }
+    if (m_process->state() != QProcess::NotRunning) {
+        m_process->kill();
+        m_process->waitForFinished(100);
+    }
+    m_goEnvMap.clear();
+    QString go = FileUtil::lookPath("go",m_env,false);
+    if (go.isEmpty()) {
+        QString goroot = m_env.value("GOROOT");
+        if (goroot.isEmpty()) {
+            goroot = LiteApi::getDefaultGOROOT();
+        }
+        go = FileUtil::lookPathInDir("go",goroot+"/bin");
+        if (go.isEmpty()) {
+            emit goenvError(m_id,"cannot find go in PATH");
+            return;
+        }
+    }
+    m_process->setProcessEnvironment(m_env);
+    m_process->start("go",QStringList() << "env");
 }
 
 void Env::loadEnvFile(QIODevice *dev)
@@ -137,6 +174,34 @@ void Env::loadEnv(EnvManager *manager, const QString &filePath)
     manager->addEnv(env);
 }
 
+void Env::readStdout()
+{
+    QByteArray data = m_process->readAllStandardOutput();
+// set GOARCH=amd64
+// GOARCH="amd64"
+    foreach (QByteArray line, data.split('\n')) {
+        QString info = QString::fromUtf8(line).trimmed();
+        if (info.startsWith("set ")) {
+            info = info.mid(4);
+        }
+        int index = info.indexOf("=");
+        if (index > 0) {
+            QString key = info.left(index);
+            QString value = info.right(info.length()-index-1);
+            if (value.startsWith("\"") && value.endsWith("\"")) {
+                value = value.mid(1,value.length()-2);
+            }
+            m_goEnvMap[key] = value;
+        }
+    }
+}
+
+void Env::readStderr()
+{
+    QByteArray data = m_process->readAllStandardError();
+    emit goenvError(m_id,QString::fromUtf8(data));
+}
+
 EnvManager::EnvManager(QObject *parent)
     : LiteApi::IEnvManager(parent),
       m_curEnv(0),m_toolBar(0)
@@ -156,10 +221,14 @@ EnvManager::~EnvManager()
 void EnvManager::addEnv(LiteApi::IEnv *env)
 {
     m_envList.append(env);
+    connect(env,SIGNAL(goenvError(QString,QString)),this,SLOT(goenvError(QString,QString)));
 }
 
 void EnvManager::removeEnv(LiteApi::IEnv *env)
 {
+    if (env) {
+        disconnect(env,0);
+    }
     m_envList.removeAll(env);
 }
 
@@ -329,4 +398,9 @@ void EnvManager::editorSaved(LiteApi::IEditor *editor)
         m_curEnv->reload();
         currentEnvChanged(m_curEnv);
     }
+}
+
+void EnvManager::goenvError(const QString &id, const QString &msg)
+{
+    m_liteApp->appendLog(QString("%1: go env error").arg(id),msg,true);
 }

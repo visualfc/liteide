@@ -113,6 +113,7 @@ void FileSearchManager::addFileSearch(LiteApi::IFileSearch *search)
     connect(search,SIGNAL(findFinished(bool)),this,SLOT(findFinished(bool)));
     connect(search,SIGNAL(findResult(LiteApi::FileSearchResult)),this,SLOT(findResult(LiteApi::FileSearchResult)));
     connect(search,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
+    connect(search,SIGNAL(findError(QString)),this,SLOT(findError(QString)));
 }
 
 LiteApi::IFileSearch *FileSearchManager::findFileSearch(const QString &mime)
@@ -185,6 +186,11 @@ void FileSearchManager::findStarted()
 void FileSearchManager::findFinished(bool)
 {
     m_searchResultWidget->finishSearch(false);
+}
+
+void FileSearchManager::findError(const QString &error)
+{
+    m_searchResultWidget->setInfo(m_currentSearch->displayName()+" Error:",error,error);
 }
 
 void FileSearchManager::findResult(const LiteApi::FileSearchResult &result)

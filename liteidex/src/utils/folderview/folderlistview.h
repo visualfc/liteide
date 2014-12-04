@@ -18,40 +18,35 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: createdirdialog.cpp
+// Module: folderlistview.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "createdirdialog.h"
-#include "ui_createdirdialog.h"
-#include <QDir>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#ifndef FOLDERLISTVIEW_H
+#define FOLDERLISTVIEW_H
 
-CreateDirDialog::CreateDirDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::CreateDirDialog)
-{
-    ui->setupUi(this);
-}
+#include "basefoldeview.h"
+#include "folderlistmodel.h"
 
-CreateDirDialog::~CreateDirDialog()
+class FolderListView : public BaseFolderView
 {
-    delete ui;
-}
+    Q_OBJECT
+public:
+    explicit FolderListView(LiteApi::IApplication *app, QWidget *parent = 0);
+    FolderListModel *model() const;
+public:
+    void addRootPath(const QString &path);
+    void setRootPathList(const QStringList &pathList);
+    QStringList rootPathList() const;
+    void clear();
+public slots:
+    void customContextMenuRequested(const QPoint &pos);
+    virtual void removeFolder();
+    virtual void removeFile();
+    virtual void addFolder();
+    virtual void closeFolder();
+    virtual void closeAllFolders();
+protected:
+    FolderListModel *m_model;
+};
 
-void CreateDirDialog::setDirectory(const QString &path)
-{
-    ui->dirLabel->setText(QDir::toNativeSeparators(path));
-}
-
-QString CreateDirDialog::getDirPath() const
-{
-    return ui->lineEdit->text();
-}
+#endif // FOLDERLISTVIEW_H

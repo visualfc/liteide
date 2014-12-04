@@ -11,6 +11,7 @@ import (
 	"bytes"
 	"fmt"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/printer"
 	"go/token"
@@ -19,7 +20,7 @@ import (
 	"strconv"
 	"strings"
 
-	"code.google.com/p/go.tools/astutil"
+	"golang.org/x/tools/astutil"
 )
 
 // Options specifies options for processing files.
@@ -29,7 +30,8 @@ type Options struct {
 
 	Comments  bool // Print comments (true if nil *Options provided)
 	TabIndent bool // Use tabs for indent (true if nil *Options provided)
-	TabWidth  int  // Tab width (8 if nil *Options provided)
+	Format    bool
+	TabWidth  int // Tab width (8 if nil *Options provided)
 }
 
 // Process formats and adjusts imports for the provided file.
@@ -89,11 +91,12 @@ func Process(filename string, src []byte, opt *Options) ([]byte, error) {
 	if len(spacesBefore) > 0 {
 		out = addImportSpaces(bytes.NewReader(out), spacesBefore)
 	}
-
-	//out, err = format.Source(out)
-	//if err != nil {
-	//	return nil, err
-	//}
+	if opt.Format {
+		out, err = format.Source(out)
+		if err != nil {
+			return nil, err
+		}
+	}
 	return out, nil
 }
 

@@ -82,6 +82,16 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
             }
         }
     }
+    ui->styleComboBox->addItem(tr("SideBarStyle"),"sidebar");
+    ui->styleComboBox->addItem(tr("SplitterStyle"),"splitter");
+    QString style = m_liteApp->settings()->value(LITEAPP_STYLE,"sidebar").toString();
+    for (int i = 0; i < ui->styleComboBox->count(); i++) {
+        if (style == ui->styleComboBox->itemData(i).toString()) {
+            ui->styleComboBox->setCurrentIndex(i);
+            break;
+        }
+    }
+
     const QString &liteQssPath = m_liteApp->resourcePath()+"/liteapp/qss";
     QDir qssDir(liteQssPath);
     if (qssDir.exists()) {
@@ -177,6 +187,13 @@ void LiteAppOption::apply()
         QString lc = ui->langComboBox->itemData(index).toString();
         m_liteApp->settings()->setValue(LITEAPP_LANGUAGE,lc);
     }
+
+    index = ui->styleComboBox->currentIndex();
+    if (index >= 0 && index < ui->styleComboBox->count()) {
+        QString style = ui->styleComboBox->itemData(index).toString();
+        m_liteApp->settings()->setValue(LITEAPP_STYLE,style);
+    }
+
     QString max = ui->maxRecentLineEdit->text();
     m_liteApp->settings()->setValue(LITEAPP_MAXRECENTFILES,max);
     //bool b = ui->autoCloseProjecEditorsCheckBox->isChecked();

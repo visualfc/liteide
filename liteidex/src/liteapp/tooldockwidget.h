@@ -32,31 +32,23 @@
 
 class QLabel;
 
-class ToolDockWidget : public QDockWidget
+class BaseDockWidget : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit ToolDockWidget(QSize iconSize, QWidget *parent = 0);
-    QAction *addWidget(QWidget *widget);
-    void setWindowTitle(const QString &text);
-    QList<QAction *> actions() const;
-    void addAction(QAction *act, const QString &title);
-    void removeAction(QAction *act);
-    QAction * checkedAction () const;
-    void setToolMenu(QMenu *menu);
-    void setWidgetActions(QList<QAction*> actions);
-    void createMenu(Qt::DockWidgetArea area, bool split);
-signals:
-    void moveActionTo(Qt::DockWidgetArea, QAction*, bool);
+    explicit BaseDockWidget(QSize iconSize, QWidget *parent = 0);
+    virtual QAction *addWidget(QWidget *widget);
+    virtual void setWindowTitle(const QString &text);
+    virtual QList<QAction *> actions() const;
+    virtual QAction * checkedAction() const;
+    virtual void setToolMenu(QMenu *menu);
+    virtual void setWidgetActions(QList<QAction*> actions);
+    virtual void addAction(QAction *act, const QString &title);
+    virtual void removeAction(QAction *act);
 protected slots:
-    void moveAction();
-    void splitAction();
-    void unsplitAction();
-    void moveActionSplit();
-    void actionChanged();
-    void activeComboBoxIndex(int);
+    virtual void actionChanged();
+    virtual void activeComboBoxIndex(int);
 protected:
-    Qt::DockWidgetArea area;
     QToolBar *m_toolBar;
     QLabel   *m_titleLabel;
     QComboBox *m_comboBox;
@@ -67,5 +59,52 @@ protected:
     QList<QAction*> m_actions;
     QPointer<QAction> current;
 };
+
+class SplitDockWidget : public BaseDockWidget
+{
+    Q_OBJECT
+public:
+    explicit SplitDockWidget(QSize iconSize, QWidget *parent = 0);
+    void createMenu(Qt::DockWidgetArea area, bool split);
+signals:
+    void moveActionTo(Qt::DockWidgetArea, QAction*, bool);
+protected slots:
+    void moveAction();
+    void splitAction();
+    void unsplitAction();
+    void moveActionSplit();
+};
+
+class OutputDockWidget : public BaseDockWidget
+{
+    Q_OBJECT
+public:
+    explicit OutputDockWidget(QSize iconSize, QWidget *parent = 0);
+    void createMenu(Qt::DockWidgetArea area);
+signals:
+    void moveActionTo(Qt::DockWidgetArea, QAction*);
+protected slots:
+    void moveAction();
+};
+
+class SideDockWidget : public BaseDockWidget
+{
+    Q_OBJECT
+public:
+    explicit SideDockWidget(QSize iconSize, QWidget *parent = 0);
+    void createMenu(Qt::DockWidgetArea area);
+    void setCheckedAction(QAction *action);
+    void setActions(const QList<QAction*> &actions);
+signals:
+    void moveActionTo(Qt::DockWidgetArea, QAction*);
+    void currenActionChanged(QAction *org, QAction *act);
+protected slots:
+    void moveAction();
+    void actionChanged();
+    virtual void activeComboBoxIndex(int);
+protected:
+    QMenu *m_menu;
+};
+
 
 #endif // TOOLDOCKWIDGET_H

@@ -3,6 +3,7 @@ TEMPLATE = lib
 
 include(../../liteideplugin.pri)
 include(../../api/liteenvapi/liteenvapi.pri)
+include(../../utils/fileutil/fileutil.pri)
 
 DEFINES += LITEENV_LIBRARY
 

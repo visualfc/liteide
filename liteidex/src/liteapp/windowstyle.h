@@ -1,3 +1,26 @@
+/**************************************************************************
+** This file is part of LiteIDE
+**
+** Copyright (c) 2011-2014 LiteIDE Team. All rights reserved.
+**
+** This library is free software; you can redistribute it and/or
+** modify it under the terms of the GNU Lesser General Public
+** License as published by the Free Software Foundation; either
+** version 2.1 of the License, or (at your option) any later version.
+**
+** This library is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Lesser General Public License for more details.
+**
+** In addition, as a special exception,  that plugins developed for LiteIDE,
+** are allowed to remain closed sourced and can be distributed under any license .
+** These rights are included in the file LGPL_EXCEPTION.txt in this package.
+**
+**************************************************************************/
+// Module: windowstyle.h
+// Creator: visualfc <visualfc@gmail.com>
+
 #ifndef WINDOWSTYLE_H
 #define WINDOWSTYLE_H
 
@@ -12,11 +35,10 @@ public:
     virtual void removeToolWindow(QAction *action) = 0;
     virtual QAction *findToolWindow(QWidget *wiget) = 0;
     virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split) = 0;
-    virtual QByteArray saveToolState(int version = 0) const = 0;
-    virtual bool loadInitToolState(const QByteArray &state, int version = 0) = 0;
-    virtual bool restoreState(const QByteArray &state, int version = 0) = 0;
+    virtual void saveToolState() const = 0;
+    virtual void restoreToolsState() = 0;
 public slots:
-    virtual void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea) = 0;
+    virtual void hideOutputWindow() = 0;
     virtual void showOrHideToolWindow() = 0;
     virtual void hideAllToolWindows() = 0;
 };

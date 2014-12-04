@@ -37,14 +37,13 @@ public:
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
-    QByteArray saveToolState(int version = 0) const;
-    bool loadInitToolState(const QByteArray &state, int version = 0);
+    QByteArray saveState(int version = 0) const;
     bool restoreState(const QByteArray &state, int version = 0);
 public slots:
-    void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     void showOrHideToolWindow();
+    void hideOutputWindow();
     void hideAllToolWindows();
-    void moveToolWindow(Qt::DockWidgetArea area, QAction *action,bool split = false);    
+    void moveToolWindow(Qt::DockWidgetArea area, QAction *action,bool split = false);
 protected:
     IWindowStyle *m_windowStyle;
 };

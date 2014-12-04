@@ -42,7 +42,7 @@ GolangFmtOption::GolangFmtOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     bool diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     bool autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     bool syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();

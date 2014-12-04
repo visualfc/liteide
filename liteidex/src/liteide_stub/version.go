@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	liteide_stub_version = "1.0"
+	liteide_stub_version = "1.4"
 )
 
 var cmdVersion = &Command{

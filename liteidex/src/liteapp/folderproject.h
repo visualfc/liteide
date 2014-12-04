@@ -25,7 +25,7 @@
 #define FOLDERPROJECT_H
 
 #include "liteapi/liteapi.h"
-#include "filesystem/filesystemwidget.h"
+#include "folderview/folderlistview.h"
 
 using namespace LiteApi;
 
@@ -51,7 +51,7 @@ public:
     virtual void load();
 protected:
     IApplication *m_liteApp;
-    FileSystemWidget *m_widget;
+    FolderListView *m_folderView;
 };
 
 #endif // FOLDERPROJECT_H

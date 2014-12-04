@@ -51,7 +51,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<WebKitHtmlWidgetPlugin>
 #endif
 public:
     PluginFactory() {
-        m_info->setVer("x23");
+        m_info->setVer("X23");
         m_info->setId("plugin/WebKitHtmlWidget");
         m_info->setName("WebKitHtmlWidget");
         m_info->setAuthor("visualfc");

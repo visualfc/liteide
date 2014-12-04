@@ -44,7 +44,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<LiteTtyPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/LiteTty");
-        m_info->setVer("x19");
+        m_info->setVer("X19");
         m_info->setName("LiteTty");
         m_info->setAuthor("visualfc");
         m_info->setInfo("LiteIDE tty Util");

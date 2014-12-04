@@ -1816,12 +1816,24 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                     }
                 }
             }
+        } else if (keyText == "(" || keyText == "[") {
+            QTextCursor cursor = textCursor();
+            if (!cursor.atBlockEnd()) {
+                QString text = cursor.block().text();
+                if (text.at(cursor.positionInBlock()).isLetterOrNumber()) {
+                     QPlainTextEdit::keyPressEvent(e);
+                     return;
+                }
+            }
         }
         if (!mr.isNull()) {
             QTextCursor cursor = textCursor();
             if (this->checkIsMatchBraces(cursor,keyText)) {
                 cursor.beginEditBlock();
                 int pos = cursor.position();
+                if (cursor.hasSelection()) {
+                    pos = cursor.selectionStart();
+                }
                 cursor.insertText(keyText+mr);
                 cursor.setPosition(pos+1);
                 cursor.endEditBlock();

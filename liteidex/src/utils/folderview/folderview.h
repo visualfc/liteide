@@ -18,29 +18,30 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: createdirdialog.h
+// Module: folderview.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef CREATEDIRDIALOG_H
-#define CREATEDIRDIALOG_H
+#ifndef FOLDERVIEW_H
+#define FOLDERVIEW_H
 
-#include <QDialog>
+#include <QTreeView>
+#include <QFileSystemModel>
+#include "basefoldeview.h"
 
-namespace Ui {
-    class CreateDirDialog;
-}
-
-class CreateDirDialog : public QDialog
+class FolderView : public BaseFolderView
 {
     Q_OBJECT
-
 public:
-    explicit CreateDirDialog(QWidget *parent = 0);
-    ~CreateDirDialog();
-    void setDirectory(const QString &path);
-    QString getDirPath() const;
-private:
-    Ui::CreateDirDialog *ui;
+    explicit FolderView(LiteApi::IApplication *app, QWidget *parent = 0);
+    void setRootPath(const QString &path);
+    QString rootPath() const;
+    QFileSystemModel *model() const;
+public slots:
+    void customContextMenuRequested(const QPoint &pos);    
+    virtual void removeFolder();
+    virtual void removeFile();
+protected:
+    QFileSystemModel *m_model;
 };
 
-#endif // CREATEDIRDIALOG_H
+#endif // FOLDERVIEW_H

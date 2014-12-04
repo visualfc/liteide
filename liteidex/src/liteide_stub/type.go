@@ -22,8 +22,8 @@ import (
 	"strings"
 	"time"
 
-	"code.google.com/p/go.tools/go/gcimporter"
-	"code.google.com/p/go.tools/go/types"
+	"golang.org/x/tools/go/gcimporter"
+	"golang.org/x/tools/go/types"
 )
 
 /*
@@ -259,6 +259,16 @@ func (w *PkgWalker) isBinaryPkg(pkg string) bool {
 	return isStdPkg(pkg)
 }
 
+func (w *PkgWalker) importPath(path string, mode build.ImportMode) (*build.Package, error) {
+	if filepath.IsAbs(path) {
+		return w.context.ImportDir(path, 0)
+	}
+	if isStdPkg(path) {
+		return ImportStdPkg(w.context, path, mode)
+	}
+	return w.context.Import(path, "", mode)
+}
+
 func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg *types.Package, err error) {
 	defer func() {
 		err := recover()
@@ -282,11 +292,9 @@ func (w *PkgWalker) Import(parentDir string, name string, conf *PkgConfig) (pkg 
 		log.Println("parser pkg", name)
 	}
 
-	var bp *build.Package
-	if filepath.IsAbs(name) {
-		bp, err = w.context.ImportDir(name, 0)
-	} else {
-		bp, err = w.context.Import(name, "", 0)
+	bp, err := w.importPath(name, 0)
+	if err != nil {
+		return nil, err
 	}
 
 	checkName := name

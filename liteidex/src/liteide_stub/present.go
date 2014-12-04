@@ -13,7 +13,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"code.google.com/p/go.tools/present"
+	"golang.org/x/tools/present"
 )
 
 var cmdPresent = &Command{

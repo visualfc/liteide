@@ -40,8 +40,11 @@ public:
     virtual QString id() const = 0;
     virtual QString filePath() const = 0;
     virtual QStringList orgEnvLines() const = 0;
+    virtual QMap<QString,QString> goEnvMap() const = 0;
     virtual QProcessEnvironment& environment() = 0;
     virtual void reload() = 0;
+signals:
+    void goenvError(QString,QString);
 };
 
 class IEnvManager : public IManager
@@ -120,6 +123,18 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 #else
     QString sep = ":";
 #endif
+
+    IEnvManager *mgr = LiteApi::getEnvManager(app);
+    if (mgr) {
+        LiteApi::IEnv *ce = mgr->currentEnv();
+        if (ce) {
+            QMapIterator<QString,QString> i(ce->goEnvMap());
+            while(i.hasNext()) {
+                i.next();
+                env.insert(i.key(),i.value());
+            }
+        }
+    }
 
     QString goos = env.value("GOOS");
     if (goos.isEmpty()) {

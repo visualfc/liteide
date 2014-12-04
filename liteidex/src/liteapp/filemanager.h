@@ -25,12 +25,13 @@
 #define FILEMANAGER_H
 
 #include "liteapi/liteapi.h"
+#include <QModelIndex>
 
 using namespace LiteApi;
 
 class QFileSystemWatcher;
 class NewFileDialog;
-class FileSystemWidget;
+class FolderListView;
 class FileManager : public IFileManager
 {
     Q_OBJECT
@@ -61,6 +62,7 @@ public:
     QString openAllTypeFilter() const;
     QString openProjectTypeFilter() const;
     QString openEditorTypeFilter() const;
+    bool isShowHideFiles() const;
 protected:
     QString schemeKey(const QString &scheme) const;
 	QString schemeName(const QString &scheme) const;
@@ -85,9 +87,10 @@ public slots:
     void cleanRecent();
     void applyOption(QString);
     void showHideFiles(bool);
+    void doubleClickedFolderView(const QModelIndex &index);
 protected:
     NewFileDialog        *m_newFileDialog;
-    FileSystemWidget     *m_folderWidget;
+    FolderListView     *m_folderListView;
     QFileSystemWatcher   *m_fileWatcher;
     QMap<QString,QDateTime> m_fileStateMap;
     QStringList          m_changedFiles;
