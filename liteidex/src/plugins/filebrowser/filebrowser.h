@@ -25,10 +25,8 @@
 #define FILEBROWSER_H
 
 #include "liteapi/liteapi.h"
-#include "filesystem/filesystemwidget.h"
 #include "folderview/folderview.h"
 #include <QModelIndex>
-#include <QTimer>
 
 class QComboBox;
 class QLineEdit;

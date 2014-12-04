@@ -25,6 +25,7 @@
 #define FILEMANAGER_H
 
 #include "liteapi/liteapi.h"
+#include <QModelIndex>
 
 using namespace LiteApi;
 

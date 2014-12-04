@@ -25,7 +25,6 @@
 #include "newfiledialog.h"
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
-#include "filesystem/filesystemwidget.h"
 #include "folderview/folderlistview.h"
 #include "liteapp_global.h"
 
