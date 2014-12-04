@@ -44,6 +44,7 @@ protected slots:
 protected:
     LiteApi::IApplication *m_liteApp;
     QAction   *m_gofmtAct;
+    QAction   *m_goimportsAct;
     QAction   *m_goplayAct;
     LiteApi::IEditor *m_playEditor;
     QToolButton *m_fmtBtn;

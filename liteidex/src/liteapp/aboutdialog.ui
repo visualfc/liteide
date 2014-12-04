@@ -106,7 +106,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/kun.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/qian.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>

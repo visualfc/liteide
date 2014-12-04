@@ -60,7 +60,7 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(fmtFinish(bool,int,QString)));
 
-    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
@@ -76,7 +76,7 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,true).toBool();
+    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     if (!m_diff) {
@@ -90,7 +90,7 @@ void GolangFmt::applyOption(QString id)
     m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
 }
 
-void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout)
+void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, int timeout, int fmtStyle)
 {
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!textEditor) {
@@ -124,17 +124,32 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
 
     QStringList args;
-    if (m_goimports) {
+    //format style
+    if (fmtStyle == 0) {
+        if (m_goimports) {
+            args << "goimports";
+        }
+        if (m_diff) {
+            args << "-d";
+        }
+        if (m_goimports) {
+            QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+            process.start(cmd,args);
+        } else {
+            process.start(m_gofmtCmd,args);
+        }
+    } else if (fmtStyle == 1) {
+        if (m_diff) {
+            args << "-d";
+        }
+        process.start(m_gofmtCmd,args);
+    } else if (fmtStyle == 2) {
         args << "goimports";
-    }
-    if (m_diff) {
-        args << "-d";
-    }
-    if (m_goimports) {
+        if (m_diff) {
+            args << "-d";
+        }
         QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
         process.start(cmd,args);
-    } else {
-        process.start(m_gofmtCmd,args);
     }
     if (!process.waitForStarted(timeout)) {
         m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
@@ -278,7 +293,17 @@ void GolangFmt::gofmt()
         return;
     }
     m_liteApp->editorManager()->saveEditor(editor,false);
-    syncfmtEditor(editor,false,true,-1);
+    syncfmtEditor(editor,false,true,30000,1);
+}
+
+void GolangFmt::goimports()
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    m_liteApp->editorManager()->saveEditor(editor,false);
+    syncfmtEditor(editor,false,true,30000,2);
 }
 
 void GolangFmt::fmtStarted()

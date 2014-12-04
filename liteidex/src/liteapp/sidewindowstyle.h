@@ -48,6 +48,7 @@ public:
     void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
     void removeAction(QAction *action);
     QAction *findToolAction(QWidget *widget);
+    void updateAction(QAction *action);
 signals:
     void moveActionTo(Qt::DockWidgetArea,QAction*);
 protected slots:
@@ -64,7 +65,6 @@ public:
     QList<SideDockWidget*> m_dockList;
     QMap<QAction*,SideActionState*> m_actionStateMap;
     bool bHideToolBar;
-    void updateAction(QAction *action);
 };
 
 struct OutputActionState

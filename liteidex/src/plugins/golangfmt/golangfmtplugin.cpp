@@ -54,16 +54,19 @@ bool GolangFmtPlugin::load(LiteApi::IApplication *app)
     app->optionManager()->addFactory(new GolangFmtOptionFactory(app,this));
 
     m_fmt = new GolangFmt(app,this);
-    m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code"),this);
+    m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code (gofmt)"),this);
+    m_goimportsAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code (goimports)"),this);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoFmt");
 
-    actionContext->regAction(m_gofmtAct,"Gofmt","Shift+F7");
+    actionContext->regAction(m_gofmtAct,"Gofmt","Ctrl+I");
+    actionContext->regAction(m_goimportsAct,"GoImports","Ctrl+Alt+I");
 
     m_goplayAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code"),this);
-    actionContext->regAction(m_goplayAct,"Goplayfmt","Shift+F7");
+    actionContext->regAction(m_goplayAct,"Goplayfmt","Ctrl+I");
 
     connect(m_gofmtAct,SIGNAL(triggered()),m_fmt,SLOT(gofmt()));
+    connect(m_goimportsAct,SIGNAL(triggered()),m_fmt,SLOT(goimports()));
     connect(m_goplayAct,SIGNAL(triggered()),this,SLOT(goplayFmt()));
 
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
@@ -114,11 +117,13 @@ void GolangFmtPlugin::editorCreated(LiteApi::IEditor *editor)
     if (menu) {
         menu->addSeparator();
         menu->addAction(m_gofmtAct);
+        menu->addAction(m_goimportsAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
         menu->addSeparator();
         menu->addAction(m_gofmtAct);
+        menu->addAction(m_goimportsAct);
     }
 }
 

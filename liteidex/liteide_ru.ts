@@ -190,166 +190,179 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
 </context>
 <context>
+    <name>BaseDockWidget</name>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="63"/>
+        <source>Hide</source>
+        <translation type="unfinished">Скрыть</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="64"/>
+        <source>Hide Tool Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BaseFolderView</name>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="40"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="63"/>
         <source>Open File</source>
         <translation type="unfinished">Открыть файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="41"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="64"/>
         <source>New File...</source>
         <translation type="unfinished">Новый файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="42"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="65"/>
         <source>New File Wizard...</source>
         <translation type="unfinished">Мастер создания файла...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="43"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="66"/>
         <source>Rename File...</source>
         <translation type="unfinished">Переименовать файл...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="44"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="175"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="180"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="67"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="198"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="203"/>
         <source>Delete File</source>
         <translation type="unfinished">Удалить файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="46"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="69"/>
         <source>New Folder...</source>
         <translation type="unfinished">Новая папка</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="47"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="70"/>
         <source>Rename Folder...</source>
         <translation type="unfinished">Переименовать папку...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="48"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="250"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="71"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="267"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="273"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Удалить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="50"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
         <source>Open Terminal Here</source>
         <translation type="unfinished">Открыть терминал в этой папке</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="51"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
         <source>Open Explorer Here</source>
         <translation type="unfinished">Открыть папку в проводнике</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="53"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
         <source>View Godoc Here</source>
         <translation type="unfinished">Открыть Godoc</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="55"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
         <source>Add Folder...</source>
         <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="56"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>Close Folder</source>
         <translation type="unfinished">Закрыть папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="58"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
         <source>Close All Folders</source>
         <translation type="unfinished">Закрыть все папки</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="119"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="132"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="142"/>
         <source>Create File</source>
         <translation type="unfinished">Создание файла</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="110"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="133"/>
         <source>A file with that name already exists!</source>
         <translation type="unfinished">Файл уже существует!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="120"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="143"/>
         <source>Failed to create the file!</source>
         <translation type="unfinished">Ошибка при создании файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="150"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="156"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="161"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="173"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="179"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="184"/>
         <source>Rename File</source>
         <translation type="unfinished">Переименовать файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="150"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="173"/>
         <source>New Name:</source>
         <translation type="unfinished">Новое имя:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="157"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="162"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="180"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="185"/>
         <source>Failed to rename the file!</source>
         <translation type="unfinished">Ошибка при переименовании файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="176"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="181"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="204"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="202"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="222"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="225"/>
         <source>Create Folder</source>
         <translation type="unfinished">Создание папки</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="200"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="223"/>
         <source>A folder with that name already exists!</source>
         <translation type="unfinished">Папка уже существует!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="203"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="226"/>
         <source>Failed to create the folder!</source>
         <translation type="unfinished">Ошибка при создании папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="216"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="225"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="230"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="248"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="253"/>
         <source>Rename Folder</source>
         <translation type="unfinished">Переименовать папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="216"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
         <source>Folder Name</source>
         <translation type="unfinished">Имя папки</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="226"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="231"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="249"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="254"/>
         <source>Failed to rename the folder!</source>
         <translation type="unfinished">Ошибка при переименовании папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="245"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="268"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="274"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
     </message>
@@ -408,27 +421,27 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="obsolete">Путь:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="62"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="94"/>
         <source>Create Folder</source>
         <translation type="unfinished">Создание папки</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="64"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="96"/>
         <source>Directory:</source>
         <translation type="unfinished">Папка:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="66"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="98"/>
         <source>Dir Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="74"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="106"/>
         <source>Create</source>
         <translation type="unfinished">Создать</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="75"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="107"/>
         <source>Cancel</source>
         <translation type="unfinished">Отменить</translation>
     </message>
@@ -436,33 +449,33 @@ LiteIDE это простая кросплатформенная среда ра
 <context>
     <name>CreateFileDialog</name>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="12"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="44"/>
         <source>Create File</source>
         <oldsource>Create File Dialog</oldsource>
         <translation type="unfinished">Создание файла</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="14"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="46"/>
         <source>Directory:</source>
         <translation type="unfinished">Папка:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="16"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="48"/>
         <source>File Name:</source>
         <translation type="unfinished">Имя файла:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="24"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="56"/>
         <source>Create</source>
         <translation type="unfinished">Создать</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="25"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="57"/>
         <source>Create and Edit</source>
         <translation type="unfinished">Создать и редактировать</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderdialog.cpp" line="26"/>
+        <location filename="src/utils/folderview/folderdialog.cpp" line="58"/>
         <source>Cancel</source>
         <translation type="unfinished">Отменить</translation>
     </message>
@@ -1099,12 +1112,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="222"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="228"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="225"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="231"/>
         <source>File is readonly</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1532,39 +1545,39 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="139"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="144"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="171"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="176"/>
         <source>Delete File</source>
         <translation type="unfinished">Удалить файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="140"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="172"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="145"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="177"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="157"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="162"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="189"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="194"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Удалить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="158"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="190"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="163"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="195"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="175"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="207"/>
         <source>Add Folder</source>
         <translation type="unfinished">Добавить папку</translation>
     </message>
@@ -1572,34 +1585,34 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FolderView</name>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="39"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="44"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="71"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="76"/>
         <source>Delete File</source>
         <translation type="unfinished">Удалить файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="40"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="72"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="45"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="77"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="57"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="62"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="89"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="94"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Удалить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="58"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="90"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="63"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="95"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
     </message>
@@ -1798,7 +1811,16 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     <name>GolangFmtPlugin</name>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="57"/>
-        <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="63"/>
+        <source>Format Code (gofmt)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="58"/>
+        <source>Format Code (goimports)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="65"/>
         <source>Format Code</source>
         <translation type="unfinished">Форматирование кода</translation>
     </message>
@@ -2070,117 +2092,117 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="201"/>
+        <location filename="src/liteapp/liteapp.cpp" line="209"/>
         <source>Event Log</source>
         <translation type="unfinished">Журнал</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="188"/>
+        <location filename="src/liteapp/liteapp.cpp" line="196"/>
         <source>Escape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="630"/>
+        <location filename="src/liteapp/liteapp.cpp" line="638"/>
         <source>Close File</source>
         <translation type="unfinished">Закрыть файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="633"/>
+        <location filename="src/liteapp/liteapp.cpp" line="641"/>
         <source>Close All Files</source>
         <translation type="unfinished">Закрыть все файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="643"/>
+        <location filename="src/liteapp/liteapp.cpp" line="651"/>
         <source>Save File</source>
         <translation type="unfinished">Сохранить файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="654"/>
         <source>Save File As...</source>
         <translation type="unfinished">Сохранить файл как...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="657"/>
         <source>Save All Files</source>
         <translation type="unfinished">Сохранить все файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="636"/>
+        <location filename="src/liteapp/liteapp.cpp" line="644"/>
         <source>Open Project</source>
         <translation>Открыть проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="203"/>
+        <location filename="src/liteapp/liteapp.cpp" line="211"/>
         <source>Options</source>
         <translation type="unfinished">Параметры</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="604"/>
+        <location filename="src/liteapp/liteapp.cpp" line="612"/>
         <source>New...</source>
         <translation type="unfinished">Новый...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="607"/>
+        <location filename="src/liteapp/liteapp.cpp" line="615"/>
         <source>Open File...</source>
         <translation type="unfinished">Открыть файл...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="610"/>
+        <location filename="src/liteapp/liteapp.cpp" line="618"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Открыть папку...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="613"/>
+        <location filename="src/liteapp/liteapp.cpp" line="621"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Открыть папку в новом окне...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="618"/>
+        <location filename="src/liteapp/liteapp.cpp" line="626"/>
         <source>Add Folder...</source>
         <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="621"/>
+        <location filename="src/liteapp/liteapp.cpp" line="629"/>
         <source>Close All Folders</source>
         <translation type="unfinished">Закрыть все папки</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="624"/>
+        <location filename="src/liteapp/liteapp.cpp" line="632"/>
         <source>New Window</source>
         <translation type="unfinished">Новое окно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="627"/>
+        <location filename="src/liteapp/liteapp.cpp" line="635"/>
         <source>Close Window</source>
         <translation type="unfinished">Закрыть окно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="638"/>
+        <location filename="src/liteapp/liteapp.cpp" line="646"/>
         <source>Save Project</source>
         <translation>Сохранить проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="640"/>
+        <location filename="src/liteapp/liteapp.cpp" line="648"/>
         <source>Close Project</source>
         <translation type="unfinished">Закрыть проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="652"/>
+        <location filename="src/liteapp/liteapp.cpp" line="660"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="655"/>
+        <location filename="src/liteapp/liteapp.cpp" line="663"/>
         <source>Full Screen</source>
         <translation type="unfinished">Полный экран</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="659"/>
+        <location filename="src/liteapp/liteapp.cpp" line="667"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">О программе Liteide</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="665"/>
+        <location filename="src/liteapp/liteapp.cpp" line="673"/>
         <source>About Plugins</source>
         <translation type="unfinished">О расширениях</translation>
     </message>
@@ -2214,101 +2236,106 @@ Success: %2.</oldsource>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="120"/>
+        <location filename="src/liteapp/liteappoption.ui" line="130"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation type="unfinished">Недавние файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="126"/>
+        <location filename="src/liteapp/liteappoption.ui" line="136"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation type="unfinished">Максимальное количество:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="104"/>
+        <location filename="src/liteapp/liteappoption.ui" line="114"/>
         <source>Monitoring files for modifications</source>
         <translation type="unfinished">Отслеживать внешние изменения файлов</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="110"/>
+        <location filename="src/liteapp/liteappoption.ui" line="78"/>
+        <source>Style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="120"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation type="unfinished">Автоматически перезагружать или закрывать окно редактирования, если файл был изменен/удален</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="173"/>
+        <location filename="src/liteapp/liteappoption.ui" line="183"/>
         <source>Session</source>
         <translation type="unfinished">Сессия</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="204"/>
+        <location filename="src/liteapp/liteappoption.ui" line="214"/>
         <source>Reload folders on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="231"/>
+        <location filename="src/liteapp/liteappoption.ui" line="241"/>
         <source>Reload files on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="276"/>
-        <location filename="src/liteapp/liteappoption.ui" line="282"/>
+        <location filename="src/liteapp/liteappoption.ui" line="286"/>
+        <location filename="src/liteapp/liteappoption.ui" line="292"/>
         <source>Display</source>
         <translation type="unfinished">Вид</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="288"/>
+        <location filename="src/liteapp/liteappoption.ui" line="298"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished">Показывать заставку при старте</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="295"/>
+        <location filename="src/liteapp/liteappoption.ui" line="305"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished">Показывать страницу &quot;Добро пожаловать&quot; на старте</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="302"/>
+        <location filename="src/liteapp/liteappoption.ui" line="312"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished">Показывать кнопку закрытия на каждой вкладке редактора</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="312"/>
+        <location filename="src/liteapp/liteappoption.ui" line="322"/>
         <source>Toolbar Icon Size</source>
         <translation type="unfinished">Размер иконок в панели инструментов</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="385"/>
+        <location filename="src/liteapp/liteappoption.ui" line="395"/>
         <source>Keyboard</source>
         <translation type="unfinished">Клавиатура</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="391"/>
+        <location filename="src/liteapp/liteappoption.ui" line="401"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation type="unfinished">Формат: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="403"/>
+        <location filename="src/liteapp/liteappoption.ui" line="413"/>
         <source>Hide standard commands</source>
         <translation type="unfinished">Спрятать стандартные команды</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="410"/>
+        <location filename="src/liteapp/liteappoption.ui" line="420"/>
         <source>Reset</source>
         <translation type="unfinished">Сбросить</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="417"/>
+        <location filename="src/liteapp/liteappoption.ui" line="427"/>
         <source>Reset All</source>
         <translation type="unfinished">Сбросить все</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="437"/>
+        <location filename="src/liteapp/liteappoption.ui" line="447"/>
         <source>Import...</source>
         <translation type="unfinished">Импорт...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="444"/>
+        <location filename="src/liteapp/liteappoption.ui" line="454"/>
         <source>Export...</source>
         <translation type="unfinished">Экспорт...</translation>
     </message>
@@ -2318,65 +2345,75 @@ Success: %2.</oldsource>
         <translation type="unfinished">Общие</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="78"/>
+        <location filename="src/liteapp/liteappoption.ui" line="88"/>
         <source>Theme:</source>
         <translation type="unfinished">Тема:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="179"/>
+        <location filename="src/liteapp/liteappoption.ui" line="189"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Загружать последнюю сессию при старте</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="256"/>
+        <location filename="src/liteapp/liteappoption.ui" line="266"/>
         <source>Language changes will take effect after LiteIDE is restarted.</source>
         <oldsource>The language change will take effect after a restart of LiteIDE.</oldsource>
         <translation type="unfinished">Язык будет изменён после перезапуска LiteIDE.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="127"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="85"/>
+        <source>SideBarStyle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.cpp" line="86"/>
+        <source>SplitterStyle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.cpp" line="137"/>
         <source>Command</source>
         <translation type="unfinished">Команда</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="128"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="138"/>
         <source>Label</source>
         <translation type="unfinished">Имя</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="129"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="139"/>
         <source>Shortcuts</source>
         <translation type="unfinished">Комбинация клавиш</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="130"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
         <source>Standard</source>
         <translation type="unfinished">Стандартная</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="390"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="407"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished">Импорт комбинаций клавиатуры</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="390"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="424"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="407"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="441"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished">Файл комбинаций клавиатуры (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="397"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="414"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished">Ошибка чтения комбинаций клавиатуры из %1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="424"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="441"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished">Экспорт комбинаций клавиатуры</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="435"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="452"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished">Ошибка записи комбинаций клавиатуры в %1!</translation>
     </message>
@@ -3741,27 +3778,27 @@ Do you want to replace it?</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="13"/>
+        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="46"/>
         <source>%1 TB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="15"/>
+        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="48"/>
         <source>%1 GB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="17"/>
+        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="50"/>
         <source>%1 MB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="19"/>
+        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="52"/>
         <source>%1 KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="20"/>
+        <location filename="src/utils/folderview/filesystemmodelex.cpp" line="53"/>
         <source>%1 bytes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3868,9 +3905,90 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>SideDockWidget</name>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="378"/>
+        <source>SideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="379"/>
+        <source>Show SideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SideWindowStyle</name>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="340"/>
+        <source>Hide Sidebars</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SplitDockWidget</name>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="197"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="265"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="266"/>
+        <source>Move To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="199"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="203"/>
+        <source>Top (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="209"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="213"/>
+        <source>Bottom (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="219"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="223"/>
+        <source>Left (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="229"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="233"/>
+        <source>Right (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="241"/>
+        <source>Unsplit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="246"/>
+        <source>Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SplitWindowStyle</name>
     <message>
-        <location filename="src/liteapp/splitwindowstyle.cpp" line="218"/>
+        <location filename="src/liteapp/splitwindowstyle.cpp" line="242"/>
         <source>Hide Sidebars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3914,76 +4032,8 @@ Do you want to replace it?</source>
 <context>
     <name>ToolDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="62"/>
         <source>Hide</source>
-        <translation type="unfinished">Скрыть</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="63"/>
-        <source>Hide Tool Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="80"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="140"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="141"/>
-        <source>Move To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="82"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="86"/>
-        <source>Top (Split)</source>
-        <oldsource>Top : Split</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="92"/>
-        <source>Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="96"/>
-        <source>Bottom (Split)</source>
-        <oldsource>Bottom : Split</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="102"/>
-        <source>Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="106"/>
-        <source>Left (Split)</source>
-        <oldsource>Left : Split</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="112"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="116"/>
-        <source>Right (Split)</source>
-        <oldsource>Right : Split</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="124"/>
-        <source>Unsplit</source>
-        <oldsource>UnSplit</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="129"/>
-        <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Скрыть</translation>
     </message>
 </context>
 <context>
