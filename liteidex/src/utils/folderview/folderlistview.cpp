@@ -172,7 +172,9 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
         menu.addAction(m_newFolderAct);
-        menu.addAction(m_closeFolerAct);
+        menu.addSeparator();
+        menu.addAction(m_reloadFolderAct);
+        menu.addAction(m_closeFolderAct);
         menu.addSeparator();
         if (hasGo) {
             menu.addAction(m_viewGodocAct);
@@ -282,6 +284,16 @@ void FolderListView::closeFolder()
         index = m_proxy->mapToSource(index);
     }
     m_model->removeRoot(index);
+}
+
+void FolderListView::reloadFolder()
+{
+    QModelIndex index = this->currentIndex();
+    if (m_proxy) {
+        index = m_proxy->mapToSource(index);
+    }
+    this->collapse(index);
+    m_model->reloadRoot(index);
 }
 
 void FolderListView::closeAllFolders()

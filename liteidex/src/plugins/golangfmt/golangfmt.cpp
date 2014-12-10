@@ -184,7 +184,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         errmsg.replace("<standard input>","");
         liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
         log.replace("<standard input>",info.filePath());
-        m_liteApp->appendLog("go code format error",log,true);
+        m_liteApp->appendLog("go code format error",log,fmtStyle == 0 ? false: true);
         return;
     }
     liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
@@ -277,11 +277,9 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
-    if (!m_goimports) {
-        m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
-        if (m_gofmtCmd.isEmpty()) {
-            m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
-        }
+    m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
+    if (m_gofmtCmd.isEmpty()) {
+        m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
     }
     m_process->setProcessEnvironment(env);
 }
@@ -393,7 +391,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
         errmsg.replace("<standard input>","");
         liteEditor->setNavigateHead(LiteApi::EditorNavigateError,"go code format error\n"+errmsg);
         log.replace("<standard input>",fileName);
-        m_liteApp->appendLog("go code format error",log,true);
+        m_liteApp->appendLog("go code format error",log,false);
     }
     m_data.clear();
 }

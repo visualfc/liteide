@@ -48,6 +48,7 @@ public slots:
     virtual void removeFile();
     virtual void addFolder();
     virtual void closeFolder();
+    virtual void reloadFolder();
     virtual void closeAllFolders();
 protected:
     QSortFilterProxyModel *m_proxy;

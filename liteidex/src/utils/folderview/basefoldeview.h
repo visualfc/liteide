@@ -50,6 +50,7 @@ public slots:
     virtual void viewGodoc();
     virtual void addFolder();
     virtual void closeFolder();
+    virtual void reloadFolder();
     virtual void closeAllFolders();
 protected:
     LiteApi::IApplication *m_liteApp;
@@ -67,7 +68,8 @@ protected:
     QAction *m_openExplorerAct;
     QAction *m_viewGodocAct;
     QAction *m_addFolderAct;
-    QAction *m_closeFolerAct;
+    QAction *m_closeFolderAct;
+    QAction *m_reloadFolderAct;
     QAction *m_closeAllFoldersAct;
 };
 

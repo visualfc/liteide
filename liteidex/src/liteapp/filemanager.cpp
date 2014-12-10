@@ -58,6 +58,7 @@ bool FileManager::initWithApp(IApplication *app)
     if (!IFileManager::initWithApp(app)) {
         return false;
     }
+
 #ifdef Q_OS_MAC
     m_folderListView = new FolderListView(true,m_liteApp);
 #else

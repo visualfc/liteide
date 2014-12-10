@@ -30,14 +30,12 @@
 namespace Ui {
     class AboutDialog;
 }
-
 class AboutDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit AboutDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     ~AboutDialog();
-
 private:
     Ui::AboutDialog *ui;
 };

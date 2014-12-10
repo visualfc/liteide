@@ -74,6 +74,7 @@ func runGoimports(cmd *Command, args []string) {
 	if goimportsTabWidth < 0 {
 		fmt.Fprintf(os.Stderr, "negative tabwidth %d\n", goimportsTabWidth)
 		exitCode = 2
+		os.Exit(exitCode)
 		return
 	}
 
@@ -89,23 +90,21 @@ func runGoimports(cmd *Command, args []string) {
 		if err := processFile("<standard input>", os.Stdin, os.Stdout, true); err != nil {
 			report(err)
 		}
-		return
-	}
-
-	for _, path := range args {
-		switch dir, err := os.Stat(path); {
-		case err != nil:
-			report(err)
-		case dir.IsDir():
-			walkDir(path)
-		default:
-			if err := processFile(path, nil, os.Stdout, false); err != nil {
+	} else {
+		for _, path := range args {
+			switch dir, err := os.Stat(path); {
+			case err != nil:
 				report(err)
+			case dir.IsDir():
+				walkDir(path)
+			default:
+				if err := processFile(path, nil, os.Stdout, false); err != nil {
+					report(err)
+				}
 			}
 		}
 	}
 	os.Exit(exitCode)
-
 }
 
 func isGoFile(f os.FileInfo) bool {

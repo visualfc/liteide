@@ -184,6 +184,24 @@ void FolderListModel::removeRoot(const QModelIndex &index)
     }
 }
 
+void FolderListModel::reloadRoot(const QModelIndex &index)
+{
+    QMutableListIterator<SourceModel> i(m_modelList);
+    int count = 0;
+    while (i.hasNext()) {
+        SourceModel s = i.next();
+        if (s.rootIndex == index) {
+            QModelIndex sourceIndex = s.model->setRootPath(s.rootPath);
+            s.rootSourceIndex = sourceIndex;
+            s.rootIndex = createIndex(count,0,sourceIndex.internalPointer());
+            m_indexMap.insert(sourceIndex.internalId(),s.model);
+            i.setValue(s);
+            break;
+        }
+        count++;
+    }
+}
+
 bool FolderListModel::isRootPath(const QString &path)
 {
     QString rootPath = QDir::cleanPath(QDir::fromNativeSeparators(path));

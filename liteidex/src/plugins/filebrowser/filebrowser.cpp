@@ -88,7 +88,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_syncAct = new QAction(/*QIcon("icon:filebrowser/images/sync.png"),*/tr("Synchronize with editor"),this);
     m_syncAct->setCheckable(true);
 
-    m_reloadAct = new QAction(QIcon("icon:filebrowser/images/reload.png"),tr("Reload current directory"),this);
+    m_reloadAct = new QAction(QIcon("icon:filebrowser/images/reload.png"),tr("Reload Folder"),this);
 
     m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
     m_showHideFilesAct->setCheckable(true);

@@ -51,6 +51,7 @@ public:
     QModelIndex addRootPath(const QString &path);
     void removeRootPath(const QString &path);
     void removeRoot(const QModelIndex &index);
+    void reloadRoot(const QModelIndex &index);
     bool isRootPath(const QString &path);
     QList<QModelIndex> rootIndexs() const;
     QStringList rootPathList() const;
