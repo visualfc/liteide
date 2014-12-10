@@ -60,7 +60,7 @@ bool FileManager::initWithApp(IApplication *app)
     }
 
 #ifdef Q_OS_MAC
-    m_folderListView = new FolderListView(false,m_liteApp);
+    m_folderListView = new FolderListView(true,m_liteApp);
 #else
     m_folderListView = new FolderListView(false,m_liteApp);
 #endif

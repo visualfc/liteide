@@ -274,7 +274,7 @@ QModelIndex FolderListModel::mapFromSource(const QModelIndex &sourceIndex) const
             break;
         }
     }
-    QModelIndex index = createIndex(sourceIndex.row(), sourceIndex.column(), sourceIndex.internalPointer());
+    QModelIndex index = createIndex(row, sourceIndex.column(), sourceIndex.internalPointer());
     m_indexMap.insert(sourceIndex.internalId(),(QAbstractItemModel*)sourceIndex.model());
     return index;
 }
@@ -292,7 +292,7 @@ QModelIndex FolderListModel::mapToSource(const QModelIndex &proxyIndex) const
         }
     }
     FileSystemModelEx *model = (FileSystemModelEx*)findSource(proxyIndex);
-    return model->createIndex(proxyIndex.row(), proxyIndex.column(), proxyIndex.internalPointer());
+    return model->createIndex(row, proxyIndex.column(), proxyIndex.internalPointer());
 }
 
 QString FolderListModel::filePath(const QModelIndex &index) const
@@ -756,13 +756,14 @@ void FolderListModel::sourceLayoutAboutToBeChanged()
     if (ignoreNextLayoutAboutToBeChanged)
         return;
 
-//    foreach(const QPersistentModelIndex &proxyPersistentIndex, this->persistentIndexList()) {
-//        proxyIndexes << proxyPersistentIndex;
+    foreach(const QPersistentModelIndex &proxyPersistentIndex, this->persistentIndexList()) {
+   //     qDebug() << proxyPersistentIndex << this->filePath(proxyPersistentIndex);
+        proxyIndexes << proxyPersistentIndex;
 //        Q_ASSERT(proxyPersistentIndex.isValid());
-//        const QPersistentModelIndex srcPersistentIndex = this->mapToSource(proxyPersistentIndex);
+        const QPersistentModelIndex srcPersistentIndex = this->mapToSource(proxyPersistentIndex);
 //        Q_ASSERT(srcPersistentIndex.isValid());
-//        layoutChangePersistentIndexes << srcPersistentIndex;
-//    }
+        layoutChangePersistentIndexes << srcPersistentIndex;
+    }
 
     this->layoutAboutToBeChanged();
 }
@@ -772,12 +773,12 @@ void FolderListModel::sourceLayoutChanged()
     if (ignoreNextLayoutChanged)
         return;
 
-//    for (int i = 0; i < proxyIndexes.size(); ++i) {
-//        this->changePersistentIndex(proxyIndexes.at(i), this->mapFromSource(layoutChangePersistentIndexes.at(i)));
-//    }
+    for (int i = 0; i < proxyIndexes.size(); ++i) {
+        this->changePersistentIndex(proxyIndexes.at(i), this->mapFromSource(layoutChangePersistentIndexes.at(i)));
+    }
 
-//    layoutChangePersistentIndexes.clear();
-//    proxyIndexes.clear();
+    layoutChangePersistentIndexes.clear();
+    proxyIndexes.clear();
 
     this->layoutChanged();
 }

@@ -36,7 +36,11 @@
 FolderProject::FolderProject(IApplication *app) :
     m_liteApp(app), m_folderView(0)
 {
-    m_folderView = new FolderListView(false,app);
+#ifdef Q_OS_MAC
+    m_folderView = new FolderListView(true,m_liteApp);
+#else
+    m_folderView = new FolderListView(false,m_liteApp);
+#endif
 }
 
 FolderProject::~FolderProject()

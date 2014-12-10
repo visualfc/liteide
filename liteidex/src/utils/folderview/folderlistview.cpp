@@ -53,6 +53,9 @@ public:
     virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const
     {
         FolderListModel *model = static_cast<FolderListModel*>(this->sourceModel());
+        if (model->isRootIndex(left) && model->isRootIndex(right)) {
+            return false;
+        }
         QFileInfo l = model->fileInfo(left);
         QFileInfo r = model->fileInfo(right);
         if (l.isDir() && r.isFile()) {
@@ -77,6 +80,7 @@ FolderListView::FolderListView(bool proxyMode, LiteApi::IApplication *app, QWidg
     if (proxyMode) {
         m_proxy = new FolderListProxyModel(this);
         m_proxy->setSourceModel(m_model);
+        m_proxy->sort(0);
         this->setModel(m_proxy);
     } else {
         m_proxy = 0;
@@ -289,10 +293,10 @@ void FolderListView::closeFolder()
 void FolderListView::reloadFolder()
 {
     QModelIndex index = this->currentIndex();
+    this->collapse(index);
     if (m_proxy) {
         index = m_proxy->mapToSource(index);
     }
-    this->collapse(index);
     m_model->reloadRoot(index);
 }
 
