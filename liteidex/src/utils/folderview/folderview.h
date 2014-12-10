@@ -29,11 +29,12 @@
 #include <QFileInfo>
 #include "basefoldeview.h"
 
+class QSortFilterProxyModel;
 class FolderView : public BaseFolderView
 {
     Q_OBJECT
 public:
-    explicit FolderView(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *parent = 0);
     void setRootPath(const QString &path);
     QString rootPath() const;
     void setFilter(QDir::Filters filters);
@@ -45,6 +46,8 @@ public slots:
     virtual void removeFolder();
     virtual void removeFile();
 protected:
+    bool m_proxyMode;
+    QSortFilterProxyModel *m_proxy;
     QFileSystemModel *m_model;
 };
 

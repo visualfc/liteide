@@ -124,15 +124,17 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootToolBar->addAction(m_cdupAct);
     m_rootToolBar->addSeparator();
     m_rootToolBar->addWidget(m_rootCombo);
-
-    m_folderView = new FolderView(m_liteApp);
+#ifdef Q_OS_MAC
+    m_folderView = new FolderView(true,m_liteApp);
+#else
+    m_folderView = new FolderView(false,m_liteApp);
+#endif
     m_folderView->setRootIsDecorated(true);
     m_folderView->setFilter(filters);
-
-    //m_fileWidget->treeView()->header()->setIn
     //mainLayout->addWidget(m_filterToolBar);
     mainLayout->addWidget(m_rootToolBar);
     mainLayout->addWidget(m_folderView);
+
     m_widget->setLayout(mainLayout);
 
     m_setRootAct = new QAction(tr("Set As Root Folder"),this);

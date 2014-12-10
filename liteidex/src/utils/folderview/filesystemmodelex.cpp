@@ -77,3 +77,8 @@ QVariant FileSystemModelEx::data(const QModelIndex &index, int role) const
     }
     return QFileSystemModel::data(index,role);
 }
+
+
+
+
+

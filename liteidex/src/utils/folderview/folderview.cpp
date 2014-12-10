@@ -24,6 +24,7 @@
 #include "folderview.h"
 #include "filesystemmodelex.h"
 #include <QMessageBox>
+#include <QSortFilterProxyModel>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -34,13 +35,44 @@
 #endif
 //lite_memory_check_end
 
-FolderView::FolderView(LiteApi::IApplication *app, QWidget *parent) :
-    BaseFolderView(app,parent)
+class FileSystemProxyModel : public QSortFilterProxyModel
+{
+public:
+    FileSystemProxyModel(QObject *parent) :
+        QSortFilterProxyModel(parent)
+    {
+    }
+    virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const
+    {
+        QFileSystemModel *model = static_cast<QFileSystemModel*>(this->sourceModel());
+        QFileInfo l = model->fileInfo(left);
+        QFileInfo r = model->fileInfo(right);
+        if (l.isDir() && r.isFile()) {
+            return true;
+        } else if (l.isFile() && r.isDir()) {
+            return false;
+        }
+#ifdef Q_OS_WIN
+        if (l.filePath().length() <= 3 || r.filePath().length() <= 3) {
+            return l.filePath().at(0) < r.filePath().at(0);
+        }
+#endif
+        return (l.fileName().compare(r.fileName(),Qt::CaseInsensitive) < 0);
+    }
+};
+
+FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *parent) :
+    BaseFolderView(app,parent), m_proxyMode(proxyMode)
 {
     m_model = new FileSystemModelEx(this);
-    this->setModel(m_model);
+    if (m_proxyMode) {
+        m_proxy = new FileSystemProxyModel(this);
+        m_proxy->setSourceModel(m_model);
+        this->setModel(m_proxy);
+    } else {
+        this->setModel(m_model);
+    }
     this->setHeaderHidden(true);
-
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
 }
@@ -48,7 +80,10 @@ FolderView::FolderView(LiteApi::IApplication *app, QWidget *parent) :
 void FolderView::setRootPath(const QString &path)
 {
     QModelIndex index = m_model->setRootPath(path);
-    this->setRootIndex(index);
+    if (m_proxyMode)
+        this->setRootIndex(m_proxy->mapFromSource(index));
+    else
+        this->setRootIndex(index);
 }
 
 QString FolderView::rootPath() const
@@ -68,12 +103,18 @@ QDir::Filters FolderView::filter() const
 
 QFileInfo FolderView::fileInfo(const QModelIndex &index)
 {
-    return m_model->fileInfo(index);
+    if (m_proxyMode)
+        return m_model->fileInfo(m_proxy->mapToSource(index));
+    else
+        return m_model->fileInfo(index);
 }
 
 QModelIndex FolderView::indexForPath(const QString &fileName)
 {
-    return m_model->index(fileName);
+    if (m_proxyMode)
+        return m_proxy->mapFromSource(m_model->index(fileName));
+    else
+        return m_model->index(fileName);
 }
 
 void FolderView::removeFile()
@@ -87,7 +128,13 @@ void FolderView::removeFile()
                           tr("Are you sure that you want to permanently delete this file?"),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
-        if (!m_model->remove(this->currentIndex())) {
+        QModelIndex index;
+        if (m_proxyMode) {
+            index = m_proxy->mapToSource(this->currentIndex());
+        } else {
+            index = this->currentIndex();
+        }
+        if (!m_model->remove(index)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Delete File"),
                                      tr("Failed to delete the file!"));
         }
@@ -105,7 +152,13 @@ void FolderView::removeFolder()
                           tr("Are you sure that you want to permanently delete this folder and all of its contents?"),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
-        if (!m_model->remove(this->currentIndex())) {
+        QModelIndex index;
+        if (m_proxyMode) {
+            index = m_proxy->mapToSource(this->currentIndex());
+        } else {
+            index = this->currentIndex();
+        }
+        if (!m_model->remove(index)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Delete Folder"),
                                      tr("Failed to delete the folder!"));
         }
@@ -118,16 +171,27 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
     LiteApi::FILESYSTEM_CONTEXT_FLAG flag = LiteApi::FILESYSTEM_ROOT;
     QModelIndex index = this->indexAt(pos);
     if (index.isValid()) {
-        m_contextInfo = m_model->fileInfo(index);
+        bool isDir = false;
+        if (m_proxyMode) {
+            m_contextInfo = m_model->fileInfo(m_proxy->mapToSource(index));
+            isDir = m_model->isDir(m_proxy->mapToSource(index));
+        } else {
+            m_contextInfo = m_model->fileInfo(index);
+            isDir = m_model->isDir(index);
+        }
         m_contextIndex = index;
-        if (m_model->isDir(index)) {
+        if (isDir) {
             flag = LiteApi::FILESYSTEM_FOLDER;
         } else {
             flag = LiteApi::FILESYSTEM_FILES;
         }
     } else {
         m_contextIndex = this->rootIndex();
-        m_contextInfo = m_model->fileInfo(m_contextIndex);
+        if (m_proxyMode) {
+            m_contextInfo = m_model->fileInfo(m_proxy->mapToSource(m_contextIndex));
+        } else {
+            m_contextInfo = m_model->fileInfo(m_contextIndex);
+        }
         flag = LiteApi::FILESYSTEM_ROOTFOLDER;
     }
     bool hasGo = false;
