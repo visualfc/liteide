@@ -26,6 +26,7 @@
 
 #include <QTreeView>
 #include <QFileSystemModel>
+#include <QFileInfo>
 #include "basefoldeview.h"
 
 class FolderView : public BaseFolderView
@@ -35,7 +36,10 @@ public:
     explicit FolderView(LiteApi::IApplication *app, QWidget *parent = 0);
     void setRootPath(const QString &path);
     QString rootPath() const;
-    QFileSystemModel *model() const;
+    void setFilter(QDir::Filters filters);
+    QDir::Filters filter() const;
+    QFileInfo fileInfo(const QModelIndex &index);
+    QModelIndex indexForPath(const QString &fileName);
 public slots:
     void customContextMenuRequested(const QPoint &pos);    
     virtual void removeFolder();

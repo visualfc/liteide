@@ -127,7 +127,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_folderView = new FolderView(m_liteApp);
     m_folderView->setRootIsDecorated(true);
-    m_folderView->model()->setFilter(filters);
+    m_folderView->setFilter(filters);
 
     //m_fileWidget->treeView()->header()->setIn
     //mainLayout->addWidget(m_filterToolBar);
@@ -198,8 +198,7 @@ void FileBrowser::currentEditorChanged(LiteApi::IEditor *editor)
 
     addFolderToRoot(info.path());
 
-    QFileSystemModel *model = m_folderView->model();
-    QModelIndex index = model->index(fileName);
+    QModelIndex index = m_folderView->indexForPath(fileName);
     if (!index.isValid()) {
         return;
     }
@@ -245,19 +244,19 @@ void FileBrowser::showHideFiles(bool b)
     if (isShowHideFiles() == b) {
         return;
     }
-    QDir::Filters filters = m_folderView->model()->filter();
+    QDir::Filters filters = m_folderView->filter();
     if (b) {
         filters |= QDir::Hidden;
     } else {
         filters ^= QDir::Hidden;
     }
-    m_folderView->model()->setFilter(filters);
+    m_folderView->setFilter(filters);
     m_liteApp->settings()->setValue(FILEBROWSER_SHOW_HIDDEN_FILES,b);
 }
 
 bool FileBrowser::isShowHideFiles() const
 {
-    return m_folderView->model()->filter() & QDir::Hidden;
+    return m_folderView->filter() & QDir::Hidden;
 }
 
 void FileBrowser::openFolderInNewWindow()
@@ -286,7 +285,7 @@ void FileBrowser::executeFile()
 
 void FileBrowser::doubleClicked(const QModelIndex &index)
 {
-    QFileInfo info = m_folderView->model()->fileInfo(index);
+    QFileInfo info = m_folderView->fileInfo(index);
     if (info.isFile()) {
         m_liteApp->fileManager()->openEditor(info.filePath());
     }

@@ -55,9 +55,19 @@ FolderListView::FolderListView(LiteApi::IApplication *app, QWidget *parent) :
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
 }
 
-FolderListModel *FolderListView::model() const
+void FolderListView::setFilter(QDir::Filters filters)
 {
-    return m_model;
+    m_model->setFilter(filters);
+}
+
+QDir::Filters FolderListView::filter() const
+{
+    return m_model->filter();
+}
+
+QFileInfo FolderListView::fileInfo(const QModelIndex &index) const
+{
+    return m_model->fileInfo(index);
 }
 
 void FolderListView::addRootPath(const QString &path)

@@ -545,25 +545,25 @@ void FileManager::applyOption(QString id)
 
 bool FileManager::isShowHideFiles() const
 {
-    return m_folderListView->model()->filter() & QDir::Hidden;
+    return m_folderListView->filter() & QDir::Hidden;
 }
 
 void FileManager::showHideFiles(bool b)
 {
-    QDir::Filters filters = m_folderListView->model()->filter();
+    QDir::Filters filters = m_folderListView->filter();
     if (b) {
         filters |= QDir::Hidden;
     } else {
         filters ^= QDir::Hidden;
     }
-    m_folderListView->model()->setFilter(filters);
+    m_folderListView->setFilter(filters);
 }
 void FileManager::doubleClickedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
     }
-    QFileInfo info = m_folderListView->model()->fileInfo(index);
+    QFileInfo info = m_folderListView->fileInfo(index);
     if (info.isFile()) {
         this->openEditor(info.filePath());
     }

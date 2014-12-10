@@ -26,13 +26,16 @@
 
 #include "basefoldeview.h"
 #include "folderlistmodel.h"
+#include <QFileInfo>
 
 class FolderListView : public BaseFolderView
 {
     Q_OBJECT
 public:
     explicit FolderListView(LiteApi::IApplication *app, QWidget *parent = 0);
-    FolderListModel *model() const;
+    void setFilter(QDir::Filters filters);
+    QDir::Filters filter() const;
+    QFileInfo fileInfo(const QModelIndex &index) const;
 public:
     void addRootPath(const QString &path);
     void setRootPathList(const QStringList &pathList);

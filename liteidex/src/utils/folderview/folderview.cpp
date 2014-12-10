@@ -56,9 +56,24 @@ QString FolderView::rootPath() const
     return m_model->rootPath();
 }
 
-QFileSystemModel *FolderView::model() const
+void FolderView::setFilter(QDir::Filters filters)
 {
-    return m_model;
+    m_model->setFilter(filters);
+}
+
+QDir::Filters FolderView::filter() const
+{
+    return m_model->filter();
+}
+
+QFileInfo FolderView::fileInfo(const QModelIndex &index)
+{
+    return m_model->fileInfo(index);
+}
+
+QModelIndex FolderView::indexForPath(const QString &fileName)
+{
+    return m_model->index(fileName);
 }
 
 void FolderView::removeFile()
