@@ -85,7 +85,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     //m_filterToolBar = new QToolBar(m_widget);
     //m_filterToolBar->setIconSize(QSize(16,16));
 
-    m_syncAct = new QAction(QIcon("icon:filebrowser/images/sync.png"),tr("Synchronize with editor"),this);
+    m_syncAct = new QAction(/*QIcon("icon:filebrowser/images/sync.png"),*/tr("Synchronize with editor"),this);
     m_syncAct->setCheckable(true);
 
     m_reloadAct = new QAction(QIcon("icon:filebrowser/images/reload.png"),tr("Reload current directory"),this);
@@ -153,7 +153,8 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_configMenu = new QMenu(tr("Config"));
     m_configMenu->setIcon(QIcon("icon:markdown/images/config.png"));
     m_configMenu->addAction(m_showHideFilesAct);
-    actions << m_configMenu->menuAction() << m_syncAct;
+    m_configMenu->addAction(m_syncAct);
+    actions << m_configMenu->menuAction();
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"filesystem",tr("File System"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
