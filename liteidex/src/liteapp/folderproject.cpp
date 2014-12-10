@@ -36,7 +36,7 @@
 FolderProject::FolderProject(IApplication *app) :
     m_liteApp(app), m_folderView(0)
 {
-    m_folderView = new FolderListView(app);
+    m_folderView = new FolderListView(true,app);
 }
 
 FolderProject::~FolderProject()

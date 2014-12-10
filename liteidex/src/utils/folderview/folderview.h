@@ -41,12 +41,12 @@ public:
     QDir::Filters filter() const;
     QFileInfo fileInfo(const QModelIndex &index);
     QModelIndex indexForPath(const QString &fileName);
+    void reload();
 public slots:
     void customContextMenuRequested(const QPoint &pos);    
     virtual void removeFolder();
     virtual void removeFile();
 protected:
-    bool m_proxyMode;
     QSortFilterProxyModel *m_proxy;
     QFileSystemModel *m_model;
 };

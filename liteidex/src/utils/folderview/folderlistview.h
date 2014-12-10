@@ -28,11 +28,12 @@
 #include "folderlistmodel.h"
 #include <QFileInfo>
 
+class QSortFilterProxyModel;
 class FolderListView : public BaseFolderView
 {
     Q_OBJECT
 public:
-    explicit FolderListView(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit FolderListView(bool proxyMode, LiteApi::IApplication *app, QWidget *parent = 0);
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;
     QFileInfo fileInfo(const QModelIndex &index) const;
@@ -49,6 +50,7 @@ public slots:
     virtual void closeFolder();
     virtual void closeAllFolders();
 protected:
+    QSortFilterProxyModel *m_proxy;
     FolderListModel *m_model;
 };
 

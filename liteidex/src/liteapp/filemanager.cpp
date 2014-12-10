@@ -58,11 +58,24 @@ bool FileManager::initWithApp(IApplication *app)
     if (!IFileManager::initWithApp(app)) {
         return false;
     }
+#ifdef Q_OS_MAC
+    m_folderListView = new FolderListView(true,m_liteApp);
+#else
+    m_folderListView = new FolderListView(false,m_liteApp);
+#endif
 
-    m_folderListView = new FolderListView(m_liteApp);
+    QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
+                            | QDir::Readable| QDir::Writable
+                            | QDir::Executable /*| QDir::Hidden*/
+                            | QDir::NoDotAndDotDot;
 
     bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
+    if (bShowHiddenFiles) {
+        filters |= QDir::Hidden;
+    }
     this->showHideFiles(bShowHiddenFiles);
+
+    m_folderListView->setFilter(filters);
 
     m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
     m_showHideFilesAct->setCheckable(true);

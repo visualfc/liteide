@@ -42,6 +42,7 @@ public slots:
     void visibilityChanged(bool);
     void activatedRoot(QString);
     void syncFileModel(bool);
+    void reloadFileModel();
     void currentEditorChanged(LiteApi::IEditor*);
     void aboutToShowContextMenu(QMenu* menu,LiteApi::FILESYSTEM_CONTEXT_FLAG flag,const QFileInfo &fileInfo);
 protected slots:
@@ -63,6 +64,7 @@ protected:
     QToolBar    *m_rootToolBar;
     QAction *m_syncAct;
     QAction *m_showHideFilesAct;
+    QAction *m_reloadAct;
     QMenu   *m_configMenu;
 protected:
     QAction *m_toolWindowAct;

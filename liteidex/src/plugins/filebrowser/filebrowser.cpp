@@ -88,6 +88,8 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_syncAct = new QAction(QIcon("icon:filebrowser/images/sync.png"),tr("Synchronize with editor"),this);
     m_syncAct->setCheckable(true);
 
+    m_reloadAct = new QAction(QIcon("icon:filebrowser/images/reload.png"),tr("Reload current directory"),this);
+
     m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
     m_showHideFilesAct->setCheckable(true);
     if (bShowHiddenFiles) {
@@ -122,6 +124,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootCombo->setEditable(false);
 
     m_rootToolBar->addAction(m_cdupAct);
+    m_rootToolBar->addAction(m_reloadAct);
     m_rootToolBar->addSeparator();
     m_rootToolBar->addWidget(m_rootCombo);
 #ifdef Q_OS_MAC
@@ -157,6 +160,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     //connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activatedFilter(QString)));
     connect(m_rootCombo,SIGNAL(activated(QString)),this,SLOT(activatedRoot(QString)));
     connect(m_syncAct,SIGNAL(triggered(bool)),this,SLOT(syncFileModel(bool)));
+    connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reloadFileModel()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_folderView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_folderView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
@@ -215,6 +219,11 @@ void FileBrowser::syncFileModel(bool b)
     } else {
         currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     }
+}
+
+void FileBrowser::reloadFileModel()
+{
+    m_folderView->reload();
 }
 
 void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)

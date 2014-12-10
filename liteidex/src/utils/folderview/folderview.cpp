@@ -62,14 +62,15 @@ public:
 };
 
 FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *parent) :
-    BaseFolderView(app,parent), m_proxyMode(proxyMode)
+    BaseFolderView(app,parent)
 {
     m_model = new FileSystemModelEx(this);
-    if (m_proxyMode) {
+    if (proxyMode) {
         m_proxy = new FileSystemProxyModel(this);
         m_proxy->setSourceModel(m_model);
         this->setModel(m_proxy);
     } else {
+        m_proxy = 0;
         this->setModel(m_model);
     }
     this->setHeaderHidden(true);
@@ -80,7 +81,7 @@ FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *pare
 void FolderView::setRootPath(const QString &path)
 {
     QModelIndex index = m_model->setRootPath(path);
-    if (m_proxyMode)
+    if (m_proxy)
         this->setRootIndex(m_proxy->mapFromSource(index));
     else
         this->setRootIndex(index);
@@ -103,7 +104,7 @@ QDir::Filters FolderView::filter() const
 
 QFileInfo FolderView::fileInfo(const QModelIndex &index)
 {
-    if (m_proxyMode)
+    if (m_proxy)
         return m_model->fileInfo(m_proxy->mapToSource(index));
     else
         return m_model->fileInfo(index);
@@ -111,10 +112,16 @@ QFileInfo FolderView::fileInfo(const QModelIndex &index)
 
 QModelIndex FolderView::indexForPath(const QString &fileName)
 {
-    if (m_proxyMode)
+    if (m_proxy)
         return m_proxy->mapFromSource(m_model->index(fileName));
     else
         return m_model->index(fileName);
+}
+
+void FolderView::reload()
+{
+    this->collapseAll();
+    this->setRootPath(this->rootPath());
 }
 
 void FolderView::removeFile()
@@ -128,11 +135,9 @@ void FolderView::removeFile()
                           tr("Are you sure that you want to permanently delete this file?"),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
-        QModelIndex index;
-        if (m_proxyMode) {
-            index = m_proxy->mapToSource(this->currentIndex());
-        } else {
-            index = this->currentIndex();
+        QModelIndex index = this->currentIndex();
+        if (m_proxy) {
+            index = m_proxy->mapToSource(index);
         }
         if (!m_model->remove(index)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Delete File"),
@@ -152,11 +157,9 @@ void FolderView::removeFolder()
                           tr("Are you sure that you want to permanently delete this folder and all of its contents?"),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
-        QModelIndex index;
-        if (m_proxyMode) {
-            index = m_proxy->mapToSource(this->currentIndex());
-        } else {
-            index = this->currentIndex();
+        QModelIndex index = this->currentIndex();
+        if (m_proxy) {
+            index = m_proxy->mapToSource(index);
         }
         if (!m_model->remove(index)) {
             QMessageBox::information(m_liteApp->mainWindow(),tr("Delete Folder"),
@@ -172,7 +175,7 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
     QModelIndex index = this->indexAt(pos);
     if (index.isValid()) {
         bool isDir = false;
-        if (m_proxyMode) {
+        if (m_proxy) {
             m_contextInfo = m_model->fileInfo(m_proxy->mapToSource(index));
             isDir = m_model->isDir(m_proxy->mapToSource(index));
         } else {
@@ -187,7 +190,7 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         }
     } else {
         m_contextIndex = this->rootIndex();
-        if (m_proxyMode) {
+        if (m_proxy) {
             m_contextInfo = m_model->fileInfo(m_proxy->mapToSource(m_contextIndex));
         } else {
             m_contextInfo = m_model->fileInfo(m_contextIndex);
