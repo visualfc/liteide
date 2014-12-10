@@ -200,8 +200,9 @@ public:
     virtual bool isInEmptyString(const QTextCursor &cursor) const = 0;
     virtual bool isEndOfString(const QTextCursor &cursor) const = 0;
     virtual bool isInStringOrComment(const QTextCursor &cursor) const = 0;
-    virtual bool isCanCodeCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
+    virtual bool isInCode(const QTextCursor &cursor) const = 0;
+    virtual bool isInImport(const QTextCursor &cursor) const;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
     virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info) = 0;
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;
@@ -228,8 +229,11 @@ public:
     virtual bool isInStringOrComment(const QTextCursor &/*cursor*/) const {
         return false;
     }
-    virtual bool isCanCodeCompleter(const QTextCursor &/*cursor*/) const {
+    virtual bool isInCode(const QTextCursor &/*cursor*/) const {
         return m_bCC;
+    }
+    virtual bool isInImport(const QTextCursor &/*cursor*/) const {
+        return false;
     }
     virtual bool isCanAutoCompleter(const QTextCursor &/*cursor*/) const {
         return m_bAC;

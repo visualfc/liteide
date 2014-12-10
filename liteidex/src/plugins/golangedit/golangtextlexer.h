@@ -35,7 +35,8 @@ public:
     virtual bool isInEmptyString(const QTextCursor &cursor) const;
     virtual bool isEndOfString(const QTextCursor &cursor) const;
     virtual bool isInStringOrComment(const QTextCursor &cursor) const;
-    virtual bool isCanCodeCompleter(const QTextCursor &cursor) const;
+    virtual bool isInCode(const QTextCursor &cursor) const;
+    virtual bool isInImport(const QTextCursor &cursor) const;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const;
     virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info);

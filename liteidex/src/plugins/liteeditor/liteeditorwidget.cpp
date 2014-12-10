@@ -171,7 +171,8 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
     }
-    if (!m_textLexer->isCanCodeCompleter(this->textCursor())) {
+
+    if (!m_textLexer->isInCode(this->textCursor())) {
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
     }

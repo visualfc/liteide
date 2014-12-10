@@ -98,9 +98,29 @@ bool GolangTextLexer::isInStringOrComment(const QTextCursor &cursor) const
     return false;
 }
 
-bool GolangTextLexer::isCanCodeCompleter(const QTextCursor &cursor) const
+bool GolangTextLexer::isInCode(const QTextCursor &cursor) const
 {
     return !isInStringOrComment(cursor);
+}
+
+bool GolangTextLexer::isInImport(const QTextCursor &cursor) const
+{
+    if (!isInString(cursor)) {
+        return false;
+    }
+    LanguageFeatures features;
+    features.golangEnable = true;
+
+    SimpleLexer tokenize;
+    tokenize.setLanguageFeatures(features);
+
+    const int prevState = BackwardsScanner::previousBlockState(cursor.block()) & 0xFF;
+    const QList<Token> tokens = tokenize(cursor.block().text(), prevState);
+
+    const unsigned pos = cursor.selectionEnd() - cursor.block().position();
+
+
+    return true;
 }
 
 bool GolangTextLexer::isCanAutoCompleter(const QTextCursor &cursor) const
