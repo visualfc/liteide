@@ -75,7 +75,6 @@ protected:
     virtual void mouseDoubleClickEvent(QMouseEvent *e);
 };
 
-
 class FileSearch : public LiteApi::IFileSearch
 {
     Q_OBJECT

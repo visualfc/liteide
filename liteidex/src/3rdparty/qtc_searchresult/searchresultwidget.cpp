@@ -45,6 +45,7 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QToolBar>
 
 static const int SEARCHRESULT_WARNING_LIMIT = 200000;
 static const char SIZE_WARNING_ID[] = "sizeWarningLabel";
@@ -84,31 +85,31 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_preserveCaseSupported(false)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
-    layout->setSpacing(0);
+    layout->setMargin(2);
+    layout->setSpacing(1);
     setLayout(layout);
 
     QFrame *topWidget = new QFrame;
-    QPalette pal = topWidget->palette();
-    pal.setColor(QPalette::Window, QColor(255, 255, 225));
-    pal.setColor(QPalette::WindowText, Qt::black);
-    topWidget->setPalette(pal);
-    topWidget->setFrameStyle(QFrame::Panel | QFrame::Raised);
-    topWidget->setLineWidth(1);
-    topWidget->setAutoFillBackground(true);
+//    QPalette pal = topWidget->palette();
+//    pal.setColor(QPalette::Window, QColor(255, 255, 225));
+//    pal.setColor(QPalette::WindowText, Qt::black);
+//    topWidget->setPalette(pal);
+    topWidget->setFrameStyle(QFrame::Panel);// | QFrame::Raised);
+    topWidget->setLineWidth(0);
+    //topWidget->setAutoFillBackground(true);
     QHBoxLayout *topLayout = new QHBoxLayout(topWidget);
-    topLayout->setMargin(2);
+    topLayout->setMargin(0);
     topWidget->setLayout(topLayout);
     layout->addWidget(topWidget);
 
     m_infoWidget = new QFrame;
-    pal = m_infoWidget->palette();
-    pal.setColor(QPalette::Window, QColor(255, 255, 225));
-    pal.setColor(QPalette::WindowText, Qt::black);
-    m_infoWidget->setPalette(pal);
-    m_infoWidget->setFrameStyle(QFrame::Panel | QFrame::Raised);
-    m_infoWidget->setLineWidth(1);
-    m_infoWidget->setAutoFillBackground(true);
+//    pal = m_infoWidget->palette();
+//    pal.setColor(QPalette::Window, QColor(255, 255, 225));
+//    pal.setColor(QPalette::WindowText, Qt::black);
+//    m_infoWidget->setPalette(pal);
+    m_infoWidget->setFrameStyle(QFrame::Panel);// | QFrame::Raised);
+    m_infoWidget->setLineWidth(0);
+    //m_infoWidget->setAutoFillBackground(true);
 
     QHBoxLayout *infoLayout = new QHBoxLayout(m_infoWidget);
     infoLayout->setMargin(2);
@@ -118,24 +119,24 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
 
 
     m_messageWidget = new QFrame;
-    pal.setColor(QPalette::Window, QColor(255, 255, 225));
-    pal.setColor(QPalette::WindowText, Qt::red);
-    m_messageWidget->setPalette(pal);
-    m_messageWidget->setFrameStyle(QFrame::Panel | QFrame::Raised);
-    m_messageWidget->setLineWidth(1);
-    m_messageWidget->setAutoFillBackground(true);
+//    pal.setColor(QPalette::Window, QColor(255, 255, 225));
+//    pal.setColor(QPalette::WindowText, Qt::red);
+//    m_messageWidget->setPalette(pal);
+    m_messageWidget->setFrameStyle(QFrame::Panel);// | QFrame::Raised);
+    m_messageWidget->setLineWidth(0);
+    //m_messageWidget->setAutoFillBackground(true);
     QHBoxLayout *messageLayout = new QHBoxLayout(m_messageWidget);
     messageLayout->setMargin(2);
     m_messageWidget->setLayout(messageLayout);
     QLabel *messageLabel = new QLabel(tr("Search was canceled."));
-    messageLabel->setPalette(pal);
+    //messageLabel->setPalette(pal);
     messageLayout->addWidget(messageLabel);
     layout->addWidget(m_messageWidget);
     m_messageWidget->setVisible(false);
 
     m_searchResultTreeView = new Internal::SearchResultTreeView(this);
-    m_searchResultTreeView->setFrameStyle(QFrame::NoFrame);
-    m_searchResultTreeView->setAttribute(Qt::WA_MacShowFocusRect, false);
+    //m_searchResultTreeView->setFrameStyle(QFrame::NoFrame);
+    //m_searchResultTreeView->setAttribute(Qt::WA_MacShowFocusRect, false);
 //    Aggregation::Aggregate * agg = new Aggregation::Aggregate;
 //    agg->add(m_searchResultTreeView);
 //    agg->add(new TreeViewFind(m_searchResultTreeView,
