@@ -241,7 +241,7 @@ QString FileUtil::lookPathInDir(const QString &file, const QString &dir)
 QString FileUtil::canExec(QString fileName, QStringList /*exts*/)
 {
     QFileInfo info(fileName);
-    if (info.exists() && info.isExecutable()) {
+    if (info.exists() && info.isFile()  && info.isExecutable()) {
         return info.canonicalFilePath();
     }
     return QString();
@@ -303,7 +303,7 @@ QString FileUtil::findExecute(const QString &target)
     foreach (QString fileName, targetList) {
         if (QFile::exists(fileName)) {
             QFileInfo info(fileName);
-            if (info.isExecutable()) {
+            if (info.isFile() && info.isExecutable()) {
                 return info.canonicalFilePath();
             }
         }

@@ -26,6 +26,7 @@
 #include "liteenvapi/liteenvapi.h"
 #include "golangdocapi/golangdocapi.h"
 #include "qjson/include/QJson/Parser"
+#include "fileutil/fileutil.h"
 #include "packageproject.h"
 #include <QTreeView>
 #include <QStandardItemModel>
@@ -190,6 +191,7 @@ void PackageBrowser::reloadAll()
     if (m_goTool->isRuning()) {
         return;
     }
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_goTool->reloadEnv();
     if (!m_goTool->exists()) {
         m_model->clear();
@@ -201,11 +203,9 @@ void PackageBrowser::reloadAll()
         m_model->appendRow(new QStandardItem(tr("Loading Go package list...")));
     }
     QString root = LiteApi::getGOROOT(m_liteApp);
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_goTool->setProcessEnvironment(env);
     m_goTool->setWorkDir(root);
     m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
-    //m_goTool->start_list_json();
 }
 
 void PackageBrowser::setupGopath()
