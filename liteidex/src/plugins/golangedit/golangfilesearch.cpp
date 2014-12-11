@@ -147,6 +147,7 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
                 //m_searchText = info.mid(7).trimmed();
                 QString pkgName = info.mid(7).trimmed();
                 if (pkgName != m_searchText) {
+		    m_searchText = pkgName;
                     emit searchTextChanged(pkgName);
                 }
             }
