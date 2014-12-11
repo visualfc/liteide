@@ -216,6 +216,18 @@ void LiteCompleter::showPopup()
     m_completer->complete(cr); // popup it up!
 }
 
+void LiteCompleter::hidePopup()
+{
+    if (m_completer->popup()->isVisible()) {
+        m_completer->popup()->hide();
+    }
+}
+
+bool LiteCompleter::isShowPopup()
+{
+    return m_completer->popup()->isVisible();
+}
+
 void LiteCompleter::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
 {
     m_completer->setCaseSensitivity(caseSensitivity);
@@ -229,6 +241,16 @@ void LiteCompleter::setCompletionPrefix(const QString &prefix)
 QString LiteCompleter::completionPrefix() const
 {
     return m_completer->completionPrefix();
+}
+
+void LiteCompleter::setCompletionContext(LiteApi::CompletionContext ctx)
+{
+    m_completer->setCompletionContext(ctx);
+}
+
+LiteApi::CompletionContext LiteCompleter::completionContext() const
+{
+    return m_completer->completionContext();
 }
 
 QAbstractItemView *LiteCompleter::popup() const
@@ -273,6 +295,11 @@ bool LiteCompleter::startCompleter(const QString &completionPrefix)
 void LiteCompleter::updateCompleterModel()
 {
     this->m_completer->updateFilter();
+}
+
+void LiteCompleter::setImportList(const QStringList &importList)
+{
+    this->m_completer->setImportList(importList);
 }
 
 void LiteCompleter::setSearchSeparator(bool b)

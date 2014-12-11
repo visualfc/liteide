@@ -319,7 +319,8 @@ void GolangCode::loadPkgList()
                 continue;
             }
             QStringList pathList = line.split("/");
-            m_pkgList.insert(pathList.last(),line);
+            m_pkgListMap.insert(pathList.last(),line);
+            m_importList.append(line);
         }
     }
 }
@@ -363,6 +364,7 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
     }
     m_completer = completer;
     if (m_completer) {
+        m_completer->setImportList(m_importList);
         if (!m_gocodeCmd.isEmpty()) {
             m_completer->setSearchSeparator(false);
             m_completer->setExternalMode(true);
@@ -377,6 +379,10 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
 
 void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
 {
+    if (m_completer->completionContext() != LiteApi::CompleterCodeContext) {
+        return;
+    }
+
     if (m_gocodeCmd.isEmpty()) {
         return;
     }
@@ -524,7 +530,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     }
     if (n == 0 && m_lastPrefix.endsWith(".")) {
         QString id = m_lastPrefix.left(m_lastPrefix.length()-1);
-        QStringList pkgs = m_pkgList.values(id);
+        QStringList pkgs = m_pkgListMap.values(id);
         if (!pkgs.isEmpty() && !findImport(id)) {
             QPlainTextEdit *ed = LiteApi::getPlainTextEdit(m_editor);
             if (ed) {

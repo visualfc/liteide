@@ -62,6 +62,7 @@ signals:
 public:
     QString wordUnderCursor() const;
     QString textUnderCursor(QTextCursor tc) const;
+    QString importUnderCursor(QTextCursor tc) const;
 protected:
     LiteApi::ICompleter *m_completer;
     QMenu      *m_contextMenu;

@@ -54,9 +54,13 @@ public:
     virtual void setExternalMode(bool b);
     virtual bool externalMode() const;
     virtual void showPopup();
+    virtual void hidePopup();
+    virtual bool isShowPopup();
     virtual void setCaseSensitivity(Qt::CaseSensitivity caseSensitivity);
     virtual void setCompletionPrefix(const QString &prefix);
     virtual QString completionPrefix() const;
+    virtual void setCompletionContext(LiteApi::CompletionContext ctx);
+    virtual LiteApi::CompletionContext completionContext() const;
     virtual QAbstractItemView *popup() const;
     virtual QModelIndex currentIndex() const;
     virtual QString currentCompletion() const;
@@ -64,6 +68,7 @@ public:
     virtual QAbstractItemModel *completionModel() const;
     virtual bool startCompleter(const QString &completionPrefix);
     virtual void updateCompleterModel();
+    virtual void setImportList(const QStringList &importList);
 public slots:
     virtual void completionPrefixChanged(QString,bool force);
     virtual void insertCompletion(QModelIndex);

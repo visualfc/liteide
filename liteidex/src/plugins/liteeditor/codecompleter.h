@@ -28,6 +28,7 @@
 #include <QTimer>
 #include <QListView>
 #include "liteapi/liteapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 
 class QListView;
 class QKeyEvent;
@@ -90,15 +91,17 @@ public:
     virtual int rowCount(const QModelIndex & index = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
     void setSourceModel(QStandardItemModel *sourceModel);
+    void setImportList(const QStringList &importList);
     QStandardItemModel *sourceModel() const;
     QStandardItem* item(const QModelIndex &index) const;
-    int filter(const QString &filter, int cs = LiteApi::CaseInsensitive);
+    int filter(const QString &filter, int cs = LiteApi::CaseInsensitive, LiteApi::CompletionContext ctx = LiteApi::CompleterCodeContext);
     void setSeparator(const QString &separator);
     QString separator() const;
 protected:
-    bool splitFilter(const QString &filter, QModelIndex &parent, QString &prefix);
+    bool splitFilter(const QString &filter, QModelIndex &parent, QString &prefix, const QString &sep = ".");
     void clearItems();
     QList<QStandardItem*> m_items;
+    QStringList         m_importList;
     QStandardItemModel *m_model;
     QString             m_seperator;
 };
@@ -111,10 +114,13 @@ public:
     virtual ~CodeCompleterEx();
     void setModel(QStandardItemModel *c);
     QAbstractItemModel *model() const;
+    void setImportList(const QStringList &importList);
     void setSeparator(const QString &separator);
     QString separator() const;
     void setCompletionPrefix(const QString &prefix);
     QString completionPrefix() const;
+    void setCompletionContext(LiteApi::CompletionContext ctx);
+    LiteApi::CompletionContext completionContext() const;
     void updateFilter();
     void complete(const QRect& rect = QRect());
     QWidget *widget() const;
@@ -137,6 +143,7 @@ protected:
     CodeCompleterListView     *m_popup;
     CodeCompleterProxyModel   *m_proxy;
     Qt::CaseSensitivity m_cs;
+    LiteApi::CompletionContext m_ctx;
     QString             m_prefix;
     int                 maxVisibleItems;
     bool                m_eatFocusOut;

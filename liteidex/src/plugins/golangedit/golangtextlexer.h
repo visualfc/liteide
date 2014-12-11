@@ -44,6 +44,7 @@ public:
 protected:
     bool isInCommentHelper(const QTextCursor &cursor, CPlusPlus::Token *retToken = 0) const;
     const CPlusPlus::Token tokenAtPosition(const QList<CPlusPlus::Token> &tokens, const unsigned pos) const;
+    bool isInImportHelper(const QTextCursor &cursor) const;
 };
 
 #endif // GOLANGTEXTLEXER_H

@@ -86,7 +86,8 @@ protected:
     LiteApi::ICompleter   *m_completer;
     QWidget *m_pkgWidget;
     ImportPkgTip    *m_pkgImportTip;
-    QMultiMap<QString,QString> m_pkgList;
+    QMultiMap<QString,QString> m_pkgListMap;
+    QStringList m_importList;
     QString     m_gobinCmd;
     QString     m_preWord;
     QString     m_prefix;

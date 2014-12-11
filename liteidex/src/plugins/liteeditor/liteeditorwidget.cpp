@@ -70,42 +70,29 @@ void LiteEditorWidget::setCompleter(LiteApi::ICompleter *completer)
 
 void LiteEditorWidget::codeCompleter()
 {
-    QString completionPrefix = textUnderCursor(textCursor());
-    if (completionPrefix.startsWith(".")) {
-        completionPrefix.insert(0,'@');
+    QTextCursor cursor = this->textCursor();
+    bool isInImport = false;
+    if (m_textLexer->isInStringOrComment(cursor)) {
+        isInImport = m_textLexer->isInImport(cursor);
+        if (!isInImport) {
+            return;
+        }
     }
-
-    m_completer->setCompletionPrefix("");
-    emit completionPrefixChanged(completionPrefix,true);
-
-    m_completer->startCompleter(completionPrefix);
-    /*
-
-    m_completer->setCompletionPrefix("");
-    emit completionPrefixChanged(completionPrefix,true);
-
-    if (completionPrefix != m_completer->completionPrefix()) {
-        m_completer->setCompletionPrefix(completionPrefix);
-        m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
+    if (isInImport) {
+        QString completionPrefix = importUnderCursor(textCursor());
+        m_completer->setCompletionContext(LiteApi::CompleterImportContext);
+        m_completer->setCompletionPrefix("");
+        m_completer->startCompleter(completionPrefix);
+    } else {
+        QString completionPrefix = textUnderCursor(textCursor());
+        if (completionPrefix.startsWith(".")) {
+            completionPrefix.insert(0,'@');
+        }
+        m_completer->setCompletionContext(LiteApi::CompleterCodeContext);
+        m_completer->setCompletionPrefix("");
+        emit completionPrefixChanged(completionPrefix,true);
+        m_completer->startCompleter(completionPrefix);
     }
-
-    if (m_completer->currentCompletion() == completionPrefix) {
-        m_completer->popup()->hide();
-        return;
-    }
-    QTextCursor cursor = textCursor();
-    int offset = completionPrefix.length();
-    int pos = completionPrefix.indexOf(".");
-    if (pos != -1) {
-        offset -= pos+1;
-    }
-    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
-    QRect cr = cursorRect(cursor);
-    cr.setLeft(cr.left()+this->viewport()->x()-24);
-    cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
-                + m_completer->popup()->verticalScrollBar()->sizeHint().width());
-    m_completer->complete(cr); // popup it up!
-    */
 }
 
 QString LiteEditorWidget::wordUnderCursor() const
@@ -113,6 +100,20 @@ QString LiteEditorWidget::wordUnderCursor() const
     QTextCursor tc = textCursor();
     tc.select(QTextCursor::WordUnderCursor);
     return tc.selectedText();
+}
+
+QString LiteEditorWidget::importUnderCursor(QTextCursor tc) const
+{
+    QString text = tc.block().text().left(tc.positionInBlock());
+    if (text.isEmpty()) {
+        return QString();
+    }
+    static QRegExp reg("[\"`][a-zA-Z0-9_\\.\\/]*$");
+    int index = reg.indexIn(text);
+    if (index < 0) {
+        return QString();
+    }
+    return text.right(reg.matchedLength()-1);
 }
 
 QString LiteEditorWidget::textUnderCursor(QTextCursor tc) const
@@ -172,10 +173,6 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    if (!m_textLexer->isInCode(this->textCursor())) {
-        LiteEditorWidgetBase::keyPressEvent(e);
-        return;
-    }
     if (m_completer->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
         switch (e->key()) {
@@ -198,8 +195,16 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-
     LiteEditorWidgetBase::keyPressEvent(e);
+
+    bool isInImport = false;
+    if (m_textLexer->isInStringOrComment(this->textCursor())) {
+        isInImport = m_textLexer->isInImport(this->textCursor());
+        if (!isInImport) {
+            m_completer->hidePopup();
+            return;
+        }
+    }
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 
@@ -209,12 +214,27 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 //    }
     if (e->modifiers() & Qt::ControlModifier) {
         if (!e->text().isEmpty()) {
-            m_completer->popup()->hide();
+            m_completer->hidePopup();
         }
         return;
     }
 
     if (e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) {
+        return;
+    }
+
+    if (e->text().isEmpty()) {
+        if (e->key() != Qt::Key_Backspace) {
+            m_completer->hidePopup();
+            return;
+        }
+    }
+    //import line
+    if (isInImport) {
+        QString completionPrefix = importUnderCursor(textCursor());
+        m_completer->setCompletionContext(LiteApi::CompleterImportContext);
+        m_completer->setCompletionPrefix("");
+        m_completer->startCompleter(completionPrefix);
         return;
     }
 
@@ -250,37 +270,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
         return;
     }
+    m_completer->setCompletionContext(LiteApi::CompleterCodeContext);
     emit completionPrefixChanged(completionPrefix,false);
     m_completer->startCompleter(completionPrefix);
-
-    return;
-    /*
-    if (completionPrefix != m_completer->completionPrefix()) {
-        m_completer->setCompletionPrefix(completionPrefix);
-        m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
-    }
-
-    if (m_completer->currentCompletion() == completionPrefix) {
-        m_completer->popup()->hide();
-        return;
-    }
-
-    if (m_completer->popup()->isVisible()) {
-        //return;
-    }
-    QTextCursor cursor = textCursor();
-    int offset = completionPrefix.length();
-    int pos = completionPrefix.indexOf(".");
-    if (pos != -1) {
-        offset -= pos+1;
-    }
-    cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,offset);
-    QRect cr = cursorRect(cursor);
-    cr.setLeft(cr.left()+this->viewport()->x()-24);
-    cr.setWidth(m_completer->popup()->sizeHintForColumn(0)
-                + m_completer->popup()->verticalScrollBar()->sizeHint().width());
-    m_completer->complete(cr); // popup it up!
-    */
 }
 
 void LiteEditorWidget::inputMethodEvent(QInputMethodEvent *e)

@@ -103,24 +103,88 @@ bool GolangTextLexer::isInCode(const QTextCursor &cursor) const
     return !isInStringOrComment(cursor);
 }
 
+bool GolangTextLexer::isInImportHelper(const QTextCursor &cursor) const
+{
+    const int blockNumber = cursor.block().blockNumber();
+    QTextBlock block = cursor.document()->firstBlock();
+    int pos1 = -1;
+    while (block.isValid()) {
+        QString text = block.text().trimmed();
+        if (text.startsWith("/*")) {
+            block = block.next();
+            while(block.isValid()) {
+                if (block.text().endsWith("*/")) {
+                    break;
+                }
+                block = block.next();
+            }
+            if (!block.isValid()) {
+                break;
+            }
+        } else if (text.startsWith("var")) {
+            break;
+        } else if (text.startsWith("func")) {
+            break;
+        } else if (text.startsWith("package ")) {
+            pos1 = block.position()+block.length();
+        } else if (pos1 != -1 && text.startsWith("import (")) {
+            block = block.next();
+            while(block.isValid()) {
+                QString text = block.text().trimmed();
+                if (text.startsWith(")")) {
+                    break;
+                }
+                //skip
+                if (text.startsWith("/*")) {
+                    block = block.next();
+                    while(block.isValid()) {
+                        if (block.text().endsWith("*/")) {
+                            break;
+                        }
+                        block = block.next();
+                    }
+                    if (!block.isValid()) {
+                        break;
+                    }
+                }
+                if (text.startsWith("//")) {
+                    block = block.next();
+                    continue;
+                }
+                if (block.blockNumber() == blockNumber) {
+                    return true;
+                }
+                block = block.next();
+            }
+        } else if (pos1 != -1 && text.startsWith("import ")) {
+            if (block.blockNumber() == blockNumber) {
+                return true;
+            }
+        }
+        block = block.next();
+    }
+    return false;
+}
+
 bool GolangTextLexer::isInImport(const QTextCursor &cursor) const
 {
-    if (!isInString(cursor)) {
+    Token token;
+    if (isInCommentHelper(cursor, &token))
         return false;
+    if (token.isStringLiteral() || token.isCharLiteral()) {
+        const unsigned pos = cursor.selectionEnd() - cursor.block().position();
+        QString tk = cursor.block().text().mid(token.begin(),token.length());
+        if (tk.endsWith('\"') || tk.endsWith('`')) {
+            if (pos > token.begin() && pos < token.end()) {
+                return isInImportHelper(cursor);
+            }
+        } else {
+            if (pos > token.begin()) {
+                return isInImportHelper(cursor);
+            }
+        }
     }
-    LanguageFeatures features;
-    features.golangEnable = true;
-
-    SimpleLexer tokenize;
-    tokenize.setLanguageFeatures(features);
-
-    const int prevState = BackwardsScanner::previousBlockState(cursor.block()) & 0xFF;
-    const QList<Token> tokens = tokenize(cursor.block().text(), prevState);
-
-    const unsigned pos = cursor.selectionEnd() - cursor.block().position();
-
-
-    return true;
+    return false;
 }
 
 bool GolangTextLexer::isCanAutoCompleter(const QTextCursor &cursor) const

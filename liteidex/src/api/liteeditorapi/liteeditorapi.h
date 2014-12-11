@@ -89,6 +89,11 @@ public:
     virtual QList<ISnippetList*> allSnippetList() const = 0;
 };
 
+enum CompletionContext {
+    CompleterCodeContext = 0,
+    CompleterImportContext,
+};
+
 class ICompleter : public QObject
 {
     Q_OBJECT
@@ -111,7 +116,10 @@ public:
     virtual void setCaseSensitivity(Qt::CaseSensitivity caseSensitivity) = 0;
     virtual void setCompletionPrefix(const QString &prefix) = 0;
     virtual QString completionPrefix() const = 0;
+    virtual void setCompletionContext(CompletionContext ctx) = 0;
+    virtual CompletionContext completionContext() const = 0;
     virtual void showPopup() = 0;
+    virtual void hidePopup() = 0;
     virtual QAbstractItemView *popup() const = 0;
     virtual QModelIndex currentIndex() const = 0;
     virtual QString currentCompletion() const = 0;
@@ -119,6 +127,7 @@ public:
     virtual bool startCompleter(const QString &completionPrefix) = 0;
     virtual void updateCompleterModel() = 0;
     virtual void updateCompleteInfo(QModelIndex index) = 0;
+    virtual void setImportList(const QStringList &importList) = 0;
 signals:
     void prefixChanged(QTextCursor,QString,bool force);
     void wordCompleted(const QString &func, const QString &kind, const QString &info);
@@ -202,7 +211,7 @@ public:
     virtual bool isInStringOrComment(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
     virtual bool isInCode(const QTextCursor &cursor) const = 0;
-    virtual bool isInImport(const QTextCursor &cursor) const;
+    virtual bool isInImport(const QTextCursor &cursor) const = 0;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
     virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info) = 0;
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;

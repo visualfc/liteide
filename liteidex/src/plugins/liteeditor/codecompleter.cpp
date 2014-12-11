@@ -325,6 +325,11 @@ void CodeCompleterProxyModel::setSourceModel(QStandardItemModel *model)
     m_model = model;
 }
 
+void CodeCompleterProxyModel::setImportList(const QStringList &importList)
+{
+    m_importList = importList;
+}
+
 QStandardItemModel *CodeCompleterProxyModel::sourceModel() const
 {
     return m_model;
@@ -337,14 +342,14 @@ QStandardItem *CodeCompleterProxyModel::item(const QModelIndex &index) const
     return m_items[index.row()];
 }
 
-bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &parent, QString &prefix)
+bool CodeCompleterProxyModel::splitFilter(const QString &filter, QModelIndex &parent, QString &prefix, const QString &sep)
 {
     if (filter.isEmpty()) {
         parent = QModelIndex();
         prefix = filter;
         return true;
     }
-    QStringList filterList = filter.split(".");
+    QStringList filterList = filter.split(sep);
     if (filterList.size() == 1) {
         parent = QModelIndex();
         prefix = filter;
@@ -463,15 +468,47 @@ private:
     QString m_prefix;
 };
 
-int CodeCompleterProxyModel::filter(const QString &filter, int cs)
+int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::CompletionContext ctx)
 {
     if (!m_model) {
         return 0;
     }
     clearItems();
+    if (ctx == LiteApi::CompleterImportContext) {
+        if (filter.isEmpty()) {
+            foreach (QString import, m_importList) {
+                m_items.append(new QStandardItem(import));
+            }
+            return m_items.size();
+        }
+        bool hasSep = filter.contains("/");
+        if (hasSep) {
+            foreach (QString import, m_importList) {
+                if (import.startsWith(filter)) {
+                    m_items.append(new QStandardItem(import));
+                }
+            }
+        } else {
+            QList<QStandardItem*> items;
+            foreach (QString import, m_importList) {
+                if (import.contains("/")) {
+                    foreach (QString path, import.split("/")) {
+                        if (path.startsWith(filter)) {
+                            items.append(new QStandardItem(import));
+                            break;
+                        }
+                    }
+                } else if (import.startsWith(filter)) {
+                    m_items.append(new QStandardItem(import));
+                }
+            }
+            m_items.append(items);
+        }
+        return m_items.size();
+    }
     QModelIndex parentIndex;
     QString prefix;
-    if (!splitFilter(filter,parentIndex,prefix)) {
+    if (!splitFilter(filter,parentIndex,prefix,".")) {
         return 0;
     }
     if (prefix.isEmpty()) {
@@ -547,6 +584,7 @@ CodeCompleterEx::CodeCompleterEx(QObject *parent)
     m_eatFocusOut = true;
     m_hiddenBecauseNoMatch = false;
     m_cs = Qt::CaseInsensitive;
+    m_ctx = LiteApi::CompleterCodeContext;
     m_wrap = true;
     m_popup = new CodeCompleterListView;
     m_popup->setUniformItemSizes(true);
@@ -589,6 +627,11 @@ QAbstractItemModel *CodeCompleterEx::model() const
     return m_proxy->sourceModel();
 }
 
+void CodeCompleterEx::setImportList(const QStringList &importList)
+{
+    m_proxy->setImportList(importList);
+}
+
 void CodeCompleterEx::setSeparator(const QString &separator)
 {
     m_proxy->setSeparator(separator);
@@ -602,7 +645,7 @@ QString CodeCompleterEx::separator() const
 void CodeCompleterEx::setCompletionPrefix(const QString &prefix)
 {
     m_prefix = prefix;
-    if (m_proxy->filter(prefix,m_cs) <= 0) {
+    if (m_proxy->filter(prefix,m_cs,m_ctx) <= 0) {
         if (m_popup->isVisible()) {
             m_popup->close();
         }
@@ -614,6 +657,16 @@ void CodeCompleterEx::setCompletionPrefix(const QString &prefix)
 QString CodeCompleterEx::completionPrefix() const
 {
     return m_prefix;
+}
+
+void CodeCompleterEx::setCompletionContext(LiteApi::CompletionContext ctx)
+{
+    m_ctx = ctx;
+}
+
+LiteApi::CompletionContext CodeCompleterEx::completionContext() const
+{
+    return m_ctx;
 }
 
 void CodeCompleterEx::updateFilter()
