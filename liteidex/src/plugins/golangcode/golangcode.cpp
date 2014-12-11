@@ -323,6 +323,9 @@ void GolangCode::loadPkgList()
             m_importList.append(line);
         }
     }
+    m_importList << "github.com/"
+                 << "golang.org/x/";
+    m_importList.removeDuplicates();
 }
 
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
