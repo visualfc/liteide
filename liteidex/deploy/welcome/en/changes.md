@@ -10,6 +10,10 @@
 	* enable completer import line (standard package)
 * GolangFmt
 	* fix goimports error report bug
+* GolangEdit
+	* support go1.4		
+* GolangDoc
+	* support go1.4
 * LiteFind
 	* fix search result style sheet	
 * FileBorwser

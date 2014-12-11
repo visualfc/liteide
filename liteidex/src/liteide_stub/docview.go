@@ -42,7 +42,44 @@ func runDocView(cmd *Command, args []string) {
 	var template string
 	var info *Info
 	if len(docViewList) > 0 {
-		info = NewListInfo(filepath.Join(goroot, "src", docViewList))
+		pkgPath := filepath.Join(goroot, "src", docViewList)
+		if docViewList == "pkg" {
+			_, err := os.Stat(pkgPath)
+			if err != nil {
+				pkgPath = filepath.Join(goroot, "src")
+			}
+		}
+		info = NewListInfo(pkgPath)
+		if info != nil {
+			if docViewList == "pkg" {
+				var filterList []DirEntry
+				for _, v := range info.Dirs.List {
+					if v.Path == "cmd" {
+						continue
+					}
+					if strings.HasPrefix(v.Path, "cmd/") {
+						continue
+					}
+					if strings.Contains(v.Path, "/testdata") {
+						continue
+					}
+					filterList = append(filterList, v)
+				}
+				info.Dirs.List = filterList
+			} else if docViewList == "cmd" {
+				var filterList []DirEntry
+				for _, v := range info.Dirs.List {
+					if strings.Contains(v.Path, "/") {
+						continue
+					}
+					if strings.Contains(v.Path, "internal") {
+						continue
+					}
+					filterList = append(filterList, v)
+				}
+				info.Dirs.List = filterList
+			}
+		}
 		switch docViewMode {
 		case "html":
 			template = listHTML

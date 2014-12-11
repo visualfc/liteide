@@ -382,6 +382,9 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
         QFileInfo i2(QFileInfo(goroot,"src/pkg").filePath(),pkgname);
         if (i2.exists()) {
             m_targetList.append(i2.filePath());
+        } else {
+            QFileInfo i3(QFileInfo(goroot,"src").filePath(),pkgname);
+            m_targetList.append(i3.filePath());
         }
         foreach(QString path,LiteApi::getGOPATH(m_liteApp,false)) {
             QFileInfo info(QFileInfo(path,"src").filePath(),pkgname);
@@ -607,6 +610,16 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
             }
         } else if (url.path().indexOf("/src/pkg/target/") == 0 && m_lastUrl.scheme() == "pdoc") {
             QString name = url.path().right(url.path().length()-16);
+            foreach (QString path, m_targetList) {
+                QFileInfo info(path,name);
+                if (info.exists()) {
+                    url.setScheme("file");
+                    url.setPath(info.filePath());
+                    break;
+                }
+            }
+        } else if (url.path().indexOf("/src/target/") == 0 && m_lastUrl.scheme() == "pdoc") {
+            QString name = url.path().right(url.path().length()-12);
             foreach (QString path, m_targetList) {
                 QFileInfo info(path,name);
                 if (info.exists()) {
