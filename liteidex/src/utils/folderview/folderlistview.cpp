@@ -118,6 +118,9 @@ void FolderListView::addRootPath(const QString &path)
         return;
     }
     m_model->addRootPath(path);
+    if (m_proxy) {
+        m_proxy->sort(0);
+    }
 }
 
 void FolderListView::setRootPathList(const QStringList &pathList)
@@ -125,6 +128,9 @@ void FolderListView::setRootPathList(const QStringList &pathList)
     m_model->clear();
     foreach(QString path, pathList) {
         m_model->addRootPath(path);
+    }
+    if (m_proxy) {
+        m_proxy->sort(0);
     }
 }
 
