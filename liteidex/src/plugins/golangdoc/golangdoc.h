@@ -72,6 +72,7 @@ public slots:
     void toggledApiSearchWindow(bool);
     void toggledDocSearchWindow(bool);
     void loadEnv();
+    void loadGoroot();
     void currentEnvChanged(LiteApi::IEnv*);
     void listCmd();
     void listPkg();

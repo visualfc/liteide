@@ -176,7 +176,6 @@ void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 void GolangDoc::loadEnv()
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);//m_envManager->currentEnvironment();
-    m_goroot = env.value("GOROOT");
 
     m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
 
@@ -190,6 +189,15 @@ void GolangDoc::loadEnv()
     }
 
     m_pathFileMap.clear();
+    loadGoroot();
+}
+
+void GolangDoc::loadGoroot()
+{
+    m_goroot = LiteApi::getGOROOT(m_liteApp);
+    if (m_goroot.isEmpty()) {
+        return;
+    }
     QDir dir(m_goroot);
     if (dir.exists() && dir.cd("doc")) {
         foreach(QFileInfo info, dir.entryInfoList(QStringList()<<"*.html",QDir::Files)) {
@@ -541,6 +549,9 @@ void GolangDoc::openUrlFile(const QUrl &url)
 
 QUrl GolangDoc::parserUrl(const QUrl &_url)
 {
+    if (m_goroot.isEmpty()) {
+        loadGoroot();
+    }
     QUrl url = _url;
     if (url.path().isEmpty() && !url.fragment().isEmpty()) {
         return url;
@@ -671,7 +682,7 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
                 if (info.exists()) {
                     url.setPath(info.filePath());
                 } else {
-                    if (m_lastUrl.scheme() == "pdoc") {
+                    if (m_lastUrl.scheme() == "pdoc" && !m_goroot.isEmpty()) {
                         url.setPath(QDir::cleanPath(m_lastUrl.path()+"/"+url.path()));
                     } else {
                         url.setPath(url.path());
