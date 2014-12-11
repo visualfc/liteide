@@ -4,6 +4,8 @@
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
 ### 2014.12.12 Ver X25.1
+* LiteIDE
+	* both support go1.3 and go1.4
 * LiteApp
 	* fix folders sort by folder first in macosx
 * GolangCode
@@ -11,7 +13,7 @@
 * GolangFmt
 	* fix goimports error report bug
 * GolangEdit
-	* support go1.4		
+	* fix import line find usages
 * GolangDoc
 	* support go1.4
 * LiteFind
