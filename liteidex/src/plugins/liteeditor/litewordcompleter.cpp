@@ -79,24 +79,55 @@ void LiteWordCompleter::completionPrefixChanged(QString prefix,bool force)
         }
     }
 
-    QTextCursor tc = m_editor->textCursor();
-    int startPosition = tc.position() - prefix.size();
-    tc.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
+    bool isSep = false;
+    if (prefix.startsWith("@.")) {
+        isSep = true;
+        prefix = prefix.mid(1);
+    }
 
-    QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
-    while (1) {
-        tc = tc.document()->find(prefix, tc.position(), flags);
-        if (tc.isNull())
-            break;
-        QTextCursor sel = tc;
-        sel.select(QTextCursor::WordUnderCursor);
-        QString found = textUnderCursor(sel);
-        if (found.startsWith(prefix)
-                && !m_wordSet.contains(found)
-                && tc.anchor() != startPosition) {
-            m_wordSet.insert(found);
-            appendItem(found,m_icon,true);
+    QTextCursor tc = m_editor->textCursor();
+    QTextDocument *doc = m_editor->document();
+    int maxNumber = tc.blockNumber();
+    int blockNumber = tc.blockNumber();
+    QTextBlock block = doc->firstBlock();
+    if (maxNumber < 500) {
+        maxNumber = 500;
+    } else {
+        int firstNumber = maxNumber-500;
+        if (firstNumber > 0) {
+            block = doc->findBlockByNumber(firstNumber);
         }
-        tc.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor);
+    }
+    QRegExp rx("([\\w\\-\\_\\.]+)");
+    Qt::CaseSensitivity cs = m_completer->caseSensitivity();
+    int count = 0;
+    while (block.isValid()) {
+        if (block.blockNumber() >= maxNumber) {
+            break;
+        }
+        if (block.blockNumber() == blockNumber) {
+            block = block.next();
+            continue;
+        }
+        QString line = block.text().trimmed();
+        if (!line.isEmpty())  {
+             int pos = 0;
+             while ((pos = rx.indexIn(line, pos)) != -1) {
+                 QString cap = rx.cap(1);
+                 if (cap.length() < 20 && cap.startsWith(prefix,cs)) {
+                     if (isSep) {
+                         cap = "@"+cap;
+                     }
+                     count++;
+                     appendItem(cap,m_icon,true);
+                 }
+                 pos += rx.matchedLength();
+             }
+        }
+        block = block.next();
+    }
+    if (count > 0) {
+        this->updateCompleterModel();
+        this->showPopup();
     }
 }
