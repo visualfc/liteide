@@ -648,9 +648,19 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
             }
             if (!info.exists()) {
                 QString path = url.path();
-
-                if (path.at(0) == '/') {
-                    info.setFile(QDir(m_goroot),path.right(path.length()-1));
+                if (path.startsWith("/")) {
+                    if (path.endsWith(".go")) {
+                        QStringList gopathList = LiteApi::getGOPATH(m_liteApp,true);
+                        foreach (QString gopath, gopathList) {
+                            QFileInfo _info(gopath+path);
+                            if (_info.exists()) {
+                                info.setFile(_info.filePath());
+                                break;
+                            }
+                        }
+                    } else {
+                        info.setFile(QDir(m_goroot),path.right(path.length()-1));
+                    }
                 } else if (m_lastUrl.scheme() == "file") {
                     info.setFile(QFileInfo(m_lastUrl.toLocalFile()).absoluteDir(),path);
                 }
