@@ -478,10 +478,24 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
             local = true;
         }
     }
-
     if (local) {
-        m_godocProcess->setWorkingDirectory(url.path());
-        args << "-html=true" << ".";
+        QStringList gopathList = LiteApi::getGOPATH(m_liteApp,true);
+        QStringList pkgList;
+        foreach (QString gopath, gopathList) {
+            gopath = QDir::fromNativeSeparators(QDir::cleanPath(gopath));
+            QString urlpath = QDir::fromNativeSeparators(QDir::cleanPath(url.path()));
+            if (urlpath.startsWith(gopath+"/src/")) {
+                pkgList << urlpath.mid(gopath.length()+5);
+            }
+        }
+        if (pkgList.size() == 1) {
+            m_godocProcess->setWorkingDirectory(m_goroot);
+            m_openUrl.setPath(pkgList.at(0));
+            args << "-html=true" << pkgList.at(0);
+        } else {
+            m_godocProcess->setWorkingDirectory(url.path());
+            args << "-html=true" << ".";
+        }
     } else {
         m_godocProcess->setWorkingDirectory(m_goroot);
         args << "-html=true" << url.path();

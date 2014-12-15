@@ -73,7 +73,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     m_openShellAct = new QAction(tr("Open Terminal Here"),this);
     m_openExplorerAct = new QAction(tr("Open Explorer Here"),this);
 
-    m_viewGodocAct = new QAction(tr("View Godoc Here"),this);
+    m_viewGodocAct = new QAction(tr("Use godoc View"),this);
 
     m_addFolderAct = new QAction(tr("Add Folder..."),this);
     m_reloadFolderAct = new QAction(tr("Reload Folder"),this);

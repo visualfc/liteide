@@ -28,7 +28,6 @@
 #include <QModelIndex>
 
 using namespace LiteApi;
-
 class QFileSystemWatcher;
 class NewFileDialog;
 class FolderListView;

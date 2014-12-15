@@ -86,7 +86,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     actionContext->regAction(m_setupGopathAct,"SetupGOPATH","");
 
-    m_godocAct = new QAction(tr("View Documentation"),this);
+    m_godocAct = new QAction(tr("Use godoc View"),this);
     m_loadPackageInNewWindowAct = new QAction(tr("Load Package in New Window"),this);
     m_addToFoldersAct = new QAction(tr("Add Package to Folders"),this);
     m_openSrcAct = new QAction(tr("Open Source File"),this);
