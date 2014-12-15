@@ -677,12 +677,12 @@ QUrl GolangDoc::parserUrl(const QUrl &_url)
             if (info.exists() && info.isFile()) {
                 url.setScheme("file");
                 url.setPath(QDir::cleanPath(info.filePath()));
-            } else if(url.path().at(url.path().length()-1) != '/') {
+            } else {
                 url.setScheme("pdoc");
                 if (info.exists()) {
                     url.setPath(info.filePath());
                 } else {
-                    if (m_lastUrl.scheme() == "pdoc" && !m_goroot.isEmpty()) {
+                    if (m_lastUrl.scheme() == "pdoc" && url.path().endsWith('/')) {
                         url.setPath(QDir::cleanPath(m_lastUrl.path()+"/"+url.path()));
                     } else {
                         url.setPath(url.path());
