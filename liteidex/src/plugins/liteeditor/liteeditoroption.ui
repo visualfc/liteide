@@ -394,6 +394,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="codeFoldVisibleCheckBox">
+            <property name="text">
+             <string>Display code fold</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="indentLineCheckBox">
             <property name="text">
              <string>Display indent guide </string>

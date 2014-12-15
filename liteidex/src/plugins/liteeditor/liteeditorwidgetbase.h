@@ -189,6 +189,12 @@ public:
     void setEofVisible(bool b) {
         m_eofVisible = b;
     }
+    void setCodeFoldVisible(bool b) {
+        m_codeFoldingVisible = b;
+    }
+    bool codeFoldVisible() const {
+        return m_codeFoldingVisible;
+    }
     void setIndentLineVisible(bool b) {
         m_indentLineVisible = b;
     }

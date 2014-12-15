@@ -101,6 +101,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
     bool cleanWhitespaceOnSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
+    bool codeFoldVisible = m_liteApp->settings()->value(EDITOR_CODEFOLDVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
@@ -122,6 +123,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->autoBraces4CheckBox->setChecked(autoBraces4);
     ui->autoBraces5CheckBox->setChecked(autoBraces5);
     ui->lineNumberVisibleCheckBox->setChecked(lineNumberVisible);
+    ui->codeFoldVisibleCheckBox->setChecked(codeFoldVisible);
     ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
     ui->preMinLineEdit->setText(QString("%1").arg(min));
     ui->cleanWhitespaceOnSaveCheckBox->setChecked(cleanWhitespaceOnSave);
@@ -231,6 +233,7 @@ void LiteEditorOption::apply()
     bool autoBraces4 = ui->autoBraces4CheckBox->isChecked();
     bool autoBraces5 = ui->autoBraces5CheckBox->isChecked();
     bool lineNumberVisible = ui->lineNumberVisibleCheckBox->isChecked();
+    bool codeFoldVisible = ui->codeFoldVisibleCheckBox->isChecked();
     bool caseSensitive = ui->completerCaseSensitiveCheckBox->isChecked();
     bool cleanWhitespaceOnSave = ui->cleanWhitespaceOnSaveCheckBox->isChecked();
     bool antialias = ui->antialiasCheckBox->isChecked();
@@ -258,6 +261,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE4,autoBraces4);
     m_liteApp->settings()->setValue(EDITOR_AUTOBRACE5,autoBraces5);
     m_liteApp->settings()->setValue(EDITOR_LINENUMBERVISIBLE,lineNumberVisible);
+    m_liteApp->settings()->setValue(EDITOR_CODEFOLDVISIBLE,codeFoldVisible);
     m_liteApp->settings()->setValue(EDITOR_EOFVISIBLE,eofVisible);
     m_liteApp->settings()->setValue(EDITOR_DEFAULTWORDWRAP,defaultWordWrap);
     m_liteApp->settings()->setValue(EDITOR_INDENTLINEVISIBLE,indentLineVisible);

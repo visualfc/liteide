@@ -56,6 +56,7 @@
 #define EDITOR_RIGHTLINEVISIBLE "editor/rightlinevisible"
 #define EDITOR_RIGHTLINEWIDTH "editor/rightlinewidth"
 #define EDITOR_EOFVISIBLE "editor/eofvisible"
+#define EDITOR_CODEFOLDVISIBLE "editor/codefoldvisible"
 #define EDITOR_OFFSETVISIBLE "editor/offsetvisible"
 #define EDITOR_DEFAULTWORDWRAP "editor/defaultwordwrap"
 #define EDITOR_INDENTLINEVISIBLE "editor/indentlinevisible"
