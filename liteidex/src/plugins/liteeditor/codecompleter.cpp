@@ -475,9 +475,10 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
     }
     clearItems();
     if (ctx == LiteApi::CompleterImportContext) {
+        QIcon icon("icon:liteeditor/images/keyword.png");
         if (filter.isEmpty()) {
             foreach (QString import, m_importList) {
-                m_items.append(new QStandardItem(import));
+                m_items.append(new QStandardItem(icon,import));
             }
             return m_items.size();
         }
@@ -485,7 +486,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
         if (hasSep) {
             foreach (QString import, m_importList) {
                 if (import.startsWith(filter)) {
-                    m_items.append(new QStandardItem(import));
+                    m_items.append(new QStandardItem(icon,import));
                 }
             }
         } else {
@@ -494,12 +495,12 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
                 if (import.contains("/")) {
                     foreach (QString path, import.split("/")) {
                         if (path.startsWith(filter)) {
-                            items.append(new QStandardItem(import));
+                            items.append(new QStandardItem(icon,import));
                             break;
                         }
                     }
                 } else if (import.startsWith(filter)) {
-                    m_items.append(new QStandardItem(import));
+                    m_items.append(new QStandardItem(icon,import));
                 }
             }
             m_items.append(items);

@@ -431,10 +431,12 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     QString info = index.data(Qt::ToolTipRole).toString();
     QString prefix = m_completer->completionPrefix();
     //IsAbs r.URL.
-    int pos = prefix.lastIndexOf(m_completer->separator());
     int length = prefix.length();
-    if (pos != -1) {
-        length = prefix.length()-pos-1;
+    if (m_completer->completionContext() == LiteApi::CompleterCodeContext) {
+        int pos = prefix.lastIndexOf(m_completer->separator());
+        if (pos != -1) {
+            length = prefix.length()-pos-1;
+        }
     }
     QString extra = text;
     QString wordText = text;
