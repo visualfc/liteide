@@ -386,6 +386,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
         }
         if (item == 0) {
             item = new WordItem(word);
+            item->setIcon(icon);
             if (root == 0) {
                 m_model->appendRow(item);
             } else {
