@@ -259,7 +259,8 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
-        <source>View Godoc Here</source>
+        <source>Use godoc View</source>
+        <oldsource>View Godoc Here</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -742,13 +743,13 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="143"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="144"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="144"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Folder in New Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -774,17 +775,17 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="146"/>
         <source>Add to Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="153"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
         <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
         <source>File System</source>
         <translation type="unfinished"></translation>
     </message>
@@ -815,19 +816,19 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="173"/>
-        <location filename="src/liteapp/filemanager.cpp" line="194"/>
-        <location filename="src/liteapp/filemanager.cpp" line="215"/>
+        <location filename="src/liteapp/filemanager.cpp" line="172"/>
+        <location filename="src/liteapp/filemanager.cpp" line="193"/>
+        <location filename="src/liteapp/filemanager.cpp" line="214"/>
         <source>All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="384"/>
+        <location filename="src/liteapp/filemanager.cpp" line="383"/>
         <source>LiteIDE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="385"/>
+        <location filename="src/liteapp/filemanager.cpp" line="384"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -835,62 +836,62 @@ Do you want to load?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="285"/>
+        <location filename="src/liteapp/filemanager.cpp" line="284"/>
         <source>Open Project or File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="81"/>
+        <location filename="src/liteapp/filemanager.cpp" line="80"/>
         <source>Show Hidden Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="89"/>
+        <location filename="src/liteapp/filemanager.cpp" line="88"/>
         <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="94"/>
+        <location filename="src/liteapp/filemanager.cpp" line="93"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="170"/>
-        <location filename="src/liteapp/filemanager.cpp" line="191"/>
-        <location filename="src/liteapp/filemanager.cpp" line="212"/>
+        <location filename="src/liteapp/filemanager.cpp" line="169"/>
+        <location filename="src/liteapp/filemanager.cpp" line="190"/>
+        <location filename="src/liteapp/filemanager.cpp" line="211"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="298"/>
-        <location filename="src/liteapp/filemanager.cpp" line="316"/>
+        <location filename="src/liteapp/filemanager.cpp" line="297"/>
+        <location filename="src/liteapp/filemanager.cpp" line="315"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="518"/>
+        <location filename="src/liteapp/filemanager.cpp" line="517"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="519"/>
+        <location filename="src/liteapp/filemanager.cpp" line="518"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="520"/>
+        <location filename="src/liteapp/filemanager.cpp" line="519"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="521"/>
+        <location filename="src/liteapp/filemanager.cpp" line="520"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="745"/>
+        <location filename="src/liteapp/filemanager.cpp" line="744"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -900,7 +901,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="752"/>
+        <location filename="src/liteapp/filemanager.cpp" line="751"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -908,7 +909,7 @@ Do you want to close the editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="782"/>
+        <location filename="src/liteapp/filemanager.cpp" line="781"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -918,7 +919,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="789"/>
+        <location filename="src/liteapp/filemanager.cpp" line="788"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -926,25 +927,25 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="340"/>
+        <location filename="src/liteapp/filemanager.cpp" line="339"/>
         <source>Open Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="102"/>
+        <location filename="src/liteapp/filemanager.cpp" line="101"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="353"/>
+        <location filename="src/liteapp/filemanager.cpp" line="352"/>
         <source>Open Project</source>
         <translation type="unfinished">Ouvrir un projet</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="749"/>
-        <location filename="src/liteapp/filemanager.cpp" line="754"/>
-        <location filename="src/liteapp/filemanager.cpp" line="786"/>
-        <location filename="src/liteapp/filemanager.cpp" line="791"/>
+        <location filename="src/liteapp/filemanager.cpp" line="748"/>
+        <location filename="src/liteapp/filemanager.cpp" line="753"/>
+        <location filename="src/liteapp/filemanager.cpp" line="785"/>
+        <location filename="src/liteapp/filemanager.cpp" line="790"/>
         <source>LiteIDE X</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1482,39 +1483,39 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="229"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="238"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="235"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="244"/>
         <source>Delete File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="230"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="236"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="239"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="245"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="251"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="260"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="257"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="266"/>
         <source>Delete Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="252"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="261"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="267"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
         <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1522,34 +1523,34 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FolderView</name>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="134"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="143"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="135"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="144"/>
         <source>Delete File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="135"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="136"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="144"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="145"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="156"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="165"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="157"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="166"/>
         <source>Delete Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="157"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="158"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="166"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="167"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2705,27 +2706,27 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="865"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="867"/>
         <source>Export HTML</source>
         <translation>Exporter en HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="873"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="875"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="874"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="893"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="895"/>
         <source>Export PDF</source>
         <translation>Exporter en PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="918"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="920"/>
         <source>Print Document</source>
         <translation>Imprimer le document</translation>
     </message>
@@ -2789,7 +2790,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="276"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="974"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="976"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -2860,7 +2861,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="935"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="937"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2871,7 +2872,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="974"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="976"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2972,12 +2973,17 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="443"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="399"/>
+        <source>Display code fold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="450"/>
         <source>Display offset position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="467"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="474"/>
         <source>File Types</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2998,12 +3004,12 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="399"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="406"/>
         <source>Display indent guide </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="408"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="415"/>
         <source>Display right margin at column</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3032,22 +3038,22 @@ Success: %2.</oldsource>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="141"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="143"/>
         <source>MIME Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="144"/>
         <source>Tab Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="143"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="145"/>
         <source>Spaces as Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="144"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="146"/>
         <source>File Extensions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3513,57 +3519,56 @@ Do you want to replace it?</source>
 <context>
     <name>PackageBrowser</name>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="82"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="83"/>
         <source>Manage GOPATH...</source>
         <oldsource>Setup GOPATH</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="81"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="82"/>
         <source>Reload All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="88"/>
-        <source>View Documentation</source>
-        <oldsource>View Package Document</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="89"/>
-        <source>Load Package in New Window</source>
+        <source>Use godoc View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="90"/>
-        <source>Add Package to Folders</source>
+        <source>Load Package in New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
-        <source>Open Source File</source>
+        <source>Add Package to Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
+        <source>Open Source File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="114"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="115"/>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="196"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="198"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="201"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="203"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation type="unfinished"></translation>
