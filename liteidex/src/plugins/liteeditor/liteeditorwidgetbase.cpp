@@ -1670,6 +1670,15 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                 insertLineAfter();
             }
             return;
+        } else if (e->modifiers() & Qt::ShiftModifier) {
+            QTextCursor cur = this->textCursor();
+            if (m_autoIndent) {
+                indentEnter(cur);
+            } else {
+                cur.insertText("\n");
+            }
+            this->setTextCursor(cur);
+            return;
         }
     }
     if (e == QKeySequence::MoveToStartOfBlock
@@ -1972,14 +1981,13 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
     if (block.isValid() && block.next().isValid() && !block.next().isVisible()) {
         unfold();
     }
-    cur.beginEditBlock();
     int pos = cur.position()-cur.block().position();
     QString text = cur.block().text();
     int i = 0;
     int tab = 0;
     int space = 0;
     QString inText = "\n";
-    while (i < text.size()) {
+    while (i < pos) {
         if (!text.at(i).isSpace())
             break;
         if (text.at(i) == ' ') {
@@ -1991,8 +1999,7 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
     }
     tab += space/m_nTabSize;
     inText += this->tabText(tab);
-
-    text.trimmed();
+    text = text.trimmed();
     if (!text.isEmpty()) {
         if (pos >= text.size()) {
             const QChar ch = text.at(text.size()-1);
@@ -2004,6 +2011,7 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
             const QChar r = text.at(text.size()-1);
             if ( (l == '{' && r == '}') ||
                  (l == '(' && r== ')') ) {
+                cur.beginEditBlock();
                 cur.insertText(inText);
                 int pos = cur.position();
                 cur.insertText(inText);
@@ -2015,6 +2023,7 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
             }
         }
     }
+    cur.beginEditBlock();
     cur.insertText(inText);
     cur.endEditBlock();
     ensureCursorVisible();
