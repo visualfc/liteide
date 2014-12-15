@@ -24,16 +24,20 @@ var cmdPkgs = &Command{
 }
 
 var (
-	pkgsList bool
-	pkgsJson bool
-	pkgsFind string
-	pkgsStd  bool
+	pkgsList       bool
+	pkgsJson       bool
+	pkgsFind       string
+	pkgsStd        bool
+	pkgsPkgOnly    bool
+	pkgsSkipGoroot bool
 )
 
 func init() {
 	cmdPkgs.Flag.BoolVar(&pkgsList, "list", false, "list all package")
 	cmdPkgs.Flag.BoolVar(&pkgsJson, "json", false, "json format")
 	cmdPkgs.Flag.BoolVar(&pkgsStd, "std", false, "std library")
+	cmdPkgs.Flag.BoolVar(&pkgsPkgOnly, "pkg", false, "pkg only")
+	cmdPkgs.Flag.BoolVar(&pkgsSkipGoroot, "skip_goroot", false, "skip goroot")
 	cmdPkgs.Flag.StringVar(&pkgsFind, "find", "", "find package by name")
 }
 
@@ -49,6 +53,9 @@ func runPkgs(cmd *Command, args []string) {
 	if pkgsList {
 		for _, pi := range pp.indexs {
 			for _, pkg := range pi.pkgs {
+				if pkgsPkgOnly && pkg.IsCommand() {
+					continue
+				}
 				if pkgsJson {
 					var p GoPackage
 					p.copyBuild(pkg)
@@ -66,6 +73,9 @@ func runPkgs(cmd *Command, args []string) {
 		for _, pi := range pp.indexs {
 			for _, pkg := range pi.pkgs {
 				if pkg.Name == pkgsFind {
+					if pkgsPkgOnly && pkg.IsCommand() {
+						continue
+					}
 					if pkgsJson {
 						var p GoPackage
 						p.copyBuild(pkg)
@@ -210,18 +220,20 @@ func (p *PathPkgsIndex) LoadIndex() {
 	gopath := context.GOPATH
 	context.GOPATH = ""
 
-	//go1.4 go/src/
-	//go1.3 go/src/pkg; go/src/cmd
-	_, err := os.Stat(filepath.Join(goroot, "src/pkg/runtime"))
-	if err == nil {
-		for _, v := range context.SrcDirs() {
-			if strings.HasSuffix(v, "pkg") {
-				srcDirs = append(srcDirs, v[:len(v)-3]+"cmd")
+	if !pkgsSkipGoroot {
+		//go1.4 go/src/
+		//go1.3 go/src/pkg; go/src/cmd
+		_, err := os.Stat(filepath.Join(goroot, "src/pkg/runtime"))
+		if err == nil {
+			for _, v := range context.SrcDirs() {
+				if strings.HasSuffix(v, "pkg") {
+					srcDirs = append(srcDirs, v[:len(v)-3]+"cmd")
+				}
+				srcDirs = append(srcDirs, v)
 			}
-			srcDirs = append(srcDirs, v)
+		} else {
+			srcDirs = append(srcDirs, filepath.Join(goroot, "src"))
 		}
-	} else {
-		srcDirs = append(srcDirs, filepath.Join(goroot, "src"))
 	}
 
 	context.GOPATH = gopath
@@ -345,7 +357,7 @@ func (p *PkgsIndex) loadPkgsPath(wg *sync.WaitGroup, root, pkgrelpath string) {
 		buildPkg, err := build.ImportDir(dir, 0)
 		if err == nil {
 			if buildPkg.ImportPath == "." {
-				buildPkg.ImportPath = pkgrelpath
+				buildPkg.ImportPath = filepath.ToSlash(pkgrelpath)
 				buildPkg.Root = root
 				buildPkg.Goroot = true
 			}
