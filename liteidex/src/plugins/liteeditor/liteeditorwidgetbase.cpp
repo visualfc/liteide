@@ -1999,7 +1999,6 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
     }
     tab += space/m_nTabSize;
     inText += this->tabText(tab);
-    text = text.trimmed();
     if (!text.isEmpty()) {
         if (pos >= text.size()) {
             const QChar ch = text.at(text.size()-1);
