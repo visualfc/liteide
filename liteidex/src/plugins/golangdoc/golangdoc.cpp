@@ -471,10 +471,11 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
     QStringList args;
     //check additional path
     bool local = false;
-    if (QDir(url.path()).exists()) {
-        local = true;
-        if (url.path().length() >= 2 && url.path().right(2) == "..") {
-            local = false;
+    QDir dir(url.path());
+    if (dir.exists()) {
+        QStringList nameFilter("*.go");
+        if (!dir.entryList(nameFilter).isEmpty()) {
+            local = true;
         }
     }
 
