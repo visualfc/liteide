@@ -64,7 +64,6 @@ bool FileManager::initWithApp(IApplication *app)
 #else
     m_folderListView = new FolderListView(false,m_liteApp);
 #endif
-
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable
                             | QDir::Executable /*| QDir::Hidden*/

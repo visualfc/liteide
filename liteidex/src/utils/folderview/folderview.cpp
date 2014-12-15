@@ -69,6 +69,7 @@ FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *pare
         m_proxy = new FileSystemProxyModel(this);
         m_proxy->setSourceModel(m_model);
         this->setModel(m_proxy);
+        m_proxy->sort(0);
     } else {
         m_proxy = 0;
         this->setModel(m_model);

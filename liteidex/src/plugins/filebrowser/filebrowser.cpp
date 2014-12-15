@@ -127,6 +127,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootToolBar->addAction(m_reloadAct);
     m_rootToolBar->addSeparator();
     m_rootToolBar->addWidget(m_rootCombo);
+
 #ifdef Q_OS_MAC
     m_folderView = new FolderView(true,m_liteApp);
 #else
