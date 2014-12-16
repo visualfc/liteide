@@ -71,7 +71,7 @@ bool WelcomePlugin::load(LiteApi::IApplication *app)
         m_homeAct = new QAction(QIcon("icon:images/home.png"),tr("Welcome"),this);
         m_homeAct->setShortcut(QKeySequence("Ctrl+Alt+H"));
         connect(m_homeAct,SIGNAL(triggered()),this,SLOT(home()));
-        m_godocAct = new QAction(QIcon("icon:images/godoc.png"),tr("Golang Documents"),this);
+        m_godocAct = new QAction(QIcon("icon:images/godoc.png"),tr("View Golang Documents"),this);
         connect(m_godocAct,SIGNAL(triggered()),this,SLOT(godoc()));
         toolBar->addAction(m_homeAct);
         toolBar->addAction(m_godocAct);

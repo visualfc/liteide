@@ -149,6 +149,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
+        menu->addAction(m_viewGodocAct);
+        menu->addSeparator();
         menu->addAction(m_updatePkgAct);
         menu->addSeparator();
         menu->addAction(m_findInfoAct);

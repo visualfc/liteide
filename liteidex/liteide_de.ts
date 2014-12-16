@@ -1709,6 +1709,11 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
         <source>Golang Api Index</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="src/plugins/golangdoc/golangdoc.cpp" line="111"/>
+        <source>Find Package:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangDocOption</name>
@@ -1737,37 +1742,42 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
 <context>
     <name>GolangEdit</name>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="50"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="51"/>
+        <source>View import package use godoc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="54"/>
         <source>Update dependencies library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="53"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="57"/>
         <source>View Expression Information</source>
         <translation type="unfinished">Zeige Ausdrucks-Information</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="56"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="60"/>
         <source>Jump to Declaration</source>
         <translation>Zur Deklaration springen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="59"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="63"/>
         <source>Find Usages</source>
         <translation type="unfinished">Nutzungen suchen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="62"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="66"/>
         <source>Rename Symbol Under Cursor</source>
         <translation type="unfinished">Symbol unter Cursor umbenennen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="71"/>
         <source>Comment/Uncomment Selection</source>
         <translation type="unfinished">Auswahl kommentieren/auskommentieren</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
         <source>Refactor</source>
         <translation type="unfinished">Refaktor</translation>
     </message>
@@ -2071,7 +2081,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="642"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="641"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">Achtung: Pkg nicht gefunden, bitte eingeben:</translation>
     </message>
@@ -2749,218 +2759,218 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="222"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="223"/>
         <source>Undo</source>
         <translation>Rückgängig</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="225"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
         <source>Redo</source>
         <translation>Wiederholen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="228"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="229"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="231"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="234"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="235"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="237"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="238"/>
         <source>Select All</source>
         <translation>Alles auswählen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="459"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="460"/>
         <source>Advanced</source>
         <translation type="unfinished">Erweitert</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="498"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="499"/>
         <source>Code Folding</source>
         <translation type="unfinished">Code-Faltung</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="503"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="504"/>
         <source>Line</source>
         <translation type="unfinished">Zeile</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="867"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="868"/>
         <source>Export HTML</source>
         <translation>Exportiere HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="875"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Export Failed</source>
         <translation type="unfinished">Export fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="877"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished">Konnte %1 nicht zum Schreiben öffnen.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="895"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="896"/>
         <source>Export PDF</source>
         <translation>Exportiere PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="920"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="921"/>
         <source>Print Document</source>
         <translation type="unfinished">Dokument drucken</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="245"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation type="unfinished">Druckvorschau...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="240"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="241"/>
         <source>Export HTML...</source>
         <translation type="unfinished">Exportiere HTML...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="242"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Export PDF...</source>
         <translation type="unfinished">Exportiere PDF...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
         <source>Print...</source>
         <translation type="unfinished">Drucken...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="247"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
         <translation type="unfinished">Zu vorherigem Block springen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="253"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
         <source>Select Block</source>
         <translation>Block auswählen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="256"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="257"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
         <translation type="unfinished">Springe zu passender Klammer</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="259"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
         <source>Fold</source>
         <translation>Einklappen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
         <source>Unfold</source>
         <translation>Ausklappen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
         <source>Fold All</source>
         <translation>Alle einklappen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
         <source>Unfold All</source>
         <translation>Alle ausklappen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="276"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="976"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="277"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="977"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished">Springe zu Zeile</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="280"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="283"/>
         <source>Duplicate</source>
         <translation>Duplizieren</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
         <source>Delete Line</source>
         <translation type="unfinished">Zeile löschen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="292"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
         <source>Insert Line Before</source>
         <translation type="unfinished">Zeile einfügen vor</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="296"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="297"/>
         <source>Insert Line After</source>
         <translation type="unfinished">Zeile einfügen nach</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="300"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
         <source>Increase Font Size</source>
         <translation>Schriftgröße erhöhen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="303"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="304"/>
         <source>Decrease Font Size</source>
         <translation>Schriftgröße verringern</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="307"/>
         <source>Reset Font Size</source>
         <translation>Schriftgröße zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="310"/>
         <source>Clean Whitespace</source>
         <translation type="unfinished">Whitespaces bereinigen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="312"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
         <source>Word Wrap</source>
         <translation type="unfinished">Umbruch</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="316"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
         <source>Code Complete</source>
         <translation type="unfinished">Code vervollständigen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="440"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="441"/>
         <source>Close Document</source>
         <translation>Dokument schließen</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="567"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="568"/>
         <source>Reload File</source>
         <translation type="unfinished">Datei neu laden</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="937"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="938"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished">Möchten Sie ihre Änderungen verwerfen und die Datei neu laden: %1?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="250"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
         <translation type="unfinished">Springe zu nächstem Block</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="976"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="977"/>
         <source>Line: </source>
         <translation type="unfinished">Zeile: </translation>
     </message>
@@ -3577,7 +3587,7 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>OptionsBrowser</name>
     <message>
-        <location filename="src/liteapp/optionsbrowser.cpp" line="58"/>
+        <location filename="src/liteapp/optionsbrowser.cpp" line="57"/>
         <source>Options</source>
         <oldsource>Options Page</oldsource>
         <translation>Optionen</translation>
@@ -3596,14 +3606,12 @@ Soll es ersetzt werden?</translation>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="src/liteapp/optionswidget.ui" line="79"/>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation type="obsolete">Anwenden</translation>
     </message>
     <message>
-        <location filename="src/liteapp/optionswidget.ui" line="86"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -4209,10 +4217,16 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>WelcomePlugin</name>
     <message>
-        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="64"/>
+        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="71"/>
         <source>Welcome</source>
         <oldsource>Home</oldsource>
         <translation>Willkommen</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="74"/>
+        <source>View Golang Documents</source>
+        <oldsource>Golang Documents</oldsource>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

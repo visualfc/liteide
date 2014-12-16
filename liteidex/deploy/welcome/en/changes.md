@@ -11,6 +11,7 @@
 * LiteEditor
 	* fix enter key indent
 	* fix import line regexp
+	* fix complete word suspended  bug (in non go file)
 	* re-implement full text completer
 * GolangDoc
 	* fix lookup godoc on system env
@@ -19,6 +20,7 @@
 	* completer import line on GOPATH	
 * GolangEdit
 	* add update dependencies library action
+	* add view import package in godoc action
 	
 ### 2014.12.12 Ver X25.1
 * LiteIDE

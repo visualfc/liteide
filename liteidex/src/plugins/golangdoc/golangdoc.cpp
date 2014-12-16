@@ -108,7 +108,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_godocFindComboBox->setEditable(true);
     //m_godocFindComboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     m_docBrowser->toolBar()->addSeparator();
-    m_docBrowser->toolBar()->addWidget(new QLabel("Find Package:"));
+    m_docBrowser->toolBar()->addWidget(new QLabel(tr("Find Package:")));
     m_docBrowser->toolBar()->addWidget(m_godocFindComboBox);
 
     m_browserAct = m_liteApp->editorManager()->registerBrowser(m_docBrowser);
