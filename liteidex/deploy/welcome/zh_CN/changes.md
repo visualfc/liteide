@@ -4,10 +4,13 @@
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
 ### 2014.12.16 Ver X25.2
+* LiteIDE
+	* default enviroment id system work
 * LiteApp
 	* fix sort folder on macosx
 * LiteEnv
 	* add reload current enviroment action	
+	* set default enviroment id system
 * LiteEditor
 	* fix enter key indent
 	* fix import line regexp

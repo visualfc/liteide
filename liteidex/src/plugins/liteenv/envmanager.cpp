@@ -350,7 +350,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
-    QString id = m_liteApp->settings()->value(LITEENV_CURRENTENV,defaultEnvid()).toString();
+    QString id = m_liteApp->settings()->value(LITEENV_CURRENTENV,"system").toString();
     if (!id.isEmpty()) {
         this->setCurrentEnvId(id);
     }
