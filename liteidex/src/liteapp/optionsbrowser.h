@@ -34,7 +34,7 @@ namespace Ui {
 }
 
 class QListWidgetItem;
-
+class QAbstractButton;
 class OptionsBrowser : public QDialog//LiteApi::IBrowserEditor
 {
     Q_OBJECT
@@ -48,10 +48,10 @@ public:
 signals:
     void applyOption(QString);
 protected slots:
-    void itemSelectionChanged();
+    void itemSelectionChanged();    
 private slots:
-    void applayButton();
-
+    void clicked(QAbstractButton*);
+    void applay();
 private:
     LiteApi::IApplication   *m_liteApp;
     Ui::OptionsWidget *ui;

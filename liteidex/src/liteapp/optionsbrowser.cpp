@@ -43,8 +43,7 @@ OptionsBrowser::OptionsBrowser(LiteApi::IApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->listWidget,SIGNAL(itemSelectionChanged()),this,SLOT(itemSelectionChanged()));
-    connect(ui->applayButton,SIGNAL(clicked()),this,SLOT(applayButton()));
-    connect(ui->cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
+    connect(ui->buttonBox,SIGNAL(clicked(QAbstractButton*)),this,SLOT(clicked(QAbstractButton*)));
 }
 
 OptionsBrowser::~OptionsBrowser()
@@ -104,7 +103,20 @@ void OptionsBrowser::itemSelectionChanged()
     }
 }
 
-void OptionsBrowser::applayButton()
+void OptionsBrowser::clicked(QAbstractButton *button)
+{
+    QDialogButtonBox::ButtonRole role = ui->buttonBox->buttonRole(button);
+    if (role == QDialogButtonBox::AcceptRole) {
+        this->applay();
+        this->accept();
+    } else if (role == QDialogButtonBox::RejectRole) {
+        this->reject();
+    } else if (role == QDialogButtonBox::ApplyRole) {
+        this->applay();
+    }
+}
+
+void OptionsBrowser::applay()
 {
     QListWidgetItem *item = ui->listWidget->currentItem();
     if (!item) {
