@@ -30,6 +30,7 @@
 class GolangTextLexer : public LiteApi::ITextLexer
 {
 public:
+    GolangTextLexer(QObject *parent = 0);
     virtual bool isInComment(const QTextCursor &cursor) const;
     virtual bool isInString(const QTextCursor &cursor) const;
     virtual bool isInEmptyString(const QTextCursor &cursor) const;

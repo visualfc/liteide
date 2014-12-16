@@ -7,6 +7,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"go/build"
 	"io"
 	"log"
 	"os"
@@ -194,14 +195,28 @@ type Info struct {
 }
 
 type GodocDir struct {
-	pkg *Directory
-	cmd *Directory
+	pkg    *Directory
+	cmd    *Directory
+	gopath []*Directory
 }
 
 func NewSourceDir(goroot string) *GodocDir {
-	pkg := newDirectory(filepath.Join(goroot, "src", "pkg"), nil, -1)
-	cmd := newDirectory(filepath.Join(goroot, "src", "cmd"), nil, -1)
-	return &GodocDir{pkg, cmd}
+	pkgPath := filepath.Join(goroot, "src/pkg")
+	_, err := os.Stat(pkgPath)
+	var cmd *Directory
+	if err != nil {
+		pkgPath = filepath.Join(goroot, "src")
+	} else {
+		cmd = newDirectory(filepath.Join(goroot, "src", "cmd"), nil, -1)
+	}
+	pkg := newDirectory(pkgPath, nil, -1)
+	ctx := build.Default
+	ctx.GOROOT = ""
+	var gopath []*Directory
+	for _, v := range ctx.SrcDirs() {
+		gopath = append(gopath, newDirectory(v, nil, -1))
+	}
+	return &GodocDir{pkg, cmd, gopath}
 }
 
 func (dir *GodocDir) FindInfo(name string) *Info {
@@ -222,7 +237,20 @@ func (dir *GodocDir) FindInfo(name string) *Info {
 	} else {
 		best = best2
 	}
-	return &Info{name, best, &DirList{maxHeight, appendList(list1, list2)}}
+	var list []DirEntry
+	list = append(list, list1...)
+	list = append(list, list2...)
+	for _, v := range dir.gopath {
+		max3, best3, list3 := FindDir(v, name)
+		if max3 > maxHeight {
+			maxHeight = max3
+		}
+		if best == nil {
+			best = best3
+		}
+		list = append(list, list3...)
+	}
+	return &Info{name, best, &DirList{maxHeight, list}}
 }
 
 func FindDir(dir *Directory, pkgname string) (maxHeight int, best *DirEntry, list []DirEntry) {

@@ -39,7 +39,10 @@ public:
 public slots:
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    void updateLink(const QTextCursor &cursor);    
+    void updateLink(const QTextCursor &cursor);
+    void aboutToShowContextMenu();
+    void editorUpdatePkg();
+    void editorViewGodoc();
     void editorFindInfo();
     void editorJumpToDecl();
     void editorFindUsages();
@@ -61,11 +64,13 @@ protected:
     QPlainTextEdit        *m_plainTextEdit;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
+    QAction *m_updatePkgAct;
     QAction *m_findInfoAct;
     QAction *m_jumpDeclAct;
     QAction *m_findUseAct;
     QAction *m_renameSymbolAct;
     QAction *m_commentAct;
+    QAction *m_viewGodocAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;
     ProcessEx  *m_findLinkProcess;

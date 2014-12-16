@@ -699,13 +699,21 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="336"/>
-        <source>Environment</source>
-        <translation>环境变量</translation>
+        <source>Switching current environment</source>
+        <oldsource>Switch Current Environment</oldsource>
+        <translation>切换当前环境</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="339"/>
-        <source>Edit Environment</source>
-        <translation>编辑环境变量</translation>
+        <source>Edit current environment</source>
+        <oldsource>Edit Current Environment</oldsource>
+        <translation>编辑当前环境</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="340"/>
+        <source>Reload current environment</source>
+        <oldsource>Reload Current Environment</oldsource>
+        <translation>重新加载当前环境</translation>
     </message>
 </context>
 <context>
@@ -1692,6 +1700,13 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     </message>
 </context>
 <context>
+    <name>GolangCodePlugin</name>
+    <message>
+        <source>Get dependencies library (gocode)</source>
+        <translation type="obsolete">获取依赖包(gocode)</translation>
+    </message>
+</context>
+<context>
     <name>GolangDoc</name>
     <message>
         <location filename="src/plugins/golangdoc/golangdoc.cpp" line="100"/>
@@ -1736,32 +1751,37 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>GolangEdit</name>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="48"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="50"/>
+        <source>Update dependencies library</source>
+        <translation>更新依赖库</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="53"/>
         <source>View Expression Information</source>
         <translation>查看表达式信息</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="51"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="56"/>
         <source>Jump to Declaration</source>
         <translation>跳转到声明</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="54"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="59"/>
         <source>Find Usages</source>
         <translation>查找使用</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="57"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="62"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>重命名符号</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="62"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
         <source>Comment/Uncomment Selection</source>
         <translation>切换区域注释/反注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="156"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
         <source>Refactor</source>
         <translation>重构</translation>
     </message>
@@ -2065,7 +2085,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="595"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="642"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation>警告，包未发现，按回车导入:</translation>
     </message>

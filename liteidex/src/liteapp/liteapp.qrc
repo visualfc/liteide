@@ -31,7 +31,6 @@
         <file>images/forward.png</file>
         <file>images/reload.png</file>
         <file>images/gopher.png</file>
-        <file>images/gopath.png</file>
         <file>images/editclear.png</file>
         <file>images/closetool.png</file>
         <file>images/movemenu.png</file>
@@ -51,5 +50,8 @@
         <file>images/liteide128.png</file>
         <file>images/liteide-logo128.png</file>
         <file>images/config.png</file>
+        <file>images/godoc.png</file>
+        <file>images/gopath.png</file>
+        <file>images/home.png</file>
     </qresource>
 </RCC>

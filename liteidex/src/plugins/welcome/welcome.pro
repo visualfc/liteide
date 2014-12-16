@@ -24,5 +24,4 @@ FORMS +=
 
 OTHER_FILES +=
 
-RESOURCES += \
-    welcome.qrc
+RESOURCES +=

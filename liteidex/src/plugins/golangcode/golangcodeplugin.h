@@ -40,11 +40,9 @@ protected slots:
     void appLoaded();
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    void updatePkg();
 protected:
     LiteApi::IApplication *m_liteApp;
     GolangCode *m_code;
-    QAction    *m_updatePkgAct;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GolangCodePlugin>
@@ -60,7 +58,7 @@ public:
         m_info->appendDepend("plugin/golangast");
         m_info->setName("GolangCode");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X25.1");
+        m_info->setVer("X25.2");
         m_info->setInfo("Golang Gocode Support");
     }
 };

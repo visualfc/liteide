@@ -6,13 +6,19 @@
 ### 2014.12.16 Ver X25.2
 * LiteApp
 	* fix sort folder on macosx
-* GolangDoc
-	* fix view on system env
-	* fix path name to pkg name
+* LiteEnv
+	* add reload current enviroment action	
 * LiteEditor
-	* fix enter indent
-	* fix import line offset	
-	* fix full word completer
+	* fix enter key indent
+	* fix import line regexp
+	* re-implement full text completer
+* GolangDoc
+	* fix lookup godoc on system env
+	* fix path name to pkg name
+* GolangCode
+	* completer import line on GOPATH	
+* GolangEdit
+	* add update dependencies library action
 	
 ### 2014.12.12 Ver X25.1
 * LiteIDE

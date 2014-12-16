@@ -454,7 +454,6 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
         cgoComplete();
         return;
     }
-
     QString src = cur.document()->toPlainText();
     src = src.replace("\r\n","\n");
     m_writeData = src.left(cur.position()).toUtf8();
@@ -721,7 +720,7 @@ bool ImportPkgTip::eventFilter(QObject *obj, QEvent *e)
                 return true;
             } else if (ke->key() == Qt::Key_Down) {
                 return true;
-            } else if (ke->text() != "."){
+            } else /*if (ke->text() != ".")*/{
                 hide();
             }
         }

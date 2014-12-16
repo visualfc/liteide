@@ -333,11 +333,11 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_envCmb->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     m_envCmb->setMinimumContentsLength(6);
     m_envCmb->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
-    m_envCmb->setToolTip(tr("Switch Current Environment"));
+    m_envCmb->setToolTip(tr("Switching current environment"));
 
     m_toolBar->addWidget(m_envCmb);
-    QAction *editAct = new QAction(QIcon("icon:liteenv/images/setenv.png"),tr("Edit Current Environment"),this);
-    QAction *reloadAct = new QAction(QIcon("icon:liteenv/images/reload.png"),tr("Reload Current Environment"),this);
+    QAction *editAct = new QAction(QIcon("icon:liteenv/images/setenv.png"),tr("Edit current environment"),this);
+    QAction *reloadAct = new QAction(QIcon("icon:liteenv/images/reload.png"),tr("Reload current environment"),this);
     m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,reloadAct);

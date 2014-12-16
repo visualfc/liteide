@@ -24,6 +24,9 @@
 #include "golangedit.h"
 #include "golangtextlexer.h"
 #include "qtc_editutil/uncommentselection.h"
+#include "litebuildapi/litebuildapi.h"
+#include "golangdocapi/golangdocapi.h"
+#include "fileutil/fileutil.h"
 #include <QMenu>
 #include <QToolBar>
 #include <QAction>
@@ -44,6 +47,12 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent), m_liteApp(app)
 {
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangEdit");
+
+    m_viewGodocAct = new QAction(tr("View import package use godoc"),this);
+    actionContext->regAction(m_viewGodocAct,"ViewGodoc","");
+
+    m_updatePkgAct = new QAction(tr("Update dependencies library"),this);
+    actionContext->regAction(m_updatePkgAct,"UpdatePkg","");
 
     m_findInfoAct = new QAction(tr("View Expression Information"),this);
     actionContext->regAction(m_findInfoAct,"ViewInfo","CTRL+SHIFT+I;F1");
@@ -74,6 +83,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
+    connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(editorViewGodoc()));
+    connect(m_updatePkgAct,SIGNAL(triggered()),this,SLOT(editorUpdatePkg()));
     connect(m_findInfoAct,SIGNAL(triggered()),this,SLOT(editorFindInfo()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
@@ -138,6 +149,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
+        menu->addAction(m_updatePkgAct);
+        menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
         menu->addAction(m_findUseAct);
@@ -149,6 +162,10 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
         menu->addSeparator();
+        menu->addAction(m_viewGodocAct);
+        menu->addSeparator();
+        menu->addAction(m_updatePkgAct);
+        menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
         menu->addAction(m_findUseAct);
@@ -157,6 +174,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_renameSymbolAct);
         menu->addSeparator();
         menu->addAction(m_commentAct);
+        connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -208,6 +226,78 @@ void GolangEdit::updateLink(const QTextCursor &_cursor)
     m_findLinkProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def -info .").
                              arg(info.fileName()).
                                arg(offset));
+}
+
+void GolangEdit::aboutToShowContextMenu()
+{
+    LiteApi::ITextLexer *textLexer = LiteApi::getTextLexer(m_editor);
+    if (!textLexer) {
+        return;
+    }
+    QTextCursor cursor = m_editor->textCursor();
+    bool b = textLexer->isInImport(cursor);
+    m_viewGodocAct->setVisible(b);
+}
+
+void GolangEdit::editorUpdatePkg()
+{
+    LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
+    if (!build) {
+        return;
+    }
+    QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    if (cmd.isEmpty()) {
+        return;
+    }
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    QFileInfo info(m_editor->filePath());
+    build->executeCommand(cmd,"get -v .",info.path(),true,true);
+}
+
+QString parser_import(const QString &text)
+{
+    QString sep = "\"";
+    int start = text.indexOf(sep);
+    if (start < 0) {
+        sep = "`";
+        start = text.indexOf(sep);
+    }
+    if (start >= 0) {
+        int end = text.indexOf(sep,start+1);
+        if (end > 0) {
+            return text.mid(start+1,end-start-1);
+        }
+    }
+    return QString();
+}
+
+void GolangEdit::editorViewGodoc()
+{
+    LiteApi::ITextLexer *textLexer = LiteApi::getTextLexer(m_editor);
+    if (!textLexer) {
+        return;
+    }
+    QTextCursor cursor = m_editor->textCursor();
+    bool b = textLexer->isInImport(cursor);
+    if (!b) {
+        return;
+    }
+    QString pkg = parser_import(cursor.block().text());
+    if (pkg.isEmpty()) {
+        return;
+    }
+    LiteApi::IGolangDoc *doc = LiteApi::getGolangDoc(m_liteApp);
+    if (!doc) {
+        return;
+    }
+    QUrl url;
+    url.setScheme("pdoc");
+    url.setPath(pkg);
+    doc->openUrl(url);
+    doc->activeBrowser();
 }
 
 void GolangEdit::editorJumpToDecl()

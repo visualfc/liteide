@@ -26,6 +26,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QToolBar>
+#include <QUrl>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -46,6 +47,12 @@ void WelcomePlugin::home()
     m_liteApp->editorManager()->activeBrowser(m_welcome);
 }
 
+void WelcomePlugin::godoc()
+{
+    m_liteApp->editorManager()->activeBrowser(m_welcome);
+    m_welcome->openUrl(QUrl("godoc:/doc/docs.html"));
+}
+
 bool WelcomePlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
@@ -61,10 +68,13 @@ bool WelcomePlugin::load(LiteApi::IApplication *app)
     QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
     if (toolBar) {
         toolBar->addSeparator();
-        m_homeAct = new QAction(QIcon("icon:welcome/images/home.png"),tr("Welcome"),this);
+        m_homeAct = new QAction(QIcon("icon:images/home.png"),tr("Welcome"),this);
         m_homeAct->setShortcut(QKeySequence("Ctrl+Alt+H"));
         connect(m_homeAct,SIGNAL(triggered()),this,SLOT(home()));
+        m_godocAct = new QAction(QIcon("icon:images/godoc.png"),tr("Golang Documents"),this);
+        connect(m_godocAct,SIGNAL(triggered()),this,SLOT(godoc()));
         toolBar->addAction(m_homeAct);
+        toolBar->addAction(m_godocAct);
     }
 
     m_liteDoc = new LiteDoc(m_liteApp,this);

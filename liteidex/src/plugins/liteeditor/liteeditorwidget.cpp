@@ -108,7 +108,7 @@ QString LiteEditorWidget::importUnderCursor(QTextCursor tc) const
     if (text.isEmpty()) {
         return QString();
     }
-    static QRegExp reg("[\"`][a-zA-Z0-9_\\.\\/]*$");
+    static QRegExp reg("[\"`][a-zA-Z0-9_\\-\\.\\/]*$");
     int index = reg.indexIn(text);
     if (index < 0) {
         return QString();

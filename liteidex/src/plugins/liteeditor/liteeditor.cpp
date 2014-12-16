@@ -181,6 +181,7 @@ void LiteEditor::setEditorMark(LiteApi::IEditorMark *mark)
 
 void LiteEditor::setTextLexer(LiteApi::ITextLexer *lexer)
 {
+    m_extension->addObject("LiteApi.ITextLexer",lexer);
     m_editorWidget->setTextLexer(lexer);
 }
 

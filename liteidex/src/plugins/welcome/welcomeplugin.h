@@ -38,12 +38,14 @@ public:
     virtual bool load(LiteApi::IApplication *app);
 protected slots:
     void home();
+    void godoc();
 protected:
     LiteApi::IApplication *m_liteApp;
     WelcomeBrowser *m_welcome;
     LiteDoc *m_liteDoc;
     QAction *m_welcomeAct;
     QAction *m_homeAct;
+    QAction *m_godocAct;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<WelcomePlugin>

@@ -197,10 +197,10 @@ struct Link
     int targetColumn;
 };
 
-class ITextLexer
+class ITextLexer : public QObject
 {
 public:
-    ITextLexer()
+    ITextLexer(QObject *parent = 0) : QObject(parent)
     {}
     virtual ~ITextLexer()
     {}
@@ -220,7 +220,8 @@ public:
 class BaseTextLexer : public ITextLexer
 {
 public:
-    BaseTextLexer() : m_bAC(true), m_bCC(true)
+    BaseTextLexer(QObject *parent = 0) : ITextLexer(parent),
+        m_bAC(true), m_bCC(true)
     {
     }
     virtual bool isInComment(const QTextCursor &/*cursor*/) const {
@@ -294,6 +295,13 @@ inline ILiteEditor *getLiteEditor(IEditor *editor)
 {
     if (editor && editor->extension()) {
         return findExtensionObject<ILiteEditor*>(editor->extension(),"LiteApi.ILiteEditor");
+    }
+    return 0;
+}
+
+inline ITextLexer *getTextLexer(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<ITextLexer*>(editor->extension(),"LiteApi.ITextLexer");
     }
     return 0;
 }

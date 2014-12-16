@@ -685,12 +685,20 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="336"/>
-        <source>Environment</source>
+        <source>Switching current environment</source>
+        <oldsource>Switch Current Environment</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="339"/>
-        <source>Edit Environment</source>
+        <source>Edit current environment</source>
+        <oldsource>Edit Current Environment</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="340"/>
+        <source>Reload current environment</source>
+        <oldsource>Reload Current Environment</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1655,32 +1663,37 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>GolangEdit</name>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="48"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="50"/>
+        <source>Update dependencies library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="53"/>
         <source>View Expression Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="51"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="56"/>
         <source>Jump to Declaration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="54"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="59"/>
         <source>Find Usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="57"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="62"/>
         <source>Rename Symbol Under Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="62"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
         <source>Comment/Uncomment Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="156"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1984,7 +1997,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="595"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="642"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished"></translation>
     </message>
