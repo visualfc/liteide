@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/liteenv">
         <file>images/setenv.png</file>
+        <file>images/reload.png</file>
     </qresource>
 </RCC>

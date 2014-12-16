@@ -60,9 +60,11 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     g_gocodeInstCount++;
     m_gocodeProcess = new QProcess(this);
     m_updatePkgProcess = new QProcess(this);
+    m_importProcess = new QProcess(this);
     m_breset = false;
     connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
     connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
+    connect(m_importProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(importFinished(int,QProcess::ExitStatus)));
 
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
@@ -323,9 +325,34 @@ void GolangCode::loadPkgList()
             m_importList.append(line);
         }
     }
+    m_importList.removeDuplicates();
     m_importList << "github.com/"
                  << "golang.org/x/";
-    m_importList.removeDuplicates();
+    m_allImportList = m_importList;
+}
+
+void GolangCode::loadImportsList()
+{
+    if (m_importProcess->state() != QProcess::NotRunning) {
+        return;
+    }
+
+    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    if (cmd.isEmpty()) {
+        return;
+    }
+    QStringList args;
+    args << "pkgs" << "-list" << "-pkg" << "-skip_goroot";
+    m_importProcess->start(cmd,args);
+}
+
+void GolangCode::updateDependsPkg()
+{
+    if (m_updatePkgProcess->state() != QProcess::NotRunning) {
+        m_updatePkgProcess->kill();
+        m_updatePkgProcess->waitForFinished(100);
+    }
+    m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
 }
 
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
@@ -335,6 +362,7 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
     m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);
     m_updatePkgProcess->setProcessEnvironment(env);
     m_gocodeProcess->setProcessEnvironment(env);
+    m_importProcess->setProcessEnvironment(env);
 
     if (m_gocodeCmd.isEmpty()) {
          m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
@@ -342,6 +370,7 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
          m_liteApp->appendLog("GolangCode",QString("Found gocode at %1").arg(m_gocodeCmd));
     }
     resetGocode();
+    loadImportsList();
 }
 
 void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
@@ -367,7 +396,7 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
     }
     m_completer = completer;
     if (m_completer) {
-        m_completer->setImportList(m_importList);
+        m_completer->setImportList(m_allImportList);
         if (!m_gocodeCmd.isEmpty()) {
             m_completer->setSearchSeparator(false);
             m_completer->setExternalMode(true);
@@ -542,6 +571,24 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
                 m_pkgImportTip->showPkgHint(pos,pkgs,ed);
             }
         }
+    }
+}
+
+void GolangCode::importFinished(int code,QProcess::ExitStatus)
+{
+    if (code != 0) {
+        return;
+    }
+    QByteArray read = m_importProcess->readAllStandardOutput();
+    QString data = QString::fromUtf8(read);
+    QStringList importList = data.split('\n');
+    importList.removeDuplicates();
+    importList.sort();
+    m_allImportList = m_importList;
+    m_allImportList.append(importList);
+    m_allImportList.removeDuplicates();
+    if (m_completer) {
+        m_completer->setImportList(m_allImportList);
     }
 }
 

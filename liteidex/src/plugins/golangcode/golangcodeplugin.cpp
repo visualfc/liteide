@@ -23,6 +23,7 @@
 
 #include "golangcodeplugin.h"
 #include "liteeditorapi/liteeditorapi.h"
+#include "litebuildapi/litebuildapi.h"
 #include "fileutil/fileutil.h"
 #include "qtc_editutil/uncommentselection.h"
 #include "golangcode.h"
@@ -30,6 +31,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QPlainTextEdit>
+#include <QFileInfo>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -49,10 +51,17 @@ bool GolangCodePlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
     m_code = new GolangCode(app,this);
+
+    m_updatePkgAct = new QAction(tr("Get dependencies library (gocode)"),this);
+
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoCode");
+    actionContext->regAction(m_updatePkgAct,"GetDep","");
+
     app->optionManager()->addFactory(new GolangCodeOptionFactory(app,this));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(m_updatePkgAct,SIGNAL(triggered()),this,SLOT(updatePkg()));
     return true;
 }
 
@@ -67,11 +76,25 @@ void GolangCodePlugin::appLoaded()
 
 void GolangCodePlugin::editorCreated(LiteApi::IEditor *editor)
 {
-    if (editor && editor->mimeType() == "text/x-gosrc") {
-        LiteApi::ILiteEditor *liteEdit = LiteApi::getLiteEditor(editor);
-        if (liteEdit) {
-            liteEdit->setSpellCheckZoneDontComplete(true);
-        }
+    if (!editor) {
+        return;
+    }
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
+    LiteApi::ILiteEditor *liteEdit = LiteApi::getLiteEditor(editor);
+    if (liteEdit) {
+        liteEdit->setSpellCheckZoneDontComplete(true);
+    }
+    QMenu *menu = LiteApi::getEditMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(m_updatePkgAct);
+    }
+    menu = LiteApi::getContextMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(m_updatePkgAct);
     }
 }
 
@@ -92,6 +115,27 @@ void GolangCodePlugin::currentEditorChanged(LiteApi::IEditor *editor)
         }
     }
     m_code->setCompleter(0);
+}
+
+void GolangCodePlugin::updatePkg()
+{
+    LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
+    if (!build) {
+        return;
+    }
+    QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    if (cmd.isEmpty()) {
+        return;
+    }
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!editor) {
+        return;
+    }
+    QString path = editor->filePath();
+    if (path.isEmpty()) {
+        return;
+    }
+    build->executeCommand(cmd,"get -v .",QFileInfo(path).path(),true,true);
 }
 
 #if QT_VERSION < 0x050000

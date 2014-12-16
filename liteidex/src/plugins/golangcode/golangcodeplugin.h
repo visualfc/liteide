@@ -40,9 +40,11 @@ protected slots:
     void appLoaded();
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
+    void updatePkg();
 protected:
     LiteApi::IApplication *m_liteApp;
     GolangCode *m_code;
+    QAction    *m_updatePkgAct;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GolangCodePlugin>

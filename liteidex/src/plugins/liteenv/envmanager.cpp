@@ -333,11 +333,14 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_envCmb->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     m_envCmb->setMinimumContentsLength(6);
     m_envCmb->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
-    m_envCmb->setToolTip(tr("Environment"));
+    m_envCmb->setToolTip(tr("Switch Current Environment"));
 
     m_toolBar->addWidget(m_envCmb);
-    QAction *editAct = new QAction(QIcon("icon:liteenv/images/setenv.png"),tr("Edit Environment"),this);
+    QAction *editAct = new QAction(QIcon("icon:liteenv/images/setenv.png"),tr("Edit Current Environment"),this);
+    QAction *reloadAct = new QAction(QIcon("icon:liteenv/images/reload.png"),tr("Reload Current Environment"),this);
+    m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,reloadAct);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,editAct);
 
     foreach (LiteApi::IEnv *env, m_envList) {
@@ -353,6 +356,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
 
     connect(m_envCmb,SIGNAL(activated(QString)),this,SLOT(envActivated(QString)));
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
+    connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
     return true;
 }
@@ -387,13 +391,21 @@ void EnvManager::editCurrentEnv()
     m_liteApp->fileManager()->openEditor(m_curEnv->filePath(),true);
 }
 
+void EnvManager::reloadCurrentEnv()
+{
+    if (!m_curEnv) {
+        return;
+    }
+    m_curEnv->reload();
+    currentEnvChanged(m_curEnv);
+}
+
 void EnvManager::editorSaved(LiteApi::IEditor *editor)
 {
     LiteApi::ITextEditor *ed = LiteApi::getTextEditor(editor);
     if (!ed) {
         return;
     }
-
     if (m_curEnv && m_curEnv->filePath() == ed->filePath()) {
         m_curEnv->reload();
         currentEnvChanged(m_curEnv);

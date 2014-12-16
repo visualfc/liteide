@@ -73,6 +73,7 @@ public:
 protected slots:
     void envActivated(QString);
     void editCurrentEnv();
+    void reloadCurrentEnv();
     void editorSaved(LiteApi::IEditor*);
     void goenvError(const QString &id, const QString &msg);
 public:

@@ -67,6 +67,8 @@ public:
     void resetGocode();
     void cgoComplete();
     void loadPkgList();
+    void loadImportsList();
+    void updateDependsPkg();
 public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
@@ -74,6 +76,7 @@ public slots:
     void wordCompleted(QString,QString,QString);
     void started();
     void finished(int,QProcess::ExitStatus);
+    void importFinished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);
     void applyOption(QString);
     void loaded();
@@ -88,6 +91,7 @@ protected:
     ImportPkgTip    *m_pkgImportTip;
     QMultiMap<QString,QString> m_pkgListMap;
     QStringList m_importList;
+    QStringList m_allImportList;
     QString     m_gobinCmd;
     QString     m_preWord;
     QString     m_prefix;
@@ -96,6 +100,7 @@ protected:
     bool        m_breset;
     QProcess   *m_gocodeProcess;
     QProcess   *m_updatePkgProcess;
+    QProcess   *m_importProcess;
     QByteArray  m_writeData;
     LiteApi::IEnvManager *m_envManager;
     LiteApi::IGolangAst *m_golangAst;
