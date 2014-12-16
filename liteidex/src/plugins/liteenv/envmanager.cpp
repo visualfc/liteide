@@ -259,6 +259,7 @@ void EnvManager::setCurrentEnv(LiteApi::IEnv *env)
     if (m_curEnv) {
         m_curEnv->reload();
         m_liteApp->settings()->setValue(LITEENV_CURRENTENV,m_curEnv->id());
+        m_liteApp->appendLog("LiteEnv",QString("load environment %1").arg(m_curEnv->id()),false);
     }
     emit currentEnvChanged(m_curEnv);
 }
@@ -358,6 +359,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
     connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
+    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
     return true;
 }
 
@@ -397,7 +399,15 @@ void EnvManager::reloadCurrentEnv()
         return;
     }
     m_curEnv->reload();
+    m_liteApp->appendLog("LiteEnv",QString("reload environment %1").arg(m_curEnv->id()),false);
     currentEnvChanged(m_curEnv);
+}
+
+void EnvManager::broadcast(QString module,QString id,QString)
+{
+    if (module == "golangpackage" && id == "reloadgopath") {
+        reloadCurrentEnv();
+    }
 }
 
 void EnvManager::editorSaved(LiteApi::IEditor *editor)

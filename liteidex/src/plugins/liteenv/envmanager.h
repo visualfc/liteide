@@ -81,6 +81,8 @@ public:
     void addEnv(LiteApi::IEnv *build);
     void removeEnv(LiteApi::IEnv *build);
     void loadEnvFiles(const QString &path);
+public slots:
+    void broadcast(QString module, QString id, QString);
 protected:
     QList<LiteApi::IEnv*>    m_envList;
     LiteApi::IEnv           *m_curEnv;
