@@ -255,6 +255,9 @@ void GolangEdit::editorUpdatePkg()
     if (!editor) {
         return;
     }
+    if (editor->isModified()) {
+        m_liteApp->editorManager()->saveEditor(editor,false);
+    }
     QFileInfo info(m_editor->filePath());
     build->executeCommand(cmd,"get -v .",info.path(),true,true);
 }
