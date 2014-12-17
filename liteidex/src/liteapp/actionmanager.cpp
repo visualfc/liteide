@@ -367,6 +367,11 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
             act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
         }
         info->action = act;
+
+        // Add QAction to main window, otherwise the shortcut doesn't always work
+        if (!defks.isEmpty()) {
+            m_liteApp->mainWindow()->addAction(act);
+        }
     } else {
         info->action = 0;
     }
