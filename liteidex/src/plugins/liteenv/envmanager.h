@@ -76,6 +76,7 @@ protected slots:
     void reloadCurrentEnv();
     void editorSaved(LiteApi::IEditor*);
     void goenvError(const QString &id, const QString &msg);
+    void goenvChanged(const QString &id);
 public:
     void setCurrentEnv(LiteApi::IEnv *env);
     void addEnv(LiteApi::IEnv *build);
