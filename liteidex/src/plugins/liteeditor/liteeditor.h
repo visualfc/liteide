@@ -196,4 +196,15 @@ public:
     QAction *m_closeEditorAct;
 };
 
+class EditContext : public LiteApi::IEditContext
+{
+    Q_OBJECT
+public:
+    EditContext(LiteEditor *editor, QObject *parent);
+    virtual QWidget *focusWidget() const;
+    virtual QMenu   *focusMenu() const;
+protected:
+    LiteEditor  *m_editor;
+};
+
 #endif //LITEEDITOR_H

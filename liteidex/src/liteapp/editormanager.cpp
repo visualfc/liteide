@@ -75,6 +75,7 @@ bool EditorManager::initWithApp(IApplication *app)
         return false;
     }
     m_nullMenu = new QMenu;
+    m_nullMenu->setEnabled(false);
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
@@ -151,6 +152,7 @@ bool EditorManager::initWithApp(IApplication *app)
     connect(copyPathToClipboard,SIGNAL(triggered()),this,SLOT(tabContextCopyPathToClipboard()));
     connect(showInExplorer,SIGNAL(triggered()),this,SLOT(tabContextShowInExplorer()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
+    connect(qApp,SIGNAL(focusChanged(QWidget*,QWidget*)),this,SLOT(focusChanged(QWidget*,QWidget*)));
 
     return true;
 }
@@ -180,6 +182,9 @@ void EditorManager::createActions()
 #else
     actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
 #endif
+
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_goBackAct);
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_goForwardAct);
 
     updateNavigatorActions();
 
@@ -246,6 +251,10 @@ void EditorManager::addEditor(IEditor *editor)
         emit editorCreated(editor);
         connect(editor,SIGNAL(modificationChanged(bool)),this,SLOT(modificationChanged(bool)));
         emit editToolbarVisibleChanged(m_editToolbarAct->isChecked());
+        LiteApi::IEditContext *context = LiteApi::getEditContext(editor);
+        if (context) {
+            this->addEditContext(context);
+        }
     }
 }
 
@@ -373,6 +382,10 @@ bool EditorManager::closeEditor(IEditor *editor)
             return true;
         }
     }
+    LiteApi::IEditContext *context = LiteApi::getEditContext(cur);
+    if (context) {
+        this->removeEditContext(context);
+    }
     cur->deleteLater();
     return true;
 }
@@ -486,6 +499,8 @@ void EditorManager::setCurrentEditor(IEditor *editor)
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
+    }
+    /*
         QMenu *menu = LiteApi::getEditMenu(editor);
         if (menu) {
 #if defined(Q_OS_OSX)
@@ -501,7 +516,7 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         m_editMenu->menuAction()->setMenu(m_nullMenu);
         m_editMenu->setEnabled(false);
     }
-
+    */
     emit currentEditorChanged(editor);
 }
 
@@ -711,6 +726,16 @@ const ColorStyleScheme *EditorManager::colorStyleScheme() const
     return m_colorStyleScheme;
 }
 
+void EditorManager::addEditContext(IEditContext *context)
+{
+    m_editContextMap.insert(context->focusWidget(),context);
+}
+
+void EditorManager::removeEditContext(IEditContext *context)
+{
+    m_editContextMap.remove(context->focusWidget());
+}
+
 void EditorManager::updateCurrentPositionInNavigationHistory()
 {
     IEditor *editor = currentEditor();
@@ -900,5 +925,21 @@ void EditorManager::moveToNewWindow()
     if (app->fileManager()->openEditor(filePath)) {
         this->closeEditor(ed);
         app->fileManager()->addFolderList(info.path());
+    }
+}
+
+void EditorManager::focusChanged(QWidget */*old*/, QWidget *now)
+{
+    IEditContext *context = m_editContextMap.value(now);
+    if (context && context->focusMenu() ) {
+#if defined(Q_OS_OSX)
+            // dirty trick to show the correct edit menu at the first time on Mac OS X
+        m_editMenu->setEnabled(false);
+#endif
+        m_editMenu->menuAction()->setMenu(context->focusMenu());
+        m_editMenu->setEnabled(true);
+    } else {
+        m_editMenu->menuAction()->setMenu(m_nullMenu);
+        m_editMenu->setEnabled(false);
     }
 }

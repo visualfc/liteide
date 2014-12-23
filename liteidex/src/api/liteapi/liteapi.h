@@ -230,6 +230,15 @@ public slots:
     virtual void openProjects() = 0;
 };
 
+class IEditContext : public QObject
+{
+    Q_OBJECT
+public:
+    IEditContext(QObject *parent) : QObject(parent) {}
+    virtual QWidget *focusWidget() const = 0;
+    virtual QMenu   *focusMenu() const = 0;
+};
+
 class IView : public IObject
 {
     Q_OBJECT
@@ -314,6 +323,14 @@ inline QMenu *getMenu(IObject *obj, const QString &id)
     return 0;
 }
 
+inline IEditContext *getEditContext(IObject *obj)
+{
+    if (obj && obj->extension()) {
+        return findExtensionObject<IEditContext*>(obj->extension(),"LiteApi.IEditContext");
+    }
+    return 0;
+}
+
 inline QMenu *getEditMenu(IObject *obj)
 {
     return getMenu(obj,"Edit");
@@ -355,6 +372,8 @@ public:
     virtual void cutForwardNavigationHistory() = 0;
     virtual void loadColorStyleScheme(const QString &fileName) = 0;
     virtual const ColorStyleScheme *colorStyleScheme() const = 0;
+    virtual void addEditContext(IEditContext *context) = 0;
+    virtual void removeEditContext(IEditContext *context) = 0;
 public slots:
     virtual bool saveEditor(IEditor *editor = 0, bool emitAboutSave = true) = 0;
     virtual bool saveEditorAs(IEditor *editor = 0) = 0;

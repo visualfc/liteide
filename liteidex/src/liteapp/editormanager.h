@@ -64,6 +64,8 @@ public:
     virtual void cutForwardNavigationHistory();
     virtual void loadColorStyleScheme(const QString &file);
     virtual const ColorStyleScheme *colorStyleScheme() const;
+    virtual void addEditContext(IEditContext *context);
+    virtual void removeEditContext(IEditContext *context);
 protected:
     void addEditor(IEditor *editor);
     bool eventFilter(QObject *target, QEvent *event);
@@ -90,6 +92,7 @@ public slots:
     void updateNavigatorActions();
     void updateCurrentPositionInNavigationHistory();
     void moveToNewWindow();
+    void focusChanged(QWidget *old,QWidget *now);
 signals:
     void tabAddRequest();
     void doubleClickedTab();
@@ -108,6 +111,7 @@ protected:
     QPointer<IEditor> m_currentEditor;
     QList<IEditorFactory*>    m_factoryList;
     QMap<IEditor*,QAction*>   m_browserActionMap;
+    QMap<QWidget*,IEditContext*> m_editContextMap;
     QAction     *m_goBackAct;
     QAction     *m_goForwardAct;
     QAction     *m_editToolbarAct;

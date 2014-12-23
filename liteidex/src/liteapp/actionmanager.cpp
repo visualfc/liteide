@@ -363,6 +363,7 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
     if (act) {
         info->label = act->text();
         act->setShortcuts(info->keys);
+        act->setShortcutContext(Qt::ApplicationShortcut);
         if (!info->ks.isEmpty()) {
             act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
         }

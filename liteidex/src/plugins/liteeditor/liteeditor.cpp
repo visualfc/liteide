@@ -135,12 +135,15 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
     //applyOption("option/liteeditor");
 
+    LiteApi::IEditContext *editContext = new EditContext(this,this);
+
     m_extension->addObject("LiteApi.ITextEditor",this);
     m_extension->addObject("LiteApi.ILiteEditor",this);
     m_extension->addObject("LiteApi.QToolBar",m_toolBar);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
     m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
+    m_extension->addObject("LiteApi.IEditContext",editContext);
 
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
@@ -407,12 +410,12 @@ void LiteEditor::createToolBars()
     m_infoToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
     //editor toolbar
-    m_toolBar->addAction(m_undoAct);
-    m_toolBar->addAction(m_redoAct);
-    m_toolBar->addSeparator();
-    m_toolBar->addAction(m_cutAct);
-    m_toolBar->addAction(m_copyAct);
-    m_toolBar->addAction(m_pasteAct);
+//    m_toolBar->addAction(m_undoAct);
+//    m_toolBar->addAction(m_redoAct);
+//    m_toolBar->addSeparator();
+//    m_toolBar->addAction(m_cutAct);
+//    m_toolBar->addAction(m_copyAct);
+//    m_toolBar->addAction(m_pasteAct);
 #ifdef LITEEDITOR_FIND
     m_findComboBox = new QComboBox(m_widget);
     m_findComboBox->setEditable(true);
@@ -1194,4 +1197,21 @@ void LiteEditor::loadColorStyleScheme()
     m_editorWidget->setStyleSheet(sheet);
 //#endif
     emit colorStyleChanged();
+}
+
+
+EditContext::EditContext(LiteEditor *editor, QObject *parent)
+    : LiteApi::IEditContext(parent), m_editor(editor)
+{
+
+}
+
+QWidget *EditContext::focusWidget() const
+{
+    return m_editor->m_editorWidget;
+}
+
+QMenu *EditContext::focusMenu() const
+{
+    return m_editor->m_editMenu;
 }
