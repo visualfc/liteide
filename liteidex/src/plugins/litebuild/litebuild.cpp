@@ -842,40 +842,37 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
     if (!build) {
         return;
     }
-    QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
-    if (!toolBar) {
-        return;
-    }
-    QAction *spacer = LiteApi::findExtensionObject<QAction*>(editor,"LiteApi.QToolBar.Spacer");
+
     QList<QAction*> actions = build->actions();
-    toolBar->insertSeparator(spacer);
-    toolBar->insertAction(spacer,m_configAct);
-    toolBar->insertSeparator(spacer);
-    //toolBar->insertActions(spacer,actions);
-    foreach (QAction *act, actions) {
-        QMenu *subMenu = act->menu();
-        if (subMenu) {
-            BuildAction *ba = build->findAction(subMenu->menuAction()->objectName());
-            if (ba) {
-                QToolButton *btn = new QToolButton(toolBar);
-                btn->setIcon(subMenu->menuAction()->icon());
-                btn->setText(subMenu->title());
-                btn->setMenu(subMenu);
-                if (ba->isFolder()) {
-                    btn->setPopupMode(QToolButton::InstantPopup);
-                } else {
-                    btn->setPopupMode(QToolButton::MenuButtonPopup);
-                    btn->setDefaultAction(subMenu->menuAction());
+
+    QToolBar *toolBar = LiteApi::getBuildToolBar(editor);
+    if (toolBar) {
+        toolBar->addAction(m_configAct);
+        toolBar->addSeparator();
+        foreach (QAction *act, actions) {
+            QMenu *subMenu = act->menu();
+            if (subMenu) {
+                BuildAction *ba = build->findAction(subMenu->menuAction()->objectName());
+                if (ba) {
+                    QToolButton *btn = new QToolButton(toolBar);
+                    btn->setIcon(subMenu->menuAction()->icon());
+                    btn->setText(subMenu->title());
+                    btn->setMenu(subMenu);
+                    if (ba->isFolder()) {
+                        btn->setPopupMode(QToolButton::InstantPopup);
+                    } else {
+                        btn->setPopupMode(QToolButton::MenuButtonPopup);
+                        btn->setDefaultAction(subMenu->menuAction());
+                    }
+                    toolBar->addWidget(btn);
                 }
-                toolBar->insertWidget(spacer,btn);
+            } else {
+                toolBar->addAction(act);
             }
-        } else {
-            toolBar->insertAction(spacer,act);
         }
     }
 
     QMenu *menu = new QMenu(editor->widget());
-
     menu->addAction(m_configAct);
     menu->addSeparator();
     menu->addAction(m_stopAct);

@@ -261,7 +261,7 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
         editorMark->addMark(m_lastLine.line,LiteApi::CurrentLineMark);
     }
 
-    QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
+    QToolBar *toolBar = LiteApi::getBuildToolBar(editor);
     if (toolBar) {
         toolBar->addSeparator();
         toolBar->addAction(m_switchBreakAct);

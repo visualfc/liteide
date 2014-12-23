@@ -123,8 +123,6 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
     QAction *hr = new QAction(QIcon("icon:markdown/images/hr.png"),tr("Horizontal Rule"),this);
     actionContext->regAction(hr,"HorizontalRule","Ctrl+Shift+H");
 
-    QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
-
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addSeparator();
@@ -166,6 +164,7 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         menu->addAction(hr);
     }
 
+    QToolBar *toolBar = LiteApi::getEditToolBar(editor);
     if (toolBar) {
         toolBar->addSeparator();
         toolBar->addAction(h1);

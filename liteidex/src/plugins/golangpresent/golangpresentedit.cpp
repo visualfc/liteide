@@ -107,7 +107,7 @@ GolangPresentEdit::GolangPresentEdit(LiteApi::IApplication *app, LiteApi::IEdito
     connect(verify,SIGNAL(triggered()),this,SLOT(verify()));
     //connect(exportPdf,SIGNAL(triggered()),this,SLOT(exportPdf()));
 
-    QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
+    QToolBar *toolBar = LiteApi::getEditToolBar(editor);
     if (toolBar) {
         toolBar->addSeparator();
         toolBar->addAction(s1);

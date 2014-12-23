@@ -146,7 +146,8 @@ public:
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;
     QWidget *m_widget;
-    QToolBar *m_toolBar;
+    QToolBar *m_editToolBar;
+    QToolBar *m_buildToolBar;
     QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteApi::ICompleter *m_completer;
@@ -203,6 +204,7 @@ public:
     EditContext(LiteEditor *editor, QObject *parent);
     virtual QWidget *focusWidget() const;
     virtual QMenu   *focusMenu() const;
+    virtual QToolBar *focusToolBar() const;
 protected:
     LiteEditor  *m_editor;
 };

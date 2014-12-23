@@ -66,7 +66,7 @@ JsonEdit::JsonEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject
     format->addAction(indentMedium);
     format->addAction(indentFull);
 
-    QToolBar *toolBar = LiteApi::findExtensionObject<QToolBar*>(editor,"LiteApi.QToolBar");
+    QToolBar *toolBar = LiteApi::getEditToolBar(editor);
     if (toolBar) {
         toolBar->addSeparator();
         toolBar->addAction(verify);

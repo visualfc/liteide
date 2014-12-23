@@ -29,6 +29,7 @@
 
 #include <QWidget>
 #include <QMenu>
+#include <QToolBar>
 #include <QPlainTextEdit>
 #include <QSettings>
 #include <QMainWindow>
@@ -237,6 +238,7 @@ public:
     IEditContext(QObject *parent) : QObject(parent) {}
     virtual QWidget *focusWidget() const = 0;
     virtual QMenu   *focusMenu() const = 0;
+    virtual QToolBar *focusToolBar() const = 0;
 };
 
 class IView : public IObject
@@ -350,6 +352,21 @@ inline QPlainTextEdit *getPlainTextEdit(IEditor *editor) {
     }
     return 0;
 }
+
+inline QToolBar *getEditToolBar(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<QToolBar*>(editor->extension(),"LiteApi.QToolBar.Edit");
+    }
+    return 0;
+}
+
+inline QToolBar *getBuildToolBar(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<QToolBar*>(editor->extension(),"LiteApi.QToolBar.Build");
+    }
+    return 0;
+}
+
 
 class IEditorManager : public IManager
 {
