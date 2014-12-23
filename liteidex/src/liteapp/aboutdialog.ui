@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2011-2014 (c) visualfc &amp;lt;visualfc@gmail.com&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2011-2015 (c) visualfc &amp;lt;visualfc@gmail.com&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
