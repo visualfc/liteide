@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2014.12.16 Ver X25.2
+### 2014.12.16 Ver X26
 * LiteIDE
 	* default enviroment id system work
 * LiteApp

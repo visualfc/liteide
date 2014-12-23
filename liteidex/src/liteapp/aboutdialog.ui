@@ -554,7 +554,7 @@ p, li { white-space: pre-wrap; }
           <bool>true</bool>
          </property>
          <property name="plainText">
-          <string notr="true">Copyright (c) 2011-2014 LiteIDE. All rights reserved.
+          <string notr="true">Copyright (c) 2011-2015 LiteIDE. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
 
