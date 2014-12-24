@@ -111,17 +111,17 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="513"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="523"/>
         <source>Thanks to...</source>
         <translation>感謝...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="548"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="557"/>
         <source>License</source>
         <translation>許可協議</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="589"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="598"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
@@ -587,101 +587,101 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="111"/>
+        <location filename="src/liteapp/editormanager.cpp" line="112"/>
         <source>Close</source>
         <translation type="unfinished">關閉</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="122"/>
+        <location filename="src/liteapp/editormanager.cpp" line="123"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="162"/>
+        <location filename="src/liteapp/editormanager.cpp" line="164"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation type="unfinished">編輯</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="176"/>
+        <location filename="src/liteapp/editormanager.cpp" line="178"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="113"/>
+        <location filename="src/liteapp/editormanager.cpp" line="114"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="114"/>
+        <location filename="src/liteapp/editormanager.cpp" line="115"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="115"/>
+        <location filename="src/liteapp/editormanager.cpp" line="116"/>
         <source>Close Left Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="116"/>
+        <location filename="src/liteapp/editormanager.cpp" line="117"/>
         <source>Close Right Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="117"/>
+        <location filename="src/liteapp/editormanager.cpp" line="118"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="118"/>
+        <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="119"/>
+        <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="120"/>
+        <location filename="src/liteapp/editormanager.cpp" line="121"/>
         <source>Show in Explorer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="167"/>
+        <location filename="src/liteapp/editormanager.cpp" line="169"/>
         <source>Navigate Backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="193"/>
+        <location filename="src/liteapp/editormanager.cpp" line="198"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="348"/>
+        <location filename="src/liteapp/editormanager.cpp" line="357"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="349"/>
+        <location filename="src/liteapp/editormanager.cpp" line="358"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation type="unfinished">儲存修改內容</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="427"/>
+        <location filename="src/liteapp/editormanager.cpp" line="440"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="429"/>
+        <location filename="src/liteapp/editormanager.cpp" line="442"/>
         <source>Save As</source>
         <translation>另存爲</translation>
     </message>
@@ -689,25 +689,25 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
 <context>
     <name>EnvManager</name>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="329"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="335"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="336"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="342"/>
         <source>Switching current environment</source>
         <oldsource>Switch Current Environment</oldsource>
         <translation type="unfinished">環境變數</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="339"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="345"/>
         <source>Edit current environment</source>
         <oldsource>Edit Current Environment</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="340"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="346"/>
         <source>Reload current environment</source>
         <oldsource>Reload Current Environment</oldsource>
         <translation type="unfinished"></translation>
@@ -1619,12 +1619,13 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="26"/>
-        <source>Close gocode when exiting</source>
+        <source>Auto update depends package when it&apos;s source changed.</source>
+        <oldsource>Auto update depends package when source changed.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
-        <source>Auto update depends package</source>
+        <source>Close gocode when exiting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1684,36 +1685,31 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="54"/>
-        <source>Update dependencies library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="57"/>
         <source>View Expression Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="60"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="57"/>
         <source>Jump to Declaration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="63"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="60"/>
         <source>Find Usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="66"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="63"/>
         <source>Rename Symbol Under Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="71"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="68"/>
         <source>Comment/Uncomment Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="167"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1869,7 +1865,7 @@ Do you want to reload the file from disk?</source>
     <name>GoplayBrowser</name>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="85"/>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="150"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="149"/>
         <source>Go Playground</source>
         <translation></translation>
     </message>
@@ -1904,7 +1900,7 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="173"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="172"/>
         <source>Running...</source>
         <oldsource>Running...
 
@@ -1912,36 +1908,36 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="197"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="196"/>
         <source>Error: %1.</source>
         <oldsource>
 Error: %1.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="199"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="198"/>
         <source>Success: %2.</source>
         <oldsource>
 Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="249"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="248"/>
         <source>Load File</source>
         <translation>讀取文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="249"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="248"/>
         <source>Select a file to load:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="265"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="264"/>
         <source>Save File</source>
         <translation>儲存文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="265"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="264"/>
         <source>New File Name:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2017,7 +2013,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="641"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="644"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2063,7 +2059,7 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="209"/>
+        <location filename="src/liteapp/liteapp.cpp" line="210"/>
         <source>Event Log</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2073,107 +2069,107 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="638"/>
+        <location filename="src/liteapp/liteapp.cpp" line="639"/>
         <source>Close File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="641"/>
+        <location filename="src/liteapp/liteapp.cpp" line="642"/>
         <source>Close All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="651"/>
+        <location filename="src/liteapp/liteapp.cpp" line="652"/>
         <source>Save File</source>
         <translation type="unfinished">儲存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="654"/>
+        <location filename="src/liteapp/liteapp.cpp" line="655"/>
         <source>Save File As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="657"/>
+        <location filename="src/liteapp/liteapp.cpp" line="658"/>
         <source>Save All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="644"/>
+        <location filename="src/liteapp/liteapp.cpp" line="645"/>
         <source>Open Project</source>
         <translation>開啟專案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="211"/>
+        <location filename="src/liteapp/liteapp.cpp" line="212"/>
         <source>Options</source>
         <translation type="unfinished">選項</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="612"/>
+        <location filename="src/liteapp/liteapp.cpp" line="613"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="615"/>
+        <location filename="src/liteapp/liteapp.cpp" line="616"/>
         <source>Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="618"/>
+        <location filename="src/liteapp/liteapp.cpp" line="619"/>
         <source>Open Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="621"/>
+        <location filename="src/liteapp/liteapp.cpp" line="622"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="626"/>
+        <location filename="src/liteapp/liteapp.cpp" line="627"/>
         <source>Add Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="629"/>
+        <location filename="src/liteapp/liteapp.cpp" line="630"/>
         <source>Close All Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="632"/>
+        <location filename="src/liteapp/liteapp.cpp" line="633"/>
         <source>New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="635"/>
+        <location filename="src/liteapp/liteapp.cpp" line="636"/>
         <source>Close Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="647"/>
         <source>Save Project</source>
         <translation>儲存專案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="648"/>
+        <location filename="src/liteapp/liteapp.cpp" line="649"/>
         <source>Close Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="660"/>
+        <location filename="src/liteapp/liteapp.cpp" line="661"/>
         <source>Exit</source>
         <translation>離開</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="663"/>
+        <location filename="src/liteapp/liteapp.cpp" line="664"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="667"/>
+        <location filename="src/liteapp/liteapp.cpp" line="668"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">關於 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="673"/>
+        <location filename="src/liteapp/liteapp.cpp" line="674"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2465,62 +2461,62 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1009"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1006"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1012"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1009"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1014"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1011"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1050"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1098"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1047"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1095"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1091"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1088"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1094"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1091"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1192"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1189"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1238"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1235"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1238"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1235"/>
         <source>Failed to start process</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2694,218 +2690,218 @@ Success: %2.</oldsource>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="223"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="228"/>
         <source>Undo</source>
         <translation type="unfinished">復原</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="226"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="231"/>
         <source>Redo</source>
         <translation type="unfinished">重做</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="229"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="234"/>
         <source>Cut</source>
         <translation type="unfinished">剪下</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="232"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="237"/>
         <source>Copy</source>
         <translation type="unfinished">複製</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="235"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="240"/>
         <source>Paste</source>
         <translation type="unfinished">貼上</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="238"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Select All</source>
         <translation type="unfinished">全部選擇</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="460"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="468"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="499"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="507"/>
         <source>Code Folding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="504"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="512"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="868"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
         <source>Export HTML</source>
         <translation>匯出HTML文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="876"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="884"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="877"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="885"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="896"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="904"/>
         <source>Export PDF</source>
         <translation>匯出PDF文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="921"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="929"/>
         <source>Print Document</source>
         <translation>列印文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="245"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="250"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation type="unfinished">預覽列印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="241"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
         <source>Export HTML...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="248"/>
         <source>Export PDF...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="249"/>
         <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="247"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="259"/>
         <source>Select Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="257"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
         <source>Fold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
         <source>Unfold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
         <source>Fold All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="274"/>
         <source>Unfold All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="277"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="977"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="985"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="280"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="285"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="283"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
         <source>Delete Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="298"/>
         <source>Insert Line Before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="297"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="302"/>
         <source>Insert Line After</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
         <source>Increase Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="304"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
         <source>Decrease Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="307"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="312"/>
         <source>Reset Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="310"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="315"/>
         <source>Clean Whitespace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="318"/>
         <source>Word Wrap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="322"/>
         <source>Code Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="441"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="449"/>
         <source>Close Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="568"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="576"/>
         <source>Reload File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="938"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="946"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="250"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="255"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="977"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="985"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3414,7 +3410,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownedit.cpp" line="131"/>
+        <location filename="src/plugins/markdown/markdownedit.cpp" line="129"/>
         <source>Heading</source>
         <translation type="unfinished"></translation>
     </message>

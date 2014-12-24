@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
-    <height>121</height>
+    <width>379</width>
+    <height>114</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="autoUpPkgCheckBox">
         <property name="text">
-         <string>Auto update depends package when source changed.</string>
+         <string>Auto update depends package when it's source changed.</string>
         </property>
        </widget>
       </item>
