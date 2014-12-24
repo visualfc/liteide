@@ -45,6 +45,7 @@ public:
     virtual void reload() = 0;
 signals:
     void goenvError(QString,QString);
+    void goenvChanged(QString);
 };
 
 class IEnvManager : public IManager

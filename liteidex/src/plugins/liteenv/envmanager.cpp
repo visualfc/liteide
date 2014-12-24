@@ -89,7 +89,10 @@ void Env::reload()
     }
     loadEnvFile(&f);
     f.close();
-    loadGoEnv();
+    if (!m_env.contains("GOROOT") ||
+            !m_env.contains("GOARCH")) {
+        loadGoEnv();
+    }
 }
 
 void Env::loadGoEnv()
@@ -194,6 +197,7 @@ void Env::readStdout()
             m_goEnvMap[key] = value;
         }
     }
+    emit goenvChanged(m_id);
 }
 
 void Env::readStderr()
@@ -222,6 +226,7 @@ void EnvManager::addEnv(LiteApi::IEnv *env)
 {
     m_envList.append(env);
     connect(env,SIGNAL(goenvError(QString,QString)),this,SLOT(goenvError(QString,QString)));
+    connect(env,SIGNAL(goenvChanged(QString)),this,SLOT(goenvChanged(QString)));
 }
 
 void EnvManager::removeEnv(LiteApi::IEnv *env)
@@ -425,4 +430,12 @@ void EnvManager::editorSaved(LiteApi::IEditor *editor)
 void EnvManager::goenvError(const QString &id, const QString &msg)
 {
     m_liteApp->appendLog(QString("%1: go env error").arg(id),msg,true);
+}
+
+void EnvManager::goenvChanged(const QString &id)
+{
+    if (id == m_curEnv->id()) {
+        m_liteApp->appendLog("LiteEnv",QString("reset %1 environment for \"go env\"").arg(id),false);
+        currentEnvChanged(m_curEnv);
+    }
 }

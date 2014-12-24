@@ -276,6 +276,10 @@ GolangCode::~GolangCode()
 
 void GolangCode::resetGocode()
 {
+    if (m_gocodeProcess->state() != QProcess::NotRunning) {
+        m_gocodeProcess->kill();
+        m_gocodeProcess->waitForFinished(200);
+    }
     if (!m_gocodeCmd.isEmpty()) {
         m_breset = true;
         m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
@@ -334,7 +338,8 @@ void GolangCode::loadPkgList()
 void GolangCode::loadImportsList()
 {
     if (m_importProcess->state() != QProcess::NotRunning) {
-        return;
+        m_importProcess->kill();
+        m_importProcess->waitForFinished(200);
     }
 
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
@@ -350,7 +355,7 @@ void GolangCode::updateDependsPkg()
 {
     if (m_updatePkgProcess->state() != QProcess::NotRunning) {
         m_updatePkgProcess->kill();
-        m_updatePkgProcess->waitForFinished(100);
+        m_updatePkgProcess->waitForFinished(200);
     }
     m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
 }
