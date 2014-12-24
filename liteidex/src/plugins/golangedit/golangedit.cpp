@@ -51,9 +51,6 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_viewGodocAct = new QAction(tr("View import package use godoc"),this);
     actionContext->regAction(m_viewGodocAct,"ViewGodoc","");
 
-    m_updatePkgAct = new QAction(tr("Update dependencies library"),this);
-    actionContext->regAction(m_updatePkgAct,"UpdatePkg","");
-
     m_findInfoAct = new QAction(tr("View Expression Information"),this);
     actionContext->regAction(m_findInfoAct,"ViewInfo","CTRL+SHIFT+I;F1");
 
@@ -84,7 +81,6 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(editorViewGodoc()));
-    connect(m_updatePkgAct,SIGNAL(triggered()),this,SLOT(editorUpdatePkg()));
     connect(m_findInfoAct,SIGNAL(triggered()),this,SLOT(editorFindInfo()));
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
@@ -151,8 +147,6 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_viewGodocAct);
         menu->addSeparator();
-        menu->addAction(m_updatePkgAct);
-        menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
         menu->addAction(m_findUseAct);
@@ -165,8 +159,6 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     if (menu) {
         menu->addSeparator();
         menu->addAction(m_viewGodocAct);
-        menu->addSeparator();
-        menu->addAction(m_updatePkgAct);
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
@@ -239,27 +231,6 @@ void GolangEdit::aboutToShowContextMenu()
     QTextCursor cursor = m_editor->textCursor();
     bool b = textLexer->isInImport(cursor);
     m_viewGodocAct->setVisible(b);
-}
-
-void GolangEdit::editorUpdatePkg()
-{
-    LiteApi::ILiteBuild *build = LiteApi::getLiteBuild(m_liteApp);
-    if (!build) {
-        return;
-    }
-    QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
-    if (cmd.isEmpty()) {
-        return;
-    }
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (!editor) {
-        return;
-    }
-    if (editor->isModified()) {
-        m_liteApp->editorManager()->saveEditor(editor,false);
-    }
-    QFileInfo info(m_editor->filePath());
-    build->executeCommand(cmd,"get -v .",info.path(),true,true);
 }
 
 QString parser_import(const QString &text)

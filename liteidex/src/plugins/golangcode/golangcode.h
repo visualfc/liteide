@@ -68,7 +68,6 @@ public:
     void cgoComplete();
     void loadPkgList();
     void loadImportsList();
-    void updateDependsPkg();
 public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
@@ -99,7 +98,7 @@ protected:
     QFileInfo   m_fileInfo;
     bool        m_breset;
     QProcess   *m_gocodeProcess;
-    QProcess   *m_updatePkgProcess;
+    QProcess   *m_gocodeSetProcess;
     QProcess   *m_importProcess;
     QByteArray  m_writeData;
     LiteApi::IEnvManager *m_envManager;

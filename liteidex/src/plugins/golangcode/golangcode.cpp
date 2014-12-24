@@ -55,22 +55,22 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_editor(0),
     m_completer(0),
     m_closeOnExit(true),
-    m_autoUpdatePkg(false)
+    m_autoUpdatePkg(true)
 {
     g_gocodeInstCount++;
     m_gocodeProcess = new QProcess(this);
-    m_updatePkgProcess = new QProcess(this);
+    m_gocodeSetProcess = new QProcess(this);
     m_importProcess = new QProcess(this);
     m_breset = false;
     connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
     connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     connect(m_importProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(importFinished(int,QProcess::ExitStatus)));
-
-    m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
+    m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
         currentEnvChanged(m_envManager->currentEnv());
     }
+    m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     m_golangAst = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
     m_pkgImportTip = new ImportPkgTip(m_liteApp,this);
     connect(m_pkgImportTip,SIGNAL(import(QString,int)),this,SLOT(import(QString,int)));
@@ -85,7 +85,15 @@ void GolangCode::applyOption(QString id)
 {
     if (id != "option/golangcode") return;
     m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPPKG,false).toBool();
+    m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPDEPPKG,true).toBool();
+    QStringList args;
+    args << "set" << "autobuild";
+    if (m_autoUpdatePkg) {
+        args << "true";
+    } else {
+        args << "false";
+    }
+    m_gocodeSetProcess->start(m_gocodeCmd,args);
 }
 
 void GolangCode::loaded()
@@ -351,21 +359,11 @@ void GolangCode::loadImportsList()
     m_importProcess->start(cmd,args);
 }
 
-void GolangCode::updateDependsPkg()
-{
-    if (m_updatePkgProcess->state() != QProcess::NotRunning) {
-        m_updatePkgProcess->kill();
-        m_updatePkgProcess->waitForFinished(200);
-    }
-    m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
-}
-
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
     m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);
-    m_updatePkgProcess->setProcessEnvironment(env);
     m_gocodeProcess->setProcessEnvironment(env);
     m_importProcess->setProcessEnvironment(env);
 
@@ -391,7 +389,6 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
     }
     m_fileInfo.setFile(filePath);
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
-    m_updatePkgProcess->setWorkingDirectory(m_fileInfo.absolutePath());
 }
 
 void GolangCode::setCompleter(LiteApi::ICompleter *completer)
@@ -564,10 +561,6 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     if (n >= 1) {
         m_completer->updateCompleterModel();
         m_completer->showPopup();
-    } else if (m_autoUpdatePkg && !m_gobinCmd.isEmpty()){
-        if (m_updatePkgProcess->state() == QProcess::NotRunning) {
-            m_updatePkgProcess->start(m_gobinCmd,QStringList() << "get");
-        }
     }
     if (n == 0 && m_lastPrefix.endsWith(".")) {
         QString id = m_lastPrefix.left(m_lastPrefix.length()-1);
