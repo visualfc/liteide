@@ -1539,18 +1539,39 @@ static void countBrackets(QTextCursor cursor,
 bool LiteEditorWidgetBase::checkIsMatchBraces(QTextCursor &cursor, const QString &textToInsert) const
 {
     const QChar character = textToInsert.at(0);
-    const QString parentheses = QLatin1String("()");
-    const QString brackets = QLatin1String("[]");
-    if (parentheses.contains(character) || brackets.contains(character)) {
+    const QString parentheses1 = QLatin1String("()");
+    const QString parentheses2 = QLatin1String("[]");
+    const QString parentheses3 = QLatin1String("{}");
+    if (parentheses1.contains(character) ||
+            parentheses2.contains(character) ||
+            parentheses3.contains(character) ) {
         QTextCursor tmp= cursor;
         bool foundBlockStart = TextEditor::TextBlockUserData::findPreviousBlockOpenParenthesis(&tmp);
         int blockStart = foundBlockStart ? tmp.position() : 0;
         tmp = cursor;
         bool foundBlockEnd = TextEditor::TextBlockUserData::findNextBlockClosingParenthesis(&tmp);
         int blockEnd = foundBlockEnd ? tmp.position() : (cursor.document()->characterCount() - 1);
-        const QChar openChar = parentheses.contains(character) ? QLatin1Char('(') : QLatin1Char('[');
-        const QChar closeChar = parentheses.contains(character) ? QLatin1Char(')') : QLatin1Char(']');
-
+        QChar openChar;
+        QChar closeChar;
+        if (parentheses1.contains(character)) {
+            openChar = QLatin1Char('(');
+            closeChar = QLatin1Char(')');
+        } else {
+            if (parentheses2.contains(character)) {
+                openChar = QLatin1Char('[');
+                closeChar = QLatin1Char(']');
+            } else if (parentheses3.contains(character)) {
+                openChar = QLatin1Char('{');
+                closeChar = QLatin1Char('}');
+            }
+            if (cursor.document()->blockCount() < 5000) {
+                blockStart = 0;
+                blockEnd = cursor.document()->characterCount()-1;
+            } else {
+                blockStart = cursor.block().position();
+                blockEnd = cursor.block().position()+cursor.block().length();
+            }
+        }
         int errors = 0;
         int stillopen = 0;
         countBrackets(cursor, blockStart, blockEnd, openChar, closeChar, &errors, &stillopen);
@@ -1572,6 +1593,7 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     int pos = cursor.position();
     if (pos == 0)
         return false;
+
     if (this->m_textLexer->isInComment(cursor)) {
         return false;
     }
@@ -1585,7 +1607,8 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     //const QChar lookFurtherBehind = doc->characterAt(pos - 2);
 
     if ( (lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')')) ||
-         (lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')')) ) {
+         (lookBehind == QLatin1Char('[') && lookAhead == QLatin1Char(']')) ||
+         (lookBehind == QLatin1Char('{') && lookAhead == QLatin1Char('}')) ) {
         if (m_textLexer->isInString(cursor)) {
             return false;
         }
@@ -1600,7 +1623,10 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     }
 
     const QChar character = lookBehind;
-    if (character == QLatin1Char('(') || character == QLatin1Char('[')) {
+    if (character == QLatin1Char('(') ||
+            character == QLatin1Char('[') ||
+            character == QLatin1Char('{') ) {
+
         QTextCursor tmp = cursor;
         TextEditor::TextBlockUserData::findPreviousBlockOpenParenthesis(&tmp);
         int blockStart = tmp.isNull() ? 0 : tmp.position();
@@ -1608,7 +1634,23 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
         TextEditor::TextBlockUserData::findNextBlockClosingParenthesis(&tmp);
         int blockEnd = tmp.isNull() ? (cursor.document()->characterCount()-1) : tmp.position();
         QChar openChar = character;
-        QChar closeChar = (character == QLatin1Char('(')) ? QLatin1Char(')') : QLatin1Char(']');
+        QChar closeChar;
+        if (openChar == QLatin1Char('(')) {
+            closeChar = ')';
+        } else  {
+            if (openChar == QLatin1Char('[')) {
+                closeChar = ']';
+            } else {
+                closeChar = '}';
+            }
+            if (cursor.document()->blockCount() < 5000) {
+                blockStart = 0;
+                blockEnd = cursor.document()->characterCount()-1;
+            } else {
+                blockStart = cursor.block().position();
+                blockEnd = cursor.block().position()+cursor.block().length();
+            }
+        }
 
         int errors = 0;
         int stillopen = 0;
@@ -1619,7 +1661,6 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
         countBrackets(cursor, blockStart, pos - 1, openChar, closeChar, &errors, &stillopen);
         countBrackets(cursor, pos, blockEnd, openChar, closeChar, &errors, &stillopen);
         int errorsAfterDeletion = errors + stillopen;
-
         if (errorsAfterDeletion < errorsBeforeDeletion)
             return false; // insertion fixes parentheses or bracket errors, do not auto complete
     }
@@ -1813,7 +1854,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             mr = "`";
         }
 
-        if (keyText == ")" || keyText == "]") {
+        if (keyText == ")" || keyText == "]" || keyText == "}") {
             QTextCursor cursor = textCursor();
             if (!cursor.atBlockEnd()) {
                 QString text = cursor.block().text();
