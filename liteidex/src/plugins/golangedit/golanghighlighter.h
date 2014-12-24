@@ -46,6 +46,7 @@ private:
     bool isPPKeyword(const QStringRef &text) const;
 protected:
     QStringList m_todoList;
+    QStringList m_gotagList;
 };
 
 #endif // GOLANGHIGHLIGHTER_H

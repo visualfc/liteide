@@ -47,6 +47,7 @@ GolangHighlighter::GolangHighlighter(QTextDocument *document) :
     TextEditor::SyntaxHighlighter(document)
 {
     m_todoList = QString("TODO,BUG,FIXME,NOTE,SECBUG").split(",");
+    m_gotagList = QString("+build,import").split(",");
 }
 
 GolangHighlighter::~GolangHighlighter()
@@ -459,14 +460,13 @@ void GolangHighlighter::highlightCommentLine(const QString &text, int position, 
     QTextCharFormat visualSpaceFormat = m_creatorFormats[SyntaxHighlighter::VisualWhitespace];
     visualSpaceFormat.setBackground(format.background());
 
-    if (text.startsWith("//")) {
-        setFormat(position, 2, format);
-        position += 2;
-        length -= 2;
-    }
-
     const int end = position + length;
     int index = position;
+
+    if (text.mid(position).startsWith("//")) {
+        setFormat(position, 2, format);
+        index += 2;
+    }
 
     int first = true;
     while (index != end) {
@@ -485,6 +485,14 @@ void GolangHighlighter::highlightCommentLine(const QString &text, int position, 
                 if (m_todoList.contains(text.mid(start,tokenLength))) {
                     setFormat(start,tokenLength,todoFormat);
                     continue;
+                }
+                if (m_gotagList.contains(text.mid(start,tokenLength))) {
+                    setFormat(position,length,todoFormat);
+                    break;
+                }
+                if (text.mid(start).startsWith("go:")) {
+                    setFormat(position,length,todoFormat);
+                    break;
                 }
             }
             setFormat(start, tokenLength, format);
