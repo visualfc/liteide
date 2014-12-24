@@ -5,9 +5,10 @@
 
 ### 2014.12.24 Ver X26
 * LiteIDE
-	* fix editor shortcut key monopolize.
+	* fix shortcut key call mechanism
+	* fix editor shortcut key monopolize
 * LiteEnv
-	* fix system enviroment auto reset by go env.
+	* fix system enviroment auto reset by go env
 * LiteEditor
 	* fix enter {} key indent
 	* fix []{} insert and backspace
@@ -16,7 +17,7 @@
 	* fix system enviroment work
 	* add auto update package when its source change option		
 * GdbDebugger
-	* fix system enviroment gdb/gdb64 auto select.
+	* fix system enviroment gdb/gdb64 auto select
 * GolangEdit
 	* add golang tag highlighter	 	
 
