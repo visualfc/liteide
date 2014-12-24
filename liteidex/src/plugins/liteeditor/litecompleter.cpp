@@ -494,12 +494,19 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         }
         QString target = targetList.join("\n");
         int startpos = tc.position();
-        int pos = target.indexOf("$$");
-        target.replace("$$","");
+        int pos1 = target.indexOf("$");
+        int pos2 = -1;
+        if (pos1 > 0) {
+            pos2 = target.indexOf("$",pos1+1);
+        }
+        target.replace("$","");
         extra = target;
         tc.insertText(extra);
-        if (pos >= 0) {
-            tc.setPosition(startpos+pos);
+        if (pos1 >= 0) {
+            tc.setPosition(startpos+pos1);
+            if (pos2 > 0) {
+                tc.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,pos2-pos1-1);
+            }
         }
     } else {
         tc.insertText(extra);

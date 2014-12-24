@@ -1837,6 +1837,11 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                 return;
             }
         }
+
+        if (textCursor().hasSelection()) {
+            QPlainTextEdit::keyPressEvent(e);
+            return;
+        }
         m_bLastBraces = false;
         QString keyText = e->text();
         QString mr;
@@ -1866,11 +1871,17 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                     }
                 }
             }
-        } else if (keyText == "(" || keyText == "[") {
+        } else if (keyText == "(" || keyText == "[" || keyText == "{") {
             QTextCursor cursor = textCursor();
             if (!cursor.atBlockEnd()) {
                 QString text = cursor.block().text();
-                if (text.at(cursor.positionInBlock()).isLetterOrNumber()) {
+                if (text.mid(cursor.positionInBlock(),1) == keyText) {
+                    if (this->checkIsMatchBraces(cursor,keyText)) {
+                        cursor.movePosition(QTextCursor::Right);
+                        setTextCursor(cursor);
+                        return;
+                    }
+                } else if (text.at(cursor.positionInBlock()).isLetterOrNumber()) {
                      QPlainTextEdit::keyPressEvent(e);
                      return;
                 }
