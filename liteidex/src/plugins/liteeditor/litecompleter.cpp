@@ -454,11 +454,16 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         wordText = text;
 //    }
 
-    if (kind == "func" && tc.block().text().at(tc.positionInBlock()-1) != '(') {
-        extra += "()";
-        tc.insertText(extra);
-        if (!info.startsWith("func()")) {
-            tc.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,1);
+    if (kind == "func") {
+        if (tc.block().text().at(tc.positionInBlock()) != '(') {
+            extra += "()";
+            tc.insertText(extra);
+            if (!info.startsWith("func()")) {
+                tc.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,1);
+            }
+        } else {
+            tc.insertText(extra);
+            kind.clear();
         }
     } else {
         tc.insertText(extra);
