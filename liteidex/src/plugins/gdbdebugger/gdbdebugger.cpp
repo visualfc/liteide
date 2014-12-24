@@ -210,16 +210,18 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
         argsListInfo << arguments;
     }
 
-    QString gdb = env.value("LITEIDE_GDB","gdb");
-#ifdef Q_OS_WIN
+    QString gdb = env.value("LITEIDE_GDB","");
     if (gdb.isEmpty()) {
+#ifdef Q_OS_WIN
         if (env.value("GOARCH") == "386") {
             gdb = "gdb";
         } else {
             gdb = "gdb64";
         }
-    }
+#else
+        gdb = "gdb";
 #endif
+    }
 
     m_gdbFilePath = FileUtil::lookPath(gdb,env,true);
     if (m_gdbFilePath.isEmpty()) {
