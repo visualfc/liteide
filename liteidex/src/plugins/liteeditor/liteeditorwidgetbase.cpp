@@ -2005,9 +2005,9 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
             if (ch == '{' || ch == '(') {
                 inText += this->tabText();
             }
-        } else if (pos == text.size()-1 && text.size() >= 3) {
-            const QChar l = text.at(text.size()-2);
-            const QChar r = text.at(text.size()-1);
+        } else if (pos >= 1 && pos < text.size()) {
+            const QChar l = text.at(pos-1);
+            const QChar r = text.at(pos);
             if ( (l == '{' && r == '}') ||
                  (l == '(' && r== ')') ) {
                 cur.beginEditBlock();
