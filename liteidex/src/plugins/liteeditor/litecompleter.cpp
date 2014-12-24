@@ -53,7 +53,8 @@ public:
     }
     enum {
         KindRole = Qt::UserRole+2,
-        TempRole
+        TempRole,
+        SnippetRole,
     };
     void setKind(const QString &kind)
     {
@@ -329,6 +330,16 @@ void LiteCompleter::appendItems(QStringList items,const QString &kind, const QSt
     }
 }
 
+void LiteCompleter::appendSnippetItem(const QString &name, const QString &info, const QString &content)
+{   
+    WordItem *item = new WordItem(name);
+    item->setKind("snippet");
+    item->setToolTip(info);
+    item->setIcon(QIcon(":liteeditor/images/snippet.png"));
+    item->setData(content,WordItem::SnippetRole);
+    m_model->appendRow(item);
+}
+
 
 bool LiteCompleter::appendItem(const QString &name, const QIcon &icon, bool temp)
 {
@@ -443,16 +454,11 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     QString wordText = text;
     QTextCursor tc = m_editor->textCursor();
     tc.beginEditBlock();
-//    if (m_completer->caseSensitivity() == Qt::CaseSensitive) {
-//        extra = text.right(text.length()-length);
-//        wordText = prefix+extra;
-//    } else {
-        while (length--) {
-            tc.deletePreviousChar();
-        }
-        extra = text;
-        wordText = text;
-//    }
+    while (length--) {
+         tc.deletePreviousChar();
+    }
+    extra = text;
+    wordText = text;
 
     if (kind == "func") {
         if (tc.block().text().at(tc.positionInBlock()) != '(') {
@@ -464,6 +470,36 @@ void LiteCompleter::insertCompletion(QModelIndex index)
         } else {
             tc.insertText(extra);
             kind.clear();
+        }
+    } else if (kind == "snippet") {
+        QString content = index.data(WordItem::SnippetRole).toString();
+        QString text = m_editor->textCursor().block().text();
+        int space = 0;
+        for (int i = 0; i < text.size(); i++) {
+            if (text.at(i).isSpace()) {
+                space++;
+            } else {
+                break;
+            }
+        }
+        QString head = text.left(space);
+        QStringList srcList = content.split("\n");
+        QStringList targetList;
+        for (int i = 0; i < srcList.size(); i++) {
+            if (i == 0) {
+                targetList.append(srcList[i]);
+            } else {
+                targetList.append(head+srcList[i]);
+            }
+        }
+        QString target = targetList.join("\n");
+        int startpos = tc.position();
+        int pos = target.indexOf("$$");
+        target.replace("$$","");
+        extra = target;
+        tc.insertText(extra);
+        if (pos >= 0) {
+            tc.setPosition(startpos+pos);
         }
     } else {
         tc.insertText(extra);

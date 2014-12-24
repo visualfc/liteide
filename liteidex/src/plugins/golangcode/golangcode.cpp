@@ -408,6 +408,9 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
             m_completer->setSearchSeparator(true);
             m_completer->setExternalMode(false);
         }
+        m_completer->appendSnippetItem("gofn","go func(){\n}()","go func(){\n\t$$\n}()");
+        m_completer->appendSnippetItem("typest","type any struct{\n}","type $$ struct {\n\t\n}");
+        m_completer->appendSnippetItem("typein","type any interface{\n}","type $$ interface {\n\t\n}");
     }
 }
 

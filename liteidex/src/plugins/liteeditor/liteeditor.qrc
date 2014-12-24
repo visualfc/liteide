@@ -14,5 +14,6 @@
         <file>images/findword.png</file>
         <file>images/keyword.png</file>
         <file>images/func.png</file>
+        <file>images/snippet.png</file>
     </qresource>
 </RCC>

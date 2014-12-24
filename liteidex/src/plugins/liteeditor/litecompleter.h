@@ -46,6 +46,7 @@ public:
     virtual bool appendItem(const QString &name,const QIcon &icon, bool temp);
     virtual bool appendItemEx(const QString &name,const QString &kind, const QString &info,const QIcon &icon, bool temp);
     virtual void appendItems(QStringList nameList,const QString &kind, const QString &info,const QIcon &icon, bool temp);
+    virtual void appendSnippetItem(const QString &name, const QString &info, const QString &content);
     virtual void clearItemChilds(const QString &name);
     virtual void clear();
     virtual void clearTemp();

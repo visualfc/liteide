@@ -442,7 +442,7 @@ void GolangEdit::findLinkFinish(bool /*error*/, int /*code*/, QString)
 {
 }
 
-void GolangEdit::searchTextChanged(const QString &word)
+void GolangEdit::searchTextChanged(const QString &/*word*/)
 {
 
 }

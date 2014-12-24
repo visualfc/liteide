@@ -106,6 +106,7 @@ public:
     virtual bool appendItem(const QString &name,const QIcon &icon, bool temp) = 0;
     virtual bool appendItemEx(const QString &name,const QString &kind, const QString &info,const QIcon &icon, bool temp) = 0;
     virtual void appendItems(QStringList items, const QString &kind, const QString &info,const QIcon &icon, bool temp) = 0;
+    virtual void appendSnippetItem(const QString &name, const QString &info, const QString &content) = 0;
     virtual void clearItemChilds(const QString &name) = 0;
     virtual void clearTemp() = 0;
     virtual void clear() = 0;
