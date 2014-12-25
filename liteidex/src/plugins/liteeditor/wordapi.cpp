@@ -18,13 +18,18 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: snippetmanager.cpp
+// Module: wordapi.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "snippetmanager.h"
-#include "snippet.h"
-#include <QFileInfo>
+#include "wordapi.h"
+
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QCoreApplication>
+#include <QFile>
 #include <QDir>
+#include <QFileInfo>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -35,53 +40,71 @@
 #endif
 //lite_memory_check_end
 
-SnippetsManager::SnippetsManager(QObject *parent) :
-    LiteApi::ISnippetsManager(parent)
+
+WordApi::WordApi(const QString &package)
+    : m_package(package), m_bLoad(false)
 {
+
 }
 
-SnippetsManager::~SnippetsManager()
+QString WordApi::package() const
 {
-    qDeleteAll(m_snippetsList);
+    return m_package;
 }
 
-void SnippetsManager::addSnippetList(ISnippetList *snippets)
+QStringList WordApi::apiFiles() const
 {
-    m_snippetsList.append(snippets);
+    return m_apiFiles;
 }
 
-void SnippetsManager::removeSnippetList(ISnippetList *snippets)
+QStringList WordApi::wordList() const
 {
-    m_snippetsList.removeAll(snippets);
+    return m_wordList;
 }
 
-ISnippetList *SnippetsManager::findSnippetList(const QString &mimeType)
+QStringList WordApi::expList() const
 {
-    foreach (ISnippetList *snippets, m_snippetsList) {
-        if (snippets->mimeType() == mimeType) {
-            return snippets;
-        }
+    return m_expList;
+}
+
+void WordApi::appendExp(const QStringList &list)
+{
+    m_expList.append(list);
+}
+
+bool WordApi::loadApi()
+{
+    if (m_bLoad) {
+        return true;
     }
-    return 0;
-}
-
-QList<ISnippetList *> SnippetsManager::allSnippetList() const
-{
-    return m_snippetsList;
-}
-
-void SnippetsManager::load(const QString &path)
-{
-    QDir dir(path);
-    foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs)) {
-        QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeBySuffix(info.fileName());
-        if (!mimeType.isEmpty()) {
-            ISnippetList *find = this->findSnippetList(mimeType);
-            if (!find) {
-                find = new SnippetList(mimeType);
-                this->addSnippetList(find);
+    m_bLoad = true;
+    m_wordList.clear();
+    foreach (QString file, m_apiFiles) {
+        QFile f(file);
+        if (!f.open(QIODevice::ReadOnly)) {
+            continue;
+        }
+        while (!f.atEnd()) {
+            QString line = f.readLine().trimmed();
+            if (!line.isEmpty()) {
+                m_wordList.append(line);
             }
-            ((SnippetList*)find)->appendPath(info.path());
         }
     }
+    return !m_wordList.isEmpty();
+}
+
+void WordApi::appendApiFile(const QString &file)
+{
+    m_apiFiles.append(file);
+}
+
+void WordApi::setApiFiles(const QStringList &files)
+{
+    m_apiFiles = files;
+}
+
+bool WordApi::isEmpty() const
+{
+    return m_apiFiles.isEmpty();
 }

@@ -18,14 +18,12 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: wordapimanager.cpp
+// Module: snippet.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "wordapimanager.h"
-#include "wordapi/wordapi.h"
-
-#include <QDir>
-#include <QFileInfo>
+#include "snippetapi.h"
+#include <QFile>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -37,48 +35,60 @@
 //lite_memory_check_end
 
 
-WordApiManager::WordApiManager(QObject *parent)
-    : IWordApiManager(parent)
+SnippetApi::SnippetApi(const QString &package)
+    : m_package(package), m_bLoad(false)
 {
+
 }
 
-WordApiManager::~WordApiManager()
+QString SnippetApi::package() const
 {
-    qDeleteAll(m_wordApiList);
+    return m_package;
 }
 
-void WordApiManager::addWordApi(IWordApi *wordApi)
+QStringList SnippetApi::apiFiles() const
 {
-    m_wordApiList.append(wordApi);
+    return m_apiFiles;
 }
 
-void WordApiManager::removeWordApi(IWordApi *wordApi)
+QStringList SnippetApi::snippetList() const
 {
-    m_wordApiList.removeAll(wordApi);
+    return m_snippetList;
 }
 
-IWordApi *WordApiManager::findWordApi(const QString &mimeType)
+bool SnippetApi::loadApi()
 {
-    foreach (IWordApi *wordApi, m_wordApiList) {
-        if (wordApi->mimeType() == mimeType) {
-            return wordApi;
+    if (m_bLoad) {
+        return true;
+    }
+    m_bLoad = true;
+    m_snippetList.clear();
+    foreach (QString file, m_apiFiles) {
+        QFile f(file);
+        if (!f.open(QIODevice::ReadOnly)) {
+            continue;
+        }
+        while (!f.atEnd()) {
+            QString line = f.readLine().trimmed();
+            if (!line.isEmpty()) {
+                m_snippetList.append(line);
+            }
         }
     }
-    return 0;
+    return !m_snippetList.isEmpty();
 }
 
-QList<IWordApi*> WordApiManager::wordApiList() const
+void SnippetApi::appendApiFile(const QString &file)
 {
-    return m_wordApiList;
+    m_apiFiles.append(file);
 }
 
-void WordApiManager::load(const QString &path)
+void SnippetApi::setApiFiles(const QStringList &files)
 {
-    QDir dir = path;
-    m_liteApp->appendLog("WordApiManager","Loading "+path);
-    dir.setFilter(QDir::Files | QDir::NoSymLinks);
-    dir.setNameFilters(QStringList("*.xml"));
-    foreach (QString fileName, dir.entryList()) {
-        WordApi::loadWordApi(this,QFileInfo(dir,fileName).absoluteFilePath());
-    }
+    m_apiFiles = files;
+}
+
+bool SnippetApi::isEmpty() const
+{
+    return m_apiFiles.isEmpty();
 }

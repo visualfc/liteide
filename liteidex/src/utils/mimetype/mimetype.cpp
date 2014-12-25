@@ -170,7 +170,7 @@ bool MimeType::loadMimeTypes(LiteApi::IMimeTypeManager *manager, QIODevice *dev,
             if (reader.name() == "mime-type" && mimeType == 0) {
                 mimeType = new MimeType;
                 mimeType->setType(attrs.value("type").toString());
-                mimeType->setType(attrs.value("package").toString());
+                mimeType->setPackage(attrs.value("package").toString());
                 mimeType->setCodec(attrs.value("codec").toString());
                 mimeType->setScheme(attrs.value("scheme").toString());
             } else if (reader.name() == "sub-class-of" && mimeType) {

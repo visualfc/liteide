@@ -129,7 +129,7 @@ public:
     virtual void removeMimeType(IMimeType *mimeType) = 0;
     virtual QList<IMimeType*> mimeTypeList() const= 0;
     virtual IMimeType *findMimeType(const QString &type) const = 0;
-    virtual QString findMimeTypePackage(const QString &type) const = 0;
+    virtual QString findPackageByMimeType(const QString &type) const = 0;
     virtual QString findMimeTypeByFile(const QString &fileName) const = 0;
     virtual QString findMimeTypeBySuffix(const QString &suffix) const = 0;
     virtual QString findMimeTypeByScheme(const QString &scheme) const = 0;
@@ -267,7 +267,6 @@ public:
     virtual bool isModified() const = 0;
     virtual QString filePath() const = 0;
     virtual QString mimeType() const = 0;
-    virtual QString package() const = 0;
     virtual QByteArray saveState() const = 0;
     virtual bool restoreState(const QByteArray &array) = 0;
     virtual void onActive() = 0;
@@ -804,6 +803,11 @@ inline QString liteide_stub_cmd(LiteApi::IApplication *app)
 #else
     return app->applicationPath()+"/liteide_stub";
 #endif
+}
+
+inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString mimeType)
+{
+    return app->mimeTypeManager()->findPackageByMimeType(mimeType);
 }
 
 } //namespace LiteApi

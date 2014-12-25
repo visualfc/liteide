@@ -11,7 +11,6 @@ SUBDIRS = \
     textoutput \
     symboltreeview \
     modelproject \
-    wordapi \
     processex \
     colorstyle \
     documentbrowser \

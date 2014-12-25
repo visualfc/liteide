@@ -18,29 +18,33 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: snippetmanager.h
+// Module: wordapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef SNIPPETMANAGER_H
-#define SNIPPETMANAGER_H
+#ifndef LITEWORDAPI_H
+#define LITEWORDAPI_H
 
 #include "liteeditorapi/liteeditorapi.h"
 
-using namespace LiteApi;
-
-class SnippetsManager : public LiteApi::ISnippetsManager
+class WordApi : public LiteApi::IWordApi
 {
 public:
-    SnippetsManager(QObject *parent);
-    virtual ~SnippetsManager();
-    virtual void addSnippetList(ISnippetList *snippets);
-    virtual void removeSnippetList(ISnippetList *snippets);
-    virtual ISnippetList *findSnippetList(const QString &mimeType);
-    virtual QList<ISnippetList*> allSnippetList() const;
-public:
-    void load(const QString &path);
-protected:
-    QList<ISnippetList*> m_snippetsList;
-};
+    WordApi(const QString &package);
+    virtual QString package() const;
+    virtual QStringList apiFiles() const;
+    virtual bool loadApi();
+    virtual QStringList wordList() const;
+    virtual QStringList expList() const;
+    virtual void appendExp(const QStringList &list);
 
-#endif // SNIPPETMANAGER_H
+    void appendApiFile(const QString &file);
+    void setApiFiles(const QStringList &files);
+    bool isEmpty() const;
+protected:
+    QString m_package;
+    QStringList m_apiFiles;
+    QStringList m_wordList;
+    QStringList m_expList;
+    bool m_bLoad;
+};
+#endif // LITEWORDAPI_H

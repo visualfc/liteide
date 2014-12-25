@@ -18,36 +18,34 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: wordapi.h
+// Module: editorapimanager.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef LITEAPI_WORDAPI_H
-#define LITEAPI_WORDAPI_H
+#ifndef EDITORAPIMANAGER_H
+#define EDITORAPIMANAGER_H
 
 #include "liteeditorapi/liteeditorapi.h"
 
-class WordApi : public LiteApi::IWordApi
+using namespace LiteApi;
+
+class EditorApiManager : public IEditorApiManager
 {
 public:
-    WordApi();
-    virtual QString mimeType() const;
-    virtual QStringList apiFiles() const;
-    virtual bool loadApi();
-    virtual QStringList wordList() const;
-    virtual QStringList expList() const;
-    virtual void appendExp(const QStringList &list);
-
-    void setType(const QString &mimeType);
-    void appendApiFiles(const QString &globPattern);
-    bool isEmpty() const;
-protected:
-    QString m_mimeType;
-    QStringList m_globApiFiles;
-    QStringList m_wordList;
-    QStringList m_expList;
-    bool m_bLoad;
+    EditorApiManager(QObject *parent = 0);
+    ~EditorApiManager();
+    virtual void addWordApi(IWordApi *api);
+    virtual void removeWordApi(IWordApi *api);
+    virtual IWordApi *findWordApi(const QString &mimeType);
+    virtual QList<IWordApi*> wordApiList() const;
+    virtual void addSnippetApi(ISnippetApi *api);
+    virtual void removeSnippetApi(ISnippetApi *api);
+    virtual ISnippetApi *findSnippetApi(const QString &mimeType);
+    virtual QList<ISnippetApi*> snippetApiList() const;
 public:
-    static bool loadWordApi(LiteApi::IWordApiManager *manager, const QString &fileName);
-    static bool loadWordApi2(LiteApi::IWordApiManager *manager, QIODevice *dev, const QString &fileName);
+    void load(const QString &path);
+protected:
+    QList<IWordApi*>    m_wordApiList;
+    QList<ISnippetApi*> m_snippetApiList;
 };
-#endif // LITEAPI_WORDAPI_H
+
+#endif // EDITORAPIMANAGER_H

@@ -27,7 +27,7 @@
 #include "liteapi/liteapi.h"
 #include "highlightermanager.h"
 
-class WordApiManager;
+class EditorApiManager;
 class LiteEditorMarkTypeManager;
 class LiteEditor;
 
@@ -45,7 +45,7 @@ public slots:
     void tabSettingChanged(int);
 protected:
     LiteApi::IApplication *m_liteApp;
-    WordApiManager *m_wordApiManager;
+    EditorApiManager *m_wordApiManager;
     LiteEditorMarkTypeManager *m_markTypeManager;
     HighlighterManager *m_highlighterManager;
     QStringList m_mimeTypes;

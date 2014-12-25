@@ -71,7 +71,7 @@ void GolangCodePlugin::editorCreated(LiteApi::IEditor *editor)
     if (!editor) {
         return;
     }
-    if (editor->package() != "text/x-gosrc") {
+    if (editor->mimeType() != "text/x-gosrc") {
         return;
     }
     LiteApi::ILiteEditor *liteEdit = LiteApi::getLiteEditor(editor);

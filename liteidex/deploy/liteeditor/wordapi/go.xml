@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-  <mime-type type="text/x-gosrc">
-    <sub-class-of type="text/plain"/>
-	  <glob apifile="go/keyword.api"/>
-	  <glob apifile="go/types.api"/>
-	  <glob apifile="go/funcs.api"/>
-  </mime-type>
-</mime-info>

@@ -1,4 +1,0 @@
-LIBS *= -l$$qtLibraryName(wordapi)
-
-
-

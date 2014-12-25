@@ -18,29 +18,30 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: wordapimanager.h
+// Module: snippetapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef WORDAPIMANAGER_H
-#define WORDAPIMANAGER_H
+#ifndef LITESNIPPETAPI_H
+#define LITESNIPPETAPI_H
 
 #include "liteeditorapi/liteeditorapi.h"
 
-using namespace LiteApi;
-
-class WordApiManager : public IWordApiManager
+class SnippetApi : public LiteApi::ISnippetApi
 {
 public:
-    WordApiManager(QObject *parent = 0);
-    ~WordApiManager();
-    virtual void addWordApi(IWordApi *wordApi);
-    virtual void removeWordApi(IWordApi *wordApi);
-    virtual IWordApi *findWordApi(const QString &mimeType);
-    virtual QList<IWordApi*> wordApiList() const;
-public:
-    void load(const QString &path);
-protected:
-    QList<IWordApi*>    m_wordApiList;
-};
+    SnippetApi(const QString &package);
+    virtual QString package() const;
+    virtual QStringList apiFiles() const;
+    virtual bool loadApi();
+    virtual QStringList snippetList() const;
 
-#endif // WORDAPIMANAGER_H
+    void appendApiFile(const QString &file);
+    void setApiFiles(const QStringList &files);
+    bool isEmpty() const;
+protected:
+    QString m_package;
+    QStringList m_apiFiles;
+    QStringList m_snippetList;
+    bool m_bLoad;
+};
+#endif // LITESNIPPETAPI_H

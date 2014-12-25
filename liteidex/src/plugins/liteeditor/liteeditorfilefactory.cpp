@@ -25,7 +25,7 @@
 #include "liteeditor.h"
 #include "liteeditorwidget.h"
 #include "litewordcompleter.h"
-#include "wordapimanager.h"
+#include "editorapimanager.h"
 #include "liteeditormark.h"
 #include "liteeditor_global.h"
 #include "katehighlighterfactory.h"
@@ -78,10 +78,10 @@ LiteEditorFileFactory::LiteEditorFileFactory(LiteApi::IApplication *app, QObject
     }
     m_mimeTypes.removeDuplicates();
 
-    m_wordApiManager = new WordApiManager(this);
+    m_wordApiManager = new EditorApiManager(this);
     if (m_wordApiManager->initWithApp(app)) {
         m_liteApp->extension()->addObject("LiteApi.IWordApiManager",m_wordApiManager);
-        m_wordApiManager->load(m_liteApp->resourcePath()+"/liteeditor/wordapi");
+        m_wordApiManager->load(m_liteApp->resourcePath()+"/package");
     }
     m_markTypeManager = new LiteEditorMarkTypeManager(this);
     if (m_markTypeManager->initWithApp(app)) {

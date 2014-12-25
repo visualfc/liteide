@@ -7,7 +7,6 @@ include (../../liteideplugin.pri)
 include (../../api/liteeditorapi/liteeditorapi.pri)
 include (../../utils/extension/extension.pri)
 include (../../utils/mimetype/mimetype.pri)
-include (../../utils/wordapi/wordapi.pri)
 include (../../utils/colorstyle/colorstyle.pri)
 include (../../3rdparty/qtc_texteditor/qtc_texteditor.pri)
 include (../../3rdparty/treemodelcompleter/treemodelcompleter.pri)
@@ -26,15 +25,15 @@ SOURCES += liteeditorplugin.cpp \
     liteeditorwidget.cpp \
     litecompleter.cpp \
     litewordcompleter.cpp \
-    wordapimanager.cpp \
     liteeditormark.cpp \
-    snippet.cpp \
-    snippetmanager.cpp \
     highlightermanager.cpp \
     katehighlighterfactory.cpp \
     codecompleter.cpp \
     functiontooltip.cpp \
-    faketooltip.cpp
+    faketooltip.cpp \
+    snippetapi.cpp \
+    wordapi.cpp \
+    editorapimanager.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
@@ -47,15 +46,15 @@ HEADERS += liteeditorplugin.h\
     liteeditorwidget.h \
     litecompleter.h \
     litewordcompleter.h \
-    wordapimanager.h \
     liteeditormark.h \
-    snippet.h \
-    snippetmanager.h \
     highlightermanager.h \
     katehighlighterfactory.h \
     codecompleter.h \
     functiontooltip.h \
-    faketooltip.h
+    faketooltip.h \
+    snippetapi.h \
+    wordapi.h \
+    editorapimanager.h
 
 FORMS += \
     liteeditoroption.ui

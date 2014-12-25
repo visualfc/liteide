@@ -632,18 +632,6 @@ QString LiteEditor::mimeType() const
     return m_file->mimeType();
 }
 
-QString LiteEditor::package() const
-{
-    if (!m_file) {
-        return QString();
-    }
-    QString type = m_file->mimeType();
-    if (type.isEmpty()) {
-        return QString();
-    }
-    return m_liteApp->mimeTypeManager()->findMimeTypePackage(type);
-}
-
 LiteApi::IFile *LiteEditor::file()
 {
     return m_file;

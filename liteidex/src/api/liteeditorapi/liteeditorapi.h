@@ -40,7 +40,7 @@ class IWordApi
 {
 public:
     virtual ~IWordApi() {}
-    virtual QString mimeType() const = 0;
+    virtual QString package() const = 0;
     virtual QStringList apiFiles() const = 0;
     virtual bool loadApi() = 0;
     virtual QStringList wordList() const = 0;
@@ -48,45 +48,29 @@ public:
     virtual void appendExp(const QStringList &list) = 0;
 };
 
-class IWordApiManager : public IManager
+class ISnippetApi
+{
+public:
+    virtual ~ISnippetApi() {}
+    virtual QString package() const = 0;
+    virtual QStringList apiFiles() const = 0;
+    virtual bool loadApi() = 0;
+    virtual QStringList snippetList() const = 0;
+};
+
+class IEditorApiManager : public IManager
 {
     Q_OBJECT
 public:
-    IWordApiManager(QObject *parent = 0) : IManager(parent) {}
-    virtual void addWordApi(IWordApi *wordApi) = 0;
-    virtual void removeWordApi(IWordApi *wordApi) = 0;
+    IEditorApiManager(QObject *parent = 0) : IManager(parent) {}
+    virtual void addWordApi(IWordApi *api) = 0;
+    virtual void removeWordApi(IWordApi *api) = 0;
     virtual IWordApi *findWordApi(const QString &mimeType) = 0;
     virtual QList<IWordApi*> wordApiList() const = 0;
-};
-
-class ISnippet
-{
-public:
-    virtual ~ISnippet() {}
-    virtual QString trigger() const = 0;
-    virtual void setTrigger(const QString &trigger) = 0;
-    virtual QString content() const = 0;
-    virtual void setContent(const QString &content) = 0;
-};
-
-class ISnippetList
-{
-public:
-    virtual ~ISnippetList() {}
-    virtual QString mimeType() const = 0;
-    virtual bool load() = 0;
-    virtual QList<ISnippet*> findSnippet(const QString &trigger, Qt::CaseSensitivity cs = Qt::CaseInsensitive) const = 0;
-    virtual QList<ISnippet*> snippetList() const = 0;
-};
-
-class ISnippetsManager : public IManager
-{
-public:
-    ISnippetsManager(QObject *parent = 0) : IManager(parent) {}
-    virtual void addSnippetList(ISnippetList *snippets) = 0;
-    virtual void removeSnippetList(ISnippetList *snippets) = 0;
-    virtual ISnippetList *findSnippetList(const QString &mimeType) = 0;
-    virtual QList<ISnippetList*> allSnippetList() const = 0;
+    virtual void addSnippetApi(ISnippetApi *api) = 0;
+    virtual void removeSnippetApi(ISnippetApi *api) = 0;
+    virtual ISnippetApi *findSnippetApi(const QString &mimeType) = 0;
+    virtual QList<ISnippetApi*> snippetApiList() const = 0;
 };
 
 enum CompletionContext {
