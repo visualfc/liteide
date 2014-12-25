@@ -3,13 +3,15 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2014.12.24 Ver X26
+### 2014.12.25 Ver X26
 * LiteIDE
+	* add lang package support
 	* fix shortcut key call mechanism
 	* fix editor shortcut key monopolize
 * LiteEnv
 	* fix system enviroment auto reset by go env
 * LiteEditor
+	* add simple snippet code
 	* fix enter {} key indent
 	* fix []{} insert and backspace
 	* fix code completer func () insert

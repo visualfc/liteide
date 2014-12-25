@@ -281,6 +281,7 @@ GolangCode::~GolangCode()
     }
     delete m_gocodeProcess;
     delete m_gocodeSetProcess;
+    delete m_importProcess;
 }
 
 void GolangCode::resetGocode()
