@@ -112,15 +112,15 @@ void EditorApiManager::load(const QString &path)
     QDir dir = path;
     m_liteApp->appendLog("WordApiManager","Loading "+path);
     QStringList nameFilter;
-    nameFilter << "*.api" << "*.snippet";
+    nameFilter << "*.api" << "*.snippet.json";
     foreach(QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot)) {
         QStringList wordFiles;
         QStringList snippetFiles;
         if (info.isDir()) {
             foreach (QFileInfo i, QDir(info.absoluteFilePath()).entryInfoList(nameFilter)) {
-                if (i.suffix() == ".api") {
+                if (i.fileName().endsWith(".api")) {
                     wordFiles.append(i.filePath());
-                } else if (i.suffix() == ".snippet") {
+                } else if (i.fileName().endsWith(".snippet.json")) {
                     snippetFiles.append(i.filePath());
                 }
             }
@@ -128,10 +128,14 @@ void EditorApiManager::load(const QString &path)
         if (!wordFiles.isEmpty()) {
             WordApi *api = new WordApi(info.fileName());
             api->setApiFiles(wordFiles);
+            this->addWordApi(api);
+            m_liteApp->appendLog("load word api",wordFiles.join(","));
         }
         if (!snippetFiles.isEmpty()) {
             SnippetApi *api = new SnippetApi(info.fileName());
             api->setApiFiles(snippetFiles);
+            this->addSnippetApi(api);
+            m_liteApp->appendLog("load snippet api",snippetFiles.join(","));
         }
     }
 }

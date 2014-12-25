@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "snippetapi.h"
+#include "qjson/include/QJson/Parser"
 #include <QFile>
 #include <QDebug>
 //lite_memory_check_begin
@@ -41,6 +42,14 @@ SnippetApi::SnippetApi(const QString &package)
 
 }
 
+SnippetApi::~SnippetApi()
+{
+    foreach (LiteApi::Snippet *s, m_snippetList) {
+        delete s;
+    }
+    m_snippetList.clear();
+}
+
 QString SnippetApi::package() const
 {
     return m_package;
@@ -51,7 +60,7 @@ QStringList SnippetApi::apiFiles() const
     return m_apiFiles;
 }
 
-QStringList SnippetApi::snippetList() const
+QList<LiteApi::Snippet*> SnippetApi::snippetList() const
 {
     return m_snippetList;
 }
@@ -62,16 +71,31 @@ bool SnippetApi::loadApi()
         return true;
     }
     m_bLoad = true;
-    m_snippetList.clear();
+    QJson::Parser parser;
+    QString name;
+    QString info;
+    QString text;
     foreach (QString file, m_apiFiles) {
         QFile f(file);
         if (!f.open(QIODevice::ReadOnly)) {
             continue;
         }
-        while (!f.atEnd()) {
-            QString line = f.readLine().trimmed();
-            if (!line.isEmpty()) {
-                m_snippetList.append(line);
+        QByteArray data = f.readAll();
+        bool ok;
+        QVariant json = parser.parse(data, &ok);
+        if (ok) {
+            foreach (QVariant v, json.toList()) {
+                QMap<QString,QVariant> m = v.toMap();
+                name = m.value("name").toString();
+                info = m.value("info").toString();
+                text = m.value("text").toString();
+                if (!name.isEmpty() && !info.isEmpty() && !text.isEmpty()) {
+                    LiteApi::Snippet *snippet = new LiteApi::Snippet;
+                    snippet->Name = name;
+                    snippet->Info = info;
+                    snippet->Text = text;
+                    m_snippetList.append(snippet);
+                }
             }
         }
     }

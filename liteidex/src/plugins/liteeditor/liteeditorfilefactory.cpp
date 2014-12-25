@@ -81,7 +81,7 @@ LiteEditorFileFactory::LiteEditorFileFactory(LiteApi::IApplication *app, QObject
     m_wordApiManager = new EditorApiManager(this);
     if (m_wordApiManager->initWithApp(app)) {
         m_liteApp->extension()->addObject("LiteApi.IWordApiManager",m_wordApiManager);
-        m_wordApiManager->load(m_liteApp->resourcePath()+"/package");
+        m_wordApiManager->load(m_liteApp->resourcePath()+"/packages");
     }
     m_markTypeManager = new LiteEditorMarkTypeManager(this);
     if (m_markTypeManager->initWithApp(app)) {
@@ -175,6 +175,12 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
             }
             wordCompleter->appendItems(wordApi->expList(),"","",exp,false);
             wordCompleter->model()->sort(0);
+        }
+        LiteApi::ISnippetApi *snippetApi = m_wordApiManager->findSnippetApi(mimeType);
+        if (snippetApi && snippetApi->loadApi()) {
+            foreach (LiteApi::Snippet *snippet, snippetApi->snippetList()) {
+                wordCompleter->appendSnippetItem(snippet->Name,snippet->Info,snippet->Text);
+            }
         }
     }
     editor->applyOption(OPTION_LITEEDITOR);

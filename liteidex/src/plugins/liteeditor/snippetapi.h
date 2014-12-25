@@ -30,10 +30,11 @@ class SnippetApi : public LiteApi::ISnippetApi
 {
 public:
     SnippetApi(const QString &package);
+    virtual ~SnippetApi();
     virtual QString package() const;
     virtual QStringList apiFiles() const;
     virtual bool loadApi();
-    virtual QStringList snippetList() const;
+    virtual QList<LiteApi::Snippet*> snippetList() const;
 
     void appendApiFile(const QString &file);
     void setApiFiles(const QStringList &files);
@@ -41,7 +42,7 @@ public:
 protected:
     QString m_package;
     QStringList m_apiFiles;
-    QStringList m_snippetList;
+    QList<LiteApi::Snippet*> m_snippetList;
     bool m_bLoad;
 };
 #endif // LITESNIPPETAPI_H

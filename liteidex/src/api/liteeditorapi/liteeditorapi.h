@@ -48,6 +48,13 @@ public:
     virtual void appendExp(const QStringList &list) = 0;
 };
 
+struct Snippet
+{
+    QString Name;
+    QString Info;
+    QString Text;
+};
+
 class ISnippetApi
 {
 public:
@@ -55,7 +62,7 @@ public:
     virtual QString package() const = 0;
     virtual QStringList apiFiles() const = 0;
     virtual bool loadApi() = 0;
-    virtual QStringList snippetList() const = 0;
+    virtual QList<Snippet*> snippetList() const = 0;
 };
 
 class IEditorApiManager : public IManager

@@ -280,6 +280,7 @@ GolangCode::~GolangCode()
         ProcessEx::startDetachedEx(m_gocodeCmd,QStringList() << "close");
     }
     delete m_gocodeProcess;
+    delete m_gocodeSetProcess;
 }
 
 void GolangCode::resetGocode()
@@ -408,14 +409,6 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
             m_completer->setSearchSeparator(true);
             m_completer->setExternalMode(false);
         }
-        m_completer->appendSnippetItem("gos1","go func(){\n}()","go func(){\n\t$$\n}()");
-        m_completer->appendSnippetItem("types1","type any struct{\n}","type $$ struct {\n\t\n}");
-        m_completer->appendSnippetItem("types2","type any interface{\n}","type $$ interface {\n\t\n}");
-        m_completer->appendSnippetItem("funcs1","func name() {\n}","func $name$() {\n\t\n}");
-        m_completer->appendSnippetItem("funcs2","func() {\n}","func() {\n\t$$\n}");
-        m_completer->appendSnippetItem("funcs3","func() {\n}()","func() {\n\t$$\n}()");
-        m_completer->appendSnippetItem("imports1","import (\n)","import (\n\t\"$$\"\n)");
-        m_completer->appendSnippetItem("imports2","import \"C\"","import \"C\"");
     }
 }
 
