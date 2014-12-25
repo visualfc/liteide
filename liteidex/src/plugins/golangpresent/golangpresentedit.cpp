@@ -293,8 +293,8 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
             QDir dir(exportInfo.absolutePath());
             dir.mkdir("static");
             dir.mkdir("js");
-            FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/static",dir.path()+"/static");
-            FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/gopresent/js",dir.path()+"/js");
+            FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/packages/gopresent/static",dir.path()+"/static");
+            FileUtil::CopyDirectory(m_liteApp->resourcePath()+"/packages/gopresent/js",dir.path()+"/js");
             m_liteApp->appendLog("GoPresent","export "+exportInfo.filePath(),false);
             if (dlg.isExportAndView()) {
                 LiteApi::IWebKitBrowser *browser = LiteApi::getWebKitBrowser(m_liteApp);
@@ -315,7 +315,7 @@ void GolangPresentEdit::extFinish(bool error, int code, QString /*msg*/)
                 m_htmldoc = m_liteApp->htmlWidgetManager()->createDocument(this);
                 connect(m_htmldoc,SIGNAL(loadFinished(bool)),this,SLOT(loadHtmlFinished(bool)));
             }
-            QUrl url = QUrl::fromLocalFile(m_liteApp->resourcePath()+"/gopresent/export.html");
+            QUrl url = QUrl::fromLocalFile(m_liteApp->resourcePath()+"/packages/gopresent/export.html");
             m_htmldoc->setHtml(QString::fromUtf8(m_exportData),url);
         }
     }

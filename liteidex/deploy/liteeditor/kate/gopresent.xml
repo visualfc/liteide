@@ -43,6 +43,7 @@
 <language name="Go-Slide" version="1.0" section="Markup"
 		extensions="*.slide;*.article"
 		mimetype="text/x-goslide"
+		package="gopresent"
 		priority="15"
 		author="Darrin Yeager, Claes Holmerson, visualfc"
 		license="GPL,BSD" >

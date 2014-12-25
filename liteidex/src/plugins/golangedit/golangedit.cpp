@@ -351,6 +351,8 @@ void GolangEdit::findDefStarted()
 void GolangEdit::findDefOutput(QByteArray data, bool bStdErr)
 {
     if (bStdErr) {
+        QString info = QString::fromUtf8(data).trimmed();
+        m_liteApp->appendLog("find def error",info,true);
         return;
     }
     QString info = QString::fromUtf8(data).trimmed();

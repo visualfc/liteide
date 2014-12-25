@@ -323,7 +323,7 @@ void GolangCode::cgoComplete()
 
 void GolangCode::loadPkgList()
 {
-    QString path = m_liteApp->resourcePath()+("/golang/pkglist");
+    QString path = m_liteApp->resourcePath()+("/packages/go/pkglist");
     QFile file(path);
     if (file.open(QFile::ReadOnly)) {
         QByteArray data = file.readAll();

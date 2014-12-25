@@ -92,7 +92,7 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     connect(ui->mergetPrintPushButton,SIGNAL(clicked()),this,SLOT(mergePrint()));
     connect(ui->mergePrintPreviwPushButton,SIGNAL(clicked()),this,SLOT(mergePrintPreview()));
 
-    QDir dir(m_liteApp->resourcePath()+"/markdown/css");
+    QDir dir(m_liteApp->resourcePath()+"/packages/markdown/css");
     QStringList csss;
     foreach (QFileInfo info, dir.entryInfoList(QStringList()<<"*.css",QDir::Files)) {
         csss.append(info.fileName());
@@ -505,7 +505,7 @@ void MarkdownBatchBrowser::init()
     if (m_doc == 0) {
         m_doc = m_liteApp->htmlWidgetManager()->createDocument(this);
         connect(m_doc,SIGNAL(loadFinished(bool)),this,SLOT(loadFinished(bool)));
-        QFile file(m_liteApp->resourcePath()+"/markdown/export.html");
+        QFile file(m_liteApp->resourcePath()+"/packages/markdown/export.html");
         if (file.open(QFile::ReadOnly)) {
             m_exportOrgTemple = file.readAll();
         } else {
@@ -516,7 +516,7 @@ void MarkdownBatchBrowser::init()
     QByteArray css;
     if (ui->useCssCheckBox->isChecked()) {
         QString fileName = ui->cssComboBox->currentText();
-        QFile f(m_liteApp->resourcePath()+"/markdown/css/"+fileName);
+        QFile f(m_liteApp->resourcePath()+"/packages/markdown/css/"+fileName);
         if (f.open(QFile::ReadOnly)) {
             css = f.readAll();
         }

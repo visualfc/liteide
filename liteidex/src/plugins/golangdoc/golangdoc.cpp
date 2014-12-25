@@ -100,7 +100,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_docBrowser->setName(tr("Godoc Search"));
 
     QStringList paths;
-    paths << m_liteApp->resourcePath()+"/golangdoc";
+    paths << m_liteApp->resourcePath()+"/packages/go/godoc";
     m_docBrowser->setSearchPaths(paths);
 
     m_godocFindComboBox = new QComboBox;
@@ -138,13 +138,13 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     m_liteApp->extension()->addObject("LiteApi.IGolangDoc",this);
     //m_liteApp->extension()->addObject("LiteApi.IGolangApi",m_golangApiThread);
 
-    QString path = m_liteApp->resourcePath()+"/golangdoc/godoc.html";
+    QString path = m_liteApp->resourcePath()+"/packages/go/godoc/godoc.html";
     QFile file(path);
     if (file.open(QIODevice::ReadOnly)) {
         m_templateData = file.readAll();
         file.close();
     }
-    QString about = m_liteApp->resourcePath()+"/golangdoc/about.html";
+    QString about = m_liteApp->resourcePath()+"/packages/go/godoc/about.html";
     QFileInfo info(about);
     if(info.exists()) {
         m_templateData.replace("{about}",info.filePath());

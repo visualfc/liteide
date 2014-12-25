@@ -109,7 +109,7 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
 
     m_browser = m_liteApp->htmlWidgetManager()->createByName(this,"QTextBrowser");
     QStringList paths;
-    paths << m_liteApp->resourcePath()+"/golangdoc";
+    paths << m_liteApp->resourcePath()+"/packages/go/godoc";
     m_browser->setSearchPaths(paths);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -190,7 +190,7 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_browser,SIGNAL(linkClicked(QUrl)),this,SLOT(openUrl(QUrl)));
 
 
-    QString path = m_liteApp->resourcePath()+"/golangdoc/finddoc.html";
+    QString path = m_liteApp->resourcePath()+"/packages/go/godoc/finddoc.html";
     QFile file(path);
     if (file.open(QIODevice::ReadOnly)) {
         m_templateData = file.readAll();
