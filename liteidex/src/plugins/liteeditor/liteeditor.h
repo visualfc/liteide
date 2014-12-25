@@ -87,6 +87,7 @@ public:
     virtual bool isModified() const;
     virtual QString filePath() const;
     virtual QString mimeType() const;
+    virtual QString package() const;
     virtual LiteApi::IFile *file();
     virtual int line() const;
     virtual int column() const;

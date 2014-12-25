@@ -38,6 +38,11 @@
 //lite_memory_check_end
 
 
+QString MimeType::package() const
+{
+    return m_package;
+}
+
 QString MimeType::type() const
 {
     return m_type;
@@ -82,10 +87,17 @@ void MimeType::merge(const IMimeType *mimeType)
     if (!mimeType->scheme().isEmpty()) {
         m_scheme = mimeType->scheme();
     }
-
+    if (!mimeType->package().isEmpty()) {
+        m_package = mimeType->package();
+    }
     m_subClassesOf.removeDuplicates();
     m_globPatterns.removeDuplicates();
     m_comment.removeDuplicates();
+}
+
+void MimeType::setPackage(const QString &package)
+{
+    m_package = package;
 }
 
 void MimeType::setType(const QString &type)
@@ -158,6 +170,7 @@ bool MimeType::loadMimeTypes(LiteApi::IMimeTypeManager *manager, QIODevice *dev,
             if (reader.name() == "mime-type" && mimeType == 0) {
                 mimeType = new MimeType;
                 mimeType->setType(attrs.value("type").toString());
+                mimeType->setType(attrs.value("package").toString());
                 mimeType->setCodec(attrs.value("codec").toString());
                 mimeType->setScheme(attrs.value("scheme").toString());
             } else if (reader.name() == "sub-class-of" && mimeType) {

@@ -74,6 +74,16 @@ IMimeType *MimeTypeManager::findMimeType(const QString &type) const
     return 0;
 }
 
+QString MimeTypeManager::findMimeTypePackage(const QString &type) const
+{
+    foreach(IMimeType *mimeType, m_mimeTypeList) {
+        if (mimeType->type() == type) {
+            return mimeType->package();
+        }
+    }
+    return QString();
+}
+
 QString MimeTypeManager::findMimeTypeByFile(const QString &fileName) const
 {
     QString find = QFileInfo(fileName).suffix();

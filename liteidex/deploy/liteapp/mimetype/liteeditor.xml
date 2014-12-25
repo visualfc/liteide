@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-  <mime-type type="text/x-gosrc" codec="utf-8">
+  <mime-type type="text/x-gosrc" codec="utf-8" package="go">
     <sub-class-of type="text/plain"/>
     <comment>Golang Source File</comment>
     <glob pattern="*.go"/>
   </mime-type>
-  <mime-type type="text/x-lua" codec="utf-8">
+  <mime-type type="text/x-lua" codec="utf-8" package="lua">
     <sub-class-of type="text/plain"/>
     <comment>Lua Source File</comment>
     <glob pattern="*.lua"/>
     <glob pattern="*.wlua"/>
   </mime-type>  
-  <mime-type type="text/html" codec="utf-8">
+  <mime-type type="text/html" codec="utf-8" package="html">
     <sub-class-of type="text/plain"/>
     <comment>HTML Source File</comment>
     <glob pattern="*.htm"/>
@@ -19,7 +19,7 @@
     <glob pattern="*.shtml"/>
     <glob pattern="*.shtm"/>
   </mime-type>
-  <mime-type type="text/xml" codec="utf-8">
+  <mime-type type="text/xml" codec="utf-8" package="xml">
     <sub-class-of type="text/plain"/>
     <comment>XML Source File</comment>
     <glob pattern="*.docbook"/>
@@ -31,7 +31,7 @@
     <glob pattern="*.xspf"/>
     <glob pattern="*.plist"/>
   </mime-type>
-  <mime-type type="text/x-csrc" codec="utf-8">
+  <mime-type type="text/x-csrc" codec="utf-8" package="c">
     <sub-class-of type="text/plain"/>
     <comment>C Source File</comment>
     <glob pattern="*.c"/>

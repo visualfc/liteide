@@ -36,6 +36,7 @@ public:
     virtual void removeMimeType(IMimeType *mimeType);
     virtual QList<IMimeType*> mimeTypeList() const;
     virtual IMimeType *findMimeType(const QString &type) const;
+    virtual QString findMimeTypePackage(const QString &type) const;
     virtual QString findMimeTypeByFile(const QString &fileName) const;
     virtual QString findMimeTypeBySuffix(const QString &suffix) const;
     virtual QString findMimeTypeByScheme(const QString &scheme) const;
