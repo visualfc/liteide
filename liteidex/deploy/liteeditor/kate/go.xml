@@ -5,6 +5,7 @@
           indenter="cstyle"
           extensions="*.go"
           mimetype="text/x-gosrc"
+		  package="go"
           priority="5"
           author="The Go Authors"
           license="BSD">
