@@ -104,9 +104,9 @@ bool GolangTextLexer::isInStringOrComment(const QTextCursor &cursor) const
     return false;
 }
 
-bool GolangTextLexer::isInCode(const QTextCursor &cursor) const
+bool GolangTextLexer::isLangSupport() const
 {
-    return !isInStringOrComment(cursor);
+    return true;
 }
 
 bool GolangTextLexer::isInImportHelper(const QTextCursor &cursor) const

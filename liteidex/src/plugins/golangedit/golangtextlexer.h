@@ -31,12 +31,12 @@ class GolangTextLexer : public LiteApi::ITextLexer
 {
 public:
     GolangTextLexer(QObject *parent = 0);
+    virtual bool isLangSupport() const;
     virtual bool isInComment(const QTextCursor &cursor) const;
     virtual bool isInString(const QTextCursor &cursor) const;
     virtual bool isInEmptyString(const QTextCursor &cursor) const;
     virtual bool isEndOfString(const QTextCursor &cursor) const;
     virtual bool isInStringOrComment(const QTextCursor &cursor) const;
-    virtual bool isInCode(const QTextCursor &cursor) const;
     virtual bool isInImport(const QTextCursor &cursor) const;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const;

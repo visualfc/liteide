@@ -196,71 +196,20 @@ public:
     {}
     virtual ~ITextLexer()
     {}
+    virtual bool isLangSupport() const = 0;
     virtual bool isInComment(const QTextCursor &cursor) const = 0;
     virtual bool isInString(const QTextCursor &cursor) const = 0;
     virtual bool isInEmptyString(const QTextCursor &cursor) const = 0;
     virtual bool isEndOfString(const QTextCursor &cursor) const = 0;
     virtual bool isInStringOrComment(const QTextCursor &cursor) const = 0;
     virtual bool isCanAutoCompleter(const QTextCursor &cursor) const = 0;
-    virtual bool isInCode(const QTextCursor &cursor) const = 0;
     virtual bool isInImport(const QTextCursor &cursor) const = 0;
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
     virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info) = 0;
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;
 };
 
-class BaseTextLexer : public ITextLexer
-{
-public:
-    BaseTextLexer(QObject *parent = 0) : ITextLexer(parent),
-        m_bAC(true), m_bCC(true)
-    {
-    }
-    virtual bool isInComment(const QTextCursor &/*cursor*/) const {
-        return false;
-    }
-    virtual bool isInString(const QTextCursor &/*cursor*/) const {
-        return false;
-    }
-    virtual bool isInEmptyString(const QTextCursor &/*cursor*/) const {
-        return false;
-    }
-    virtual bool isEndOfString(const QTextCursor &/*cursor*/) const {
-        return false;
-    }
-    virtual bool isInStringOrComment(const QTextCursor &/*cursor*/) const {
-        return false;
-    }
-    virtual bool isInCode(const QTextCursor &/*cursor*/) const {
-        return m_bCC;
-    }
-    virtual bool isInImport(const QTextCursor &/*cursor*/) const {
-        return false;
-    }
-    virtual bool isCanAutoCompleter(const QTextCursor &/*cursor*/) const {
-        return m_bAC;
-    }
-    virtual void setCanCodeCompleter(bool b) {
-        m_bCC = b;
-    }
-    virtual void setCanAutoCompleter(bool b) {
-        m_bAC = b;
-    }
-    virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
-        return -1;
-    }
-    virtual QString fetchFunctionTip(const QString &/*func*/, const QString &/*kind*/, const QString &/*info*/)
-    {
-        return QString();
-    }
-    virtual bool fetchFunctionArgs(const QString &/*str*/, int &/*argnr*/, int &/*parcount*/)
-    {
-        return false;
-    }
-protected:
-    bool m_bAC;
-    bool m_bCC;
-};
+
 
 class ILiteEditor : public ITextEditor
 {

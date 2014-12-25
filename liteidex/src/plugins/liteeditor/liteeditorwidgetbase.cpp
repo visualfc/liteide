@@ -256,11 +256,84 @@ protected:
     LiteEditorWidgetBase *textEdit;
 };
 
+class BaseTextLexer : public LiteApi::ITextLexer
+{
+public:
+    BaseTextLexer(QObject *parent = 0) : LiteApi::ITextLexer(parent),
+        m_bAC(true), m_bCC(true)
+    {
+    }
+    virtual bool isLangSupport() const {
+        return false;
+    }
+    virtual bool isInComment(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isInString(const QTextCursor &cursor) const {
+        int pos = cursor.positionInBlock();
+        if (pos == 0) {
+            return false;
+        }
+        QString text = cursor.block().text();
+        if (text.mid(pos).indexOf("\"") < 0) {
+            return false;
+        }
+        if (text.left(pos).indexOf("\"") < 0) {
+            return false;
+        }
+        return true;
+    }
+    virtual bool isInEmptyString(const QTextCursor &cursor) const {
+        int pos = cursor.positionInBlock();
+        if (pos > 0) {
+            QString text = cursor.block().text();
+            return text.at(pos-1) == '\"' && text.at(pos) == '\"';
+        }
+        return false;
+    }
+    virtual bool isEndOfString(const QTextCursor &cursor) const {
+        int pos = cursor.positionInBlock();
+        return cursor.block().text().at(pos) == '\"';
+    }
+    virtual bool isInStringOrComment(const QTextCursor &cursor) const {
+        if (isInString(cursor)) {
+            return true;
+        }
+        return false;
+    }
+    virtual bool isInImport(const QTextCursor &/*cursor*/) const {
+        return false;
+    }
+    virtual bool isCanAutoCompleter(const QTextCursor &/*cursor*/) const {
+        return m_bAC;
+    }
+    virtual void setCanCodeCompleter(bool b) {
+        m_bCC = b;
+    }
+    virtual void setCanAutoCompleter(bool b) {
+        m_bAC = b;
+    }
+    virtual int startOfFunctionCall(const QTextCursor &/*cursor*/) const {
+        return -1;
+    }
+    virtual QString fetchFunctionTip(const QString &/*func*/, const QString &/*kind*/, const QString &/*info*/)
+    {
+        return QString();
+    }
+    virtual bool fetchFunctionArgs(const QString &/*str*/, int &/*argnr*/, int &/*parcount*/)
+    {
+        return false;
+    }
+protected:
+    bool m_bAC;
+    bool m_bCC;
+};
+
 LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *parent)
     : QPlainTextEdit(parent),
       m_liteApp(app),
       m_editorMark(0),
-      m_textLexer(new LiteApi::BaseTextLexer()),
+      m_textLexer(new BaseTextLexer()),
       m_contentsChanged(false),
       m_lastCursorChangeWasInteresting(false)
 {
@@ -1615,6 +1688,9 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     } else if ( (lookBehind == QLatin1Char('\"') && lookAhead == QLatin1Char('\"')) ||
                (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')) ||
                 (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`'))) {
+        if (!this->m_textLexer->isLangSupport()) {
+            return false;
+        }
         if(!m_textLexer->isInEmptyString(cursor)) {
              return false;
         }
@@ -1808,7 +1884,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         }
     }
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
-            m_textLexer->isEndOfString(this->textCursor())) {
+            m_textLexer->isLangSupport() && m_textLexer->isEndOfString(this->textCursor())) {
         QString keyText = e->text();
         if (keyText == "\"" || keyText == "\'" || keyText == "`") {
             QTextCursor cursor = textCursor();
@@ -1857,6 +1933,11 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             mr = "\"";
         } else if (m_autoBraces5 && keyText == "`") {
             mr = "`";
+        }
+
+        if (m_textLexer->isInStringOrComment(this->textCursor())) {
+            QPlainTextEdit::keyPressEvent(e);
+            return;
         }
 
         if (keyText == ")" || keyText == "]" || keyText == "}") {
