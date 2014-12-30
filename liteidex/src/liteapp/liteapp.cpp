@@ -195,7 +195,6 @@ LiteApp::LiteApp()
 
     QAction *esc = new QAction(tr("Escape"),this);
     m_actionManager->getActionContext(this,"App")->regAction(esc,"Escape","ESC");
-    esc->setShortcutContext(Qt::WindowShortcut);
     m_mainwindow->addAction(esc);
     connect(esc,SIGNAL(triggered()),this,SLOT(escape()));
 
