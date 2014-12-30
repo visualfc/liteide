@@ -107,6 +107,7 @@ class SideWindowStyle : public IWindowStyle
 public:
     SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SideWindowStyle();
+    virtual void createToolWindowMenu();
     virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     virtual void removeToolWindow(QAction *action);
     virtual QAction *findToolWindow(QWidget *widget);
@@ -131,6 +132,8 @@ protected:
     QAction     *m_hideSideAct;
     QList<QAction*> m_hideActionList;
     QList<QAction*> m_hideSideActionList;
+    QMenu       *m_sideMenu;
+    QMenu       *m_outputMenu;
 };
 
 #endif // SIDEWINDOWSTYLE_H

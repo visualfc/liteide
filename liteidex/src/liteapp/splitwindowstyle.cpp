@@ -258,12 +258,22 @@ SplitWindowStyle::SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *wind
 
     m_mainWindow->setStatusBar(m_statusBar);
 
+    m_windowMenu = 0;
+
     connect(m_hideSideAct,SIGNAL(toggled(bool)),this,SLOT(hideSideBar(bool)));
 }
 
 SplitWindowStyle::~SplitWindowStyle()
 {
     qDeleteAll(m_actStateMap);
+}
+
+void SplitWindowStyle::createToolWindowMenu()
+{
+    QMenu *menu = m_liteApp->actionManager()->loadMenu("menu/view");
+    if (menu) {
+        m_windowMenu = menu->addMenu(tr("Tool Windows"));
+    }
 }
 
 void SplitWindowStyle::toggledAction(bool)
@@ -352,9 +362,12 @@ QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidg
         LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
         actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
     }
-    m_actStateMap.insert(action,state);
+    m_actStateMap.insert(action,state);    
 
     connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledAction(bool)));
+    if (m_windowMenu) {
+        m_windowMenu->addAction(action);
+    }
     return action;
 }
 

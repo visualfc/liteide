@@ -353,12 +353,24 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
 
     m_mainWindow->setStatusBar(m_statusBar);
 
+    m_sideMenu = 0;
+    m_outputMenu = 0;
+
     connect(m_hideSideAct,SIGNAL(toggled(bool)),this,SLOT(hideSideBar(bool)));
 }
 
 SideWindowStyle::~SideWindowStyle()
 {
 
+}
+
+void SideWindowStyle::createToolWindowMenu()
+{
+    QMenu *menu = m_liteApp->actionManager()->loadMenu("menu/view");
+    if (menu) {
+        m_sideMenu = menu->addMenu(tr("SideBar Windows"));
+        m_outputMenu = menu->addMenu(tr("Output Windows"));
+    }
 }
 
 void SideWindowStyle::restoreHideToolWindows()
@@ -494,9 +506,15 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
             LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
             actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
         }
+        if (m_outputMenu) {
+            m_outputMenu->addAction(action);
+        }
     } else {
         m_sideBar->addAction(action,widget,id,title,widgetActions);
         connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledSideBar(bool)));
+        if (m_sideMenu) {
+            m_sideMenu->addAction(action);
+        }
     }
     return action;
 }

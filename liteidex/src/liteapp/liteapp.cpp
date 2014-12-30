@@ -155,6 +155,9 @@ LiteApp::LiteApp()
 
     m_goProxy = new GoProxy(this);
     m_actionManager->initWithApp(this);
+
+    m_mainwindow->createToolWindowMenu();
+
     m_toolWindowManager->initWithApp(this);
     m_mimeTypeManager->initWithApp(this);
     m_projectManager->initWithApp(this);

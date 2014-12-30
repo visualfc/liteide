@@ -51,6 +51,11 @@ void ToolMainWindow::setWindowStyle(IWindowStyle *style)
     m_windowStyle = style;
 }
 
+void ToolMainWindow::createToolWindowMenu()
+{
+    m_windowStyle->createToolWindowMenu();
+}
+
 QAction *ToolMainWindow::findToolWindow(QWidget *widget)
 {
     return m_windowStyle->findToolWindow(widget);
