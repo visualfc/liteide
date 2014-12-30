@@ -1113,6 +1113,7 @@ void LiteEditor::setEditToolbarVisible(bool visible)
 {
     m_editToolBar->setVisible(visible);
     m_infoToolBar->setVisible(visible);
+    m_buildToolBar->setVisible(visible);
 }
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
