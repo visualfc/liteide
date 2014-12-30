@@ -835,8 +835,7 @@ void EditorManager::tabContextShowInExplorer()
     if (filePath.isEmpty()) {
         return;
     }
-    QFileInfo info(filePath);
-    QDesktopServices::openUrl(info.absolutePath());
+    FileUtil::openInExplorer(filePath);
 }
 
 void EditorManager::tabContextCloseOtherFolderFiles()

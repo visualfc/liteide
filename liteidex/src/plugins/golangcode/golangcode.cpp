@@ -55,7 +55,7 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_editor(0),
     m_completer(0),
     m_closeOnExit(true),
-    m_autoUpdatePkg(true)
+    m_autoUpdatePkg(false)
 {
     g_gocodeInstCount++;
     m_gocodeProcess = new QProcess(this);
@@ -85,7 +85,7 @@ void GolangCode::applyOption(QString id)
 {
     if (id != "option/golangcode") return;
     m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPDEPPKG,true).toBool();
+    m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
     QStringList args;
     args << "set" << "autobuild";
     if (m_autoUpdatePkg) {

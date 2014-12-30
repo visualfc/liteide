@@ -33,6 +33,6 @@
 #endif
 
 #define  GOLANGCODE_EXITCLOSE "golangcode/exitclose"
-#define  GOLANGCODE_AUTOUPDEPPKG "golangcode/autoupdeppkg"
+#define  GOLANGCODE_AUTOBUILD "golangcode/gocodeautobuild"
 
 #endif // GOLANGCODE_GLOBAL_H

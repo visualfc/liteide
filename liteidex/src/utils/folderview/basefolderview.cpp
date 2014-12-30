@@ -32,7 +32,6 @@
 #include <QMenu>
 #include <QAction>
 #include <QMessageBox>
-#include <QDesktopServices>
 #include <QProcess>
 #include <QInputDialog>
 #include <QLineEdit>
@@ -41,6 +40,8 @@
 #include <QFileSystemWatcher>
 #include <QFileDialog>
 #include <QHeaderView>
+#include <QProcess>
+#include <QProcessEnvironment>
 #include <QDebug>
 
 #ifdef Q_OS_WIN
@@ -280,8 +281,7 @@ void BaseFolderView::removeFolder()
 
 void BaseFolderView::openExplorer()
 {
-    QDir dir = contextDir();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(dir.path()));
+    FileUtil::openInExplorer(contextFileInfo().filePath());
 }
 
 void BaseFolderView::viewGodoc()
