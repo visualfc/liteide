@@ -19,7 +19,7 @@ fi
 
 echo update liteide tools ...
 cd $LITEIDE_ROOT
-export GOPATH=$PWD
+export GOPATH=$PWD:$GOPATH
 
 echo get gocode ...
 go get -v -u -ldflags "-s" "github.com/nsf/gocode"
