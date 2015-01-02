@@ -31,6 +31,7 @@ class IWindowStyle : public QObject
     Q_OBJECT
 public:
     IWindowStyle(QObject *parent) : QObject(parent) {}
+    virtual void createToolWindowMenu() = 0;
     virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>()) = 0;
     virtual void removeToolWindow(QAction *action) = 0;
     virtual QAction *findToolWindow(QWidget *wiget) = 0;

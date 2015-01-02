@@ -91,6 +91,7 @@ class SplitWindowStyle : public IWindowStyle
 public:
     SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SplitWindowStyle();
+    void createToolWindowMenu();
     QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
@@ -113,6 +114,7 @@ protected:
     QMap<QAction*,SplitActionState*> m_actStateMap;
     QStatusBar  *m_statusBar;
     QAction     *m_hideSideAct;
+    QMenu       *m_windowMenu;
     QList<QAction*> m_hideActionList;
 };
 

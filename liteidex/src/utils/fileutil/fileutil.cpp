@@ -26,6 +26,8 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QProcess>
+#include <QProcessEnvironment>
+#include <QDesktopServices>
 #include <QDebug>
 
 //lite_memory_check_begin
@@ -433,5 +435,40 @@ bool FileUtil::CopyDirectory(const QString &src, const QString &dest)
         }
     }
     return true;
+}
+
+void FileUtil::openInExplorer(const QString &path)
+{
+#ifdef Q_OS_WIN
+    const QString explorer = FileUtil::lookPath("explorer.exe",QProcessEnvironment::systemEnvironment(),false);
+    if (!explorer.isEmpty()) {
+        QStringList param;
+        if (!QFileInfo(path).isDir())
+            param += QLatin1String("/select,");
+        param += QDir::toNativeSeparators(path);
+        QProcess::startDetached(explorer, param);
+        return;
+    }
+#endif
+#ifdef Q_OS_MAC
+    if (QFileInfo("/usr/bin/osascript").exists()) {
+        QStringList scriptArgs;
+        scriptArgs << QLatin1String("-e")
+                   << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
+                                         .arg(path);
+        QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
+        scriptArgs.clear();
+        scriptArgs << QLatin1String("-e")
+                   << QLatin1String("tell application \"Finder\" to activate");
+        QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
+        return;
+    }
+#endif
+    QFileInfo info(path);
+    if (info.isDir()) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(info.filePath()));
+    } else {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(info.path()));
+    }
 }
 

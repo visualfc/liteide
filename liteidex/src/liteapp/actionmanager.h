@@ -76,7 +76,6 @@ protected:
     QMap<QString,QMenu*>   m_idMenuMap;
     QMap<QString,QToolBar*> m_idToolBarMap;
     QMenu *m_viewMenu;
-    QMenu *m_viewToolMenu;
     QAction *m_baseToolBarAct;
     QAction *m_baseBrowserAct;
     QMap<QObject*,IActionContext*> m_objContextMap;

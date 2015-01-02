@@ -243,7 +243,7 @@ void AstWidget::gotoItemDefinition(GolangAstItem *item)
     if (!textEditor) {
         return;
     }
-    textEditor->gotoLine(pos.line-1,pos.column,false);
+    textEditor->gotoLine(pos.line-1,pos.column,true);
 }
 
 GolangAstItem *AstWidget::astItemFromIndex(QModelIndex index)

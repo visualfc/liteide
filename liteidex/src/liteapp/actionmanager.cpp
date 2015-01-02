@@ -66,7 +66,6 @@ bool ActionManager::initWithApp(IApplication *app)
     insertMenu("menu/edit",tr("&Edit"));
     insertMenu("menu/find",tr("F&ind"));
     m_viewMenu = insertMenu("menu/view",tr("&View"));
-    m_viewToolMenu = m_viewMenu->addMenu(tr("Tool Windows"));
     m_viewMenu->addSeparator();
     m_baseToolBarAct = m_viewMenu->addSeparator();
     m_baseBrowserAct = m_viewMenu->addSeparator();
@@ -191,8 +190,6 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
 {
     if (pos == ViewMenuToolBarPos) {
         m_viewMenu->insertAction(m_baseToolBarAct,act);
-    } else if (pos == ViewMenuToolWindowPos) {
-        m_viewToolMenu->addAction(act);
     } else if(pos == ViewMenuBrowserPos){
         m_viewMenu->insertAction(m_baseBrowserAct,act);
     } else {
@@ -363,7 +360,6 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
     if (act) {
         info->label = act->text();
         act->setShortcuts(info->keys);
-        act->setShortcutContext(Qt::ApplicationShortcut);
         if (!info->ks.isEmpty()) {
             act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
         }

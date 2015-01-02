@@ -32,6 +32,8 @@ using namespace LiteApi;
 class QFileSystemWatcher;
 class NewFileDialog;
 class FolderListView;
+
+
 class FileManager : public IFileManager
 {
     Q_OBJECT

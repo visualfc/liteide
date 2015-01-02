@@ -43,7 +43,7 @@ GolangCodeOption::GolangCodeOption(LiteApi::IApplication *app,QObject *parent) :
     ui->setupUi(m_widget);
 
     bool close = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOUPDEPPKG,true).toBool();
+    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
     ui->exitCloseCheckBox->setChecked(close);
     ui->autoUpPkgCheckBox->setChecked(uppkg);
 }
@@ -74,5 +74,5 @@ void GolangCodeOption::apply()
     bool close = ui->exitCloseCheckBox->isChecked();
     bool uppkg = ui->autoUpPkgCheckBox->isChecked();
     m_liteApp->settings()->setValue(GOLANGCODE_EXITCLOSE,close);
-    m_liteApp->settings()->setValue(GOLANGCODE_AUTOUPDEPPKG,uppkg);
+    m_liteApp->settings()->setValue(GOLANGCODE_AUTOBUILD,uppkg);
 }

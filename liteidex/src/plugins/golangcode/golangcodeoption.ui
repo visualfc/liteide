@@ -21,16 +21,16 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="autoUpPkgCheckBox">
+       <widget class="QCheckBox" name="exitCloseCheckBox">
         <property name="text">
-         <string>Auto update depends package when it's source changed.</string>
+         <string>Close gocode when exiting</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="exitCloseCheckBox">
+       <widget class="QCheckBox" name="autoUpPkgCheckBox">
         <property name="text">
-         <string>Close gocode when exiting</string>
+         <string>Auto update depends package when it's source changed.</string>
         </property>
        </widget>
       </item>
