@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!--
+ ***************************************************************************
+ ** Writing a Kate Highlighting XML File
+ ** http://kate-editor.org/article/writing_a_kate_highlighting_xml_file
+ **
+ ** Introducing TOML
+ ** https://github.com/toml-lang/toml
+ **
+ ***************************************************************************
+-->
+<language name="TOML Files" section="Configuration" extensions="*.toml" mimetype="text/x-toml" version="1.0" kateversion="2.0" author="visualfc@gmail.com" license="LGPL">
+<highlighting>
+	<contexts>
+		<context name="Toml" attribute="Normal Text" lineEndContext="#stay">
+		 	<!--RangeDetect attribute="Section" context="#stay" char="[" char1="]" beginRegion="Section" endRegion="Section" /-->
+			<DetectChar attribute="Assignment" context="Value" char="=" />
+			<DetectChar attribute="String" context="String" char="&quot;"/>
+			<DetectChar char="#" attribute="Comment" context="Comment" firstNonSpace="true" />
+		</context>
+	    <context name="Value" attribute="Value" lineEndContext="#pop" >
+			<DetectChar attribute="String" context="String" char="&quot;"/>
+			<RegExpr attribute="Comment" context="#pop" String="#.*$" />
+		</context>		
+		<context name="Comment" attribute="Comment" lineEndContext="#pop">
+			<DetectSpaces />
+			<IncludeRules context="##Alerts" />
+			<DetectIdentifier />
+		</context>
+		<context attribute="String" lineEndContext="#pop" name="String">
+		  <!--LineContinue attribute="String" context="#stay"/-->
+		  <DetectChar attribute="String" context="#pop" char="&quot;"/>
+		</context>		
+	</contexts>
+	<itemDatas>
+		<itemData name="Normal Text" defStyleNum="dsDataType" />
+		<itemData name="Section" defStyleNum="dsKeyword" />
+		<itemData name="Comment" defStyleNum="dsComment" />
+		<itemData name="Assignment" defStyleNum="dsOthers" />
+		<itemData name="Float" defStyleNum="dsFloat" />
+		<itemData name="Int" defStyleNum="dsDecVal" />
+		<itemData name="String"  defStyleNum="dsString"/>
+		<itemData name="Keyword" defStyleNum="dsKeyword" />
+	</itemDatas>
+</highlighting>
+<general>
+	<comments>
+		<comment name="singleLine" start="#" />
+	</comments>
+</general>
+</language>
