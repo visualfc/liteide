@@ -119,13 +119,26 @@ bool isComment(const QString &text,
 } // namespace anynomous
 
 
-void Utils::unCommentSelection(QPlainTextEdit *edit, const CommentDefinition &definition)
+void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const CommentDefinition &definition)
 {
     if (!definition.hasSingleLineStyle() && !definition.hasMultiLineStyle())
         return;
 
     QTextCursor cursor = edit->textCursor();
     QTextDocument *doc = cursor.document();
+
+    if (!cursor.hasSelection() && (flag == BlockComment) ) {
+        if (definition.hasMultiLineStyle()) {
+            cursor.beginEditBlock();
+            cursor.insertText(definition.multiLineStart());
+            cursor.insertText(definition.multiLineEnd());
+            cursor.movePosition(QTextCursor::Left,QTextCursor::MoveAnchor,definition.multiLineEnd().length());
+            cursor.endEditBlock();
+            edit->setTextCursor(cursor);
+            return;
+        }
+    }
+
     cursor.beginEditBlock();
 
     int pos = cursor.position();
@@ -194,7 +207,8 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, const CommentDefinition &de
         doMultiLineStyleComment = !doMultiLineStyleUncomment
                                   && (hasLeadingCharacters
                                       || hasTrailingCharacters
-                                      || !definition.hasSingleLineStyle());
+                                      || !definition.hasSingleLineStyle()
+                                      || (flag == BlockComment));
     } else if (!hasSelection && !definition.hasSingleLineStyle()) {
 
         QString text = startBlock.text().trimmed();
@@ -215,6 +229,11 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, const CommentDefinition &de
         }
     }
 
+    if (flag == SingleComment) {
+        if (doMultiLineStyleComment) {
+            doMultiLineStyleComment = false;
+        }
+    }
     if (doMultiLineStyleUncomment) {
         cursor.setPosition(end);
         cursor.movePosition(QTextCursor::PreviousCharacter,

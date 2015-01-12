@@ -319,7 +319,7 @@ void GolangEdit::editorComment()
     }
     Utils::CommentDefinition cd;
     cd.setAfterWhiteSpaces(true);
-    Utils::unCommentSelection(textEdit,cd);
+    Utils::unCommentSelection(textEdit,Utils::AutoComment,cd);
 }
 
 void GolangEdit::editorFindInfo()
