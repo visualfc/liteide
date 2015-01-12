@@ -5,12 +5,17 @@
     <comment>Golang Source File</comment>
     <glob pattern="*.go"/>
   </mime-type>
+  <mime-type type="text/x-rust" codec="utf-8" package="rust">
+    <sub-class-of type="text/plain"/>
+    <comment>Rust Source File</comment>
+    <glob pattern="*.rs"/>
+  </mime-type>
   <mime-type type="text/x-lua" codec="utf-8" package="lua">
     <sub-class-of type="text/plain"/>
     <comment>Lua Source File</comment>
     <glob pattern="*.lua"/>
     <glob pattern="*.wlua"/>
-  </mime-type>  
+  </mime-type>
   <mime-type type="text/html" codec="utf-8" package="html">
     <sub-class-of type="text/plain"/>
     <comment>HTML Source File</comment>
@@ -43,8 +48,8 @@
 	<glob pattern="*.hpp"/>
 	<glob pattern="*.hh"/>
 	<glob pattern="*.hxx"/>
-	<glob pattern="*.h++"/>	
-	<glob pattern="*.hcc"/>		
-	<glob pattern="*.moc"/>		
-  </mime-type> 
+	<glob pattern="*.h++"/>
+	<glob pattern="*.hcc"/>
+	<glob pattern="*.moc"/>
+  </mime-type>
 </mime-info>
