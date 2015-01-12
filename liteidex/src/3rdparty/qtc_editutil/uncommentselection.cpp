@@ -118,7 +118,6 @@ bool isComment(const QString &text,
 
 } // namespace anynomous
 
-
 void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const CommentDefinition &definition)
 {
     if (!definition.hasSingleLineStyle() && !definition.hasMultiLineStyle())
@@ -234,6 +233,7 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const Com
             doMultiLineStyleComment = false;
         }
     }
+
     if (doMultiLineStyleUncomment) {
         cursor.setPosition(end);
         cursor.movePosition(QTextCursor::PreviousCharacter,
@@ -260,7 +260,9 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const Com
                 break;
             }
         }
-
+        if (!hasSelection && cursor.block().text().isEmpty()) {
+            doSingleLineStyleUncomment = false;
+        }
         const int singleLineLength = definition.singleLine().length();
         for (QTextBlock block = startBlock; block != endBlock; block = block.next()) {
             if (doSingleLineStyleUncomment) {

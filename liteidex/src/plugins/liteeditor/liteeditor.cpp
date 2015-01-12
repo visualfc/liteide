@@ -29,6 +29,7 @@
 #include "liteeditor_global.h"
 #include "colorstyle/colorstyle.h"
 #include "qtc_texteditor/generichighlighter/highlighter.h"
+#include "qtc_editutil/uncommentselection.h"
 #include "functiontooltip.h"
 
 #include <QFileInfo>
@@ -325,6 +326,16 @@ void LiteEditor::createActions()
 #else
     actionContext->regAction(m_codeCompleteAct,"CodeComplete","Ctrl+Space");
 #endif
+
+    m_commentAct = new QAction(tr("Toggle Comment"),this);
+    actionContext->regAction(m_commentAct,"Comment","Ctrl+/");
+
+    m_blockCommentAct = new QAction(tr("Toggle Block Commnet"),this);
+    actionContext->regAction(m_blockCommentAct,"BlockComment","Ctrl+Shift+/");
+
+    m_commentAct->setVisible(false);
+    m_blockCommentAct->setVisible(false);
+
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
@@ -364,6 +375,8 @@ void LiteEditor::createActions()
     connect(m_resetFontSizeAct,SIGNAL(triggered()),this,SLOT(resetFontSize()));
     connect(m_cleanWhitespaceAct,SIGNAL(triggered()),m_editorWidget,SLOT(cleanWhitespace()));
     connect(m_wordWrapAct,SIGNAL(triggered(bool)),m_editorWidget,SLOT(setWordWrapOverride(bool)));
+    connect(m_commentAct,SIGNAL(triggered()),this,SLOT(comment()));
+    connect(m_blockCommentAct,SIGNAL(triggered()),this,SLOT(blockComment()));
 
 #ifdef Q_OS_WIN
     QClipboard *clipboard = QApplication::clipboard();
@@ -497,6 +510,9 @@ void LiteEditor::createMenu()
     m_editMenu->addSeparator();
     m_editMenu->addAction(m_codeCompleteAct);
     m_editMenu->addAction(m_gotoLineAct);
+    m_editMenu->addSeparator();
+    m_editMenu->addAction(m_commentAct);
+    m_editMenu->addAction(m_blockCommentAct);
 
     //context menu
     m_contextMenu->addAction(m_cutAct);
@@ -514,6 +530,9 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_deleteLineAct);
     subMenu->addAction(m_insertLineBeforeAct);
     subMenu->addAction(m_insertLineAfterAct);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_commentAct);
+    m_contextMenu->addAction(m_blockCommentAct);
 }
 
 #ifdef LITEEDITOR_FIND
@@ -1114,6 +1133,41 @@ void LiteEditor::setEditToolbarVisible(bool visible)
     m_editToolBar->setVisible(visible);
     m_infoToolBar->setVisible(visible);
     m_buildToolBar->setVisible(visible);
+}
+
+void LiteEditor::comment()
+{
+    Utils::CommentDefinition cd;
+    cd.setAfterWhiteSpaces(false);
+    cd.setSingleLine(m_comment.line);
+    cd.setMultiLineStart(m_comment.start);
+    cd.setMultiLineEnd(m_comment.end);
+    if (cd.hasSingleLineStyle())
+        Utils::unCommentSelection(m_editorWidget,Utils::SingleComment,cd);
+    else
+        Utils::unCommentSelection(m_editorWidget,Utils::AutoComment,cd);
+}
+
+void LiteEditor::blockComment()
+{
+    Utils::CommentDefinition cd;
+    cd.setAfterWhiteSpaces(false);
+    cd.setSingleLine(m_blockComment.line);
+    cd.setMultiLineStart(m_blockComment.start);
+    cd.setMultiLineEnd(m_blockComment.end);
+    if (cd.hasMultiLineStyle())
+        Utils::unCommentSelection(m_editorWidget,Utils::BlockComment,cd);
+    else
+        Utils::unCommentSelection(m_editorWidget,Utils::AutoComment,cd);
+
+}
+
+void LiteEditor::setComment(LiteApi::Comment comment, LiteApi::Comment blockComment)
+{
+    m_comment = comment;
+    m_blockComment = blockComment;
+    m_commentAct->setVisible(!m_comment.isEmpty());
+    m_blockCommentAct->setVisible(!m_blockComment.isEmpty());
 }
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :

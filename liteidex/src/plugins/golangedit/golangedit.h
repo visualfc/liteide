@@ -67,7 +67,6 @@ protected:
     QAction *m_jumpDeclAct;
     QAction *m_findUseAct;
     QAction *m_renameSymbolAct;
-    QAction *m_commentAct;
     QAction *m_viewGodocAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;

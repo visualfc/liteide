@@ -176,12 +176,19 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
             wordCompleter->appendItems(wordApi->expList(),"","",exp,false);
             wordCompleter->model()->sort(0);
         }
-        LiteApi::ISnippetApi *snippetApi = m_wordApiManager->findSnippetApi(mimeType);
-        if (snippetApi && snippetApi->loadApi()) {
-            foreach (LiteApi::Snippet *snippet, snippetApi->snippetList()) {
-                wordCompleter->appendSnippetItem(snippet->Name,snippet->Info,snippet->Text);
-            }
+
+    }
+    LiteApi::ISnippetApi *snippetApi = m_wordApiManager->findSnippetApi(mimeType);
+    if (snippetApi && snippetApi->loadApi()) {
+        foreach (LiteApi::Snippet *snippet, snippetApi->snippetList()) {
+            wordCompleter->appendSnippetItem(snippet->Name,snippet->Info,snippet->Text);
         }
+    }
+    LiteApi::ICommentApi *commentApi = m_wordApiManager->findCommentApi(mimeType);
+    if (commentApi && commentApi->loadApi()) {
+        LiteApi::Comment comment = commentApi->findComment("Comment");
+        LiteApi::Comment blockComment = commentApi->findComment("BlockComment");
+        editor->setComment(comment,blockComment);
     }
     editor->applyOption(OPTION_LITEEDITOR);
     editor->loadColorStyleScheme();

@@ -65,6 +65,25 @@ public:
     virtual QList<Snippet*> snippetList() const = 0;
 };
 
+struct Comment
+{
+    QString line;
+    QString start;
+    QString end;
+    bool isEmpty() {
+        return line.isEmpty() && start.isEmpty() && end.isEmpty();
+    }
+};
+
+class ICommentApi
+{
+public:
+    virtual ~ICommentApi(){}
+    virtual QString package() const = 0;
+    virtual bool loadApi() = 0;
+    virtual Comment findComment(const QString &name) const = 0;
+};
+
 class IEditorApiManager : public IManager
 {
     Q_OBJECT
@@ -78,6 +97,7 @@ public:
     virtual void removeSnippetApi(ISnippetApi *api) = 0;
     virtual ISnippetApi *findSnippetApi(const QString &mimeType) = 0;
     virtual QList<ISnippetApi*> snippetApiList() const = 0;
+    virtual ICommentApi *findCommentApi(const QString &mimeType) const = 0;
 };
 
 enum CompletionContext {
