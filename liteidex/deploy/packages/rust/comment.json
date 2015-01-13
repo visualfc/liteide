@@ -1,0 +1,9 @@
+{
+ "BlockComment" :  {
+  "end" : "*/",
+  "start" : "/*"
+ },
+ "Comment" :  {
+  "line" : "//"
+ }
+}

@@ -18,36 +18,27 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: editorapimanager.h
+// Module: commentapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef EDITORAPIMANAGER_H
-#define EDITORAPIMANAGER_H
+#ifndef COMMENTAPI_H
+#define COMMENTAPI_H
 
 #include "liteeditorapi/liteeditorapi.h"
 
-using namespace LiteApi;
-
-class EditorApiManager : public IEditorApiManager
+class CommentApi : public LiteApi::ICommentApi
 {
 public:
-    EditorApiManager(QObject *parent = 0);
-    ~EditorApiManager();
-    virtual void addWordApi(IWordApi *api);
-    virtual void removeWordApi(IWordApi *api);
-    virtual IWordApi *findWordApi(const QString &mimeType);
-    virtual QList<IWordApi*> wordApiList() const;
-    virtual void addSnippetApi(ISnippetApi *api);
-    virtual void removeSnippetApi(ISnippetApi *api);
-    virtual ISnippetApi *findSnippetApi(const QString &mimeType);
-    virtual QList<ISnippetApi*> snippetApiList() const;
-    virtual ICommentApi *findCommentApi(const QString &mimeType) const;
-public:
-    void load(const QString &path);
+    CommentApi(const QString &package);
+    virtual QString package() const;
+    virtual bool loadApi();
+    virtual LiteApi::Comment findComment(const QString &name) const;
+    void setApiFile(const QString &file);
 protected:
-    QList<IWordApi*>    m_wordApiList;
-    QList<ISnippetApi*> m_snippetApiList;
-    QList<ICommentApi*> m_commentApiList;
+    QString m_package;
+    bool    m_bLoad;
+    QString m_apiFile;
+    QMap<QString,LiteApi::Comment> m_commentMap;
 };
 
-#endif // EDITORAPIMANAGER_H
+#endif // COMMENTAPI_H

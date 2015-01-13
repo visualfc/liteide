@@ -70,6 +70,8 @@ public:
     virtual void setCompleter(LiteApi::ICompleter *complter);
     virtual void setEditorMark(LiteApi::IEditorMark *mark);
     virtual void setTextLexer(LiteApi::ITextLexer *lexer);
+    void setSyntaxHighlighter(TextEditor::SyntaxHighlighter *syntax);
+    TextEditor::SyntaxHighlighter *syntaxHighlighter() const;
     void createActions();
     void createToolBars();
     void createMenu();
@@ -140,6 +142,9 @@ public slots:
     void decreaseFontSize();
     void resetFontSize();
     void setEditToolbarVisible(bool visible);
+    void comment();
+    void blockComment();
+    void setComment(LiteApi::Comment comment, LiteApi::Comment blockComment);
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;
@@ -151,6 +156,7 @@ public:
     QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteApi::ICompleter *m_completer;
+    TextEditor::SyntaxHighlighter *m_syntax;
     FunctionTooltip     *m_funcTip;
     QAction *m_undoAct;
     QAction *m_redoAct;
@@ -195,6 +201,10 @@ public:
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
     QAction *m_closeEditorAct;
+    QAction *m_commentAct;
+    QAction *m_blockCommentAct;
+    LiteApi::Comment m_comment;
+    LiteApi::Comment m_blockComment;
 };
 
 class EditContext : public LiteApi::IEditContext

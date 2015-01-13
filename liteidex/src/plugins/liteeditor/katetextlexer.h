@@ -18,36 +18,29 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: editorapimanager.h
+// Module: katetextlexer.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef EDITORAPIMANAGER_H
-#define EDITORAPIMANAGER_H
+#ifndef KATETEXTLEXER_H
+#define KATETEXTLEXER_H
 
 #include "liteeditorapi/liteeditorapi.h"
 
-using namespace LiteApi;
-
-class EditorApiManager : public IEditorApiManager
+class KateTextLexer : public LiteApi::ITextLexer
 {
 public:
-    EditorApiManager(QObject *parent = 0);
-    ~EditorApiManager();
-    virtual void addWordApi(IWordApi *api);
-    virtual void removeWordApi(IWordApi *api);
-    virtual IWordApi *findWordApi(const QString &mimeType);
-    virtual QList<IWordApi*> wordApiList() const;
-    virtual void addSnippetApi(ISnippetApi *api);
-    virtual void removeSnippetApi(ISnippetApi *api);
-    virtual ISnippetApi *findSnippetApi(const QString &mimeType);
-    virtual QList<ISnippetApi*> snippetApiList() const;
-    virtual ICommentApi *findCommentApi(const QString &mimeType) const;
-public:
-    void load(const QString &path);
-protected:
-    QList<IWordApi*>    m_wordApiList;
-    QList<ISnippetApi*> m_snippetApiList;
-    QList<ICommentApi*> m_commentApiList;
+    KateTextLexer(QObject *parent);
+    virtual bool isLangSupport() const;
+    virtual bool isInComment(const QTextCursor &cursor) const;
+    virtual bool isInString(const QTextCursor &cursor) const;
+    virtual bool isInEmptyString(const QTextCursor &cursor) const;
+    virtual bool isEndOfString(const QTextCursor &cursor) const;
+    virtual bool isInStringOrComment(const QTextCursor &cursor) const;
+    virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
+    virtual bool isInImport(const QTextCursor &cursor) const;
+    virtual int startOfFunctionCall(const QTextCursor &cursor) const;
+    virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info);
+    virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount);
 };
 
-#endif // EDITORAPIMANAGER_H
+#endif // KATETEXTLEXER_H

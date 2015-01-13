@@ -119,9 +119,9 @@ public Q_SLOTS:
 protected:
     virtual void highlightBlock(const QString &text) = 0;
 
-    void setFormat(int start, int count, const QTextCharFormat &format);
-    void setFormat(int start, int count, const QColor &color);
-    void setFormat(int start, int count, const QFont &font);
+    void setFormat(int start, int count, const QTextCharFormat &format, int id = 0);
+    //void setFormat(int start, int count, const QColor &color);
+    //void setFormat(int start, int count, const QFont &font);
     QTextCharFormat format(int pos) const;
 
     void applyFormatToSpaces(const QString &text, const QTextCharFormat &format);

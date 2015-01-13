@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "syntaxhighlighter.h"
-
+#include "basetextdocumentlayout.h"
 #include <qtextdocument.h>
 #include <qtextlayout.h>
 #include <qpointer.h>
@@ -87,6 +87,7 @@ public:
     void applyFormatChanges(int from, int charsRemoved, int charsAdded);
     QVector<QTextCharFormat> formatChanges;
     QTextBlock currentBlock;
+    QList<SyntaxToken> tokens;
     bool rehighlightPending;
     bool inReformatBlocks;
 };
@@ -224,9 +225,13 @@ void SyntaxHighlighterPrivate::reformatBlock(const QTextBlock &block, int from, 
     Q_ASSERT_X(!currentBlock.isValid(), "SyntaxHighlighter::reformatBlock()", "reFormatBlock() called recursively");
 
     currentBlock = block;
-
+    tokens.clear();
     formatChanges.fill(QTextCharFormat(), block.length() - 1);
     q->highlightBlock(block.text());
+
+    BaseTextDocumentLayout::userData(block)->setTokens(tokens);
+    BaseTextDocumentLayout::setLexerState(block,q->currentBlockState());
+
     applyFormatChanges(from, charsRemoved, charsAdded);
 
     currentBlock = QTextBlock();
@@ -267,7 +272,6 @@ void SyntaxHighlighter::configureFormat(TextFormatId id, const QTextCharFormat &
 void SyntaxHighlighter::setTabSize(int /*tabSize*/)
 {
 }
-
 
 /*!
     \class SyntaxHighlighter
@@ -525,7 +529,7 @@ void SyntaxHighlighter::rehighlightBlock(const QTextBlock &block)
 
     \sa format(), highlightBlock()
 */
-void SyntaxHighlighter::setFormat(int start, int count, const QTextCharFormat &format)
+void SyntaxHighlighter::setFormat(int start, int count, const QTextCharFormat &format, int id)
 {
     Q_D(SyntaxHighlighter);
     if (start < 0 || start >= d->formatChanges.count())
@@ -534,6 +538,23 @@ void SyntaxHighlighter::setFormat(int start, int count, const QTextCharFormat &f
     const int end = qMin(start + count, d->formatChanges.count());
     for (int i = start; i < end; ++i)
         d->formatChanges[i] = format;
+
+    if (id >= Normal) {
+        int offset = start;
+        int count = end-start;
+        if (!d->tokens.empty()) {
+            SyntaxToken &last = d->tokens.last();
+            if ((last.id == id) && (last.offset+last.count == offset)) {
+                last.count += count;
+                return;
+            }
+        }
+        SyntaxToken token;
+        token.offset = offset;
+        token.count = count;
+        token.id = id;
+        d->tokens.append(token);
+    }
 }
 
 /*!
@@ -547,12 +568,12 @@ void SyntaxHighlighter::setFormat(int start, int count, const QTextCharFormat &f
 
     \sa format(), highlightBlock()
 */
-void SyntaxHighlighter::setFormat(int start, int count, const QColor &color)
-{
-    QTextCharFormat format;
-    format.setForeground(color);
-    setFormat(start, count, format);
-}
+//void SyntaxHighlighter::setFormat(int start, int count, const QColor &color)
+//{
+//    QTextCharFormat format;
+//    format.setForeground(color);
+//    setFormat(start, count, format);
+//}
 
 /*!
     \overload
@@ -565,12 +586,12 @@ void SyntaxHighlighter::setFormat(int start, int count, const QColor &color)
 
     \sa format(), highlightBlock()
 */
-void SyntaxHighlighter::setFormat(int start, int count, const QFont &font)
-{
-    QTextCharFormat format;
-    format.setFont(font);
-    setFormat(start, count, format);
-}
+//void SyntaxHighlighter::setFormat(int start, int count, const QFont &font)
+//{
+//    QTextCharFormat format;
+//    format.setFont(font);
+//    setFormat(start, count, format);
+//}
 
 void SyntaxHighlighter::applyFormatToSpaces(const QString &text, const QTextCharFormat &format)
 {

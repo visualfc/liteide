@@ -9,6 +9,7 @@ include (../../utils/extension/extension.pri)
 include (../../utils/mimetype/mimetype.pri)
 include (../../utils/colorstyle/colorstyle.pri)
 include (../../3rdparty/qtc_texteditor/qtc_texteditor.pri)
+include (../../3rdparty/qtc_editutil/qtc_editutil.pri)
 include (../../3rdparty/treemodelcompleter/treemodelcompleter.pri)
 include (../../3rdparty/elidedlabel/elidedlabel.pri)
 include (../../3rdparty/cplusplus/cplusplus.pri)
@@ -35,7 +36,9 @@ SOURCES += liteeditorplugin.cpp \
     faketooltip.cpp \
     snippetapi.cpp \
     wordapi.cpp \
-    editorapimanager.cpp
+    editorapimanager.cpp \
+    commentapi.cpp \
+    katetextlexer.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
@@ -56,7 +59,9 @@ HEADERS += liteeditorplugin.h\
     faketooltip.h \
     snippetapi.h \
     wordapi.h \
-    editorapimanager.h
+    editorapimanager.h \
+    commentapi.h \
+    katetextlexer.h
 
 FORMS += \
     liteeditoroption.ui
