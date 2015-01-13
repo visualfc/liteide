@@ -82,6 +82,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
       m_funcTip(0),
       m_bReadOnly(false)
 {
+    m_syntax = 0;
     m_widget = new QWidget;
     m_editorWidget = new LiteEditorWidget(app,m_widget);
     m_editorWidget->setCursorWidth(2);
@@ -189,6 +190,17 @@ void LiteEditor::setTextLexer(LiteApi::ITextLexer *lexer)
 {
     m_extension->addObject("LiteApi.ITextLexer",lexer);
     m_editorWidget->setTextLexer(lexer);
+}
+
+void LiteEditor::setSyntaxHighlighter(TextEditor::SyntaxHighlighter *syntax)
+{
+    m_syntax = syntax;
+    m_extension->addObject("TextEditor::SyntaxHighlighter",syntax);
+}
+
+TextEditor::SyntaxHighlighter *LiteEditor::syntaxHighlighter() const
+{
+    return m_syntax;
 }
 
 void LiteEditor::setCompleter(LiteApi::ICompleter *complter)
@@ -1159,7 +1171,6 @@ void LiteEditor::blockComment()
         Utils::unCommentSelection(m_editorWidget,Utils::BlockComment,cd);
     else
         Utils::unCommentSelection(m_editorWidget,Utils::AutoComment,cd);
-
 }
 
 void LiteEditor::setComment(LiteApi::Comment comment, LiteApi::Comment blockComment)

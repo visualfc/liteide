@@ -70,6 +70,8 @@ public:
     virtual void setCompleter(LiteApi::ICompleter *complter);
     virtual void setEditorMark(LiteApi::IEditorMark *mark);
     virtual void setTextLexer(LiteApi::ITextLexer *lexer);
+    void setSyntaxHighlighter(TextEditor::SyntaxHighlighter *syntax);
+    TextEditor::SyntaxHighlighter *syntaxHighlighter() const;
     void createActions();
     void createToolBars();
     void createMenu();
@@ -154,6 +156,7 @@ public:
     QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteApi::ICompleter *m_completer;
+    TextEditor::SyntaxHighlighter *m_syntax;
     FunctionTooltip     *m_funcTip;
     QAction *m_undoAct;
     QAction *m_redoAct;

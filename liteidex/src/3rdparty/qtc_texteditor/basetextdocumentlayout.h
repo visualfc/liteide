@@ -47,6 +47,13 @@ namespace TextEditor {
 struct Parenthesis;
 typedef QVector<Parenthesis> Parentheses;
 
+struct SyntaxToken
+{
+    int offset;
+    int count;
+    int id;
+};
+
 struct TEXTEDITOR_EXPORT Parenthesis
 {
     enum Type { Opened, Closed };
@@ -140,7 +147,8 @@ public:
 
     CodeFormatterData *codeFormatterData() const { return m_codeFormatterData; }
     void setCodeFormatterData(CodeFormatterData *data);
-
+    void setTokens(const QList<SyntaxToken> &tokens) {m_tokens = tokens; }
+    QList<SyntaxToken> tokens() const { return m_tokens; }
 private:
     TextMarks m_marks;
     uint m_folded : 1;
@@ -152,6 +160,7 @@ private:
     uint m_findExpressionMark:1;
     Parentheses m_parentheses;
     QMap<int,bool> m_spellCheckZones;
+    QList<SyntaxToken> m_tokens;
     CodeFormatterData *m_codeFormatterData;
 };
 

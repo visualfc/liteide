@@ -195,16 +195,17 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    LiteEditorWidgetBase::keyPressEvent(e);
-
     bool isInImport = false;
     if (m_textLexer->isInStringOrComment(this->textCursor())) {
         isInImport = m_textLexer->isInImport(this->textCursor());
         if (!isInImport) {
+            LiteEditorWidgetBase::keyPressEvent(e);
             m_completer->hidePopup();
             return;
         }
     }
+
+    LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 

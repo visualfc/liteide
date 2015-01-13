@@ -37,7 +37,8 @@ SOURCES += liteeditorplugin.cpp \
     snippetapi.cpp \
     wordapi.cpp \
     editorapimanager.cpp \
-    commentapi.cpp
+    commentapi.cpp \
+    katetextlexer.cpp
 
 HEADERS += liteeditorplugin.h\
         liteeditor_global.h \
@@ -59,7 +60,8 @@ HEADERS += liteeditorplugin.h\
     snippetapi.h \
     wordapi.h \
     editorapimanager.h \
-    commentapi.h
+    commentapi.h \
+    katetextlexer.h
 
 FORMS += \
     liteeditoroption.ui

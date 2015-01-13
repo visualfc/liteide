@@ -446,7 +446,7 @@ void Highlighter::applyFormat(int offset,
                 if (itemData->isStrikeOutSpecified())
                     format.setFontStrikeOut(itemData->isStrikeOut());
             //}
-            setFormat(offset, count, format);
+            setFormat(offset, count, format, formatId);
         //}
     //}
 }
