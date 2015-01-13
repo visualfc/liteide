@@ -1149,6 +1149,12 @@ void LiteEditor::setEditToolbarVisible(bool visible)
 
 void LiteEditor::comment()
 {
+//    QTextCursor cursor = this->m_editorWidget->textCursor();
+//    if (this->m_editorWidget->textLexer()->isInComment(cursor)) {
+//        QTextBlock block = cursor.block();
+//        TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(block);
+
+//    }
     Utils::CommentDefinition cd;
     cd.setAfterWhiteSpaces(false);
     cd.setSingleLine(m_comment.line);

@@ -48,11 +48,27 @@ bool KateTextLexer::isLangSupport() const
 
 bool KateTextLexer::isInComment(const QTextCursor &cursor) const
 {
-    int pos = cursor.positionInBlock();
+    int pos = cursor.positionInBlock();    
     TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(cursor.block());
+    int state = data->lexerState();
+    if (state != 0 && data->tokens().isEmpty()) {
+        QTextBlock block = cursor.block().previous();
+        while(block.isValid()) {
+            TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(block);
+            if (data && !data->tokens().isEmpty()) {
+                return data->tokens().last().id == TextEditor::SyntaxHighlighter::Comment;
+            }
+            block = block.previous();
+        }
+        return false;
+    }
+    int offset = 0;
+    if (cursor.positionInBlock() == cursor.block().length()-1) {
+        offset = 1;
+    }
     foreach(TextEditor::SyntaxToken token, data->tokens()) {
         if ((token.id == TextEditor::SyntaxHighlighter::Comment) &&
-                (pos >= token.offset) && (pos <= (token.offset+token.count))) {
+                (pos >= token.offset) && (pos < (token.offset+token.count+offset))) {
             return true;
         }
     }

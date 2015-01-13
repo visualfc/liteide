@@ -230,6 +230,7 @@ void SyntaxHighlighterPrivate::reformatBlock(const QTextBlock &block, int from, 
     q->highlightBlock(block.text());
 
     BaseTextDocumentLayout::userData(block)->setTokens(tokens);
+    BaseTextDocumentLayout::setLexerState(block,q->currentBlockState());
 
     applyFormatChanges(from, charsRemoved, charsAdded);
 
