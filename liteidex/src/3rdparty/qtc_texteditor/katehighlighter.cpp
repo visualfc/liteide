@@ -59,6 +59,12 @@ TextEditor::SyntaxHighlighter *KateHighlighter::create(QTextDocument *doc, const
     QString id = Manager2::instance()->definitionIdByMimeType(mimeType);
     QSharedPointer<HighlightDefinition> def = Manager2::instance()->definition(id);
     if (def) {
+        SyntaxComment comment;
+        comment.singleLineComment = def->singleLineComment();
+        comment.multiLineCommentStart = def->multiLineCommentStart();
+        comment.multiLineCommentEnd = def->multiLineCommentEnd();
+        comment.isCommentAfterWhiteSpaces = def->isCommentAfterWhiteSpaces();
+        h->setupComment(comment);
         h->setDefaultContext(def->initialContext());
     }
     return h;

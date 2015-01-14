@@ -61,6 +61,20 @@ namespace TextEditor {
 
 class SyntaxHighlighterPrivate;
 
+struct SyntaxComment {
+    SyntaxComment() : isCommentAfterWhiteSpaces(false)
+    {}
+    bool isEmpty() const {
+        return singleLineComment.isEmpty() &&
+                multiLineCommentStart.isEmpty() &&
+                multiLineCommentEnd.isEmpty();
+    }
+    QString singleLineComment;
+    QString multiLineCommentStart;
+    QString multiLineCommentEnd;
+    bool isCommentAfterWhiteSpaces;
+};
+
 class TEXTEDITOR_EXPORT SyntaxHighlighter : public QObject
 {
     Q_OBJECT
@@ -110,6 +124,9 @@ public:
     void setExtraAdditionalFormats(const QTextBlock& block, const QList<QTextLayout::FormatRange> &formats);
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
     virtual void setTabSize(int tabSize);
+public:
+    SyntaxComment comment() const;
+    void setupComment(const SyntaxComment &comment);
 signals:
     void foldIndentChanged(QTextBlock block);
 public Q_SLOTS:

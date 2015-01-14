@@ -144,7 +144,6 @@ public slots:
     void setEditToolbarVisible(bool visible);
     void comment();
     void blockComment();
-    void setComment(LiteApi::Comment comment, LiteApi::Comment blockComment);
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;
@@ -203,8 +202,6 @@ public:
     QAction *m_closeEditorAct;
     QAction *m_commentAct;
     QAction *m_blockCommentAct;
-    LiteApi::Comment m_comment;
-    LiteApi::Comment m_blockComment;
 };
 
 class EditContext : public LiteApi::IEditContext

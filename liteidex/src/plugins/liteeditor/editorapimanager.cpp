@@ -24,7 +24,6 @@
 #include "editorapimanager.h"
 #include "wordapi.h"
 #include "snippetapi.h"
-#include "commentapi.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -108,20 +107,6 @@ QList<ISnippetApi *> EditorApiManager::snippetApiList() const
     return m_snippetApiList;
 }
 
-ICommentApi *EditorApiManager::findCommentApi(const QString &mimeType) const
-{
-    QString package = LiteApi::findPackageByMimeType(m_liteApp,mimeType);
-    if (package.isEmpty()) {
-        return 0;
-    }
-    foreach (ICommentApi *api, m_commentApiList) {
-        if (api->package() == package) {
-            return api;
-        }
-    }
-    return 0;
-}
-
 void EditorApiManager::load(const QString &path)
 {
     QDir dir = path;
@@ -138,13 +123,6 @@ void EditorApiManager::load(const QString &path)
                 } else if (i.fileName().endsWith(".snippet.json")) {
                     snippetFiles.append(i.filePath());
                 }
-            }
-            QFileInfo commentFile(info.filePath()+"/comment.json");
-            if (commentFile.exists()) {
-                CommentApi *api = new CommentApi(info.fileName());
-                api->setApiFile(commentFile.filePath());
-                m_commentApiList.append(api);
-                m_liteApp->appendLog("load comment api",commentFile.filePath());
             }
         }
         if (!wordFiles.isEmpty()) {

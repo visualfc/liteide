@@ -41,13 +41,11 @@ public:
     virtual void removeSnippetApi(ISnippetApi *api);
     virtual ISnippetApi *findSnippetApi(const QString &mimeType);
     virtual QList<ISnippetApi*> snippetApiList() const;
-    virtual ICommentApi *findCommentApi(const QString &mimeType) const;
 public:
     void load(const QString &path);
 protected:
     QList<IWordApi*>    m_wordApiList;
     QList<ISnippetApi*> m_snippetApiList;
-    QList<ICommentApi*> m_commentApiList;
 };
 
 #endif // EDITORAPIMANAGER_H

@@ -88,6 +88,7 @@ public:
     QVector<QTextCharFormat> formatChanges;
     QTextBlock currentBlock;
     QList<SyntaxToken> tokens;
+    SyntaxComment comment;
     bool rehighlightPending;
     bool inReformatBlocks;
 };
@@ -271,6 +272,18 @@ void SyntaxHighlighter::configureFormat(TextFormatId id, const QTextCharFormat &
 
 void SyntaxHighlighter::setTabSize(int /*tabSize*/)
 {
+}
+
+SyntaxComment SyntaxHighlighter::comment() const
+{
+    Q_D(const SyntaxHighlighter);
+    return d->comment;
+}
+
+void SyntaxHighlighter::setupComment(const SyntaxComment &comment)
+{
+    Q_D(SyntaxHighlighter);
+    d->comment = comment;
 }
 
 /*!

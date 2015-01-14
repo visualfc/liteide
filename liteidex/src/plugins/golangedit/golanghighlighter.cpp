@@ -48,6 +48,12 @@ GolangHighlighter::GolangHighlighter(QTextDocument *document) :
 {
     m_todoList = QString("TODO,BUG,FIXME,NOTE,SECBUG").split(",");
     m_gotagList = QString("+build,import").split(",");
+    TextEditor::SyntaxComment comment;
+    comment.singleLineComment = "//";
+    comment.multiLineCommentStart = "/*";
+    comment.multiLineCommentEnd = "*/";
+    comment.isCommentAfterWhiteSpaces = false;
+    setupComment(comment);
 }
 
 GolangHighlighter::~GolangHighlighter()

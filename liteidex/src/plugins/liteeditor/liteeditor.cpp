@@ -196,6 +196,7 @@ void LiteEditor::setSyntaxHighlighter(TextEditor::SyntaxHighlighter *syntax)
 {
     m_syntax = syntax;
     m_extension->addObject("TextEditor::SyntaxHighlighter",syntax);
+    m_commentAct->setVisible(m_syntax && !m_syntax->comment().isEmpty());
 }
 
 TextEditor::SyntaxHighlighter *LiteEditor::syntaxHighlighter() const
@@ -1149,42 +1150,20 @@ void LiteEditor::setEditToolbarVisible(bool visible)
 
 void LiteEditor::comment()
 {
-//    QTextCursor cursor = this->m_editorWidget->textCursor();
-//    if (this->m_editorWidget->textLexer()->isInComment(cursor)) {
-//        QTextBlock block = cursor.block();
-//        TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(block);
-
-//    }
+    if (!m_syntax) {
+        return;
+    }
+    TextEditor::SyntaxComment comment = m_syntax->comment();
     Utils::CommentDefinition cd;
-    cd.setAfterWhiteSpaces(false);
-    cd.setSingleLine(m_comment.line);
-    cd.setMultiLineStart(m_comment.start);
-    cd.setMultiLineEnd(m_comment.end);
-    if (cd.hasSingleLineStyle())
-        Utils::unCommentSelection(m_editorWidget,Utils::SingleComment,cd);
-    else
-        Utils::unCommentSelection(m_editorWidget,Utils::AutoComment,cd);
+    cd.setAfterWhiteSpaces(comment.isCommentAfterWhiteSpaces);
+    cd.setSingleLine(comment.singleLineComment);
+    cd.setMultiLineStart(comment.multiLineCommentStart);
+    cd.setMultiLineEnd(comment.multiLineCommentEnd);
+    Utils::unCommentSelection(m_editorWidget,Utils::AutoComment,cd);
 }
 
 void LiteEditor::blockComment()
 {
-    Utils::CommentDefinition cd;
-    cd.setAfterWhiteSpaces(false);
-    cd.setSingleLine(m_blockComment.line);
-    cd.setMultiLineStart(m_blockComment.start);
-    cd.setMultiLineEnd(m_blockComment.end);
-    if (cd.hasMultiLineStyle())
-        Utils::unCommentSelection(m_editorWidget,Utils::BlockComment,cd);
-    else
-        Utils::unCommentSelection(m_editorWidget,Utils::AutoComment,cd);
-}
-
-void LiteEditor::setComment(LiteApi::Comment comment, LiteApi::Comment blockComment)
-{
-    m_comment = comment;
-    m_blockComment = blockComment;
-    m_commentAct->setVisible(!m_comment.isEmpty());
-    m_blockCommentAct->setVisible(!m_blockComment.isEmpty());
 }
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
