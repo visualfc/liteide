@@ -854,14 +854,13 @@ void LiteEditor::applyOption(QString id)
 //    m_editorWidget->extraArea()->setFont(font);
 //    m_editorWidget->slotUpdateExtraAreaWidth();
     m_editorWidget->updateFont(font);
+//    QString mime = this->m_file->mimeType();
+//    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
+//    m_editorWidget->setTabSize(tabWidth);
+//    bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
+//    m_editorWidget->setTabUseSpace(useSpace);
 
-    QString mime = this->m_file->mimeType();
-    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-    m_editorWidget->setTabSize(tabWidth);
-    bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
-    m_editorWidget->setTabUseSpace(useSpace);
-
-    emit tabSettingChanged(tabWidth);
+//    emit tabSettingChanged(tabWidth);
 }
 
 void LiteEditor::updateTip(const QString &func,const QString &kind,const QString &info)
@@ -1100,6 +1099,15 @@ void LiteEditor::showLink(const LiteApi::Link &link)
 void LiteEditor::clearLink()
 {
     m_editorWidget->clearLink();
+}
+
+void LiteEditor::setTabOption(int tabSize, bool tabToSpace)
+{
+    m_editorWidget->setTabSize(tabSize);
+    m_editorWidget->setTabUseSpace(tabToSpace);
+    if (m_syntax) {
+        m_syntax->setTabSize(tabSize);
+    }
 }
 
 void LiteEditor::selectNextParam()

@@ -153,6 +153,7 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
         if (h) {
             editor->setSyntaxHighlighter(h);
             editor->setTextLexer(new KateTextLexer(editor));
+            editor->setTabOption(4,true);
             connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
             connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
             connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));

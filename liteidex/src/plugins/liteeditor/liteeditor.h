@@ -116,6 +116,7 @@ public:
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
     virtual void showLink(const LiteApi::Link &link);
     virtual void clearLink();
+    virtual void setTabOption(int tabSize, bool tabToSpace);
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);

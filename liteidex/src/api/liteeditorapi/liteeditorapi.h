@@ -209,8 +209,6 @@ public:
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;
 };
 
-
-
 class ILiteEditor : public ITextEditor
 {
     Q_OBJECT
@@ -228,6 +226,7 @@ public:
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
     virtual void showLink(const Link &link) = 0;
     virtual void clearLink() = 0;
+    virtual void setTabOption(int tabSize, bool tabToSpace) = 0;
 signals:
     void updateLink(const QTextCursor &cursor);
 };
