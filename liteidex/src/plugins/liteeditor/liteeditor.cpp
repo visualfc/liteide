@@ -804,6 +804,7 @@ void LiteEditor::applyOption(QString id)
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     bool wheelZooming = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
+    bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
@@ -825,6 +826,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setRightLineWidth(rightLineWidth);
     m_editorWidget->setDefaultWordWrap(defaultWordWrap);
     m_editorWidget->setScrollWheelZooming(wheelZooming);
+    m_editorWidget->setVisualizeWhitespace(visualizeWhitespace);
 
     if (m_completer) {
         m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
@@ -1213,6 +1215,7 @@ void LiteEditor::loadColorStyleScheme()
     const ColorStyle *text = colorScheme->findStyle("Text");
     const ColorStyle *selection = colorScheme->findStyle("Selection");
     const ColorStyle *currentLine = colorScheme->findStyle("CurrentLine");
+    const ColorStyle *visualWhitespace = colorScheme->findStyle("VisualWhitespace");
     if (extra) {
         m_editorWidget->setExtraColor(extra->foregound(),extra->background());
     }
@@ -1221,6 +1224,9 @@ void LiteEditor::loadColorStyleScheme()
     }
     if (currentLine) {
         m_editorWidget->setCurrentLineColor(currentLine->background());
+    }
+    if (visualWhitespace) {
+        m_editorWidget->setVisualizeWhitespaceColor(visualWhitespace->foregound());
     }
     QPalette p = m_defEditorPalette;
     if (text) {

@@ -343,6 +343,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_navigateManager = new NavigateManager(this);
 
     m_indentLineForeground = QColor(Qt::darkCyan);
+    m_visualizeWhitespaceForeground = QColor(Qt::darkGray);
     m_extraForeground = QColor(Qt::darkCyan);
     m_extraBackground = m_extraArea->palette().color(QPalette::Background);
     m_currentLineBackground = QColor(180,200,200,128);
@@ -593,6 +594,15 @@ void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)
         m_indentLineForeground = QColor(Qt::darkCyan);
     }
     m_indentLineForeground.setAlpha(128);
+}
+
+void LiteEditorWidgetBase::setVisualizeWhitespaceColor(const QColor &foreground)
+{
+    if (foreground.isValid()) {
+        m_visualizeWhitespaceForeground = foreground;
+    } else {
+        m_visualizeWhitespaceForeground = QColor(Qt::darkGray);
+    }
 }
 
 void LiteEditorWidgetBase::setExtraColor(const QColor &foreground,const QColor &background)
@@ -1763,7 +1773,7 @@ void LiteEditorWidgetBase::handleBackspaceKey()
 {
 }
 
-bool LiteEditorWidgetBase::setVisualizeWhitespace(bool b)
+void LiteEditorWidgetBase::setVisualizeWhitespace(bool b)
 {
     m_visualizeWhitespace = b;
 }
@@ -2834,8 +2844,32 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
             painter.restore();
         }
-
-
+        if (m_visualizeWhitespace) {
+            QString text = block.text();
+            painter.save();
+            for (int i = 0; i < text.length(); i++) {
+                if (text.at(i) == '\t') {
+                     painter.setPen(QPen(m_visualizeWhitespaceForeground,1));
+                     QTextLine line = layout->lineForTextPosition(i);
+                     QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                     qreal left = line.cursorToX(i)+offset.x()+2;
+                     qreal right = line.cursorToX(i+1)+offset.x()-4;
+                     qreal y = lineRect.top()+line.height()/2;
+                     painter.drawLine(left,y,right,y);
+                     painter.drawLine(right-4,y-4,right,y);
+                     painter.drawLine(right-4,y+4,right,y);
+                } else if (text.at(i).isSpace()) {
+                    painter.setPen(QPen(m_visualizeWhitespaceForeground,2));
+                    QTextLine line = layout->lineForTextPosition(i);
+                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                    qreal left = line.cursorToX(i)+offset.x();
+                    qreal right = line.cursorToX(i+1)+offset.x();
+                    qreal y = lineRect.top()+line.height()/2;
+                    painter.drawPoint(left+(right-left)/2,y);
+                }
+            }
+            painter.restore();
+        }
         QTextBlock nextBlock = block.next();
         //draw wrap
         int lineCount = layout->lineCount();

@@ -56,6 +56,7 @@ public:
     void setExtraColor(const QColor &foreground,const QColor &background);
     void setCurrentLineColor(const QColor &background);
     void setIndentLineColor(const QColor &foreground);
+    void setVisualizeWhitespaceColor(const QColor &foreground);
     int extraAreaWidth();
     void extraAreaPaintEvent(QPaintEvent *e);
     void extraAreaMouseEvent(QMouseEvent *e);
@@ -217,7 +218,7 @@ public:
     bool checkIsMatchBraces(QTextCursor &cursor, const QString &textToInsert) const;
     bool autoBackspace(QTextCursor &cursor);
     void handleBackspaceKey();
-    bool setVisualizeWhitespace(bool b);
+    void setVisualizeWhitespace(bool b);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -249,6 +250,7 @@ protected:
     QColor  m_extraBackground;
     QColor  m_indentLineForeground;
     QColor  m_currentLineBackground;
+    QColor  m_visualizeWhitespaceForeground;
     QRegExp m_selectionExpression;
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
