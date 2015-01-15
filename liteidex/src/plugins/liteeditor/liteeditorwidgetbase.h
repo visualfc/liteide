@@ -217,6 +217,7 @@ public:
     bool checkIsMatchBraces(QTextCursor &cursor, const QString &textToInsert) const;
     bool autoBackspace(QTextCursor &cursor);
     void handleBackspaceKey();
+    bool setVisualizeWhitespace(bool b);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -279,6 +280,7 @@ protected:
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;
+    bool m_visualizeWhitespace;
     NavigateManager *m_navigateManager;
 };
 

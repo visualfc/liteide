@@ -368,6 +368,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
     m_mouseNavigation = false;
+    m_visualizeWhitespace = false;
     setTabSize(4);
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
@@ -1762,6 +1763,11 @@ void LiteEditorWidgetBase::handleBackspaceKey()
 {
 }
 
+bool LiteEditorWidgetBase::setVisualizeWhitespace(bool b)
+{
+    m_visualizeWhitespace = b;
+}
+
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
     if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
@@ -2653,8 +2659,11 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     QAbstractTextDocumentLayout::PaintContext context = getPaintContext();
 
-    while (block.isValid()) {
+    static bool bc = true;
+    bc = !bc;
+    context.cursorPosition == bc ? -1 : cursor.position();
 
+    while (block.isValid()) {
         QRectF r = blockBoundingRect(block).translated(offset);
         QTextLayout *layout = block.layout();
 
@@ -2811,6 +2820,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     break;
                 }
             }
+
             QTextLine line = layout->lineForTextPosition(pos);
             int kt = r.top()+1;
             int kb = r.top()+line.height()-1;
@@ -2824,6 +2834,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
             painter.restore();
         }
+
 
         QTextBlock nextBlock = block.next();
         //draw wrap

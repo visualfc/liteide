@@ -36,6 +36,7 @@
 GolangHighlighterFactory::GolangHighlighterFactory(QObject *parent) :
     LiteApi::IHighlighterFactory(parent)
 {
+
 }
 
 QStringList GolangHighlighterFactory::mimeTypes() const
