@@ -370,7 +370,6 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_mouseOnFoldedMarker = false;
     m_mouseNavigation = false;
     m_visualizeWhitespace = false;
-    setTabSize(4);
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
     m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
@@ -393,10 +392,87 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
         connect(layout,SIGNAL(updateBlock(QTextBlock)),this,SLOT(updateBlock(QTextBlock)));
         connect(layout,SIGNAL(documentSizeChanged(QSizeF)),this,SLOT(documentSizeChanged(QSizeF)));
     }
+    updateTabWidth();
 }
 
 LiteEditorWidgetBase::~LiteEditorWidgetBase()
 {
+}
+
+static void indentBlock(QTextDocument *doc,
+                                 const QTextBlock &block,
+                                 const QChar &typedChar,
+                                 const TextEditor::TabSettings &tabSettings)
+{
+    Q_UNUSED(typedChar)
+
+    // At beginning: Leave as is.
+    if (block == doc->begin())
+        return;
+
+    if (block.text().isEmpty()) {
+        return;
+    }
+
+    QString previousText;
+    QTextBlock previous = block.previous();
+    while (previous.isValid()) {
+        previousText = previous.text();
+        if (!previousText.isEmpty() && !previousText.trimmed().isEmpty()) {
+            break;
+        }
+        previous = previous.previous();
+    }
+    // Empty line indicates a start of a new paragraph. Leave as is.
+    if (previousText.isEmpty() || previousText.trimmed().isEmpty())
+        return;
+
+    int offset = 0;
+    QString text = previousText.trimmed();
+    if (text.endsWith("{") || text.endsWith("(")) {
+        offset += tabSettings.m_tabSize;
+    }
+    text = block.text().trimmed();
+    if (text.startsWith("}") || text.startsWith(")")) {
+        offset -= tabSettings.m_tabSize;
+    }
+    int i = 0;
+    while (i < previousText.size()) {
+        if (!previousText.at(i).isSpace()) {
+            tabSettings.indentLine(block, tabSettings.columnAt(previousText, i+offset));
+            break;
+        }
+        ++i;
+    }
+}
+
+static void autoIndent(QTextDocument *doc, const QTextCursor &cursor, const TextEditor::TabSettings &tabSettings)
+{
+    if (cursor.hasSelection()) {
+        QTextBlock block = doc->findBlock(cursor.selectionStart());
+        const QTextBlock end = doc->findBlock(cursor.selectionEnd()).next();
+
+        // skip empty blocks
+        while (block.isValid() && block != end) {
+//            QString bt = block.text();
+//            if (tabSettings.firstNonSpace(bt) < bt.size())
+//                break;
+            indentBlock(doc, block, QChar::Null, tabSettings);
+            block = block.next();
+        }
+//        int previousIndentation = tabSettings.indentationColumn(block.text());
+//        indentBlock(doc, block, QChar::Null, tabSettings);
+//        int currentIndentation = tabSettings.indentationColumn(block.text());
+//        int delta = currentIndentation - previousIndentation;
+
+//        block = block.next();
+//        while (block.isValid() && block != end) {
+//            tabSettings.reindentLine(block, delta);
+//            block = block.next();
+//        }
+    } else {
+        indentBlock(doc, cursor.block(), QChar::Null, tabSettings);
+    }
 }
 
 void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
@@ -416,6 +492,10 @@ void LiteEditorWidgetBase::setTabSize(int n)
 {
     m_nTabSize = n;
     updateTabWidth();
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)document()->documentLayout();
+    if (layout) {
+        layout->m_tabSettings.m_tabSize = m_nTabSize;
+    }
 }
 
 int LiteEditorWidgetBase::tabSize() const
@@ -431,6 +511,10 @@ void LiteEditorWidgetBase::updateTabWidth()
 void LiteEditorWidgetBase::setTabUseSpace(bool b)
 {
     m_bTabUseSpace = b;
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)document()->documentLayout();
+    if (layout) {
+        layout->m_tabSettings.m_autoSpacesForTabs = m_bTabUseSpace;
+    }
 }
 
 void LiteEditorWidgetBase::initLoadDocument()
@@ -603,6 +687,7 @@ void LiteEditorWidgetBase::setVisualizeWhitespaceColor(const QColor &foreground)
     } else {
         m_visualizeWhitespaceForeground = QColor(Qt::darkGray);
     }
+    m_visualizeWhitespaceForeground.setAlpha(200);
 }
 
 void LiteEditorWidgetBase::setExtraColor(const QColor &foreground,const QColor &background)
@@ -1776,6 +1861,15 @@ void LiteEditorWidgetBase::handleBackspaceKey()
 void LiteEditorWidgetBase::setVisualizeWhitespace(bool b)
 {
     m_visualizeWhitespace = b;
+}
+
+void LiteEditorWidgetBase::autoIndent()
+{
+    QTextCursor cursor = textCursor();
+    cursor.beginEditBlock();
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)this->document()->documentLayout();
+    ::autoIndent(this->document(),cursor,layout->m_tabSettings);
+    cursor.endEditBlock();
 }
 
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)

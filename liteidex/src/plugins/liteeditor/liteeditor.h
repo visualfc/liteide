@@ -117,6 +117,7 @@ public:
     virtual void showLink(const LiteApi::Link &link);
     virtual void clearLink();
     virtual void setTabOption(int tabSize, bool tabToSpace);
+    virtual void setEnableAutoIndentAction(bool b);
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
@@ -145,6 +146,7 @@ public slots:
     void setEditToolbarVisible(bool visible);
     void comment();
     void blockComment();
+    void autoIndent();
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;
@@ -203,6 +205,7 @@ public:
     QAction *m_closeEditorAct;
     QAction *m_commentAct;
     QAction *m_blockCommentAct;
+    QAction *m_autoIndentAct;
 };
 
 class EditContext : public LiteApi::IEditContext

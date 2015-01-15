@@ -132,6 +132,7 @@ public slots:
     void moveCursorVisible(bool ensureVisible);
     void toggleBlockVisible(const QTextBlock &block);
     void foldIndentChanged(QTextBlock block);
+    void autoIndent();
 public:
     void setAutoIndent(bool b){
         m_autoIndent = b;
@@ -165,9 +166,6 @@ public:
     void setMarksVisible(bool b) {
         m_marksVisible = b;
         slotUpdateExtraAreaWidth();
-    }
-    bool autoIndent() const {
-        return m_autoIndent;
     }
     bool lineNumberVisible() const {
         return m_lineNumbersVisible;

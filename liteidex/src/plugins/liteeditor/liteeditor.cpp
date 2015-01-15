@@ -346,6 +346,9 @@ void LiteEditor::createActions()
     m_blockCommentAct = new QAction(tr("Toggle Block Commnet"),this);
     actionContext->regAction(m_blockCommentAct,"BlockComment","Ctrl+Shift+/");
 
+    m_autoIndentAct = new QAction(tr("Auto-indent Selection"),this);
+    actionContext->regAction(m_autoIndentAct,"AutoIndent","Ctrl+I");
+
     m_commentAct->setVisible(false);
     m_blockCommentAct->setVisible(false);
 
@@ -390,6 +393,7 @@ void LiteEditor::createActions()
     connect(m_wordWrapAct,SIGNAL(triggered(bool)),m_editorWidget,SLOT(setWordWrapOverride(bool)));
     connect(m_commentAct,SIGNAL(triggered()),this,SLOT(comment()));
     connect(m_blockCommentAct,SIGNAL(triggered()),this,SLOT(blockComment()));
+    connect(m_autoIndentAct,SIGNAL(triggered()),this,SLOT(autoIndent()));
 
 #ifdef Q_OS_WIN
     QClipboard *clipboard = QApplication::clipboard();
@@ -526,6 +530,7 @@ void LiteEditor::createMenu()
     m_editMenu->addSeparator();
     m_editMenu->addAction(m_commentAct);
     m_editMenu->addAction(m_blockCommentAct);
+    m_editMenu->addAction(m_autoIndentAct);
 
     //context menu
     m_contextMenu->addAction(m_cutAct);
@@ -546,6 +551,7 @@ void LiteEditor::createMenu()
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_commentAct);
     m_contextMenu->addAction(m_blockCommentAct);
+    m_contextMenu->addAction(m_autoIndentAct);
 }
 
 #ifdef LITEEDITOR_FIND
@@ -1112,6 +1118,11 @@ void LiteEditor::setTabOption(int tabSize, bool tabToSpace)
     }
 }
 
+void LiteEditor::setEnableAutoIndentAction(bool b)
+{
+    m_autoIndentAct->setVisible(b);
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();
@@ -1174,6 +1185,11 @@ void LiteEditor::comment()
 
 void LiteEditor::blockComment()
 {
+}
+
+void LiteEditor::autoIndent()
+{
+    m_editorWidget->autoIndent();
 }
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :

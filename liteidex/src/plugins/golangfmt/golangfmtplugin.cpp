@@ -24,6 +24,7 @@
 #include "golangfmtplugin.h"
 #include "golangfmt.h"
 #include "golangfmtoptionfactory.h"
+#include "liteeditorapi/liteeditorapi.h"
 #include "fileutil/fileutil.h"
 
 #include <QMenu>
@@ -102,6 +103,10 @@ void GolangFmtPlugin::appLoaded()
             menu->addSeparator();
             menu->addAction(m_goplayAct);            
         }
+        LiteApi::ILiteEditor *ed = LiteApi::getLiteEditor(m_playEditor);
+        if (ed) {
+            ed->setEnableAutoIndentAction(false);
+        }
     }
 }
 
@@ -124,6 +129,10 @@ void GolangFmtPlugin::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_gofmtAct);
         menu->addAction(m_goimportsAct);
+    }
+    LiteApi::ILiteEditor *ed = LiteApi::getLiteEditor(editor);
+    if (ed) {
+        ed->setEnableAutoIndentAction(false);
     }
 }
 
