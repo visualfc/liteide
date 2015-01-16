@@ -1,0 +1,12 @@
+#ifndef RUSTEDIT_GLOBAL_H
+#define RUSTEDIT_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(RUSTEDIT_LIBRARY)
+#  define RUSTEDITSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define RUSTEDITSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // RUSTEDIT_GLOBAL_H

@@ -24,3 +24,4 @@ SUBDIRS = \
     markdown \
     jsonedit \
     webkithtmlwidget \
+    rustedit

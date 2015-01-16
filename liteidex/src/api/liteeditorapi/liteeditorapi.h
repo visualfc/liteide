@@ -110,6 +110,8 @@ public:
     virtual QString completionPrefix() const = 0;
     virtual void setCompletionContext(CompletionContext ctx) = 0;
     virtual CompletionContext completionContext() const = 0;
+    virtual void setSeparator(const QString &sep) = 0;
+    virtual QString separator() const = 0;
     virtual void showPopup() = 0;
     virtual void hidePopup() = 0;
     virtual QAbstractItemView *popup() const = 0;

@@ -45,7 +45,7 @@ LiteWordCompleter::LiteWordCompleter(QObject *parent) :
     LiteCompleter(parent),
     m_icon(QIcon("icon:liteeditor/images/findword.png"))
 {
-    m_completer->setSeparator(".");
+
 }
 
 QString LiteWordCompleter::textUnderCursor(QTextCursor tc) const
@@ -74,7 +74,7 @@ void LiteWordCompleter::completionPrefixChanged(QString prefix,bool force)
         return;
     }
     if (!m_bSearchSeparator) {
-        if (prefix.indexOf(".") >= 0) {
+        if (prefix.indexOf(this->separator()) >= 0) {
             return;
         }
     }

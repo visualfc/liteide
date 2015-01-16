@@ -296,7 +296,7 @@ private:
 CodeCompleterProxyModel::CodeCompleterProxyModel(QObject *parent)
     : QAbstractListModel(parent),m_model(0)
 {
-    m_seperator = ".";
+    m_seperator = "::";
 }
 
 CodeCompleterProxyModel::~CodeCompleterProxyModel()
@@ -509,7 +509,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
     }
     QModelIndex parentIndex;
     QString prefix;
-    if (!splitFilter(filter,parentIndex,prefix,".")) {
+    if (!splitFilter(filter,parentIndex,prefix,m_seperator)) {
         return 0;
     }
     if (prefix.isEmpty()) {

@@ -205,7 +205,7 @@ void LiteCompleter::showPopup()
     m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
     QTextCursor cursor = m_editor->textCursor();
     int offset = m_completer->completionPrefix().length();
-    int pos = m_completer->completionPrefix().indexOf(".");
+    int pos = m_completer->completionPrefix().indexOf(m_completer->separator());
     if (pos != -1) {
         offset -= pos+1;
     }
@@ -252,6 +252,16 @@ void LiteCompleter::setCompletionContext(LiteApi::CompletionContext ctx)
 LiteApi::CompletionContext LiteCompleter::completionContext() const
 {
     return m_completer->completionContext();
+}
+
+void LiteCompleter::setSeparator(const QString &sep)
+{
+    m_completer->setSeparator(sep);
+}
+
+QString LiteCompleter::separator() const
+{
+    return m_completer->separator();
 }
 
 QAbstractItemView *LiteCompleter::popup() const
@@ -447,7 +457,7 @@ void LiteCompleter::insertCompletion(QModelIndex index)
     if (m_completer->completionContext() == LiteApi::CompleterCodeContext) {
         int pos = prefix.lastIndexOf(m_completer->separator());
         if (pos != -1) {
-            length = prefix.length()-pos-1;
+            length = prefix.length()-pos-m_completer->separator().length();
         }
     }
     QString extra = text;

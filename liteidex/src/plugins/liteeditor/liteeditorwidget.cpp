@@ -123,7 +123,7 @@ QString LiteEditorWidget::textUnderCursor(QTextCursor tc) const
         return QString();
     }
     //int index = text.lastIndexOf(QRegExp("\\b[a-zA-Z_][a-zA-Z0-9_\.]+"));
-    static QRegExp reg("[a-zA-Z_\\.]+[a-zA-Z0-9_\\.]*$");
+    static QRegExp reg("[a-zA-Z_\\.]+[a-zA-Z0-9_\\.\\:]*$");
     int index = reg.indexIn(text);
     if (index < 0) {
         return QString();
@@ -239,8 +239,8 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    //static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
-    static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
+    //static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
+    static QString eow("~!@#$%^&*()+{}|\"<>?,/;'[]\\-="); // end of word
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor(textCursor());
     if (completionPrefix.startsWith(".")) {
