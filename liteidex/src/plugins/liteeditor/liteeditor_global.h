@@ -51,6 +51,7 @@
 #define EDITOR_AUTOBRACE6 "editor/autobraces6"
 #define EDITOR_COMPLETER_CASESENSITIVE "editor/completercasesensitive"
 #define EDITOR_LINENUMBERVISIBLE "editor/linenumbervisible"
+#define EDITOR_VISUALIZEWHITESPACE "editor/visualizeWhitespace"
 #define EDITOR_PREFIXLENGTH "editor/prefixlength"
 #define EDITOR_CLEANWHITESPACEONSAVE "editor/cleanwhitespaceonsave"
 #define EDITOR_RIGHTLINEVISIBLE "editor/rightlinevisible"

@@ -43,6 +43,12 @@ QT_END_NAMESPACE
 
 namespace Utils {
 
+enum CommentFlag {
+    AutoComment = 0,
+    SingleComment,
+    BlockComment,
+};
+
 class QTCREATOR_UTILS_EXPORT CommentDefinition
 {
 public:
@@ -73,6 +79,7 @@ private:
 
 QTCREATOR_UTILS_EXPORT
 void unCommentSelection(QPlainTextEdit *edit,
+                        CommentFlag flag,
                         const CommentDefinition &definiton = CommentDefinition());
 
 } // namespace Utils

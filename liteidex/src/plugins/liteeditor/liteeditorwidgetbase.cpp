@@ -343,6 +343,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_navigateManager = new NavigateManager(this);
 
     m_indentLineForeground = QColor(Qt::darkCyan);
+    m_visualizeWhitespaceForeground = QColor(Qt::darkGray);
     m_extraForeground = QColor(Qt::darkCyan);
     m_extraBackground = m_extraArea->palette().color(QPalette::Background);
     m_currentLineBackground = QColor(180,200,200,128);
@@ -368,7 +369,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
     m_mouseNavigation = false;
-    setTabSize(4);
+    m_visualizeWhitespace = false;
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
     m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
@@ -391,10 +392,87 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
         connect(layout,SIGNAL(updateBlock(QTextBlock)),this,SLOT(updateBlock(QTextBlock)));
         connect(layout,SIGNAL(documentSizeChanged(QSizeF)),this,SLOT(documentSizeChanged(QSizeF)));
     }
+    updateTabWidth();
 }
 
 LiteEditorWidgetBase::~LiteEditorWidgetBase()
 {
+}
+
+static void indentBlock(QTextDocument *doc,
+                                 const QTextBlock &block,
+                                 const QChar &typedChar,
+                                 const TextEditor::TabSettings &tabSettings)
+{
+    Q_UNUSED(typedChar)
+
+    // At beginning: Leave as is.
+    if (block == doc->begin())
+        return;
+
+    if (block.text().isEmpty()) {
+        return;
+    }
+
+    QString previousText;
+    QTextBlock previous = block.previous();
+    while (previous.isValid()) {
+        previousText = previous.text();
+        if (!previousText.isEmpty() && !previousText.trimmed().isEmpty()) {
+            break;
+        }
+        previous = previous.previous();
+    }
+    // Empty line indicates a start of a new paragraph. Leave as is.
+    if (previousText.isEmpty() || previousText.trimmed().isEmpty())
+        return;
+
+    int offset = 0;
+    QString text = previousText.trimmed();
+    if (text.endsWith("{") || text.endsWith("(")) {
+        offset += tabSettings.m_tabSize;
+    }
+    text = block.text().trimmed();
+    if (text.startsWith("}") || text.startsWith(")")) {
+        offset -= tabSettings.m_tabSize;
+    }
+    int i = 0;
+    while (i < previousText.size()) {
+        if (!previousText.at(i).isSpace()) {
+            tabSettings.indentLine(block, tabSettings.columnAt(previousText, i+offset));
+            break;
+        }
+        ++i;
+    }
+}
+
+static void autoIndent(QTextDocument *doc, const QTextCursor &cursor, const TextEditor::TabSettings &tabSettings)
+{
+    if (cursor.hasSelection()) {
+        QTextBlock block = doc->findBlock(cursor.selectionStart());
+        const QTextBlock end = doc->findBlock(cursor.selectionEnd()).next();
+
+        // skip empty blocks
+        while (block.isValid() && block != end) {
+//            QString bt = block.text();
+//            if (tabSettings.firstNonSpace(bt) < bt.size())
+//                break;
+            indentBlock(doc, block, QChar::Null, tabSettings);
+            block = block.next();
+        }
+//        int previousIndentation = tabSettings.indentationColumn(block.text());
+//        indentBlock(doc, block, QChar::Null, tabSettings);
+//        int currentIndentation = tabSettings.indentationColumn(block.text());
+//        int delta = currentIndentation - previousIndentation;
+
+//        block = block.next();
+//        while (block.isValid() && block != end) {
+//            tabSettings.reindentLine(block, delta);
+//            block = block.next();
+//        }
+    } else {
+        indentBlock(doc, cursor.block(), QChar::Null, tabSettings);
+    }
 }
 
 void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
@@ -414,6 +492,10 @@ void LiteEditorWidgetBase::setTabSize(int n)
 {
     m_nTabSize = n;
     updateTabWidth();
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)document()->documentLayout();
+    if (layout) {
+        layout->m_tabSettings.m_tabSize = m_nTabSize;
+    }
 }
 
 int LiteEditorWidgetBase::tabSize() const
@@ -429,6 +511,10 @@ void LiteEditorWidgetBase::updateTabWidth()
 void LiteEditorWidgetBase::setTabUseSpace(bool b)
 {
     m_bTabUseSpace = b;
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)document()->documentLayout();
+    if (layout) {
+        layout->m_tabSettings.m_autoSpacesForTabs = m_bTabUseSpace;
+    }
 }
 
 void LiteEditorWidgetBase::initLoadDocument()
@@ -592,6 +678,16 @@ void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)
         m_indentLineForeground = QColor(Qt::darkCyan);
     }
     m_indentLineForeground.setAlpha(128);
+}
+
+void LiteEditorWidgetBase::setVisualizeWhitespaceColor(const QColor &foreground)
+{
+    if (foreground.isValid()) {
+        m_visualizeWhitespaceForeground = foreground;
+    } else {
+        m_visualizeWhitespaceForeground = QColor(Qt::darkGray);
+    }
+    m_visualizeWhitespaceForeground.setAlpha(200);
 }
 
 void LiteEditorWidgetBase::setExtraColor(const QColor &foreground,const QColor &background)
@@ -1762,6 +1858,20 @@ void LiteEditorWidgetBase::handleBackspaceKey()
 {
 }
 
+void LiteEditorWidgetBase::setVisualizeWhitespace(bool b)
+{
+    m_visualizeWhitespace = b;
+}
+
+void LiteEditorWidgetBase::autoIndent()
+{
+    QTextCursor cursor = textCursor();
+    cursor.beginEditBlock();
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)this->document()->documentLayout();
+    ::autoIndent(this->document(),cursor,layout->m_tabSettings);
+    cursor.endEditBlock();
+}
+
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
     if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
@@ -2653,8 +2763,11 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     QAbstractTextDocumentLayout::PaintContext context = getPaintContext();
 
-    while (block.isValid()) {
+    static bool bc = true;
+    bc = !bc;
+    context.cursorPosition == bc ? -1 : cursor.position();
 
+    while (block.isValid()) {
         QRectF r = blockBoundingRect(block).translated(offset);
         QTextLayout *layout = block.layout();
 
@@ -2811,6 +2924,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     break;
                 }
             }
+
             QTextLine line = layout->lineForTextPosition(pos);
             int kt = r.top()+1;
             int kb = r.top()+line.height()-1;
@@ -2824,7 +2938,32 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
             painter.restore();
         }
-
+        if (m_visualizeWhitespace) {
+            QString text = block.text();
+            painter.save();
+            for (int i = 0; i < text.length(); i++) {
+                if (text.at(i) == '\t') {
+                     painter.setPen(QPen(m_visualizeWhitespaceForeground,1));
+                     QTextLine line = layout->lineForTextPosition(i);
+                     QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                     qreal left = line.cursorToX(i)+offset.x()+2;
+                     qreal right = line.cursorToX(i+1)+offset.x()-4;
+                     qreal y = lineRect.top()+line.height()/2;
+                     painter.drawLine(left,y,right,y);
+                     painter.drawLine(right-4,y-4,right,y);
+                     painter.drawLine(right-4,y+4,right,y);
+                } else if (text.at(i).isSpace()) {
+                    painter.setPen(QPen(m_visualizeWhitespaceForeground,2));
+                    QTextLine line = layout->lineForTextPosition(i);
+                    QRectF lineRect = line.naturalTextRect().translated(offset.x(), r.top());
+                    qreal left = line.cursorToX(i)+offset.x();
+                    qreal right = line.cursorToX(i+1)+offset.x();
+                    qreal y = lineRect.top()+line.height()/2;
+                    painter.drawPoint(left+(right-left)/2,y);
+                }
+            }
+            painter.restore();
+        }
         QTextBlock nextBlock = block.next();
         //draw wrap
         int lineCount = layout->lineCount();

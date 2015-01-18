@@ -29,6 +29,7 @@
 #include "liteeditormark.h"
 #include "liteeditor_global.h"
 #include "katehighlighterfactory.h"
+#include "katetextlexer.h"
 #include <QDir>
 #include <QFileInfo>
 #include "mimetype/mimetype.h"
@@ -100,7 +101,7 @@ void LiteEditorFileFactory::colorStyleChanged()
     if (!editor) {
         return;
     }
-    TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
+    TextEditor::SyntaxHighlighter *h = editor->syntaxHighlighter();
     if (h) {
         m_highlighterManager->setColorStyle(h,m_liteApp->editorManager()->colorStyleScheme());
     }
@@ -112,7 +113,7 @@ void LiteEditorFileFactory::tabSettingChanged(int tabSize)
     if (!editor) {
         return;
     }
-    TextEditor::SyntaxHighlighter *h = static_cast<TextEditor::SyntaxHighlighter*>(editor->extension()->findObject("TextEditor::SyntaxHighlighter"));
+    TextEditor::SyntaxHighlighter *h = editor->syntaxHighlighter();
     if (h) {
         m_highlighterManager->setTabSize(h,tabSize);
     }
@@ -150,7 +151,9 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
     if (factory) {
         TextEditor::SyntaxHighlighter *h = factory->create(doc,mimeType);
         if (h) {
-            editor->extension()->addObject("TextEditor::SyntaxHighlighter",h);
+            editor->setSyntaxHighlighter(h);
+            editor->setTextLexer(new KateTextLexer(editor));
+            editor->setTabOption(4,true);
             connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
             connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
             connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
@@ -176,11 +179,12 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
             wordCompleter->appendItems(wordApi->expList(),"","",exp,false);
             wordCompleter->model()->sort(0);
         }
-        LiteApi::ISnippetApi *snippetApi = m_wordApiManager->findSnippetApi(mimeType);
-        if (snippetApi && snippetApi->loadApi()) {
-            foreach (LiteApi::Snippet *snippet, snippetApi->snippetList()) {
-                wordCompleter->appendSnippetItem(snippet->Name,snippet->Info,snippet->Text);
-            }
+
+    }
+    LiteApi::ISnippetApi *snippetApi = m_wordApiManager->findSnippetApi(mimeType);
+    if (snippetApi && snippetApi->loadApi()) {
+        foreach (LiteApi::Snippet *snippet, snippetApi->snippetList()) {
+            wordCompleter->appendSnippetItem(snippet->Name,snippet->Info,snippet->Text);
         }
     }
     editor->applyOption(OPTION_LITEEDITOR);

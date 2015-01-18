@@ -136,6 +136,6 @@ void EditorApiManager::load(const QString &path)
             api->setApiFiles(snippetFiles);
             this->addSnippetApi(api);
             m_liteApp->appendLog("load snippet api",snippetFiles.join(","));
-        }
+        }        
     }
 }

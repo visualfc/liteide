@@ -69,7 +69,6 @@ public:
     //void setTabSettings(const TabSettings &ts);
     virtual void setTabSize(int tabSize);
     void setDefaultContext(const QSharedPointer<Context> &defaultContext);
-
 protected:
     virtual void highlightBlock(const QString &text);
 

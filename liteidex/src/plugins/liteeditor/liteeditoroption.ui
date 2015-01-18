@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>479</width>
-    <height>286</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -373,6 +373,20 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
+           <widget class="QCheckBox" name="codeFoldVisibleCheckBox">
+            <property name="text">
+             <string>Display code fold</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="visualizeWhitespaceCheckBox">
+            <property name="text">
+             <string>Display VisualizeWhitespace</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="eofVisibleCheckBox">
             <property name="text">
              <string>Display EOF</string>
@@ -390,13 +404,6 @@
            <widget class="QCheckBox" name="lineNumberVisibleCheckBox">
             <property name="text">
              <string>Display line numbers</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="codeFoldVisibleCheckBox">
-            <property name="text">
-             <string>Display code fold</string>
             </property>
            </widget>
           </item>

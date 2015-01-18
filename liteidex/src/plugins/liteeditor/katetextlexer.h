@@ -18,33 +18,29 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golanghighlighterfactory.cpp
+// Module: katetextlexer.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "golanghighlighterfactory.h"
-#include "golanghighlighter.h"
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#ifndef KATETEXTLEXER_H
+#define KATETEXTLEXER_H
 
-GolangHighlighterFactory::GolangHighlighterFactory(QObject *parent) :
-    LiteApi::IHighlighterFactory(parent)
+#include "liteeditorapi/liteeditorapi.h"
+
+class KateTextLexer : public LiteApi::ITextLexer
 {
+public:
+    KateTextLexer(QObject *parent);
+    virtual bool isLangSupport() const;
+    virtual bool isInComment(const QTextCursor &cursor) const;
+    virtual bool isInString(const QTextCursor &cursor) const;
+    virtual bool isInEmptyString(const QTextCursor &cursor) const;
+    virtual bool isEndOfString(const QTextCursor &cursor) const;
+    virtual bool isInStringOrComment(const QTextCursor &cursor) const;
+    virtual bool isCanAutoCompleter(const QTextCursor &cursor) const;
+    virtual bool isInImport(const QTextCursor &cursor) const;
+    virtual int startOfFunctionCall(const QTextCursor &cursor) const;
+    virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info);
+    virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount);
+};
 
-}
-
-QStringList GolangHighlighterFactory::mimeTypes() const
-{
-    return QStringList() << "text/x-gosrc";
-}
-
-TextEditor::SyntaxHighlighter *GolangHighlighterFactory::create(QTextDocument *doc, const QString &/*mimeType*/)
-{
-    return new GolangHighlighter(doc);
-}
+#endif // KATETEXTLEXER_H

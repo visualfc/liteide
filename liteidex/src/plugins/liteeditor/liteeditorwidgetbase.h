@@ -56,6 +56,7 @@ public:
     void setExtraColor(const QColor &foreground,const QColor &background);
     void setCurrentLineColor(const QColor &background);
     void setIndentLineColor(const QColor &foreground);
+    void setVisualizeWhitespaceColor(const QColor &foreground);
     int extraAreaWidth();
     void extraAreaPaintEvent(QPaintEvent *e);
     void extraAreaMouseEvent(QMouseEvent *e);
@@ -131,6 +132,7 @@ public slots:
     void moveCursorVisible(bool ensureVisible);
     void toggleBlockVisible(const QTextBlock &block);
     void foldIndentChanged(QTextBlock block);
+    void autoIndent();
 public:
     void setAutoIndent(bool b){
         m_autoIndent = b;
@@ -164,9 +166,6 @@ public:
     void setMarksVisible(bool b) {
         m_marksVisible = b;
         slotUpdateExtraAreaWidth();
-    }
-    bool autoIndent() const {
-        return m_autoIndent;
     }
     bool lineNumberVisible() const {
         return m_lineNumbersVisible;
@@ -217,6 +216,7 @@ public:
     bool checkIsMatchBraces(QTextCursor &cursor, const QString &textToInsert) const;
     bool autoBackspace(QTextCursor &cursor);
     void handleBackspaceKey();
+    void setVisualizeWhitespace(bool b);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -248,6 +248,7 @@ protected:
     QColor  m_extraBackground;
     QColor  m_indentLineForeground;
     QColor  m_currentLineBackground;
+    QColor  m_visualizeWhitespaceForeground;
     QRegExp m_selectionExpression;
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
@@ -279,6 +280,7 @@ protected:
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;
+    bool m_visualizeWhitespace;
     NavigateManager *m_navigateManager;
 };
 

@@ -123,7 +123,7 @@ QString LiteEditorWidget::textUnderCursor(QTextCursor tc) const
         return QString();
     }
     //int index = text.lastIndexOf(QRegExp("\\b[a-zA-Z_][a-zA-Z0-9_\.]+"));
-    static QRegExp reg("[a-zA-Z_\\.]+[a-zA-Z0-9_\\.]*$");
+    static QRegExp reg("[a-zA-Z_\\.]+[a-zA-Z0-9_\\.\\:]*$");
     int index = reg.indexIn(text);
     if (index < 0) {
         return QString();
@@ -195,16 +195,17 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    LiteEditorWidgetBase::keyPressEvent(e);
-
     bool isInImport = false;
     if (m_textLexer->isInStringOrComment(this->textCursor())) {
         isInImport = m_textLexer->isInImport(this->textCursor());
         if (!isInImport) {
+            LiteEditorWidgetBase::keyPressEvent(e);
             m_completer->hidePopup();
             return;
         }
     }
+
+    LiteEditorWidgetBase::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
 
@@ -238,8 +239,8 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    //static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
-    static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
+    //static QString eow("~!@#$%^&*()+{}|:\"<>?,/;'[]\\-="); // end of word
+    static QString eow("~!@#$%^&*()+{}|\"<>?,/;'[]\\-="); // end of word
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor(textCursor());
     if (completionPrefix.startsWith(".")) {

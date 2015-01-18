@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-rust" id="rust-cargo" work="$(EDITOR_DIR)" ver="1">
+		<config id="Rustc" name="RUSTC" value="rustc"/>
+		<config id="Cargo" name="CARGO" value="cargo"/>
+		<config id="LiteIDEStub" name="LITEIDESTUB" value="$(LITEAPPDIR)/liteide_stub"/>
+		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
+		<custom id="TargetArgs" name="TARGETARGS" value=""/>
+		<custom id="BuildArgs" name="BUILDARGS" value=""/>
+		<custom id="CleanArgs" name="CLEANARGS" value=""/>
+		<custom id="TestArgs" name="TESTARGS" value=""/>
+		<custom id="UpdateArgs" name="UPDATEARGS" value=""/>
+		<custom id="BenchmarkArgs" name="BENCHMARKARGS" value=""/>
+		<custom id="DocArgs" name="DOCARGS" value=""/>
+		<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" cmd="$(CARGO)" args="run $(BUILDARGS) $(TARGETARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(CARGO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Clean" img="blue/clean.png" key="" cmd="$(CARGO)" args="clean $(CLEANARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Test" img="blue/test.png" key="" cmd="$(CARGO)" args="test $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Bench" img="blue/testbench.png" key="" cmd="$(CARGO)" args="bench $(BENCHMARKARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Update" img="blue/update.png" key="" cmd="$(CARGO)" args="update $(UPDATEARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Doc" img="blue/doc.png" key="" cmd="$(CARGO)" args="doc $(DOCARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+	</mime-type>
+</mime-info>

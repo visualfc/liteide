@@ -110,6 +110,8 @@ public:
     virtual QString completionPrefix() const = 0;
     virtual void setCompletionContext(CompletionContext ctx) = 0;
     virtual CompletionContext completionContext() const = 0;
+    virtual void setSeparator(const QString &sep) = 0;
+    virtual QString separator() const = 0;
     virtual void showPopup() = 0;
     virtual void hidePopup() = 0;
     virtual QAbstractItemView *popup() const = 0;
@@ -209,8 +211,6 @@ public:
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;
 };
 
-
-
 class ILiteEditor : public ITextEditor
 {
     Q_OBJECT
@@ -228,6 +228,8 @@ public:
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
     virtual void showLink(const Link &link) = 0;
     virtual void clearLink() = 0;
+    virtual void setTabOption(int tabSize, bool tabToSpace) = 0;
+    virtual void setEnableAutoIndentAction(bool b) = 0;
 signals:
     void updateLink(const QTextCursor &cursor);
 };

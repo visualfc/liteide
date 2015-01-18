@@ -65,9 +65,6 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     m_fileSearch = new GolangFileSearch(app,this);
 
-    m_commentAct = new QAction(tr("Comment/Uncomment Selection"),this);
-    actionContext->regAction(m_commentAct,"Comment","CTRL+/");
-
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
     if (manager) {
         manager->addFileSearch(m_fileSearch);
@@ -85,7 +82,6 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
     connect(m_renameSymbolAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbol()));
-    connect(m_commentAct,SIGNAL(triggered()),this,SLOT(editorComment()));
     connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
     connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
     connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
@@ -152,8 +148,6 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findUseAct);
         menu->addSeparator();
         menu->addAction(m_renameSymbolAct);
-        menu->addSeparator();
-        menu->addAction(m_commentAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -166,13 +160,12 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         QMenu *sub = menu->addMenu(tr("Refactor"));
         sub->addAction(m_renameSymbolAct);
-        menu->addSeparator();
-        menu->addAction(m_commentAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
         m_editor->setTextLexer(new GolangTextLexer());
+        m_editor->setTabOption(4,false);
         connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
     }
 }
@@ -318,8 +311,8 @@ void GolangEdit::editorComment()
         return;
     }
     Utils::CommentDefinition cd;
-    cd.setAfterWhiteSpaces(true);
-    Utils::unCommentSelection(textEdit,cd);
+    cd.setAfterWhiteSpaces(false);
+    Utils::unCommentSelection(textEdit,Utils::AutoComment,cd);
 }
 
 void GolangEdit::editorFindInfo()

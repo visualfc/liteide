@@ -109,7 +109,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     bool wheelZoom = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
     bool offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
-
+    bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
@@ -123,6 +123,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->autoBraces4CheckBox->setChecked(autoBraces4);
     ui->autoBraces5CheckBox->setChecked(autoBraces5);
     ui->lineNumberVisibleCheckBox->setChecked(lineNumberVisible);
+    ui->visualizeWhitespaceCheckBox->setChecked(visualizeWhitespace);
     ui->codeFoldVisibleCheckBox->setChecked(codeFoldVisible);
     ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
     ui->preMinLineEdit->setText(QString("%1").arg(min));
@@ -242,6 +243,7 @@ void LiteEditorOption::apply()
     bool defaultWordWrap = ui->defaultWordWrapCheckBox->isChecked();
     bool indentLineVisible = ui->indentLineCheckBox->isChecked();
     bool wheelZoom = ui->wheelZoomingCheckBox->isChecked();
+    bool visualizeWhitespace = ui->visualizeWhitespaceCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
@@ -271,6 +273,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);
     m_liteApp->settings()->setValue(EDITOR_WHEEL_SCROLL,wheelZoom);
     m_liteApp->settings()->setValue(EDITOR_OFFSETVISIBLE,offsetVisible);
+    m_liteApp->settings()->setValue(EDITOR_VISUALIZEWHITESPACE,visualizeWhitespace);
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }

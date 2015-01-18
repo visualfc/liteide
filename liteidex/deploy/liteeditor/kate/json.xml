@@ -82,15 +82,15 @@
     <itemDatas>
       <itemData name="Style_Normal"             defStyleNum="dsNormal" />
 
-      <itemData name="Style_Seperator_Pair"     defStyleNum="dsNormal" bold="1" color="#EF0000" />
-      <itemData name="Style_Seperator_Array"    defStyleNum="dsNormal" bold="1" color="#0000AF" />
+      <itemData name="Style_Seperator_Pair"     defStyleNum="dsNormal" bold="1" />
+      <itemData name="Style_Seperator_Array"    defStyleNum="dsNormal" bold="1" />
 
       <itemData name="Style_Decimal"            defStyleNum="dsDecVal" />
       <itemData name="Style_Float"              defStyleNum="dsFloat" />
       <itemData name="Style_String_Key"         defStyleNum="dsDataType" />
-      <itemData name="Style_String_Value"       defStyleNum="dsString" color="#FF00FF" />
+      <itemData name="Style_String_Value"       defStyleNum="dsString" />
       <itemData name="Style_String_Key_Char"    defStyleNum="dsDataType" underline="1" />
-      <itemData name="Style_String_Value_Char"  defStyleNum="dsString" color="#FF00FF" underline="1" />
+      <itemData name="Style_String_Value_Char"  defStyleNum="dsString" underline="1" />
 
       <itemData name="Style_Keyword"            defStyleNum="dsDecVal" bold="1" />
 

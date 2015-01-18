@@ -62,6 +62,8 @@ public:
     virtual QString completionPrefix() const;
     virtual void setCompletionContext(LiteApi::CompletionContext ctx);
     virtual LiteApi::CompletionContext completionContext() const;
+    virtual void setSeparator(const QString &sep);
+    virtual QString separator() const;
     virtual QAbstractItemView *popup() const;
     virtual QModelIndex currentIndex() const;
     virtual QString currentCompletion() const;
