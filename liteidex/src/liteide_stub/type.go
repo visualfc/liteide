@@ -653,16 +653,17 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 	if kind == ObjMethod && cursorSelection != nil && cursorSelection.Recv() != nil {
 		sig := cursorObj.(*types.Func).Type().Underlying().(*types.Signature)
 		if _, ok := sig.Recv().Type().Underlying().(*types.Interface); ok {
-			named := cursorSelection.Recv().(*types.Named)
-			obj, typ := w.lookupNamedMethod(named, cursorObj.Name())
-			if obj != nil {
-				cursorObj = obj
+			if named, ok := cursorSelection.Recv().(*types.Named); ok {
+				obj, typ := w.lookupNamedMethod(named, cursorObj.Name())
+				if obj != nil {
+					cursorObj = obj
+				}
+				if typ != nil {
+					cursorPkg = typ.Obj().Pkg()
+					cursorInterfaceTypeName = typ.Obj().Name()
+				}
+				cursorIsInterfaceMethod = true
 			}
-			if typ != nil {
-				cursorPkg = typ.Obj().Pkg()
-				cursorInterfaceTypeName = typ.Obj().Name()
-			}
-			cursorIsInterfaceMethod = true
 		}
 	}
 
