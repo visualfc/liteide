@@ -45,8 +45,13 @@ void RustEdit::currentEditorChanged(LiteApi::IEditor *editor)
     m_editor = LiteApi::getLiteEditor(editor);
 }
 
-void RustEdit::prefixChanged(const QTextCursor &cur, const QString &pre, bool force)
+void RustEdit::prefixChanged(const QTextCursor &/*cur*/, const QString &pre, bool force)
 {
+    if (pre.endsWith("::")) {
+        m_completer->setSeparator("::");
+    } else if (pre.endsWith(".")) {
+        m_completer->setSeparator(".");
+    }
     if (m_completer->completionContext() != LiteApi::CompleterCodeContext) {
         return;
     }
@@ -75,9 +80,10 @@ void RustEdit::prefixChanged(const QTextCursor &cur, const QString &pre, bool fo
             m_preWord = pre.left(index);
         }
     }*/
-    if (!pre.endsWith("::")) {
+    if (!(pre.endsWith("::") || pre.endsWith("."))) {
         return;
     }
+
     m_prefix = pre;
     m_lastPrefix = m_prefix;
 
@@ -97,13 +103,34 @@ void RustEdit::prefixChanged(const QTextCursor &cur, const QString &pre, bool fo
 }
 
 void RustEdit::wordCompleted(QString, QString, QString)
-{
-    //m_completer->clearTemp();
-}
+{   
 
+}
+//            PREFIX 21,21,
+//            MATCH Arc,115,11,C:\Rust\rust-nightly\src\liballoc\arc.rs,Struct,pub struct Arc<T> {
+//            MATCH Weak,131,11,C:\Rust\rust-nightly\src\liballoc\arc.rs,Struct,pub struct Weak<T> {
+//            MATCH weak_count,205,7,C:\Rust\rust-nightly\src\liballoc\arc.rs,Function,pub fn weak_count<T>(this: &Arc<T>) -> uint { this.inner().weak.load(SeqCst) - 1 }
+//            MATCH strong_count,210,7,C:\Rust\rust-nightly\src\liballoc\arc.rs,Function,pub fn strong_count<T>(this: &Arc<T>) -> uint { this.inner().strong.load(SeqCst) }
+//            PREFIX 16,16,
+//            MATCH core,1,0,C:\Rust\rust-nightly\src\libcore\lib.rs,Module,C:\Rust\rust-nightly\src\libcore\lib.rs
+//            MATCH libc,1,0,C:\Rust\rust-nightly\src\liblibc\lib.rs,Module,C:\Rust\rust-nightly\src\liblibc\lib.rs
+//            MATCH std,1,0,C:\Rust\rust-nightly\src\libstd\lib.rs,Module,C:\Rust\rust-nightly\src\libstd\lib.rs
+//            MATCH log,1,0,C:\Rust\rust-nightly\src\liblog\lib.rs,Module,C:\Rust\rust-nightly\src\liblog\lib.rs
+//            MATCH boxed,1,0,C:\Rust\rust-nightly\src\liballoc\boxed.rs,Module,C:\Rust\rust-nightly\src\liballoc\boxed.rs
+//            MATCH heap,1,0,C:\Rust\rust-nightly\src\liballoc\heap.rs,Module,C:\Rust\rust-nightly\src\liballoc\heap.rs
+//            MATCH boxed,1,0,C:\Rust\rust-nightly\src\liballoc\boxed.rs,Module,C:\Rust\rust-nightly\src\liballoc\boxed.rs
+//            MATCH arc,1,0,C:\Rust\rust-nightly\src\liballoc\arc.rs,Module,C:\Rust\rust-nightly\src\liballoc\arc.rs
+//            MATCH rc,1,0,C:\Rust\rust-nightly\src\liballoc\rc.rs,Module,C:\Rust\rust-nightly\src\liballoc\rc.rs
+//            MATCH oom,100,7,C:\Rust\rust-nightly\src\liballoc\lib.rs,Function,pub fn oom() -> ! {
+//            MATCH fixme_14344_be_sure_to_link_to_collections,120,7,C:\Rust\rust-nightly\src\liballoc\lib.rs,Function,pub fn fixme_14344_be_sure_to_link_to_collections() {}
+//            PREFIX 6,6,
+//            MATCH value,10,4,main.rs,StructField,value
+//            PREFIX 26,29,new
+//            MATCH new,161,11,C:\Rust\rust-nightly\src\liballoc\arc.rs,Function,pub fn new(data: T) -> Arc<T> {
 void RustEdit::finished(int code, QProcess::ExitStatus)
 {
     if (code != 0) {
+        m_liteApp->appendLog("racer",QString::fromUtf8(m_process->readAll()),false);
         return;
     }
     QByteArray data = m_process->readAllStandardOutput();
@@ -133,7 +160,7 @@ void RustEdit::setCompleter(LiteApi::ICompleter *completer)
         if (!m_racerCmd.isEmpty()) {
             m_completer->setSearchSeparator(false);
             m_completer->setExternalMode(false);
-            m_completer->setSeparator("::");
+            m_completer->setSeparator(".");
             connect(m_completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(prefixChanged(QTextCursor,QString,bool)));
             connect(m_completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(wordCompleted(QString,QString,QString)));
         } else {
