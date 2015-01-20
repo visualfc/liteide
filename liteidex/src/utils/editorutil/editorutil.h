@@ -36,6 +36,7 @@ public:
     static void SwitchHead(QPlainTextEdit *ed, const QString &tagAdd, const QStringList &tagRemove, bool blockStart = true);
     static void MarkSelection(QPlainTextEdit *ed, const QString &mark1, const QString &mark2);
     static void MarkSelection(QPlainTextEdit *ed, const QString &mark);
+    static void loadDiff(QTextCursor &cursor, const QString &diff);
 };
 
 #endif // EDITORUTIL_H

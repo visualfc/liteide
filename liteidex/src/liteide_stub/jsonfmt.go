@@ -28,7 +28,8 @@ var (
 	jsonFmtCompact bool
 	jsonFmtWrite   bool
 	jsonFmtDiff    bool
-	jsonFmtIdent   string
+	jsonTabWidth   int
+	jsonTabIndent  bool
 )
 
 func init() {
@@ -36,19 +37,21 @@ func init() {
 	cmdJsonFmt.Flag.BoolVar(&jsonFmtCompact, "c", false, "compact json")
 	cmdJsonFmt.Flag.BoolVar(&jsonFmtWrite, "w", false, "write result to (source) file instead of stdout")
 	cmdJsonFmt.Flag.BoolVar(&jsonFmtDiff, "d", false, "display diffs instead of rewriting files")
-	cmdJsonFmt.Flag.StringVar(&jsonFmtIdent, "ident", "\t", "format indent string")
+	cmdJsonFmt.Flag.IntVar(&jsonTabWidth, "tabwidth", 4, "tab width")
+	cmdJsonFmt.Flag.BoolVar(&jsonTabIndent, "tabs", false, "indent with tabs")
 }
 
 func runJsonFmt(cmd *Command, args []string) {
 	opt := &JsonFmtOption{}
 	opt.List = jsonFmtList
 	opt.Compact = jsonFmtCompact
-	opt.Ident = jsonFmtIdent
+	opt.IndentTab = jsonTabIndent
+	opt.TabWidth = jsonTabWidth
 	opt.Write = jsonFmtWrite
 	opt.Diff = jsonFmtDiff
 
 	if len(args) == 0 {
-		if err := processFile("<standard input>", os.Stdin, os.Stdout, true); err != nil {
+		if err := processJsonFile("<standard input>", os.Stdin, os.Stdout, true, opt); err != nil {
 			reportJsonError(err)
 		}
 	} else {
@@ -76,12 +79,13 @@ func runJsonFmt(cmd *Command, args []string) {
 }
 
 type JsonFmtOption struct {
-	List    bool
-	Compact bool
-	Format  bool
-	Write   bool
-	Diff    bool
-	Ident   string
+	List      bool
+	Compact   bool
+	Format    bool
+	Write     bool
+	Diff      bool
+	IndentTab bool
+	TabWidth  int
 }
 
 func isJsonFile(f os.FileInfo) bool {
@@ -105,7 +109,16 @@ func processJson(filename string, src []byte, opt *JsonFmtOption) ([]byte, error
 		return out.Bytes(), nil
 	} else {
 		var out bytes.Buffer
-		err := json.Indent(&out, src, "", opt.Ident)
+		var err error
+		if opt.IndentTab {
+			err = json.Indent(&out, src, "", "\t")
+		} else {
+			var indent string
+			for i := 0; i < opt.TabWidth; i++ {
+				indent += " "
+			}
+			err = json.Indent(&out, src, "", indent)
+		}
 		if err != nil {
 			return nil, err
 		}

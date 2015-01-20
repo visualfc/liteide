@@ -33,8 +33,6 @@ class JsonEditPlugin : public LiteApi::IPlugin
 public:
     JsonEditPlugin();
     virtual bool load(LiteApi::IApplication *app);
-public slots:
-    void editorCreated(LiteApi::IEditor*);
 protected:
     LiteApi::IApplication *m_liteApp;
 };

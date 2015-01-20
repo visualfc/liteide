@@ -2,7 +2,8 @@ TARGET = jsonedit
 TEMPLATE = lib
 
 include(../../liteideplugin.pri)
-include (../../3rdparty/qjson/qjson.pri)
+include(../../3rdparty/qjson/qjson.pri)
+include(../../utils/editorutil/editorutil.pri)
 
 
 DEFINES += JSONEDIT_LIBRARY

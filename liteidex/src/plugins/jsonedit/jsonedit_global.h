@@ -32,4 +32,6 @@
 #  define JSONEDITSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define JSONFMT_TAG "jsonfmt/navtag"
+
 #endif // JSONEDIT_GLOBAL_H

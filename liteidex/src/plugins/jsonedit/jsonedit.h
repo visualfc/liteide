@@ -33,22 +33,23 @@ class JsonEdit : public QObject
 {
     Q_OBJECT
 public:
-    explicit JsonEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor, QObject *parent = 0);
+    explicit JsonEdit(LiteApi::IApplication *app, QObject *parent = 0);
 
+    void fmtEditor(LiteApi::IEditor *editor, bool compact, bool tabs, bool diff, int timeout);
 signals:
 
 public slots:
+    void editorCreated(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor*);
     void verify();
-    void indentNone();
-    void indentCompact();
-    void indentMinimum();
-    void indentMedium();
-    void indentFull();
+    void format();
+    void compact();
 protected:
-    void format(QJson::IndentMode mode);
+    bool verifyJson(LiteApi::IEditor *editor);
     LiteApi::IApplication *m_liteApp;
-    LiteApi::ILiteEditor  *m_editor;
+    QAction *m_verifyAct;
+    QAction *m_formatAct;
+    QAction *m_compactAct;
 };
 
 #endif // JSONEDIT_H

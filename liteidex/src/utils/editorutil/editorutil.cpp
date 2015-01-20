@@ -226,3 +226,54 @@ void EditorUtil::MarkSelection(QPlainTextEdit *ed, const QString &mark)
     EditorUtil::MarkSelection(ed,mark,mark);
 }
 
+void EditorUtil::loadDiff(QTextCursor &cursor, const QString &diff)
+{
+    QRegExp reg("@@\\s+\\-(\\d+),?(\\d*)\\s+\\+(\\d+),?(\\d*)\\s+@@");
+    //@@ -1,11 +1,9 @@
+    //@@ -1,9 +1 @@
+    //@@ -1 +1,9 @@
+    QTextBlock block;
+    int line = -1;
+    int line_add = 0;
+    foreach(QString s, diff.split('\n')) {
+        if (s.length() == 0) {
+            continue;
+        }
+        QChar ch = s.at(0);
+        if (ch == '@') {
+            if (reg.indexIn(s) == 0) {
+                int s1 = reg.cap(1).toInt();
+                int s2 = reg.cap(2).toInt();
+                //int n1 = reg.cap(3).toInt();
+                int n2 = reg.cap(4).toInt();
+                line = line_add+s1;
+                block = cursor.document()->findBlockByNumber(line-1);
+                line_add += n2-s2;//n2+n1-(s2+s1);
+                continue;
+            }
+        }
+        if (line == -1) {
+            continue;
+        }
+        if (ch == '+') {
+            cursor.setPosition(block.position());
+            cursor.insertText(s.right(s.length()-1)+"\n");
+            block = cursor.block();
+            //break;
+        } else if (ch == '-') {
+            cursor.setPosition(block.position());
+            if (block.next().isValid()) {
+                cursor.setPosition(block.next().position(), QTextCursor::KeepAnchor);
+            } else {
+                cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+            }
+            cursor.removeSelectedText();
+            block = cursor.block();
+        } else if (ch == ' ') {
+            block = block.next();
+        } else if (ch == '\\') {
+        }
+    }
+}
+
+
