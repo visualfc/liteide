@@ -101,6 +101,7 @@ var commands = []*Command{
 	cmdType,
 	cmdGoimports,
 	cmdPkgs,
+	cmdJsonFmt,
 }
 
 var exitStatus = 0
