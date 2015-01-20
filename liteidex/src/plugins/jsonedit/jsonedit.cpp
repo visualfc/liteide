@@ -124,7 +124,7 @@ void JsonEdit::format()
     if (!verifyJson(editor)) {
         return;
     }
-    fmtEditor(editor,false,false,true,200);
+    fmtEditor(editor,false,false,true,1000);
 }
 
 void JsonEdit::compact()
@@ -136,7 +136,7 @@ void JsonEdit::compact()
     if (!verifyJson(editor)) {
         return;
     }
-    fmtEditor(editor,true,false,true,200);
+    fmtEditor(editor,true,false,true,1000);
 }
 
 void JsonEdit::fmtEditor(LiteApi::IEditor *editor, bool compact, bool tabs, bool diff,int timeout)
