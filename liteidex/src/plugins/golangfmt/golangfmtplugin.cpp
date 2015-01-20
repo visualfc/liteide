@@ -55,8 +55,8 @@ bool GolangFmtPlugin::load(LiteApi::IApplication *app)
     app->optionManager()->addFactory(new GolangFmtOptionFactory(app,this));
 
     m_fmt = new GolangFmt(app,this);
-    m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code (gofmt)"),this);
-    m_goimportsAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code (goimports)"),this);
+    m_gofmtAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code"),this);
+    m_goimportsAct = new QAction(QIcon("icon:golangfmt/images/gofmt.png"),tr("Format Code (Adjusts Imports)"),this);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoFmt");
 
