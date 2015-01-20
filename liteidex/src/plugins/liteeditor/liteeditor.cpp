@@ -349,8 +349,12 @@ void LiteEditor::createActions()
     m_autoIndentAct = new QAction(tr("Auto-indent Selection"),this);
     actionContext->regAction(m_autoIndentAct,"AutoIndent","Ctrl+I");
 
+    m_tabToSpacesAct = new QAction(tr("Tab To Spaces"),this);
+    actionContext->regAction(m_tabToSpacesAct,"TabToSpaces","");
+    m_tabToSpacesAct->setCheckable(true);
+
     m_commentAct->setVisible(false);
-    m_blockCommentAct->setVisible(false);
+    m_blockCommentAct->setVisible(false);        
 
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
@@ -394,6 +398,7 @@ void LiteEditor::createActions()
     connect(m_commentAct,SIGNAL(triggered()),this,SLOT(comment()));
     connect(m_blockCommentAct,SIGNAL(triggered()),this,SLOT(blockComment()));
     connect(m_autoIndentAct,SIGNAL(triggered()),this,SLOT(autoIndent()));
+    connect(m_tabToSpacesAct,SIGNAL(toggled(bool)),this,SLOT(tabToSpacesToggled(bool)));
 
 #ifdef Q_OS_WIN
     QClipboard *clipboard = QApplication::clipboard();
@@ -516,7 +521,9 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_resetFontSizeAct);
     subMenu->addSeparator();
     subMenu->addAction(m_cleanWhitespaceAct);
+    subMenu->addSeparator();
     subMenu->addAction(m_wordWrapAct);
+    subMenu->addAction(m_tabToSpacesAct);
 #ifndef QT_NO_PRINTER
     subMenu->addSeparator();
     subMenu->addAction(m_exportPdfAct);
@@ -862,13 +869,10 @@ void LiteEditor::applyOption(QString id)
 //    m_editorWidget->extraArea()->setFont(font);
 //    m_editorWidget->slotUpdateExtraAreaWidth();
     m_editorWidget->updateFont(font);
-//    QString mime = this->m_file->mimeType();
-//    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-//    m_editorWidget->setTabSize(tabWidth);
-//    bool useSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
-//    m_editorWidget->setTabUseSpace(useSpace);
-
-//    emit tabSettingChanged(tabWidth);
+    QString mime = this->m_file->mimeType();
+    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
+    bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
+    this->setTabOption(tabWidth,useSpace);
 }
 
 void LiteEditor::updateTip(const QString &func,const QString &kind,const QString &info)
@@ -1112,10 +1116,11 @@ void LiteEditor::clearLink()
 void LiteEditor::setTabOption(int tabSize, bool tabToSpace)
 {
     m_editorWidget->setTabSize(tabSize);
-    m_editorWidget->setTabUseSpace(tabToSpace);
+    m_editorWidget->setTabToSpaces(tabToSpace);
     if (m_syntax) {
         m_syntax->setTabSize(tabSize);
     }
+    m_tabToSpacesAct->setChecked(tabToSpace);
 }
 
 void LiteEditor::setEnableAutoIndentAction(bool b)
@@ -1190,6 +1195,12 @@ void LiteEditor::blockComment()
 void LiteEditor::autoIndent()
 {
     m_editorWidget->autoIndent();
+}
+
+void LiteEditor::tabToSpacesToggled(bool b)
+{
+    m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+this->mimeType(),b);
+    m_editorWidget->setTabToSpaces(b);
 }
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :

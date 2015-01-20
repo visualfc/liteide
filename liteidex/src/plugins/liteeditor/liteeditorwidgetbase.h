@@ -47,7 +47,7 @@ public:
     void setTabSize(int n);
     int tabSize() const;
     void updateTabWidth();
-    void setTabUseSpace(bool b);
+    void setTabToSpaces(bool b);
     void setEditorMark(LiteApi::IEditorMark *mark);
     void setTextLexer(LiteApi::ITextLexer *lexer);
 public:

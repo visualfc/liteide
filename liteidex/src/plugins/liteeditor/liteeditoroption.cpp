@@ -143,7 +143,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     m_mimeModel = new QStandardItemModel(0,4,this);
     m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
     m_mimeModel->setHeaderData(1,Qt::Horizontal,tr("Tab Width"));
-    m_mimeModel->setHeaderData(2,Qt::Horizontal,tr("Spaces as Tabs"));
+    m_mimeModel->setHeaderData(2,Qt::Horizontal,tr("Tab To Spaces"));
     m_mimeModel->setHeaderData(3,Qt::Horizontal,tr("File Extensions"));
     connect(m_mimeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(mimeItemChanged(QStandardItem*)));
 
@@ -160,7 +160,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
             QStandardItem *item = new QStandardItem(mime);
             item->setEditable(false);
             QString tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,"4").toString();
-            bool tabUseSpace = m_liteApp->settings()->value(EDITOR_TABUSESPACE+mime,false).toBool();
+            bool tabUseSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
             QStandardItem *tab = new QStandardItem(tabWidth);
             QStandardItem *useSpace = new QStandardItem();
             useSpace->setCheckable(true);
@@ -285,8 +285,8 @@ void LiteEditorOption::apply()
         if (ok && n > 0 && n < 20) {
             m_liteApp->settings()->setValue(EDITOR_TABWIDTH+mime,n);
         }
-        bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;
-        m_liteApp->settings()->setValue(EDITOR_TABUSESPACE+mime,b);
+        bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;        
+        m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+mime,b);
     }
 }
 

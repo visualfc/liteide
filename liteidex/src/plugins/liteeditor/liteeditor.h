@@ -147,6 +147,7 @@ public slots:
     void comment();
     void blockComment();
     void autoIndent();
+    void tabToSpacesToggled(bool b);
 public:
     void findCodecs();
     QList<QTextCodec *> m_codecs;
@@ -206,6 +207,7 @@ public:
     QAction *m_commentAct;
     QAction *m_blockCommentAct;
     QAction *m_autoIndentAct;
+    QAction *m_tabToSpacesAct;
 };
 
 class EditContext : public LiteApi::IEditContext

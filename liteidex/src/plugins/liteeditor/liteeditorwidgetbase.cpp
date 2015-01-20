@@ -508,7 +508,7 @@ void LiteEditorWidgetBase::updateTabWidth()
     setTabStopWidth(QFontMetrics(font()).averageCharWidth() * m_nTabSize);
 }
 
-void LiteEditorWidgetBase::setTabUseSpace(bool b)
+void LiteEditorWidgetBase::setTabToSpaces(bool b)
 {
     m_bTabUseSpace = b;
     TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)document()->documentLayout();

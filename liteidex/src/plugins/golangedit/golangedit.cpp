@@ -165,7 +165,6 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
         m_editor->setTextLexer(new GolangTextLexer());
-        m_editor->setTabOption(4,false);
         connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
     }
 }

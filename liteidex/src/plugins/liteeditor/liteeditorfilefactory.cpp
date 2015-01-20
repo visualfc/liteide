@@ -30,6 +30,7 @@
 #include "liteeditor_global.h"
 #include "katehighlighterfactory.h"
 #include "katetextlexer.h"
+#include "liteeditorapi/liteeditorapi.h"
 #include <QDir>
 #include <QFileInfo>
 #include "mimetype/mimetype.h"
@@ -153,9 +154,8 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
         if (h) {
             editor->setSyntaxHighlighter(h);
             editor->setTextLexer(new KateTextLexer(editor));
-            editor->setTabOption(4,true);
             connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
-            connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
+            //connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
             connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
         }
     }

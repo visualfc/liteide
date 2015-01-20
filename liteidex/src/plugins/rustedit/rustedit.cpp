@@ -28,6 +28,10 @@ void RustEdit::editorCreated(LiteApi::IEditor *editor)
     if (editor->mimeType() != "text/x-rust") {
         return;
     }
+    LiteApi::ILiteEditor *ed = LiteApi::getLiteEditor(editor);
+    if (ed) {
+        ed->setTabOption(4,true);
+    }
 }
 
 void RustEdit::currentEditorChanged(LiteApi::IEditor *editor)

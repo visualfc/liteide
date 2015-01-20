@@ -24,6 +24,7 @@
 #include "golangeditplugin.h"
 #include "golangedit.h"
 #include "golanghighlighterfactory.h"
+#include "liteeditorapi/liteeditorapi.h"
 #include <QtPlugin>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
