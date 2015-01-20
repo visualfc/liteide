@@ -180,6 +180,9 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
 #else
                 emit enterText(cur.selectedText()+"\n");
 #endif
+                QTextCursor cur = this->textCursor();
+                cur.movePosition(QTextCursor::End);
+                m_endPostion = cur.position();
                 return;
             }
         }
