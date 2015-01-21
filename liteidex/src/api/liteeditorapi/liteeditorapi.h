@@ -230,6 +230,8 @@ public:
     virtual void clearLink() = 0;
     virtual void setTabOption(int tabSize, bool tabToSpace) = 0;
     virtual void setEnableAutoIndentAction(bool b) = 0;
+    virtual bool isLineEndUnix() const = 0;
+    virtual void setLineEndUnix(bool b) = 0;
 signals:
     void updateLink(const QTextCursor &cursor);
 };

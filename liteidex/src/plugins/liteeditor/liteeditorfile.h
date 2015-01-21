@@ -46,7 +46,10 @@ public:
     QString textCodec() const;
     bool reloadByCodec(const QString &codecName);
     bool open(const QString &filePath, const QString &mimeType, bool bCheckCodec);
-public:
+    bool isLineEndUnix() const;
+    bool isLineEndWindow() const;
+    bool setLineEndUnix(bool b);
+protected:
     enum LineTerminatorMode {
         LFLineTerminator = 0,
         CRLFLineTerminator,

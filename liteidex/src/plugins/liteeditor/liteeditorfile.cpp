@@ -217,6 +217,33 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
     return true;
 }
 
+bool LiteEditorFile::setLineEndUnix(bool b)
+{
+    if (this->isLineEndUnix() == b) {
+        return false;
+    }
+    QString text = m_document->toPlainText();
+    if (b) {
+        m_lineTerminatorMode = LFLineTerminator;
+        text.replace("\r\n","\n");
+    } else {
+        m_lineTerminatorMode = CRLFLineTerminator;
+        text.replace("\n","\r\n");
+    }
+    m_document->setPlainText(text);
+    return true;
+}
+
+bool LiteEditorFile::isLineEndUnix() const
+{
+    return m_lineTerminatorMode == LFLineTerminator;
+}
+
+bool LiteEditorFile::isLineEndWindow() const
+{
+    return m_lineTerminatorMode == CRLFLineTerminator;
+}
+
 bool LiteEditorFile::create(const QString &contents, const QString &mimeType)
 {
     m_mimeType = mimeType;

@@ -118,6 +118,8 @@ public:
     virtual void clearLink();
     virtual void setTabOption(int tabSize, bool tabToSpace);
     virtual void setEnableAutoIndentAction(bool b);
+    virtual bool isLineEndUnix() const;
+    virtual void setLineEndUnix(bool b);
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
@@ -148,7 +150,9 @@ public slots:
     void blockComment();
     void autoIndent();
     void tabToSpacesToggled(bool b);
+    void triggeredLineEnding(QAction *action);
 public:
+    void initLoad();
     void findCodecs();
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;
@@ -208,6 +212,8 @@ public:
     QAction *m_blockCommentAct;
     QAction *m_autoIndentAct;
     QAction *m_tabToSpacesAct;
+    QAction *m_lineEndingWindowAct;
+    QAction *m_lineEndingUnixAct;
 };
 
 class EditContext : public LiteApi::IEditContext

@@ -353,6 +353,14 @@ void LiteEditor::createActions()
     actionContext->regAction(m_tabToSpacesAct,"TabToSpaces","");
     m_tabToSpacesAct->setCheckable(true);
 
+    m_lineEndingWindowAct = new QAction(tr("Line End Windows (\\r\\n)"),this);
+    actionContext->regAction(m_lineEndingWindowAct,"LineEndingWindow","");
+    m_lineEndingWindowAct->setCheckable(true);
+
+    m_lineEndingUnixAct = new QAction(tr("Line End Unix (\\n)"),this);
+    actionContext->regAction(m_lineEndingUnixAct,"LineEndingUnix","");
+    m_lineEndingUnixAct->setCheckable(true);
+
     m_commentAct->setVisible(false);
     m_blockCommentAct->setVisible(false);        
 
@@ -399,6 +407,12 @@ void LiteEditor::createActions()
     connect(m_blockCommentAct,SIGNAL(triggered()),this,SLOT(blockComment()));
     connect(m_autoIndentAct,SIGNAL(triggered()),this,SLOT(autoIndent()));
     connect(m_tabToSpacesAct,SIGNAL(toggled(bool)),this,SLOT(tabToSpacesToggled(bool)));
+    //connect(m_lineEndingWindowAct,SIGNAL(triggered()),this,SLOT(lineEndingWindow()));
+    //connect(m_lineEndingUnixAct,SIGNAL(triggered()),this,SLOT(lineEndingUnixAct()));
+    QActionGroup *group = new QActionGroup(this);
+    group->addAction(m_lineEndingWindowAct);
+    group->addAction(m_lineEndingUnixAct);
+    connect(group,SIGNAL(triggered(QAction*)),this,SLOT(triggeredLineEnding(QAction*)));
 
 #ifdef Q_OS_WIN
     QClipboard *clipboard = QApplication::clipboard();
@@ -537,6 +551,9 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_increaseFontSizeAct);
     subMenu->addAction(m_decreaseFontSizeAct);
     subMenu->addAction(m_resetFontSizeAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_lineEndingWindowAct);
+    subMenu->addAction(m_lineEndingUnixAct);
 
     m_editMenu->addSeparator();
     m_editMenu->addAction(m_codeCompleteAct);
@@ -610,12 +627,19 @@ QIcon LiteEditor::icon() const
     return QIcon();
 }
 
+void LiteEditor::initLoad()
+{
+    m_editorWidget->initLoadDocument();
+    setReadOnly(m_file->isReadOnly());
+    m_lineEndingUnixAct->setChecked(m_file->isLineEndUnix());
+    m_lineEndingWindowAct->setChecked(!m_file->isLineEndUnix());
+}
+
 bool LiteEditor::createNew(const QString &contents, const QString &mimeType)
 {
     bool success = m_file->create(contents,mimeType);
     if (success) {
-        m_editorWidget->initLoadDocument();
-        setReadOnly(m_file->isReadOnly());
+        initLoad();
     }
     return success;
 }
@@ -623,9 +647,8 @@ bool LiteEditor::createNew(const QString &contents, const QString &mimeType)
 bool LiteEditor::open(const QString &fileName,const QString &mimeType)
 {
     bool success = m_file->open(fileName,mimeType);
-    if (success) {        
-        m_editorWidget->initLoadDocument();
-        setReadOnly(m_file->isReadOnly());
+    if (success) {
+        initLoad();;
     }
     return success;
 }
@@ -715,7 +738,7 @@ int LiteEditor::utf8Position(bool realFile) const
     QTextCursor cur = m_editorWidget->textCursor();
     QString src = cur.document()->toPlainText().left(cur.position());
     int offset = 0;
-    if (realFile && (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator)) {
+    if (realFile && m_file->isLineEndWindow()) {
        offset = cur.blockNumber();
     }
     return src.toUtf8().length()+offset+1;
@@ -1146,6 +1169,18 @@ void LiteEditor::setEnableAutoIndentAction(bool b)
     m_autoIndentAct->setVisible(b);
 }
 
+bool LiteEditor::isLineEndUnix() const
+{
+    return m_file->isLineEndUnix();
+}
+
+void LiteEditor::setLineEndUnix(bool b)
+{
+    if (m_file->setLineEndUnix(b)) {
+         m_liteApp->editorManager()->saveEditor(this,false);
+    }
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();
@@ -1219,6 +1254,11 @@ void LiteEditor::tabToSpacesToggled(bool b)
 {
     m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+this->mimeType(),b);
     m_editorWidget->setTabToSpaces(b);
+}
+
+void LiteEditor::triggeredLineEnding(QAction *action)
+{
+    this->setLineEndUnix(action == m_lineEndingUnixAct);
 }
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
