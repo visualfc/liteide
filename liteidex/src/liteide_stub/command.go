@@ -102,6 +102,7 @@ var commands = []*Command{
 	cmdGoimports,
 	cmdPkgs,
 	cmdJsonFmt,
+	cmdOracle,
 }
 
 var exitStatus = 0
