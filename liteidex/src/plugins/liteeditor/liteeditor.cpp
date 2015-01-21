@@ -157,6 +157,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_editorWidget,SIGNAL(updateLink(QTextCursor)),this,SIGNAL(updateLink(QTextCursor)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
+
+    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
 }
 
 LiteEditor::~LiteEditor()
@@ -893,30 +895,8 @@ void LiteEditor::applyOption(QString id)
         m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
     }
 
-#if defined(Q_OS_WIN)
-    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
-#elif defined(Q_OS_LINUX)
-    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
-#elif defined(Q_OS_MAC)
-    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
-#else
-    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
-#endif
-    int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
-    int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();    
-    bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
-    QFont font = m_editorWidget->font();
-    font.setFamily(fontFamily);
-    font.setPointSize(fontSize*fontZoom/100.0);
-    if (antialias) {
-        font.setStyleStrategy(QFont::PreferAntialias);
-    } else {
-        font.setStyleStrategy(QFont::NoAntialias);
-    }
-//    m_editorWidget->setFont(font);
-//    m_editorWidget->extraArea()->setFont(font);
-//    m_editorWidget->slotUpdateExtraAreaWidth();
-    m_editorWidget->updateFont(font);
+    updateFont();
+
     QString mime = this->m_file->mimeType();
     int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
     bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
@@ -1228,6 +1208,7 @@ void LiteEditor::resetFontSize()
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize);
     m_editorWidget->updateFont(font);
+    this->sendUpdateFont();
 }
 
 void LiteEditor::setEditToolbarVisible(bool visible)
@@ -1277,6 +1258,43 @@ void LiteEditor::triggeredLineEnding(QAction *action)
     this->setLineEndUnix(action == m_lineEndingUnixAct);
 }
 
+void LiteEditor::broadcast(const QString &module, const QString &id, const QString &param)
+{
+    if (module == "liteeditor" && id == "font" && param != this->filePath()) {
+        this->updateFont();
+    }
+}
+
+void LiteEditor::updateFont()
+{
+#if defined(Q_OS_WIN)
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
+#elif defined(Q_OS_LINUX)
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
+#elif defined(Q_OS_MAC)
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
+#else
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
+#endif
+    int fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
+    int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();
+    bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
+    QFont font = m_editorWidget->font();
+    font.setFamily(fontFamily);
+    font.setPointSize(fontSize*fontZoom/100.0);
+    if (antialias) {
+        font.setStyleStrategy(QFont::PreferAntialias);
+    } else {
+        font.setStyleStrategy(QFont::NoAntialias);
+    }
+    m_editorWidget->updateFont(font);
+}
+
+void LiteEditor::sendUpdateFont()
+{
+    m_liteApp->sendBroadcast("liteeditor","font",this->filePath());
+}
+
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
     QLabel(text,parent)
 {
@@ -1301,11 +1319,9 @@ void LiteEditor::requestFontZoom(int zoom)
 
     QFont font = m_editorWidget->font();
     font.setPointSize(fontSize*fontZoom/100.0);
-//    m_editorWidget->setFont(font);
-//    m_editorWidget->extraArea()->setFont(font);
-//    m_editorWidget->updateTabWidth();
-//    m_editorWidget->slotUpdateExtraAreaWidth();
     m_editorWidget->updateFont(font);
+
+    this->sendUpdateFont();
 }
 
 void LiteEditor::loadColorStyleScheme()

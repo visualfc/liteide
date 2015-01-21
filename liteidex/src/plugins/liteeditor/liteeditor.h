@@ -152,7 +152,10 @@ public slots:
     void tabToSpacesToggled(bool b);
     void toggledVisualizeWhitespace(bool b);
     void triggeredLineEnding(QAction *action);
+    void broadcast(const QString &module, const QString &id, const QString &param);
 public:
+    void updateFont();
+    void sendUpdateFont();
     void initLoad();
     void findCodecs();
     QList<QTextCodec *> m_codecs;
