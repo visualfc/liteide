@@ -150,6 +150,7 @@ public slots:
     void blockComment();
     void autoIndent();
     void tabToSpacesToggled(bool b);
+    void toggledVisualizeWhitespace(bool b);
     void triggeredLineEnding(QAction *action);
 public:
     void initLoad();
@@ -214,6 +215,7 @@ public:
     QAction *m_tabToSpacesAct;
     QAction *m_lineEndingWindowAct;
     QAction *m_lineEndingUnixAct;
+    QAction *m_visualizeWhitespaceAct;
 };
 
 class EditContext : public LiteApi::IEditContext
