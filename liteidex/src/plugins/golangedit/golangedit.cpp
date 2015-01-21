@@ -158,8 +158,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_jumpDeclAct);
         menu->addAction(m_findUseAct);
         menu->addSeparator();
-        QMenu *sub = menu->addMenu(tr("Refactor"));
-        sub->addAction(m_renameSymbolAct);
+        menu->addAction(m_renameSymbolAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
     }
     m_editor = LiteApi::getLiteEditor(editor);
