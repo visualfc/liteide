@@ -1177,7 +1177,9 @@ bool LiteEditor::isLineEndUnix() const
 void LiteEditor::setLineEndUnix(bool b)
 {
     if (m_file->setLineEndUnix(b)) {
-         m_liteApp->editorManager()->saveEditor(this,false);
+        m_lineEndingUnixAct->setChecked(b);
+        m_lineEndingWindowAct->setChecked(!b);
+        m_liteApp->editorManager()->saveEditor(this,false);
     }
 }
 

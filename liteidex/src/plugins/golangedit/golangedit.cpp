@@ -166,6 +166,10 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         m_editor->setTextLexer(new GolangTextLexer());
         connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
     }
+    //new go src for unix line end
+    if (m_editor->document()->isEmpty()) {
+        m_editor->setLineEndUnix(true);
+    }
 }
 
 void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
