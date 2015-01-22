@@ -77,14 +77,14 @@ SymbolTreeView::SymbolTreeView(QWidget *parent)
    // setFrameStyle(QFrame::NoFrame);
     setIndentation(indentation() * 9/10);
     {
-        QHeaderView *treeHeader = header();
-        treeHeader->setVisible(false);
-#if QT_VERSION >= 0x050000
-        treeHeader->setSectionResizeMode(QHeaderView::Stretch);
-#else
-        treeHeader->setResizeMode(QHeaderView::Stretch);
-#endif
-        treeHeader->setStretchLastSection(true);
+        this->setHeaderHidden(true);
+    #if QT_VERSION >= 0x050000
+        this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    #else
+        this->header()->setResizeMode(QHeaderView::ResizeToContents);
+    #endif
+        this->header()->setStretchLastSection(false);
+        this->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
     setContextMenuPolicy(Qt::CustomContextMenu);
     setUniformRowHeights(true);

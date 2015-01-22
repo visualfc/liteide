@@ -65,15 +65,6 @@ FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *ap
     m_bHideRoot(false)
 {
     m_tree = new SymbolTreeView;
-    m_tree->setHeaderHidden(true);
-
-#if QT_VERSION >= 0x050000
-    m_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-    m_tree->header()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
-    m_tree->header()->setStretchLastSection(false);
-
     m_model = new FileSystemModel(this);
 
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives

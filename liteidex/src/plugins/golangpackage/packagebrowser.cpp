@@ -31,6 +31,7 @@
 #include <QTreeView>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QHeaderView>
 #include <QDir>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -64,9 +65,10 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
-    m_treeView = new SymbolTreeView;
+
     m_model = new QStandardItemModel(this);
-    m_treeView->setHeaderHidden(true);
+
+    m_treeView = new SymbolTreeView;    
     m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_treeView->setModel(m_model);
     m_treeView->setEditTriggers(QTreeView::NoEditTriggers);

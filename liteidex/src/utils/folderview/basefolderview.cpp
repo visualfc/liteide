@@ -61,6 +61,15 @@
 BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     QTreeView(parent), m_liteApp(app)
 {
+    this->setHeaderHidden(true);
+#if QT_VERSION >= 0x050000
+    this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
+    this->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
+    this->header()->setStretchLastSection(false);
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
     m_openEditorAct = new QAction(tr("Open File"),this);
     m_newFileAct = new QAction(tr("New File..."),this);
     m_newFileWizardAct = new QAction(tr("New File Wizard..."),this);

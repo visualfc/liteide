@@ -57,8 +57,8 @@ protected:
     LiteApi::IApplication   *m_liteApp;
     QWidget                 *m_widget;
     FolderView        *m_folderView;
-    //QComboBox   *m_filterCombo;
     QComboBox   *m_rootCombo;
+    //QComboBox   *m_filterCombo;
     //QToolBar    *m_filterToolBar;
     QToolBar    *m_rootToolBar;
     QAction *m_syncAct;
