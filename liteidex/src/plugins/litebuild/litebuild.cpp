@@ -133,10 +133,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
         m_liteApp->extension()->addObject("LiteApi.IBuildManager",m_buildManager);
     }    
     m_bProjectBuild = false;
-    m_buildToolBar = m_liteApp->actionManager()->loadToolBar("toolbar/build");
-    if (!m_buildToolBar) {
-        m_buildToolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Build ToolBar"));
-    }
+
+    m_buildToolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Build Toolbar"),"toolbar/build");
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_buildToolBar->toggleViewAction());
 
     m_buildMenu = m_liteApp->actionManager()->loadMenu("menu/build");
     if (!m_buildMenu) {
