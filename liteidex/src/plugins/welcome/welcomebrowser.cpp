@@ -58,6 +58,7 @@ WelcomeBrowser::WelcomeBrowser(LiteApi::IApplication *app, QObject *parent)
     m_browser->toolBar()->hide();
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->setMargin(0);
 
     mainLayout->addWidget(m_browser->widget());
 
