@@ -91,6 +91,7 @@ void BaseDockWidget::setToolMenu(QMenu *menu)
     QToolButton *btn = new QToolButton;
     btn->setPopupMode(QToolButton::InstantPopup);
     btn->setMenu(menu);
+    btn->setStyleSheet("QToolButton::menu-indicator{image:none;}");
 
     m_toolBar->insertWidget(m_closeAct,btn);
 }
@@ -109,6 +110,7 @@ void BaseDockWidget::setWidgetActions(QList<QAction*> actions)
             QToolButton *btn = qobject_cast<QToolButton*>(w);
             if (btn) {
                 btn->setPopupMode(QToolButton::InstantPopup);
+                btn->setStyleSheet("QToolButton::menu-indicator{image:none;}");
             }
         }
     }
@@ -264,7 +266,7 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     btn->setMenu(menu);
     btn->setText(tr("Move To"));
     btn->setToolTip(tr("Move To"));
-    //btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
+    btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
     m_toolBar->insertWidget(m_closeAct,btn);
 }
 
@@ -377,7 +379,7 @@ void SideDockWidget::createMenu(Qt::DockWidgetArea area)
     btn->setMenu(m_menu);
     btn->setText(tr("SideBar"));
     btn->setToolTip(tr("Show SideBar"));
-    //btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
+    btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
     m_toolBar->insertWidget(m_closeAct,btn);
 }
 

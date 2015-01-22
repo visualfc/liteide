@@ -55,8 +55,8 @@ public:
     QTabBar *tabBar();
     void setTabText(int index, const QString & text);
     QList<QWidget*> widgetList() const;
-    QToolBar *headerToolBar();
     QWidget *stackedWidget();
+    QWidget *tabBarWidget();
 signals:
     void currentChanged(int index);
     void tabCloseRequested(int index);
@@ -70,9 +70,11 @@ public slots:
     void selectListActGroup(QAction*);
     void tabCurrentChanged(int);
 protected:
-    QToolBar        *m_headerToolBar;
+    QToolBar        *m_dumpToolBar;
+    QWidget         *m_tabBarWidget;
     QTabBar         *m_tabBar;
     QToolButton     *m_listButton;
+    QToolButton     *m_closeButton;
     QStackedWidget  *m_stackedWidget;
     QList<QWidget*>  m_widgetList;
     QAction         *m_closeTabAct;

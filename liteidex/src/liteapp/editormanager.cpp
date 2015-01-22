@@ -91,11 +91,11 @@ bool EditorManager::initWithApp(IApplication *app)
     mainLayout->setMargin(1);
     mainLayout->setSpacing(0);
 
-    QToolBar *toolBar = m_editorTabWidget->headerToolBar();
-    toolBar->setObjectName("toolbar/tabs");
-    m_liteApp->actionManager()->insertToolBar(toolBar);
-    m_editorTabWidget->headerToolBar()->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
-
+//    QToolBar *toolBar = m_editorTabWidget->headerToolBar();
+//    toolBar->setObjectName("toolbar/tabs");
+//    m_liteApp->actionManager()->insertToolBar(toolBar);
+//    m_editorTabWidget->headerToolBar()->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
+    mainLayout->addWidget(m_editorTabWidget->tabBarWidget());
     mainLayout->addWidget(m_editorTabWidget->stackedWidget());
     m_widget->setLayout(mainLayout);
 
