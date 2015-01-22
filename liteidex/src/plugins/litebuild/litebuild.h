@@ -37,6 +37,7 @@ class ProcessEx;
 class TextOutput;
 class QStandardItemModel;
 
+struct BuildBarInfo;
 class LiteBuild : public LiteApi::ILiteBuild
 {
     Q_OBJECT
@@ -55,17 +56,18 @@ public:
     virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true);
     virtual bool buildTests();
     QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
-
 public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void setCurrentBuild(LiteApi::IBuild *build);
     void updateBuildConfig(LiteApi::IBuild *build);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
+    void loadBuildInfo(const QString &buildPath);
     void loadTargetInfo(LiteApi::IBuild *build);
-
     LiteApi::IBuild *findProjectBuildByEditor(LiteApi::IEditor *editor);
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
+    void setDynamicBuild();
+    void loadBuild(const QString &mimeType);
 public slots:
     void appLoaded();
     void debugBefore();
@@ -92,11 +94,12 @@ protected:
     BuildManager    *m_buildManager;
     LiteApi::IBuild *m_build;
     LiteApi::IEnvManager *m_envManager;
+    QToolBar    *m_buildToolBar;
     QMenu       *m_buildMenu;
+    QMap<QString,BuildBarInfo*> m_buildBarInfoMap;
     QStandardItemModel *m_liteideModel;
     QStandardItemModel *m_configModel;
     QStandardItemModel *m_customModel;
-    QMap<QString,QString> m_liteAppInfo;
     QString m_workDir;
     ProcessEx *m_process;
     TextOutput *m_output;
@@ -111,9 +114,13 @@ protected:
     QAction     *m_fmctxGoCleanAct;
     QFileInfo   m_fmctxInfo;
     QString     m_outputRegex;
-    QString     m_buildTag;
+    QString     m_buildMimeType;
+    QString     m_buildRootPath;
+    bool        m_bDynamicBuild;
     bool        m_bProjectBuild;
+    QMap<QString,QString> m_liteAppInfo;
     QMap<QString,QString> m_editorInfo;
+    QMap<QString,QString> m_buildInfo;
     QMap<QString,QString> m_projectInfo;
     QMap<QString,QString> m_targetInfo;
 };

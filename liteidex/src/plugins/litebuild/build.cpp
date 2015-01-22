@@ -275,7 +275,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, const QString &fileName)
     return Build::loadBuild(manager,&file,fileName);
 }
 
-static int build_ver = 1;
+static int build_ver = 2;
 
 bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QString &fileName)
 {
