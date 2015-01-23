@@ -54,6 +54,12 @@ protected:
 #endif
     void currentChanged(const QModelIndex &current, const QModelIndex &previous);
     void getTreeExpands(const QModelIndex &parent, QList<QModelIndex> &list) const;
+protected slots:
+    void clickedItem(QModelIndex);
+    void hsbValueChanged(int);
+protected:
+    bool m_bClickedItem;
+    int  m_hsbPos;
 };
 
 #endif //SYMBOLTREEVIEW_H

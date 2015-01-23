@@ -25,9 +25,10 @@
 #define BASEFOLDERVIEW_H
 
 #include "liteapi/liteapi.h"
+#include "symboltreeview/symboltreeview.h"
 #include <QTreeView>
 
-class BaseFolderView : public QTreeView
+class BaseFolderView : public SymbolTreeView
 {
     Q_OBJECT
 public:

@@ -57,9 +57,8 @@
 //lite_memory_check_end
 #endif
 
-
 BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
-    QTreeView(parent), m_liteApp(app)
+    SymbolTreeView(parent), m_liteApp(app)
 {
     this->setHeaderHidden(true);
 #if QT_VERSION >= 0x050000

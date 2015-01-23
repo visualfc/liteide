@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-	<mime-type type="text/x-lua" id="lua" work="$(EDITOR_DIR)" ver="1">
-		<config id="LiteIDEStub" name="LITEIDESTUB" value="$(LITEAPPDIR)/liteide_stub"/>
-		<action id="RunTerm" key="Alt+Shift+F5" img="gray/runterm.png" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(LITEIDESTUB) exec lua -e io.stdout:setvbuf(&quot;no&quot;) $(EDITOR_NAME)" save="editor" output="false" readline="true"/>
-		<action id="Run" key="Alt+F5" img="gray/run.png" cmd="lua" args="-e io.stdout:setvbuf('no') $(EDITOR_NAME)" save="editor" output="true" codec="utf-8" regex="([\w\d:_\-\\/\.]+):(\d+)" readline="true" />
+	<mime-type type="text/x-lua" id="lua" work="$(EDITOR_DIR_PATH)" ver="2">
+		<config id="LiteIDEStub" name="LITEIDESTUB" value="$(LITEIDE_BIN_DIR)/liteide_stub"/>
+		<action id="Run" key="Ctrl+R" img="gray/run.png" cmd="lua" args="-e io.stdout:setvbuf('no') $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" regex="([\w\d:_\-\\/\.]+):(\d+)" readline="true" />
+		<action id="RunTerm" key="Ctrl+Shift+F5" img="gray/runterm.png" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(LITEIDESTUB) exec lua -e io.stdout:setvbuf(&quot;no&quot;) $(EDITOR_FILE_NAME)" save="editor" output="false" readline="true"/>
 	</mime-type>
 </mime-info>

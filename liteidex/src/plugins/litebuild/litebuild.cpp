@@ -489,23 +489,23 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
 
-//    bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
-//    if (!b) {
-//        return;
-//    }
+    bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
+    if (!b) {
+        return;
+    }
 
-//    QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
-//    if (gobin.isEmpty()) {
-//        m_output->updateExistsTextColor();
-//        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
-//        m_output->append("go bin not found!",Qt::red);
-//        return;
-//    }
-//    if (!m_process->isRunning()) {
-//        m_output->updateExistsTextColor();
-//        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
-//        this->executeCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
-//    }
+    QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
+    if (gobin.isEmpty()) {
+        m_output->updateExistsTextColor();
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        m_output->append("go bin not found!",Qt::red);
+        return;
+    }
+    if (!m_process->isRunning()) {
+        m_output->updateExistsTextColor();
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        this->executeCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
+    }
 }
 
 void LiteBuild::loadProjectInfo(const QString &filePath)

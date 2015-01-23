@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include "folderview/folderview.h"
 #include <QModelIndex>
+
 class QComboBox;
 class QLineEdit;
 class FileBrowser : public QObject

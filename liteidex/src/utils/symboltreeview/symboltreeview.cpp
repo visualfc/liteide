@@ -73,6 +73,8 @@ static QModelIndex indexFromStringList(QAbstractItemModel *model, QStringList &l
 SymbolTreeView::SymbolTreeView(QWidget *parent)
     : QTreeView(parent)
 {
+    m_bClickedItem = false;
+    m_hsbPos = 0;
     setEditTriggers(QAbstractItemView::NoEditTriggers);
    // setFrameStyle(QFrame::NoFrame);
     setIndentation(indentation() * 9/10);
@@ -91,6 +93,8 @@ SymbolTreeView::SymbolTreeView(QWidget *parent)
     setTextElideMode(Qt::ElideNone);
 //        setExpandsOnDoubleClick(false);
     setAttribute(Qt::WA_MacShowFocusRect, false);
+    connect(this,SIGNAL(clicked(QModelIndex)),this,SLOT(clickedItem(QModelIndex)));
+    connect(this->horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(hsbValueChanged(int)));
 }
 
 void SymbolTreeView::focusInEvent(QFocusEvent *event)
@@ -139,6 +143,20 @@ void SymbolTreeView::getTreeExpands(const QModelIndex &parent, QList<QModelIndex
             list.append(index);
             getTreeExpands(index,list);
         }
+    }
+}
+
+void SymbolTreeView::clickedItem(QModelIndex)
+{
+    this->m_bClickedItem = true;
+    this->m_hsbPos = this->horizontalScrollBar()->sliderPosition();
+}
+
+void SymbolTreeView::hsbValueChanged(int)
+{
+    if (this->m_bClickedItem) {
+        this->m_bClickedItem = false;
+        this->horizontalScrollBar()->setValue(this->m_hsbPos);
     }
 }
 

@@ -59,7 +59,7 @@ public slots:
 protected:
     void gotoItemDefinition(GolangAstItem *item);
     bool                m_bOutline;
-    bool                m_bFirst;
+    bool                m_bFirst;    
     SymbolTreeView     *m_tree;
     Utils::FilterLineEdit *m_filterEdit;
     QStandardItemModel *m_model;
