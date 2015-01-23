@@ -81,7 +81,7 @@ signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
     void wordWrapChanged(bool);
-    void updateLink(const QTextCursor &curosr);
+    void updateLink(const QTextCursor &curosr, const QPoint &pos);
 public:
     bool restoreState(const QByteArray &state);
     QByteArray saveState() const;

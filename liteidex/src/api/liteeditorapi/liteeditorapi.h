@@ -166,13 +166,21 @@ enum ExtraSelectionKind {
 
 struct Link
 {
-    Link(const QString &fileName = QString(), int line = 0, int column = 0)
-        : linkTextStart(-1)
+    Link(): linkTextStart(-1)
         , linkTextEnd(-1)
-        , targetFileName(fileName)
-        , targetLine(line)
-        , targetColumn(column)
+        , targetLine(-1)
+        , targetColumn(-1)
     {}
+
+    void clear()
+    {
+        linkTextStart = -1;
+        linkTextEnd = -1;
+        targetFileName.clear();
+        targetInfo.clear();
+        targetLine = 0;
+        targetColumn = 0;
+    }
 
     bool hasValidTarget() const
     { return !targetFileName.isEmpty(); }
@@ -185,8 +193,8 @@ struct Link
 
     int linkTextStart;
     int linkTextEnd;
-
     QString targetFileName;
+    QString targetInfo;
     int targetLine;
     int targetColumn;
 };
@@ -233,7 +241,7 @@ public:
     virtual bool isLineEndUnix() const = 0;
     virtual void setLineEndUnix(bool b) = 0;
 signals:
-    void updateLink(const QTextCursor &cursor);
+    void updateLink(const QTextCursor &cursor, const QPoint &pos);
 };
 
 inline ILiteEditor *getLiteEditor(IEditor *editor)

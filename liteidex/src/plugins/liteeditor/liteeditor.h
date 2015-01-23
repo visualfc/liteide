@@ -92,7 +92,7 @@ public:
     virtual LiteApi::IFile *file();
     virtual int line() const;
     virtual int column() const;
-    virtual int utf8Position(bool realFile) const;
+    virtual int utf8Position(bool realFile, int pos = -1) const;
     virtual QByteArray utf8Data() const;
     virtual void setWordWrap(bool wrap);
     virtual bool wordWrap() const;

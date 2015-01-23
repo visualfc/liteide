@@ -299,7 +299,7 @@ public:
     ITextEditor(QObject *parent = 0) : IEditor(parent) {}
     virtual int line() const = 0;
     virtual int column() const = 0;
-    virtual int utf8Position(bool realFile = false) const = 0;
+    virtual int utf8Position(bool realFile = false, int pos = -1) const = 0;
     virtual QByteArray utf8Data() const = 0;
     virtual void setWordWrap(bool wrap) = 0;
     virtual bool wordWrap() const = 0;
@@ -765,13 +765,20 @@ public:
     }
 };
 
-inline void gotoLine(IApplication *app, const QString &fileName, int line, int col) {
+inline bool gotoLine(IApplication *app, const QString &fileName, int line, int col, bool forceCenter = false) {
     app->editorManager()->addNavigationHistory();
+    IEditor *cur = app->editorManager()->currentEditor();
     IEditor *edit = app->fileManager()->openEditor(fileName);
     ITextEditor *textEdit = getTextEditor(edit);
     if (textEdit) {
-        textEdit->gotoLine(line,col);
+        if (cur == edit) {
+            textEdit->gotoLine(line,col,forceCenter);
+        } else {
+            textEdit->gotoLine(line,col,true);
+        }
+        return true;
     }
+    return false;
 }
 
 inline QSize getToolBarIconSize(LiteApi::IApplication *app) {

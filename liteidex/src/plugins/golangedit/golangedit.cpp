@@ -164,7 +164,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
         m_editor->setTextLexer(new GolangTextLexer());
-        connect(m_editor,SIGNAL(updateLink(QTextCursor)),this,SLOT(updateLink(QTextCursor)));
+        connect(m_editor,SIGNAL(updateLink(QTextCursor,QPoint)),this,SLOT(updateLink(QTextCursor,QPoint)));
         //new go src for unix line end
         if (m_editor->document()->isEmpty()) {
             m_editor->setLineEndUnix(true);
@@ -181,38 +181,56 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
     m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
 }
 
-void GolangEdit::updateLink(const QTextCursor &_cursor)
+void GolangEdit::updateLink(const QTextCursor &_cursor, const QPoint &pos)
 {
     QTextCursor cursor = _cursor;
-    LiteApi::selectWordUnderCursor(cursor);
+    bool moveLeft = false;
+    LiteApi::selectWordUnderCursor(cursor,&moveLeft);
 
-    if (cursor.selectionStart() == cursor.selectionEnd()) {
+    QString text = cursor.selectedText();
+    //hack
+    if (text == "(") {
+        text.clear();
+    }
+
+    if (text.isEmpty()) {
+        m_lastLink.clear();
         m_editor->clearLink();
         return;
     }
-
-    if (m_linkCursor.selectionStart() == cursor.selectionStart() &&
-            m_linkCursor.selectionEnd() == cursor.selectionEnd()) {
+    if (m_lastLink.linkTextStart == cursor.selectionStart() &&
+            m_lastLink.linkTextEnd == cursor.selectionEnd()) {
         if (m_lastLink.hasValidTarget()) {
             m_editor->showLink(m_lastLink);
+            return;
         }
         return;
     }
-    m_linkCursor = cursor;
-    m_lastLink = LiteApi::Link();
     if (m_findLinkProcess->isRunning()) {
-        m_findLinkProcess->kill();
-        m_findLinkProcess->waitForFinished(100);
-        //return;
+        if (!m_findLinkProcess->waitForFinished(100)) {
+            m_findLinkProcess->kill();
+        }
+        if (m_findLinkProcess->isRunning()) {
+            return;
+        }
     }
+
+    m_lastLink.clear();
+    m_lastLink.linkTextStart = cursor.selectionStart();
+    m_lastLink.linkTextEnd = cursor.selectionEnd();
+
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
-    QString src = cursor.document()->toPlainText();
-    m_srcData = src.toUtf8();
-    int offset = src.left(cursor.selectionStart()).length();
+
+    m_srcData = m_editor->utf8Data();
+    int offset = m_editor->utf8Position(false,cursor.selectionStart());
+    if (moveLeft) {
+        offset -=1;
+    }
+
     QFileInfo info(m_editor->filePath());
     m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
-    m_findLinkProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def -info .").
+    m_findLinkProcess->startEx(cmd,QString("type -b -cursor %1:%2 -cursor_stdin -def -info .").
                              arg(info.fileName()).
                                arg(offset));
 }
@@ -376,7 +394,6 @@ void GolangEdit::findInfoOutput(QByteArray data, bool bStdErr)
     if (bStdErr) {
         return;
     }
-
     if ( m_editor == m_liteApp->editorManager()->currentEditor()) {
         if (m_plainTextEdit->textCursor() == m_lastCursor) {
             QString info = QString::fromUtf8(data).trimmed();
@@ -402,12 +419,8 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
     if (bStdErr) {
         return;
     }
-
     if ( m_editor == m_liteApp->editorManager()->currentEditor()) {
-        QTextCursor cur = this->textCursorForPos(QCursor::pos());
-        cur.select(QTextCursor::WordUnderCursor);
-        if (cur.selectionStart() == m_linkCursor.selectionStart() &&
-                cur.selectionEnd() == m_linkCursor.selectionEnd()) {
+        if (m_lastLink.hasValidLinkText()) {
             QStringList info = QString::fromUtf8(data).trimmed().split("\n");
             if (info.size() == 2) {
                 if (info[0] != "-") {
@@ -417,19 +430,24 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
                         QString fileName = info[0].left(pos);
                         int line = reg.cap(1).toInt();
                         int col = reg.cap(2).toInt();
-                        LiteApi::Link link(fileName,line-1,col-1);
-                        m_lastCursor.select(QTextCursor::WordUnderCursor);
-                        link.linkTextStart = m_linkCursor.selectionStart();
-                        link.linkTextEnd = m_linkCursor.selectionEnd();
-                        m_lastLink = link;
-                        m_editor->showLink(link);
+                        m_lastLink.targetFileName = fileName;
+                        m_lastLink.targetLine = line-1;
+                        m_lastLink.targetColumn = col-1;
+                        m_lastLink.targetInfo = info[1];
+//                        if (QFileInfo(m_editor->filePath()) == QFileInfo(fileName)) {
+//                            if (m_lastLink.linkSouceLine == line-1 &&
+//                                    m_lastLink.linkSouceCoumn == col-1) {
+//                                m_lastLink.isDefined = true;
+//                            }
+//                        }
+                        m_editor->showLink(m_lastLink);
                     }
                 } else {
                     m_editor->clearLink();
                 }
-                QRect rc = m_plainTextEdit->cursorRect(m_linkCursor);
-                QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
-                QToolTip::showText(pt,info[1],m_plainTextEdit);
+                //QRect rc = m_plainTextEdit->cursorRect(m_linkCursor);
+                //QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
+                //QToolTip::showText(pt,info[1],m_plainTextEdit);
             }
         }
     }

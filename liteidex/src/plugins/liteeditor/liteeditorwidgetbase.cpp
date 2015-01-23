@@ -368,7 +368,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
-    m_mouseNavigation = false;
+    m_mouseNavigation = true;
     m_visualizeWhitespace = false;
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
@@ -2540,7 +2540,6 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
     if (m_currentLink == link)
         return;
-
     QTextEdit::ExtraSelection sel;
     sel.cursor = textCursor();
     sel.cursor.setPosition(link.linkTextStart);
@@ -2550,6 +2549,11 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     setExtraSelections(LiteApi::LinkSelection,QList<QTextEdit::ExtraSelection>() << sel);
     viewport()->setCursor(Qt::PointingHandCursor);
     m_currentLink = link;
+    if (!link.targetInfo.isEmpty()) {
+        QRect rc = cursorRect(sel.cursor);
+        QPoint pt = this->mapToGlobal(rc.topRight());
+        QToolTip::showText(pt,link.targetInfo,this);
+    }
 }
 
 void LiteEditorWidgetBase::clearLink()
@@ -2560,23 +2564,16 @@ void LiteEditorWidgetBase::clearLink()
     setExtraSelections(LiteApi::LinkSelection, QList<QTextEdit::ExtraSelection>());
     viewport()->setCursor(Qt::IBeamCursor);
     m_currentLink = LiteApi::Link();
+    QToolTip::hideText();
 }
 
-bool LiteEditorWidgetBase::openLink(const LiteApi::Link &_link)
+bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
 {
-    if (!_link.hasValidTarget()) {
+    if (!link.hasValidTarget()) {
         return false;
     }
-    LiteApi::Link link = _link;
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(link.targetFileName);
-    if (editor) {
-         LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-        if (textEditor) {            
-            textEditor->gotoLine(link.targetLine,link.targetColumn,false);
-            return true;
-        }
-    }
-    return false;
+    LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn);
+    return true;
 }
 
 void LiteEditorWidgetBase::setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections)
@@ -2596,11 +2593,10 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
     if (m_mouseNavigation && e->modifiers() & Qt::ControlModifier) {
         // Link emulation behaviour for 'go to definition'
         const QTextCursor cursor = cursorForPosition(e->pos());
-
         // Check that the mouse was actually on the text somewhere
         bool onText = cursorRect(cursor).contains(e->pos());// e->x();
         if (onText) {
-            emit updateLink(cursor);
+            emit updateLink(cursor,e->pos());
         }
     }
 }

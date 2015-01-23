@@ -154,7 +154,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
     connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
     connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
-    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor)),this,SIGNAL(updateLink(QTextCursor)));
+    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor,QPoint)),this,SIGNAL(updateLink(QTextCursor,QPoint)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 
@@ -742,10 +742,10 @@ int LiteEditor::column() const
     return m_editorWidget->textCursor().columnNumber();
 }
 
-int LiteEditor::utf8Position(bool realFile) const
+int LiteEditor::utf8Position(bool realFile, int pos) const
 {
     QTextCursor cur = m_editorWidget->textCursor();
-    QString src = cur.document()->toPlainText().left(cur.position());
+    QString src = cur.document()->toPlainText().left(pos >= 0 ? pos : cur.position());
     int offset = 0;
     if (realFile && m_file->isLineEndWindow()) {
        offset = cur.blockNumber();

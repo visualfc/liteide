@@ -39,7 +39,7 @@ public:
 public slots:
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    void updateLink(const QTextCursor &cursor);
+    void updateLink(const QTextCursor &cursor, const QPoint &pos);
     void aboutToShowContextMenu();
     void editorViewGodoc();
     void editorFindInfo();
