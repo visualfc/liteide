@@ -45,7 +45,7 @@ protected:
     LiteDoc *m_liteDoc;
     QAction *m_welcomeAct;
     QAction *m_homeAct;
-    QAction *m_godocAct;
+    //QAction *m_godocAct;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<WelcomePlugin>
