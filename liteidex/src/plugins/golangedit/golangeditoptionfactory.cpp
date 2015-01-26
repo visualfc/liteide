@@ -18,22 +18,37 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangedit_global.h
+// Module: golangeditoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOLANGEDIT_GLOBAL_H
-#define GOLANGEDIT_GLOBAL_H
-
-#include <QtCore/qglobal.h>
-
-#if defined(GOLANGEDIT_LIBRARY)
-#  define GOLANGEDITSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define GOLANGEDITSHARED_EXPORT Q_DECL_IMPORT
+#include "golangeditoption.h"
+#include "golangeditoptionfactory.h"
+#include "golangedit_global.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
 #endif
+//lite_memory_check_end
 
-#define OPTION_GOLANGEDIT   "option/golangedit"
-#define GOLANGEDIT_MOUSEINFO "golangedit/mouseinfo"
-#define GOLANGEDIT_MOUSENAVIGATIOIN "golangedit/mousenavigation"
+GolangEditOptionFactory::GolangEditOptionFactory(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IOptionFactory(parent),
+      m_liteApp(app)
+{
+}
 
-#endif // GOLANGEDIT_GLOBAL_H
+QStringList GolangEditOptionFactory::mimeTypes() const
+{
+    return QStringList() << OPTION_GOLANGEDIT;
+}
+
+LiteApi::IOption *GolangEditOptionFactory::create(const QString &mimeType)
+{
+    if (mimeType == OPTION_GOLANGEDIT) {
+        return new GolangEditOption(m_liteApp,this);
+    }
+    return 0;
+}

@@ -37,9 +37,10 @@ public:
     explicit GolangEdit(LiteApi::IApplication *app, QObject *parent = 0);
     QTextCursor textCursorForPos(const QPoint &globalPos);
 public slots:
+    void applyOption(const QString &option);
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
-    void updateLink(const QTextCursor &cursor, const QPoint &pos);
+    void updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
     void aboutToShowContextMenu();
     void editorViewGodoc();
     void editorFindInfo();
@@ -61,6 +62,8 @@ protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
+    bool m_enableMouseInfo;
+    bool m_enableMouseNavigation;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
     QAction *m_findInfoAct;

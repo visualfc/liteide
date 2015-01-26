@@ -18,22 +18,22 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangedit_global.h
+// Module: golangeditoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef GOLANGEDIT_GLOBAL_H
-#define GOLANGEDIT_GLOBAL_H
+#ifndef GOLANGEDITOPTIONFACTORY_H
+#define GOLANGEDITOPTIONFACTORY_H
 
-#include <QtCore/qglobal.h>
+#include "liteapi/liteapi.h"
 
-#if defined(GOLANGEDIT_LIBRARY)
-#  define GOLANGEDITSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define GOLANGEDITSHARED_EXPORT Q_DECL_IMPORT
-#endif
+class GolangEditOptionFactory : public LiteApi::IOptionFactory
+{
+public:
+    GolangEditOptionFactory(LiteApi::IApplication *app, QObject *parent);
+    virtual QStringList mimeTypes() const;
+    virtual LiteApi::IOption *create(const QString &mimeType);
+protected:
+    LiteApi::IApplication *m_liteApp;
+};
 
-#define OPTION_GOLANGEDIT   "option/golangedit"
-#define GOLANGEDIT_MOUSEINFO "golangedit/mouseinfo"
-#define GOLANGEDIT_MOUSENAVIGATIOIN "golangedit/mousenavigation"
-
-#endif // GOLANGEDIT_GLOBAL_H
+#endif // GOLANGEDITOPTIONFACTORY_H

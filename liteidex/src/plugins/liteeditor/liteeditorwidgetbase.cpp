@@ -2545,7 +2545,7 @@ void LiteEditorWidgetBase::uplinkTimeout()
             rc.setRight(rc.right()+(cursor.selectionEnd()-pos)*m_averageCharWidth);
             if (rc.contains(m_uplinkPos)) {
                 findLink = true;
-                emit updateLink(cursor,m_uplinkPos);
+                emit updateLink(cursor,m_uplinkPos,false);
             }
         }
     }
@@ -2681,7 +2681,7 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
                 if (rc.contains(e->pos())) {
                     findLink = true;
                     m_linkNavigation = true;
-                    emit updateLink(cursor,e->pos());
+                    emit updateLink(cursor,e->pos(),true);
                 }
             }
         }

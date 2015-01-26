@@ -242,7 +242,7 @@ public:
     virtual bool isLineEndUnix() const = 0;
     virtual void setLineEndUnix(bool b) = 0;
 signals:
-    void updateLink(const QTextCursor &cursor, const QPoint &pos);
+    void updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
 };
 
 inline ILiteEditor *getLiteEditor(IEditor *editor)

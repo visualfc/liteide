@@ -18,15 +18,12 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangeditplugin.cpp
+// Module: golangeditoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "golangeditplugin.h"
-#include "golangedit.h"
-#include "golanghighlighterfactory.h"
-#include "golangeditoptionfactory.h"
-#include "liteeditorapi/liteeditorapi.h"
-#include <QtPlugin>
+#include "golangeditoption.h"
+#include "ui_golangeditoption.h"
+#include "golangedit_global.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -37,21 +34,44 @@
 #endif
 //lite_memory_check_end
 
-GolangEditPlugin::GolangEditPlugin()
+GolangEditOption::GolangEditOption(LiteApi::IApplication *app,QObject *parent) :
+    LiteApi::IOption(parent),
+    m_liteApp(app),
+    m_widget(new QWidget),
+    ui(new Ui::GolangEditOption)
 {
+    ui->setupUi(m_widget);
+    bool info = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
+    bool nav = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
+    ui->enableMouseInfoCheckBox->setChecked(info);
+    ui->enableMouseNavigationCheckBox->setChecked(nav);
 }
 
-bool GolangEditPlugin::load(LiteApi::IApplication *app)
+GolangEditOption::~GolangEditOption()
 {
-    LiteApi::IHighlighterManager *manager = LiteApi::getHighlighterManager(app);
-    if (manager) {
-        manager->addFactory(new GolangHighlighterFactory(this));
-    }
-    app->optionManager()->addFactory(new GolangEditOptionFactory(app,this));
-    new GolangEdit(app,this);
-    return true;
+    delete m_widget;
+    delete ui;
 }
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
-#endif
+QWidget *GolangEditOption::widget()
+{
+    return m_widget;
+}
+
+QString GolangEditOption::name() const
+{
+    return "GolangEdit";
+}
+
+QString GolangEditOption::mimeType() const
+{
+    return OPTION_GOLANGEDIT;
+}
+
+void GolangEditOption::apply()
+{
+    bool info = ui->enableMouseInfoCheckBox->isChecked();
+    bool nav = ui->enableMouseNavigationCheckBox->isChecked();
+    m_liteApp->settings()->setValue(GOLANGEDIT_MOUSEINFO,info);
+    m_liteApp->settings()->setValue(GOLANGEDIT_MOUSENAVIGATIOIN,nav);
+}

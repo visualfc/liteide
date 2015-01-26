@@ -154,7 +154,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
     connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
     connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
-    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor,QPoint)),this,SIGNAL(updateLink(QTextCursor,QPoint)));
+    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SIGNAL(updateLink(QTextCursor,QPoint,bool)));
     connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 

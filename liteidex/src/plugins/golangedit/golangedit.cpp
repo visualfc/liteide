@@ -23,6 +23,7 @@
 
 #include "golangedit.h"
 #include "golangtextlexer.h"
+#include "golangedit_global.h"
 #include "qtc_editutil/uncommentselection.h"
 #include "litebuildapi/litebuildapi.h"
 #include "golangdocapi/golangdocapi.h"
@@ -73,6 +74,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_findDefProcess = new ProcessEx(this);
     m_findInfoProcess = new ProcessEx(this);
     m_findLinkProcess = new ProcessEx(this);
+    m_enableMouseInfo = true;
+    m_enableMouseNavigation = true;
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -92,6 +95,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findLinkProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findLinkOutput(QByteArray,bool)));
     connect(m_findLinkProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findLinkFinish(bool,int,QString)));
     connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
+
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 }
 
 //bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
@@ -132,6 +137,15 @@ QTextCursor GolangEdit::textCursorForPos(const QPoint &globalPos)
     return m_plainTextEdit->cursorForPosition(pos);
 }
 
+void GolangEdit::applyOption(const QString &option)
+{
+    if (option != OPTION_GOLANGEDIT) {
+        return;
+    }
+    m_enableMouseInfo = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
+    m_enableMouseNavigation = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
+}
+
 void GolangEdit::editorCreated(LiteApi::IEditor *editor)
 {
     if (!editor || editor->mimeType() != "text/x-gosrc") {
@@ -164,7 +178,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
         m_editor->setTextLexer(new GolangTextLexer());
-        connect(m_editor,SIGNAL(updateLink(QTextCursor,QPoint)),this,SLOT(updateLink(QTextCursor,QPoint)));
+        connect(m_editor,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SLOT(updateLink(QTextCursor,QPoint,bool)));
         //new go src for unix line end
         if (m_editor->document()->isEmpty()) {
             m_editor->setLineEndUnix(true);
@@ -181,8 +195,18 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
     m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
 }
 
-void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos)
+void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav)
 {
+    if (nav) {
+        if (!m_enableMouseNavigation) {
+            return;
+        }
+    } else {
+        if (!m_enableMouseInfo) {
+            return;
+        }
+    }
+
     QString text = cursor.selectedText();
     //hack
     if (text == "(") {
