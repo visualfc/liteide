@@ -380,6 +380,12 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 
 void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
 {
+    if (!editor) {
+        return;
+    }
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
     m_editor = LiteApi::getTextEditor(editor);
     if (!m_editor) {
         return;
