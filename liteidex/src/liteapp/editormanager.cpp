@@ -486,7 +486,7 @@ IEditor *EditorManager::currentEditor() const
     return m_currentEditor;
 }
 
-void EditorManager::setCurrentEditor(IEditor *editor)
+void EditorManager::setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory)
 {
     if (m_currentEditor == editor) {
         if (m_currentEditor) {
@@ -494,8 +494,10 @@ void EditorManager::setCurrentEditor(IEditor *editor)
         }
         return;
     }
+    if (editor && !ignoreNavigationHistory) {
+        this->addNavigationHistory();
+    }
     m_currentEditor = editor;
-
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
@@ -659,8 +661,8 @@ void EditorManager::addNavigationHistory(IEditor *editor,const QByteArray &saveS
     m_navigationHistory.insert(m_currentNavigationHistoryPosition, location);
     ++m_currentNavigationHistoryPosition;
 
-    while (m_navigationHistory.size() >= 30) {
-        if (m_currentNavigationHistoryPosition > 15) {
+    while (m_navigationHistory.size() >= 100) {
+        if (m_currentNavigationHistoryPosition > 50) {
             m_navigationHistory.removeFirst();
             --m_currentNavigationHistoryPosition;
         } else {
@@ -676,7 +678,7 @@ void EditorManager::goBack()
     while (m_currentNavigationHistoryPosition > 0) {
         --m_currentNavigationHistoryPosition;
         EditLocation location = m_navigationHistory.at(m_currentNavigationHistoryPosition);
-        IEditor *editor = m_liteApp->fileManager()->openEditor(location.filePath,true);
+        IEditor *editor = m_liteApp->fileManager()->openEditor(location.filePath,true,true);
         if (editor) {
             editor->restoreState(location.state);
         } else {
@@ -694,7 +696,7 @@ void EditorManager::goForward()
         return;
     ++m_currentNavigationHistoryPosition;
     EditLocation location = m_navigationHistory.at(m_currentNavigationHistoryPosition);
-    IEditor *editor = m_liteApp->fileManager()->openEditor(location.filePath);
+    IEditor *editor = m_liteApp->fileManager()->openEditor(location.filePath,true,true);
     if (!editor) {
         return;
     }

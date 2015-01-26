@@ -38,7 +38,7 @@ public:
     explicit TextOutput(LiteApi::IApplication *app, bool readOnly = true, QWidget *parent = 0);
     void append(const QString &text);
     void append(const QString &text,const QBrush &foreground);
-    void appendTag(const QString &text, bool error = false);
+    void appendTag(const QString &text, bool error = false, bool time = false);
     void updateExistsTextColor();
     void setMaxLine(int max);
 public slots:

@@ -55,12 +55,12 @@ public:
 public:
     virtual QWidget *widget();
     virtual IEditor *currentEditor() const;
-    virtual void setCurrentEditor(IEditor *editor);
+    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false);
     virtual IEditor *findEditor(const QString &fileName, bool canonical) const;
     virtual QList<IEditor*> editorList() const;
     virtual QAction *registerBrowser(IEditor *editor);
     virtual void activeBrowser(IEditor *editor);
-    virtual void addNavigationHistory(IEditor *editor,const QByteArray &saveState);
+    virtual void addNavigationHistory(IEditor *editor = 0,const QByteArray &saveState = QByteArray());
     virtual void cutForwardNavigationHistory();
     virtual void loadColorStyleScheme(const QString &file);
     virtual const ColorStyleScheme *colorStyleScheme() const;

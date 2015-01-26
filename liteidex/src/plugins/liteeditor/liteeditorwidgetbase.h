@@ -83,10 +83,10 @@ signals:
     void wordWrapChanged(bool);
     void updateLink(const QTextCursor &curosr, const QPoint &pos, bool nav);
 public:
+    void saveCurrentCursorPositionForNavigation();
     bool restoreState(const QByteArray &state);
     QByteArray saveState() const;
 protected:
-    void saveCurrentCursorPositionForNavigation();
     QByteArray m_tempNavigationState;
 public slots:
     void cleanWhitespace(bool wholeDocument = false);
@@ -282,6 +282,7 @@ protected:
     int m_lastSaveRevision;
     int m_extraAreaSelectionNumber;
     int m_averageCharWidth;
+    int m_lastLine;
     QTimer *m_uplinkTimer;
     QTextCursor m_uplinkCursor;
     QPoint m_uplinkPos;

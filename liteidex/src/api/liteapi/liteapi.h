@@ -204,7 +204,7 @@ public:
 
     virtual void execFileWizard(const QString &projPath, const QString &filePath, const QString &gopath = QString()) = 0;
     virtual bool openFile(const QString &fileName) = 0;
-    virtual IEditor *openEditor(const QString &fileName, bool bActive = true) = 0;
+    virtual IEditor *openEditor(const QString &fileName, bool bActive = true, bool ignoreNavigationHistory = false) = 0;
     virtual IEditor *createEditor(const QString &contents, const QString &_mimeType) = 0;
     virtual IEditor *createEditor(const QString &fileName) = 0;
     virtual IProject *openProject(const QString &fileName) = 0;
@@ -382,7 +382,7 @@ public:
     virtual QStringList mimeTypeList() const = 0;
     virtual QWidget *widget() = 0;
     virtual IEditor *currentEditor() const = 0;
-    virtual void setCurrentEditor(IEditor *editor) = 0;
+    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false) = 0;
     virtual IEditor *findEditor(const QString &fileName, bool canonical) const = 0;
     virtual QList<IEditor*> editorList() const = 0;
     virtual QAction *registerBrowser(IEditor *editor) = 0;

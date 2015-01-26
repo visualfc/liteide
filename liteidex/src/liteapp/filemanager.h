@@ -44,7 +44,7 @@ public:
 public:
     virtual void execFileWizard(const QString &projPath, const QString &filePath, const QString &gopath = QString());
     virtual bool openFile(const QString &fileName);
-    virtual IEditor *openEditor(const QString &fileName, bool bActive = true);
+    virtual IEditor *openEditor(const QString &fileName, bool bActive = true, bool ignoreNavigationHistory = false);
     virtual IEditor *createEditor(const QString &contents, const QString &mimeType);
     virtual IEditor *createEditor(const QString &fileName);
     virtual IProject *openProject(const QString &fileName);

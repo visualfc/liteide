@@ -29,6 +29,7 @@
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QElapsedTimer>
+#include <QTime>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -74,7 +75,7 @@ void TextOutput::append(const QString &text,const QBrush &foreground)
     appendAndReset(text, f);
 }
 
-void TextOutput::appendTag(const QString &text, bool error)
+void TextOutput::appendTag(const QString &text, bool error, bool time)
 {
     QTextCharFormat f = m_fmt;
     f.setFontWeight(QFont::Bold);
@@ -82,8 +83,12 @@ void TextOutput::appendTag(const QString &text, bool error)
         f.setForeground(m_clrError);
     } else {
         f.setForeground(m_clrTag);
+    }    
+    if (time) {
+        appendAndReset(QTime::currentTime().toString("hh:mm:ss: ")+text, f);
+    } else {
+        appendAndReset(text, f);
     }
-    appendAndReset(text, f);
 }
 
 void TextOutput::appendAndReset(const QString &text, QTextCharFormat& f)

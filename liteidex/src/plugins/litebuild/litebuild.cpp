@@ -1346,7 +1346,9 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
         m_process->setWorkingDirectory(m_workDir);        
         m_output->appendTag(QString("%1 %2 [%3]\n")
-                             .arg(QDir::cleanPath(cmd)).arg(args).arg(m_workDir));
+                            .arg(QDir::cleanPath(cmd))
+                            .arg(args)
+                            .arg(m_workDir));
 #ifdef Q_OS_WIN
         m_process->setNativeArguments(args);
         m_process->start("\""+cmd+"\"");

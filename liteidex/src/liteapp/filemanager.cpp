@@ -440,7 +440,7 @@ IEditor *FileManager::createEditor(const QString &_fileName)
 }
 
 
-IEditor *FileManager::openEditor(const QString &_fileName, bool bActive)
+IEditor *FileManager::openEditor(const QString &_fileName, bool bActive, bool ignoreNavigationHistory)
 {
     QString fileName = QDir::fromNativeSeparators(QDir::cleanPath(_fileName));
 
@@ -448,7 +448,7 @@ IEditor *FileManager::openEditor(const QString &_fileName, bool bActive)
 
     IEditor *editor = m_liteApp->editorManager()->openEditor(fileName,mimeType);
     if (editor && bActive) {
-        m_liteApp->editorManager()->setCurrentEditor(editor);
+        m_liteApp->editorManager()->setCurrentEditor(editor,ignoreNavigationHistory);
     }
     if (editor) {
         addRecentFile(fileName,"file");

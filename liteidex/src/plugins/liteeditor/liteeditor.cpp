@@ -1096,6 +1096,7 @@ void LiteEditor::onActive()
     m_editorWidget->setFocus();
     //clipbordDataChanged();
     //editPositionChanged();
+    //m_editorWidget->saveCurrentCursorPositionForNavigation();
 }
 
 void LiteEditor::setFindOption(LiteApi::FindOption *opt)

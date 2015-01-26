@@ -372,6 +372,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_mouseNavigation = true;
     m_linkNavigation = false;
     m_visualizeWhitespace = false;
+    m_lastLine = -1;
 
     m_uplinkTimer = new QTimer(this);
     m_uplinkTimer->setSingleShot(true);
@@ -1265,8 +1266,12 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
 {
     if (m_lastCursorChangeWasInteresting) {
         //navigate change
-        emit navigationStateChanged(m_tempNavigationState);
-        m_lastCursorChangeWasInteresting = false;
+        int lastLine = this->textCursor().blockNumber();
+        if (lastLine != m_lastLine) {
+            m_lastLine = lastLine;
+            emit navigationStateChanged(m_tempNavigationState);
+            m_lastCursorChangeWasInteresting = false;
+        }
     } else {
         this->saveCurrentCursorPositionForNavigation();
     }
