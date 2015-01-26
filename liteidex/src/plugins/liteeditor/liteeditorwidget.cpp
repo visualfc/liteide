@@ -56,6 +56,7 @@ LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_scrollWheelZooming(true),
     m_bSpellCheckZoneDontComplete(false)
 {
+    this->m_averageCharWidth = QFontMetrics(this->font()).averageCharWidth();
 }
 
 void LiteEditorWidget::setContextMenu(QMenu *contextMenu)
@@ -378,6 +379,7 @@ void LiteEditorWidget::updateFont(const QFont &font)
 {
     this->setFont(font);
     this->extraArea()->setFont(font);
+    this->m_averageCharWidth = QFontMetrics(font).averageCharWidth();
     this->updateTabWidth();
     this->slotUpdateExtraAreaWidth();
     if (this->m_completer) {

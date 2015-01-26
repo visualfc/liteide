@@ -217,6 +217,7 @@ public:
     bool autoBackspace(QTextCursor &cursor);
     void handleBackspaceKey();
     void setVisualizeWhitespace(bool b);
+    QRectF selectionRect(const QTextCursor &cursor);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -235,6 +236,8 @@ protected:
     void indentEnter(QTextCursor cur);
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
+protected slots:
+    void uplinkTimeout();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_extraArea;
@@ -273,10 +276,15 @@ protected:
     bool m_bLastBraces;
     bool m_bTabUseSpace;
     bool m_mouseNavigation;
-    int  m_nTabSize;
+    bool m_linkNavigation;
     QString m_lastBraceText;
+    int  m_nTabSize;
     int m_lastSaveRevision;
     int m_extraAreaSelectionNumber;
+    int m_averageCharWidth;
+    QTimer *m_uplinkTimer;
+    QTextCursor m_uplinkCursor;
+    QPoint m_uplinkPos;
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;

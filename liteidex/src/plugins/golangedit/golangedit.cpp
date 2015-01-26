@@ -181,23 +181,22 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
     m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
 }
 
-void GolangEdit::updateLink(const QTextCursor &_cursor, const QPoint &pos)
+void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos)
 {
-    QTextCursor cursor = _cursor;
-    bool moveLeft = false;
-    LiteApi::selectWordUnderCursor(cursor,&moveLeft);
-
+//    QTextCursor cursor = _cursor;
+//    bool moveLeft = false;
+//    LiteApi::selectWordUnderCursor(cursor,&moveLeft);
     QString text = cursor.selectedText();
     //hack
     if (text == "(") {
         text.clear();
     }
-
     if (text.isEmpty()) {
         m_lastLink.clear();
         m_editor->clearLink();
         return;
     }
+
     if (m_lastLink.linkTextStart == cursor.selectionStart() &&
             m_lastLink.linkTextEnd == cursor.selectionEnd()) {
         if (m_lastLink.hasValidTarget()) {
@@ -223,9 +222,6 @@ void GolangEdit::updateLink(const QTextCursor &_cursor, const QPoint &pos)
 
     m_srcData = m_editor->utf8Data();
     int offset = m_editor->utf8Position(false,cursor.selectionStart());
-    if (moveLeft) {
-        offset -=1;
-    }
 
     QFileInfo info(m_editor->filePath());
     m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());

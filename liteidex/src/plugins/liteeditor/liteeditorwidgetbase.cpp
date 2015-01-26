@@ -369,7 +369,12 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
     m_mouseNavigation = true;
+    m_linkNavigation = false;
     m_visualizeWhitespace = false;
+
+    m_uplinkTimer = new QTimer(this);
+    m_uplinkTimer->setSingleShot(true);
+    connect(m_uplinkTimer,SIGNAL(timeout()),this,SLOT(uplinkTimeout()));
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
     m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
@@ -2526,6 +2531,23 @@ QTextBlock LiteEditorWidgetBase::foldedBlockAt(const QPoint &pos, QRect *box) co
     return QTextBlock();
 }
 
+void LiteEditorWidgetBase::uplinkTimeout()
+{
+    //qDebug() << "uplink1" << m_uplinkCursor.block().text().at(m_uplinkCursor.positionInBlock());
+    bool moveLeft = false;
+    LiteApi::selectWordUnderCursor(m_uplinkCursor,&moveLeft);
+    qDebug() << m_uplinkCursor.selectedText();
+    /*
+    const QTextCursor cursor = cursorForPosition(m_uplinkPos);
+    // Check that the mouse was actually on the text somewhere
+    bool onText = cursorRect(cursor).contains(m_uplinkPos);// e->x();
+    if (onText) {
+        qDebug() << "uplink2";
+        //emit updateLink(cursor,m_uplinkPos);
+    }
+    */
+}
+
 bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 {
     QTextBlock block = cur.block();
@@ -2538,8 +2560,13 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 
 void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
+    if (!m_linkNavigation) {
+        return;
+    }
+
     if (m_currentLink == link)
         return;
+
     QTextEdit::ExtraSelection sel;
     sel.cursor = textCursor();
     sel.cursor.setPosition(link.linkTextStart);
@@ -2552,12 +2579,14 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     if (!link.targetInfo.isEmpty()) {
         QRect rc = cursorRect(sel.cursor);
         QPoint pt = this->mapToGlobal(rc.topRight());
-        QToolTip::showText(pt,link.targetInfo,this);
+        QToolTip::showText(pt,link.targetInfo,this,rc);
     }
 }
 
 void LiteEditorWidgetBase::clearLink()
 {
+    m_linkNavigation = false;
+
     if (!m_currentLink.hasValidLinkText())
         return;
 
@@ -2588,16 +2617,72 @@ void LiteEditorWidgetBase::setExtraSelections(LiteApi::ExtraSelectionKind kind, 
     QPlainTextEdit::setExtraSelections(all);
 }
 
+QRectF LiteEditorWidgetBase::selectionRect(const QTextCursor &cursor)
+{
+    QRectF r;
+    if (!cursor.hasSelection()) {
+        r = this->cursorRect(cursor);
+    } else {
+        QTextDocument *doc = this->document();
+        const int position = cursor.selectionStart();
+        const int anchor = cursor.selectionEnd();
+        const QTextBlock posBlock = doc->findBlock(position);
+        const QTextBlock anchorBlock = doc->findBlock(anchor);
+        if (posBlock == anchorBlock && posBlock.isValid() && posBlock.layout()->lineCount()) {
+            const QTextLine posLine = posBlock.layout()->lineForTextPosition(position - posBlock.position());
+            const QTextLine anchorLine = anchorBlock.layout()->lineForTextPosition(anchor - anchorBlock.position());
+
+            const int firstLine = qMin(posLine.lineNumber(), anchorLine.lineNumber());
+            const int lastLine = qMax(posLine.lineNumber(), anchorLine.lineNumber());
+            const QTextLayout *layout = posBlock.layout();
+            r = QRectF();
+            for (int i = firstLine; i <= lastLine; ++i) {
+                r |= layout->lineAt(i).rect();
+                r |= layout->lineAt(i).naturalTextRect(); // might be bigger in the case of wrap not enabled
+            }
+            r.translate(blockBoundingRect(posBlock).topLeft());
+        } else {
+            qDebug() << "error";
+//            QRectF anchorRect = rectForPosition(cursor.selectionEnd());
+//            r |= anchorRect;
+//            r |= boundingRectOfFloatsInSelection(cursor);
+//            QRectF frameRect(doc->documentLayout()->frameBoundingRect(cursor.currentFrame()));
+//            r.setLeft(frameRect.left());
+//            r.setRight(frameRect.right());
+        }
+        if (r.isValid())
+            r.adjust(-1, -1, 1, 1);
+    }
+    return r;
+}
+
 void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
 {
-    if (m_mouseNavigation && e->modifiers() & Qt::ControlModifier) {
+    if (!m_mouseNavigation) {
+        return;
+    }
+    bool findLink = false;
+    if (e->modifiers() & Qt::ControlModifier) {
         // Link emulation behaviour for 'go to definition'
-        const QTextCursor cursor = cursorForPosition(e->pos());
-        // Check that the mouse was actually on the text somewhere
-        bool onText = cursorRect(cursor).contains(e->pos());// e->x();
-        if (onText) {
-            emit updateLink(cursor,e->pos());
+        QTextCursor cursor = cursorForPosition(e->pos());
+        if (!cursor.isNull()) {
+            bool moveLeft = false;
+            int pos = cursor.position();
+            QRect rc = this->cursorRect(cursor);
+            LiteApi::selectWordUnderCursor(cursor,&moveLeft);
+            if (cursor.hasSelection()) {
+                rc.setLeft(rc.left()-(pos-cursor.selectionStart())*m_averageCharWidth);
+                rc.setRight(rc.right()+(cursor.selectionEnd()-pos)*m_averageCharWidth);
+                if (rc.contains(e->pos())) {
+                    findLink = true;
+                    m_linkNavigation = true;
+                    emit updateLink(cursor,e->pos());
+                }
+            }
         }
+    }
+    if (!findLink) {
+        clearLink();
     }
 }
 
