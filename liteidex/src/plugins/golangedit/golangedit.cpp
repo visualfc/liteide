@@ -183,9 +183,6 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
 
 void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos)
 {
-//    QTextCursor cursor = _cursor;
-//    bool moveLeft = false;
-//    LiteApi::selectWordUnderCursor(cursor,&moveLeft);
     QString text = cursor.selectedText();
     //hack
     if (text == "(") {
@@ -208,15 +205,17 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos)
     if (m_findLinkProcess->isRunning()) {
         if (!m_findLinkProcess->waitForFinished(100)) {
             m_findLinkProcess->kill();
-        }
-        if (m_findLinkProcess->isRunning()) {
-            return;
+            if (!m_findLinkProcess->waitForFinished(100)) {
+                m_liteApp->appendLog("golang","find link error",false);
+                return;
+            }
         }
     }
 
     m_lastLink.clear();
     m_lastLink.linkTextStart = cursor.selectionStart();
     m_lastLink.linkTextEnd = cursor.selectionEnd();
+    m_lastLink.cursorPos = pos;
 
     QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
 
@@ -430,20 +429,11 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
                         m_lastLink.targetLine = line-1;
                         m_lastLink.targetColumn = col-1;
                         m_lastLink.targetInfo = info[1];
-//                        if (QFileInfo(m_editor->filePath()) == QFileInfo(fileName)) {
-//                            if (m_lastLink.linkSouceLine == line-1 &&
-//                                    m_lastLink.linkSouceCoumn == col-1) {
-//                                m_lastLink.isDefined = true;
-//                            }
-//                        }
                         m_editor->showLink(m_lastLink);
                     }
                 } else {
                     m_editor->clearLink();
                 }
-                //QRect rc = m_plainTextEdit->cursorRect(m_linkCursor);
-                //QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
-                //QToolTip::showText(pt,info[1],m_plainTextEdit);
             }
         }
     }

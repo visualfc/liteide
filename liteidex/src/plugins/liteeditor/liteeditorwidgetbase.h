@@ -207,8 +207,8 @@ public:
     void showLink(const LiteApi::Link &link);
     void clearLink();
     bool openLink(const LiteApi::Link &link);
-    void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
     void testUpdateLink(QMouseEvent *e);
+    void setExtraSelections(LiteApi::ExtraSelectionKind kind, const QList<QTextEdit::ExtraSelection> &selections);
     LiteApi::ITextLexer * textLexer() const {
         return m_textLexer.data();
     }

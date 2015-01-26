@@ -197,6 +197,7 @@ struct Link
     QString targetInfo;
     int targetLine;
     int targetColumn;
+    QPoint cursorPos;
 };
 
 class ITextLexer : public QObject
