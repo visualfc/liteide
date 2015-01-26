@@ -74,7 +74,7 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_editor = m_liteApp->fileManager()->createEditor(data,"text/x-gosrc");
     m_editor->open(m_playFile,"text/x-gosrc");
 
-    QToolBar *toolBar = LiteApi::getBuildToolBar(m_editor);
+    QToolBar *toolBar = LiteApi::getEditToolBar(m_editor);
 
     m_output = new TextOutput(m_liteApp);
 

@@ -114,7 +114,7 @@ protected:
     QMap<QWidget*,IEditContext*> m_editContextMap;
     QAction     *m_goBackAct;
     QAction     *m_goForwardAct;
-    QAction     *m_editToolbarAct;
+    //QAction     *m_editToolbarAct;
     QMenu       *m_editMenu;
     QMenu       *m_tabContextFileMenu;
     QMenu       *m_tabContextNofileMenu;

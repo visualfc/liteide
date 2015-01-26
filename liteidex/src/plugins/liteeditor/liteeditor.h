@@ -163,8 +163,6 @@ public:
     Extension   *m_extension;
     QWidget *m_widget;
     QToolBar *m_editToolBar;
-    QToolBar *m_buildToolBar;
-    QToolBar *m_infoToolBar;
     LiteEditorWidget    *m_editorWidget;
     LiteApi::ICompleter *m_completer;
     TextEditor::SyntaxHighlighter *m_syntax;
@@ -211,7 +209,7 @@ public:
     bool     m_offsetVisible;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
-    QAction *m_closeEditorAct;
+    //QAction *m_closeEditorAct;
     QAction *m_commentAct;
     QAction *m_blockCommentAct;
     QAction *m_autoIndentAct;
