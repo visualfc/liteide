@@ -36,7 +36,7 @@
 
 #define OPTION_LITEAPP "option/liteapp"
 
-#define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFiles"
+#define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFile"
 #define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
 #define LITEAPP_AUTOLOADLASTSESSION "LiteApp/AutoLoadLastSession"
 #define LITEAPP_LANGUAGE "General/Language"

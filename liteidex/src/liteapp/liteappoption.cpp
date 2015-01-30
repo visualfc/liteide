@@ -105,7 +105,7 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         ui->qssComboBox->setCurrentIndex(index);
     }
 
-    int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
+    int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
     ui->maxRecentLineEdit->setText(QString("%1").arg(max));
     //bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
     //ui->autoCloseProjecEditorsCheckBox->setChecked(b);

@@ -95,7 +95,7 @@ bool FileManager::initWithApp(IApplication *app)
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
 
-    m_maxRecentFiles = m_liteApp->settings()->value("LiteApp/MaxRecentFiles",16).toInt();
+    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
     m_newFileDialog = 0;
     m_recentMenu = m_liteApp->actionManager()->loadMenu("menu/recent");
     QAction *cleanAct = new QAction(tr("Clear History"),this);
@@ -225,9 +225,9 @@ void FileManager::setFolderList(const QStringList &folders)
     QStringList all = folders;
     all.removeDuplicates();
     m_folderListView->setRootPathList(all);
-//    if (!m_folderListView->rootPathList().isEmpty()) {
-//        m_toolWindowAct->setChecked(true);
-//    }
+    foreach (QString folder, all) {
+        addRecentFile(folder,"folder");
+    }
 }
 
 void FileManager::addFolderList(const QString &folder)
@@ -544,7 +544,7 @@ void FileManager::applyOption(QString id)
     }
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
-    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,16).toInt();
+    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
     foreach (QString scheme, this->schemeList()) {
         QString key = schemeKey(scheme);
         QStringList files = m_liteApp->settings()->value(key).toStringList();
