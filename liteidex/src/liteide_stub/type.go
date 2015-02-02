@@ -119,6 +119,15 @@ func builtinInfo(id string) string {
 	return "builtin " + id
 }
 
+func simpleObjInfo(obj types.Object) string {
+	pkg := obj.Pkg()
+	s := simpleType(obj.String())
+	if pkg != nil && pkg.Name() == "main" {
+		return strings.Replace(s, simpleType(pkg.Path())+".", "", -1)
+	}
+	return s
+}
+
 func simpleType(src string) string {
 	re, _ := regexp.Compile("[\\w\\./]+")
 	return re.ReplaceAllStringFunc(src, func(s string) string {
@@ -722,15 +731,15 @@ func (w *PkgWalker) LookupObjects(pkg *types.Package, pkgInfo *types.Info, curso
 			if fieldTypeObj.Pkg() != nil && fieldTypeObj.Pkg() != pkg {
 				typeName = fieldTypeObj.Pkg().Name() + "." + fieldTypeObj.Name()
 			}
-			fmt.Println(typeName, simpleType(cursorObj.String()))
+			fmt.Println(typeName, simpleObjInfo(cursorObj))
 		} else if kind == ObjBuiltin {
 			fmt.Println(builtinInfo(cursorObj.Name()))
 		} else if kind == ObjPkgName {
 			fmt.Println(cursorObj.String())
 		} else if cursorIsInterfaceMethod {
-			fmt.Println(strings.Replace(simpleType(cursorObj.String()), "(interface)", cursorPkg.Name()+"."+cursorInterfaceTypeName, 1))
+			fmt.Println(strings.Replace(simpleObjInfo(cursorObj), "(interface)", cursorPkg.Name()+"."+cursorInterfaceTypeName, 1))
 		} else {
-			fmt.Println(simpleType(cursorObj.String()))
+			fmt.Println(simpleObjInfo(cursorObj))
 		}
 	}
 	//if f, ok := w.parsedFileCache[w.fset.Position(cursorPos).Filename]; ok {
