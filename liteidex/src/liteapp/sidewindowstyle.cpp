@@ -132,10 +132,10 @@ SideActionBar::SideActionBar(QSize _iconSize, QMainWindow *_window, Qt::DockWidg
     toolBar->setObjectName(QString("side_tool_%1").arg(area));
     toolBar->setMovable(false);
 
-    QWidget *spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    spacerAct = toolBar->addWidget(spacer);
-    toolBar->addSeparator();
+//    QWidget *spacer = new QWidget;
+//    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+//    spacerAct = toolBar->addWidget(spacer);
+//    toolBar->addSeparator();
 }
 
 SideActionBar::~SideActionBar()
@@ -285,10 +285,10 @@ OutputActionBar::OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWi
     toolBar->setObjectName(QString("side_tool_%1").arg(area));
     toolBar->setMovable(false);
 
-    QWidget *spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    spacerAct = toolBar->addWidget(spacer);
-    toolBar->addSeparator();
+//    QWidget *spacer = new QWidget;
+//    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+//    spacerAct = toolBar->addWidget(spacer);
+//    toolBar->addSeparator();
 
     dock = new OutputDockWidget(iconSize, window);
     dock->setObjectName(QString("side_dock_%1").arg(area));
@@ -440,6 +440,7 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
     m_statusBar->addWidget(m_outputBar->toolBar,1);
 
     m_mainWindow->setStatusBar(m_statusBar);
+    //m_mainWindow->addToolBar(Qt::BottomToolBarArea,m_outputBar->toolBar);
 
     m_sideMenu = 0;
     m_outputMenu = 0;
