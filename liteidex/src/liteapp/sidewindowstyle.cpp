@@ -36,6 +36,94 @@
 #endif
 //lite_memory_check_end
 
+SideDockWidget::SideDockWidget(QSize iconSize, QWidget *parent) :
+    BaseDockWidget(iconSize,parent)
+{
+}
+
+void SideDockWidget::createMenu(Qt::DockWidgetArea area)
+{
+//    QMenu *moveMenu = new QMenu(tr("Move To"),this);
+//    QAction *act = new QAction(tr("OutputBar"),this);
+//    act->setData(area);
+//    moveMenu->addAction(act);
+//    connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
+
+    m_menu = new QMenu(this);
+
+    QToolButton *btn = new QToolButton(m_toolBar);
+    btn->setPopupMode(QToolButton::InstantPopup);
+    btn->setIcon(QIcon("icon:images/movemenu.png"));
+    btn->setMenu(m_menu);
+    btn->setText(tr("SideBar"));
+    btn->setToolTip(tr("Show SideBar"));
+    btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
+    m_toolBar->insertWidget(m_closeAct,btn);
+}
+
+void SideDockWidget::moveAction()
+{
+    QAction *action = static_cast<QAction*>(sender());
+    if (!action) {
+        return;
+    }
+    Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
+    emit moveActionTo(area,current);
+}
+
+void SideDockWidget::actionChanged()
+{
+
+}
+
+void SideDockWidget::activeComboBoxIndex(int index)
+{
+    if (index < 0 || index >= m_comboBox->count()) {
+        return;
+    }
+    QString objName = m_comboBox->itemData(index).toString();
+    foreach(QAction *act, m_actions) {
+        if (act->objectName() == objName) {
+            QAction *org = current.data();
+            current = act;
+            emit currenActionChanged(org,act);
+            break;
+        }
+    }
+}
+
+void SideDockWidget::setCheckedAction(QAction *action)
+{
+    current = action;
+    for (int i = 0; i < m_comboBox->count(); i++) {
+        if (m_comboBox->itemText(i) == action->text()) {
+            m_comboBox->setCurrentIndex(i);
+            break;
+        }
+    }
+}
+
+void SideDockWidget::setActions(const QMap<QAction *, SideActionState *> &m)
+{
+    m_actions = m.keys();
+    m_comboBox->clear();
+    int cur = 0;
+    int index = 0;
+    m_menu->clear();
+    QMapIterator<QAction *, SideActionState *> i(m);
+    while(i.hasNext()) {
+        i.next();
+        QAction *act = i.key();
+        m_comboBox->addItem(i.value()->title,act->objectName());
+        m_menu->addAction(act);
+        if (current && (current->objectName() == act->objectName())) {
+            cur = index;
+        }
+        index++;
+    }
+    m_comboBox->setCurrentIndex(cur);
+}
+
 SideActionBar::SideActionBar(QSize _iconSize, QMainWindow *_window, Qt::DockWidgetArea _area)
     : QObject(_window), iconSize(_iconSize), window(_window),area(_area), bHideToolBar(false)
 {
@@ -94,7 +182,7 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledAction(bool)));
     //update actions
     foreach(SideDockWidget *dock, m_dockList) {
-        dock->setActions(m_actionStateMap.keys());
+        dock->setActions(m_actionStateMap);
     }
 }
 
@@ -511,6 +599,13 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
         }
     } else {
         m_sideBar->addAction(action,widget,id,title,widgetActions);
+        int index = m_sideBar->m_actionStateMap.size();
+        if (index <= 9) {
+            action->setText(QString("%1: %2").arg(index).arg(title));
+            QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+%1").arg(index):QString("Ctrl+%1").arg(index));
+            LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
+            actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
+        }
         connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledSideBar(bool)));
         if (m_sideMenu) {
             m_sideMenu->addAction(action);

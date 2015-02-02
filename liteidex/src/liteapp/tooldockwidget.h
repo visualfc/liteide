@@ -87,24 +87,4 @@ protected slots:
     void moveAction();
 };
 
-class SideDockWidget : public BaseDockWidget
-{
-    Q_OBJECT
-public:
-    explicit SideDockWidget(QSize iconSize, QWidget *parent = 0);
-    void createMenu(Qt::DockWidgetArea area);
-    void setCheckedAction(QAction *action);
-    void setActions(const QList<QAction*> &actions);
-signals:
-    void moveActionTo(Qt::DockWidgetArea, QAction*);
-    void currenActionChanged(QAction *org, QAction *act);
-protected slots:
-    void moveAction();
-    void actionChanged();
-    virtual void activeComboBoxIndex(int);
-protected:
-    QMenu *m_menu;
-};
-
-
 #endif // TOOLDOCKWIDGET_H
