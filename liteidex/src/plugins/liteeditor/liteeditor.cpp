@@ -1024,20 +1024,17 @@ void LiteEditor::codecComboBoxChanged(QString codec)
 
 void LiteEditor::editPositionChanged()
 {
-//     QTextCursor cur = m_editorWidget->textCursor();
-/*
-     QString src = cur.document()->toPlainText().left(cur.position());
-     int offset = 0;
-     if (m_file->m_lineTerminatorMode == LiteEditorFile::CRLFLineTerminator) {
-        offset = cur.blockNumber();
-     }
-*/
-     //m_liteApp->editorManager()->updateLine(this,cur.blockNumber()+1,cur.columnNumber()+1, src.toUtf8().length()+offset+1);
-//     if (m_offsetVisible) {
-//         m_lineInfo->setText(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(this->utf8Position(true)));
-//     } else {
-//         m_lineInfo->setText(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     QTextCursor cur = m_editorWidget->textCursor();
+     //QString src = cur.document()->toPlainText().left(cur.position());
+//     int offset = 0;
+//     if (m_file->isLineEndWindow()) {
+//        offset = cur.blockNumber();
 //     }
+     if (m_offsetVisible) {
+         m_liteApp->editorManager()->updateEditInfo(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(this->utf8Position(true)));
+     } else {
+         m_liteApp->editorManager()->updateEditInfo(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+     }
 }
 
 void LiteEditor::gotoLine()
@@ -1087,7 +1084,7 @@ void LiteEditor::onActive()
 {
     m_editorWidget->setFocus();
     //clipbordDataChanged();
-    //editPositionChanged();
+    editPositionChanged();
     //m_editorWidget->saveCurrentCursorPositionForNavigation();
 }
 

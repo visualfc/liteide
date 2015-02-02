@@ -33,6 +33,7 @@ using namespace LiteApi;
 class LiteTabWidget;
 class QStackedWidget;
 class QToolButton;
+class QLabel;
 
 struct EditLocation {
     QString filePath;
@@ -66,6 +67,7 @@ public:
     virtual const ColorStyleScheme *colorStyleScheme() const;
     virtual void addEditContext(IEditContext *context);
     virtual void removeEditContext(IEditContext *context);
+    virtual void updateEditInfo(const QString &info);
 protected:
     void addEditor(IEditor *editor);
     bool eventFilter(QObject *target, QEvent *event);
@@ -120,6 +122,7 @@ protected:
     QMenu       *m_tabContextNofileMenu;
     ColorStyleScheme *m_colorStyleScheme;
     int          m_tabContextIndex;
+    QLabel      *m_lineInfo;
 };
 
 #endif // EDITORMANAGER_H

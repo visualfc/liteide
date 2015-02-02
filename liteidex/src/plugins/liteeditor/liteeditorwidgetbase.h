@@ -238,6 +238,7 @@ protected:
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
 protected slots:
     void uplinkTimeout();
+    void stopUplinkTimer();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_extraArea;

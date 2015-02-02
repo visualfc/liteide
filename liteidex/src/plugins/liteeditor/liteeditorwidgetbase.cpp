@@ -1275,7 +1275,7 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     } else {
         this->saveCurrentCursorPositionForNavigation();
     }
-
+    this->stopUplinkTimer();
     //emit navigationStateChanged(saveState());
     /*
     if (!m_contentsChanged && m_lastCursorChangeWasInteresting) {
@@ -2557,6 +2557,12 @@ void LiteEditorWidgetBase::uplinkTimeout()
     if (!findLink) {
         QToolTip::hideText();
     }
+}
+
+void LiteEditorWidgetBase::stopUplinkTimer()
+{
+    QToolTip::hideText();
+    m_uplinkTimer->stop();
 }
 
 bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const

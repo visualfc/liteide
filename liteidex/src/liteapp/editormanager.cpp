@@ -42,6 +42,7 @@
 #include <QComboBox>
 #include <QTextCodec>
 #include <QClipboard>
+#include <QLabel>
 #include <QDebug>
 #include "litetabwidget.h"
 #include "fileutil/fileutil.h"
@@ -153,6 +154,11 @@ bool EditorManager::initWithApp(IApplication *app)
     connect(showInExplorer,SIGNAL(triggered()),this,SLOT(tabContextShowInExplorer()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
     connect(qApp,SIGNAL(focusChanged(QWidget*,QWidget*)),this,SLOT(focusChanged(QWidget*,QWidget*)));
+
+    QStatusBar *bar = m_liteApp->mainWindow()->statusBar();
+
+    m_lineInfo = new QLabel("000:000");
+    bar->addPermanentWidget(m_lineInfo);
 
     return true;
 }
@@ -498,6 +504,7 @@ void EditorManager::setCurrentEditor(IEditor *editor, bool ignoreNavigationHisto
         this->addNavigationHistory();
     }
     m_currentEditor = editor;
+    this->updateEditInfo("");
     if (editor != 0) {
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
@@ -736,6 +743,11 @@ void EditorManager::addEditContext(IEditContext *context)
 void EditorManager::removeEditContext(IEditContext *context)
 {
     m_editContextMap.remove(context->focusWidget());
+}
+
+void EditorManager::updateEditInfo(const QString &info)
+{
+    m_lineInfo->setText(info);
 }
 
 void EditorManager::updateCurrentPositionInNavigationHistory()
