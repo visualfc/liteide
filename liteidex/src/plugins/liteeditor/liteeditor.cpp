@@ -1030,10 +1030,16 @@ void LiteEditor::editPositionChanged()
 //     if (m_file->isLineEndWindow()) {
 //        offset = cur.blockNumber();
 //     }
+     QString line;
      if (m_offsetVisible) {
-         m_liteApp->editorManager()->updateEditInfo(QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(this->utf8Position(true)));
+         line = QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(this->utf8Position(true));
      } else {
-         m_liteApp->editorManager()->updateEditInfo(QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3));
+         line = QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3);
+     }
+     if (m_bReadOnly) {
+         m_liteApp->editorManager()->updateEditInfo(QString("[%1] %2").arg(tr("ReadOnly")).arg(line));
+     } else {
+         m_liteApp->editorManager()->updateEditInfo(line);
      }
 }
 
