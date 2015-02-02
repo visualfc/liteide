@@ -277,7 +277,8 @@ protected:
     bool m_bLastBraces;
     bool m_bTabUseSpace;
     bool m_mouseNavigation;
-    bool m_linkNavigation;
+    bool m_showLinkNavigation;
+    bool m_showLinkInfomation;
     QString m_lastBraceText;
     int  m_nTabSize;
     int m_lastSaveRevision;
@@ -287,6 +288,7 @@ protected:
     QTimer *m_uplinkTimer;
     QTextCursor m_uplinkCursor;
     QPoint m_uplinkPos;
+    QPoint m_lastUplinkPos;
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;

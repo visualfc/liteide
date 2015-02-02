@@ -370,7 +370,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
     m_mouseNavigation = true;
-    m_linkNavigation = false;
+    m_showLinkNavigation = false;
+    m_showLinkInfomation = false;
     m_visualizeWhitespace = false;
     m_lastLine = -1;
 
@@ -1275,7 +1276,6 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     } else {
         this->saveCurrentCursorPositionForNavigation();
     }
-    this->stopUplinkTimer();
     //emit navigationStateChanged(saveState());
     /*
     if (!m_contentsChanged && m_lastCursorChangeWasInteresting) {
@@ -2550,6 +2550,7 @@ void LiteEditorWidgetBase::uplinkTimeout()
             rc.setRight(rc.right()+(cursor.selectionEnd()-pos)*m_averageCharWidth);
             if (rc.contains(m_uplinkPos)) {
                 findLink = true;
+                m_showLinkInfomation = true;
                 emit updateLink(cursor,m_uplinkPos,false);
             }
         }
@@ -2561,6 +2562,7 @@ void LiteEditorWidgetBase::uplinkTimeout()
 
 void LiteEditorWidgetBase::stopUplinkTimer()
 {
+    m_showLinkInfomation = false;
     QToolTip::hideText();
     m_uplinkTimer->stop();
 }
@@ -2577,12 +2579,12 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 
 void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
-    if (!link.targetInfo.isEmpty()) {
+    if (!link.targetInfo.isEmpty() && m_showLinkInfomation) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
         QToolTip::showText(pt,link.targetInfo,this);
     }
 
-    if (!m_linkNavigation) {
+    if (!m_showLinkNavigation) {
         return;
     }
     if (m_currentLink == link)
@@ -2602,7 +2604,8 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 
 void LiteEditorWidgetBase::clearLink()
 {
-    m_linkNavigation = false;
+    m_showLinkNavigation = false;
+    m_showLinkInfomation = false;
 
     if (!m_currentLink.hasValidLinkText())
         return;
@@ -2691,7 +2694,8 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
                 rc.setRight(rc.right()+(cursor.selectionEnd()-pos)*m_averageCharWidth);
                 if (rc.contains(e->pos())) {
                     findLink = true;
-                    m_linkNavigation = true;
+                    m_showLinkNavigation = true;
+                    m_showLinkInfomation = true;
                     emit updateLink(cursor,e->pos(),true);
                 }
             }
@@ -2713,14 +2717,16 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             toggleBlockVisible(foldedBlock);
             viewport()->setCursor(Qt::IBeamCursor);
         }
-        if (m_mouseNavigation
-                && e->modifiers() & Qt::ControlModifier
-                && !(e->modifiers() & Qt::ShiftModifier)
-                && m_currentLink.hasValidLinkText()) {
-            if (openLink(m_currentLink)) {
-                clearLink();
-                return;
+        if (m_mouseNavigation) {
+            if (e->modifiers() & Qt::ControlModifier
+                    && !(e->modifiers() & Qt::ShiftModifier)
+                    && m_currentLink.hasValidLinkText()) {
+                if (openLink(m_currentLink)) {
+                    clearLink();
+                    return;
+                }
             }
+            this->stopUplinkTimer();
         }
     }
     QPlainTextEdit::mousePressEvent(e);
