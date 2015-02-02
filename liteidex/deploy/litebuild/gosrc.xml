@@ -2,7 +2,8 @@
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="text/x-gosrc" id="go tool" work="$(BUILD_DIR_PATH)" ver="2">
 		<config id="Go" name="GO" value="go"/>
-		<config id="LiteIDEStub" name="LITEIDESTUB" value="$(LITEIDE_BIN_DIR)/liteide_stub"/>
+		<config id="GoFmt" name="GOFMT" value="gofmt"/>
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_BIN_DIR)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
 		<config id="TargetName" name = "TARGETNAME" value="$(BUILD_DIR_GONAME)"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
@@ -14,7 +15,7 @@
 		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
 		<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
 		<action id="Run" img="blue/run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
-		<action id="RunTerm" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(LITEIDESTUB) exec $(TARGETNAME) $(TARGETARGS)" output="false" readline="true"/>
+		<action id="RunTerm" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd $(TARGETNAME) $(TARGETARGS)" output="false" readline="true"/>
 		<action id="RunTerm" os="macosx" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="/usr/bin/open" args="$(TARGETNAME)" output="false" readline="true"/>
 		<action id="FileRun" img="blue/filerun.png" key="Shift+Alt+R;Alt+F6" cmd="$(GO)" args="run $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" readline="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
@@ -35,6 +36,7 @@
 		<action id="CoverFunc" menu="Test" img="blue/cover.png" key = "" cmd="$(GO)" args="tool cover -func=cover.out " save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Utils" folder="true" img="blue/utils.png"/>
 		<action id="GoFmt" menu="Utils" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="GoFmtAll" menu="Utils" img="blue/fmt.png" cmd="$(GOFMT)" args="-l -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="GoVet" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="GoLint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Gopm Build" menu="Utils" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>

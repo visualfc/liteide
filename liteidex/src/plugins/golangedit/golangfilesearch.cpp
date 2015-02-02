@@ -109,11 +109,11 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     m_lastLine = 0;
     m_bParserHead = true;
     m_file.close();
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QFileInfo info(editor->filePath());
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->setWorkingDirectory(info.path());
-    m_process->startEx(cmd,QString("type -cursor %1:%2 -info -use .").
+    m_process->startEx(cmd,QString("types -pos %1:%2 -info -use .").
                              arg(info.fileName()).arg(offset));
 
 }

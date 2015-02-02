@@ -172,7 +172,7 @@ void JsonEdit::fmtEditor(LiteApi::IEditor *editor, bool compact, bool tabs, bool
     if (diff) {
         args << "-d";
     }
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     process.start(cmd,args);
     if (!process.waitForStarted(timeout)) {
         m_liteApp->appendLog("jsonfmt",QString("Timed out after %1ms when starting json format").arg(timeout),false);

@@ -330,7 +330,7 @@ void GolangAst::updateAstNow()
     if (m_updateFileNames.isEmpty()) {
         return;
     }
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "astview";
     args << m_updateFileNames;
@@ -350,7 +350,7 @@ void GolangAst::updateAstNowFile()
     if (m_editorFileName.isEmpty()) {
         return;
     }
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "astview";
     args << m_editorFileName;

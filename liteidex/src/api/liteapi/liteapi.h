@@ -804,12 +804,12 @@ inline IWebKitBrowser *getWebKitBrowser(LiteApi::IApplication *app)
     return static_cast<IWebKitBrowser*>(app->extension()->findObject("LiteApp.IWebKitBrowser"));
 }
 
-inline QString liteide_stub_cmd(LiteApi::IApplication *app)
+inline QString getGotools(LiteApi::IApplication *app)
 {
 #ifdef Q_OS_WIN
-    return app->applicationPath()+"/liteide_stub.exe";
+    return app->applicationPath()+"/gotools.exe";
 #else
-    return app->applicationPath()+"/liteide_stub";
+    return app->applicationPath()+"/gotools";
 #endif
 }
 

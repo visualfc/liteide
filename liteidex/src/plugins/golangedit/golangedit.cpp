@@ -241,7 +241,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     m_lastLink.linkTextEnd = cursor.selectionEnd();
     m_lastLink.cursorPos = pos;
 
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
 
     m_srcData = m_editor->utf8Data();
     int offset = m_editor->utf8Position(false,cursor.selectionStart());
@@ -249,7 +249,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     QFileInfo info(m_editor->filePath());
     m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
-    m_findLinkProcess->startEx(cmd,QString("type -b -cursor %1:%2 -cursor_stdin -def -info .").
+    m_findLinkProcess->startEx(cmd,QString("types -b -pos %1:%2 -stdin -def -info .").
                              arg(info.fileName()).
                                arg(offset));
 }
@@ -317,12 +317,12 @@ void GolangEdit::editorJumpToDecl()
     }
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
     m_findDefProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findDefProcess->setWorkingDirectory(info.path());
-    m_findDefProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -def .").
+    m_findDefProcess->startEx(cmd,QString("types -pos %1:%2 -stdin -def .").
                              arg(info.fileName()).
                               arg(offset));
 }
@@ -356,7 +356,7 @@ void GolangEdit::editorComment()
 
 void GolangEdit::editorFindInfo()
 {
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
     bool moveLeft = false;
@@ -369,7 +369,7 @@ void GolangEdit::editorFindInfo()
 
     m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
-    m_findInfoProcess->startEx(cmd,QString("type -cursor %1:%2 -cursor_stdin -info .").
+    m_findInfoProcess->startEx(cmd,QString("types -pos %1:%2 -stdin -info .").
                              arg(info.fileName()).
                              arg(offset));
 }

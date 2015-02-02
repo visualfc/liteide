@@ -133,7 +133,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
             args << "-d";
         }
         if (m_goimports) {
-            QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+            QString cmd = LiteApi::getGotools(m_liteApp);
             process.start(cmd,args);
         } else {
             process.start(m_gofmtCmd,args);
@@ -148,7 +148,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         if (m_diff) {
             args << "-d";
         }
-        QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+        QString cmd = LiteApi::getGotools(m_liteApp);
         process.start(cmd,args);
     }
     if (!process.waitForStarted(timeout)) {
@@ -255,7 +255,7 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
         args << "-d";
     }
     if (m_goimports) {
-        QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+        QString cmd = LiteApi::getGotools(m_liteApp);
         m_process->start(cmd,args);
     } else {
         m_process->start(m_gofmtCmd,args);

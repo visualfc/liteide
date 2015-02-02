@@ -250,7 +250,7 @@ void GolangDoc::rebuildApiData()
 
 void GolangDoc::listPkg()
 {
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "docview" << "-mode=lite" << "-list=pkg";
     m_findData.clear();
@@ -259,7 +259,7 @@ void GolangDoc::listPkg()
 
 void GolangDoc::listCmd()
 {
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "docview" << "-mode" << "lite" << "-list"<<"cmd";
     m_findData.clear();
@@ -435,7 +435,7 @@ void GolangDoc::openUrlList(const QUrl &url)
     if (url.scheme() != "list") {
         return;
     }
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "docview" << "-mode=html"<< QString("-list=%1").arg(url.path());
     m_godocData.clear();
@@ -447,7 +447,7 @@ void GolangDoc::openUrlFind(const QUrl &url)
     if (url.scheme() != "find") {
         return;
     }
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "docview" << "-mode=html" << "-find" << url.path();
     m_godocData.clear();

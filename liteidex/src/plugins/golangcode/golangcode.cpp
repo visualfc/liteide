@@ -352,7 +352,7 @@ void GolangCode::loadImportsList()
         m_importProcess->waitForFinished(200);
     }
 
-    QString cmd = LiteApi::liteide_stub_cmd(m_liteApp);
+    QString cmd = LiteApi::getGotools(m_liteApp);
     if (cmd.isEmpty()) {
         return;
     }
