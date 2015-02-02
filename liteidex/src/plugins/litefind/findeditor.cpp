@@ -155,7 +155,11 @@ void FindEditor::setVisible(bool b)
             QString text;
             QPlainTextEdit *ed = LiteApi::findExtensionObject<QPlainTextEdit*>(editor,"LiteApi.QPlainTextEdit");
             if (ed) {
-                text = ed->textCursor().selectedText();
+                QTextCursor cur = ed->textCursor();
+                if (!cur.hasSelection()) {
+                    cur.select(QTextCursor::WordUnderCursor);
+                }
+                text = cur.selectedText();
             }
             if (!text.isEmpty()) {
                 this->m_findEdit->setText(text);
