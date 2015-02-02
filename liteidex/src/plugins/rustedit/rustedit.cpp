@@ -81,7 +81,7 @@ void RustEdit::currentEditorChanged(LiteApi::IEditor *editor)
     m_editor = LiteApi::getLiteEditor(editor);
 }
 
-void RustEdit::prefixChanged(const QTextCursor &/*cur*/, const QString &pre, bool force)
+void RustEdit::prefixChanged(const QTextCursor &/*cur*/, const QString &pre, bool /*force*/)
 {
     if (pre.endsWith("::")) {
         m_completer->setSeparator("::");

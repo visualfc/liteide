@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>655</width>
-    <height>414</height>
+    <width>529</width>
+    <height>454</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,13 +27,18 @@
        <item>
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
-          <string>Store</string>
+          <string>Store [*]</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QCheckBox" name="storeLocalCheckBox">
+            <property name="font">
+             <font>
+              <italic>false</italic>
+             </font>
+            </property>
             <property name="text">
-             <string>Store settings to local ini file ( request restart LiteIDE )</string>
+             <string>Store settings to local ini file</string>
             </property>
            </widget>
           </item>
@@ -43,7 +48,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Interface</string>
+          <string>Interface [*]</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -57,22 +62,6 @@
            <widget class="QComboBox" name="langComboBox"/>
           </item>
           <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="label_6">
             <property name="text">
              <string>Style:</string>
@@ -82,6 +71,31 @@
           <item>
            <widget class="QComboBox" name="styleComboBox"/>
           </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string>Theme [*]</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
@@ -244,42 +258,29 @@
             </item>
            </layout>
           </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
        </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Language changes will take effect after LiteIDE is restarted.</string>
-         </property>
-         <property name="scaledContents">
-          <bool>false</bool>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
       </layout>
-      <zorder>label_2</zorder>
       <zorder>groupBox_2</zorder>
       <zorder>groupBox</zorder>
       <zorder>groupBox_3</zorder>
       <zorder>groupBox_4</zorder>
       <zorder>groupBox_5</zorder>
+      <zorder>groupBox_6</zorder>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -289,7 +290,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_8">
          <property name="title">
-          <string>Display</string>
+          <string>Display [*]</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
@@ -319,7 +320,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_9">
          <property name="title">
-          <string>Toolbar Icon Size</string>
+          <string>Toolbar Icon Size [*]</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
-    <height>350</height>
+    <width>548</width>
+    <height>211</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Options</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,4">
+  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,3">
    <item>
     <widget class="QListWidget" name="listWidget">
      <property name="sizePolicy">
@@ -21,6 +21,12 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>0</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -60,6 +66,13 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>[*] item requeset restart liteide</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">

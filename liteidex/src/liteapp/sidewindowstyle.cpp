@@ -41,7 +41,7 @@ SideDockWidget::SideDockWidget(QSize iconSize, QWidget *parent) :
 {
 }
 
-void SideDockWidget::createMenu(Qt::DockWidgetArea area)
+void SideDockWidget::createMenu(Qt::DockWidgetArea /*area*/)
 {
 //    QMenu *moveMenu = new QMenu(tr("Move To"),this);
 //    QAction *act = new QAction(tr("OutputBar"),this);

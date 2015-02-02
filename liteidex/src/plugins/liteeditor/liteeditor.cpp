@@ -1207,7 +1207,7 @@ void LiteEditor::resetFontSize()
     this->sendUpdateFont();
 }
 
-void LiteEditor::setEditToolbarVisible(bool visible)
+void LiteEditor::setEditToolbarVisible(bool /*visible*/)
 {
     //m_editToolBar->setVisible(visible);
 }

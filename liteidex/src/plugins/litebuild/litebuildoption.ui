@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>383</width>
-    <height>256</height>
+    <height>255</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QCheckBox" name="goenvCheckBox">
      <property name="text">
@@ -22,26 +22,15 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="treeLabel">
-     <property name="text">
-      <string>Build command configuration files:</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Build command configuration files [*]</string>
      </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTreeView" name="fileTreeView"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Build configuration changes will take effect after LiteIDE is restarted.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTreeView" name="fileTreeView"/>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

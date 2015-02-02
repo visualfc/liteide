@@ -321,7 +321,7 @@ OutputDockWidget::OutputDockWidget(QSize iconSize, QWidget *parent) :
     m_toolBar->insertWidget(m_closeAct,spacer);
 }
 
-void OutputDockWidget::createMenu(Qt::DockWidgetArea area)
+void OutputDockWidget::createMenu(Qt::DockWidgetArea /*area*/)
 {    
 //    QMenu *moveMenu = new QMenu(tr("Move To"),this);
 //    QAction *act = new QAction(tr("SideBar"),this);
