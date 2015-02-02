@@ -425,7 +425,7 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
 
     m_statusBar = new QStatusBar;
 
-    m_hideSideAct = new QAction(tr("Hide Sidebars"),this);
+    m_hideSideAct = new QAction(tr("Hide SideBar"),this);
     m_hideSideAct->setIcon(QIcon("icon:images/hidesidebar.png"));
     m_hideSideAct->setCheckable(true);
 
@@ -456,9 +456,12 @@ void SideWindowStyle::createToolWindowMenu()
 {
     QMenu *menu = m_liteApp->actionManager()->loadMenu("menu/view");
     if (menu) {
+        menu->addAction(m_hideSideAct);
         m_sideMenu = menu->addMenu(tr("SideBar Windows"));
         m_outputMenu = menu->addMenu(tr("Output Windows"));
     }
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+    actionContext->regAction(m_hideSideAct,"HideSideBar",LiteApi::UseMacShortcuts?"Ctrl+Alt+0":"Alt+0");
 }
 
 void SideWindowStyle::restoreHideToolWindows()
