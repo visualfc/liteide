@@ -33,6 +33,7 @@
 #include <QTextCursor>
 #include <QTextDocumentFragment>
 #include <QScrollBar>
+#include <QInputMethodEvent>
 #include <QTimer>
 #include <cmath>
 //lite_memory_check_begin
@@ -338,6 +339,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
       m_contentsChanged(false),
       m_lastCursorChangeWasInteresting(false)
 {
+    m_inputCursorOffset = 0;
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
     m_navigateArea = new TextEditNavigateArea(this);
@@ -2772,6 +2774,12 @@ void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
         viewport()->setCursor(Qt::IBeamCursor);
 }
 
+void LiteEditorWidgetBase::inputMethodEvent(QInputMethodEvent *e)
+{
+    m_inputCursorOffset = e->preeditString().length();
+    QPlainTextEdit::inputMethodEvent(e);
+}
+
 static void fillBackground(QPainter *p, const QRectF &rect, QBrush brush, QRectF gradientRect = QRectF())
 {
     p->save();
@@ -2871,7 +2879,10 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     static bool bc = true;
     bc = !bc;
-    context.cursorPosition == bc ? -1 : cursor.position();
+    context.cursorPosition = bc ? -1 : cursor.position();
+    if (!hasFocus()) {
+        context.cursorPosition = -1;
+    }
 
     while (block.isValid()) {
         QRectF r = blockBoundingRect(block).translated(offset);
@@ -3011,7 +3022,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             if ((drawCursor && !drawCursorAsBlock)
                 || (editable && context.cursorPosition < -1
                     && !layout->preeditAreaText().isEmpty())) {
-                int cpos = context.cursorPosition;
+                int cpos = context.cursorPosition+m_inputCursorOffset;
                 if (cpos < -1)
                     cpos = layout->preeditAreaPosition() - (cpos + 2);
                 else

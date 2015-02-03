@@ -230,6 +230,7 @@ protected:
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
+    void inputMethodEvent(QInputMethodEvent *e);
     void indentBlock(QTextBlock block, bool bIndent);
     void indentCursor(QTextCursor cur, bool bIndent);
     void indentText(QTextCursor cur, bool bIndent);
@@ -266,6 +267,7 @@ protected:
     bool m_rightLineVisible;
     bool m_eofVisible;
     int  m_rightLineWidth;
+    int  m_inputCursorOffset;
     bool m_indentLineVisible;
     bool m_autoIndent;
     bool m_autoBraces0; //{
