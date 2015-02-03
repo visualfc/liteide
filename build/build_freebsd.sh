@@ -46,7 +46,7 @@ fi
 
 echo build liteide tools ...
 cd $LITEIDE_ROOT
-export GOPATH=$PWD
+export GOPATH=$PWD:$GOPATH
 
 go install -ldflags "-s" -v github.com/visualfc/gotools
 
