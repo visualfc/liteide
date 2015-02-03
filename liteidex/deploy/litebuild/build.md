@@ -1,0 +1,29 @@
+### LiteEdit Build Environment
+
+***
+
+### liteide app info
+
+	LITEIDE_BIN_DIR
+	LITEIDE_RES_DIR
+
+### build dir info
+
+	BUILD_DIR_PATH
+	BUILD_DIR_NAME
+	BUILD_DIR_BASENAME
+	BUILD_DIR_GONAME
+
+### editor file info
+
+	EDITOR_FILE_PATH
+	EDITOR_FILE_NAME
+	EDITOR_FILE_BASENAME
+	EDITOR_FILE_SUFFIX
+
+### editor dir info
+
+	EDITOR_DIR_PATH
+	EDITOR_DIR_NAME
+	EDITOR_DIR_BASENAME
+	EDITOR_DIR_GONAME
