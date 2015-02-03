@@ -238,7 +238,8 @@ protected:
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
 protected slots:
-    void uplinkTimeout();
+    void uplinkDeployTimeout();
+    void uplinkInfoTimeout();
     void stopUplinkTimer();
 protected:
     LiteApi::IApplication *m_liteApp;
@@ -287,10 +288,11 @@ protected:
     int m_extraAreaSelectionNumber;
     int m_averageCharWidth;
     int m_lastLine;
-    QTimer *m_uplinkTimer;
-    QTextCursor m_uplinkCursor;
-    QPoint m_uplinkPos;
-    QPoint m_lastUplinkPos;
+    int m_uplinkTime;
+    QTimer *m_uplinkDeployTimer;
+    QTimer *m_uplinkInfoTimer;
+    QPoint m_uplinkInfoPos;
+    QPoint m_lastUplinkInfoPos;
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;

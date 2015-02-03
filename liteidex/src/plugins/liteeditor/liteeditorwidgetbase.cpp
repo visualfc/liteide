@@ -340,6 +340,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
       m_lastCursorChangeWasInteresting(false)
 {
     m_inputCursorOffset = 0;
+    m_uplinkTime = 200;
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
     m_navigateArea = new TextEditNavigateArea(this);
@@ -377,9 +378,12 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_visualizeWhitespace = false;
     m_lastLine = -1;
 
-    m_uplinkTimer = new QTimer(this);
-    m_uplinkTimer->setSingleShot(true);
-    connect(m_uplinkTimer,SIGNAL(timeout()),this,SLOT(uplinkTimeout()));
+    m_uplinkDeployTimer = new QTimer(this);
+    m_uplinkDeployTimer->setSingleShot(true);
+    connect(m_uplinkDeployTimer,SIGNAL(timeout()),this,SLOT(uplinkDeployTimeout()));
+    m_uplinkInfoTimer = new QTimer(this);
+    m_uplinkInfoTimer->setSingleShot(true);
+    connect(m_uplinkInfoTimer,SIGNAL(timeout()),this,SLOT(uplinkInfoTimeout()));
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
     m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
@@ -2539,9 +2543,19 @@ QTextBlock LiteEditorWidgetBase::foldedBlockAt(const QPoint &pos, QRect *box) co
     return QTextBlock();
 }
 
-void LiteEditorWidgetBase::uplinkTimeout()
+void LiteEditorWidgetBase::uplinkDeployTimeout()
 {
-    QTextCursor cursor = cursorForPosition(m_uplinkPos);
+    m_lastUplinkInfoPos = m_uplinkInfoPos;
+    m_uplinkInfoTimer->start(m_uplinkTime+100);
+}
+
+void LiteEditorWidgetBase::uplinkInfoTimeout()
+{
+    if (m_lastUplinkInfoPos != m_uplinkInfoPos) {
+        QToolTip::hideText();
+        return;
+    }
+    QTextCursor cursor = cursorForPosition(m_uplinkInfoPos);
     bool findLink = false;
     if (!cursor.isNull()) {
         int pos = cursor.position();
@@ -2550,10 +2564,11 @@ void LiteEditorWidgetBase::uplinkTimeout()
         if (cursor.hasSelection()) {
             rc.setLeft(rc.left()-(pos-cursor.selectionStart())*m_averageCharWidth);
             rc.setRight(rc.right()+(cursor.selectionEnd()-pos)*m_averageCharWidth);
-            if (rc.contains(m_uplinkPos)) {
+            if (rc.contains(m_uplinkInfoPos)) {
                 findLink = true;
                 m_showLinkInfomation = true;
-                emit updateLink(cursor,m_uplinkPos,false);
+                QToolTip::hideText();
+                emit updateLink(cursor,m_uplinkInfoPos,false);
             }
         }
     }
@@ -2566,7 +2581,8 @@ void LiteEditorWidgetBase::stopUplinkTimer()
 {
     m_showLinkInfomation = false;
     QToolTip::hideText();
-    m_uplinkTimer->stop();
+    m_uplinkInfoTimer->stop();
+    m_uplinkDeployTimer->stop();
 }
 
 bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
@@ -2581,7 +2597,9 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 
 void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
-    if (!link.targetInfo.isEmpty() && m_showLinkInfomation) {
+    if (!link.targetInfo.isEmpty() &&
+        ( (m_showLinkInfomation && link.cursorPos == m_lastUplinkInfoPos)
+          || m_showLinkNavigation )) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
         QToolTip::showText(pt,link.targetInfo,this);
     }
@@ -2697,14 +2715,16 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
                 if (rc.contains(e->pos())) {
                     findLink = true;
                     m_showLinkNavigation = true;
-                    m_showLinkInfomation = true;
                     emit updateLink(cursor,e->pos(),true);
                 }
             }
         }
+    } else if (e->buttons() == Qt::NoButton){
+        m_uplinkInfoPos = e->pos();
+        m_uplinkDeployTimer->start(m_uplinkTime);
     } else {
-        m_uplinkPos = e->pos();
-        m_uplinkTimer->start(100);
+        m_uplinkDeployTimer->stop();
+        m_uplinkInfoTimer->stop();
     }
     if (!findLink) {
         clearLink();

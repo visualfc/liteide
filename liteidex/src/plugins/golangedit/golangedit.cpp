@@ -220,6 +220,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     if (m_lastLink.linkTextStart == cursor.selectionStart() &&
             m_lastLink.linkTextEnd == cursor.selectionEnd()) {
         if (m_lastLink.hasValidTarget()) {
+            m_lastLink.cursorPos = pos;
             m_editor->showLink(m_lastLink);
             return;
         }
