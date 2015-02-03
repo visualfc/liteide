@@ -30,6 +30,7 @@
 #include <QProcess>
 #include <QToolBar>
 #include <QToolButton>
+#include <QTextCodec>
 #include <QMenu>
 #include <QDebug>
 //lite_memory_check_begin
