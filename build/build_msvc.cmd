@@ -38,7 +38,7 @@ echo .
 cd %LITEIDE_ROOT%
 set GOPATH=%CD%;%GOPATH%
 
-go install -ldflags "-s" -v liteide_stub
+go install -ldflags "-s" -v github.com/visualfc/gotools
 if ERRORLEVEL 1 goto go_fail
 
 go install -ldflags "-s" -v github.com/nsf/gocode

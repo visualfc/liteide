@@ -47,7 +47,7 @@ echo build liteide tools ...
 cd $LITEIDE_ROOT
 export GOPATH=$PWD:$GOPATH
 
-go install -ldflags "-s" -v liteide_stub
+go install -ldflags "-s" -v github.com/visualfc/gotools
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'
@@ -76,7 +76,7 @@ cp -R -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -R -v $LITEIDE_ROOT/../README.md liteide
 cp -R -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 
-cp -R -v $LITEIDE_ROOT/bin/liteide_stub liteide/LiteIDE.app/Contents/MacOS
+cp -R -v $LITEIDE_ROOT/bin/gotools liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/bin/gocode liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/deploy/* liteide/LiteIDE.app/Contents/Resources
 cp -R -v $LITEIDE_ROOT/os_deploy/macosx/* liteide/LiteIDE.app/Contents/Resources

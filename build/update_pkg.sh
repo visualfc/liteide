@@ -23,8 +23,8 @@ export GOPATH=$PWD
 
 echo get gocode ...
 go get -v -u -ldflags "-s" "github.com/nsf/gocode"
-echo get liteide_stub ...
-go get -v -ldflags "-s" "liteide_stub"
+echo get gotools ...
+go get -v -u -ldflags "-s" "github.com/visualfc/gotools"
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'

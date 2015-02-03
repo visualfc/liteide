@@ -21,8 +21,8 @@ set GOPATH=%CD%;%GOPATH%
 
 echo get gocode ...
 go get -v -u "github.com/nsf/gocode"
-echo get liteide_stub ...
-go get -v "liteide_stub"
+echo get gotools ...
+go get -v -u "github.com/visualfc/gotools"
 
 cd %BUILD_ROOT%
 
