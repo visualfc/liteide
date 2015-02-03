@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
+    <width>625</width>
     <height>211</height>
    </rect>
   </property>
@@ -69,7 +69,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>[*] item requeset restart liteide</string>
+          <string>[*] item requeset restart LiteIDE</string>
          </property>
         </widget>
        </item>

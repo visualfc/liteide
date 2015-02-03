@@ -30,6 +30,7 @@
 
 class QComboBox;
 class QLineEdit;
+
 class FileBrowser : public QObject
 {
     Q_OBJECT

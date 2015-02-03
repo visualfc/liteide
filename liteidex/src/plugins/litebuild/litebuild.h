@@ -70,7 +70,6 @@ public:
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
     void setDynamicBuild();
     void loadBuildType(const QString &mimeType);
-    void setBuildRoot(const QString &path);
 public slots:
     void appLoaded();
     void debugBefore();

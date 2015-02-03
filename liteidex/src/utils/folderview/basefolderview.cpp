@@ -207,7 +207,8 @@ void BaseFolderView::removeFile()
     }
 
     int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Delete File"),
-                          tr("Are you sure that you want to permanently delete this file?"),
+                          tr("Are you sure that you want to permanently delete this file?")
+                          +"\n"+info.filePath(),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         if (!QFile::remove(info.filePath())) {
@@ -276,7 +277,8 @@ void BaseFolderView::removeFolder()
     }
 
     int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("Delete Folder"),
-                          tr("Are you sure that you want to permanently delete this folder and all of its contents?"),
+                          tr("Are you sure that you want to permanently delete this folder and all of its contents?")
+                          +"\n"+info.filePath(),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         QDir dir = info.dir();

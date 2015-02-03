@@ -844,7 +844,7 @@ void LiteBuild::loadBuildPath(const QString &buildPath)
     } else {
         m_lockBuildRoot->setEnabled(true);
         m_lockBuildRoot->setText(QFileInfo(buildPath).fileName());
-        m_lockBuildRoot->setToolTip(QString(tr("Lock Build: %1").arg(QDir::toNativeSeparators(buildPath))));
+        m_lockBuildRoot->setToolTip(QString("%1 : %2").arg(tr("Lock Build").arg(QDir::toNativeSeparators(buildPath))));
     }
     if (buildPath.isEmpty()) {
         return;
@@ -962,13 +962,6 @@ void LiteBuild::loadBuildType(const QString &mimeType)
             act->setVisible(visible);
         }
     }
-}
-
-void LiteBuild::setBuildRoot(const QString &path)
-{
-    m_buildRootPath = path;
-    m_lockBuildRoot->setText(QString("%1").arg(QFileInfo(path).fileName()));
-    m_lockBuildRoot->setToolTip(QString(tr("Lock Build Path : %1").arg(path)));
 }
 
 void LiteBuild::editorCreated(LiteApi::IEditor *editor)
