@@ -347,6 +347,7 @@ void LiteEditor::createActions()
 
     m_autoIndentAct = new QAction(tr("Auto-indent Selection"),this);
     actionContext->regAction(m_autoIndentAct,"AutoIndent","Ctrl+I");
+    m_autoIndentAct->setVisible(false);
 
     m_tabToSpacesAct = new QAction(tr("Tab To Spaces (MimeType)"),this);
     actionContext->regAction(m_tabToSpacesAct,"TabToSpaces","");

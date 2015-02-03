@@ -63,6 +63,7 @@ void RustEdit::editorCreated(LiteApi::IEditor *editor)
     LiteApi::ILiteEditor *ed = LiteApi::getLiteEditor(editor);
     if (ed) {
         ed->setTabOption(4,true);
+        ed->setEnableAutoIndentAction(true);
     }
 }
 

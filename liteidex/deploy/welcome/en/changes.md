@@ -3,6 +3,35 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2015.2.4 Ver X27
+* LiteIDE
+	* create independent project gotools and replace liteide_stub 
+	* move build toolbar to the main window
+	* move editor tab to editor widget
+	* fix multi window keyshort invalid
+	* fix treeview scroll bar
+	* fix sidebar keyshort
+* GolangEdit
+	* add editor mouse under symbol tooltip 
+	* add ctrl + left mouse button to link navigate
+	* fix embeded func navigate
+	* fix golang syntax parser
+* LiteBuild
+	* add build lock action
+	* update build config file
+	* fix output enter offset
+* LiteFind
+	* update find text by under cursor
+* LiteEditor
+	* add whitespace visible setup option
+	* add line end setup option 
+	* fix google pinying editor cursor hide bug
+	* fix editor navigate action
+* JsonEdit
+	* re-implement json format
+* RustEdit
+	* add simple rust support
+
 ### 2014.12.25 Ver X26
 * LiteIDE
 	* add lang package support
@@ -17,11 +46,12 @@
 	* fix code completer func () insert
 * GolangCode
 	* fix system enviroment work
-	* add auto update package when its source change option		
+	* add auto update package when its source change option
 * GdbDebugger
 	* fix system enviroment gdb/gdb64 auto select
 * GolangEdit
-	* add golang tag highlighter	 	
+	* add golang tag highlighter
+
 
 ### 2014.12.16 Ver X25.2
 * LiteIDE
@@ -29,7 +59,7 @@
 * LiteApp
 	* fix sort folder on macosx
 * LiteEnv
-	* add reload current enviroment action	
+	* add reload current enviroment action
 	* set default enviroment id system
 * LiteEditor
 	* fix enter key indent
@@ -40,11 +70,11 @@
 	* fix lookup godoc on system env
 	* fix path name to pkg name
 * GolangCode
-	* completer import line on GOPATH	
+	* completer import line on GOPATH
 * GolangEdit
 	* add update dependencies library action
 	* add view import package in godoc action
-	
+
 ### 2014.12.12 Ver X25.1
 * LiteIDE
 	* both support go1.3 and go1.4
@@ -59,10 +89,10 @@
 * GolangDoc
 	* support go1.4
 * LiteFind
-	* fix search result style sheet	
+	* fix search result style sheet
 * FileBorwser
-	* fix sort by folder first in macosx		
-	
+	* fix sort by folder first in macosx
+
 
 ### 2014.12.4 Ver X25
 * LiteApp
@@ -79,30 +109,30 @@
 	* fix find usages Non-English offset
 	* fix faketip on ubuntu
 * FileBorwser
-	* use new folder class implement	
+	* use new folder class implement
 * LiteEditor
 	* fix clipboard	blocking on linux
 	* fix editor brace insert postion
 * GolangFmt
-	* default save use gofmt style	
+	* default save use gofmt style
 	* add menu action Code Format(gofmt) (Ctrl+I)
 	* and menu action Code Format(goimports) (Ctrl+Alt+I)
 
 ### 2014.11.13 Ver X24.3
 * liteide_stub
-	* merge and optimization code.google.com/p/goimports 
+	* merge and optimization code.google.com/p/goimports
 	* fix astview for decl funcs
-	* fix import line find uses	
+	* fix import line find uses
 * LiteApp
 	* update german translation, thanks Harald Leinders
 	* fix PATHEXT no default on windows
 	* fix treeview remove crash bug
-	* fix open terminal 
+	* fix open terminal
 * GolangEdit
 	* fix import find usages
 	* fix golang func decl syntax highlighter
 * GolangAst
-	* fix astview view missing funcs	
+	* fix astview view missing funcs
 * GolangCode
 	* fix goimports incorrectly removing certain no incorrectly removing no convention import paths
 
@@ -131,18 +161,18 @@
 	* new codecompleter components
 	* code completer match by strings.hp  => HasPrefix
 	* code completer sort by prefix
-	* code completer list use tooltip 
+	* code completer list use tooltip
 	* code completer list updown use ctrl+n/ctrl+p short key
 	* smart () [] "" '' `` insert and backspace remove
-	* smart right ) ] " ' ` insert skip	
+	* smart right ) ] " ' ` insert skip
 	* fix code completer up/down key
 	* fix ctrl+enter/ctrl+shift+enter to insert line after/berore
 	* fix selection highlight
-	
+
 * LiteBuild
 	* golang config custom add TESTARGS/BENCHMARKARGS
 	* output font family use editor family
-	
+
 ### 2014.08.05 Ver X23.2
 * gocode add cgo basic completer
 * update option to dialog mode
@@ -162,7 +192,7 @@
 	* add ITextLexer interface
 	* add new color scheme carbon from William Kennedy <bill@ardanstudios.com>
 	* fix kate code fold
-	* fix code completer offset 
+	* fix code completer offset
 * GolangEdit
 	* add golang simple lexer
 	* add golang highlighter parser
@@ -171,7 +201,7 @@
 	* view by QtWebKit
 * WebKitHtmlWidget
 	* change to browser view mode
-				
+
 ### 2014.04.14 Ver X22
 * LiteIDE
 	* add golang find usage support
@@ -205,12 +235,12 @@
 	* add code complete short key (ctrl+space)
 	* fix gocode automatically plugin
 	* fix golang present verify plugin
-	
+
 ### 2014.03.06 Ver X21
 * LiteIDE
 	* fast highlighter for MacOS X 10.9
 	* fast expression lookup F1/F2
-	* cancel x20 always open in new window mode.	
+	* cancel x20 always open in new window mode.
 	* add new JsonEdit plugin.
 	* add reload/close dialog YesToAll, if modified on the drive.
 	* add auto reload files option, if modified on the drive.
@@ -230,7 +260,7 @@
 	* add type const
 	* add import symbol, and view document menu
 	* add context menu
-	* add symbol extra info		
+	* add symbol extra info
 * GolangFmt
 	* fix timeout
 	* fix GOPATH
@@ -251,7 +281,7 @@
 	* update kate highlighter
 	* add gopresent.xml syntax
 	* add Visual Studio Theme (by William Kennedy <bill@ardanstudios.com>)
-	* fix goto match braces	
+	* fix goto match braces
 	* update editor menu
 * LiteEnv:
 	* auto set $PATH for GOROOT/bin and GOBIN and GOPATH/bin and GOPATH/bin/GOOS_GOARCH
@@ -261,7 +291,7 @@
 	* fix close gocode on last window close
 * GolangFmt:
 	* use sync code format (option)
-	* use goimports instead gofmt (option)		
+	* use goimports instead gofmt (option)
 	* code format error show in editor navigate area
 * LiteDebug:
 	* external cmd setting
@@ -271,7 +301,7 @@
 * FileBrowser:
 	* option show hidden files
 * LiteBuild:
-	* fix build menu enable	
+	* fix build menu enable
 	* build error show in editor navigate area
 	* add gopm(Go Package Manager) tool <https://github.com/gpmgo/gopm>
 * GolangPresent:
@@ -281,25 +311,25 @@
 * Welcome:
 	* update document
 	* add zh_CN document
-	
+
 ### 2013.7.17 Ver X19
 * LiteIDE
 	* MacOS X 10.8 Retina support
 	* add simple webkit browser
 	* update macosx tool window short key to Ctrl+Alt+1~9
-* LiteDebug	
+* LiteDebug
 	* add debug go test support, thanks for GoEddie <https://github.com/GoEddie>
-* GdbDebugger	
+* GdbDebugger
 	* gdb debugger --tty mode support (windows default)
 	* debugger command input foucus
-* LiteEditor		
-	* add wheel zooming option 
+* LiteEditor
+	* add wheel zooming option
 	* fix editor extra width
 	* fix init editor update
-* LiteFind	
+* LiteFind
 	* fix find hide
 * Markdown
-	* markdown preview fast sync	
+	* markdown preview fast sync
 
 ### 2013.5.21 Ver X18.2
 * fast for gocode
@@ -323,7 +353,7 @@
 * litefind:
 	* Find/Replace commands highlight existing text
 	* enable find file
-	* add close button	
+	* add close button
 * liteeditor:
 	* Word wrap support
 	* Added option to trim whitespace on save
@@ -334,7 +364,7 @@
 * liteapp:
 	* fix full screen bug
 * litebuild:
-	* execute use combbox	
+	* execute use combbox
 	* add close button
 * litedebug:
 	* add close button
@@ -348,7 +378,7 @@
 	* macosx lion full screen
 	* add color theme highcontrastdark.xml and app theme black.qss, thanks for addxtoy <pollux@lavabit.com>
 	* add tr liteide_de.ts , thanks for Helge Plaschke <https://github.com/HelgePlaschke>
-	* fix keybord scheme 
+	* fix keybord scheme
 * liteeditor:
 	* show tab ident guide
 	* show find scope expression
@@ -371,48 +401,48 @@
 * litefind:
 	* new find and replace
 	* fix find editor and unfold
-	* fix backword find	
-* litebuild:		
-	* add test bench	
+	* fix backword find
+* litebuild:
+	* add test bench
 * document:
 	* enable zoom font size Ctrl++/Ctrl+-/Ctrl+0
 	* fix find crash
 * gopath setup:
 	* fix invalid path
 
-	
+
 ### 2013.1.16 Ver X16
 * support keybord mapping scheme
 * fix: lookup go command in $PATH
 * fix: remove GOBIN enviroment set
-* fix: empty editor cursor position	
+* fix: empty editor cursor position
 * fix: double click error output to jump source and editor set focus
-  
+
 ### 2013.1.10 Ver X15.2
 * LiteIDE:
 	* use new logo and icon
 	* support go version hg-tip
 * LiteApp:
 	* update logo
-	* update splash	
+	* update splash
 	* add action close same/other folder files
 	* fix full screen restore
 * LiteEnv:
-	* add user env files	
+	* add user env files
 * LiteEditor:
 	* fix `Insert` key
 	* update sublime color scheme
 * GolangDoc:
 	* support go tip version
-	* show error output	
+	* show error output
 * GolangCode:
 	* fix code completer icon visible
 * Golang Fmt:
 	* fix timeout option invalid
 * Markdown:
 	* fix critical messsage
-	* add css Documents.css	
-	
+	* add css Documents.css
+
 ### 2012.12.28 Ver X15.1
 * LiteIDE:
 	* update logo
@@ -428,7 +458,7 @@
 	* add sublime color scheme, thanks for `Henson Lu`
 	* custom tab width and tab to spaces for mimetype
 * LiteEnv:
-	* add cross-compiler   
+	* add cross-compiler
 * GolangDoc:
 	* fix goto source
 
@@ -437,12 +467,12 @@
 	* add markdown plugin
 	* changed LiteApp to dynamic library
 	* redesign editor menu and toolbar
-	* update doc to markdown format  
+	* update doc to markdown format
 	* add html render twin-engine
 		* internal QHtmlBrowser
 		* plugin QtWebKit, if find qt webkit dynamic library
 * LiteApp:
-	* changed to dynamic library  
+	* changed to dynamic library
 	* support full screen mode
 	* editor tabs change to toolbar
 	* add toolbar icon size option
@@ -455,15 +485,15 @@
 	* redesign editor menu , context menu and toolbar
 	* add right margin line visible option
 * GolangFmt:
-	* fix comment offset, remove spaces  
-* LiteBuild: 
+	* fix comment offset, remove spaces
+* LiteBuild:
 	* id BuildAndRun before kill old process
 	* redesign build toolbar and menu
 	* support GOBIN
-* LiteDebug: 
+* LiteDebug:
 	* add debug before rebuild option
 	* add debug external application action
-* Markdown: 
+* Markdown:
 	* markdown editor support
 		* action h1-h6, bold, italic, code, list, quote, hr, link, image
 		* syntax highlighting
@@ -471,13 +501,13 @@
 		* sync scroll
 		* export html
 		* export pdf
-		* custom css , css files from [Mou](http://mouapp.com) 
-	* markdown batch 
+		* custom css , css files from [Mou](http://mouapp.com)
+	* markdown batch
 		* separate to html
 		* separate to pdf
 		* merge to html
 		* merge to pdf
-* GolangDoc: 
+* GolangDoc:
 	* fix url parser
 
 
@@ -486,7 +516,7 @@
 * LiteApp : multi instance support
 * GolangDoc: deply load mode
 * GolangPackage: deply load mode
-* GolangAst : fix classview 
+* GolangAst : fix classview
 * LiteEditor: fix if/else fold
 * GolangDoc : goapi enable _test
 
@@ -495,7 +525,7 @@
 * GolangDoc: View Expression Information (F1)
 * GolangDoc: Jump to Declaration (F2)
 * GolangDoc: lookup all GOPATH pkg api
-* LiteApp: fix editor navigate 
+* LiteApp: fix editor navigate
 * LiteEditor : add action Move to New Windows
 * LiteFind : focus in find text and enter
 * LiteEditor: fix code completer func test ()
@@ -503,7 +533,7 @@
 * GolanPlay: enable gocode and fmt
 * GolangFmt: auto popup gofmt messsage option
 * LiteBuild : fix build config custom view
-* LiteBuild : BUILDARGS / INSTALLARGS support set 
+* LiteBuild : BUILDARGS / INSTALLARGS support set
   example -gcflags "-N -l" for debug
   example -ldflags "-s" for release
 * remove: Makefile plugin , Profile plugin, x64 Project
@@ -519,7 +549,7 @@
 * Welcome : update page
 * LiteEnv : edit enviroment action
 * LiteBuild : update gosrc.xml
-* LiteBuild : fix double click goto line regexp 
+* LiteBuild : fix double click goto line regexp
 * LiteBuild : show enviroment go env
 * LiteBuild : execute error use red font
 * LiteEditor : color theme set currnet line background
@@ -528,7 +558,7 @@
 * LiteEditor : code completer func auto append ()
 * LiteEditor : fix tab indent
 * FileSystem : fix execute find path
-* LiteFind : fix current directory 
+* LiteFind : fix current directory
 
 ### 2012.9.24 Ver X13.1
 * LiteBuild : fix build load crash.
@@ -545,7 +575,7 @@
 ### 2012.9.21 Ver X13
 * LiteApp : any folder, any file to build
 * LiteApp : update window style, add editor toolbar and status
-* LiteEditor : remove editor toolbar 
+* LiteEditor : remove editor toolbar
 * LiteEditor : extra use editor font
 * LiteBuild : new build toolbar and menu
 * LiteBuild : clean action tags
@@ -586,7 +616,7 @@
 ### 2012.6.27 Ver X12.1
 * LiteIDE : LiteIDE use new logo
 * LiteEditor : fold / unfold
-* LiteEditor : color scheme custom selection 
+* LiteEditor : color scheme custom selection
 * LiteEditor : kate go.xml remove linecontinue
 * LiteEditor : goto line
 * LiteApp : fix recent file load bug
@@ -654,7 +684,7 @@
 * GdbDebugger : variables expand tree
 * GdbDebugger : call stack view
 * GdbDebugger : load library view
-* TerminalEdit : provided to LiteBuild and LiteDebug 
+* TerminalEdit : provided to LiteBuild and LiteDebug
 
 ### 2011.9.14 Ver X9 1.40625
 * LiteDebug : new debug manager plugin
@@ -723,7 +753,7 @@
 
 ### 2011.6.30 Ver X4 v0.625
 * add interface zh_cn
-* add filebrowser pluing add/change/remove 
+* add filebrowser pluing add/change/remove
 * add editor color style scheme setup
 * add editor codec check/reload
 * add editor pdf export
@@ -779,4 +809,4 @@
 * gopromake use goroutines
 
 ### 2011.1.10 v0.1
-* init version 
+* init version
