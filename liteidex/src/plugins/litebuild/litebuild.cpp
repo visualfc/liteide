@@ -844,7 +844,7 @@ void LiteBuild::loadBuildPath(const QString &buildPath)
     } else {
         m_lockBuildRoot->setEnabled(true);
         m_lockBuildRoot->setText(QFileInfo(buildPath).fileName());
-        m_lockBuildRoot->setToolTip(QString("%1 : %2").arg(tr("Lock Build").arg(QDir::toNativeSeparators(buildPath))));
+        m_lockBuildRoot->setToolTip(QString("%1 : %2").arg(tr("Lock Build")).arg(QDir::toNativeSeparators(buildPath)));
     }
     if (buildPath.isEmpty()) {
         return;
