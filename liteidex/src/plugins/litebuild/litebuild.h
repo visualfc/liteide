@@ -35,6 +35,8 @@ class BuildManager;
 class QComboBox;
 class ProcessEx;
 class TextOutput;
+class QLabel;
+class QCheckBox;
 class QStandardItemModel;
 
 struct BuildBarInfo;
@@ -62,12 +64,13 @@ public:
     void updateBuildConfig(LiteApi::IBuild *build);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
-    void loadBuildInfo(const QString &buildPath);
+    void loadBuildPath(const QString &buildPath);
     void loadTargetInfo(LiteApi::IBuild *build);
     LiteApi::IBuild *findProjectBuildByEditor(LiteApi::IEditor *editor);
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
     void setDynamicBuild();
-    void loadBuild(const QString &mimeType);
+    void loadBuildType(const QString &mimeType);
+    void setBuildRoot(const QString &path);
 public slots:
     void appLoaded();
     void debugBefore();
@@ -88,6 +91,7 @@ public slots:
     void fmctxExecuteFile();
     void fmctxGoTool();
     void applyOption(QString);
+    void lockBuildRoot(bool b);
 protected:
     QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;
@@ -112,10 +116,12 @@ protected:
     QAction     *m_fmctxGoInstallAct;
     QAction     *m_fmctxGoTestAct;
     QAction     *m_fmctxGoCleanAct;
+    QCheckBox   *m_lockBuildRoot;
     QFileInfo   m_fmctxInfo;
     QString     m_outputRegex;
     QString     m_buildMimeType;
     QString     m_buildRootPath;
+    bool        m_bLockBuildRoot;
     bool        m_bDynamicBuild;
     bool        m_bProjectBuild;
     QMap<QString,QString> m_liteAppInfo;

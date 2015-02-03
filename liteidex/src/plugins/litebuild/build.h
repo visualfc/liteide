@@ -37,6 +37,7 @@ public:
     virtual QString mimeType() const;
     virtual QString id() const;
     virtual QString work() const;
+    virtual QString lock() const;
     virtual QList<BuildAction*> actionList() const;
     virtual QList<BuildLookup*> lookupList() const;
     virtual QList<BuildConfig*> configList() const;
@@ -53,6 +54,7 @@ public:
     void setType(const QString &mimeType);
     void setId(const QString &id);
     void setWork(const QString &work);
+    void setLock(const QString &lock);
     void appendAction(BuildAction *act);
     void appendLookup(BuildLookup *lookup);
     void appendConfig(BuildConfig *config);
@@ -64,6 +66,7 @@ public:
 protected:
     QString m_mimeType;
     QString m_id;
+    QString m_lock;
     QString m_work;
     QMap<QString,QMenu*> m_idMenuMap;
     QList<QAction*> m_actions;

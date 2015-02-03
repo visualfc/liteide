@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-	<mime-type type="text/x-rust" id="rust cargo" work="$(BUILD_DIR_PATH)" ver="2">
+	<mime-type type="text/x-rust" id="rust cargo" work="$(BUILD_DIR_PATH)" lock="dir" ver="2">
 		<config id="Rustc" name="RUSTC" value="rustc"/>
 		<config id="Cargo" name="CARGO" value="cargo"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_BIN_DIR)/gotools"/>

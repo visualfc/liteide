@@ -235,6 +235,7 @@ public:
     virtual QString mimeType() const = 0;
     virtual QString id() const = 0;
     virtual QString work() const = 0;
+    virtual QString lock() const = 0;
     virtual QList<BuildAction*> actionList() const = 0;
     virtual QList<BuildLookup*> lookupList() const = 0;
     virtual QList<BuildConfig*> configList() const = 0;

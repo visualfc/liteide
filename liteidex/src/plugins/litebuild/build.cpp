@@ -71,6 +71,11 @@ QString Build::work() const
     return m_work;
 }
 
+QString Build::lock() const
+{
+    return m_lock;
+}
+
 QList<BuildAction*> Build::actionList() const
 {
     return m_actionList;
@@ -211,6 +216,11 @@ void Build::setWork(const QString &work)
     m_work = work;
 }
 
+void Build::setLock(const QString &lock)
+{
+    m_lock = lock;
+}
+
 void Build::appendAction(BuildAction *act)
 {
     for (int i = 0; i < m_actionList.size(); i++) {
@@ -299,6 +309,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                     build->setType(attrs.value("type").toString());
                     build->setId(attrs.value("id").toString());
                     build->setWork(attrs.value("work").toString());
+                    build->setLock(attrs.value("lock").toString());
                 }
             } else if (reader.name() == "lookup" && lookup == 0 && build != 0) {
                 lookup = new BuildLookup;

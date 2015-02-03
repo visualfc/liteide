@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-	<mime-type type="text/x-python" id="python" work="$(EDITOR_DIR_PATH)" ver="2">
+	<mime-type type="text/x-python" id="python" work="$(EDITOR_DIR_PATH)" lock="file" ver="2">
     <config id="ErrRegex" name="ERRREGEX" value="\&quot;([\w\.]+)\&quot;\,\s*line\s*(\d+)"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEAPPDIR)/gotools"/>
 		<action id="Run" key="Ctrl+R" img="gray/run.png" cmd="python" args="$(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" regex="$(ERRREGEX)" readline="true" />
