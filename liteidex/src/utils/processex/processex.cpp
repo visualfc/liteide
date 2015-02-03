@@ -184,3 +184,37 @@ bool ProcessEx::startDetachedEx(const QString& cmd, const QStringList &args)
     return QProcess::startDetached(cmd, args);
 #endif
 }
+
+
+Process::Process(QObject *parent) : QProcess(parent)
+{
+
+}
+
+bool Process::isRunning() const
+{
+    return this->state() == QProcess::Running;
+}
+
+void Process::startEx(const QString &cmd, const QString &args)
+{
+#ifdef Q_OS_WIN
+    this->setNativeArguments(args);
+    if (cmd.indexOf(" ")) {
+        this->start("\""+cmd+"\"");
+    } else {
+        this->start(cmd);
+    }
+#else
+    this->start(cmd+" "+args);
+#endif
+}
+
+bool Process::startDetachedEx(const QString &cmd, const QStringList &args)
+{
+#ifdef Q_OS_WIN
+    return (intptr_t)ShellExecuteW(NULL, NULL, (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), NULL, SW_HIDE) > 32;
+#else
+    return QProcess::startDetached(cmd, args);
+#endif
+}

@@ -55,8 +55,7 @@ public slots:
     void findInfoOutput(QByteArray,bool);
     void findInfoFinish(bool,int,QString);
     void findLinkStarted();
-    void findLinkOutput(QByteArray,bool);
-    void findLinkFinish(bool,int,QString);
+    void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
 protected:
     LiteApi::IApplication *m_liteApp;
@@ -73,7 +72,7 @@ protected:
     QAction *m_viewGodocAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;
-    ProcessEx  *m_findLinkProcess;
+    Process  *m_findLinkProcess;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;

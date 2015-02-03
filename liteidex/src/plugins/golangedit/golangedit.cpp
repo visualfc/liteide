@@ -73,7 +73,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     m_findDefProcess = new ProcessEx(this);
     m_findInfoProcess = new ProcessEx(this);
-    m_findLinkProcess = new ProcessEx(this);
+    m_findLinkProcess = new Process(this);
     m_enableMouseInfo = true;
     m_enableMouseNavigation = true;
 
@@ -92,8 +92,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findInfoProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoOutput(QByteArray,bool)));
     connect(m_findInfoProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findInfoFinish(bool,int,QString)));
     connect(m_findLinkProcess,SIGNAL(started()),this,SLOT(findLinkStarted()));
-    connect(m_findLinkProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findLinkOutput(QByteArray,bool)));
-    connect(m_findLinkProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findLinkFinish(bool,int,QString)));
+    connect(m_findLinkProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findLinkFinish(int,QProcess::ExitStatus)));
     connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
 
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
@@ -226,11 +225,11 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
         }
         return;
     }
-    if (m_findLinkProcess->isRunning()) {
+    if (m_findLinkProcess->state() != QProcess::NotRunning) {
         if (!m_findLinkProcess->waitForFinished(100)) {
             m_findLinkProcess->kill();
             if (!m_findLinkProcess->waitForFinished(100)) {
-                m_liteApp->appendLog("golang","find link error",false);
+                m_liteApp->appendLog("golang","find link timeout",false);
                 return;
             }
         }
@@ -433,11 +432,12 @@ void GolangEdit::findLinkStarted()
     m_findLinkProcess->closeWriteChannel();
 }
 
-void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
+void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
 {
-    if (bStdErr) {
+    if (code != 0) {
         return;
     }
+    QByteArray data = m_findLinkProcess->readAllStandardOutput();
     if ( m_editor == m_liteApp->editorManager()->currentEditor()) {
         if (m_lastLink.hasValidLinkText()) {
             QStringList info = QString::fromUtf8(data).trimmed().split("\n");
@@ -461,10 +461,6 @@ void GolangEdit::findLinkOutput(QByteArray data, bool bStdErr)
             }
         }
     }
-}
-
-void GolangEdit::findLinkFinish(bool /*error*/, int /*code*/, QString)
-{
 }
 
 void GolangEdit::searchTextChanged(const QString &/*word*/)

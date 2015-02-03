@@ -27,6 +27,16 @@
 #include <QProcess>
 #include <QVariant>
 
+class Process : public QProcess
+{
+    Q_OBJECT
+public:
+    Process(QObject *parent);
+    bool isRunning() const;
+    void startEx(const QString &cmd, const QString &args);
+    static bool startDetachedEx(const QString& cmd, const QStringList &args);
+};
+
 class ProcessEx : public QProcess
 {
     Q_OBJECT
