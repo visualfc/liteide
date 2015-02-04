@@ -173,6 +173,11 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         LiteEditorWidgetBase::keyPressEvent(e);
         return;
     }
+    if (m_inputCursorOffset > 0) {
+        m_completer->hidePopup();
+        LiteEditorWidgetBase::keyPressEvent(e);
+        return;
+    }
 
     if (m_completer->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
@@ -279,8 +284,8 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
 
 void LiteEditorWidget::inputMethodEvent(QInputMethodEvent *e)
 {
-    if (!e->commitString().isEmpty() && m_completer->popup()->isVisible()) {
-        m_completer->popup()->hide();
+    if (!e->preeditString().isEmpty()) {
+        m_completer->hidePopup();
     }
     LiteEditorWidgetBase::inputMethodEvent(e);
 }

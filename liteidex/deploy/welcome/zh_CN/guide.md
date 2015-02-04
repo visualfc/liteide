@@ -2,10 +2,17 @@
 
 # LiteIDE 功能手册
 
-## 多窗口模式设置
-LiteIDE允许设置总是在新窗口打开目录
+## 如何支持低版本Go1.1和Go1.2
+LiteIDE的编译设置使用了-i编译参数。如果使用Go1.1或Go1.2则不支持此参数。选项->查看->LiteBuild 双击gosrc.xml进行编辑。修改BUILDARGS默认设置：
 
-选项->查看->LiteApp-> 总是在新窗口打开目录。
+	<custom id="BuildArgsi" name="BUILDARGS" value="-i"/>
+	
+将value设置为空存盘重启LiteIDE即可支持Go1.1和Go1.2。
+
+## 窗口样式设置
+LiteIDE目前有两种窗口样式分离式和侧边栏式。
+
+选项->查看->LiteApp-> 窗口样式。
 
 
 ## 环境设置
@@ -129,7 +136,7 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
 ## Go语言代码格式化
 存盘时自动格式化	
 
-### Goimports
+### Goimports样式格式化
 LiteIDE 查看->选项->GolangFmt-> 使用Goimports代替gofmt进行代码格式化
 
 这个工具自动更新您的Go语言import行，增加缺少的pkg和移除未引用的pkg。

@@ -2,10 +2,17 @@
 
 # LiteIDE Feature Guide
 
-## Multiple Window Mode Setup
-LiteIDE setup allows open folder in new windows.
+## How to use the low version Go1.1 and Go1.2
+LiteIDE build config default use -i flag, if use Go1.1 or Go1.2 not support. View -> Options -> LiteBuild double click gosrc.xml to edit, modify BUILDARGS value:
 
-Options->View->LiteApp-> allows open folder in new windows.
+	<custom id="BuildArgsi" name="BUILDARGS" value="-i"/>
+	
+set value to empty and restart LiteIDE to support Go1.1 and Go1.2.
+
+## Window Style Setup
+LiteIDE now support splitter style and side style.
+
+Options->View->LiteApp-> Style
 
 ## Environments
 The LiteIDE environment setup plugin allows you to quickly switch between multiple system environments for your build.  Each environment has its own set of environment variables that can be used to control the build process.
