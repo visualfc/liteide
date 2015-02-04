@@ -372,6 +372,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_bTabUseSpace = false;
     m_nTabSize = 4;
     m_mouseOnFoldedMarker = false;
+    m_uplinkSkip = false;
     m_mouseNavigation = true;
     m_showLinkNavigation = false;
     m_showLinkInfomation = false;
@@ -2720,6 +2721,10 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
             }
         }
     } else if (e->buttons() == Qt::NoButton){
+        if (m_uplinkSkip) {
+            m_uplinkSkip = false;
+            return;
+        }
         m_uplinkInfoPos = e->pos();
         m_uplinkDeployTimer->start(m_uplinkTime);
     } else {
@@ -2748,6 +2753,7 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
                     return;
                 }
             }
+            m_uplinkSkip = true;
             this->stopUplinkTimer();
         }
     }

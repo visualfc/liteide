@@ -293,6 +293,7 @@ protected:
     QTimer *m_uplinkInfoTimer;
     QPoint m_uplinkInfoPos;
     QPoint m_lastUplinkInfoPos;
+    bool m_uplinkSkip;
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;
     bool m_lastCursorChangeWasInteresting;
