@@ -404,8 +404,9 @@ void LiteBuild::config()
             QStandardItem *name = m_customModel->item(i,0);
             QStandardItem *value = m_customModel->item(i,1);
             //m_customMap.insert(name->text(),value->text());
+            QString id = name->data().toString();
             if (!key.isEmpty()) {
-                m_liteApp->settings()->setValue(key+"#"+name->text(),value->text());
+                m_liteApp->settings()->setValue(key+"#"+id,value->text());
             }
         }
     }
@@ -767,8 +768,10 @@ void LiteBuild::updateBuildConfig(IBuild *build)
             if (!customkey.isEmpty()) {
                 value = m_liteApp->settings()->value(customkey+"#"+cf->id(),value).toString();
             }
+            QStandardItem *item = new QStandardItem(name);
+            item->setData(cf->id());
             m_customModel->appendRow(QList<QStandardItem*>()
-                                     << new QStandardItem(name)
+                                     << item
                                      << new QStandardItem(value));
         }
         foreach(LiteApi::BuildConfig *cf, build->configList()) {
@@ -777,8 +780,10 @@ void LiteBuild::updateBuildConfig(IBuild *build)
             if (!configkey.isEmpty()) {
                 value = m_liteApp->settings()->value(configkey+"#"+cf->id(),value).toString();
             }
+            QStandardItem *item = new QStandardItem(name);
+            item->setData(cf->id());
             m_configModel->appendRow(QList<QStandardItem*>()
-                                     << new QStandardItem(name)
+                                     << item
                                      << new QStandardItem(value));
         }
     }
