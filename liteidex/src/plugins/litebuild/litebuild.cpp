@@ -1460,15 +1460,21 @@ void LiteBuild::dbclickBuildOutput(const QTextCursor &cur)
         }
     }
 
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName);
-    if (editor) {
+    if (LiteApi::gotoLine(m_liteApp,fileName,line-1,0,true,true)) {
         QTextCursor lineCur = cur;
         lineCur.select(QTextCursor::LineUnderCursor);
         m_output->setTextCursor(lineCur);
-        editor->widget()->setFocus();
-        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-        if (textEditor) {
-            textEditor->gotoLine(line-1,0,true);
-        }
     }
+//    return;
+//    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName);
+//    if (editor) {
+//        QTextCursor lineCur = cur;
+//        lineCur.select(QTextCursor::LineUnderCursor);
+//        m_output->setTextCursor(lineCur);
+//        editor->widget()->setFocus();
+//        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+//        if (textEditor) {
+//            textEditor->gotoLine(line-1,0,true);
+//        }
+//    }
 }

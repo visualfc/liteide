@@ -1048,12 +1048,16 @@ void LiteEditor::gotoLine()
 {
     int min = 1;
     int max = m_editorWidget->document()->blockCount();
-    int v = m_editorWidget->textCursor().blockNumber()+1;
+    int old = m_editorWidget->textCursor().blockNumber()+1;
     bool ok = false;
-    v = QInputDialog::getInt(this->m_widget,tr("Go To Line"),tr("Line: ")+QString("%1-%2").arg(min).arg(max),v,min,max,1,&ok);
+    int v = QInputDialog::getInt(this->m_widget,tr("Go To Line"),tr("Line: ")+QString("%1-%2").arg(min).arg(max),old,min,max,1,&ok);
     if (!ok) {
         return;
     }
+    if (v == old) {
+        return;
+    }
+    m_liteApp->editorManager()->addNavigationHistory();
     this->gotoLine(v-1,0,true);
 }
 

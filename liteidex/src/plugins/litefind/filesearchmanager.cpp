@@ -147,16 +147,17 @@ void FileSearchManager::activated(const Find::SearchResultItem &item)
     if (item.path.isEmpty()) {
         return;
     }
-    QString fileName = item.path.at(0);
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName,true);
-    if (!editor) {
-        return;
-    }
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (!textEditor) {
-        return;
-    }
-    textEditor->gotoLine(item.lineNumber-1,item.textMarkPos,false);
+    //QString fileName = item.path.at(0);
+    LiteApi::gotoLine(m_liteApp,item.path.at(0),item.lineNumber-1,item.textMarkPos,true,true);
+//    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName,true);
+//    if (!editor) {
+//        return;
+//    }
+//    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+//    if (!textEditor) {
+//        return;
+//    }
+//    textEditor->gotoLine(item.lineNumber-1,item.textMarkPos,false);
 }
 
 void FileSearchManager::newSearch()

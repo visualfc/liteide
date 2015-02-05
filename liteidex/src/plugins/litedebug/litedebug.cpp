@@ -562,13 +562,14 @@ void LiteDebug::showLine()
     if (m_lastLine.fileName.isEmpty()) {
         return;
     }
-    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(m_lastLine.fileName,true);
-    if (editor) {
-        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-        if (textEditor) {
-            textEditor->gotoLine(m_lastLine.line,0,true);
-        }
-    }
+    LiteApi::gotoLine(m_liteApp,m_lastLine.fileName,m_lastLine.line,0,true,true);
+//    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(m_lastLine.fileName,true);
+//    if (editor) {
+//        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+//        if (textEditor) {
+//            textEditor->gotoLine(m_lastLine.line,0,true);
+//        }
+//    }
 }
 
 void LiteDebug::removeAllBreakPoints()
