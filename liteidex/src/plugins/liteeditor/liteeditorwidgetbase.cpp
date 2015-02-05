@@ -1246,6 +1246,9 @@ bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
             if (block.isValid())
                 TextEditor::BaseTextDocumentLayout::doFoldOrUnfold(block, false);
         }
+        if (!collapsedBlocks.empty()) {
+            this->repaint();
+        }
     }
 
     m_lastCursorChangeWasInteresting = false; // avoid adding last position to history
