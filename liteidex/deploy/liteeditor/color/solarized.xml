@@ -4,7 +4,7 @@
 	     http://ethanschoonover.com/solarized                     -->
 	<style name="Text" foreground="#657b83" background="#fdf6e3"/>
  	<style name="Extra" foreground="#657b83" background="#eee8d5"/>
-  <style name="Selection" background="#77ddff"/>
+  <style name="Selection" background="#3399ff"/>
  	<style name="CurrentLine" background="#B4C8C8"/>
  	<style name="IndentLine" foreground="#008B8B"/>
   <style name="VisualWhitespace" foreground="#c0c0c0"/>

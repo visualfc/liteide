@@ -2872,8 +2872,8 @@ static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int 
 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {  
-//    QPlainTextEdit::paintEvent(e);
-//    return;
+    //QPlainTextEdit::paintEvent(e);
+    //return;
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
@@ -2931,7 +2931,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         }
 
         if (r.bottom() >= er.top() && r.top() <= er.bottom()) {
-
             QTextBlockFormat blockFormat = block.blockFormat();
 
             QBrush bg = blockFormat.background();
@@ -2941,7 +2940,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 fillBackground(&painter, contentsRect, bg);
             }
 
-
             QVector<QTextLayout::FormatRange> selections;
             int blpos = block.position();
             int bllen = block.length();
@@ -2949,23 +2947,14 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
                 const int selStart = range.cursor.selectionStart() - blpos;
                 const int selEnd = range.cursor.selectionEnd() - blpos;
-                if (!hasSelection && range.cursor.selectionEnd() == selectionEnd) {
-                    continue;
-                }
                 if (selStart < bllen && selEnd > 0
                     && selEnd > selStart) {
                     QTextLayout::FormatRange o;
                     o.start = selStart;
                     o.length = selEnd - selStart;
-                    QTextCharFormat formatCopy(range.format);
-                    formatCopy.clearForeground();
-                    o.format = formatCopy;
-                    if (!o.format.hasProperty(LiteEditorWidgetBase::MatchBrace)) {
-                        //o.format.setForeground(palette().highlightedText());
-                        o.format.setBackground(palette().highlight());
-                    }
+                    o.format = range.format;
                     selections.append(o);
-                } /*else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
+                } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
                            && block.contains(range.cursor.position())) {
                     // for full width selections we don't require an actual selection, just
                     // a position to specify the line. that's more convenience in usage.
@@ -2977,8 +2966,42 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                         ++o.length; // include newline
                     o.format = range.format;
                     selections.append(o);
-                }*/
+                }
             }
+//            for (int i = 0; i < context.selections.size(); ++i) {
+//                const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
+//                const int selStart = range.cursor.selectionStart() - blpos;
+//                const int selEnd = range.cursor.selectionEnd() - blpos;
+//                if (!hasSelection && range.cursor.selectionEnd() == selectionEnd) {
+//                    continue;
+//                }
+//                if (selStart < bllen && selEnd > 0
+//                    && selEnd > selStart) {
+//                    QTextLayout::FormatRange o;
+//                    o.start = selStart;
+//                    o.length = selEnd - selStart;
+//                    QTextCharFormat formatCopy(range.format);
+//                    formatCopy.clearForeground();
+//                    o.format = formatCopy;
+//                    if (!o.format.hasProperty(LiteEditorWidgetBase::MatchBrace)) {
+//                        //o.format.setForeground(palette().highlightedText());
+//                        o.format.setBackground(palette().highlight());
+//                    }
+//                    selections.append(o);
+//                } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
+//                           && block.contains(range.cursor.position())) {
+//                    // for full width selections we don't require an actual selection, just
+//                    // a position to specify the line. that's more convenience in usage.
+//                    QTextLayout::FormatRange o;
+//                    QTextLine l = layout->lineForTextPosition(range.cursor.position() - blpos);
+//                    o.start = l.textStart();
+//                    o.length = l.textLength();
+//                    if (o.start + o.length == bllen - 1)
+//                        ++o.length; // include newline
+//                    o.format = range.format;
+//                    selections.append(o);
+//                }
+//            }
 
             if (block == textCursor().block()) {
                 QRectF rr = layout->lineForTextPosition(textCursor().positionInBlock()).rect();
