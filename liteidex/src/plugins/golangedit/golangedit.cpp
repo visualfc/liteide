@@ -456,6 +456,9 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         m_lastLink.targetInfo = info[1];
                         m_editor->showLink(m_lastLink);
                     }
+                } else if (info[0] == "-") {
+                    m_lastLink.targetInfo = info[1];
+                    m_editor->showLink(m_lastLink);
                 } else {
                     m_editor->clearLink();
                 }

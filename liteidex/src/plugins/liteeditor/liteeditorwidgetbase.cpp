@@ -2614,6 +2614,11 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     if (m_currentLink == link)
         return;
 
+    if (link.targetFileName.isEmpty()) {
+        m_currentLink = LiteApi::Link();
+        return;
+    }
+
     QTextEdit::ExtraSelection sel;
     sel.cursor = textCursor();
     sel.cursor.setPosition(link.linkTextStart);

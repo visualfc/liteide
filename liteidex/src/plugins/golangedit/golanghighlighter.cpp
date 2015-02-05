@@ -78,12 +78,11 @@ void GolangHighlighter::highlightBlock(const QString &text)
 
     LanguageFeatures features;
     features.golangEnable = true;
-
     SimpleLexer tokenize;
     tokenize.setLanguageFeatures(features);
 
     int initialLexerState = lexerState;
-    const QList<Token> tokens = tokenize(text, initialLexerState);
+    QList<Token> tokens = tokenize(text, initialLexerState);
     lexerState = tokenize.state(); // refresh lexer state
 
     initialLexerState &= ~0x80; // discard newline expected bit
@@ -123,8 +122,21 @@ void GolangHighlighter::highlightBlock(const QString &text)
 
     //bool expectPreprocessorKeyword = false;
     //bool onlyHighlightComments = false;
+    bool adjust = false;
+    QByteArray data = text.toUtf8();
+    if (data.length() != text.length()) {
+        adjust = true;
+    }
+
     for (int i = 0; i < tokens.size(); ++i) {
-        const Token &tk = tokens.at(i);
+        Token &tk = tokens[i];
+        if (adjust) {
+            int offset = tk.offset;
+            int length = tk.f.length;
+            tk.offset = QString::fromUtf8(data.left(offset)).length();
+            tk.f.length = QString::fromUtf8(data.left(offset+length)).length()-tk.offset;
+        }
+        //tk.f.length = QString::fromUtf8(data.left(tk.begin())).length();
         unsigned previousTokenEnd = 0;
         if (i != 0) {
             // mark the whitespaces

@@ -65,7 +65,6 @@ public:
 
     LanguageFeatures languageFeatures() const { return _languageFeatures; }
     void setLanguageFeatures(LanguageFeatures features) { _languageFeatures = features; }
-
 private:
     void scan_helper(Token *tok);
     void setSource(const char *firstChar, const char *lastChar);
