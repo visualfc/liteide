@@ -766,8 +766,10 @@ public:
     }
 };
 
-inline bool gotoLine(IApplication *app, const QString &fileName, int line, int col, bool forceCenter = false) {
-    app->editorManager()->addNavigationHistory();
+inline bool gotoLine(IApplication *app, const QString &fileName, int line, int col, bool forceCenter, bool saveHistory) {
+    if (saveHistory) {
+        app->editorManager()->addNavigationHistory();
+    }
     IEditor *cur = app->editorManager()->currentEditor();
     IEditor *edit = app->fileManager()->openEditor(fileName);
     ITextEditor *textEdit = getTextEditor(edit);

@@ -386,7 +386,7 @@ void GolangEdit::findDefOutput(QByteArray data, bool bStdErr)
         QString info = QString::fromUtf8(data).trimmed();
         m_liteApp->appendLog("find def error",info,true);
         return;
-    }
+    }        
     QString info = QString::fromUtf8(data).trimmed();
     QRegExp reg(":(\\d+):(\\d+)");
     int pos = reg.lastIndexIn(info);
@@ -394,7 +394,7 @@ void GolangEdit::findDefOutput(QByteArray data, bool bStdErr)
         QString fileName = info.left(pos);
         int line = reg.cap(1).toInt();
         int col = reg.cap(2).toInt();
-        LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1);
+        LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1,true,false);
     }
 }
 

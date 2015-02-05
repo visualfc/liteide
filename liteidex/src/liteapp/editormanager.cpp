@@ -682,7 +682,7 @@ void EditorManager::addNavigationHistory(IEditor *editor,const QByteArray &saveS
 void EditorManager::goBack()
 {
     updateCurrentPositionInNavigationHistory();
-    while (m_currentNavigationHistoryPosition > 0) {
+    if (m_currentNavigationHistoryPosition > 0) {
         --m_currentNavigationHistoryPosition;
         EditLocation location = m_navigationHistory.at(m_currentNavigationHistoryPosition);
         IEditor *editor = m_liteApp->fileManager()->openEditor(location.filePath,true,true);
@@ -691,7 +691,6 @@ void EditorManager::goBack()
         } else {
             m_navigationHistory.removeAt(m_currentNavigationHistoryPosition);
         }
-        break;
     }
     updateNavigatorActions();
 }

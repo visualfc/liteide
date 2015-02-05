@@ -2641,8 +2641,8 @@ bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
 {
     if (!link.hasValidTarget()) {
         return false;
-    }
-    LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true);
+    }            
+    LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,false);
     return true;
 }
 
@@ -2748,10 +2748,12 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             if (e->modifiers() & Qt::ControlModifier
                     && !(e->modifiers() & Qt::ShiftModifier)
                     && m_currentLink.hasValidLinkText()) {
-                if (openLink(m_currentLink)) {
+                LiteApi::Link temp = m_currentLink;
+                QPlainTextEdit::mousePressEvent(e);
+                if (openLink(temp)) {
                     clearLink();
-                    return;
                 }
+                return;
             }
             m_uplinkSkip = true;
             this->stopUplinkTimer();
