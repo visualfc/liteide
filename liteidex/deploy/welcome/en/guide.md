@@ -194,9 +194,6 @@ Example XML for Go (`gosrc.xml`):
 		</mime-type>
 	</mime-info>
 
-## Gocode
-Gocode is required for auto-completion of identifiers.  See `INSTALL` for installation details.
-
 ## Godoc Viewer
 LiteIDE includes an integrated viewer for godoc output.  Documentation can be viewed for the Go language itself or for your own packages.  Open the viewer using `View > Godoc Viewer` for more details.
 

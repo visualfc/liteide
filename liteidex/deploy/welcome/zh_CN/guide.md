@@ -203,9 +203,6 @@ LiteIDE的编译系统是高度可配置的，可使用XML文件自定义生成�
 		</mime-type>
 	</mime-info>
 
-## Gocode
-Gocode提供Go语言的自动完成功能。
-
 ## Go文档查看
 
 LiteIDE可使用godoc来输出需要Go文档并浏览。可以查看标准包文档或自定义包文档。打开使用`查看> Godoc文档查看`可以查看关于此的更多细节。
