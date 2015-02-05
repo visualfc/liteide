@@ -1305,7 +1305,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
     QString editorPath = m_process->userData(ID_EDITOR).toString();
     QString buildFilePath;
-    if (!editorPath.isEmpty()) {
+    if (!editorPath.isEmpty() && !m_bLockBuildRoot) {
         buildFilePath = QFileInfo(editorPath).path();
     } else {
         buildFilePath = m_buildRootPath;
