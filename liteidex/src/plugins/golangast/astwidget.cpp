@@ -360,13 +360,13 @@ void AstWidget::updateModel(const QByteArray &data)
 
     m_model->clear();
 
-    QList<QByteArray> array = data.split('\n');
+    QList<QString> array = QString::fromUtf8(data).split('\n');
     QMap<int,QStandardItem*> items;
     QStringList indexFiles;
     bool ok = false;
     bool bmain = false;
     QMap<QString,GolangAstItem*> level1NameItemMap;
-    foreach (QByteArray line, array) {
+    foreach (QString line, array) {
         int pos = line.indexOf('@');
         QString tip;
         if (pos == 0) {
@@ -377,7 +377,7 @@ void AstWidget::updateModel(const QByteArray &data)
             line = line.left(pos);
         }
         line.trimmed();
-        QList<QByteArray> info = line.split(',');
+        QList<QString> info = line.split(',');
         if (info.size() < 3) {
             continue;
         }
@@ -431,8 +431,8 @@ void AstWidget::updateModel(const QByteArray &data)
             item->setToolTip(QString("%1 %2").arg(tagInfo(tag)).arg(name));
         }
         if (info.size() >= 4) {
-            foreach (QByteArray pos, info[3].split(';')) {
-                QList<QByteArray> ar = pos.split(':');
+            foreach (QString pos, info[3].split(';')) {
+                QList<QString> ar = pos.split(':');
                 if (ar.size() == 3) {
                     bool ok = false;
                     int index = ar[0].toInt(&ok);
