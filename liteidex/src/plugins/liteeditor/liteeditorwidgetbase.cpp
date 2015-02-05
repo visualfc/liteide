@@ -617,13 +617,14 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         unfold();
     }
 
-    if (!isReadOnly()) {
-        QTextEdit::ExtraSelection full;
-        full.format.setBackground(m_currentLineBackground);
-        full.format.setProperty(QTextFormat::FullWidthSelection, true);
-        full.cursor = this->textCursor();
-        setExtraSelections(LiteApi::CurrentLineSelection,QList<QTextEdit::ExtraSelection>() << full );
-    }
+//    if (!isReadOnly()) {
+//        QTextEdit::ExtraSelection full;
+//        full.format.setBackground(m_currentLineBackground);
+//        full.format.setProperty(QTextFormat::FullWidthSelection, true);
+//        full.cursor = this->textCursor();
+//        //full.cursor.select(QTextCursor::LineUnderCursor);
+//        setExtraSelections(LiteApi::CurrentLineSelection,QList<QTextEdit::ExtraSelection>() << full );
+//    }
 
     QList<QTextEdit::ExtraSelection> extraSelections;
     MatchBracePos mb;
@@ -657,6 +658,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
     }
     setExtraSelections(LiteApi::ParenthesesMatchingSelection,extraSelections);
     clearLink();
+    this->update();
 }
 
 static int foldBoxWidth(const QFontMetrics &fm)
@@ -1247,7 +1249,7 @@ bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
                 TextEditor::BaseTextDocumentLayout::doFoldOrUnfold(block, false);
         }
         if (!collapsedBlocks.empty()) {
-            this->repaint();
+            this->update();
         }
     }
 
@@ -3004,9 +3006,10 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 //            }
 
             if (block == textCursor().block()) {
-                QRectF rr = layout->lineForTextPosition(textCursor().positionInBlock()).rect();
+                QTextLine l = layout->lineForTextPosition(textCursor().positionInBlock());
+                QRectF rr = l.rect();
                 rr.moveTop(rr.top() + r.top());
-                rr.setLeft(0);
+                rr.setLeft(offset.x());
                 rr.setRight(viewportRect.width() - offset.x());
                 painter.fillRect(rr, m_currentLineBackground);
             }
