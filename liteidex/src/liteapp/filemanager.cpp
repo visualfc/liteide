@@ -230,9 +230,12 @@ void FileManager::setFolderList(const QStringList &folders)
     }
 }
 
+
 void FileManager::addFolderList(const QString &folder)
 {
-    m_folderListView->addRootPath(folder);
+    if (!m_folderListView->addRootPath(folder)) {
+        return;
+    }
     m_toolWindowAct->setChecked(true);
     addRecentFile(folder,"folder");
 }

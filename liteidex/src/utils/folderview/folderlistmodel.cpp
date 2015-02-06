@@ -82,6 +82,9 @@ QModelIndex FolderListModel::addRootPath(const QString &path)
     model->setNameFilterDisables(m_nameFilterDisables);
     model->setResolveSymlinks(m_resolveSymlinks);
     QModelIndex sourceIndex = model->setRootPath(path);
+    if (!sourceIndex.isValid()) {
+        return sourceIndex;
+    }
     SourceModel m;
     m.model = model;
     m.rootPath = QDir::cleanPath(QDir::fromNativeSeparators(path));

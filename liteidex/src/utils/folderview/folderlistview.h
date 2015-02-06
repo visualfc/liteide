@@ -38,7 +38,7 @@ public:
     QDir::Filters filter() const;
     QFileInfo fileInfo(const QModelIndex &index) const;
 public:
-    void addRootPath(const QString &path);
+    bool addRootPath(const QString &path);
     void setRootPathList(const QStringList &pathList);
     QStringList rootPathList() const;
     void clear();

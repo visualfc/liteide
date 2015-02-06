@@ -112,15 +112,19 @@ QFileInfo FolderListView::fileInfo(const QModelIndex &index) const
     }
 }
 
-void FolderListView::addRootPath(const QString &path)
+bool FolderListView::addRootPath(const QString &path)
 {
     if (m_model->isRootPath(path)) {
-        return;
+        return true;
     }
-    m_model->addRootPath(path);
+    if (!m_model->addRootPath(path).isValid()) {
+        m_liteApp->appendLog("Add path false",path,true);
+        return false;
+    }
     if (m_proxy) {
         m_proxy->invalidate();
     }
+    return true;
 }
 
 void FolderListView::setRootPathList(const QStringList &pathList)
