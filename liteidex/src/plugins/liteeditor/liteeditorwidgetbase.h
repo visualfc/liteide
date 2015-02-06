@@ -247,7 +247,6 @@ protected:
     QWidget *m_navigateArea;
     LiteApi::IEditorMark *m_editorMark;
     QScopedPointer<LiteApi::ITextLexer> m_textLexer;
-    LiteApi::Link       m_currentLink;
     QMap<LiteApi::ExtraSelectionKind,QList<QTextEdit::ExtraSelection> > m_extralSelectionMap;
     QTextCursor m_lastSelection;
     QColor  m_extraForeground;
@@ -258,6 +257,7 @@ protected:
     QRegExp m_selectionExpression;
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
+    LiteApi::Link       m_currentLink;
     bool m_defaultWordWrap;
     bool m_wordWrapOverridden;
     bool m_wordWrap;
@@ -293,6 +293,7 @@ protected:
     QTimer *m_uplinkInfoTimer;
     QPoint m_uplinkInfoPos;
     QPoint m_lastUplinkInfoPos;
+    bool m_linkPressed;
     bool m_uplinkSkip;
     bool m_mouseOnFoldedMarker;
     bool m_contentsChanged;

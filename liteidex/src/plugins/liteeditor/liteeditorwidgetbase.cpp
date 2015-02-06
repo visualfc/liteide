@@ -341,6 +341,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
 {
     m_inputCursorOffset = 0;
     m_uplinkTime = 200;
+    m_linkPressed = false;
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
     m_navigateArea = new TextEditNavigateArea(this);
@@ -657,7 +658,6 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         }
     }
     setExtraSelections(LiteApi::ParenthesesMatchingSelection,extraSelections);
-    clearLink();
     this->update();
 }
 
@@ -1319,6 +1319,7 @@ void LiteEditorWidgetBase::updateSelection()
         m_selectionExpression.setPattern(pattern);
         viewport()->update();
     }
+    clearLink();
 }
 
 void LiteEditorWidgetBase::slotUpdateBlockNotify(const QTextBlock &)
@@ -2613,8 +2614,10 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     if (!m_showLinkNavigation) {
         return;
     }
-    if (m_currentLink == link)
+
+    if (m_currentLink == link) {
         return;
+    }
 
     if (link.targetFileName.isEmpty()) {
         m_currentLink = LiteApi::Link();
@@ -2631,13 +2634,14 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     viewport()->setCursor(Qt::PointingHandCursor);
 
     m_currentLink = link;
+    m_linkPressed = false;
 }
 
 void LiteEditorWidgetBase::clearLink()
 {
     m_showLinkNavigation = false;
     m_showLinkInfomation = false;
-
+    m_linkPressed = false;
     if (!m_currentLink.hasValidLinkText())
         return;
 
@@ -2652,7 +2656,7 @@ bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
     if (!link.hasValidTarget()) {
         return false;
     }            
-    LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,false);
+    LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,true);
     return true;
 }
 
@@ -2755,15 +2759,8 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             viewport()->setCursor(Qt::IBeamCursor);
         }
         if (m_mouseNavigation) {
-            if (e->modifiers() & Qt::ControlModifier
-                    && !(e->modifiers() & Qt::ShiftModifier)
-                    && m_currentLink.hasValidLinkText()) {
-                LiteApi::Link temp = m_currentLink;
-                QPlainTextEdit::mousePressEvent(e);
-                if (openLink(temp)) {
-                    clearLink();
-                }
-                return;
+            if (this->m_currentLink.hasValidTarget()) {
+                this->m_linkPressed = true;
             }
             m_uplinkSkip = true;
             this->stopUplinkTimer();
@@ -2774,21 +2771,15 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 
 void LiteEditorWidgetBase::mouseReleaseEvent(QMouseEvent *e)
 {
-//    if (m_linkPressed
-//            && e->modifiers() & Qt::ControlModifier
-//            && !(e->modifiers() & Qt::ShiftModifier)
-//            && e->button() == Qt::LeftButton
-//            ) {
-//        QTextCursor cursor = cursorForPosition(e->pos());
-//        cursor.select(QTextCursor::WordUnderCursor);
-//        if (cursor.selectionStart() == m_currentLink.linkTextStart &&
-//                cursor.selectionEnd() == m_currentLink.linkTextEnd) {
-//            if (openLink(m_currentLink)) {
-//                cleanLink();
-//                return;
-//            }
-//        }
-//    }
+    if (m_mouseNavigation && m_linkPressed
+        && (e->modifiers() & Qt::ControlModifier)
+        && !(e->modifiers() & Qt::ShiftModifier)
+        && e->button() == Qt::LeftButton) {
+        if (openLink(m_currentLink)) {
+            clearLink();
+            return;
+        }
+    }
     QPlainTextEdit::mouseReleaseEvent(e);
 }
 
