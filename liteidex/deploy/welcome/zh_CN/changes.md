@@ -6,6 +6,7 @@
 ### 2015.2.6 Ver X27.1
 * LiteIDE
 	* fix code navigate history ( build / astview / debug / link)
+	* fix UNC path crash check
 * LiteEditor
 	* fix selection color
 	* fix link color
