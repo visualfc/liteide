@@ -1770,6 +1770,16 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
         <translation type="unfinished">Symbol unter Cursor umbenennen</translation>
     </message>
     <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
+        <source>Find Usages (Global)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
+        <source>Rename Symbol Under Cursor (Global)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Comment/Uncomment Selection</source>
         <translation type="obsolete">Auswahl kommentieren/auskommentieren</translation>
     </message>

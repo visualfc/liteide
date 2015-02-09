@@ -1788,6 +1788,16 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation>重命名符号</translation>
     </message>
     <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
+        <source>Find Usages (Global)</source>
+        <translation>Golang 查找使用 (全局)</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
+        <source>Rename Symbol Under Cursor (Global)</source>
+        <translation>重命名符号 (全局)</translation>
+    </message>
+    <message>
         <source>Comment/Uncomment Selection</source>
         <translation type="obsolete">切换区域注释/反注释</translation>
     </message>

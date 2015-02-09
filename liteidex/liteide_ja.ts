@@ -1765,6 +1765,16 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation>カーソル下のシンボルをリネーム</translation>
     </message>
     <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
+        <source>Find Usages (Global)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
+        <source>Rename Symbol Under Cursor (Global)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Comment/Uncomment Selection</source>
         <translation type="obsolete">選択をコメント/コメント除去</translation>
     </message>

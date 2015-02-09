@@ -1683,6 +1683,16 @@ Do you want to reload the file from disk?</source>
         <source>Rename Symbol Under Cursor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
+        <source>Find Usages (Global)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
+        <source>Rename Symbol Under Cursor (Global)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangEditOption</name>
