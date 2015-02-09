@@ -68,8 +68,12 @@ public:
     LiteApi::IBuild *findProjectBuildByEditor(LiteApi::IEditor *editor);
     LiteApi::IBuild *findProjectBuild(LiteApi::IProject *project);
     void setDynamicBuild();
-    void loadBuildPath(const QString &buildPath);
+    void loadBuildPath(const QString &buildPath, const QString &buildName, const QString &buildInfo);
     void loadBuildType(const QString &mimeType);
+    bool isLockBuildRoot() const;
+    QString currentBuildPath() const;
+signals:
+    void buildPathChanged(const QString &buildPath);
 public slots:
     void appLoaded();
     void debugBefore();
@@ -120,6 +124,7 @@ protected:
     QString     m_outputRegex;
     QString     m_buildMimeType;
     QString     m_buildRootPath;
+    QString     m_buildRootName;
     bool        m_bLockBuildRoot;
     bool        m_bDynamicBuild;
     bool        m_bProjectBuild;

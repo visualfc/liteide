@@ -74,7 +74,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_findDefProcess = new ProcessEx(this);
     m_findInfoProcess = new ProcessEx(this);
     m_findLinkProcess = new Process(this);
-    m_enableMouseInfo = true;
+    m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
@@ -141,7 +141,7 @@ void GolangEdit::applyOption(const QString &option)
     if (option != OPTION_GOLANGEDIT) {
         return;
     }
-    m_enableMouseInfo = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
+    m_enableMouseUnderInfo = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
     m_enableMouseNavigation = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
 }
 
@@ -201,7 +201,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
             return;
         }
     } else {
-        if (!m_enableMouseInfo) {
+        if (!m_enableMouseUnderInfo) {
             return;
         }
     }

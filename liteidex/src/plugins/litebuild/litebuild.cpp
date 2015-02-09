@@ -503,7 +503,7 @@ bool LiteBuild::isLockBuildRoot() const
     return m_bLockBuildRoot;
 }
 
-QString LiteBuild::buildRootPath() const
+QString LiteBuild::currentBuildPath() const
 {
     return m_buildRootPath;
 }
@@ -848,19 +848,21 @@ void LiteBuild::loadEditorInfo(const QString &filePath)
     m_editorInfo.insert("EDITOR_DIR_GONAME",QFileInfo(info.path()).fileName().replace(" ","_"));
 }
 
-void LiteBuild::loadBuildPath(const QString &buildPath)
+void LiteBuild::loadBuildPath(const QString &buildPath, const QString &buildName, const QString &buildInfo)
 {
     m_buildInfo.clear();
     m_buildRootPath = buildPath;
-    if (buildPath.isEmpty()) {
+    m_buildRootName = buildName;
+    if (buildName.isEmpty()) {
         m_lockBuildRoot->setEnabled(false);
         m_lockBuildRoot->setText("");
         m_lockBuildRoot->setToolTip("");
     } else {
         m_lockBuildRoot->setEnabled(true);
-        m_lockBuildRoot->setText(QFileInfo(buildPath).fileName());
-        m_lockBuildRoot->setToolTip(QString("%1 : %2").arg(tr("Lock Build")).arg(QDir::toNativeSeparators(buildPath)));
+        m_lockBuildRoot->setText(buildName);
+        m_lockBuildRoot->setToolTip(QString("%1 : %2").arg(tr("Lock Build")).arg(buildInfo));
     }
+    emit buildPathChanged(buildPath);
     if (buildPath.isEmpty()) {
         return;
     }
@@ -1068,17 +1070,27 @@ void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)
         mimeType = editor->mimeType();
     }
     QString buildPath;
+    QString buildName;
+    QString buildInfo;
     if (editor && !editor->filePath().isEmpty()) {
         LiteApi::IBuild *build = m_buildManager->findBuild(mimeType);
         if (build) {
+            QFileInfo info(editor->filePath());
             if (build->lock() == "dir") {
-                buildPath = QFileInfo(editor->filePath()).path();
+                buildPath = info.path();
+                buildName = QFileInfo(info.path()).fileName();
+                buildInfo = QDir::toNativeSeparators(buildPath);
             } else if (build->lock() == "file") {
-                buildPath = editor->filePath();
+                buildName = info.fileName();
+                buildPath = info.path();
+                buildInfo = QDir::toNativeSeparators(info.filePath());
             }
+        } else {
+            QFileInfo info(editor->filePath());
+            buildPath = info.path();
         }
     }
-    loadBuildPath(buildPath);
+    loadBuildPath(buildPath,buildName,buildInfo);
     loadBuildType(mimeType);
 }
 

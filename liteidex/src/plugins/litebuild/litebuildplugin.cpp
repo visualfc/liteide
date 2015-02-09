@@ -71,6 +71,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     m_liteApp = app;
     m_build = new LiteBuild(app,this);
     app->optionManager()->addFactory(new LiteBuildOptionFactory(app,this));
+    connect(m_build,SIGNAL(buildPathChanged(QString)),this,SLOT(buildPathChanged(QString)));
 
     //execute editor
     QLayout *layout=app->editorManager()->widget()->layout();
@@ -114,8 +115,6 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
     connect(m_commandCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(execute()));
     connect(m_liteApp,SIGNAL(key_escape()),this,SLOT(closeRequest()));
-    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-
     return true;
 }
 
@@ -124,13 +123,13 @@ void LiteBuildPlugin::showExecute()
     m_executeWidget->show();
     m_commandCombo->lineEdit()->selectAll();
     m_commandCombo->lineEdit()->setFocus();
-    QString work = m_liteApp->applicationPath();
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (textEditor) {
-        work = QFileInfo(textEditor->filePath()).path();
-    }
-    m_workLabel->setText(work);
+//    QString work = m_liteApp->applicationPath();
+//    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+//    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+//    if (textEditor) {
+//        work = QFileInfo(textEditor->filePath()).path();
+//    }
+//    m_workLabel->setText(work);
 }
 
 void LiteBuildPlugin::execute()
@@ -147,28 +146,23 @@ void LiteBuildPlugin::execute()
         cmd = text.left(find);
         args = text.right(text.length()-find-1);
     }
-    QString work = m_liteApp->applicationPath();
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (textEditor) {
-        work = QFileInfo(textEditor->filePath()).path();
+    QString work = m_build->currentBuildPath();
+    if (work.isEmpty()) {
+        work = m_liteApp->applicationPath();
     }
+//            m_liteApp->applicationPath();
+//    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+//    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+//    if (textEditor) {
+//        work = QFileInfo(textEditor->filePath()).path();
+//    }
     m_build->executeCommand(cmd.trimmed(),args.trimmed(),work);
 }
 
-void LiteBuildPlugin::currentEditorChanged(LiteApi::IEditor *)
+void LiteBuildPlugin::buildPathChanged(const QString &buildPath)
 {
-    if (!m_executeWidget->isVisible()) {
-        return;
-    }
-    QString work = m_liteApp->applicationPath();
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (textEditor) {
-        work = QFileInfo(textEditor->filePath()).path();
-    }
-    m_workLabel->setText(work);
-    m_workLabel->setToolTip(work);
+    m_workLabel->setText(buildPath);
+    m_workLabel->setToolTip(buildPath);
 }
 
 void LiteBuildPlugin::closeRequest()

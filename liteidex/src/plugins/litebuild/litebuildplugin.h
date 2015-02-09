@@ -42,7 +42,7 @@ public:
 protected slots:
     void showExecute();
     void execute();
-    void currentEditorChanged(LiteApi::IEditor*);
+    void buildPathChanged(const QString &buildPath);
     void closeRequest();
 protected:
     virtual bool eventFilter(QObject *, QEvent *);
