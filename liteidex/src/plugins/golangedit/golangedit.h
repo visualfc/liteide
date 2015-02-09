@@ -36,9 +36,6 @@ class GolangEdit : public QObject
 public:
     explicit GolangEdit(LiteApi::IApplication *app, QObject *parent = 0);
     QTextCursor textCursorForPos(const QPoint &globalPos);
-    QAction *findUseGOPATHAct() const;
-    void setFindUseGOPATHAct(QAction *findUseGOPATHAct);
-
 public slots:
     void applyOption(const QString &option);
     void editorCreated(LiteApi::IEditor*);
@@ -73,9 +70,9 @@ protected:
     QAction *m_findInfoAct;
     QAction *m_jumpDeclAct;
     QAction *m_findUseAct;
-    QAction *m_findUseGopathAct;
+    //QAction *m_findUseGopathAct;
     QAction *m_renameSymbolAct;
-    QAction *m_renameSymbolGopathAct;
+    //QAction *m_renameSymbolGopathAct;
     QAction *m_viewGodocAct;
     ProcessEx  *m_findDefProcess;
     ProcessEx  *m_findInfoProcess;
