@@ -498,6 +498,16 @@ void LiteBuild::lockBuildRoot(bool b)
     }
 }
 
+bool LiteBuild::isLockBuildRoot() const
+{
+    return m_bLockBuildRoot;
+}
+
+QString LiteBuild::buildRootPath() const
+{
+    return m_buildRootPath;
+}
+
 void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
 {
     m_process->setEnvironment(m_envManager->currentEnvironment().toStringList());
