@@ -56,4 +56,16 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./build_osx.sh
 	$ ./deploy_osx_qt4.sh
 
+### OpenBSD
+	$ git clone https://github.com/visualfc/liteide.git
+	$ export QTDIR=/usr/local/lib/qt4
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ ./build_openbsd.sh
+
+	## Run it: ##
+	$ export LD_LIBRARY_PATH=$HOME/liteide/build/liteide/bin:$LD_LIBRARY_PATH
+	$ cd ~/liteide/build/liteide/bin
+	$ ./liteide
+
 Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.

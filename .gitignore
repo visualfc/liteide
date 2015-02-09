@@ -11,6 +11,9 @@
 *.dylib
 *.7z
 
+#Emacs
+*~
+
 # Qt-es
 
 *.pro.user
