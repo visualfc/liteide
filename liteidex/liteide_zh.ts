@@ -225,7 +225,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="209"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="214"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="215"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
@@ -241,8 +241,8 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="278"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="284"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="279"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="286"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
@@ -322,51 +322,51 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="215"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="216"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="233"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="236"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="234"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="237"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="234"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="235"/>
         <source>A folder with that name already exists!</source>
         <translation>目录名已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="237"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="250"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="259"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="264"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="260"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="265"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="250"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <source>Folder Name</source>
         <translation>目录名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="260"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="265"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="261"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="266"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="279"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="280"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="285"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -843,12 +843,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="383"/>
+        <location filename="src/liteapp/filemanager.cpp" line="386"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="384"/>
+        <location filename="src/liteapp/filemanager.cpp" line="387"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -856,7 +856,7 @@ Do you want to load?</oldsource>
         <translation>项目文件 &apos;%1&apos;已建立,是否加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="284"/>
+        <location filename="src/liteapp/filemanager.cpp" line="287"/>
         <source>Open Project or File</source>
         <translation>打开项目或文件</translation>
     </message>
@@ -889,34 +889,34 @@ Do you want to load?</oldsource>
         <translation>所有支持文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="297"/>
-        <location filename="src/liteapp/filemanager.cpp" line="315"/>
+        <location filename="src/liteapp/filemanager.cpp" line="300"/>
+        <location filename="src/liteapp/filemanager.cpp" line="318"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>选择目录:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="517"/>
+        <location filename="src/liteapp/filemanager.cpp" line="520"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="518"/>
+        <location filename="src/liteapp/filemanager.cpp" line="521"/>
         <source>Project</source>
         <translation>项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="519"/>
+        <location filename="src/liteapp/filemanager.cpp" line="522"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="520"/>
+        <location filename="src/liteapp/filemanager.cpp" line="523"/>
         <source>Folder</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="744"/>
+        <location filename="src/liteapp/filemanager.cpp" line="747"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -930,7 +930,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="751"/>
+        <location filename="src/liteapp/filemanager.cpp" line="754"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -941,7 +941,7 @@ Do you want to close the editor?</source>
 您想要关闭编辑器？</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="781"/>
+        <location filename="src/liteapp/filemanager.cpp" line="784"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -955,7 +955,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="788"/>
+        <location filename="src/liteapp/filemanager.cpp" line="791"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -1007,12 +1007,12 @@ Do you want to reload the file from disk ?</oldsource>
 您想要重新从磁盘读取？</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="339"/>
+        <location filename="src/liteapp/filemanager.cpp" line="342"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="352"/>
+        <location filename="src/liteapp/filemanager.cpp" line="355"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
@@ -1030,10 +1030,10 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="748"/>
-        <location filename="src/liteapp/filemanager.cpp" line="753"/>
-        <location filename="src/liteapp/filemanager.cpp" line="785"/>
-        <location filename="src/liteapp/filemanager.cpp" line="790"/>
+        <location filename="src/liteapp/filemanager.cpp" line="751"/>
+        <location filename="src/liteapp/filemanager.cpp" line="756"/>
+        <location filename="src/liteapp/filemanager.cpp" line="788"/>
+        <location filename="src/liteapp/filemanager.cpp" line="793"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1139,12 +1139,12 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation>搜索结果</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="229"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="230"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
         <translation>下面的文件没有可写权限，你想要更改可写权限？</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="232"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="233"/>
         <source>File is readonly</source>
         <translation>文件只读</translation>
     </message>
@@ -1570,39 +1570,39 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="235"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="244"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="239"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="236"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="240"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="245"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="257"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="266"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="262"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="263"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="267"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="285"/>
         <source>Add Folder</source>
         <translation>添加目录</translation>
     </message>
@@ -1610,34 +1610,34 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FolderView</name>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="135"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="144"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="148"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="158"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="136"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="149"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="145"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="159"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="157"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="166"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="171"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="181"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="158"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="172"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="167"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="182"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -2127,17 +2127,17 @@ Success: %2.</oldsource>
 <context>
     <name>JsonEdit</name>
     <message>
-        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="50"/>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="51"/>
         <source>Verify</source>
         <translation>校验</translation>
     </message>
     <message>
-        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="52"/>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="53"/>
         <source>Format Json</source>
         <translation>格式化Json</translation>
     </message>
     <message>
-        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="54"/>
+        <location filename="src/plugins/jsonedit/jsonedit.cpp" line="55"/>
         <source>Compact Json</source>
         <translation>压缩Json</translation>
     </message>
@@ -2591,74 +2591,74 @@ Success: %2.</oldsource>
         <translation>编译输出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="516"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="522"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="517"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="523"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>当前环境变更 id &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="847"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="852"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation>锁定编译</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1153"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1158"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>错误: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1156"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1161"/>
         <source>Command exited with code %1.</source>
         <translation>命令退出代码 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1158"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1163"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>成功: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1194"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1243"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1199"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1248"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>进程正在运行.请先停止当前命令操作.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1236"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1241"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>终止当前进程...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1239"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1244"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation>无法终止已存在进程!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1337"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1342"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation>&gt; 不能解析命令 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1383"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1388"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>进程启动成功</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1383"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1388"/>
         <source>Failed to start process</source>
         <translation></translation>
     </message>
