@@ -1779,13 +1779,11 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="61"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
         <source>Find Usages</source>
         <translation>查找使用</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="64"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>重命名符号</translation>
     </message>
@@ -2593,74 +2591,74 @@ Success: %2.</oldsource>
         <translation>编译输出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="517"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="523"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="527"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="533"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>当前环境变更 id &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="852"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="863"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation>锁定编译</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1158"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1180"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>错误: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1161"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1183"/>
         <source>Command exited with code %1.</source>
         <translation>命令退出代码 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1163"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1185"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>成功: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1199"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1248"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1221"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1270"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>进程正在运行.请先停止当前命令操作.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1241"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1263"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>终止当前进程...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1244"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1266"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation>无法终止已存在进程!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1342"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1364"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation>&gt; 不能解析命令 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1388"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1410"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>进程启动成功</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1388"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1410"/>
         <source>Failed to start process</source>
         <translation></translation>
     </message>
@@ -2692,18 +2690,18 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuildPlugin</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="100"/>
+        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="101"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="103"/>
+        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="104"/>
         <source>Execute:</source>
         <oldsource>Exec:</oldsource>
         <translation>执行:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="110"/>
+        <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="111"/>
         <source>Execute File</source>
         <oldsource>Execute</oldsource>
         <translation>执行文件</translation>
