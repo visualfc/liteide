@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2015.2.6 Ver X27.1
+### 2015.2.9 Ver X27.1
 * LiteIDE
 	* fix code navigate history ( build / astview / debug / link)
 	* fix UNC path crash check

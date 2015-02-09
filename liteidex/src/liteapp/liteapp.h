@@ -44,6 +44,7 @@ class HtmlWidgetManager;
 class QSettings;
 class QSplitter;
 class LiteAppOptionFactory;
+
 class LiteApp : public IApplication
 {
     Q_OBJECT
