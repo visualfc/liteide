@@ -3,6 +3,7 @@ TEMPLATE = lib
 
 include(../../liteideplugin.pri)
 include(../../utils/fileutil/fileutil.pri)
+include (../../api/liteenvapi/liteenvapi.pri)
 
 DEFINES += RUSTEDIT_LIBRARY
 
