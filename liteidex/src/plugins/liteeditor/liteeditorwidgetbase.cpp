@@ -1319,7 +1319,7 @@ void LiteEditorWidgetBase::updateSelection()
         m_selectionExpression.setPattern(pattern);
         viewport()->update();
     }
-    clearLink();
+    //clearLink();
 }
 
 void LiteEditorWidgetBase::slotUpdateBlockNotify(const QTextBlock &)
