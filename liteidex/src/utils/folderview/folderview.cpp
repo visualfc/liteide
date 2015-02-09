@@ -25,6 +25,11 @@
 #include "filesystemmodelex.h"
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
+#include <QDesktopServices>
+#if QT_VERSION >= 0x050000
+#include <QStandardPaths>
+#endif
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -82,6 +87,14 @@ FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *pare
 void FolderView::setRootPath(const QString &path)
 {
     QModelIndex index = m_model->setRootPath(path);
+    if (!path.isEmpty() && !index.isValid()) {
+#if QT_VERSION >= 0x050000
+        QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#else
+        QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
+        index = m_model->setRootPath(home);
+    }
     if (m_proxy)
         this->setRootIndex(m_proxy->mapFromSource(index));
     else
