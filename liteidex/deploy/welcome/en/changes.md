@@ -11,8 +11,6 @@
 	* fix selection color
 	* fix link color
 * GolangEdit
-	* add find usages (GOPATH)
-	* add rename symbol under cursor (GOPATH)
 	* fix no jump code tooltip
 	* fix syntax for Non-English symbol name	
 * LiteBuild
