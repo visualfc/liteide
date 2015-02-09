@@ -1761,23 +1761,15 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="61"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
         <source>Find Usages</source>
         <translation type="unfinished">Nutzungen suchen</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="64"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
         <source>Rename Symbol Under Cursor</source>
         <translation type="unfinished">Symbol unter Cursor umbenennen</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="67"/>
-        <source>Find Usages (Global)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="70"/>
-        <source>Rename Symbol Under Cursor (Global)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Comment/Uncomment Selection</source>
