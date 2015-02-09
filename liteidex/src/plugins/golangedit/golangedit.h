@@ -61,7 +61,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
-    bool m_enableMouseInfo;
+    bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
