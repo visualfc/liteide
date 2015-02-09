@@ -84,21 +84,36 @@ bool GolangFileSearch::replaceMode() const
     return m_replaceMode;
 }
 
-void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool replace)
+void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool oracle, bool replace)
 {
     if (m_process->isRunning()) {
         return;
     }
 
     bool moveLeft = false;
-    m_searchText = LiteApi::wordUnderCursor(cursor,&moveLeft);
+    LiteApi::selectWordUnderCursor(cursor,&moveLeft);
+    m_searchText = cursor.selectedText();
     if (m_searchText.isEmpty()) {
         return;
     }
 
     m_liteApp->editorManager()->saveAllEditors(false);
 
-    int offset = moveLeft ? editor->utf8Position(true)-1: editor->utf8Position(true);
+    if (oracle) {
+        LiteApi::ITextLexer *textLexer = LiteApi::getTextLexer(editor);
+        if (textLexer) {
+            if (textLexer->isInImport(cursor)) {
+                oracle = false;
+            }
+        }
+    }
+
+    int offset = 0;
+    if (oracle) {
+        offset = editor->utf8Position(true,cursor.selectionStart())-1;
+    } else {
+        offset = moveLeft ? editor->utf8Position(true)-1: editor->utf8Position(true);
+    }
 
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);
     if (!manager) {
@@ -113,9 +128,13 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     QFileInfo info(editor->filePath());
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->setWorkingDirectory(info.path());
-    m_process->startEx(cmd,QString("types -pos %1:%2 -info -use .").
-                             arg(info.fileName()).arg(offset));
-
+    if (oracle) {
+        m_process->startEx(cmd,QString("oracle -pos %1:#%2 referrers .").
+                                 arg(info.fileName()).arg(offset));
+    } else {
+        m_process->startEx(cmd,QString("types -pos %1:%2 -info -use .").
+                                 arg(info.fileName()).arg(offset));
+    }
 }
 
 void GolangFileSearch::findUsagesStarted()

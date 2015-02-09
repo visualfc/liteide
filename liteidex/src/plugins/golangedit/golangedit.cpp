@@ -64,6 +64,12 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_renameSymbolAct = new QAction(tr("Rename Symbol Under Cursor"),this);
     actionContext->regAction(m_renameSymbolAct,"RenameSymbol","CTRL+SHIFT+R");
 
+    m_findUseGlobalAct = new QAction(tr("Find Usages (Global)"),this);
+    actionContext->regAction(m_findUseGlobalAct,"FindUsagesGlobal","");
+
+    m_renameSymbolGlobalAct = new QAction(tr("Rename Symbol Under Cursor (Global)"),this);
+    actionContext->regAction(m_renameSymbolGlobalAct,"RenameSymbolGlobal","");
+
     m_fileSearch = new GolangFileSearch(app,this);
 
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
@@ -85,6 +91,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_jumpDeclAct,SIGNAL(triggered()),this,SLOT(editorJumpToDecl()));
     connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
     connect(m_renameSymbolAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbol()));
+    connect(m_findUseGlobalAct,SIGNAL(triggered()),this,SLOT(editorFindUsagesGlobal()));
+    connect(m_renameSymbolGlobalAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbolGlobal()));
     connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
     connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
     connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
@@ -158,9 +166,13 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
-        menu->addAction(m_findUseAct);
         menu->addSeparator();
+        menu->addAction(m_findUseAct);
         menu->addAction(m_renameSymbolAct);
+        menu->addSeparator();
+        QMenu *sub = menu->addMenu("Oracle");
+        sub->addAction(m_findUseGlobalAct);
+        sub->addAction(m_renameSymbolGlobalAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -169,9 +181,13 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
-        menu->addAction(m_findUseAct);
         menu->addSeparator();
+        menu->addAction(m_findUseAct);
         menu->addAction(m_renameSymbolAct);
+        menu->addSeparator();
+        QMenu *sub = menu->addMenu("Oracle");
+        sub->addAction(m_findUseGlobalAct);
+        sub->addAction(m_renameSymbolGlobalAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
     }
     m_editor = LiteApi::getLiteEditor(editor);
@@ -330,13 +346,25 @@ void GolangEdit::editorJumpToDecl()
 void GolangEdit::editorFindUsages()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor,false);
+    m_fileSearch->findUsages(m_editor,cursor,false,false);
+}
+
+void GolangEdit::editorFindUsagesGlobal()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_fileSearch->findUsages(m_editor,cursor,true,false);
 }
 
 void GolangEdit::editorRenameSymbol()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor,true);
+    m_fileSearch->findUsages(m_editor,cursor,false,true);
+}
+
+void GolangEdit::editorRenameSymbolGlobal()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_fileSearch->findUsages(m_editor,cursor,true,true);
 }
 
 void GolangEdit::editorComment()
