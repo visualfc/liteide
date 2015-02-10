@@ -44,6 +44,25 @@
 #endif
 //lite_memory_check_end
 
+//type gotools.s struct{}
+//type command.Command struct{Run func(cmd *Command, args []string);Short string;Long string;Flag flag.FlagSet;CustomFlags bool}
+QString formatInfo(const QString &info)
+{
+    if (!info.startsWith("type")) {
+        return info;
+    }
+    QRegExp re("([\\w\\s\\.]+)\\{(.+)\\}");
+    if (re.indexIn(info) == 0) {
+        if (re.matchedLength() == info.length()) {
+            QString str = re.cap(1)+" {\n\t";
+            str += re.cap(2).split(";").join("\n\t");
+            str += "\n}";
+            return str;
+        }
+    }
+    return info;
+}
+
 GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent), m_liteApp(app)
 {
@@ -446,7 +465,7 @@ void GolangEdit::findInfoOutput(QByteArray data, bool bStdErr)
             QString info = QString::fromUtf8(data).trimmed();
             QRect rc = m_plainTextEdit->cursorRect(m_lastCursor);
             QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
-            QToolTip::showText(pt,info,m_plainTextEdit);
+            QToolTip::showText(pt,formatInfo(info),m_plainTextEdit);
         }
     }
 }
@@ -481,7 +500,7 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         m_lastLink.targetFileName = fileName;
                         m_lastLink.targetLine = line-1;
                         m_lastLink.targetColumn = col-1;
-                        m_lastLink.targetInfo = info[1];
+                        m_lastLink.targetInfo = formatInfo(info[1]);
                         m_editor->showLink(m_lastLink);
                     }
                 } else if (info[0] == "-") {
