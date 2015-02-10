@@ -68,19 +68,23 @@ cd $BUILD_ROOT
 
 rm -r liteide
 mkdir -p liteide
-mkdir -p liteide/bin
-mkdir -p liteide/share/liteide
-mkdir -p liteide/lib/liteide/plugins
+mkdir -p liteide/local/bin
+mkdir -p liteide/local/share/liteide
+mkdir -p liteide/local/share/pixmaps
+mkdir -p liteide/local/lib/liteide/plugins
 
 cp -RpP $LITEIDE_ROOT/LICENSE.LGPL liteide
 cp -RpP $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -RpP $LITEIDE_ROOT/../README.md liteide
 cp -RpP $LITEIDE_ROOT/../CONTRIBUTORS liteide
 
-cp -RpP $LITEIDE_ROOT/liteide/bin/* liteide/bin
-cp -RpP $LITEIDE_ROOT/bin/gotools liteide/bin
-cp -RpP $LITEIDE_ROOT/bin/gocode liteide/bin
-cp -RpP $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/lib/liteide/plugins
+cp $LITEIDE_ROOT/liteide/bin/liteide liteide/local/bin
+cp $LITEIDE_ROOT/liteide/bin/*.so.* liteide/local/lib
+cp -RpP $LITEIDE_ROOT/bin/gotools liteide/local/bin
+cp -RpP $LITEIDE_ROOT/bin/gocode liteide/local/bin
+cp -RpP $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/local/lib/liteide/plugins
 
-cp -r $LITEIDE_ROOT/deploy/* liteide/share/liteide/
-cp -r $LITEIDE_ROOT/os_deploy/openbsd/* liteide/share/liteide/
+cp -r $LITEIDE_ROOT/deploy/* liteide/local/share/liteide/
+cp -r $LITEIDE_ROOT/os_deploy/openbsd/* liteide/local/share/liteide/
+cp $LITEIDE_ROOT/deploy/welcome/images/liteide-logo*.png liteide/local/share/pixmaps
+
