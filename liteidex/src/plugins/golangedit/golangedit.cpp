@@ -96,8 +96,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
         manager->addFileSearch(m_fileSearch);
     }
 
-    m_findDefProcess = new ProcessEx(this);
-    m_findInfoProcess = new ProcessEx(this);
+    m_findDefProcess = new Process(this);
+    m_findInfoProcess = new Process(this);
     m_findLinkProcess = new Process(this);
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
@@ -113,11 +113,11 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     //connect(m_findUseGopathAct,SIGNAL(triggered()),this,SLOT(editorFindUsagesGlobal()));
     //connect(m_renameSymbolGopathAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbolGlobal()));
     connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
-    connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
-    connect(m_findDefProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findDefFinish(bool,int,QString)));
+    //connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
+    connect(m_findDefProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findDefFinish(int,QProcess::ExitStatus)));
     connect(m_findInfoProcess,SIGNAL(started()),this,SLOT(findInfoStarted()));
-    connect(m_findInfoProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoOutput(QByteArray,bool)));
-    connect(m_findInfoProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findInfoFinish(bool,int,QString)));
+    //connect(m_findInfoProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoOutput(QByteArray,bool)));
+    connect(m_findInfoProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findInfoFinish(int,QProcess::ExitStatus)));
     connect(m_findLinkProcess,SIGNAL(started()),this,SLOT(findLinkStarted()));
     connect(m_findLinkProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findLinkFinish(int,QProcess::ExitStatus)));
     connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
@@ -284,7 +284,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     QFileInfo info(m_editor->filePath());
     m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
-    m_findLinkProcess->startEx(cmd,QString("types -b -pos %1:%2 -stdin -def -info .").
+    m_findLinkProcess->startEx(cmd,QString("types -b -pos %1:%2 -stdin -def -info -doc .").
                              arg(info.fileName()).
                                arg(offset));
 }
@@ -416,7 +416,7 @@ void GolangEdit::editorFindInfo()
 
     m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
-    m_findInfoProcess->startEx(cmd,QString("types -pos %1:%2 -stdin -info .").
+    m_findInfoProcess->startEx(cmd,QString("types -pos %1:%2 -stdin -info -def -doc .").
                              arg(info.fileName()).
                              arg(offset));
 }
@@ -427,13 +427,17 @@ void GolangEdit::findDefStarted()
     m_findDefProcess->closeWriteChannel();
 }
 
-void GolangEdit::findDefOutput(QByteArray data, bool bStdErr)
+void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
 {
-    if (bStdErr) {
-        QString info = QString::fromUtf8(data).trimmed();
-        m_liteApp->appendLog("find def error",info,true);
+    if (code != 0) {
+        QString err = ProcessEx::exitStatusText(code,status);
+        m_liteApp->appendLog("find def error",err,true);
         return;
-    }        
+    }
+    QByteArray data = m_findDefProcess->readAllStandardOutput();
+    if (data.isEmpty()) {
+        return;
+    }
     QString info = QString::fromUtf8(data).trimmed();
     QRegExp reg(":(\\d+):(\\d+)");
     int pos = reg.lastIndexIn(info);
@@ -445,33 +449,39 @@ void GolangEdit::findDefOutput(QByteArray data, bool bStdErr)
     }
 }
 
-void GolangEdit::findDefFinish(bool, int, QString)
-{
-}
-
 void GolangEdit::findInfoStarted()
 {
     m_findInfoProcess->write(m_srcData);
     m_findInfoProcess->closeWriteChannel();
 }
 
-void GolangEdit::findInfoOutput(QByteArray data, bool bStdErr)
+void GolangEdit::findInfoFinish(int code, QProcess::ExitStatus)
 {
-    if (bStdErr) {
+    if (code != 0) {
+        return;
+    }
+    QByteArray data = m_findInfoProcess->readAllStandardOutput();
+    if (data.isEmpty()) {
         return;
     }
     if ( m_editor == m_liteApp->editorManager()->currentEditor()) {
         if (m_plainTextEdit->textCursor() == m_lastCursor) {
-            QString info = QString::fromUtf8(data).trimmed();
+            QStringList lines = QString::fromUtf8(data).trimmed().split("\n");
+            QString info;
+            if (lines.size() >= 2) {
+                info = formatInfo(lines[1]);
+                if (lines.size() >= 3) {
+                    info += "\n";
+                    for (int i = 2; i < lines.size(); i++) {
+                        info += "\n"+lines.at(i);
+                    }
+                }
+            }
             QRect rc = m_plainTextEdit->cursorRect(m_lastCursor);
             QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
-            QToolTip::showText(pt,formatInfo(info),m_plainTextEdit);
+            QToolTip::showText(pt,info,m_plainTextEdit);
         }
     }
-}
-
-void GolangEdit::findInfoFinish(bool /*error*/, int /*code*/, QString)
-{
 }
 
 void GolangEdit::findLinkStarted()
@@ -489,7 +499,7 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
     if ( m_editor == m_liteApp->editorManager()->currentEditor()) {
         if (m_lastLink.hasValidLinkText()) {
             QStringList info = QString::fromUtf8(data).trimmed().split("\n");
-            if (info.size() == 2) {
+            if (info.size() >= 2) {
                 if (info[0] != "-") {
                     QRegExp reg(":(\\d+):(\\d+)");
                     int pos = reg.lastIndexIn(info[0]);
@@ -501,6 +511,12 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         m_lastLink.targetLine = line-1;
                         m_lastLink.targetColumn = col-1;
                         m_lastLink.targetInfo = formatInfo(info[1]);
+                        if (info.size() >= 3) {
+                            m_lastLink.targetInfo += "\n";
+                            for (int i = 2; i < info.size(); i++) {
+                                m_lastLink.targetInfo += "\n"+info.at(i);
+                            }
+                        }
                         m_editor->showLink(m_lastLink);
                     }
                 } else if (info[0] == "-") {

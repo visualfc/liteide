@@ -51,11 +51,9 @@ public slots:
     void editorRenameSymbolGlobal();
     void editorComment();
     void findDefStarted();
-    void findDefOutput(QByteArray,bool);
-    void findDefFinish(bool,int,QString);
+    void findDefFinish(int code,QProcess::ExitStatus status);
     void findInfoStarted();
-    void findInfoOutput(QByteArray,bool);
-    void findInfoFinish(bool,int,QString);
+    void findInfoFinish(int, QProcess::ExitStatus);
     void findLinkStarted();
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
@@ -74,8 +72,8 @@ protected:
     QAction *m_renameSymbolAct;
     //QAction *m_renameSymbolGopathAct;
     QAction *m_viewGodocAct;
-    ProcessEx  *m_findDefProcess;
-    ProcessEx  *m_findInfoProcess;
+    Process  *m_findDefProcess;
+    Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
