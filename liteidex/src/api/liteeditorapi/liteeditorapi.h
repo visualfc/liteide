@@ -170,6 +170,7 @@ struct Link
         , linkTextEnd(-1)
         , targetLine(-1)
         , targetColumn(-1)
+        , showTip(false)
     {}
 
     void clear()
@@ -180,6 +181,7 @@ struct Link
         targetInfo.clear();
         targetLine = 0;
         targetColumn = 0;
+        showTip = false;
     }
 
     bool hasValidTarget() const
@@ -193,10 +195,11 @@ struct Link
 
     int linkTextStart;
     int linkTextEnd;
-    QString targetFileName;
-    QString targetInfo;
     int targetLine;
     int targetColumn;
+    bool    showTip;
+    QString targetFileName;
+    QString targetInfo;
     QPoint cursorPos;
 };
 

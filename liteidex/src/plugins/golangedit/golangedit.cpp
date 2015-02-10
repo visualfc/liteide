@@ -54,8 +54,8 @@ QString formatInfo(const QString &info)
     QRegExp re("([\\w\\s\\.]+)\\{(.+)\\}");
     if (re.indexIn(info) == 0) {
         if (re.matchedLength() == info.length()) {
-            QString str = re.cap(1)+" {\n\t";
-            str += re.cap(2).split(";").join("\n\t");
+            QString str = re.cap(1)+" {\n    ";
+            str += re.cap(2).split(";").join("\n    ");
             str += "\n}";
             return str;
         }
@@ -256,6 +256,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
             m_lastLink.linkTextEnd == cursor.selectionEnd()) {
         if (m_lastLink.hasValidTarget()) {
             m_lastLink.cursorPos = pos;
+            m_lastLink.showTip = true;
             m_editor->showLink(m_lastLink);
             return;
         }
@@ -272,6 +273,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     }
 
     m_lastLink.clear();
+    m_lastLink.showTip = true;
     m_lastLink.linkTextStart = cursor.selectionStart();
     m_lastLink.linkTextEnd = cursor.selectionEnd();
     m_lastLink.cursorPos = pos;

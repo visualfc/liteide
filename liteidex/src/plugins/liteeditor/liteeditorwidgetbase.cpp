@@ -2604,7 +2604,7 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 
 void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
-    if (!link.targetInfo.isEmpty() &&
+    if (link.showTip && !link.targetInfo.isEmpty() &&
         ( (m_showLinkInfomation && link.cursorPos == m_lastUplinkInfoPos)
           || m_showLinkNavigation )) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
