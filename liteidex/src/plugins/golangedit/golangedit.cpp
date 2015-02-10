@@ -54,9 +54,11 @@ QString formatInfo(const QString &info)
     QRegExp re("([\\w\\s\\.]+)\\{(.+)\\}");
     if (re.indexIn(info) == 0) {
         if (re.matchedLength() == info.length()) {
-            QString str = re.cap(1)+" {\n    ";
-            str += re.cap(2).split(";").join("\n    ");
-            str += "\n}";
+            QString str = re.cap(1)+" {\n";
+            foreach (QString item, re.cap(2).split(";",QString::SkipEmptyParts)) {
+                str += "\t"+item.trimmed()+"\n";
+            }
+            str += "}";
             return str;
         }
     }
