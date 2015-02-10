@@ -20,6 +20,7 @@ static void cdrv_cb(void *cb, void *id, void *reply, int size, int err, void* ct
 
 #cgo windows LDFLAGS: -L../../liteide/bin -lliteapp
 #cgo linux LDFLAGS: -L../../liteide/bin -lliteapp
+#cgo openbsd LDFLAGS: -L../../liteide/bin -lliteapp
 #cgo darwin LDFLAGS: -L../../liteide/bin/liteide.app/Contents/MacOS
 */
 import "C"

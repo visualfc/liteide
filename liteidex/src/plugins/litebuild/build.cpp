@@ -250,6 +250,12 @@ void Build::appendAction(BuildAction *act)
                     delete ba;
                 }
 #endif
+#ifdef Q_OS_OPENBD
+                if (act->os().contains("openbsd",Qt::CaseInsensitive)) {
+                    m_actionList[i] = act;
+                    delete ba;
+                }
+#endif
                 return;
         }
     }
