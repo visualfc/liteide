@@ -30,6 +30,7 @@
 #include "qtc_searchresult/searchresultwidget.h"
 
 class QStackedWidget;
+
 class FileSearchManager : public LiteApi::IFileSearchManager
 {
     Q_OBJECT

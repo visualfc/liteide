@@ -121,6 +121,7 @@ private slots:
 private:
     QList<SearchResultItem> checkedItems() const;
     void updateMatchesFoundLabel();
+    void initMatchesFoundLabel();
 
     SearchResultTreeView *m_searchResultTreeView;
     int m_count;

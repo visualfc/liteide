@@ -412,7 +412,8 @@ void SearchResultWidget::restart()
     m_cancelButton->setVisible(true);
     m_searchAgainButton->setVisible(false);
     m_messageWidget->setVisible(false);
-    updateMatchesFoundLabel();
+    //updateMatchesFoundLabel();
+    initMatchesFoundLabel();
     emit restarted();
 }
 
@@ -518,6 +519,11 @@ void SearchResultWidget::updateMatchesFoundLabel()
         m_matchesFoundLabel->setText(tr("No matches found."));
     else
         m_matchesFoundLabel->setText(tr("%n matches found.", 0, m_count));
+}
+
+void SearchResultWidget::initMatchesFoundLabel()
+{
+    m_matchesFoundLabel->setText(tr("searching ..."));
 }
 
 #include "searchresultwidget.moc"
