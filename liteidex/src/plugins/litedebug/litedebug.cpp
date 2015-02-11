@@ -366,7 +366,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
     }
 
     m_debugger->setInitBreakTable(m_fileBpMap);
-    m_debugger->setEnvironment(m_envManager->currentEnvironment().toStringList());
+    m_debugger->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_debugger->setWorkingDirectory(work);
     if (!m_debugger->start(cmd,args)) {
         m_liteApp->appendLog("LiteDebug","Failed to start debugger",true);
