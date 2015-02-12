@@ -289,11 +289,11 @@ protected:
     int m_extraAreaSelectionNumber;
     int m_averageCharWidth;
     int m_lastLine;
-    int m_uplinkTime;
-    QTimer *m_uplinkDeployTimer;
-    QTimer *m_uplinkInfoTimer;
-    QPoint m_uplinkInfoPos;
-    QPoint m_lastUplinkInfoPos;
+    int m_upToolTipTime;
+    QTimer *m_upToolTipDeployTimer;
+    QTimer *m_upToolTipTimer;
+    QPoint m_upToolTipPos;
+    QPoint m_lastUpToolTipPos;
     bool m_linkPressed;
     bool m_uplinkSkip;
     bool m_mouseOnFoldedMarker;

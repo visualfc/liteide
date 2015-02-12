@@ -340,7 +340,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
       m_lastCursorChangeWasInteresting(false)
 {
     m_inputCursorOffset = 0;
-    m_uplinkTime = 200;
+    m_upToolTipTime = 200;
     m_linkPressed = false;
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
@@ -380,12 +380,12 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_visualizeWhitespace = false;
     m_lastLine = -1;
 
-    m_uplinkDeployTimer = new QTimer(this);
-    m_uplinkDeployTimer->setSingleShot(true);
-    connect(m_uplinkDeployTimer,SIGNAL(timeout()),this,SLOT(uplinkDeployTimeout()));
-    m_uplinkInfoTimer = new QTimer(this);
-    m_uplinkInfoTimer->setSingleShot(true);
-    connect(m_uplinkInfoTimer,SIGNAL(timeout()),this,SLOT(uplinkInfoTimeout()));
+    m_upToolTipDeployTimer = new QTimer(this);
+    m_upToolTipDeployTimer->setSingleShot(true);
+    connect(m_upToolTipDeployTimer,SIGNAL(timeout()),this,SLOT(uplinkDeployTimeout()));
+    m_upToolTipTimer = new QTimer(this);
+    m_upToolTipTimer->setSingleShot(true);
+    connect(m_upToolTipTimer,SIGNAL(timeout()),this,SLOT(uplinkInfoTimeout()));
 
     m_selectionExpression.setCaseSensitivity(Qt::CaseSensitive);
     m_selectionExpression.setPatternSyntax(QRegExp::FixedString);
@@ -2552,17 +2552,17 @@ QTextBlock LiteEditorWidgetBase::foldedBlockAt(const QPoint &pos, QRect *box) co
 
 void LiteEditorWidgetBase::uplinkDeployTimeout()
 {
-    m_lastUplinkInfoPos = m_uplinkInfoPos;
-    m_uplinkInfoTimer->start(m_uplinkTime+100);
+    m_lastUpToolTipPos = m_upToolTipPos;
+    m_upToolTipTimer->start(m_upToolTipTime+100);
 }
 
 void LiteEditorWidgetBase::uplinkInfoTimeout()
 {
-    if (m_lastUplinkInfoPos != m_uplinkInfoPos) {
+    if (m_lastUpToolTipPos != m_upToolTipPos) {
         QToolTip::hideText();
         return;
     }
-    QTextCursor cursor = cursorForPosition(m_uplinkInfoPos);
+    QTextCursor cursor = cursorForPosition(m_upToolTipPos);
     bool findLink = false;
     if (!cursor.isNull()) {
         int pos = cursor.position();
@@ -2571,11 +2571,11 @@ void LiteEditorWidgetBase::uplinkInfoTimeout()
         if (cursor.hasSelection()) {
             rc.setLeft(rc.left()-(pos-cursor.selectionStart())*m_averageCharWidth);
             rc.setRight(rc.right()+(cursor.selectionEnd()-pos)*m_averageCharWidth);
-            if (rc.contains(m_uplinkInfoPos)) {
+            if (rc.contains(m_upToolTipPos)) {
                 findLink = true;
                 m_showLinkInfomation = true;
                 QToolTip::hideText();
-                emit updateLink(cursor,m_uplinkInfoPos,false);
+                emit updateLink(cursor,m_upToolTipPos,false);
             }
         }
     }
@@ -2588,8 +2588,8 @@ void LiteEditorWidgetBase::stopUplinkTimer()
 {
     m_showLinkInfomation = false;
     QToolTip::hideText();
-    m_uplinkInfoTimer->stop();
-    m_uplinkDeployTimer->stop();
+    m_upToolTipTimer->stop();
+    m_upToolTipDeployTimer->stop();
 }
 
 bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
@@ -2605,7 +2605,7 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
     if (link.showTip && !link.targetInfo.isEmpty() &&
-        ( (m_showLinkInfomation && link.cursorPos == m_lastUplinkInfoPos)
+        ( (m_showLinkInfomation && link.cursorPos == m_lastUpToolTipPos)
           || m_showLinkNavigation )) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
         QToolTip::showText(pt,link.targetInfo,this);
@@ -2734,17 +2734,7 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
                 }
             }
         }
-    }/* else if (e->buttons() == Qt::NoButton){
-        if (m_uplinkSkip) {
-            m_uplinkSkip = false;
-            return;
-        }
-        m_uplinkInfoPos = e->pos();
-        m_uplinkDeployTimer->start(m_uplinkTime);
-    } else {
-        m_uplinkDeployTimer->stop();
-        m_uplinkInfoTimer->stop();
-    }*/
+    }
     if (!findLink) {
         clearLink();
     }
@@ -2810,8 +2800,8 @@ bool LiteEditorWidgetBase::viewportEvent(QEvent *e)
             return true;
         }
         const QHelpEvent *he = static_cast<QHelpEvent*>(e);
-        m_uplinkInfoPos = he->pos();
-        m_uplinkDeployTimer->start(m_uplinkTime);
+        m_upToolTipPos = he->pos();
+        m_upToolTipDeployTimer->start(m_upToolTipTime);
         return true;
     }
     return QPlainTextEdit::viewportEvent(e);
