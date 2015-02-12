@@ -504,6 +504,21 @@ void SearchResultWidget::searchAgain()
 void SearchResultWidget::showReplaceMode()
 {
     this->setShowReplaceUI(true);
+    Internal::SearchResultTreeModel *model = m_searchResultTreeView->model();
+    const int fileCount = model->rowCount(QModelIndex());
+    for (int i = 0; i < fileCount; ++i) {
+        QModelIndex fileIndex = model->index(i, 0, QModelIndex());
+        Internal::SearchResultTreeItem *fileItem = static_cast<Internal::SearchResultTreeItem *>(fileIndex.internalPointer());
+        fileItem->setIsUserCheckable(true);
+        fileItem->setCheckState(Qt::Checked);
+        for (int rowIndex = 0; rowIndex < fileItem->childrenCount(); ++rowIndex) {
+            QModelIndex textIndex = model->index(rowIndex, 0, fileIndex);
+            Internal::SearchResultTreeItem *rowItem = static_cast<Internal::SearchResultTreeItem *>(textIndex.internalPointer());
+            rowItem->setIsUserCheckable(true);
+            rowItem->setCheckState(Qt::Checked);
+        }
+    }
+    this->m_replaceTextEdit->setFocus();
 }
 
 QList<SearchResultItem> SearchResultWidget::checkedItems() const

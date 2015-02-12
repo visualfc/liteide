@@ -2734,7 +2734,7 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
                 }
             }
         }
-    } else if (e->buttons() == Qt::NoButton){
+    }/* else if (e->buttons() == Qt::NoButton){
         if (m_uplinkSkip) {
             m_uplinkSkip = false;
             return;
@@ -2744,7 +2744,7 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
     } else {
         m_uplinkDeployTimer->stop();
         m_uplinkInfoTimer->stop();
-    }
+    }*/
     if (!findLink) {
         clearLink();
     }
@@ -2801,6 +2801,20 @@ void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
     }
     if (viewport()->cursor().shape() == Qt::BlankCursor)
         viewport()->setCursor(Qt::IBeamCursor);
+}
+
+bool LiteEditorWidgetBase::viewportEvent(QEvent *e)
+{
+    if (e->type() == QEvent::ToolTip) {
+        if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+            return true;
+        }
+        const QHelpEvent *he = static_cast<QHelpEvent*>(e);
+        m_uplinkInfoPos = he->pos();
+        m_uplinkDeployTimer->start(m_uplinkTime);
+        return true;
+    }
+    return QPlainTextEdit::viewportEvent(e);
 }
 
 void LiteEditorWidgetBase::inputMethodEvent(QInputMethodEvent *e)
