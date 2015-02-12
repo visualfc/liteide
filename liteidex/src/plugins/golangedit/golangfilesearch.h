@@ -42,6 +42,7 @@ public:
     virtual void activate();
     virtual QString searchText() const;
     virtual bool replaceMode() const;
+    virtual bool canCancel() const { return false; }
     void findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool replace = false);
 public slots:
     void findUsagesStarted();

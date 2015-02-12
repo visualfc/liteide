@@ -32,7 +32,6 @@ class QLineEdit;
 class QCheckBox;
 class QPushButton;
 class QLabel;
-
 struct FindOption : public LiteApi::FindOption
 {
     QString replaceText;

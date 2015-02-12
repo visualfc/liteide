@@ -57,7 +57,8 @@ public:
     virtual void cancel() = 0;
     virtual void activate() = 0;
     virtual QString searchText() const = 0;
-    virtual bool replaceMode() const = 0;
+    virtual bool replaceMode() const = 0;    
+    virtual bool canCancel() const = 0;
 signals:
     void searchTextChanged(const QString &text);
     void findStarted();

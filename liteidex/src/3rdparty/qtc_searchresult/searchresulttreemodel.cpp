@@ -150,21 +150,21 @@ QVariant SearchResultTreeModel::data(const QModelIndex &idx, int role) const
 {
     if (!idx.isValid())
         return QVariant();
+    return data(treeItemAtIndex(idx), role);
+//    QVariant result;
 
-    QVariant result;
+//    if (role == Qt::SizeHintRole) {
+//        int height = QApplication::fontMetrics().height();
+//        if (m_editorFontIsUsed) {
+//            const int editorFontHeight = QFontMetrics(m_textEditorFont).height();
+//            height = qMax(height, editorFontHeight);
+//        }
+//        result = QSize(0, height);
+//    } else {
+//        result = data(treeItemAtIndex(idx), role);
+//    }
 
-    if (role == Qt::SizeHintRole) {
-        int height = QApplication::fontMetrics().height();
-        if (m_editorFontIsUsed) {
-            const int editorFontHeight = QFontMetrics(m_textEditorFont).height();
-            height = qMax(height, editorFontHeight);
-        }
-        result = QSize(0, height);
-    } else {
-        result = data(treeItemAtIndex(idx), role);
-    }
-
-    return result;
+//    return result;
 }
 
 bool SearchResultTreeModel::setData(const QModelIndex &idx, const QVariant &value, int role)

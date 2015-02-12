@@ -82,7 +82,8 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_count(0),
     m_isShowingReplaceUI(false),
     m_searchAgainSupported(false),
-    m_preserveCaseSupported(false)
+    m_preserveCaseSupported(false),
+    m_cancelSupported(true)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(2);
@@ -196,7 +197,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
 //    }
 
     m_matchesFoundLabel = new QLabel(topWidget);
-    updateMatchesFoundLabel();
+    endMatchesFoundLabel();
 
     topLayout->addWidget(m_descriptionContainer);
     topLayout->addWidget(m_cancelButton);
@@ -418,12 +419,17 @@ void SearchResultWidget::restart()
 //    Core::Id sizeWarningId(SIZE_WARNING_ID);
 //    m_infoBar.removeInfo(sizeWarningId);
 //    m_infoBar.enableInfo(sizeWarningId);
-    m_cancelButton->setVisible(true);
+    m_cancelButton->setVisible(m_cancelSupported);
     m_searchAgainButton->setVisible(false);
     m_messageWidget->setVisible(false);
     //updateMatchesFoundLabel();
-    initMatchesFoundLabel();
+    beginMatchesFoundLabel();
     emit restarted();
+}
+
+void SearchResultWidget::setCancelSupported(bool supported)
+{
+    m_cancelSupported = supported;
 }
 
 void SearchResultWidget::setSearchAgainSupported(bool supported)
@@ -445,7 +451,7 @@ void SearchResultWidget::setPreserveCaseSupported(bool supported)
 
 void SearchResultWidget::finishSearch(bool canceled)
 {
-    this->updateMatchesFoundLabel();
+    endMatchesFoundLabel();
     m_replaceTextEdit->setEnabled(m_count > 0);
     m_replaceButton->setEnabled(m_count > 0);
     m_preserveCaseCheck->setEnabled(m_count > 0);
@@ -542,15 +548,20 @@ QList<SearchResultItem> SearchResultWidget::checkedItems() const
 
 void SearchResultWidget::updateMatchesFoundLabel()
 {
+   m_matchesFoundLabel->setText(tr("searching... %n matches found.", 0, m_count));
+}
+
+void SearchResultWidget::beginMatchesFoundLabel()
+{
+    m_matchesFoundLabel->setText(tr("searching ..."));
+}
+
+void SearchResultWidget::endMatchesFoundLabel()
+{
     if (m_count == 0)
         m_matchesFoundLabel->setText(tr("No matches found."));
     else
         m_matchesFoundLabel->setText(tr("%n matches found.", 0, m_count));
-}
-
-void SearchResultWidget::initMatchesFoundLabel()
-{
-    m_matchesFoundLabel->setText(tr("searching ..."));
 }
 
 #include "searchresultwidget.moc"

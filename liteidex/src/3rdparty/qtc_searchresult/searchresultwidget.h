@@ -91,6 +91,7 @@ public:
 
     void restart();
 
+    void setCancelSupported(bool supported);
     void setSearchAgainSupported(bool supported);
     void setSearchAgainEnabled(bool enabled);
     void setPreserveCaseSupported(bool enabled);
@@ -122,7 +123,8 @@ private slots:
 private:
     QList<SearchResultItem> checkedItems() const;
     void updateMatchesFoundLabel();
-    void initMatchesFoundLabel();
+    void beginMatchesFoundLabel();
+    void endMatchesFoundLabel();
 
     SearchResultTreeView *m_searchResultTreeView;
     int m_count;
@@ -130,15 +132,16 @@ private:
     QFrame *m_messageWidget;
 //    Core::InfoBar m_infoBar;
 //    Core::InfoBarDisplay m_infoBarDisplay;
-    bool m_isShowingReplaceUI;
     QLabel *m_replaceLabel;
     QLineEdit *m_replaceTextEdit;
     QToolButton *m_replaceButton;
     QToolButton *m_searchAgainButton;
     QCheckBox *m_preserveCaseCheck;
     QToolButton *m_showReplaceModeButton;
+    bool m_isShowingReplaceUI;
     bool m_searchAgainSupported;
     bool m_preserveCaseSupported;
+    bool m_cancelSupported;
     QWidget *m_descriptionContainer;
     QLabel *m_label;
     QLabel *m_searchTerm;
