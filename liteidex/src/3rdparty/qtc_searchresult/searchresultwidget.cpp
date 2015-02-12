@@ -169,6 +169,13 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_searchAgainButton->setVisible(false);
     connect(m_searchAgainButton, SIGNAL(clicked()), this, SLOT(searchAgain()));
 
+    m_showReplaceModeButton = new QToolButton(topWidget);
+    m_showReplaceModeButton->setToolTip(tr("Set show replace mode ui"));
+    m_showReplaceModeButton->setText(tr("Show Replace"));
+    m_showReplaceModeButton->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    m_showReplaceModeButton->setVisible(false);
+    connect(m_showReplaceModeButton,SIGNAL(clicked()),this,SLOT(showReplaceMode()));
+
     m_replaceLabel = new QLabel(tr("Replace with:"), topWidget);
     m_replaceTextEdit = new WideEnoughLineEdit(topWidget);
     m_replaceTextEdit->setMinimumWidth(120);
@@ -194,6 +201,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     topLayout->addWidget(m_descriptionContainer);
     topLayout->addWidget(m_cancelButton);
     topLayout->addWidget(m_searchAgainButton);
+    topLayout->addWidget(m_showReplaceModeButton);
     topLayout->addWidget(m_replaceLabel);
     topLayout->addWidget(m_replaceTextEdit);
     topLayout->addWidget(m_replaceButton);
@@ -320,6 +328,7 @@ void SearchResultWidget::setShowReplaceUI(bool visible)
     m_preserveCaseCheck->setVisible(m_preserveCaseSupported && visible);
     m_isShowingReplaceUI = visible;
     m_infoWidget->setVisible(visible);
+    m_showReplaceModeButton->setVisible(!visible);
 }
 
 void SearchResultWidget::setInfoWidgetLabel(const QString &infoText)
@@ -436,9 +445,7 @@ void SearchResultWidget::setPreserveCaseSupported(bool supported)
 
 void SearchResultWidget::finishSearch(bool canceled)
 {
-//    Core::Id sizeWarningId(SIZE_WARNING_ID);
-//    m_infoBar.removeInfo(sizeWarningId);
-//    m_infoBar.enableInfo(sizeWarningId);
+    this->updateMatchesFoundLabel();
     m_replaceTextEdit->setEnabled(m_count > 0);
     m_replaceButton->setEnabled(m_count > 0);
     m_preserveCaseCheck->setEnabled(m_count > 0);
@@ -492,6 +499,11 @@ void SearchResultWidget::cancel()
 void SearchResultWidget::searchAgain()
 {
     emit searchAgainRequested();
+}
+
+void SearchResultWidget::showReplaceMode()
+{
+    this->setShowReplaceUI(true);
 }
 
 QList<SearchResultItem> SearchResultWidget::checkedItems() const

@@ -117,6 +117,7 @@ private slots:
     void handleReplaceButton();
     void cancel();
     void searchAgain();
+    void showReplaceMode();
 
 private:
     QList<SearchResultItem> checkedItems() const;
@@ -135,6 +136,7 @@ private:
     QToolButton *m_replaceButton;
     QToolButton *m_searchAgainButton;
     QCheckBox *m_preserveCaseCheck;
+    QToolButton *m_showReplaceModeButton;
     bool m_searchAgainSupported;
     bool m_preserveCaseSupported;
     QWidget *m_descriptionContainer;

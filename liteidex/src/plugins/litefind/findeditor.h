@@ -41,6 +41,7 @@ struct FindOption : public LiteApi::FindOption
     }
 };
 
+
 class FindEditor : public QObject
 {
     Q_OBJECT
