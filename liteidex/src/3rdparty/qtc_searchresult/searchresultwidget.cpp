@@ -235,6 +235,11 @@ void SearchResultWidget::setInfo(const QString &label, const QString &toolTip, c
     m_searchTerm->setVisible(!term.isEmpty());
 }
 
+QString SearchResultWidget::searchText() const
+{
+    return m_searchTerm->text();
+}
+
 void SearchResultWidget::addResult(const QString &fileName, int lineNumber, const QString &rowText,
     int searchTermStart, int searchTermLength, const QVariant &userData)
 {
@@ -249,12 +254,12 @@ void SearchResultWidget::addResult(const QString &fileName, int lineNumber, cons
     addResults(QList<SearchResultItem>() << item, AddOrdered);
 }
 
-void SearchResultWidget::addResults(const QList<SearchResultItem> &items, AddMode mode)
+void SearchResultWidget::addResults(const QList<SearchResultItem> &items, AddMode mode, bool revert)
 {
     bool firstItems = (m_count == 0);
     m_count += items.size();
     m_searchResultTreeView->addResults(items, mode);
-    updateMatchesFoundLabel();
+    updateMatchesFoundLabel(revert);
     if (firstItems) {
 //        if (!m_dontAskAgainGroup.isEmpty()) {
 //            Core::Id undoWarningId = Core::Id("warninglabel/").withSuffix(m_dontAskAgainGroup);
@@ -290,6 +295,14 @@ void SearchResultWidget::addResults(const QList<SearchResultItem> &items, AddMod
 //        m_infoBar.addInfo(info);
 //        emit requestPopup(false/*no focus*/);
     }
+}
+
+void SearchResultWidget::setRevert(const QString &replaceText, const QString &searchText)
+{
+    m_searchTerm->setText(replaceText);
+    this->setTextToReplace(searchText);
+    this->m_replaceButton->setText(tr("Revert"));
+    this->m_replaceButton->setToolTip(tr("Revert all occurrences"));
 }
 
 
@@ -422,9 +435,18 @@ void SearchResultWidget::restart()
     m_cancelButton->setVisible(m_cancelSupported);
     m_searchAgainButton->setVisible(false);
     m_messageWidget->setVisible(false);
+    m_replaceButton->setToolTip(tr("Replace all occurrences"));
+    m_replaceButton->setText(tr("Replace"));
     //updateMatchesFoundLabel();
     beginMatchesFoundLabel();
     emit restarted();
+}
+
+void SearchResultWidget::clear()
+{
+    m_searchResultTreeView->clear();
+    m_count = 0;
+    endMatchesFoundLabel();
 }
 
 void SearchResultWidget::setCancelSupported(bool supported)
@@ -546,9 +568,13 @@ QList<SearchResultItem> SearchResultWidget::checkedItems() const
     return result;
 }
 
-void SearchResultWidget::updateMatchesFoundLabel()
+void SearchResultWidget::updateMatchesFoundLabel(bool revert)
 {
-   m_matchesFoundLabel->setText(tr("searching... %n matches found.", 0, m_count));
+    if (revert) {
+        m_matchesFoundLabel->setText(tr("%n matches replaced.", 0, m_count));
+    } else {
+        m_matchesFoundLabel->setText(tr("searching... %n matches found.", 0, m_count));
+    }
 }
 
 void SearchResultWidget::beginMatchesFoundLabel()

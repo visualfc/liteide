@@ -58,10 +58,13 @@ public:
     ~SearchResultWidget();
 
     void setInfo(const QString &label, const QString &toolTip, const QString &term);
+    QString searchText() const;
 
     void addResult(const QString &fileName, int lineNumber, const QString &lineText,
                    int searchTermStart, int searchTermLength, const QVariant &userData = QVariant());
-    void addResults(const QList<SearchResultItem> &items, AddMode mode);
+    void addResults(const QList<SearchResultItem> &items, AddMode mode, bool revert = false);
+
+    void setRevert(const QString &replaceText, const QString &searchText);
 
     int count() const;
 
@@ -90,6 +93,7 @@ public:
     void goToPrevious();
 
     void restart();
+    void clear();
 
     void setCancelSupported(bool supported);
     void setSearchAgainSupported(bool supported);
@@ -122,7 +126,7 @@ private slots:
 
 private:
     QList<SearchResultItem> checkedItems() const;
-    void updateMatchesFoundLabel();
+    void updateMatchesFoundLabel(bool revert);
     void beginMatchesFoundLabel();
     void endMatchesFoundLabel();
 

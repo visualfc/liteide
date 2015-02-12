@@ -66,8 +66,8 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     m_searchResultWidget->setPreserveCaseSupported(false);
     m_searchResultWidget->setSearchAgainSupported(false);
     m_searchResultWidget->setAutoExpandResults(true);
-    m_searchResultWidget->setInfoWidgetLabel(tr("This file change cannot be undone!"));
-
+    //m_searchResultWidget->setInfoWidgetLabel(tr("This file change cannot be undone!"));
+    m_searchResultWidget->setInfoWidgetLabel(tr("This file change can be revert!"));
 
     QPalette pal = m_searchWidget->palette();
     Find::Internal::SearchResultColor color;
@@ -210,6 +210,9 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
     if (text.trimmed().isEmpty()) {
         return;
     }
+    if (text == m_searchResultWidget->searchText()) {
+        return;
+    }
     if (items.isEmpty()) {
         return;
     }
@@ -240,13 +243,16 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
         }
     }
 
-    m_toolAct->setChecked(false);
+    //revert mode
+    m_searchResultWidget->clear();
     it.toFront();
     while(it.hasNext()) {
         it.next();
         ReplaceDocument doc(m_liteApp);
-        doc.replace(it.key(),text,it.value());
+        QList<Find::SearchResultItem> items = doc.replace(it.key(),text,it.value());
+        m_searchResultWidget->addResults(items,Find::AddOrdered,true);
     }
+    m_searchResultWidget->setRevert(text,m_currentSearch->searchText());
 }
 
 void FileSearchManager::searchTextChanged(const QString &text)

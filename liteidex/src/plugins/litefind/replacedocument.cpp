@@ -47,16 +47,17 @@ ReplaceDocument::~ReplaceDocument()
     }
 }
 
-bool ReplaceDocument::replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items)
+QList<Find::SearchResultItem> ReplaceDocument::replace(const QString &fileName, const QString &text, const QList<Find::SearchResultItem> &items)
 {
     QTextCursor cursor;
     bool crlf = false;
     QTextDocument *doc = fileDocument(fileName,cursor,crlf);
     if (!doc) {
-        return false;
+        return QList<Find::SearchResultItem>();
     }
     cursor.movePosition(QTextCursor::Start);
     cursor.beginEditBlock();
+    QList<Find::SearchResultItem> update_items;
     QTextBlock block = cursor.block();
     int offset = 0;
     foreach(Find::SearchResultItem item, items) {
@@ -75,13 +76,17 @@ bool ReplaceDocument::replace(const QString &fileName, const QString &text, cons
         cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,item.textMarkLength);
         cursor.removeSelectedText();
         cursor.insertText(text);
+        item.textMarkPos -= offset;
+        item.text.replace(item.textMarkPos,item.textMarkLength,text);
         offset += text.length()-item.textMarkLength;
+        item.textMarkLength = text.length();
+        update_items.push_back(item);
     }
     cursor.endEditBlock();
     if (m_document) {
         QFile f(fileName);
         if (!f.open(QFile::WriteOnly)) {
-            return false;
+            return QList<Find::SearchResultItem>();
         }
         QString text = m_document->toPlainText();
         if (crlf) {
@@ -89,7 +94,7 @@ bool ReplaceDocument::replace(const QString &fileName, const QString &text, cons
         }
         f.write(text.toUtf8());
     }
-    return false;
+    return update_items;
 }
 
 QTextDocument *ReplaceDocument::fileDocument(const QString &fileName, QTextCursor &cursor, bool &crlf)
