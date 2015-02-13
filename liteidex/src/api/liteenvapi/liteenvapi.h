@@ -93,18 +93,23 @@ inline QProcessEnvironment getCurrentEnvironment(LiteApi::IApplication *app)
 
 inline QString getDefaultGOOS()
 {
+    const char* goos = "";
 #ifdef Q_OS_WIN
-    return "windows";
+    goos = "windows";
 #endif
 #ifdef Q_OS_LINUX
-    return "linux";
+    goos = "linux";
 #endif
 #ifdef Q_OS_DARWIN
-    return "darwin";
+    goos = "darwin";
 #endif
 #ifdef Q_OS_FREEBSD
-    return "freebsd";
+    goos = "freebsd";
 #endif
+#ifdef Q_OS_OPENBSD
+    goos = "openbsd";
+#endif
+	return goos;
 }
 
 inline QString getDefaultGOROOT()

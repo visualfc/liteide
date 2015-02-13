@@ -323,6 +323,13 @@ static QString defaultEnvid()
         return "freebsd64";
     }
 #endif
+#ifdef Q_OS_OPENBSD
+    if (QSysInfo::WordSize == 32) {
+        return "openbsd32";
+    } else {
+        return "openbsd64";
+    }
+#endif
 }
 
 bool EnvManager::initWithApp(LiteApi::IApplication *app)

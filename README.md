@@ -40,6 +40,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * Windows x86 (32-bit or 64-bit) 
 * Linux x86 (32-bit or 64-bit)
 * MacOS X10.6 or higher (64-bit)
+* OpenBSD 5.6 or higher (64-bit)
 
 ### Website
 * LiteIDE Source code
