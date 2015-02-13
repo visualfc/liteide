@@ -101,7 +101,6 @@ void GolangHighlighter::highlightBlock(const QString &text)
         userData->setFoldingEndIncluded(false);
     }
 
-
     if (tokens.isEmpty()) {
         setCurrentBlockState((braceDepth << 8) | lexerState);
         BaseTextDocumentLayout::clearParentheses(currentBlock());
@@ -132,7 +131,7 @@ void GolangHighlighter::highlightBlock(const QString &text)
     //bool onlyHighlightComments = false;
     for (int i = 0; i < tokens.size(); ++i) {
         Token &tk = tokens[i];
-        //tk.f.length = QString::fromUtf8(data.left(tk.begin())).length();
+
         unsigned previousTokenEnd = 0;
         if (i != 0) {
             // mark the whitespaces
