@@ -258,7 +258,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
             m_lastLink.linkTextEnd == cursor.selectionEnd()) {
         if (m_lastLink.hasValidTarget()) {
             m_lastLink.cursorPos = pos;
-            m_lastLink.showTip = true;
+            m_lastLink.showTip = !nav;
             m_editor->showLink(m_lastLink);
             return;
         }
@@ -275,7 +275,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     }
 
     m_lastLink.clear();
-    m_lastLink.showTip = true;
+    m_lastLink.showTip = !nav;
     m_lastLink.linkTextStart = cursor.selectionStart();
     m_lastLink.linkTextEnd = cursor.selectionEnd();
     m_lastLink.cursorPos = pos;

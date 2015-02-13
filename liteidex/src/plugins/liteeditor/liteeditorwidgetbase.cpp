@@ -2604,9 +2604,10 @@ bool LiteEditorWidgetBase::isSpellCheckingAt(QTextCursor cur) const
 
 void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
-    if (link.showTip && !link.targetInfo.isEmpty() &&
-        ( (m_showLinkInfomation && link.cursorPos == m_lastUpToolTipPos)
-          || m_showLinkNavigation )) {
+    if (link.showTip
+            && !link.targetInfo.isEmpty()
+            && m_showLinkInfomation
+            && link.cursorPos == m_lastUpToolTipPos) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
         QToolTip::showText(pt,link.targetInfo,this);
     }
@@ -2620,7 +2621,7 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
     }
 
     if (link.targetFileName.isEmpty()) {
-        m_currentLink = LiteApi::Link();
+        clearLink();
         return;
     }
 
@@ -2640,7 +2641,6 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 void LiteEditorWidgetBase::clearLink()
 {
     m_showLinkNavigation = false;
-    m_showLinkInfomation = false;
     m_linkPressed = false;
     if (!m_currentLink.hasValidLinkText())
         return;
