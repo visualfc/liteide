@@ -252,7 +252,7 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
         QList<Find::SearchResultItem> items = doc.replace(it.key(),text,it.value());
         m_searchResultWidget->addResults(items,Find::AddOrdered,true);
     }
-    m_searchResultWidget->setRevert(text,m_currentSearch->searchText());
+    m_searchResultWidget->setRevertMode(text,m_currentSearch->searchText());
 }
 
 void FileSearchManager::searchTextChanged(const QString &text)

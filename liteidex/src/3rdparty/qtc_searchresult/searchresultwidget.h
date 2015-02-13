@@ -64,7 +64,7 @@ public:
                    int searchTermStart, int searchTermLength, const QVariant &userData = QVariant());
     void addResults(const QList<SearchResultItem> &items, AddMode mode, bool revert = false);
 
-    void setRevert(const QString &replaceText, const QString &searchText);
+    void setRevertMode(const QString &replaceText, const QString &searchText);
 
     int count() const;
 

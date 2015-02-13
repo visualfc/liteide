@@ -85,10 +85,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_renameSymbolAct = new QAction(tr("Rename Symbol Under Cursor"),this);
     actionContext->regAction(m_renameSymbolAct,"RenameSymbol","CTRL+SHIFT+R");
 
-    m_findUseGlobalAct = new QAction(QString("%1 (Global)").arg(tr("Find Usages")),this);
-    actionContext->regAction(m_findUseGlobalAct,"FindUsagesGOPATH","");
+    m_findUseGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Find Usages")),this);
+    actionContext->regAction(m_findUseGlobalAct,"FindUsagesGOPATH","CTRL+ALT+U");
 
-    m_renameSymbolGlobalAct = new QAction(QString("%1 (Global)").arg(tr("Rename Symbol Under Cursor")),this);
+    m_renameSymbolGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Rename Symbol Under Cursor")),this);
     actionContext->regAction(m_renameSymbolGlobalAct,"RenameSymbolGOPATH","");
 
     m_fileSearch = new GolangFileSearch(app,this);
@@ -187,12 +187,11 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
-        menu->addSeparator();
         menu->addAction(m_findUseAct);
-        menu->addAction(m_renameSymbolAct);
+        menu->addAction(m_findUseGlobalAct);
         menu->addSeparator();
         QMenu *sub = menu->addMenu("GoTools");
-        sub->addAction(m_findUseGlobalAct);
+        sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
     }
     menu = LiteApi::getContextMenu(editor);
@@ -202,12 +201,11 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_findInfoAct);
         menu->addAction(m_jumpDeclAct);
-        menu->addSeparator();
         menu->addAction(m_findUseAct);
-        menu->addAction(m_renameSymbolAct);
+        menu->addAction(m_findUseGlobalAct);
         menu->addSeparator();
         QMenu *sub = menu->addMenu("GoTools");
-        sub->addAction(m_findUseGlobalAct);
+        sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
     }

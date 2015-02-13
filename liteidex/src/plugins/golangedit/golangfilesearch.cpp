@@ -98,14 +98,6 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
 
     m_liteApp->editorManager()->saveAllEditors(false);
 
-//    if (oracle) {
-//        LiteApi::ITextLexer *textLexer = LiteApi::getTextLexer(editor);
-//        if (textLexer) {
-//            if (textLexer->isInImport(cursor)) {
-//                oracle = false;
-//            }
-//        }
-//    }
     int offset = moveLeft ? editor->utf8Position(true)-1: editor->utf8Position(true);
 
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);

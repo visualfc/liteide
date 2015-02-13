@@ -297,15 +297,14 @@ void SearchResultWidget::addResults(const QList<SearchResultItem> &items, AddMod
     }
 }
 
-void SearchResultWidget::setRevert(const QString &replaceText, const QString &searchText)
+void SearchResultWidget::setRevertMode(const QString &replaceText, const QString &searchText)
 {
     m_searchTerm->setText(replaceText);
     this->setTextToReplace(searchText);
+    this->m_replaceLabel->setText(tr("Revert with:"));
     this->m_replaceButton->setText(tr("Revert"));
     this->m_replaceButton->setToolTip(tr("Revert all occurrences"));
 }
-
-
 
 int SearchResultWidget::count() const
 {
@@ -342,7 +341,7 @@ void SearchResultWidget::setShowReplaceUI(bool visible)
     m_preserveCaseCheck->setVisible(m_preserveCaseSupported && visible);
     m_isShowingReplaceUI = visible;
     m_infoWidget->setVisible(visible);
-    m_showReplaceModeButton->setVisible(!visible);
+    m_showReplaceModeButton->setVisible(false);
 }
 
 void SearchResultWidget::setInfoWidgetLabel(const QString &infoText)
@@ -435,6 +434,7 @@ void SearchResultWidget::restart()
     m_cancelButton->setVisible(m_cancelSupported);
     m_searchAgainButton->setVisible(false);
     m_messageWidget->setVisible(false);
+    m_replaceLabel->setText(tr("Replace with:"));
     m_replaceButton->setToolTip(tr("Replace all occurrences"));
     m_replaceButton->setText(tr("Replace"));
     //updateMatchesFoundLabel();
@@ -480,6 +480,7 @@ void SearchResultWidget::finishSearch(bool canceled)
     m_cancelButton->setVisible(false);
     m_messageWidget->setVisible(canceled);
     m_searchAgainButton->setVisible(m_searchAgainSupported);
+    m_showReplaceModeButton->setVisible(!this->m_isShowingReplaceUI && !canceled);
 }
 
 void SearchResultWidget::sendRequestPopup()
