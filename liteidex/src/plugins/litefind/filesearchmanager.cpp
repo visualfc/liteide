@@ -66,8 +66,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     m_searchResultWidget->setPreserveCaseSupported(false);
     m_searchResultWidget->setSearchAgainSupported(false);
     m_searchResultWidget->setAutoExpandResults(true);
-    //m_searchResultWidget->setInfoWidgetLabel(tr("This file change cannot be undone!"));
-    m_searchResultWidget->setInfoWidgetLabel(tr("This file change can be revert!"));
+    m_searchResultWidget->setInfoWidgetLabel(tr("Only golang file changes can be revert!"));
 
     QPalette pal = m_searchWidget->palette();
     Find::Internal::SearchResultColor color;

@@ -480,7 +480,7 @@ void SearchResultWidget::finishSearch(bool canceled)
     m_cancelButton->setVisible(false);
     m_messageWidget->setVisible(canceled);
     m_searchAgainButton->setVisible(m_searchAgainSupported);
-    m_showReplaceModeButton->setVisible(!this->m_isShowingReplaceUI && !canceled);
+    m_showReplaceModeButton->setVisible(!this->m_isShowingReplaceUI && !canceled && m_count > 0);
 }
 
 void SearchResultWidget::sendRequestPopup()
