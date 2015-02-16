@@ -3,22 +3,33 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2015.2.9 Ver X27.1
+### 2015.2.16 Ver X27.1
 * LiteIDE
 	* fix code navigate history ( build / astview / debug / link)
 	* fix UNC path crash check
 * LiteEditor
+	* add copy/cut/move/join line action
 	* fix selection color
 	* fix link color
 * GolangEdit
+	* add global find usages and refactor(GOPATH)
+	* add refactor revert mode
+	* add golang symbol document on tooltip
 	* fix no jump code tooltip
-	* fix syntax for Non-English symbol name	
+	* fix syntax for Non-English symbol name
+* LiteFind
+	* add find swith replace mode
+	* add replace revert mode
 * LiteBuild
 	* fix build lock custom config
 * GolangAst
-	* fix Non-English symbol name	
+	* fix Non-English symbol name
 * gotools:
 	* type - simple object info
+	* type - add global usages
+	* type - add symbol doc search
+	* type - add XTest files support
+	* type - fix field pos search
 	* astview - update type var and factor to global
 
 ### 2015.2.4 Ver X27
