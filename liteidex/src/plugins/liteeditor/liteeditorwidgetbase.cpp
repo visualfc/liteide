@@ -2938,6 +2938,12 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
             m_uplinkSkip = true;
             this->stopUplinkTimer();
         }
+    } else if (e->button() == Qt::RightButton) {
+        int eventCursorPosition = cursorForPosition(e->pos()).position();
+        if (eventCursorPosition < textCursor().selectionStart()
+                || eventCursorPosition > textCursor().selectionEnd()) {
+            setTextCursor(cursorForPosition(e->pos()));
+        }
     }
     QPlainTextEdit::mousePressEvent(e);
 }
