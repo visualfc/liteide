@@ -24,6 +24,7 @@
 #include "liteeditorwidgetbase.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"
 #include <QCoreApplication>
+#include <QApplication>
 #include <QTextBlock>
 #include <QPainter>
 #include <QStyle>
