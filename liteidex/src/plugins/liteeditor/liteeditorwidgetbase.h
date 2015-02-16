@@ -110,12 +110,27 @@ public slots:
     void gotoLineStartWithSelection();
     void gotoLineEnd();
     void gotoLineEndWithSelection();
+
     void duplicate();
+
     void cutLine();
     void copyLine();
-    void deleteLine();    
+    void deleteLine();
+
+    void deleteEndOfWord();
+    void deleteStartOfWord();
+
+    void moveLineUp();
+    void moveLineDown();
+
+    void copyLineUp();
+    void copyLineDown();
+
+    void joinLines();
+
     void insertLineBefore();
     void insertLineAfter();
+
     void gotoPrevBlock();
     void gotoNextBlock();
     void selectBlock();
@@ -238,6 +253,8 @@ protected:
     void indentEnter(QTextCursor cur);
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
+    void moveLineUpDown(bool up);
+    void copyLineUpDown(bool up);
 protected slots:
     void uplinkDeployTimeout();
     void uplinkInfoTimeout();
@@ -259,6 +276,7 @@ protected:
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
     LiteApi::Link       m_currentLink;
+    bool m_moveLineUndoHack;
     bool m_defaultWordWrap;
     bool m_wordWrapOverridden;
     bool m_wordWrap;

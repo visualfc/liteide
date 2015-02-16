@@ -185,6 +185,8 @@ public:
     QAction *m_gotoMatchBraceAct;
     QAction *m_selectBlockAct;
     QAction *m_gotoLineAct;
+    QAction *m_cutLineAct;
+    QAction *m_copyLineAct;
     QAction *m_duplicateAct;
     QAction *m_deleteLineAct;
     QAction *m_insertLineBeforeAct;
@@ -217,6 +219,11 @@ public:
     QAction *m_lineEndingWindowAct;
     QAction *m_lineEndingUnixAct;
     QAction *m_visualizeWhitespaceAct;
+    QAction *m_moveLineUpAction;
+    QAction *m_moveLineDownAction;
+    QAction *m_copyLineUpAction;
+    QAction *m_copyLineDownAction;
+    QAction *m_joinLinesAction;
 };
 
 class EditContext : public LiteApi::IEditContext

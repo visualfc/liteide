@@ -342,6 +342,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_inputCursorOffset = 0;
     m_upToolTipTime = 200;
     m_linkPressed = false;
+    m_moveLineUndoHack = false;
     setLineWrapMode(QPlainTextEdit::NoWrap);
     m_extraArea = new TextEditExtraArea(this);
     m_navigateArea = new TextEditNavigateArea(this);
@@ -1528,6 +1529,186 @@ void LiteEditorWidgetBase::deleteLine()
     textCursor().removeSelectedText();
 }
 
+void LiteEditorWidgetBase::deleteEndOfWord()
+{
+    moveCursor(QTextCursor::EndOfWord, QTextCursor::KeepAnchor);
+    textCursor().removeSelectedText();
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::moveLineUpDown(bool up)
+{
+    QTextCursor cursor = textCursor();
+    QTextCursor move = cursor;
+
+    move.setVisualNavigation(false); // this opens folded items instead of destroying them
+
+    if (m_moveLineUndoHack)
+        move.joinPreviousEditBlock();
+    else
+        move.beginEditBlock();
+
+    bool hasSelection = cursor.hasSelection();
+
+    if (hasSelection) {
+        move.setPosition(cursor.selectionStart());
+        move.movePosition(QTextCursor::StartOfBlock);
+        move.setPosition(cursor.selectionEnd(), QTextCursor::KeepAnchor);
+        move.movePosition(move.atBlockStart() ? QTextCursor::Left: QTextCursor::EndOfBlock,
+                          QTextCursor::KeepAnchor);
+    } else {
+        move.movePosition(QTextCursor::StartOfBlock);
+        move.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    }
+    QString text = move.selectedText();
+
+    move.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+    move.removeSelectedText();
+
+    if (up) {
+        move.movePosition(QTextCursor::PreviousBlock);
+        move.insertBlock();
+        move.movePosition(QTextCursor::Left);
+    } else {
+        move.movePosition(QTextCursor::EndOfBlock);
+        if (move.atBlockStart()) { // empty block
+            move.movePosition(QTextCursor::NextBlock);
+            move.insertBlock();
+            move.movePosition(QTextCursor::Left);
+        } else {
+            move.insertBlock();
+        }
+    }
+
+    int start = move.position();
+    move.clearSelection();
+    move.insertText(text);
+    int end = move.position();
+
+    if (hasSelection) {
+        move.setPosition(end);
+        move.setPosition(start, QTextCursor::KeepAnchor);
+    } else {
+        move.setPosition(start);
+    }
+
+    move.endEditBlock();
+
+    setTextCursor(move);
+    m_moveLineUndoHack = true;
+}
+
+void LiteEditorWidgetBase::copyLineUpDown(bool up)
+{
+    QTextCursor cursor = textCursor();
+    QTextCursor move = cursor;
+    move.beginEditBlock();
+
+    bool hasSelection = cursor.hasSelection();
+
+    if (hasSelection) {
+        move.setPosition(cursor.selectionStart());
+        move.movePosition(QTextCursor::StartOfBlock);
+        move.setPosition(cursor.selectionEnd(), QTextCursor::KeepAnchor);
+        move.movePosition(move.atBlockStart() ? QTextCursor::Left: QTextCursor::EndOfBlock,
+                          QTextCursor::KeepAnchor);
+    } else {
+        move.movePosition(QTextCursor::StartOfBlock);
+        move.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    }
+
+    QString text = move.selectedText();
+
+    if (up) {
+        move.setPosition(cursor.selectionStart());
+        move.movePosition(QTextCursor::StartOfBlock);
+        move.insertBlock();
+        move.movePosition(QTextCursor::Left);
+    } else {
+        move.movePosition(QTextCursor::EndOfBlock);
+        if (move.atBlockStart()) {
+            move.movePosition(QTextCursor::NextBlock);
+            move.insertBlock();
+            move.movePosition(QTextCursor::Left);
+        } else {
+            move.insertBlock();
+        }
+    }
+
+    int start = move.position();
+    move.clearSelection();
+    move.insertText(text);
+    int end = move.position();
+
+    move.setPosition(start);
+    move.setPosition(end, QTextCursor::KeepAnchor);
+
+    move.endEditBlock();
+
+    setTextCursor(move);
+}
+
+void LiteEditorWidgetBase::joinLines()
+{
+    QTextCursor cursor = textCursor();
+    QTextCursor start = cursor;
+    QTextCursor end = cursor;
+
+    start.setPosition(cursor.selectionStart());
+    end.setPosition(cursor.selectionEnd() - 1);
+
+    int lineCount = qMax(1, end.blockNumber() - start.blockNumber());
+
+    cursor.beginEditBlock();
+    cursor.setPosition(cursor.selectionStart());
+    while (lineCount--) {
+        cursor.movePosition(QTextCursor::NextBlock);
+        cursor.movePosition(QTextCursor::StartOfBlock);
+        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+        QString cutLine = cursor.selectedText();
+
+        // Collapse leading whitespaces to one or insert whitespace
+        cutLine.replace(QRegExp(QLatin1String("^\\s*")), QLatin1String(" "));
+        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+        cursor.removeSelectedText();
+
+        cursor.movePosition(QTextCursor::PreviousBlock);
+        cursor.movePosition(QTextCursor::EndOfBlock);
+
+        cursor.insertText(cutLine);
+    }
+    cursor.endEditBlock();
+
+    setTextCursor(cursor);
+}
+
+void LiteEditorWidgetBase::deleteStartOfWord()
+{
+    moveCursor(QTextCursor::StartOfWord, QTextCursor::KeepAnchor);
+    textCursor().removeSelectedText();
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::moveLineUp()
+{
+    moveLineUpDown(true);
+}
+
+void LiteEditorWidgetBase::moveLineDown()
+{
+    moveLineUpDown(false);
+}
+
+void LiteEditorWidgetBase::copyLineUp()
+{
+    copyLineUpDown(true);
+}
+
+void LiteEditorWidgetBase::copyLineDown()
+{
+    copyLineUpDown(false);
+}
+
 void LiteEditorWidgetBase::insertLineBefore()
 {
     QTextCursor cur = this->textCursor();
@@ -1906,6 +2087,8 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         emit overwriteModeChanged(this->overwriteMode());
         return;
     }
+    QToolTip::hideText();
+    this->m_moveLineUndoHack = false;
     bool ro = isReadOnly();
 
     if ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return ) {

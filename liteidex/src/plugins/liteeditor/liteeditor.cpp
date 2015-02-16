@@ -300,13 +300,19 @@ void LiteEditor::createActions()
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
     actionContext->regAction(m_duplicateAct,"Duplicate","Ctrl+D");
-
     connect(m_duplicateAct,SIGNAL(triggered()),m_editorWidget,SLOT(duplicate()));
 
     m_deleteLineAct = new QAction(tr("Delete Line"),this);
     actionContext->regAction(m_deleteLineAct,"DeleteLine","Ctrl+Shift+K");
-
     connect(m_deleteLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(deleteLine()));
+
+    m_copyLineAct = new QAction(tr("Copy Line"),this);
+    actionContext->regAction(m_copyLineAct,"CopyLine","Ctrl+Ins");
+    connect(m_copyLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(copyLine()));
+
+    m_cutLineAct = new QAction(tr("Cut Line"),this);
+    actionContext->regAction(m_cutLineAct,"CutLine","Shift+Del");
+    connect(m_cutLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(cutLine()));
 
     m_insertLineBeforeAct = new QAction(tr("Insert Line Before"),this);
     actionContext->regAction(m_insertLineBeforeAct,"InsertLineBefore","Ctrl+Shift+Return");
@@ -317,13 +323,13 @@ void LiteEditor::createActions()
     connect(m_insertLineAfterAct,SIGNAL(triggered()),m_editorWidget,SLOT(insertLineAfter()));
 
     m_increaseFontSizeAct = new QAction(tr("Increase Font Size"),this);
-    actionContext->regAction(m_increaseFontSizeAct,"IncreaseFontSize","Ctrl++;Ctrl+=");
+    actionContext->regAction(m_increaseFontSizeAct,"IncreaseFontSize","Ctrl++");
 
     m_decreaseFontSizeAct = new QAction(tr("Decrease Font Size"),this);
     actionContext->regAction(m_decreaseFontSizeAct,"DecreaseFontSize","Ctrl+-");
 
     m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
-    actionContext->regAction(m_resetFontSizeAct,"ResetFontSize","Ctrl+0");
+    actionContext->regAction(m_resetFontSizeAct,"ResetFontSize","");
 
     m_cleanWhitespaceAct = new QAction(tr("Clean Whitespace"),this);
     actionContext->regAction(m_cleanWhitespaceAct,"CleanWhitespace","");
@@ -366,7 +372,22 @@ void LiteEditor::createActions()
     m_visualizeWhitespaceAct->setCheckable(true);
 
     m_commentAct->setVisible(false);
-    m_blockCommentAct->setVisible(false);        
+    m_blockCommentAct->setVisible(false);
+
+    m_moveLineUpAction = new QAction(tr("Move Line Up"),this);
+    actionContext->regAction(m_moveLineUpAction,"MoveLineUp","Ctrl+Shift+Up");
+
+    m_moveLineDownAction = new QAction(tr("Move Line Down"),this);
+    actionContext->regAction(m_moveLineDownAction,"MoveLineDown","Ctrl+Shift+Down");
+
+    m_copyLineUpAction = new QAction(tr("Copy Line Up"),this);
+    actionContext->regAction(m_copyLineUpAction,"CopyLineUp","Ctrl+Alt+Up");
+
+    m_copyLineDownAction = new QAction(tr("Copy Line Down"),this);
+    actionContext->regAction(m_copyLineDownAction,"CopyLineDown","Ctrl+Alt+Down");
+
+    m_joinLinesAction = new QAction(tr("Jone Lines"),this);
+    actionContext->regAction(m_joinLinesAction,"JoinLines","Ctrl+J");
 
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
@@ -412,6 +433,11 @@ void LiteEditor::createActions()
     connect(m_autoIndentAct,SIGNAL(triggered()),this,SLOT(autoIndent()));
     connect(m_tabToSpacesAct,SIGNAL(toggled(bool)),this,SLOT(tabToSpacesToggled(bool)));
     connect(m_visualizeWhitespaceAct,SIGNAL(toggled(bool)),this,SLOT(toggledVisualizeWhitespace(bool)));
+    connect(m_moveLineUpAction,SIGNAL(triggered()),m_editorWidget,SLOT(moveLineUp()));
+    connect(m_moveLineDownAction,SIGNAL(triggered()),m_editorWidget,SLOT(moveLineDown()));
+    connect(m_copyLineUpAction,SIGNAL(triggered()),m_editorWidget,SLOT(copyLineUp()));
+    connect(m_copyLineDownAction,SIGNAL(triggered()),m_editorWidget,SLOT(copyLineDown()));
+    connect(m_joinLinesAction,SIGNAL(triggered()),m_editorWidget,SLOT(joinLines()));
     //connect(m_lineEndingWindowAct,SIGNAL(triggered()),this,SLOT(lineEndingWindow()));
     //connect(m_lineEndingUnixAct,SIGNAL(triggered()),this,SLOT(lineEndingUnixAct()));
     QActionGroup *group = new QActionGroup(this);
@@ -518,6 +544,13 @@ void LiteEditor::createMenu()
     QMenu *subMenu = m_editMenu->addMenu(tr("Advanced"));
     subMenu->addAction(m_duplicateAct);
     subMenu->addAction(m_deleteLineAct);
+    subMenu->addAction(m_copyLineAct);
+    subMenu->addAction(m_cutLineAct);
+    subMenu->addAction(m_moveLineUpAction);
+    subMenu->addAction(m_moveLineDownAction);
+    subMenu->addAction(m_copyLineUpAction);
+    subMenu->addAction(m_copyLineDownAction);
+    subMenu->addAction(m_joinLinesAction);
     subMenu->addAction(m_insertLineBeforeAct);
     subMenu->addAction(m_insertLineAfterAct);
     subMenu->addSeparator();
@@ -573,8 +606,16 @@ void LiteEditor::createMenu()
     subMenu = m_contextMenu->addMenu(tr("Advanced"));
     subMenu->addAction(m_duplicateAct);
     subMenu->addAction(m_deleteLineAct);
+    subMenu->addAction(m_copyLineAct);
+    subMenu->addAction(m_cutLineAct);
+    subMenu->addAction(m_moveLineUpAction);
+    subMenu->addAction(m_moveLineDownAction);
+    subMenu->addAction(m_copyLineUpAction);
+    subMenu->addAction(m_copyLineDownAction);
+    subMenu->addAction(m_joinLinesAction);
     subMenu->addAction(m_insertLineBeforeAct);
     subMenu->addAction(m_insertLineAfterAct);
+
     subMenu->addSeparator();
     subMenu->addAction(m_cleanWhitespaceAct);
     subMenu->addSeparator();
