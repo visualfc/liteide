@@ -251,6 +251,7 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
         QList<Find::SearchResultItem> items = doc.replace(it.key(),text,it.value());
         m_searchResultWidget->addResults(items,Find::AddOrdered,true);
     }
+    m_liteApp->editorManager()->saveAllEditors(true);
     m_searchResultWidget->setRevertMode(text,m_currentSearch->searchText());
 }
 
