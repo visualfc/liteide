@@ -2082,9 +2082,13 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
         return;
     }
-    if (e->key() == Qt::Key_Insert && e->modifiers() == Qt::NoModifier) {
-        this->setOverwriteMode(!this->overwriteMode());
-        emit overwriteModeChanged(this->overwriteMode());
+    if (e->key() == Qt::Key_Insert ) {
+        if (e->modifiers() == Qt::NoModifier) {
+            this->setOverwriteMode(!this->overwriteMode());
+            emit overwriteModeChanged(this->overwriteMode());
+        } else if (e->modifiers() == Qt::ControlModifier) {
+            this->copyLine();
+        }
         return;
     }
     QToolTip::hideText();

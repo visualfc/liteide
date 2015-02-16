@@ -299,7 +299,7 @@ void LiteEditor::createActions()
     m_lockAct->setEnabled(false);
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
-    actionContext->regAction(m_duplicateAct,"Duplicate","Ctrl+D");
+    actionContext->regAction(m_duplicateAct,"Duplicate","Ctrl+Shift+D");
     connect(m_duplicateAct,SIGNAL(triggered()),m_editorWidget,SLOT(duplicate()));
 
     m_deleteLineAct = new QAction(tr("Delete Line"),this);
@@ -329,7 +329,7 @@ void LiteEditor::createActions()
     actionContext->regAction(m_decreaseFontSizeAct,"DecreaseFontSize","Ctrl+-");
 
     m_resetFontSizeAct = new QAction(tr("Reset Font Size"),this);
-    actionContext->regAction(m_resetFontSizeAct,"ResetFontSize","");
+    actionContext->regAction(m_resetFontSizeAct,"ResetFontSize","Ctrl+0");
 
     m_cleanWhitespaceAct = new QAction(tr("Clean Whitespace"),this);
     actionContext->regAction(m_cleanWhitespaceAct,"CleanWhitespace","");
@@ -543,8 +543,8 @@ void LiteEditor::createMenu()
 
     QMenu *subMenu = m_editMenu->addMenu(tr("Advanced"));
     subMenu->addAction(m_duplicateAct);
-    subMenu->addAction(m_deleteLineAct);
     subMenu->addAction(m_copyLineAct);
+    subMenu->addAction(m_deleteLineAct);
     subMenu->addAction(m_cutLineAct);
     subMenu->addAction(m_moveLineUpAction);
     subMenu->addAction(m_moveLineDownAction);
@@ -605,8 +605,8 @@ void LiteEditor::createMenu()
 
     subMenu = m_contextMenu->addMenu(tr("Advanced"));
     subMenu->addAction(m_duplicateAct);
-    subMenu->addAction(m_deleteLineAct);
     subMenu->addAction(m_copyLineAct);
+    subMenu->addAction(m_deleteLineAct);
     subMenu->addAction(m_cutLineAct);
     subMenu->addAction(m_moveLineUpAction);
     subMenu->addAction(m_moveLineDownAction);
@@ -615,7 +615,6 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_joinLinesAction);
     subMenu->addAction(m_insertLineBeforeAct);
     subMenu->addAction(m_insertLineAfterAct);
-
     subMenu->addSeparator();
     subMenu->addAction(m_cleanWhitespaceAct);
     subMenu->addSeparator();
