@@ -108,7 +108,7 @@ bool FileManager::initWithApp(IApplication *app)
     connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
     connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
-    connect(m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
+    connect(m_folderListView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
 
@@ -574,7 +574,7 @@ void FileManager::showHideFiles(bool b)
     }
     m_folderListView->setFilter(filters);
 }
-void FileManager::doubleClickedFolderView(const QModelIndex &index)
+void FileManager::activatedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;

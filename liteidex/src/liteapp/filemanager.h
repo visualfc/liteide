@@ -89,7 +89,7 @@ public slots:
     void cleanRecent();
     void applyOption(QString);
     void showHideFiles(bool);
-    void doubleClickedFolderView(const QModelIndex &index);
+    void activatedFolderView(const QModelIndex &index);
 protected:
     NewFileDialog        *m_newFileDialog;
     FolderListView     *m_folderListView;

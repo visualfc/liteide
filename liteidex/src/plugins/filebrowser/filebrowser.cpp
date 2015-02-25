@@ -165,7 +165,8 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reloadFileModel()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_folderView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
-    connect(m_folderView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
+    //connect(m_folderView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(openEditor(QModelIndex)));
+    connect(m_folderView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
 
     QString root = m_liteApp->settings()->value("FileBrowser/root","").toString();
     if (!root.isEmpty()) {
@@ -296,7 +297,7 @@ void FileBrowser::executeFile()
     }
 }
 
-void FileBrowser::doubleClicked(const QModelIndex &index)
+void FileBrowser::activatedFolderView(const QModelIndex &index)
 {
     QFileInfo info = m_folderView->fileInfo(index);
     if (info.isFile()) {

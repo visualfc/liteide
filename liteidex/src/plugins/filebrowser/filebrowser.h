@@ -52,7 +52,7 @@ protected slots:
     void openFolderInNewWindow();
     void addToFolders();
     void executeFile();
-    void doubleClicked(const QModelIndex &index);
+    void activatedFolderView(const QModelIndex &index);
 protected:
     void addFolderToRoot(const QString &path);
 protected:
