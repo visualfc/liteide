@@ -2087,9 +2087,12 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         if (e->modifiers() == Qt::NoModifier) {
             this->setOverwriteMode(!this->overwriteMode());
             emit overwriteModeChanged(this->overwriteMode());
+            return;
         } else if (e->modifiers() == Qt::ControlModifier) {
             this->copyLine();
+            return;
         }
+        QPlainTextEdit::keyPressEvent(e);
         return;
     }
     QToolTip::hideText();
