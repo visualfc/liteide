@@ -225,7 +225,7 @@ LiteApp::LiteApp()
 
     //m_projectManager->addFactory(new FolderProjectFactory(this,this));
 
-    connect(m_goProxy,SIGNAL(done(QByteArray,QByteArray)),this,SLOT(goproxyDone(QByteArray,QByteArray)));
+    connect(m_goProxy,SIGNAL(stdoutput(QByteArray)),this,SLOT(goproxyDone(QByteArray)));
     connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideOutputWindow()));
     connect(m_mainwindow,SIGNAL(fullScreenStateChanged(bool)),m_fullScreent,SLOT(setChecked(bool)));
 }
@@ -917,7 +917,7 @@ void LiteApp::dbclickLogOutput(QTextCursor cur)
     }
 }
 
-void LiteApp::goproxyDone(const QByteArray &id, const QByteArray &reply)
+void LiteApp::goproxyDone(const QByteArray &reply)
 {
-    this->appendLog("GoProxy",QString("%1 = %2").arg(QString::fromUtf8(id)).arg(QString::fromUtf8(reply).trimmed()));
+    this->appendLog("GoProxy",QString("%1 = %2").arg(QString::fromUtf8(m_goProxy->commandId())).arg(QString::fromUtf8(reply).trimmed()));
 }

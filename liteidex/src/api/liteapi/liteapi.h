@@ -615,10 +615,14 @@ class IGoProxy : public QObject
 public:
     IGoProxy(QObject *parent) : QObject(parent) {}
     virtual bool isValid() const = 0;
-    virtual bool isRunning(const QByteArray &id) const = 0;
+    virtual bool isRunning() const = 0;
+    virtual QByteArray commandId() const = 0;
+    virtual void writeStdin(const QByteArray &data) = 0;
 signals:
-    void error(const QByteArray &id, int err);
-    void done(const QByteArray &id, const QByteArray &args);
+    void started();
+    void stdoutput(const QByteArray &data);
+    void stderror(const QByteArray &data);
+    void finished(int code, const QByteArray &msg);
 public slots:
     virtual void call(const QByteArray &id, const QByteArray &args = QByteArray()) = 0;
 };

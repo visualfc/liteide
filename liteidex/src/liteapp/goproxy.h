@@ -32,15 +32,18 @@ class GoProxy : public LiteApi::IGoProxy
     Q_OBJECT
 public:
     explicit GoProxy(QObject *parent = 0);
-    virtual bool isValid() const;
     static bool hasProxy();
-    virtual bool isRunning(const QByteArray &id) const;
+    virtual bool isValid() const;
+    virtual bool isRunning() const;
+    virtual QByteArray commandId() const;
+    virtual void writeStdin(const QByteArray &data);
 public slots:
     virtual void call(const QByteArray &id, const QByteArray &args = QByteArray());
 public:
     void callback(char *id, int id_size, char *reply, int reply_size, int err);
 protected:
-    QMap<QByteArray,bool> m_runMap;
+    bool m_isRuning;
+    QByteArray m_id;
 };
 
 #endif // GOPROXY_H

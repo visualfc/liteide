@@ -105,7 +105,7 @@ public:
     void setPluginPath(const QString &path); 
     void setResourcePath(const QString &path);
 protected slots:
-    void goproxyDone(const QByteArray &id,const QByteArray &reply);
+    void goproxyDone(const QByteArray &reply);
     void dbclickLogOutput(QTextCursor);
     void projectReloaded();
     void currentProjectChanged(LiteApi::IProject *project);

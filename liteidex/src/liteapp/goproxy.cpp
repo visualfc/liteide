@@ -52,6 +52,7 @@ static void cdrv_callback(char *id, int id_size, char *reply, int len, int err, 
 GoProxy::GoProxy(QObject *parent) :
     LiteApi::IGoProxy(parent)
 {
+    m_isRuning = false;
 }
 
 bool GoProxy::isValid() const
@@ -64,23 +65,46 @@ bool GoProxy::hasProxy()
     return godrv_call_fn != 0;
 }
 
-bool GoProxy::isRunning(const QByteArray &id) const
+bool GoProxy::isRunning() const
 {
-    return m_runMap[id];
+    return m_isRuning;
+}
+
+QByteArray GoProxy::commandId() const
+{
+    return m_id;
+}
+
+void GoProxy::writeStdin(const QByteArray &data)
+{
+    godrv_call("stdin",data,&cdrv_callback,this);
 }
 
 void GoProxy::call(const QByteArray &id, const QByteArray &args)
-{    
-    m_runMap[id] = true;
+{
+    m_id = id;
+    m_isRuning = false;
     godrv_call(id,args,&cdrv_callback,this);
 }
 
-void GoProxy::callback(char *id, int id_size, char *reply, int reply_size, int err)
+void GoProxy::callback(char *id, int id_size, char *reply, int reply_size, int flag)
 {
-    if (err != 0) {
-        emit error(QByteArray(id,id_size),err);
-    } else {
-        emit done(QByteArray(id,id_size),QByteArray(reply,reply_size));
+    if (m_id != QByteArray(id,id_size)) {
+        return;
+    }
+    if (flag == 0) {
+        m_isRuning = true;
+        emit started();
+    } else if(flag == 1) {
+        emit stdoutput(QByteArray(reply,reply_size));
+    } else if (flag == 2) {
+        emit stderror(QByteArray(reply,reply_size));
+    } else if (flag == 3) {
+        m_isRuning = false;
+        emit finished(0,"");
+    } else if (flag == 4) {
+        m_isRuning = false;
+        emit finished(2,QByteArray(reply,reply_size));
     }
 }
 
