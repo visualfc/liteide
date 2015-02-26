@@ -3,7 +3,18 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
+
+	"github.com/visualfc/gotools/astview"
+	"github.com/visualfc/gotools/command"
+	"github.com/visualfc/gotools/docview"
+	"github.com/visualfc/gotools/finddoc"
+	"github.com/visualfc/gotools/goapi"
+	"github.com/visualfc/gotools/goimports"
+	"github.com/visualfc/gotools/gopresent"
+	"github.com/visualfc/gotools/jsonfmt"
+	"github.com/visualfc/gotools/pkgs"
+	"github.com/visualfc/gotools/runcmd"
+	"github.com/visualfc/gotools/types"
 )
 
 func main() {
@@ -16,11 +27,14 @@ var (
 )
 
 func init() {
-	RegCmd("version", func(args []byte) ([]byte, error) {
-		return []byte("liteidex(go) version 15.0"), nil
-	})
-	RegCmd("setenv", func(args []byte) ([]byte, error) {
-		Env = strings.Split(string(args), "\n")
-		return nil, nil
-	})
+	command.Register(types.Command)
+	command.Register(jsonfmt.Command)
+	command.Register(finddoc.Command)
+	command.Register(runcmd.Command)
+	command.Register(docview.Command)
+	command.Register(astview.Command)
+	command.Register(goimports.Command)
+	command.Register(gopresent.Command)
+	command.Register(goapi.Command)
+	command.Register(pkgs.Command)
 }

@@ -12,10 +12,10 @@ static void cdrv_init_ex()
 	cdrv_init(&godrv_call);
 }
 
-static void cdrv_cb(void *cb, void *id, void *reply, int size, int err, void* ctx)
+static void cdrv_cb(void *cb, void *id, int id_size, void *reply, int size, int err, void* ctx)
 {
-	typedef void (*DRV_CALLBACK)(void *id, void *reply, int len, int err, void *ctx);
-    ((DRV_CALLBACK)(cb))(id,reply,size,err,ctx);
+	typedef void (*DRV_CALLBACK)(void *id, int id_size, void *reply, int len, int err, void *ctx);
+    ((DRV_CALLBACK)(cb))(id,id_size,reply,size,err,ctx);
 }
 
 #cgo windows LDFLAGS: -L../../liteide/bin -lliteapp
@@ -24,7 +24,13 @@ static void cdrv_cb(void *cb, void *id, void *reply, int size, int err, void* ct
 #cgo darwin LDFLAGS: -L../../liteide/bin/liteide.app/Contents/MacOS
 */
 import "C"
-import "unsafe"
+import (
+	"log"
+	"strings"
+	"unsafe"
+
+	"github.com/visualfc/gotools/command"
+)
 
 func cdrv_main(args []string) int {
 	argc := len(args)
@@ -43,7 +49,7 @@ func cdrv_main(args []string) int {
 }
 
 func cdrv_cb(cb unsafe.Pointer, id []byte, reply []byte, err int, ctx unsafe.Pointer) {
-	C.cdrv_cb(cb, unsafe.Pointer(&id[0]), unsafe.Pointer(&reply[0]), C.int(len(reply)), C.int(err), ctx)
+	C.cdrv_cb(cb, unsafe.Pointer(&id[0]), C.int(len(id)), unsafe.Pointer(&reply[0]), C.int(len(reply)), C.int(err), ctx)
 }
 
 //export godrv_call
@@ -51,36 +57,50 @@ func godrv_call(id unsafe.Pointer, id_size C.int, args unsafe.Pointer, size C.in
 	return C.int(go_call(C.GoBytes(id, id_size), C.GoBytes(args, size), cb, ctx))
 }
 
-var (
-	cmdFuncMap = make(map[string]func(args []byte) ([]byte, error))
-)
+type writer_output struct {
+	id  []byte
+	cb  unsafe.Pointer
+	ctx unsafe.Pointer
+	err int
+}
 
-func RegCmd(id string, fn func(args []byte) ([]byte, error)) {
-	cmdFuncMap[id] = fn
+func (w *writer_output) Write(p []byte) (n int, err error) {
+	n = len(p)
+	log.Println(string(w.id), string(p))
+	cdrv_cb(w.cb, w.id, p, w.err, w.ctx)
+	return
 }
 
 func go_call(id []byte, args []byte, cb unsafe.Pointer, ctx unsafe.Pointer) int {
-	if fn, ok := cmdFuncMap[string(id)]; ok {
-		go func(id, args []byte, cb, ctx unsafe.Pointer) {
-			rep, err := fn(args)
-			if err != nil {
-				cdrv_cb(cb, id, []byte{0}, -1, ctx)
-			}
-			cdrv_cb(cb, id, append(rep, 0), 0, ctx)
-		}(id, args, cb, ctx)
-		return 0
+	for _, cmd := range command.CommandList() {
+		if cmd == string(id) {
+			go func() {
+				command.Stdout = &writer_output{id, cb, ctx, 0}
+				command.Stderr = &writer_output{id, cb, ctx, -1}
+				var arguments []string
+				arguments = append(arguments, string(id))
+				if len(args) > 0 {
+					for _, opt := range strings.Split(string(args), ";;") {
+						if len(opt) > 0 {
+							arguments = append(arguments, opt)
+						}
+					}
+				}
+				command.ParseArgs(arguments)
+			}()
+			return 0
+		}
 	}
+	//	return 1
+	//	if fn, ok := cmdFuncMap[string(id)]; ok {
+	//		go func(id, args []byte, cb, ctx unsafe.Pointer) {
+	//			rep, err := fn(args)
+	//			if err != nil {
+	//				cdrv_cb(cb, id, []byte{0}, -1, ctx)
+	//			}
+	//			cdrv_cb(cb, id, append(rep, 0), 0, ctx)
+	//		}(id, args, cb, ctx)
+	//		return 0
+	//	}
 	return -1
-}
-
-func cmdList(args []byte) ([]byte, error) {
-	var cmds []byte
-	for cmd, _ := range cmdFuncMap {
-		cmds = append(cmds, []byte(cmd+" ")...)
-	}
-	return cmds, nil
-}
-
-func init() {
-	RegCmd("cmdlist", cmdList)
 }

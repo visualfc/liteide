@@ -26,7 +26,7 @@
 
 #include "liteapp_global.h"
 
-typedef void (*DRV_CALLBACK)(char *id, char *reply, int len, int err, void *ctx);
+typedef void (*DRV_CALLBACK)(char *id, int id_size, char *reply, int len, int err, void *ctx);
 typedef int (*GODRV_CALL)(char* id,int id_size, char* args, int args_size, DRV_CALLBACK cb, void *ctx);
 
 extern "C"

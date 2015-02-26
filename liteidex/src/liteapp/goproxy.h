@@ -38,7 +38,7 @@ public:
 public slots:
     virtual void call(const QByteArray &id, const QByteArray &args = QByteArray());
 public:
-    void callback(char *id, char *reply, int len, int err);
+    void callback(char *id, int id_size, char *reply, int reply_size, int err);
 protected:
     QMap<QByteArray,bool> m_runMap;
 };

@@ -340,7 +340,6 @@ void LiteApp::load(bool bUseSession, IApplication *baseApp)
     this->appendLog("DefaultHtmlWidgetFactory",m_htmlWidgetManager->defaultClassName());
 
     m_goProxy->call("version");
-    m_goProxy->call("cmdlist");    
 	
     appendLog("LiteApp","Finished loading");
 }
@@ -920,5 +919,5 @@ void LiteApp::dbclickLogOutput(QTextCursor cur)
 
 void LiteApp::goproxyDone(const QByteArray &id, const QByteArray &reply)
 {
-    this->appendLog("GoProxy",QString("%1 = %2").arg(QString::fromUtf8(id)).arg(QString::fromUtf8(reply)));
+    this->appendLog("GoProxy",QString("%1 = %2").arg(QString::fromUtf8(id)).arg(QString::fromUtf8(reply).trimmed()));
 }

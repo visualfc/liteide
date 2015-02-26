@@ -44,9 +44,9 @@ static int godrv_call(const QByteArray &id, const QByteArray &args, DRV_CALLBACK
     return godrv_call_fn((char*)id.constData(),id.length(),(char*)args.constData(),args.length(),cb,ctx);
 }
 
-static void cdrv_callback(char *id, char *reply, int len, int err, void *ctx)
+static void cdrv_callback(char *id, int id_size, char *reply, int len, int err, void *ctx)
 {
-    ((GoProxy*)(ctx))->callback(id,reply,len,err);
+    ((GoProxy*)(ctx))->callback(id,id_size,reply,len,err);
 }
 
 GoProxy::GoProxy(QObject *parent) :
@@ -75,12 +75,12 @@ void GoProxy::call(const QByteArray &id, const QByteArray &args)
     godrv_call(id,args,&cdrv_callback,this);
 }
 
-void GoProxy::callback(char *id, char *reply, int len, int err)
+void GoProxy::callback(char *id, int id_size, char *reply, int reply_size, int err)
 {
     if (err != 0) {
-        emit error(id,err);
+        emit error(QByteArray(id,id_size),err);
     } else {
-        emit done(id,QByteArray(reply,len));
+        emit done(QByteArray(id,id_size),QByteArray(reply,reply_size));
     }
 }
 
@@ -89,7 +89,7 @@ void cdrv_init(void *fn)
     godrv_call_fn = (GODRV_CALL)fn;
 }
 
-void cdrv_cb(DRV_CALLBACK cb, char *id, char *reply, int size, int err, void* ctx)
+void cdrv_cb(DRV_CALLBACK cb, char *id, int id_size, char *reply, int size, int err, void* ctx)
 {
-    cb(id,reply,size,err,ctx);
+    cb(id,id_size,reply,size,err,ctx);
 }
