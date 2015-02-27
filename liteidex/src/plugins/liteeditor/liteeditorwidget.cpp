@@ -56,7 +56,6 @@ LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_scrollWheelZooming(true),
     m_bSpellCheckZoneDontComplete(false)
 {
-    setAcceptDrops(false);
     this->m_averageCharWidth = QFontMetrics(this->font()).averageCharWidth();
 }
 
