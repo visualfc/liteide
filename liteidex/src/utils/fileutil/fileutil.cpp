@@ -30,6 +30,11 @@
 #include <QDesktopServices>
 #include <QDebug>
 
+#ifdef WIN32
+#include <windows.h>
+#include <shlobj.h>
+#endif
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -437,9 +442,60 @@ bool FileUtil::CopyDirectory(const QString &src, const QString &dest)
     return true;
 }
 
+#ifdef Q_OS_WIN
+bool openBrowser(LPCTSTR lpszFileName)
+{
+    HINSTANCE hl= LoadLibrary(TEXT("liteshell.dll"));
+    typedef BOOL (*BrowseToFileProc)(const wchar_t* filename);
+    if(!hl)
+        return false;
+    bool b = false;
+    BrowseToFileProc proc = (BrowseToFileProc)GetProcAddress(hl,"BrowseToFile");
+    if (proc) {
+        b = proc(lpszFileName);
+    }
+    FreeLibrary(hl);
+    return b;
+}
+bool shellOpenFolder(LPCTSTR filename)
+{
+    HINSTANCE hl= LoadLibrary(TEXT("Shell32.dll"));
+    if (!hl) {
+        return false;
+    }
+    typedef LPITEMIDLIST(*ILCreateFromPathProc)(LPCTSTR);
+    typedef void (*ILFreeProc)(LPITEMIDLIST);
+    typedef void (*SHOpenFolderAndSelectItemsProc)(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST *apidl, DWORD dwFlags);
+    ILCreateFromPathProc fnILCreateFromPath =0;
+    ILFreeProc fnILFree = 0;
+    SHOpenFolderAndSelectItemsProc fnSHOpenFolderAndSelectItems = 0;
+    fnILCreateFromPath = (ILCreateFromPathProc)GetProcAddress(hl,"ILCreateFromPath");
+    fnILFree = (ILFreeProc)GetProcAddress(hl,"ILFree");
+    fnSHOpenFolderAndSelectItems = (SHOpenFolderAndSelectItemsProc)GetProcAddress(hl,"SHOpenFolderAndSelectItems");
+    bool b = false;
+    if(fnILCreateFromPath && fnILFree && fnSHOpenFolderAndSelectItems){
+        ITEMIDLIST *pidl=0;
+        pidl = fnILCreateFromPath(filename);
+        if (pidl) {
+            fnSHOpenFolderAndSelectItems(pidl,0,0,0);
+            fnILFree(pidl);
+            b = true;
+        }
+    }
+    FreeLibrary(hl);
+    return b;
+}
+#endif
+
 void FileUtil::openInExplorer(const QString &path)
 {
 #ifdef Q_OS_WIN
+    if (openBrowser((LPCTSTR)QDir::toNativeSeparators(path).utf16())) {
+        return;
+    }
+    if (shellOpenFolder((LPCTSTR)QDir::toNativeSeparators(path).utf16())) {
+        return;
+    }
     const QString explorer = FileUtil::lookPath("explorer.exe",QProcessEnvironment::systemEnvironment(),false);
     if (!explorer.isEmpty()) {
         QStringList param;
