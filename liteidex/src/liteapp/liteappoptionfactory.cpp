@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "liteappoption.h"
+#include "outputoption.h"
 #include "liteappoptionfactory.h"
 #include "liteapp_global.h"
 //lite_memory_check_begin
@@ -42,13 +43,15 @@ LiteAppOptionFactory::LiteAppOptionFactory(LiteApi::IApplication *app, QObject *
 
 QStringList LiteAppOptionFactory::mimeTypes() const
 {
-    return QStringList() << OPTION_LITEAPP;
+    return QStringList() << OPTION_LITEAPP << OPTION_OUTPUT;
 }
 
 LiteApi::IOption *LiteAppOptionFactory::create(const QString &mimeType)
 {
     if (mimeType == OPTION_LITEAPP) {
         return new LiteAppOption(m_liteApp,this);
+    } else if (mimeType == OPTION_OUTPUT) {
+        return new OutputOption(m_liteApp,this);
     }
     return 0;
 }

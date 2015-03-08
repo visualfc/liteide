@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>479</width>
-    <height>324</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -159,13 +159,6 @@
              </spacer>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="outputUseColorSchemeCheck">
-            <property name="text">
-             <string>Apply color scheme to text output widgets</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>

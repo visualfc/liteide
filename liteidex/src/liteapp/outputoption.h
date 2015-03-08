@@ -18,34 +18,38 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: optionmanager.h
+// Module: outputoption.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef OPTIONMANAGER_H
-#define OPTIONMANAGER_H
+#ifndef OUTPUTOPTION_H
+#define OUTPUTOPTION_H
 
 #include "liteapi/liteapi.h"
 
-using namespace LiteApi;
+namespace Ui {
+    class OutputOption;
+}
 
-class OptionsBrowser;
-class BrowserEditorImpl;
-class OptionManager : public IOptionManager
+class OutputOption : public LiteApi::IOption
 {
     Q_OBJECT
+
 public:
-    OptionManager();
-    ~OptionManager();
-    virtual bool initWithApp(IApplication *app);
-    virtual void addFactory(IOptionFactory *factory);
-    virtual void removeFactory(IOptionFactory *factory);
-    virtual QList<IOptionFactory*> factoryList() const;
-public slots:
-    virtual void exec();
-    void loadOption(const QString &opt);
+    explicit OutputOption(LiteApi::IApplication *app, QObject *parent = 0);
+    ~OutputOption();
+    virtual QWidget *widget();
+    virtual QString name() const;
+    virtual QString mimeType() const;
+    virtual void apply();
+    void updatePointSizes();
+    QList<int> pointSizesForSelectedFont() const;
 protected:
-    OptionsBrowser  *m_browser;
-    QList<IOptionFactory*>  m_factoryList;
+    int m_fontSize;
+    QString m_fontFamily;
+private:
+    LiteApi::IApplication   *m_liteApp;
+    QWidget           *m_widget;
+    Ui::OutputOption *ui;
 };
 
-#endif // OPTIONMANAGER_H
+#endif // OUTPUTOPTION_H

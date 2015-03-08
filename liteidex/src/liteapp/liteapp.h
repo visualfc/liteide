@@ -29,6 +29,7 @@
 #include "extension/extension.h"
 #include "goproxy.h"
 
+
 using namespace LiteApi;
 
 class MainWindow;
@@ -44,6 +45,7 @@ class HtmlWidgetManager;
 class QSettings;
 class QSplitter;
 class LiteAppOptionFactory;
+
 
 class LiteApp : public IApplication
 {

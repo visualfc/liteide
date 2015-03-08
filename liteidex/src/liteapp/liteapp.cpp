@@ -223,8 +223,6 @@ LiteApp::LiteApp()
 
     m_optionManager->addFactory(m_liteAppOptionFactory);
 
-    //m_projectManager->addFactory(new FolderProjectFactory(this,this));
-
     connect(m_goProxy,SIGNAL(stdoutput(QByteArray)),this,SLOT(goproxyDone(QByteArray)));
     connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideOutputWindow()));
     connect(m_mainwindow,SIGNAL(fullScreenStateChanged(bool)),m_fullScreent,SLOT(setChecked(bool)));

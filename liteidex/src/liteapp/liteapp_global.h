@@ -35,6 +35,7 @@
 #define LITEIDE_STORELOCAL "LiteIDE/StoreLocal"
 
 #define OPTION_LITEAPP "option/liteapp"
+#define OPTION_OUTPUT  "option/output"
 
 #define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFile"
 #define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
@@ -55,6 +56,14 @@
 #define LITEAPP_STARTUPRELOADFILES   "LiteApp/StartupReloadFiles"
 #define LITEAPP_STARTUPRELOADFOLDERS   "LiteApp/StartupReloadFolders"
 #define LITEAPP_FILEWATCHERAUTORELOAD "LiteApp/FileWatcherAutoReload"
+
+#define OUTPUT_FAMILY "output/family"
+#define OUTPUT_FONTSIZE "output/fontsize"
+#define OUTPUT_FONTZOOM "output/fontzoom"
+#define OUTPUT_ANTIALIAS "output/antialias"
+#define OUTPUT_LINEWRAP  "outout/linewrap"
+#define OUTPUT_USECOLORSCHEME "output/colorscheme"
+
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,

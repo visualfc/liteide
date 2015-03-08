@@ -87,3 +87,15 @@ void OptionManager::exec()
     }
     m_browser->execute();
 }
+
+void OptionManager::loadOption(const QString &opt)
+{
+    foreach (IOptionFactory *f, m_factoryList) {
+        QStringList mimeTypes = f->mimeTypes();
+        foreach (QString mimeType, mimeTypes) {
+            if (opt == mimeType) {
+                emit applyOption(mimeType);
+            }
+        }
+    }
+}

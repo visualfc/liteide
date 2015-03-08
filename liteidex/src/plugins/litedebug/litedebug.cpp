@@ -73,7 +73,6 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     QAction *clearAct = new QAction(tr("Clear"),this);
     clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
-
     connect(clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
 
     QVBoxLayout *layout = new QVBoxLayout;    

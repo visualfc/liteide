@@ -29,8 +29,6 @@
 
 #include <QElapsedTimer>
 
-#define TEXTOUTPUT_USECOLORSCHEME "textoutput/usecolorscheme"
-
 class TextOutput : public TerminalEdit
 {
     Q_OBJECT
@@ -42,8 +40,8 @@ public:
     void updateExistsTextColor();
     void setMaxLine(int max);
 public slots:
-    void appLoaded();
     void loadColorStyleScheme();
+    void applyOption(QString);
 protected:
     void appendAndReset(const QString &text, QTextCharFormat& f);
     LiteApi::IApplication *m_liteApp;

@@ -24,7 +24,6 @@
 #include "liteeditoroption.h"
 #include "ui_liteeditoroption.h"
 #include "liteeditor_global.h"
-#include "textoutput/textoutput.h"
 #include <QFontDatabase>
 #include <QDir>
 #include <QFileInfo>
@@ -105,7 +104,6 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
-    bool outputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     bool wheelZoom = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
     bool offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
@@ -133,7 +131,6 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->eofVisibleCheckBox->setChecked(eofVisible);
     ui->defaultWordWrapCheckBox->setChecked(defaultWordWrap);
     ui->indentLineCheckBox->setChecked(indentLineVisible);
-    ui->outputUseColorSchemeCheck->setChecked(outputUseColor);
     ui->wheelZoomingCheckBox->setChecked(wheelZoom);
     ui->offsetCheckBox->setChecked(offsetVisible);
 
@@ -213,13 +210,8 @@ void LiteEditorOption::apply()
     }
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,fontZoom);
 
-    bool outputUseColor = ui->outputUseColorSchemeCheck->isChecked();
-    bool oldOutputUseColor = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
-
     QString style = ui->styleComboBox->currentText();
-    if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString() ||
-            outputUseColor != oldOutputUseColor) {
-        m_liteApp->settings()->setValue(TEXTOUTPUT_USECOLORSCHEME,outputUseColor);
+    if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString()) {
         m_liteApp->settings()->setValue(EDITOR_STYLE,style);
         QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
         m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
@@ -307,7 +299,7 @@ void LiteEditorOption::updatePointSizes()
     // Update point sizes
     const int oldSize = m_fontSize;
     if (ui->sizeComboBox->count()) {
-        const QString curSize = ui->sizeComboBox->currentText();
+        //const QString curSize = ui->sizeComboBox->currentText();
         ui->sizeComboBox->clear();
     }
     const QList<int> sizeLst = pointSizesForSelectedFont();

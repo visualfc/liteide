@@ -23,6 +23,7 @@
 
 #include "textoutput.h"
 #include "colorstyle/colorstyle.h"
+#include "../liteapp/liteapp_global.h"
 #include <QTextCharFormat>
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -60,7 +61,11 @@ TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *paren
     m_clrTag = Qt::darkBlue;
     m_clrError = Qt::red;
     m_existsTimer.start();
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
+
+    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+
+    this->applyOption(OPTION_OUTPUT);
 }
 
 void TextOutput::append(const QString &text)
@@ -115,15 +120,9 @@ void TextOutput::setMaxLine(int max)
     this->setMaximumBlockCount(max);;
 }
 
-void TextOutput::appLoaded()
-{
-    connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
-    this->loadColorStyleScheme();
-}
-
 void TextOutput::loadColorStyleScheme()
 {
-    bool useColorShceme = m_liteApp->settings()->value(TEXTOUTPUT_USECOLORSCHEME,true).toBool();
+    bool useColorShceme = m_liteApp->settings()->value(OUTPUT_USECOLORSCHEME,true).toBool();
 
     const ColorStyleScheme *colorScheme = m_liteApp->editorManager()->colorStyleScheme();
     const ColorStyle *text = colorScheme->findStyle("Text");
@@ -180,4 +179,36 @@ void TextOutput::loadColorStyleScheme()
     cur.select(QTextCursor::Document);
     cur.setCharFormat(m_fmt);
     fadeText(cur);
+}
+
+void TextOutput::applyOption(QString opt)
+{
+    if (opt != OPTION_OUTPUT) {
+        return;
+    }
+    QString fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY).toString();
+    int fontSize = m_liteApp->settings()->value(OUTPUT_FONTSIZE,12).toInt();
+
+    int fontZoom = m_liteApp->settings()->value(OUTPUT_FONTZOOM,100).toInt();
+
+    bool antialias = m_liteApp->settings()->value(OUTPUT_ANTIALIAS,true).toBool();
+
+    bool lineWrap = m_liteApp->settings()->value(OUTPUT_LINEWRAP,false).toBool();
+
+    QFont font = this->font();
+    if (!fontFamily.isEmpty()) {
+        font.setFamily(fontFamily);
+    }
+
+    font.setPointSize(fontSize*fontZoom/100.0);
+    if (antialias) {
+        font.setStyleStrategy(QFont::PreferAntialias);
+    } else {
+        font.setStyleStrategy(QFont::NoAntialias);
+    }
+    this->setFont(font);
+
+    this->setLineWrapMode(lineWrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+
+    this->loadColorStyleScheme();
 }

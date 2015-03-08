@@ -481,13 +481,13 @@ void LiteBuild::fmctxGoTool()
     }
 }
 
-void LiteBuild::applyOption(QString opt)
+void LiteBuild::applyOption(QString /*opt*/)
 {
-    if (opt == OPTION_LITEEDITOR) {
-        QFont font = m_output->font();
-        font.setFamily(m_liteApp->settings()->value(EDITOR_FAMILY,font.family()).toString());
-        m_output->setFont(font);
-    }
+//    if (opt == OPTION_LITEEDITOR) {
+//        QFont font = m_output->font();
+//        font.setFamily(m_liteApp->settings()->value(EDITOR_FAMILY,font.family()).toString());
+//        m_output->setFont(font);
+//    }
 }
 
 void LiteBuild::lockBuildRoot(bool b)
