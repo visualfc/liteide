@@ -42,6 +42,7 @@ GotoMatchBrace=Ctrl+E
 GotoNextBlock=Ctrl+]
 GotoPreviousBlock=Ctrl+[
 IncreaseFontSize="Ctrl++; Ctrl+="
+Paste="Shift+Insert; Ctrl+V"
 Redo="Ctrl+Shift+Z; Ctrl+Y"
 ResetFontSize=Ctrl+0
 SelectBlock=Ctrl+U
