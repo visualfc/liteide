@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Default">
+  <!-- clearday color scheme -->
+  <style name="Text" foreground="#333333" background="#ffffdd"/>
+  <style name="Extra" foreground="#008B8B" background=""/>
+  <style name="Selection" foreground="#333333" background="#b5d5ff"/>
+  <style name="CurrentLine" background="#cddbdb"/>
+  <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#049695"/>
+  <style name="DataType" foreground="#4982c4" /> 
+  <style name="Decimal" foreground="#800080"/>
+  <style name="BaseN" foreground="#800080"/>
+  <style name="Float" foreground="#800080"/>
+  <style name="Char" foreground="#800000"/>
+  <style name="String" foreground="#f57d00"/>
+  <style name="Comment" foreground="#008000" />
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#ff0000"/>
+  <style name="Function" foreground="#3364a4"/>
+  <style name="RegionMarker" foreground="#333333"/>
+  <style name="Symbol" foreground="#3364a4"/> 
+  <style name="BuiltinFunc" foreground="#3364a4"/>
+  <style name="Predeclared" foreground="#3364a4"/>
+  <style name="FuncDecl" foreground="#3364a4"/>
+  <style name="Placeholder" foreground="#008080"/>
+  <style name="ToDo" foreground="#006000" background="#e0e0e0" bold="true"/>
+</style-scheme>
