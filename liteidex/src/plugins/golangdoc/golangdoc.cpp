@@ -133,8 +133,6 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
     }
 
-    this->loadEnv();
-
     m_liteApp->extension()->addObject("LiteApi.IGolangDoc",this);
     //m_liteApp->extension()->addObject("LiteApi.IGolangApi",m_golangApiThread);
 
@@ -179,7 +177,9 @@ void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 void GolangDoc::loadEnv()
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);//m_envManager->currentEnvironment();
-
+    if (!LiteApi::hasGoEnv(env)) {
+        return;
+    }
     m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
 
     m_findProcess->setEnvironment(env.toStringList());

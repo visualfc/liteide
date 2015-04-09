@@ -208,7 +208,7 @@ void Env::readStderr()
 
 EnvManager::EnvManager(QObject *parent)
     : LiteApi::IEnvManager(parent),
-      m_curEnv(0),m_toolBar(0)
+      m_curEnv(0),m_toolBar(0), m_appLoaded(false)
 {
 }
 
@@ -266,7 +266,7 @@ void EnvManager::setCurrentEnv(LiteApi::IEnv *env)
         m_liteApp->settings()->setValue(LITEENV_CURRENTENV,m_curEnv->id());
         m_liteApp->appendLog("LiteEnv",QString("load environment %1").arg(m_curEnv->id()),false);
     }
-    emit currentEnvChanged(m_curEnv);
+    emitEnvChanged();
 }
 
 LiteApi::IEnv *EnvManager::currentEnv() const
@@ -282,6 +282,13 @@ QProcessEnvironment EnvManager::currentEnvironment() const
     return QProcessEnvironment::systemEnvironment();
 }
 
+void EnvManager::appLoaded()
+{
+    m_appLoaded = true;
+    m_liteApp->appendLog("EnvManager","init load environment");
+    emitEnvChanged();
+}
+
 void EnvManager::loadEnvFiles(const QString &path)
 {
     QDir dir = path;
@@ -291,6 +298,14 @@ void EnvManager::loadEnvFiles(const QString &path)
     foreach (QString fileName, dir.entryList()) {
         Env::loadEnv(this,QFileInfo(dir,fileName).absoluteFilePath());
     }
+}
+
+void EnvManager::emitEnvChanged()
+{
+    if (!m_appLoaded) {
+        return;
+    }
+    emit currentEnvChanged(m_curEnv);
 }
 
 static QString defaultEnvid()
@@ -372,6 +387,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
     connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
+    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     return true;
 }
 
@@ -412,7 +428,7 @@ void EnvManager::reloadCurrentEnv()
     }
     m_curEnv->reload();
     m_liteApp->appendLog("LiteEnv",QString("reload environment %1").arg(m_curEnv->id()),false);
-    currentEnvChanged(m_curEnv);
+    emitEnvChanged();
 }
 
 void EnvManager::broadcast(QString module,QString id,QString)
@@ -430,7 +446,7 @@ void EnvManager::editorSaved(LiteApi::IEditor *editor)
     }
     if (m_curEnv && m_curEnv->filePath() == ed->filePath()) {
         m_curEnv->reload();
-        currentEnvChanged(m_curEnv);
+        emitEnvChanged();
     }
 }
 
@@ -443,6 +459,6 @@ void EnvManager::goenvChanged(const QString &id)
 {
     if (id == m_curEnv->id()) {
         m_liteApp->appendLog("LiteEnv",QString("reset %1 environment for \"go env\"").arg(id),false);
-        currentEnvChanged(m_curEnv);
+        emitEnvChanged();
     }
 }

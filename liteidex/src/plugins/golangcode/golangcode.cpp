@@ -68,7 +68,6 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
-        currentEnvChanged(m_envManager->currentEnv());
     }
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     m_golangAst = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
@@ -364,6 +363,10 @@ void GolangCode::loadImportsList()
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    if (!LiteApi::hasGoEnv(env)) {
+        return;
+    }
+    m_liteApp->appendLog("GolangCode","go environment changed");
     m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
     m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);
     m_gocodeProcess->setProcessEnvironment(env);

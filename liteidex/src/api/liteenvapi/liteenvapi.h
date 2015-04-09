@@ -121,6 +121,11 @@ inline QString getDefaultGOROOT()
 #endif
 }
 
+inline bool hasGoEnv(const QProcessEnvironment &env)
+{
+    return env.contains("GOROOT") && env.contains("GOARCH");
+}
+
 inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 {
     QProcessEnvironment env = getCurrentEnvironment(app);

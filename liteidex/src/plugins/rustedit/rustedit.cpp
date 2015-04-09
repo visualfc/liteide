@@ -51,7 +51,6 @@ RustEdit::RustEdit(LiteApi::IApplication *app, QObject *parent)
     LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
     if (env) {
         connect(env,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
-        currentEnvChanged(env->currentEnv());
     }
 }
 

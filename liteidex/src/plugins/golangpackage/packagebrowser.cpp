@@ -115,7 +115,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"gopackbrowser",tr("Package Browser"),true);
-    connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(toggledToolWindow(bool)));
+    connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(toggledToolWindow(bool)));
     connect(m_goTool,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     connect(m_goTool,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
@@ -141,10 +141,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     if (env) {
         connect(env,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
     }
-
     connect(m_liteApp->fileManager(),SIGNAL(fileWizardFinished(QString,QString,QString)),this,SLOT(fileWizardFinished(QString,QString,QString)));
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
-    //this->reloadAll();
 }
 
 PackageBrowser::~PackageBrowser()
@@ -155,14 +152,6 @@ PackageBrowser::~PackageBrowser()
     delete m_fileMenu;
     if (m_widget) {
         delete m_widget;
-    }
-}
-
-void PackageBrowser::appLoaded()
-{
-    //m_toolWindowAct->setChecked(false);
-    if (m_toolWindowAct->isChecked()) {
-        QTimer::singleShot(100, this, SLOT(reloadAll()));
     }
 }
 
@@ -182,18 +171,22 @@ void PackageBrowser::fileWizardFinished(const QString&, const QString&, const QS
 
 void PackageBrowser::currentEnvChanged(LiteApi::IEnv *)
 {
-    if (!m_bLoaded) {
-        return;
-    }
     reloadAll();
 }
 
 void PackageBrowser::reloadAll()
 {
-    if (m_goTool->isRuning()) {
+    if (!m_toolWindowAct->isChecked()) {
         return;
     }
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    if (!LiteApi::hasGoEnv(env)) {
+        return;
+    }
+    m_liteApp->appendLog("GolangPackages","reload all packages");
+    if (m_goTool->isRuning()) {
+        return;
+    }
     m_goTool->reloadEnv();
     if (!m_goTool->exists()) {
         m_model->clear();

@@ -254,6 +254,10 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
         }
     }    
 
+    m_envManager = LiteApi::getEnvManager(m_liteApp);
+    if (m_envManager) {
+        connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
+    }
     applyOption(OPTION_LITEEDITOR);
 }
 
@@ -375,11 +379,6 @@ void LiteBuild::appendOutput(const QString &str, const QBrush &brush, bool activ
 
 void LiteBuild::appLoaded()
 {
-    m_envManager = LiteApi::getEnvManager(m_liteApp);
-    if (m_envManager) {
-        connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
-        currentEnvChanged(m_envManager->currentEnv());
-    }
 }
 
 void LiteBuild::debugBefore()
@@ -510,11 +509,17 @@ QString LiteBuild::currentBuildPath() const
 
 void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
 {
-    m_process->setEnvironment(m_envManager->currentEnvironment().toStringList());
-    LiteApi::IEnv *env = m_envManager->currentEnv();
-    if (!env) {
+    LiteApi::IEnv *ienv = m_envManager->currentEnv();
+    if (!ienv) {
         return;
     }
+    QProcessEnvironment env =  LiteApi::getGoEnvironment(m_liteApp);
+    if (!LiteApi::hasGoEnv(env)) {
+        return;
+    }
+
+    m_liteApp->appendLog("LiteBuild","go environment changed");
+    m_process->setEnvironment(env.toStringList());
 
     bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     if (!b) {
@@ -524,13 +529,13 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
     if (gobin.isEmpty()) {
         m_output->updateExistsTextColor();
-        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
         m_output->append("go bin not found!",Qt::red);
         return;
     }
     if (!m_process->isRunning()) {
         m_output->updateExistsTextColor();
-        m_output->appendTag(tr("Current environment change id \"%1\"").arg(env->id())+"\n");
+        m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
         this->executeCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
     }
 }

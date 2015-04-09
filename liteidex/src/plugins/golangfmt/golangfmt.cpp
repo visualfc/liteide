@@ -64,7 +64,6 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
-        currentEnvChanged(m_envManager->currentEnv());
     }
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToSave(LiteApi::IEditor*)),this,SLOT(editorAboutToSave(LiteApi::IEditor*)));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
@@ -84,7 +83,6 @@ void GolangFmt::applyOption(QString id)
     }
     if (goimports != m_goimports) {
         m_goimports = goimports;
-        currentEnvChanged(0);
     }
     m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
     m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
@@ -277,6 +275,9 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
     QProcessEnvironment env = m_envManager->currentEnvironment();
+    if (!LiteApi::hasGoEnv(env)) {
+        return;
+    }
     m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
     if (m_gofmtCmd.isEmpty()) {
         m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);

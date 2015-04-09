@@ -71,22 +71,25 @@ public:
     virtual LiteApi::IEnv *currentEnv() const;
     virtual QProcessEnvironment currentEnvironment() const;
 protected slots:
+    void appLoaded();
     void envActivated(QString);
     void editCurrentEnv();
     void reloadCurrentEnv();
     void editorSaved(LiteApi::IEditor*);
     void goenvError(const QString &id, const QString &msg);
-    void goenvChanged(const QString &id);
-public:
+    void goenvChanged(const QString &id);    
+public:    
     void setCurrentEnv(LiteApi::IEnv *env);
     void addEnv(LiteApi::IEnv *build);
     void removeEnv(LiteApi::IEnv *build);
     void loadEnvFiles(const QString &path);
+    void emitEnvChanged();
 public slots:
     void broadcast(QString module, QString id, QString);
 protected:
     QList<LiteApi::IEnv*>    m_envList;
     LiteApi::IEnv           *m_curEnv;
+    bool             m_appLoaded;
     QToolBar        *m_toolBar;
     QComboBox       *m_envCmb;
 };
