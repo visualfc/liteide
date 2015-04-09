@@ -43,14 +43,14 @@ LiteAppOptionFactory::LiteAppOptionFactory(LiteApi::IApplication *app, QObject *
 
 QStringList LiteAppOptionFactory::mimeTypes() const
 {
-    return QStringList() << OPTION_LITEAPP << OPTION_OUTPUT;
+    return QStringList() << OPTION_LITEAPP << OPTION_LITEOUTPUT;
 }
 
 LiteApi::IOption *LiteAppOptionFactory::create(const QString &mimeType)
 {
     if (mimeType == OPTION_LITEAPP) {
         return new LiteAppOption(m_liteApp,this);
-    } else if (mimeType == OPTION_OUTPUT) {
+    } else if (mimeType == OPTION_LITEOUTPUT) {
         return new OutputOption(m_liteApp,this);
     }
     return 0;

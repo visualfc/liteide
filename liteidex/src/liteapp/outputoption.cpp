@@ -92,12 +92,12 @@ QWidget *OutputOption::widget()
 
 QString OutputOption::name() const
 {
-    return "Output";
+    return "LiteOutput";
 }
 
 QString OutputOption::mimeType() const
 {
-    return OPTION_OUTPUT;
+    return OPTION_LITEOUTPUT;
 }
 
 void OutputOption::apply()

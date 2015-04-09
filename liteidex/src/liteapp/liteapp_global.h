@@ -35,7 +35,7 @@
 #define LITEIDE_STORELOCAL "LiteIDE/StoreLocal"
 
 #define OPTION_LITEAPP "option/liteapp"
-#define OPTION_OUTPUT  "option/output"
+#define OPTION_LITEOUTPUT  "option/liteoutput"
 
 #define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFile"
 #define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
