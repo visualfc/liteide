@@ -203,15 +203,34 @@ void PackageBrowser::reloadAll()
     m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
 }
 
+static bool hasSameList(const QStringList &list1, const QStringList &list2)
+{
+    if (list1.size() != list2.size()) {
+        return false;
+    }
+    for (int i = 0; i < list1.size(); i++) {
+        if (list1[i] != list2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void PackageBrowser::setupGopath()
 {
     SetupGopathDialog *dlg = new SetupGopathDialog(m_liteApp->mainWindow());
     dlg->setSysPathList(m_goTool->sysGopath());
     dlg->setLitePathList(m_goTool->liteGopath());
     if (dlg->exec() == QDialog::Accepted) {
-        m_goTool->setLiteGopath(dlg->litePathList());        
-        reloadAll();
-        m_liteApp->sendBroadcast("golangpackage","reloadgopath");
+        QStringList litePath = m_goTool->liteGopath();
+        //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
+        if (!hasSameList(litePath,dlg->litePathList())) {
+            m_goTool->setLiteGopath(dlg->litePathList());
+            LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
+            if (env) {
+                env->reloadCurrentEnv();
+            }
+        }
     }
 }
 

@@ -208,7 +208,8 @@ void Env::readStderr()
 
 EnvManager::EnvManager(QObject *parent)
     : LiteApi::IEnvManager(parent),
-      m_curEnv(0),m_toolBar(0), m_appLoaded(false)
+      m_curEnv(0),m_toolBar(0), m_envCmb(0),
+      m_appLoaded(false)
 {
 }
 
@@ -431,11 +432,11 @@ void EnvManager::reloadCurrentEnv()
     emitEnvChanged();
 }
 
-void EnvManager::broadcast(QString module,QString id,QString)
+void EnvManager::broadcast(QString /*module*/,QString /*id*/,QString)
 {
-    if (module == "golangpackage" && id == "reloadgopath") {
-        reloadCurrentEnv();
-    }
+//    if (module == "golangpackage" && id == "reloadgopath") {
+//        reloadCurrentEnv();
+//    }
 }
 
 void EnvManager::editorSaved(LiteApi::IEditor *editor)

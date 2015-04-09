@@ -58,6 +58,7 @@ public:
     virtual void setCurrentEnvId(const QString &id) = 0;
     virtual IEnv *currentEnv() const = 0;
     virtual QProcessEnvironment currentEnvironment() const = 0;
+    virtual void reloadCurrentEnv() = 0;
 signals:
     void currentEnvChanged(LiteApi::IEnv*);
 };

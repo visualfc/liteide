@@ -265,11 +265,11 @@ bool GolangCode::findImport(const QString &id)
     return false;
 }
 
-void GolangCode::broadcast(QString module,QString id,QString)
+void GolangCode::broadcast(QString /*module*/,QString /*id*/,QString)
 {
-    if (module == "golangpackage" && id == "reloadgopath") {
-        resetGocode();
-    }
+//    if (module == "golangpackage" && id == "reloadgopath") {
+//        resetGocode();
+//    }
 }
 
 GolangCode::~GolangCode()
