@@ -28,8 +28,22 @@
 #include <liteeditorapi/liteeditorapi.h>
 #include <liteenvapi/liteenvapi.h>
 #include "processex/processex.h"
+#include "textoutput/textoutput.h"
 #include "golangfilesearch.h"
 
+/*
+    oracle action
+    callees	  	show possible targets of selected function call
+    callers	  	show possible callers of selected function
+    callstack 	show path from callgraph root to selected function
+    definition	show declaration of selected identifier
+    describe  	describe selected syntax: definition, methods, etc
+    freevars  	show free variables of selection
+    implements	show 'implements' relation for selected type or method
+    peers     	show send/receive corresponding to selected channel op
+    referrers 	show all refs to entity denoted by selected identifier
+    what		show basic information about the selected syntax node
+*/
 class GolangEdit : public QObject
 {
     Q_OBJECT
@@ -57,10 +71,24 @@ public slots:
     void findLinkStarted();
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
+    void oracleFinished(int code, QProcess::ExitStatus status);
+    void runOracle(const QString &action);
+    void oracleWhat();
+    void oracleCallees();
+    void oracleCallers();
+    void oracleCallstack();
+    void oracleDefinition();
+    void oracleDescribe();
+    void oracleFreevars();
+    void oracleImplements();
+    void oraclePeers();
+    void oracleReferrers();
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
+    TextOutput            *m_oracleOutput;
+    QAction               *m_oracleOutputAct;
     bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
     QTextCursor m_linkCursor;
@@ -72,9 +100,20 @@ protected:
     QAction *m_renameSymbolAct;
     QAction *m_renameSymbolGlobalAct;
     QAction *m_viewGodocAct;
+    QAction *m_oracleWhatAct;
+    QAction *m_oracleCalleesAct;
+    QAction *m_oracleCallersAct;
+    QAction *m_oracleCallstackAct;
+    QAction *m_oracleDefinitionAct;
+    QAction *m_oracleDescribeAct;
+    QAction *m_oracleFreevarsAct;
+    QAction *m_oracleImplementsAct;
+    QAction *m_oraclePeersAct;
+    QAction *m_oracleReferrersAct;
     Process  *m_findDefProcess;
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
+    Process  *m_oracleProcess;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;

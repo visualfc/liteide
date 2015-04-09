@@ -1,12 +1,14 @@
 TARGET = golangedit
 TEMPLATE = lib
 
-include(../../liteideplugin.pri)
-include(../../api/litefindapi/litefindapi.pri)
-include(../../api/liteeditorapi/liteeditorapi.pri)
-include(../../api/litebuildapi/litebuildapi.pri)
-include(../../utils/processex/processex.pri)
-include(../../utils/fileutil/fileutil.pri)
+include (../../liteideplugin.pri)
+include (../../api/litefindapi/litefindapi.pri)
+include (../../api/liteeditorapi/liteeditorapi.pri)
+include (../../api/litebuildapi/litebuildapi.pri)
+include (../../utils/processex/processex.pri)
+include (../../utils/fileutil/fileutil.pri)
+include (../../utils/textoutput/textoutput.pri)
+include (../../utils/colorstyle/colorstyle.pri)
 include (../../3rdparty/qtc_texteditor/qtc_texteditor.pri)
 include (../../3rdparty/cplusplus/cplusplus.pri)
 include (../../3rdparty/qtc_editutil/qtc_editutil.pri)
