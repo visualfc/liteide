@@ -43,15 +43,7 @@
 #include <QApplication>
 #include <QTimer>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
@@ -68,7 +60,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_model = new QStandardItemModel(this);
 
-    m_treeView = new SymbolTreeView;    
+    m_treeView = new SymbolTreeView;
     m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_treeView->setModel(m_model);
     m_treeView->setEditTriggers(QTreeView::NoEditTriggers);
@@ -216,7 +208,7 @@ void PackageBrowser::setupGopath()
     dlg->setSysPathList(m_goTool->sysGopath());
     dlg->setLitePathList(m_goTool->liteGopath());
     if (dlg->exec() == QDialog::Accepted) {
-        m_goTool->setLiteGopath(dlg->litePathList());        
+        m_goTool->setLiteGopath(dlg->litePathList());
         reloadAll();
         m_liteApp->sendBroadcast("golangpackage","reloadgopath");
     }

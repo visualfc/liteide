@@ -41,16 +41,7 @@
 #include <QTextCodec>
 #include <QDir>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
+#include "memory.h"
 
 DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IDocumentBrowser(parent),
@@ -151,7 +142,7 @@ bool DocumentBrowser::open(const QString &fileName,const QString &mimeType)
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
         return false;
-    }    
+    }
     m_mimeType = mimeType;
     QFileInfo info(fileName);
     QString htmlType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);

@@ -42,17 +42,7 @@
 #include <QUrlQuery>
 #endif
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
-
+#include "memory.h"
 
 LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::ILiteDoc(parent),
@@ -78,7 +68,7 @@ LiteDoc::LiteDoc(LiteApi::IApplication *app, QObject *parent) :
         file.close();
     }
 
-    m_liteApp->extension()->addObject("LiteApi.ILiteDoc",this);    
+    m_liteApp->extension()->addObject("LiteApi.ILiteDoc",this);
 }
 
 static QString getAppLocale()

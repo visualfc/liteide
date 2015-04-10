@@ -27,15 +27,7 @@
 #include <QToolBar>
 #include <QAction>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 ActionManager::ActionManager(QObject *parent) :
@@ -80,7 +72,7 @@ bool ActionManager::initWithApp(IApplication *app)
 }
 
 QMenu *ActionManager::insertMenu(const QString &id, const QString &title, const QString &idBefore)
-{    
+{
     QMenu *menu = m_idMenuMap.value(id);
     if (menu) {
         return menu;

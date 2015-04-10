@@ -36,19 +36,11 @@
 #include <QTextCodec>
 #include <QFileDialog>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 WebKitBrowser::WebKitBrowser(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IWebKitBrowser(parent), m_liteApp(app)
-{        
+{
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
     m_widget = new QWidget;
@@ -251,7 +243,7 @@ void WebKitBrowser::loadProgress(int value)
 }
 
 void WebKitBrowser::openHtmlFile()
-{    
+{
     QString dir = m_liteApp->settings()->value("WebKitBrowser/home","").toString();
     QString filePath = QFileDialog::getOpenFileName(m_liteApp->mainWindow(),tr("Open Html or Markdown File"),dir,
                                                     "Html or Markdown File (*.html *.htm *.md *.markdown);;Html File (*.html *.htm);; Markdown File (*.md *.markdown)");

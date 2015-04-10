@@ -26,15 +26,7 @@
 #include "qtc_texteditor/syntaxhighlighter.h"
 
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 KateTextLexer::KateTextLexer(QObject *parent)
     : LiteApi::ITextLexer(parent)
@@ -48,7 +40,7 @@ bool KateTextLexer::isLangSupport() const
 
 bool KateTextLexer::isInComment(const QTextCursor &cursor) const
 {
-    int pos = cursor.positionInBlock();    
+    int pos = cursor.positionInBlock();
     TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(cursor.block());
     int state = data->lexerState();
     if (state != 0 && data->tokens().isEmpty()) {

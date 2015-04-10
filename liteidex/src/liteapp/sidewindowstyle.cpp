@@ -26,15 +26,7 @@
 #include "rotationtoolbutton.h"
 
 #include <QStatusBar>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 SideDockWidget::SideDockWidget(QSize iconSize, QWidget *parent) :
     BaseDockWidget(iconSize,parent)
@@ -146,7 +138,7 @@ SideActionBar::~SideActionBar()
 void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction *> widgetActions)
 {
     RotationToolButton *btn = new RotationToolButton;
-    btn->setDefaultAction(action);    
+    btn->setDefaultAction(action);
     if (area == Qt::LeftDockWidgetArea) {
         btn->setRotation(RotationToolButton::CounterClockwise);
     } else if (area == Qt::RightDockWidgetArea) {

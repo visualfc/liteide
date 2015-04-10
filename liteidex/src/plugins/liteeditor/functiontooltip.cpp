@@ -31,15 +31,7 @@
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 FunctionTooltip::FunctionTooltip(LiteApi::IApplication *app, LiteApi::ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount, QObject *parent)
     : QObject(parent), m_liteApp(app), m_editor(editor), m_lexer(lexer), m_maxTipCount(maxTipCount)

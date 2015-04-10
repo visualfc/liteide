@@ -22,6 +22,7 @@ moc_*.cpp
 qrc_*.cpp
 Makefile
 *-build-*
+Build-*
 
 # hg
 .hg*

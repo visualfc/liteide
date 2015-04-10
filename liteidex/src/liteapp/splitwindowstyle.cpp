@@ -34,15 +34,7 @@
 #include <QKeySequence>
 #include <QMenu>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 ActionGroup::ActionGroup(QObject *parent) : QObject(parent)
 {
@@ -362,7 +354,7 @@ QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidg
         LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
         actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
     }
-    m_actStateMap.insert(action,state);    
+    m_actStateMap.insert(action,state);
 
     connect(action,SIGNAL(toggled(bool)),this,SLOT(toggledAction(bool)));
     if (m_windowMenu) {

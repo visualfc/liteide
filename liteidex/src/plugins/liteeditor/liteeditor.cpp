@@ -63,17 +63,7 @@
 #include <QMenu>
 #include <QInputDialog>
 #include <QToolButton>
-
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
+#include "memory.h"
 
 LiteEditor::LiteEditor(LiteApi::IApplication *app)
     : m_liteApp(app),
@@ -275,7 +265,7 @@ void LiteEditor::createActions()
     m_gotoMatchBraceAct = new QAction(tr("Go To Matching Brace"),this);
     actionContext->regAction(m_gotoMatchBraceAct,"GotoMatchBrace","Ctrl+E");
 
-    m_foldAct = new QAction(tr("Fold"),this);   
+    m_foldAct = new QAction(tr("Fold"),this);
     actionContext->regAction(m_foldAct,"Fold","Ctrl+<");
 
     m_unfoldAct = new QAction(tr("Unfold"),this);

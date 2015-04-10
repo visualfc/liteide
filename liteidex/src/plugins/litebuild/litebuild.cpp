@@ -48,15 +48,8 @@
 #include <QToolButton>
 #include <QTime>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
+
 /*
 ### liteide app info
 
@@ -133,7 +126,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     if (m_buildManager->initWithApp(m_liteApp)) {
         m_buildManager->load(m_liteApp->resourcePath()+"/litebuild");
         m_liteApp->extension()->addObject("LiteApi.IBuildManager",m_buildManager);
-    }    
+    }
     m_bProjectBuild = false;
 
     m_buildToolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Build Toolbar"),"toolbar/build");
@@ -252,7 +245,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
             }
             actionContext->regAction(act,act->objectName(),shortcuts.join(";"));
         }
-    }    
+    }
 
     applyOption(OPTION_LITEEDITOR);
 }
@@ -536,7 +529,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
 }
 
 void LiteBuild::loadProjectInfo(const QString &filePath)
-{    
+{
     m_projectInfo.clear();
     if (filePath.isEmpty()) {
         return;
@@ -734,7 +727,7 @@ QMap<QString,QString> LiteBuild::buildEnvMap() const
             v.replace("$("+m.key()+")",m.value());
         }
         env.insert(k,v);
-    }    
+    }
     QMapIterator<QString,QString> p(m_projectInfo);
     while(p.hasNext()) {
         p.next();
@@ -1196,7 +1189,7 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
         }
     } else {
         m_process->setUserData(ID_TASKLIST,QStringList());
-    }    
+    }
 }
 
 void LiteBuild::stopAction()
@@ -1255,10 +1248,10 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
 }
 
 void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
-{  
+{
     m_output->clear();
     m_outputAct->setChecked(true);
-    if (m_process->isRunning()) {        
+    if (m_process->isRunning()) {
         if (ba->isKillOld()) {
             m_output->append(tr("Killing current process...")+"\n");
             m_process->kill();
@@ -1414,7 +1407,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         m_process->setUserData(ID_CODEC,codec);
         m_process->setUserData(ID_INPUTTYPE,INPUT_ACTION);
 
-        m_process->setWorkingDirectory(m_workDir);        
+        m_process->setWorkingDirectory(m_workDir);
         m_output->appendTag(QString("%1 %2 [%3]\n")
                             .arg(QDir::cleanPath(cmd))
                             .arg(args)

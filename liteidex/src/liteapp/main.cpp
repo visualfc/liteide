@@ -37,15 +37,8 @@
 #include "liteapp.h"
 #include "goproxy.h"
 #include "cdrv.h"
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+
+#include "memory.h"
 
 #ifdef LITEAPP_LIBRARY
 int liteapp_main(int argc, char *argv[])
@@ -88,7 +81,7 @@ int main(int argc, char *argv[])
         if (translator.load(QLatin1String("liteide_") + locale, liteideTrPath)) {
             const QString &qtTrPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
             const QString &qtTrFile = QLatin1String("qt_") + locale;
-            // Binary installer puts Qt tr files into creatorTrPath            
+            // Binary installer puts Qt tr files into creatorTrPath
             app.installTranslator(&translator);
             if (qtTranslator.load(qtTrFile, qtTrPath) || qtTranslator.load(qtTrFile, liteideTrPath)) {
                 app.installTranslator(&qtTranslator);

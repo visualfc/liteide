@@ -30,15 +30,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 Build::Build(QObject *parent)
@@ -133,7 +125,7 @@ void Build::make()
     }
 
     foreach(LiteApi::BuildAction *ba,m_actionList) {
-        QAction *act = this->makeAction(ba);        
+        QAction *act = this->makeAction(ba);
         QString idMenu = ba->menu();
         if (idMenu.isEmpty()) {
             QMenu *menu = m_idMenuMap.value(ba->id());

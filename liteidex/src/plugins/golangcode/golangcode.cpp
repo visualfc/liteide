@@ -37,15 +37,7 @@
 #include <QTimer>
 #include <QScrollBar>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 int GolangCode::g_gocodeInstCount = 0;
 
@@ -362,7 +354,7 @@ void GolangCode::loadImportsList()
 }
 
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
-{    
+{
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
     m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);

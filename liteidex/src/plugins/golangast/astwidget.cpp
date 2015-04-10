@@ -33,15 +33,7 @@
 #include <QFont>
 #include <QVBoxLayout>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) :
@@ -54,7 +46,7 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    m_tree = new SymbolTreeView;    
+    m_tree = new SymbolTreeView;
     m_filterEdit = new Utils::FilterLineEdit(200);
 
     m_model = new QStandardItemModel(this);

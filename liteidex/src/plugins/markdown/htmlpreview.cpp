@@ -43,16 +43,7 @@
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #endif
-
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 HtmlPreview::HtmlPreview(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
@@ -228,10 +219,10 @@ QByteArray HtmlPreview::loadCssData(const QString &fileName)
 }
 
 void HtmlPreview::currentEditorChanged(LiteApi::IEditor *editor)
-{       
+{
     if (m_curEditor != 0) {
         m_curEditor->disconnect(this);
-    }    
+    }
     if (m_curTextEditor != 0) {
         m_curTextEditor->verticalScrollBar()->disconnect(this);
     }
@@ -325,7 +316,7 @@ void HtmlPreview::editorHtmlPrivew(bool force)
     QByteArray data = m_curEditor->utf8Data();
     if (!force && (m_lastData == data)) {
         return;
-    }    
+    }
     loadHtmlData(data,QFileInfo(m_curEditor->filePath()).fileName().toUtf8(),m_curEditor->mimeType(),QUrl::fromLocalFile(m_curEditor->filePath()));
 }
 
