@@ -27,15 +27,7 @@
 #include <QXmlStreamReader>
 #include <QCoreApplication>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 QString MimeType::package() const
@@ -78,7 +70,7 @@ void MimeType::merge(const IMimeType *mimeType)
         return;
     }
     m_subClassesOf.append(mimeType->subClassesOf());
-    m_globPatterns.append(mimeType->globPatterns());    
+    m_globPatterns.append(mimeType->globPatterns());
     m_comment.append(mimeType->comment());
 
     if (!mimeType->codec().isEmpty()) {

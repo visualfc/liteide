@@ -66,15 +66,7 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 void ListViewEx::currentChanged(const QModelIndex &current, const QModelIndex&)
 {
@@ -153,7 +145,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     QUrl url;
     url.setScheme("file");
     url.setPath(info.filePath());
-    openUrl(url);    
+    openUrl(url);
 }
 
 GolangDoc::~GolangDoc()
@@ -177,7 +169,7 @@ void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 }
 
 void GolangDoc::loadEnv()
-{    
+{
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);//m_envManager->currentEnvironment();
 
     m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
@@ -735,7 +727,7 @@ void GolangDoc::highlighted(const QUrl &_url)
 }
 
 void GolangDoc::openUrl(const QUrl &_url)
-{ 
+{
     m_liteApp->mainWindow()->statusBar()->clearMessage();
     QUrl url = parserUrl(_url);
     /*

@@ -31,15 +31,7 @@
 #include <QMenu>
 #include <QToolButton>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     QDockWidget(parent), current(0)
@@ -322,7 +314,7 @@ OutputDockWidget::OutputDockWidget(QSize iconSize, QWidget *parent) :
 }
 
 void OutputDockWidget::createMenu(Qt::DockWidgetArea /*area*/)
-{    
+{
 //    QMenu *moveMenu = new QMenu(tr("Move To"),this);
 //    QAction *act = new QAction(tr("SideBar"),this);
 //    act->setData(area);

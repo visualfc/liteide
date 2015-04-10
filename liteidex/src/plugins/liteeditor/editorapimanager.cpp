@@ -27,16 +27,7 @@
 
 #include <QDir>
 #include <QFileInfo>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
+#include "memory.h"
 
 EditorApiManager::EditorApiManager(QObject *parent)
     : IEditorApiManager(parent)
@@ -136,6 +127,6 @@ void EditorApiManager::load(const QString &path)
             api->setApiFiles(snippetFiles);
             this->addSnippetApi(api);
             m_liteApp->appendLog("load snippet api",snippetFiles.join(","));
-        }        
+        }
     }
 }

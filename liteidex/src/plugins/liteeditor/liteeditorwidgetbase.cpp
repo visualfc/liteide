@@ -37,15 +37,7 @@
 #include <QInputMethodEvent>
 #include <QTimer>
 #include <cmath>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 const int PRIORITYLIST_LENGTH = 5;
 const LiteApi::EditorNaviagteType MARKTYPE_PRIORITYLIST[PRIORITYLIST_LENGTH] = {
@@ -77,7 +69,7 @@ struct NavigateMark
             delete node;
         }
         m_nodeList.clear();
-    }    
+    }
 
     struct Node {
         LiteApi::EditorNaviagteType type;
@@ -614,7 +606,7 @@ void LiteEditorWidgetBase::gotoMatchBrace()
 }
 
 void LiteEditorWidgetBase::highlightCurrentLine()
-{    
+{
     QTextCursor cur = textCursor();
     if (!cur.block().isVisible()) {
         unfold();
@@ -925,7 +917,7 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
                     (selStart < block.position() + block.length()
                     && selEnd > block.position())
                     || (selStart == selEnd && selStart == block.position())
-                    );            
+                    );
             if (selected) {
                 painter.save();
                 QFont f = painter.font();
@@ -2228,7 +2220,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 
 
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
-            (m_bLastBraces ||m_textLexer->isCanAutoCompleter(this->textCursor())) ) {        
+            (m_bLastBraces ||m_textLexer->isCanAutoCompleter(this->textCursor())) ) {
         if (m_bLastBraces) {
             if (e->text() == m_lastBraceText) {
                 QTextCursor cursor = textCursor();
@@ -2360,7 +2352,7 @@ void LiteEditorWidgetBase::indentCursor(QTextCursor cur, bool bIndent)
    cur.beginEditBlock();
     if (bIndent) {
         cur.insertText(this->tabText());
-    } else {         
+    } else {
         QString text = cur.block().text();
         int pos = cur.positionInBlock()-1;
         if (pos >= 0) {
@@ -2846,7 +2838,7 @@ bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
 {
     if (!link.hasValidTarget()) {
         return false;
-    }            
+    }
     LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,true);
     return true;
 }
@@ -3065,7 +3057,7 @@ static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int 
 }
 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
-{  
+{
     //QPlainTextEdit::paintEvent(e);
     //return;
     QPainter painter(viewport());
@@ -3265,7 +3257,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     o.start = context.cursorPosition - blpos;
                     o.length = 1;
                     o.format.setForeground(palette().base());
-                    o.format.setBackground(palette().text());                    
+                    o.format.setBackground(palette().text());
                     selections.append(o);
                 }
             }

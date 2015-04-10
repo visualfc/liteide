@@ -39,16 +39,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
+#include "memory.h"
 
 LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::ILiteDebug(parent),
@@ -75,7 +66,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));
     connect(clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
 
-    QVBoxLayout *layout = new QVBoxLayout;    
+    QVBoxLayout *layout = new QVBoxLayout;
     QToolBar *widgetToolBar = new QToolBar;
     widgetToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     layout->setMargin(0);
@@ -447,7 +438,7 @@ void LiteDebug::startDebugTests()
 
     if(!m_liteBuild->buildTests())
     {
-    	m_liteApp->appendLog("LiteDebug","Build tests failed",true);
+        m_liteApp->appendLog("LiteDebug","Build tests failed",true);
     }
     LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
@@ -458,7 +449,7 @@ void LiteDebug::startDebugTests()
         testCmd = QFileInfo(findCmd).fileName();
     }
 
-	this->startDebug(testCmd,info.args,info.workDir);
+    this->startDebug(testCmd,info.args,info.workDir);
 }
 
 void LiteDebug::startDebug()
@@ -664,7 +655,7 @@ void LiteDebug::debugStarted()
     m_output->setReadOnly(false);
     //m_liteApp->outputManager()->setCurrentOutput(m_output);
     m_outputAct->setChecked(true);
-    m_widget->show();    
+    m_widget->show();
     emit debugVisible(true);
 }
 
@@ -695,7 +686,7 @@ void LiteDebug::debugStoped()
 }
 
 void LiteDebug::setCurrentLine(const QString &fileName, int line)
-{ 
+{
     bool center = true;
     if (m_lastLine.fileName == fileName) {
         center = false;

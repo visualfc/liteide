@@ -34,16 +34,7 @@
 #include <QTextBlock>
 #include <QTimer>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
+#include "memory.h"
 
 class WordItem : public QStandardItem
 {
@@ -341,7 +332,7 @@ void LiteCompleter::appendItems(QStringList items,const QString &kind, const QSt
 }
 
 void LiteCompleter::appendSnippetItem(const QString &name, const QString &info, const QString &content)
-{   
+{
     WordItem *item = new WordItem(name);
     item->setKind("snippet");
     item->setToolTip(info);
@@ -384,7 +375,7 @@ void LiteCompleter::clearItemChilds(const QString &name)
     }
     if (item) {
         QModelIndex index = m_model->indexFromItem(item);
-        m_model->removeRows(0,m_model->rowCount(index),index);        
+        m_model->removeRows(0,m_model->rowCount(index),index);
     }
 }
 
@@ -394,7 +385,7 @@ bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const 
 
     WordItem *root = 0;
     WordItem *item = 0;
-    bool bnew = false;    
+    bool bnew = false;
     foreach (QString word, words) {
         item = 0;
         QModelIndex parent = m_model->indexFromItem(root);
@@ -438,7 +429,7 @@ void LiteCompleter::completionPrefixChanged(QString prefix, bool force)
 }
 
 void LiteCompleter::insertCompletion(QModelIndex index)
-{   
+{
     if (!m_editor) {
         return;
     }

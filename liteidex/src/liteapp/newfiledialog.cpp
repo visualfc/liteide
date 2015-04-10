@@ -35,15 +35,7 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 NewFileDialog::NewFileDialog(QWidget *parent) :
@@ -140,8 +132,8 @@ void NewFileDialog::accept()
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
-    m_stringMap.clear();    
-    m_stringMap.insert("$ROOT$",QFileInfo(name).fileName());    
+    m_stringMap.clear();
+    m_stringMap.insert("$ROOT$",QFileInfo(name).fileName());
     QDate dt = QDate::currentDate();
     QTime tm = QTime::currentTime();
     m_stringMap.insert("$DATE$", QString("%1 %2 %3").arg(dt.day()).arg(shortMonthNames[dt.month()-1]).arg(dt.year()));
@@ -366,7 +358,7 @@ void NewFileDialog::on_locationBrowseButton_clicked()
         m_projectLocation = location;
     } else if (m_cur.type == "file"){
         m_fileLocation = location;
-    }    
+    }
 }
 
 void NewFileDialog::locationLineChanged(QString)

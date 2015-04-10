@@ -28,15 +28,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFile>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 RustEdit::RustEdit(LiteApi::IApplication *app, QObject *parent)
     : QObject(parent), m_liteApp(app)
@@ -140,7 +132,7 @@ void RustEdit::prefixChanged(const QTextCursor &/*cur*/, const QString &pre, boo
 }
 
 void RustEdit::wordCompleted(QString, QString, QString)
-{   
+{
 
 }
 //            PREFIX 21,21,

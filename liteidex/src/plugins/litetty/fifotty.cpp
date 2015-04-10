@@ -39,16 +39,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
-
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 FiFoTty::FiFoTty(QObject *parent) :
@@ -127,7 +118,7 @@ void FiFoTty::write(const QByteArray &data)
 }
 
 void FiFoTty::bytesAvailable()
-{  
+{
     size_t nbytes = 0;
     if (::ioctl(m_serverFd, FIONREAD, (char *) &nbytes) < 0)
         return;

@@ -55,15 +55,7 @@
 #include <QTimer>
 #include <QPainter>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 #define LITEIDE_VERSION "X27.1"
 
@@ -124,7 +116,7 @@ LiteApp::LiteApp()
       m_pluginPath(LiteApp::getPluginPath()),
       m_resourcePath(LiteApp::getResoucePath()),
       m_storagePath(LiteApp::getStoragePath())
-{    
+{
     QSettings global(m_resourcePath+"/liteapp/config/global.ini",QSettings::IniFormat);
     bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
     if (storeLocal) {
@@ -163,7 +155,7 @@ LiteApp::LiteApp()
     m_projectManager->initWithApp(this);
     m_editorManager->initWithApp(this);
     m_fileManager->initWithApp(this);
-    m_optionManager->initWithApp(this);        
+    m_optionManager->initWithApp(this);
 
     //m_mainwindow->setCentralWidget(m_editorManager->widget());
     m_mainwindow->splitter()->addWidget(m_editorManager->widget());
@@ -338,7 +330,7 @@ void LiteApp::load(bool bUseSession, IApplication *baseApp)
     this->appendLog("DefaultHtmlWidgetFactory",m_htmlWidgetManager->defaultClassName());
 
     m_goProxy->call("version");
-	
+
     appendLog("LiteApp","Finished loading");
 }
 
@@ -641,7 +633,7 @@ void LiteApp::createActions()
     m_closeAllAct = new QAction(QIcon("icon:images/closeall.png"),tr("Close All Files"),m_mainwindow);
     actionContext->regAction(m_closeAllAct,"CloseAllFiles","");
 
-    m_openProjectAct = new QAction(QIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);    
+    m_openProjectAct = new QAction(QIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);
 
     m_saveProjectAct = new QAction(QIcon("icon:images/saveproject.png"),tr("Save Project"),m_mainwindow);
 

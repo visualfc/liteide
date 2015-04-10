@@ -43,15 +43,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 bool FileManager::initWithApp(IApplication *app)
 {
@@ -133,7 +125,7 @@ FileManager::~FileManager()
     }
     if (m_folderListView) {
         delete m_folderListView;
-    }    
+    }
     delete m_configMenu;
 }
 
@@ -517,11 +509,11 @@ QString FileManager::schemeKey(const QString &scheme) const
 
 QString FileManager::schemeName(const QString &scheme) const
 {
-	if (scheme == "session") return tr("Session");
+    if (scheme == "session") return tr("Session");
     else if (scheme == "proj") return tr("Project");
     else if (scheme == "file") return tr("File");
     else if (scheme == "folder") return tr("Folder");
-	else return scheme;
+    else return scheme;
 }
 
 QStringList FileManager::recentFiles(const QString &scheme) const
@@ -589,7 +581,7 @@ void FileManager::updateRecentFileActions(const QString &scheme)
 {
     QMenu *menu = m_schemeMenuMap.value(scheme);
     if (!menu) {
-		QString name = schemeName(scheme);
+        QString name = schemeName(scheme);
         QAction *act = new QAction(name,this);
         m_recentMenu->insertAction(m_recentSeparator,act);
         menu = new QMenu(scheme,m_recentMenu);

@@ -108,7 +108,8 @@ HEADERS  += mainwindow.h \
     windowstyle.h \
     splitwindowstyle.h \
     sidewindowstyle.h \
-    outputoption.h
+    outputoption.h \
+    memory.h
 
 FORMS += \
     aboutdialog.ui \

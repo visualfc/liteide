@@ -27,15 +27,7 @@
 #include <QCoreApplication>
 #include <stdlib.h>
 #include <time.h>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 SocketTty::SocketTty(QObject *parent) :
     LiteApi::ITty(parent), m_server(0),m_socket(0)

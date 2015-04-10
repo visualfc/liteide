@@ -29,17 +29,7 @@
 #include <QFileInfo>
 #include <QStandardItemModel>
 #include <QStandardItem>
-
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
-
+#include "memory.h"
 
 LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     LiteApi::IOption(parent),
@@ -135,7 +125,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->offsetCheckBox->setChecked(offsetVisible);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
-    connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
+    connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
 
     m_mimeModel = new QStandardItemModel(0,4,this);
     m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
@@ -277,7 +267,7 @@ void LiteEditorOption::apply()
         if (ok && n > 0 && n < 20) {
             m_liteApp->settings()->setValue(EDITOR_TABWIDTH+mime,n);
         }
-        bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;        
+        bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;
         m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+mime,b);
     }
 }

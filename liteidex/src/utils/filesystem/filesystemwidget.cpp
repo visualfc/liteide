@@ -47,15 +47,7 @@
 #include <QDebug>
 #ifdef Q_OS_WIN
 #include <windows.h>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 #endif
 
 FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *app, QWidget *parent) :
@@ -341,7 +333,7 @@ void FileSystemWidget::removeFile()
     if (!info.isFile()) {
         return;
     }
-	
+
     int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Delete File"),
                           tr("Are you sure that you want to permanently delete this file?"),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
@@ -410,7 +402,7 @@ void FileSystemWidget::removeFolder()
     if (!info.isDir()) {
         return;
     }
-	
+
     int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("Delete Folder"),
                           tr("Are you sure that you want to permanently delete this folder and all of its contents?"),
                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);

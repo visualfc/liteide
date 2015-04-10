@@ -47,15 +47,7 @@
 #include "litetabwidget.h"
 #include "fileutil/fileutil.h"
 #include "liteapp.h"
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 
 EditorManager::~EditorManager()
@@ -594,7 +586,7 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
                 }
             }
         }
-    }   
+    }
     if (editor) {
         ITextEditor *textEditor = getTextEditor(editor);
         if (textEditor) {
@@ -659,7 +651,7 @@ void EditorManager::addNavigationHistory(IEditor *editor,const QByteArray &saveS
         state = saveState;
     }
 
-    m_currentNavigationHistoryPosition = qMin(m_currentNavigationHistoryPosition, m_navigationHistory.size()); // paranoia    
+    m_currentNavigationHistoryPosition = qMin(m_currentNavigationHistoryPosition, m_navigationHistory.size()); // paranoia
     if (m_currentNavigationHistoryPosition > 0 && m_currentNavigationHistoryPosition <= m_navigationHistory.size()) {
         EditLocation &prev = m_navigationHistory[m_currentNavigationHistoryPosition-1];
         if (prev.filePath == filePath && prev.state == state) {

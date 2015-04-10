@@ -33,15 +33,7 @@
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QDebug>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 static void GdbMiValueToItem(QStandardItem *item, const GdbMiValue &value)
 {
@@ -120,7 +112,7 @@ GdbDebugger::GdbDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
     m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");
 
-    m_gdbinit = false;    
+    m_gdbinit = false;
     m_gdbexit = false;
 
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
@@ -681,7 +673,7 @@ void GdbDebugger::handleAsyncClass(const QByteArray &asyncClass, const GdbMiValu
     //m_asyncModel->clear();
     //m_asyncModel->appendRow(item);
     if (asyncClass == "stopped") {
-        handleStopped(result);        
+        handleStopped(result);
     } else if (asyncClass == "library-loaded") {
         handleLibrary(result);
     }

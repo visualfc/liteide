@@ -32,15 +32,7 @@
 #include <QAction>
 #include <QPlainTextEdit>
 #include <QTextBrowser>
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#include "memory.h"
 
 static char help[] =
 "<b>Search Format</b>"
@@ -169,7 +161,7 @@ FindDocWidget::FindDocWidget(LiteApi::IApplication *app, QWidget *parent) :
     menu->addAction(helpAct);
     connect(helpAct,SIGNAL(triggered()),this,SLOT(showHelp()));
 
-    this->setLayout(mainLayout);    
+    this->setLayout(mainLayout);
 
 
     connect(findAll,SIGNAL(triggered()),this,SLOT(findDoc()));
