@@ -6,7 +6,7 @@
 LiteIDE build config default use -i flag, if use Go1.1 or Go1.2 not support. View -> Options -> LiteBuild double click gosrc.xml to edit, modify BUILDARGS value:
 
 	<custom id="BuildArgsi" name="BUILDARGS" value="-i"/>
-	
+
 set value to empty and restart LiteIDE to support Go1.1 and Go1.2.
 
 ## Window Style Setup
@@ -37,14 +37,14 @@ Alternatively, environments can be viewed and edited in the `View > Options > Li
 Example `win32.env`:
 
     #win32 environment
-    
+
     GOROOT=c:\go
     #GOBIN=
     GOARCH=386
     GOOS=windows
-    
+
     PATH=c:\mingw32\bin;%GOROOT%\bin;%PATH%
-    
+
     LITEIDE_GDB=gdb
     LITEIDE_MAKE=mingw32-make
     LITEIDE_TERM=%COMSPEC%
@@ -56,14 +56,14 @@ Example `win32.env`:
 Example `linux32.env`:
 
     #linux32 environment
-    
+
     GOROOT=$HOME/go
     #GOBIN=
     GOARCH=386
     GOOS=linux
-    
+
     PATH=$GOROOT/bin:$PATH
-    
+
     LITEIDE_GDB=gdb
     LITEIDE_MAKE=make
     LITEIDE_TERM=/usr/bin/gnome-terminal
@@ -94,7 +94,7 @@ To cross-compile your project for another operating system or architecture, you 
     * 386 (32-bit x86)
     * arm (32-bit ARM)
 * `$GOARM` - ARM architecture version the run-time libraries should target (default: 6).
-    * Setting `$GOARM` to 5 causes the linker to emit calls to a software floating point implementation instead of using hardware floating point support. 
+    * Setting `$GOARM` to 5 causes the linker to emit calls to a software floating point implementation instead of using hardware floating point support.
 * `$CGO_ENABLED`
     * This should be set to 0 when cross-compiling.
 
@@ -137,11 +137,11 @@ Example configuration for cross-compiling 64-bit Linux binaries on Windows:
     GOARCH=amd64
     GOOS=linux
     CGO_ENABLED=0
-    
+
     PATH=%GOBIN%;%GOROOT%\bin;%PATH%
     ...
-	
-## Golang Code Format	
+
+## Golang Code Format
 Automatic formatting when saving.
 
 ### Goimports
@@ -149,6 +149,9 @@ LiteIDE View->Options->GolangFmt-> Use goimports instead of gofmt, for code form
 
 This tool updates your Go import lines, adding missing ones and
 removing unreferenced ones.
+
+OBS! If you get the following error uncheck "Use goimports instead of gofmt" and it'll "solve" it
+	go code format error: fatal error: unrollgcprog: unknown instruction
 
 ## Gocode
 Code completion use gocode <https://github.com/nsf/gocode>.gocode works .a file is read from the project dependencies, so please update project libraries can not rely on code completion.
