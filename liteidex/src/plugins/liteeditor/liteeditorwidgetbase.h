@@ -97,7 +97,7 @@ public slots:
     virtual void slotModificationChanged(bool);
     virtual void slotUpdateRequest(const QRect &r, int dy);
     virtual void slotCursorPositionChanged();
-    virtual void updateSelection();
+    virtual void slotSelectionChanged();
     virtual void slotUpdateBlockNotify(const QTextBlock &);
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    
@@ -257,6 +257,16 @@ protected:
     void moveLineUpDown(bool up);
     void copyLineUpDown(bool up);
     const TextEditor::TabSettings &tabSettings() const;
+    void clearBlockSelection();
+    QString copyBlockSelection() const;
+    void removeBlockSelection(const QString &text = QString());
+    bool selectionVisible(int blockNumber) const;
+    void handleBlockSelection(int diff_row, int diff_col);
+public slots:
+    virtual void copy();
+    virtual void paste();
+    virtual void cut();
+    virtual void selectAll();
 protected slots:
     void uplinkDeployTimeout();
     void uplinkInfoTimeout();

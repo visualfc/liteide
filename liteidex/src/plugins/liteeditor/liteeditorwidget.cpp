@@ -354,20 +354,78 @@ QString LiteEditorWidget::cursorToHtml(QTextCursor cursor) const
     return html;
 }
 
+static const char kVerticalTextBlockMimeType[] = "application/vnd.liteide.vblocktext";
+
 QMimeData *LiteEditorWidget::createMimeDataFromSelection() const
 {
     QTextCursor cursor = textCursor();
-
-    if (!cursor.hasSelection()) {
-        return 0;
+    if (m_inBlockSelectionMode) {
+        QMimeData *mimeData = new QMimeData;
+        QString text = this->copyBlockSelection();
+        mimeData->setData(QLatin1String(kVerticalTextBlockMimeType), text.toUtf8());
+        mimeData->setText(text); // for exchangeability
+        return mimeData;
+    } else if (cursor.hasSelection()) {
+        QMimeData *mimeData = new QMimeData;
+        QString text = cursor.selectedText();
+        convertToPlainText(text);
+        mimeData->setText(text);
+        // Copy the selected text as HTML
+        mimeData->setHtml(cursorToHtml(cursor));
+        return mimeData;
     }
-    QMimeData *mimeData = new QMimeData;
-    QString text = cursor.selectedText();
-    convertToPlainText(text);
-    mimeData->setText(text);
-    // Copy the selected text as HTML
-    mimeData->setHtml(cursorToHtml(cursor));
-    return mimeData;
+    return 0;
+}
+
+bool LiteEditorWidget::canInsertFromMimeData(const QMimeData *source) const
+{
+    return QPlainTextEdit::canInsertFromMimeData(source);
+}
+
+void LiteEditorWidget::insertFromMimeData(const QMimeData *source)
+{
+    if (isReadOnly())
+        return;
+
+    if (source->hasFormat(QLatin1String(kVerticalTextBlockMimeType))) {
+        QString text = QString::fromUtf8(source->data(QLatin1String(kVerticalTextBlockMimeType)));
+        if (text.isEmpty())
+            return;
+
+        QStringList lines = text.split(QLatin1Char('\n'));
+        QTextCursor cursor = textCursor();
+        cursor.beginEditBlock();
+        const TextEditor::TabSettings &ts = this->tabSettings();
+        int initialCursorPosition = cursor.position();
+        int column = ts.columnAt(cursor.block().text(), cursor.positionInBlock());
+        cursor.insertText(lines.first());
+        for (int i = 1; i < lines.count(); ++i) {
+            QTextBlock next = cursor.block().next();
+            if (next.isValid()) {
+                cursor.setPosition(next.position());
+            } else {
+                cursor.movePosition(QTextCursor::EndOfBlock);
+                cursor.insertBlock();
+            }
+            int offset = 0;
+            int position = ts.positionAtColumn(cursor.block().text(), column, &offset);
+            cursor.setPosition(cursor.block().position() + position);
+            if (offset < 0) {
+                cursor.deleteChar();
+                cursor.insertText(QString(-offset, QLatin1Char(' ')));
+            } else {
+                cursor.insertText(QString(offset, QLatin1Char(' ')));
+            }
+            cursor.insertText(lines.at(i));
+        }
+        cursor.setPosition(initialCursorPosition);
+        cursor.endEditBlock();
+        setTextCursor(cursor);
+        ensureCursorVisible();
+        return;
+    }
+
+    QPlainTextEdit::insertFromMimeData(source);
 }
 
 void LiteEditorWidget::zoomIn(int range)

@@ -399,7 +399,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     //connect(this, SIGNAL(selectionChanged()),this,SLOT(updateSelection()));
     connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(slotUpdateRequest(QRect, int)));
     connect(this->document(),SIGNAL(contentsChange(int,int,int)),this,SLOT(editContentsChanged(int,int,int)));
-    connect(this,SIGNAL(selectionChanged()),this,SLOT(updateSelection()));
+    connect(this,SIGNAL(selectionChanged()),this,SLOT(slotSelectionChanged()));
 
     QTextDocument *doc = this->document();
     if (doc) {
@@ -1304,7 +1304,7 @@ void LiteEditorWidgetBase::slotCursorPositionChanged()
     highlightCurrentLine();
 }
 
-void LiteEditorWidgetBase::updateSelection()
+void LiteEditorWidgetBase::slotSelectionChanged()
 {
     QString pattern;
     QTextCursor cur = this->textCursor();
@@ -2105,6 +2105,32 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     this->m_moveLineUndoHack = false;
     bool ro = isReadOnly();
 
+    if (m_inBlockSelectionMode) {
+        if (e == QKeySequence::Cut) {
+            if (!ro) {
+                cut();
+                e->accept();
+                return;
+            }
+        } else if (e == QKeySequence::Delete || e->key() == Qt::Key_Backspace) {
+            if (!ro) {
+                removeBlockSelection();
+                e->accept();
+                return;
+            }
+        } else if (e == QKeySequence::Paste) {
+            if (!ro) {
+                paste();
+                e->accept();
+                return;
+            }
+        } else if (e == QKeySequence::SelectAll) {
+            selectAll();
+            e->accept();
+            return;
+        }
+    }
+
     if ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return ) {
         if (e->modifiers() == Qt::NoModifier) {
             if (m_autoIndent) {
@@ -2199,6 +2225,32 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             }
         case Qt::Key_Right:
         case Qt::Key_Left:
+#ifdef Q_OS_MAC
+            break;
+#endif
+            if ((e->modifiers()
+                 & (Qt::AltModifier | Qt::ShiftModifier)) == (Qt::AltModifier | Qt::ShiftModifier)) {
+                int diff_row = 0;
+                int diff_col = 0;
+                if (e->key() == Qt::Key_Up)
+                    diff_row = -1;
+                else if (e->key() == Qt::Key_Down)
+                    diff_row = 1;
+                else if (e->key() == Qt::Key_Left)
+                    diff_col = -1;
+                else if (e->key() == Qt::Key_Right)
+                    diff_col = 1;
+                handleBlockSelection(diff_row, diff_col);
+                e->accept();
+                return;
+            } else {
+                // leave block selection mode
+                if (m_inBlockSelectionMode) {
+                    m_inBlockSelectionMode = false;
+                    m_blockSelection.clear();
+                    viewport()->update();
+                }
+            }
             break;
         case Qt::Key_PageUp:
         case Qt::Key_PageDown:
@@ -2214,6 +2266,14 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             break;
         }
     }
+
+    if (!ro && m_inBlockSelectionMode) {
+        QString text = e->text();
+        if (!text.isEmpty() && (text.at(0).isPrint() || text.at(0) == QLatin1Char('\t'))) {
+            removeBlockSelection();
+        }
+    }
+
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
             m_textLexer->isLangSupport() && m_textLexer->isEndOfString(this->textCursor())) {
         QString keyText = e->text();
@@ -2940,6 +3000,8 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
 void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton) {
+        this->clearBlockSelection();
+
         QTextBlock foldedBlock = foldedBlockAt(e->pos());
         if (foldedBlock.isValid()) {
             toggleBlockVisible(foldedBlock);
@@ -2980,6 +3042,154 @@ const TextEditor::TabSettings &LiteEditorWidgetBase::tabSettings() const
 {
     TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)this->document()->documentLayout();
     return layout->m_tabSettings;
+}
+
+void LiteEditorWidgetBase::clearBlockSelection()
+{
+    if (m_inBlockSelectionMode) {
+        m_inBlockSelectionMode = false;
+        m_blockSelection.clear();
+        QTextCursor cursor = this->textCursor();
+        cursor.clearSelection();
+        setTextCursor(cursor);
+    }
+}
+
+QString LiteEditorWidgetBase::copyBlockSelection() const
+{
+    QString selection;
+    QTextCursor cursor = this->textCursor();
+    if (!m_inBlockSelectionMode)
+        return selection;
+    const TextEditor::TabSettings &ts = this->tabSettings();
+    QTextBlock block = m_blockSelection.firstBlock.block();
+    QTextBlock lastBlock = m_blockSelection.lastBlock.block();
+    bool textInserted = false;
+    for (;;) {
+        if (this->selectionVisible(block.blockNumber())) {
+            if (textInserted)
+                selection += QLatin1Char('\n');
+            textInserted = true;
+
+            QString text = block.text();
+            int startOffset = 0;
+            int startPos = ts.positionAtColumn(text, m_blockSelection.firstVisualColumn, &startOffset);
+            int endOffset = 0;
+            int endPos = ts.positionAtColumn(text, m_blockSelection.lastVisualColumn, &endOffset);
+
+            if (startPos == endPos) {
+                selection += QString(endOffset - startOffset, QLatin1Char(' '));
+            } else {
+                if (startOffset < 0)
+                    selection += QString(-startOffset, QLatin1Char(' '));
+                if (endOffset < 0)
+                    --endPos;
+                selection += text.mid(startPos, endPos - startPos);
+                if (endOffset < 0)
+                    selection += QString(ts.m_tabSize + endOffset, QLatin1Char(' '));
+                else if (endOffset > 0)
+                    selection += QString(endOffset, QLatin1Char(' '));
+            }
+        }
+        if (block == lastBlock)
+            break;
+
+        block = block.next();
+    }
+    return selection;
+}
+
+void LiteEditorWidgetBase::removeBlockSelection(const QString &text)
+{
+    QTextCursor cursor = this->textCursor();
+    if (!cursor.hasSelection() || !m_inBlockSelectionMode)
+        return;
+
+    int cursorPosition = cursor.selectionStart();
+    cursor.clearSelection();
+    cursor.beginEditBlock();
+
+    const TextEditor::TabSettings &ts = this->tabSettings();
+    QTextBlock block = m_blockSelection.firstBlock.block();
+    QTextBlock lastBlock = m_blockSelection.lastBlock.block();
+    for (;;) {
+        QString text = block.text();
+        int startOffset = 0;
+        int startPos = ts.positionAtColumn(text, m_blockSelection.firstVisualColumn, &startOffset);
+        int endOffset = 0;
+        int endPos = ts.positionAtColumn(text, m_blockSelection.lastVisualColumn, &endOffset);
+
+        cursor.setPosition(block.position() + startPos);
+        cursor.setPosition(block.position() + endPos, QTextCursor::KeepAnchor);
+        cursor.removeSelectedText();
+
+        if (startOffset < 0)
+            cursor.insertText(QString(ts.m_tabSize + startOffset, QLatin1Char(' ')));
+        if (endOffset < 0)
+            cursor.insertText(QString(-endOffset, QLatin1Char(' ')));
+
+        if (block == lastBlock)
+            break;
+        block = block.next();
+    }
+
+    cursor.setPosition(cursorPosition);
+    if (!text.isEmpty())
+        cursor.insertText(text);
+    cursor.endEditBlock();
+    this->setTextCursor(cursor);
+}
+
+bool LiteEditorWidgetBase::selectionVisible(int blockNumber) const
+{
+    Q_UNUSED(blockNumber);
+    return true;
+}
+
+void LiteEditorWidgetBase::handleBlockSelection(int diff_row, int diff_col)
+{
+    if (!m_inBlockSelectionMode) {
+        m_blockSelection.fromSelection(this->tabSettings(), textCursor());
+        m_inBlockSelectionMode = true;
+    }
+
+    m_blockSelection.moveAnchor(m_blockSelection.anchorBlockNumber() + diff_row,
+                                   m_blockSelection.anchorColumnNumber() + diff_col);
+    setTextCursor(m_blockSelection.selection(this->tabSettings()));
+
+    viewport()->update();
+}
+
+void LiteEditorWidgetBase::copy()
+{
+    if (!textCursor().hasSelection())
+        return;
+
+    QPlainTextEdit::copy();
+}
+
+void LiteEditorWidgetBase::paste()
+{
+    if (m_inBlockSelectionMode)
+        removeBlockSelection();
+    QPlainTextEdit::paste();
+}
+
+void LiteEditorWidgetBase::cut()
+{
+    if (m_inBlockSelectionMode) {
+        copy();
+        removeBlockSelection();
+        return;
+    }
+    QPlainTextEdit::cut();
+    //collectToCircularClipboard();
+}
+
+void LiteEditorWidgetBase::selectAll()
+{
+    this->clearBlockSelection();
+    QPlainTextEdit::selectAll();
 }
 
 void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)

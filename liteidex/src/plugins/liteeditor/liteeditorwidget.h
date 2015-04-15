@@ -48,6 +48,8 @@ protected:
     void focusInEvent(QFocusEvent *e);
     void wheelEvent(QWheelEvent *e);
     virtual QMimeData *createMimeDataFromSelection() const;
+    virtual bool canInsertFromMimeData(const QMimeData *source) const;
+    virtual void insertFromMimeData(const QMimeData *source);
 public slots:
     void codeCompleter();
     void zoomIn(int range = 1);
