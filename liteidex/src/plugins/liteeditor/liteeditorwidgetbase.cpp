@@ -381,6 +381,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_showLinkInfomation = false;
     m_visualizeWhitespace = false;
     m_lastLine = -1;
+    m_inBlockSelectionMode = false;
 
     m_upToolTipDeployTimer = new QTimer(this);
     m_upToolTipDeployTimer->setSingleShot(true);
@@ -1321,6 +1322,12 @@ void LiteEditorWidgetBase::updateSelection()
         m_selectionExpression.setPattern(pattern);
         viewport()->update();
     }
+
+    if (m_inBlockSelectionMode && !textCursor().hasSelection()) {
+        m_inBlockSelectionMode = false;
+        m_blockSelection.clear();
+        viewport()->update();
+    }
     //clearLink();
 }
 
@@ -2073,8 +2080,7 @@ void LiteEditorWidgetBase::autoIndent()
 {
     QTextCursor cursor = textCursor();
     cursor.beginEditBlock();
-    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)this->document()->documentLayout();
-    ::autoIndent(this->document(),cursor,layout->m_tabSettings);
+    ::autoIndent(this->document(),cursor,this->tabSettings());
     cursor.endEditBlock();
 }
 
@@ -2970,6 +2976,12 @@ void LiteEditorWidgetBase::mouseReleaseEvent(QMouseEvent *e)
     QPlainTextEdit::mouseReleaseEvent(e);
 }
 
+const TextEditor::TabSettings &LiteEditorWidgetBase::tabSettings() const
+{
+    TextEditor::BaseTextDocumentLayout *layout = (TextEditor::BaseTextDocumentLayout*)this->document()->documentLayout();
+    return layout->m_tabSettings;
+}
+
 void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
 {
     testUpdateLink(e);
@@ -2985,6 +2997,23 @@ void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
         }
     } else {
         QPlainTextEdit::mouseMoveEvent(e);
+        if (e->modifiers() & Qt::AltModifier) {
+            if (!m_inBlockSelectionMode) {
+                m_blockSelection.fromSelection(this->tabSettings(), textCursor());
+                m_inBlockSelectionMode = true;
+            } else {
+                QTextCursor cursor = textCursor();
+
+                // get visual column
+                int column = this->tabSettings().columnAt(
+                            cursor.block().text(), cursor.positionInBlock());
+                if (cursor.positionInBlock() == cursor.block().length()-1)
+                    column += (e->pos().x() - cursorRect().center().x())/QFontMetricsF(font()).width(QLatin1Char(' '));
+                m_blockSelection.moveAnchor(cursor.blockNumber(), column);
+                setTextCursor(m_blockSelection.selection(this->tabSettings()));
+                viewport()->update();
+            }
+        }
     }
     if (viewport()->cursor().shape() == Qt::BlankCursor)
         viewport()->setCursor(Qt::IBeamCursor);
@@ -3114,6 +3143,13 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         context.cursorPosition = -1;
     }
 
+    int blockSelectionIndex = -1;
+    if (m_inBlockSelectionMode
+        && context.selections.count() && context.selections.last().cursor == textCursor()) {
+        blockSelectionIndex = context.selections.size()-1;
+        context.selections[blockSelectionIndex].format.clearBackground();
+    }
+
     while (block.isValid()) {
         QRectF r = blockBoundingRect(block).translated(offset);
         QTextLayout *layout = block.layout();
@@ -3135,19 +3171,33 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
 
             QVector<QTextLayout::FormatRange> selections;
+            QVector<QTextLayout::FormatRange> prioritySelections;
             int blpos = block.position();
             int bllen = block.length();
             for (int i = 0; i < context.selections.size(); ++i) {
                 const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
                 const int selStart = range.cursor.selectionStart() - blpos;
                 const int selEnd = range.cursor.selectionEnd() - blpos;
-                if (selStart < bllen && selEnd > 0
-                    && selEnd > selStart) {
+                if (selStart < bllen && selEnd >= 0
+                    && selEnd >= selStart) {
                     QTextLayout::FormatRange o;
                     o.start = selStart;
                     o.length = selEnd - selStart;
                     o.format = range.format;
-                    selections.append(o);
+                    if (i == blockSelectionIndex) {
+                        QString text = block.text();
+                        const TextEditor::TabSettings &ts = this->tabSettings();
+                        o.start = ts.positionAtColumn(text, m_blockSelection.firstVisualColumn);
+                        o.length = ts.positionAtColumn(text,m_blockSelection.lastVisualColumn) - o.start;
+                    }
+//                    if ((hasSelection && i == context.selections.size()-1)
+//                        || (o.format.foreground().style() == Qt::NoBrush
+//                        && o.format.underlineStyle() != QTextCharFormat::NoUnderline
+//                        && o.format.background() == Qt::NoBrush)) {
+//                        prioritySelections.append(o);
+//                    } else {
+                        selections.append(o);
+                   // }
                 } else if (!range.cursor.hasSelection() && range.format.hasProperty(QTextFormat::FullWidthSelection)
                            && block.contains(range.cursor.position())) {
                     // for full width selections we don't require an actual selection, just
@@ -3162,6 +3212,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     selections.append(o);
                 }
             }
+            selections += prioritySelections;
 //            for (int i = 0; i < context.selections.size(); ++i) {
 //                const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
 //                const int selStart = range.cursor.selectionStart() - blpos;
@@ -3251,7 +3302,60 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             }
             TextEditor::BaseTextDocumentLayout::userData(block)->setFindExpressionMark(findSelectionMark);
 
-            bool drawCursor = (editable
+            QRectF blockSelectionCursorRect;
+            if (m_inBlockSelectionMode
+                    && block.position() >= m_blockSelection.firstBlock.block().position()
+                    && block.position() <= m_blockSelection.lastBlock.block().position()) {
+                QString text = block.text();
+                const TextEditor::TabSettings &ts = this->tabSettings();
+                qreal spacew = QFontMetricsF(font()).width(QLatin1Char(' '));
+
+                int offset = 0;
+                int relativePos  =  ts.positionAtColumn(text, m_blockSelection.firstVisualColumn, &offset);
+                QTextLine line = layout->lineForTextPosition(relativePos);
+                qreal x = line.cursorToX(relativePos) + offset * spacew;
+
+                int eoffset = 0;
+                int erelativePos  =  ts.positionAtColumn(text, m_blockSelection.lastVisualColumn, &eoffset);
+                QTextLine eline = layout->lineForTextPosition(erelativePos);
+                qreal ex = eline.cursorToX(erelativePos) + eoffset * spacew;
+
+                QRectF rr = line.naturalTextRect();
+                rr.moveTop(rr.top() + r.top());
+                rr.setLeft(r.left() + x);
+                if (line.lineNumber() == eline.lineNumber())
+                    rr.setRight(r.left() + ex);
+                painter.fillRect(rr, palette().highlight());
+                if ((m_blockSelection.anchor == TextEditor::BaseTextBlockSelection::TopLeft
+                        && block == m_blockSelection.firstBlock.block())
+                        || (m_blockSelection.anchor == TextEditor::BaseTextBlockSelection::BottomLeft
+                            && block == m_blockSelection.lastBlock.block())
+                        ) {
+                    rr.setRight(rr.left()+2);
+                    blockSelectionCursorRect = rr;
+                }
+                for (int i = line.lineNumber() + 1; i < eline.lineNumber(); ++i) {
+                    rr = layout->lineAt(i).naturalTextRect();
+                    rr.moveTop(rr.top() + r.top());
+                    rr.setLeft(r.left() + x);
+                    painter.fillRect(rr, palette().highlight());
+                }
+
+                rr = eline.naturalTextRect();
+                rr.moveTop(rr.top() + r.top());
+                rr.setRight(r.left() + ex);
+                if (line.lineNumber() != eline.lineNumber())
+                    painter.fillRect(rr, palette().highlight());
+                if ((m_blockSelection.anchor == TextEditor::BaseTextBlockSelection::TopRight
+                     && block == m_blockSelection.firstBlock.block())
+                        || (m_blockSelection.anchor == TextEditor::BaseTextBlockSelection::BottomRight
+                            && block == m_blockSelection.lastBlock.block())) {
+                    rr.setLeft(rr.right()-2);
+                    blockSelectionCursorRect = rr;
+                }
+            }
+
+            bool drawCursor = ( editable
                                && context.cursorPosition >= blpos
                                && context.cursorPosition < blpos + bllen);
 
@@ -3273,16 +3377,23 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
             layout->draw(&painter, offset, selections, er);
 
-            if ((drawCursor && !drawCursorAsBlock)
-                || (editable && context.cursorPosition < -1
-                    && !layout->preeditAreaText().isEmpty())) {
-                int cpos = context.cursorPosition+m_inputCursorOffset;
-                if (cpos < -1)
-                    cpos = layout->preeditAreaPosition() - (cpos + 2);
-                else
-                    cpos -= blpos;
-                layout->drawCursor(&painter, offset, cpos, cursorWidth());
+            if (!m_inBlockSelectionMode) {
+                if ((drawCursor && !drawCursorAsBlock)
+                    || (editable && context.cursorPosition < -1
+                        && !layout->preeditAreaText().isEmpty())) {
+                    int cpos = context.cursorPosition+m_inputCursorOffset;
+                    if (cpos < -1)
+                        cpos = layout->preeditAreaPosition() - (cpos + 2);
+                    else
+                        cpos -= blpos;
+                    layout->drawCursor(&painter, offset, cpos, cursorWidth());
+                }
             }
+
+#ifndef Q_OS_MAC
+            if (blockSelectionCursorRect.isValid())
+                painter.fillRect(blockSelectionCursorRect, palette().text());
+#endif
         }
 
         //draw indent line

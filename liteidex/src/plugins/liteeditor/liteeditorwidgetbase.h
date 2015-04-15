@@ -28,6 +28,7 @@
 #include <QTextBlock>
 #include "liteeditorapi/liteeditorapi.h"
 #include "qtc_texteditor/autocompleter.h"
+#include "qtc_texteditor/basetextblockselection.h"
 
 class NavigateManager;
 struct NavigateMark;
@@ -255,6 +256,7 @@ protected:
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
     void moveLineUpDown(bool up);
     void copyLineUpDown(bool up);
+    const TextEditor::TabSettings &tabSettings() const;
 protected slots:
     void uplinkDeployTimeout();
     void uplinkInfoTimeout();
@@ -319,6 +321,8 @@ protected:
     bool m_lastCursorChangeWasInteresting;
     bool m_visualizeWhitespace;
     NavigateManager *m_navigateManager;
+    bool m_inBlockSelectionMode;
+    TextEditor::BaseTextBlockSelection m_blockSelection;
 };
 
 #endif // LITEEDITORWIDGETBASE_H
