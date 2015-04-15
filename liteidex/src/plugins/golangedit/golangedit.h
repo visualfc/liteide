@@ -44,6 +44,16 @@
     referrers 	show all refs to entity denoted by selected identifier
     what		show basic information about the selected syntax node
 */
+
+struct OracleInfo
+{
+    QString workPath;
+    QString filePath;
+    QString action;
+    QString output;
+    bool    success;
+};
+
 class GolangEdit : public QObject
 {
     Q_OBJECT
@@ -72,6 +82,8 @@ public slots:
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
     void oracleFinished(int code, QProcess::ExitStatus status);
+    void updateOracleInfo(const QString &action, const QString &text);
+    void dbclickOracleOutput(const QTextCursor &cursor);
     void runOracle(const QString &action);
     void oracleWhat();
     void oracleCallees();
@@ -114,6 +126,7 @@ protected:
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
     Process  *m_oracleProcess;
+    OracleInfo m_oracleInfo;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;

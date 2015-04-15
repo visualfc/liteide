@@ -218,3 +218,13 @@ bool Process::startDetachedEx(const QString &cmd, const QStringList &args)
     return QProcess::startDetached(cmd, args);
 #endif
 }
+
+void Process::setUserData(int id, const QVariant &data)
+{
+    m_idVarMap.insert(id,data);
+}
+
+QVariant Process::userData(int id) const
+{
+    return m_idVarMap.value(id);
+}

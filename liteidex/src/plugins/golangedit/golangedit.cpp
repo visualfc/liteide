@@ -131,6 +131,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     m_oracleOutput = new TextOutput(m_liteApp,true);
 
+    connect(m_oracleOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickOracleOutput(QTextCursor)));
+
     m_oracleOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_oracleOutput,"oracle",tr("Oracle"),true);
 
     m_oracleWhatAct = new QAction(tr("What"),this);
@@ -624,7 +626,65 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
         m_oracleOutput->append("nothing");
         return;
     }
-    m_oracleOutput->append(data);
+    m_oracleInfo.output = QString::fromUtf8(data);
+    m_oracleInfo.success = true;
+    m_oracleOutput->append(m_oracleInfo.output);
+}
+
+void GolangEdit::updateOracleInfo(const QString &action, const QString &text)
+{
+    //if (action == "what") {
+//        QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
+//        foreach (QString line, text.split("\n")) {
+//            if (reg.indexIn(line) >= 0) {
+//                //qDebug() << reg.capturedTexts();
+//                QString text = line.mid(reg.capturedTexts().at(0).length());
+//                QString html = QString("<a href=\"file://%1\">%2</a> %3").arg(reg.capturedTexts().at(0)).arg(reg.capturedTexts().at(0)).arg(text);
+//                m_oracleOutput->appendHtml(html);
+//            }
+//        }
+    //}
+    m_oracleOutput->append(text);
+}
+
+void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
+{
+    QTextCursor cur = cursor;
+    cur.select(QTextCursor::LineUnderCursor);
+    QString text = cur.selectedText();
+    if (text.isEmpty()) {
+        return;
+    }
+    QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
+    if (reg.indexIn(text) < 0) {
+        return;
+    }
+    QStringList capList = reg.capturedTexts();
+    if (capList.count() < 5) {
+        return;
+    }
+    QString fileName = capList[1];
+    QString fileLine = capList[2];
+    QString fileCol = capList[3];
+
+    bool ok = false;
+    int line = fileLine.toInt(&ok);
+    if (!ok)
+        return;
+    int col = fileCol.toInt(&ok);
+    if (ok) {
+        col--;
+    } else {
+        col = 0;
+    }
+
+    QDir dir(m_oracleInfo.workPath);
+    if (!QFileInfo(fileName).isAbsolute()) {
+        fileName = dir.filePath(fileName);
+    }
+    if (LiteApi::gotoLine(m_liteApp,fileName,line-1,col,true,true)) {
+        m_oracleOutput->setTextCursor(cur);
+    }
 }
 
 void GolangEdit::runOracle(const QString &action)
@@ -647,8 +707,15 @@ void GolangEdit::runOracle(const QString &action)
     m_oracleOutput->clear();
     m_oracleOutput->append(QString("wait for oracle %1 ...").arg(action));
 
-    QString cmd = LiteApi::getGotools(m_liteApp);
     QFileInfo info(m_editor->filePath());
+
+    m_oracleInfo.action = action;
+    m_oracleInfo.workPath = info.path();
+    m_oracleInfo.filePath = info.filePath();
+    m_oracleInfo.output.clear();
+    m_oracleInfo.success = false;
+
+    QString cmd = LiteApi::getGotools(m_liteApp);
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_oracleProcess->setWorkingDirectory(info.path());
     m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2 %3 .").

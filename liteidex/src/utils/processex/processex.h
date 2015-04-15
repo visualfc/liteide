@@ -35,6 +35,11 @@ public:
     bool isRunning() const;
     void startEx(const QString &cmd, const QString &args);
     static bool startDetachedEx(const QString& cmd, const QStringList &args);
+public:
+    void setUserData(int id, const QVariant &data);
+    QVariant userData(int id) const;
+protected:
+    QMap<int,QVariant> m_idVarMap;
 };
 
 class ProcessEx : public QProcess
