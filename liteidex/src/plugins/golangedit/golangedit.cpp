@@ -239,10 +239,11 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findUseAct);
         menu->addAction(m_findUseGlobalAct);
         menu->addSeparator();
-        QMenu *sub = menu->addMenu("GoTools");
+        QMenu *sub = menu->addMenu("Rename");
         sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
 
+        menu->addSeparator();
         sub = menu->addMenu("Oracle");
         sub->addAction(m_oracleWhatAct);
         sub->addSeparator();
@@ -266,11 +267,12 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findUseAct);
         menu->addAction(m_findUseGlobalAct);
         menu->addSeparator();
-        QMenu *sub = menu->addMenu("GoTools");
+        QMenu *sub = menu->addMenu("Rename");
         sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
 
+        menu->addSeparator();
         sub = menu->addMenu("Oracle");
         sub->addAction(m_oracleWhatAct);
         sub->addSeparator();
@@ -612,7 +614,7 @@ void GolangEdit::searchTextChanged(const QString &/*word*/)
 
 }
 
-void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
+void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
 {
     m_oracleOutputAct->setChecked(true);
     m_oracleOutput->clear();
@@ -623,7 +625,7 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
     }
     QByteArray data = m_oracleProcess->readAllStandardOutput();
     if (data.isEmpty()) {
-        m_oracleOutput->append("nothing");
+        m_oracleOutput->append(QString("oracle \"%1\" output is nothing.").arg(m_oracleInfo.action));
         return;
     }
     m_oracleInfo.output = QString::fromUtf8(data);
@@ -631,9 +633,9 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
     m_oracleOutput->append(m_oracleInfo.output);
 }
 
-void GolangEdit::updateOracleInfo(const QString &action, const QString &text)
-{
-    //if (action == "what") {
+//void GolangEdit::updateOracleInfo(const QString &action, const QString &text)
+//{
+//    //if (action == "what") {
 //        QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
 //        foreach (QString line, text.split("\n")) {
 //            if (reg.indexIn(line) >= 0) {
@@ -643,9 +645,9 @@ void GolangEdit::updateOracleInfo(const QString &action, const QString &text)
 //                m_oracleOutput->appendHtml(html);
 //            }
 //        }
-    //}
-    m_oracleOutput->append(text);
-}
+//    //}
+//    m_oracleOutput->append(text);
+//}
 
 void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
 {
@@ -693,16 +695,20 @@ void GolangEdit::runOracle(const QString &action)
     if (m_oracleProcess->isRunning()) {
         return;
     }
-
-    bool moveLeft = false;
-    QString text = LiteApi::wordUnderCursor(cursor,&moveLeft);
-    if (text.isEmpty()) {
-        return;
+    int offset = -1;
+    int offset2 = -1;
+    if (cursor.hasSelection()) {
+        offset = m_editor->utf8Position(true,cursor.selectionStart());
+        offset2 = m_editor->utf8Position(true,cursor.selectionEnd());
+    } else {
+        bool moveLeft = false;
+        QString text = LiteApi::wordUnderCursor(cursor,&moveLeft);
+        if (text.isEmpty()) {
+            return;
+        }
+        m_liteApp->editorManager()->saveAllEditors(false);
+        offset = moveLeft ? m_editor->utf8Position(true)-1: m_editor->utf8Position(true);
     }
-
-    m_liteApp->editorManager()->saveAllEditors(false);
-
-    int offset = moveLeft ? m_editor->utf8Position(true)-1: m_editor->utf8Position(true);
 
     m_oracleOutput->clear();
     m_oracleOutput->append(QString("wait for oracle %1 ...").arg(action));
@@ -718,8 +724,14 @@ void GolangEdit::runOracle(const QString &action)
     QString cmd = LiteApi::getGotools(m_liteApp);
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_oracleProcess->setWorkingDirectory(info.path());
-    m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2 %3 .").
-                             arg(info.fileName()).arg(offset).arg(action));
+    if (offset2 == -1) {
+        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2 %3 .").
+                                 arg(info.fileName()).arg(offset).arg(action));
+    } else {
+        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2,#%3 %4 .").
+                                 arg(info.fileName()).arg(offset).arg(offset2).arg(action));
+
+    }
 }
 
 void GolangEdit::oracleWhat()

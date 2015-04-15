@@ -82,7 +82,7 @@ public slots:
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
     void oracleFinished(int code, QProcess::ExitStatus status);
-    void updateOracleInfo(const QString &action, const QString &text);
+    //void updateOracleInfo(const QString &action, const QString &text);
     void dbclickOracleOutput(const QTextCursor &cursor);
     void runOracle(const QString &action);
     void oracleWhat();
