@@ -32,7 +32,8 @@ HEADERS += \
     katehighlighter.h \
     generichighlighter/manager2.h \
     colorscheme.h \
-    autocompleter.h
+    autocompleter.h \
+    basetextblockselection.h
 
 SOURCES += \
     tabsettings.cpp \
@@ -54,4 +55,5 @@ SOURCES += \
     katehighlighter.cpp \
     generichighlighter/manager2.cpp \
     colorscheme.cpp \
-    autocompleter.cpp
+    autocompleter.cpp \
+    basetextblockselection.cpp
