@@ -239,7 +239,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findUseAct);
         menu->addAction(m_findUseGlobalAct);
         menu->addSeparator();
-        QMenu *sub = menu->addMenu("Rename");
+        QMenu *sub = menu->addMenu(tr("Refactor"));
         sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
 
@@ -267,7 +267,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_findUseAct);
         menu->addAction(m_findUseGlobalAct);
         menu->addSeparator();
-        QMenu *sub = menu->addMenu("Rename");
+        QMenu *sub = menu->addMenu(tr("Refactor"));
         sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
