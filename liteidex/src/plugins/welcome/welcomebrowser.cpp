@@ -199,10 +199,9 @@ void WelcomeBrowser::loadData()
         list.append("</ul>");
         list.append("</td></tr></table>");
     }
-
+    data.replace("{liteide_version}",m_liteApp->ideVersion());
     data.replace("{recent_sessions}",sessionList.join("\n"));
     data.replace("{recent_files}",list.join("\n"));
-
     QUrl url(m_liteApp->resourcePath()+"/welcome/welcome.html");
     m_browser->setUrlHtml(url,data);
 }

@@ -3,6 +3,26 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2015.4.16 Ver X27.2
+* LiteIDE
+	* add output option
+	* add windows native open explorer
+* LiteEditor
+	* add block selection mode (use Alt key)
+	* fix insert key
+* LiteEnv
+	* optimization go env reload
+* LiteBuild
+	* fix build config
+* LiteFind
+	* fix file search matchWord
+* GolangEdit
+	* fix embeded struct find
+	* add oracle support
+* gotools
+	* fix embeded struct type find
+	* add oracle
+
 ### 2015.2.16 Ver X27.1
 * LiteIDE
 	* fix code navigate history ( build / astview / debug / link)

@@ -99,12 +99,18 @@ void FindThread::findFile(const QRegExp &reg, const QString &fileName)
     int lineNr = 1;
     while (!stream.atEnd()) {
         line = stream.readLine();
-//        int pos = reg.indexIn(line);
-//        if (pos >= 0) {
-//            emit findResult(LiteApi::FileSearchResult(fileName, line,lineNr, line,pos,reg.matchedLength()));
-//        }
         int pos = 0;
         while ((pos = reg.indexIn(line, pos)) != -1) {
+            if (!useRegExp && matchWord) {
+                const int start = pos;
+                const int end = start + reg.matchedLength();
+                if ((start != 0 && line.at(start - 1).isLetterOrNumber())
+                        || (end != line.length() && line.at(end).isLetterOrNumber())) {
+                    //if this is not a whole word, continue the search in the string
+                    pos = end+1;
+                    continue;
+                }
+            }
             emit findResult(LiteApi::FileSearchResult(fileName, line,lineNr,pos, reg.matchedLength()));
             pos += reg.matchedLength();
         }
@@ -129,14 +135,17 @@ void FindThread::run()
 {
     finding = true;
     QRegExp reg;
-    if (matchWord) {
-        reg.setPattern(QString::fromLatin1("\\b%1\\b").arg(findText));
-    } else {
-        reg.setPattern(findText);
-    }
     reg.setCaseSensitivity(matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive);
-    if (!useRegExp) {
-        reg.setPatternSyntax(QRegExp::FixedString);
+
+    if (useRegExp) {
+        if (matchWord) {
+            reg.setPattern(QString::fromLatin1("\\b%1\\b").arg(findText));
+        } else {
+            reg.setPattern(findText);
+        }
+    } else {
+       reg.setPattern(findText);
+       reg.setPatternSyntax(QRegExp::FixedString);
     }
     findDir(reg,findPath);
     finding = false;
