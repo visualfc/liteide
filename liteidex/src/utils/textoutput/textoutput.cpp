@@ -65,7 +65,7 @@ TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *paren
     connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
-    this->applyOption(OPTION_OUTPUT);
+    this->applyOption(OPTION_LITEOUTPUT);
 }
 
 void TextOutput::append(const QString &text)
@@ -183,7 +183,7 @@ void TextOutput::loadColorStyleScheme()
 
 void TextOutput::applyOption(QString opt)
 {
-    if (opt != OPTION_OUTPUT) {
+    if (opt != OPTION_LITEOUTPUT) {
         return;
     }
     QString fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY).toString();
