@@ -204,8 +204,9 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
             m_lineTerminatorMode = CRLFLineTerminator;
         }
     }
+
     bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
-    if (noprintCheck) {
+    if (noprintCheck && !LiteApi::mimeIsText(mimeType)) {
         for (int i = 0; i < text.length(); i++) {
             if (!text[i].isPrint() && !text[i].isSpace() && text[i] != '\r' && text[i] != '\n') {
                 text[i] = '.';
@@ -213,6 +214,7 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
             }
         }
     }
+
     m_document->setPlainText(text);
     return true;
 }
