@@ -175,6 +175,14 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_oracleReferrersAct,"OracleReferrers","");
     connect(m_oracleReferrersAct,SIGNAL(triggered()),this,SLOT(oracleReferrers()));
 
+    m_oraclePointstoAct = new QAction(tr("Pointsto"),this);
+    actionContext->regAction(m_oraclePointstoAct,"OraclePointsto","");
+    connect(m_oraclePointstoAct,SIGNAL(triggered()),this,SLOT(oraclePointsto()));
+
+    m_oracleWhicherrs = new QAction(tr("Whicherrs"),this);
+    actionContext->regAction(m_oracleWhicherrs,"OracleWhicherrs","");
+    connect(m_oracleWhicherrs,SIGNAL(triggered()),this,SLOT(oracleWhicherrs()));
+
     this->applyOption(OPTION_GOLANGEDIT);
 }
 
@@ -257,6 +265,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_oracleFreevarsAct);
         sub->addAction(m_oracleImplementsAct);
         sub->addAction(m_oraclePeersAct);
+        sub->addAction(m_oraclePointstoAct);
+        sub->addAction(m_oracleWhicherrs);
         //sub->addAction(m_oracleReferrersAct);
     }
     menu = LiteApi::getContextMenu(editor);
@@ -286,6 +296,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_oracleFreevarsAct);
         sub->addAction(m_oracleImplementsAct);
         sub->addAction(m_oraclePeersAct);
+        sub->addAction(m_oraclePointstoAct);
+        sub->addAction(m_oracleWhicherrs);
         //sub->addAction(m_oracleReferrersAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
@@ -616,7 +628,7 @@ void GolangEdit::searchTextChanged(const QString &/*word*/)
 
 }
 
-void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
+void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
 {
     m_oracleOutputAct->setChecked(true);
     m_oracleOutput->clear();
@@ -626,6 +638,9 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
         return;
     }
     QByteArray data = m_oracleProcess->readAllStandardOutput();
+    if (data.isEmpty()) {
+        data = m_oracleProcess->readAllStandardError();
+    }
     if (data.isEmpty()) {
         m_oracleOutput->append(QString("oracle \"%1\" output is nothing.").arg(m_oracleInfo.action));
         return;
@@ -784,5 +799,15 @@ void GolangEdit::oraclePeers()
 void GolangEdit::oracleReferrers()
 {
     runOracle("referrers");
+}
+
+void GolangEdit::oraclePointsto()
+{
+    runOracle("pointsto");
+}
+
+void GolangEdit::oracleWhicherrs()
+{
+    runOracle("whicherrs");
 }
 

@@ -43,6 +43,8 @@
     peers     	show send/receive corresponding to selected channel op
     referrers 	show all refs to entity denoted by selected identifier
     what		show basic information about the selected syntax node
+    pointsto
+    whicherrs
 */
 
 struct OracleInfo
@@ -95,6 +97,8 @@ public slots:
     void oracleImplements();
     void oraclePeers();
     void oracleReferrers();
+    void oraclePointsto();
+    void oracleWhicherrs();
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
@@ -122,6 +126,8 @@ protected:
     QAction *m_oracleImplementsAct;
     QAction *m_oraclePeersAct;
     QAction *m_oracleReferrersAct;
+    QAction *m_oraclePointstoAct;
+    QAction *m_oracleWhicherrs;
     Process  *m_findDefProcess;
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
