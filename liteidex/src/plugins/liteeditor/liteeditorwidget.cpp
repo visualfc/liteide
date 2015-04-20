@@ -252,7 +252,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     static QString eow("~!@#$%^&*()+{}|\"<>?,/;'[]\\-="); // end of word
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor(textCursor());
-    if (completionPrefix.startsWith(".")) {
+    if (completionPrefix.startsWith("...")) {
+        completionPrefix = completionPrefix.mid(3);
+    } else if (completionPrefix.startsWith(".")) {
         completionPrefix.insert(0,'@');
     }
 
