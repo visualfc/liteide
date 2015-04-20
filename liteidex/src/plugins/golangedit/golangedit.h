@@ -51,8 +51,11 @@ struct OracleInfo
 {
     QString workPath;
     QString filePath;
+    QString fileName;
     QString action;
     QString output;
+    int     offset;
+    int     offset2;
     bool    success;
 };
 
@@ -87,6 +90,7 @@ public slots:
     //void updateOracleInfo(const QString &action, const QString &text);
     void dbclickOracleOutput(const QTextCursor &cursor);
     void runOracle(const QString &action);
+    void runOracleByInfo(const QString &action);
     void oracleWhat();
     void oracleCallees();
     void oracleCallers();

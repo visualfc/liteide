@@ -631,7 +631,7 @@ void GolangEdit::searchTextChanged(const QString &/*word*/)
 void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
 {
     m_oracleOutputAct->setChecked(true);
-    m_oracleOutput->clear();
+   // m_oracleOutput->clear();
     if (code != 0) {
         QByteArray data = m_oracleProcess->readAllStandardError();
         m_oracleOutput->append(data,Qt::red);
@@ -669,8 +669,16 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
 void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
 {
     QTextCursor cur = cursor;
-    cur.select(QTextCursor::LineUnderCursor);
+    cur.select(QTextCursor::WordUnderCursor);
+    QStringList actions;
+    actions << "callees" << "callers" << "callstack" << "definition" << "describe" << "freevars" << "implements" << "peers" << "referrers" << "pointsto" << "whicherrs";
     QString text = cur.selectedText();
+    if (actions.contains(text)) {
+        runOracleByInfo(text);
+        return;
+    }
+    cur.select(QTextCursor::LineUnderCursor);
+    text = cur.selectedText();
     if (text.isEmpty()) {
         return;
     }
@@ -728,15 +736,18 @@ void GolangEdit::runOracle(const QString &action)
     }
 
     m_oracleOutput->clear();
-    m_oracleOutput->append(QString("wait for oracle %1 ...").arg(action));
+    m_oracleOutput->append(QString("wait for oracle %1 ...\n").arg(action));
 
     QFileInfo info(m_editor->filePath());
 
     m_oracleInfo.action = action;
     m_oracleInfo.workPath = info.path();
     m_oracleInfo.filePath = info.filePath();
+    m_oracleInfo.fileName = info.fileName();
     m_oracleInfo.output.clear();
     m_oracleInfo.success = false;
+    m_oracleInfo.offset = offset;
+    m_oracleInfo.offset2 = offset2;
 
     QString cmd = LiteApi::getGotools(m_liteApp);
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
@@ -747,6 +758,34 @@ void GolangEdit::runOracle(const QString &action)
     } else {
         m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2,#%3 %4 .").
                                  arg(info.fileName()).arg(offset).arg(offset2).arg(action));
+
+    }
+}
+
+void GolangEdit::runOracleByInfo(const QString &action)
+{
+    if (action == "referrers") {
+        m_oracleOutput->append("\nreferrers : please use find usages action\n");
+        return;
+    }
+    if (m_oracleProcess->isRunning()) {
+        return;
+    }
+    QString cmd = LiteApi::getGotools(m_liteApp);
+
+    int offset = m_oracleInfo.offset;
+    int offset2 = m_oracleInfo.offset2;
+
+    m_oracleOutput->append(QString("\nwait for oracle %1 ...\n").arg(action));
+
+    m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_oracleProcess->setWorkingDirectory(m_oracleInfo.workPath);
+    if (offset2 == -1) {
+        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2 %3 .").
+                                 arg(m_oracleInfo.fileName).arg(offset).arg(action));
+    } else {
+        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2,#%3 %4 .").
+                                 arg(m_oracleInfo.fileName).arg(offset).arg(offset2).arg(action));
 
     }
 }
