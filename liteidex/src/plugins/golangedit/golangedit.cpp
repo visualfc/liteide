@@ -257,7 +257,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_oracleFreevarsAct);
         sub->addAction(m_oracleImplementsAct);
         sub->addAction(m_oraclePeersAct);
-        sub->addAction(m_oracleReferrersAct);
+        //sub->addAction(m_oracleReferrersAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -286,7 +286,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_oracleFreevarsAct);
         sub->addAction(m_oracleImplementsAct);
         sub->addAction(m_oraclePeersAct);
-        sub->addAction(m_oracleReferrersAct);
+        //sub->addAction(m_oracleReferrersAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
