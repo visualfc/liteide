@@ -30,6 +30,7 @@
 #include "basetextblockselection.h"
 #include <QTextBlock>
 #include <QTextCursor>
+#include <QTextDocument>
 
 using namespace TextEditor;
 
