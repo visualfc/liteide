@@ -28,6 +28,8 @@
 ****************************************************************************/
 
 #include "basetextblockselection.h"
+#include <QTextBlock>
+#include <QTextCursor>
 
 using namespace TextEditor;
 
