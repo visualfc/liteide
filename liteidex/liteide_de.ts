@@ -1880,8 +1880,8 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
         <translation type="obsolete">Auswahl kommentieren/auskommentieren</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="242"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="270"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="244"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="272"/>
         <source>Refactor</source>
         <translation type="unfinished">Refaktor</translation>
     </message>

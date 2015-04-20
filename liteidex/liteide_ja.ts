@@ -1873,8 +1873,8 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="obsolete">選択をコメント/コメント除去</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="242"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="270"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="244"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="272"/>
         <source>Refactor</source>
         <translation type="unfinished">リファクタリング</translation>
     </message>

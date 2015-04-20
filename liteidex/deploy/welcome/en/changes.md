@@ -7,6 +7,7 @@
 * LiteIDE
 	* add output option
 	* add windows native open explorer
+	* add Ukrainian translation thanks Roman Shmelev <rshmelev@gmail.com>
 * LiteEditor
 	* add block selection mode (use Alt key)
 	* fix text mimetype print char check.

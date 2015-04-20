@@ -1900,8 +1900,8 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="obsolete">切换区域注释/反注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="242"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="270"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="244"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="272"/>
         <source>Refactor</source>
         <translation>重构</translation>
     </message>

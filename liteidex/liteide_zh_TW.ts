@@ -1798,8 +1798,8 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="242"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="270"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="244"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="272"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
     </message>
