@@ -134,7 +134,7 @@ QString LiteEditorWidget::textUnderCursor(QTextCursor tc) const
     //     qDebug() << ">" << text << index;
     //     int left = text.lastIndexOf(QRegExp("[ |\t|\"|\(|\)|\'|<|>]"));
     //     text = text.right(text.length()-left+1);
-    return "";
+    //return "";
 }
 
 void LiteEditorWidget::focusInEvent(QFocusEvent *e)
@@ -239,6 +239,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
     //import line
     if (isInImport) {
         QString completionPrefix = importUnderCursor(textCursor());
+        if (completionPrefix.isEmpty()) {
+            return;
+        }
         m_completer->setCompletionContext(LiteApi::CompleterImportContext);
         m_completer->setCompletionPrefix("");
         m_completer->startCompleter(completionPrefix);
