@@ -10,6 +10,7 @@
 * LiteEditor
 	* add block selection mode (use Alt key)
 	* fix text mimetype print char check.
+	* fix code completer ...type
 	* fix insert key
 * LiteEnv
 	* optimization go env reload
