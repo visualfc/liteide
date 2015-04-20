@@ -335,7 +335,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
             if (opt->useRegexp) {
                 text.replace(QRegExp(opt->findText,cs),opt->replaceText);
             } else {
-                text.replace(opt->findText,opt->replaceText);
+                text.replace(QRegExp(opt->findText,cs,QRegExp::FixedString),opt->replaceText);
             }
             find.removeSelectedText();
             find.insertText(text);
