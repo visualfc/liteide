@@ -174,6 +174,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_oracleReferrersAct = new QAction(tr("Referrers"),this);
     actionContext->regAction(m_oracleReferrersAct,"OracleReferrers","");
     connect(m_oracleReferrersAct,SIGNAL(triggered()),this,SLOT(oracleReferrers()));
+
+    this->applyOption(OPTION_GOLANGEDIT);
 }
 
 //bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
