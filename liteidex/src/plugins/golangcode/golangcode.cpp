@@ -384,11 +384,23 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
 {
     if (!editor) {
+        this->setCompleter(0);
         return;
     }
-    if (editor->mimeType() != "text/x-gosrc") {
+
+    if (editor->mimeType() == "text/x-gosrc") {
+        LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
+        this->setCompleter(completer);
+    } else if (editor->mimeType() == "browser/goplay") {
+        LiteApi::IEditor* editor = LiteApi::findExtensionObject<LiteApi::IEditor*>(m_liteApp->extension(),"LiteApi.Goplay.IEditor");
+        if (editor && editor->mimeType() == "text/x-gosrc") {
+            LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
+            this->setCompleter(completer);
+        }
+    } else {
         return;
     }
+
     m_editor = LiteApi::getTextEditor(editor);
     if (!m_editor) {
         return;
@@ -512,6 +524,8 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
         m_breset = false;
         m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
         m_gocodeProcess->start(m_gocodeCmd);
+        m_liteApp->appendLog("GolangCode","reset gocode");
+        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
         return;
     }
 
