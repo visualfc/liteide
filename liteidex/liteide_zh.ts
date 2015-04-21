@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -2000,7 +2000,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="66"/>
         <source>Format Code</source>
         <oldsource>Format Code (goimports)</oldsource>
-        <translation>代码格式化 (goimports)</translation>
+        <translation>代码格式化</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="59"/>
