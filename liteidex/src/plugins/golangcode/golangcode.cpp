@@ -479,7 +479,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length()+offset);
     m_writeData = src.toUtf8();
     m_breset = false;
-    m_gocodeProcess->setWorkingDirectory(m_fileInfo.path());
+    m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
     m_gocodeProcess->start(m_gocodeCmd,args);
 }
 
@@ -490,6 +490,9 @@ void GolangCode::wordCompleted(QString,QString,QString)
 
 void GolangCode::started()
 {
+    if (m_breset) {
+        return;
+    }
     if (m_writeData.isEmpty()) {
         m_gocodeProcess->closeWriteChannel();
         return;
@@ -508,7 +511,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     if (m_breset) {
         m_breset = false;
         m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
-        m_gocodeProcess->start(m_gocodeCmd);
+        m_gocodePsrocess->start(m_gocodeCmd);
         return;
     }
 
