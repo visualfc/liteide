@@ -31,6 +31,8 @@
 #define BASETEXTBLOCKSELECTION_H
 
 #include "qtc_texteditor/tabsettings.h"
+#include <QTextBlock>
+#include <QTextCursor>
 
 namespace TextEditor {
 
