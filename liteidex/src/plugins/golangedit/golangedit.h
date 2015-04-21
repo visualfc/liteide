@@ -54,6 +54,7 @@ struct OracleInfo
     QString fileName;
     QString action;
     QString output;
+    QString mode;
     int     offset;
     int     offset2;
     bool    success;

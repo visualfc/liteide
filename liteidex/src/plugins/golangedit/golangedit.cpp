@@ -135,8 +135,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     m_oracleOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_oracleOutput,"oracle",tr("Oracle"),true);
 
-    m_oracleWhatAct = new QAction(tr("What"),this);
-    actionContext->regAction(m_oracleWhatAct,"OracleWhat","");
+    m_oracleWhatAct = new QAction(tr("Oracle What"),this);
+    actionContext->regAction(m_oracleWhatAct,"OracleWhat","Ctrl+Shift+H");
     connect(m_oracleWhatAct,SIGNAL(triggered()),this,SLOT(oracleWhat()));
 
     m_oracleCalleesAct = new QAction(tr("Callees"),this);
@@ -254,9 +254,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_renameSymbolGlobalAct);
 
         menu->addSeparator();
+        menu->addAction(m_oracleWhatAct);
         sub = menu->addMenu("Oracle");
-        sub->addAction(m_oracleWhatAct);
-        sub->addSeparator();
         sub->addAction(m_oracleCalleesAct);
         sub->addAction(m_oracleCallersAct);
         sub->addAction(m_oracleCallstackAct);
@@ -285,9 +284,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
 
         menu->addSeparator();
+        menu->addAction(m_oracleWhatAct);
         sub = menu->addMenu("Oracle");
-        sub->addAction(m_oracleWhatAct);
-        sub->addSeparator();
         sub->addAction(m_oracleCalleesAct);
         sub->addAction(m_oracleCallersAct);
         sub->addAction(m_oracleCallstackAct);
@@ -628,10 +626,11 @@ void GolangEdit::searchTextChanged(const QString &/*word*/)
 
 }
 
-void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
+void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
 {
     m_oracleOutputAct->setChecked(true);
    // m_oracleOutput->clear();
+    m_oracleOutput->updateExistsTextColor(true);
     if (code != 0) {
         QByteArray data = m_oracleProcess->readAllStandardError();
         m_oracleOutput->append(data,Qt::red);
@@ -647,7 +646,20 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus status)
     }
     m_oracleInfo.output = QString::fromUtf8(data);
     m_oracleInfo.success = true;
-    m_oracleOutput->append(m_oracleInfo.output);
+   // m_oracleOutput->append(m_oracleInfo.output);
+    //remove referrers action
+    foreach (QString line, QString::fromUtf8(data).split("\n")) {
+        //-: modes: [callees callers callstack definition describe implements pointsto referrers]
+        if (line.startsWith("-: modes:")) {
+            QString mode = line.mid(9);
+            mode.remove(QRegExp("\\s?\\breferrers\\b"));
+            m_oracleInfo.mode = mode;
+        }
+        m_oracleOutput->append(line+"\n");
+    }
+    if (!m_oracleInfo.mode.isEmpty()) {
+        m_oracleOutput->appendTag(m_oracleInfo.mode+"\n");
+    }
 }
 
 //void GolangEdit::updateOracleInfo(const QString &action, const QString &text)
@@ -746,6 +758,7 @@ void GolangEdit::runOracle(const QString &action)
     m_oracleInfo.fileName = info.fileName();
     m_oracleInfo.output.clear();
     m_oracleInfo.success = false;
+    m_oracleInfo.mode.clear();
     m_oracleInfo.offset = offset;
     m_oracleInfo.offset2 = offset2;
 
@@ -765,7 +778,6 @@ void GolangEdit::runOracle(const QString &action)
 void GolangEdit::runOracleByInfo(const QString &action)
 {
     if (action == "referrers") {
-        m_oracleOutput->append("\nreferrers : please use find usages action\n");
         return;
     }
     if (m_oracleProcess->isRunning()) {

@@ -37,7 +37,7 @@ public:
     void append(const QString &text);
     void append(const QString &text,const QBrush &foreground);
     void appendTag(const QString &text, bool error = false, bool time = false);
-    void updateExistsTextColor();
+    void updateExistsTextColor(bool force = false);
     void setMaxLine(int max);
 public slots:
     void loadColorStyleScheme();
