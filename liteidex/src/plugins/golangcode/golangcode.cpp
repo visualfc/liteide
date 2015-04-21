@@ -511,7 +511,7 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     if (m_breset) {
         m_breset = false;
         m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
-        m_gocodePsrocess->start(m_gocodeCmd);
+        m_gocodeProcess->start(m_gocodeCmd);
         return;
     }
 
