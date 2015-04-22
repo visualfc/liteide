@@ -37,6 +37,7 @@
 		<action id="GoFmt" menu="Utils" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoFmtAll" menu="Utils" img="blue/fmt.png" cmd="$(GOFMT)" args="-l -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoVet" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoVetAll" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="tool vet ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoLint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Gopm Build" menu="Utils" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<target id="Target" cmd="$(TARGETNAME)" args="$(TARGETARGS)" work="$(BUILD_DIR_PATH)"/>
