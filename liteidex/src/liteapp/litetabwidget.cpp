@@ -46,11 +46,10 @@
 #endif
 //lite_memory_check_end
 
-
 LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     QObject(parent)
 {
-    m_tabBar = new QTabBar;
+    m_tabBar = new TabBar;
     m_tabBar->setExpanding(false);
     m_tabBar->setDocumentMode(true);
     m_tabBar->setDrawBase(false);
@@ -181,7 +180,7 @@ QWidget *LiteTabWidget::currentWidget()
     return m_stackedWidget->currentWidget();
 }
 
-QTabBar *LiteTabWidget::tabBar()
+TabBar *LiteTabWidget::tabBar()
 {
     return m_tabBar;
 }

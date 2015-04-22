@@ -128,6 +128,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b7 = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
     ui->fileWatcherAutoReloadCheckBox->setChecked(b7);
 
+    bool b8 = m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool();
+    ui->editorTabsEnableWhellCheckBox->setChecked(b8);
+
     int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
         ui->buttonGroup->buttons().at(id)->setChecked(true);
@@ -212,6 +215,8 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_STARTUPRELOADFOLDERS,b6);
     bool b7 = ui->fileWatcherAutoReloadCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_FILEWATCHERAUTORELOAD,b7);
+    bool b8 = ui->editorTabsEnableWhellCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_EDITTABSENABLEWHELL,b8);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {

@@ -74,7 +74,6 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_pkgImportTip = new ImportPkgTip(m_liteApp,this);
     connect(m_pkgImportTip,SIGNAL(import(QString,int)),this,SLOT(import(QString,int)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(loaded()));
     applyOption("option/golangcode");
@@ -398,6 +397,7 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
             this->setCompleter(completer);
         }
     } else {
+        this->setCompleter(0);
         return;
     }
 

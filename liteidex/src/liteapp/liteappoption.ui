@@ -326,10 +326,26 @@
             </property>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="title">
+          <string>Editor tab [*]</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <widget class="QCheckBox" name="editorTabsClosableCheckBox">
             <property name="text">
              <string>Show close buttons on each editor tab</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="editorTabsEnableWhellCheckBox">
+            <property name="text">
+             <string>Enalbe mouse whell selected on tab</string>
             </property>
            </widget>
           </item>

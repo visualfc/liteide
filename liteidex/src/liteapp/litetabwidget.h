@@ -40,6 +40,31 @@ class QActionGroup;
 
 //header : headerWidget
 //body: stackedWidget
+
+class TabBar : public QTabBar
+{
+public:
+    TabBar(QWidget *parent = 0) : QTabBar(parent)
+    {
+        m_enableWheel = true;
+    }
+    void wheelEvent(QWheelEvent *event)
+    {
+        if (!m_enableWheel) {
+            return;
+        }
+        QTabBar::wheelEvent(event);
+    }
+    void setEnableWheel(bool b) {
+        m_enableWheel = b;
+    }
+    bool enableWheel() const {
+        return m_enableWheel;
+    }
+protected:
+    bool m_enableWheel;
+};
+
 class LiteTabWidget : public QObject
 {
     Q_OBJECT
@@ -52,7 +77,7 @@ public:
     int indexOf(QWidget *w);
     QWidget *widget(int index);
     QWidget *currentWidget();
-    QTabBar *tabBar();
+    TabBar *tabBar();
     void setTabText(int index, const QString & text);
     QList<QWidget*> widgetList() const;
     QWidget *stackedWidget();
@@ -72,7 +97,7 @@ public slots:
 protected:
     QToolBar        *m_dumpToolBar;
     QWidget         *m_tabBarWidget;
-    QTabBar         *m_tabBar;
+    TabBar         *m_tabBar;
     QToolButton     *m_listButton;
     QToolButton     *m_closeButton;
     QStackedWidget  *m_stackedWidget;

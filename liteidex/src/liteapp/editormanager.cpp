@@ -83,6 +83,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
+    m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
 
     //m_editorTabWidget->tabBar()->setIconSize(LiteApi::getToolBarIconSize());
 //    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border:1px solid} QTabBar::close-button {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}"
