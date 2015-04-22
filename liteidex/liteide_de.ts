@@ -111,17 +111,22 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
         <translation type="unfinished">Deutsch</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="523"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="513"/>
+        <source>Ukrainian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="537"/>
         <source>Thanks to...</source>
         <translation>Danke an...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="558"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="572"/>
         <source>License</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="599"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="613"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -592,75 +597,75 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="113"/>
+        <location filename="src/liteapp/editormanager.cpp" line="114"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="124"/>
+        <location filename="src/liteapp/editormanager.cpp" line="125"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>In neues Fenster verschieben</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="170"/>
+        <location filename="src/liteapp/editormanager.cpp" line="171"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="184"/>
+        <location filename="src/liteapp/editormanager.cpp" line="185"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Gehe weiter</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="115"/>
+        <location filename="src/liteapp/editormanager.cpp" line="116"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Andere Tabs schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="116"/>
+        <location filename="src/liteapp/editormanager.cpp" line="117"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Alle Tabs schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="117"/>
+        <location filename="src/liteapp/editormanager.cpp" line="118"/>
         <source>Close Left Tabs</source>
         <translation>Tabs links schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="118"/>
+        <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Close Right Tabs</source>
         <translation>Tabs rechts schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="119"/>
+        <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Dateien aus gleichem Ordner schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="120"/>
+        <location filename="src/liteapp/editormanager.cpp" line="121"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Dateien aus anderen Ordnern schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="121"/>
+        <location filename="src/liteapp/editormanager.cpp" line="122"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Vollständigen Pfad in die Zwischenablage legen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="122"/>
+        <location filename="src/liteapp/editormanager.cpp" line="123"/>
         <source>Show in Explorer</source>
         <translation>Im Dateimanager öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="175"/>
+        <location filename="src/liteapp/editormanager.cpp" line="176"/>
         <source>Navigate Backward</source>
         <translation>Gehe zurück</translation>
     </message>
@@ -669,23 +674,23 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
         <translation type="obsolete">Bearbeitungswerkzeugleiste</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="363"/>
+        <location filename="src/liteapp/editormanager.cpp" line="364"/>
         <source>Save changes to %1?</source>
         <translation>Änderung an %1 speichern?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="364"/>
+        <location filename="src/liteapp/editormanager.cpp" line="365"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Ungesicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="446"/>
+        <location filename="src/liteapp/editormanager.cpp" line="447"/>
         <source>All Files (*)</source>
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="448"/>
+        <location filename="src/liteapp/editormanager.cpp" line="449"/>
         <source>Save As</source>
         <translation>Speichern unter</translation>
     </message>
@@ -1827,7 +1832,8 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="138"/>
-        <source>What</source>
+        <source>Oracle What</source>
+        <oldsource>What</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1876,12 +1882,22 @@ Bei „Ja“ gehen Ihre ungesicherten Änderungen verloren.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="178"/>
+        <source>Pointsto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="182"/>
+        <source>Whicherrs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Comment/Uncomment Selection</source>
         <translation type="obsolete">Auswahl kommentieren/auskommentieren</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="244"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="272"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="252"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="281"/>
         <source>Refactor</source>
         <translation type="unfinished">Refaktor</translation>
     </message>
@@ -2205,7 +2221,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="655"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="672"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">Achtung: Pkg nicht gefunden, bitte eingeben:</translation>
     </message>
@@ -2478,12 +2494,23 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished">Willkommen-Seite beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="332"/>
+        <location filename="src/liteapp/liteappoption.ui" line="335"/>
+        <source>Editor tab [*]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="341"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished">&quot;Schließen&quot;-Knopf bei jedem Editor-Tab anzeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="342"/>
+        <location filename="src/liteapp/liteappoption.ui" line="348"/>
+        <source>Enalbe mouse whell navigation on tabs</source>
+        <oldsource>Enalbe mouse whell selected on tab</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="358"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2492,37 +2519,37 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="obsolete">Icon-Größe der Toolbars</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="415"/>
+        <location filename="src/liteapp/liteappoption.ui" line="431"/>
         <source>Keyboard</source>
         <translation>Tastatur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="421"/>
+        <location filename="src/liteapp/liteappoption.ui" line="437"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>Formatierung: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="433"/>
+        <location filename="src/liteapp/liteappoption.ui" line="449"/>
         <source>Hide standard commands</source>
         <translation type="unfinished">Standard-Kommandos verbergen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="440"/>
+        <location filename="src/liteapp/liteappoption.ui" line="456"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="447"/>
+        <location filename="src/liteapp/liteappoption.ui" line="463"/>
         <source>Reset All</source>
         <translation type="unfinished">Alles zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="467"/>
+        <location filename="src/liteapp/liteappoption.ui" line="483"/>
         <source>Import...</source>
         <translation type="unfinished">Importieren...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="474"/>
+        <location filename="src/liteapp/liteappoption.ui" line="490"/>
         <source>Export...</source>
         <translation type="unfinished">Exportieren...</translation>
     </message>
@@ -2558,48 +2585,48 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="137"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
         <source>Command</source>
         <translation>Kommando</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="138"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="141"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="139"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="142"/>
         <source>Shortcuts</source>
         <translation>Shortcuts</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="143"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="407"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="412"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema importieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="407"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="441"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="412"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="446"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished">Tastaturbelegungsschema (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="414"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="419"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht gelesen werden!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="441"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="446"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema exportieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="452"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="457"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht geschrieben werden!</translation>
     </message>
@@ -3473,17 +3500,17 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="obsolete">Tabs auflisten</translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="67"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="66"/>
         <source>Open a new tab</source>
         <translation>Neues Tab öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="72"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="71"/>
         <source>List All Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="78"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="77"/>
         <source>Close Tab</source>
         <translation type="unfinished"></translation>
     </message>

@@ -110,17 +110,22 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>德文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="523"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="513"/>
+        <source>Ukrainian</source>
+        <translation>乌克兰文</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/aboutdialog.ui" line="537"/>
         <source>Thanks to...</source>
         <translation>感谢...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="558"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="572"/>
         <source>License</source>
         <translation>许可协议</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="599"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="613"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -589,75 +594,75 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="113"/>
+        <location filename="src/liteapp/editormanager.cpp" line="114"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="124"/>
+        <location filename="src/liteapp/editormanager.cpp" line="125"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>移动到新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="170"/>
+        <location filename="src/liteapp/editormanager.cpp" line="171"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="184"/>
+        <location filename="src/liteapp/editormanager.cpp" line="185"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="115"/>
+        <location filename="src/liteapp/editormanager.cpp" line="116"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="116"/>
+        <location filename="src/liteapp/editormanager.cpp" line="117"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="117"/>
+        <location filename="src/liteapp/editormanager.cpp" line="118"/>
         <source>Close Left Tabs</source>
         <translation>关闭左侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="118"/>
+        <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Close Right Tabs</source>
         <translation>关闭右侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="119"/>
+        <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>关闭相同目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="120"/>
+        <location filename="src/liteapp/editormanager.cpp" line="121"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>关闭其他目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="121"/>
+        <location filename="src/liteapp/editormanager.cpp" line="122"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>复制完整路径到剪贴板</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="122"/>
+        <location filename="src/liteapp/editormanager.cpp" line="123"/>
         <source>Show in Explorer</source>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="175"/>
+        <location filename="src/liteapp/editormanager.cpp" line="176"/>
         <source>Navigate Backward</source>
         <translation>返回</translation>
     </message>
@@ -666,23 +671,23 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation type="obsolete">编辑工具栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="363"/>
+        <location filename="src/liteapp/editormanager.cpp" line="364"/>
         <source>Save changes to %1?</source>
         <translation>保存修改到 %1 ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="364"/>
+        <location filename="src/liteapp/editormanager.cpp" line="365"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>未保存修改</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="446"/>
+        <location filename="src/liteapp/editormanager.cpp" line="447"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="448"/>
+        <location filename="src/liteapp/editormanager.cpp" line="449"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
@@ -1843,7 +1848,8 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="138"/>
-        <source>What</source>
+        <source>Oracle What</source>
+        <oldsource>What</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1892,6 +1898,16 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="178"/>
+        <source>Pointsto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="182"/>
+        <source>Whicherrs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rename</source>
         <translation type="obsolete">重命名</translation>
     </message>
@@ -1900,8 +1916,8 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="obsolete">切换区域注释/反注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="244"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="272"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="252"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="281"/>
         <source>Refactor</source>
         <translation>重构</translation>
     </message>
@@ -2229,7 +2245,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="655"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="672"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation>警告，包未发现，按回车导入:</translation>
     </message>
@@ -2441,7 +2457,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="41"/>
         <source>Store settings to local ini file</source>
-        <translation>存储设置到本地init文件</translation>
+        <translation>存储设置到本地ini文件</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="51"/>
@@ -2501,12 +2517,23 @@ Success: %2.</oldsource>
         <translation>启动时显示欢迎页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="332"/>
+        <location filename="src/liteapp/liteappoption.ui" line="335"/>
+        <source>Editor tab [*]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="341"/>
         <source>Show close buttons on each editor tab</source>
         <translation>在每个文档标签栏都显示关闭按钮</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="342"/>
+        <location filename="src/liteapp/liteappoption.ui" line="348"/>
+        <source>Enalbe mouse whell navigation on tabs</source>
+        <oldsource>Enalbe mouse whell selected on tab</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="358"/>
         <source>Toolbar Icon Size [*]</source>
         <translation>工具栏图标大小 [*]</translation>
     </message>
@@ -2515,37 +2542,37 @@ Success: %2.</oldsource>
         <translation type="obsolete">工具栏图标大小</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="415"/>
+        <location filename="src/liteapp/liteappoption.ui" line="431"/>
         <source>Keyboard</source>
         <translation>键盘</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="421"/>
+        <location filename="src/liteapp/liteappoption.ui" line="437"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="433"/>
+        <location filename="src/liteapp/liteappoption.ui" line="449"/>
         <source>Hide standard commands</source>
         <translation>隐藏标准命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="440"/>
+        <location filename="src/liteapp/liteappoption.ui" line="456"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="447"/>
+        <location filename="src/liteapp/liteappoption.ui" line="463"/>
         <source>Reset All</source>
         <translation>重置所有</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="467"/>
+        <location filename="src/liteapp/liteappoption.ui" line="483"/>
         <source>Import...</source>
         <translation>导入...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="474"/>
+        <location filename="src/liteapp/liteappoption.ui" line="490"/>
         <source>Export...</source>
         <translation>导出...</translation>
     </message>
@@ -2581,48 +2608,48 @@ Success: %2.</oldsource>
         <translation>分离样式</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="137"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
         <source>Command</source>
         <translation>命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="138"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="141"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="139"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="142"/>
         <source>Shortcuts</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="143"/>
         <source>Standard</source>
         <translation>标准键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="407"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="412"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>导入键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="407"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="441"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="412"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="446"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>键盘映射方案 (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="414"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="419"/>
         <source>Could not read scheme from %1!</source>
         <translation>无法加载方案%1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="441"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="446"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>导出键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="452"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="457"/>
         <source>Could not write scheme to %1!</source>
         <translation>无法写入方案%1!</translation>
     </message>
@@ -3496,17 +3523,17 @@ Success: %2.</oldsource>
         <translation type="obsolete">标签列表</translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="67"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="66"/>
         <source>Open a new tab</source>
         <translation>打开新标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="72"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="71"/>
         <source>List All Tabs</source>
         <translation>显示所有页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="78"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="77"/>
         <source>Close Tab</source>
         <translation>关闭页面</translation>
     </message>
