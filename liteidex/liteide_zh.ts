@@ -2519,7 +2519,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="335"/>
         <source>Editor tab [*]</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑器Tab栏 [*]</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="341"/>
@@ -2530,7 +2530,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="348"/>
         <source>Enalbe mouse whell navigation on tabs</source>
         <oldsource>Enalbe mouse whell selected on tab</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>允许鼠标滚轮导航Tabs</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="358"/>
