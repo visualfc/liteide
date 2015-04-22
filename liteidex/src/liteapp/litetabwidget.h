@@ -27,6 +27,7 @@
 #include <QWidget>
 #include <QMap>
 #include <QPointer>
+#include <QTabBar>
 
 class QMenu;
 class QTabBar;
