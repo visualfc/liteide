@@ -9,7 +9,7 @@
 在安装LiteIDE之前一定要先安装Go语言。
 
 ## 安装二进制文件
-<http://code.google.com/p/golangide>
+<http://sourceforge.net/projects/liteide/>
 
 ### Windows
 下载压缩包并解压至c:\盘
