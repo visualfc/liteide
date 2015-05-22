@@ -17,7 +17,7 @@ Download the archive and extract it into c:\
 Download the archive and extract it into /usr/local or $HOME
 
 ## Building from Source
-Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  You will need to install Qt4/Qt5 in order to compile the source.  Qt can be obtained from <https://qt-project.org/downloads> or from your distribution's package manager. 
+Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  You will need to install Qt4/Qt5 in order to compile the source.  Qt can be obtained from <https://qt-project.org/downloads> or from your distribution's package manager. For Mac OS X, you don't need to install Qt from source code, but run `brew update && brew install qt` which will save you several hours.
 
 ### Windows
 	> git clone https://github.com/visualfc/liteide.git
@@ -50,7 +50,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 
 ### Mac OS X
 	$ git clone https://github.com/visualfc/liteide.git
-	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
+	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc #If QT is installed with brew, input: export QTDIR=/usr/local/Cellar/qt/4.8.6
 	$ cd liteide/build
 	$ ./update_pkg.sh
 	$ ./build_osx.sh

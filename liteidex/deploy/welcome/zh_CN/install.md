@@ -18,7 +18,7 @@
 下载压缩包并解压到/usr/local或者是$HOME
 
 ## 从源代码编译
-LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt5来编译源代码，Qt库可以从<https://qt-project.org/downloads>上获取。下面的编译以Qt4为例。
+LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt5来编译源代码，Qt库可以从<https://qt-project.org/downloads>上获取。Mac OS X用户可以不从源代码编译Qt，直接在终端中运行`brew update && brew install qt`，节省大量时间。下面的编译以Qt4为例。
 
 ### Windows
 	> git clone https://github.com/visualfc/liteide.git
@@ -39,7 +39,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 
 ### Mac OS X
 	$ git clone https://github.com/visualfc/liteide.git
-	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
+	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc #如果Qt是通过brew安装，输入: export QTDIR=/usr/local/Cellar/qt/4.8.6
 	$ cd liteide/build
 	$ ./update_pkg.sh
 	$ ./build_osx.sh
