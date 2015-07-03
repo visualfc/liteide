@@ -2478,7 +2478,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="134"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
-        <translation>当文件被更改或删除时，自动从重新读取或关闭编辑器。</translation>
+        <translation>当文件被更改或删除时，自动重新读取或关闭编辑器。</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="163"/>
