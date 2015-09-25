@@ -1653,7 +1653,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
-        <source>Auto update depends package when it&apos;s source changed.</source>
+        <source>Auto update depends package when its source is changed.</source>
         <oldsource>Auto update depends package when source changed.</oldsource>
         <translation type="unfinished"></translation>
     </message>
@@ -2381,8 +2381,8 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="348"/>
-        <source>Enalbe mouse whell navigation on tabs</source>
-        <oldsource>Enalbe mouse whell selected on tab</oldsource>
+        <source>Enable mouse wheel navigation on tabs</source>
+        <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
