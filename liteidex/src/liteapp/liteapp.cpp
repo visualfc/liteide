@@ -623,9 +623,6 @@ void LiteApp::createActions()
     //m_openFolderNewWindowAct->setVisible(!b);
     actionContext->regAction(m_openFolderNewWindowAct,"OpenFolderNewWindow","");
 
-    m_addFolderAct = new QAction(tr("Add Folder..."),m_mainwindow);
-    actionContext->regAction(m_addFolderAct,"AddFolder","");
-
     m_closeAllFolderAct = new QAction(tr("Close All Folders"),m_mainwindow);
     actionContext->regAction(m_closeAllFolderAct,"CloseAllFolders","");
 
@@ -680,7 +677,6 @@ void LiteApp::createActions()
     connect(m_openFileAct,SIGNAL(triggered()),m_fileManager,SLOT(openFiles()));
     connect(m_openFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolder()));
     connect(m_openFolderNewWindowAct,SIGNAL(triggered()),m_fileManager,SLOT(openFolderNewWindow()));
-    connect(m_addFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(addFolder()));
     connect(m_closeAllFolderAct,SIGNAL(triggered()),m_fileManager,SLOT(closeAllFolders()));
     connect(m_newWindow,SIGNAL(triggered()),this,SLOT(newWindow()));
     connect(m_closeWindow,SIGNAL(triggered()),this,SLOT(closeWindow()));
@@ -706,7 +702,6 @@ void LiteApp::createMenus()
 
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openFileAct);
-    m_fileMenu->addAction(m_addFolderAct);
     m_fileMenu->addAction(m_openFolderAct);
     m_fileMenu->addAction(m_openFolderNewWindowAct);
     m_fileMenu->addSeparator();
@@ -831,6 +826,9 @@ void LiteApp::loadSession(const QString &name)
 
     if (m_settings->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool()) {
         m_fileManager->setFolderList(folderList);
+        if (!folderList.isEmpty()) {
+
+        }
     }
 
     if (!projectName.isEmpty()) {

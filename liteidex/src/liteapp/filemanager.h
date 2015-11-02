@@ -76,7 +76,6 @@ public slots:
     void openFiles();
     void openFolder();
     void openFolderNewWindow();
-    void addFolder();
     void closeAllFolders();
     void newInstance();
     void openEditors();

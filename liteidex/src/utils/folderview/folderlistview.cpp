@@ -148,6 +148,22 @@ void FolderListView::clear()
     m_model->clear();
 }
 
+void FolderListView::expandFolder(const QString &path, bool expand)
+{
+    QList<QModelIndex> indexList = m_model->indexForPath(path);
+    foreach (QModelIndex sourceIndex, indexList) {
+        QModelIndex index = sourceIndex;
+        if (m_proxy) {
+            index = m_proxy->mapFromSource(sourceIndex);
+        }
+        if (expand) {
+            this->expand(index);
+        } else {
+            this->collapse(index);
+        }
+    }
+}
+
 void FolderListView::customContextMenuRequested(const QPoint &pos)
 {
     QMenu menu(this);
@@ -277,20 +293,28 @@ void FolderListView::removeFolder()
 
 void FolderListView::addFolder()
 {
-#if QT_VERSION >= 0x050000
-        static QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#else
-        static QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#endif
-    QString folder = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Add Folder"),home);
-    if (folder.isEmpty()) {
-        return;
-    }
-    m_model->addRootPath(folder);
-    QDir dir(folder);
-    if (dir.cdUp()) {
-        home = dir.path();
-    }
+    m_liteApp->fileManager()->openFolder();
+//    return;
+//#if QT_VERSION >= 0x050000
+//        static QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+//#else
+//        static QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+//#endif
+//    QString folder = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Add Folder"),home);
+//    if (folder.isEmpty()) {
+//        return;
+//    }
+//    QModelIndex index = m_model->addRootPath(folder);
+//    if (index.isValid()) {
+//        if (m_proxy) {
+//            index = m_proxy->mapFromSource(index);
+//        }
+//        this->expandFolder(folder,true);
+//    }
+//    QDir dir(folder);
+//    if (dir.cdUp()) {
+//        home = dir.path();
+//    }
 }
 
 void FolderListView::closeFolder()

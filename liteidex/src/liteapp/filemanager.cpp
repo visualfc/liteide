@@ -53,16 +53,16 @@
 #endif
 //lite_memory_check_end
 
+
 bool FileManager::initWithApp(IApplication *app)
 {
     if (!IFileManager::initWithApp(app)) {
         return false;
     }
-
 #ifdef Q_OS_MAC
     m_folderListView = new FolderListView(true,m_liteApp);
 #else
-    m_folderListView = new FolderListView(false,m_liteApp);
+    m_folderListView = new FolderListView(true,m_liteApp);
 #endif
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable
@@ -228,6 +228,9 @@ void FileManager::setFolderList(const QStringList &folders)
     foreach (QString folder, all) {
         addRecentFile(folder,"folder");
     }
+    if (m_folderListView->rootPathList().size() == 1) {
+        m_folderListView->expandFolder(m_folderListView->rootPathList().first(),true);
+    }
 }
 
 
@@ -238,6 +241,7 @@ void FileManager::addFolderList(const QString &folder)
     }
     m_toolWindowAct->setChecked(true);
     addRecentFile(folder,"folder");
+    m_folderListView->expandFolder(folder,true);
 }
 
 IApplication* FileManager::openFolderInNewWindow(const QString &folder)
@@ -324,11 +328,6 @@ void FileManager::openFolderNewWindow()
        IApplication *app = m_liteApp->newInstance(false);
        app->fileManager()->setFolderList(QStringList() << folder);
    }
-}
-
-void FileManager::addFolder()
-{
-    m_folderListView->addFolder();
 }
 
 void FileManager::closeAllFolders()
