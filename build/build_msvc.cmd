@@ -36,7 +36,11 @@ echo build liteide tools
 echo .
 
 cd %LITEIDE_ROOT%
-set GOPATH=%CD%;%GOPATH%
+if defined %GOPATH (
+	set GOPATH=%CD%;%GOPATH%
+) else (
+	set GOPATH=%CD%
+)
 
 go install -ldflags "-s" -v github.com/visualfc/gotools
 if ERRORLEVEL 1 goto go_fail
