@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QColor>
 #include <QMap>
+#include <QIODevice>
 
 class ColorStyle
 {
