@@ -197,7 +197,7 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
     }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
-        menu.addAction(m_addFolderAct);
+        menu.addAction(m_openFolderAct);
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
@@ -291,30 +291,9 @@ void FolderListView::removeFolder()
     }
 }
 
-void FolderListView::addFolder()
+void FolderListView::openFolder()
 {
     m_liteApp->fileManager()->openFolder();
-//    return;
-//#if QT_VERSION >= 0x050000
-//        static QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-//#else
-//        static QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-//#endif
-//    QString folder = QFileDialog::getExistingDirectory(m_liteApp->mainWindow(),tr("Add Folder"),home);
-//    if (folder.isEmpty()) {
-//        return;
-//    }
-//    QModelIndex index = m_model->addRootPath(folder);
-//    if (index.isValid()) {
-//        if (m_proxy) {
-//            index = m_proxy->mapFromSource(index);
-//        }
-//        this->expandFolder(folder,true);
-//    }
-//    QDir dir(folder);
-//    if (dir.cdUp()) {
-//        home = dir.path();
-//    }
 }
 
 void FolderListView::closeFolder()

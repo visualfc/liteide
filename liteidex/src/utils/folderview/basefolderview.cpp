@@ -84,7 +84,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 
     m_viewGodocAct = new QAction(tr("Use godoc View"),this);
 
-    m_addFolderAct = new QAction(tr("Add Folder..."),this);
+    m_openFolderAct = new QAction(tr("Open Folder..."),this);
     m_reloadFolderAct = new QAction(tr("Reload Folder"),this);
     m_closeFolderAct = new QAction(tr("Close Folder"),this);
 
@@ -101,7 +101,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
-    connect(m_addFolderAct,SIGNAL(triggered()),this,SLOT(addFolder()));
+    connect(m_openFolderAct,SIGNAL(triggered()),this,SLOT(openFolder()));
     connect(m_closeFolderAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
     connect(m_reloadFolderAct,SIGNAL(triggered()),this,SLOT(reloadFolder()));
     connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
@@ -307,8 +307,9 @@ void BaseFolderView::viewGodoc()
     }
 }
 
-void BaseFolderView::addFolder()
+void BaseFolderView::openFolder()
 {
+
 }
 
 void BaseFolderView::closeFolder()

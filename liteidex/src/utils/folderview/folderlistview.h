@@ -47,7 +47,7 @@ public slots:
     void customContextMenuRequested(const QPoint &pos);
     virtual void removeFolder();
     virtual void removeFile();
-    virtual void addFolder();
+    virtual void openFolder();
     virtual void closeFolder();
     virtual void reloadFolder();
     virtual void closeAllFolders();

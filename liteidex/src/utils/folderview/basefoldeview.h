@@ -49,7 +49,7 @@ public slots:
     virtual void openShell();
     virtual void openExplorer();
     virtual void viewGodoc();
-    virtual void addFolder();
+    virtual void openFolder();
     virtual void closeFolder();
     virtual void reloadFolder();
     virtual void closeAllFolders();
@@ -68,7 +68,7 @@ protected:
     QAction *m_openShellAct;
     QAction *m_openExplorerAct;
     QAction *m_viewGodocAct;
-    QAction *m_addFolderAct;
+    QAction *m_openFolderAct;
     QAction *m_closeFolderAct;
     QAction *m_reloadFolderAct;
     QAction *m_closeAllFoldersAct;

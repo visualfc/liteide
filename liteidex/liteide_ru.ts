@@ -165,10 +165,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished">&amp;Вид</translation>
     </message>
     <message>
-        <source>Tool Windows</source>
-        <translation type="obsolete">Панели инструментов</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/actionmanager.cpp" line="73"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;Справка</translation>
@@ -270,7 +266,8 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
-        <source>Add Folder...</source>
+        <source>Open Folder...</source>
+        <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
@@ -416,20 +413,6 @@ LiteIDE это простая кросплатформенная среда ра
 </context>
 <context>
     <name>CreateDirDialog</name>
-    <message>
-        <source>Create Directory</source>
-        <oldsource>Create Directory Dialog</oldsource>
-        <translation type="obsolete">Создание папки</translation>
-    </message>
-    <message>
-        <source>Parent:</source>
-        <translation type="obsolete">Расположение:</translation>
-    </message>
-    <message>
-        <source>Child Path:</source>
-        <oldsource>Path Name:</oldsource>
-        <translation type="obsolete">Путь:</translation>
-    </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="94"/>
         <source>Create Folder</source>
@@ -668,10 +651,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <source>Edit Toolbar</source>
-        <translation type="obsolete">Редактировать</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/editormanager.cpp" line="364"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished">Сохранить изменения в %1?</translation>
@@ -842,19 +821,19 @@ LiteIDE это простая кросплатформенная среда ра
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="172"/>
-        <location filename="src/liteapp/filemanager.cpp" line="193"/>
-        <location filename="src/liteapp/filemanager.cpp" line="214"/>
+        <location filename="src/liteapp/filemanager.cpp" line="171"/>
+        <location filename="src/liteapp/filemanager.cpp" line="192"/>
+        <location filename="src/liteapp/filemanager.cpp" line="213"/>
         <source>All Files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="386"/>
+        <location filename="src/liteapp/filemanager.cpp" line="384"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="387"/>
+        <location filename="src/liteapp/filemanager.cpp" line="385"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -863,62 +842,62 @@ Do you want to load?</oldsource>
 Вы хотите его открыть?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="287"/>
+        <location filename="src/liteapp/filemanager.cpp" line="290"/>
         <source>Open Project or File</source>
         <translation>Открыть файл или проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="80"/>
+        <location filename="src/liteapp/filemanager.cpp" line="79"/>
         <source>Show Hidden Files</source>
         <translation type="unfinished">Показать скрытые файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="88"/>
+        <location filename="src/liteapp/filemanager.cpp" line="87"/>
         <source>Config</source>
         <translation type="unfinished">Конфигурация</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="93"/>
+        <location filename="src/liteapp/filemanager.cpp" line="92"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation type="unfinished">Папки</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="169"/>
-        <location filename="src/liteapp/filemanager.cpp" line="190"/>
-        <location filename="src/liteapp/filemanager.cpp" line="211"/>
+        <location filename="src/liteapp/filemanager.cpp" line="168"/>
+        <location filename="src/liteapp/filemanager.cpp" line="189"/>
+        <location filename="src/liteapp/filemanager.cpp" line="210"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished">Все поддерживаемые типы файлов (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="300"/>
-        <location filename="src/liteapp/filemanager.cpp" line="318"/>
+        <location filename="src/liteapp/filemanager.cpp" line="303"/>
+        <location filename="src/liteapp/filemanager.cpp" line="321"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished">Выбрать папку</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="520"/>
+        <location filename="src/liteapp/filemanager.cpp" line="518"/>
         <source>Session</source>
         <translation type="unfinished">Сессия</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="521"/>
+        <location filename="src/liteapp/filemanager.cpp" line="519"/>
         <source>Project</source>
         <translation type="unfinished">Проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="522"/>
+        <location filename="src/liteapp/filemanager.cpp" line="520"/>
         <source>File</source>
         <translation type="unfinished">Файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="523"/>
+        <location filename="src/liteapp/filemanager.cpp" line="521"/>
         <source>Folder</source>
         <translation type="unfinished">Папка</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="747"/>
+        <location filename="src/liteapp/filemanager.cpp" line="745"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -928,7 +907,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="754"/>
+        <location filename="src/liteapp/filemanager.cpp" line="752"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -936,7 +915,7 @@ Do you want to close the editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="784"/>
+        <location filename="src/liteapp/filemanager.cpp" line="782"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -946,7 +925,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="791"/>
+        <location filename="src/liteapp/filemanager.cpp" line="789"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -954,81 +933,25 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1
-This file has been deleted from the drive.
-
-Do you want to close the editor ?</source>
-        <oldsource>%1
-This file has been deleted from the drive,
-
-Do you want to close the editor ?</oldsource>
-        <translation type="obsolete">%1
-Файл был удален с диска.
-
-Закрыть файл в редакторе ?</translation>
-    </message>
-    <message>
-        <source>%1
-This file has been modified on the drive,
-but you have unsaved modifications in your LiteIDE editor.
-
-Do you want to reload the file from disk ?
-Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="obsolete">%1
-Файл был изменен на диске, вместе с тем
-имеются несохраненные изменения в редакторе LiteIDE.
-
-Перезагрузить файл ?
-При ответе &quot;Да&quot; все несохраненные изменения будут утеряны.</translation>
-    </message>
-    <message>
-        <source>%1
-This file has been modified on the drive.
-
-Do you want to reload the file from disk ?</source>
-        <oldsource>%1
-This file has been modified on the drive,
-
-Do you want to reload the file from disk ?</oldsource>
-        <translation type="obsolete">%1
-Файл был изменен на диске,
-
-Перезагрузить файл ?</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/filemanager.cpp" line="342"/>
+        <location filename="src/liteapp/filemanager.cpp" line="340"/>
         <source>Open Files</source>
         <translation>Открыть файлы...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="101"/>
+        <location filename="src/liteapp/filemanager.cpp" line="100"/>
         <source>Clear History</source>
         <translation type="unfinished">Очистить историю</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="355"/>
+        <location filename="src/liteapp/filemanager.cpp" line="353"/>
         <source>Open Project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <source>%1
-This file has been deleted from the drive,
-but you have unsaved modifications in your LiteIDE editor.
-
-Do you want to close the editor ?
-Answering &quot;Yes&quot; will discard your unsaved changes.</source>
-        <translation type="obsolete">%1
-Файл был удален с диска, вместе с тем
-имеются несохраненные изменения в редакторе LiteIDE.
-
-Закрыть файл в редакторе ?
-При ответе &quot;Да&quot; все несохраненные изменения будут утеряны.</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/filemanager.cpp" line="751"/>
-        <location filename="src/liteapp/filemanager.cpp" line="756"/>
-        <location filename="src/liteapp/filemanager.cpp" line="788"/>
-        <location filename="src/liteapp/filemanager.cpp" line="793"/>
+        <location filename="src/liteapp/filemanager.cpp" line="749"/>
+        <location filename="src/liteapp/filemanager.cpp" line="754"/>
+        <location filename="src/liteapp/filemanager.cpp" line="786"/>
+        <location filename="src/liteapp/filemanager.cpp" line="791"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -1618,41 +1541,36 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="239"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="255"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="265"/>
         <source>Delete File</source>
         <translation type="unfinished">Удалить файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="240"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="256"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="266"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="262"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="288"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Удалить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="263"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="289"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
-    </message>
-    <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="285"/>
-        <source>Add Folder</source>
-        <translation type="unfinished">Добавить папку</translation>
     </message>
 </context>
 <context>
@@ -1736,18 +1654,14 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
-        <source>Auto update depends package when its source is changed.</source>
-        <oldsource>Auto update depends package when source changed.</oldsource>
+        <source>Auto update depends package when it&apos;s source changed.</source>
+        <oldsource>Auto update depends package when its source is changed.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="26"/>
         <source>Close gocode when exiting</source>
         <translation type="unfinished">Закрыть gocode при выходе</translation>
-    </message>
-    <message>
-        <source>Auto update depends package</source>
-        <translation type="obsolete">Автоматически обновлять зависимые пакеты</translation>
     </message>
 </context>
 <context>
@@ -1897,10 +1811,6 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="281"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment/Uncomment Selection</source>
-        <translation type="obsolete">Комментировать/раскомментировать</translation>
     </message>
 </context>
 <context>
@@ -2258,32 +2168,32 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="638"/>
+        <location filename="src/liteapp/liteapp.cpp" line="635"/>
         <source>Close File</source>
         <translation type="unfinished">Закрыть файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="641"/>
+        <location filename="src/liteapp/liteapp.cpp" line="638"/>
         <source>Close All Files</source>
         <translation type="unfinished">Закрыть все файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="651"/>
+        <location filename="src/liteapp/liteapp.cpp" line="648"/>
         <source>Save File</source>
         <translation type="unfinished">Сохранить файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="654"/>
+        <location filename="src/liteapp/liteapp.cpp" line="651"/>
         <source>Save File As...</source>
         <translation type="unfinished">Сохранить файл как...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="657"/>
+        <location filename="src/liteapp/liteapp.cpp" line="654"/>
         <source>Save All Files</source>
         <translation type="unfinished">Сохранить все файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="644"/>
+        <location filename="src/liteapp/liteapp.cpp" line="641"/>
         <source>Open Project</source>
         <translation>Открыть проект...</translation>
     </message>
@@ -2314,51 +2224,47 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="626"/>
-        <source>Add Folder...</source>
+        <source>Close All Folders</source>
+        <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Добавить папку...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="629"/>
-        <source>Close All Folders</source>
-        <translation type="unfinished">Закрыть все папки</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteapp.cpp" line="632"/>
         <source>New Window</source>
         <translation type="unfinished">Новое окно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="635"/>
+        <location filename="src/liteapp/liteapp.cpp" line="632"/>
         <source>Close Window</source>
         <translation type="unfinished">Закрыть окно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="643"/>
         <source>Save Project</source>
         <translation>Сохранить проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="648"/>
+        <location filename="src/liteapp/liteapp.cpp" line="645"/>
         <source>Close Project</source>
         <translation type="unfinished">Закрыть проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="660"/>
+        <location filename="src/liteapp/liteapp.cpp" line="657"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="663"/>
+        <location filename="src/liteapp/liteapp.cpp" line="660"/>
         <source>Full Screen</source>
         <translation type="unfinished">Полный экран</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="667"/>
+        <location filename="src/liteapp/liteapp.cpp" line="664"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">О программе Liteide</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="673"/>
+        <location filename="src/liteapp/liteapp.cpp" line="670"/>
         <source>About Plugins</source>
         <translation type="unfinished">О расширениях</translation>
     </message>
@@ -2375,15 +2281,6 @@ Success: %2.</oldsource>
         <source>Store [*]</source>
         <oldsource>Store</oldsource>
         <translation type="unfinished">Хранение</translation>
-    </message>
-    <message>
-        <source>Store settings to local ini file ( request restart LiteIDE )</source>
-        <oldsource>Store settings to local ini file ( request restart liteide )</oldsource>
-        <translation type="obsolete">Хранить настройки в локальном ini файле ( требует перезапуска LiteIDE )</translation>
-    </message>
-    <message>
-        <source>Interface</source>
-        <translation type="obsolete">Интерфейс</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="57"/>
@@ -2491,10 +2388,6 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toolbar Icon Size</source>
-        <translation type="obsolete">Размер иконок в панели инструментов</translation>
-    </message>
-    <message>
         <location filename="src/liteapp/liteappoption.ui" line="431"/>
         <source>Keyboard</source>
         <translation type="unfinished">Клавиатура</translation>
@@ -2544,11 +2437,6 @@ Success: %2.</oldsource>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Загружать последнюю сессию при старте</translation>
-    </message>
-    <message>
-        <source>Language changes will take effect after LiteIDE is restarted.</source>
-        <oldsource>The language change will take effect after a restart of LiteIDE.</oldsource>
-        <translation type="obsolete">Язык будет изменён после перезапуска LiteIDE.</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="85"/>
@@ -2772,10 +2660,6 @@ Success: %2.</oldsource>
         <source>Build command configuration files [*]</source>
         <oldsource>Build command configuration files:</oldsource>
         <translation type="unfinished">Файлы конфигурации сборки:</translation>
-    </message>
-    <message>
-        <source>Build configuration changes will take effect after LiteIDE is restarted.</source>
-        <translation type="obsolete">Изменения в конфигурации сборки будут применены после перезапуска LiteIDE.</translation>
     </message>
 </context>
 <context>
@@ -3030,10 +2914,6 @@ Success: %2.</oldsource>
         <translation type="unfinished">Свертка кода</translation>
     </message>
     <message>
-        <source>Line</source>
-        <translation type="obsolete">Строка</translation>
-    </message>
-    <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="981"/>
         <source>Export HTML</source>
         <translation type="unfinished">Экспорт в HTML</translation>
@@ -3179,17 +3059,9 @@ Success: %2.</oldsource>
         <translation type="unfinished">Очистить рабочую область</translation>
     </message>
     <message>
-        <source>Word Wrap</source>
-        <translation type="obsolete">Перенос слов</translation>
-    </message>
-    <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="341"/>
         <source>Code Complete</source>
         <translation type="unfinished">Автодополнение кода</translation>
-    </message>
-    <message>
-        <source>Close Document</source>
-        <translation type="obsolete">Закрыть документ</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="704"/>
@@ -3290,11 +3162,6 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="144"/>
         <source>Edit</source>
         <translation>Изменить</translation>
-    </message>
-    <message>
-        <source>Apply color scheme to text output widgets</source>
-        <oldsource>Output widget use color scheme</oldsource>
-        <translation type="obsolete">Применить цветовую схему к виджетам вывода текста</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="189"/>
@@ -3461,16 +3328,6 @@ Success: %2.</oldsource>
 </context>
 <context>
     <name>LiteTabWidget</name>
-    <message>
-        <source>Close tab</source>
-        <oldsource>Close Page</oldsource>
-        <translation type="obsolete">Закрыть страницу</translation>
-    </message>
-    <message>
-        <source>List all tabs</source>
-        <oldsource>List Page</oldsource>
-        <translation type="obsolete">Список страниц</translation>
-    </message>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="66"/>
         <source>Open a new tab</source>
@@ -3869,14 +3726,6 @@ Do you want to replace it?</source>
         <source>[*] item requeset restart LiteIDE</source>
         <oldsource>[*] item requeset restart liteide</oldsource>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="obsolete">Применить</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отменить</translation>
     </message>
 </context>
 <context>
@@ -4400,13 +4249,6 @@ Do you want to replace it?</source>
         <location filename="src/3rdparty/qtc_texteditor/colorscheme.cpp" line="212"/>
         <source>Not a color scheme file.</source>
         <translation>Файл не является цветовой схемой.</translation>
-    </message>
-</context>
-<context>
-    <name>ToolDockWidget</name>
-    <message>
-        <source>Hide</source>
-        <translation type="obsolete">Скрыть</translation>
     </message>
 </context>
 <context>
