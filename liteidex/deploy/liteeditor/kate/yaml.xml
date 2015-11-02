@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!-- Author: Dr Orlovsky MA <maxim@orlovsky.info> //-->
+<language name="YAML" version="1.2" kateversion="2.5" section="Markup"
+          extensions="*.yaml;*.yml" mimetype="text/yaml"
+          author="Dr Orlovsky MA (dr.orlovsky@gmail.com)" license="LGPL">
+  <highlighting>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#stay" name="normal" >
+        <RegExpr attribute="Document Header" context="header" String="^---"/>
+        <RegExpr attribute="End of Document" context="EOD" String="^\.\.\.$"/>
+        <RegExpr attribute="Directive" context="directive" String="^%"/>
+
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="comment" char="#" />
+
+        <DetectChar attribute="Operator" firstNonSpace="true"  context="dash" char="-" />
+
+        <DetectChar attribute="Operator" context="list" char="[" beginRegion="List" />
+        <DetectChar attribute="Operator" context="hash" char="{" beginRegion="Hash" />
+
+        <RegExpr attribute="Data Types" firstNonSpace="true" context="#stay" String="!!\S+" />
+        <RegExpr attribute="Alias" firstNonSpace="true" context="#stay" String="&amp;\S+" />
+        <RegExpr attribute="Reference" firstNonSpace="true" context="#stay" String="\*\S+" />
+
+        <RegExpr attribute="Key" context="attribute-pre" String="\??\s*[^&quot;'#-][^:#]*:"/>
+        <RegExpr attribute="Key" context="attribute-pre" String="\??\s*&quot;[^&quot;#]+&quot;\s*:"/>
+        <RegExpr attribute="Key" context="attribute-pre" String="\??\s*'[^'#]+'\s*:"/>
+
+        <DetectChar attribute="String" context="string" char="'" beginRegion="String" />
+        <DetectChar attribute="String" context="stringx" char="&quot;" beginRegion="String" />
+      </context>
+
+      <context attribute="List" lineEndContext="#pop" name="dash">
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="comment" char="#" />
+        <RegExpr attribute="Data Types" context="#stay" String="null$" />
+        <RegExpr attribute="Data Types" context="#stay" String="!!\S+" />
+        <RegExpr attribute="Alias" context="#stay" String="&amp;\S+" />
+        <RegExpr attribute="Reference" context="#stay" String="\*\S+" />
+        <RegExpr attribute="Normal Text" lookAhead="true" context="#pop" String="." />
+      </context>
+
+      <context attribute="Document Header" lineEndContext="#pop" name="header">
+        <DetectChar attribute="Comment" context="comment" char="#" />
+      </context>
+
+      <context attribute="End of Document" lineEndContext="#stay" name="EOD">
+      </context>
+
+      <context attribute="Directive" lineEndContext="#pop" name="directive">
+      </context>
+
+      <context attribute="Attribute" lineEndContext="#pop#pop" name="attribute">
+        <DetectChar attribute="Comment" context="comment" char="#" />
+      </context>
+
+      <context attribute="Attribute" lineEndContext="#stay" name="attribute-inline">
+        <DetectChar attribute="Operator" context="#pop#pop" char="," />
+        <DetectChar attribute="Operator" context="#pop#pop" lookAhead="true" char="}" />
+        <DetectChar attribute="Comment" context="comment" char="#" />
+      </context>
+
+      <context attribute="Attribute" lineEndContext="#pop" name="attribute-pre">
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="comment" char="#" />
+        <RegExpr attribute="Data Types" context="#stay" String="null$" />
+        <RegExpr attribute="Data Types" context="#stay" String="!!\S+" />
+        <DetectChar attribute="Operator" context="list" char="[" beginRegion="List" />
+        <DetectChar attribute="Operator" context="hash" char="{" beginRegion="Hash" />
+        <DetectChar attribute="String" context="attribute-string" char="'" beginRegion="String" />
+        <DetectChar attribute="String" context="attribute-stringx" char="&quot;" beginRegion="String" />
+        <RegExpr attribute="Alias" context="attribute" String="&amp;\S+" />
+        <RegExpr attribute="Reference" context="attribute" String="\*\S+" />
+        <RegExpr attribute="Attribute" context="attribute" String="." />
+      </context>
+
+      <context attribute="Attribute" lineEndContext="#pop" name="attribute-pre-inline">
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="comment" char="#" />
+
+        <StringDetect attribute="Data Types" context="#stay" String="null" />
+        <RegExpr attribute="Data Types" context="#stay" String="!!\S+" />
+        <DetectChar attribute="Operator" context="list" char="[" beginRegion="List" />
+        <DetectChar attribute="Operator" context="hash" char="{" beginRegion="Hash" />
+        <DetectChar attribute="String" context="attribute-string-inline" char="'" beginRegion="String" />
+        <DetectChar attribute="String" context="attribute-stringx-inline" char="&quot;" beginRegion="String" />
+        <RegExpr attribute="Alias" context="attribute-inline" String="&amp;\S+" />
+        <RegExpr attribute="Reference" context="attribute-inline" String="\*\S+" />
+
+        <DetectChar attribute="Operator" context="#pop" char="," />
+        <DetectChar attribute="Operator" context="#pop" lookAhead="true" char="}" />
+        <RegExpr attribute="Attribute" context="attribute-inline" String="." />
+      </context>
+
+      <context attribute="List" lineEndContext="#stay" name="list">
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="comment" char="#" />
+
+        <DetectChar attribute="Operator" context="#pop" char="]" endRegion="List" />
+
+        <RegExpr attribute="Key" context="attribute-pre" String="\??\s*[^&quot;'#-][^:#]*:"/>
+        <RegExpr attribute="Key" context="attribute-pre" String="\??\s*&quot;[^&quot;#]+&quot;\s*:"/>
+        <RegExpr attribute="Key" context="attribute-pre" String="\??\s*'[^'#]+'\s*:"/>
+
+        <StringDetect attribute="Data Types" context="#stay" String="null" />
+        <RegExpr attribute="Data Types" context="#stay" String="!!\S+" />
+        <DetectChar attribute="Operator" context="list" char="[" beginRegion="List" />
+        <DetectChar attribute="Operator" context="hash" char="{" beginRegion="Hash" />
+        <RegExpr attribute="Alias" context="#stay" String="&amp;\S+" />
+        <RegExpr attribute="Reference" context="#stay" String="\*\S+" />
+        <DetectChar attribute="String" context="string" char="'" beginRegion="String" />
+        <DetectChar attribute="String" context="stringx" char="&quot;" beginRegion="String" />
+
+        <DetectChar attribute="Operator" context="#stay" char="," />
+      </context>
+
+      <context attribute="Hash" lineEndContext="#stay" name="hash">
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="comment" char="#" />
+
+        <RegExpr attribute="Key" context="attribute-pre-inline" String="\??\s*[^&quot;'#-][^:#]*:"/>
+        <RegExpr attribute="Key" context="attribute-pre-inline" String="\??\s*&quot;[^&quot;#]+&quot;\s*:"/>
+        <RegExpr attribute="Key" context="attribute-pre-inline" String="\??\s*'[^'#]+'\s*:"/>
+
+        <DetectChar attribute="Operator" context="#pop" char="}" endRegion="Hash" />
+      </context>
+
+      <context attribute="String" lineEndContext="#stay" name="attribute-string">
+        <DetectIdentifier />
+        <DetectChar attribute="String" context="attribute-end" char="'" endRegion="String" />
+      </context>
+
+      <context attribute="String" lineEndContext="#stay" name="attribute-stringx">
+        <DetectIdentifier />
+        <DetectChar attribute="String" context="attribute-end" char="&quot;" endRegion="String" />
+      </context>
+
+      <context attribute="String" lineEndContext="#stay" name="attribute-string-inline">
+          <DetectIdentifier />
+          <DetectChar attribute="String" context="attribute-end-inline" char="'" endRegion="String" />
+      </context>
+
+      <context attribute="String" lineEndContext="#stay" name="attribute-stringx-inline">
+          <DetectIdentifier />
+          <DetectChar attribute="String" context="attribute-end-inline" char="&quot;" endRegion="String" />
+      </context>
+
+      <context attribute="Error" lineEndContext="#pop#pop#pop" name="attribute-end">
+      </context>
+
+      <context attribute="Error" lineEndContext="#pop#pop#pop" name="attribute-end-inline">
+          <RegExpr attribute="Normal Text" context="#stay" String="\s*"/>
+          <DetectChar attribute="String" context="#pop#pop#pop"  lookAhead="true" char="}"/>
+          <RegExpr attribute="Operator" context="#pop#pop#pop"  String=",\s"/>
+      </context>
+
+      <context attribute="String" lineEndContext="#stay" name="string">
+        <DetectIdentifier />
+        <DetectChar attribute="String" context="#pop" char="'" endRegion="String" />
+      </context>
+
+      <context attribute="String" lineEndContext="#stay" name="stringx">
+        <DetectIdentifier />
+        <DetectChar attribute="String" context="#pop" char="&quot;" endRegion="String" />
+      </context>
+
+      <context attribute="Comment" lineEndContext="#pop" name="comment">
+        <IncludeRules context="##Alerts" />
+        <IncludeRules context="##Modelines" />
+      </context>
+    </contexts>
+
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal" />
+      <itemData name="List" defStyleNum="dsNormal" />
+      <itemData name="Hash" defStyleNum="dsNormal" />
+      <itemData name="Comment" defStyleNum="dsComment" />
+      <itemData name="End of Document" defStyleNum="dsComment" />
+      <itemData name="Document Header" defStyleNum="dsOthers" />
+      <itemData name="Data Types" defStyleNum="dsDataType" />
+      <itemData name="Alias" defStyleNum="dsDataType" />
+      <itemData name="Reference" defStyleNum="dsDataType" />
+      <itemData name="Key" defStyleNum="dsFunction" />
+      <itemData name="Directive" defStyleNum="dsOthers" />
+      <itemData name="Operator" defStyleNum="dsKeyword" />
+      <itemData name="String" defStyleNum="dsString" />
+      <itemData name="Error" defStyleNum="dsError" />
+    </itemDatas>
+  </highlighting>
+
+  <general>
+    <folding indentationsensitive="1" />
+    <comments>
+      <comment name="singleLine" start="#" position="afterwhitespace" />
+    </comments>
+    <keywords casesensitive="1"/>
+  </general>
+</language>
