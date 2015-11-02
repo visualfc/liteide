@@ -119,7 +119,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
 
     QProcess process;
-    process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    process.setProcessEnvironment(LiteApi::getGoEnvironment(m_liteApp));
 
     QStringList args;
     //format style
@@ -274,10 +274,12 @@ void GolangFmt::editorAboutToSave(LiteApi::IEditor* editor)
 
 void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
 {
-    QProcessEnvironment env = m_envManager->currentEnvironment();
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     if (!LiteApi::hasGoEnv(env)) {
+        m_liteApp->appendLog("GolangFmt","Could not find gofmt because no go env", false);
         return;
     }
+    m_liteApp->appendLog("GolangFmt","go environment changed");
     m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
     if (m_gofmtCmd.isEmpty()) {
         m_liteApp->appendLog("GolangFmt",QString("Could not find %1").arg(m_gofmtCmd),false);
