@@ -53,7 +53,6 @@
 #endif
 //lite_memory_check_end
 
-
 bool FileManager::initWithApp(IApplication *app)
 {
     if (!IFileManager::initWithApp(app)) {

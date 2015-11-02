@@ -158,7 +158,7 @@ void FolderListModel::removeRoot(const QModelIndex &index)
     QMutableListIterator<SourceModel> i(m_modelList);
     while (i.hasNext()) {
         SourceModel s = i.next();
-        if (s.rootIndex == index) {
+        if (s.rootIndex.internalId() == index.internalId()) {
             this->beginRemoveRows(QModelIndex(),index.row(),index.row());
             if (m_bWatcherRoot) {
                 int n = 0;
@@ -174,14 +174,14 @@ void FolderListModel::removeRoot(const QModelIndex &index)
             this->removeRow(index.row());
             i.remove();
             this->endRemoveRows();
-            QMutableHashIterator<qint64,QAbstractItemModel*> i(m_indexMap);
-            while (i.hasNext()) {
-                i.next();
-                if (i.value() == s.model) {
-                    i.remove();
+            QMutableHashIterator<qint64,QAbstractItemModel*> i2(m_indexMap);
+            while (i2.hasNext()) {
+                i2.next();
+                if (i2.value() == s.model) {
+                    i2.remove();
                 }
             }
-            delete s.model;
+            delete s.model;            
             break;
         }
     }
@@ -193,7 +193,7 @@ void FolderListModel::reloadRoot(const QModelIndex &index)
     int count = 0;
     while (i.hasNext()) {
         SourceModel s = i.next();
-        if (s.rootIndex == index) {
+        if (s.rootIndex.internalId() == index.internalId()) {
             QModelIndex sourceIndex = s.model->setRootPath(s.rootPath);
             s.rootSourceIndex = sourceIndex;
             s.rootIndex = createIndex(count,0,sourceIndex.internalPointer());
