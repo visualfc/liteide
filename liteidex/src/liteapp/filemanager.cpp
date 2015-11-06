@@ -83,15 +83,14 @@ bool FileManager::initWithApp(IApplication *app)
     }
     connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
 
-    m_syncEditorAct = new QAction(/*QIcon("icon:filebrowser/images/sync.png"),*/tr("Synchronize with editor"),this);
+    m_syncEditorAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
     m_syncEditorAct->setCheckable(true);
 
     QList<QAction*> actions;
-    m_configMenu = new QMenu(tr("Config"));
-    m_configMenu->setIcon(QIcon("icon:images/config.png"));
-    m_configMenu->addAction(m_showHideFilesAct);
-    m_configMenu->addAction(m_syncEditorAct);
-    actions << m_configMenu->menuAction();
+    m_filterMenu = new QMenu(tr("Filter"));
+    m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
+    m_filterMenu->addAction(m_showHideFilesAct);
+    actions << m_filterMenu->menuAction() << m_syncEditorAct;
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"folders",tr("Folders"),false,actions);
 
@@ -145,7 +144,7 @@ FileManager::~FileManager()
     if (m_folderListView) {
         delete m_folderListView;
     }    
-    delete m_configMenu;
+    delete m_filterMenu;
 }
 
 bool FileManager::findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const

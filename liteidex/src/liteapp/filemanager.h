@@ -104,7 +104,7 @@ protected:
     QMenu       *m_recentMenu;
     QAction     *m_toolWindowAct;
     QString      m_initPath;
-    QMenu*       m_configMenu;
+    QMenu*       m_filterMenu;
     QAction*     m_showHideFilesAct;
     QAction*     m_syncEditorAct;
 };

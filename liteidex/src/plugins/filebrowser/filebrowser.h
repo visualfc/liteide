@@ -66,7 +66,7 @@ protected:
     QAction *m_syncAct;
     QAction *m_showHideFilesAct;
     QAction *m_reloadAct;
-    QMenu   *m_configMenu;
+    QMenu   *m_filterMenu;
 protected:
     QAction *m_toolWindowAct;
     QAction *m_cdupAct;

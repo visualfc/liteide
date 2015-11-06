@@ -53,5 +53,7 @@
         <file>images/godoc.png</file>
         <file>images/gopath.png</file>
         <file>images/home.png</file>
+        <file>images/filter.png</file>
+        <file>images/sync.png</file>
     </qresource>
 </RCC>

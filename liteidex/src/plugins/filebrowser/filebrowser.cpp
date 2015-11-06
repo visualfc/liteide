@@ -85,7 +85,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     //m_filterToolBar = new QToolBar(m_widget);
     //m_filterToolBar->setIconSize(QSize(16,16));
 
-    m_syncAct = new QAction(/*QIcon("icon:filebrowser/images/sync.png"),*/tr("Synchronize with editor"),this);
+    m_syncAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
     m_syncAct->setCheckable(true);
 
     m_reloadAct = new QAction(QIcon("icon:filebrowser/images/reload.png"),tr("Reload Folder"),this);
@@ -151,11 +151,10 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_addToFoldersAct,SIGNAL(triggered()),this,SLOT(addToFolders()));
 
     QList<QAction*> actions;
-    m_configMenu = new QMenu(tr("Config"));
-    m_configMenu->setIcon(QIcon("icon:markdown/images/config.png"));
-    m_configMenu->addAction(m_showHideFilesAct);
-    m_configMenu->addAction(m_syncAct);
-    actions << m_configMenu->menuAction();
+    m_filterMenu = new QMenu(tr("Filter"));
+    m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
+    m_filterMenu->addAction(m_showHideFilesAct);
+    actions << m_filterMenu->menuAction() << m_syncAct;
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"filesystem",tr("File System"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
@@ -183,7 +182,7 @@ FileBrowser::~FileBrowser()
     QString root = m_rootCombo->currentText();
     m_liteApp->settings()->setValue("FileBrowser/root",root);
     m_liteApp->settings()->setValue("FileBrowser/synceditor",m_syncAct->isChecked());
-    delete m_configMenu;
+    delete m_filterMenu;
     delete m_widget;
 }
 
