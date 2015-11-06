@@ -43,6 +43,7 @@ public:
     QStringList rootPathList() const;
     void clear();
     void expandFolder(const QString &path, bool expand);
+    QList<QModelIndex> indexForPath(const QString &path) const;
 public slots:
     void customContextMenuRequested(const QPoint &pos);
     virtual void removeFolder();

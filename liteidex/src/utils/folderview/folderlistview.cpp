@@ -164,6 +164,19 @@ void FolderListView::expandFolder(const QString &path, bool expand)
     }
 }
 
+QList<QModelIndex> FolderListView::indexForPath(const QString &path) const
+{
+    QList<QModelIndex> indexList = m_model->indexForPath(path);
+    if (!m_proxy) {
+        return indexList;
+    }
+    QList<QModelIndex> indexs;
+    foreach (QModelIndex sourceIndex, indexList) {
+        indexs.push_back(m_proxy->mapFromSource(sourceIndex));
+    }
+    return indexs;
+}
+
 void FolderListView::customContextMenuRequested(const QPoint &pos)
 {
     QMenu menu(this);

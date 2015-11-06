@@ -88,6 +88,8 @@ public slots:
     void applyOption(QString);
     void showHideFiles(bool);
     void activatedFolderView(const QModelIndex &index);
+    void currentEditorChanged(LiteApi::IEditor *editor);
+    void triggeredSyncEditor(bool b);
 protected:
     NewFileDialog        *m_newFileDialog;
     FolderListView     *m_folderListView;
@@ -102,8 +104,9 @@ protected:
     QMenu       *m_recentMenu;
     QAction     *m_toolWindowAct;
     QString      m_initPath;
-    QMenu*      m_configMenu;
+    QMenu*       m_configMenu;
     QAction*     m_showHideFilesAct;
+    QAction*     m_syncEditorAct;
 };
 
 #endif // FILEMANAGER_H

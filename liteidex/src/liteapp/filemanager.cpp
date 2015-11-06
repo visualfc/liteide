@@ -83,10 +83,14 @@ bool FileManager::initWithApp(IApplication *app)
     }
     connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
 
+    m_syncEditorAct = new QAction(/*QIcon("icon:filebrowser/images/sync.png"),*/tr("Synchronize with editor"),this);
+    m_syncEditorAct->setCheckable(true);
+
     QList<QAction*> actions;
     m_configMenu = new QMenu(tr("Config"));
     m_configMenu->setIcon(QIcon("icon:images/config.png"));
     m_configMenu->addAction(m_showHideFilesAct);
+    m_configMenu->addAction(m_syncEditorAct);
     actions << m_configMenu->menuAction();
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"folders",tr("Folders"),false,actions);
@@ -108,8 +112,15 @@ bool FileManager::initWithApp(IApplication *app)
     connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
     connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_folderListView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
+    connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
+
+    connect(m_syncEditorAct,SIGNAL(triggered(bool)),this,SLOT(triggeredSyncEditor(bool)));
+    bool b = m_liteApp->settings()->value("FileManager/synceditor",false).toBool();
+    if (b) {
+        m_syncEditorAct->setChecked(true);
+    }
 
     return true;
 }
@@ -126,6 +137,7 @@ FileManager::~FileManager()
     m_liteApp->actionManager()->removeMenu(m_recentMenu);
     delete m_fileWatcher;
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
+    m_liteApp->settings()->setValue("FileManager/synceditor",m_syncEditorAct->isChecked());
     m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
     if (m_newFileDialog) {
         delete m_newFileDialog;
@@ -580,6 +592,34 @@ void FileManager::activatedFolderView(const QModelIndex &index)
     QFileInfo info = m_folderListView->fileInfo(index);
     if (info.isFile()) {
         this->openEditor(info.filePath());
+    }
+}
+
+void FileManager::currentEditorChanged(IEditor *editor)
+{
+    if (!m_syncEditorAct->isChecked()) {
+        return;
+    }
+    if (!editor) {
+        return;
+    }
+    QString fileName = editor->filePath();
+    if (fileName.isEmpty()) {
+        return;
+    }
+    QList<QModelIndex> indexList = m_folderListView->indexForPath(fileName);
+    if (indexList.isEmpty()) {
+        return;
+    }
+    QModelIndex index = indexList.first();
+    m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
+    m_folderListView->setCurrentIndex(index);
+}
+
+void FileManager::triggeredSyncEditor(bool b)
+{
+    if (b) {
+        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     }
 }
 

@@ -29,6 +29,18 @@
 #include "liteeditorapi/liteeditorapi.h"
 #include "processex/processex.h"
 
+inline QByteArray trimmedRight(const QByteArray &d)
+{
+    if (d.size() == 0) {
+        return d;
+    }
+    const char *s = d.data();
+    int end = d.size() - 1;
+    while (end && isspace(uchar(s[end])))           // skip white space from end
+        end--;
+    return d.left(end+1);
+}
+
 class GolangFileSearch : public LiteApi::IFileSearch
 {
     Q_OBJECT

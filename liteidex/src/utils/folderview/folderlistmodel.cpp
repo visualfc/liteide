@@ -463,7 +463,7 @@ QList<QModelIndex> FolderListModel::indexForPath(const QString &path) const
     QList<QModelIndex> indexs;
     QString findPath = QDir::cleanPath(QDir::fromNativeSeparators(path));
     foreach (SourceModel s, m_modelList) {
-        if (!s.rootPath.startsWith(findPath)) {
+        if (!findPath.startsWith(s.rootPath)) {
             continue;
         }
         QModelIndex sourceIndex = s.model->index(path);
