@@ -266,7 +266,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_oraclePeersAct);
         sub->addAction(m_oraclePointstoAct);
         sub->addAction(m_oracleWhicherrs);
-        //sub->addAction(m_oracleReferrersAct);
+        sub->addAction(m_oracleReferrersAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -296,7 +296,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_oraclePeersAct);
         sub->addAction(m_oraclePointstoAct);
         sub->addAction(m_oracleWhicherrs);
-        //sub->addAction(m_oracleReferrersAct);
+        sub->addAction(m_oracleReferrersAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -652,7 +652,7 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
         //-: modes: [callees callers callstack definition describe implements pointsto referrers]
         if (line.startsWith("-: modes:")) {
             QString mode = line.mid(9);
-            mode.remove(QRegExp("\\s?\\breferrers\\b"));
+           // mode.remove(QRegExp("\\s?\\breferrers\\b"));
             m_oracleInfo.mode = mode;
         }
         m_oracleOutput->append(line+"\n");
@@ -777,9 +777,9 @@ void GolangEdit::runOracle(const QString &action)
 
 void GolangEdit::runOracleByInfo(const QString &action)
 {
-    if (action == "referrers") {
-        return;
-    }
+//    if (action == "referrers") {
+//        return;
+//    }
     if (m_oracleProcess->isRunning()) {
         return;
     }
