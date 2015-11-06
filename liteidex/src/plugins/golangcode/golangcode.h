@@ -96,7 +96,6 @@ protected:
     QString     m_prefix;
     QString     m_lastPrefix;
     QFileInfo   m_fileInfo;
-    bool        m_breset;
     QProcess   *m_gocodeProcess;
     QProcess   *m_gocodeSetProcess;
     QProcess   *m_importProcess;

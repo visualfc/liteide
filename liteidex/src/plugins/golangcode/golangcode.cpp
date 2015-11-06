@@ -61,7 +61,8 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_gocodeProcess = new QProcess(this);
     m_gocodeSetProcess = new QProcess(this);
     m_importProcess = new QProcess(this);
-    m_breset = false;
+    m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
+    m_gocodeSetProcess->setWorkingDirectory(m_liteApp->applicationPath());
     connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
     connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     connect(m_importProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(importFinished(int,QProcess::ExitStatus)));
@@ -284,16 +285,13 @@ GolangCode::~GolangCode()
 
 void GolangCode::resetGocode()
 {
-    if (m_gocodeProcess->state() != QProcess::NotRunning) {
-        m_gocodeProcess->kill();
-        m_gocodeProcess->waitForFinished(200);
+    if (m_gocodeCmd.isEmpty()) {
+        return;
     }
-    if (!m_gocodeCmd.isEmpty()) {
-        m_breset = true;
-        m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
-        m_gocodeProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-        m_gocodeProcess->start(m_gocodeCmd,QStringList() << "close");
-    }
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    m_gocodeProcess->setEnvironment(env.toStringList());
+    m_gocodeSetProcess->setEnvironment(env.toStringList());
+    m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "set" << "lib-path" << env.value("GOPATH"));
 }
 
 void GolangCode::cgoComplete()
@@ -490,7 +488,6 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     QStringList args;
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length()+offset);
     m_writeData = src.toUtf8();
-    m_breset = false;
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
     m_gocodeProcess->start(m_gocodeCmd,args);
 }
@@ -502,9 +499,6 @@ void GolangCode::wordCompleted(QString,QString,QString)
 
 void GolangCode::started()
 {
-    if (m_breset) {
-        return;
-    }
     if (m_writeData.isEmpty()) {
         m_gocodeProcess->closeWriteChannel();
         return;
@@ -517,15 +511,6 @@ void GolangCode::started()
 void GolangCode::finished(int code,QProcess::ExitStatus)
 {
     if (code != 0) {
-        return;
-    }
-
-    if (m_breset) {
-        m_breset = false;
-        m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
-        m_gocodeProcess->start(m_gocodeCmd);
-        m_liteApp->appendLog("GolangCode","reset gocode");
-        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
         return;
     }
 
