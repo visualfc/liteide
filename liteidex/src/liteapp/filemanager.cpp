@@ -608,6 +608,7 @@ void FileManager::currentEditorChanged(IEditor *editor)
     }
     QList<QModelIndex> indexList = m_folderListView->indexForPath(fileName);
     if (indexList.isEmpty()) {
+        m_folderListView->setCurrentIndex(QModelIndex());
         return;
     }
     QModelIndex index = indexList.first();
