@@ -2863,10 +2863,14 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
     if (link.showTip
             && !link.targetInfo.isEmpty()
-            && m_showLinkInfomation
-            && link.cursorPos == m_lastUpToolTipPos) {
+//            && m_showLinkInfomation
+            /*&& link.cursorPos == m_lastUpToolTipPos*/) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
         QToolTip::showText(pt,link.targetInfo,this);
+    }
+
+    if (!link.showNav) {
+        return;
     }
 
     if (!m_showLinkNavigation) {
