@@ -335,4 +335,10 @@ protected:
     TextEditor::BaseTextBlockSelection m_blockSelection;
 };
 
+inline bool isIdentifierChar(const QChar &ch)
+{
+    return ch.isLetterOrNumber() || ch == QChar('_');
+}
+
+
 #endif // LITEEDITORWIDGETBASE_H

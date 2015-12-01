@@ -1313,7 +1313,7 @@ void LiteEditorWidgetBase::slotSelectionChanged()
         QString text = cur.selectedText();
         cur.setPosition(cur.selectionStart());
         cur.select(QTextCursor::WordUnderCursor);
-        if (text == cur.selectedText() && text.begin()->isLetterOrNumber()) {
+        if (text == cur.selectedText() && isIdentifierChar(*text.begin())) {
             pattern = text;
         }
     }
@@ -3289,8 +3289,8 @@ static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int 
         if (options & QTextDocument::FindWholeWords) {
             const int start = idx;
             const int end = start + expr.matchedLength();
-            if ((start != 0 && text.at(start - 1).isLetterOrNumber())
-                || (end != text.length() && text.at(end).isLetterOrNumber())) {
+            if ((start != 0 && isIdentifierChar(text.at(start - 1)))
+                || (end != text.length() && isIdentifierChar(text.at(end)))) {
                 //if this is not a whole word, continue the search in the string
                 offset = (options & QTextDocument::FindBackward) ? idx-1 : end+1;
                 idx = -1;
