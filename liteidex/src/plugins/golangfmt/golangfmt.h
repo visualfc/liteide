@@ -52,7 +52,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     ProcessEx *m_process;
     LiteApi::IEnvManager *m_envManager;
-    QString m_gofmtCmd;
+    //QString m_gofmtCmd;
     QByteArray m_data;
     QByteArray m_errData;
     bool m_goimports;
