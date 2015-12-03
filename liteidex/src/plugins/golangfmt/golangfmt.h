@@ -55,7 +55,8 @@ protected:
     //QString m_gofmtCmd;
     QByteArray m_data;
     QByteArray m_errData;
-    bool m_goimports;
+    bool m_fixImports;
+    bool m_sorImports;
     bool m_diff;
     bool m_autofmt;
     bool m_syncfmt;

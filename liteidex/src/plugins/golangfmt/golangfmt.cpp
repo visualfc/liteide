@@ -49,8 +49,9 @@
 GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_goimports(false),
     m_diff(true),
+    m_fixImports(false),
+    m_sorImports(true),
     m_autofmt(true),
     m_syncfmt(false),
     m_timeout(600)
@@ -60,7 +61,6 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(fmtFinish(bool,int,QString)));
 
-    m_goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
@@ -75,15 +75,9 @@ void GolangFmt::applyOption(QString id)
     if (id != "option/golangfmt") {
         return;
     }
-    bool goimports = m_liteApp->settings()->value(GOLANGFMT_USEGOIMPORTS,false).toBool();
-    m_diff = m_liteApp->settings()->value(GOLANGFMT_USEDIFF,true).toBool();
+    m_fixImports = m_liteApp->settings()->value(GOLANGFMT_FIXIMPORTS,false).toBool();
+    m_sorImports = m_liteApp->settings()->value(GOLANGFMT_SORTIMPORTS,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
-    if (!m_diff) {
-        m_autofmt = false;
-    }
-    if (goimports != m_goimports) {
-        m_goimports = goimports;
-    }
     m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
     m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
 }
@@ -125,21 +119,18 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     args << "gofmt";
     //format style 0: auto, 1: gofmt 2: fiximports
     if (fmtStyle == 0) {
-        if (m_goimports) {
+        if (m_fixImports) {
             args << "-fiximports";
         }
-        if (m_diff) {
-            args << "-d";
-        }
     } else if (fmtStyle == 1) {
-        if (m_diff) {
-            args << "-d";
-        }
     } else if (fmtStyle == 2) {
         args << "-fiximports";
-        if (m_diff) {
-            args << "-d";
-        }
+    }
+    if (m_diff) {
+        args << "-d";
+    }
+    if (m_sorImports) {
+        args << "-sortimports";
     }
     QString cmd = LiteApi::getGotools(m_liteApp);
     process.start(cmd,args);
@@ -242,8 +233,11 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
 
     QStringList args;
     args << "gofmt";
-    if (m_goimports) {
+    if (m_fixImports) {
         args << "-fiximports";
+    }
+    if (m_sorImports) {
+        args << "-sortimports";
     }
     if (m_diff) {
         args << "-d";

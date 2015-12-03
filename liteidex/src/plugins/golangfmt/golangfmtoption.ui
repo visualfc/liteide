@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>493</width>
-    <height>214</height>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,9 +31,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBoxDiff">
+       <widget class="QCheckBox" name="checkBoxSortImports">
         <property name="text">
-         <string>Use diff tool for faster formatting (requires diff program in PATH)</string>
+         <string>Sort imports of consecutive import lines in import blocks</string>
         </property>
        </widget>
       </item>
