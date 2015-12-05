@@ -386,7 +386,7 @@ void LiteEditor::createActions()
     m_copyLineDownAction = new QAction(tr("Copy Line Down"),this);
     actionContext->regAction(m_copyLineDownAction,"CopyLineDown","Ctrl+Alt+Down");
 
-    m_joinLinesAction = new QAction(tr("Jone Lines"),this);
+    m_joinLinesAction = new QAction(tr("Join Lines"),this);
     actionContext->regAction(m_joinLinesAction,"JoinLines","Ctrl+J");
 
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
