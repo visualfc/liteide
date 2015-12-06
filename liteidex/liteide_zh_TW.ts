@@ -3053,7 +3053,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="389"/>
-        <source>Jone Lines</source>
+        <source>Join Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
