@@ -388,10 +388,11 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
 
 void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
 {
-    QRegExp reg("@@\\s+\\-(\\d+),(\\d+)\\s+\\+(\\d+),(\\d+)\\s+@@");
+    QRegExp reg("@@\\s+\\-(\\d+),?(\\d+)?\\s+\\+(\\d+),?(\\d+)?\\s+@@");
     QTextBlock block;
     int line = -1;
     int line_add = 0;
+    int block_number = 0;
     foreach(QString s, diff.split('\n')) {
         if (s.length() == 0) {
             continue;
@@ -404,8 +405,9 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
                 //int n1 = reg.cap(3).toInt();
                 int n2 = reg.cap(4).toInt();
                 line = line_add+s1;
-                block = cursor.document()->findBlockByNumber(line-1);
+                //block = cursor.document()->findBlockByNumber(line-1);
                 line_add += n2-s2;//n2+n1-(s2+s1);
+                block_number = line-1;
                 continue;
             }
         }
@@ -413,22 +415,33 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             continue;
         }
         if (ch == '+') {
-            cursor.setPosition(block.position());
-            cursor.insertText(s.right(s.length()-1)+"\n");
-            block = cursor.block();
-            //break;
+            block = cursor.document()->findBlockByNumber(block_number);
+            if (!block.isValid()) {
+                cursor.movePosition(QTextCursor::End);
+                cursor.insertBlock();
+                cursor.insertText(s.mid(1));
+            } else {
+                cursor.setPosition(block.position());
+                cursor.insertText(s.mid(1));
+                cursor.insertBlock();
+            }
+            block_number++;
         } else if (ch == '-') {
+            block = cursor.document()->findBlockByNumber(block_number);
             cursor.setPosition(block.position());
             if (block.next().isValid()) {
                 cursor.setPosition(block.next().position(), QTextCursor::KeepAnchor);
+                cursor.removeSelectedText();
             } else {
-                cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+                cursor.movePosition(QTextCursor::EndOfBlock);
+                cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+                cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+                cursor.removeSelectedText();
             }
-            cursor.removeSelectedText();
-            block = cursor.block();
         } else if (ch == ' ') {
-            block = block.next();
+            block_number++;
         } else if (ch == '\\') {
+            //skip comment
         }
     }
 }
