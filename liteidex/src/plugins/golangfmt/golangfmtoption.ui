@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
+    <width>535</width>
     <height>220</height>
    </rect>
   </property>
@@ -26,14 +26,14 @@
          <string>Goimports updates your Go import lines, adding missing ones and removing unreferenced ones.</string>
         </property>
         <property name="text">
-         <string>Use goimports instead of gofmt, for code formatting</string>
+         <string>Enable update imports line, adding missing ones and removing unreferenced ones.</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="checkBoxSortImports">
         <property name="text">
-         <string>Sort imports of consecutive import lines in import blocks</string>
+         <string>Enable sort imports of consecutive import lines in import blocks</string>
         </property>
        </widget>
       </item>

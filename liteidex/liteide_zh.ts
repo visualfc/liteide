@@ -800,9 +800,8 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>添加到目录列表</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
         <source>Config</source>
-        <translation>配置</translation>
+        <translation type="obsolete">配置</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
@@ -811,7 +810,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>打开上级目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
+        <source>Filter</source>
+        <translation>过滤</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -842,19 +846,19 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="171"/>
-        <location filename="src/liteapp/filemanager.cpp" line="192"/>
-        <location filename="src/liteapp/filemanager.cpp" line="213"/>
+        <location filename="src/liteapp/filemanager.cpp" line="182"/>
+        <location filename="src/liteapp/filemanager.cpp" line="203"/>
+        <location filename="src/liteapp/filemanager.cpp" line="224"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="384"/>
+        <location filename="src/liteapp/filemanager.cpp" line="395"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="385"/>
+        <location filename="src/liteapp/filemanager.cpp" line="396"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -862,7 +866,7 @@ Do you want to load?</oldsource>
         <translation>项目文件 &apos;%1&apos;已建立,是否加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="290"/>
+        <location filename="src/liteapp/filemanager.cpp" line="301"/>
         <source>Open Project or File</source>
         <translation>打开项目或文件</translation>
     </message>
@@ -872,57 +876,66 @@ Do you want to load?</oldsource>
         <translation>显示隐藏文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="87"/>
         <source>Config</source>
-        <translation>配置</translation>
+        <translation type="obsolete">配置</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="92"/>
+        <location filename="src/liteapp/filemanager.cpp" line="86"/>
+        <source>Synchronize with editor</source>
+        <translation>与编辑器同步</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/filemanager.cpp" line="90"/>
+        <source>Filter</source>
+        <translation>过滤</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/filemanager.cpp" line="95"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="100"/>
+        <location filename="src/liteapp/filemanager.cpp" line="103"/>
         <source>Clear History</source>
         <translation>清除历史</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="168"/>
-        <location filename="src/liteapp/filemanager.cpp" line="189"/>
-        <location filename="src/liteapp/filemanager.cpp" line="210"/>
+        <location filename="src/liteapp/filemanager.cpp" line="179"/>
+        <location filename="src/liteapp/filemanager.cpp" line="200"/>
+        <location filename="src/liteapp/filemanager.cpp" line="221"/>
         <source>All Support Files (%1)</source>
         <translation>所有支持文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="303"/>
-        <location filename="src/liteapp/filemanager.cpp" line="321"/>
+        <location filename="src/liteapp/filemanager.cpp" line="314"/>
+        <location filename="src/liteapp/filemanager.cpp" line="332"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>选择目录:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="518"/>
+        <location filename="src/liteapp/filemanager.cpp" line="529"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="519"/>
+        <location filename="src/liteapp/filemanager.cpp" line="530"/>
         <source>Project</source>
         <translation>项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="520"/>
+        <location filename="src/liteapp/filemanager.cpp" line="531"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="521"/>
+        <location filename="src/liteapp/filemanager.cpp" line="532"/>
         <source>Folder</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="745"/>
+        <location filename="src/liteapp/filemanager.cpp" line="785"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -936,7 +949,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="752"/>
+        <location filename="src/liteapp/filemanager.cpp" line="792"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -947,7 +960,7 @@ Do you want to close the editor?</source>
 您想要关闭编辑器？</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="782"/>
+        <location filename="src/liteapp/filemanager.cpp" line="822"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -961,7 +974,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="789"/>
+        <location filename="src/liteapp/filemanager.cpp" line="829"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -1013,12 +1026,12 @@ Do you want to reload the file from disk ?</oldsource>
 您想要重新从磁盘读取？</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="340"/>
+        <location filename="src/liteapp/filemanager.cpp" line="351"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="353"/>
+        <location filename="src/liteapp/filemanager.cpp" line="364"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
@@ -1036,10 +1049,10 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="749"/>
-        <location filename="src/liteapp/filemanager.cpp" line="754"/>
-        <location filename="src/liteapp/filemanager.cpp" line="786"/>
-        <location filename="src/liteapp/filemanager.cpp" line="791"/>
+        <location filename="src/liteapp/filemanager.cpp" line="789"/>
+        <location filename="src/liteapp/filemanager.cpp" line="794"/>
+        <location filename="src/liteapp/filemanager.cpp" line="826"/>
+        <location filename="src/liteapp/filemanager.cpp" line="831"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1623,34 +1636,34 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="255"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="265"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="256"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="269"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="266"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="288"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="292"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="289"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="302"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -1710,17 +1723,17 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 <context>
     <name>GolangAst</name>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="57"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="58"/>
         <source>No outline available</source>
         <translation>没有大纲</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="71"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
         <source>Class View</source>
         <translation>类视图</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="73"/>
         <source>Outline</source>
         <translation>大纲</translation>
     </message>
@@ -1973,14 +1986,23 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="29"/>
+        <source>Enable update imports line, adding missing ones and removing unreferenced ones.</source>
+        <translation>允许更新import行，增加缺少的pkg和移除未引用的pkg.</translation>
+    </message>
+    <message>
         <source>Use goimports instead of gofmt, for code formatting</source>
         <oldsource>Use goimports instead of gofmt,for code formatting</oldsource>
-        <translation>使用goimports代替gofmt进行代码格式化</translation>
+        <translation type="obsolete">使用goimports代替gofmt进行代码格式化</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
+        <source>Enable sort imports of consecutive import lines in import blocks</source>
+        <oldsource>Enable Sort imports of consecutive import lines in import blocks</oldsource>
+        <translation>允许import代码块中对于连续的import的包进行排序</translation>
+    </message>
+    <message>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
-        <translation>使用diff工具进行快速格式化(要求diff程序位于PATH路径中)</translation>
+        <translation type="obsolete">使用diff工具进行快速格式化(要求diff程序位于PATH路径中)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
@@ -2245,7 +2267,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="672"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="657"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation>警告，包未发现，按回车导入:</translation>
     </message>

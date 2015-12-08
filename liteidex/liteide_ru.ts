@@ -779,9 +779,8 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished">Добавить в папки</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
         <source>Config</source>
-        <translation type="unfinished">Конфигурация</translation>
+        <translation type="obsolete">Конфигурация</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
@@ -790,7 +789,12 @@ LiteIDE это простая кросплатформенная среда ра
         <translation type="unfinished">Вверх</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
         <source>File System</source>
         <translation type="unfinished">Файловая система</translation>
     </message>
@@ -821,19 +825,19 @@ LiteIDE это простая кросплатформенная среда ра
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="171"/>
-        <location filename="src/liteapp/filemanager.cpp" line="192"/>
-        <location filename="src/liteapp/filemanager.cpp" line="213"/>
+        <location filename="src/liteapp/filemanager.cpp" line="182"/>
+        <location filename="src/liteapp/filemanager.cpp" line="203"/>
+        <location filename="src/liteapp/filemanager.cpp" line="224"/>
         <source>All Files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="384"/>
+        <location filename="src/liteapp/filemanager.cpp" line="395"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="385"/>
+        <location filename="src/liteapp/filemanager.cpp" line="396"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -842,7 +846,7 @@ Do you want to load?</oldsource>
 Вы хотите его открыть?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="290"/>
+        <location filename="src/liteapp/filemanager.cpp" line="301"/>
         <source>Open Project or File</source>
         <translation>Открыть файл или проект...</translation>
     </message>
@@ -852,52 +856,51 @@ Do you want to load?</oldsource>
         <translation type="unfinished">Показать скрытые файлы</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="87"/>
         <source>Config</source>
-        <translation type="unfinished">Конфигурация</translation>
+        <translation type="obsolete">Конфигурация</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="92"/>
+        <location filename="src/liteapp/filemanager.cpp" line="95"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation type="unfinished">Папки</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="168"/>
-        <location filename="src/liteapp/filemanager.cpp" line="189"/>
-        <location filename="src/liteapp/filemanager.cpp" line="210"/>
+        <location filename="src/liteapp/filemanager.cpp" line="179"/>
+        <location filename="src/liteapp/filemanager.cpp" line="200"/>
+        <location filename="src/liteapp/filemanager.cpp" line="221"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished">Все поддерживаемые типы файлов (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="303"/>
-        <location filename="src/liteapp/filemanager.cpp" line="321"/>
+        <location filename="src/liteapp/filemanager.cpp" line="314"/>
+        <location filename="src/liteapp/filemanager.cpp" line="332"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished">Выбрать папку</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="518"/>
+        <location filename="src/liteapp/filemanager.cpp" line="529"/>
         <source>Session</source>
         <translation type="unfinished">Сессия</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="519"/>
+        <location filename="src/liteapp/filemanager.cpp" line="530"/>
         <source>Project</source>
         <translation type="unfinished">Проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="520"/>
+        <location filename="src/liteapp/filemanager.cpp" line="531"/>
         <source>File</source>
         <translation type="unfinished">Файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="521"/>
+        <location filename="src/liteapp/filemanager.cpp" line="532"/>
         <source>Folder</source>
         <translation type="unfinished">Папка</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="745"/>
+        <location filename="src/liteapp/filemanager.cpp" line="785"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -907,7 +910,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="752"/>
+        <location filename="src/liteapp/filemanager.cpp" line="792"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -915,7 +918,7 @@ Do you want to close the editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="782"/>
+        <location filename="src/liteapp/filemanager.cpp" line="822"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -925,7 +928,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="789"/>
+        <location filename="src/liteapp/filemanager.cpp" line="829"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -933,25 +936,35 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="340"/>
+        <location filename="src/liteapp/filemanager.cpp" line="351"/>
         <source>Open Files</source>
         <translation>Открыть файлы...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="100"/>
+        <location filename="src/liteapp/filemanager.cpp" line="86"/>
+        <source>Synchronize with editor</source>
+        <translation type="unfinished">Синхронизировать с редактором</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/filemanager.cpp" line="90"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/filemanager.cpp" line="103"/>
         <source>Clear History</source>
         <translation type="unfinished">Очистить историю</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="353"/>
+        <location filename="src/liteapp/filemanager.cpp" line="364"/>
         <source>Open Project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="749"/>
-        <location filename="src/liteapp/filemanager.cpp" line="754"/>
-        <location filename="src/liteapp/filemanager.cpp" line="786"/>
-        <location filename="src/liteapp/filemanager.cpp" line="791"/>
+        <location filename="src/liteapp/filemanager.cpp" line="789"/>
+        <location filename="src/liteapp/filemanager.cpp" line="794"/>
+        <location filename="src/liteapp/filemanager.cpp" line="826"/>
+        <location filename="src/liteapp/filemanager.cpp" line="831"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -1541,34 +1554,34 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="255"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="265"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
         <source>Delete File</source>
         <translation type="unfinished">Удалить файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="256"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="269"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="266"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Ошибка при удалении файла!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="288"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Удалить папку</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="292"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="289"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="302"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Ошибка при удалении папки!</translation>
     </message>
@@ -1624,17 +1637,17 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>GolangAst</name>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="57"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="58"/>
         <source>No outline available</source>
         <translation type="unfinished">Дерево недоступно</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="71"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
         <source>Class View</source>
         <translation type="unfinished">Пакет</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="73"/>
         <source>Outline</source>
         <translation type="unfinished">Файл</translation>
     </message>
@@ -1864,14 +1877,23 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="29"/>
+        <source>Enable update imports line, adding missing ones and removing unreferenced ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Use goimports instead of gofmt, for code formatting</source>
         <oldsource>Use goimports instead of gofmt,for code formatting</oldsource>
-        <translation type="unfinished">Использовать goimports вместо gofmt для форматирования кода</translation>
+        <translation type="obsolete">Использовать goimports вместо gofmt для форматирования кода</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
+        <source>Enable sort imports of consecutive import lines in import blocks</source>
+        <oldsource>Enable Sort imports of consecutive import lines in import blocks</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
-        <translation type="unfinished">Использовать diff для более быстрого форматирования (требует diff в PATH)</translation>
+        <translation type="obsolete">Использовать diff для более быстрого форматирования (требует diff в PATH)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
@@ -2132,7 +2154,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="672"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="657"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished"></translation>
     </message>
