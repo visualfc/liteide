@@ -120,6 +120,16 @@ void TextOutput::setMaxLine(int max)
     this->setMaximumBlockCount(max);;
 }
 
+void TextOutput::setLineWrap(bool b)
+{
+    this->setLineWrapMode(b ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+}
+
+bool TextOutput::isLineWrap() const
+{
+    return this->lineWrapMode() != QPlainTextEdit::NoWrap;
+}
+
 void TextOutput::loadColorStyleScheme()
 {
     bool useColorShceme = m_liteApp->settings()->value(OUTPUT_USECOLORSCHEME,true).toBool();
@@ -193,7 +203,7 @@ void TextOutput::applyOption(QString opt)
 
     bool antialias = m_liteApp->settings()->value(OUTPUT_ANTIALIAS,true).toBool();
 
-    bool lineWrap = m_liteApp->settings()->value(OUTPUT_LINEWRAP,false).toBool();
+    int maxLines = m_liteApp->settings()->value(OUTPUT_MAXLINES,5000).toInt();
 
     QFont font = this->font();
     if (!fontFamily.isEmpty()) {
@@ -208,7 +218,7 @@ void TextOutput::applyOption(QString opt)
     }
     this->setFont(font);
 
-    this->setLineWrapMode(lineWrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+    this->setMaxLine(maxLines);
 
     this->loadColorStyleScheme();
 }

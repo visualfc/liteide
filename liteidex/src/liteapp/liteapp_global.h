@@ -62,7 +62,7 @@
 #define OUTPUT_FONTSIZE "output/fontsize"
 #define OUTPUT_FONTZOOM "output/fontzoom"
 #define OUTPUT_ANTIALIAS "output/antialias"
-#define OUTPUT_LINEWRAP  "outout/linewrap"
+#define OUTPUT_MAXLINES  "output/maxlines"
 #define OUTPUT_USECOLORSCHEME "output/colorscheme"
 
 

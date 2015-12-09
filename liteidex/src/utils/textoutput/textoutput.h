@@ -39,6 +39,8 @@ public:
     void appendTag(const QString &text, bool error = false, bool time = false);
     void updateExistsTextColor(bool force = false);
     void setMaxLine(int max);
+    void setLineWrap(bool b);
+    bool isLineWrap() const;
 public slots:
     void loadColorStyleScheme();
     void applyOption(QString);

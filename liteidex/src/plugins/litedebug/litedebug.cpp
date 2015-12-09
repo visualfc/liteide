@@ -69,7 +69,6 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     m_output = new TextOutput(m_liteApp);
     m_output->setReadOnly(true);
-    m_output->setMaxLine(2048);
 
     QAction *clearAct = new QAction(tr("Clear"),this);
     clearAct->setIcon(QIcon("icon:images/cleanoutput.png"));

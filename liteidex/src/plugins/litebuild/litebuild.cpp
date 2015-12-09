@@ -173,7 +173,6 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_process = new ProcessEx(this);
     m_output = new TextOutput(m_liteApp);
-    m_output->setMaxLine(2048);
 
     m_stopAct = new QAction(tr("Stop Action"),this);
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
@@ -209,11 +208,31 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_buildMenu->addSeparator();
 
     //m_liteApp->outputManager()->addOutuput(m_output,tr("Build Output"));
+    m_outputLineWrapAct = new QAction(tr("Line Wrap"),this);
+    m_outputLineWrapAct->setCheckable(true);
+    connect(m_outputLineWrapAct,SIGNAL(toggled(bool)),this,SLOT(setOutputLineWrap(bool)));
+
+    m_outputAutoClearAct = new QAction(tr("Auto Clear"),this);
+    m_outputAutoClearAct->setCheckable(true);
+    connect(m_outputAutoClearAct,SIGNAL(triggered(bool)),this,SLOT(setOutputAutoClear(bool)));
+
+    bool bLineWrap = m_liteApp->settings()->value(LITEBUILD_OUTPUTLINEWRAP,false).toBool();
+    m_bOutputAutoClear = m_liteApp->settings()->value(LITEBUILD_OUTPUTAUTOCLEAR,true).toBool();
+
+    m_output->setLineWrap(bLineWrap);
+    m_outputLineWrapAct->setChecked(bLineWrap);
+    m_outputAutoClearAct->setChecked(m_bOutputAutoClear);
+
+    m_outputMenu = new QMenu(tr("Setup"));
+    m_outputMenu->setIcon(QIcon(":/images/setup.png"));
+    m_outputMenu->addAction(m_outputAutoClearAct);
+    m_outputMenu->addAction(m_outputLineWrapAct);
+
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,
                                                                 m_output,"buildoutput",
                                                                 tr("Build Output"),
                                                                 false,
-                                                                QList<QAction*>() << m_stopAct << m_clearAct);
+                                                                QList<QAction*>() << m_stopAct << m_clearAct << m_outputMenu->menuAction());
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
@@ -266,6 +285,7 @@ LiteBuild::~LiteBuild()
     qDeleteAll(m_buildBarInfoMap);
     stopAction();
     delete m_output;
+    delete m_outputMenu;
     if (!m_nullMenu->parent()) {
         delete m_nullMenu;
     }
@@ -495,6 +515,18 @@ void LiteBuild::lockBuildRoot(bool b)
     if (!b) {
         this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     }
+}
+
+void LiteBuild::setOutputLineWrap(bool b)
+{
+    m_output->setLineWrap(b);
+    m_liteApp->settings()->setValue(LITEBUILD_OUTPUTLINEWRAP,b);
+}
+
+void LiteBuild::setOutputAutoClear(bool b)
+{
+    m_bOutputAutoClear = b;
+    m_liteApp->settings()->setValue(LITEBUILD_OUTPUTAUTOCLEAR,b);
 }
 
 bool LiteBuild::isLockBuildRoot() const
@@ -1261,7 +1293,11 @@ void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const Q
 
 void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
 {  
-    m_output->clear();
+    if (m_bOutputAutoClear) {
+        m_output->clear();
+    } else {
+        m_output->updateExistsTextColor(true);
+    }
     m_outputAct->setChecked(true);
     if (m_process->isRunning()) {        
         if (ba->isKillOld()) {

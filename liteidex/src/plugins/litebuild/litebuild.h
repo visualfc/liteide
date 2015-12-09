@@ -95,6 +95,8 @@ public slots:
     void fmctxGoTool();
     void applyOption(QString);
     void lockBuildRoot(bool b);
+    void setOutputLineWrap(bool b);
+    void setOutputAutoClear(bool b);
 protected:
     QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;
@@ -110,6 +112,9 @@ protected:
     QString m_workDir;
     ProcessEx *m_process;
     TextOutput *m_output;
+    QMenu      *m_outputMenu;
+    QAction    *m_outputLineWrapAct;
+    QAction    *m_outputAutoClearAct;
     QAction     *m_configAct;
     QAction     *m_stopAct;
     QAction     *m_clearAct;
@@ -125,6 +130,7 @@ protected:
     QString     m_buildMimeType;
     QString     m_buildRootPath;
     QString     m_buildRootName;
+    bool        m_bOutputAutoClear;
     bool        m_bLockBuildRoot;
     bool        m_bDynamicBuild;
     bool        m_bProjectBuild;
