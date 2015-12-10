@@ -3,6 +3,43 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2015.12.10 Ver X28
+* LiteIDE
+	* gotools add go1.5 vendor support if env GO15VGOROOTXPERIMENT=1 set
+* LiteApp
+	* folder add sync edit action
+	* fix close folder bug
+* LiteBuild
+	* add folder context lock build path
+	* add folder context gofmt 
+	* add output menu auto clear and line wrap action
+* LiteOutput
+	* add set max line option
+* GolangFmt
+	* add new gotools gofmt action
+	* add sortimports option (default)
+* LiteEnv
+	* add var #GO15VGOROOTXPERIMENT=1 (default comment)
+* GolangAst
+	* support go1.5 vendor
+* LiteEditor
+	* fix selection identifier regexp	
+* GolangEdit
+	* support go1.5 vendor
+	* enable oracle enable referres action
+* GolangCode
+	* use set lib-path action
+	
+* gotools
+	* types add go1.5 support if GO15VGOROOTXPERIMENT=1 set
+	* types fix cycle import check
+	* types fix pkg find bug	
+	* types add unsafe builtin info
+	* astview add go1.5 support if GO15VGOROOTXPERIMENT=1 set
+	* stdlib update to go1.5
+	* add new gofmt action
+	* gofmt import godiff replace diff cmd
+	
 ### 2015.4.22 Ver X27.2.1
 * LiteIDE
 	* fix editor change crash
