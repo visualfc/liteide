@@ -95,6 +95,7 @@ public slots:
     void fmctxExecuteFile();
     void fmctxGoLockBuild();
     void fmctxGoTool();
+    void fmctxGofmt();
     void applyOption(QString);
     void lockBuildRoot(bool b);
     void setOutputLineWrap(bool b);
@@ -127,6 +128,7 @@ protected:
     QAction     *m_fmctxGoInstallAct;
     QAction     *m_fmctxGoTestAct;
     QAction     *m_fmctxGoCleanAct;
+    QAction     *m_fmctxGoFmtAct;
     QCheckBox   *m_checkBoxLockBuild;
     QFileInfo   m_fmctxInfo;
     QString     m_outputRegex;

@@ -200,6 +200,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_fmctxGoTestAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoCleanAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
 
+    m_fmctxGoFmtAct = new QAction(tr("Go Fmt"),this);
+    connect(m_fmctxGoFmtAct,SIGNAL(triggered()),this,SLOT(fmctxGofmt()));
+
     connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
     connect(m_clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
 
@@ -472,6 +475,7 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
                 menu->insertAction(act,m_fmctxGoTestAct);
             }
             menu->insertAction(act,m_fmctxGoCleanAct);
+            menu->insertAction(act,m_fmctxGoFmtAct);
             menu->insertSeparator(act);
         }
     }
@@ -501,6 +505,19 @@ void LiteBuild::fmctxGoTool()
     // build install test clean
     QString args = act->data().toString();
     QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
+    m_process->setUserData(ID_REGEXP,m_outputRegex);
+    if (!cmd.isEmpty()) {
+        m_liteApp->editorManager()->saveAllEditors();
+        this->stopAction();
+        this->executeCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
+    }
+}
+
+void LiteBuild::fmctxGofmt()
+{
+    QString args = "gofmt -l -w -sortimports=true .";
+    QString cmd = LiteApi::getGotools(m_liteApp);
     m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
     m_process->setUserData(ID_REGEXP,m_outputRegex);
     if (!cmd.isEmpty()) {
@@ -1095,8 +1112,6 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
 
 void LiteBuild::lockBuildRootByMimeType(const QString &path, const QString &mimeType)
 {
-    m_bLockBuildRoot = true;
-    m_checkBoxLockBuild->setChecked(true);
     LiteApi::IBuild *build = m_buildManager->findBuild(mimeType);
     if (!build) {
         return;
@@ -1104,6 +1119,8 @@ void LiteBuild::lockBuildRootByMimeType(const QString &path, const QString &mime
     if (build->lock() != "dir") {
         return;
     }
+    m_bLockBuildRoot = true;
+    m_checkBoxLockBuild->setChecked(true);
     QString buildPath;
     QString buildName;
     QString buildInfo;
