@@ -5,7 +5,7 @@
 
 ### 2015.12.10 Ver X28
 * LiteIDE
-	* gotools add go1.5 vendor support if env GO15VGOROOTXPERIMENT=1 set
+	* gotools add go1.5 vendor support if env GO15VENDOREXPERIMENT=1 set
 * LiteApp
 	* folder add sync edit action
 	* fix close folder bug
@@ -19,7 +19,7 @@
 	* add new gotools gofmt action
 	* add sortimports option (default)
 * LiteEnv
-	* add var #GO15VGOROOTXPERIMENT=1 (default comment)
+	* add var GO15VENDOREXPERIMENT=1 (default comment)
 * GolangAst
 	* support go1.5 vendor
 * LiteEditor
