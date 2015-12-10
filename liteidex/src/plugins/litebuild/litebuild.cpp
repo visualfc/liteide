@@ -166,9 +166,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_buildToolBar->addAction(m_configAct);
     m_buildToolBar->addSeparator();
 
-    m_lockBuildRoot = new QCheckBox;
+    m_checkBoxLockBuild = new QCheckBox;
 
-    m_buildToolBar->addWidget(m_lockBuildRoot);
+    m_buildToolBar->addWidget(m_checkBoxLockBuild);
     m_buildToolBar->addSeparator();
 
     m_process = new ProcessEx(this);
@@ -185,6 +185,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxExecuteFileAct = new QAction(tr("Execute File"),this);
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
+    m_fmctxGoLockBuildAct = new QAction(tr("Lock Build Path"),this);
     m_fmctxGoBuildAct = new QAction(tr("Go Build"),this);
     m_fmctxGoBuildAct->setData("build -v ./...");
     m_fmctxGoInstallAct = new QAction(tr("Go Install"),this);
@@ -193,6 +194,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoTestAct->setData("test -v ./...");
     m_fmctxGoCleanAct = new QAction(tr("Go Clean"),this);
     m_fmctxGoCleanAct->setData("clean -i -x ./...");
+    connect(m_fmctxGoLockBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoLockBuild()));
     connect(m_fmctxGoBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoInstallAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoTestAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
@@ -245,7 +247,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterTextBuildOutput(QString)));
     connect(m_configAct,SIGNAL(triggered()),this,SLOT(config()));
     connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
-    connect(m_lockBuildRoot,SIGNAL(toggled(bool)),this,SLOT(lockBuildRoot(bool)));
+    connect(m_checkBoxLockBuild,SIGNAL(toggled(bool)),this,SLOT(lockBuildRoot(bool)));
 
     m_liteAppInfo.insert("LITEAPPDIR",m_liteApp->applicationPath());
     m_liteAppInfo.insert("LITEIDE_BIN_DIR",m_liteApp->applicationPath());
@@ -462,6 +464,8 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
             if (!menu->actions().isEmpty()) {
                 act = menu->actions().at(0);
             }
+            menu->insertAction(act,m_fmctxGoLockBuildAct);
+            menu->insertSeparator(act);
             menu->insertAction(act,m_fmctxGoBuildAct);
             menu->insertAction(act,m_fmctxGoInstallAct);
             if (hasTest) {
@@ -480,6 +484,12 @@ void LiteBuild::fmctxExecuteFile()
         this->stopAction();
         this->executeCommand(cmd,QString(),m_fmctxInfo.path(),true,true,false);
     }
+}
+
+void LiteBuild::fmctxGoLockBuild()
+{
+    QString buildPath = m_fmctxInfo.filePath();
+    this->lockBuildRootByMimeType(buildPath,"text/x-gosrc");
 }
 
 void LiteBuild::fmctxGoTool()
@@ -891,13 +901,13 @@ void LiteBuild::loadBuildPath(const QString &buildPath, const QString &buildName
     m_buildRootPath = buildPath;
     m_buildRootName = buildName;
     if (buildName.isEmpty()) {
-        m_lockBuildRoot->setEnabled(false);
-        m_lockBuildRoot->setText("");
-        m_lockBuildRoot->setToolTip("");
+        m_checkBoxLockBuild->setEnabled(false);
+        m_checkBoxLockBuild->setText("");
+        m_checkBoxLockBuild->setToolTip("");
     } else {
-        m_lockBuildRoot->setEnabled(true);
-        m_lockBuildRoot->setText(buildName);
-        m_lockBuildRoot->setToolTip(QString("%1 : %2").arg(tr("Lock Build")).arg(buildInfo));
+        m_checkBoxLockBuild->setEnabled(true);
+        m_checkBoxLockBuild->setText(buildName);
+        m_checkBoxLockBuild->setToolTip(QString("%1 : %2").arg(tr("Lock Build")).arg(buildInfo));
     }
     emit buildPathChanged(buildPath);
     if (buildPath.isEmpty()) {
@@ -1006,7 +1016,7 @@ void LiteBuild::loadBuildType(const QString &mimeType)
         m_buildMenu->menuAction()->setMenu(m_nullMenu);
     }
     m_buildMenu->setEnabled(menu != 0);
-    m_lockBuildRoot->setEnabled(m_build != 0);
+    m_checkBoxLockBuild->setEnabled(m_build != 0);
 
     QMapIterator<QString,BuildBarInfo*> i(m_buildBarInfoMap);
     while(i.hasNext()) {
@@ -1081,6 +1091,28 @@ void LiteBuild::editorCreated(LiteApi::IEditor *editor)
         }
         m_buildBarInfoMap.insert(build->mimeType(),info);
     }
+}
+
+void LiteBuild::lockBuildRootByMimeType(const QString &path, const QString &mimeType)
+{
+    m_bLockBuildRoot = true;
+    m_checkBoxLockBuild->setChecked(true);
+    LiteApi::IBuild *build = m_buildManager->findBuild(mimeType);
+    if (!build) {
+        return;
+    }
+    if (build->lock() != "dir") {
+        return;
+    }
+    QString buildPath;
+    QString buildName;
+    QString buildInfo;
+    QFileInfo info(path);
+    buildPath = info.filePath();
+    buildName = info.fileName();
+    buildInfo = QDir::toNativeSeparators(buildPath);
+    loadBuildPath(buildPath,buildName,buildInfo);
+    loadBuildType(mimeType);
 }
 
 void LiteBuild::currentEditorChanged(LiteApi::IEditor *editor)

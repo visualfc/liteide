@@ -72,6 +72,7 @@ public:
     void loadBuildType(const QString &mimeType);
     bool isLockBuildRoot() const;
     QString currentBuildPath() const;
+    void lockBuildRootByMimeType(const QString &path, const QString &mimeType);
 signals:
     void buildPathChanged(const QString &buildPath);
 public slots:
@@ -92,6 +93,7 @@ public slots:
     void config();
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void fmctxExecuteFile();
+    void fmctxGoLockBuild();
     void fmctxGoTool();
     void applyOption(QString);
     void lockBuildRoot(bool b);
@@ -120,11 +122,12 @@ protected:
     QAction     *m_clearAct;
     QAction     *m_outputAct;
     QAction     *m_fmctxExecuteFileAct;
+    QAction     *m_fmctxGoLockBuildAct;
     QAction     *m_fmctxGoBuildAct;
     QAction     *m_fmctxGoInstallAct;
     QAction     *m_fmctxGoTestAct;
     QAction     *m_fmctxGoCleanAct;
-    QCheckBox   *m_lockBuildRoot;
+    QCheckBox   *m_checkBoxLockBuild;
     QFileInfo   m_fmctxInfo;
     QString     m_outputRegex;
     QString     m_buildMimeType;
