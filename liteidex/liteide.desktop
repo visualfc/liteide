@@ -1,11 +1,10 @@
 [Desktop Entry]
-Name=liteide
-GenericName=liteide
-Comment=liteide for golang
-Exec=liteide
-Icon=
-MimeType=application/x-designer;
-Terminal=false
 Encoding=UTF-8
 Type=Application
-Categories=Development
+Name=LiteIDE
+Comment=IDE for editing and building projects written in the Go programming language
+Exec=liteide
+Icon=liteide
+Terminal=false
+StartupNotify=false
+Categories=Application;Development;
