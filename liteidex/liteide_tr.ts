@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tr_TR">
+<TS version="2.1" language="tr_TR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -1346,7 +1346,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="575"/>
         <source>%n matches replaced.</source>
         <translation>%n eşleşme değiştirildi</translation>
-    </message>
+	</message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="577"/>
         <source>searching... %n matches found.</source>
