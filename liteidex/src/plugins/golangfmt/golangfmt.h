@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2015 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2016 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -55,9 +55,9 @@ protected:
     //QString m_gofmtCmd;
     QByteArray m_data;
     QByteArray m_errData;
+    bool m_diff;
     bool m_fixImports;
     bool m_sorImports;
-    bool m_diff;
     bool m_autofmt;
     bool m_syncfmt;
     int  m_timeout;
