@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="tr_TR">
+<TS version="2.0" language="tr_TR">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="20"/>
         <source>About LiteIDE</source>
         <oldsource>About Liteide</oldsource>
-        <translation>LiteIDE Hakkında</translation>
+        <translation>LiteIDE Hakk&#305;nda</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="156"/>
@@ -18,15 +18,15 @@
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="162"/>
         <source>Welcome:</source>
-        <translation>Hoşgeldiniz:</translation>
+        <translation>Ho&#351;geldiniz:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="168"/>
         <source>Welcome to LiteIDE X! LiteIDE is a simple, open source, cross-platform IDE.</source>
         <oldsource>Welcome to LiteIDE X!
 LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
-        <translation>LiteIDE X'e hoşgeldiniz!
-LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıdır.</translation>
+        <translation>LiteIDE X'e ho&#351;geldiniz!
+LiteIDE sade, a&#231;&#305;k kaynakl&#305; ve platform ba&#287;&#305;ms&#305;z bir geli&#351;tirme ortam&#305;d&#305;r.</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="178"/>
@@ -36,12 +36,12 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="208"/>
         <source>Name:</source>
-        <translation>Adı:</translation>
+        <translation>Ad&#305;:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="191"/>
         <source>Author:</source>
-        <translation>Geliştirici:</translation>
+        <translation>Geli&#351;tirici:</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="222"/>
@@ -73,17 +73,17 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="297"/>
         <source>Developers</source>
-        <translation>Geliştiriciler</translation>
+        <translation>Geli&#351;tiriciler</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="400"/>
         <source>Translations</source>
-        <translation>Çeviriler</translation>
+        <translation>&#199;eviriler</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="412"/>
         <source>Chinese</source>
-        <translation>Çince</translation>
+        <translation>&#199;ince</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="426"/>
@@ -93,17 +93,17 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="440"/>
         <source>Russian</source>
-        <translation>Rusça</translation>
+        <translation>Rus&#231;a</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="454"/>
         <source>French</source>
-        <translation>Fransızca</translation>
+        <translation>Frans&#305;zca</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="468"/>
         <source>Traditional Chinese</source>
-        <translation>Geleneksel Çince</translation>
+        <translation>Geleneksel &#199;ince</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="482"/>
@@ -118,7 +118,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="537"/>
         <source>Thanks to...</source>
-        <translation>Teşekkürler...</translation>
+        <translation>Te&#351;ekkürler...</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="572"/>
@@ -133,7 +133,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/aboutdialog.cpp" line="42"/>
         <source>Based on Qt %1 (%2 bit)</source>
-        <translation>Qt sürüm %1 (%2 bit) tabanlıdır</translation>
+        <translation>Qt sürüm %1 (%2 bit) tabanl&#305;d&#305;r</translation>
     </message>
 </context>
 <context>
@@ -147,7 +147,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/liteapp/actionmanager.cpp" line="65"/>
         <source>&amp;Recent</source>
         <translatorcomment>Note to the Developer: This shoud be a sub menu of &quot;File&quot;</translatorcomment>
-        <translation>&amp;Son kullanılanlar</translation>
+        <translation>&amp;Son kullan&#305;lanlar</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="66"/>
@@ -168,13 +168,13 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="73"/>
         <source>&amp;Help</source>
-        <translation>&amp;Yardım</translation>
+        <translation>&amp;Yard&#305;m</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="75"/>
         <source>Standard Toolbar</source>
         <oldsource>Standard ToolBar</oldsource>
-        <translation>Standart araç çubuğu</translation>
+        <translation>Standart ara&#231; &#231;ubu&#287;u</translation>
     </message>
 </context>
 <context>
@@ -182,12 +182,12 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
         <source>Go To Definition</source>
-        <translation>Tanımlamaya Git</translation>
+        <translation>Tan&#305;mlamaya Git</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="76"/>
         <source>View Import Document</source>
-        <translation>İçeri aktarma görünümü</translation>
+        <translation>&#304;&#231;eri aktarma görünümü</translation>
     </message>
 </context>
 <context>
@@ -200,7 +200,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="64"/>
         <source>Hide Tool Window</source>
-        <translation type="unfinished">Araç Penceresini Gizle</translation>
+        <translation type="unfinished">Ara&#231; Penceresini Gizle</translation>
     </message>
 </context>
 <context>
@@ -208,7 +208,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="72"/>
         <source>Open File</source>
-        <translation>Dosya Aç</translation>
+        <translation>Dosya A&#231;</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
@@ -218,19 +218,19 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
         <source>New File Wizard...</source>
-        <translation type="unfinished">Yeni Dosya Sihirbazı...</translation>
+        <translation type="unfinished">Yeni Dosya Sihirbaz&#305;...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
         <source>Rename File...</source>
-        <translation>Dosya adını değiştir...</translation>
+        <translation>Dosya ad&#305;n&#305; de&#287;i&#351;tir...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="209"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="215"/>
         <source>Delete File</source>
-        <translation type="unfinished">Dosyayı sil</translation>
+        <translation type="unfinished">Dosyay&#305; sil</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
@@ -240,7 +240,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished">Dizini yeniden adlandır...</translation>
+        <translation type="unfinished">Dizini yeniden adland&#305;r...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
@@ -252,12 +252,12 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
         <source>Open Terminal Here</source>
-        <translation>Burada komut satırı aç</translation>
+        <translation>Burada komut sat&#305;r&#305; a&#231;</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
         <source>Open Explorer Here</source>
-        <translation>Bulunduğu dizini aç</translation>
+        <translation>Bulundu&#287;u dizini a&#231;</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
@@ -268,7 +268,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
-        <translation type="unfinished">Dizin Aç...</translation>
+        <translation type="unfinished">Dizin A&#231;...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="88"/>
@@ -289,7 +289,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/utils/folderview/basefolderview.cpp" line="143"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="153"/>
         <source>Create File</source>
-        <translation type="unfinished">Dosya Oluştur</translation>
+        <translation type="unfinished">Dosya Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="144"/>
@@ -299,30 +299,30 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="154"/>
         <source>Failed to create the file!</source>
-        <translation>Dosya yaratılamadı!</translation>
+        <translation>Dosya yarat&#305;lamad&#305;!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="184"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="190"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="195"/>
         <source>Rename File</source>
-        <translation type="unfinished">Dosya İsmini Değiştir</translation>
+        <translation type="unfinished">Dosya &#304;smini De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="184"/>
         <source>New Name:</source>
-        <translation type="unfinished">Yeni İsim:</translation>
+        <translation type="unfinished">Yeni &#304;sim:</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="191"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="196"/>
         <source>Failed to rename the file!</source>
-        <translation type="unfinished">Dosya ismi değiştirilemedi!</translation>
+        <translation type="unfinished">Dosya ismi de&#287;i&#351;tirilemedi!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="210"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation>Bu dosyayı kalıcı olarak silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dosyay&#305; kal&#305;c&#305; olarak silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="216"/>
@@ -333,7 +333,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/utils/folderview/basefolderview.cpp" line="234"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="237"/>
         <source>Create Folder</source>
-        <translation>Dizin Oluştur</translation>
+        <translation>Dizin Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="235"/>
@@ -343,30 +343,30 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
         <source>Failed to create the folder!</source>
-        <translation>Dizin yaratılamıyor!</translation>
+        <translation>Dizin yarat&#305;lam&#305;yor!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="260"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="265"/>
         <source>Rename Folder</source>
-        <translation>Dizini Yeniden Adlandır</translation>
+        <translation>Dizini Yeniden Adland&#305;r</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <source>Folder Name</source>
-        <translation>Dizin Adı</translation>
+        <translation>Dizin Ad&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="261"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="266"/>
         <source>Failed to rename the folder!</source>
-        <translation>Dizin adı değiştirilemiyor!</translation>
+        <translation>Dizin ad&#305; de&#287;i&#351;tirilemiyor!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="280"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation>Bu dizini içindeki tüm alt dizin ve dosyalarla birlikte silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dizini i&#231;indeki tüm alt dizin ve dosyalarla birlikte silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
@@ -380,7 +380,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="14"/>
         <source>Build Configuration</source>
         <oldsource>Build Config Dialog</oldsource>
-        <translation>Build Ayarları</translation>
+        <translation>Build Ayarlar&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="26"/>
@@ -416,7 +416,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="94"/>
         <source>Create Folder</source>
-        <translation>Dizin Oluştur</translation>
+        <translation>Dizin Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="96"/>
@@ -426,17 +426,17 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="98"/>
         <source>Dir Name:</source>
-        <translation>Dizin Adı:</translation>
+        <translation>Dizin Ad&#305;:</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="106"/>
         <source>Create</source>
-        <translation>Oluştur</translation>
+        <translation>Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="107"/>
         <source>Cancel</source>
-        <translation>Vazgeç</translation>
+        <translation>Vazge&#231;</translation>
     </message>
 </context>
 <context>
@@ -445,7 +445,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/utils/folderview/folderdialog.cpp" line="44"/>
         <source>Create File</source>
         <oldsource>Create File Dialog</oldsource>
-        <translation>Dosya Oluştur</translation>
+        <translation>Dosya Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="46"/>
@@ -455,22 +455,22 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="48"/>
         <source>File Name:</source>
-        <translation>Dosya Adı:</translation>
+        <translation>Dosya Ad&#305;:</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="56"/>
         <source>Create</source>
-        <translation>Oluştur</translation>
+        <translation>Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="57"/>
         <source>Create and Edit</source>
-        <translation>Oluşutur ve Düzenle</translation>
+        <translation>Olu&#351;utur ve Düzenle</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="58"/>
         <source>Cancel</source>
-        <translation>Vazgeç</translation>
+        <translation>Vazge&#231;</translation>
     </message>
 </context>
 <context>
@@ -479,23 +479,23 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="80"/>
         <source>Async Record</source>
         <oldsource>AsyncRecord</oldsource>
-        <translation>Asenkron Kayıt</translation>
+        <translation>Asenkron Kay&#305;t</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="81"/>
         <source>Variables</source>
-        <translation>Değişkenler</translation>
+        <translation>De&#287;i&#351;kenler</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="82"/>
         <source>Watch</source>
-        <translation>İzle</translation>
+        <translation>&#304;zle</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
         <source>Call Stack</source>
         <oldsource>CallStack</oldsource>
-        <translation>Çağrı Yığını</translation>
+        <translation>&#199;a&#287;r&#305; Y&#305;&#287;&#305;n&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
@@ -512,23 +512,23 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="94"/>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
         <source>Add Global Watch</source>
-        <translation>Genel İzlemeye Al</translation>
+        <translation>Genel &#304;zlemeye Al</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="95"/>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Add Local Watch</source>
-        <translation>Lokal İzlemeye Al</translation>
+        <translation>Lokal &#304;zlemeye Al</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="96"/>
         <source>Remove Watch</source>
-        <translation>İzlemeden Kaldır</translation>
+        <translation>&#304;zlemeden Kald&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
         <source>Remove All Watches</source>
-        <translation>Tüm İzlemeleri Kaldır</translation>
+        <translation>Tüm &#304;zlemeleri Kald&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
@@ -552,7 +552,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
         <source>Forward</source>
-        <translation>İleri</translation>
+        <translation>&#304;leri</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
@@ -562,17 +562,17 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="75"/>
         <source>Increase Font Size</source>
-        <translation>Yazıtipini Büyüt</translation>
+        <translation>Yaz&#305;tipini Büyüt</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="78"/>
         <source>Decrease Font Size</source>
-        <translation>Yazıtipini Küçült</translation>
+        <translation>Yaz&#305;tipini Kü&#231;ült</translation>
     </message>
     <message>
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
         <source>Reset Font Size</source>
-        <translation>Yazıtipi Boyutunu Sıfırla</translation>
+        <translation>Yaz&#305;tipi Boyutunu S&#305;f&#305;rla</translation>
     </message>
 </context>
 <context>
@@ -586,7 +586,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/liteapp/editormanager.cpp" line="125"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
-        <translation>Yeni Pencereye Taşı</translation>
+        <translation>Yeni Pencereye Ta&#351;&#305;</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="171"/>
@@ -598,13 +598,13 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/liteapp/editormanager.cpp" line="185"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
-        <translation>İleri Git</translation>
+        <translation>&#304;leri Git</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="116"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
-        <translation>Diğerlerini Kapat</translation>
+        <translation>Di&#287;erlerini Kapat</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="117"/>
@@ -620,19 +620,19 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="119"/>
         <source>Close Right Tabs</source>
-        <translation>Sağdaki Sekmeleri Kapat</translation>
+        <translation>Sa&#287;daki Sekmeleri Kapat</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="120"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
-        <translation>Aynı Dizindeki Dosyaları Kapat</translation>
+        <translation>Ayn&#305; Dizindeki Dosyalar&#305; Kapat</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="121"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
-        <translation>Diğer Dizinlerdeki Dosyaları Kapat</translation>
+        <translation>Di&#287;er Dizinlerdeki Dosyalar&#305; Kapat</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="122"/>
@@ -653,13 +653,13 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="364"/>
         <source>Save changes to %1?</source>
-        <translation>Değişikler %1 içine kaydedilsin mi?</translation>
+        <translation>De&#287;i&#351;ikler %1 i&#231;ine kaydedilsin mi?</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="365"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
-        <translation>Kaydedilmemiş Değişiklikler</translation>
+        <translation>Kaydedilmemi&#351; De&#287;i&#351;iklikler</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="447"/>
@@ -669,7 +669,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="449"/>
         <source>Save As</source>
-        <translation>Farklı Kaydet</translation>
+        <translation>Farkl&#305; Kaydet</translation>
     </message>
 </context>
 <context>
@@ -678,25 +678,25 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/plugins/liteenv/envmanager.cpp" line="358"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
-        <translation>ÇAlışma ortamı Araç Çubuğu</translation>
+        <translation>&#199;Al&#305;&#351;ma ortam&#305; Ara&#231; &#199;ubu&#287;u</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="365"/>
         <source>Switching current environment</source>
         <oldsource>Switch Current Environment</oldsource>
-        <translation>Çalışma ortamı değiştiriliyor</translation>
+        <translation>&#199;al&#305;&#351;ma ortam&#305; de&#287;i&#351;tiriliyor</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="368"/>
         <source>Edit current environment</source>
         <oldsource>Edit Current Environment</oldsource>
-        <translation>Çalışma ortamını düzenle</translation>
+        <translation>&#199;al&#305;&#351;ma ortam&#305;n&#305; düzenle</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="369"/>
         <source>Reload current environment</source>
         <oldsource>Reload Current Environment</oldsource>
-        <translation>Çalışma ortamını yenile</translation>
+        <translation>&#199;al&#305;&#351;ma ortam&#305;n&#305; yenile</translation>
     </message>
 </context>
 <context>
@@ -704,22 +704,22 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Dışa Aktar</translation>
+        <translation>D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="22"/>
         <source>Name:</source>
-        <translation>İsim:</translation>
+        <translation>&#304;sim:</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="49"/>
         <source>Export</source>
-        <translation>Dışa Aktar</translation>
+        <translation>D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="56"/>
         <source>ExportAndView</source>
-        <translation>Dışa Aktar ve Görüntüle</translation>
+        <translation>D&#305;&#351;a Aktar ve Görüntüle</translation>
     </message>
 </context>
 <context>
@@ -727,17 +727,17 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
         <source>Cannot create temporary file: %1</source>
-        <translation>Geçici dosya yaratılamıyor: %1</translation>
+        <translation>Ge&#231;ici dosya yarat&#305;lam&#305;yor: %1</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="97"/>
         <source>Cannot create FiFo %1: %2</source>
-        <translation>FiFo %1 yaratılamıyor: %2</translation>
+        <translation>FiFo %1 yarat&#305;lam&#305;yor: %2</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="104"/>
         <source>Cannot open FiFo %1: %2</source>
-        <translation>FiFo %1 açılamıyor: %2</translation>
+        <translation>FiFo %1 a&#231;&#305;lam&#305;yor: %2</translation>
     </message>
 </context>
 <context>
@@ -750,18 +750,18 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="93"/>
         <source>Show Hidden Files</source>
-        <translation>Gizli Dosyaları Göster</translation>
+        <translation>Gizli Dosyalar&#305; Göster</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="144"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
-        <translation>Kök Dizin Olarak İşaretle</translation>
+        <translation>Kök Dizin Olarak &#304;&#351;aretle</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="100"/>
         <source>Execute File</source>
-        <translation>Dosyayı Çalıştır</translation>
+        <translation>Dosyay&#305; &#199;al&#305;&#351;t&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="91"/>
@@ -771,7 +771,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Folder in New Window</source>
-        <translation>Dizini Yeni Pencerede Aç</translation>
+        <translation>Dizini Yeni Pencerede A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="146"/>
@@ -786,7 +786,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
-        <translation>Üst Dizini Aç</translation>
+        <translation>Üst Dizini A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
@@ -809,7 +809,7 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
     <message>
         <location filename="src/plugins/filebrowser/filebrowseroption.ui" line="20"/>
         <source>Terminal</source>
-        <translation>Komut Satırı</translation>
+        <translation>Komut Sat&#305;r&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowseroption.ui" line="26"/>
@@ -842,18 +842,18 @@ LiteIDE sade, açık kaynaklı ve platform bağımsız bir geliştirme ortamıd�
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
 Do you want to load?</oldsource>
-        <translation>&apos;%1&apos; projesi yaratıldı.
+        <translation>&apos;%1&apos; projesi yarat&#305;ld&#305;.
 Yüklemek ister misin?</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="301"/>
         <source>Open Project or File</source>
-        <translation>Dosya veya Proje Aç</translation>
+        <translation>Dosya veya Proje A&#231;</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="79"/>
         <source>Show Hidden Files</source>
-        <translation>Gizli Dosyaları Göster</translation>
+        <translation>Gizli Dosyalar&#305; Göster</translation>
     </message>
     <message>
         <source>Config</source>
@@ -868,21 +868,21 @@ Yüklemek ister misin?</translation>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="103"/>
         <source>Clear History</source>
-        <translation>Geçmişi Sil</translation>
+        <translation>Ge&#231;mi&#351;i Sil</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="179"/>
         <location filename="src/liteapp/filemanager.cpp" line="200"/>
         <location filename="src/liteapp/filemanager.cpp" line="221"/>
         <source>All Support Files (%1)</source>
-        <translation>Tüm Yardım Dosyaları (%1)</translation>
+        <translation>Tüm Yard&#305;m Dosyalar&#305; (%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="314"/>
         <location filename="src/liteapp/filemanager.cpp" line="332"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
-        <translation>Bir dizin seç:</translation>
+        <translation>Bir dizin se&#231;:</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="529"/>
@@ -934,11 +934,11 @@ but you have unsaved modifications in your LiteIDE editor.
 Do you want to reload the file from disk?
 Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation>%1
-Bu dosya sabit diskte değişikliğe uğradı ancak,
-LiteIDE editöründe henüz kaydedilmemiş değişiklikleriniz var.
+Bu dosya sabit diskte de&#287;i&#351;ikli&#287;e u&#287;rad&#305; ancak,
+LiteIDE editöründe henüz kaydedilmemi&#351; de&#287;i&#351;iklikleriniz var.
 
-Dosya içeriği diskten okunarak güncellensin mi?
-&quot;Evet&quot; demeniz halinde kaydedilmemiş değişiklikleriniz gözardı edilecek.
+Dosya i&#231;eri&#287;i diskten okunarak güncellensin mi?
+&quot;Evet&quot; demeniz halinde kaydedilmemi&#351; de&#287;i&#351;iklikleriniz gözard&#305; edilecek.
         </translation>
     </message>
     <message>
@@ -948,14 +948,14 @@ This file has been modified on the drive.
 
 Do you want to reload the file from disk?</source>
         <translation>%1
-Bu dosya sabit diskte değişikliğe uğradı.
+Bu dosya sabit diskte de&#287;i&#351;ikli&#287;e u&#287;rad&#305;.
 
-Dosya içeriği diskten okunarak güncellensin mi?</translation>
+Dosya i&#231;eri&#287;i diskten okunarak güncellensin mi?</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="351"/>
         <source>Open Files</source>
-        <translation>Dosyaları Aç</translation>
+        <translation>Dosyalar&#305; A&#231;</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="86"/>
@@ -970,7 +970,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="364"/>
         <source>Open Project</source>
-        <translation>Proje Aç</translation>
+        <translation>Proje A&#231;</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="789"/>
@@ -987,12 +987,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/plugins/litefind/filesearch.cpp" line="203"/>
         <source>Match whole word</source>
         <oldsource>Match word</oldsource>
-        <translation>Tüm kelimeleri eşleştir</translation>
+        <translation>Tüm kelimeleri e&#351;le&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="204"/>
         <source>Match case</source>
-        <translation>Büyük/küçük harf duyarlı</translation>
+        <translation>Büyük/kü&#231;ük harf duyarl&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="205"/>
@@ -1008,7 +1008,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="226"/>
         <source>Search for:</source>
-        <translation>Şunu ara:</translation>
+        <translation>&#350;unu ara:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="228"/>
@@ -1025,7 +1025,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/plugins/litefind/filesearch.cpp" line="235"/>
         <source>Use Current</source>
         <oldsource>Current</oldsource>
-        <translation>Varsayılanı Kullan</translation>
+        <translation>Varsay&#305;lan&#305; Kullan</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="252"/>
@@ -1045,7 +1045,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="216"/>
         <source>Cancel</source>
-        <translation>Vazgeç</translation>
+        <translation>Vazge&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="257"/>
@@ -1055,7 +1055,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="444"/>
         <source>Open Directory</source>
-        <translation>Dizini Aç</translation>
+        <translation>Dizini A&#231;</translation>
     </message>
 </context>
 <context>
@@ -1063,13 +1063,13 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="50"/>
         <source>Search Item:</source>
-        <translation>Öğe Ara:</translation>
+        <translation>Ö&#287;e Ara:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="69"/>
         <source>Only golang file changes can be revert!</source>
         <oldsource>This file change cannot be undone!</oldsource>
-        <translation>Sadece golang dosya değişiklikleri geri alınabilir!</translation>
+        <translation>Sadece golang dosya de&#287;i&#351;iklikleri geri al&#305;nabilir!</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="83"/>
@@ -1079,12 +1079,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="86"/>
         <source>Search Result</source>
-        <translation>Arama Sonuçları</translation>
+        <translation>Arama Sonu&#231;lar&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="233"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
-        <translation>Aşağıdaki dosyalara yazma izni yok? Yazma izni için yetki değişikliği yapılsın mı?</translation>
+        <translation>A&#351;a&#287;&#305;daki dosyalara yazma izni yok? Yazma izni i&#231;in yetki de&#287;i&#351;ikli&#287;i yap&#305;ls&#305;n m&#305;?</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/filesearchmanager.cpp" line="236"/>
@@ -1098,7 +1098,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="94"/>
         <source>Open File</source>
         <oldsource>Open Editor</oldsource>
-        <translation>Dosya Aç</translation>
+        <translation>Dosya A&#231;</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="95"/>
@@ -1110,14 +1110,14 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="96"/>
         <source>New File Wizard...</source>
         <oldsource>New File Wizard</oldsource>
-        <translation>Yeni Dosya Sihirbazı...</translation>
+        <translation>Yeni Dosya Sihirbaz&#305;...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="320"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="326"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="331"/>
         <source>Rename File</source>
-        <translation>Dosya Adını Değiştir</translation>
+        <translation>Dosya Ad&#305;n&#305; De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="98"/>
@@ -1125,7 +1125,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="350"/>
         <source>Delete File</source>
         <oldsource>Remove File</oldsource>
-        <translation>Dosyayı Sil</translation>
+        <translation>Dosyay&#305; Sil</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="100"/>
@@ -1136,14 +1136,14 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="346"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation>Bo dosyayı kalıcı olarak silmek istediğinize emin misiniz?</translation>
+        <translation>Bo dosyay&#305; kal&#305;c&#305; olarak silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="395"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="400"/>
         <source>Rename Folder</source>
-        <translation>Dizini Yeniden Adlandır</translation>
+        <translation>Dizini Yeniden Adland&#305;r</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="102"/>
@@ -1156,22 +1156,22 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="97"/>
         <source>Rename File...</source>
-        <translation>Dosyayı Yeniden Adlandır...</translation>
+        <translation>Dosyay&#305; Yeniden Adland&#305;r...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="101"/>
         <source>Rename Folder...</source>
-        <translation>Dizini Yeniden Adlandır...</translation>
+        <translation>Dizini Yeniden Adland&#305;r...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="104"/>
         <source>Open Terminal Here</source>
-        <translation>Burada Komut Satırını Aç</translation>
+        <translation>Burada Komut Sat&#305;r&#305;n&#305; A&#231;</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
         <source>Open Explorer Here</source>
-        <translation>Burayı Dizinde Göster</translation>
+        <translation>Buray&#305; Dizinde Göster</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="107"/>
@@ -1202,7 +1202,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="279"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="289"/>
         <source>Create File</source>
-        <translation>Dosya Oluştur</translation>
+        <translation>Dosya Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="280"/>
@@ -1213,23 +1213,23 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="290"/>
         <source>Failed to create the file!</source>
-        <translation>Dosya yaratılamıyor!</translation>
+        <translation>Dosya yarat&#305;lam&#305;yor!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="320"/>
         <source>New Name:</source>
-        <translation>Yeni İsim:</translation>
+        <translation>Yeni &#304;sim:</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="327"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="332"/>
         <source>Failed to rename the file!</source>
-        <translation>Dosya İsmi Değiştirilemiyor!</translation>
+        <translation>Dosya &#304;smi De&#287;i&#351;tirilemiyor!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="415"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation>Bu dizini içindeki tüm alt dizin ve dosyalarla birlikte silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dizini i&#231;indeki tüm alt dizin ve dosyalarla birlikte silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
@@ -1241,7 +1241,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="369"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="372"/>
         <source>Create Folder</source>
-        <translation>Dizin Oluştur</translation>
+        <translation>Dizin Olu&#351;tur</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="370"/>
@@ -1252,18 +1252,18 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="373"/>
         <source>Failed to create the folder!</source>
-        <translation>Dizin oluşturulamıyor!</translation>
+        <translation>Dizin olu&#351;turulam&#305;yor!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
         <source>Folder Name</source>
-        <translation>Dizin Adı</translation>
+        <translation>Dizin Ad&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="396"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="401"/>
         <source>Failed to rename the folder!</source>
-        <translation>Dizin adı değiştirilemiyor!</translation>
+        <translation>Dizin ad&#305; de&#287;i&#351;tirilemiyor!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="422"/>
@@ -1282,12 +1282,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="163"/>
         <source>Cancel</source>
-        <translation>Vazgeç</translation>
+        <translation>Vazge&#231;</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="167"/>
         <source>Repeat the search with same parameters</source>
-        <translation>Aramayı aynı parametrelerle tekrar yap</translation>
+        <translation>Aramay&#305; ayn&#305; parametrelerle tekrar yap</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="168"/>
@@ -1297,40 +1297,40 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="174"/>
         <source>Set show replace mode ui</source>
-        <translation>Değişiklik yapma modunu göster</translation>
+        <translation>De&#287;i&#351;iklik yapma modunu göster</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="175"/>
         <source>Show Replace</source>
-        <translation>Değiştir</translation>
+        <translation>De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="180"/>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="437"/>
         <source>Replace with:</source>
-        <translation>Şununla değiştir:</translation>
+        <translation>&#350;ununla de&#287;i&#351;tir:</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="186"/>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="438"/>
         <source>Replace all occurrences</source>
-        <translation>Tümünü değiştir</translation>
+        <translation>Tümünü de&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="187"/>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="439"/>
         <source>Replace</source>
-        <translation>Değiştir</translation>
+        <translation>De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="191"/>
         <source>Preserve case</source>
-        <translation>BÜYÜK/Küçük harfleri koru</translation>
+        <translation>BÜYÜK/Kü&#231;ük harfleri koru</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="304"/>
         <source>Revert with:</source>
-        <translation>Şununla geri al:</translation>
+        <translation>&#350;ununla geri al:</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="305"/>
@@ -1345,27 +1345,27 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="575"/>
         <source>%n matches replaced.</source>
-        <translation>%n eşleşme değiştirildi</translation>
-	</message>
+        <translation>%n e&#351;le&#351;me de&#287;i&#351;tirildi</translation>
+    </message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="577"/>
         <source>searching... %n matches found.</source>
-        <translation>aranıyor... %n eşleşme bulundu.</translation>
+        <translation>aran&#305;yor... %n e&#351;le&#351;me bulundu.</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="583"/>
         <source>searching ...</source>
-        <translation>aranıyor ...</translation>
+        <translation>aran&#305;yor ...</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="589"/>
         <source>No matches found.</source>
-        <translation>Hiç sonuç bulunamadı.</translation>
+        <translation>Hi&#231; sonu&#231; bulunamad&#305;.</translation>
     </message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="591"/>
         <source>%n matches found.</source>
-        <translation>%n sonuç found</translation>
+        <translation>%n sonu&#231; found</translation>
     </message>
 </context>
 <context>
@@ -1378,7 +1378,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.h" line="70"/>
         <source>Stop Search</source>
-        <translation>Aramayı Durdur</translation>
+        <translation>Aramay&#305; Durdur</translation>
     </message>
 </context>
 <context>
@@ -1397,7 +1397,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="313"/>
         <source>Rebuild database</source>
-        <translation>Veritabanını yeniden indeksle</translation>
+        <translation>Veritaban&#305;n&#305; yeniden indeksle</translation>
     </message>
 </context>
 <context>
@@ -1440,7 +1440,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="130"/>
         <source>Find struct</source>
-        <translation>Yapı bul (struct)</translation>
+        <translation>Yap&#305; bul (struct)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="132"/>
@@ -1450,27 +1450,27 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="134"/>
         <source>Find var</source>
-        <translation>Değişken bul (var)</translation>
+        <translation>De&#287;i&#351;ken bul (var)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="136"/>
         <source>Use Regexp</source>
-        <translation>Düzenli İfade Kullan</translation>
+        <translation>Düzenli &#304;fade Kullan</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="138"/>
         <source>Match Case</source>
-        <translation>BÜYÜK/Küçük Harfe Duyarlı</translation>
+        <translation>BÜYÜK/Kü&#231;ük Harfe Duyarl&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="140"/>
         <source>Match Word</source>
-        <translation>Kelime Eşleştir</translation>
+        <translation>Kelime E&#351;le&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="167"/>
         <source>Help</source>
-        <translation>Yardım</translation>
+        <translation>Yard&#305;m</translation>
     </message>
 </context>
 <context>
@@ -1478,7 +1478,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="63"/>
         <source>Match case</source>
-        <translation>BÜYÜK/Küçük Harfe Duyarlı</translation>
+        <translation>BÜYÜK/Kü&#231;ük Harfe Duyarl&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="64"/>
@@ -1488,7 +1488,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="65"/>
         <source>Wrap around</source>
-        <translation>Etrafında Ara</translation>
+        <translation>Etraf&#305;nda Ara</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="56"/>
@@ -1504,29 +1504,29 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="58"/>
         <source>Replace With:</source>
-        <translation>Şununla değiştir:</translation>
+        <translation>&#350;ununla de&#287;i&#351;tir:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="59"/>
         <source>Replace</source>
-        <translation>Değiştir</translation>
+        <translation>De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="60"/>
         <source>Replace All</source>
-        <translation>Tümünü Değiştir</translation>
+        <translation>Tümünü De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="62"/>
         <source>Match whole word only</source>
-        <translation>Tüm cümleyi eşleştir</translation>
+        <translation>Tüm cümleyi e&#351;le&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="238"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="441"/>
         <source>Ready</source>
-        <translation>Hazır</translation>
+        <translation>Haz&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="81"/>
@@ -1536,7 +1536,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="99"/>
         <source>Find What:</source>
-        <translation>Şunu Bul:</translation>
+        <translation>&#350;unu Bul:</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="110"/>
@@ -1548,7 +1548,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/plugins/litefind/findeditor.cpp" line="209"/>
         <location filename="src/plugins/litefind/findeditor.cpp" line="364"/>
         <source>Not found</source>
-        <translation>Bulunamadı</translation>
+        <translation>Bulunamad&#305;</translation>
     </message>
 </context>
 <context>
@@ -1557,12 +1557,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
         <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
         <source>Delete File</source>
-        <translation>Dosyayı Sil</translation>
+        <translation>Dosyay&#305; Sil</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="269"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation>Bu dosyayı kalıcı olarak silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dosyay&#305; kal&#305;c&#305; olarak silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
@@ -1578,7 +1578,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="292"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation>Bu dizini içindeki tüm alt dizin ve dosyalarla birlikte silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dizini i&#231;indeki tüm alt dizin ve dosyalarla birlikte silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="302"/>
@@ -1592,12 +1592,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/utils/folderview/folderview.cpp" line="148"/>
         <location filename="src/utils/folderview/folderview.cpp" line="158"/>
         <source>Delete File</source>
-        <translation>Dosyayı Sil</translation>
+        <translation>Dosyay&#305; Sil</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="149"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation>Bu dosyayı kalıcı olarak silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dosyay&#305; kal&#305;c&#305; olarak silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="159"/>
@@ -1613,7 +1613,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="172"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation>Bu dizini içindeki tüm alt dizin ve dosyalarla birlikte silmek istediğinize emin misiniz?</translation>
+        <translation>Bu dizini i&#231;indeki tüm alt dizin ve dosyalarla birlikte silmek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="182"/>
@@ -1631,7 +1631,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/gdbdebugger/gdbdebuggeroption.ui" line="20"/>
         <source>Enable --tty for program being debugged.</source>
-        <translation>Hata ayıklarken --tty açık kalsın.</translation>
+        <translation>Hata ay&#305;klarken --tty a&#231;&#305;k kals&#305;n.</translation>
     </message>
 </context>
 <context>
@@ -1639,12 +1639,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="58"/>
         <source>No outline available</source>
-        <translation>Hiç genel görünüm yok</translation>
+        <translation>Hi&#231; genel görünüm yok</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
         <source>Class View</source>
-        <translation>Sınıf Görünümü</translation>
+        <translation>S&#305;n&#305;f Görünümü</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/golangast.cpp" line="73"/>
@@ -1669,12 +1669,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
         <source>Auto update depends package when it&apos;s source changed.</source>
         <oldsource>Auto update depends package when its source is changed.</oldsource>
-        <translation>Kullanılan paketlerin kaynak kodu değiştiğinde otomatik güncelle</translation>
+        <translation>Kullan&#305;lan paketlerin kaynak kodu de&#287;i&#351;ti&#287;inde otomatik güncelle</translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="26"/>
         <source>Close gocode when exiting</source>
-        <translation>Çıkarken go kodunu kapat</translation>
+        <translation>&#199;&#305;karken go kodunu kapat</translation>
     </message>
 </context>
 <context>
@@ -1715,13 +1715,13 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="26"/>
         <source>Use default context (fast)</source>
-        <translation>Varsayılan context'i kullan (hızlı)</translation>
+        <translation>Varsay&#305;lan context'i kullan (h&#305;zl&#305;)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangdoc/golangdocoption.ui" line="33"/>
         <source>Only load standard API documentation</source>
         <oldsource>Only load standard api</oldsource>
-        <translation>Sadece standart API dökümanlarını yükle</translation>
+        <translation>Sadece standart API dökümanlar&#305;n&#305; yükle</translation>
     </message>
 </context>
 <context>
@@ -1729,7 +1729,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="73"/>
         <source>View import package use godoc</source>
-        <translation>Paket çağırma kullanımını göster</translation>
+        <translation>Paket &#231;a&#287;&#305;rma kullan&#305;m&#305;n&#305; göster</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="76"/>
@@ -1739,19 +1739,19 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="79"/>
         <source>Jump to Declaration</source>
-        <translation>Tanımlanan yere git</translation>
+        <translation>Tan&#305;mlanan yere git</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="82"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="88"/>
         <source>Find Usages</source>
-        <translation>Kullanılan Yerleri Bul</translation>
+        <translation>Kullan&#305;lan Yerleri Bul</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="85"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="91"/>
         <source>Rename Symbol Under Cursor</source>
-        <translation>İşaretçi altındaki sembolü yeniden adlandır</translation>
+        <translation>&#304;&#351;aret&#231;i alt&#305;ndaki sembolü yeniden adland&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="136"/>
@@ -1767,27 +1767,27 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="142"/>
         <source>Callees</source>
-        <translation>Çağrılanlar</translation>
+        <translation>&#199;a&#287;r&#305;lanlar</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="146"/>
         <source>Callers</source>
-        <translation>Çağıranlar</translation>
+        <translation>&#199;a&#287;&#305;ranlar</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="150"/>
         <source>Callstack</source>
-        <translation>Çağrı yığını</translation>
+        <translation>&#199;a&#287;r&#305; y&#305;&#287;&#305;n&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="154"/>
         <source>Definition</source>
-        <translation>Tanım</translation>
+        <translation>Tan&#305;m</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="158"/>
         <source>Describe</source>
-        <translation>Açıklama</translation>
+        <translation>A&#231;&#305;klama</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="162"/>
@@ -1802,7 +1802,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
         <source>Peers</source>
-        <translation>Bağlar</translation>
+        <translation>Ba&#287;lar</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="174"/>
@@ -1812,7 +1812,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="178"/>
         <source>Pointsto</source>
-        <translation>İşaret edenler</translation>
+        <translation>&#304;&#351;aret edenler</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="182"/>
@@ -1841,12 +1841,12 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangeditoption.ui" line="26"/>
         <source>Enable view expression infomation on mouse</source>
-        <translation>Fare üzerine geldiğinde sözdizimi bilgisi göster</translation>
+        <translation>Fare üzerine geldi&#287;inde sözdizimi bilgisi göster</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangeditoption.ui" line="33"/>
         <source>Enable mouse navigation</source>
-        <translation>Fare ile navigasyonu etkinleştir</translation>
+        <translation>Fare ile navigasyonu etkinle&#351;tir</translation>
     </message>
 </context>
 <context>
@@ -1854,7 +1854,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangedit/golangfilesearch.cpp" line="54"/>
         <source>Golang Find Usages</source>
-        <translation>Golang Kullanılan Yerleri Bul</translation>
+        <translation>Golang Kullan&#305;lan Yerleri Bul</translation>
     </message>
 </context>
 <context>
@@ -1868,32 +1868,32 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="20"/>
         <source>Format Options</source>
         <oldsource>Golang Format</oldsource>
-        <translation>Format Ayarları</translation>
+        <translation>Format Ayarlar&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="26"/>
         <source>Goimports updates your Go import lines, adding missing ones and removing unreferenced ones.</source>
-        <translation>Goimports, import satırlarını günceller, eksik olanları ekler ve kullanılmayanları kaldırır.</translation>
+        <translation>Goimports, import sat&#305;rlar&#305;n&#305; günceller, eksik olanlar&#305; ekler ve kullan&#305;lmayanlar&#305; kald&#305;r&#305;r.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="29"/>
         <source>Enable update imports line, adding missing ones and removing unreferenced ones.</source>
-        <translation>Import satırlarını güncellemeyi etkinleştir.</translation>
+        <translation>Import sat&#305;rlar&#305;n&#305; güncellemeyi etkinle&#351;tir.</translation>
     </message>
     <message>
         <source>Use goimports instead of gofmt, for code formatting</source>
         <oldsource>Use goimports instead of gofmt,for code formatting</oldsource>
-        <translation>Kodu formatlamak için gofmt yerine goimports kullan</translation>
+        <translation>Kodu formatlamak i&#231;in gofmt yerine goimports kullan</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="36"/>
         <source>Enable sort imports of consecutive import lines in import blocks</source>
-        <oldsource>Import bloklarında ardışık import satırlarını etkinleştir</oldsource>
+        <oldsource>Import bloklar&#305;nda ard&#305;&#351;&#305;k import sat&#305;rlar&#305;n&#305; etkinle&#351;tir</oldsource>
         <translation></translation>
     </message>
     <message>
         <source>Use diff tool for faster formatting (requires diff program in PATH)</source>
-        <translation>Daha hızlı formatlama için diff programı kullan (PATH içinde diff yolu bulunmalıdır)</translation>
+        <translation>Daha h&#305;zl&#305; formatlama i&#231;in diff program&#305; kullan (PATH i&#231;inde diff yolu bulunmal&#305;d&#305;r)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="53"/>
@@ -1909,7 +1909,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="68"/>
         <source>Synchronous code formatting timeout in milliseconds (500ms or more):</source>
-        <translation>Milisaniye cinsinden kod formatlama zamanaşımı (&gt;= 500ms):</translation>
+        <translation>Milisaniye cinsinden kod formatlama zamana&#351;&#305;m&#305; (&gt;= 500ms):</translation>
     </message>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtoption.ui" line="43"/>
@@ -1930,7 +1930,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangfmt/golangfmtplugin.cpp" line="59"/>
         <source>Format Code (Adjusts Imports)</source>
-        <translation>Kodu Formatla (Importları ayarla)</translation>
+        <translation>Kodu Formatla (Importlar&#305; ayarla)</translation>
     </message>
 </context>
 <context>
@@ -1938,7 +1938,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="64"/>
         <source>Bölüm (s1)</source>
-        <translation>Kısım (s1)</translation>
+        <translation>K&#305;s&#305;m (s1)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="67"/>
@@ -1953,43 +1953,43 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="73"/>
         <source>Bold</source>
-        <translation>Kalın</translation>
+        <translation>Kal&#305;n</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="76"/>
         <source>Italic</source>
-        <translation>İtalik</translation>
+        <translation>&#304;talik</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="79"/>
         <source>Inline Code</source>
-        <translation>Satıriçi Kod</translation>
+        <translation>Sat&#305;ri&#231;i Kod</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="82"/>
         <source>Switch Bullets</source>
-        <translation>Switch Noktaları</translation>
+        <translation>Switch Noktalar&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="85"/>
         <source>Comment/Uncomment Selection</source>
-        <translation>Seçilen yorumları aç/kapat</translation>
+        <translation>Se&#231;ilen yorumlar&#305; a&#231;/kapat</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="88"/>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="267"/>
         <source>Export HTML</source>
-        <translation>HTML Olarak Dışa Aktar</translation>
+        <translation>HTML Olarak D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="91"/>
         <source>Verify Present</source>
-        <translation>Durumu Doğrula</translation>
+        <translation>Durumu Do&#287;rula</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="256"/>
         <source>Present verify success</source>
-        <translation>Durum doğrulama başarılı</translation>
+        <translation>Durum do&#287;rulama ba&#351;ar&#305;l&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="258"/>
@@ -1999,7 +1999,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="310"/>
         <source>Export PDF</source>
-        <translation>PDF Olarak Dışa Aktar</translation>
+        <translation>PDF Olarak D&#305;&#351;a Aktar</translation>
     </message>
 </context>
 <context>
@@ -2013,7 +2013,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="84"/>
         <source>Run</source>
-        <translation>Çalıştır</translation>
+        <translation>&#199;al&#305;&#351;t&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="85"/>
@@ -2038,7 +2038,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="89"/>
         <source>Explore Folder</source>
-        <translation>Dizini Aç</translation>
+        <translation>Dizini A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="168"/>
@@ -2046,7 +2046,7 @@ Dosya içeriği diskten okunarak güncellensin mi?</translation>
         <oldsource>Running...
 
 </oldsource>
-        <translation>Çalışıyor...</translation>
+        <translation>&#199;al&#305;&#351;&#305;yor...</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="192"/>
@@ -2060,7 +2060,7 @@ Error: %1.</oldsource>
         <source>Success: %2.</source>
         <oldsource>
 Success: %2.</oldsource>
-        <translation>Başarılı: %2.</translation>
+        <translation>Ba&#351;ar&#305;l&#305;: %2.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="244"/>
@@ -2070,17 +2070,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="244"/>
         <source>Select a file to load:</source>
-        <translation>Yüklenecek dosyayı seç:</translation>
+        <translation>Yüklenecek dosyay&#305; se&#231;:</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="260"/>
         <source>Save File</source>
-        <translation>Dosyayı Kaydet</translation>
+        <translation>Dosyay&#305; Kaydet</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="260"/>
         <source>New File Name:</source>
-        <translation>Yeni dosya adı:</translation>
+        <translation>Yeni dosya ad&#305;:</translation>
     </message>
 </context>
 <context>
@@ -2099,23 +2099,23 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
         <source>Export Html</source>
-        <translation>HTML Olarak Dışa Aktar</translation>
+        <translation>HTML Olarak D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="413"/>
         <source>Export PDF</source>
-        <translation>PDF Olarak Dışa Aktar</translation>
+        <translation>PDF Olarak D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
         <source>Print Preview</source>
-        <translation>Baskı Önizleme</translation>
+        <translation>Bask&#305; Önizleme</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="82"/>
         <source>Synchronize preview and code scrollbars</source>
-        <translation>Önizleme ve kod kaydırma çubuklarını senkronize et</translation>
+        <translation>Önizleme ve kod kayd&#305;rma &#231;ubuklar&#305;n&#305; senkronize et</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
@@ -2130,7 +2130,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
         <source>Export Failed</source>
-        <translation>Dışa aktarma başarısız</translation>
+        <translation>D&#305;&#351;a aktarma ba&#351;ar&#305;s&#305;z</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="85"/>
@@ -2148,7 +2148,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
-        <translation>%1 dosyası yazmak için açılamıyor!</translation>
+        <translation>%1 dosyas&#305; yazmak i&#231;in a&#231;&#305;lam&#305;yor!</translation>
     </message>
 </context>
 <context>
@@ -2156,7 +2156,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/golangcode/golangcode.cpp" line="657"/>
         <source>warning, pkg not find, please enter to import :</source>
-        <translation>Uyarı: Pkg bulunamadı, içeri aktarmak için enter:</translation>
+        <translation>Uyar&#305;: Pkg bulunamad&#305;, i&#231;eri aktarmak i&#231;in enter:</translation>
     </message>
 </context>
 <context>
@@ -2164,17 +2164,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="51"/>
         <source>Verify</source>
-        <translation>Doğrula</translation>
+        <translation>Do&#287;rula</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="53"/>
         <source>Format Json</source>
-        <translation>Json Biçimlendir</translation>
+        <translation>Json Bi&#231;imlendir</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="55"/>
         <source>Compact Json</source>
-        <translation>Sıkıştırılmış Json</translation>
+        <translation>S&#305;k&#305;&#351;t&#305;r&#305;lm&#305;&#351; Json</translation>
     </message>
 </context>
 <context>
@@ -2182,47 +2182,47 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="212"/>
         <source>Event Log</source>
-        <translation>Olay Günlüğü</translation>
+        <translation>Olay Günlü&#287;ü</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="199"/>
         <source>Escape</source>
-        <translation>İptal</translation>
+        <translation>&#304;ptal</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="635"/>
         <source>Close File</source>
-        <translation>Dosyayı Kapat</translation>
+        <translation>Dosyay&#305; Kapat</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="638"/>
         <source>Close All Files</source>
-        <translation>Tüm Dosyaları Kapat</translation>
+        <translation>Tüm Dosyalar&#305; Kapat</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="648"/>
         <source>Save File</source>
-        <translation>Dosyayı Kaydet</translation>
+        <translation>Dosyay&#305; Kaydet</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="651"/>
         <source>Save File As...</source>
-        <translation>Dosyayı Farklı Kaydet...</translation>
+        <translation>Dosyay&#305; Farkl&#305; Kaydet...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="654"/>
         <source>Save All Files</source>
-        <translation>Tüm Dosyaları Kaydet</translation>
+        <translation>Tüm Dosyalar&#305; Kaydet</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="641"/>
         <source>Open Project</source>
-        <translation>Proje Aç</translation>
+        <translation>Proje A&#231;</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="214"/>
         <source>Options</source>
-        <translation>Seçenekler</translation>
+        <translation>Se&#231;enekler</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="612"/>
@@ -2232,17 +2232,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="615"/>
         <source>Open File...</source>
-        <translation>Dosya Aç...</translation>
+        <translation>Dosya A&#231;...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="618"/>
         <source>Open Folder...</source>
-        <translation>Dizin Aç...</translation>
+        <translation>Dizin A&#231;...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="621"/>
         <source>Open Folder in New Window...</source>
-        <translation>Dizini Yeni Pencerede Aç...</translation>
+        <translation>Dizini Yeni Pencerede A&#231;...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="626"/>
@@ -2273,7 +2273,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="657"/>
         <source>Exit</source>
-        <translation>Çıkış</translation>
+        <translation>&#199;&#305;k&#305;&#351;</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="660"/>
@@ -2283,12 +2283,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="664"/>
         <source>About LiteIDE</source>
-        <translation>LiteIDE Hakkında</translation>
+        <translation>LiteIDE Hakk&#305;nda</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="670"/>
         <source>About Plugins</source>
-        <translation>Eklentiler Hakkında</translation>
+        <translation>Eklentiler Hakk&#305;nda</translation>
     </message>
 </context>
 <context>
@@ -2313,7 +2313,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="239"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
-        <translation>Son Kullanılan Dosyalar</translation>
+        <translation>Son Kullan&#305;lan Dosyalar</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="245"/>
@@ -2324,11 +2324,11 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="128"/>
         <source>Monitoring files for modifications</source>
-        <translation>Dosyaların değişip değişmediğini gözlemle</translation>
+        <translation>Dosyalar&#305;n de&#287;i&#351;ip de&#287;i&#351;medi&#287;ini gözlemle</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="41"/>
-        <source>Ayarları lokal bir ini dosyasında sakla</source>
+        <source>Ayarlar&#305; lokal bir ini dosyas&#305;nda sakla</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2350,7 +2350,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="134"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
-        <translation>Açık dosya arkaplanda değişir/silinirse editör önbelleğini diskten okuyarak güncelle.</translation>
+        <translation>A&#231;&#305;k dosya arkaplanda de&#287;i&#351;ir/silinirse editör önbelle&#287;ini diskten okuyarak güncelle.</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="163"/>
@@ -2361,12 +2361,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="200"/>
         <source>Reload folders on startup</source>
-        <translation>Açılışta dizinleri yeniden yükle</translation>
+        <translation>A&#231;&#305;l&#305;&#351;ta dizinleri yeniden yükle</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="227"/>
         <source>Reload files on startup</source>
-        <translation>Açılışta dosyaları yeniden yükle</translation>
+        <translation>A&#231;&#305;l&#305;&#351;ta dosyalar&#305; yeniden yükle</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="306"/>
@@ -2381,12 +2381,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="318"/>
         <source>Show splash screen on startup</source>
-        <translation>Açılışta splash penceresini göster</translation>
+        <translation>A&#231;&#305;l&#305;&#351;ta splash penceresini göster</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="325"/>
         <source>Show welcome page on startup</source>
-        <translation>Açılışta hoşgeldin sayfasını göster</translation>
+        <translation>A&#231;&#305;l&#305;&#351;ta ho&#351;geldin sayfas&#305;n&#305; göster</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="335"/>
@@ -2402,12 +2402,12 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="348"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
-        <translation>Fare tekerleği ile sekmeler arası gezintiyi etkinleştir</translation>
+        <translation>Fare tekerle&#287;i ile sekmeler aras&#305; gezintiyi etkinle&#351;tir</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="358"/>
         <source>Toolbar Icon Size [*]</source>
-        <translation>Araç Çubuğu İkonları</translation>
+        <translation>Ara&#231; &#199;ubu&#287;u &#304;konlar&#305;</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="431"/>
@@ -2422,27 +2422,27 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="449"/>
         <source>Hide standard commands</source>
-        <translation>Standart komutları gizle</translation>
+        <translation>Standart komutlar&#305; gizle</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="456"/>
         <source>Reset</source>
-        <translation>Sıfırla</translation>
+        <translation>S&#305;f&#305;rla</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="463"/>
         <source>Reset All</source>
-        <translation>Tümünü Sıfırla</translation>
+        <translation>Tümünü S&#305;f&#305;rla</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="483"/>
         <source>Import...</source>
-        <translation>İçe Aktar...</translation>
+        <translation>&#304;&#231;e Aktar...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="490"/>
         <source>Export...</source>
-        <translation>Dışa Aktar...</translation>
+        <translation>D&#305;&#351;a Aktar...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="24"/>
@@ -2458,7 +2458,7 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/liteappoption.ui" line="175"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
-        <translation>Açılışta oturumu yeniden yükle</translation>
+        <translation>A&#231;&#305;l&#305;&#351;ta oturumu yeniden yükle</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="85"/>
@@ -2468,7 +2468,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="86"/>
         <source>SplitterStyle</source>
-        <translation>Ayıraç Stili</translation>
+        <translation>Ay&#305;ra&#231; Stili</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="140"/>
@@ -2483,7 +2483,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="142"/>
         <source>Shortcuts</source>
-        <translation>Kısayollar</translation>
+        <translation>K&#305;sayollar</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="143"/>
@@ -2493,28 +2493,28 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="412"/>
         <source>Import Keyboard Mapping Scheme</source>
-        <translation>Klavye kısayol şemasını içe aktar</translation>
+        <translation>Klavye k&#305;sayol &#351;emas&#305;n&#305; i&#231;e aktar</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="412"/>
         <location filename="src/liteapp/liteappoption.cpp" line="446"/>
         <source>Keyboard Mapping Scheme (%1)</source>
-        <translation>Klavye Kısayol Şeması (%1)</translation>
+        <translation>Klavye K&#305;sayol &#350;emas&#305; (%1)</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="419"/>
         <source>Could not read scheme from %1!</source>
-        <translation>%1 yolundaki şema okunamıyor!</translation>
+        <translation>%1 yolundaki &#351;ema okunam&#305;yor!</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="446"/>
         <source>Export Keyboard Mapping Scheme</source>
-        <translation>Klavye kısayol şemasını dışarı aktar</translation>
+        <translation>Klavye k&#305;sayol &#351;emas&#305;n&#305; d&#305;&#351;ar&#305; aktar</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="457"/>
         <source>Could not write scheme to %1!</source>
-        <translation>Şema %1 dosyasına yazılamıyor!</translation>
+        <translation>&#350;ema %1 dosyas&#305;na yaz&#305;lam&#305;yor!</translation>
     </message>
 </context>
 <context>
@@ -2522,7 +2522,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="139"/>
         <source>Build Toolbar</source>
-        <translation>Derleme Araç Çubuğu</translation>
+        <translation>Derleme Ara&#231; &#199;ubu&#287;u</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="144"/>
@@ -2534,20 +2534,20 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="154"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="158"/>
         <source>Name</source>
-        <translation>İsim</translation>
+        <translation>&#304;sim</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="151"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="155"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="159"/>
         <source>Value</source>
-        <translation>Değer</translation>
+        <translation>De&#287;er</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="163"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
-        <translation>Derleme ayarları...</translation>
+        <translation>Derleme ayarlar&#305;...</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
@@ -2558,12 +2558,12 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="181"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
-        <translation>Çıktıyı Temizle</translation>
+        <translation>&#199;&#305;kt&#305;y&#305; Temizle</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="185"/>
         <source>Execute File</source>
-        <translation>Dosya Çalıştır</translation>
+        <translation>Dosya &#199;al&#305;&#351;t&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="188"/>
@@ -2598,7 +2598,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="216"/>
         <source>Line Wrap</source>
-        <translation>Satır Kaydırma</translation>
+        <translation>Sat&#305;r Kayd&#305;rma</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="220"/>
@@ -2614,13 +2614,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="238"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
-        <translation>Derleme Çıktısı</translation>
+        <translation>Derleme &#199;&#305;kt&#305;s&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="591"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="597"/>
         <source>Current environment change id &quot;%1&quot;</source>
-        <translation>Mevcut çalışma ortamı değişilik no &quot;%1&quot;</translation>
+        <translation>Mevcut &#231;al&#305;&#351;ma ortam&#305; de&#287;i&#351;ilik no &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="927"/>
@@ -2638,12 +2638,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1269"/>
         <source>Command exited with code %1.</source>
-        <translation>Komutun çalışması %1 koduyla sonlandı.</translation>
+        <translation>Komutun &#231;al&#305;&#351;mas&#305; %1 koduyla sonland&#305;.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1271"/>
         <source>Success: %1.</source>
-        <oldsource>Başarılı: %1.
+        <oldsource>Ba&#351;ar&#305;l&#305;: %1.
 </oldsource>
         <translation type="unfinished">Erfolg: %1.</translation>
     </message>
@@ -2653,7 +2653,7 @@ Success: %2.</oldsource>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
-        <translation>Şu an bir proses zaten çalışıyor.. Önce bu eylemi durdurun.</translation>
+        <translation>&#350;u an bir proses zaten &#231;al&#305;&#351;&#305;yor.. Önce bu eylemi durdurun.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1353"/>
@@ -2667,26 +2667,26 @@ Success: %2.</oldsource>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
-        <translation>Mevcut prosesin durdurulması başarısız!</translation>
+        <translation>Mevcut prosesin durdurulmas&#305; ba&#351;ar&#305;s&#305;z!</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1454"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
-        <translation>&gt; Eylem &apos;%1&apos; okunamıyor</translation>
+        <translation>&gt; Eylem &apos;%1&apos; okunam&#305;yor</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1500"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
-        <translation>Proses başlatma başarılı</translation>
+        <translation>Proses ba&#351;latma ba&#351;ar&#305;l&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1500"/>
         <source>Failed to start process</source>
-        <translation>Proses başlatılamıyor</translation>
+        <translation>Proses ba&#351;lat&#305;lam&#305;yor</translation>
     </message>
 </context>
 <context>
@@ -2700,13 +2700,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="20"/>
         <source>Recheck Go installation when changing environments</source>
         <oldsource>Recheck go env if enviroment changed</oldsource>
-        <translation>Çalışma ortamı değişikliğinde Go kurulumunu kontrol et</translation>
+        <translation>&#199;al&#305;&#351;ma ortam&#305; de&#287;i&#351;ikli&#287;inde Go kurulumunu kontrol et</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildoption.ui" line="27"/>
         <source>Build command configuration files [*]</source>
         <oldsource>Build command configuration files:</oldsource>
-        <translation>Komut ayarları dosyalarını derle:</translation>
+        <translation>Komut ayarlar&#305; dosyalar&#305;n&#305; derle:</translation>
     </message>
 </context>
 <context>
@@ -2720,13 +2720,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="104"/>
         <source>Execute:</source>
         <oldsource>Exec:</oldsource>
-        <translation>Çalıştır:</translation>
+        <translation>&#199;al&#305;&#351;t&#305;r:</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="111"/>
         <source>Execute File</source>
         <oldsource>Execute</oldsource>
-        <translation>Dosyayı Çalıştır</translation>
+        <translation>Dosyay&#305; &#199;al&#305;&#351;t&#305;r</translation>
     </message>
 </context>
 <context>
@@ -2749,19 +2749,19 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="119"/>
         <source>Show Current Line</source>
-        <translation>Mevcut Satırı Göster</translation>
+        <translation>Mevcut Sat&#305;r&#305; Göster</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="194"/>
         <source>Debug Output</source>
         <oldsource>Debug</oldsource>
-        <translation>Hata Ayıklama Çıktısı</translation>
+        <translation>Hata Ay&#305;klama &#199;&#305;kt&#305;s&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="103"/>
         <source>Start Debugging External Application...</source>
         <oldsource>Start Debugging External Application</oldsource>
-        <translation>Hata Ayıklamayı Harici Uygulamada Başlat...</translation>
+        <translation>Hata Ay&#305;klamay&#305; Harici Uygulamada Ba&#351;lat...</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="91"/>
@@ -2771,17 +2771,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="106"/>
         <source>Start Debugging</source>
-        <translation>Hata Ayıklamaya Başla</translation>
+        <translation>Hata Ay&#305;klamaya Ba&#351;la</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="109"/>
         <source>Start Debugging Tests</source>
-        <translation>Hata Ayıklama Testlerine Başla</translation>
+        <translation>Hata Ay&#305;klama Testlerine Ba&#351;la</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="122"/>
         <source>Step Into</source>
-        <translation>İçine Adım</translation>
+        <translation>&#304;&#231;ine Ad&#305;m</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="125"/>
@@ -2791,27 +2791,27 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="128"/>
         <source>Step Out</source>
-        <translation>Dışa Adım</translation>
+        <translation>D&#305;&#351;a Ad&#305;m</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="131"/>
         <source>Run to Line</source>
-        <translation>Satıra kadar Çalış</translation>
+        <translation>Sat&#305;ra kadar &#199;al&#305;&#351;</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="134"/>
         <source>Insert/Remove Breakpoint</source>
-        <translation>Kesme noktası ekle/kaldır</translation>
+        <translation>Kesme noktas&#305; ekle/kald&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="137"/>
         <source>Remove All Breakpoints</source>
-        <translation>Tüm Kesme Noktalarını Kaldır</translation>
+        <translation>Tüm Kesme Noktalar&#305;n&#305; Kald&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebug.cpp" line="156"/>
         <source>&amp;Debug</source>
-        <translation>&amp;Hata Ayıkla</translation>
+        <translation>&amp;Hata Ay&#305;kla</translation>
     </message>
 </context>
 <context>
@@ -2824,13 +2824,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="20"/>
         <source>Debug</source>
-        <translation>Hata Ayıkla</translation>
+        <translation>Hata Ay&#305;kla</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
         <source>Rebuild before debugging</source>
         <oldsource>Debug before rebuild</oldsource>
-        <translation>Hata ayıklamadan önce yeniden derle</translation>
+        <translation>Hata ay&#305;klamadan önce yeniden derle</translation>
     </message>
 </context>
 <context>
@@ -2839,7 +2839,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/litedebug/litedebugplugin.cpp" line="58"/>
         <source>Debug Window</source>
         <oldsource>Debug</oldsource>
-        <translation>Hata Ayıklama Penceresi</translation>
+        <translation>Hata Ay&#305;klama Penceresi</translation>
     </message>
 </context>
 <context>
@@ -2848,7 +2848,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
-        <translation>LiteIDE Dökümanları</translation>
+        <translation>LiteIDE Dökümanlar&#305;</translation>
     </message>
 </context>
 <context>
@@ -2876,17 +2876,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="253"/>
         <source>Paste</source>
-        <translation>Yapıştır</translation>
+        <translation>Yap&#305;&#351;t&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="256"/>
         <source>Select All</source>
-        <translation>Tümünü Seç</translation>
+        <translation>Tümünü Se&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="337"/>
         <source>Word Wrap (MimeType)</source>
-        <translation>Satır Kaydırma (MimeTipi)</translation>
+        <translation>Sat&#305;r Kayd&#305;rma (MimeTipi)</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="348"/>
@@ -2901,58 +2901,58 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="354"/>
         <source>Auto-indent Selection</source>
-        <translation>Seçimi Otomatik Hizala</translation>
+        <translation>Se&#231;imi Otomatik Hizala</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="358"/>
         <source>Tab To Spaces (MimeType)</source>
-        <translation>Tab-Boşluk Dönüşümü (MimeTipi)</translation>
+        <translation>Tab-Bo&#351;luk Dönü&#351;ümü (MimeTipi)</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="362"/>
         <source>Line End Windows (\r\n)</source>
-        <translation>Windows satır sonu (\r\n)</translation>
+        <translation>Windows sat&#305;r sonu (\r\n)</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="366"/>
         <source>Line End Unix (\n)</source>
-        <translation>Unix satır sonu (\n)</translation>
+        <translation>Unix sat&#305;r sonu (\n)</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="370"/>
         <source>Visualize Whitespace (Global)</source>
-        <translation>Boşlukları Görünür Yap (Genel)</translation>
+        <translation>Bo&#351;luklar&#305; Görünür Yap (Genel)</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="377"/>
         <source>Move Line Up</source>
-        <translation>Satırı Yukarı Taşı</translation>
+        <translation>Sat&#305;r&#305; Yukar&#305; Ta&#351;&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="380"/>
         <source>Move Line Down</source>
-        <translation>Satırı Aşağı Taşı</translation>
+        <translation>Sat&#305;r&#305; A&#351;a&#287;&#305; Ta&#351;&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="383"/>
         <source>Copy Line Up</source>
-        <translation>Satırı Yukarı Kopyala</translation>
+        <translation>Sat&#305;r&#305; Yukar&#305; Kopyala</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="386"/>
         <source>Copy Line Down</source>
-        <translation>Satırı Aşağı Kopyala</translation>
+        <translation>Sat&#305;r&#305; A&#351;a&#287;&#305; Kopyala</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="389"/>
         <source>Join Lines</source>
-        <translation>Satırları Birleştir</translation>
+        <translation>Sat&#305;rlar&#305; Birle&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="544"/>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="606"/>
         <source>Advanced</source>
-        <translation>Gelişmiş</translation>
+        <translation>Geli&#351;mi&#351;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="574"/>
@@ -2963,65 +2963,65 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="981"/>
         <source>Export HTML</source>
-        <translation>HTML Olarak Dışa Aktar</translation>
+        <translation>HTML Olarak D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="989"/>
         <source>Export Failed</source>
-        <translation>Dışa Aktarma Başarısız</translation>
+        <translation>D&#305;&#351;a Aktarma Ba&#351;ar&#305;s&#305;z</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="990"/>
         <source>Could not open %1 for writing.</source>
-        <translation>%1 dosyası yazmak için açılamıyor.</translation>
+        <translation>%1 dosyas&#305; yazmak i&#231;in a&#231;&#305;lam&#305;yor.</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1009"/>
         <source>Export PDF</source>
-        <translation>PDF Olarak Dışa Aktar</translation>
+        <translation>PDF Olarak D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1034"/>
         <source>Print Document</source>
-        <translation>Dökümanı Yazdır</translation>
+        <translation>Döküman&#305; Yazd&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
-        <translation>Döküman Baskı Önizleme...</translation>
+        <translation>Döküman Bask&#305; Önizleme...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="259"/>
         <source>Export HTML...</source>
-        <translation>HTML Olarak Dışa Aktar...</translation>
+        <translation>HTML Olarak D&#305;&#351;a Aktar...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="261"/>
         <source>Export PDF...</source>
-        <translation>PDF Olarak Dışa Aktar...</translation>
+        <translation>PDF Olarak D&#305;&#351;a Aktar...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
         <source>Print...</source>
-        <translation>Yazdır...</translation>
+        <translation>Yazd&#305;r...</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
         <source>Go To Previous Block</source>
         <oldsource>Goto Previous Block</oldsource>
-        <translation>Bir Önceki Bloğa Git</translation>
+        <translation>Bir Önceki Blo&#287;a Git</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
         <source>Select Block</source>
-        <translation>Bloğu Seç</translation>
+        <translation>Blo&#287;u Se&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="275"/>
         <source>Go To Matching Brace</source>
         <oldsource>Goto Match Brace</oldsource>
-        <translation>Eşleşen Paranteze Git</translation>
+        <translation>E&#351;le&#351;en Paranteze Git</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="278"/>
@@ -3048,7 +3048,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1093"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
-        <translation>Satıra Git</translation>
+        <translation>Sat&#305;ra Git</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="298"/>
@@ -3058,52 +3058,52 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
         <source>Duplicate</source>
-        <translation>Kopyasını Al</translation>
+        <translation>Kopyas&#305;n&#305; Al</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="305"/>
         <source>Delete Line</source>
-        <translation>Satırı Sil</translation>
+        <translation>Sat&#305;r&#305; Sil</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
         <source>Copy Line</source>
-        <translation>Satırı Kopyala</translation>
+        <translation>Sat&#305;r&#305; Kopyala</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
         <source>Cut Line</source>
-        <translation>Satırı Kes</translation>
+        <translation>Sat&#305;r&#305; Kes</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
         <source>Insert Line Before</source>
-        <translation>Önüne satır ekle</translation>
+        <translation>Önüne sat&#305;r ekle</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="321"/>
         <source>Insert Line After</source>
-        <translation>Arkasına satır ekle</translation>
+        <translation>Arkas&#305;na sat&#305;r ekle</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="325"/>
         <source>Increase Font Size</source>
-        <translation>Yazıtipini Büyüt</translation>
+        <translation>Yaz&#305;tipini Büyüt</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="328"/>
         <source>Decrease Font Size</source>
-        <translation>Yazıtipini Küçült</translation>
+        <translation>Yaz&#305;tipini Kü&#231;ült</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="331"/>
         <source>Reset Font Size</source>
-        <translation>Yazıtipi Boyutunu Sıfırla</translation>
+        <translation>Yaz&#305;tipi Boyutunu S&#305;f&#305;rla</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="334"/>
         <source>Clean Whitespace</source>
-        <translation>Boşlukları Temizle</translation>
+        <translation>Bo&#351;luklar&#305; Temizle</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="341"/>
@@ -3113,18 +3113,18 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="704"/>
         <source>Reload File</source>
-        <translation>Dosyayı Yenile</translation>
+        <translation>Dosyay&#305; Yenile</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1051"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
-        <translation>Kaydedilmemiş değişiklikleri gözardı edip %1 dosyasını yeniden yüklemek istediğinize emin misiniz?</translation>
+        <translation>Kaydedilmemi&#351; de&#287;i&#351;iklikleri gözard&#305; edip %1 dosyas&#305;n&#305; yeniden yüklemek istedi&#287;inize emin misiniz?</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
         <source>Go To Next Block</source>
         <oldsource>Goto Next Block</oldsource>
-        <translation>Bir Sonraki Bloğa Git</translation>
+        <translation>Bir Sonraki Blo&#287;a Git</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="580"/>
@@ -3139,7 +3139,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1093"/>
         <source>Line: </source>
-        <translation>Satır: </translation>
+        <translation>Sat&#305;r: </translation>
     </message>
 </context>
 <context>
@@ -3157,17 +3157,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="355"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
-        <translation>Görüntülenmeyen karakterleri yakala ve &apos;.&apos; ile değiştir</translation>
+        <translation>Görüntülenmeyen karakterleri yakala ve &apos;.&apos; ile de&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="30"/>
         <source>Font</source>
-        <translation>Yazıtipi</translation>
+        <translation>Yaz&#305;tipi</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="24"/>
         <source>Font &amp;&amp; Colors</source>
-        <translation type="unfinished">Yazıtipi &amp;&amp; Renkler</translation>
+        <translation type="unfinished">Yaz&#305;tipi &amp;&amp; Renkler</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="36"/>
@@ -3192,13 +3192,13 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="96"/>
         <source>Antialias</source>
-        <translation>Yumuşak kenarlar</translation>
+        <translation>Yumu&#351;ak kenarlar</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="119"/>
         <source>Editor Color Scheme</source>
         <oldsource>ColorStyle Scheme</oldsource>
-        <translation>Editör Renk Şeması</translation>
+        <translation>Editör Renk &#350;emas&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="127"/>
@@ -3219,32 +3219,32 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="312"/>
         <source>Clean whitespace when saving files</source>
-        <translation>Dosyaları kaydederken gereksiz boşlukları sil</translation>
+        <translation>Dosyalar&#305; kaydederken gereksiz bo&#351;luklar&#305; sil</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="319"/>
         <source>Enable scroll wheel zooming</source>
-        <translation>Fare terkerleği ile zoom etkin</translation>
+        <translation>Fare terkerle&#287;i ile zoom etkin</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="378"/>
         <source>Display VisualizeWhitespace</source>
-        <translation>Boşlukları Görselleştir</translation>
+        <translation>Bo&#351;luklar&#305; Görselle&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="392"/>
         <source>Word wrap by default</source>
-        <translation>Varsayılan olarak satırları kaydır</translation>
+        <translation>Varsay&#305;lan olarak sat&#305;rlar&#305; kayd&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="371"/>
         <source>Display code fold</source>
-        <translation>Kod katlamayı göster</translation>
+        <translation>Kod katlamay&#305; göster</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="450"/>
         <source>Display offset position</source>
-        <translation>Kenar boşluğu konumunu göster</translation>
+        <translation>Kenar bo&#351;lu&#287;u konumunu göster</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="474"/>
@@ -3255,27 +3255,27 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="183"/>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="258"/>
         <source>Behavior</source>
-        <translation>Davranış</translation>
+        <translation>Davran&#305;&#351;</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="385"/>
         <source>Display EOF</source>
-        <translation>Satır sonu (EOF) karakterini göster</translation>
+        <translation>Sat&#305;r sonu (EOF) karakterini göster</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="399"/>
         <source>Display line numbers</source>
-        <translation>Satır numaralarını göster</translation>
+        <translation>Sat&#305;r numaralar&#305;n&#305; göster</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="406"/>
         <source>Display indent guide </source>
-        <translation>Hizalama çizgisini göster</translation>
+        <translation>Hizalama &#231;izgisini göster</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="415"/>
         <source>Display right margin at column</source>
-        <translation>Sağ marjini göster</translation>
+        <translation>Sa&#287; marjini göster</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="264"/>
@@ -3287,13 +3287,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="271"/>
         <source>Case sensitive code completion</source>
         <oldsource>Completer case sensitive</oldsource>
-        <translation>Kod tamamlarken Küçük/BÜYÜK harfe duyarlı ol</translation>
+        <translation>Kod tamamlarken Kü&#231;ük/BÜYÜK harfe duyarl&#305; ol</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="280"/>
         <source>Code completion prefix length:</source>
         <oldsource>Word Complete Prefix Length</oldsource>
-        <translation>Kod tamamlama için karakter sayısı:</translation>
+        <translation>Kod tamamlama i&#231;in karakter say&#305;s&#305;:</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="343"/>
@@ -3309,17 +3309,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="142"/>
         <source>Tab Width</source>
-        <translation>Tab Genişliği</translation>
+        <translation>Tab Geni&#351;li&#287;i</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="143"/>
         <source>Tab To Spaces</source>
-        <translation>Tab-Boşluk Dönüşümü</translation>
+        <translation>Tab-Bo&#351;luk Dönü&#351;ümü</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="144"/>
         <source>File Extensions</source>
-        <translation>Dosya Uzantıları</translation>
+        <translation>Dosya Uzant&#305;lar&#305;</translation>
     </message>
 </context>
 <context>
@@ -3332,12 +3332,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteenv/liteenvoption.ui" line="20"/>
         <source>Environment definition files:</source>
-        <translation>Çalışma ortamı tanımlama dosyaları:</translation>
+        <translation>&#199;al&#305;&#351;ma ortam&#305; tan&#305;mlama dosyalar&#305;:</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/liteenvoption.ui" line="33"/>
         <source>Environment changes will take effect after switching environments.</source>
-        <translation>Çalışma ortamı değişiklikleri çalışma ortamı değiştikten sonra geçerli olur.</translation>
+        <translation>&#199;al&#305;&#351;ma ortam&#305; de&#287;i&#351;iklikleri &#231;al&#305;&#351;ma ortam&#305; de&#287;i&#351;tikten sonra ge&#231;erli olur.</translation>
     </message>
 </context>
 <context>
@@ -3365,7 +3365,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="81"/>
         <source>Replace</source>
-        <translation>Değiştir</translation>
+        <translation>De&#287;i&#351;tir</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/litefindplugin.cpp" line="84"/>
@@ -3378,7 +3378,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="66"/>
         <source>Open a new tab</source>
-        <translation>Yeni bir sekme aç</translation>
+        <translation>Yeni bir sekme a&#231;</translation>
     </message>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="71"/>
@@ -3397,7 +3397,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="142"/>
         <source>Markdown Exporter</source>
         <oldsource>Markdown Batch</oldsource>
-        <translation>Markdown Dışa Aktarıcı</translation>
+        <translation>Markdown D&#305;&#351;a Aktar&#305;c&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="161"/>
@@ -3408,29 +3408,29 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="230"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
-        <translation>Markdown dosyalarınızı içeren dizini seçin:</translation>
+        <translation>Markdown dosyalar&#305;n&#305;z&#305; i&#231;eren dizini se&#231;in:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="241"/>
         <source>Select Markdown Files</source>
-        <translation>Markdown Dosyalarını Seç</translation>
+        <translation>Markdown Dosyalar&#305;n&#305; Se&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="289"/>
         <source>Select the folder to contain separated markdown exports:</source>
-        <translation>Markdown dışa aktarımları için dizin seçin:</translation>
+        <translation>Markdown d&#305;&#351;a aktar&#305;mlar&#305; i&#231;in dizin se&#231;in:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="302"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
-        <translation>Tek HTML Olarak Dışa Aktar</translation>
+        <translation>Tek HTML Olarak D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="377"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
-        <translation>Tek PDF Olarak Dışa Aktar</translation>
+        <translation>Tek PDF Olarak D&#305;&#351;a Aktar</translation>
     </message>
 </context>
 <context>
@@ -3444,13 +3444,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="20"/>
         <source>Markdown Source Files</source>
         <oldsource>Markdown Files</oldsource>
-        <translation>Markdown Kaynak Dosyaları</translation>
+        <translation>Markdown Kaynak Dosyalar&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="38"/>
         <source>Import Folder...</source>
         <oldsource>Import Folder</oldsource>
-        <translation>İçe Aktarma Dizini...</translation>
+        <translation>&#304;&#231;e Aktarma Dizini...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="45"/>
@@ -3461,22 +3461,22 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="52"/>
         <source>Move Up</source>
-        <translation>Yukarı Taşı</translation>
+        <translation>Yukar&#305; Ta&#351;&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="59"/>
         <source>Move Down</source>
-        <translation>Aşağı Taşı</translation>
+        <translation>A&#351;a&#287;&#305; Ta&#351;&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="66"/>
         <source>Remove</source>
-        <translation>Kaldır</translation>
+        <translation>Kald&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="73"/>
         <source>Remove All</source>
-        <translation>Tümünü Kaldır</translation>
+        <translation>Tümünü Kald&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="98"/>
@@ -3486,7 +3486,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="106"/>
         <source>Export Folder:</source>
-        <translation>Dışa Aktarma Dizini:</translation>
+        <translation>D&#305;&#351;a Aktarma Dizini:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="116"/>
@@ -3503,55 +3503,55 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="137"/>
         <source>Insert horizontal line between merged files</source>
         <oldsource>Merge files insert split &lt;hr&gt;</oldsource>
-        <translation>Birleşen dosyaların arasına çizgi ekle</translation>
+        <translation>Birle&#351;en dosyalar&#305;n aras&#305;na &#231;izgi ekle</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="144"/>
         <source>Insert page break between merged files</source>
         <oldsource>Merge files insert page break</oldsource>
-        <translation>Birleşen dosyaların arasına sayfa sonu işareti ekle</translation>
+        <translation>Birle&#351;en dosyalar&#305;n aras&#305;na sayfa sonu i&#351;areti ekle</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="169"/>
         <source>Export</source>
         <oldsource>Export Util</oldsource>
-        <translation>Dışa Aktar</translation>
+        <translation>D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="175"/>
         <source>Export Separated HTML</source>
         <oldsource>Separate Html</oldsource>
-        <translation>Ayrı HTML Dışa Aktar</translation>
+        <translation>Ayr&#305; HTML D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="182"/>
         <source>Export Separated PDF</source>
         <oldsource>Separate PDF</oldsource>
-        <translation>Ayrı PDF Dışa Aktar</translation>
+        <translation>Ayr&#305; PDF D&#305;&#351;a Aktar</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="189"/>
         <source>Export Merged HTML...</source>
         <oldsource>Merge Html</oldsource>
-        <translation>Birleştirilmiş HTML Olarak Dışa Aktar...</translation>
+        <translation>Birle&#351;tirilmi&#351; HTML Olarak D&#305;&#351;a Aktar...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="196"/>
         <source>Export Merged PDF...</source>
         <oldsource>Merge PDF</oldsource>
-        <translation>Birleştirilmiş PDF Olarak Dışa Aktar...</translation>
+        <translation>Birle&#351;tirilmi&#351; PDF Olarak D&#305;&#351;a Aktar...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="203"/>
         <source>Print Preview Merged...</source>
         <oldsource>Merge Print Preview</oldsource>
-        <translation>Birleştirilmiş Baskı Önizleme...</translation>
+        <translation>Birle&#351;tirilmi&#351; Bask&#305; Önizleme...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="210"/>
         <source>Print Merged</source>
         <oldsource>Merge Print</oldsource>
-        <translation>Birleştirerek Yazdır</translation>
+        <translation>Birle&#351;tirerek Yazd&#305;r</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="233"/>
@@ -3565,57 +3565,57 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="83"/>
         <source>Header (h1)</source>
         <oldsource>Header &lt;h1&gt;</oldsource>
-        <translation>Başlık (h1)</translation>
+        <translation>Ba&#351;l&#305;k (h1)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="86"/>
         <source>Header (h2)</source>
         <oldsource>Header &lt;h2&gt;</oldsource>
-        <translation>Başlık (h2)</translation>
+        <translation>Ba&#351;l&#305;k (h2)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="89"/>
         <source>Header (h3)</source>
         <oldsource>Header &lt;h3&gt;</oldsource>
-        <translation>Başlık (h3)</translation>
+        <translation>Ba&#351;l&#305;k (h3)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="92"/>
         <source>Header (h4)</source>
         <oldsource>Header &lt;h4&gt;</oldsource>
-        <translation>Başlık (h4)</translation>
+        <translation>Ba&#351;l&#305;k (h4)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="95"/>
         <source>Header (h5)</source>
         <oldsource>Header &lt;h5&gt;</oldsource>
-        <translation>Başlık (h5)</translation>
+        <translation>Ba&#351;l&#305;k (h5)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="98"/>
         <source>Header (h6)</source>
         <oldsource>Header &lt;h6&gt;</oldsource>
-        <translation>Başlık (h6)</translation>
+        <translation>Ba&#351;l&#305;k (h6)</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="101"/>
         <source>Bold</source>
-        <translation>Kalın</translation>
+        <translation>Kal&#305;n</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="104"/>
         <source>Italic</source>
-        <translation>İtalik</translation>
+        <translation>&#304;talik</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="107"/>
         <source>Inline Code</source>
-        <translation>Satır İçi Kod</translation>
+        <translation>Sat&#305;r &#304;&#231;i Kod</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="110"/>
         <source>Link</source>
-        <translation>Bağlantı</translation>
+        <translation>Ba&#287;lant&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="113"/>
@@ -3625,28 +3625,28 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="116"/>
         <source>Unordered List</source>
-        <translation>Sırasız Liste</translation>
+        <translation>S&#305;ras&#305;z Liste</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="119"/>
         <source>Ordered List</source>
-        <translation>Sıralı Liste</translation>
+        <translation>S&#305;ral&#305; Liste</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="122"/>
         <source>Blockquote</source>
-        <translation>Alıntı</translation>
+        <translation>Al&#305;nt&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="125"/>
         <source>Horizontal Rule</source>
-        <translation>Yatay Çizgi</translation>
+        <translation>Yatay &#199;izgi</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="131"/>
         <location filename="src/plugins/markdown/markdownedit.cpp" line="154"/>
         <source>Heading</source>
-        <translation>Başlangıç</translation>
+        <translation>Ba&#351;lang&#305;&#231;</translation>
     </message>
 </context>
 <context>
@@ -3685,7 +3685,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="87"/>
         <source>Name:</source>
-        <translation>İsim:</translation>
+        <translation>&#304;sim:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="114"/>
@@ -3701,52 +3701,52 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
         <source>Could not create the target directory: %1</source>
-        <translation>Hedef dizin yaratılamıyor: %1</translation>
+        <translation>Hedef dizin yarat&#305;lam&#305;yor: %1</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>Uyar&#305;</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Location %1 is not empty.
 Use the target directory anyway?</source>
-        <translation>%1 dizini boş değil.
-Yine de hedef dizin olarak kullanılsın mı?</translation>
+        <translation>%1 dizini bo&#351; de&#287;il.
+Yine de hedef dizin olarak kullan&#305;ls&#305;n m&#305;?</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>Overwrite File</source>
-        <translation>Dosyanın Üzerine Yaz</translation>
+        <translation>Dosyan&#305;n Üzerine Yaz</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation type="unfinished">%1 zaten mevcut.
-Değiştirilmesini istiyor musunuz?</translation>
+De&#287;i&#351;tirilmesini istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
         <source>No files could be created.</source>
-        <translation>Hiç dosya yaratılmadı.</translation>
+        <translation>Hi&#231; dosya yarat&#305;lmad&#305;.</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="279"/>
         <source>File template details:</source>
-        <translation type="unfinished">Taslak dosya detayları:</translation>
+        <translation type="unfinished">Taslak dosya detaylar&#305;:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="281"/>
         <source>Project template details:</source>
         <oldsource>New project wizard:</oldsource>
-        <translation>Taslak proje detayları:</translation>
+        <translation>Taslak proje detaylar&#305;:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="359"/>
         <source>Choose a directory for the new content:</source>
-        <translation>Yeni içerik için bir dizin seçin:</translation>
+        <translation>Yeni i&#231;erik i&#231;in bir dizin se&#231;in:</translation>
     </message>
 </context>
 <context>
@@ -3774,7 +3774,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/liteapp/optionswidget.ui" line="72"/>
         <source>[*] item requeset restart LiteIDE</source>
         <oldsource>[*] item requeset restart liteide</oldsource>
-        <translation>[*] LiteIDE yeniden başlatılmalıdır</translation>
+        <translation>[*] LiteIDE yeniden ba&#351;lat&#305;lmal&#305;d&#305;r</translation>
     </message>
 </context>
 <context>
@@ -3787,7 +3787,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="20"/>
         <source>Font</source>
-        <translation>Yazıtipi</translation>
+        <translation>Yaz&#305;tipi</translation>
     </message>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="26"/>
@@ -3812,7 +3812,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="86"/>
         <source>Antialias</source>
-        <translation>Yumuşak kenarlar</translation>
+        <translation>Yumu&#351;ak kenarlar</translation>
     </message>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="109"/>
@@ -3822,12 +3822,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="115"/>
         <source>Use editor color scheme</source>
-        <translation>Editör renk şemasını kullan</translation>
+        <translation>Editör renk &#351;emas&#305;n&#305; kullan</translation>
     </message>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="124"/>
         <source>Sets the maximum number of lines</source>
-        <translation>Maksimum satır sayısını belirler</translation>
+        <translation>Maksimum sat&#305;r say&#305;s&#305;n&#305; belirler</translation>
     </message>
 </context>
 <context>
@@ -3851,7 +3851,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
         <source>Load Package in New Window</source>
-        <translation>Paketi Yeni Pencerede Aç</translation>
+        <translation>Paketi Yeni Pencerede A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
@@ -3861,13 +3861,13 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="94"/>
         <source>Open Source File</source>
-        <translation>Kaynak Dosyayı Aç</translation>
+        <translation>Kaynak Dosyay&#305; A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="95"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
-        <translation>İsmi Kopyala</translation>
+        <translation>&#304;smi Kopyala</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="117"/>
@@ -3879,7 +3879,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="193"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
-        <translation>Go kurulumu bulunamadı.</translation>
+        <translation>Go kurulumu bulunamad&#305;.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="198"/>
@@ -3898,7 +3898,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="77"/>
         <source>Open Explorer Here</source>
-        <translation>İçeren Dizini Göster</translation>
+        <translation>&#304;&#231;eren Dizini Göster</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="78"/>
@@ -3915,12 +3915,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
         <source>File %1 already exists.</source>
-        <translation>%1 dosyası zaten mevcut.</translation>
+        <translation>%1 dosyas&#305; zaten mevcut.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
         <source>Could not open %1 for writing.</source>
-        <translation>%1 dosyası yazmak için açılamıyor.</translation>
+        <translation>%1 dosyas&#305; yazmak i&#231;in a&#231;&#305;lam&#305;yor.</translation>
     </message>
 </context>
 <context>
@@ -3939,12 +3939,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="51"/>
         <source>Name</source>
-        <translation>İsim</translation>
+        <translation>&#304;sim</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="54"/>
         <source>Author</source>
-        <translation>Geliştirici</translation>
+        <translation>Geli&#351;tirici</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="52"/>
@@ -3966,7 +3966,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/liteapp/pluginsdialog.cpp" line="56"/>
         <source>File Name</source>
         <oldsource>FileName</oldsource>
-        <translation>Dosya Adı</translation>
+        <translation>Dosya Ad&#305;</translation>
     </message>
 </context>
 <context>
@@ -3974,47 +3974,47 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="46"/>
         <source>process exited with code %1</source>
-        <translation>Prosesin çalışması %1 koduyla sonlandı</translation>
+        <translation>Prosesin &#231;al&#305;&#351;mas&#305; %1 koduyla sonland&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="49"/>
         <source>process crashed or was terminated</source>
-        <translation>proses çakıldı veya sonlandırıldı</translation>
+        <translation>proses &#231;ak&#305;ld&#305; veya sonland&#305;r&#305;ld&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="52"/>
         <source>process exited with an unknown status</source>
-        <translation>proses bilinmeyen bir durum koduyla sonlandı</translation>
+        <translation>proses bilinmeyen bir durum koduyla sonland&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="62"/>
         <source>process failed to start</source>
-        <translation>proses başlatma başarısız</translation>
+        <translation>proses ba&#351;latma ba&#351;ar&#305;s&#305;z</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="65"/>
         <source>process crashed or was terminated while running</source>
-        <translation>proses çalışırken çakıldı veya sonlandırıldı</translation>
+        <translation>proses &#231;al&#305;&#351;&#305;rken &#231;ak&#305;ld&#305; veya sonland&#305;r&#305;ld&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="68"/>
         <source>timed out waiting for process</source>
-        <translation>proses beklerken zamanaşımına uğradı</translation>
+        <translation>proses beklerken zamana&#351;&#305;m&#305;na u&#287;rad&#305;</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="71"/>
         <source>couldn&apos;t read from the process</source>
-        <translation>prosesin çıktısı okunamıyor</translation>
+        <translation>prosesin &#231;&#305;kt&#305;s&#305; okunam&#305;yor</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="74"/>
         <source>couldn&apos;t write to the process</source>
-        <translation>prosese yazılamıyor</translation>
+        <translation>prosese yaz&#305;lam&#305;yor</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="78"/>
         <source>an unknown error occurred</source>
-        <translation>bilinmeyen bir hata oluştu</translation>
+        <translation>bilinmeyen bir hata olu&#351;tu</translation>
     </message>
 </context>
 <context>
@@ -4027,7 +4027,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="119"/>
         <source>Import Directory &lt;%1&gt;</source>
-        <translation>İçe Aktarım Dizini &lt;%1&gt;</translation>
+        <translation>&#304;&#231;e Aktar&#305;m Dizini &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -4076,7 +4076,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="82"/>
         <source>Stop Search</source>
-        <translation>Aramayı Durdur</translation>
+        <translation>Aramay&#305; Durdur</translation>
     </message>
 </context>
 <context>
@@ -4084,7 +4084,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="14"/>
         <source>Debug External Application</source>
-        <translation>Harici Uygulamada Hata Ayıkla</translation>
+        <translation>Harici Uygulamada Hata Ay&#305;kla</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="22"/>
@@ -4106,18 +4106,18 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="46"/>
         <source>Working directory:</source>
-        <translation>Çalşma dizini:</translation>
+        <translation>&#199;al&#351;ma dizini:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="82"/>
         <source>Select Executable</source>
-        <translation>Çalıştırlabilir Dosya Seçin</translation>
+        <translation>&#199;al&#305;&#351;t&#305;rlabilir Dosya Se&#231;in</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="92"/>
         <source>Select the working directory:</source>
         <oldsource>Select Working Directory</oldsource>
-        <translation>Çalışma dizinini seçin:</translation>
+        <translation>&#199;al&#305;&#351;ma dizinini se&#231;in:</translation>
     </message>
 </context>
 <context>
@@ -4125,12 +4125,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="14"/>
         <source>Manage GOPATH</source>
-        <translation>GOPATH&apos;ı Yönet</translation>
+        <translation>GOPATH&apos;&#305; Yönet</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
         <source>System GOPATH</source>
-        <translation>Sistemde Kayıtlı GOPATH</translation>
+        <translation>Sistemde Kay&#305;tl&#305; GOPATH</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="35"/>
@@ -4140,7 +4140,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="60"/>
         <source>Custom Directories (one per line)</source>
-        <translation>Özel Dizinler (satır başına bir tane)</translation>
+        <translation>Özel Dizinler (sat&#305;r ba&#351;&#305;na bir tane)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="71"/>
@@ -4156,7 +4156,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="74"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
-        <translation>GOPATH'e eklemek için dizin seçin:</translation>
+        <translation>GOPATH'e eklemek i&#231;in dizin se&#231;in:</translation>
     </message>
 </context>
 <context>
@@ -4169,7 +4169,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="59"/>
         <source>Show SideBar</source>
-        <translation>Sidebar&apos;ı Göster</translation>
+        <translation>Sidebar&apos;&#305; Göster</translation>
     </message>
 </context>
 <context>
@@ -4177,7 +4177,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="428"/>
         <source>Hide SideBar</source>
-        <translation>Sidebar&apos;ı Gizle</translation>
+        <translation>Sidebar&apos;&#305; Gizle</translation>
     </message>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="461"/>
@@ -4187,7 +4187,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="462"/>
         <source>Output Windows</source>
-        <translation>Çıktı Pencereleri</translation>
+        <translation>&#199;&#305;kt&#305; Pencereleri</translation>
     </message>
 </context>
 <context>
@@ -4197,7 +4197,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/liteapp/tooldockwidget.cpp" line="267"/>
         <location filename="src/liteapp/tooldockwidget.cpp" line="268"/>
         <source>Move To</source>
-        <translation>Şuraya Taşı</translation>
+        <translation>&#350;uraya Ta&#351;&#305;</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="201"/>
@@ -4232,17 +4232,17 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="231"/>
         <source>Right</source>
-        <translation>Sağa</translation>
+        <translation>Sa&#287;a</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="235"/>
         <source>Right (Split)</source>
-        <translation>Sağa (Böl)</translation>
+        <translation>Sa&#287;a (Böl)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="243"/>
         <source>Unsplit</source>
-        <translation>Birleştir</translation>
+        <translation>Birle&#351;tir</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="248"/>
@@ -4255,12 +4255,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/liteapp/splitwindowstyle.cpp" line="242"/>
         <source>Hide Sidebars</source>
-        <translation>Sidebar&apos;ları Gizle</translation>
+        <translation>Sidebar&apos;lar&#305; Gizle</translation>
     </message>
     <message>
         <location filename="src/liteapp/splitwindowstyle.cpp" line="275"/>
         <source>Tool Windows</source>
-        <translation>Araç Pencereleri</translation>
+        <translation>Ara&#231; Pencereleri</translation>
     </message>
 </context>
 <context>
@@ -4278,12 +4278,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="66"/>
         <source>Paste</source>
-        <translation>Yapıştır</translation>
+        <translation>Yap&#305;&#351;t&#305;r</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="69"/>
         <source>Select All</source>
-        <translation>Tümünü Seç</translation>
+        <translation>Tümünü Se&#231;</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="72"/>
@@ -4296,7 +4296,7 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/3rdparty/qtc_texteditor/colorscheme.cpp" line="212"/>
         <source>Not a color scheme file.</source>
-        <translation>Geçerli bir renk şema dosyası değil.</translation>
+        <translation>Ge&#231;erli bir renk &#351;ema dosyas&#305; de&#287;il.</translation>
     </message>
 </context>
 <context>
@@ -4323,12 +4323,12 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="72"/>
         <source>Open Html File</source>
         <oldsource>Open Html</oldsource>
-        <translation>HTML Dosyası Aç</translation>
+        <translation>HTML Dosyas&#305; A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="119"/>
         <source>WebKitBrowser</source>
-        <translation>WebKit Tabanlı Tarayıcı</translation>
+        <translation>WebKit Tabanl&#305; Taray&#305;c&#305;</translation>
     </message>
     <message>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="169"/>
@@ -4339,7 +4339,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
-        <translation>HTML veya Markdown Dosyası Aç</translation>
+        <translation>HTML veya Markdown Dosyas&#305; A&#231;</translation>
     </message>
 </context>
 <context>
@@ -4348,7 +4348,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/webkithtmlwidget/webkithtmlwidgetplugin.cpp" line="74"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
-        <translation>HTML veya Markdown Dosyası Aç</translation>
+        <translation>HTML veya Markdown Dosyas&#305; A&#231;</translation>
     </message>
 </context>
 <context>
@@ -4361,12 +4361,12 @@ Değiştirilmesini istiyor musunuz?</translation>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="66"/>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation>A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="67"/>
         <source>Open Folder</source>
-        <translation>Dizin Aç</translation>
+        <translation>Dizin A&#231;</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="68"/>
@@ -4377,7 +4377,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="216"/>
         <source>Welcome</source>
         <oldsource>Welcome Page</oldsource>
-        <translation>Hoşgeldiniz</translation>
+        <translation>Ho&#351;geldiniz</translation>
     </message>
 </context>
 <context>
@@ -4386,7 +4386,7 @@ Değiştirilmesini istiyor musunuz?</translation>
         <location filename="src/plugins/welcome/welcomeplugin.cpp" line="71"/>
         <source>Welcome</source>
         <oldsource>Home</oldsource>
-        <translation>Hoşgeldiniz</translation>
+        <translation>Ho&#351;geldiniz</translation>
     </message>
 </context>
 </TS>
