@@ -811,7 +811,7 @@ void GolangEdit::oracleWhat()
 
 void GolangEdit::oracleCallees()
 {
-    runOracle("calless");
+    runOracle("callees");
 }
 
 void GolangEdit::oracleCallers()
