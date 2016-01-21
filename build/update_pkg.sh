@@ -27,9 +27,9 @@ else
 fi
 
 echo get gocode ...
-go get -v -ldflags "-s" "github.com/nsf/gocode"
+go get -v -u -ldflags "-s" "github.com/nsf/gocode"
 echo get gotools ...
-go get -v -ldflags "-s" "github.com/visualfc/gotools"
+go get -v -u -ldflags "-s" "github.com/visualfc/gotools"
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'
