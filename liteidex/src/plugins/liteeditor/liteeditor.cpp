@@ -240,15 +240,19 @@ void LiteEditor::createActions()
 
     m_undoAct = new QAction(QIcon("icon:liteeditor/images/undo.png"),tr("Undo"),this);
     actionContext->regAction(m_undoAct,"Undo",QKeySequence::Undo);
+    m_undoAct->setEnabled(false);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
     actionContext->regAction(m_redoAct,"Redo","Ctrl+Shift+Z; Ctrl+Y");
-
+    m_redoAct->setEnabled(false);
+    
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
     actionContext->regAction(m_cutAct,"Cut",QKeySequence::Cut);
+    m_cutAct->setEnabled(false);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
     actionContext->regAction(m_copyAct,"Copy",QKeySequence::Copy);
+    m_copyAct->setEnabled(false);
 
     m_pasteAct = new QAction(QIcon("icon:liteeditor/images/paste.png"),tr("Paste"),this);
     actionContext->regAction(m_pasteAct,"Paste",QKeySequence::Paste);
