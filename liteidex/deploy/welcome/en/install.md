@@ -39,7 +39,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 ### Ubuntu
 	$ git clone https://github.com/visualfc/liteide.git
 	$ sudo apt-get update
-	$ sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui g++
+	$ sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui libqtwebkit-dev g++
 	$ cd liteide/build
 	$ ./update_pkg.sh
 	$ QTDIR=/usr ./build_linux.sh
