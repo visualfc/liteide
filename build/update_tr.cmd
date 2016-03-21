@@ -23,7 +23,6 @@ lrelease -compress %LITEIDE_ROOT%\liteide_fr.ts -qm %LITEIDE_ROOT%\deploy\transl
 lrelease -compress %LITEIDE_ROOT%\liteide_ja.ts -qm %LITEIDE_ROOT%\deploy\translations\liteide_ja.qm
 lrelease -compress %LITEIDE_ROOT%\liteide_ru.ts -qm %LITEIDE_ROOT%\deploy\translations\liteide_ru.qm
 lrelease -compress %LITEIDE_ROOT%\liteide_uk.ts -qm %LITEIDE_ROOT%\deploy\translations\liteide_uk.qm
-lrelease -compress %LITEIDE_ROOT%\liteide_tr.ts -qm %LITEIDE_ROOT%\deploy\translations\liteide_tr.qm
 
 goto end
 

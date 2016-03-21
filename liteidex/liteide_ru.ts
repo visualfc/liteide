@@ -3049,7 +3049,11 @@ Do you want to replace it?</source>
     <message>
         <source>[*] item requeset restart LiteIDE</source>
         <oldsource>[*] item requeset restart liteide</oldsource>
-        <translation>[*] элемент требует перезапуска LiteIDE</translation>
+        <translation type="obsolete">[*] элемент требует перезапуска LiteIDE</translation>
+    </message>
+    <message>
+        <source>[*] item request restart of LiteIDE</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3168,6 +3172,10 @@ Do you want to replace it?</source>
     <message>
         <source>Could not open %1 for writing.</source>
         <translation>Не удалось открыть %1 для записи.</translation>
+    </message>
+    <message>
+        <source>File Name:</source>
+        <translation type="unfinished">Имя файла:</translation>
     </message>
 </context>
 <context>
