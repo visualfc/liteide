@@ -69,7 +69,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>[*] item requeset restart LiteIDE</string>
+          <string>[*] item request restart of LiteIDE</string>
          </property>
         </widget>
        </item>
