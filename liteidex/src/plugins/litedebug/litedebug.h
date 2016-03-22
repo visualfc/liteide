@@ -61,6 +61,7 @@ signals:
 public slots:
     void hideDebug();
     void appLoaded();
+    void selectedDebug(QAction *act);
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);

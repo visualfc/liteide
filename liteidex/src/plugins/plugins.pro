@@ -24,4 +24,5 @@ SUBDIRS = \
     markdown \
     jsonedit \
     webkithtmlwidget \
-    rustedit
+    rustedit \
+    dlvdebugger

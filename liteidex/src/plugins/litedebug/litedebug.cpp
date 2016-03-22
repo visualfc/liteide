@@ -220,6 +220,33 @@ void LiteDebug::appLoaded()
         markTypeManager->registerMark(BreakPointMark,QIcon("icon:litedebug/images/breakmark.png"));
         markTypeManager->registerMark(CurrentLineMark,QIcon("icon:litedebug/images/linemark.png"));
     }
+    QMenu *menu = new QMenu(tr("Select Debug"));
+    QActionGroup *group = new QActionGroup(this);
+    QString mimeType = m_liteApp->settings()->value(LITEDEBUG_DEBUGGER,"debugger/delve").toString();
+    foreach (LiteApi::IDebugger *debug, m_manager->debuggerList()) {
+        QAction *act = new QAction(debug->mimeType(),this);
+        act->setObjectName(debug->mimeType());
+        act->setCheckable(true);
+        group->addAction(act);
+        if (mimeType == debug->mimeType()) {
+            act->setChecked(true);
+            m_manager->setCurrentDebugger(debug);
+        }
+    }
+    menu->addActions(group->actions());
+    connect(group,SIGNAL(triggered(QAction*)),this,SLOT(selectedDebug(QAction*)));
+    QAction *first = m_debugMenu->actions().at(0);
+    m_debugMenu->insertMenu(first,menu);
+    m_debugMenu->insertSeparator(first);
+}
+
+void LiteDebug::selectedDebug(QAction *act)
+{
+    QString mimeType = act->objectName();
+    LiteApi::IDebugger *debug = m_manager->findDebugger(mimeType);
+    if (debug) {
+        m_manager->setCurrentDebugger(debug);
+    }
 }
 
 void LiteDebug::editorCreated(LiteApi::IEditor *editor)
@@ -396,6 +423,9 @@ bool LiteDebug::isRunning() const
 
 void LiteDebug::setDebugger(LiteApi::IDebugger *debug)
 {
+    if (m_debugger) {
+        disconnect(m_debugger,0,this,0);
+    }
     m_debugger = debug;
     if (m_debugger) {
         connect(m_debugger,SIGNAL(debugStarted()),this,SLOT(debugStarted()));

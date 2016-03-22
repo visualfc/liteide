@@ -33,7 +33,7 @@
 #endif
 
 #define OPTION_LITEDEBUG "option/litedebug"
-
 #define LITEDEBUG_REBUILD   "litedebug/rebuild"
+#define LITEDEBUG_DEBUGGER  "litedebug/debugger"
 
 #endif // LITEDEBUG_GLOBAL_H

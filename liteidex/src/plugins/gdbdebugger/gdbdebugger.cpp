@@ -145,7 +145,7 @@ void GdbDebugger::appLoaded()
 
 QString GdbDebugger::mimeType() const
 {
-    return QLatin1String("debuger/gdb");
+    return QLatin1String("debugger/gdb");
 }
 
 QAbstractItemModel *GdbDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)

@@ -39,7 +39,7 @@ public:
     virtual IDebugger *findDebugger(const QString &mimeType);
     virtual QList<IDebugger*> debuggerList() const;
     virtual void setCurrentDebugger(IDebugger *debug);
-    virtual IDebugger *currentDebugger();
+    virtual IDebugger *currentDebugger();       
 protected:
     QList<IDebugger*>  m_debugList;
     IDebugger *m_currentDebug;
