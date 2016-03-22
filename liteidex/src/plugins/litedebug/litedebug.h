@@ -85,6 +85,7 @@ protected slots:
     void debugStarted();
     void debugStoped();
     void setCurrentLine(const QString &fileName, int line);
+    void setFrameLine(const QString &fileName, int line);
     void debugCmdInput();
 protected:
     void clearLastLine();

@@ -438,6 +438,7 @@ void LiteDebug::setDebugger(LiteApi::IDebugger *debug)
         connect(m_debugger,SIGNAL(debugStoped()),this,SLOT(debugStoped()));
         connect(m_debugger,SIGNAL(debugLog(LiteApi::DEBUG_LOG_TYPE,QString)),this,SLOT(debugLog(LiteApi::DEBUG_LOG_TYPE,QString)));
         connect(m_debugger,SIGNAL(setCurrentLine(QString,int)),this,SLOT(setCurrentLine(QString,int)));
+        connect(m_debugger,SIGNAL(setFrameLine(QString,int)),this,SLOT(setFrameLine(QString,int)));
         connect(m_debugger,SIGNAL(debugLoaded()),this,SLOT(debugLoaded()));
     }
     m_dbgWidget->setDebugger(m_debugger);
@@ -609,13 +610,6 @@ void LiteDebug::showLine()
         return;
     }
     LiteApi::gotoLine(m_liteApp,m_lastLine.fileName,m_lastLine.line,0,true,true);
-//    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(m_lastLine.fileName,true);
-//    if (editor) {
-//        LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
-//        if (textEditor) {
-//            textEditor->gotoLine(m_lastLine.line,0,true);
-//        }
-//    }
 }
 
 void LiteDebug::removeAllBreakPoints()
@@ -766,6 +760,23 @@ void LiteDebug::setCurrentLine(const QString &fileName, int line)
     if (m_bLastDebugCmdInput) {
         m_bLastDebugCmdInput = false;
         m_dbgWidget->setInputFocus();
+    }
+}
+
+void LiteDebug::setFrameLine(const QString &fileName, int line)
+{
+    if (QFile::exists(fileName)) {
+        LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(fileName,true);
+        if (editor) {
+            LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
+            if (textEditor) {
+                textEditor->gotoLine(line,0,center);
+            }
+            LiteApi::IEditorMark *editMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
+            if (editMark) {
+                editMark->addMark(line,LiteApi::CurrentLineMark);
+            }
+        }
     }
 }
 

@@ -88,6 +88,7 @@ signals:
     void debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log);
     void setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded);
     void setCurrentLine(const QString &fileName, int line);
+    void setFrameLine(const QString &fileName, int line);
     void watchCreated(const QString &watch,const QString &name);
     void watchRemoved(const QString &watch);
 };
