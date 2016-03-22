@@ -246,6 +246,7 @@ void LiteDebug::selectedDebug(QAction *act)
     LiteApi::IDebugger *debug = m_manager->findDebugger(mimeType);
     if (debug) {
         m_manager->setCurrentDebugger(debug);
+        m_liteApp->settings()->setValue(LITEDEBUG_DEBUGGER,mimeType);
     }
 }
 
@@ -352,14 +353,19 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
 
     m_dbgWidget->clearLog();
 
-    if (cmd.isEmpty()) {
-        m_liteApp->appendLog("LiteDebug","No debugger command specified",true);
-        return;
-    }
-    if (QFileInfo(cmd).isAbsolute()) {
-        m_debugInfoId = cmd;
+    //delve mode
+    if (m_debugger->isDelveMode()) {
+        m_debugInfoId = work;
     } else {
-        m_debugInfoId = work+"/"+cmd;
+        if (cmd.isEmpty()) {
+            m_liteApp->appendLog("LiteDebug","No debugger command specified",true);
+            return;
+        }
+        if (QFileInfo(cmd).isAbsolute()) {
+            m_debugInfoId = cmd;
+        } else {
+            m_debugInfoId = work+"/"+cmd;
+        }
     }
 
     QDir dir(work);
@@ -474,6 +480,12 @@ void LiteDebug::startDebugTests()
         m_startDebugFile = editor->filePath();
     }
 
+    if (m_debugger->isDelveMode()) {
+        LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
+        this->startDebug("test",info.args,info.workDir);
+        return;
+    }
+
     if(!m_liteBuild->buildTests())
     {
     	m_liteApp->appendLog("LiteDebug","Build tests failed",true);
@@ -504,11 +516,6 @@ void LiteDebug::startDebug()
         return;
     }
 
-    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
-    if (b) {
-        m_liteBuild->rebuild();
-    }
-
     LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
     QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
@@ -519,6 +526,17 @@ void LiteDebug::startDebug()
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor) {
         m_startDebugFile = editor->filePath();
+    }
+
+    if (m_debugger->isDelveMode()) {
+        LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
+        this->startDebug("debug",info.args,info.workDir);
+        return;
+    }
+
+    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
+    if (b) {
+        m_liteBuild->rebuild();
     }
 
     this->startDebug(info.cmd,info.args,info.workDir);
@@ -549,8 +567,8 @@ void LiteDebug::runToLine()
     if (filePath.isEmpty()) {
         return;
     }
-    QString fileName = QFileInfo(filePath).fileName();
-    m_debugger->runToLine(fileName,textEditor->line()+1);
+    //QString fileName = QFileInfo(filePath).fileName();
+    m_debugger->runToLine(filePath,textEditor->line()+1);
 }
 
 void LiteDebug::stopDebug()

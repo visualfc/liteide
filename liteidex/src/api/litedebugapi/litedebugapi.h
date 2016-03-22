@@ -62,7 +62,7 @@ public:
     virtual QAbstractItemModel *debugModel(DEBUG_MODEL_TYPE type) = 0;
     virtual void setWorkingDirectory(const QString &dir) = 0;
     virtual void setEnvironment (const QStringList &environment) = 0;
-    virtual bool start(const QString &program, const QString &arguments) = 0;
+    virtual bool start(const QString &cmd, const QString &arguments) = 0;
     virtual void stop() = 0;
     virtual bool isRunning() = 0;
     virtual void stepOver() = 0;
@@ -80,6 +80,7 @@ public:
     virtual void removeWatch(const QString &var, bool children) = 0;
     virtual void removeWatchByName(const QString &name, bool children) = 0;
     virtual void showFrame(QModelIndex index) = 0;
+    virtual bool isDelveMode() const = 0;
 signals:
     void debugStarted();
     void debugStoped();
