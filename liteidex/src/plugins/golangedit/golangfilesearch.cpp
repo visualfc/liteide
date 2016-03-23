@@ -114,10 +114,10 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->setWorkingDirectory(info.path());
     if (global) {
-        m_process->startEx(cmd,QString("types -pos %1:%2 -info -use -all .").
+        m_process->startEx(cmd,QString("types -pos \"%1:%2\" -info -use -all .").
                                  arg(info.fileName()).arg(offset));
     } else {
-        m_process->startEx(cmd,QString("types -pos %1:%2 -info -use .").
+        m_process->startEx(cmd,QString("types -pos \"%1:%2\" -info -use .").
                                  arg(info.fileName()).arg(offset));
     }
 }

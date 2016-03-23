@@ -377,7 +377,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     QFileInfo info(m_editor->filePath());
     m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
-    m_findLinkProcess->startEx(cmd,QString("types -b -pos %1:%2 -stdin -def -info -doc .").
+    m_findLinkProcess->startEx(cmd,QString("types -b -pos \"%1:%2\" -stdin -def -info -doc .").
                              arg(info.fileName()).
                                arg(offset));
 }
@@ -450,7 +450,7 @@ void GolangEdit::editorJumpToDecl()
     QFileInfo info(m_editor->filePath());
     m_findDefProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findDefProcess->setWorkingDirectory(info.path());
-    m_findDefProcess->startEx(cmd,QString("types -pos %1:%2 -stdin -def .").
+    m_findDefProcess->startEx(cmd,QString("types -pos \"%1:%2\" -stdin -def .").
                              arg(info.fileName()).
                               arg(offset));
 }
@@ -509,7 +509,7 @@ void GolangEdit::editorFindInfo()
 
     m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
-    m_findInfoProcess->startEx(cmd,QString("types -pos %1:%2 -stdin -info -def -doc .").
+    m_findInfoProcess->startEx(cmd,QString("types -pos \"%1:%2\" -stdin -info -def -doc .").
                              arg(info.fileName()).
                              arg(offset));
 }
