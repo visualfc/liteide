@@ -47,7 +47,7 @@ fi
 echo build liteide tools ...
 cd $LITEIDE_ROOT
 
-if [ -z $GOPATH]; then
+if [ -z $GOPATH ]; then
 	export GOPATH=$PWD
 else
 	export GOPATH=$PWD:$GOPATH
