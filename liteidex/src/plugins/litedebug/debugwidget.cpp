@@ -131,7 +131,7 @@ void DebugWidget::enterText(const QString &text)
     QString cmd = text.simplified();
     if (!cmd.isEmpty() && m_debugger && m_debugger->isRunning()) {
         emit debugCmdInput();
-        m_debugger->command(cmd.toUtf8());
+        m_debugger->enterDebugText(cmd);
     }
 }
 

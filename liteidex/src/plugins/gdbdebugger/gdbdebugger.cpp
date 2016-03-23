@@ -442,13 +442,18 @@ void GdbDebugger::command(const GdbCmd &cmd)
     command_helper(cmd,true);
 }
 
-void GdbDebugger::enterText(const QString &text)
+void GdbDebugger::enterAppText(const QString &text)
 {
     if (m_tty) {
         m_tty->write(text.toUtf8());
     } else {
         m_process->write(text.toUtf8());
     }
+}
+
+void GdbDebugger::enterDebugText(const QString &text)
+{
+    command(text);
 }
 
 void  GdbDebugger::command(const QByteArray &cmd)
@@ -460,8 +465,6 @@ void GdbDebugger::readStdError()
 {
     emit debugLog(LiteApi::DebugErrorLog,QString::fromUtf8(m_process->readAllStandardError()));
 }
-
-
 
 static bool isNameChar(char c)
 {

@@ -71,7 +71,8 @@ public:
     virtual void continueRun() = 0;
     virtual void runToLine(const QString &fileName, int line) = 0;
     virtual void command(const QByteArray &cmd) = 0;
-    virtual void enterText(const QString &text) = 0;
+    virtual void enterAppText(const QString &text) = 0;
+    virtual void enterDebugText(const QString &text) = 0;
     virtual void expandItem(QModelIndex index, DEBUG_MODEL_TYPE type) = 0;
     virtual void setInitBreakTable(const QMultiMap<QString,int> &bks) = 0;
     virtual void insertBreakPoint(const QString &fileName, int line) = 0;

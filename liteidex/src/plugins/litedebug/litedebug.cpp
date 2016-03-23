@@ -476,6 +476,8 @@ void LiteDebug::startDebugTests()
         return;
     }
 
+    m_liteApp->editorManager()->saveAllEditors();
+
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor) {
         m_startDebugFile = editor->filePath();
@@ -516,6 +518,8 @@ void LiteDebug::startDebug()
     if (!m_liteBuild) {
         return;
     }
+
+    m_liteApp->editorManager()->saveAllEditors();
 
     LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
@@ -788,7 +792,7 @@ void LiteDebug::debugCmdInput()
 void LiteDebug::enterAppInputText(QString text)
 {
     if (m_debugger && m_debugger->isRunning()) {
-        m_debugger->enterText(text);
+        m_debugger->enterAppText(text);
     }
 }
 

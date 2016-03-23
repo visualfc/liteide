@@ -414,16 +414,34 @@ void DlvDebugger::command(const GdbCmd &cmd)
     command_helper(cmd,true);
 }
 
-void DlvDebugger::enterText(const QString &text)
+void DlvDebugger::enterAppText(const QString &text)
 {
     m_updateCmdList.clear();
     m_updateCmd.clear();
+
+    QString cmd = text.trimmed();
+    if (cmd == "r" || cmd == "restart") {
+        m_processId.clear();
+    }
 
     if (m_tty) {
         m_tty->write(text.toUtf8());
     } else {
         m_process->write(text.toUtf8());
     }
+}
+
+void DlvDebugger::enterDebugText(const QString &text)
+{
+    m_updateCmdList.clear();
+    m_updateCmd.clear();
+
+    QString cmd = text.trimmed();
+    if (cmd == "r" || cmd == "restart") {
+        m_processId.clear();
+    }
+
+    command(text);
 }
 
 void  DlvDebugger::command(const QByteArray &cmd)
@@ -434,8 +452,15 @@ void  DlvDebugger::command(const QByteArray &cmd)
 void DlvDebugger::readStdError()
 {
     //Process 4084 has exited with status 0
+    QString data = QString::fromUtf8(m_process->readAllStandardError());
     //QRegExp reg;
-    emit debugLog(LiteApi::DebugErrorLog,QString::fromUtf8(m_process->readAllStandardError()));
+    emit debugLog(LiteApi::DebugErrorLog,data);
+    foreach (QString line, data.split("\n",QString::SkipEmptyParts)) {
+        if (line.startsWith("Process "+m_processId)) {
+            m_processId.clear();
+            this->stop();
+        }
+    }
 }
 
 
@@ -501,7 +526,14 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
     if (buff.isEmpty()) {
         return;
     }
-
+    if (m_processId.isEmpty()) {
+        //Process restarted with PID
+        int n = buff.indexOf("PID");
+        if (n != -1) {
+            m_processId = buff.mid(n+3).trimmed();
+        }
+    }
+    //Process restarted with PID 4532
     //> main.main() H:/goproj/src/hello/main.go:13 (hits goroutine(1):1 total:1) (PC: 0x401172)
     //> main.main() H:/goproj/src/hello/main.go:14 (PC: 0x401179)
     //> main.main() H:/goproj/src/hello/main.go:21 (hits goroutine(1):1 total:1) (PC: 0x40161a)
@@ -1114,6 +1146,9 @@ void DlvDebugger::initDebug()
     }
     //command("set ");
     */
+    //get thread id
+    m_processId.clear();
+    command("restart");
     QMapIterator<QString,int> i(m_initBks);
     while (i.hasNext()) {
         i.next();
