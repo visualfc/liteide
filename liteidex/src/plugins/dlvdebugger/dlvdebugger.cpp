@@ -542,7 +542,7 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
     //> github.com/derekparker/delve/cmd/dlv/cmds.New() /src/github.com/derekparker/delve/cmd/dlv/cmds/commands.go:61 (PC: 0x45d09f)
     //> [bk6767010] main.test() H:/goproj/src/hello/main.go:12 (hits goroutine(1):1 total:1) (PC: 0x401066)
     if (buff.startsWith("> ")) {
-        static QRegExp reg("^>(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+[\\w\\d]+\\))");
+        static QRegExp reg("^>(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+[\\w\\d]+\\))");
         int n = reg.indexIn(QString::fromUtf8(buff));
         if (n < 0) {
             return;
