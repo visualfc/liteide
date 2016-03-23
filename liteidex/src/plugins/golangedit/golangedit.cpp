@@ -696,7 +696,7 @@ void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
     if (text.isEmpty()) {
         return;
     }
-    QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
+    QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
     if (reg.indexIn(text) < 0) {
         return;
     }
@@ -768,10 +768,10 @@ void GolangEdit::runOracle(const QString &action)
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_oracleProcess->setWorkingDirectory(info.path());
     if (offset2 == -1) {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2 %3 .").
+        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2\" %3 .").
                                  arg(info.fileName()).arg(offset).arg(action));
     } else {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2,#%3 %4 .").
+        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2,#%3\" %4 .").
                                  arg(info.fileName()).arg(offset).arg(offset2).arg(action));
 
     }
@@ -795,10 +795,10 @@ void GolangEdit::runOracleByInfo(const QString &action)
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_oracleProcess->setWorkingDirectory(m_oracleInfo.workPath);
     if (offset2 == -1) {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2 %3 .").
+        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2\" %3 .").
                                  arg(m_oracleInfo.fileName).arg(offset).arg(action));
     } else {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos %1:#%2,#%3 %4 .").
+        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2,#%3\" %4 .").
                                  arg(m_oracleInfo.fileName).arg(offset).arg(offset2).arg(action));
 
     }
