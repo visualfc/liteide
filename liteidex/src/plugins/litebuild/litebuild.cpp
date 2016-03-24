@@ -1436,7 +1436,12 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 //            cmd = findCmd;
 //        }
 //    }
-    QString shell = FileUtil::lookPathInDir(cmd,m_workDir);
+    QString shell;
+    if (ba->cmd() == "$(GO)") {
+        shell = FileUtil::lookupGoBin(cmd,m_liteApp,false);
+    } else {
+        shell = FileUtil::lookPathInDir(cmd,m_workDir);
+    }
     if (shell.isEmpty()) {
         shell = FileUtil::lookPath(cmd,sysenv,false);
     }
