@@ -5,7 +5,7 @@
 		<config id="GoFmt" name="GOFMT" value="gofmt"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_BIN_DIR)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
-		<config id="TargetName" name = "TARGETNAME" value="$(BUILD_DIR_GONAME)"/>
+		<config id="TargetName" name = "TARGETNAME" value="$(BUILD_DIR_NAME)"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
 		<custom id="BuildArgsi" name="BUILDARGS" value="-i"/>
 		<custom id="ForceBuildArgsi" name="FORCEBUILDARGS" value="-i -a -v"/>
