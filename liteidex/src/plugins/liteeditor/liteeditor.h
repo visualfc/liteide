@@ -120,6 +120,7 @@ public:
     virtual void setEnableAutoIndentAction(bool b);
     virtual bool isLineEndUnix() const;
     virtual void setLineEndUnix(bool b);
+    virtual void showToolTipInfo(const QPoint & pos, const QString & text);
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);

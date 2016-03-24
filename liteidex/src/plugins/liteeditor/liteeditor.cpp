@@ -1216,6 +1216,11 @@ void LiteEditor::setLineEndUnix(bool b)
     }
 }
 
+void LiteEditor::showToolTipInfo(const QPoint &pos, const QString &text)
+{
+    m_editorWidget->showToolTipInfo(pos,text);
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();

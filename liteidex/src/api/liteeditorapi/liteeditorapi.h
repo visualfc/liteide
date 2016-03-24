@@ -247,6 +247,7 @@ public:
     virtual void setEnableAutoIndentAction(bool b) = 0;
     virtual bool isLineEndUnix() const = 0;
     virtual void setLineEndUnix(bool b) = 0;
+    virtual void showToolTipInfo(const QPoint & pos, const QString & text) = 0;
 signals:
     void updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
 };

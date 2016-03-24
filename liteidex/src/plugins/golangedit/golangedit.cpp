@@ -572,7 +572,7 @@ void GolangEdit::findInfoFinish(int code, QProcess::ExitStatus)
             }
             QRect rc = m_plainTextEdit->cursorRect(m_lastCursor);
             QPoint pt = m_plainTextEdit->mapToGlobal(rc.topRight());
-            QToolTip::showText(pt,info,m_plainTextEdit);
+            m_editor->showToolTipInfo(pt,info);
         }
     }
 }

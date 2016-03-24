@@ -70,8 +70,7 @@ public:
     void navigateAreaLeaveEvent(QEvent *e);
     void navigateAreaEnterEvent(QEvent *e);
     void resizeEvent(QResizeEvent *e);
-    void showToolTip(const QTextCursor &cursor, const QString &tip);
-    void hideToolTip();
+    void showToolTipInfo(const QPoint & pos, const QString & text);
     void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
     void ensureFinalNewLine(QTextCursor& cursor);
     void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
@@ -150,6 +149,10 @@ public slots:
     void foldIndentChanged(QTextBlock block);
     void autoIndent();
 public:
+    void setMaxTipInfoLines(int maxLines) {
+        m_maxTipInfoLines = maxLines;
+    }
+
     void setAutoIndent(bool b){
         m_autoIndent = b;
     }
@@ -299,6 +302,7 @@ protected:
     bool m_rightLineVisible;
     bool m_eofVisible;
     int  m_rightLineWidth;
+    int  m_maxTipInfoLines;
     int  m_inputCursorOffset;
     bool m_indentLineVisible;
     bool m_autoIndent;
