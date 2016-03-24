@@ -68,7 +68,6 @@
     BUILD_DIR_PATH
     BUILD_DIR_NAME
     BUILD_DIR_BASENAME
-    BUILD_DIR_GONAME
 
 ### editor file info
 
@@ -82,7 +81,6 @@
     EDITOR_DIR_PATH
     EDITOR_DIR_NAME
     EDITOR_DIR_BASENAME
-    EDITOR_DIR_GONAME
 */
 
 enum {
@@ -883,7 +881,6 @@ void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
 BUILD_DIR_PATH
 BUILD_DIR_NAME
 BUILD_DIR_BASENAME
-BUILD_DIR_GONAME
 
 EDITOR_FILE_PATH
 EDITOR_FILE_NAME
@@ -893,7 +890,6 @@ EDITOR_FILE_SUFFIX
 EDITOR_DIR_PATH
 EDITOR_DIR_NAME
 EDITOR_DIR_BASENAME
-EDITOR_DIR_GONAME
 */
 void LiteBuild::loadEditorInfo(const QString &filePath)
 {
@@ -909,7 +905,6 @@ void LiteBuild::loadEditorInfo(const QString &filePath)
     m_editorInfo.insert("EDITOR_DIR_PATH",info.path());
     m_editorInfo.insert("EDITOR_DIR_NAME",QFileInfo(info.path()).fileName());
     m_editorInfo.insert("EDITOR_DIR_BASENAME",QFileInfo(info.path()).baseName());
-    m_editorInfo.insert("EDITOR_DIR_GONAME",QFileInfo(info.path()).fileName().replace(" ","_"));
 }
 
 void LiteBuild::loadBuildPath(const QString &buildPath, const QString &buildName, const QString &buildInfo)
@@ -934,7 +929,6 @@ void LiteBuild::loadBuildPath(const QString &buildPath, const QString &buildName
     m_buildInfo.insert("BUILD_DIR_PATH",info.filePath());
     m_buildInfo.insert("BUILD_DIR_NAME",info.fileName());
     m_buildInfo.insert("BUILD_DIR_BASENAME",info.baseName());
-    m_buildInfo.insert("BUILD_DIR_GONAME",info.fileName().replace(" ","_"));
 }
 
 void LiteBuild::loadTargetInfo(LiteApi::IBuild *build)
