@@ -541,8 +541,8 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
     //> runtime.convT2E() c:/go/go1.6/src/runtime/iface.go:128 (PC: 0x40caaa)"
     //> github.com/derekparker/delve/cmd/dlv/cmds.New() /src/github.com/derekparker/delve/cmd/dlv/cmds/commands.go:61 (PC: 0x45d09f)
     //> [bk6767010] main.test() H:/goproj/src/hello/main.go:12 (hits goroutine(1):1 total:1) (PC: 0x401066)
-    if (buff.startsWith("> ")) {
-        static QRegExp reg("^>(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+[\\w\\d]+\\))");
+    if (buff.contains("> ")) {
+        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+[\\w\\d]+\\))");
         int n = reg.indexIn(QString::fromUtf8(buff));
         if (n < 0) {
             return;
@@ -1298,7 +1298,7 @@ void DlvDebugger::readStdOutput()
                  }
                  head = !head;
              }
-        } else if (m_updateCmd == "locals" || m_updateCmd == "args") {
+        } else if (m_updateCmd == "stack 0 -full") {
             // s = " \x04S\x00\x00\x00\x00\x00\x1d\x00\x00\x00\x00\x00\x00\x00"
             // v = []int len: 0, cap: 4257785, []"
             // args = []string len: 1, cap: 1, ["H:\\goproj\\src\\hello\\debug"]
@@ -1348,7 +1348,7 @@ void DlvDebugger::readStdOutput()
         stop();
     } else if (m_handleState.stopped()) {
         m_updateCmdList.clear();
-        m_updateCmdList << "stack" << "locals|args";
+        m_updateCmdList << "stack" << "stack 0 -full";
     }
 
     m_handleState.clear();
