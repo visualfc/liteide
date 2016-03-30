@@ -291,7 +291,7 @@ void FileBrowser::executeFile()
         QFileInfo info = m_folderView->contextFileInfo();
         QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
         if (!cmd.isEmpty()) {
-            build->executeCommand(cmd,QString(),info.path(),true,true,false);
+            build->execCommand(cmd,QString(),info.path(),true,true,false);
         }
     }
 }

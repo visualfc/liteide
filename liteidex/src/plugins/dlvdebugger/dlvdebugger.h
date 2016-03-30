@@ -142,7 +142,6 @@ public:
     virtual void removeWatch(const QString &var, bool children);
     virtual void removeWatchByName(const QString &name, bool children);
     virtual void showFrame(QModelIndex index);
-    virtual bool isDelveMode() const { return true; }
 protected:
     void command_helper(const GdbCmd &cmd, bool emitOut);
 public slots:

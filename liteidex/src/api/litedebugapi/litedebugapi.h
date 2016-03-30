@@ -81,7 +81,6 @@ public:
     virtual void removeWatch(const QString &var, bool children) = 0;
     virtual void removeWatchByName(const QString &name, bool children) = 0;
     virtual void showFrame(QModelIndex index) = 0;
-    virtual bool isDelveMode() const = 0;
 signals:
     void debugStarted();
     void debugStoped();

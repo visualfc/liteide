@@ -198,7 +198,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         return false;
     }
     QStringList argsList;
-    argsList << cmd;
+    argsList << "exec" << "\""+cmd+"\"";
     argsList << "--" << arguments;
 
     clear();
@@ -1267,6 +1267,7 @@ void DlvDebugger::readStdOutput()
         m_busy = false;
     }
 
+    bool emitLog = true;
     if (m_updateCmd == m_lastCmd) {
         if (m_updateCmd == "stack") {
 //            0  0x000000000040135a in main.main
@@ -1339,9 +1340,11 @@ void DlvDebugger::readStdOutput()
             m_varNameMap = nameMap;
         }
         m_updateCmd.clear();
+        emitLog = false;
     }
-
-    emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));
+    if (emitLog) {
+        emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));
+    }
     m_inbuffer.clear();
 
     if (!m_gdbinit) {

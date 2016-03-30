@@ -88,6 +88,7 @@ protected slots:
     void setFrameLine(const QString &fileName, int line);
     void debugCmdInput();
 protected:
+    bool execGocommand(const QStringList &args, const QString &work, bool showLog);
     void clearLastLine();
     bool m_bLastDebugCmdInput;
     LiteApi::IApplication *m_liteApp;

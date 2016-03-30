@@ -276,7 +276,6 @@ public:
     {
     }
 public:
-    virtual void rebuild() = 0;
     virtual QString buildTag() const = 0;
     virtual QMap<QString,QString> buildEnvMap() const = 0;
     virtual TargetInfo getTargetInfo() = 0;
@@ -284,10 +283,8 @@ public:
     virtual QString envValue(LiteApi::IBuild *build, const QString &value) = 0;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true) = 0;
     virtual void execAction(const QString &mime,const QString &id) = 0;
-    virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir, bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true) = 0;
-    virtual bool buildTests() = 0;
-signals:
-    void currentBuildFileChanged(const QString &filePath);
+    virtual void execCommand(const QString &cmd, const QString &args, const QString &workDir, bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true) = 0;
+    virtual bool execGoCommand(const QStringList &args, const QString &work, bool waitFinish = true) = 0;
 };
 
 inline ILiteBuild *getLiteBuild(LiteApi::IApplication* app)

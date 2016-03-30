@@ -353,19 +353,14 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
 
     m_dbgWidget->clearLog();
 
-    //delve mode
-    if (m_debugger->isDelveMode()) {
-        m_debugInfoId = work;
+    if (cmd.isEmpty()) {
+        m_liteApp->appendLog("LiteDebug","No debugger command specified",true);
+        return;
+    }
+    if (QFileInfo(cmd).isAbsolute()) {
+        m_debugInfoId = cmd;
     } else {
-        if (cmd.isEmpty()) {
-            m_liteApp->appendLog("LiteDebug","No debugger command specified",true);
-            return;
-        }
-        if (QFileInfo(cmd).isAbsolute()) {
-            m_debugInfoId = cmd;
-        } else {
-            m_debugInfoId = work+"/"+cmd;
-        }
+        m_debugInfoId = work+"/"+cmd;
     }
 
     QDir dir(work);
@@ -445,7 +440,7 @@ void LiteDebug::setDebugger(LiteApi::IDebugger *debug)
 }
 
 void LiteDebug::debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log)
-{
+{    
     switch(type) {
     case LiteApi::DebugConsoleLog:
         m_dbgWidget->appendLog(log);
@@ -462,49 +457,6 @@ void LiteDebug::debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log)
     }
 }
 
-void LiteDebug::startDebugTests()
-{
-    if (!m_debugger) {
-        return;
-    }
-    if (m_debugger->isRunning()) {
-        m_debugger->continueRun();
-        return;
-    }
-
-    if (!m_liteBuild) {
-        return;
-    }
-
-    m_liteApp->editorManager()->saveAllEditors();
-
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (editor) {
-        m_startDebugFile = editor->filePath();
-    }
-
-    if (m_debugger->isDelveMode()) {
-        LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
-        this->startDebug("test",info.args,info.workDir);
-        return;
-    }
-
-    if(!m_liteBuild->buildTests())
-    {
-    	m_liteApp->appendLog("LiteDebug","Build tests failed",true);
-    }
-    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
-
-    QString testCmd = info.cmd+".test";
-    QString findCmd = FileUtil::lookPathInDir(testCmd,info.workDir);
-
-    if (!findCmd.isEmpty()) {
-        testCmd = QFileInfo(findCmd).fileName();
-    }
-
-	this->startDebug(testCmd,info.args,info.workDir);
-}
-
 void LiteDebug::startDebug()
 {
     if (!m_debugger) {
@@ -515,6 +467,7 @@ void LiteDebug::startDebug()
         return;
     }
 
+
     if (!m_liteBuild) {
         return;
     }
@@ -523,28 +476,69 @@ void LiteDebug::startDebug()
 
     LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
-    QString findCmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
-    if (!findCmd.isEmpty()) {
-        info.cmd = QFileInfo(findCmd).fileName();
+    QStringList args;
+    args << "build" << "-gcflags" << "\"-N -l\"";
+    bool b = m_liteBuild->execGoCommand(args,info.workDir,true);
+    if (!b) {
+        return;
     }
+
+    QString cmd = FileUtil::lookPathInDir(info.cmd,info.workDir);
+    if (cmd.isEmpty()) {
+        m_liteApp->appendLog("debug",QString("not find execute file in path %2").arg(info.workDir),true);
+        return;
+    }
+
+    QString fileName = QFileInfo(cmd).fileName();
 
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor) {
         m_startDebugFile = editor->filePath();
     }
 
-    if (m_debugger->isDelveMode()) {
-        LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
-        this->startDebug("debug",info.args,info.workDir);
+    this->startDebug(fileName,info.args,info.workDir);
+}
+
+void LiteDebug::startDebugTests()
+{
+    if (!m_debugger) {
+        return;
+    }
+    if (m_debugger->isRunning()) {
+        m_debugger->continueRun();
         return;
     }
 
-    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
-    if (b) {
-        m_liteBuild->rebuild();
+
+    if (!m_liteBuild) {
+        return;
     }
 
-    this->startDebug(info.cmd,info.args,info.workDir);
+    m_liteApp->editorManager()->saveAllEditors();
+
+    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
+
+    QStringList args;
+    args << "test" << "-gcflags" << "\"-N -l\"" << "-c";
+    bool b = m_liteBuild->execGoCommand(args,info.workDir,true);
+    if (!b) {
+        return;
+    }
+
+    QString cmd = FileUtil::lookPathInDir(info.cmd+".test",info.workDir);
+    if (cmd.isEmpty()) {
+        m_liteApp->appendLog("debug",QString("not find execute test file in path %2").arg(info.workDir),true);
+        return;
+    }
+
+    QString fileName = QFileInfo(cmd).fileName();
+
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        m_startDebugFile = editor->filePath();
+    }
+
+    this->startDebug(fileName,info.args,info.workDir);
 }
 
 void LiteDebug::continueRun()
@@ -787,6 +781,32 @@ void LiteDebug::setFrameLine(const QString &fileName, int line)
 void LiteDebug::debugCmdInput()
 {
     m_bLastDebugCmdInput = true;
+}
+
+bool LiteDebug::execGocommand(const QStringList &args, const QString &work, bool showLog)
+{
+    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    if (gocmd.isEmpty()) {
+        debugLog(LiteApi::DebugRuntimeLog,QString("go command not find!").arg(args.join(" "),work));
+        return false;
+    }
+    debugLog(LiteApi::DebugRuntimeLog,QString("%1 %2 [%3]").arg(gocmd).arg(args.join(" "),work));
+    QProcess process;
+    process.setWorkingDirectory(work);
+    process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    process.start(gocmd,args);
+    if (!process.waitForFinished()) {
+        return false;
+    }
+    int code = process.exitCode();
+    if (code == 0) {
+        return true;
+    }
+    if (showLog) {
+        QByteArray data = process.readAllStandardError();
+        debugLog(LiteApi::DebugErrorLog,QString::fromUtf8(data));
+    }
+    return false;
 }
 
 void LiteDebug::enterAppInputText(QString text)

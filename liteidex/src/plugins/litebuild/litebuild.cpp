@@ -294,46 +294,26 @@ LiteBuild::~LiteBuild()
     }
 }
 
-void LiteBuild::rebuild()
+bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
 {
-    if (!m_build) {
-        return;
-    }
-    BuildAction *ba = m_build->findAction("Build");
-    if (!ba) {
-        return;
-    }
     if (m_process->isRunning()) {
         m_process->kill();
         m_process->waitForFinished(1000);
     }
-    this->execAction(m_build->mimeType(),ba->id());
-    if (!m_process->waitForStarted(1000)) {
-        return;
-    }
-    m_process->waitForFinished(1000);
-}
-
-bool LiteBuild::buildTests()
-{
-   if (!m_build) {
+    m_process->setWorkingDirectory(workDir);
+    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    if (gocmd.isEmpty()) {
         return false;
     }
-    BuildAction *ba = m_build->findAction("BuildTests");
-    if (!ba) {
-        return false;
+    this->execCommand(gocmd,args.join(" "),workDir);
+    if (!waitFinish) {
+        return true;
     }
-    if (m_process->isRunning()) {
+    if (!m_process->waitForFinished(3000)) {
         m_process->kill();
-        m_process->waitForFinished(1000);
-    }
-    this->execAction(m_build->mimeType(),ba->id());
-    if (!m_process->waitForStarted(1000)) {
         return false;
     }
-    m_process->waitForFinished(1000);
-
-    return true;
+    return m_process->exitCode() == 0;
 }
 
 
@@ -484,7 +464,7 @@ void LiteBuild::fmctxExecuteFile()
     QString cmd = FileUtil::lookPathInDir(m_fmctxInfo.fileName(),m_fmctxInfo.path());
     if (!cmd.isEmpty()) {
         this->stopAction();
-        this->executeCommand(cmd,QString(),m_fmctxInfo.path(),true,true,false);
+        this->execCommand(cmd,QString(),m_fmctxInfo.path(),true,true,false);
     }
 }
 
@@ -508,7 +488,7 @@ void LiteBuild::fmctxGoTool()
     if (!cmd.isEmpty()) {
         m_liteApp->editorManager()->saveAllEditors();
         this->stopAction();
-        this->executeCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
+        this->execCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
     }
 }
 
@@ -521,7 +501,7 @@ void LiteBuild::fmctxGofmt()
     if (!cmd.isEmpty()) {
         m_liteApp->editorManager()->saveAllEditors();
         this->stopAction();
-        this->executeCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
+        this->execCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
     }
 }
 
@@ -593,7 +573,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     if (!m_process->isRunning()) {
         m_output->updateExistsTextColor();
         m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
-        this->executeCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
+        this->execCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
     }
 }
 
@@ -1289,7 +1269,7 @@ void LiteBuild::stopAction()
     }
 }
 
-void LiteBuild::executeCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor, bool activateOutputCheck, bool navigate, bool command)
+void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QString &workDir, bool updateExistsTextColor, bool activateOutputCheck, bool navigate, bool command)
 {
     if (updateExistsTextColor) {
         m_output->updateExistsTextColor();

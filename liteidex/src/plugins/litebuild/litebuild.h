@@ -47,7 +47,6 @@ public:
     explicit LiteBuild(LiteApi::IApplication *app, QObject *parent = 0);
     virtual ~LiteBuild();
 public:
-    virtual void rebuild();
     virtual QString buildTag() const;
     virtual QMap<QString,QString> buildEnvMap() const;
     virtual QMap<QString,QString> liteideEnvMap() const;
@@ -55,8 +54,8 @@ public:
     virtual QString envValue(LiteApi::IBuild *build, const QString &value);
     virtual LiteApi::IBuildManager *buildManager() const;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true);
-    virtual void executeCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true);
-    virtual bool buildTests();
+    virtual void execCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true);
+    virtual bool execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish);
     QMap<QString,QString> buildEnvMap(LiteApi::IBuild *build, const QString &buildTag) const;
 public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);

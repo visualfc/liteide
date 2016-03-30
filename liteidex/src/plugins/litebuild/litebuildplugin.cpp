@@ -156,7 +156,7 @@ void LiteBuildPlugin::execute()
 //    if (textEditor) {
 //        work = QFileInfo(textEditor->filePath()).path();
 //    }
-    m_build->executeCommand(cmd.trimmed(),args.trimmed(),work);
+    m_build->execCommand(cmd.trimmed(),args.trimmed(),work);
 }
 
 void LiteBuildPlugin::buildPathChanged(const QString &buildPath)
