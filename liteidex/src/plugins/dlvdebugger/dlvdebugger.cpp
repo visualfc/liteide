@@ -192,6 +192,9 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         dlv = FileUtil::lookPath("dlv",env,false);
     }
     m_dlvFilePath = dlv;
+    m_lastFileLine = 0;
+    m_lastFileName.clear();
+    m_checkFuncDecl = false;
 
     if (m_dlvFilePath.isEmpty()) {
         m_liteApp->appendLog("DlvDebugger","dlv was not found on system PATH (hint: is GDB installed?)",true);
@@ -199,7 +202,10 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
     }
     QStringList argsList;
     argsList << "exec" << "\""+cmd+"\"";
-    argsList << "--" << arguments;
+
+    if (!arguments.isEmpty()) {
+        argsList << "--" << arguments;
+    }
 
     clear();
 #ifdef Q_OS_WIN
@@ -245,7 +251,35 @@ void DlvDebugger::stepInto()
 
 void DlvDebugger::stepOut()
 {
-    command("finish");
+    QString cmd = LiteApi::getGotools(m_liteApp);
+    QProcess process;
+    process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
+    QFileInfo info(m_lastFileName);
+    process.setWorkingDirectory(info.path());
+    QStringList args;
+    args << "finddecl" << "-file" << info.fileName() << "-line" << QString("%1").arg(m_lastFileLine+1);
+    process.start(cmd,args);
+    if (!process.waitForFinished(3000)) {
+        emit debugLog(LiteApi::DebugErrorLog,"error wait find decl process");
+        process.kill();
+        return;
+    }
+    if (process.exitCode() != 0) {
+        emit debugLog(LiteApi::DebugErrorLog,"error get find decl result");
+        return;
+    }
+    QByteArray data = process.readAll().trimmed();
+    QStringList ar = QString::fromUtf8(data).split(" ");
+    if (ar.size() != 4 || ar[0] != "func") {
+        emit debugLog(LiteApi::DebugErrorLog,"error find func decl in line");
+        return;
+    }
+    m_funcDecl.fileName = m_lastFileName;
+    m_funcDecl.funcName = ar[1];
+    m_funcDecl.start = ar[2].toInt()-1;
+    m_funcDecl.end = ar[3].toInt()-1;
+    m_checkFuncDecl = true;
+    command("next");
 }
 
 void DlvDebugger::runToLine(const QString &fileName, int line)
@@ -563,10 +597,14 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
             bool ok = false;
             int n = line.toInt(&ok);
             if (ok) {
+                m_lastFileName = fileName;
+                m_lastFileLine = n-1;
+                //check step out
                 emit setCurrentLine(fileName,n-1);
             }
         }
         m_handleState.setStopped(true);
+
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("stopped");
         QString func = reg.cap(2).trimmed();
@@ -1273,6 +1311,16 @@ void DlvDebugger::readStdOutput()
         dataList.append(QString::fromUtf8(data));
         handleResponse(data);
         m_busy = false;
+    }
+
+    if (m_checkFuncDecl) {
+        if (m_lastFileName == m_funcDecl.fileName && m_lastFileLine >= m_funcDecl.start && m_lastFileLine <= m_funcDecl.end) {
+            command("next");
+            m_inbuffer.clear();
+            return;
+        }
+        m_checkFuncDecl = false;
+        m_funcDecl.clear();
     }
 
     bool emitLog = true;

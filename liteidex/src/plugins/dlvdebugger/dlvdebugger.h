@@ -105,6 +105,24 @@ protected:
 class QStandardItemModel;
 class QStandardItem;
 
+struct funcDecl {
+    funcDecl()
+    {
+        clear();
+    }
+    void clear()
+    {
+        fileName.clear();;
+        funcName.clear();
+        start = -1;
+        end = -1;
+    }
+    QString fileName;
+    QString funcName;
+    int     start;
+    int     end;
+};
+
 class DlvDebugger : public LiteApi::IDebugger
 {
     Q_OBJECT
@@ -182,6 +200,10 @@ protected:
     void updateVarListChildren(const QString &name);
     void updateVarValue(const QString &name);
 protected:
+    QString                 m_lastFileName;
+    int                     m_lastFileLine;
+    funcDecl                m_funcDecl;
+    bool                    m_checkFuncDecl;
     LiteApi::IApplication   *m_liteApp;
     LiteApi::IEnvManager    *m_envManager;
     LiteApi::ITty           *m_tty;
