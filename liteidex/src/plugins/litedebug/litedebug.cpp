@@ -567,7 +567,7 @@ void LiteDebug::runToLine()
         return;
     }
     //QString fileName = QFileInfo(filePath).fileName();
-    m_debugger->runToLine(filePath,textEditor->line()+1);
+    m_debugger->runToLine(filePath,textEditor->line());
 }
 
 void LiteDebug::stopDebug()

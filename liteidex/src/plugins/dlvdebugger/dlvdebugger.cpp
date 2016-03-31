@@ -250,13 +250,14 @@ void DlvDebugger::stepOut()
 
 void DlvDebugger::runToLine(const QString &fileName, int line)
 {
-    line++;
-    QStringList args;
-    args << "break";
-    args << QString("%1:%2").arg(fileName).arg(line-1);
-    command(args.join(" "));
-
-    command("continue");
+    bool find = findBreakPoint(fileName,line);
+    if (!find) {
+        insertBreakPoint(fileName,line);
+        command("continue");
+        removeBreakPoint(fileName,line);
+    } else {
+        command("continue");
+    }
 }
 
 void DlvDebugger::createWatch(const QString &var, bool floating, bool watchModel)
@@ -391,6 +392,13 @@ void DlvDebugger::removeBreakPoint(const QString &fileName, int line)
     GdbCmd cmd;
     cmd.setCmd(args);
     command(cmd);
+}
+
+bool DlvDebugger::findBreakPoint(const QString &fileName, int line)
+{
+    QString location = QString("%1:%2").arg(fileName).arg(line);
+    QString id = m_locationBkMap.value(location);
+    return m_locationBkMap.contains(location);
 }
 
 void DlvDebugger::command_helper(const GdbCmd &cmd, bool emitOut)

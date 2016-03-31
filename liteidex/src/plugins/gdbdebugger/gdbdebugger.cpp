@@ -278,6 +278,7 @@ void GdbDebugger::stepOut()
 
 void GdbDebugger::runToLine(const QString &fileName, int line)
 {
+    line++;
     GdbCmd cmd;
     QStringList args;
     args << "-break-insert";

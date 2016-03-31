@@ -136,6 +136,7 @@ public:
     virtual void setInitBreakTable(const QMultiMap<QString,int> &bks);
     virtual void insertBreakPoint(const QString &fileName, int line);
     virtual void removeBreakPoint(const QString &fileName, int line);
+    bool findBreakPoint(const QString &fileName,int line);
 public:
     virtual void command(const GdbCmd &cmd);
     virtual void createWatch(const QString &var, bool floating, bool watchModel = false);
