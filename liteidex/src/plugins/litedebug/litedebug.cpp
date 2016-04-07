@@ -220,9 +220,9 @@ void LiteDebug::appLoaded()
         markTypeManager->registerMark(BreakPointMark,QIcon("icon:litedebug/images/breakmark.png"));
         markTypeManager->registerMark(CurrentLineMark,QIcon("icon:litedebug/images/linemark.png"));
     }
-    QMenu *menu = new QMenu(tr("Select Debug"));
+    //QMenu *menu = new QMenu(tr("Select Debug"));
     QActionGroup *group = new QActionGroup(this);
-    QString mimeType = m_liteApp->settings()->value(LITEDEBUG_DEBUGGER,"debugger/delve").toString();
+    QString mimeType = m_liteApp->settings()->value(LITEDEBUG_DEBUGGER,"debugger/gdb").toString();
     foreach (LiteApi::IDebugger *debug, m_manager->debuggerList()) {
         QAction *act = new QAction(debug->mimeType(),this);
         act->setObjectName(debug->mimeType());
@@ -233,15 +233,18 @@ void LiteDebug::appLoaded()
             m_manager->setCurrentDebugger(debug);
         }
     }
-    menu->addActions(group->actions());
+   // menu->addActions(group->actions());
     connect(group,SIGNAL(triggered(QAction*)),this,SLOT(selectedDebug(QAction*)));
     QAction *first = m_debugMenu->actions().at(0);
-    m_debugMenu->insertMenu(first,menu);
+    //m_debugMenu->insertMenu(first,menu);
+    m_debugMenu->insertActions(first,group->actions());
     m_debugMenu->insertSeparator(first);
 }
 
 void LiteDebug::selectedDebug(QAction *act)
 {
+    stopDebug();
+
     QString mimeType = act->objectName();
     LiteApi::IDebugger *debug = m_manager->findDebugger(mimeType);
     if (debug) {
