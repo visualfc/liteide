@@ -1472,6 +1472,8 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         }
     }
 
+    args = args.trimmed();
+
     if (!ba->isOutput()) {
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);
         m_output->appendTag(QString("%1 %2 [%3]\n")
