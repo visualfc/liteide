@@ -106,7 +106,7 @@ void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
     cur.insertText(text);
     this->setTextCursor(cur);
     setUndoRedoEnabled(true);
-    m_endPostion = cur.position();
+    m_endPostion = this->textCursor().position();
 }
 
 void TerminalEdit::clear()
@@ -172,7 +172,6 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
             }
             if (ke->key() == Qt::Key_Return ||
                     ke->key() == Qt::Key_Enter) {
-                QPlainTextEdit::keyPressEvent(ke);
                 cur.setPosition(end,QTextCursor::MoveAnchor);
                 cur.setPosition(m_endPostion,QTextCursor::KeepAnchor);
 #ifdef Q_OS_WIN
@@ -180,6 +179,7 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
 #else
                 emit enterText(cur.selectedText()+"\n");
 #endif
+                QPlainTextEdit::keyPressEvent(ke);
                 QTextCursor cur = this->textCursor();
                 cur.movePosition(QTextCursor::End);
                 m_endPostion = cur.position();
