@@ -219,17 +219,26 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_outputAutoClearAct->setCheckable(true);
     connect(m_outputAutoClearAct,SIGNAL(triggered(bool)),this,SLOT(setOutputAutoClear(bool)));
 
+    m_outputAutoPosCursorAct = new QAction(tr("Automatic positioning cursor"),this);
+    m_outputAutoPosCursorAct->setCheckable(true);
+    connect(m_outputAutoPosCursorAct,SIGNAL(triggered(bool)),this,SLOT(setOutputAutoPosCursor(bool)));
+
     bool bLineWrap = m_liteApp->settings()->value(LITEBUILD_OUTPUTLINEWRAP,false).toBool();
     m_bOutputAutoClear = m_liteApp->settings()->value(LITEBUILD_OUTPUTAUTOCLEAR,true).toBool();
+
+    bool bAutoPosCursor = m_liteApp->settings()->value(LITEBUILD_OUTPUTAUTOPOSCURSOR,true).toBool();
 
     m_output->setLineWrap(bLineWrap);
     m_outputLineWrapAct->setChecked(bLineWrap);
     m_outputAutoClearAct->setChecked(m_bOutputAutoClear);
+    m_outputAutoPosCursorAct->setChecked(bAutoPosCursor);
+    m_output->setAutoPosCursor(bAutoPosCursor);
 
     m_outputMenu = new QMenu(tr("Setup"));
     m_outputMenu->setIcon(QIcon(":/images/setup.png"));
     m_outputMenu->addAction(m_outputAutoClearAct);
     m_outputMenu->addAction(m_outputLineWrapAct);
+    m_outputMenu->addAction(m_outputAutoPosCursorAct);
 
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,
                                                                 m_output,"buildoutput",
@@ -532,6 +541,12 @@ void LiteBuild::setOutputAutoClear(bool b)
 {
     m_bOutputAutoClear = b;
     m_liteApp->settings()->setValue(LITEBUILD_OUTPUTAUTOCLEAR,b);
+}
+
+void LiteBuild::setOutputAutoPosCursor(bool b)
+{
+    m_liteApp->settings()->setValue(LITEBUILD_OUTPUTAUTOPOSCURSOR,b);
+    m_output->setAutoPosCursor(b);
 }
 
 bool LiteBuild::isLockBuildRoot() const

@@ -40,11 +40,11 @@ public slots:
     void contextMenuRequested(const QPoint &pt);
     void cursorPositionChanged();
 public:
-    void setAutoMoveToLast(bool b) {
-        m_bAutoMoveToLast = b;
+    void setAutoPosCursor(bool b) {
+        m_bAutoPosCursor = b;
     }
     bool isAutoMoveToLast() const {
-        return m_bAutoMoveToLast;
+        return m_bAutoPosCursor;
     }
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
@@ -61,7 +61,7 @@ protected:
     QAction *m_selectAll;
     QAction *m_clear;
     bool    m_bFocusOut;
-    bool    m_bAutoMoveToLast;
+    bool    m_bAutoPosCursor;
 };
 
 

@@ -55,7 +55,7 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
     m_contextMenu = new QMenu(this);
     m_contextRoMenu = new QMenu(this);
 
-    m_bAutoMoveToLast = false;
+    m_bAutoPosCursor = true;
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -202,7 +202,7 @@ void TerminalEdit::mouseDoubleClickEvent(QMouseEvent *e)
 void TerminalEdit::mousePressEvent(QMouseEvent *e)
 {
     QPlainTextEdit::mousePressEvent(e);
-    if (!m_bAutoMoveToLast) {
+    if (!m_bAutoPosCursor) {
         return;
     }
     if (!this->isReadOnly() && m_bFocusOut) {

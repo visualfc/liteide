@@ -99,6 +99,7 @@ public slots:
     void lockBuildRoot(bool b);
     void setOutputLineWrap(bool b);
     void setOutputAutoClear(bool b);
+    void setOutputAutoPosCursor(bool b);
 protected:
     QMenu *m_nullMenu;
     LiteApi::IApplication   *m_liteApp;
@@ -117,6 +118,7 @@ protected:
     QMenu      *m_outputMenu;
     QAction    *m_outputLineWrapAct;
     QAction    *m_outputAutoClearAct;
+    QAction    *m_outputAutoPosCursorAct;
     QAction     *m_configAct;
     QAction     *m_stopAct;
     QAction     *m_clearAct;

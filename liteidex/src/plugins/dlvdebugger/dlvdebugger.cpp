@@ -159,7 +159,7 @@ QAbstractItemModel *DlvDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
     }else if (type == LiteApi::CALLSTACK_MODEL) {
         return m_framesModel;
     } else if (type == LiteApi::LIBRARY_MODEL) {
-        return m_libraryModel;
+        return 0;//m_libraryModel;
     }
     return 0;
 }
@@ -800,6 +800,8 @@ void DlvDebugger::readStdOutput()
             }
         }
         emitLog = false;
+    } else {
+        emit debugLog(LiteApi::DebugApplationLog,QString::fromUtf8(m_inbuffer));
     }
     if (emitLog) {
         emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));

@@ -36,5 +36,6 @@
 #define LITEBUILD_ENVCHECK "litebuild/envcheck"
 #define LITEBUILD_OUTPUTLINEWRAP "litebuild/outputlinewrap"
 #define LITEBUILD_OUTPUTAUTOCLEAR "litebuild/outputautoclear"
+#define LITEBUILD_OUTPUTAUTOPOSCURSOR "litebuild/outputautoposcursor"
 
 #endif // LITEBUILD_GLOBAL_H
