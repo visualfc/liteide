@@ -55,6 +55,8 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
     m_contextMenu = new QMenu(this);
     m_contextRoMenu = new QMenu(this);
 
+    m_bAutoMoveToLast = false;
+
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_cut = new QAction(tr("Cut"),this);
@@ -200,6 +202,9 @@ void TerminalEdit::mouseDoubleClickEvent(QMouseEvent *e)
 void TerminalEdit::mousePressEvent(QMouseEvent *e)
 {
     QPlainTextEdit::mousePressEvent(e);
+    if (!m_bAutoMoveToLast) {
+        return;
+    }
     if (!this->isReadOnly() && m_bFocusOut) {
         m_bFocusOut = false;
         QTextCursor cur = this->textCursor();
