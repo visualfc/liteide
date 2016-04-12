@@ -616,10 +616,31 @@ void DlvDebugger::initDebug()
 
 static QString valueToolTip(const QString &value)
 {
-    QString toolTip = value.trimmed();
-    toolTip.replace("{","{\n\t");
-    toolTip.replace(",",",\n\t");
-    toolTip.replace(QRegExp("\\}$"),"\n}");
+    int offset = 0;
+    QString toolTip;
+    QString text = value;
+    text.replace(", ",",");
+    for (int i = 0; i < text.size(); i++) {
+        if (text[i] == '{') {
+            if ( (i+1) < text.size() && text[i+1] == '}' ) {
+                toolTip += "{}";
+                i++;
+            } else {
+                offset++;
+                toolTip += text[i];
+                toolTip += "\n"+QString("\t").repeated(offset);
+            }
+        } else if (text[i] == '}') {
+            offset--;
+            toolTip += "\n"+QString("\t").repeated(offset);
+            toolTip += text[i];
+        } else if (text[i] == ',') {
+            toolTip += text[i];
+            toolTip += "\n"+QString("\t").repeated(offset);
+        } else {
+            toolTip += text[i];
+        }
+    }
     return toolTip;
 }
 
