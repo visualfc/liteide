@@ -197,7 +197,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
     m_checkFuncDecl = false;
 
     if (m_dlvFilePath.isEmpty()) {
-        m_liteApp->appendLog("DlvDebugger","dlv was not found on system PATH (hint: is GDB installed?)",true);
+        m_liteApp->appendLog("DlvDebugger","dlv was not found on system PATH (hint: is Delve installed?)",true);
         return false;
     }
     QStringList argsList;
