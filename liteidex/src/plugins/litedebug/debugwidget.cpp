@@ -94,7 +94,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_widget->setLayout(layout);
 
     m_watchMenu = new QMenu(m_widget);
-    m_addWatchAct = new QAction(tr("Add Watch"),this);
+    m_addWatchAct = new QAction(tr("Add Global Watch"),this);
     //m_addLocalWatchAct = new QAction(tr("Add Local Watch"),this);
     m_removeWatchAct = new QAction(tr("Remove Watch"),this);
     m_removeAllWatchAct = new QAction(tr("Remove All Watches"),this);
@@ -260,7 +260,7 @@ void DebugWidget::saveDebugInfo(const QString &id)
 
 void DebugWidget::addWatch()
 {
-    QString text = QInputDialog::getText(this->m_widget,tr("Add Watch"),tr("Watch expression (e.g. main.var os.Stdout):"));
+    QString text = QInputDialog::getText(this->m_widget,tr("Add Global Watch"),tr("Watch expression (e.g. main.var os.Stdout):"));
     if (text.isEmpty()) {
         return;
     }

@@ -235,7 +235,7 @@ bool DlvDebugger::isRunning()
 }
 
 void DlvDebugger::continueRun()
-{
+{    
     command("continue");
 }
 
@@ -414,6 +414,10 @@ void DlvDebugger::command_helper(const GdbCmd &cmd, bool emitOut)
     if (emitOut) {
      //   emit debugLog(LiteApi::DebugConsoleLog,">>> "+QString::fromUtf8(buf));
     }
+    if (m_lastCmd == "continue") {
+        m_asyncItem->removeRows(0,m_asyncItem->rowCount());
+        m_asyncItem->setText("runing");
+    }
 #ifdef Q_OS_WIN
     buf.append("\r\n");
 #else
@@ -570,33 +574,6 @@ void DlvDebugger::clear()
 
 void DlvDebugger::initDebug()
 {
-    /*
-    command("set unwindonsignal on");
-    command("set overload-resolution off");
-    command("handle SIGSEGV nopass stop print");
-    command("set breakpoint pending on");
-    command("set width 0");
-    command("set height 0");
-    command("set auto-solib-add on");
-    if (!m_runtimeFilePath.isEmpty()) {
-#ifdef Q_OS_WIN
-        QStringList pathList = LiteApi::getGOPATH(m_liteApp,false);
-        QString paths;
-        foreach(QString path, pathList) {
-            paths += QDir::fromNativeSeparators(path)+"/src";
-            paths += ";";
-        }
-
-        command("-environment-directory "+m_runtimeFilePath.toLatin1());
-        //command("-environment-directory "+m_runtimeFilePath.toLatin1()+";"+paths.toLatin1());
-        command("set substitute-path /go/src/pkg/runtime "+m_runtimeFilePath.toLatin1());
-#else
-        command("-environment-directory "+m_runtimeFilePath.toUtf8());
-        command("set substitute-path /go/src/pkg/runtime "+m_runtimeFilePath.toUtf8());
-#endif
-    }
-    //command("set ");
-    */
     //get thread id
     m_processId.clear();
     command("restart");
@@ -621,6 +598,17 @@ static QString valueToolTip(const QString &value)
     QString text = value;
     text.replace(", ",",");
     for (int i = 0; i < text.size(); i++) {
+//        if (text[i] == '[')  {
+//            int j = i;
+//            for (; j++; j < text.size()) {
+//                if (text[j] == ']') {
+//                    break;
+//                }
+//            }
+//            toolTip += text.mid(i,j+1-i);
+//            i = j;
+//            continue;
+//        }
         if (text[i] == '{') {
             if ( (i+1) < text.size() && text[i+1] == '}' ) {
                 toolTip += "{}";
@@ -636,6 +624,10 @@ static QString valueToolTip(const QString &value)
             toolTip += text[i];
         } else if (text[i] == ',') {
             toolTip += text[i];
+            int pos = text.lastIndexOf(QRegExp("\\{|\\[|\\]|\\}"),i-1);
+            if (pos != -1 && text[pos] == '[') {
+                continue;
+            }
             toolTip += "\n"+QString("\t").repeated(offset);
         } else {
             toolTip += text[i];
