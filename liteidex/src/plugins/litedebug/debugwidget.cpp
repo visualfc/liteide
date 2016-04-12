@@ -94,12 +94,12 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_widget->setLayout(layout);
 
     m_watchMenu = new QMenu(m_widget);
-    m_addWatchAct = new QAction(tr("Add Global Watch"),this);
-    m_addLocalWatchAct = new QAction(tr("Add Local Watch"),this);
+    m_addWatchAct = new QAction(tr("Add Watch"),this);
+    //m_addLocalWatchAct = new QAction(tr("Add Local Watch"),this);
     m_removeWatchAct = new QAction(tr("Remove Watch"),this);
     m_removeAllWatchAct = new QAction(tr("Remove All Watches"),this);
     m_watchMenu->addAction(m_addWatchAct);
-    m_watchMenu->addAction(m_addLocalWatchAct);
+    //m_watchMenu->addAction(m_addLocalWatchAct);
     m_watchMenu->addSeparator();
     m_watchMenu->addAction(m_removeWatchAct);
     m_watchMenu->addAction(m_removeAllWatchAct);
@@ -108,7 +108,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     connect(m_varsView,SIGNAL(expanded(QModelIndex)),this,SLOT(expandedVarsView(QModelIndex)));
     connect(m_watchView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(watchViewContextMenu(QPoint)));
     connect(m_addWatchAct,SIGNAL(triggered()),this,SLOT(addWatch()));
-    connect(m_addLocalWatchAct,SIGNAL(triggered()),this,SLOT(addLocalWatch()));
+    //connect(m_addLocalWatchAct,SIGNAL(triggered()),this,SLOT(addLocalWatch()));
     connect(m_removeWatchAct,SIGNAL(triggered()),this,SLOT(removeWatch()));
     connect(m_removeAllWatchAct,SIGNAL(triggered()),this,SLOT(removeAllWatchAct()));
     connect(m_statckView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedStack(QModelIndex)));
@@ -239,13 +239,14 @@ void DebugWidget::watchViewContextMenu(QPoint pos)
 void DebugWidget::loadDebugInfo(const QString &id)
 {
     m_watchMap.clear();
-    foreach(QString var, m_liteApp->settings()->value(id).toStringList()) {
-        if (var.indexOf(".") < 0) {
-            //local var
-            m_debugger->createWatch(var,true,false);
-        }
-        m_debugger->createWatch(var,false,true);
-    }
+    m_debugger->setInitWatchList(m_liteApp->settings()->value(id+"/watch").toStringList());
+//    foreach(QString var, m_liteApp->settings()->value(id+"/watch").toStringList()) {
+//        if (var.indexOf(".") < 0) {
+//            //local var
+//            m_debugger->createWatch(var,true,false);
+//        }
+//        m_debugger->createWatch(var,false,true);
+//    }
 }
 
 void DebugWidget::saveDebugInfo(const QString &id)
@@ -254,28 +255,16 @@ void DebugWidget::saveDebugInfo(const QString &id)
     foreach(QString var, m_watchMap.values()) {
         vars.append(var);
     }
-    m_liteApp->settings()->setValue(id,vars);
+    m_liteApp->settings()->setValue(id+"/watch",vars);
 }
 
 void DebugWidget::addWatch()
 {
-    QString text = QInputDialog::getText(this->m_widget,tr("Add Global Watch"),tr("Watch expression (e.g. main.var os.Stdout):"));
+    QString text = QInputDialog::getText(this->m_widget,tr("Add Watch"),tr("Watch expression (e.g. main.var os.Stdout):"));
     if (text.isEmpty()) {
         return;
     }
-    if (text.indexOf(".") >= 0) {
-        text = QString("\'%1'").arg(text);
-    }
-    m_debugger->createWatch(text,false,true);
-}
-
-void DebugWidget::addLocalWatch()
-{
-    QString text = QInputDialog::getText(this->m_widget,tr("Add Local Watch"),tr("Watch expression (e.g. s1.str):"));
-    if (text.isEmpty()) {
-        return;
-    }
-    m_debugger->createWatch(text,false,true);
+    m_debugger->createWatch(text);
 }
 
 void DebugWidget::removeWatch()
@@ -289,21 +278,13 @@ void DebugWidget::removeWatch()
         return;
     }
     QString name = head.data(Qt::UserRole + 1).toString();
-    m_debugger->removeWatchByName(name,true);
+    m_debugger->removeWatch(name);
 }
 
 void DebugWidget::removeAllWatchAct()
 {
-    QStringList watchList;
-    for (int i = 0; i < m_watchView->model()->rowCount(); i++) {
-        QModelIndex index = m_watchView->model()->index(i,0);
-        if (index.isValid()) {
-            watchList << index.data(Qt::DisplayRole).toString();
-        }
-    }
-    foreach(QString var, watchList) {
-        m_debugger->removeWatch(var,true);
-    }
+    m_debugger->removeAllWatch();
+    m_watchMap.clear();
 }
 
 void DebugWidget::watchCreated(QString var,QString name)

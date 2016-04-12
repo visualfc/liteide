@@ -152,14 +152,15 @@ public:
     virtual void enterDebugText(const QString &text);
     virtual void expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type);
     virtual void setInitBreakTable(const QMultiMap<QString,int> &bks);
+    virtual void setInitWatchList(const QStringList &names);
     virtual void insertBreakPoint(const QString &fileName, int line);
     virtual void removeBreakPoint(const QString &fileName, int line);
     bool findBreakPoint(const QString &fileName,int line);
 public:
     virtual void command(const GdbCmd &cmd);
-    virtual void createWatch(const QString &var, bool floating, bool watchModel = false);
-    virtual void removeWatch(const QString &var, bool children);
-    virtual void removeWatchByName(const QString &name, bool children);
+    virtual void createWatch(const QString &var);
+    virtual void removeWatch(const QString &value);
+    virtual void removeAllWatch();
     virtual void showFrame(QModelIndex index);
 protected:
     void command_helper(const GdbCmd &cmd, bool emitOut);
@@ -172,33 +173,9 @@ public slots:
     void readTty(const QByteArray &data);
 protected:
     void handleResponse(const QByteArray &buff);
-    void handleStopped(const GdbMiValue &result);
-    void handleLibrary(const GdbMiValue &result);
-    void handleAsyncClass(const QByteArray &asyncClass, const GdbMiValue &result);
-    void handleConsoleStream(const QByteArray &data);
-    void handleTargetStream(const QByteArray &data);
-    void handleLogStream(const QByteArray &data);
-    void handleResultRecord(const GdbResponse &response);
-    void handleResultStackListFrame(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultStackListVariables(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultVarCreate(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultVarListChildren(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultVarUpdate(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultVarDelete(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultVarUpdateValue(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleResultVarUpdateType(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleBreakInsert(const GdbResponse &response, QMap<QString,QVariant> &map);
-    void handleBreakDelete(const GdbResponse &response, QMap<QString,QVariant> &map);
 protected:
     void clear();
     void initDebug();
-    void updateWatch();
-    void updateLocals();
-    void updateFrames();
-    void updateBreaks();
-    void updateVarTypeInfo(const QString &name);
-    void updateVarListChildren(const QString &name);
-    void updateVarValue(const QString &name);
 protected:
     QString                 m_lastFileName;
     int                     m_lastFileLine;
@@ -207,8 +184,9 @@ protected:
     LiteApi::IApplication   *m_liteApp;
     LiteApi::IEnvManager    *m_envManager;
     LiteApi::ITty           *m_tty;
+    QMap<QString,QString>   m_watchNameMap;
     QStringList             m_updateCmdList;
-    QString                 m_updateCmd;
+    QStringList             m_updateCmdHistroy;
     QString                 m_lastCmd;
     QString                 m_processId;
     QProcess *m_process;

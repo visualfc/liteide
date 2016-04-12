@@ -289,7 +289,31 @@ void GdbDebugger::runToLine(const QString &fileName, int line)
     command("-exec-continue");
 }
 
-void GdbDebugger::createWatch(const QString &var, bool floating, bool watchModel)
+void GdbDebugger::createWatch(const QString &var)
+{
+    QString value;
+    if (value.contains(".")) {
+        value = "\'"+var+"\'";
+    } else {
+        value = var;
+    }
+    createWatchHelp(var,false,true);
+}
+
+void GdbDebugger::removeWatch(const QString &name)
+{
+    removeWatchHelp(name,true,true);
+}
+
+void GdbDebugger::removeAllWatch()
+{
+    //removeWatchHelp
+    foreach (QString name, m_watchList) {
+        removeWatchHelp(name,true,true);
+    }
+}
+
+void GdbDebugger::createWatchHelp(const QString &var, bool floating, bool watchModel)
 {
     GdbCmd cmd;
     QStringList args;
@@ -309,26 +333,17 @@ void GdbDebugger::createWatch(const QString &var, bool floating, bool watchModel
     command(cmd);
 }
 
-void GdbDebugger::removeWatch(const QString &var, bool children)
+void GdbDebugger::removeWatchHelp(const QString &value, bool byName, bool children)
 {
-    QString name = m_varNameMap.value(var);
-    QStringList args;
-    args << "-var-delete";
-    if (children) {
-        args << "-c";
+    QString name;
+    QString var;
+    if (byName) {
+        name = value;
+        var = m_varNameMap.key(name);
+    } else {
+        var = value;
+        name = m_varNameMap.value(var);
     }
-    args << name;
-    GdbCmd cmd;
-    cmd.setCmd(args);
-    cmd.insert("var",var);
-    cmd.insert("name",name);
-    cmd.insert("children",children);
-    command(cmd);
-}
-
-void GdbDebugger::removeWatchByName(const QString &name, bool children)
-{
-    QString var = m_varNameMap.key(name);
     QStringList args;
     args << "-var-delete";
     if (children) {
@@ -386,6 +401,13 @@ void GdbDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
 void GdbDebugger::setInitBreakTable(const QMultiMap<QString,int> &bks)
 {
     m_initBks = bks;
+}
+
+void GdbDebugger::setInitWatchList(const QStringList &names)
+{
+    foreach (QString name, names) {
+        createWatch(name);
+    }
 }
 
 void GdbDebugger::insertBreakPoint(const QString &fileName, int line)
@@ -747,7 +769,7 @@ void GdbDebugger::handleResultStackListVariables(const GdbResponse &response, QM
             if (child.isValid()) {
                 QString var = child.findChild("name").data();
                 if (!m_varNameMap.contains(var)) {
-                    createWatch(var,true,false);
+                    createWatchHelp(var,true,false);
                 }
             }
         }
@@ -853,11 +875,11 @@ void GdbDebugger::handleResultVarUpdate(const GdbResponse &response, QMap<QStrin
                 QString type_changed = child.findChild("type_changed").data();
                 QString var = m_varNameMap.key(name);
                 if (in_scope == "false") {
-                    removeWatch(var,false);
+                    removeWatchHelp(var,false,false);
                 } else {
                     if (type_changed == "true") {
                         //remove watch children
-                        removeWatch(var,true);
+                        removeWatchHelp(var,false,true);
                         //update type
                         updateVarTypeInfo(name);
                         //udpate children

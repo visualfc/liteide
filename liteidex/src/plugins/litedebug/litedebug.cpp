@@ -361,9 +361,9 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
         return;
     }
     if (QFileInfo(cmd).isAbsolute()) {
-        m_debugInfoId = cmd;
+        m_debugInfoId = "litedebug/"+cmd;
     } else {
-        m_debugInfoId = work+"/"+cmd;
+        m_debugInfoId = "litedebug/"+work+"/"+cmd;
     }
 
     QDir dir(work);

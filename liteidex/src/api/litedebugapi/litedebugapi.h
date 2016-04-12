@@ -75,11 +75,12 @@ public:
     virtual void enterDebugText(const QString &text) = 0;
     virtual void expandItem(QModelIndex index, DEBUG_MODEL_TYPE type) = 0;
     virtual void setInitBreakTable(const QMultiMap<QString,int> &bks) = 0;
+    virtual void setInitWatchList(const QStringList &names) = 0;
     virtual void insertBreakPoint(const QString &fileName, int line) = 0;
     virtual void removeBreakPoint(const QString &fileName, int line) = 0;
-    virtual void createWatch(const QString &var, bool floating, bool watchModel = false) = 0;
-    virtual void removeWatch(const QString &var, bool children) = 0;
-    virtual void removeWatchByName(const QString &name, bool children) = 0;
+    virtual void createWatch(const QString &var) = 0;
+    virtual void removeWatch(const QString &var) = 0;
+    virtual void removeAllWatch() = 0;
     virtual void showFrame(QModelIndex index) = 0;
 signals:
     void debugStarted();

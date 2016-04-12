@@ -133,15 +133,19 @@ public:
     virtual void enterDebugText(const QString &text);
     virtual void expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type);
     virtual void setInitBreakTable(const QMultiMap<QString,int> &bks);
+    virtual void setInitWatchList(const QStringList &names);
     virtual void insertBreakPoint(const QString &fileName, int line);
     virtual void removeBreakPoint(const QString &fileName, int line);
 public:
     virtual void command(const GdbCmd &cmd);
-    virtual void createWatch(const QString &var, bool floating, bool watchModel = false);
-    virtual void removeWatch(const QString &var, bool children);
-    virtual void removeWatchByName(const QString &name, bool children);
+    virtual void createWatch(const QString &var);
+    virtual void removeWatch(const QString &name);
+    virtual void removeAllWatch();
     virtual void showFrame(QModelIndex index);
 protected:
+    void createWatchHelp(const QString &var, bool floating, bool watchModel);
+    void removeWatchHelp(const QString &var, bool byName, bool children);
+    void removeWatchByNameHelp(const QString &name, bool children);
     void command_helper(const GdbCmd &cmd, bool emitOut);
 public slots:
     void appLoaded();
