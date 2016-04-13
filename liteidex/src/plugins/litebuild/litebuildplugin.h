@@ -66,7 +66,7 @@ public:
         m_info->setId("plugin/litebuild");
         m_info->setName("LiteBuilder");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X27.2");
+        m_info->setVer("X29");
         m_info->setInfo("Core Build");
         m_info->appendDepend("plugin/liteenv");
         m_info->setMustLoad(true);
