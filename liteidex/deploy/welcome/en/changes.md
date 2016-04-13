@@ -3,6 +3,35 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2016.4.12 Ver X29
+* LiteIDE
+	* support for multiple debuggers
+	* support Delve debugger
+	* env GO15VENDOREXPERIMENT=1 default setup
+* LiteBuild
+	* fix project folder id named go, error find go tool
+	* fix project folder contains spaces run failed
+	* fix output number of rows exceeds the maximum input fails 
+	* add output add automatic positioning cursor option
+* LiteEnv
+	* env GO15VENDOREXPERIMENT=1 default setup	
+* LiteDebug
+	* support for multiple debuggers
+	* debug berore auto go build -gcflags "-N -l"
+	* fix stack frame clicked to doubleClocked
+* DlvDebugger
+	* support dlv debugger	
+	* simulation execution 'step-out'
+* GdbDebugger
+	* fix show frame line locate
+	* fix goto line action
+* LiteEditor
+	* display limit tip line info
+* GolangEdit
+	* fix folder contains spaces, gotools fails
+* gotools
+	* fix types info, display pkg real name
+
 ### 2015.12.10 Ver X28
 * LiteIDE
 	* gotools add go1.5 vendor support if env GO15VENDOREXPERIMENT=1 set

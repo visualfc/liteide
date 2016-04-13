@@ -412,7 +412,7 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Add Local Watch</source>
-        <translation>Добавить в локальное наблюдение</translation>
+        <translation type="obsolete">Добавить в локальное наблюдение</translation>
     </message>
     <message>
         <source>Remove Watch</source>
@@ -428,7 +428,14 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Watch expression (e.g. s1.str):</source>
-        <translation>Наблюдаемое выражение (например s1.str):</translation>
+        <translation type="obsolete">Наблюдаемое выражение (например s1.str):</translation>
+    </message>
+</context>
+<context>
+    <name>DlvDebuggerOption</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
     </message>
 </context>
 <context>
@@ -2157,6 +2164,10 @@ Success: %2.</oldsource>
     <message>
         <source>Failed to start process</source>
         <translation>Не удалось запустить процесс</translation>
+    </message>
+    <message>
+        <source>Automatic positioning cursor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

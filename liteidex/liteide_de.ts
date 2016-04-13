@@ -478,69 +478,74 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
 <context>
     <name>DebugWidget</name>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="80"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
         <source>Async Record</source>
         <oldsource>AsyncRecord</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="81"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
         <source>Variables</source>
         <translation>Variablen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="82"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
         <source>Watch</source>
         <translation>Überwachen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="86"/>
         <source>Call Stack</source>
         <oldsource>CallStack</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="87"/>
         <source>Libraries</source>
         <oldsource>Library</oldsource>
         <translation>Bibliotheken</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="88"/>
         <source>Console</source>
         <translation>Konsole</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="94"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="263"/>
         <source>Add Global Watch</source>
         <translation>Globale Überwachung hinzufügen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="95"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Add Local Watch</source>
-        <translation>Lokale Überwachung hinzufügen</translation>
+        <translation type="obsolete">Lokale Überwachung hinzufügen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="96"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="99"/>
         <source>Remove Watch</source>
         <translation>Überwachung entfernen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="100"/>
         <source>Remove All Watches</source>
         <translation>Alle Überwachungen entfernen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="263"/>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
         <translation type="unfinished">Beobachte Ausdruck (Bsp: main.var os.Stdout):</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Watch expression (e.g. s1.str):</source>
-        <translation type="unfinished">Beobachte Ausdruck (Bsp: s1.str):</translation>
+        <translation type="obsolete">Beobachte Ausdruck (Bsp: s1.str):</translation>
+    </message>
+</context>
+<context>
+    <name>DlvDebuggerOption</name>
+    <message>
+        <location filename="src/plugins/dlvdebugger/dlvdebuggeroption.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
     </message>
 </context>
 <context>
@@ -2520,171 +2525,176 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="139"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="137"/>
         <source>Build Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="144"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="142"/>
         <source>&amp;Build</source>
         <translation type="unfinished">Ausführen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="150"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="154"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="158"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="148"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="152"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="156"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="151"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="155"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="159"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="149"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="153"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="157"/>
         <source>Value</source>
         <translation>Wert</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="163"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="161"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation type="unfinished">Build Konfiguration...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="175"/>
         <source>Stop Action</source>
         <translation>Aktion stoppen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="181"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation type="unfinished">Ausgabe löschen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="185"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="183"/>
         <source>Execute File</source>
         <translation type="unfinished">Datei ausführen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="188"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="186"/>
         <source>Lock Build Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="189"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="187"/>
         <source>Go Build</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="191"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="189"/>
         <source>Go Install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="193"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="191"/>
         <source>Go Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="195"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="193"/>
         <source>Go Clean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="203"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="201"/>
         <source>Go Fmt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="216"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="214"/>
         <source>Line Wrap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="220"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="218"/>
         <source>Auto Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="231"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="222"/>
+        <source>Automatic positioning cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="237"/>
         <source>Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="238"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="245"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>Build Ausgabe</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="591"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="597"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="584"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="590"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation type="unfinished">Id &quot;%1&quot; der aktuellem Umgebung ändern</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="927"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="917"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1266"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1255"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished">Fehler: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1269"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1258"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished">Prozess beendet mit Rückgabewert %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1271"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1260"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished">Erfolg: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1307"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1360"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1296"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1349"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished">Es wird bereits ein Prozess ausgeführt. Bitte beenden Sie die aktuelle Aktion zuerst.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1353"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1342"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished">Beende aktuellen Prozess...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1356"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1345"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation type="unfinished">Der Prozess konnte nicht beendet werden!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1454"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1448"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation type="unfinished">&gt; AKtion &apos;%1&apos; konnte nicht verstanden werden</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1500"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1496"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished">Prozess erfolgreich gestartet</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1500"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1496"/>
         <source>Failed to start process</source>
         <translation type="unfinished">Prozess konnten nicht gestartet werden</translation>
     </message>
@@ -4266,27 +4276,27 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>TerminalEdit</name>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="60"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="62"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="63"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="65"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="66"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="68"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="69"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="71"/>
         <source>Select All</source>
         <translation>Alles auswählen</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="72"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="74"/>
         <source>Clear All</source>
         <translation>Auswahl aufheben</translation>
     </message>

@@ -493,69 +493,74 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>DebugWidget</name>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="80"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
         <source>Async Record</source>
         <oldsource>AsyncRecord</oldsource>
         <translation>同步记录</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="81"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
         <source>Variables</source>
         <translation>变量</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="82"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
         <source>Watch</source>
         <translation>监视</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="83"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="86"/>
         <source>Call Stack</source>
         <oldsource>CallStack</oldsource>
         <translation>调用堆栈</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="84"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="87"/>
         <source>Libraries</source>
         <oldsource>Library</oldsource>
         <translation>动态库</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="85"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="88"/>
         <source>Console</source>
         <translation>控制台</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="94"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="263"/>
         <source>Add Global Watch</source>
         <translation>添加全局监视</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="95"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Add Local Watch</source>
-        <translation>添加本地监视</translation>
+        <translation type="obsolete">添加本地监视</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="96"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="99"/>
         <source>Remove Watch</source>
         <translation>移除监视</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="97"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="100"/>
         <source>Remove All Watches</source>
         <translation>移除所有监视</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="259"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="263"/>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
         <translation>变量监视: (例 main.var os.Stdout):</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="271"/>
         <source>Watch expression (e.g. s1.str):</source>
-        <translation>变量监视: (例 sq.str):</translation>
+        <translation type="obsolete">变量监视: (例 sq.str):</translation>
+    </message>
+</context>
+<context>
+    <name>DlvDebuggerOption</name>
+    <message>
+        <location filename="src/plugins/dlvdebugger/dlvdebuggeroption.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2675,171 +2680,176 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="139"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="137"/>
         <source>Build Toolbar</source>
         <translation>编译工具栏</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="144"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="142"/>
         <source>&amp;Build</source>
         <translation>编译(&amp;B)</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="150"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="154"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="158"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="148"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="152"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="156"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="151"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="155"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="159"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="149"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="153"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="157"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="163"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="161"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation>编译配置...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="175"/>
         <source>Stop Action</source>
         <translation>停止执行</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="181"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation>清除输出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="185"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="183"/>
         <source>Execute File</source>
         <translation>执行文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="188"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="186"/>
         <source>Lock Build Path</source>
         <translation>锁定编译目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="189"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="187"/>
         <source>Go Build</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="191"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="189"/>
         <source>Go Install</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="193"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="191"/>
         <source>Go Test</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="195"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="193"/>
         <source>Go Clean</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="203"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="201"/>
         <source>Go Fmt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="216"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="214"/>
         <source>Line Wrap</source>
         <translation>自动换行</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="220"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="218"/>
         <source>Auto Clear</source>
         <translation>自动清除</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="231"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="222"/>
+        <source>Automatic positioning cursor</source>
+        <translation>自动定位光标</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="237"/>
         <source>Setup</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="238"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="245"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>编译输出</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="591"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="597"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="584"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="590"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>当前环境变更 id &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="927"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="917"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation>锁定编译</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1266"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1255"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>错误: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1269"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1258"/>
         <source>Command exited with code %1.</source>
         <translation>命令退出代码 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1271"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1260"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>成功: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1307"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1360"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1296"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1349"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>进程正在运行.请先停止当前命令操作.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1353"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1342"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>终止当前进程...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1356"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1345"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation>无法终止已存在进程!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1454"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1448"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
         <translation>&gt; 不能解析命令 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1500"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1496"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>进程启动成功</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1500"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1496"/>
         <source>Failed to start process</source>
         <translation></translation>
     </message>
@@ -3962,7 +3972,7 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/optionswidget.ui" line="72"/>
         <source>[*] item request restart of LiteIDE</source>
         <oldsource>[*] item requeset restart LiteIDE</oldsource>
-        <translation type="unfinished">[*] 项需要重启LiteIDE</translation>
+        <translation>[*] 项需要重启LiteIDE</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -4477,27 +4487,27 @@ Do you want to replace it?</source>
 <context>
     <name>TerminalEdit</name>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="60"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="62"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="63"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="65"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="66"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="68"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="69"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="71"/>
         <source>Select All</source>
         <translation>选择所有</translation>
     </message>
     <message>
-        <location filename="src/utils/textoutput/terminaledit.cpp" line="72"/>
+        <location filename="src/utils/textoutput/terminaledit.cpp" line="74"/>
         <source>Clear All</source>
         <translation>清除所有</translation>
     </message>
