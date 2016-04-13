@@ -5,7 +5,7 @@ setlocal
 set BUILD_ROOT=%CD%
 if x%LITEIDE_ROOT%==x set LITEIDE_ROOT=%CD%\..\liteidex
 
-echo build liteide 
+echo build liteide
 echo QTDIR=%QTDIR%
 echo GOROOT=%GOROOT%
 echo BUILD_ROOT=%BUILD_ROOT%
@@ -17,16 +17,16 @@ if x%QTDIR%==x goto qtdir_fail
 
 xcopy %QTDIR%\bin\Qt5Core.dll liteide\bin /y
 xcopy %QTDIR%\bin\Qt5Gui.dll liteide\bin /y
-xcopy %QTDIR%\bin\Qt5Widgets.dll liteide\bin /y  
-xcopy %QTDIR%\bin\Qt5Xml.dll liteide\bin /y 
-xcopy %QTDIR%\bin\Qt5PrintSupport.dll liteide\bin /y 
-xcopy %QTDIR%\bin\icudt49.dll liteide\bin /y 
-xcopy %QTDIR%\bin\icuin49.dll liteide\bin /y 
+xcopy %QTDIR%\bin\Qt5Widgets.dll liteide\bin /y
+xcopy %QTDIR%\bin\Qt5Xml.dll liteide\bin /y
+xcopy %QTDIR%\bin\Qt5PrintSupport.dll liteide\bin /y
+xcopy %QTDIR%\bin\icudt49.dll liteide\bin /y
+xcopy %QTDIR%\bin\icuin49.dll liteide\bin /y
 xcopy %QTDIR%\bin\icuuc49.dll liteide\bin /y
 xcopy %QTDIR%\bin\libegl.dll liteide\bin /y
-xcopy %QTDIR%\bin\libglesv2.dll liteide\bin /y  
-xcopy %QTDIR%\bin\D3DCompiler_43.dll liteide\bin /y  
-xcopy %QTDIR%\bin\libwinpthread-1.dll liteide\bin /y 
+xcopy %QTDIR%\bin\libglesv2.dll liteide\bin /y
+xcopy %QTDIR%\bin\D3DCompiler_43.dll liteide\bin /y
+xcopy %QTDIR%\bin\libwinpthread-1.dll liteide\bin /y
 xcopy %QTDIR%\bin\libgcc_s_sjlj-1.dll liteide\bin /y
 xcopy %QTDIR%\bin\libstdc++-6.dll liteide\bin /y
 
