@@ -659,8 +659,9 @@ void DlvDebugger::readStdOutput()
         int start = newstart;
         int end = m_inbuffer.indexOf('\n', scan);
         if (end < 0) {
-            m_inbuffer.remove(0, start);
-            return;
+            //m_inbuffer.remove(0, start);
+            //return;
+            end = m_inbuffer.size()-1;
         }
         newstart = end + 1;
         scan = newstart;
