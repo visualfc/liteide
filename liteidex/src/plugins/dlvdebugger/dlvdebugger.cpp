@@ -212,7 +212,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
     m_process->setNativeArguments(argsList.join(" "));
     m_process->start("\""+m_dlvFilePath+"\"");
 #else
-    m_process->start(m_gdbFilePath + " " + argsList.join(" "));
+    m_process->start(m_dlvFilePath + " " + argsList.join(" "));
 #endif
 
     QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
