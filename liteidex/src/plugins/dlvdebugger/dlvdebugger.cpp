@@ -517,7 +517,11 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
             return;
         }
         QString fileName = reg.cap(3);
+        if (fileName.startsWith("./")) {
+            fileName = QDir::cleanPath(m_process->workingDirectory()+"/"+fileName);
+        }
         QString line = reg.cap(4);
+
         if (!fileName.isEmpty() && !line.isEmpty()) {
             bool ok = false;
             int n = line.toInt(&ok);
@@ -638,6 +642,11 @@ static QString valueToolTip(const QString &value)
 
 void DlvDebugger::readStdOutput()
 {
+    if (!m_gdbinit) {
+        m_gdbinit = true;
+        initDebug();
+    }
+
     int newstart = 0;
     int scan = m_inbuffer.size();
     m_inbuffer.append(m_process->readAllStandardOutput());
@@ -807,11 +816,6 @@ void DlvDebugger::readStdOutput()
         emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));
     }
     m_inbuffer.clear();
-
-    if (!m_gdbinit) {
-        m_gdbinit = true;
-        initDebug();
-    }
 
     if (m_handleState.exited() && !m_gdbexit) {
         m_gdbexit = true;
