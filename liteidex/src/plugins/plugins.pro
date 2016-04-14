@@ -23,6 +23,10 @@ SUBDIRS = \
     gdbdebugger \
     markdown \
     jsonedit \
-    webkithtmlwidget \
     rustedit \
-    dlvdebugger
+    dlvdebugger \
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+} else {
+    SUBDIRS += webkithtmlwidget
+}
