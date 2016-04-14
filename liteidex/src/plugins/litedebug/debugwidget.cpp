@@ -72,7 +72,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 
     m_statckView->setEditTriggers(0);
 #if QT_VERSION >= 0x050000
-    m_statckView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::ResizeToContents);
+    m_statckView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
     m_statckView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
