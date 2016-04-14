@@ -71,8 +71,11 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_watchView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_statckView->setEditTriggers(0);
+#if QT_VERSION >= 0x050000
+    m_statckView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::ResizeToContents);
+#else
     m_statckView->header()->setResizeMode(QHeaderView::ResizeToContents);
-
+#endif
     m_libraryView->setEditTriggers(0);
 
     m_debugLogEdit = new TerminalEdit;
