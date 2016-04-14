@@ -645,11 +645,23 @@ void DlvDebugger::readStdOutput()
     if (!m_gdbinit) {
         m_gdbinit = true;
         initDebug();
+        return;
     }
 
     int newstart = 0;
     int scan = m_inbuffer.size();
     m_inbuffer.append(m_process->readAllStandardOutput());
+
+    //hack check (dlv)
+    static bool first_check = true;
+    static bool dlv_check = false;
+    if (first_check) {
+        first_check = false;
+        dlv_check = m_inbuffer.indexOf("(dlv)") != -1;
+    }
+    if (dlv_check && !m_inbuffer.endsWith("(dlv) ")) {
+        return;
+    }
 
     // This can trigger when a dialog starts a nested event loop.
     if (m_busy)
