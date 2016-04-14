@@ -27,6 +27,7 @@
 		<action id="Get Update Network" menu="Get" img="blue/get.png" cmd="$(GO)" args="get -u -v ." save="all" output="true" codec="utf-8"/>
 		<action id="Get Force Rebuilding" menu="Get" img="blue/reget.png" cmd="$(GO)" args="get -a -v ." save="all" output="true" codec="utf-8"/>
 		<action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="$(GO)" args="test $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
+		<action id="FileTest" menu="Test" img="blue/filetest.png" key = "Alt+T" cmd="$(GOTOOLS)" args="gotest -f $(EDITOR_FILE_NAME)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
 		<action id="TestAll" menu="Test" img="blue/test.png" key = "Ctrl+Alt+T" cmd="$(GO)" args="test $(TESTARGS) ./..." save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
 		<action id="TestBench" menu="Test" img="blue/testbench.png" cmd="$(GO)" args="test -test.bench=.* $(BENCHMARKARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="TestBuild" menu="Test" img="blue/buildtest.png" cmd="$(GO)" args="test -c -gcflags &quot;-N -l&quot;" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)"/>
