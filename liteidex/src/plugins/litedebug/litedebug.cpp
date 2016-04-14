@@ -771,7 +771,7 @@ void LiteDebug::setFrameLine(const QString &fileName, int line)
         if (editor) {
             LiteApi::ITextEditor *textEditor = LiteApi::findExtensionObject<LiteApi::ITextEditor*>(editor,"LiteApi.ITextEditor");
             if (textEditor) {
-                textEditor->gotoLine(line,0,center);
+                textEditor->gotoLine(line,0,true);
             }
             LiteApi::IEditorMark *editMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
             if (editMark) {
