@@ -184,21 +184,86 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
     m_fmctxGoLockBuildAct = new QAction(tr("Lock Build Path"),this);
-    m_fmctxGoBuildAct = new QAction(tr("Go Build"),this);
-    m_fmctxGoBuildAct->setData("build -v ./...");
-    m_fmctxGoInstallAct = new QAction(tr("Go Install"),this);
-    m_fmctxGoInstallAct->setData("install -v ./...");
-    m_fmctxGoTestAct = new QAction(tr("Go Test"),this);
-    m_fmctxGoTestAct->setData("test -v ./...");
-    m_fmctxGoCleanAct = new QAction(tr("Go Clean"),this);
-    m_fmctxGoCleanAct->setData("clean -i -x ./...");
+
+    m_fmctxGoToolMenu = new QMenu("Go Tool");
+
+    m_fmctxGoBuildAct = new QAction("Go Build",this);
+    m_fmctxGoBuildAct->setData("build -v");
+
+    m_fmctxGoBuildAllAct = new QAction("Go Build All",this);
+    m_fmctxGoBuildAllAct->setData("build -v ./...");
+
+    m_fmctxGoInstallAct = new QAction("Go Install",this);
+    m_fmctxGoInstallAct->setData("install -v");
+
+    m_fmctxGoInstallAllAct = new QAction("Go Install All",this);
+    m_fmctxGoInstallAllAct->setData("install -v ./...");
+
+    m_fmctxGoTestAct = new QAction("Go Test",this);
+    m_fmctxGoTestAct->setData("test -v");
+
+    m_fmctxGoTestAllAct = new QAction("Go Test All",this);
+    m_fmctxGoTestAllAct->setData("test -v ./...");
+
+    m_fmctxGoCleanAct = new QAction("Go Clean",this);
+    m_fmctxGoCleanAct->setData("clean -i -x");
+
+    m_fmctxGoCleanAllAct = new QAction("Go Clean All",this);
+    m_fmctxGoCleanAllAct->setData("clean -i -x ./...");
+
+    m_fmctxGoGetAct = new QAction("Go Get",this);
+    m_fmctxGoGetAct->setData("get -v");
+
+    m_fmctxGoGetUpdateAct = new QAction("Go Get Update",this);
+    m_fmctxGoGetUpdateAct->setData("get -v -u");
+
+    m_fmctxGoGetForceAct = new QAction("Go Get Force",this);
+    m_fmctxGoGetForceAct->setData("get -v -a");
+
+    m_fmctxGoVetAct = new QAction("Go Vet",this);
+    m_fmctxGoVetAct->setData("tool vet -v .");
+
+    m_fmctxGoVetAllCheckAct = new QAction("Go Vet (enable all checks)",this);
+    m_fmctxGoVetAllCheckAct->setData("tool vet -v -all .");
+
+    m_fmctxGoFmtAct = new QAction("GoFmt",this);
+
+    m_fmctxGoToolMenu->addAction(m_fmctxGoBuildAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoBuildAllAct);
+    m_fmctxGoToolMenu->addSeparator();
+    m_fmctxGoToolMenu->addAction(m_fmctxGoInstallAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoInstallAllAct);
+    m_fmctxGoToolMenu->addSeparator();
+    m_fmctxGoToolMenu->addAction(m_fmctxGoGetAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoGetUpdateAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoGetForceAct);
+    m_fmctxGoToolMenu->addSeparator();
+    m_fmctxGoToolMenu->addAction(m_fmctxGoTestAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoTestAllAct);
+    m_fmctxGoToolMenu->addSeparator();
+    m_fmctxGoToolMenu->addAction(m_fmctxGoCleanAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoCleanAllAct);
+    m_fmctxGoToolMenu->addSeparator();
+    m_fmctxGoToolMenu->addAction(m_fmctxGoVetAct);
+    m_fmctxGoToolMenu->addAction(m_fmctxGoVetAllCheckAct);
+    m_fmctxGoToolMenu->addSeparator();
+    m_fmctxGoToolMenu->addAction(m_fmctxGoFmtAct);
+
     connect(m_fmctxGoLockBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoLockBuild()));
     connect(m_fmctxGoBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoBuildAllAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoInstallAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoInstallAllAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoTestAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoTestAllAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoCleanAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoCleanAllAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoGetAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoGetUpdateAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoGetForceAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoVetAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
+    connect(m_fmctxGoVetAllCheckAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
 
-    m_fmctxGoFmtAct = new QAction(tr("Go Fmt"),this);
     connect(m_fmctxGoFmtAct,SIGNAL(triggered()),this,SLOT(fmctxGofmt()));
 
     connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
@@ -301,6 +366,7 @@ LiteBuild::~LiteBuild()
     if (!m_nullMenu->parent()) {
         delete m_nullMenu;
     }
+    delete m_fmctxGoToolMenu;
 }
 
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
@@ -455,14 +521,9 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
                 act = menu->actions().at(0);
             }
             menu->insertAction(act,m_fmctxGoLockBuildAct);
-            menu->insertSeparator(act);
-            menu->insertAction(act,m_fmctxGoBuildAct);
-            menu->insertAction(act,m_fmctxGoInstallAct);
-            if (hasTest) {
-                menu->insertAction(act,m_fmctxGoTestAct);
-            }
-            menu->insertAction(act,m_fmctxGoCleanAct);
-            menu->insertAction(act,m_fmctxGoFmtAct);
+            menu->insertSeparator(act);            
+            //m_fmctxGoTestAct->setEnabled(hasTest);
+            menu->insertMenu(act,m_fmctxGoToolMenu);
             menu->insertSeparator(act);
         }
     }
