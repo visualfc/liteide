@@ -221,42 +221,38 @@ void Build::setLock(const QString &lock)
     m_lock = lock;
 }
 
+static QString action_os_name()
+{
+#ifdef Q_OS_MAC
+    return "macosx";
+#endif
+#ifdef Q_OS_WIN
+    return "windows";
+#endif
+#ifdef Q_OS_LINUX
+    return "linux";
+#endif
+#ifdef Q_OS_FREEBSD
+    return "freebsd";
+#endif
+#ifdef Q_OS_OPENBD
+    return "openbsd";
+#endif
+    return "unknown-os";
+}
+
 void Build::appendAction(BuildAction *act)
 {
     for (int i = 0; i < m_actionList.size(); i++) {
         BuildAction *ba = m_actionList[i];
         if (ba->id() == act->id()) {
-#ifdef Q_OS_MAC
-                if (act->os().contains("macosx",Qt::CaseInsensitive)) {
-                    m_actionList[i] = act;
-                    delete ba;
-                }
-#endif
-#ifdef Q_OS_WIN
-                if (act->os().contains("windows",Qt::CaseInsensitive)) {
-                    m_actionList[i] = act;
-                    delete ba;
-                }
-#endif
-#ifdef Q_OS_LINUX
-                if (act->os().contains("linux",Qt::CaseInsensitive)) {
-                    m_actionList[i] = act;
-                    delete ba;
-                }
-#endif
-#ifdef Q_OS_FREEBSD
-                if (act->os().contains("freebsd",Qt::CaseInsensitive)) {
-                    m_actionList[i] = act;
-                    delete ba;
-                }
-#endif
-#ifdef Q_OS_OPENBD
-                if (act->os().contains("openbsd",Qt::CaseInsensitive)) {
-                    m_actionList[i] = act;
-                    delete ba;
-                }
-#endif
-                return;
+            if (act->os().contains(action_os_name(),Qt::CaseInsensitive)) {
+                m_actionList[i] = act;
+                delete ba;
+            } else {
+                delete act;
+            }
+            return;
         }
     }
     m_actionList.append(act);
