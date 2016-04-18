@@ -46,6 +46,7 @@ EditorApiManager::EditorApiManager(QObject *parent)
 EditorApiManager::~EditorApiManager()
 {
     qDeleteAll(m_wordApiList);
+    qDeleteAll(m_snippetApiList);
 }
 
 void EditorApiManager::addWordApi(IWordApi *api)

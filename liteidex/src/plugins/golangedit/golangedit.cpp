@@ -186,6 +186,13 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     this->applyOption(OPTION_GOLANGEDIT);
 }
 
+GolangEdit::~GolangEdit()
+{
+    if (m_oracleOutput) {
+        delete m_oracleOutput;
+    }
+}
+
 //bool GolangEdit::eventFilter(QObject *obj, QEvent *event)
 //{
 //    if (obj == m_plainTextEdit && event->type() == QEvent::ShortcutOverride) {

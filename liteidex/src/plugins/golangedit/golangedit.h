@@ -65,6 +65,7 @@ class GolangEdit : public QObject
     Q_OBJECT
 public:
     explicit GolangEdit(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual ~GolangEdit();
     QTextCursor textCursorForPos(const QPoint &globalPos);
 public slots:
     void applyOption(const QString &option);
