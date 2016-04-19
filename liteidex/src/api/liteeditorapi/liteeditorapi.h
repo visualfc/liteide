@@ -203,6 +203,7 @@ struct Link
     bool    showNav;
     QString targetFileName;
     QString targetInfo;
+    QString sourceInfo;
     QPoint cursorPos;
 };
 

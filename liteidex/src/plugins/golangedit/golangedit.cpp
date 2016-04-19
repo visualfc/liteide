@@ -590,6 +590,45 @@ void GolangEdit::findLinkStarted()
     m_findLinkProcess->closeWriteChannel();
 }
 
+static QStringList FindSourceInfo(LiteApi::IApplication *app, const QString &fileName, int line, int maxLine) {
+    QStringList lines;
+    LiteApi::IEditor *edit = app->editorManager()->findEditor(fileName,true);
+    int digits = 2;
+    int max = line+maxLine;
+    while (max >= 100) {
+        max /= 10;
+        ++digits;
+    }
+    if (edit) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(edit);
+        if (ed) {
+            QTextBlock block = ed->document()->findBlockByLineNumber(line);
+            int index = 0;
+            while (block.isValid() && index < maxLine) {
+                index++;
+                lines.append(QString("%1 %2").arg(line+index,digits).arg(block.text()));
+                block = block.next();
+            }
+        }
+    } else {
+        QFile f(fileName);
+        if (f.open(QFile::ReadOnly)) {
+            QTextStream stream(&f);
+            stream.setCodec("utf-8");
+            int curLine = 0;
+            QString text;
+            while(!stream.atEnd() && (curLine < (line+maxLine)) ) {
+                text = stream.readLine();
+                if (curLine >= line) {
+                    lines.append(QString("%1 %2").arg(curLine,digits).arg(text));
+                }
+                curLine++;
+            }
+        }
+    }
+    return lines;
+}
+
 void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
 {
     if (code != 0) {
@@ -611,7 +650,25 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         m_lastLink.targetLine = line-1;
                         m_lastLink.targetColumn = col-1;
                         m_lastLink.targetInfo = formatInfo(info[1]);
-                        if (info.size() >= 3) {
+                        if (m_lastLink.showNav) {
+                            m_lastLink.sourceInfo = QString("%1\n\n> %2:%3").arg(formatInfo(info[1])).arg(fileName).arg(line);
+                            int n = 7;
+                            if (info.size() >= 3) {
+                                for (int i = 2; i < info.size(); i++) {
+                                    m_lastLink.sourceInfo += "\n// "+info.at(i);
+                                    n--;
+                                    if (i >= 5) {
+                                        if (i+1 < info.size()) {
+                                            m_lastLink.sourceInfo += "\t...";
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            m_lastLink.sourceInfo += "\n";
+                            m_lastLink.sourceInfo += FindSourceInfo(m_liteApp,fileName,line-1,n).join("\n").replace("\t","    ");
+                        }
+                        if (m_lastLink.showTip && (info.size() >= 3) ) {
                             m_lastLink.targetInfo += "\n";
                             for (int i = 2; i < info.size(); i++) {
                                 m_lastLink.targetInfo += "\n"+info.at(i);
@@ -621,6 +678,7 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                     }
                 } else if (info[0] == "-") {
                     m_lastLink.targetInfo = info[1];
+                    m_lastLink.sourceInfo = info[1];
                     m_editor->showLink(m_lastLink);
                 } else {
                     m_editor->clearLink();
