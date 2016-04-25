@@ -80,11 +80,7 @@ win32-msvc* {
     DEFINES += _CRT_SECURE_NO_WARNINGS
 }
 
-linux {
-     packagesExist(QtWebKit) {
-         DEFINES += LITEIDE_QTWEBKIT
-     }
-} else {
+win32|macx {
     greaterThan(QT_MAJOR_VERSION, 4) {
     } else {
         DEFINES += LITEIDE_QTWEBKIT
