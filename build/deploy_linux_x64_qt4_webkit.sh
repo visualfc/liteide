@@ -24,3 +24,6 @@ fi
 cp -a -v $QT4LIBS/libQtCore.so* liteide/lib/liteide
 cp -a -v $QT4LIBS/libQtGui.so* liteide/lib/liteide
 cp -a -v $QT4LIBS/libQtXml.so* liteide/lib/liteide
+
+cp -a -v $QT4LIBS/libQtNetwork.so* liteide/lib/liteide
+cp -a -v $QT4LIBS/libQtWebKit.so* liteide/lib/liteide

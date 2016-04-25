@@ -80,7 +80,11 @@ win32-msvc* {
     DEFINES += _CRT_SECURE_NO_WARNINGS
 }
 
-win32|macx {
+linux {
+    contains(CONFIG, liteide_qtwebkit) {
+        DEFINES += LITEIDE_QTWEBKIT
+    }
+} else {
     greaterThan(QT_MAJOR_VERSION, 4) {
     } else {
         DEFINES += LITEIDE_QTWEBKIT
