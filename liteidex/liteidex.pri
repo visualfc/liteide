@@ -79,3 +79,15 @@ win32-msvc* {
     #Don't warn about sprintf, fopen etc being 'unsafe'
     DEFINES += _CRT_SECURE_NO_WARNINGS
 }
+
+linux {
+     packagesExist(QtWebKit) {
+         DEFINES += LITEIDE_QTWEBKIT
+     }
+} else {
+    greaterThan(QT_MAJOR_VERSION, 4) {
+    } else {
+        DEFINES += LITEIDE_QTWEBKIT
+    }
+}
+

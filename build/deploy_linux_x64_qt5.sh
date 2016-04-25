@@ -9,7 +9,7 @@ fi
 QT5LIBS=/usr/lib/x86_64-linux-gnu
 echo "Setting QT5LIBS=$QT5LIBS"
 
-echo build liteide 
+echo build liteide
 echo QT5LIBS=$QT5LIBS
 echo GOROOT=$GOROOT
 echo BUILD_ROOT=$BUILD_ROOT

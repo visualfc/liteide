@@ -1,5 +1,6 @@
 # USE .subdir AND .depends !
 # OTHERWISE PLUGINS WILL BUILD IN WRONG ORDER (DIRECTORIES ARE COMPILED IN PARALLEL)
+include (../../liteidex.pri)
 
 TEMPLATE  = subdirs
 
@@ -26,7 +27,7 @@ SUBDIRS = \
     rustedit \
     dlvdebugger \
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-} else {
+
+contains(DEFINES, LITEIDE_QTWEBKIT) {
     SUBDIRS += webkithtmlwidget
 }
