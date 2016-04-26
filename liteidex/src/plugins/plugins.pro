@@ -25,7 +25,8 @@ SUBDIRS = \
     markdown \
     jsonedit \
     rustedit \
-    dlvdebugger 
+    dlvdebugger \
+    fakevimedit
 
 
 contains(DEFINES, LITEIDE_QTWEBKIT) {
