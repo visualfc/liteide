@@ -124,7 +124,7 @@ QString LiteEditorWidget::textUnderCursor(QTextCursor tc) const
         return QString();
     }
     //int index = text.lastIndexOf(QRegExp("\\b[a-zA-Z_][a-zA-Z0-9_\.]+"));
-    static QRegExp reg("[a-zA-Z_\\.]+[a-zA-Z0-9_\\.\\:]*$");
+    static QRegExp reg("[a-zA-Z0-9_\\.]+[a-zA-Z0-9_\\.\\:]*$");
     int index = reg.indexIn(text);
     if (index < 0) {
         return QString();
