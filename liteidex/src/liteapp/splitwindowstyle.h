@@ -91,12 +91,13 @@ class SplitWindowStyle : public IWindowStyle
 public:
     SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SplitWindowStyle();
-    void createToolWindowMenu();
-    QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
-    void removeToolWindow(QAction *action);
-    QAction *findToolWindow(QWidget *wiget);
-    void saveToolState() const;
-    void restoreToolsState();
+    virtual void createToolWindowMenu();
+    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
+    virtual void removeToolWindow(QAction *action);
+    virtual QAction *findToolWindow(QWidget *wiget);
+    virtual void saveToolState() const;
+    virtual void restoreToolsState();
+    virtual void updateConer();
 public slots:
     void hideToolWindow(Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
     void showOrHideToolWindow();

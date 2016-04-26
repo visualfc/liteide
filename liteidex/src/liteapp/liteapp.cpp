@@ -806,6 +806,7 @@ void LiteApp::loadState()
         m_mainwindow->resize(800,600);
     }
     m_mainwindow->restoreState(m_settings->value("liteapp/state").toByteArray());
+    m_mainwindow->updateConer();
 }
 
 void LiteApp::saveState()

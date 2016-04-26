@@ -38,6 +38,7 @@ public:
     virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split) = 0;
     virtual void saveToolState() const = 0;
     virtual void restoreToolsState() = 0;
+    virtual void updateConer() = 0;
 public slots:
     virtual void hideOutputWindow() = 0;
     virtual void showOrHideToolWindow() = 0;

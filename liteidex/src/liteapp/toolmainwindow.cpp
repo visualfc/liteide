@@ -74,6 +74,11 @@ bool ToolMainWindow::restoreState(const QByteArray &state, int version)
     return b;
 }
 
+void ToolMainWindow::updateConer()
+{
+    m_windowStyle->updateConer();
+}
+
 void ToolMainWindow::removeToolWindow(QAction *action)
 {
     m_windowStyle->removeToolWindow(action);

@@ -135,6 +135,7 @@ public:
     virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split);
     virtual void saveToolState() const;
     virtual void restoreToolsState();
+    virtual void updateConer();
     void restoreHideToolWindows();
     void restoreHideSideToolWindows();
     void hideSideToolWindows();

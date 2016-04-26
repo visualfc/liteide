@@ -40,6 +40,7 @@ public:
     QAction *findToolWindow(QWidget *wiget);
     QByteArray saveState(int version = 0) const;
     bool restoreState(const QByteArray &state, int version = 0);
+    void updateConer();
 public slots:
     void showOrHideToolWindow();
     void hideOutputWindow();

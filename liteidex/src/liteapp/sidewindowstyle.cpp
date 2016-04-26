@@ -416,8 +416,6 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
     m_mainWindow->addToolBar(Qt::LeftToolBarArea,m_sideBar->toolBar);
     //m_mainWindow->addDockWidget(Qt::LeftDockWidgetArea,m_sideBar->dock);
 
-    m_mainWindow->setCorner(Qt::BottomLeftCorner,Qt::LeftDockWidgetArea);
-
     m_mainWindow->addDockWidget(Qt::BottomDockWidgetArea,m_outputBar->dock);
 
     m_mainWindow->setDockNestingEnabled(true);
@@ -562,6 +560,12 @@ void SideWindowStyle::saveToolState() const
 void SideWindowStyle::restoreToolsState()
 {
     m_hideSideAct->setChecked(m_liteApp->settings()->value("side_side_hide").toBool());
+}
+
+void SideWindowStyle::updateConer()
+{
+    m_mainWindow->setCorner(Qt::BottomLeftCorner,Qt::LeftDockWidgetArea);
+    m_mainWindow->setCorner(Qt::BottomRightCorner,Qt::RightDockWidgetArea);
 }
 
 void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea /*area*/, QAction */*action*/, bool /*split*/)

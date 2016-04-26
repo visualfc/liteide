@@ -465,6 +465,12 @@ void SplitWindowStyle::restoreToolsState()
     m_hideSideAct->setChecked(m_liteApp->settings()->value("split_side_hide").toBool());
 }
 
+void SplitWindowStyle::updateConer()
+{
+    m_mainWindow->setCorner(Qt::BottomLeftCorner,Qt::LeftDockWidgetArea);
+    m_mainWindow->setCorner(Qt::BottomRightCorner,Qt::RightDockWidgetArea);
+}
+
 void SplitWindowStyle::hideToolWindow(Qt::DockWidgetArea area)
 {
     SplitActionToolBar *bar = m_areaToolBar.value(area);
