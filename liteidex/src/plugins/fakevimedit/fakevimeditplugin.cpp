@@ -43,7 +43,7 @@ FakeVimEditPlugin::FakeVimEditPlugin()
 
 bool FakeVimEditPlugin::load(LiteApi::IApplication *app)
 {
-    app->optionManager()->addFactory(new FakeVimEditOptionFactory(app,this));
+    //app->optionManager()->addFactory(new FakeVimEditOptionFactory(app,this));
     new FakeVimEdit(app,this);
     return true;
 }

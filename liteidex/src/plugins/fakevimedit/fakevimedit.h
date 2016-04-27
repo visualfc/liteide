@@ -76,6 +76,7 @@ public slots:
     void applyOption(const QString &option);
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
+    void toggledEnableUseFakeVim(bool b);
 
 protected slots:
     void showMessage(QString contents, int);
@@ -101,6 +102,7 @@ private:
     QLabel *m_commandLabel;
 
     QMap<QObject *,FakeVimHandler *> m_editorMap;
+    QAction *m_enableUseFakeVimAct;
 };
 
 #endif // FAKEVIMEDIT_H

@@ -57,9 +57,32 @@ FakeVimEdit::FakeVimEdit(LiteApi::IApplication *app, QObject *parent) :
 {
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    //connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
-    this->applyOption(OPTION_FAKEVIMEDIT);
+    //this->applyOption(OPTION_FAKEVIMEDIT);
+
+    m_enableUseFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,false).toBool();
+
+    m_enableUseFakeVimAct = new QAction(tr("Use FakeVim Editing"),this);
+    m_enableUseFakeVimAct->setCheckable(true);
+    m_enableUseFakeVimAct->setChecked(m_enableUseFakeVim);
+
+    connect(m_enableUseFakeVimAct,SIGNAL(toggled(bool)),this,SLOT(toggledEnableUseFakeVim(bool)));
+
+    if (m_enableUseFakeVim) {
+        _enableFakeVim();
+    }
+}
+
+void FakeVimEdit::toggledEnableUseFakeVim(bool b)
+{
+    m_enableUseFakeVim = b;
+    m_liteApp->settings()->setValue(FAKEVIMEDIT_USEFAKEVIM,b);
+    if(m_enableUseFakeVim){
+        _enableFakeVim();
+    }else{
+        _disableFakeVim();
+    }
 }
 
 void FakeVimEdit::applyOption(const QString &option)
@@ -67,6 +90,7 @@ void FakeVimEdit::applyOption(const QString &option)
     if (option != OPTION_FAKEVIMEDIT) {
         return;
     }
+    /*
     m_enableUseFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,false).toBool();
 
     if(m_enableUseFakeVim){
@@ -74,6 +98,7 @@ void FakeVimEdit::applyOption(const QString &option)
     }else{
         _disableFakeVim();
     }
+    */
 }
 
 
@@ -218,19 +243,26 @@ void FakeVimEdit::handleExCommandRequested(bool *b, ExCommand c)
 
 void FakeVimEdit::editorCreated(LiteApi::IEditor *editor)
 {
-    if (!m_enableUseFakeVim){
-        return;
-    }
     if (!editor) {
         return;
     }
+
+    QMenu *menu = LiteApi::getEditMenu(editor);
+    if (menu) {
+        menu->addSeparator();
+        menu->addAction(m_enableUseFakeVimAct);
+    }
+
+    if (!m_enableUseFakeVim){
+        return;
+    }
+
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
         m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
     }else{
         return;
     }
-
 
     if(!m_enableUseFakeVim)
         return;
