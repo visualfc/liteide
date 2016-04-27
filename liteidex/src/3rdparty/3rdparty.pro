@@ -14,4 +14,5 @@ SUBDIRS = \
     elidedlabel \
     sundown \
     cplusplus \
+    fakevim
 
