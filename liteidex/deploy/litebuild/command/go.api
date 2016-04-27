@@ -1,6 +1,7 @@
 go
 go test
-go test -test.branch=.*
+go test -test.bench=.*
+go test -test.bench=.* -test.benchmem
 go test -cover
 go install
 go get
