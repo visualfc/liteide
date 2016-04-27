@@ -67,7 +67,7 @@ void FakeVimEdit::applyOption(const QString &option)
     if (option != OPTION_FAKEVIMEDIT) {
         return;
     }
-    m_enableUseFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,true).toBool();
+    m_enableUseFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,false).toBool();
 
     if(m_enableUseFakeVim){
         _enableFakeVim();
