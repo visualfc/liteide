@@ -45,7 +45,7 @@ inline QStringList make_init_list()
     list << "set shiftwidth=4";
     list << "set tabstop=4";
     list << "set autoindent";
-    list << "#source fakevimrc";
+    //list << "#source fakevimrc";
     return list;
 }
 

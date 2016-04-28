@@ -119,7 +119,7 @@ void FakeVimEdit::_addCommandLabel(){
     _removeCommandLabel();
     m_commandLabel = new QLabel(m_liteApp->mainWindow());
     m_commandLabel->setFont(font);
-    m_liteApp->mainWindow()->statusBar()->insertPermanentWidget(0,m_commandLabel);
+    m_liteApp->mainWindow()->statusBar()->addPermanentWidget(m_commandLabel);
 }
 
 void FakeVimEdit::_removeCommandLabel(){
