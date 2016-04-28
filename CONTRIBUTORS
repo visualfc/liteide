@@ -1,45 +1,78 @@
-LiteIDE Contributor List:
+# LiteIDE Contributor List:
+# This is the official list of people who can contribute
+# (and typically have contributed) code to the LiteIDE repository.
+#
+# Names should be added to this file like so:
+#     Individual's name <submission email address>
+#     Individual's name <github.com address> 
+#
+
+# Please keep the list sorted.
 
 Addxtoy <pollux@lavabit.com>
 Ahmed (OneOfOne) W <oneofone@gmail.com>
 Alexander Rødseth <rodseth@gmail.com>
 appajee <github.com/appajee>
 bombless <bombless@126.com>
+b-s-a <github.com/b-s-a>
 devshell <root@devshell.org>
+custa <github.com/custa>
 Daniel Theophanes kardianos <kardianos@gmail.com>
 Dobrosław Żybort <bitbucket.org/matrixik/>
 Dumitru Ungureanu <itmitica@gmail.com>
+Dvir Volk <github.com/dvirsky>
 Fan Yang <github.com/missdeer>
+FeelGo <github.com/uin57>
+jsuppe <jon.suppe@gmail.com>
+Jeremy Harris <github.com/cillosis>
 Georges Varouchas <gvarouchas@2000ecoles.net>
 GoEddie <goeddieuk@gmail.com>
+Guolei <github.com/xiaozi0lei>
 Elgs Qian Chen <elgs1980@gmail.com>
-FredFoonly <kmikep@live.com>
+Fred Foonly <kmikep@live.com>
 eugoss <github.com/eugoss>
 Fan Yang missdeer <github.com/missdeer>
 Hai Thanh Nguyen <phaikawl@gmail.com>
 Harald Leinders <harald.leinders@denkwerk.com>
 Helge Plaschke <github.com/HelgePlaschke>
 Henson Lu <henson.lu@gmail.com>
+Lee Forest <lee8oi@gmail.com>
+Laurent Saint-Félix <anaethelion@gmail.com>
 Lockals <lockalsash@gmail.com>
+Lauri Ojansivu <github.com/xet7>
 lixiaolong <github.com/lixiaolong>
+Lucio M. Tato <github.com/luciotato>
 mattn <mattn.jp@gmail.com>
 mars <marshalys@gmail.com>
 Maxim Perenesenko <github.com/maximp>
+Marius Karnauskas <marius.karnauskas@gmail.com>
 Michael Käufl <michael-k@users.noreply.github.com>
+Mr Tom <github.com/smileytom>
 Nik U <niku@vaxxine.com>
 Philippe Lhoste <philho@gmx.net>
 Roman Shmelev <rshmelev@gmail.com>
+Roland Illig <github.com/rillig>
 Shauvik Roy Choudhary <shauvik@gmail.com>
+Santiago Corredoira Lascaray <scorredoira@gmail.com>
 Slene <vslene@gmail.com>
+stemd <stemdd@gmail.com>
 Timothy Lin <zh9102@gmail.com>
 TomBoss <tomboss@gmx.com>
 Tylor Arndt <github.com/tarndt>
 vanackere <github.com/vanackere>
 Vincent Vanackere <vincent.vanackere@gmail.com>
+Vladimir Timofeev <vovkasm@gmail.com>
 Vedran Vuk <vedranvuk82@gmail.com>
+Vahid pylover <vahid.mardani@gmail.com>
+Vince Yuan <vince.yuan@gmail.com>
+Yuwen Shen <github.com/losas>
+Yılmaz <github.com/edigu>
 Unknown <github.com/Unknwon>
 William Kennedy <bill@ardanstudios.com>
+Wanpat Anantapan <github.com/oneplus1000>
 zigal <janiiik@hotmail.com>
+Zach Collier <github.com/Zamicol>
 
-All contributors that provided patches.
-If they are missing, please let me know.
+
+# All contributors that provided patches.
+# If they are missing, please let me know.
