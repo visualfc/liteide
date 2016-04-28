@@ -18,7 +18,7 @@
 	<list name="reserved">
 		<item> abstract </item>
 		<item> alignof </item>
-		<item> be </item>
+		<item> become </item>
 		<item> do </item>
 		<item> final </item>
 		<item> offsetof </item>
@@ -64,29 +64,41 @@
 		<item> while </item>
 	</list>
 	<list name="traits">
-		<item> Const </item>
+		<item> AsSlice </item>
+		<item> CharExt </item>
+		<item> Clone </item>
 		<item> Copy </item>
-		<item> Send </item>
-		<item> Owned </item>
-		<item> Sized </item>
-		<item> Eq </item>
-		<item> Ord </item>
-		<item> Num </item>
-		<item> Ptr </item>
+		<item> Debug </item>
+		<item> Decodable </item>
+		<item> Default </item>
+		<item> Display </item>
+		<item> DoubleEndedIterator </item>
 		<item> Drop </item>
-		<item> Add </item>
-		<item> Sub </item>
-		<item> Mul </item>
-		<item> Quot </item>
-		<item> Rem </item>
-		<item> Neg </item>
-		<item> BitAnd </item>
-		<item> BitOr </item>
-		<item> BitXor </item>
-		<item> Shl </item>
-		<item> Shr </item>
-		<item> Index </item>
-		<item> Not </item>
+		<item> Encodable </item>
+		<item> Eq </item>
+		<item> Default </item>
+		<item> Extend </item>
+		<item> Fn </item>
+		<item> FnMut </item>
+		<item> FnOnce </item>
+		<item> FromPrimitive </item>
+		<item> Hash </item>
+		<item> Iterator </item>
+		<item> IteratorExt </item>
+		<item> MutPtrExt </item>
+		<item> Ord </item>
+		<item> PartialEq </item>
+		<item> PartialOrd </item>
+		<item> PtrExt </item>
+		<item> Rand </item>
+		<item> Send </item>
+		<item> Sized </item>
+		<item> SliceConcatExt </item>
+		<item> SliceExt </item>
+		<item> Str </item>
+		<item> StrExt </item>
+		<item> Sync </item>
+		<item> ToString </item>
 	</list>
 	<list name="types">
 		<item> bool </item>
@@ -110,6 +122,9 @@
 		<item> Option </item>
 		<item> Result </item>
 		<item> Self </item>
+		<item> Box </item>
+		<item> Vec </item>
+		<item> String </item>
 	</list>
 	<list name="ctypes">
 		<item> c_float </item>
@@ -229,6 +244,9 @@
 			<RegExpr String="&apos;&rustIdent;(?!&apos;)" attribute="Lifetime"/>
 			<DetectChar char="{" attribute="Symbol" context="#stay" beginRegion="Brace" />
 			<DetectChar char="}" attribute="Symbol" context="#stay" endRegion="Brace" />
+                        <Detect2Chars char="r" char1="&quot;" attribute="String" context="RawString"/>
+                        <StringDetect String="r##&quot;" attribute="String" context="RawHashed2"/>
+                        <StringDetect String="r#&quot;" attribute="String" context="RawHashed1"/>
 			<DetectChar char="&quot;" attribute="String" context="String"/>
 			<DetectChar char="&apos;" attribute="Character" context="Character"/>
 			<DetectChar char="[" attribute="Symbol" context="#stay" beginRegion="Bracket" />
@@ -248,12 +266,24 @@
 			<DetectSpaces/>
 			<DetectChar char="=" attribute="Normal Text" context="#pop"/>
 			<DetectChar char="&lt;" attribute="Normal Text" context="#pop"/>
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
 		</context>
-		<context attribute="String" lineEndContext="#pop" name="String">
-			<LineContinue attribute="String" context="#stay"/>
-			<DetectChar char="\" attribute="CharEscape" context="CharEscape"/>
+                <!-- Rustc allows strings to extend over multiple lines, and the
+                only thing a backshash at end-of-line does is remove the whitespace. -->
+                <context attribute="String" lineEndContext="#stay" name="String">
+                        <DetectChar char="\" attribute="CharEscape" context="CharEscape"/>
+                        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+                </context>
+		<context attribute="String" lineEndContext="#stay" name="RawString">
 			<DetectChar attribute="String" context="#pop" char="&quot;"/>
 		</context>
+                <!-- These rules are't complete: they won't match r###"abc"### -->
+                <context attribute="String" lineEndContext="#stay" name="RawHashed1">
+                        <Detect2Chars attribute="String" context="#pop" char="&quot;" char1="#"/>
+                </context>
+                <context attribute="String" lineEndContext="#stay" name="RawHashed2">
+                        <StringDetect attribute="String" context="#pop" String="&quot;##"/>
+                </context>
 		<context attribute="Character" lineEndContext="#pop" name="Character">
 			<DetectChar char="\" attribute="CharEscape" context="CharEscape"/>
 			<DetectChar attribute="Character" context="#pop" char="&apos;"/>
@@ -274,20 +304,20 @@
 	</contexts>
 	<itemDatas>
 		<itemData name="Normal Text"  defStyleNum="dsNormal"/>
-		<itemData name="Keyword"      defStyleNum="dsKeyword" bold="1"/>
-		<itemData name="Self"         defStyleNum="dsKeyword" bold="1"/>
-		<itemData name="Type"         defStyleNum="dsKeyword" bold="1"/>
-		<itemData name="Trait"        defStyleNum="dsKeyword" bold="1"/>
-		<itemData name="CType"        defStyleNum="dsNormal" />
-		<itemData name="Constant"     defStyleNum="dsKeyword" />
-		<itemData name="CConstant"    defStyleNum="dsNormal" />
-		<itemData name="Definition"   defStyleNum="dsNormal" />
-		<itemData name="Comment"      defStyleNum="dsComment" />
-		<itemData name="Scope"        defStyleNum="dsNormal" />
-		<itemData name="Number"       defStyleNum="dsDecVal" />
-		<itemData name="String"       defStyleNum="dsString" />
-		<itemData name="CharEscape"   defStyleNum="dsChar" bold="1"/>
-		<itemData name="Character"    defStyleNum="dsChar" />
+		<itemData name="Keyword"      defStyleNum="dsKeyword" color="#770088" bold="1"/>
+		<itemData name="Self"         defStyleNum="dsKeyword" color="#FF0000" bold="1"/>
+		<itemData name="Type"         defStyleNum="dsKeyword" color="#4e9a06" bold="1"/>
+		<itemData name="Trait"        defStyleNum="dsKeyword" color="#4e9a06" bold="1"/>
+		<itemData name="CType"        defStyleNum="dsNormal" color="#4e9a06"/>
+		<itemData name="Constant"     defStyleNum="dsKeyword" color="#116644"/>
+		<itemData name="CConstant"    defStyleNum="dsNormal" color="#116644"/>
+		<itemData name="Definition"   defStyleNum="dsNormal" color="#0000FF"/>
+		<itemData name="Comment"      defStyleNum="dsComment" color="#AA5500"/>
+		<itemData name="Scope"        defStyleNum="dsNormal" color="#0055AA"/>
+		<itemData name="Number"       defStyleNum="dsDecVal" color="#116644"/>
+		<itemData name="String"       defStyleNum="dsString" color="#FF0000"/>
+		<itemData name="CharEscape"   defStyleNum="dsChar" color="#FF0000" bold="1"/>
+		<itemData name="Character"    defStyleNum="dsChar" color="#FF0000"/>
 		<itemData name="Macro"        defStyleNum="dsOthers"/>
 		<itemData name="Attribute"    defStyleNum="dsOthers"/>
 		<itemData name="Lifetime"     defStyleNum="dsOthers" bold="1"/>
@@ -302,3 +332,4 @@
 	<keywords casesensitive="1" />
 </general>
 </language>
+
