@@ -52,14 +52,14 @@ using namespace FakeVim::Internal;
 FakeVimEdit::FakeVimEdit(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app),
-    m_commandLabel(NULL),
-    m_enableUseFakeVim(false)
+    m_enableUseFakeVim(false),
+    m_commandLabel(0)
 {
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    //connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
-    //this->applyOption(OPTION_FAKEVIMEDIT);
+    this->applyOption(OPTION_FAKEVIMEDIT);
 
     m_enableUseFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,false).toBool();
 
@@ -90,22 +90,14 @@ void FakeVimEdit::applyOption(const QString &option)
     if (option != OPTION_FAKEVIMEDIT) {
         return;
     }
-    /*
-    m_enableUseFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,false).toBool();
-
-    if(m_enableUseFakeVim){
-        _enableFakeVim();
-    }else{
-        _disableFakeVim();
-    }
-    */
+    m_initCommandList = m_liteApp->settings()->value(FAKEVIMEDIT_INITCOMMANDS,initCommandList()).toStringList();
 }
 
 
 void FakeVimEdit::_enableFakeVim(){
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    _addFakeVimToEditor(editor);
     _addCommandLabel();
+    _addFakeVimToEditor(editor);
 }
 
 void FakeVimEdit::_disableFakeVim(){
@@ -184,19 +176,15 @@ void FakeVimEdit::_addFakeVimToEditor(LiteApi::IEditor *editor){
     connect(fakeVimHandler, SIGNAL(commandBufferChanged(QString,int,int,int,QObject*)),
             this, SLOT(showMessage(QString,int)));
 
-    /// TODO: these options were taken from test
+    //init command list
     {
-        fakeVimHandler->handleCommand(("set nopasskeys"));
-        fakeVimHandler->handleCommand(("set nopasscontrolkey"));
-
-        // Set some Vim options.
-        fakeVimHandler->handleCommand(("set expandtab"));
-        fakeVimHandler->handleCommand(("set shiftwidth=4"));
-        fakeVimHandler->handleCommand(("set tabstop=4"));
-        fakeVimHandler->handleCommand(("set autoindent"));
-
-        // Try to source file "fakevimrc" from current directory.
-        fakeVimHandler->handleCommand(("source fakevimrc"));
+        foreach(QString cmd, m_initCommandList) {
+            if (cmd.startsWith("#")) {
+                continue;
+            }
+            fakeVimHandler->handleCommand(cmd);
+        }
+        fakeVimHandler->handleInput("<esc>");
     }
 
     fakeVimHandler->setCurrentFileName(ed->filePath());

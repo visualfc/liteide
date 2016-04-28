@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>152</height>
+    <width>395</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,31 +17,27 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Vim Behavior</string>
+      <string>FakeVim initialization command list (# start is comment):</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="enableUseFakeVimCheckBox">
-        <property name="text">
-         <string>Use FakeVim</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       <widget class="QPlainTextEdit" name="textInitCommands"/>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

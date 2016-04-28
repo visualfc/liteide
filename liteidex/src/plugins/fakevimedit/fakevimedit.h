@@ -69,11 +69,11 @@ private:
     QPlainTextEdit        *m_plainTextEdit;
 
     bool m_enableUseFakeVim;
-
     QLabel *m_commandLabel;
 
     QMap<QObject *,FakeVimHandler *> m_editorMap;
     QAction *m_enableUseFakeVimAct;
+    QStringList  m_initCommandList;
 };
 
 #endif // FAKEVIMEDIT_H

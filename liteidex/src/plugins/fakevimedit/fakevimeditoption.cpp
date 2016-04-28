@@ -41,8 +41,8 @@ FakeVimEditOption::FakeVimEditOption(LiteApi::IApplication *app,QObject *parent)
     ui(new Ui::FakeVimEditOption)
 {
     ui->setupUi(m_widget);
-    bool useFakeVim = m_liteApp->settings()->value(FAKEVIMEDIT_USEFAKEVIM,true).toBool();
-    ui->enableUseFakeVimCheckBox->setChecked(useFakeVim);
+    QStringList cmds = m_liteApp->settings()->value(FAKEVIMEDIT_INITCOMMANDS,initCommandList()).toStringList();
+    ui->textInitCommands->setPlainText(cmds.join("\n"));
 }
 
 FakeVimEditOption::~FakeVimEditOption()
@@ -68,6 +68,7 @@ QString FakeVimEditOption::mimeType() const
 
 void FakeVimEditOption::apply()
 {
-    bool useFakeVim = ui->enableUseFakeVimCheckBox->isChecked();
-    m_liteApp->settings()->setValue(FAKEVIMEDIT_USEFAKEVIM,useFakeVim);
+    //bool useFakeVim = ui->enableUseFakeVimCheckBox->isChecked();
+    QStringList cmds = ui->textInitCommands->toPlainText().split("\n",QString::SkipEmptyParts);
+    m_liteApp->settings()->setValue(FAKEVIMEDIT_INITCOMMANDS,cmds);
 }

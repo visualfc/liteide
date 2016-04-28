@@ -34,5 +34,25 @@
 
 #define OPTION_FAKEVIMEDIT   "option/fakevimedit"
 #define FAKEVIMEDIT_USEFAKEVIM "fakevimedit/usefakevim"
+#define FAKEVIMEDIT_INITCOMMANDS "fakevimedit/initcommands"
+
+inline QStringList make_init_list()
+{
+    QStringList list;
+    list << "#this is fakevim init command list";
+    list << "set nopasskeys";
+    list << "set nopasscontrolkey";
+    list << "set shiftwidth=4";
+    list << "set tabstop=4";
+    list << "set autoindent";
+    list << "#source fakevimrc";
+    return list;
+}
+
+inline QStringList initCommandList()
+{
+    static QStringList list = make_init_list();
+    return list;
+}
 
 #endif // FAKEVIMEDIT_GLOBAL_H
