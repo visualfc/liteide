@@ -175,7 +175,6 @@ void FakeVimEdit::_addFakeVimToEditor(LiteApi::IEditor *editor){
         return;
     }
 
-
     FakeVimHandler *fakeVimHandler;
 
     fakeVimHandler = new FakeVimHandler(ped,0);
@@ -185,7 +184,6 @@ void FakeVimEdit::_addFakeVimToEditor(LiteApi::IEditor *editor){
     connect(fakeVimHandler, SIGNAL(commandBufferChanged(QString,int,int,int,QObject*)),
             this, SLOT(showMessage(QString,int)));
 
-
     /// TODO: these options were taken from test
     {
         fakeVimHandler->handleCommand(("set nopasskeys"));
@@ -193,8 +191,8 @@ void FakeVimEdit::_addFakeVimToEditor(LiteApi::IEditor *editor){
 
         // Set some Vim options.
         fakeVimHandler->handleCommand(("set expandtab"));
-        fakeVimHandler->handleCommand(("set shiftwidth=8"));
-        fakeVimHandler->handleCommand(("set tabstop=16"));
+        fakeVimHandler->handleCommand(("set shiftwidth=4"));
+        fakeVimHandler->handleCommand(("set tabstop=4"));
         fakeVimHandler->handleCommand(("set autoindent"));
 
         // Try to source file "fakevimrc" from current directory.

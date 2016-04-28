@@ -2672,8 +2672,8 @@ void FakeVimHandler::Private::importSelection()
 
 void FakeVimHandler::Private::updateEditor()
 {
-    //const int charWidth = QFontMetrics(EDITOR(font())).width(QLatin1Char(' '));
-    //EDITOR(setTabStopWidth(charWidth * config(ConfigTabStop).toInt()));
+    const int charWidth = QFontMetrics(EDITOR(font())).width(QLatin1Char(' '));
+    EDITOR(setTabStopWidth(charWidth * config(ConfigTabStop).toInt()));
     setupCharClass();
 }
 
@@ -2683,8 +2683,8 @@ void FakeVimHandler::Private::restoreWidget(int tabSize)
     //updateMiniBuffer();
     //EDITOR(removeEventFilter(q));
     //EDITOR(setReadOnly(m_wasReadOnly));
-    //const int charWidth = QFontMetrics(EDITOR(font())).width(QLatin1Char(' '));
-    //EDITOR(setTabStopWidth(charWidth * tabSize));
+    const int charWidth = QFontMetrics(EDITOR(font())).width(QLatin1Char(' '));
+    EDITOR(setTabStopWidth(charWidth * tabSize));
     g.visualMode = NoVisualMode;
     // Force "ordinary" cursor.
     EDITOR(setOverwriteMode(false));
