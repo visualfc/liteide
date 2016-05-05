@@ -372,8 +372,10 @@ LiteBuild::~LiteBuild()
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
 {
     if (m_process->isRunning()) {
-        m_process->kill();
-        m_process->waitForFinished(1000);
+        if (!m_process->waitForFinished(1000)) {
+            m_process->kill();
+        }
+        m_process->waitForFinished(100);
     }
     m_process->setWorkingDirectory(workDir);
     QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
@@ -384,7 +386,7 @@ bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, b
     if (!waitFinish) {
         return true;
     }
-    if (!m_process->waitForFinished(3000)) {
+    if (!m_process->waitForFinished(30000)) {
         m_process->kill();
         return false;
     }
