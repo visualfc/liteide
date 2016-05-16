@@ -510,8 +510,9 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
     //> github.com/derekparker/delve/cmd/dlv/cmds.New() /src/github.com/derekparker/delve/cmd/dlv/cmds/commands.go:61 (PC: 0x45d09f)
     //> [bk6767010] main.test() H:/goproj/src/hello/main.go:12 (hits goroutine(1):1 total:1) (PC: 0x401066)
     //> [bk101903173] github.com/derekparker/delve/vendor/github.com/spf13/cobra.(*Command).Execute() github.com/derekparker/delve/vendor/github.com/spf13/cobra/command.go:615 (hits goroutine(1):1 total:1) (PC: 0x524ea6)
+    //> qlang.io/qlang%2espec%2ev1.Import()
     if (buff.contains("> ")) {
-        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\*\\(\\)\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
+        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\%\\*\\(\\)\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
         int n = reg.indexIn(QString::fromUtf8(buff));
         if (n < 0) {
             return;
@@ -537,6 +538,10 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("stopped");
         QString func = reg.cap(2).trimmed();
+        //hack
+        if (func.contains("%")) {
+            func.replace("%2e",".");
+        }
         QString hits = reg.cap(5).trimmed();
         QString pc = reg.cap(6).trimmed();
         int pos = pc.indexOf('\n');
