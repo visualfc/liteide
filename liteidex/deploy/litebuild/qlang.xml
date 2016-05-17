@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-qlang" id="qlang" work="$(EDITOR_DIR_PATH)" lock="file" ver="2">
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_BIN_DIR)/gotools"/>
+		<config id="qlang" name="QLANG" value="qlang"/>
+		<custom id="TargetArgs" name="TARGETARGS" value=""/>
+		<action id="Run" key="Ctrl+R" img="blue/run.png" cmd="$(QLANG)" args="$(EDITOR_FILE_NAME) $(TARGETARGS)" save="editor" output="true" codec="utf-8" regex="([\w\d:_\-\\/\.]+):(\d+)" readline="true" />
+		<action id="RunTerm" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd $(QLANG) $(EDITOR_FILE_NAME) $(TARGETARGS)" output="false" readline="true"/>
+		<action id="RunTerm" os="macosx" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="/usr/bin/open" args="$(QLANG) $(EDITOR_FILE_NAME) $(TARGETARGS)" output="false" readline="true"/>
+	</mime-type>
+</mime-info>
