@@ -77,8 +77,9 @@ public:
     virtual QSettings *settings();
     virtual QMap<QString,QVariant> &globalCookie();
 
-    virtual QString resourcePath() const;
+    virtual QString rootPath() const;
     virtual QString applicationPath() const;
+    virtual QString resourcePath() const;
     virtual QString pluginPath() const;
     virtual QString storagePath() const;
 
@@ -121,6 +122,7 @@ protected slots:
     void exit();
     void applyOption(QString id);
 protected:
+    QString         m_rootPath;
     QString         m_applicationPath;
     QString         m_pluginPath;
     QString         m_resourcePath;

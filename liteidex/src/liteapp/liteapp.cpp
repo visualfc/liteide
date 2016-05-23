@@ -120,7 +120,8 @@ PluginManager *LiteApp::pluginManager()
 QMap<QString,QVariant> LiteApp::m_cookie;
 
 LiteApp::LiteApp()
-    : m_applicationPath(QApplication::applicationDirPath()),
+    : m_rootPath(LiteApp::getRootPath()),
+      m_applicationPath(QApplication::applicationDirPath()),
       m_pluginPath(LiteApp::getPluginPath()),
       m_resourcePath(LiteApp::getResoucePath()),
       m_storagePath(LiteApp::getStoragePath())
@@ -486,6 +487,11 @@ QSettings *LiteApp::settings()
 QMap<QString,QVariant> &LiteApp::globalCookie()
 {
     return m_cookie;
+}
+
+QString LiteApp::rootPath() const
+{
+    return m_rootPath;
 }
 
 QString LiteApp::resourcePath() const

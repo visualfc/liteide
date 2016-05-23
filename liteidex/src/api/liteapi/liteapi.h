@@ -649,8 +649,9 @@ public:
     virtual QSettings *settings() = 0;
     virtual QMap<QString,QVariant> &globalCookie() = 0; //global cookie
 
-    virtual QString resourcePath() const = 0;
+    virtual QString rootPath() const = 0;
     virtual QString applicationPath() const = 0;
+    virtual QString resourcePath() const = 0;
     virtual QString pluginPath() const = 0;
     virtual QString storagePath() const = 0;
 
@@ -826,7 +827,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X29")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X29.1")
 
 
 #endif //__LITEAPI_H__
