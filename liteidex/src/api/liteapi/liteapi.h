@@ -101,6 +101,10 @@ public:
         m_liteApp = app;
         return true;
     }
+    virtual IApplication* application() {
+        return m_liteApp;
+    }
+
 protected:
     IApplication *m_liteApp;
 };

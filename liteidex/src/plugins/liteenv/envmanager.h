@@ -33,7 +33,7 @@ class Env : public LiteApi::IEnv
 {
     Q_OBJECT
 public:
-    Env(QObject *parent = 0);
+    Env(LiteApi::IApplication *app, QObject *parent = 0);
 public:
     virtual QString id() const;
     virtual QString filePath() const;
@@ -49,10 +49,14 @@ protected slots:
     void readStdout();
     void readStderr();
 protected:
+    void updateIdeEnv(QProcessEnvironment &env);
+protected:
+    LiteApi::IApplication *m_liteApp;
     QString m_filePath;
     QStringList m_orgEnvLines;
     QString m_id;
     QProcessEnvironment m_env;
+    QMap<QString,QString> m_ideEnvMap;
     QMap<QString,QString> m_goEnvMap;
     QProcess *m_process;
 };

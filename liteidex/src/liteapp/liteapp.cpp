@@ -54,6 +54,7 @@
 #include <QTextBlock>
 #include <QTimer>
 #include <QPainter>
+#include <QProcessEnvironment>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -76,6 +77,11 @@ QString LiteApp::getRootPath()
 
 QString LiteApp::getPluginPath()
 {
+    static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString path = env.value("LITEIDE_PLUGIN_PATH");
+    if (!path.isEmpty()) {
+        return path;
+    }
     QString root = getRootPath();
 #ifdef Q_OS_MAC
     return root+"/PlugIns";
@@ -86,6 +92,11 @@ QString LiteApp::getPluginPath()
 
 QString LiteApp::getResoucePath()
 {
+    static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString path = env.value("LITEIDE_RES_PATH");
+    if (!path.isEmpty()) {
+        return path;
+    }
     QString root = getRootPath();
 #ifdef Q_OS_MAC
     return root+"/Resources";
