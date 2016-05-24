@@ -75,6 +75,16 @@ QString LiteApp::getRootPath()
     return rootDir.canonicalPath();
 }
 
+QString LiteApp::getToolPath()
+{
+    static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString path = env.value("LITEIDE_TOOL_PATH");
+    if (!path.isEmpty()) {
+        return path;
+    }
+    return QApplication::applicationDirPath();
+}
+
 QString LiteApp::getPluginPath()
 {
     static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -134,6 +144,7 @@ LiteApp::LiteApp()
     : m_rootPath(LiteApp::getRootPath()),
       m_applicationPath(QApplication::applicationDirPath()),
       m_pluginPath(LiteApp::getPluginPath()),
+      m_toolPath(LiteApp::getToolPath()),
       m_resourcePath(LiteApp::getResoucePath()),
       m_storagePath(LiteApp::getStoragePath())
 {    
@@ -513,6 +524,11 @@ QString LiteApp::resourcePath() const
 QString LiteApp::applicationPath() const
 {
     return m_applicationPath;
+}
+
+QString LiteApp::toolPath() const
+{
+    return m_toolPath;
 }
 
 QString LiteApp::pluginPath() const

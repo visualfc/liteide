@@ -52,6 +52,7 @@ class LiteApp : public IApplication
     Q_OBJECT
 public:
     static QString getRootPath();
+    static QString getToolPath();
     static QString getPluginPath();
     static QString getResoucePath();
     static QString getStoragePath();
@@ -79,6 +80,7 @@ public:
 
     virtual QString rootPath() const;
     virtual QString applicationPath() const;
+    virtual QString toolPath() const;
     virtual QString resourcePath() const;
     virtual QString pluginPath() const;
     virtual QString storagePath() const;
@@ -124,6 +126,7 @@ protected slots:
 protected:
     QString         m_rootPath;
     QString         m_applicationPath;
+    QString         m_toolPath;
     QString         m_pluginPath;
     QString         m_resourcePath;
     QString         m_storagePath;

@@ -655,6 +655,7 @@ public:
 
     virtual QString rootPath() const = 0;
     virtual QString applicationPath() const = 0;
+    virtual QString toolPath() const = 0;
     virtual QString resourcePath() const = 0;
     virtual QString pluginPath() const = 0;
     virtual QString storagePath() const = 0;
@@ -818,9 +819,9 @@ inline IWebKitBrowser *getWebKitBrowser(LiteApi::IApplication *app)
 inline QString getGotools(LiteApi::IApplication *app)
 {
 #ifdef Q_OS_WIN
-    return app->applicationPath()+"/gotools.exe";
+    return app->toolPath()+"/gotools.exe";
 #else
-    return app->applicationPath()+"/gotools";
+    return app->toolPath()+"/gotools";
 #endif
 }
 
@@ -831,7 +832,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X29.1")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X30")
 
 
 #endif //__LITEAPI_H__

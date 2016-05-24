@@ -69,6 +69,7 @@ Env::Env(LiteApi::IApplication *app, QObject *parent) :
 {
     m_ideEnvMap.insert("LITEIDE_ROOT_PATH",app->rootPath());
     m_ideEnvMap.insert("LITEIDE_APP_PATH",app->applicationPath());
+    m_ideEnvMap.insert("LITEIDE_TOOL_PATH",app->toolPath());
     m_ideEnvMap.insert("LITEIDE_RES_PATH",app->resourcePath());
     m_ideEnvMap.insert("LITEIDE_PLUGIN_PATH",app->pluginPath());
 
