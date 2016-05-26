@@ -153,6 +153,10 @@ public:
         m_maxTipInfoLines = maxLines;
     }
 
+    void setMimeType(const QString &mime) {
+        m_mimeType = mime;
+    }
+
     void setAutoIndent(bool b){
         m_autoIndent = b;
     }
@@ -291,6 +295,7 @@ protected:
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
     LiteApi::Link       m_currentLink;
+    QString m_mimeType;
     bool m_moveLineUndoHack;
     bool m_defaultWordWrap;
     bool m_wordWrapOverridden;

@@ -2324,9 +2324,10 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         } else if (m_autoBraces4 && keyText == "\"") {
             mr = "\"";
         } else if (m_autoBraces5 && keyText == "`") {
-            mr = "`";
+            if (m_mimeType == "text/x-gosrc") {
+                mr = "`";
+            }
         }
-
         if (m_textLexer->isInStringOrComment(this->textCursor())) {
             QPlainTextEdit::keyPressEvent(e);
             return;
