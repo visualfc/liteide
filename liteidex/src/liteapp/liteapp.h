@@ -42,8 +42,10 @@ class MimeTypeManager;
 class OptionManager;
 class ToolWindowManager;
 class HtmlWidgetManager;
+class FilterManager;
 class QSettings;
 class QSplitter;
+class QComboBox;
 class LiteAppOptionFactory;
 
 
@@ -73,6 +75,7 @@ public:
     virtual IOptionManager  *optionManager();
     virtual IToolWindowManager *toolWindowManager();
     virtual IHtmlWidgetManager *htmlWidgetManager();
+    virtual IFilterManager *filterManager();
 
     virtual QMainWindow *mainWindow() const;
     virtual QSettings *settings();
@@ -141,6 +144,7 @@ protected:
     FileManager    *m_fileManager;
     MimeTypeManager *m_mimeTypeManager;
     OptionManager   *m_optionManager;
+    FilterManager   *m_filterManager;
     TextOutput    *m_logOutput;
     QAction       *m_logAct;
     LiteAppOptionFactory *m_liteAppOptionFactory;

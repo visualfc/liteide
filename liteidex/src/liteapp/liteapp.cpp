@@ -31,6 +31,7 @@
 #include "optionmanager.h"
 #include "toolwindowmanager.h"
 #include "htmlwidgetmanager.h"
+#include "filtermanager.h"
 #include "mainwindow.h"
 #include "liteappoptionfactory.h"
 #include "folderprojectfactory.h"
@@ -54,6 +55,7 @@
 #include <QTextBlock>
 #include <QTimer>
 #include <QPainter>
+#include <QComboBox>
 #include <QProcessEnvironment>
 #include <QDebug>
 //lite_memory_check_begin
@@ -143,8 +145,8 @@ QMap<QString,QVariant> LiteApp::m_cookie;
 LiteApp::LiteApp()
     : m_rootPath(LiteApp::getRootPath()),
       m_applicationPath(QApplication::applicationDirPath()),
-      m_pluginPath(LiteApp::getPluginPath()),
       m_toolPath(LiteApp::getToolPath()),
+      m_pluginPath(LiteApp::getPluginPath()),
       m_resourcePath(LiteApp::getResoucePath()),
       m_storagePath(LiteApp::getStoragePath())
 {    
@@ -175,6 +177,7 @@ LiteApp::LiteApp()
     m_fileManager = new FileManager;
     m_mimeTypeManager = new MimeTypeManager;
     m_optionManager = new OptionManager;
+    m_filterManager = new FilterManager;
 
     m_goProxy = new GoProxy(this);
     m_actionManager->initWithApp(this);
@@ -186,7 +189,8 @@ LiteApp::LiteApp()
     m_projectManager->initWithApp(this);
     m_editorManager->initWithApp(this);
     m_fileManager->initWithApp(this);
-    m_optionManager->initWithApp(this);        
+    m_optionManager->initWithApp(this);
+    m_filterManager->initWithApp(this);
 
     //m_mainwindow->setCentralWidget(m_editorManager->widget());
     m_mainwindow->splitter()->addWidget(m_editorManager->widget());
@@ -229,6 +233,8 @@ LiteApp::LiteApp()
     createToolBars();
 
     m_editorManager->createActions();
+
+    m_filterManager->createActions();
 
     m_logOutput = new TextOutput(this);
     //m_outputManager->addOutuput(m_logOutput,tr("Console"));
@@ -494,6 +500,11 @@ IToolWindowManager *LiteApp::toolWindowManager()
 IHtmlWidgetManager *LiteApp::htmlWidgetManager()
 {
     return m_htmlWidgetManager;
+}
+
+IFilterManager *LiteApp::filterManager()
+{
+    return m_filterManager;
 }
 
 QMainWindow *LiteApp::mainWindow() const
