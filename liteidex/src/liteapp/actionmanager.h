@@ -72,6 +72,7 @@ protected slots:
 public:
     static QList<QKeySequence> toShortcuts(const QString &ks);
     static QString formatShortcutsString(const QString &ks);
+    static QString formatShortcutsNativeString(const QString &ks);
 protected:
     QMap<QString,QMenu*>   m_idMenuMap;
     QMap<QString,QToolBar*> m_idToolBarMap;

@@ -281,6 +281,16 @@ QString ActionManager::formatShortcutsString(const QString &ks)
     return ksList.join("; ");
 }
 
+QString ActionManager::formatShortcutsNativeString(const QString &ks)
+{
+    QStringList ksList;
+    foreach(QKeySequence k, toShortcuts(ks)) {
+        ksList.append(k.toString(QKeySequence::NativeText));
+    }
+    return ksList.join("; ");
+
+}
+
 void ActionManager::setActionShourtcuts(const QString &id, const QString &shortcuts)
 {
     QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
@@ -364,7 +374,7 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
         info->label = act->text();
         act->setShortcuts(info->keys);
         if (!info->ks.isEmpty()) {
-            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
+            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(ActionManager::formatShortcutsNativeString(info->ks)));
         }
         info->action = act;
     } else {
@@ -398,7 +408,7 @@ void ActionContext::setActionShourtcuts(const QString &id, const QString &shortc
     if (info->action) {
         info->action->setShortcuts(info->keys);
         if (!info->ks.isEmpty()) {
-            info->action->setToolTip(QString("%1 (%2)").arg(info->action->text()).arg(info->ks));
+            info->action->setToolTip(QString("%1 (%2)").arg(info->action->text()).arg(ActionManager::formatShortcutsNativeString(info->ks)));
         }
     }
     if (info->ks != info->defks) {
