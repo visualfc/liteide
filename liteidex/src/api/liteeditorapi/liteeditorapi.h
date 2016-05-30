@@ -180,6 +180,7 @@ struct Link
         linkTextEnd = -1;
         targetFileName.clear();
         targetInfo.clear();
+        sourceInfo.clear();
         targetLine = 0;
         targetColumn = 0;
         showTip = false;

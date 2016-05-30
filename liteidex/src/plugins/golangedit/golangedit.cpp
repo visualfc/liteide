@@ -650,8 +650,8 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         m_lastLink.targetLine = line-1;
                         m_lastLink.targetColumn = col-1;
                         m_lastLink.targetInfo = formatInfo(info[1]);
+                        m_lastLink.sourceInfo = QString("%1\n\n> %2:%3").arg(formatInfo(info[1])).arg(fileName).arg(line);
                         if (m_lastLink.showNav) {
-                            m_lastLink.sourceInfo = QString("%1\n\n> %2:%3").arg(formatInfo(info[1])).arg(fileName).arg(line);
                             int n = 7;
                             if (info.size() >= 3) {
                                 for (int i = 2; i < info.size(); i++) {
