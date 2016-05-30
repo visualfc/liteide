@@ -32,8 +32,10 @@ using namespace LiteApi;
 class QComboBox;
 class FilterManager : public IFilterManager
 {
+    Q_OBJECT
 public:
     FilterManager();
+    virtual ~FilterManager();
     virtual bool initWithApp(IApplication *app);
 public:
     void createActions();

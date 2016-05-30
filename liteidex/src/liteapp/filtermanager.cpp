@@ -39,6 +39,11 @@ FilterManager::FilterManager()
 
 }
 
+FilterManager::~FilterManager()
+{
+    qDeleteAll(m_filterMap);
+}
+
 bool FilterManager::initWithApp(IApplication *app)
 {
     if (!IFilterManager::initWithApp(app)) {
