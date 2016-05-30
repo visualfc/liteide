@@ -54,6 +54,9 @@ void FilterManager::createActions()
     m_filterCombo->setEditable(true);
     m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     m_filterToolBar->addWidget(m_filterCombo);
+
+    connect(m_filterCombo,SIGNAL(editTextChanged(QString)),this,SLOT(editTextChanged(QString)));
+    connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activated(QString)));
 }
 
 void FilterManager::addFilter(const QString &sym, IFilter *filter)
@@ -81,9 +84,27 @@ QList<IFilter *> FilterManager::filterList() const
 void FilterManager::setCurrentFilter(IFilter *filter)
 {
     m_currentFilter = filter;
+    if (m_currentFilter) {
+        m_filterCombo->setModel(m_currentFilter->model());
+    }
 }
 
 IFilter *FilterManager::currentFilter() const
 {
     return m_currentFilter;
+}
+
+void FilterManager::editTextChanged(const QString &text)
+{
+    if (!m_currentFilter.isNull()) {
+        int index = m_currentFilter->filter(text);
+        m_filterCombo->setCurrentIndex(index);
+    }
+}
+
+void FilterManager::activated(const QString &text)
+{
+    if (m_currentFilter) {
+        m_currentFilter->activated(text);
+    }
 }

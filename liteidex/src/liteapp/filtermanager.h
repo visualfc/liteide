@@ -43,6 +43,9 @@ public:
     virtual QList<IFilter*> filterList() const;
     virtual void setCurrentFilter(IFilter *filter);
     virtual IFilter *currentFilter() const;
+public slots:
+    void editTextChanged(const QString &text);
+    void activated(const QString &text);
 protected:
     QToolBar    *m_filterToolBar;
     QComboBox   *m_filterCombo;

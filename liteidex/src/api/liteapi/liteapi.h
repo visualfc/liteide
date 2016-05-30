@@ -40,6 +40,7 @@
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QTextCursor>
+#include <QAbstractItemModel>
 
 class ColorStyle;
 class ColorStyleScheme;
@@ -619,7 +620,9 @@ class IFilter : public QObject
 public:
     IFilter(QObject *parent = 0) : QObject(parent) {}
     virtual QString id() const = 0;
-    virtual QStringList filter(const QString &text) = 0;
+    virtual QAbstractItemModel *model() const = 0;
+    virtual int filter(const QString &text) = 0;
+    virtual void activated(const QString &text) = 0;
 };
 
 class IFilterManager : public IManager
@@ -856,7 +859,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X30")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X30")
 
 
 #endif //__LITEAPI_H__
