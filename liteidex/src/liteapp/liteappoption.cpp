@@ -136,11 +136,15 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
 
-    m_keysModel = new QStandardItemModel(0,4,this);
+    m_keysModel = new QStandardItemModel(0,5,this);
     m_keysModel->setHeaderData(0,Qt::Horizontal,tr("Command"));
     m_keysModel->setHeaderData(1,Qt::Horizontal,tr("Label"));
     m_keysModel->setHeaderData(2,Qt::Horizontal,tr("Shortcuts"));
-    m_keysModel->setHeaderData(3,Qt::Horizontal,tr("Standard"));
+    m_keysModel->setHeaderData(3,Qt::Horizontal,tr("NativeText"));
+    m_keysModel->setHeaderData(4,Qt::Horizontal,tr("Standard"));
+#ifndef Q_OS_MAC
+    ui->keysTreeView->header()->hideSection(3);
+#endif
     ui->keysTreeView->setModel(m_keysModel);  
 #if QT_VERSION >= 0x050000
     ui->keysTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -297,7 +301,10 @@ void LiteAppOption::reloadShortcuts()
                     font.setBold(true);
                     bind->setFont(font);
                 }
-                root->appendRow(QList<QStandardItem*>() << item << label << bind << std);
+                QStandardItem *native = new QStandardItem(ActionManager::formatShortcutsNativeString(info->ks));
+                native->setEditable(false);
+
+                root->appendRow(QList<QStandardItem*>() << item << label << bind << native << std);
             }
             m_keysModel->appendRow(root);
         }
@@ -322,12 +329,14 @@ void LiteAppOption::shortcutsChanaged(QStandardItem *bind)
     if (!item) {
         return;
     }
+    QStandardItem *native = root->child(bind->row(),3);
     LiteApi::ActionInfo *info = actionContext->actionInfo(item->text());
     if (!info) {
         return;
     }
     m_keysModel->blockSignals(true);
     bind->setText(ActionManager::formatShortcutsString(bind->text()));
+    native->setText(ActionManager::formatShortcutsNativeString(bind->text()));
     m_keysModel->blockSignals(false);
     QFont font = bind->font();
     if (info->defks != bind->text()) {

@@ -73,7 +73,10 @@ void OptionsBrowser::addOption(LiteApi::IOption *opt)
     item->setText(opt->name());
     item->setTextAlignment(Qt::AlignLeft);// | Qt::AlignHCenter);
     item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
+    QLayout *layout = opt->widget()->layout();
+    if (layout) {
+        layout->setMargin(0);
+    }
     ui->listWidget->addItem(item);
     ui->stackedWidget->addWidget(opt->widget());
     m_widgetOptionMap.insert(item,opt);
@@ -84,6 +87,9 @@ int OptionsBrowser::execute()
     if (ui->listWidget->count() >= 1) {
         ui->listWidget->setCurrentItem(ui->listWidget->item(0));
         this->setMinimumHeight(600);
+#ifdef Q_OS_MAC
+        this->setMinimumWidth(900);
+#endif
     }
     return exec();
 }
