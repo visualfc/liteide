@@ -89,6 +89,8 @@ int OptionsBrowser::execute()
         this->setMinimumHeight(600);
 #ifdef Q_OS_MAC
         this->setMinimumWidth(900);
+#else
+        this->setMinimumWidth(800);
 #endif
     }
     return exec();
