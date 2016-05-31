@@ -18,42 +18,29 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: filtermanager.h
+// Module: quickopenwidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef FILTERMANAGER_H
-#define FILTERMANAGER_H
+#ifndef QUICKOPENWIDGET_H
+#define QUICKOPENWIDGET_H
 
 #include "liteapi/liteapi.h"
-#include "quickopenwidget.h"
-#include <QPointer>
+#include "../3rdparty/qtc_editutil/fancylineedit.h"
 
-using namespace LiteApi;
-
-class QComboBox;
-class FilterManager : public IFilterManager
+class QuickOpenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FilterManager();
-    virtual ~FilterManager();
-    virtual bool initWithApp(IApplication *app);
-public:
-    void createActions();
-public:
-    virtual void addFilter(const QString &sym, IFilter *filter);
-    virtual void removeFilter(IFilter *filter);
-    virtual QList<IFilter*> filterList() const;
-    virtual void setCurrentFilter(IFilter *filter);
-    virtual IFilter *currentFilter() const;
+    explicit QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent = 0);
+signals:
+
 public slots:
-    void showQuickOpen();
-    void hideQuickOpen();
+    void showPopup();
 protected:
-    QuickOpenWidget *m_widget;
-    QAction     *m_quickOpenAct;
-    QMap<QString,IFilter*> m_filterMap;
-    QPointer<IFilter> m_currentFilter;
+    virtual bool eventFilter(QObject *o, QEvent *e);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    Utils::FancyLineEdit *m_edit;
 };
 
-#endif // FILTERMANAGER_H
+#endif // QUICKOPENWIDGET_H

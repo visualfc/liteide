@@ -49,19 +49,22 @@ bool FilterManager::initWithApp(IApplication *app)
     if (!IFilterManager::initWithApp(app)) {
         return false;
     }
+
     return true;
 }
 
 void FilterManager::createActions()
 {
-    m_filterToolBar = m_liteApp->actionManager()->loadToolBar("toolbar/filter");
-    m_filterCombo = new QComboBox;
-    m_filterCombo->setEditable(true);
-    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_filterToolBar->addWidget(m_filterCombo);
+    m_widget = new QuickOpenWidget(m_liteApp,m_liteApp->mainWindow());
 
-    connect(m_filterCombo,SIGNAL(editTextChanged(QString)),this,SLOT(editTextChanged(QString)));
-    connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activated(QString)));
+    m_quickOpenAct = new QAction(tr("Quick Open"),this);
+
+    LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+    context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
+
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
+
+    connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(showQuickOpen()));
 }
 
 void FilterManager::addFilter(const QString &sym, IFilter *filter)
@@ -89,9 +92,6 @@ QList<IFilter *> FilterManager::filterList() const
 void FilterManager::setCurrentFilter(IFilter *filter)
 {
     m_currentFilter = filter;
-    if (m_currentFilter) {
-        m_filterCombo->setModel(m_currentFilter->model());
-    }
 }
 
 IFilter *FilterManager::currentFilter() const
@@ -99,17 +99,12 @@ IFilter *FilterManager::currentFilter() const
     return m_currentFilter;
 }
 
-void FilterManager::editTextChanged(const QString &text)
+void FilterManager::showQuickOpen()
 {
-    if (!m_currentFilter.isNull()) {
-        int index = m_currentFilter->filter(text);
-        m_filterCombo->setCurrentIndex(index);
-    }
+    m_widget->showPopup();
 }
 
-void FilterManager::activated(const QString &text)
+void FilterManager::hideQuickOpen()
 {
-    if (m_currentFilter) {
-        m_currentFilter->activated(text);
-    }
+    m_widget->close();
 }

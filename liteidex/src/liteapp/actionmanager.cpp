@@ -74,10 +74,7 @@ bool ActionManager::initWithApp(IApplication *app)
 
     QToolBar *stdToolBar = insertToolBar("toolbar/std",tr("Standard Toolbar"));
 
-    QToolBar *filterToolBar = insertToolBar("toolbar/filter",tr("Filter ToolBar"));
-
     insertViewMenu(LiteApi::ViewMenuToolBarPos,stdToolBar->toggleViewAction());
-    insertViewMenu(LiteApi::ViewMenuToolBarPos,filterToolBar->toggleViewAction());
 
     return true;
 }
