@@ -2217,6 +2217,10 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_Up:
         case Qt::Key_Down:
+            if ((e->modifiers() & Qt::ControlModifier) && (e->modifiers()&Qt::ShiftModifier)) {
+                this->moveLineUpDown(e->key() == Qt::Key_Up);
+                return;
+            }
             if (e->modifiers() & Qt::ControlModifier) {
                 verticalScrollBar()->triggerAction(
                         e->key() == Qt::Key_Up ? QAbstractSlider::SliderSingleStepSub :
