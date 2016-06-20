@@ -1245,7 +1245,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Find What:</source>
-        <translation>Исквать:</translation>
+        <translation>Искать:</translation>
     </message>
     <message>
         <source>Options:</source>
@@ -1489,7 +1489,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Enable view expression infomation on mouse</source>
-        <translation>Показывать информации о выражении под курсором</translation>
+        <translation>Показывать информацию о выражении под курсором</translation>
     </message>
     <message>
         <source>Enable mouse navigation</source>
