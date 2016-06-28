@@ -26,6 +26,7 @@
 #include <QComboBox>
 #include <QTreeView>
 #include <QFocusEvent>
+#include <QHeaderView>
 #include <QDebug>
 
 //lite_memory_check_begin
@@ -46,6 +47,13 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_edit = new Utils::FancyLineEdit;
     m_view = new QTreeView;
     m_view->setHeaderHidden(true);
+    m_view->setTextElideMode(Qt::ElideNone);
+#if QT_VERSION >= 0x050000
+    m_view->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
+    ui->fileTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
+
     m_wrap = true;
 
     QVBoxLayout *layout = new QVBoxLayout;
@@ -54,7 +62,7 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     layout->addWidget(m_edit);
     layout->addWidget(m_view);
 
-    this->setMinimumWidth(400);
+    this->setMinimumWidth(600);
 
     this->setLayout(layout);
 
