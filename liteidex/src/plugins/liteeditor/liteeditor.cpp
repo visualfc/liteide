@@ -266,18 +266,50 @@ void LiteEditor::createActions()
     m_filePrintAct = new QAction(QIcon("icon:liteeditor/images/fileprint.png"),tr("Print..."),this);
     m_filePrintPreviewAct = new QAction(QIcon("icon:liteeditor/images/fileprintpreview.png"),tr("Print Preview..."),this);
 #endif
-    m_gotoPrevBlockAct = new QAction(tr("Go To Previous Block"),this);
+    m_gotoPrevBlockAct = new QAction(tr("Go to Previous Block"),this);
     actionContext->regAction(m_gotoPrevBlockAct,"GotoPreviousBlock","Ctrl+[");
 
-    m_gotoNextBlockAct = new QAction(tr("Go To Next Block"),this);
+    m_gotoNextBlockAct = new QAction(tr("Go to Next Block"),this);
     actionContext->regAction(m_gotoNextBlockAct,"GotoNextBlock","Ctrl+]");
 
 
     m_selectBlockAct = new QAction(tr("Select Block"),this);
     actionContext->regAction(m_selectBlockAct,"SelectBlock","Ctrl+U");
 
-    m_gotoMatchBraceAct = new QAction(tr("Go To Matching Brace"),this);
+    m_gotoMatchBraceAct = new QAction(tr("Go to Matching Brace"),this);
     actionContext->regAction(m_gotoMatchBraceAct,"GotoMatchBrace","Ctrl+E");
+
+    m_gotoLineStartAction = new QAction(tr("Go to Line Start"),this);
+    actionContext->regAction(m_gotoLineStartAction,"GotoLineStart","");
+    connect(m_gotoLineStartAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoLineStart()));
+
+    m_gotoLineEndAction = new QAction(tr("Go to Line End"),this);
+    actionContext->regAction(m_gotoLineEndAction,"GotoLineEnd","");
+    connect(m_gotoLineEndAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoLineEnd()));
+
+    m_gotoPrevLineAction = new QAction(tr("Go to Previous Line"),this);
+    actionContext->regAction(m_gotoPrevLineAction,"GotoPreviousLine","");
+    connect(m_gotoPrevLineAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousLine()));
+
+    m_gotoNextLineAction = new QAction(tr("Go to Next Line"),this);
+    actionContext->regAction(m_gotoNextLineAction,"GotoNextLine","");
+    connect(m_gotoNextLineAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextLine()));
+
+    m_gotoPrevCharacterAction = new QAction(tr("Go to Previous Character"),this);
+    actionContext->regAction(m_gotoPrevCharacterAction,"GotoPreviousCharacter","");
+    connect(m_gotoPrevCharacterAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousCharacter()));
+
+    m_gotoNextCharacterAction = new QAction(tr("Go to Next Charater"),this);
+    actionContext->regAction(m_gotoNextCharacterAction,"GotoNextCharater","");
+    connect(m_gotoNextCharacterAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextCharacter()));
+
+    m_gotoPrevWordAction = new QAction(tr("Go to Previous Word"),this);
+    actionContext->regAction(m_gotoPrevWordAction,"GotoPreviousWord","");
+    connect(m_gotoPrevWordAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousWord()));
+
+    m_gotoNextWordAction = new QAction(tr("Go to Next Word"),this);
+    actionContext->regAction(m_gotoNextWordAction,"GotoNextWord","");
+    connect(m_gotoNextWordAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextWord()));
 
     m_foldAct = new QAction(tr("Fold"),this);   
     actionContext->regAction(m_foldAct,"Fold","Ctrl+<");
@@ -296,7 +328,7 @@ void LiteEditor::createActions()
     connect(m_foldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(foldAll()));
     connect(m_unfoldAllAct,SIGNAL(triggered()),m_editorWidget,SLOT(unfoldAll()));
 
-    m_gotoLineAct = new QAction(tr("Go To Line"),this);
+    m_gotoLineAct = new QAction(tr("Go to Line"),this);
     actionContext->regAction(m_gotoLineAct,"GotoLine","Ctrl+L");
 
     m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
@@ -562,11 +594,7 @@ void LiteEditor::createMenu()
     subMenu->addSeparator();
     subMenu->addAction(m_selectBlockAct);
     subMenu->addAction(m_selectAllAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_gotoLineAct);
-    subMenu->addAction(m_gotoMatchBraceAct);
-    subMenu->addAction(m_gotoPrevBlockAct);
-    subMenu->addAction(m_gotoNextBlockAct);
+
 #ifndef QT_NO_PRINTER
     subMenu->addSeparator();
     subMenu->addAction(m_exportPdfAct);
@@ -574,6 +602,22 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_filePrintPreviewAct);
     subMenu->addAction(m_filePrintAct);
 #endif
+
+    subMenu = m_editMenu->addMenu(tr("Goto"));
+
+    subMenu->addAction(m_gotoLineAct);
+    subMenu->addAction(m_gotoMatchBraceAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_gotoPrevBlockAct);
+    subMenu->addAction(m_gotoNextBlockAct);
+    subMenu->addAction(m_gotoLineStartAction);
+    subMenu->addAction(m_gotoLineEndAction);
+    subMenu->addAction(m_gotoPrevLineAction);
+    subMenu->addAction(m_gotoNextLineAction);
+    subMenu->addAction(m_gotoPrevCharacterAction);
+    subMenu->addAction(m_gotoNextCharacterAction);
+    subMenu->addAction(m_gotoPrevWordAction);
+    subMenu->addAction(m_gotoNextWordAction);
 
     subMenu = m_editMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);
@@ -624,11 +668,22 @@ void LiteEditor::createMenu()
     subMenu->addSeparator();
     subMenu->addAction(m_selectBlockAct);
     subMenu->addAction(m_selectAllAct);
-    subMenu->addSeparator();
+
+    subMenu = m_contextMenu->addMenu(tr("Goto"));
     subMenu->addAction(m_gotoLineAct);
     subMenu->addAction(m_gotoMatchBraceAct);
+    subMenu->addSeparator();
     subMenu->addAction(m_gotoPrevBlockAct);
     subMenu->addAction(m_gotoNextBlockAct);
+    subMenu->addAction(m_gotoLineStartAction);
+    subMenu->addAction(m_gotoLineEndAction);
+    subMenu->addAction(m_gotoPrevLineAction);
+    subMenu->addAction(m_gotoNextLineAction);
+    subMenu->addAction(m_gotoPrevCharacterAction);
+    subMenu->addAction(m_gotoNextCharacterAction);
+    subMenu->addAction(m_gotoPrevWordAction);
+    subMenu->addAction(m_gotoNextWordAction);
+
 
     subMenu = m_contextMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);

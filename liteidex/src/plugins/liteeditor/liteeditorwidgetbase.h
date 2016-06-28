@@ -124,7 +124,6 @@ public slots:
     void gotoNextWord();
     void gotoNextWordWithSelection();
 
-
     void duplicate();
 
     void cutLine();

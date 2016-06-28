@@ -181,11 +181,7 @@ public:
 #ifdef LITEEDITOR_FIND
     QComboBox *m_findComboBox;
 #endif
-    QAction *m_gotoPrevBlockAct;
-    QAction *m_gotoNextBlockAct;
-    QAction *m_gotoMatchBraceAct;
     QAction *m_selectBlockAct;
-    QAction *m_gotoLineAct;
     QAction *m_cutLineAct;
     QAction *m_copyLineAct;
     QAction *m_duplicateAct;
@@ -225,6 +221,19 @@ public:
     QAction *m_copyLineUpAction;
     QAction *m_copyLineDownAction;
     QAction *m_joinLinesAction;
+
+    QAction *m_gotoLineAct;
+    QAction *m_gotoMatchBraceAct;
+    QAction *m_gotoPrevBlockAct;
+    QAction *m_gotoNextBlockAct;
+    QAction *m_gotoLineStartAction;
+    QAction *m_gotoLineEndAction;
+    QAction *m_gotoNextLineAction;
+    QAction *m_gotoPrevLineAction;
+    QAction *m_gotoNextCharacterAction;
+    QAction *m_gotoPrevCharacterAction;
+    QAction *m_gotoPrevWordAction;
+    QAction *m_gotoNextWordAction;
 };
 
 class EditContext : public LiteApi::IEditContext
