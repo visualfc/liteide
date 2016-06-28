@@ -1488,6 +1488,70 @@ void LiteEditorWidgetBase::gotoLineEndWithSelection()
     moveCursor(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
 }
 
+void LiteEditorWidgetBase::gotoNextLine()
+{
+    moveCursor(QTextCursor::Down);
+}
+
+void LiteEditorWidgetBase::gotoNextLineWithSelection()
+{
+    moveCursor(QTextCursor::Down, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoPreviousLine()
+{
+    moveCursor(QTextCursor::Up);
+}
+
+void LiteEditorWidgetBase::gotoPreviousLineWithSelection()
+{
+    moveCursor(QTextCursor::Up, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoPreviousCharacter()
+{
+    moveCursor(QTextCursor::PreviousCharacter);
+}
+
+void LiteEditorWidgetBase::gotoPreviousCharacterWithSelection()
+{
+    moveCursor(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoNextCharacter()
+{
+    moveCursor(QTextCursor::NextCharacter);
+}
+
+void LiteEditorWidgetBase::gotoNextCharacterWithSelection()
+{
+    moveCursor(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoPreviousWord()
+{
+    moveCursor(QTextCursor::PreviousWord);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoPreviousWordWithSelection()
+{
+    moveCursor(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoNextWord()
+{
+    moveCursor(QTextCursor::NextWord);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoNextWordWithSelection()
+{
+    moveCursor(QTextCursor::NextWord, QTextCursor::KeepAnchor);
+    setTextCursor(textCursor());
+}
+
 void LiteEditorWidgetBase::duplicate()
 {
     QTextCursor cursor = textCursor();

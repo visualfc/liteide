@@ -106,10 +106,24 @@ public slots:
 public slots:
     void gotoMatchBrace();
     void gotoLine(int line, int column, bool center);
+
     void gotoLineStart();
     void gotoLineStartWithSelection();
     void gotoLineEnd();
     void gotoLineEndWithSelection();
+    void gotoNextLine();
+    void gotoNextLineWithSelection();
+    void gotoPreviousLine();
+    void gotoPreviousLineWithSelection();
+    void gotoPreviousCharacter();
+    void gotoPreviousCharacterWithSelection();
+    void gotoNextCharacter();
+    void gotoNextCharacterWithSelection();
+    void gotoPreviousWord();
+    void gotoPreviousWordWithSelection();
+    void gotoNextWord();
+    void gotoNextWordWithSelection();
+
 
     void duplicate();
 
