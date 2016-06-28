@@ -19,4 +19,4 @@ fi
 
 echo update translator files
 
-lupdate -no-obsolete %LITEIDE_ROOT%/liteidex.pro
+lupdate -no-obsolete $LITEIDE_ROOT/liteidex.pro

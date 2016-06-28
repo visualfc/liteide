@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -411,10 +411,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Добавить в глобальное наблюдения</translation>
     </message>
     <message>
-        <source>Add Local Watch</source>
-        <translation type="obsolete">Добавить в локальное наблюдение</translation>
-    </message>
-    <message>
         <source>Remove Watch</source>
         <translation>Удалить из наблюдения</translation>
     </message>
@@ -425,10 +421,6 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Watch expression (e.g. main.var os.Stdout):</source>
         <translation>Наблюдаемое выражение (например main.var os.Stdout):</translation>
-    </message>
-    <message>
-        <source>Watch expression (e.g. s1.str):</source>
-        <translation type="obsolete">Наблюдаемое выражение (например s1.str):</translation>
     </message>
 </context>
 <context>
@@ -586,6 +578,197 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>ExportAndView</source>
         <translation>Экспортировать и просмотреть</translation>
+    </message>
+</context>
+<context>
+    <name>FakeVim::Internal</name>
+    <message>
+        <source>Use Vim-style Editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read .vimrc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to .vimrc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FakeVim::Internal::FakeVimHandler</name>
+    <message>
+        <source>Unknown option: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argument must be positive: %1=%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mark &quot;%1&quot; not set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1%2%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not implemented in FakeVim.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown option:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid argument:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trailing characters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move lines into themselves.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n lines moved.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; exists (add ! to override)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; %2 %3L, %4C written.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; %2L, %3C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n lines filtered.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Cannot open file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid regular expression: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pattern not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search hit BOTTOM, continuing at TOP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search hit TOP, continuing at BOTTOM.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search hit BOTTOM without match for: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search hit TOP without match for: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n lines indented.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n lines %1ed %2 time.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n lines yanked.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Already at oldest change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already at newest change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FakeVim::Internal::FakeVimHandler::Private</name>
+    <message>
+        <source>Recursive mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type Alt-V, Alt-V to quit FakeVim mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> [New] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not an editor command: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FakeVimEdit</name>
+    <message>
+        <source>Use FakeVim Editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FakeVimEditOption</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
+    </message>
+    <message>
+        <source>FakeVim initialization command list (# start is comment):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1022,6 +1205,13 @@ Do you want to reload the file from disk?</source>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation>Не удалось удалить папку!</translation>
+    </message>
+</context>
+<context>
+    <name>FilterManager</name>
+    <message>
+        <source>Quick Open</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2028,6 +2218,10 @@ Success: %2.</oldsource>
         <source>Could not write scheme to %1!</source>
         <translation>Не удалось записать схему комбинаций клавиш в %1!</translation>
     </message>
+    <message>
+        <source>NativeText</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
@@ -2068,26 +2262,6 @@ Success: %2.</oldsource>
     <message>
         <source>Lock Build Path</source>
         <translation>Зафиксировать путь сборки</translation>
-    </message>
-    <message>
-        <source>Go Build</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go Install</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go Clean</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go Fmt</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Line Wrap</source>
@@ -2429,18 +2603,8 @@ Success: %2.</oldsource>
         <translation>Печать...</translation>
     </message>
     <message>
-        <source>Go To Previous Block</source>
-        <oldsource>Goto Previous Block</oldsource>
-        <translation>Перейти к предыдущему блоку</translation>
-    </message>
-    <message>
         <source>Select Block</source>
         <translation>Выбрать блок</translation>
-    </message>
-    <message>
-        <source>Go To Matching Brace</source>
-        <oldsource>Goto Match Brace</oldsource>
-        <translation>Перейти к соответствующей скобке</translation>
     </message>
     <message>
         <source>Fold</source>
@@ -2520,11 +2684,6 @@ Success: %2.</oldsource>
         <translation>Перезагрузить %1 с утратой несохранённых изменений?</translation>
     </message>
     <message>
-        <source>Go To Next Block</source>
-        <oldsource>Goto Next Block</oldsource>
-        <translation>Перейти к следующему блоку</translation>
-    </message>
-    <message>
         <source>Setup</source>
         <translation>Настройка</translation>
     </message>
@@ -2535,6 +2694,58 @@ Success: %2.</oldsource>
     <message>
         <source>Line: </source>
         <translation>Строка:</translation>
+    </message>
+    <message>
+        <source>Go to Previous Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Next Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Matching Brace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Line Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Line End</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Previous Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Next Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Previous Character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Next Charater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Previous Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Next Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goto</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3056,11 +3267,6 @@ Do you want to replace it?</source>
     <message>
         <source>Info</source>
         <translation>Информация</translation>
-    </message>
-    <message>
-        <source>[*] item requeset restart LiteIDE</source>
-        <oldsource>[*] item requeset restart liteide</oldsource>
-        <translation type="obsolete">[*] элемент требует перезапуска LiteIDE</translation>
     </message>
     <message>
         <source>[*] item request restart of LiteIDE</source>
