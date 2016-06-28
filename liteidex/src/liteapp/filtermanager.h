@@ -26,11 +26,14 @@
 
 #include "liteapi/liteapi.h"
 #include "quickopenwidget.h"
+
 #include <QPointer>
 
 using namespace LiteApi;
 
-class QComboBox;
+class QSortFilterProxyModel;
+class QStandardItemModel;
+class EditorFilter;
 class FilterManager : public IFilterManager
 {
     Q_OBJECT
@@ -49,11 +52,32 @@ public:
 public slots:
     void showQuickOpen();
     void hideQuickOpen();
+    void filterChanged(const QString &text);
+    void selected();
 protected:
     QuickOpenWidget *m_widget;
     QAction     *m_quickOpenAct;
     QMap<QString,IFilter*> m_filterMap;
+    QString m_sym;
     QPointer<IFilter> m_currentFilter;
+    EditorFilter *m_editorFilter;
 };
+
+class EditorFilter : public LiteApi::IFilter
+{
+    Q_OBJECT
+public:
+    EditorFilter(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual QString id() const;
+    virtual QAbstractItemModel *model() const;
+    virtual void updateModel();
+    virtual QModelIndex filter(const QString &text);
+    virtual void selected(const QModelIndex &index);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    QStandardItemModel *m_model;
+    QSortFilterProxyModel *m_proxyModel;
+};
+
 
 #endif // FILTERMANAGER_H

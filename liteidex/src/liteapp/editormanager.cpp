@@ -968,3 +968,4 @@ void EditorManager::focusChanged(QWidget *old, QWidget *now)
         context->focusToolBar()->setEnabled(false);
     }
 }
+

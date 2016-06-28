@@ -26,14 +26,20 @@
 
 #include "liteapi/liteapi.h"
 #include "../3rdparty/qtc_editutil/fancylineedit.h"
+#include <QAbstractItemModel>
 
+class QTreeView;
 class QuickOpenWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent = 0);
+    void setModel(QAbstractItemModel *model);
+    QLineEdit *editor();
+    QTreeView *view();
 signals:
-
+    void filterChanged(QString);
+    void selected();
 public slots:
     void showPopup();
 protected:
@@ -41,6 +47,8 @@ protected:
 protected:
     LiteApi::IApplication *m_liteApp;
     Utils::FancyLineEdit *m_edit;
+    QTreeView   *m_view;
+    bool         m_wrap;
 };
 
 #endif // QUICKOPENWIDGET_H

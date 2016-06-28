@@ -23,7 +23,11 @@
 
 #include "quickopenwidget.h"
 #include <QVBoxLayout>
+#include <QComboBox>
+#include <QTreeView>
 #include <QFocusEvent>
+#include <QDebug>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -40,11 +44,40 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
 {
     //this->setFocusPolicy(Qt::NoFocus);
     m_edit = new Utils::FancyLineEdit;
+    m_view = new QTreeView;
+    m_view->setHeaderHidden(true);
+    m_wrap = true;
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
+    layout->setSpacing(0);
     layout->addWidget(m_edit);
+    layout->addWidget(m_view);
+
+    this->setMinimumWidth(400);
 
     this->setLayout(layout);
+
+    connect(m_edit,SIGNAL(textChanged(QString)),this,SIGNAL(filterChanged(QString)));
+    connect(m_edit,SIGNAL(returnPressed()),this,SIGNAL(selected()));
+    connect(m_view,SIGNAL(doubleClicked(QModelIndex)),this,SIGNAL(selected()));
+
+    m_edit->installEventFilter(this);
+}
+
+void QuickOpenWidget::setModel(QAbstractItemModel *model)
+{
+    m_view->setModel(model);
+}
+
+QLineEdit *QuickOpenWidget::editor()
+{
+    return m_edit;
+}
+
+QTreeView *QuickOpenWidget::view()
+{
+    return m_view;
 }
 
 void QuickOpenWidget::showPopup()
@@ -61,5 +94,37 @@ void QuickOpenWidget::showPopup()
 
 bool QuickOpenWidget::eventFilter(QObject *o, QEvent *e)
 {
+    if (e->type() == QEvent::KeyPress) {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+        QAbstractItemModel *model = m_view->model();
+
+        if (!model) {
+            return false;
+        }
+
+        int row = m_view->currentIndex().row();
+
+        const int key = ke->key();
+        switch (key) {
+        case Qt::Key_Up:
+            row--;
+            if (row < 0) {
+                if (m_wrap) {
+                    row = model->rowCount()-1;
+                }
+            }
+            m_view->setCurrentIndex(model->index(row,0));
+            return true;
+        case Qt::Key_Down:
+            row++;
+            if (row >= model->rowCount()) {
+                if (m_wrap) {
+                    row = 0;
+                }
+            }
+            m_view->setCurrentIndex(model->index(row,0));
+            return true;
+        }
+    }
     return QWidget::eventFilter(o,e);
 }

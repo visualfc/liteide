@@ -621,8 +621,9 @@ public:
     IFilter(QObject *parent = 0) : QObject(parent) {}
     virtual QString id() const = 0;
     virtual QAbstractItemModel *model() const = 0;
-    virtual int filter(const QString &text) = 0;
-    virtual void activated(const QString &text) = 0;
+    virtual void updateModel() = 0;
+    virtual QModelIndex filter(const QString &text) = 0;
+    virtual void selected(const QModelIndex &index) = 0;
 };
 
 class IFilterManager : public IManager
