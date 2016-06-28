@@ -3116,22 +3116,22 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
         <source>Go to Previous Character</source>
-        <translation>跳转到上一字符</translation>
+        <translation>跳转到前一字符</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="310"/>
         <source>Go to Next Charater</source>
-        <translation>跳转到下一字符</translation>
+        <translation>跳转到后一字符</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="314"/>
         <source>Go to Previous Word</source>
-        <translation>跳转到上一单词</translation>
+        <translation>跳转到前一单词</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="318"/>
         <source>Go to Next Word</source>
-        <translation>跳转到下一单词</translation>
+        <translation>跳转到后一单词</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="339"/>
