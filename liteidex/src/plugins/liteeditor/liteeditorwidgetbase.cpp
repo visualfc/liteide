@@ -1552,6 +1552,16 @@ void LiteEditorWidgetBase::gotoNextWordWithSelection()
     setTextCursor(textCursor());
 }
 
+void LiteEditorWidgetBase::gotoDocStart()
+{
+    moveCursor(QTextCursor::Start);
+}
+
+void LiteEditorWidgetBase::gotoDocEnd()
+{
+    moveCursor(QTextCursor::End);
+}
+
 void LiteEditorWidgetBase::duplicate()
 {
     QTextCursor cursor = textCursor();

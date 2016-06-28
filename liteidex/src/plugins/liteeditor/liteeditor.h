@@ -224,16 +224,18 @@ public:
 
     QAction *m_gotoLineAct;
     QAction *m_gotoMatchBraceAct;
+    QAction *m_gotoDocStartAct;
+    QAction *m_gotoDocEndAct;
     QAction *m_gotoPrevBlockAct;
     QAction *m_gotoNextBlockAct;
-    QAction *m_gotoLineStartAction;
-    QAction *m_gotoLineEndAction;
-    QAction *m_gotoNextLineAction;
-    QAction *m_gotoPrevLineAction;
-    QAction *m_gotoNextCharacterAction;
-    QAction *m_gotoPrevCharacterAction;
-    QAction *m_gotoPrevWordAction;
-    QAction *m_gotoNextWordAction;
+    QAction *m_gotoLineStartAct;
+    QAction *m_gotoLineEndAct;
+    QAction *m_gotoNextLineAct;
+    QAction *m_gotoPrevLineAct;
+    QAction *m_gotoNextCharacterAct;
+    QAction *m_gotoPrevCharacterAct;
+    QAction *m_gotoPrevWordAct;
+    QAction *m_gotoNextWordAct;
 };
 
 class EditContext : public LiteApi::IEditContext

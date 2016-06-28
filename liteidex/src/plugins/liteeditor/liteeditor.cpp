@@ -279,37 +279,45 @@ void LiteEditor::createActions()
     m_gotoMatchBraceAct = new QAction(tr("Go to Matching Brace"),this);
     actionContext->regAction(m_gotoMatchBraceAct,"GotoMatchBrace","Ctrl+E");
 
-    m_gotoLineStartAction = new QAction(tr("Go to Line Start"),this);
-    actionContext->regAction(m_gotoLineStartAction,"GotoLineStart","");
-    connect(m_gotoLineStartAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoLineStart()));
+    m_gotoDocStartAct = new QAction(tr("Go to Doc Start"),this);
+    actionContext->regAction(m_gotoDocStartAct,"GotoDocStart","");
+    connect(m_gotoDocStartAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoDocStart()));
 
-    m_gotoLineEndAction = new QAction(tr("Go to Line End"),this);
-    actionContext->regAction(m_gotoLineEndAction,"GotoLineEnd","");
-    connect(m_gotoLineEndAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoLineEnd()));
+    m_gotoDocEndAct = new QAction(tr("Go to Doc End"),this);
+    actionContext->regAction(m_gotoDocEndAct,"GotoDocEnd","");
+    connect(m_gotoDocEndAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoDocEnd()));
 
-    m_gotoPrevLineAction = new QAction(tr("Go to Previous Line"),this);
-    actionContext->regAction(m_gotoPrevLineAction,"GotoPreviousLine","");
-    connect(m_gotoPrevLineAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousLine()));
+    m_gotoLineStartAct = new QAction(tr("Go to Line Start"),this);
+    actionContext->regAction(m_gotoLineStartAct,"GotoLineStart","");
+    connect(m_gotoLineStartAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoLineStart()));
 
-    m_gotoNextLineAction = new QAction(tr("Go to Next Line"),this);
-    actionContext->regAction(m_gotoNextLineAction,"GotoNextLine","");
-    connect(m_gotoNextLineAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextLine()));
+    m_gotoLineEndAct = new QAction(tr("Go to Line End"),this);
+    actionContext->regAction(m_gotoLineEndAct,"GotoLineEnd","");
+    connect(m_gotoLineEndAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoLineEnd()));
 
-    m_gotoPrevCharacterAction = new QAction(tr("Go to Previous Character"),this);
-    actionContext->regAction(m_gotoPrevCharacterAction,"GotoPreviousCharacter","");
-    connect(m_gotoPrevCharacterAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousCharacter()));
+    m_gotoPrevLineAct = new QAction(tr("Go to Previous Line"),this);
+    actionContext->regAction(m_gotoPrevLineAct,"GotoPreviousLine","");
+    connect(m_gotoPrevLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousLine()));
 
-    m_gotoNextCharacterAction = new QAction(tr("Go to Next Charater"),this);
-    actionContext->regAction(m_gotoNextCharacterAction,"GotoNextCharater","");
-    connect(m_gotoNextCharacterAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextCharacter()));
+    m_gotoNextLineAct = new QAction(tr("Go to Next Line"),this);
+    actionContext->regAction(m_gotoNextLineAct,"GotoNextLine","");
+    connect(m_gotoNextLineAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextLine()));
 
-    m_gotoPrevWordAction = new QAction(tr("Go to Previous Word"),this);
-    actionContext->regAction(m_gotoPrevWordAction,"GotoPreviousWord","");
-    connect(m_gotoPrevWordAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousWord()));
+    m_gotoPrevCharacterAct = new QAction(tr("Go to Previous Character"),this);
+    actionContext->regAction(m_gotoPrevCharacterAct,"GotoPreviousCharacter","");
+    connect(m_gotoPrevCharacterAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousCharacter()));
 
-    m_gotoNextWordAction = new QAction(tr("Go to Next Word"),this);
-    actionContext->regAction(m_gotoNextWordAction,"GotoNextWord","");
-    connect(m_gotoNextWordAction,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextWord()));
+    m_gotoNextCharacterAct = new QAction(tr("Go to Next Charater"),this);
+    actionContext->regAction(m_gotoNextCharacterAct,"GotoNextCharater","");
+    connect(m_gotoNextCharacterAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextCharacter()));
+
+    m_gotoPrevWordAct = new QAction(tr("Go to Previous Word"),this);
+    actionContext->regAction(m_gotoPrevWordAct,"GotoPreviousWord","");
+    connect(m_gotoPrevWordAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoPreviousWord()));
+
+    m_gotoNextWordAct = new QAction(tr("Go to Next Word"),this);
+    actionContext->regAction(m_gotoNextWordAct,"GotoNextWord","");
+    connect(m_gotoNextWordAct,SIGNAL(triggered()),m_editorWidget,SLOT(gotoNextWord()));
 
     m_foldAct = new QAction(tr("Fold"),this);   
     actionContext->regAction(m_foldAct,"Fold","Ctrl+<");
@@ -610,14 +618,16 @@ void LiteEditor::createMenu()
     subMenu->addSeparator();
     subMenu->addAction(m_gotoPrevBlockAct);
     subMenu->addAction(m_gotoNextBlockAct);
-    subMenu->addAction(m_gotoLineStartAction);
-    subMenu->addAction(m_gotoLineEndAction);
-    subMenu->addAction(m_gotoPrevLineAction);
-    subMenu->addAction(m_gotoNextLineAction);
-    subMenu->addAction(m_gotoPrevCharacterAction);
-    subMenu->addAction(m_gotoNextCharacterAction);
-    subMenu->addAction(m_gotoPrevWordAction);
-    subMenu->addAction(m_gotoNextWordAction);
+    subMenu->addAction(m_gotoLineStartAct);
+    subMenu->addAction(m_gotoLineEndAct);
+    subMenu->addAction(m_gotoPrevLineAct);
+    subMenu->addAction(m_gotoNextLineAct);
+    subMenu->addAction(m_gotoPrevCharacterAct);
+    subMenu->addAction(m_gotoNextCharacterAct);
+    subMenu->addAction(m_gotoPrevWordAct);
+    subMenu->addAction(m_gotoNextWordAct);
+    subMenu->addAction(m_gotoDocStartAct);
+    subMenu->addAction(m_gotoDocEndAct);
 
     subMenu = m_editMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);
@@ -675,15 +685,16 @@ void LiteEditor::createMenu()
     subMenu->addSeparator();
     subMenu->addAction(m_gotoPrevBlockAct);
     subMenu->addAction(m_gotoNextBlockAct);
-    subMenu->addAction(m_gotoLineStartAction);
-    subMenu->addAction(m_gotoLineEndAction);
-    subMenu->addAction(m_gotoPrevLineAction);
-    subMenu->addAction(m_gotoNextLineAction);
-    subMenu->addAction(m_gotoPrevCharacterAction);
-    subMenu->addAction(m_gotoNextCharacterAction);
-    subMenu->addAction(m_gotoPrevWordAction);
-    subMenu->addAction(m_gotoNextWordAction);
-
+    subMenu->addAction(m_gotoLineStartAct);
+    subMenu->addAction(m_gotoLineEndAct);
+    subMenu->addAction(m_gotoPrevLineAct);
+    subMenu->addAction(m_gotoNextLineAct);
+    subMenu->addAction(m_gotoPrevCharacterAct);
+    subMenu->addAction(m_gotoNextCharacterAct);
+    subMenu->addAction(m_gotoPrevWordAct);
+    subMenu->addAction(m_gotoNextWordAct);
+    subMenu->addAction(m_gotoDocStartAct);
+    subMenu->addAction(m_gotoDocEndAct);
 
     subMenu = m_contextMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);

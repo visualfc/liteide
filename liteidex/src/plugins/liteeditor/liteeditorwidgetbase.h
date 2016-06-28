@@ -123,6 +123,8 @@ public slots:
     void gotoPreviousWordWithSelection();
     void gotoNextWord();
     void gotoNextWordWithSelection();
+    void gotoDocStart();
+    void gotoDocEnd();
 
     void duplicate();
 

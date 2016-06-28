@@ -2747,6 +2747,14 @@ Success: %2.</oldsource>
         <source>Goto</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Go to Doc Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Doc End</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEditorOption</name>
