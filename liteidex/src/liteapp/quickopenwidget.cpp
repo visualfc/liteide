@@ -47,7 +47,7 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_edit = new Utils::FancyLineEdit;
     m_view = new QTreeView;
     m_view->setHeaderHidden(true);
-    m_view->setTextElideMode(Qt::ElideNone);
+    m_view->setTextElideMode(Qt::ElideLeft);
 #if QT_VERSION >= 0x050000
     m_view->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
