@@ -33,7 +33,7 @@ using namespace LiteApi;
 
 class QSortFilterProxyModel;
 class QStandardItemModel;
-class EditorFilter;
+class FilesFilter;
 class FilterManager : public IFilterManager
 {
     Q_OBJECT
@@ -60,14 +60,14 @@ protected:
     QMap<QString,IFilter*> m_filterMap;
     QString m_sym;
     QPointer<IFilter> m_currentFilter;
-    EditorFilter *m_editorFilter;
+    FilesFilter *m_filesFilter;
 };
 
-class EditorFilter : public LiteApi::IFilter
+class FilesFilter : public LiteApi::IFilter
 {
     Q_OBJECT
 public:
-    EditorFilter(LiteApi::IApplication *app, QObject *parent = 0);
+    FilesFilter(LiteApi::IApplication *app, QObject *parent = 0);
     virtual QString id() const;
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();

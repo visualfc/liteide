@@ -40,7 +40,6 @@ struct EditLocation {
     QByteArray state;
 };
 
-class EditorFilter;
 class EditorManager : public IEditorManager
 {
     Q_OBJECT

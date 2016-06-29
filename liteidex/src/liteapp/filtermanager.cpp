@@ -57,9 +57,9 @@ bool FilterManager::initWithApp(IApplication *app)
     connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
     connect(m_widget,SIGNAL(selected()),this,SLOT(selected()));
 
-    m_editorFilter = new EditorFilter(app,this);
+    m_filesFilter = new FilesFilter(app,this);
 
-    setCurrentFilter(m_editorFilter);
+    setCurrentFilter(m_filesFilter);
 
     return true;
 }
@@ -131,7 +131,7 @@ void FilterManager::hideQuickOpen()
 void FilterManager::filterChanged(const QString &text)
 {
     if (text.isEmpty()) {
-        setCurrentFilter(m_editorFilter);
+        setCurrentFilter(m_filesFilter);
     }
     if (!m_sym.isEmpty() && !text.startsWith(m_sym)) {
         if (text.size() == 1 || text.endsWith(" ")) {
@@ -166,7 +166,7 @@ void FilterManager::selected()
     this->hideQuickOpen();
 }
 
-EditorFilter::EditorFilter(IApplication *app, QObject *parent)
+FilesFilter::FilesFilter(IApplication *app, QObject *parent)
     : LiteApi::IFilter(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
@@ -174,37 +174,66 @@ EditorFilter::EditorFilter(IApplication *app, QObject *parent)
     m_proxyModel->setSourceModel(m_model);
 }
 
-QString EditorFilter::id() const
+QString FilesFilter::id() const
 {
     return "filter/editor";
 }
 
-QAbstractItemModel *EditorFilter::model() const
+QAbstractItemModel *FilesFilter::model() const
 {
     return m_proxyModel;
 }
 
-void EditorFilter::updateModel()
+void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model)
+{
+    QDir dir(folder);
+    foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
+        if (info.isDir()) {
+            updateFolder(info.filePath(),extFilter,model);
+        } else if (info.isFile()) {
+            if (extFilter.contains(info.suffix())) {
+                model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(info.fileName()) << new QStandardItem(info.filePath()));
+            }
+        }
+    }
+}
+
+void FilesFilter::updateModel()
 {
     m_model->clear();
     m_proxyModel->setFilterFixedString("");
+    m_proxyModel->setFilterKeyColumn(2);
 
     foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
         if (editor->filePath().isEmpty()) {
             continue;
         }
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
+        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("e") << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
     }
-    m_proxyModel->sort(0);
+
+    QStringList extFilter;
+    foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
+        foreach (QString ext, type->globPatterns()) {
+            if (ext.startsWith(".")) {
+                extFilter << ext.mid(1);
+            } else if (ext.startsWith("*.")) {
+                extFilter << ext.mid(2);
+            }
+        }
+    }
+
+    foreach(QString folder, m_liteApp->fileManager()->folderList()) {
+        updateFolder(folder,extFilter,m_model);
+    }
+    //m_proxyModel->sort(0);
 }
 
-QModelIndex EditorFilter::filter(const QString &text)
+QModelIndex FilesFilter::filter(const QString &text)
 {
     m_proxyModel->setFilterFixedString(text);
-    m_proxyModel->setFilterKeyColumn(1);
 
     for(int i = 0; i < m_proxyModel->rowCount(); i++) {
-        QModelIndex index = m_proxyModel->index(i,0);
+        QModelIndex index = m_proxyModel->index(i,1);
         QString name = index.data().toString();
         if (name.contains(text)) {
             return index;
@@ -213,11 +242,11 @@ QModelIndex EditorFilter::filter(const QString &text)
     return QModelIndex();
 }
 
-void EditorFilter::selected(const QModelIndex &index)
+void FilesFilter::selected(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
     }
-    QString filePath = m_proxyModel->index(index.row(),1).data().toString();
+    QString filePath = m_proxyModel->index(index.row(),2).data().toString();
     m_liteApp->fileManager()->openFile(filePath);
 }
