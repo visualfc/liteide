@@ -51,7 +51,7 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
 #if QT_VERSION >= 0x050000
     m_view->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
-    ui->fileTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_view->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
 
     m_wrap = true;
