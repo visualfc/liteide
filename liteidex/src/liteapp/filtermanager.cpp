@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "filtermanager.h"
+#include "liteapp_global.h"
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QSortFilterProxyModel>
@@ -184,12 +185,15 @@ QAbstractItemModel *FilesFilter::model() const
     return m_proxyModel;
 }
 
-void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model)
+void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model, int maxcount)
 {
+    if (model->rowCount() > maxcount) {
+        return;
+    }
     QDir dir(folder);
     foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
         if (info.isDir()) {
-            updateFolder(info.filePath(),extFilter,model);
+            updateFolder(info.filePath(),extFilter,model,maxcount);
         } else if (info.isFile()) {
             if (extFilter.contains(info.suffix())) {
                 model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(info.fileName()) << new QStandardItem(info.filePath()));
@@ -208,7 +212,7 @@ void FilesFilter::updateModel()
         if (editor->filePath().isEmpty()) {
             continue;
         }
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("e") << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
+        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
     }
 
     QStringList extFilter;
@@ -222,8 +226,9 @@ void FilesFilter::updateModel()
         }
     }
 
+    int maxcount = m_liteApp->settings()->value(LITEAPP_FILESFILTER_MAXCOUNT,100000).toInt();
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
-        updateFolder(folder,extFilter,m_model);
+        updateFolder(folder,extFilter,m_model,maxcount);
     }
     //m_proxyModel->sort(0);
 }

@@ -65,6 +65,8 @@
 #define OUTPUT_MAXLINES  "output/maxlines"
 #define OUTPUT_USECOLORSCHEME "output/colorscheme"
 
+#define LITEAPP_FILESFILTER_MAXCOUNT "LiteApp/FilesFilterMaxCount"
+
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,
