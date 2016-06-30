@@ -614,32 +614,6 @@ public:
     virtual IActionContext *actionContextForName(const QString &name) = 0;
 };
 
-class IFilter : public QObject
-{
-    Q_OBJECT
-public:
-    IFilter(QObject *parent = 0) : QObject(parent) {}
-    virtual QString id() const = 0;
-    virtual QAbstractItemModel *model() const = 0;
-    virtual void updateModel() = 0;
-    virtual QModelIndex filter(const QString &text) = 0;
-    virtual void selected(const QModelIndex &index) = 0;
-};
-
-class IFilterManager : public IManager
-{
-    Q_OBJECT
-public:
-    IFilterManager(QObject *parent = 0) : IManager(parent) {}
-    virtual void addFilter(const QString &sym, IFilter *filter) = 0;
-    virtual void removeFilter(IFilter *filter) = 0;
-    virtual QList<IFilter*> filterList() const = 0;
-    virtual void setCurrentFilter(IFilter *filter) = 0;
-    virtual IFilter *currentFilter() const = 0;
-signals:
-    void currentFilterChanged(IFilter *filter);
-};
-
 class IGoProxy : public QObject
 {
     Q_OBJECT
@@ -675,7 +649,6 @@ public:
     virtual IOptionManager  *optionManager() = 0;
     virtual IToolWindowManager *toolWindowManager() = 0;
     virtual IHtmlWidgetManager *htmlWidgetManager() = 0;
-    virtual IFilterManager  *filterManager() = 0;
 
     virtual QMainWindow *mainWindow() const = 0;
     virtual QSettings *settings() = 0;

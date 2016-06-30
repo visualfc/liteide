@@ -18,56 +18,21 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: filtermanager.h
+// Module: quickopenfiles.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef FILTERMANAGER_H
-#define FILTERMANAGER_H
+#ifndef QUICKOPENFILES_H
+#define QUICKOPENFILES_H
 
-#include "liteapi/liteapi.h"
-#include "quickopenwidget.h"
+#include "../api/quickopenapi/quickopenapi.h"
 
-#include <QPointer>
-
-using namespace LiteApi;
-
-class QSortFilterProxyModel;
 class QStandardItemModel;
-class FilesFilter;
-class FilterManager : public IFilterManager
+class QSortFilterProxyModel;
+class QuickOpenFiles : public LiteApi::IQuickOpen
 {
     Q_OBJECT
 public:
-    FilterManager();
-    virtual ~FilterManager();
-    virtual bool initWithApp(IApplication *app);
-public:
-    void createActions();
-public:
-    virtual void addFilter(const QString &sym, IFilter *filter);
-    virtual void removeFilter(IFilter *filter);
-    virtual QList<IFilter*> filterList() const;
-    virtual void setCurrentFilter(IFilter *filter);
-    virtual IFilter *currentFilter() const;
-public slots:
-    void showQuickOpen();
-    void hideQuickOpen();
-    void filterChanged(const QString &text);
-    void selected();
-protected:
-    QuickOpenWidget *m_widget;
-    QAction     *m_quickOpenAct;
-    QMap<QString,IFilter*> m_filterMap;
-    QString m_sym;
-    QPointer<IFilter> m_currentFilter;
-    FilesFilter *m_filesFilter;
-};
-
-class FilesFilter : public LiteApi::IFilter
-{
-    Q_OBJECT
-public:
-    FilesFilter(LiteApi::IApplication *app, QObject *parent = 0);
+    QuickOpenFiles(LiteApi::IApplication *app, QObject *parent = 0);
     virtual QString id() const;
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();
@@ -79,5 +44,4 @@ protected:
     QSortFilterProxyModel *m_proxyModel;
 };
 
-
-#endif // FILTERMANAGER_H
+#endif // QUICKOPENFILES_H

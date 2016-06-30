@@ -12,6 +12,7 @@ SUBDIRS = \
     litefind    \
     litedebug   \
     litetty \
+    quickopen \
     filebrowser \
     golangast \
     golangedit \

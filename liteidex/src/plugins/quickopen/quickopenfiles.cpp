@@ -18,17 +18,16 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: filtermanager.cpp
+// Module: quickopenfiles.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "filtermanager.h"
-#include "liteapp_global.h"
+#include "quickopenfiles.h"
+#include "quickopen_global.h"
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QSortFilterProxyModel>
-#include <QTreeView>
-#include <QDebug>
-
+#include <QDir>
+#include <QFileInfo>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -39,148 +38,20 @@
 #endif
 //lite_memory_check_end
 
-FilterManager::FilterManager()
-{
-
-}
-
-FilterManager::~FilterManager()
-{
-    qDeleteAll(m_filterMap);
-}
-
-bool FilterManager::initWithApp(IApplication *app)
-{
-    if (!IFilterManager::initWithApp(app)) {
-        return false;
-    }
-    m_widget = new QuickOpenWidget(m_liteApp,m_liteApp->mainWindow());
-    connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
-    connect(m_widget,SIGNAL(selected()),this,SLOT(selected()));
-
-    m_filesFilter = new FilesFilter(app,this);
-
-    setCurrentFilter(m_filesFilter);
-
-    return true;
-}
-
-void FilterManager::createActions()
-{
-    m_quickOpenAct = new QAction(tr("Quick Open"),this);
-
-    LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
-    context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
-
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
-
-    connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(showQuickOpen()));
-}
-
-void FilterManager::addFilter(const QString &sym, IFilter *filter)
-{
-    m_filterMap.insert(sym,filter);
-}
-
-void FilterManager::removeFilter(IFilter *filter)
-{
-    QMutableMapIterator<QString,IFilter*> i(m_filterMap);
-    while (i.hasNext()) {
-        i.next();
-        if (i.value() == filter) {
-            m_filterMap.remove(i.key());
-            break;
-        }
-    }
-}
-
-QList<IFilter *> FilterManager::filterList() const
-{
-    return m_filterMap.values();
-}
-
-void FilterManager::setCurrentFilter(IFilter *filter)
-{
-    if (m_currentFilter == filter) {
-        return;
-    }
-    m_currentFilter = filter;
-    m_sym = m_filterMap.key(filter);
-}
-
-IFilter *FilterManager::currentFilter() const
-{
-    return m_currentFilter;
-}
-
-void FilterManager::showQuickOpen()
-{
-    if (m_currentFilter) {
-        m_currentFilter->updateModel();
-        m_widget->setModel(m_currentFilter->model());
-        m_widget->view()->resizeColumnToContents(0);
-    }
-    m_widget->editor()->clear();
-    m_widget->showPopup();
-}
-
-void FilterManager::hideQuickOpen()
-{
-    m_widget->close();
-}
-
-void FilterManager::filterChanged(const QString &text)
-{
-    if (text.isEmpty()) {
-        setCurrentFilter(m_filesFilter);
-    }
-    if (!m_sym.isEmpty() && !text.startsWith(m_sym)) {
-        if (text.size() == 1 || text.endsWith(" ")) {
-            QString key = text.trimmed();
-            if (key.isEmpty()) {
-                return;
-            }
-            QMapIterator<QString,IFilter*> i(m_filterMap);
-            while(i.hasNext()) {
-                i.next();
-                if (i.key() == key) {
-                    this->setCurrentFilter(i.value());
-                    return;
-                }
-            }
-        }
-    }
-    if (m_currentFilter) {
-        QModelIndex index = m_currentFilter->filter(text.mid(m_sym.size()));
-        m_widget->view()->setCurrentIndex(index);
-    }
-}
-
-void FilterManager::selected()
-{
-    QModelIndex index = m_widget->view()->currentIndex();
-    if (index.isValid()) {
-        if (m_currentFilter) {
-            m_currentFilter->selected(index);
-        }
-    }
-    this->hideQuickOpen();
-}
-
-FilesFilter::FilesFilter(IApplication *app, QObject *parent)
-    : LiteApi::IFilter(parent), m_liteApp(app)
+QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
 }
 
-QString FilesFilter::id() const
+QString QuickOpenFiles::id() const
 {
     return "filter/editor";
 }
 
-QAbstractItemModel *FilesFilter::model() const
+QAbstractItemModel *QuickOpenFiles::model() const
 {
     return m_proxyModel;
 }
@@ -202,7 +73,7 @@ void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *mod
     }
 }
 
-void FilesFilter::updateModel()
+void QuickOpenFiles::updateModel()
 {
     m_model->clear();
     m_proxyModel->setFilterFixedString("");
@@ -226,14 +97,14 @@ void FilesFilter::updateModel()
         }
     }
 
-    int maxcount = m_liteApp->settings()->value(LITEAPP_FILESFILTER_MAXCOUNT,100000).toInt();
+    int maxcount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
         updateFolder(folder,extFilter,m_model,maxcount);
     }
     //m_proxyModel->sort(0);
 }
 
-QModelIndex FilesFilter::filter(const QString &text)
+QModelIndex QuickOpenFiles::filter(const QString &text)
 {
     m_proxyModel->setFilterFixedString(text);
 
@@ -247,7 +118,7 @@ QModelIndex FilesFilter::filter(const QString &text)
     return QModelIndex();
 }
 
-void FilesFilter::selected(const QModelIndex &index)
+void QuickOpenFiles::selected(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;

@@ -77,9 +77,7 @@ SOURCES += main.cpp\
     textbrowserhtmlwidget.cpp \
     splitwindowstyle.cpp \
     sidewindowstyle.cpp \
-    outputoption.cpp \
-    filtermanager.cpp \
-    quickopenwidget.cpp
+    outputoption.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -111,9 +109,7 @@ HEADERS  += mainwindow.h \
     windowstyle.h \
     splitwindowstyle.h \
     sidewindowstyle.h \
-    outputoption.h \
-    filtermanager.h \
-    quickopenwidget.h
+    outputoption.h
 
 FORMS += \
     aboutdialog.ui \
