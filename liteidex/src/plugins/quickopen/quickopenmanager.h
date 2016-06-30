@@ -46,6 +46,7 @@ public:
     virtual QList<IQuickOpen*> filterList() const;
     virtual void setCurrentFilter(IQuickOpen *filter);
     virtual IQuickOpen *currentFilter() const;
+    virtual QModelIndex currentIndex() const;
 public slots:
     void showQuickOpen();
     void hideQuickOpen();

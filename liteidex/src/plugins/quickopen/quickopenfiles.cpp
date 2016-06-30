@@ -115,7 +115,17 @@ QModelIndex QuickOpenFiles::filter(const QString &text)
             return index;
         }
     }
+    if (m_proxyModel->rowCount() > 0)
+        return m_proxyModel->index(0,0);
     return QModelIndex();
+}
+
+bool QuickOpenFiles::enterText(const QString &text, const QModelIndex &index)
+{
+    if (!index.isValid()) {
+        return false;
+    }
+    return true;
 }
 
 void QuickOpenFiles::selected(const QModelIndex &index)

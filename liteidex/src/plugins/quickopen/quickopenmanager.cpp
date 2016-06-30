@@ -110,6 +110,11 @@ IQuickOpen *QuickOpenManager::currentFilter() const
     return m_currentFilter;
 }
 
+QModelIndex QuickOpenManager::currentIndex() const
+{
+    return m_widget->view()->currentIndex();
+}
+
 void QuickOpenManager::showQuickOpen()
 {
     if (m_currentFilter) {
@@ -155,12 +160,15 @@ void QuickOpenManager::filterChanged(const QString &text)
 
 void QuickOpenManager::selected()
 {
-    QModelIndex index = m_widget->view()->currentIndex();
-    if (index.isValid()) {
-        if (m_currentFilter) {
-            m_currentFilter->selected(index);
-        }
+    if (!m_currentFilter) {
+        return;
     }
+    QString text = m_widget->editor()->text();
+    QModelIndex index = m_widget->view()->currentIndex();
+    if (!m_currentFilter->enterText(text.mid(m_sym.size()),index)) {
+        return;
+    }
+    m_currentFilter->selected(index);
     this->hideQuickOpen();
 }
 

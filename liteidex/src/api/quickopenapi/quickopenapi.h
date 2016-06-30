@@ -37,6 +37,7 @@ public:
     virtual QAbstractItemModel *model() const = 0;
     virtual void updateModel() = 0;
     virtual QModelIndex filter(const QString &text) = 0;
+    virtual bool enterText(const QString &text, const QModelIndex &index) = 0;
     virtual void selected(const QModelIndex &index) = 0;
 };
 
@@ -50,6 +51,7 @@ public:
     virtual QList<IQuickOpen*> filterList() const = 0;
     virtual void setCurrentFilter(IQuickOpen *filter) = 0;
     virtual IQuickOpen *currentFilter() const = 0;
+    virtual QModelIndex currentIndex() const = 0;
 signals:
     void currentFilterChanged(IQuickOpen *filter);
 };
