@@ -48,7 +48,7 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
 
 QString QuickOpenFiles::id() const
 {
-    return "filter/editor";
+    return "quickopen/files";
 }
 
 QAbstractItemModel *QuickOpenFiles::model() const
