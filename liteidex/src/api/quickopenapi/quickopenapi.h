@@ -37,8 +37,7 @@ public:
     virtual QAbstractItemModel *model() const = 0;
     virtual void updateModel() = 0;
     virtual QModelIndex filter(const QString &text) = 0;
-    virtual bool enterText(const QString &text, const QModelIndex &index) = 0;
-    virtual void selected(const QModelIndex &index) = 0;
+    virtual bool selected(const QString &text, const QModelIndex &index) = 0;
 };
 
 class IQuickOpenManager : public IManager

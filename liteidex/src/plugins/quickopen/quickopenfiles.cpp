@@ -120,19 +120,14 @@ QModelIndex QuickOpenFiles::filter(const QString &text)
     return QModelIndex();
 }
 
-bool QuickOpenFiles::enterText(const QString &text, const QModelIndex &index)
+bool QuickOpenFiles::selected(const QString &text, const QModelIndex &index)
 {
     if (!index.isValid()) {
         return false;
     }
-    return true;
-}
-
-void QuickOpenFiles::selected(const QModelIndex &index)
-{
-    if (!index.isValid()) {
-        return;
-    }
     QString filePath = m_proxyModel->index(index.row(),2).data().toString();
-    m_liteApp->fileManager()->openFile(filePath);
+    if (!m_liteApp->fileManager()->openFile(filePath)) {
+        return false;
+    }
+    return true;
 }

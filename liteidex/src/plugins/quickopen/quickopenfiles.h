@@ -37,8 +37,7 @@ public:
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();
     virtual QModelIndex filter(const QString &text);
-    virtual bool enterText(const QString &text, const QModelIndex &index);
-    virtual void selected(const QModelIndex &index);
+    virtual bool selected(const QString &text, const QModelIndex &index);
 protected:
     LiteApi::IApplication *m_liteApp;
     QStandardItemModel *m_model;

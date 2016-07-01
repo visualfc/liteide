@@ -165,10 +165,9 @@ void QuickOpenManager::selected()
     }
     QString text = m_widget->editor()->text();
     QModelIndex index = m_widget->view()->currentIndex();
-    if (!m_currentFilter->enterText(text.mid(m_sym.size()),index)) {
+    if (!m_currentFilter->selected(text.mid(m_sym.size()),index)) {
         return;
     }
-    m_currentFilter->selected(index);
     this->hideQuickOpen();
 }
 
