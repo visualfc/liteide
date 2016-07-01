@@ -97,7 +97,8 @@ void QuickOpenFiles::updateModel()
         }
     }
 
-    int maxcount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
+    int count = m_model->rowCount();
+    int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
         updateFolder(folder,extFilter,m_model,maxcount);
     }
