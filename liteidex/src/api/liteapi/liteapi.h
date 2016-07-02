@@ -314,6 +314,7 @@ public:
     virtual QString textAt(int pos, int length) const = 0;
     virtual QRect cursorRect(int pos = -1) const = 0;
     virtual QTextCursor textCursor() const = 0;
+    virtual QTextDocument *document() const = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)

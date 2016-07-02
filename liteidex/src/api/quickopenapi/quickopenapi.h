@@ -53,6 +53,8 @@ public:
     virtual QModelIndex currentIndex() const = 0;
 signals:
     void currentFilterChanged(IQuickOpen *filter);
+    void showView();
+    void closeView();
 };
 
 inline IQuickOpenManager *getQuickOpenManager(LiteApi::IApplication* app)

@@ -10,10 +10,12 @@ DEFINES += QUICKOPEN_LIBRARY
 SOURCES += quickopenplugin.cpp \
     quickopenwidget.cpp \
     quickopenmanager.cpp \
-    quickopenfiles.cpp
+    quickopenfiles.cpp \
+    quickopenlines.cpp
 
 HEADERS += quickopenplugin.h\
         quickopen_global.h \
     quickopenwidget.h \
     quickopenmanager.h \
-    quickopenfiles.h
+    quickopenfiles.h \
+    quickopenlines.h

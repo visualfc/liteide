@@ -23,6 +23,7 @@
 
 #include "quickopenplugin.h"
 #include "quickopenmanager.h"
+#include "quickopenlines.h"
 #include <QtPlugin>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -44,6 +45,7 @@ bool QuickOpenPlugin::load(LiteApi::IApplication *app)
     if (!manager->initWithApp(app)) {
         return false;
     }
+    manager->addFilter(":",new QuickOpenLines(app,manager));
     return true;
 }
 

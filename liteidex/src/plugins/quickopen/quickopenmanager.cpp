@@ -61,7 +61,6 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
 
-    addFilter("",m_quickOpenFiles);
     setCurrentFilter(m_quickOpenFiles);
 
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
@@ -77,6 +76,13 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
 void QuickOpenManager::addFilter(const QString &sym, IQuickOpen *filter)
 {
+    if (filter == 0) {
+        return;
+    }
+    if (sym.isEmpty()) {
+        m_liteApp->appendLog("QuickOpen",QString("warning, skip empty symbol, id=%1").arg(filter->id()),true);
+        return;
+    }
     m_filterMap.insert(sym,filter);
 }
 
@@ -103,7 +109,10 @@ void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
         return;
     }
     m_currentFilter = filter;
-    m_sym = m_filterMap.key(filter);
+    if (m_currentFilter) {
+        m_sym = m_filterMap.key(filter);
+        m_widget->setModel(m_currentFilter->model());
+    }
 }
 
 IQuickOpen *QuickOpenManager::currentFilter() const
@@ -143,6 +152,9 @@ IQuickOpen *QuickOpenManager::findById(const QString &id)
             return i.value();
         }
     }
+    if (id == m_quickOpenFiles->id()) {
+        return m_quickOpenFiles;
+    }
     return 0;
 }
 
@@ -155,7 +167,7 @@ IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
             return i.value();
         }
     }
-    return 0;
+    return m_quickOpenFiles;
 }
 
 void QuickOpenManager::quickOpen()
@@ -164,42 +176,52 @@ void QuickOpenManager::quickOpen()
     showQuickOpen();
 }
 
+void QuickOpenManager::updateModel()
+{
+    if (!m_currentFilter) {
+        return;
+    }
+    if (m_updateMap.value(m_currentFilter)) {
+        return;
+    }
+    m_updateMap.insert(m_currentFilter,true);
+    m_currentFilter->updateModel();
+    m_widget->view()->resizeColumnToContents(0);
+}
+
 void QuickOpenManager::showQuickOpen()
 {
-    if (m_currentFilter) {
-        m_currentFilter->updateModel();
-        m_widget->setModel(m_currentFilter->model());
-        m_widget->view()->resizeColumnToContents(0);
-    }
+    updateModel();
     m_widget->editor()->setText(m_sym);
     m_widget->showPopup();
+    emit showView();
 }
 
 void QuickOpenManager::hideQuickOpen()
 {
     m_widget->close();
+    m_updateMap.clear();
 }
 
 void QuickOpenManager::filterChanged(const QString &text)
 {
-    if (text.isEmpty()) {
-        setCurrentFilter(m_quickOpenFiles);
-    }
-    if (!m_sym.isEmpty() && !text.startsWith(m_sym)) {
-        if (text.size() == 1 || text.endsWith(" ")) {
-            QString key = text.trimmed();
-            if (key.isEmpty()) {
-                return;
-            }
-            QMapIterator<QString,IQuickOpen*> i(m_filterMap);
-            while(i.hasNext()) {
-                i.next();
-                if (i.key() == key) {
-                    this->setCurrentFilter(i.value());
-                    return;
-                }
+    IQuickOpen *quick = 0;
+    if (!text.isEmpty()) {
+        QMapIterator<QString,IQuickOpen*> i(m_filterMap);
+        while (i.hasNext()) {
+            i.next();
+            if (text.startsWith(i.key())) {
+                quick = i.value();
+                break;
             }
         }
+    }
+    if (quick == 0)  {
+        quick = m_quickOpenFiles;
+    }
+    if (quick != m_currentFilter) {
+        this->setCurrentFilter(quick);
+        updateModel();
     }
     if (m_currentFilter) {
         QModelIndex index = m_currentFilter->filter(text.mid(m_sym.size()));

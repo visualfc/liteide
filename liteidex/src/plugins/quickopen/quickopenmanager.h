@@ -61,9 +61,12 @@ protected:
     QuickOpenWidget *m_widget;
     QAction     *m_quickOpenAct;
     QMap<QString,IQuickOpen*> m_filterMap;
+    QMap<IQuickOpen*,bool> m_updateMap;
     QString m_sym;
     QPointer<IQuickOpen> m_currentFilter;
     QuickOpenFiles *m_quickOpenFiles;
+protected:
+    void updateModel();
 };
 
 #endif // QUICKOPENMANAGER_H
