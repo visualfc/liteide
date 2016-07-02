@@ -61,6 +61,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
 
+    addFilter("",m_quickOpenFiles);
     setCurrentFilter(m_quickOpenFiles);
 
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
@@ -70,7 +71,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
 
-    connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(showQuickOpen()));
+    connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
     return true;
 }
 
@@ -115,6 +116,54 @@ QModelIndex QuickOpenManager::currentIndex() const
     return m_widget->view()->currentIndex();
 }
 
+void QuickOpenManager::showById(const QString &id)
+{
+    IQuickOpen *i = findById(id);
+    if (i) {
+        setCurrentFilter(i);
+        showQuickOpen();
+    }
+}
+
+void QuickOpenManager::showBySymbol(const QString &sym)
+{
+    IQuickOpen *i = findBySymbol(sym);
+    if (i) {
+        setCurrentFilter(i);
+        showQuickOpen();
+    }
+}
+
+IQuickOpen *QuickOpenManager::findById(const QString &id)
+{
+    QMutableMapIterator<QString,IQuickOpen*> i(m_filterMap);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value() ->id() == id) {
+            return i.value();
+        }
+    }
+    return 0;
+}
+
+IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
+{
+    QMutableMapIterator<QString,IQuickOpen*> i(m_filterMap);
+    while (i.hasNext()) {
+        i.next();
+        if (i.key() == sym) {
+            return i.value();
+        }
+    }
+    return 0;
+}
+
+void QuickOpenManager::quickOpen()
+{
+    setCurrentFilter(m_quickOpenFiles);
+    showQuickOpen();
+}
+
 void QuickOpenManager::showQuickOpen()
 {
     if (m_currentFilter) {
@@ -122,7 +171,7 @@ void QuickOpenManager::showQuickOpen()
         m_widget->setModel(m_currentFilter->model());
         m_widget->view()->resizeColumnToContents(0);
     }
-    m_widget->editor()->clear();
+    m_widget->editor()->setText(m_sym);
     m_widget->showPopup();
 }
 

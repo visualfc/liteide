@@ -47,7 +47,12 @@ public:
     virtual void setCurrentFilter(IQuickOpen *filter);
     virtual IQuickOpen *currentFilter() const;
     virtual QModelIndex currentIndex() const;
+    virtual void showById(const QString &id);
+    virtual void showBySymbol(const QString &sym);
+    virtual IQuickOpen *findById(const QString &id);
+    virtual IQuickOpen *findBySymbol(const QString &sym);
 public slots:
+    void quickOpen();
     void showQuickOpen();
     void hideQuickOpen();
     void filterChanged(const QString &text);
