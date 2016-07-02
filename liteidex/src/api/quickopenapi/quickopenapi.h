@@ -51,10 +51,15 @@ public:
     virtual void setCurrentFilter(IQuickOpen *filter) = 0;
     virtual IQuickOpen *currentFilter() const = 0;
     virtual QModelIndex currentIndex() const = 0;
+    virtual void showById(const QString &id) = 0;
+    virtual void showBySymbol(const QString &sym) = 0;
+    virtual IQuickOpen *findById(const QString &id) = 0;
+    virtual IQuickOpen *findBySymbol(const QString &sym) = 0;
 signals:
     void currentFilterChanged(IQuickOpen *filter);
-    void showView();
-    void closeView();
+public slots:
+    virtual void showQuickOpen() = 0;
+    virtual void hideQuickOpen() = 0;
 };
 
 inline IQuickOpenManager *getQuickOpenManager(LiteApi::IApplication* app)

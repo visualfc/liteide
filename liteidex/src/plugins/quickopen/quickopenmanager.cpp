@@ -194,7 +194,6 @@ void QuickOpenManager::showQuickOpen()
     updateModel();
     m_widget->editor()->setText(m_sym);
     m_widget->showPopup();
-    emit showView();
 }
 
 void QuickOpenManager::hideQuickOpen()

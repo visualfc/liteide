@@ -31,6 +31,7 @@
 #include "qtc_texteditor/generichighlighter/highlighter.h"
 #include "qtc_editutil/uncommentselection.h"
 #include "functiontooltip.h"
+#include "quickopenapi/quickopenapi.h"
 
 #include <QFileInfo>
 #include <QVBoxLayout>
@@ -1157,6 +1158,15 @@ void LiteEditor::editPositionChanged()
 
 void LiteEditor::gotoLine()
 {
+    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+    if (mgr) {
+        LiteApi::IQuickOpen *p = mgr->findById("quickopen/lines");
+        if (p) {
+            mgr->setCurrentFilter(p);
+            mgr->showQuickOpen();
+            return;
+        }
+    }
     int min = 1;
     int max = m_editorWidget->document()->blockCount();
     int old = m_editorWidget->textCursor().blockNumber()+1;

@@ -49,7 +49,6 @@ public:
         m_info->setAuthor("visualfc");
         m_info->setVer("X30");
         m_info->setInfo("Core Editor");
-        m_info->appendDepend("plugin/litebuild");
         m_info->setMustLoad(true);
     }
 };

@@ -82,6 +82,9 @@ bool QuickOpenLines::selected(const QString &text, const QModelIndex &index)
     if (line <= 0 || line > maxcount) {
         return false;
     }
+    if (line-1 != textEditor->line()) {
+        m_liteApp->editorManager()->addNavigationHistory();
+    }
     textEditor->gotoLine(line-1,0,true);
     return true;
 }
