@@ -56,6 +56,8 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_liteApp->extension()->addObject("LiteApi.IQuickOpenManager",this);
 
     m_widget = new QuickOpenWidget(m_liteApp,m_liteApp->mainWindow());
+    m_widget->editor()->setPlaceholderText(tr("Type '?' to get help on the actions you can take from here"));
+
     connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
     connect(m_widget,SIGNAL(selected()),this,SLOT(selected()));
 
@@ -72,6 +74,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
+
     return true;
 }
 
