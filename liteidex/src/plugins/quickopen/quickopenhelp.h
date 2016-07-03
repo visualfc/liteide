@@ -1,13 +1,13 @@
-#ifndef QUICKOPENLINES_H
-#define QUICKOPENLINES_H
+#ifndef QUICKOPENHELP_H
+#define QUICKOPENHELP_H
 
 #include "quickopenapi/quickopenapi.h"
 
 class QStandardItemModel;
-class QuickOpenLines : public LiteApi::IQuickOpen
+class QuickOpenHelp : public LiteApi::IQuickOpen
 {
 public:
-    QuickOpenLines(LiteApi::IApplication *app, QObject *parent);
+    QuickOpenHelp(LiteApi::IApplication *app, QObject *parent);
     virtual QString id() const;
     virtual QString info() const;
     virtual QAbstractItemModel *model() const;
@@ -20,4 +20,4 @@ protected:
     bool update(const QString &text);
 };
 
-#endif // QUICKOPENLINES_H
+#endif // QUICKOPENHELP_H

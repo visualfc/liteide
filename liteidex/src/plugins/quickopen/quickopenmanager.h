@@ -44,6 +44,7 @@ public:
     virtual void addFilter(const QString &sym, IQuickOpen *filter);
     virtual void removeFilter(IQuickOpen *filter);
     virtual QList<IQuickOpen*> filterList() const;
+    virtual QMap<QString, IQuickOpen *> filterMap() const;
     virtual void setCurrentFilter(IQuickOpen *filter);
     virtual IQuickOpen *currentFilter() const;
     virtual QModelIndex currentIndex() const;

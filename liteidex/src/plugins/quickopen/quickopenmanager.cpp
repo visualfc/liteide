@@ -61,7 +61,8 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
 
-    setCurrentFilter(m_quickOpenFiles);
+    //setCurrentFilter(m_quickOpenFiles);
+    m_filterMap.insert("",m_quickOpenFiles);
 
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
 
@@ -101,6 +102,11 @@ void QuickOpenManager::removeFilter(IQuickOpen *filter)
 QList<IQuickOpen *> QuickOpenManager::filterList() const
 {
     return m_filterMap.values();
+}
+
+QMap<QString, IQuickOpen *> QuickOpenManager::filterMap() const
+{
+    return m_filterMap;
 }
 
 void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
@@ -209,6 +215,9 @@ void QuickOpenManager::filterChanged(const QString &text)
         QMapIterator<QString,IQuickOpen*> i(m_filterMap);
         while (i.hasNext()) {
             i.next();
+            if (i.key().isEmpty()) {
+                continue;
+            }
             if (text.startsWith(i.key())) {
                 quick = i.value();
                 break;

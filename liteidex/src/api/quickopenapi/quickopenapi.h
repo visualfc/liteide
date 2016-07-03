@@ -34,6 +34,7 @@ class IQuickOpen : public QObject
 public:
     IQuickOpen(QObject *parent = 0) : QObject(parent) {}
     virtual QString id() const = 0;
+    virtual QString info() const = 0;
     virtual QAbstractItemModel *model() const = 0;
     virtual void updateModel() = 0;
     virtual QModelIndex filter(const QString &text) = 0;
@@ -48,6 +49,7 @@ public:
     virtual void addFilter(const QString &sym, IQuickOpen *filter) = 0;
     virtual void removeFilter(IQuickOpen *filter) = 0;
     virtual QList<IQuickOpen*> filterList() const = 0;
+    virtual QMap<QString,IQuickOpen*> filterMap() const = 0;
     virtual void setCurrentFilter(IQuickOpen *filter) = 0;
     virtual IQuickOpen *currentFilter() const = 0;
     virtual QModelIndex currentIndex() const = 0;

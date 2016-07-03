@@ -34,6 +34,7 @@ class QuickOpenFiles : public LiteApi::IQuickOpen
 public:
     QuickOpenFiles(LiteApi::IApplication *app, QObject *parent = 0);
     virtual QString id() const;
+    virtual QString info() const;
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();
     virtual QModelIndex filter(const QString &text);

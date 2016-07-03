@@ -14,6 +14,11 @@ QString QuickOpenLines::id() const
     return "quickopen/lines";
 }
 
+QString QuickOpenLines::info() const
+{
+    return tr("Go to Line");
+}
+
 QAbstractItemModel *QuickOpenLines::model() const
 {
     return m_model;

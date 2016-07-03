@@ -51,6 +51,11 @@ QString QuickOpenFiles::id() const
     return "quickopen/files";
 }
 
+QString QuickOpenFiles::info() const
+{
+    return tr("Open Files by Name");
+}
+
 QAbstractItemModel *QuickOpenFiles::model() const
 {
     return m_proxyModel;
