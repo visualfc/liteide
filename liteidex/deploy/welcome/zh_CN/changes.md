@@ -13,7 +13,7 @@
 	* option keyboard map show native text
 * QuickOpen
 	* quick open files action CTRL+P
-	* quick open editor action ATL+TAB
+	* quick open editor action CTRL+ALT+P
 	* quick go to line action CTRL+L
 	* quick open help
 * FakeVim

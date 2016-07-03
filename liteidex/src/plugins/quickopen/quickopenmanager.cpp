@@ -74,8 +74,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
     context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
-    context->regAction(m_quickOpenEditAct,"QuickOpenEditor","ALT+TAB");
-
+    context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
 
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenEditAct);
