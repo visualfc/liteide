@@ -50,7 +50,7 @@ bool QuickOpenLines::update(const QString &text)
         m_model->appendRow(new QStandardItem(QString(tr("Type a line number between %1 and %2 to navigate to")).arg(1).arg(maxcount)));
         return false;
     }
-    m_model->appendRow(new QStandardItem(QString(tr("Go to line %1")).arg(line)));
+    m_model->appendRow(new QStandardItem(QString(tr("Go to Line %1")).arg(line)));
     return true;
 }
 

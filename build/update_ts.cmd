@@ -15,6 +15,8 @@ echo .
 
 if x%QTDIR%==x goto qtdir_fail
 
+set PATH=%QTDIR%/bin;%PATH%
+
 echo update translator files
 lupdate %LITEIDE_ROOT%\liteidex.pro
 

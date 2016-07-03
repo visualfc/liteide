@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -1205,13 +1205,6 @@ Do you want to reload the file from disk?</source>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
         <translation>Не удалось удалить папку!</translation>
-    </message>
-</context>
-<context>
-    <name>FilterManager</name>
-    <message>
-        <source>Quick Open</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3520,6 +3513,61 @@ Do you want to replace it?</source>
     <message>
         <source>An error occurred while parsing json: %1</source>
         <translation>Возникла ошибка при разборе json: %1</translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenEditor</name>
+    <message>
+        <source>Open Editor by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenFiles</name>
+    <message>
+        <source>Open Files by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenHelp</name>
+    <message>
+        <source>Show Quick Open Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenLines</name>
+    <message>
+        <source>Go to Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a text file first to go to a line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type a line number between %1 and %2 to navigate to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Line %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenManager</name>
+    <message>
+        <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Open Editor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
