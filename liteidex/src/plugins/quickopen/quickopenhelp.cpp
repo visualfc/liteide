@@ -29,6 +29,9 @@ void QuickOpenHelp::updateModel()
     QMapIterator<QString,LiteApi::IQuickOpen*> i(mgr->filterMap());
     while(i.hasNext()) {
         i.next();
+        if (i.value() == this) {
+            continue;
+        }
         m_model->appendRow(QList<QStandardItem*>() << new QStandardItem(i.key()) << new QStandardItem(i.value()->info()));
     }
 }

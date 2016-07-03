@@ -92,11 +92,10 @@ void QuickOpenFiles::updateModel()
         editors.push_back(editor->name()+";"+editor->filePath());
     }
     qSort(editors);
-    foreach (QString filePath, editors) {
-        QStringList ar = filePath.split(";");
+    foreach (QString text, editors) {
+        QStringList ar = text.split(";");
         m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]) );
     }
-
 
     QStringList extFilter;
     foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
