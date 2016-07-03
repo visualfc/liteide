@@ -84,12 +84,19 @@ void QuickOpenFiles::updateModel()
     m_proxyModel->setFilterFixedString("");
     m_proxyModel->setFilterKeyColumn(2);
 
+    QStringList editors;
     foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
         if (editor->filePath().isEmpty()) {
             continue;
         }
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
+        editors.push_back(editor->name()+";"+editor->filePath());
     }
+    qSort(editors);
+    foreach (QString filePath, editors) {
+        QStringList ar = filePath.split(";");
+        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]) );
+    }
+
 
     QStringList extFilter;
     foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
