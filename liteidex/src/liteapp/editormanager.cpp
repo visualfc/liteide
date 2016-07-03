@@ -269,7 +269,11 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *e = static_cast<QKeyEvent*>(event);
+#ifdef Q_OS_MAC
+        if ( (e->modifiers() & Qt::ALT) &&
+#else
         if ( (e->modifiers() & Qt::CTRL) &&
+#endif
              ( e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) ) {
             int index = m_editorTabWidget->tabBar()->currentIndex();
             if (e->key() == Qt::Key_Tab) {
