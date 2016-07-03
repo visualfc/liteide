@@ -192,6 +192,7 @@ IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
 
 void QuickOpenManager::quickOpen()
 {
+    m_updateMap.clear();
     setCurrentFilter(m_quickOpenFiles);
     showQuickOpen();
 }
@@ -253,6 +254,7 @@ void QuickOpenManager::filterChanged(const QString &text)
     if (m_currentFilter) {
         QModelIndex index = m_currentFilter->filter(text.mid(m_sym.size()));
         m_widget->view()->setCurrentIndex(index);
+        m_widget->view()->scrollTo(index);
     }
 }
 

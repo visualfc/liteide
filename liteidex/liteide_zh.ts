@@ -1483,13 +1483,6 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
-    <name>FilterManager</name>
-    <message>
-        <source>Quick Open</source>
-        <translation type="obsolete">快速打开</translation>
-    </message>
-</context>
-<context>
     <name>Find::Internal::SearchResultWidget</name>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="132"/>

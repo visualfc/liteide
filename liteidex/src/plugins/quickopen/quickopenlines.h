@@ -6,6 +6,7 @@
 class QStandardItemModel;
 class QuickOpenLines : public LiteApi::IQuickOpen
 {
+    Q_OBJECT
 public:
     QuickOpenLines(LiteApi::IApplication *app, QObject *parent);
     virtual QString id() const;
