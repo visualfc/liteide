@@ -24,12 +24,12 @@ bool QuickOpenLines::update(const QString &text)
     m_model->clear();
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (!editor) {
-        m_model->appendRow(new QStandardItem("editor not support go to lines"));
+        m_model->appendRow(new QStandardItem(tr("Open a text file first to go to a line")));
         return false;
     }
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!textEditor) {
-        m_model->appendRow(new QStandardItem("editor not support go to lines"));
+        m_model->appendRow(new QStandardItem(tr("Open a text file first to go to a line")));
         return false;
     }
     int maxcount = textEditor->document()->blockCount();
@@ -42,10 +42,10 @@ bool QuickOpenLines::update(const QString &text)
         ok = false;
     }
     if (!ok) {
-        m_model->appendRow(new QStandardItem(QString(tr("please input line range %1 - %2")).arg(1).arg(maxcount)));
+        m_model->appendRow(new QStandardItem(QString(tr("Type a line number between %1 and %2 to navigate to")).arg(1).arg(maxcount)));
         return false;
     }
-    m_model->appendRow(new QStandardItem(QString(tr("go to line %1")).arg(line)));
+    m_model->appendRow(new QStandardItem(QString(tr("Go to line %1")).arg(line)));
     return true;
 }
 
