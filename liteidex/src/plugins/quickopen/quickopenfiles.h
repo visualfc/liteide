@@ -24,7 +24,7 @@
 #ifndef QUICKOPENFILES_H
 #define QUICKOPENFILES_H
 
-#include "../api/quickopenapi/quickopenapi.h"
+#include "quickopenapi/quickopenapi.h"
 
 class QStandardItemModel;
 class QSortFilterProxyModel;

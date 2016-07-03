@@ -24,6 +24,7 @@
 #include "quickopenmanager.h"
 #include "quickopen_global.h"
 #include "quickopenfiles.h"
+#include "quickopeneditor.h"
 #include <QTreeView>
 #include <QDebug>
 
@@ -65,15 +66,22 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     //setCurrentFilter(m_quickOpenFiles);
     m_filterMap.insert("",m_quickOpenFiles);
+    m_filterMap.insert("~",new QuickOpenEditor(m_liteApp,this));
 
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
 
+    m_quickOpenEditAct = new QAction(tr("Quick Open Editor"),this);
+
     LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
     context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
+    context->regAction(m_quickOpenEditAct,"QuickOpenEditor","ALT+TAB");
+
 
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenEditAct);
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
+    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
 
     return true;
 }
@@ -146,6 +154,9 @@ void QuickOpenManager::showById(const QString &id)
 void QuickOpenManager::showBySymbol(const QString &sym)
 {
     IQuickOpen *i = findBySymbol(sym);
+    if (i == 0) {
+        i = m_quickOpenFiles;
+    }
     if (i) {
         setCurrentFilter(i);
         showQuickOpen();
@@ -176,13 +187,18 @@ IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
             return i.value();
         }
     }
-    return m_quickOpenFiles;
+    return 0;
 }
 
 void QuickOpenManager::quickOpen()
 {
     setCurrentFilter(m_quickOpenFiles);
     showQuickOpen();
+}
+
+void QuickOpenManager::quickOpenEditor()
+{
+    showById("quickopen/editor");
 }
 
 void QuickOpenManager::updateModel()

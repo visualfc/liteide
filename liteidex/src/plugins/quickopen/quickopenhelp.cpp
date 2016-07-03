@@ -35,6 +35,13 @@ void QuickOpenHelp::updateModel()
 
 QModelIndex QuickOpenHelp::filter(const QString &text)
 {
+    if (!text.isEmpty()) {
+        LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+        LiteApi::IQuickOpen *p = mgr->findBySymbol(text);
+        if (p) {
+            mgr->showBySymbol(text);
+        }
+    }
     return m_model->index(0,0);
 }
 

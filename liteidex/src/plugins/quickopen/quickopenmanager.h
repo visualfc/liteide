@@ -54,6 +54,7 @@ public:
     virtual IQuickOpen *findBySymbol(const QString &sym);
 public slots:
     void quickOpen();
+    void quickOpenEditor();
     void showQuickOpen();
     void hideQuickOpen();
     void filterChanged(const QString &text);
@@ -61,6 +62,7 @@ public slots:
 protected:
     QuickOpenWidget *m_widget;
     QAction     *m_quickOpenAct;
+    QAction     *m_quickOpenEditAct;
     QMap<QString,IQuickOpen*> m_filterMap;
     QMap<IQuickOpen*,bool> m_updateMap;
     QString m_sym;
