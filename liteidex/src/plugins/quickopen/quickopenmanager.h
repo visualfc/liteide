@@ -52,6 +52,7 @@ public:
     virtual void showBySymbol(const QString &sym);
     virtual IQuickOpen *findById(const QString &id);
     virtual IQuickOpen *findBySymbol(const QString &sym);
+    virtual QTreeView *modelView() const;
 public:
     virtual IQuickOpenSymbol *registerQuickOpenSymbol(const QString &sym);
 public slots:

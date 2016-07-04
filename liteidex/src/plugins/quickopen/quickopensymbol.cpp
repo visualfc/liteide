@@ -60,7 +60,7 @@ void QuickOpenSymbol::activate()
         mimeType = editor->mimeType();
     }
     foreach (LiteApi::IDocumentSymbolFactory *factory, m_factoryList) {
-        LiteApi::IDocumentSymbol *symbol = factory->create(mimeType);
+        LiteApi::IDocumentSymbol *symbol = factory->load(mimeType);
         if (symbol) {
             m_symbol = symbol;
             break;

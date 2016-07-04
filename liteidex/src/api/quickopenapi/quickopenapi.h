@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 
+class QTreeView;
 namespace LiteApi {
 
 class IDocumentSymbol : public QObject
@@ -46,7 +47,7 @@ class IDocumentSymbolFactory : public QObject
 public:
     IDocumentSymbolFactory(QObject *parent = 0) : QObject(parent) {}
     virtual QStringList mimeTypes() const = 0;
-    virtual IDocumentSymbol *create(const QString &mimeType) = 0;
+    virtual IDocumentSymbol *load(const QString &mimeType) = 0;
 };
 
 class IQuickOpen : public QObject
@@ -88,6 +89,7 @@ public:
     virtual void showBySymbol(const QString &sym) = 0;
     virtual IQuickOpen *findById(const QString &id) = 0;
     virtual IQuickOpen *findBySymbol(const QString &sym) = 0;
+    virtual QTreeView *modelView() const = 0;
 public:
     virtual IQuickOpenSymbol *registerQuickOpenSymbol(const QString &sym) = 0;
 signals:

@@ -191,6 +191,11 @@ IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
     return 0;
 }
 
+QTreeView *QuickOpenManager::modelView() const
+{
+    return m_widget->view();
+}
+
 IQuickOpenSymbol *QuickOpenManager::registerQuickOpenSymbol(const QString &sym)
 {
     IQuickOpenSymbol *symbol = m_quickOpenSymbolMap[sym];

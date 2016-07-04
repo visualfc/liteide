@@ -18,38 +18,46 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopensymbol.h
+// Module: golangsymbol.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef QUICKOPENSYMBOL_H
-#define QUICKOPENSYMBOL_H
+#ifndef GOLANGSYMBOL_H
+#define GOLANGSYMBOL_H
 
-#include "quickopenapi/quickopenapi.h"
-#include <QPointer>
+#include <quickopenapi/quickopenapi.h>
+#include <QProcess>
 
 class QStandardItemModel;
-class QuickOpenSymbol : public LiteApi::IQuickOpenSymbol
+class QSortFilterProxyModel;
+class QProcess;
+class GolangSymbol : public LiteApi::IDocumentSymbol
 {
     Q_OBJECT
 public:
-    QuickOpenSymbol(LiteApi::IApplication *app, QObject *parent);
-    virtual QString id() const;
-    virtual QString info() const;
-    virtual void activate();
+    GolangSymbol(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual QString mimeType() const;
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();
     virtual QModelIndex filter(const QString &text);
     virtual bool selected(const QString &text, const QModelIndex &index);
-    virtual void addFactory(LiteApi::IDocumentSymbolFactory *factory);
-    virtual void setId(const QString &id);
-    virtual void setInfo(const QString &info);
+public slots:
+    void finished(int code,QProcess::ExitStatus status);
 protected:
-    LiteApi::IApplication   *m_liteApp;
-    QPointer<LiteApi::IDocumentSymbol> m_symbol;
-    QList<LiteApi::IDocumentSymbolFactory*> m_factoryList;
-    QStandardItemModel *m_model;
-    QString m_id;
-    QString m_info;
+    LiteApi::IApplication *m_liteApp;
+    QStandardItemModel    *m_model;
+    QSortFilterProxyModel *m_proxy;
+    QProcess              *m_process;
 };
 
-#endif // QUICKOPENSYMBOL_H
+class GolangSymbolFactory : public LiteApi::IDocumentSymbolFactory
+{
+public:
+    GolangSymbolFactory(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual QStringList mimeTypes() const;
+    virtual LiteApi::IDocumentSymbol *load(const QString &mimeType);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    GolangSymbol          *m_symbol;
+};
+
+#endif // GOLANGSYMBOL_H

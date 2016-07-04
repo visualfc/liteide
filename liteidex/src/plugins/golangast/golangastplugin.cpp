@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangastplugin.h"
+#include "golangsymbol.h"
 #include <QAction>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -41,6 +42,13 @@ GolangAstPlugin::GolangAstPlugin()
 bool GolangAstPlugin::load(LiteApi::IApplication *app)
 {
     new GolangAst(app,this);
+    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(app);
+    if (mgr) {
+        LiteApi::IQuickOpenSymbol *symbol = mgr->registerQuickOpenSymbol("@");
+        if (symbol) {
+            symbol->addFactory(new GolangSymbolFactory(app,this));
+        }
+    }
     return true;
 }
 
