@@ -28,11 +28,11 @@
 
 namespace LiteApi {
 
-class ISymbol : public QObject
+class IDocumentSymbol : public QObject
 {
     Q_OBJECT
 public:
-    ISymbol(QObject *parent = 0) : QObject(parent){}
+    IDocumentSymbol(QObject *parent = 0) : QObject(parent){}
     virtual QString mimeType() const = 0;
     virtual QAbstractItemModel *model() const = 0;
     virtual void updateModel() = 0;
@@ -40,13 +40,13 @@ public:
     virtual bool selected(const QString &text, const QModelIndex &index) = 0;
 };
 
-class ISymbolFactory : public QObject
+class IDocumentSymbolFactory : public QObject
 {
     Q_OBJECT
 public:
-    ISymbolFactory(QObject *parent = 0) : QObject(parent) {}
+    IDocumentSymbolFactory(QObject *parent = 0) : QObject(parent) {}
     virtual QStringList mimeTypes() const = 0;
-    virtual ISymbol *create(const QString &mimeType) = 0;
+    virtual IDocumentSymbol *create(const QString &mimeType) = 0;
 };
 
 class IQuickOpen : public QObject
@@ -67,7 +67,7 @@ class IQuickOpenSymbol : public LiteApi::IQuickOpen
 {
 public:
     IQuickOpenSymbol(QObject *parent) : LiteApi::IQuickOpen(parent) {}
-    virtual void addFactory(LiteApi::ISymbolFactory *factory) = 0;
+    virtual void addFactory(LiteApi::IDocumentSymbolFactory *factory) = 0;
     virtual void setId(const QString &id) = 0;
     virtual void setInfo(const QString &info) = 0;
 };
@@ -89,7 +89,7 @@ public:
     virtual IQuickOpen *findById(const QString &id) = 0;
     virtual IQuickOpen *findBySymbol(const QString &sym) = 0;
 public:
-    virtual IQuickOpenSymbol *createQuickOpenSymbol() = 0;
+    virtual IQuickOpenSymbol *registerQuickOpenSymbol(const QString &sym) = 0;
 signals:
     void currentFilterChanged(IQuickOpen *filter);
 public slots:

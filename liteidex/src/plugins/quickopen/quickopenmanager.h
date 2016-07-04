@@ -53,7 +53,7 @@ public:
     virtual IQuickOpen *findById(const QString &id);
     virtual IQuickOpen *findBySymbol(const QString &sym);
 public:
-    virtual IQuickOpenSymbol *createQuickOpenSymbol();
+    virtual IQuickOpenSymbol *registerQuickOpenSymbol(const QString &sym);
 public slots:
     void quickOpen();
     void quickOpenEditor();
@@ -67,6 +67,7 @@ protected:
     QAction     *m_quickOpenEditAct;
     QMap<QString,IQuickOpen*> m_filterMap;
     QMap<IQuickOpen*,bool> m_updateMap;
+    QMap<QString,IQuickOpenSymbol*> m_quickOpenSymbolMap;
     QString m_sym;
     QPointer<IQuickOpen> m_currentFilter;
     QuickOpenFiles *m_quickOpenFiles;

@@ -42,13 +42,13 @@ public:
     virtual void updateModel();
     virtual QModelIndex filter(const QString &text);
     virtual bool selected(const QString &text, const QModelIndex &index);
-    virtual void addFactory(LiteApi::ISymbolFactory *factory);
+    virtual void addFactory(LiteApi::IDocumentSymbolFactory *factory);
     virtual void setId(const QString &id);
     virtual void setInfo(const QString &info);
 protected:
     LiteApi::IApplication   *m_liteApp;
-    QPointer<LiteApi::ISymbol> m_symbol;
-    QList<LiteApi::ISymbolFactory*> m_factoryList;
+    QPointer<LiteApi::IDocumentSymbol> m_symbol;
+    QList<LiteApi::IDocumentSymbolFactory*> m_factoryList;
     QStandardItemModel *m_model;
     QString m_id;
     QString m_info;

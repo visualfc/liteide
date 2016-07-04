@@ -48,8 +48,6 @@ bool QuickOpenPlugin::load(LiteApi::IApplication *app)
         return false;
     }
     manager->addFilter(":",new QuickOpenLines(app,this));
-    LiteApi::IQuickOpenSymbol *symbol = manager->createQuickOpenSymbol();
-    manager->addFilter("@",symbol);
     manager->addFilter("?",new QuickOpenHelp(app,this));
     return true;
 }

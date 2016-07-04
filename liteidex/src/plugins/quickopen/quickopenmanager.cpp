@@ -191,9 +191,14 @@ IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
     return 0;
 }
 
-IQuickOpenSymbol *QuickOpenManager::createQuickOpenSymbol()
+IQuickOpenSymbol *QuickOpenManager::registerQuickOpenSymbol(const QString &sym)
 {
-    return new QuickOpenSymbol(m_liteApp,this);
+    IQuickOpenSymbol *symbol = m_quickOpenSymbolMap[sym];
+    if (!symbol) {
+        symbol = new QuickOpenSymbol(m_liteApp,this);
+        this->addFilter(sym,symbol);
+    }
+    return symbol;
 }
 
 void QuickOpenManager::quickOpen()

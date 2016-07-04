@@ -59,8 +59,8 @@ void QuickOpenSymbol::activate()
     if (editor) {
         mimeType = editor->mimeType();
     }
-    foreach (LiteApi::ISymbolFactory *factory, m_factoryList) {
-        LiteApi::ISymbol *symbol = factory->create(mimeType);
+    foreach (LiteApi::IDocumentSymbolFactory *factory, m_factoryList) {
+        LiteApi::IDocumentSymbol *symbol = factory->create(mimeType);
         if (symbol) {
             m_symbol = symbol;
             break;
@@ -99,7 +99,7 @@ bool QuickOpenSymbol::selected(const QString &text, const QModelIndex &index)
     return false;
 }
 
-void QuickOpenSymbol::addFactory(LiteApi::ISymbolFactory *factory)
+void QuickOpenSymbol::addFactory(LiteApi::IDocumentSymbolFactory *factory)
 {
     m_factoryList.push_back(factory);
 }
