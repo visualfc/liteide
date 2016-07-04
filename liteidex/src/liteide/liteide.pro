@@ -46,6 +46,6 @@ win32 {
     ICON = liteide.icns
     QMAKE_INFO_PLIST = Info.plist
 } else {
-    target.path  = /bin
+    target.path  = $$BINPREFIX
     INSTALLS    += target
 }
