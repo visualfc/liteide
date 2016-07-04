@@ -128,7 +128,7 @@ QModelIndex QuickOpenFiles::filter(const QString &text)
     for(int i = 0; i < m_proxyModel->rowCount(); i++) {
         QModelIndex index = m_proxyModel->index(i,1);
         QString name = index.data().toString();
-        if (name.contains(text)) {
+        if (name.startsWith(text)) {
             return index;
         }
     }
