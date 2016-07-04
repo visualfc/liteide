@@ -50,6 +50,7 @@ public:
         m_info->setAuthor("visualfc");
         m_info->setVer("X27.1");
         m_info->setInfo("Golang Ast View");
+        m_info->appendDepend("plugin/quickopen");
     }
 };
 

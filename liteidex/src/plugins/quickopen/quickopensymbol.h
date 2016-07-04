@@ -18,21 +18,23 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopeneditor.h
+// Module: quickopensymbol.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef QUICKOPENEDITOR_H
-#define QUICKOPENEDITOR_H
+#ifndef QUICKOPENSYMBOL_H
+#define QUICKOPENSYMBOL_H
 
 #include "quickopenapi/quickopenapi.h"
+#include <QPointer>
 
 class QStandardItemModel;
-class QSortFilterProxyModel;
-class QuickOpenEditor : public LiteApi::IQuickOpen
+
+
+class QuickOpenSymbol : public LiteApi::IQuickOpenSymbol
 {
     Q_OBJECT
 public:
-    QuickOpenEditor(LiteApi::IApplication *app, QObject *parent = 0);
+    QuickOpenSymbol(LiteApi::IApplication *app, QObject *parent);
     virtual QString id() const;
     virtual QString info() const;
     virtual void activate();
@@ -40,10 +42,16 @@ public:
     virtual void updateModel();
     virtual QModelIndex filter(const QString &text);
     virtual bool selected(const QString &text, const QModelIndex &index);
+    virtual void addFactory(LiteApi::ISymbolFactory *factory);
+    virtual void setId(const QString &id);
+    virtual void setInfo(const QString &info);
 protected:
-    LiteApi::IApplication *m_liteApp;
+    LiteApi::IApplication   *m_liteApp;
+    QPointer<LiteApi::ISymbol> m_symbol;
+    QList<LiteApi::ISymbolFactory*> m_factoryList;
     QStandardItemModel *m_model;
-    QSortFilterProxyModel *m_proxyModel;
+    QString m_id;
+    QString m_info;
 };
 
-#endif // QUICKOPENEDITOR_H
+#endif // QUICKOPENSYMBOL_H

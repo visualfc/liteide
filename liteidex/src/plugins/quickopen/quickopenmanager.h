@@ -52,6 +52,8 @@ public:
     virtual void showBySymbol(const QString &sym);
     virtual IQuickOpen *findById(const QString &id);
     virtual IQuickOpen *findBySymbol(const QString &sym);
+public:
+    virtual IQuickOpenSymbol *createQuickOpenSymbol();
 public slots:
     void quickOpen();
     void quickOpenEditor();

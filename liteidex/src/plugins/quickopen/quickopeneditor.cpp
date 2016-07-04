@@ -53,6 +53,11 @@ QString QuickOpenEditor::info() const
     return tr("Open Editor by Name");
 }
 
+void QuickOpenEditor::activate()
+{
+
+}
+
 QAbstractItemModel *QuickOpenEditor::model() const
 {
     return m_proxyModel;

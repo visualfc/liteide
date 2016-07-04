@@ -24,6 +24,7 @@
 #include "quickopenplugin.h"
 #include "quickopenmanager.h"
 #include "quickopenlines.h"
+#include "quickopensymbol.h"
 #include "quickopenhelp.h"
 #include <QtPlugin>
 //lite_memory_check_begin
@@ -46,8 +47,10 @@ bool QuickOpenPlugin::load(LiteApi::IApplication *app)
     if (!manager->initWithApp(app)) {
         return false;
     }
-    manager->addFilter(":",new QuickOpenLines(app,manager));
-    manager->addFilter("?",new QuickOpenHelp(app,manager));
+    manager->addFilter(":",new QuickOpenLines(app,this));
+    LiteApi::IQuickOpenSymbol *symbol = manager->createQuickOpenSymbol();
+    manager->addFilter("@",symbol);
+    manager->addFilter("?",new QuickOpenHelp(app,this));
     return true;
 }
 

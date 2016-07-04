@@ -51,6 +51,11 @@ QString QuickOpenLines::info() const
     return tr("Go to Line");
 }
 
+void QuickOpenLines::activate()
+{
+
+}
+
 QAbstractItemModel *QuickOpenLines::model() const
 {
     return m_model;

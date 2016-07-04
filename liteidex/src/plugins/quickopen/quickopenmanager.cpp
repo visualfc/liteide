@@ -25,6 +25,7 @@
 #include "quickopen_global.h"
 #include "quickopenfiles.h"
 #include "quickopeneditor.h"
+#include "quickopensymbol.h"
 #include <QTreeView>
 #include <QDebug>
 
@@ -45,7 +46,7 @@ QuickOpenManager::QuickOpenManager(QObject *parent) : LiteApi::IQuickOpenManager
 
 QuickOpenManager::~QuickOpenManager()
 {
-    qDeleteAll(m_filterMap);
+
 }
 
 bool QuickOpenManager::initWithApp(IApplication *app)
@@ -126,6 +127,7 @@ void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
     }
     m_currentFilter = filter;
     if (m_currentFilter) {
+        m_currentFilter->activate();
         m_sym = m_filterMap.key(filter);
         m_widget->setModel(m_currentFilter->model());
     }
@@ -167,7 +169,7 @@ IQuickOpen *QuickOpenManager::findById(const QString &id)
     QMutableMapIterator<QString,IQuickOpen*> i(m_filterMap);
     while (i.hasNext()) {
         i.next();
-        if (i.value() ->id() == id) {
+        if (i.value()->id() == id) {
             return i.value();
         }
     }
@@ -187,6 +189,11 @@ IQuickOpen *QuickOpenManager::findBySymbol(const QString &sym)
         }
     }
     return 0;
+}
+
+IQuickOpenSymbol *QuickOpenManager::createQuickOpenSymbol()
+{
+    return new QuickOpenSymbol(m_liteApp,this);
 }
 
 void QuickOpenManager::quickOpen()
@@ -232,6 +239,11 @@ void QuickOpenManager::filterChanged(const QString &text)
     IQuickOpen *quick = 0;
     if (!text.isEmpty()) {
         QMapIterator<QString,IQuickOpen*> i(m_filterMap);
+        QString mimeType;
+        LiteApi::IEditor *cur = m_liteApp->editorManager()->currentEditor();
+        if (cur) {
+            mimeType = cur->mimeType();
+        }
         while (i.hasNext()) {
             i.next();
             if (i.key().isEmpty()) {

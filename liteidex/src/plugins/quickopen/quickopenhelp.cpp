@@ -49,6 +49,11 @@ QString QuickOpenHelp::info() const
     return tr("Show Quick Open Help");
 }
 
+void QuickOpenHelp::activate()
+{
+
+}
+
 QAbstractItemModel *QuickOpenHelp::model() const
 {
     return m_model;
