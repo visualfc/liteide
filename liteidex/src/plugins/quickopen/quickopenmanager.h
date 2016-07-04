@@ -66,6 +66,7 @@ protected:
     QuickOpenWidget *m_widget;
     QAction     *m_quickOpenAct;
     QAction     *m_quickOpenEditAct;
+    QAction     *m_quickOpenSymbolAct;
     QMap<QString,IQuickOpen*> m_filterMap;
     QMap<IQuickOpen*,bool> m_updateMap;
     QMap<QString,IQuickOpenSymbol*> m_quickOpenSymbolMap;

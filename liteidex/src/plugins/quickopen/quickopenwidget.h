@@ -37,9 +37,11 @@ public:
     void setModel(QAbstractItemModel *model);
     QLineEdit *editor();
     QTreeView *view();
+    virtual void hideEvent(QHideEvent *e);
 signals:
     void filterChanged(QString);
     void selected();
+    void hidePopup();
 public slots:
     void showPopup();
 protected:

@@ -88,6 +88,12 @@ QTreeView *QuickOpenWidget::view()
     return m_view;
 }
 
+void QuickOpenWidget::hideEvent(QHideEvent *e)
+{
+    emit hidePopup();
+    QWidget::hideEvent(e);
+}
+
 void QuickOpenWidget::showPopup()
 {
     QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/std");

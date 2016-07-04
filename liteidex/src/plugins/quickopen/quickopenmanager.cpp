@@ -62,6 +62,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
     connect(m_widget,SIGNAL(selected()),this,SLOT(selected()));
+    connect(m_widget,SIGNAL(hidePopup()),this,SLOT(hideQuickOpen()));
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
 
@@ -69,19 +70,28 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_filterMap.insert("",m_quickOpenFiles);
     m_filterMap.insert("~",new QuickOpenEditor(m_liteApp,this));
 
+    this->registerQuickOpenSymbol("@");
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
+    m_quickOpenAct->setData("");
 
     m_quickOpenEditAct = new QAction(tr("Quick Open Editor"),this);
+    m_quickOpenEditAct->setData("~");
+
+    m_quickOpenSymbolAct = new QAction(tr("Quick Open Symbol"),this);
+    m_quickOpenSymbolAct->setData("@");
 
     LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
     context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
     context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
+    context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+ALT+O");
 
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenEditAct);
+    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenSymbolAct);
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
-    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
+    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
+    connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
 
     return true;
 }
@@ -122,12 +132,14 @@ QMap<QString, IQuickOpen *> QuickOpenManager::filterMap() const
 
 void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
 {
+    if (filter) {
+        filter->activate();
+    }
     if (m_currentFilter == filter) {
         return;
     }
     m_currentFilter = filter;
     if (m_currentFilter) {
-        m_currentFilter->activate();
         m_sym = m_filterMap.key(filter);
         m_widget->setModel(m_currentFilter->model());
     }
@@ -209,8 +221,12 @@ IQuickOpenSymbol *QuickOpenManager::registerQuickOpenSymbol(const QString &sym)
 void QuickOpenManager::quickOpen()
 {
     m_updateMap.clear();
-    setCurrentFilter(m_quickOpenFiles);
-    showQuickOpen();
+    QString sym;
+    QAction *act = (QAction*)sender();
+    if (act) {
+        sym = act->data().toString();
+    }
+    showBySymbol(sym);
 }
 
 void QuickOpenManager::quickOpenEditor()
@@ -242,6 +258,8 @@ void QuickOpenManager::hideQuickOpen()
 {
     m_widget->close();
     m_updateMap.clear();
+    m_currentFilter = 0;
+    m_sym.clear();
 }
 
 void QuickOpenManager::filterChanged(const QString &text)
