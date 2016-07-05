@@ -39,11 +39,9 @@ public:
     QTreeView *view();
     virtual void hideEvent(QHideEvent *e);
 signals:
-    void filterChanged(QString);
-    void selected();
     void hidePopup();
 public slots:
-    void showPopup();
+    void showView();
 protected:
     virtual bool eventFilter(QObject *o, QEvent *e);
 protected:

@@ -53,6 +53,7 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
 #else
     m_view->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
+    m_view->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     m_wrap = true;
 
@@ -65,10 +66,6 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     this->setMinimumWidth(600);
 
     this->setLayout(layout);
-
-    connect(m_edit,SIGNAL(textChanged(QString)),this,SIGNAL(filterChanged(QString)));
-    connect(m_edit,SIGNAL(returnPressed()),this,SIGNAL(selected()));
-    connect(m_view,SIGNAL(doubleClicked(QModelIndex)),this,SIGNAL(selected()));
 
     m_edit->installEventFilter(this);
 }
@@ -94,7 +91,7 @@ void QuickOpenWidget::hideEvent(QHideEvent *e)
     QWidget::hideEvent(e);
 }
 
-void QuickOpenWidget::showPopup()
+void QuickOpenWidget::showView()
 {
     QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/std");
     QRect rc = toolBar->frameGeometry();
@@ -139,6 +136,11 @@ bool QuickOpenWidget::eventFilter(QObject *o, QEvent *e)
             m_view->setCurrentIndex(model->index(row,0));
             return true;
         }
+    } else if (e->type() == QEvent::FocusOut) {
+        if (QWidget::focusWidget() == m_view ) {
+            m_edit->setFocus();
+        }
+        return true;
     }
     return QWidget::eventFilter(o,e);
 }
