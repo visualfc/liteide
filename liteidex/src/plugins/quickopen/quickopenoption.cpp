@@ -18,16 +18,12 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopenplugin.cpp
+// Module: quickopenoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "quickopenplugin.h"
-#include "quickopenmanager.h"
-#include "quickopenlines.h"
-#include "quickopenmimetype.h"
-#include "quickopenhelp.h"
-#include "quickopenoptionfactory.h"
-#include <QtPlugin>
+#include "quickopenoption.h"
+#include "ui_quickopenoption.h"
+#include "quickopen_global.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -38,24 +34,41 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenPlugin::QuickOpenPlugin()
+QuickOpenOption::QuickOpenOption(LiteApi::IApplication *app,QObject *parent) :
+    LiteApi::IOption(parent),
+    m_liteApp(app),
+    m_widget(new QWidget),
+    ui(new Ui::QuickOpenOption)
 {
+    ui->setupUi(m_widget);
+    ui->checkFilesMatchCase->setChecked(m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool());
+    ui->checkEditorMatchCase->setChecked(m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool());
+    ui->spinBoxFilesMaxCount->setValue(m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt());
 }
 
-bool QuickOpenPlugin::load(LiteApi::IApplication *app)
+QuickOpenOption::~QuickOpenOption()
 {
-    QuickOpenManager *manager = new QuickOpenManager(app);
-    if (!manager->initWithApp(app)) {
-        return false;
-    }
-    manager->addFilter(":",new QuickOpenLines(app,this));
-    manager->addFilter("?",new QuickOpenHelp(app,this));
-
-    app->optionManager()->addFactory(new QuickOpenOptionFactory(app,this));
-
-    return true;
+    delete m_widget;
+    delete ui;
 }
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
-#endif
+QWidget *QuickOpenOption::widget()
+{
+    return m_widget;
+}
+
+QString QuickOpenOption::name() const
+{
+    return "QuickOpen";
+}
+
+QString QuickOpenOption::mimeType() const
+{
+    return OPTION_QUICKOPEN;
+}
+void QuickOpenOption::apply()
+{
+    m_liteApp->settings()->setValue(QUICKOPNE_FILES_MATCHCASE,ui->checkFilesMatchCase->isChecked());
+    m_liteApp->settings()->setValue(QUICKOPNE_EDITOR_MATCHCASE,ui->checkEditorMatchCase->isChecked());
+    m_liteApp->settings()->setValue(QUICKOPEN_FILES_MAXCOUNT,ui->spinBoxFilesMaxCount->value());
+}

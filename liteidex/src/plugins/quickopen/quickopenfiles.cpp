@@ -46,6 +46,8 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
     m_model = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
+    m_matchCase = Qt::CaseInsensitive;
+    m_maxCount = 100000;
 }
 
 QString QuickOpenFiles::id() const
@@ -70,7 +72,7 @@ QAbstractItemModel *QuickOpenFiles::model() const
 
 void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model, int maxcount)
 {
-    if (model->rowCount() > maxcount) {
+    if (model->rowCount() >= maxcount) {
         return;
     }
     qApp->processEvents();
@@ -88,9 +90,13 @@ void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *mod
 
 void QuickOpenFiles::updateModel()
 {
+    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
+    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+
     m_model->clear();
     m_proxyModel->setFilterFixedString("");
     m_proxyModel->setFilterKeyColumn(2);
+    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
 
     QStringList editors;
     foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
@@ -134,7 +140,7 @@ QModelIndex QuickOpenFiles::filterChanged(const QString &text)
     for(int i = 0; i < m_proxyModel->rowCount(); i++) {
         QModelIndex index = m_proxyModel->index(i,1);
         QString name = index.data().toString();
-        if (name.startsWith(text)) {
+        if (name.startsWith(text,m_matchCase)) {
             return index;
         }
     }

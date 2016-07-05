@@ -18,34 +18,33 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopeneditor.h
+// Module: quickopenoption.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef QUICKOPENEDITOR_H
-#define QUICKOPENEDITOR_H
+#ifndef QUICKOPENOPTION_H
+#define QUICKOPENOPTION_H
 
-#include "quickopenapi/quickopenapi.h"
+#include "liteapi/liteapi.h"
 
-class QStandardItemModel;
-class QSortFilterProxyModel;
-class QuickOpenEditor : public LiteApi::IQuickOpen
+namespace Ui {
+    class QuickOpenOption;
+}
+
+class QuickOpenOption : public LiteApi::IOption
 {
     Q_OBJECT
+
 public:
-    QuickOpenEditor(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual QString id() const;
-    virtual QString info() const;
-    virtual void activate();
-    virtual QAbstractItemModel *model() const;
-    virtual void updateModel();
-    virtual QModelIndex filterChanged(const QString &text);
-    virtual void indexChanged(const QModelIndex &index);
-    virtual bool selected(const QString &text, const QModelIndex &index);
-protected:
-    LiteApi::IApplication *m_liteApp;
-    QStandardItemModel *m_model;
-    QSortFilterProxyModel *m_proxyModel;
-    Qt::CaseSensitivity m_matchCase;
+    explicit QuickOpenOption(LiteApi::IApplication *app, QObject *parent = 0);
+    ~QuickOpenOption();
+    virtual QWidget *widget();
+    virtual QString name() const;
+    virtual QString mimeType() const;
+    virtual void apply();
+private:
+    LiteApi::IApplication   *m_liteApp;
+    QWidget           *m_widget;
+    Ui::QuickOpenOption *ui;
 };
 
-#endif // QUICKOPENEDITOR_H
+#endif // QUICKOPENOPTION_H

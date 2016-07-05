@@ -47,6 +47,8 @@ protected:
     LiteApi::IApplication *m_liteApp;
     QStandardItemModel *m_model;
     QSortFilterProxyModel *m_proxyModel;
+    Qt::CaseSensitivity m_matchCase;
+    int                 m_maxCount;
 };
 
 #endif // QUICKOPENFILES_H

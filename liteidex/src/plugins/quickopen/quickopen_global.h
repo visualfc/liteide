@@ -32,6 +32,9 @@
 #  define QUICKOPENSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define OPTION_QUICKOPEN "option/quickopen"
 #define QUICKOPEN_FILES_MAXCOUNT "quickopen/filesmaxcount"
+#define QUICKOPNE_FILES_MATCHCASE "quickopen/filematchscase"
+#define QUICKOPNE_EDITOR_MATCHCASE "quickopen/editormatchcase"
 
 #endif // QUICKOPEN_GLOBAL_H

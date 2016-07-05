@@ -18,34 +18,22 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopeneditor.h
+// Module: quickopenoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef QUICKOPENEDITOR_H
-#define QUICKOPENEDITOR_H
+#ifndef QUICKOPENOPTIONFACTORY_H
+#define QUICKOPENOPTIONFACTORY_H
 
-#include "quickopenapi/quickopenapi.h"
+#include "liteapi/liteapi.h"
 
-class QStandardItemModel;
-class QSortFilterProxyModel;
-class QuickOpenEditor : public LiteApi::IQuickOpen
+class QuickOpenOptionFactory : public LiteApi::IOptionFactory
 {
-    Q_OBJECT
 public:
-    QuickOpenEditor(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual QString id() const;
-    virtual QString info() const;
-    virtual void activate();
-    virtual QAbstractItemModel *model() const;
-    virtual void updateModel();
-    virtual QModelIndex filterChanged(const QString &text);
-    virtual void indexChanged(const QModelIndex &index);
-    virtual bool selected(const QString &text, const QModelIndex &index);
+    QuickOpenOptionFactory(LiteApi::IApplication *app, QObject *parent);
+    virtual QStringList mimeTypes() const;
+    virtual LiteApi::IOption *create(const QString &mimeType);
 protected:
     LiteApi::IApplication *m_liteApp;
-    QStandardItemModel *m_model;
-    QSortFilterProxyModel *m_proxyModel;
-    Qt::CaseSensitivity m_matchCase;
 };
 
-#endif // QUICKOPENEDITOR_H
+#endif // QUICKOPENOPTIONFACTORY_H

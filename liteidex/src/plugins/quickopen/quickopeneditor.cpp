@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "quickopeneditor.h"
+#include "quickopen_global.h"
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QStandardItem>
@@ -41,6 +42,7 @@ QuickOpenEditor::QuickOpenEditor(LiteApi::IApplication *app, QObject *parent)
     m_model = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
+    m_matchCase = Qt::CaseInsensitive;
 }
 
 QString QuickOpenEditor::id() const
@@ -65,8 +67,11 @@ QAbstractItemModel *QuickOpenEditor::model() const
 
 void QuickOpenEditor::updateModel()
 {
+    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+
     m_model->clear();
     m_proxyModel->setFilterFixedString("");
+    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
     m_proxyModel->setFilterKeyColumn(2);
 
     foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
@@ -85,7 +90,7 @@ QModelIndex QuickOpenEditor::filterChanged(const QString &text)
     for(int i = 0; i < m_proxyModel->rowCount(); i++) {
         QModelIndex index = m_proxyModel->index(i,0);
         QString name = index.data().toString();
-        if (name.startsWith(text)) {
+        if (name.startsWith(text,m_matchCase)) {
             return index;
         }
     }

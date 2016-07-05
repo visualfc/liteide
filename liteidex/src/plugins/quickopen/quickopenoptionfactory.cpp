@@ -18,34 +18,37 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopeneditor.h
+// Module: quickopenoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef QUICKOPENEDITOR_H
-#define QUICKOPENEDITOR_H
+#include "quickopenoption.h"
+#include "quickopenoptionfactory.h"
+#include "quickopen_global.h"
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
-#include "quickopenapi/quickopenapi.h"
-
-class QStandardItemModel;
-class QSortFilterProxyModel;
-class QuickOpenEditor : public LiteApi::IQuickOpen
+QuickOpenOptionFactory::QuickOpenOptionFactory(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IOptionFactory(parent),
+      m_liteApp(app)
 {
-    Q_OBJECT
-public:
-    QuickOpenEditor(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual QString id() const;
-    virtual QString info() const;
-    virtual void activate();
-    virtual QAbstractItemModel *model() const;
-    virtual void updateModel();
-    virtual QModelIndex filterChanged(const QString &text);
-    virtual void indexChanged(const QModelIndex &index);
-    virtual bool selected(const QString &text, const QModelIndex &index);
-protected:
-    LiteApi::IApplication *m_liteApp;
-    QStandardItemModel *m_model;
-    QSortFilterProxyModel *m_proxyModel;
-    Qt::CaseSensitivity m_matchCase;
-};
+}
 
-#endif // QUICKOPENEDITOR_H
+QStringList QuickOpenOptionFactory::mimeTypes() const
+{
+    return QStringList() << OPTION_QUICKOPEN;
+}
+
+LiteApi::IOption *QuickOpenOptionFactory::create(const QString &mimeType)
+{
+    if (mimeType == OPTION_QUICKOPEN) {
+        return new QuickOpenOption(m_liteApp,this);
+    }
+    return 0;
+}
