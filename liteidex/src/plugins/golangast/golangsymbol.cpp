@@ -100,18 +100,14 @@ QModelIndex GolangSymbol::filterChanged(const QString &text)
     for (int i = 0; i < m_proxy->rowCount(); i++) {
         QModelIndex index = m_proxy->index(i,0);
         if (index.data().toString().startsWith(text)) {
+            gotoIndex(index);
             return index;
         }
     }
     return m_proxy->index(0,0);
 }
 
-void GolangSymbol::indexChanged(const QModelIndex &index)
-{
-
-}
-
-bool GolangSymbol::selected(const QString &text, const QModelIndex &index)
+bool GolangSymbol::gotoIndex(const QModelIndex &index)
 {
     QModelIndex i = m_proxy->mapToSource(index);
     if (!i.isValid()) {
@@ -123,17 +119,29 @@ bool GolangSymbol::selected(const QString &text, const QModelIndex &index)
     }
     AstItemPos pos = item->m_posList.at(0);
     QFileInfo info(QDir(m_process->workingDirectory()),pos.fileName);
-    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column,true,true);
+    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column-1,true,true);
     return true;
+}
+
+void GolangSymbol::indexChanged(const QModelIndex &index)
+{
+    gotoIndex(index);
+}
+
+bool GolangSymbol::selected(const QString &/*text*/, const QModelIndex &index)
+{
+    return gotoIndex(index);
 }
 
 void GolangSymbol::finished(int code, QProcess::ExitStatus status)
 {
-    QByteArray ar = m_process->readAll();
-    AstWidget::parserModel(m_model,ar,true);
-    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
-    if (mgr) {
-        mgr->modelView()->expandAll();
+    if (code == 0 && status == QProcess::NormalExit) {
+        QByteArray ar = m_process->readAll();
+        AstWidget::parserModel(m_model,ar,true);
+        LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+        if (mgr) {
+            mgr->modelView()->expandAll();
+        }
     }
 }
 

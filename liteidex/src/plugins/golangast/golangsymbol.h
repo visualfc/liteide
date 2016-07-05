@@ -43,6 +43,7 @@ public:
     virtual QModelIndex filterChanged(const QString &text);
     virtual void indexChanged(const QModelIndex &index);
     virtual bool selected(const QString &text, const QModelIndex &index);
+    bool gotoIndex(const QModelIndex &index);
 public slots:
     void finished(int code,QProcess::ExitStatus status);
 protected:

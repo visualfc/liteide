@@ -235,7 +235,7 @@ void AstWidget::gotoItemDefinition(GolangAstItem *item)
     }
     AstItemPos pos = item->m_posList.at(0);
     QFileInfo info(QDir(m_workPath),pos.fileName);
-    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column,true,true);
+    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column-1,true,true);
     return;
 //    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
 //    if (!editor) {
