@@ -136,7 +136,7 @@ contains(DEFINES, LITEAPP_LIBRARY) {
         ICON = images/liteide.icns
         QMAKE_INFO_PLIST = Info.plist
     } else {
-        target.path  = /bin
+        target.path  = $$LIBPREFIX
         INSTALLS    += target
     }
 }
