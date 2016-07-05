@@ -43,6 +43,7 @@
 #include <QTextCodec>
 #include <QClipboard>
 #include <QLabel>
+#include <QStandardItemModel>
 #include <QDebug>
 #include "litetabwidget.h"
 #include "fileutil/fileutil.h"
@@ -81,6 +82,8 @@ bool EditorManager::initWithApp(IApplication *app)
     m_colorStyleScheme = new ColorStyleScheme(this);
     m_widget = new QWidget;
     m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
+
+    m_editorModel = new QStandardItemModel(this);
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
@@ -246,6 +249,12 @@ QList<IEditor*> EditorManager::sortedEditorList() const
     return editorList;
 }
 
+class EditorItem : public QStandardItem
+{
+public:
+    LiteApi::IEditor    *editor;
+};
+
 void EditorManager::addEditor(IEditor *editor)
 {
     QWidget *w = m_widgetEditorMap.key(editor);
@@ -262,6 +271,11 @@ void EditorManager::addEditor(IEditor *editor)
         LiteApi::IEditContext *context = LiteApi::getEditContext(editor);
         if (context) {
             this->addEditContext(context);
+        }
+        if (!editor->filePath().isEmpty()) {
+            QStandardItem *item = new QStandardItem(editor->name());
+            item->setToolTip(editor->filePath());
+            m_editorModel->appendRow(item);
         }
     }
 }
@@ -383,6 +397,16 @@ bool EditorManager::closeEditor(IEditor *editor)
     int index = m_editorTabWidget->indexOf(cur->widget());
     m_editorTabWidget->removeTab(index);
     m_widgetEditorMap.remove(cur->widget());
+    QString filePath = editor->filePath();
+    if (!filePath.isEmpty()) {
+        for (int i = 0; i < m_editorModel->rowCount(); i++) {
+            QStandardItem *item = m_editorModel->item(i,0);
+            if (item->toolTip() == filePath) {
+                m_editorModel->removeRow(i);
+                break;
+            }
+        }
+    }
 
     QMapIterator<IEditor*,QAction*> i(m_browserActionMap);
     while (i.hasNext()) {

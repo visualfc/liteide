@@ -9,6 +9,7 @@ SUBDIRS = \
     qtc_gdbmi \
     qtc_editutil \
     qtc_searchresult \
+    qtc_itemview \
     qt_browser \
     qjson \
     elidedlabel \
