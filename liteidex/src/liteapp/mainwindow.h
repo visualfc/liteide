@@ -63,8 +63,8 @@ signals:
     void fullScreenStateChanged(bool b);
 public slots:
     void setFullScreen(bool b);
-    void editorModifyChanged(bool b);
     void currentEditorChanged(LiteApi::IEditor *editor);
+    void editorModifyChanged(LiteApi::IEditor *editor, bool b);
     void about();
 protected:
     IApplication     *m_liteApp;

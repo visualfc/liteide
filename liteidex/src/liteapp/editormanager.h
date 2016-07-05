@@ -35,6 +35,8 @@ class QStackedWidget;
 class QToolButton;
 class QLabel;
 class QStandardItemModel;
+class OpenEditorsWidget;
+class QTreeView;
 
 struct EditLocation {
     QString filePath;
@@ -112,6 +114,7 @@ protected:
     LiteTabWidget *m_editorTabWidget;
     QMap<QWidget *, IEditor *> m_widgetEditorMap;
     QStandardItemModel         *m_editorModel;
+    OpenEditorsWidget          *m_openEditorWidget;
     QPointer<IEditor> m_currentEditor;
     QList<IEditorFactory*>    m_factoryList;
     QMap<IEditor*,QAction*>   m_browserActionMap;

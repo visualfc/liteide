@@ -412,6 +412,7 @@ signals:
     void editorAboutToClose(LiteApi::IEditor *editor);
     void editorAboutToSave(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
+    void editorModifyChanged(LiteApi::IEditor *editor, bool b);
     void colorStyleSchemeChanged();
     void editToolbarVisibleChanged(bool visible);
 };
@@ -836,7 +837,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X30")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X30.1")
 
 
 #endif //__LITEAPI_H__

@@ -172,8 +172,8 @@ LiteApp::LiteApp()
     m_htmlWidgetManager = new HtmlWidgetManager;
     m_actionManager = new ActionManager;
     m_projectManager = new ProjectManager;
-    m_editorManager = new EditorManager;
     m_fileManager = new FileManager;
+    m_editorManager = new EditorManager;
     m_mimeTypeManager = new MimeTypeManager;
     m_optionManager = new OptionManager;
 
@@ -185,8 +185,8 @@ LiteApp::LiteApp()
     m_toolWindowManager->initWithApp(this);
     m_mimeTypeManager->initWithApp(this);
     m_projectManager->initWithApp(this);
-    m_editorManager->initWithApp(this);
     m_fileManager->initWithApp(this);
+    m_editorManager->initWithApp(this);
     m_optionManager->initWithApp(this);
 
     //m_mainwindow->setCentralWidget(m_editorManager->widget());
@@ -210,6 +210,7 @@ LiteApp::LiteApp()
     connect(m_projectManager,SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
     connect(m_editorManager,SIGNAL(currentEditorChanged(LiteApi::IEditor*)),m_projectManager,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_editorManager,SIGNAL(currentEditorChanged(LiteApi::IEditor*)),m_mainwindow,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+    connect(m_editorManager,SIGNAL(editorModifyChanged(LiteApi::IEditor*,bool)),m_mainwindow,SLOT(editorModifyChanged(LiteApi::IEditor*,bool)));
     connect(m_editorManager,SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_editorManager,SIGNAL(tabAddRequest()),m_fileManager,SLOT(openEditors()));
     connect(m_editorManager,SIGNAL(editorSaved(LiteApi::IEditor*)),m_fileManager,SLOT(editorSaved(LiteApi::IEditor*)));

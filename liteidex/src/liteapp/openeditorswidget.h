@@ -18,37 +18,35 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: golangastoptionfactory.cpp
+// Module: openeditorswidget.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "golangastoption.h"
-#include "golangastoptionfactory.h"
-#include "golangast_global.h"
-//lite_memory_check_begin
-#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
-#endif
-//lite_memory_check_end
+#ifndef OPENEDITORSWIDGET_H
+#define OPENEDITORSWIDGET_H
 
-GolangAstOptionFactory::GolangAstOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
-      m_liteApp(app)
-{
-}
+#include <liteapi/liteapi.h>
+#include <qtc_itemview/opendocumentstreeview.h>
+#include <qtc_itemview/proxymodel.h>
 
-QStringList GolangAstOptionFactory::mimeTypes() const
+class QSortFilterProxyModel;
+class OpenEditorsWidget : public Core::OpenDocumentsTreeView
 {
-    return QStringList() << OPTION_GOLANGAST;
-}
+    Q_OBJECT
+public:
+    OpenEditorsWidget(LiteApi::IApplication *app);
+    void setEditorModel(QAbstractItemModel *model);
+public slots:
+    void handleActivated(const QModelIndex &index);
+    void updateCurrentItem(LiteApi::IEditor *editor);
+    void contextMenuRequested(QPoint pos);
+    void activateEditor(const QModelIndex &index);
+    void closeDocument(const QModelIndex &index);
+protected:
+    LiteApi::IEditor *editorFormIndex(const QModelIndex &index);
+    QModelIndex indexFromEditor(LiteApi::IEditor *editor);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    QSortFilterProxyModel      *m_model;
+};
 
-LiteApi::IOption *GolangAstOptionFactory::create(const QString &mimeType)
-{
-    if (mimeType == OPTION_GOLANGAST) {
-        return new GolangAstOption(m_liteApp,this);
-    }
-    return 0;
-}
+#endif // OPENEDITORSWIDGET_H

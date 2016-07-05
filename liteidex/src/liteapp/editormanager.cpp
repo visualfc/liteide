@@ -44,10 +44,12 @@
 #include <QClipboard>
 #include <QLabel>
 #include <QStandardItemModel>
+#include <QHeaderView>
 #include <QDebug>
 #include "litetabwidget.h"
 #include "fileutil/fileutil.h"
 #include "liteapp.h"
+#include "openeditorswidget.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -85,13 +87,17 @@ bool EditorManager::initWithApp(IApplication *app)
 
     m_editorModel = new QStandardItemModel(this);
 
+    m_openEditorWidget = new OpenEditorsWidget(app);
+    m_openEditorWidget->setEditorModel(m_editorModel);
+
+    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_openEditorWidget,"OpenEditor",tr("OpenEditor"),true);
+
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
 
     //m_editorTabWidget->tabBar()->setIconSize(LiteApi::getToolBarIconSize());
 //    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border:1px solid} QTabBar::close-button {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}"
 //                                               );
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(1);
     mainLayout->setSpacing(0);
@@ -275,7 +281,7 @@ void EditorManager::addEditor(IEditor *editor)
         if (!editor->filePath().isEmpty()) {
             QStandardItem *item = new QStandardItem(editor->name());
             item->setToolTip(editor->filePath());
-            m_editorModel->appendRow(item);
+            m_editorModel->appendRow(QList<QStandardItem*>() << item);
         }
     }
 }
@@ -656,6 +662,7 @@ void EditorManager::modificationChanged(bool b)
     IEditor *editor = static_cast<IEditor*>(sender());
     if (editor) {
         QString text = editor->name();
+        QString filePath = editor->filePath();
         if (b) {
             text += " *";
         }
@@ -663,6 +670,14 @@ void EditorManager::modificationChanged(bool b)
         if (index >= 0) {
             m_editorTabWidget->setTabText(index,text);
         }
+        for (int i = 0; i < m_editorModel->rowCount(); i++) {
+            QStandardItem *item = m_editorModel->item(i,0);
+            if (item->toolTip() == filePath) {
+                item->setText(text);
+                break;
+            }
+        }
+        emit editorModifyChanged(editor,b);        
     }
 }
 

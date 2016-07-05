@@ -42,7 +42,7 @@ class OpenDocumentsTreeView : public Utils::TreeView
 public:
     explicit OpenDocumentsTreeView(QWidget *parent = 0);
 
-    void setModel(QAbstractItemModel *model);
+    void setModel(QAbstractItemModel *model);    
     void setCloseButtonVisible(bool visible);
 
 signals:

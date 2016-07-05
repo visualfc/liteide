@@ -15,6 +15,7 @@ include (../utils/symboltreeview/symboltreeview.pri)
 include (../utils/colorstyle/colorstyle.pri)
 include (../3rdparty/elidedlabel/elidedlabel.pri)
 include (../3rdparty/qtc_editutil/qtc_editutil.pri)
+include (../3rdparty/qtc_itemview/qtc_itemview.pri)
 
 isEmpty(PRECOMPILED_HEADER):PRECOMPILED_HEADER = $$IDE_SOURCE_TREE/src/pch/liteide_gui_pch.h
 
@@ -77,7 +78,8 @@ SOURCES += main.cpp\
     textbrowserhtmlwidget.cpp \
     splitwindowstyle.cpp \
     sidewindowstyle.cpp \
-    outputoption.cpp
+    outputoption.cpp \
+    openeditorswidget.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -109,7 +111,8 @@ HEADERS  += mainwindow.h \
     windowstyle.h \
     splitwindowstyle.h \
     sidewindowstyle.h \
-    outputoption.h
+    outputoption.h \
+    openeditorswidget.h
 
 FORMS += \
     aboutdialog.ui \
