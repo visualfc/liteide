@@ -73,7 +73,7 @@ void QuickOpenHelp::updateModel()
     }
 }
 
-QModelIndex QuickOpenHelp::filter(const QString &text)
+QModelIndex QuickOpenHelp::filterChanged(const QString &text)
 {
     if (!text.isEmpty()) {
         LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
@@ -83,6 +83,10 @@ QModelIndex QuickOpenHelp::filter(const QString &text)
         }
     }
     return m_model->index(0,0);
+}
+
+void QuickOpenHelp::indexChanged(const QModelIndex &/*index*/)
+{
 }
 
 bool QuickOpenHelp::selected(const QString &text, const QModelIndex &index)

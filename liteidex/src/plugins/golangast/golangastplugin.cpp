@@ -44,9 +44,9 @@ bool GolangAstPlugin::load(LiteApi::IApplication *app)
     new GolangAst(app,this);
     LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(app);
     if (mgr) {
-        LiteApi::IQuickOpenSymbol *symbol = mgr->registerQuickOpenSymbol("@");
+        LiteApi::IQuickOpenMimeType *symbol = mgr->registerQuickOpenMimeType("@");
         if (symbol) {
-            symbol->addFactory(new GolangSymbolFactory(app,this));
+            symbol->addAdapter(new GolangSymbolFactory(app,this));
         }
     }
     return true;

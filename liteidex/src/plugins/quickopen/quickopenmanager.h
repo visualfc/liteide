@@ -54,13 +54,14 @@ public:
     virtual IQuickOpen *findBySymbol(const QString &sym);
     virtual QTreeView *modelView() const;
 public:
-    virtual IQuickOpenSymbol *registerQuickOpenSymbol(const QString &sym);
+    virtual IQuickOpenMimeType *registerQuickOpenMimeType(const QString &sym);
 public slots:
     void quickOpen();
     void quickOpenEditor();
     void showQuickOpen();
     void hideQuickOpen();
     void filterChanged(const QString &text);
+    void indexChanage(const QModelIndex &index);
     void selected();
 protected:
     QuickOpenWidget *m_widget;
@@ -69,7 +70,7 @@ protected:
     QAction     *m_quickOpenSymbolAct;
     QMap<QString,IQuickOpen*> m_filterMap;
     QMap<IQuickOpen*,bool> m_updateMap;
-    QMap<QString,IQuickOpenSymbol*> m_quickOpenSymbolMap;
+    QMap<QString,IQuickOpenMimeType*> m_quickOpenSymbolMap;
     QString m_sym;
     QPointer<IQuickOpen> m_currentFilter;
     QuickOpenFiles *m_quickOpenFiles;

@@ -30,15 +30,18 @@
 class QStandardItemModel;
 class QSortFilterProxyModel;
 class QProcess;
-class GolangSymbol : public LiteApi::IDocumentSymbol
+class GolangSymbol : public LiteApi::IQuickOpen
 {
     Q_OBJECT
 public:
     GolangSymbol(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual QString mimeType() const;
+    virtual QString id() const;
+    virtual QString info() const;
+    virtual void activate();
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();
-    virtual QModelIndex filter(const QString &text);
+    virtual QModelIndex filterChanged(const QString &text);
+    virtual void indexChanged(const QModelIndex &index);
     virtual bool selected(const QString &text, const QModelIndex &index);
 public slots:
     void finished(int code,QProcess::ExitStatus status);
@@ -49,12 +52,12 @@ protected:
     QProcess              *m_process;
 };
 
-class GolangSymbolFactory : public LiteApi::IDocumentSymbolFactory
+class GolangSymbolFactory : public LiteApi::IQuickOpenAdapter
 {
 public:
     GolangSymbolFactory(LiteApi::IApplication *app, QObject *parent = 0);
     virtual QStringList mimeTypes() const;
-    virtual LiteApi::IDocumentSymbol *load(const QString &mimeType);
+    virtual LiteApi::IQuickOpen *load(const QString &mimeType);
 protected:
     LiteApi::IApplication *m_liteApp;
     GolangSymbol          *m_symbol;

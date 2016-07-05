@@ -18,10 +18,10 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopensymbol.cpp
+// Module: quickopenmimetype.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "quickopensymbol.h"
+#include "quickopenmimetype.h"
 #include <QStandardItemModel>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -33,42 +33,43 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenSymbol::QuickOpenSymbol(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpenSymbol(parent), m_liteApp(app)
+QuickOpenMimeType::QuickOpenMimeType(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IQuickOpenMimeType(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
-    m_model->appendRow(new QStandardItem("not find symbol"));
     m_id = "quickopen/symbol";
     m_info = tr("Open Symbol by Name");
+    m_message = tr("not found symbol");
 }
 
-QString QuickOpenSymbol::id() const
+QString QuickOpenMimeType::id() const
 {
     return m_id;
 }
 
-QString QuickOpenSymbol::info() const
+QString QuickOpenMimeType::info() const
 {
     return m_info;
 }
 
-void QuickOpenSymbol::activate()
+void QuickOpenMimeType::activate()
 {
     QString mimeType;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor) {
         mimeType = editor->mimeType();
     }
-    foreach (LiteApi::IDocumentSymbolFactory *factory, m_factoryList) {
-        LiteApi::IDocumentSymbol *symbol = factory->load(mimeType);
+    foreach (LiteApi::IQuickOpenAdapter *factory, m_adapterList) {
+        LiteApi::IQuickOpen *symbol = factory->load(mimeType);
         if (symbol) {
             m_symbol = symbol;
+            m_symbol->activate();
             break;
         }
     }
 }
 
-QAbstractItemModel *QuickOpenSymbol::model() const
+QAbstractItemModel *QuickOpenMimeType::model() const
 {
     if (m_symbol) {
         return m_symbol->model();
@@ -76,22 +77,32 @@ QAbstractItemModel *QuickOpenSymbol::model() const
     return m_model;
 }
 
-void QuickOpenSymbol::updateModel()
+void QuickOpenMimeType::updateModel()
 {
     if (m_symbol) {
         m_symbol->updateModel();
+    } else {
+        m_model->clear();
+        m_model->appendRow(new QStandardItem(m_message));
     }
 }
 
-QModelIndex QuickOpenSymbol::filter(const QString &text)
+QModelIndex QuickOpenMimeType::filterChanged(const QString &text)
 {
     if (m_symbol) {
-        return m_symbol->filter(text);
+        return m_symbol->filterChanged(text);
     }
     return QModelIndex();
 }
 
-bool QuickOpenSymbol::selected(const QString &text, const QModelIndex &index)
+void QuickOpenMimeType::indexChanged(const QModelIndex &index)
+{
+    if (m_symbol) {
+        m_symbol->indexChanged(index);
+    }
+}
+
+bool QuickOpenMimeType::selected(const QString &text, const QModelIndex &index)
 {
     if (m_symbol) {
         return m_symbol->selected(text,index);
@@ -99,17 +110,22 @@ bool QuickOpenSymbol::selected(const QString &text, const QModelIndex &index)
     return false;
 }
 
-void QuickOpenSymbol::addFactory(LiteApi::IDocumentSymbolFactory *factory)
+void QuickOpenMimeType::addAdapter(LiteApi::IQuickOpenAdapter *factory)
 {
-    m_factoryList.push_back(factory);
+    m_adapterList.push_back(factory);
 }
 
-void QuickOpenSymbol::setId(const QString &id)
+void QuickOpenMimeType::setId(const QString &id)
 {
     m_id = id;
 }
 
-void QuickOpenSymbol::setInfo(const QString &info)
+void QuickOpenMimeType::setInfo(const QString &info)
 {
     m_info = info;
+}
+
+void QuickOpenMimeType::setNoFoundMessage(const QString &message)
+{
+    m_message = message;
 }

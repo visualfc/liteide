@@ -96,10 +96,15 @@ void QuickOpenLines::updateModel()
     update("");
 }
 
-QModelIndex QuickOpenLines::filter(const QString &text)
+QModelIndex QuickOpenLines::filterChanged(const QString &text)
 {
     update(text);
     return m_model->index(0,0);
+}
+
+void QuickOpenLines::indexChanged(const QModelIndex &index)
+{
+
 }
 
 bool QuickOpenLines::selected(const QString &text, const QModelIndex &index)

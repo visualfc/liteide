@@ -14,7 +14,7 @@ SOURCES += quickopenplugin.cpp \
     quickopenlines.cpp \
     quickopenhelp.cpp \
     quickopeneditor.cpp \
-    quickopensymbol.cpp
+    quickopenmimetype.cpp
 
 HEADERS += quickopenplugin.h\
         quickopen_global.h \
@@ -24,4 +24,4 @@ HEADERS += quickopenplugin.h\
     quickopenlines.h \
     quickopenhelp.h \
     quickopeneditor.h \
-    quickopensymbol.h
+    quickopenmimetype.h

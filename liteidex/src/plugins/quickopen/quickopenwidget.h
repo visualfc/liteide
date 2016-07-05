@@ -40,6 +40,7 @@ public:
     virtual void hideEvent(QHideEvent *e);
 signals:
     void hidePopup();
+    void indexChanage(const QModelIndex &index);
 public slots:
     void showView();
 protected:

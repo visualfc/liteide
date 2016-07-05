@@ -78,7 +78,7 @@ void QuickOpenEditor::updateModel()
     m_proxyModel->sort(0);
 }
 
-QModelIndex QuickOpenEditor::filter(const QString &text)
+QModelIndex QuickOpenEditor::filterChanged(const QString &text)
 {
     m_proxyModel->setFilterFixedString(text);
 
@@ -92,6 +92,11 @@ QModelIndex QuickOpenEditor::filter(const QString &text)
     if (m_proxyModel->rowCount() > 0)
         return m_proxyModel->index(0,0);
     return QModelIndex();
+}
+
+void QuickOpenEditor::indexChanged(const QModelIndex &/*index*/)
+{
+
 }
 
 bool QuickOpenEditor::selected(const QString &text, const QModelIndex &index)

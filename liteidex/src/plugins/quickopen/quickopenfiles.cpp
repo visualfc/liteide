@@ -121,7 +121,7 @@ void QuickOpenFiles::updateModel()
     //m_proxyModel->sort(0);
 }
 
-QModelIndex QuickOpenFiles::filter(const QString &text)
+QModelIndex QuickOpenFiles::filterChanged(const QString &text)
 {
     m_proxyModel->setFilterFixedString(text);
 
@@ -135,6 +135,10 @@ QModelIndex QuickOpenFiles::filter(const QString &text)
     if (m_proxyModel->rowCount() > 0)
         return m_proxyModel->index(0,0);
     return QModelIndex();
+}
+
+void QuickOpenFiles::indexChanged(const QModelIndex &/*index*/)
+{
 }
 
 bool QuickOpenFiles::selected(const QString &text, const QModelIndex &index)

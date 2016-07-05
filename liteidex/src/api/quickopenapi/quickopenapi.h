@@ -29,27 +29,6 @@
 class QTreeView;
 namespace LiteApi {
 
-class IDocumentSymbol : public QObject
-{
-    Q_OBJECT
-public:
-    IDocumentSymbol(QObject *parent = 0) : QObject(parent){}
-    virtual QString mimeType() const = 0;
-    virtual QAbstractItemModel *model() const = 0;
-    virtual void updateModel() = 0;
-    virtual QModelIndex filter(const QString &text) = 0;
-    virtual bool selected(const QString &text, const QModelIndex &index) = 0;
-};
-
-class IDocumentSymbolFactory : public QObject
-{
-    Q_OBJECT
-public:
-    IDocumentSymbolFactory(QObject *parent = 0) : QObject(parent) {}
-    virtual QStringList mimeTypes() const = 0;
-    virtual IDocumentSymbol *load(const QString &mimeType) = 0;
-};
-
 class IQuickOpen : public QObject
 {
     Q_OBJECT
@@ -60,17 +39,28 @@ public:
     virtual void activate() = 0;
     virtual QAbstractItemModel *model() const = 0;
     virtual void updateModel() = 0;
-    virtual QModelIndex filter(const QString &text) = 0;
+    virtual QModelIndex filterChanged(const QString &text) = 0;
+    virtual void indexChanged(const QModelIndex &index) = 0;
     virtual bool selected(const QString &text, const QModelIndex &index) = 0;
 };
 
-class IQuickOpenSymbol : public LiteApi::IQuickOpen
+class IQuickOpenAdapter : public QObject
+{
+    Q_OBJECT
+public:
+    IQuickOpenAdapter(QObject *parent = 0) : QObject(parent) {}
+    virtual QStringList mimeTypes() const = 0;
+    virtual IQuickOpen *load(const QString &mimeType) = 0;
+};
+
+class IQuickOpenMimeType : public LiteApi::IQuickOpen
 {
 public:
-    IQuickOpenSymbol(QObject *parent) : LiteApi::IQuickOpen(parent) {}
-    virtual void addFactory(LiteApi::IDocumentSymbolFactory *factory) = 0;
+    IQuickOpenMimeType(QObject *parent) : LiteApi::IQuickOpen(parent) {}
+    virtual void addAdapter(LiteApi::IQuickOpenAdapter *factory) = 0;
     virtual void setId(const QString &id) = 0;
     virtual void setInfo(const QString &info) = 0;
+    virtual void setNoFoundMessage(const QString &message) = 0;
 };
 
 class IQuickOpenManager : public IManager
@@ -91,7 +81,7 @@ public:
     virtual IQuickOpen *findBySymbol(const QString &sym) = 0;
     virtual QTreeView *modelView() const = 0;
 public:
-    virtual IQuickOpenSymbol *registerQuickOpenSymbol(const QString &sym) = 0;
+    virtual IQuickOpenMimeType *registerQuickOpenMimeType(const QString &sym) = 0;
 signals:
     void currentFilterChanged(IQuickOpen *filter);
 public slots:

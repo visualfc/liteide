@@ -25,7 +25,7 @@
 #include "quickopen_global.h"
 #include "quickopenfiles.h"
 #include "quickopeneditor.h"
-#include "quickopensymbol.h"
+#include "quickopenmimetype.h"
 #include <QTreeView>
 #include <QDebug>
 
@@ -65,6 +65,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     connect(m_widget->view(),SIGNAL(clicked(QModelIndex)),this,SLOT(selected()));
     connect(m_widget->view(),SIGNAL(activated(QModelIndex)),this,SLOT(selected()));
     connect(m_widget,SIGNAL(hidePopup()),this,SLOT(hideQuickOpen()));
+    connect(m_widget,SIGNAL(indexChanage(QModelIndex)),this,SLOT(indexChanage(QModelIndex)));
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
 
@@ -72,7 +73,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_filterMap.insert("",m_quickOpenFiles);
     m_filterMap.insert("~",new QuickOpenEditor(m_liteApp,this));
 
-    this->registerQuickOpenSymbol("@");
+    this->registerQuickOpenMimeType("@");
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
     m_quickOpenAct->setData("");
 
@@ -210,11 +211,11 @@ QTreeView *QuickOpenManager::modelView() const
     return m_widget->view();
 }
 
-IQuickOpenSymbol *QuickOpenManager::registerQuickOpenSymbol(const QString &sym)
+IQuickOpenMimeType *QuickOpenManager::registerQuickOpenMimeType(const QString &sym)
 {
-    IQuickOpenSymbol *symbol = m_quickOpenSymbolMap[sym];
+    IQuickOpenMimeType *symbol = m_quickOpenSymbolMap[sym];
     if (!symbol) {
-        symbol = new QuickOpenSymbol(m_liteApp,this);
+        symbol = new QuickOpenMimeType(m_liteApp,this);
         this->addFilter(sym,symbol);
     }
     return symbol;
@@ -293,9 +294,16 @@ void QuickOpenManager::filterChanged(const QString &text)
         updateModel();
     }
     if (m_currentFilter) {
-        QModelIndex index = m_currentFilter->filter(text.mid(m_sym.size()));
+        QModelIndex index = m_currentFilter->filterChanged(text.mid(m_sym.size()));
         m_widget->view()->setCurrentIndex(index);
         m_widget->view()->scrollTo(index);
+    }
+}
+
+void QuickOpenManager::indexChanage(const QModelIndex &index)
+{
+    if (m_currentFilter) {
+        m_currentFilter->indexChanged(index);
     }
 }
 

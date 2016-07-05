@@ -117,24 +117,30 @@ bool QuickOpenWidget::eventFilter(QObject *o, QEvent *e)
 
         const int key = ke->key();
         switch (key) {
-        case Qt::Key_Up:
+        case Qt::Key_Up: {
             row--;
             if (row < 0) {
                 if (m_wrap) {
                     row = model->rowCount()-1;
                 }
             }
-            m_view->setCurrentIndex(model->index(row,0));
+            QModelIndex index = model->index(row,0);
+            m_view->setCurrentIndex(index);
+            emit indexChanage(index);
             return true;
-        case Qt::Key_Down:
+        }
+        case Qt::Key_Down: {
             row++;
             if (row >= model->rowCount()) {
                 if (m_wrap) {
                     row = 0;
                 }
             }
-            m_view->setCurrentIndex(model->index(row,0));
+            QModelIndex index = model->index(row,0);
+            m_view->setCurrentIndex(index);
+            emit indexChanage(index);
             return true;
+        }
         }
     } else if (e->type() == QEvent::FocusOut) {
         if (QWidget::focusWidget() == m_view ) {

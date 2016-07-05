@@ -24,7 +24,7 @@
 #include "quickopenplugin.h"
 #include "quickopenmanager.h"
 #include "quickopenlines.h"
-#include "quickopensymbol.h"
+#include "quickopenmimetype.h"
 #include "quickopenhelp.h"
 #include <QtPlugin>
 //lite_memory_check_begin

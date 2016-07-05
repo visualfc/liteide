@@ -18,38 +18,41 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: quickopensymbol.h
+// Module: quickopenmimetype.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef QUICKOPENSYMBOL_H
-#define QUICKOPENSYMBOL_H
+#ifndef QUICKOPENMIMETYPE_H
+#define QUICKOPENMIMETYPE_H
 
 #include "quickopenapi/quickopenapi.h"
 #include <QPointer>
 
 class QStandardItemModel;
-class QuickOpenSymbol : public LiteApi::IQuickOpenSymbol
+class QuickOpenMimeType : public LiteApi::IQuickOpenMimeType
 {
     Q_OBJECT
 public:
-    QuickOpenSymbol(LiteApi::IApplication *app, QObject *parent);
+    QuickOpenMimeType(LiteApi::IApplication *app, QObject *parent);
     virtual QString id() const;
     virtual QString info() const;
     virtual void activate();
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();
-    virtual QModelIndex filter(const QString &text);
+    virtual QModelIndex filterChanged(const QString &text);
+    virtual void indexChanged(const QModelIndex &index);
     virtual bool selected(const QString &text, const QModelIndex &index);
-    virtual void addFactory(LiteApi::IDocumentSymbolFactory *factory);
+    virtual void addAdapter(LiteApi::IQuickOpenAdapter *factory);
     virtual void setId(const QString &id);
     virtual void setInfo(const QString &info);
+    virtual void setNoFoundMessage(const QString &message);
 protected:
     LiteApi::IApplication   *m_liteApp;
-    QPointer<LiteApi::IDocumentSymbol> m_symbol;
-    QList<LiteApi::IDocumentSymbolFactory*> m_factoryList;
+    QPointer<LiteApi::IQuickOpen> m_symbol;
+    QList<LiteApi::IQuickOpenAdapter*> m_adapterList;
     QStandardItemModel *m_model;
     QString m_id;
     QString m_info;
+    QString m_message;
 };
 
-#endif // QUICKOPENSYMBOL_H
+#endif // QUICKOPENMIMETYPE_H

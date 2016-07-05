@@ -40,7 +40,7 @@
 //lite_memory_check_end
 
 GolangSymbol::GolangSymbol(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IDocumentSymbol(parent), m_liteApp(app)
+    : LiteApi::IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_proxy = new QSortFilterProxyModel(this);
@@ -49,9 +49,19 @@ GolangSymbol::GolangSymbol(LiteApi::IApplication *app, QObject *parent)
     connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
 }
 
-QString GolangSymbol::mimeType() const
+QString GolangSymbol::id() const
 {
-    return "text/x-gosrc";
+    return "quickopen/golangsymbol";
+}
+
+QString GolangSymbol::info() const
+{
+    return tr("Quick Open Symbol by Name");
+}
+
+void GolangSymbol::activate()
+{
+
 }
 
 QAbstractItemModel *GolangSymbol::model() const
@@ -82,7 +92,7 @@ void GolangSymbol::updateModel()
     m_process->start(cmd,args);
 }
 
-QModelIndex GolangSymbol::filter(const QString &text)
+QModelIndex GolangSymbol::filterChanged(const QString &text)
 {
     m_proxy->setFilterFixedString(text);
     m_proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -94,6 +104,11 @@ QModelIndex GolangSymbol::filter(const QString &text)
         }
     }
     return m_proxy->index(0,0);
+}
+
+void GolangSymbol::indexChanged(const QModelIndex &index)
+{
+
 }
 
 bool GolangSymbol::selected(const QString &text, const QModelIndex &index)
@@ -123,7 +138,7 @@ void GolangSymbol::finished(int code, QProcess::ExitStatus status)
 }
 
 GolangSymbolFactory::GolangSymbolFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IDocumentSymbolFactory(parent), m_liteApp(app)
+    : LiteApi::IQuickOpenAdapter(parent), m_liteApp(app)
 {
     m_symbol = new GolangSymbol(app,this);
 }
@@ -133,7 +148,7 @@ QStringList GolangSymbolFactory::mimeTypes() const
     return QStringList() << "text/x-gosrc";
 }
 
-LiteApi::IDocumentSymbol *GolangSymbolFactory::load(const QString &mimeType)
+LiteApi::IQuickOpen *GolangSymbolFactory::load(const QString &mimeType)
 {
     if (mimeType == "text/x-gosrc") {
         return m_symbol;
