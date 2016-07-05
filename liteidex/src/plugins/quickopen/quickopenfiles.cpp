@@ -28,6 +28,8 @@
 #include <QSortFilterProxyModel>
 #include <QDir>
 #include <QFileInfo>
+#include <QTimer>
+#include <QApplication>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -71,6 +73,7 @@ void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *mod
     if (model->rowCount() > maxcount) {
         return;
     }
+    qApp->processEvents();
     QDir dir(folder);
     foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
         if (info.isDir()) {
@@ -101,7 +104,11 @@ void QuickOpenFiles::updateModel()
         QStringList ar = text.split(";");
         m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]) );
     }
+    QTimer::singleShot(1,this,SLOT(updateFiles()));
+}
 
+void QuickOpenFiles::updateFiles()
+{
     QStringList extFilter;
     foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
         foreach (QString ext, type->globPatterns()) {
@@ -118,7 +125,6 @@ void QuickOpenFiles::updateModel()
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
         updateFolder(folder,extFilter,m_model,maxcount);
     }
-    //m_proxyModel->sort(0);
 }
 
 QModelIndex QuickOpenFiles::filterChanged(const QString &text)
