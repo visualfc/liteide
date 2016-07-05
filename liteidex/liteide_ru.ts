@@ -537,6 +537,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Save As</source>
         <translation>Сохранить как...</translation>
     </message>
+    <message>
+        <source>OpenEditor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EnvManager</name>
@@ -1521,6 +1525,25 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
+    <name>GolangAstOption</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
+    </message>
+    <message>
+        <source>QuickOpenSymbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show import path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GolangCodeOption</name>
     <message>
         <source>Form</source>
@@ -1794,6 +1817,13 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Export PDF</source>
         <translation>Экспортировать в PDF</translation>
+    </message>
+</context>
+<context>
+    <name>GolangSymbol</name>
+    <message>
+        <source>Quick Open Symbol by Name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3252,6 +3282,13 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>OpenEditorsWidget</name>
+    <message>
+        <source>Open Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OptionsBrowser</name>
     <message>
         <source>Options</source>
@@ -3567,6 +3604,44 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Quick Open Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Open Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenMimeType</name>
+    <message>
+        <source>Open Symbol by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not found symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenOption</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
+    </message>
+    <message>
+        <source>QuickOpenFiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max files count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QuickOpenEditor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -574,96 +574,101 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="114"/>
+        <location filename="src/liteapp/editormanager.cpp" line="123"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="125"/>
+        <location filename="src/liteapp/editormanager.cpp" line="134"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>移动到新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="171"/>
+        <location filename="src/liteapp/editormanager.cpp" line="180"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="185"/>
+        <location filename="src/liteapp/editormanager.cpp" line="194"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="116"/>
+        <location filename="src/liteapp/editormanager.cpp" line="125"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="117"/>
+        <location filename="src/liteapp/editormanager.cpp" line="93"/>
+        <source>OpenEditor</source>
+        <translation>打开文档</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="126"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="118"/>
+        <location filename="src/liteapp/editormanager.cpp" line="127"/>
         <source>Close Left Tabs</source>
         <translation>关闭左侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="119"/>
+        <location filename="src/liteapp/editormanager.cpp" line="128"/>
         <source>Close Right Tabs</source>
         <translation>关闭右侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="120"/>
+        <location filename="src/liteapp/editormanager.cpp" line="129"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>关闭相同目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="121"/>
+        <location filename="src/liteapp/editormanager.cpp" line="130"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>关闭其他目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="122"/>
+        <location filename="src/liteapp/editormanager.cpp" line="131"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>复制完整路径到剪贴板</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="123"/>
+        <location filename="src/liteapp/editormanager.cpp" line="132"/>
         <source>Show in Explorer</source>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="176"/>
+        <location filename="src/liteapp/editormanager.cpp" line="185"/>
         <source>Navigate Backward</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="364"/>
+        <location filename="src/liteapp/editormanager.cpp" line="389"/>
         <source>Save changes to %1?</source>
         <translation>保存修改到 %1 ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="365"/>
+        <location filename="src/liteapp/editormanager.cpp" line="390"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>未保存修改</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="447"/>
+        <location filename="src/liteapp/editormanager.cpp" line="482"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="449"/>
+        <location filename="src/liteapp/editormanager.cpp" line="484"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
@@ -1869,6 +1874,29 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
+    <name>GolangAstOption</name>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="20"/>
+        <source>QuickOpenSymbol</source>
+        <translation>快速跳转符号</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="26"/>
+        <source>Show import path</source>
+        <translation>显示导入包</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="33"/>
+        <source>Match case sensitive</source>
+        <translation>区分大小写匹配</translation>
+    </message>
+</context>
+<context>
     <name>GolangCodeOption</name>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="14"/>
@@ -2210,6 +2238,14 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
+    <name>GolangSymbol</name>
+    <message>
+        <location filename="src/plugins/golangast/golangsymbol.cpp" line="62"/>
+        <source>Quick Open Symbol by Name</source>
+        <translation>根据名称跳转到符号</translation>
+    </message>
+</context>
+<context>
     <name>GoplayBrowser</name>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="82"/>
@@ -2387,113 +2423,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="236"/>
+        <location filename="src/liteapp/liteapp.cpp" line="237"/>
         <source>Event Log</source>
         <translation>事件记录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="223"/>
+        <location filename="src/liteapp/liteapp.cpp" line="224"/>
         <source>Escape</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="669"/>
+        <location filename="src/liteapp/liteapp.cpp" line="672"/>
         <source>Close File</source>
         <translation>关闭文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="672"/>
+        <location filename="src/liteapp/liteapp.cpp" line="675"/>
         <source>Close All Files</source>
         <translation>关闭所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="682"/>
+        <location filename="src/liteapp/liteapp.cpp" line="685"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="685"/>
+        <location filename="src/liteapp/liteapp.cpp" line="688"/>
         <source>Save File As...</source>
         <translation>文件另存为...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="688"/>
+        <location filename="src/liteapp/liteapp.cpp" line="691"/>
         <source>Save All Files</source>
         <translation>保存所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="675"/>
+        <location filename="src/liteapp/liteapp.cpp" line="678"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="238"/>
+        <location filename="src/liteapp/liteapp.cpp" line="240"/>
         <source>Options</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="649"/>
         <source>New...</source>
         <translation>新建...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="652"/>
         <source>Open File...</source>
         <translation>打开文件...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="652"/>
+        <location filename="src/liteapp/liteapp.cpp" line="655"/>
         <source>Open Folder...</source>
         <translation>打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="655"/>
+        <location filename="src/liteapp/liteapp.cpp" line="658"/>
         <source>Open Folder in New Window...</source>
         <translation>在新窗口打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="660"/>
+        <location filename="src/liteapp/liteapp.cpp" line="663"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation>关闭所有目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="663"/>
+        <location filename="src/liteapp/liteapp.cpp" line="666"/>
         <source>New Window</source>
         <translation>新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="666"/>
+        <location filename="src/liteapp/liteapp.cpp" line="669"/>
         <source>Close Window</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="677"/>
+        <location filename="src/liteapp/liteapp.cpp" line="680"/>
         <source>Save Project</source>
         <translation>保存项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="679"/>
+        <location filename="src/liteapp/liteapp.cpp" line="682"/>
         <source>Close Project</source>
         <translation>关闭项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="691"/>
+        <location filename="src/liteapp/liteapp.cpp" line="694"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="694"/>
+        <location filename="src/liteapp/liteapp.cpp" line="697"/>
         <source>Full Screen</source>
         <translation>全屏显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="698"/>
+        <location filename="src/liteapp/liteapp.cpp" line="701"/>
         <source>About LiteIDE</source>
         <translation>关于 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="704"/>
+        <location filename="src/liteapp/liteapp.cpp" line="707"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
@@ -4000,6 +4036,14 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>OpenEditorsWidget</name>
+    <message>
+        <location filename="src/liteapp/openeditorswidget.cpp" line="43"/>
+        <source>Open Documents</source>
+        <translation>打开文档</translation>
+    </message>
+</context>
+<context>
     <name>OptionsBrowser</name>
     <message>
         <location filename="src/liteapp/optionsbrowser.cpp" line="57"/>
@@ -4320,15 +4364,15 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenEditor</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="21"/>
+        <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="55"/>
         <source>Open Editor by Name</source>
-        <translation>按名称打开编辑器</translation>
+        <translation>按名称打开文档</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenFiles</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="56"/>
+        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="60"/>
         <source>Open Files by Name</source>
         <translation>按名称打开文件</translation>
     </message>
@@ -4336,7 +4380,7 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenHelp</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenhelp.cpp" line="17"/>
+        <location filename="src/plugins/quickopen/quickopenhelp.cpp" line="49"/>
         <source>Show Quick Open Help</source>
         <translation>显示快速打开的帮助</translation>
     </message>
@@ -4344,23 +4388,23 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenLines</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="19"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="51"/>
         <source>Go to Line</source>
         <translation>跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="32"/>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="37"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="69"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="74"/>
         <source>Open a text file first to go to a line</source>
         <translation>请先打开文本文件再跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="50"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="87"/>
         <source>Type a line number between %1 and %2 to navigate to</source>
         <translation>键入要导航到的介于%1和%2之间的行号</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="53"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="90"/>
         <source>Go to Line %1</source>
         <oldsource>Go to line %1</oldsource>
         <translation>转到行 %1</translation>
@@ -4369,19 +4413,66 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenManager</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="60"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="61"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
         <translation>键入&apos;?&apos;在此处获取相关操作的帮助</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="71"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="77"/>
         <source>Quick Open</source>
         <translation>快速打开</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="73"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="80"/>
         <source>Quick Open Editor</source>
-        <translation>快速打开编辑器</translation>
+        <translation>快速打开文档</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="83"/>
+        <source>Quick Open Symbol</source>
+        <translation>快速跳转符号</translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenMimeType</name>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="41"/>
+        <source>Open Symbol by Name</source>
+        <translation>按名称跳转到符号</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="42"/>
+        <source>not found symbol</source>
+        <translation>没有找到符号</translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenOption</name>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="20"/>
+        <source>QuickOpenFiles</source>
+        <translation>快速打开文件</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="26"/>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="79"/>
+        <source>Match case sensitive</source>
+        <translation>区分大小写匹配</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="35"/>
+        <source>Max files count:</source>
+        <translation>最大文件数:</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="73"/>
+        <source>QuickOpenEditor</source>
+        <translation>快速打开文档</translation>
     </message>
 </context>
 <context>

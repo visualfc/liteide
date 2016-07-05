@@ -577,96 +577,101 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="114"/>
+        <location filename="src/liteapp/editormanager.cpp" line="123"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="125"/>
+        <location filename="src/liteapp/editormanager.cpp" line="134"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>In neues Fenster verschieben</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="171"/>
+        <location filename="src/liteapp/editormanager.cpp" line="180"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="185"/>
+        <location filename="src/liteapp/editormanager.cpp" line="194"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Gehe weiter</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="116"/>
+        <location filename="src/liteapp/editormanager.cpp" line="125"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Andere Tabs schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="117"/>
+        <location filename="src/liteapp/editormanager.cpp" line="93"/>
+        <source>OpenEditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="126"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Alle Tabs schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="118"/>
+        <location filename="src/liteapp/editormanager.cpp" line="127"/>
         <source>Close Left Tabs</source>
         <translation>Tabs links schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="119"/>
+        <location filename="src/liteapp/editormanager.cpp" line="128"/>
         <source>Close Right Tabs</source>
         <translation>Tabs rechts schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="120"/>
+        <location filename="src/liteapp/editormanager.cpp" line="129"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Dateien aus gleichem Ordner schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="121"/>
+        <location filename="src/liteapp/editormanager.cpp" line="130"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Dateien aus anderen Ordnern schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="122"/>
+        <location filename="src/liteapp/editormanager.cpp" line="131"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Vollständigen Pfad in die Zwischenablage legen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="123"/>
+        <location filename="src/liteapp/editormanager.cpp" line="132"/>
         <source>Show in Explorer</source>
         <translation>Im Dateimanager öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="176"/>
+        <location filename="src/liteapp/editormanager.cpp" line="185"/>
         <source>Navigate Backward</source>
         <translation>Gehe zurück</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="364"/>
+        <location filename="src/liteapp/editormanager.cpp" line="389"/>
         <source>Save changes to %1?</source>
         <translation>Änderung an %1 speichern?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="365"/>
+        <location filename="src/liteapp/editormanager.cpp" line="390"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Ungesicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="447"/>
+        <location filename="src/liteapp/editormanager.cpp" line="482"/>
         <source>All Files (*)</source>
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="449"/>
+        <location filename="src/liteapp/editormanager.cpp" line="484"/>
         <source>Save As</source>
         <translation>Speichern unter</translation>
     </message>
@@ -1867,6 +1872,29 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
+    <name>GolangAstOption</name>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="20"/>
+        <source>QuickOpenSymbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="26"/>
+        <source>Show import path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangastoption.ui" line="33"/>
+        <source>Match case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GolangCodeOption</name>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="14"/>
@@ -2208,6 +2236,14 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
+    <name>GolangSymbol</name>
+    <message>
+        <location filename="src/plugins/golangast/golangsymbol.cpp" line="62"/>
+        <source>Quick Open Symbol by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GoplayBrowser</name>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="82"/>
@@ -2385,113 +2421,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="236"/>
+        <location filename="src/liteapp/liteapp.cpp" line="237"/>
         <source>Event Log</source>
         <translation type="unfinished">Ereignisanzeige</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="223"/>
+        <location filename="src/liteapp/liteapp.cpp" line="224"/>
         <source>Escape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="669"/>
+        <location filename="src/liteapp/liteapp.cpp" line="672"/>
         <source>Close File</source>
         <translation type="unfinished">Datei schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="672"/>
+        <location filename="src/liteapp/liteapp.cpp" line="675"/>
         <source>Close All Files</source>
         <translation type="unfinished">Alle Dateien schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="682"/>
+        <location filename="src/liteapp/liteapp.cpp" line="685"/>
         <source>Save File</source>
         <translation type="unfinished">Datei speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="685"/>
+        <location filename="src/liteapp/liteapp.cpp" line="688"/>
         <source>Save File As...</source>
         <translation type="unfinished">Datei speichern unter...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="688"/>
+        <location filename="src/liteapp/liteapp.cpp" line="691"/>
         <source>Save All Files</source>
         <translation type="unfinished">Alle Dateien speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="675"/>
+        <location filename="src/liteapp/liteapp.cpp" line="678"/>
         <source>Open Project</source>
         <translation>Projekt öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="238"/>
+        <location filename="src/liteapp/liteapp.cpp" line="240"/>
         <source>Options</source>
         <translation type="unfinished">Optionen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="646"/>
+        <location filename="src/liteapp/liteapp.cpp" line="649"/>
         <source>New...</source>
         <translation type="unfinished">Neu...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="652"/>
         <source>Open File...</source>
         <translation type="unfinished">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="652"/>
+        <location filename="src/liteapp/liteapp.cpp" line="655"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Ordner öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="655"/>
+        <location filename="src/liteapp/liteapp.cpp" line="658"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Ordner in neuem Fenster öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="660"/>
+        <location filename="src/liteapp/liteapp.cpp" line="663"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Ordner hinzufügen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="663"/>
+        <location filename="src/liteapp/liteapp.cpp" line="666"/>
         <source>New Window</source>
         <translation type="unfinished">Neues Fenster</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="666"/>
+        <location filename="src/liteapp/liteapp.cpp" line="669"/>
         <source>Close Window</source>
         <translation type="unfinished">Fenster schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="677"/>
+        <location filename="src/liteapp/liteapp.cpp" line="680"/>
         <source>Save Project</source>
         <translation>Projekt speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="679"/>
+        <location filename="src/liteapp/liteapp.cpp" line="682"/>
         <source>Close Project</source>
         <translation type="unfinished">Projekt schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="691"/>
+        <location filename="src/liteapp/liteapp.cpp" line="694"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="694"/>
+        <location filename="src/liteapp/liteapp.cpp" line="697"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="698"/>
+        <location filename="src/liteapp/liteapp.cpp" line="701"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Über LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="704"/>
+        <location filename="src/liteapp/liteapp.cpp" line="707"/>
         <source>About Plugins</source>
         <translation type="unfinished">Über Plugins</translation>
     </message>
@@ -4001,6 +4037,14 @@ Soll es ersetzt werden?</translation>
     </message>
 </context>
 <context>
+    <name>OpenEditorsWidget</name>
+    <message>
+        <location filename="src/liteapp/openeditorswidget.cpp" line="43"/>
+        <source>Open Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OptionsBrowser</name>
     <message>
         <location filename="src/liteapp/optionsbrowser.cpp" line="57"/>
@@ -4320,7 +4364,7 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>QuickOpenEditor</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="21"/>
+        <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="55"/>
         <source>Open Editor by Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4328,7 +4372,7 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>QuickOpenFiles</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="56"/>
+        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="60"/>
         <source>Open Files by Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4336,7 +4380,7 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>QuickOpenHelp</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenhelp.cpp" line="17"/>
+        <location filename="src/plugins/quickopen/quickopenhelp.cpp" line="49"/>
         <source>Show Quick Open Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4344,23 +4388,23 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>QuickOpenLines</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="19"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="51"/>
         <source>Go to Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="32"/>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="37"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="69"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="74"/>
         <source>Open a text file first to go to a line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="50"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="87"/>
         <source>Type a line number between %1 and %2 to navigate to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="53"/>
+        <location filename="src/plugins/quickopen/quickopenlines.cpp" line="90"/>
         <source>Go to Line %1</source>
         <oldsource>Go to line %1</oldsource>
         <translation type="unfinished"></translation>
@@ -4369,18 +4413,65 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>QuickOpenManager</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="60"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="61"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="71"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="77"/>
         <source>Quick Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="73"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="80"/>
         <source>Quick Open Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="83"/>
+        <source>Quick Open Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenMimeType</name>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="41"/>
+        <source>Open Symbol by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="42"/>
+        <source>not found symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenOption</name>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="20"/>
+        <source>QuickOpenFiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="26"/>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="79"/>
+        <source>Match case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="35"/>
+        <source>Max files count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenoption.ui" line="73"/>
+        <source>QuickOpenEditor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
