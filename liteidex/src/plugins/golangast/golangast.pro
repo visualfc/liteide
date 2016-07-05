@@ -13,7 +13,9 @@ SOURCES += golangastplugin.cpp \
     golangast.cpp \
     golangasticon.cpp \
     astwidget.cpp \
-    golangsymbol.cpp
+    golangsymbol.cpp \
+    golangastoption.cpp \
+    golangastoptionfactory.cpp
 
 HEADERS += golangastplugin.h\
         golangast_global.h \
@@ -21,7 +23,12 @@ HEADERS += golangastplugin.h\
     golangasticon.h \
     astwidget.h \
     golangastitem.h \
-    golangsymbol.h
+    golangsymbol.h \
+    golangastoption.h \
+    golangastoptionfactory.h
 
 RESOURCES += \
     golangast.qrc
+
+FORMS += \
+    golangastoption.ui

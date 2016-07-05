@@ -51,6 +51,8 @@ protected:
     QStandardItemModel    *m_model;
     QSortFilterProxyModel *m_proxy;
     QProcess              *m_process;
+    Qt::CaseSensitivity    m_matchCase;
+    bool                   m_importPath;
 };
 
 class GolangSymbolFactory : public LiteApi::IQuickOpenAdapter

@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="checkFilesMatchCase">
         <property name="text">
-         <string>Match Case Sensitive</string>
+         <string>Match case sensitive</string>
         </property>
        </widget>
       </item>
@@ -32,7 +32,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Max Files Count:</string>
+           <string>Max files count:</string>
           </property>
          </widget>
         </item>
@@ -76,7 +76,7 @@
       <item>
        <widget class="QCheckBox" name="checkEditorMatchCase">
         <property name="text">
-         <string>Match Case Sensitive</string>
+         <string>Match case sensitive</string>
         </property>
        </widget>
       </item>

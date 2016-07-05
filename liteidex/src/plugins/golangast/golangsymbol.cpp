@@ -24,6 +24,7 @@
 #include "golangsymbol.h"
 #include "astwidget.h"
 #include "golangastitem.h"
+#include "golangast_global.h"
 #include <liteenvapi/liteenvapi.h>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
@@ -47,6 +48,8 @@ GolangSymbol::GolangSymbol(LiteApi::IApplication *app, QObject *parent)
     m_proxy->setSourceModel(m_model);
     m_process = new QProcess(this);
     connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
+    m_matchCase = Qt::CaseInsensitive;
+    m_importPath = true;
 }
 
 QString GolangSymbol::id() const
@@ -71,7 +74,11 @@ QAbstractItemModel *GolangSymbol::model() const
 
 void GolangSymbol::updateModel()
 {
+    m_matchCase = m_liteApp->settings()->value(GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE,false).toBool()?Qt::CaseSensitive:Qt::CaseInsensitive;
+    m_importPath = m_liteApp->settings()->value(GOLANGAST_QUICKOPNE_SYMBOL_IMPORTPATH,true).toBool();
+
     m_model->clear();
+    m_proxy->setFilterCaseSensitivity(m_matchCase);
 
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (!editor) {
@@ -95,11 +102,10 @@ void GolangSymbol::updateModel()
 QModelIndex GolangSymbol::filterChanged(const QString &text)
 {
     m_proxy->setFilterFixedString(text);
-    m_proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
     for (int i = 0; i < m_proxy->rowCount(); i++) {
         QModelIndex index = m_proxy->index(i,0);
-        if (index.data().toString().startsWith(text)) {
+        if (index.data().toString().startsWith(text,m_matchCase)) {
             gotoIndex(index);
             return index;
         }
@@ -137,7 +143,7 @@ void GolangSymbol::finished(int code, QProcess::ExitStatus status)
 {
     if (code == 0 && status == QProcess::NormalExit) {
         QByteArray ar = m_process->readAll();
-        AstWidget::parserModel(m_model,ar,true,false);
+        AstWidget::parserModel(m_model,ar,true,!m_importPath);
         LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
         if (mgr) {
             mgr->modelView()->expandAll();
