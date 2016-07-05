@@ -235,11 +235,13 @@ LiteApp::LiteApp()
     //m_outputManager->addOutuput(m_logOutput,tr("Console"));
     m_logAct = m_toolWindowManager->addToolWindow(Qt::BottomDockWidgetArea,m_logOutput,"eventlog",tr("Event Log"),true);
     connect(m_logOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickLogOutput(QTextCursor)));
+
     m_optionAct = new QAction(tr("Options"),this);
     m_optionAct->setMenuRole(QAction::PreferencesRole);
-    m_actionManager->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_optionAct);
-    connect(m_optionAct,SIGNAL(triggered()),m_optionManager,SLOT(exec()));
+    m_actionManager->setViewMenuSeparator("sep/option",true);
+    m_actionManager->insertViewMenuAction(m_optionAct,"sep/option");
 
+    connect(m_optionAct,SIGNAL(triggered()),m_optionManager,SLOT(exec()));
 
     this->appendLog("LiteApp","Initializing");
 

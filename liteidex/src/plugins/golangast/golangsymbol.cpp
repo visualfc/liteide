@@ -137,7 +137,7 @@ void GolangSymbol::finished(int code, QProcess::ExitStatus status)
 {
     if (code == 0 && status == QProcess::NormalExit) {
         QByteArray ar = m_process->readAll();
-        AstWidget::parserModel(m_model,ar,true);
+        AstWidget::parserModel(m_model,ar,true,false);
         LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
         if (mgr) {
             mgr->modelView()->expandAll();

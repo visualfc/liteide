@@ -190,8 +190,9 @@ void EditorManager::createActions()
     actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
 #endif
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_goBackAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_goForwardAct);
+    m_liteApp->actionManager()->setViewMenuSeparator("sep/nav",true);
+    m_liteApp->actionManager()->insertViewMenuAction(m_goBackAct,"sep/nav");
+    m_liteApp->actionManager()->insertViewMenuAction(m_goForwardAct,"sep/nav");
 
     updateNavigatorActions();
 

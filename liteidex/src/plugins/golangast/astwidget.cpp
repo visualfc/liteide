@@ -351,7 +351,7 @@ static LiteApi::ASTTAG_ENUM toTagFlag(const QString &tag)
     return LiteApi::TagNone;
 }
 
-void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, bool flatMode)
+void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, bool flatMode, bool skipimport)
 {
     QList<QString> array = QString::fromUtf8(data).split('\n');
     QMap<int,QStandardItem*> items;
@@ -401,6 +401,9 @@ void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, b
             if (flatMode) {
                 continue;
             }
+        }
+        if (skipimport && tag == "mm") {
+            continue;
         }
         GolangAstItem *item = 0;
         if (level == 1) {
@@ -474,7 +477,7 @@ void AstWidget::updateModel(const QByteArray &data)
 
     m_model->clear();
 
-    parserModel(m_model,data,false);
+    parserModel(m_model,data,false,false);
 
     //load state
     if (!m_tree->isExpanded(m_tree->rootIndex())) {

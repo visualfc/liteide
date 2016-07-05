@@ -409,8 +409,10 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     QAction *reloadAct = new QAction(QIcon("icon:liteenv/images/reload.png"),tr("Reload current environment"),this);
     m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,reloadAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,editAct);
+
+    m_liteApp->actionManager()->setViewMenuSeparator("sep/env",true);
+    m_liteApp->actionManager()->insertViewMenuAction(reloadAct,"sep/env");
+    m_liteApp->actionManager()->insertViewMenuAction(editAct,"sep/env");
 
     foreach (LiteApi::IEnv *env, m_envList) {
         m_envCmb->addItem(env->id());

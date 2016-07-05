@@ -197,6 +197,27 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
     }
 }
 
+void ActionManager::setViewMenuSeparator(const QString &sepid, bool group)
+{
+    if (sepid.isEmpty()) {
+        return;
+    }
+    if (m_idSeperatorMap.contains(sepid)) {
+        return;
+    }
+    if (group) {
+        m_viewMenu->addSeparator();
+    }
+    QAction *sep = m_viewMenu->addSeparator();
+    m_idSeperatorMap.insert(sepid,sep);
+}
+
+void ActionManager::insertViewMenuAction(QAction *act, const QString &sepid)
+{
+    QAction *sep = m_idSeperatorMap[sepid];
+    m_viewMenu->insertAction(sep,act);
+}
+
 IActionContext *ActionManager::getActionContext(QObject *obj, const QString &name)
 {
     IActionContext *context = m_objContextMap.value(obj);

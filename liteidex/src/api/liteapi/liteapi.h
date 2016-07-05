@@ -607,6 +607,8 @@ public:
     virtual void removeToolBar(QToolBar* toolBar) = 0;
     virtual QList<QString> toolBarList() const = 0;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act) = 0;
+    virtual void setViewMenuSeparator(const QString &sepid, bool group = false) = 0;
+    virtual void insertViewMenuAction(QAction *act, const QString &sepid) = 0;
     virtual IActionContext *getActionContext(QObject *obj, const QString &name) = 0;
     virtual QStringList actionKeys() const = 0;
     virtual ActionInfo *actionInfo(const QString &id) const = 0;

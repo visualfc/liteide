@@ -83,14 +83,16 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_quickOpenSymbolAct = new QAction(tr("Quick Open Symbol"),this);
     m_quickOpenSymbolAct->setData("@");
 
+    m_liteApp->actionManager()->setViewMenuSeparator("sep/quickopen",true);
+
     LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
     context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
     context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
     context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+ALT+O");
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenEditAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_quickOpenSymbolAct);
+    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenAct,"sep/quickopen");
+    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenEditAct,"sep/quickopen");
+    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenSymbolAct,"sep/quickopen");
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
     connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
