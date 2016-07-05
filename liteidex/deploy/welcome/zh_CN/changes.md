@@ -3,6 +3,24 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2016.7.5 Ver X30.1
+* LiteIDE
+	* add OpenEditor tool windows
+	* add GolangSymbol for QuickOpen (CTRL+SHIFT+O)
+	* fix gotools vendor error
+* LiteApp
+	* add OpenEditor tool windows
+	* update view menu
+* GolangAst
+	* add GolangSymbol for QuickOpen
+	* add GolangSymbol option
+	* fix goto symbol
+* QuickOpen
+	* optimization QuickOpenFile and QuickOpenEditor search
+	* add QuickOpen option		
+* gotools
+	* fix vendor error	
+
 ### 2016.7.2 Ver X30
 * LiteIDE
 	* add new QuickOpen plugin
