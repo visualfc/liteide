@@ -64,7 +64,7 @@ QString GolangSymbol::info() const
 
 void GolangSymbol::activate()
 {
-
+   // m_liteApp->editorManager()->addNavigationHistory();
 }
 
 QAbstractItemModel *GolangSymbol::model() const
@@ -136,7 +136,7 @@ void GolangSymbol::indexChanged(const QModelIndex &index)
 
 bool GolangSymbol::selected(const QString &/*text*/, const QModelIndex &index)
 {
-    return gotoIndex(index,true);
+    return gotoIndex(index,false);
 }
 
 void GolangSymbol::finished(int code, QProcess::ExitStatus status)
