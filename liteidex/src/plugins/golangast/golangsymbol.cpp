@@ -106,7 +106,7 @@ QModelIndex GolangSymbol::filterChanged(const QString &text)
     for (int i = 0; i < m_proxy->rowCount(); i++) {
         QModelIndex index = m_proxy->index(i,0);
         if (index.data().toString().startsWith(text,m_matchCase)) {
-            gotoIndex(index);
+            gotoIndex(index,false);
             return index;
         }
     }
