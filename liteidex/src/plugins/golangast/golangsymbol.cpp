@@ -113,7 +113,7 @@ QModelIndex GolangSymbol::filterChanged(const QString &text)
     return m_proxy->index(0,0);
 }
 
-bool GolangSymbol::gotoIndex(const QModelIndex &index)
+bool GolangSymbol::gotoIndex(const QModelIndex &index,bool saveHistroy)
 {
     QModelIndex i = m_proxy->mapToSource(index);
     if (!i.isValid()) {
@@ -125,18 +125,18 @@ bool GolangSymbol::gotoIndex(const QModelIndex &index)
     }
     AstItemPos pos = item->m_posList.at(0);
     QFileInfo info(QDir(m_process->workingDirectory()),pos.fileName);
-    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column-1,true,true);
+    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column-1,true,saveHistroy);
     return true;
 }
 
 void GolangSymbol::indexChanged(const QModelIndex &index)
 {
-    gotoIndex(index);
+    gotoIndex(index,false);
 }
 
 bool GolangSymbol::selected(const QString &/*text*/, const QModelIndex &index)
 {
-    return gotoIndex(index);
+    return gotoIndex(index,true);
 }
 
 void GolangSymbol::finished(int code, QProcess::ExitStatus status)
