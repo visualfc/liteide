@@ -88,7 +88,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
     context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
     context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
-    context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+ALT+O");
+    context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+SHIFT+O");
 
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenAct,"sep/quickopen");
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenEditAct,"sep/quickopen");
