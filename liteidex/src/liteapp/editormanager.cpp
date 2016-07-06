@@ -403,7 +403,7 @@ bool EditorManager::closeEditor(IEditor *editor)
     int index = m_editorTabWidget->indexOf(cur->widget());
     m_editorTabWidget->removeTab(index);
     m_widgetEditorMap.remove(cur->widget());
-    QString filePath = editor->filePath();
+    QString filePath = cur->filePath();
     if (!filePath.isEmpty()) {
         for (int i = 0; i < m_editorModel->rowCount(); i++) {
             QStandardItem *item = m_editorModel->item(i,0);
