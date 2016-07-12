@@ -70,7 +70,7 @@ QAbstractItemModel *QuickOpenFiles::model() const
     return m_proxyModel;
 }
 
-void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model, int maxcount, QSet<QString> *folderSet)
+void updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<QString> *extSet, QSet<QString> *folderSet, QSet<QString> *editorSet)
 {
     if (model->rowCount() >= maxcount) {
         return;
@@ -83,9 +83,9 @@ void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *mod
     QDir dir(folder);
     foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
         if (info.isDir()) {
-            updateFolder(info.filePath(),extFilter,model,maxcount,folderSet);
+            updateFolder(info.filePath(),model,maxcount,extSet,folderSet,editorSet);
         } else if (info.isFile()) {
-            if (extFilter.contains(info.suffix())) {
+            if (extSet->contains(info.suffix()) && !editorSet->contains(info.filePath()) ) {
                 model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(info.fileName()) << new QStandardItem(info.filePath()));
             }
         }
@@ -102,15 +102,17 @@ void QuickOpenFiles::updateModel()
     m_proxyModel->setFilterKeyColumn(2);
     m_proxyModel->setFilterCaseSensitivity(m_matchCase);
 
-    QStringList editors;
+    m_editors.clear();
+    QStringList names;
     foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
         if (editor->filePath().isEmpty()) {
             continue;
         }
-        editors.push_back(editor->name()+";"+editor->filePath());
+        names.push_back(editor->name()+";"+editor->filePath());
+        m_editors.push_back(editor->filePath());
     }
-    qSort(editors);
-    foreach (QString text, editors) {
+    qSort(names);
+    foreach (QString text, names) {
         QStringList ar = text.split(";");
         m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]) );
     }
@@ -119,13 +121,13 @@ void QuickOpenFiles::updateModel()
 
 void QuickOpenFiles::updateFiles()
 {
-    QStringList extFilter;
+    QSet<QString> extSet;
     foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
         foreach (QString ext, type->globPatterns()) {
             if (ext.startsWith(".")) {
-                extFilter << ext.mid(1);
+                extSet << ext.mid(1);
             } else if (ext.startsWith("*.")) {
-                extFilter << ext.mid(2);
+                extSet << ext.mid(2);
             }
         }
     }
@@ -133,8 +135,9 @@ void QuickOpenFiles::updateFiles()
     int count = m_model->rowCount();
     int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
     QSet<QString> folderSet;
+    QSet<QString> editorSet = m_editors.toSet();
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
-        updateFolder(folder,extFilter,m_model,maxcount, &folderSet);
+        updateFolder(folder,m_model,maxcount, &extSet, &folderSet, &editorSet);
     }
 }
 

@@ -47,6 +47,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     QStandardItemModel *m_model;
     QSortFilterProxyModel *m_proxyModel;
+    QStringList        m_editors;
     Qt::CaseSensitivity m_matchCase;
     int                 m_maxCount;
 };
