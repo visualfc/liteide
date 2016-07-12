@@ -136,6 +136,13 @@ void QuickOpenFiles::updateFiles()
     int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
     QSet<QString> folderSet;
     QSet<QString> editorSet = m_editors.toSet();
+
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor && !editor->filePath().isEmpty()) {
+        QString folder = QFileInfo(editor->filePath()).path();
+        updateFolder(folder,m_model,maxcount, &extSet, &folderSet, &editorSet);
+    }
+
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
         updateFolder(folder,m_model,maxcount, &extSet, &folderSet, &editorSet);
     }
