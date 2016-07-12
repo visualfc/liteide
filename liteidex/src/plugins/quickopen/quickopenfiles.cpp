@@ -70,16 +70,20 @@ QAbstractItemModel *QuickOpenFiles::model() const
     return m_proxyModel;
 }
 
-void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model, int maxcount)
+void updateFolder(QString folder, QStringList extFilter, QStandardItemModel *model, int maxcount, QSet<QString> *folderSet)
 {
     if (model->rowCount() >= maxcount) {
         return;
     }
+    if (folderSet->contains(folder)) {
+        return;
+    }
+    folderSet->insert(folder);
     qApp->processEvents();
     QDir dir(folder);
     foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
         if (info.isDir()) {
-            updateFolder(info.filePath(),extFilter,model,maxcount);
+            updateFolder(info.filePath(),extFilter,model,maxcount,folderSet);
         } else if (info.isFile()) {
             if (extFilter.contains(info.suffix())) {
                 model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(info.fileName()) << new QStandardItem(info.filePath()));
@@ -128,8 +132,9 @@ void QuickOpenFiles::updateFiles()
 
     int count = m_model->rowCount();
     int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
+    QSet<QString> folderSet;
     foreach(QString folder, m_liteApp->fileManager()->folderList()) {
-        updateFolder(folder,extFilter,m_model,maxcount);
+        updateFolder(folder,extFilter,m_model,maxcount, &folderSet);
     }
 }
 
