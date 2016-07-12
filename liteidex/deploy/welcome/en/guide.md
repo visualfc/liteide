@@ -71,7 +71,10 @@ Example `linux32.env`:
     LITEIDE_EXEC=/usr/bin/xterm
     LITEIDE_EXECOPT=-e
 
-## Cross-compilation
+## Cross-compilation (Go1.5 or high) 
+Change LiteIDE environment , set GOROOT GOARCH GOOS, build project.
+
+## Cross-compilation (before Go1.5) 
 You will need to build or install Go compilers for other platforms and architectures before cross-compiling.  If you do not do this, you may receive errors about missing executables or even the following error:
 
     %GOROOT%/src/pkg/runtime/extern.go:137: undefined: theGoos
