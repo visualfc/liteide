@@ -67,6 +67,7 @@ EditorManager::~EditorManager()
     delete m_tabContextFileMenu;
     delete m_tabContextNofileMenu;
     delete m_editorTabWidget;
+    delete m_listMenu;
     m_browserActionMap.clear();
     if (!m_nullMenu->parent()) {
         delete m_nullMenu;
@@ -82,11 +83,22 @@ bool EditorManager::initWithApp(IApplication *app)
     m_nullMenu->setEnabled(false);
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
+
     m_widget = new QWidget;
+    //create editor tab widget
     m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
 
+    //create list menu
+    m_listMenu = new QMenu;
+    m_listGroup = new QActionGroup(this);
+    m_editorTabWidget->setListMenu(m_listMenu);
+    connect(m_listMenu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowListMenu()));
+    connect(m_listGroup,SIGNAL(triggered(QAction*)),this,SLOT(triggeredListAction(QAction*)));
+
+    //create editor model
     m_editorModel = new QStandardItemModel(this);
 
+    //create opne editor for model
     m_openEditorWidget = new OpenEditorsWidget(app);
     m_openEditorWidget->setEditorModel(m_editorModel);
 
@@ -375,35 +387,35 @@ void EditorManager::activeBrowser(IEditor *editor)
 
 bool EditorManager::closeEditor(IEditor *editor)
 {
-    IEditor *cur = 0;
-    if (editor) {
-        cur = editor;
-    } else {
-        cur = m_currentEditor;
+    if (!editor) {
+        editor = m_currentEditor;
     }
-    if (cur == 0) {
+    if (editor == 0) {
         return false;
     }
 
-    if (cur->isModified() && !cur->isReadOnly()) {
-        QString text = QString(tr("Save changes to %1?")).arg(cur->filePath());
+    if (editor->isModified() && !editor->isReadOnly()) {
+        QString text = QString(tr("Save changes to %1?")).arg(editor->filePath());
         int ret = QMessageBox::question(m_widget,tr("Unsaved Modifications"),text,QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
         if (ret == QMessageBox::Cancel) {
             return false;
         } else if (ret == QMessageBox::Save) {
             //cur->save();
-            saveEditor(cur);
+            saveEditor(editor);
         }
     }
 
-    if (!cur->filePath().isEmpty()) {
-        m_liteApp->settings()->setValue(QString("state_%1").arg(cur->filePath()),cur->saveState());
+    if (!editor->filePath().isEmpty()) {
+        m_liteApp->settings()->setValue(QString("state_%1").arg(editor->filePath()),editor->saveState());
     }
-    emit editorAboutToClose(cur);
-    int index = m_editorTabWidget->indexOf(cur->widget());
+    int index = m_editorTabWidget->indexOf(editor->widget());
+    if (index < 0) {
+        return false;
+    }
+    emit editorAboutToClose(editor);
     m_editorTabWidget->removeTab(index);
-    m_widgetEditorMap.remove(cur->widget());
-    QString filePath = cur->filePath();
+    m_widgetEditorMap.remove(editor->widget());
+    QString filePath = editor->filePath();
     if (!filePath.isEmpty()) {
         for (int i = 0; i < m_editorModel->rowCount(); i++) {
             QStandardItem *item = m_editorModel->item(i,0);
@@ -417,18 +429,18 @@ bool EditorManager::closeEditor(IEditor *editor)
     QMapIterator<IEditor*,QAction*> i(m_browserActionMap);
     while (i.hasNext()) {
         i.next();
-        if (i.key() == cur) {
+        if (i.key() == editor) {
             i.value()->blockSignals(true);
             i.value()->setChecked(false);
             i.value()->blockSignals(false);
             return true;
         }
     }
-    LiteApi::IEditContext *context = LiteApi::getEditContext(cur);
+    LiteApi::IEditContext *context = LiteApi::getEditContext(editor);
     if (context) {
         this->removeEditContext(context);
     }
-    cur->deleteLater();
+    editor->deleteLater();
     return true;
 }
 
@@ -1011,5 +1023,36 @@ void EditorManager::focusChanged(QWidget *old, QWidget *now)
     if (context && context->focusToolBar()) {
         context->focusToolBar()->setEnabled(false);
     }
+}
+
+void EditorManager::aboutToShowListMenu()
+{
+    m_listMenu->clear();
+    QList<QAction*> actions = m_listGroup->actions();
+    qDeleteAll(actions);
+
+    foreach (QWidget *widget, m_editorTabWidget->widgetList()) {
+        LiteApi::IEditor *editor = m_widgetEditorMap.value(widget);
+        if (!editor) {
+            continue;
+        }
+        QAction *act = new QAction(editor->name()+"\t"+editor->filePath(),m_listGroup);
+        act->setCheckable(true);
+        act->setToolTip(editor->filePath());
+        m_listGroup->addAction(act);
+        if (m_currentEditor == editor) {
+            act->setChecked(true);
+        }
+    }
+    m_listMenu->addActions(m_listGroup->actions());
+}
+
+void EditorManager::triggeredListAction(QAction *act)
+{
+    int index = m_listGroup->actions().indexOf(act);
+    if (index < 0) {
+        return;
+    }
+    m_editorTabWidget->setCurrentIndex(index);
 }
 

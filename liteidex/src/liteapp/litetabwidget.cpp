@@ -64,13 +64,10 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     m_tabBarWidget = new QWidget;
 
     m_addTabAct = new QAction(QIcon("icon:images/addpage.png"),tr("Open a new tab"),this);
-    m_listActMenu = new QMenu;
-    m_listActGroup = new QActionGroup(this);
 
     m_listButton = new QToolButton(m_dumpToolBar);
     m_listButton->setToolTip(tr("List All Tabs"));
     m_listButton->setIcon(QIcon("icon:images/listpage.png"));
-    m_listButton->setMenu(m_listActMenu);
     m_listButton->setPopupMode(QToolButton::InstantPopup);
     m_listButton->setStyleSheet("QToolButton::menu-indicator{image:none;}");
 
@@ -94,14 +91,12 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     connect(m_tabBar,SIGNAL(tabMoved(int,int)),this,SLOT(tabMoved(int,int)));
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrentTab()));
     connect(m_addTabAct,SIGNAL(triggered()),this,SIGNAL(tabAddRequest()));
-    connect(m_listActGroup,SIGNAL(triggered(QAction*)),this,SLOT(selectListActGroup(QAction*)));
 
     m_listButton->setEnabled(false);
 }
 
 LiteTabWidget::~LiteTabWidget()
 {
-    delete m_listActMenu;
     delete m_tabBarWidget;
     delete m_dumpToolBar;
 }
@@ -113,15 +108,6 @@ void LiteTabWidget::closeCurrentTab()
         return;
     }
     emit tabCloseRequested(index);
-}
-
-void LiteTabWidget::selectListActGroup(QAction *act)
-{
-    int index = m_listActGroup->actions().indexOf(act);
-    if (index < 0) {
-        return;
-    }
-    setCurrentIndex(index);
 }
 
 int LiteTabWidget::addTab(QWidget *w,const QString & label, const QString &tip)
@@ -138,10 +124,6 @@ int LiteTabWidget::addTab(QWidget *w,const QIcon & icon, const QString & label, 
     if (m_widgetList.size() == 0) {
         m_listButton->setEnabled(true);
     }
-
-    QAction *act = m_listActGroup->addAction(icon,label);
-    act->setCheckable(true);
-    m_listActMenu->addAction(act);
 
     int index = m_tabBar->addTab(icon,label);
     if (!tip.isEmpty()) {
@@ -163,11 +145,6 @@ void LiteTabWidget::removeTab(int index)
         m_widgetList.removeAt(index);
     }
 
-    QAction *act = m_listActGroup->actions().value(index);
-    if (act) {
-        m_listActMenu->removeAction(act);
-        m_listActGroup->removeAction(act);
-    }
     if (m_widgetList.size() == 0) {
         m_listButton->setEnabled(false);
     }
@@ -200,12 +177,13 @@ QWidget *LiteTabWidget::tabBarWidget()
     return m_tabBarWidget;
 }
 
+void LiteTabWidget::setListMenu(QMenu *menu)
+{
+    m_listButton->setMenu(menu);
+}
+
 void LiteTabWidget::setTabText(int index, const QString & text)
 {
-    QAction *act = m_listActGroup->actions().value(index);
-    if (act) {
-        act->setText(text);
-    }
     m_tabBar->setTabText(index,text);
 }
 
@@ -232,11 +210,6 @@ void LiteTabWidget::tabCurrentChanged(int index)
     QWidget *w = m_widgetList.value(index);
     if (w) {
         m_stackedWidget->setCurrentWidget(w);
-    }
-
-    QAction *act = m_listActGroup->actions().value(index);
-    if (act) {
-        act->setChecked(true);
     }
 
     emit currentChanged(index);

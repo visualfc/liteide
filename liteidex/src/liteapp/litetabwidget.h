@@ -83,6 +83,7 @@ public:
     QList<QWidget*> widgetList() const;
     QWidget *stackedWidget();
     QWidget *tabBarWidget();
+    void setListMenu(QMenu *menu);
 signals:
     void currentChanged(int index);
     void tabCloseRequested(int index);
@@ -93,7 +94,6 @@ public slots:
     void tabMoved(int,int);
 public slots:
     void closeCurrentTab();
-    void selectListActGroup(QAction*);
     void tabCurrentChanged(int);
 protected:
     QToolBar        *m_dumpToolBar;
@@ -105,8 +105,6 @@ protected:
     QList<QWidget*>  m_widgetList;
     QAction         *m_closeTabAct;
     QAction         *m_addTabAct;
-    QMenu           *m_listActMenu;
-    QActionGroup    *m_listActGroup;
     QPointer<QWidget>  m_currentWidget;
 };
 

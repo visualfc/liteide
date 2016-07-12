@@ -98,6 +98,8 @@ public slots:
     void updateCurrentPositionInNavigationHistory();
     void moveToNewWindow();
     void focusChanged(QWidget *old,QWidget *now);
+    void aboutToShowListMenu();
+    void triggeredListAction(QAction *act);
 signals:
     void tabAddRequest();
     void doubleClickedTab();
@@ -122,6 +124,8 @@ protected:
     QAction     *m_goBackAct;
     QAction     *m_goForwardAct;
     //QAction     *m_editToolbarAct;
+    QMenu       *m_listMenu;
+    QActionGroup *m_listGroup;
     QMenu       *m_editMenu;
     QMenu       *m_tabContextFileMenu;
     QMenu       *m_tabContextNofileMenu;
