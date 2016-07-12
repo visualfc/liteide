@@ -9,6 +9,7 @@
 	* fix and re-implement editor list menu
 * QuickOpen
 	* QuickOpenFile skip same folder and same files
+	* QuickOpneFile add current editor local files
 
 ### 2016.7.5 Ver X30.1
 * LiteIDE
