@@ -5,7 +5,7 @@
 
 ### 2016.7.12 Ver X30.2
 * LiteApp
-	* add new vs-dard css, thanks [tupunco](https://github.com/tupunco)
+	* add new vs-dark css, thanks [tupunco](https://github.com/tupunco)
 	* fix and re-implement editor list menu
 * QuickOpen
 	* QuickOpenFile skip same folder and same files
