@@ -70,6 +70,14 @@ Example `linux32.env`:
     LITEIDE_TERMARGS=
     LITEIDE_EXEC=/usr/bin/xterm
     LITEIDE_EXECOPT=-e
+	
+## Quick Open
+
+* QuickOpen Ctrl+P
+* QuickOpenEditor Ctrl+Alt+P or QuickOpen window input ~
+* QuickOpenSymbol Ctrl+Shift+O or QuickOpen window input @
+* QuickOpenLines  Ctrl+L or QuickOpen window input :
+* Help QuickOpen window input ?
 
 ## Cross-compilation (Go1.5 or high) 
 Change LiteIDE environment , set GOROOT GOARCH GOOS, build project.
