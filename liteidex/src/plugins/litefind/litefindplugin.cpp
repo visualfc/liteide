@@ -79,8 +79,11 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     actionContext->regAction(m_findPrevAct,"FindPrevious",QKeySequence::FindPrevious);
 
     m_replaceAct = new QAction(tr("Replace"),this);
+#ifdef Q_OS_MAC
+    actionContext->regAction(m_replaceAct,"Replace","ALT+CTRL+F");
+#else
     actionContext->regAction(m_replaceAct,"Replace",QKeySequence::Replace);
-
+#endif
     m_fileSearchAct = new QAction(tr("File Search"),this);
     actionContext->regAction(m_fileSearchAct,"FileSearch","Ctrl+Shift+F");
 

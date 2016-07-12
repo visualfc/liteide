@@ -20,7 +20,7 @@ isEmpty(TARGET) {
 contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
 
 !macx {
-    target.path = /lib
+    target.path = $$LIBPREFIX
     INSTALLS += target
 }
 

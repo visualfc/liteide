@@ -3,6 +3,67 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2016.7.12 Ver X30.2
+* LiteApp
+	* add new vs-dark css, thanks [tupunco](https://github.com/tupunco)
+	* fix and re-implement editor list menu
+* QuickOpen
+	* QuickOpenFile skip same folder and same files
+	* QuickOpneFile add current editor local files
+
+### 2016.7.5 Ver X30.1
+* LiteIDE
+	* add OpenEditor tool windows
+	* add GolangSymbol for QuickOpen (CTRL+SHIFT+O)
+	* fix gotools vendor error
+* LiteApp
+	* add OpenEditor tool windows
+	* update view menu
+* GolangAst
+	* add GolangSymbol for QuickOpen
+	* add GolangSymbol option
+	* fix goto symbol
+* QuickOpen
+	* optimization QuickOpenFile and QuickOpenEditor search
+	* add QuickOpen option		
+* gotools
+	* fix vendor error	
+
+### 2016.7.2 Ver X30
+* LiteIDE
+	* add new QuickOpen plugin
+	* add new FakeVim plugin, thanks for [jsuppe](https://github.com/jsuppe)
+	* add custom env LITEIDE_TOOL_PATH/LITEIDE_PLUGIN_PATH/LITEIDE_RES_PATH
+* LiteApp
+	* action tooltip shortcut show native text
+	* option keyboard map show native text
+* QuickOpen
+	* quick open files action CTRL+P
+	* quick open editor action CTRL+ALT+P
+	* quick go to line action CTRL+L
+	* quick open help
+* FakeVim
+	* editor add vim style mode editing
+* LiteEditor
+	* add goto line start/end action
+	* add goto doc start/end action
+	* add goto previous/next line action
+	* add goto previous/next charater action
+	* add goto previous/next word action
+	* change '' braces only go source
+	* fix codecompleter number first
+	* MacOS fix move line up/down shortcut command+shift+up/down
+* GolangEdit
+	* CTRL+mouse navigate preview source info
+* LiteFind
+	* MacOS fix edit replace shortcut command+shift+F
+* Welcome
+	* fix doc css style
+* gotools
+	* types fix limit parser
+	* types simple field info
+	 
+
 ### 2016.4.15 Ver X29
 * LiteIDE
 	* support for multiple debuggers

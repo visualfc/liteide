@@ -46,10 +46,36 @@
 #endif
 //lite_memory_check_end
 
-Env::Env(QObject *parent) :
-    LiteApi::IEnv(parent)
+static QString updateValue(const QString &value,const QProcessEnvironment &env)
 {
+    QString v = value;
+    QRegExp rx("\\$\\((\\w+)\\)");
+    int pos = 0;
+    QStringList list;
+    while ((pos = rx.indexIn(v, pos)) != -1) {
+         list << rx.cap(1);
+         pos += rx.matchedLength();
+    }
+    foreach (QString str, list) {
+         if (env.contains(str)) {
+            v.replace("$("+str+")",env.value(str));
+        }
+    }
+    return v;
+}
+
+Env::Env(LiteApi::IApplication *app, QObject *parent) :
+    LiteApi::IEnv(parent), m_liteApp(app)
+{
+    m_ideEnvMap.insert("LITEIDE_ROOT_PATH",app->rootPath());
+    m_ideEnvMap.insert("LITEIDE_APP_PATH",app->applicationPath());
+    m_ideEnvMap.insert("LITEIDE_TOOL_PATH",app->toolPath());
+    m_ideEnvMap.insert("LITEIDE_RES_PATH",app->resourcePath());
+    m_ideEnvMap.insert("LITEIDE_PLUGIN_PATH",app->pluginPath());
+
     m_env = QProcessEnvironment::systemEnvironment();
+    updateIdeEnv(m_env);
+
     m_process = 0;
 }
 
@@ -126,6 +152,8 @@ void Env::loadGoEnv()
 void Env::loadEnvFile(QIODevice *dev)
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    updateIdeEnv(env);
+
     m_orgEnvLines.clear();
 #ifdef Q_OS_WIN
     QRegExp rx("\\%([\\w]+)\\%");
@@ -157,6 +185,9 @@ void Env::loadEnvFile(QIODevice *dev)
                 value.replace(cap0.at(i),env.value(cap1.at(i)));
             }
         }
+        if (value.contains("$")) {
+            value = updateValue(value,env);
+        }
         env.insert(key,value);
     }
     m_env = env;
@@ -169,7 +200,7 @@ void Env::loadEnv(EnvManager *manager, const QString &filePath)
         return;
     }
 
-    Env *env = new Env(manager);
+    Env *env = new Env(manager->application(),manager);
     env->m_filePath = filePath;
     env->m_id = QFileInfo(filePath).baseName();
     env->loadEnvFile(&f);
@@ -204,6 +235,15 @@ void Env::readStderr()
 {
     QByteArray data = m_process->readAllStandardError();
     emit goenvError(m_id,QString::fromUtf8(data));
+}
+
+void Env::updateIdeEnv(QProcessEnvironment &env)
+{
+    QMapIterator<QString,QString> i(m_ideEnvMap);
+    while(i.hasNext()) {
+        i.next();
+        env.insert(i.key(),i.value());
+    }
 }
 
 EnvManager::EnvManager(QObject *parent)
@@ -369,8 +409,10 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     QAction *reloadAct = new QAction(QIcon("icon:liteenv/images/reload.png"),tr("Reload current environment"),this);
     m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,reloadAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,editAct);
+
+    m_liteApp->actionManager()->setViewMenuSeparator("sep/env",true);
+    m_liteApp->actionManager()->insertViewMenuAction(reloadAct,"sep/env");
+    m_liteApp->actionManager()->insertViewMenuAction(editAct,"sep/env");
 
     foreach (LiteApi::IEnv *env, m_envList) {
         m_envCmb->addItem(env->id());

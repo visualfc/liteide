@@ -235,7 +235,7 @@ void AstWidget::gotoItemDefinition(GolangAstItem *item)
     }
     AstItemPos pos = item->m_posList.at(0);
     QFileInfo info(QDir(m_workPath),pos.fileName);
-    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column,true,true);
+    LiteApi::gotoLine(m_liteApp,info.filePath(),pos.line-1,pos.column-1,true,true);
     return;
 //    LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(info.filePath());
 //    if (!editor) {
@@ -351,15 +351,8 @@ static LiteApi::ASTTAG_ENUM toTagFlag(const QString &tag)
     return LiteApi::TagNone;
 }
 
-// level,tag,name,pos,@info
-void AstWidget::updateModel(const QByteArray &data)
+void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, bool flatMode, bool skipimport)
 {
-    //save state
-    SymbolTreeState state;
-    m_tree->saveState(&state);
-
-    m_model->clear();
-
     QList<QString> array = QString::fromUtf8(data).split('\n');
     QMap<int,QStandardItem*> items;
     QStringList indexFiles;
@@ -390,6 +383,9 @@ void AstWidget::updateModel(const QByteArray &data)
         if (name.isEmpty() || tag.isEmpty()) {
             continue;
         }
+        if (flatMode && tag.startsWith("+")) {
+            continue;
+        }
         if (level == 0) {
             level1NameItemMap.clear();
         }
@@ -402,6 +398,12 @@ void AstWidget::updateModel(const QByteArray &data)
             if (name == "documentation") {
                 continue;
             }
+            if (flatMode) {
+                continue;
+            }
+        }
+        if (skipimport && tag == "mm") {
+            continue;
         }
         GolangAstItem *item = 0;
         if (level == 1) {
@@ -451,12 +453,31 @@ void AstWidget::updateModel(const QByteArray &data)
         }
         QStandardItem *parent = items.value(level-1,0);
         if (parent ) {
-            parent->appendRow(item);
+            if (flatMode) {
+                if (tag == "tv") {
+                    item->setText(parent->text()+"."+item->text());
+                }
+                model->appendRow(item);
+            } else {
+                parent->appendRow(item);
+            }
         } else {
-            m_model->appendRow(item);
+            model->appendRow(item);
         }
         items[level] = item;
     }
+}
+
+// level,tag,name,pos,@info
+void AstWidget::updateModel(const QByteArray &data)
+{
+    //save state
+    SymbolTreeState state;
+    m_tree->saveState(&state);
+
+    m_model->clear();
+
+    parserModel(m_model,data,false,false);
 
     //load state
     if (!m_tree->isExpanded(m_tree->rootIndex())) {

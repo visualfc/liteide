@@ -61,6 +61,8 @@ public:
     virtual void removeToolBar(QToolBar* toolBar);
     virtual QList<QString> toolBarList() const;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act);
+    virtual void setViewMenuSeparator(const QString &sepid, bool group);
+    virtual void insertViewMenuAction(QAction *act, const QString &sepid);
     virtual IActionContext *getActionContext(QObject *obj, const QString &name);
     virtual QStringList actionKeys() const;
     virtual ActionInfo *actionInfo(const QString &id) const;
@@ -72,9 +74,11 @@ protected slots:
 public:
     static QList<QKeySequence> toShortcuts(const QString &ks);
     static QString formatShortcutsString(const QString &ks);
+    static QString formatShortcutsNativeString(const QString &ks);
 protected:
     QMap<QString,QMenu*>   m_idMenuMap;
     QMap<QString,QToolBar*> m_idToolBarMap;
+    QMap<QString,QAction*> m_idSeperatorMap;
     QMenu *m_viewMenu;
     QAction *m_baseToolBarAct;
     QAction *m_baseBrowserAct;

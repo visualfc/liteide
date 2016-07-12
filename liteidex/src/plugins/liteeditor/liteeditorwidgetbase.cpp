@@ -1488,6 +1488,80 @@ void LiteEditorWidgetBase::gotoLineEndWithSelection()
     moveCursor(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
 }
 
+void LiteEditorWidgetBase::gotoNextLine()
+{
+    moveCursor(QTextCursor::Down);
+}
+
+void LiteEditorWidgetBase::gotoNextLineWithSelection()
+{
+    moveCursor(QTextCursor::Down, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoPreviousLine()
+{
+    moveCursor(QTextCursor::Up);
+}
+
+void LiteEditorWidgetBase::gotoPreviousLineWithSelection()
+{
+    moveCursor(QTextCursor::Up, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoPreviousCharacter()
+{
+    moveCursor(QTextCursor::PreviousCharacter);
+}
+
+void LiteEditorWidgetBase::gotoPreviousCharacterWithSelection()
+{
+    moveCursor(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoNextCharacter()
+{
+    moveCursor(QTextCursor::NextCharacter);
+}
+
+void LiteEditorWidgetBase::gotoNextCharacterWithSelection()
+{
+    moveCursor(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+}
+
+void LiteEditorWidgetBase::gotoPreviousWord()
+{
+    moveCursor(QTextCursor::PreviousWord);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoPreviousWordWithSelection()
+{
+    moveCursor(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoNextWord()
+{
+    moveCursor(QTextCursor::NextWord);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoNextWordWithSelection()
+{
+    moveCursor(QTextCursor::NextWord, QTextCursor::KeepAnchor);
+    setTextCursor(textCursor());
+}
+
+void LiteEditorWidgetBase::gotoDocStart()
+{
+    moveCursor(QTextCursor::Start);
+}
+
+void LiteEditorWidgetBase::gotoDocEnd()
+{
+    moveCursor(QTextCursor::End);
+}
+
 void LiteEditorWidgetBase::duplicate()
 {
     QTextCursor cursor = textCursor();
@@ -2217,6 +2291,10 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_Up:
         case Qt::Key_Down:
+            if ((e->modifiers() & Qt::ControlModifier) && (e->modifiers()&Qt::ShiftModifier)) {
+                this->moveLineUpDown(e->key() == Qt::Key_Up);
+                return;
+            }
             if (e->modifiers() & Qt::ControlModifier) {
                 verticalScrollBar()->triggerAction(
                         e->key() == Qt::Key_Up ? QAbstractSlider::SliderSingleStepSub :
@@ -2324,9 +2402,10 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         } else if (m_autoBraces4 && keyText == "\"") {
             mr = "\"";
         } else if (m_autoBraces5 && keyText == "`") {
-            mr = "`";
+            if (m_mimeType == "text/x-gosrc") {
+                mr = "`";
+            }
         }
-
         if (m_textLexer->isInStringOrComment(this->textCursor())) {
             QPlainTextEdit::keyPressEvent(e);
             return;

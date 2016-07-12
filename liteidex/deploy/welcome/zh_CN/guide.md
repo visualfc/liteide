@@ -75,8 +75,21 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
     LITEIDE_TERMARGS=
     LITEIDE_EXEC=/usr/bin/xterm
     LITEIDE_EXECOPT=-e
+	
+## 快速打开窗口
 
-## 交叉编译
+* 快速打开 Ctrl+P
+* 快速打开文档 Ctrl+Alt+P 或者在快速打开窗口输入 ~
+* 快速跳转符号 Ctrl+Shift+O 或者在快速打开窗口输入 @
+* 快速跳转到行  Ctrl+L 或者在快速打开窗口输入 :
+* 获取帮助 在快速打开窗口输入 ?
+	
+
+## 交叉编译 (Go1.5或更高版本)
+
+选择LiteIDE的环境并设置相应的GOROOT、GOARCH、GOOS，重新编译即可。
+
+## 交叉编译 (Go1.5之前)
 
 必须先建立交叉编译器所需要的平台和架构。如果你不这样做，将出现类似下面的错误：
 

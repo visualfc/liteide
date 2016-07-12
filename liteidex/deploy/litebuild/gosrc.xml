@@ -3,7 +3,7 @@
 	<mime-type type="text/x-gosrc" id="go tool" work="$(BUILD_DIR_PATH)" lock="dir" ver="2">
 		<config id="Go" name="GO" value="go"/>
 		<config id="GoFmt" name="GOFMT" value="gofmt"/>
-		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_BIN_DIR)/gotools"/>
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
 		<config id="TargetName" name = "TARGETNAME" value="$(BUILD_DIR_NAME)"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>

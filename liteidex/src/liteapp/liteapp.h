@@ -42,8 +42,10 @@ class MimeTypeManager;
 class OptionManager;
 class ToolWindowManager;
 class HtmlWidgetManager;
+class QuickOpenManager;
 class QSettings;
 class QSplitter;
+class QComboBox;
 class LiteAppOptionFactory;
 
 
@@ -52,6 +54,7 @@ class LiteApp : public IApplication
     Q_OBJECT
 public:
     static QString getRootPath();
+    static QString getToolPath();
     static QString getPluginPath();
     static QString getResoucePath();
     static QString getStoragePath();
@@ -77,8 +80,10 @@ public:
     virtual QSettings *settings();
     virtual QMap<QString,QVariant> &globalCookie();
 
-    virtual QString resourcePath() const;
+    virtual QString rootPath() const;
     virtual QString applicationPath() const;
+    virtual QString toolPath() const;
+    virtual QString resourcePath() const;
     virtual QString pluginPath() const;
     virtual QString storagePath() const;
 
@@ -121,7 +126,9 @@ protected slots:
     void exit();
     void applyOption(QString id);
 protected:
+    QString         m_rootPath;
     QString         m_applicationPath;
+    QString         m_toolPath;
     QString         m_pluginPath;
     QString         m_resourcePath;
     QString         m_storagePath;

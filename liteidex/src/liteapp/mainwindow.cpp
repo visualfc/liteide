@@ -160,14 +160,12 @@ void MainWindow::currentEditorChanged(IEditor *editor)
         if (editor->isModified()) {
             title += " * ";
         }
-        connect(editor,SIGNAL(modificationChanged(bool)),this,SLOT(editorModifyChanged(bool)));
     }
     this->setWindowTitle(QDir::toNativeSeparators(title));
 }
 
-void MainWindow::editorModifyChanged(bool b)
+void MainWindow::editorModifyChanged(IEditor *editor, bool b)
 {
-    IEditor *editor = (IEditor*)sender();
     QString title = "LiteIDE";
     if (editor && !editor->filePath().isEmpty()) {
         title += " - " + editor->filePath();

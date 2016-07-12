@@ -40,6 +40,7 @@
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QTextCursor>
+#include <QAbstractItemModel>
 
 class ColorStyle;
 class ColorStyleScheme;
@@ -101,6 +102,10 @@ public:
         m_liteApp = app;
         return true;
     }
+    virtual IApplication* application() {
+        return m_liteApp;
+    }
+
 protected:
     IApplication *m_liteApp;
 };
@@ -309,6 +314,7 @@ public:
     virtual QString textAt(int pos, int length) const = 0;
     virtual QRect cursorRect(int pos = -1) const = 0;
     virtual QTextCursor textCursor() const = 0;
+    virtual QTextDocument *document() const = 0;
 };
 
 inline ITextEditor *getTextEditor(IEditor *editor)
@@ -406,6 +412,7 @@ signals:
     void editorAboutToClose(LiteApi::IEditor *editor);
     void editorAboutToSave(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
+    void editorModifyChanged(LiteApi::IEditor *editor, bool b);
     void colorStyleSchemeChanged();
     void editToolbarVisibleChanged(bool visible);
 };
@@ -601,6 +608,8 @@ public:
     virtual void removeToolBar(QToolBar* toolBar) = 0;
     virtual QList<QString> toolBarList() const = 0;
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act) = 0;
+    virtual void setViewMenuSeparator(const QString &sepid, bool group = false) = 0;
+    virtual void insertViewMenuAction(QAction *act, const QString &sepid) = 0;
     virtual IActionContext *getActionContext(QObject *obj, const QString &name) = 0;
     virtual QStringList actionKeys() const = 0;
     virtual ActionInfo *actionInfo(const QString &id) const = 0;
@@ -649,8 +658,10 @@ public:
     virtual QSettings *settings() = 0;
     virtual QMap<QString,QVariant> &globalCookie() = 0; //global cookie
 
-    virtual QString resourcePath() const = 0;
+    virtual QString rootPath() const = 0;
     virtual QString applicationPath() const = 0;
+    virtual QString toolPath() const = 0;
+    virtual QString resourcePath() const = 0;
     virtual QString pluginPath() const = 0;
     virtual QString storagePath() const = 0;
 
@@ -813,9 +824,9 @@ inline IWebKitBrowser *getWebKitBrowser(LiteApi::IApplication *app)
 inline QString getGotools(LiteApi::IApplication *app)
 {
 #ifdef Q_OS_WIN
-    return app->applicationPath()+"/gotools.exe";
+    return app->toolPath()+"/gotools.exe";
 #else
-    return app->applicationPath()+"/gotools";
+    return app->toolPath()+"/gotools";
 #endif
 }
 
@@ -826,7 +837,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory/X29")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X30.1")
 
 
 #endif //__LITEAPI_H__

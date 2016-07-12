@@ -48,6 +48,7 @@ public:
     }
     GolangAstItem *astItemFromIndex(QModelIndex index);
     SymbolTreeView *tree() { return m_tree; }
+    static void parserModel(QStandardItemModel *model, const QByteArray &data, bool flatMode, bool skipimport);
 public slots:
     bool filterModel(QString filter, QModelIndex parent, QModelIndex &first);
     void clearFilter(QModelIndex parent);

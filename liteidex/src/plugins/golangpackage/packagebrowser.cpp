@@ -94,7 +94,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_openSrcAct = new QAction(tr("Open Source File"),this);
     m_copyNameAct = new QAction(tr("Copy Name to Clipboard"),this);
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_setupGopathAct);
+    m_liteApp->actionManager()->insertViewMenuAction(m_setupGopathAct,"sep/option");
 
     m_rootMenu->addAction(m_reloadAct);
     m_rootMenu->addAction(m_setupGopathAct);

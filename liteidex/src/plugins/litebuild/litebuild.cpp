@@ -324,9 +324,11 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_checkBoxLockBuild,SIGNAL(toggled(bool)),this,SLOT(lockBuildRoot(bool)));
 
-    m_liteAppInfo.insert("LITEAPPDIR",m_liteApp->applicationPath());
-    m_liteAppInfo.insert("LITEIDE_BIN_DIR",m_liteApp->applicationPath());
-    m_liteAppInfo.insert("LITEIDE_RES_DIR",m_liteApp->resourcePath());
+    m_liteAppInfo.insert("LITEIDE_ROOT_PATH",m_liteApp->rootPath());
+    m_liteAppInfo.insert("LITEIDE_APP_PATH",m_liteApp->applicationPath());
+    m_liteAppInfo.insert("LITEIDE_RES_PATH",m_liteApp->resourcePath());
+    m_liteAppInfo.insert("LITEIDE_PLUGIN_PATH",m_liteApp->pluginPath());
+    m_liteAppInfo.insert("LITEIDE_TOOL_PATH",m_liteApp->toolPath());
 
     m_liteApp->extension()->addObject("LiteApi.ILiteBuild",this);
 

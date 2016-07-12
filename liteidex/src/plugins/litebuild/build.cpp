@@ -124,7 +124,7 @@ void Build::make()
     foreach(LiteApi::BuildAction *ba, m_actionList) {
         QString id = ba->menu();
         if (!id.isEmpty()) {
-            QMenu *menu = m_idMenuMap.value(id);
+            QMenu *menu = m_idMenuMap[id];
             if (!menu) {
                 menu = new QMenu;
                 m_idMenuMap.insert(id,menu);
@@ -136,7 +136,7 @@ void Build::make()
         QAction *act = this->makeAction(ba);        
         QString idMenu = ba->menu();
         if (idMenu.isEmpty()) {
-            QMenu *menu = m_idMenuMap.value(ba->id());
+            QMenu *menu = m_idMenuMap[ba->id()];
             if (menu) {
                 QAction *menuAction = menu->menuAction();
                 menuAction->setObjectName(act->objectName());
@@ -152,7 +152,7 @@ void Build::make()
                 m_actions.append(act);
             }
         } else {
-            QMenu *menu = m_idMenuMap.value(idMenu);
+            QMenu *menu = m_idMenuMap[idMenu];
             if (menu) {
                 menu->addAction(act);
             } else {

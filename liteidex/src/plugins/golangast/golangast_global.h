@@ -32,4 +32,9 @@
 #  define GOLANGASTSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define OPTION_GOLANGAST "option/golangast"
+
+#define GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE "golangast/quickopensymbolmatchcase"
+#define GOLANGAST_QUICKOPNE_SYMBOL_IMPORTPATH "golangast/quickopensymbolimportpath"
+
 #endif // GOLANGAST_GLOBAL_H

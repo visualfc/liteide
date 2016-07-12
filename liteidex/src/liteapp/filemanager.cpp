@@ -625,7 +625,7 @@ void FileManager::triggeredSyncEditor(bool b)
 
 void FileManager::updateRecentFileActions(const QString &scheme)
 {
-    QMenu *menu = m_schemeMenuMap.value(scheme);
+    QMenu *menu = m_schemeMenuMap.value(scheme,0);
     if (!menu) {
 		QString name = schemeName(scheme);
         QAction *act = new QAction(name,this);

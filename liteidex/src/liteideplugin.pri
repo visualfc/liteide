@@ -33,7 +33,7 @@ contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
 CONFIG += plugin plugin_with_soname
 
 !macx {
-    target.path = /plugins
+    target.path = $$PLUGINPREFIX
     INSTALLS += target
 }
 

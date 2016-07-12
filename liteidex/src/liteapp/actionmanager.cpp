@@ -197,6 +197,27 @@ void ActionManager::insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act)
     }
 }
 
+void ActionManager::setViewMenuSeparator(const QString &sepid, bool group)
+{
+    if (sepid.isEmpty()) {
+        return;
+    }
+    if (m_idSeperatorMap.contains(sepid)) {
+        return;
+    }
+    if (group) {
+        m_viewMenu->addSeparator();
+    }
+    QAction *sep = m_viewMenu->addSeparator();
+    m_idSeperatorMap.insert(sepid,sep);
+}
+
+void ActionManager::insertViewMenuAction(QAction *act, const QString &sepid)
+{
+    QAction *sep = m_idSeperatorMap[sepid];
+    m_viewMenu->insertAction(sep,act);
+}
+
 IActionContext *ActionManager::getActionContext(QObject *obj, const QString &name)
 {
     IActionContext *context = m_objContextMap.value(obj);
@@ -276,6 +297,16 @@ QString ActionManager::formatShortcutsString(const QString &ks)
         ksList.append(k.toString());
     }
     return ksList.join("; ");
+}
+
+QString ActionManager::formatShortcutsNativeString(const QString &ks)
+{
+    QStringList ksList;
+    foreach(QKeySequence k, toShortcuts(ks)) {
+        ksList.append(k.toString(QKeySequence::NativeText));
+    }
+    return ksList.join("; ");
+
 }
 
 void ActionManager::setActionShourtcuts(const QString &id, const QString &shortcuts)
@@ -361,7 +392,7 @@ void ActionContext::regAction(QAction *act, const QString &id, const QString &de
         info->label = act->text();
         act->setShortcuts(info->keys);
         if (!info->ks.isEmpty()) {
-            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(info->ks));
+            act->setToolTip(QString("%1 (%2)").arg(act->text()).arg(ActionManager::formatShortcutsNativeString(info->ks)));
         }
         info->action = act;
     } else {
@@ -395,7 +426,7 @@ void ActionContext::setActionShourtcuts(const QString &id, const QString &shortc
     if (info->action) {
         info->action->setShortcuts(info->keys);
         if (!info->ks.isEmpty()) {
-            info->action->setToolTip(QString("%1 (%2)").arg(info->action->text()).arg(info->ks));
+            info->action->setToolTip(QString("%1 (%2)").arg(info->action->text()).arg(ActionManager::formatShortcutsNativeString(info->ks)));
         }
     }
     if (info->ks != info->defks) {

@@ -34,6 +34,9 @@ class LiteTabWidget;
 class QStackedWidget;
 class QToolButton;
 class QLabel;
+class QStandardItemModel;
+class OpenEditorsWidget;
+class QTreeView;
 
 struct EditLocation {
     QString filePath;
@@ -95,6 +98,8 @@ public slots:
     void updateCurrentPositionInNavigationHistory();
     void moveToNewWindow();
     void focusChanged(QWidget *old,QWidget *now);
+    void aboutToShowListMenu();
+    void triggeredListAction(QAction *act);
 signals:
     void tabAddRequest();
     void doubleClickedTab();
@@ -110,6 +115,8 @@ protected:
     QWidget      *m_widget;
     LiteTabWidget *m_editorTabWidget;
     QMap<QWidget *, IEditor *> m_widgetEditorMap;
+    QStandardItemModel         *m_editorModel;
+    OpenEditorsWidget          *m_openEditorWidget;
     QPointer<IEditor> m_currentEditor;
     QList<IEditorFactory*>    m_factoryList;
     QMap<IEditor*,QAction*>   m_browserActionMap;
@@ -117,6 +124,8 @@ protected:
     QAction     *m_goBackAct;
     QAction     *m_goForwardAct;
     //QAction     *m_editToolbarAct;
+    QMenu       *m_listMenu;
+    QActionGroup *m_listGroup;
     QMenu       *m_editMenu;
     QMenu       *m_tabContextFileMenu;
     QMenu       *m_tabContextNofileMenu;

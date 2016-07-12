@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>552</width>
-    <height>394</height>
+    <height>459</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -106,7 +106,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/kan.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/li.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -119,7 +119,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/kan.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/li.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

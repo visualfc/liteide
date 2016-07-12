@@ -43,10 +43,13 @@
 #include <QTextCodec>
 #include <QClipboard>
 #include <QLabel>
+#include <QStandardItemModel>
+#include <QHeaderView>
 #include <QDebug>
 #include "litetabwidget.h"
 #include "fileutil/fileutil.h"
 #include "liteapp.h"
+#include "openeditorswidget.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -64,6 +67,7 @@ EditorManager::~EditorManager()
     delete m_tabContextFileMenu;
     delete m_tabContextNofileMenu;
     delete m_editorTabWidget;
+    delete m_listMenu;
     m_browserActionMap.clear();
     if (!m_nullMenu->parent()) {
         delete m_nullMenu;
@@ -79,8 +83,26 @@ bool EditorManager::initWithApp(IApplication *app)
     m_nullMenu->setEnabled(false);
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
+
     m_widget = new QWidget;
+    //create editor tab widget
     m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
+
+    //create list menu
+    m_listMenu = new QMenu;
+    m_listGroup = new QActionGroup(this);
+    m_editorTabWidget->setListMenu(m_listMenu);
+    connect(m_listMenu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowListMenu()));
+    connect(m_listGroup,SIGNAL(triggered(QAction*)),this,SLOT(triggeredListAction(QAction*)));
+
+    //create editor model
+    m_editorModel = new QStandardItemModel(this);
+
+    //create opne editor for model
+    m_openEditorWidget = new OpenEditorsWidget(app);
+    m_openEditorWidget->setEditorModel(m_editorModel);
+
+    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_openEditorWidget,"OpenEditor",tr("OpenEditor"),true);
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
@@ -88,7 +110,6 @@ bool EditorManager::initWithApp(IApplication *app)
     //m_editorTabWidget->tabBar()->setIconSize(LiteApi::getToolBarIconSize());
 //    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border:1px solid} QTabBar::close-button {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}"
 //                                               );
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(1);
     mainLayout->setSpacing(0);
@@ -190,8 +211,9 @@ void EditorManager::createActions()
     actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
 #endif
 
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_goBackAct);
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,m_goForwardAct);
+    m_liteApp->actionManager()->setViewMenuSeparator("sep/nav",true);
+    m_liteApp->actionManager()->insertViewMenuAction(m_goBackAct,"sep/nav");
+    m_liteApp->actionManager()->insertViewMenuAction(m_goForwardAct,"sep/nav");
 
     updateNavigatorActions();
 
@@ -245,6 +267,12 @@ QList<IEditor*> EditorManager::sortedEditorList() const
     return editorList;
 }
 
+class EditorItem : public QStandardItem
+{
+public:
+    LiteApi::IEditor    *editor;
+};
+
 void EditorManager::addEditor(IEditor *editor)
 {
     QWidget *w = m_widgetEditorMap.key(editor);
@@ -262,6 +290,11 @@ void EditorManager::addEditor(IEditor *editor)
         if (context) {
             this->addEditContext(context);
         }
+        if (!editor->filePath().isEmpty()) {
+            QStandardItem *item = new QStandardItem(editor->name());
+            item->setToolTip(editor->filePath());
+            m_editorModel->appendRow(QList<QStandardItem*>() << item);
+        }
     }
 }
 
@@ -269,7 +302,11 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *e = static_cast<QKeyEvent*>(event);
+#ifdef Q_OS_MAC
+        if ( (e->modifiers() & Qt::ALT) &&
+#else
         if ( (e->modifiers() & Qt::CTRL) &&
+#endif
              ( e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) ) {
             int index = m_editorTabWidget->tabBar()->currentIndex();
             if (e->key() == Qt::Key_Tab) {
@@ -350,50 +387,60 @@ void EditorManager::activeBrowser(IEditor *editor)
 
 bool EditorManager::closeEditor(IEditor *editor)
 {
-    IEditor *cur = 0;
-    if (editor) {
-        cur = editor;
-    } else {
-        cur = m_currentEditor;
+    if (!editor) {
+        editor = m_currentEditor;
     }
-    if (cur == 0) {
+    if (editor == 0) {
         return false;
     }
 
-    if (cur->isModified() && !cur->isReadOnly()) {
-        QString text = QString(tr("Save changes to %1?")).arg(cur->filePath());
+    if (editor->isModified() && !editor->isReadOnly()) {
+        QString text = QString(tr("Save changes to %1?")).arg(editor->filePath());
         int ret = QMessageBox::question(m_widget,tr("Unsaved Modifications"),text,QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
         if (ret == QMessageBox::Cancel) {
             return false;
         } else if (ret == QMessageBox::Save) {
             //cur->save();
-            saveEditor(cur);
+            saveEditor(editor);
         }
     }
 
-    if (!cur->filePath().isEmpty()) {
-        m_liteApp->settings()->setValue(QString("state_%1").arg(cur->filePath()),cur->saveState());
+    if (!editor->filePath().isEmpty()) {
+        m_liteApp->settings()->setValue(QString("state_%1").arg(editor->filePath()),editor->saveState());
     }
-    emit editorAboutToClose(cur);
-    int index = m_editorTabWidget->indexOf(cur->widget());
+    int index = m_editorTabWidget->indexOf(editor->widget());
+    if (index < 0) {
+        return false;
+    }
+    emit editorAboutToClose(editor);
     m_editorTabWidget->removeTab(index);
-    m_widgetEditorMap.remove(cur->widget());
+    m_widgetEditorMap.remove(editor->widget());
+    QString filePath = editor->filePath();
+    if (!filePath.isEmpty()) {
+        for (int i = 0; i < m_editorModel->rowCount(); i++) {
+            QStandardItem *item = m_editorModel->item(i,0);
+            if (item->toolTip() == filePath) {
+                m_editorModel->removeRow(i);
+                break;
+            }
+        }
+    }
 
     QMapIterator<IEditor*,QAction*> i(m_browserActionMap);
     while (i.hasNext()) {
         i.next();
-        if (i.key() == cur) {
+        if (i.key() == editor) {
             i.value()->blockSignals(true);
             i.value()->setChecked(false);
             i.value()->blockSignals(false);
             return true;
         }
     }
-    LiteApi::IEditContext *context = LiteApi::getEditContext(cur);
+    LiteApi::IEditContext *context = LiteApi::getEditContext(editor);
     if (context) {
         this->removeEditContext(context);
     }
-    cur->deleteLater();
+    editor->deleteLater();
     return true;
 }
 
@@ -627,6 +674,7 @@ void EditorManager::modificationChanged(bool b)
     IEditor *editor = static_cast<IEditor*>(sender());
     if (editor) {
         QString text = editor->name();
+        QString filePath = editor->filePath();
         if (b) {
             text += " *";
         }
@@ -634,6 +682,14 @@ void EditorManager::modificationChanged(bool b)
         if (index >= 0) {
             m_editorTabWidget->setTabText(index,text);
         }
+        for (int i = 0; i < m_editorModel->rowCount(); i++) {
+            QStandardItem *item = m_editorModel->item(i,0);
+            if (item->toolTip() == filePath) {
+                item->setText(text);
+                break;
+            }
+        }
+        emit editorModifyChanged(editor,b);        
     }
 }
 
@@ -968,3 +1024,35 @@ void EditorManager::focusChanged(QWidget *old, QWidget *now)
         context->focusToolBar()->setEnabled(false);
     }
 }
+
+void EditorManager::aboutToShowListMenu()
+{
+    m_listMenu->clear();
+    QList<QAction*> actions = m_listGroup->actions();
+    qDeleteAll(actions);
+
+    foreach (QWidget *widget, m_editorTabWidget->widgetList()) {
+        LiteApi::IEditor *editor = m_widgetEditorMap.value(widget);
+        if (!editor) {
+            continue;
+        }
+        QAction *act = new QAction(editor->name()+"\t"+editor->filePath(),m_listGroup);
+        act->setCheckable(true);
+        act->setToolTip(editor->filePath());
+        m_listGroup->addAction(act);
+        if (m_currentEditor == editor) {
+            act->setChecked(true);
+        }
+    }
+    m_listMenu->addActions(m_listGroup->actions());
+}
+
+void EditorManager::triggeredListAction(QAction *act)
+{
+    int index = m_listGroup->actions().indexOf(act);
+    if (index < 0) {
+        return;
+    }
+    m_editorTabWidget->setCurrentIndex(index);
+}
+

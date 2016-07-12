@@ -106,10 +106,25 @@ public slots:
 public slots:
     void gotoMatchBrace();
     void gotoLine(int line, int column, bool center);
+
     void gotoLineStart();
     void gotoLineStartWithSelection();
     void gotoLineEnd();
     void gotoLineEndWithSelection();
+    void gotoNextLine();
+    void gotoNextLineWithSelection();
+    void gotoPreviousLine();
+    void gotoPreviousLineWithSelection();
+    void gotoPreviousCharacter();
+    void gotoPreviousCharacterWithSelection();
+    void gotoNextCharacter();
+    void gotoNextCharacterWithSelection();
+    void gotoPreviousWord();
+    void gotoPreviousWordWithSelection();
+    void gotoNextWord();
+    void gotoNextWordWithSelection();
+    void gotoDocStart();
+    void gotoDocEnd();
 
     void duplicate();
 
@@ -151,6 +166,10 @@ public slots:
 public:
     void setMaxTipInfoLines(int maxLines) {
         m_maxTipInfoLines = maxLines;
+    }
+
+    void setMimeType(const QString &mime) {
+        m_mimeType = mime;
     }
 
     void setAutoIndent(bool b){
@@ -291,6 +310,7 @@ protected:
     QRegExp m_findExpression;
     QTextDocument::FindFlags m_findFlags;
     LiteApi::Link       m_currentLink;
+    QString m_mimeType;
     bool m_moveLineUndoHack;
     bool m_defaultWordWrap;
     bool m_wordWrapOverridden;

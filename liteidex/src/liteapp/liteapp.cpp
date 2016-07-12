@@ -54,6 +54,8 @@
 #include <QTextBlock>
 #include <QTimer>
 #include <QPainter>
+#include <QComboBox>
+#include <QProcessEnvironment>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -65,7 +67,7 @@
 #endif
 //lite_memory_check_end
 
-#define LITEIDE_VERSION "X29"
+#define LITEIDE_VERSION "X30.2"
 
 QString LiteApp::getRootPath()
 {
@@ -74,8 +76,23 @@ QString LiteApp::getRootPath()
     return rootDir.canonicalPath();
 }
 
+QString LiteApp::getToolPath()
+{
+    static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString path = env.value("LITEIDE_TOOL_PATH");
+    if (!path.isEmpty()) {
+        return path;
+    }
+    return QApplication::applicationDirPath();
+}
+
 QString LiteApp::getPluginPath()
 {
+    static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString path = env.value("LITEIDE_PLUGIN_PATH");
+    if (!path.isEmpty()) {
+        return path;
+    }
     QString root = getRootPath();
 #ifdef Q_OS_MAC
     return root+"/PlugIns";
@@ -86,6 +103,11 @@ QString LiteApp::getPluginPath()
 
 QString LiteApp::getResoucePath()
 {
+    static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString path = env.value("LITEIDE_RES_PATH");
+    if (!path.isEmpty()) {
+        return path;
+    }
     QString root = getRootPath();
 #ifdef Q_OS_MAC
     return root+"/Resources";
@@ -120,7 +142,9 @@ PluginManager *LiteApp::pluginManager()
 QMap<QString,QVariant> LiteApp::m_cookie;
 
 LiteApp::LiteApp()
-    : m_applicationPath(QApplication::applicationDirPath()),
+    : m_rootPath(LiteApp::getRootPath()),
+      m_applicationPath(QApplication::applicationDirPath()),
+      m_toolPath(LiteApp::getToolPath()),
       m_pluginPath(LiteApp::getPluginPath()),
       m_resourcePath(LiteApp::getResoucePath()),
       m_storagePath(LiteApp::getStoragePath())
@@ -148,8 +172,8 @@ LiteApp::LiteApp()
     m_htmlWidgetManager = new HtmlWidgetManager;
     m_actionManager = new ActionManager;
     m_projectManager = new ProjectManager;
-    m_editorManager = new EditorManager;
     m_fileManager = new FileManager;
+    m_editorManager = new EditorManager;
     m_mimeTypeManager = new MimeTypeManager;
     m_optionManager = new OptionManager;
 
@@ -161,9 +185,9 @@ LiteApp::LiteApp()
     m_toolWindowManager->initWithApp(this);
     m_mimeTypeManager->initWithApp(this);
     m_projectManager->initWithApp(this);
-    m_editorManager->initWithApp(this);
     m_fileManager->initWithApp(this);
-    m_optionManager->initWithApp(this);        
+    m_editorManager->initWithApp(this);
+    m_optionManager->initWithApp(this);
 
     //m_mainwindow->setCentralWidget(m_editorManager->widget());
     m_mainwindow->splitter()->addWidget(m_editorManager->widget());
@@ -186,6 +210,7 @@ LiteApp::LiteApp()
     connect(m_projectManager,SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(currentProjectChanged(LiteApi::IProject*)));
     connect(m_editorManager,SIGNAL(currentEditorChanged(LiteApi::IEditor*)),m_projectManager,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_editorManager,SIGNAL(currentEditorChanged(LiteApi::IEditor*)),m_mainwindow,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+    connect(m_editorManager,SIGNAL(editorModifyChanged(LiteApi::IEditor*,bool)),m_mainwindow,SLOT(editorModifyChanged(LiteApi::IEditor*,bool)));
     connect(m_editorManager,SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_editorManager,SIGNAL(tabAddRequest()),m_fileManager,SLOT(openEditors()));
     connect(m_editorManager,SIGNAL(editorSaved(LiteApi::IEditor*)),m_fileManager,SLOT(editorSaved(LiteApi::IEditor*)));
@@ -211,11 +236,13 @@ LiteApp::LiteApp()
     //m_outputManager->addOutuput(m_logOutput,tr("Console"));
     m_logAct = m_toolWindowManager->addToolWindow(Qt::BottomDockWidgetArea,m_logOutput,"eventlog",tr("Event Log"),true);
     connect(m_logOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickLogOutput(QTextCursor)));
+
     m_optionAct = new QAction(tr("Options"),this);
     m_optionAct->setMenuRole(QAction::PreferencesRole);
-    m_actionManager->insertViewMenu(LiteApi::ViewMenuBrowserPos,m_optionAct);
-    connect(m_optionAct,SIGNAL(triggered()),m_optionManager,SLOT(exec()));
+    m_actionManager->setViewMenuSeparator("sep/option",true);
+    m_actionManager->insertViewMenuAction(m_optionAct,"sep/option");
 
+    connect(m_optionAct,SIGNAL(triggered()),m_optionManager,SLOT(exec()));
 
     this->appendLog("LiteApp","Initializing");
 
@@ -488,6 +515,11 @@ QMap<QString,QVariant> &LiteApp::globalCookie()
     return m_cookie;
 }
 
+QString LiteApp::rootPath() const
+{
+    return m_rootPath;
+}
+
 QString LiteApp::resourcePath() const
 {
     return m_resourcePath;
@@ -496,6 +528,11 @@ QString LiteApp::resourcePath() const
 QString LiteApp::applicationPath() const
 {
     return m_applicationPath;
+}
+
+QString LiteApp::toolPath() const
+{
+    return m_toolPath;
 }
 
 QString LiteApp::pluginPath() const

@@ -5,6 +5,7 @@ QT += xml
 
 include (../../liteideplugin.pri)
 include (../../api/liteeditorapi/liteeditorapi.pri)
+include (../../api/quickopenapi/quickopenapi.pri)
 include (../../utils/extension/extension.pri)
 include (../../utils/mimetype/mimetype.pri)
 include (../../utils/colorstyle/colorstyle.pri)
