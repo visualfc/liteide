@@ -3,6 +3,13 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2016.7.12 Ver X30.2
+* LiteApp
+	* add new vs-dard css, thanks [tupunco](https://github.com/tupunco)
+	* fix and re-implement editor list menu
+* QuickOpen
+	* QuickOpenFile skip same folder and same files
+
 ### 2016.7.5 Ver X30.1
 * LiteIDE
 	* add OpenEditor tool windows
