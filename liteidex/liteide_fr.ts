@@ -18,7 +18,7 @@
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="162"/>
         <source>Welcome:</source>
-        <translation>Bienvenu :</translation>
+        <translation>Bienvenue :</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="168"/>
@@ -4780,7 +4780,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="216"/>
         <source>Welcome</source>
         <oldsource>Welcome Page</oldsource>
-        <translation type="unfinished">Bienvenu</translation>
+        <translation type="unfinished">Bienvenue</translation>
     </message>
 </context>
 <context>
@@ -4789,7 +4789,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/welcome/welcomeplugin.cpp" line="71"/>
         <source>Welcome</source>
         <oldsource>Home</oldsource>
-        <translation type="unfinished">Bienvenu</translation>
+        <translation type="unfinished">Bienvenue</translation>
     </message>
 </context>
 </TS>
