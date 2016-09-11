@@ -68,4 +68,17 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
 
+### Raspbian Jessie
+	$ sudo apt-get update
+	$ sudo apt-get install qt5-default
+	$ git clone https://github.com/visualfc/liteide.git
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ QTDIR=/usr ./build_linux.sh
+	The build process from a µSD card takes approx. 105 minutes on a RPi 2.
+	
+	## Run it: ##
+	$ cd ~/liteide/build/liteide/bin
+	$ ./liteide
+
 Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
