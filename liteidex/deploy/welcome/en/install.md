@@ -70,7 +70,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 
 ### Raspbian Jessie
 	$ sudo apt-get update
-	$ sudo apt-get install qt5-default
+	$ sudo apt-get install qt5-default xterm
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
 	$ ./update_pkg.sh
@@ -80,6 +80,5 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	## Run it: ##
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
-	Note: install xterm to run it on Raspbian Jessie Lite using a remote X server.
 
 Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
