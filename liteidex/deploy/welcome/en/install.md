@@ -80,5 +80,6 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	## Run it: ##
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
+	Note: install xterm to run it on Raspbian Jessie Lite using a remote X server.
 
 Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
