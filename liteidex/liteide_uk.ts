@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk_UA">
+<TS version="2.1" language="uk_UA">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="20"/>
         <source>About LiteIDE</source>
         <oldsource>About Liteide</oldsource>
-        <translation type="unfinished">Про програму LiteIDE</translation>
+        <translation>Про програму LiteIDE</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="156"/>
@@ -25,7 +25,7 @@
         <source>Welcome to LiteIDE X! LiteIDE is a simple, open source, cross-platform IDE.</source>
         <oldsource>Welcome to LiteIDE X!
 LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
-        <translation type="unfinished">Ласкаво просимо в LiteIDE X!
+        <translation>Ласкаво просимо в LiteIDE X!
 LiteIDE - це проста кросплатформена IDE з відкритим кодом.</translation>
     </message>
     <message>
@@ -78,7 +78,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="400"/>
         <source>Translations</source>
-        <translation>Переклад</translation>
+        <translation>Переклади</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="412"/>
@@ -98,7 +98,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="454"/>
         <source>French</source>
-        <translation>Французська</translation>
+        <translation>Французька</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="468"/>
@@ -113,7 +113,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="513"/>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>Українська</translation>
     </message>
     <message>
         <location filename="src/liteapp/aboutdialog.ui" line="537"/>
@@ -133,7 +133,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/aboutdialog.cpp" line="42"/>
         <source>Based on Qt %1 (%2 bit)</source>
-        <translation>Засновано на Qt %1 (%2 біт)</translation>
+        <translation>На основі Qt %1 (%2 біт)</translation>
     </message>
 </context>
 <context>
@@ -141,39 +141,39 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="64"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Файл</translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="65"/>
         <source>&amp;Recent</source>
-        <translation type="unfinished">&amp;Останні</translation>
+        <translation>&amp;Останні</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="66"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">Редагувати</translation>
+        <translation>Р&amp;едагувати</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="67"/>
         <source>F&amp;ind</source>
         <oldsource>&amp;Find</oldsource>
-        <translation type="unfinished">&amp;Пошук</translation>
+        <translation>&amp;Пошук</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="68"/>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Вигляд</translation>
+        <translation>&amp;Вигляд</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="73"/>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Допомога</translation>
+        <translation>&amp;Допомога</translation>
     </message>
     <message>
         <location filename="src/liteapp/actionmanager.cpp" line="75"/>
         <source>Standard Toolbar</source>
         <oldsource>Standard ToolBar</oldsource>
-        <translation type="unfinished">Стандартна панель</translation>
+        <translation>Стандартна панель</translation>
     </message>
 </context>
 <context>
@@ -181,12 +181,12 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
         <source>Go To Definition</source>
-        <translation type="unfinished">Перейти до визначення</translation>
+        <translation>Перейти до визначення</translation>
     </message>
     <message>
         <location filename="src/plugins/golangast/astwidget.cpp" line="76"/>
         <source>View Import Document</source>
-        <translation type="unfinished">Документація</translation>
+        <translation>Документація</translation>
     </message>
 </context>
 <context>
@@ -194,11 +194,12 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="63"/>
         <source>Hide</source>
-        <translation type="unfinished">Приховати</translation>
+        <translation>Приховати</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="64"/>
         <source>Hide Tool Window</source>
+        <translatorcomment>Панель? Пенал?</translatorcomment>
         <translation type="unfinished">Приховати вікно</translation>
     </message>
 </context>
@@ -207,56 +208,56 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="72"/>
         <source>Open File</source>
-        <translation type="unfinished">Відкрити файл</translation>
+        <translation>Відкрити файл</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
         <source>New File...</source>
-        <translation type="unfinished">Новий файл</translation>
+        <translation>Створити файл...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
         <source>New File Wizard...</source>
-        <translation type="unfinished">Майстер створення файлу...</translation>
+        <translation>Майстер створення файлу...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
         <source>Rename File...</source>
-        <translation type="unfinished">Перейменувати файл...</translation>
+        <translation>Перейменувати файл...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="209"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="215"/>
         <source>Delete File</source>
-        <translation type="unfinished">Видалити файл</translation>
+        <translation>Видалити файл</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
         <source>New Folder...</source>
-        <translation type="unfinished">Нова папка</translation>
+        <translation>Створити директорію...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished">Перейменувати папку...</translation>
+        <translation>Перейменувати директорію...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="279"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="286"/>
         <source>Delete Folder</source>
-        <translation type="unfinished">Видалити папку</translation>
+        <translation>Видалити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
         <source>Open Terminal Here</source>
-        <translation type="unfinished">Відкрити термінал у цій папці</translation>
+        <translation type="unfinished">Відкрити термінал тут</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished">Відкрити папку в провіднику</translation>
+        <translation type="unfinished">Відкрити в файловому менеджері</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
@@ -268,22 +269,22 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
-        <translation type="unfinished">Додати папку...</translation>
+        <translation type="unfinished">Додати директорію...</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="88"/>
         <source>Reload Folder</source>
-        <translation type="unfinished">Перезавантажити папку</translation>
+        <translation type="unfinished">Перезавантажити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
         <source>Close Folder</source>
-        <translation type="unfinished">Зачинити папку</translation>
+        <translation type="unfinished">Закрити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="91"/>
         <source>Close All Folders</source>
-        <translation type="unfinished">Зачинити всі папки</translation>
+        <translation type="unfinished">Закрити всі директорії</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="143"/>
@@ -333,45 +334,45 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/utils/folderview/basefolderview.cpp" line="234"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="237"/>
         <source>Create Folder</source>
-        <translation type="unfinished">Створення папки</translation>
+        <translation type="unfinished">Створення директорії</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="235"/>
         <source>A folder with that name already exists!</source>
-        <translation type="unfinished">Папка вже існує!</translation>
+        <translation>Директорія з таким іменем вже існує!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
         <source>Failed to create the folder!</source>
-        <translation type="unfinished">Не можу створити папку!</translation>
+        <translation>Не вдалося створити створити директорію!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="260"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="265"/>
         <source>Rename Folder</source>
-        <translation type="unfinished">Перейменувати папку</translation>
+        <translation>Перейменувати директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <source>Folder Name</source>
-        <translation type="unfinished">Им`я папки</translation>
+        <translation>Им&apos;я директорії</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="261"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="266"/>
         <source>Failed to rename the folder!</source>
-        <translation type="unfinished">Не можу перейменувати папку!</translation>
+        <translation>Не вдалося перейменувати директорію!</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="280"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished">Видалити цю папку із усім її вмістом?</translation>
+        <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
         <source>Failed to delete the folder!</source>
-        <translation type="unfinished">Не можу видалити папку!</translation>
+        <translation>Не вдалося видалити директорію!</translation>
     </message>
 </context>
 <context>
@@ -416,17 +417,17 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="94"/>
         <source>Create Folder</source>
-        <translation type="unfinished">Створити папку</translation>
+        <translation type="unfinished">Створити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="96"/>
         <source>Directory:</source>
-        <translation type="unfinished">Папка:</translation>
+        <translation type="unfinished">Директорія:</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="98"/>
         <source>Dir Name:</source>
-        <translation type="unfinished">Назва папки:</translation>
+        <translation type="unfinished">Ім&apos;я директорії:</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="106"/>
@@ -450,7 +451,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="46"/>
         <source>Directory:</source>
-        <translation type="unfinished">Папка:</translation>
+        <translation type="unfinished">Директорія:</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderdialog.cpp" line="48"/>
@@ -577,7 +578,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="123"/>
         <source>Close</source>
-        <translation type="unfinished">Зачинити</translation>
+        <translation type="unfinished">Закрити</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="134"/>
@@ -589,7 +590,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/liteapp/editormanager.cpp" line="180"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
-        <translation type="unfinished">Змінити</translation>
+        <translation type="unfinished">Р&amp;едагувати</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="194"/>
@@ -612,40 +613,40 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/liteapp/editormanager.cpp" line="126"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
-        <translation type="unfinished">Зачинити всі</translation>
+        <translation type="unfinished">Закрити всі</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="127"/>
         <source>Close Left Tabs</source>
-        <translation type="unfinished">Зачинити вкладки зліва</translation>
+        <translation type="unfinished">Закрити вкладки зліва</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="128"/>
         <source>Close Right Tabs</source>
-        <translation type="unfinished">Зачинити вкладки справа</translation>
+        <translation type="unfinished">Закрити вкладки справа</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="129"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
-        <translation type="unfinished">Зачинити файли в цій папці</translation>
+        <translation type="unfinished">Закрити файли з цієї ж директорії</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="130"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
-        <translation type="unfinished">Зачинити файли в інших папках</translation>
+        <translation type="unfinished">Закрити файли з інших директорій</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="131"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
-        <translation type="unfinished">Скопіювати повний шлях в буфер обміну</translation>
+        <translation>Копіювати повний шлях в буфер обміну</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="132"/>
         <source>Show in Explorer</source>
-        <translation type="unfinished">Показати в провіднику</translation>
+        <translation type="unfinished">Показати в файловому менеджері</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="185"/>
@@ -655,13 +656,13 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="389"/>
         <source>Save changes to %1?</source>
-        <translation type="unfinished">Зберегти зміни в %1?</translation>
+        <translation>Зберегти зміни в %1?</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="390"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
-        <translation type="unfinished">Незбережені зміни</translation>
+        <translation>Незбережені зміни</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="482"/>
@@ -671,7 +672,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="484"/>
         <source>Save As</source>
-        <translation>Зберегти як...</translation>
+        <translation>Зберегти як</translation>
     </message>
 </context>
 <context>
@@ -680,25 +681,25 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/plugins/liteenv/envmanager.cpp" line="398"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
-        <translation type="unfinished">Панель конфігурації середи</translation>
+        <translation type="unfinished">Панель конфігурації оточення</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="405"/>
         <source>Switching current environment</source>
         <oldsource>Switch Current Environment</oldsource>
-        <translation type="unfinished">Переключання поточної середи</translation>
+        <translation type="unfinished">Перемкнути поточне оточення</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="408"/>
         <source>Edit current environment</source>
         <oldsource>Edit Current Environment</oldsource>
-        <translation type="unfinished">Редагувати поточну середу</translation>
+        <translation type="unfinished">Редагувати поточне оточення</translation>
     </message>
     <message>
         <location filename="src/plugins/liteenv/envmanager.cpp" line="409"/>
         <source>Reload current environment</source>
         <oldsource>Reload Current Environment</oldsource>
-        <translation type="unfinished">Перезавантажити поточну середу</translation>
+        <translation type="unfinished">Перезавантажити поточне оточення</translation>
     </message>
 </context>
 <context>
@@ -706,7 +707,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">Діалог</translation>
+        <translation type="unfinished">Експорт</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="22"/>
@@ -721,7 +722,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/golangpresent/exportdialog.ui" line="56"/>
         <source>ExportAndView</source>
-        <translation type="unfinished">ЕкспортІПерегляд</translation>
+        <translation type="unfinished">Експорт з переглядом</translation>
     </message>
 </context>
 <context>
@@ -939,7 +940,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/fakevimedit/fakevimedit.cpp" line="66"/>
         <source>Use FakeVim Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Викорстовувати редагування FakeVim</translation>
     </message>
 </context>
 <context>
@@ -960,17 +961,17 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="86"/>
         <source>Cannot create temporary file: %1</source>
-        <translation type="unfinished">Не можу створити тимчасовий файл: %1</translation>
+        <translation>Неможливо створити тимчасовий файл: %1</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="97"/>
         <source>Cannot create FiFo %1: %2</source>
-        <translation type="unfinished">Помилка створення FiFo %1: %2</translation>
+        <translation>Неможливо створити FiFo %1: %2</translation>
     </message>
     <message>
         <location filename="src/plugins/litetty/fifotty.cpp" line="104"/>
         <source>Cannot open FiFo %1: %2</source>
-        <translation type="unfinished">Помилка відкриття FiFo %1: %2</translation>
+        <translation>Неможливо відкрити FiFo %1: %2</translation>
     </message>
 </context>
 <context>
@@ -989,7 +990,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="144"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
-        <translation type="unfinished">Встановити як кореневу папку</translation>
+        <translation type="unfinished">Встановити кореневою директорією</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="100"/>
@@ -999,17 +1000,17 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="91"/>
         <source>Reload Folder</source>
-        <translation type="unfinished">Перезавантажити папку</translation>
+        <translation type="unfinished">Перезавантажити директорію</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Folder in New Window</source>
-        <translation type="unfinished">Відкрити папку у новому вікні</translation>
+        <translation type="unfinished">Відкрити директорію у новому вікні</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="146"/>
         <source>Add to Folders</source>
-        <translation type="unfinished">Додати до папок</translation>
+        <translation type="unfinished">Додати до директорій</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
@@ -1020,12 +1021,12 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
         <source>Filter</source>
-        <translation type="unfinished">Фільтрувати</translation>
+        <translation>Фільтрувати</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
         <source>File System</source>
-        <translation type="unfinished">Файлова система</translation>
+        <translation>Файлова система</translation>
     </message>
 </context>
 <context>
@@ -1088,7 +1089,7 @@ Do you want to load?</oldsource>
         <location filename="src/liteapp/filemanager.cpp" line="95"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
-        <translation type="unfinished">Папки</translation>
+        <translation type="unfinished">Директорії</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="179"/>
@@ -1102,7 +1103,7 @@ Do you want to load?</oldsource>
         <location filename="src/liteapp/filemanager.cpp" line="332"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
-        <translation type="unfinished">Выбрати папку</translation>
+        <translation type="unfinished">Оберіть директорію:</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="529"/>
@@ -1122,7 +1123,7 @@ Do you want to load?</oldsource>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="532"/>
         <source>Folder</source>
-        <translation type="unfinished">Папка</translation>
+        <translation type="unfinished">Директорія</translation>
     </message>
     <message>
         <location filename="src/liteapp/filemanager.cpp" line="785"/>
@@ -1136,7 +1137,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 Цей файл був видалений з жорсткого диску,
 але у вас лишилися незбережені модифікації у LiteIDE.
 
-Ви хочете зачинити редактор?
+Ви хочете закрити редактор?
 Відповідаючи &quot;Так&quot; ви втратите незбережені зміни.</translation>
     </message>
     <message>
@@ -1284,7 +1285,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/plugins/litefind/filesearch.cpp" line="444"/>
         <source>Open Directory</source>
-        <translation type="unfinished">Відкрити папку</translation>
+        <translation type="unfinished">Відкрити директорію</translation>
     </message>
 </context>
 <context>
@@ -1333,7 +1334,7 @@ Do you want to reload the file from disk?</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="95"/>
         <source>New File...</source>
         <oldsource>New File</oldsource>
-        <translation type="unfinished">Новий файл</translation>
+        <translation type="unfinished">Новий файл...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="96"/>
@@ -1360,19 +1361,19 @@ Do you want to reload the file from disk?</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="100"/>
         <source>New Folder...</source>
         <oldsource>New Folder</oldsource>
-        <translation type="unfinished">Нова папка</translation>
+        <translation type="unfinished">Нова директорія...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="346"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished">Видалити файл назавжди?</translation>
+        <translation type="unfinished">Видалити цей файл назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="395"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="400"/>
         <source>Rename Folder</source>
-        <translation type="unfinished">Перейменувати папку</translation>
+        <translation type="unfinished">Перейменувати директорію</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="102"/>
@@ -1380,7 +1381,7 @@ Do you want to reload the file from disk?</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="421"/>
         <source>Delete Folder</source>
         <oldsource>Remove Folder</oldsource>
-        <translation type="unfinished">Видалити папку</translation>
+        <translation type="unfinished">Видалити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="97"/>
@@ -1390,7 +1391,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="101"/>
         <source>Rename Folder...</source>
-        <translation type="unfinished">Перейменувати папку...</translation>
+        <translation type="unfinished">Перейменувати директорію...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="104"/>
@@ -1400,7 +1401,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="105"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished">Відкрити папку в провіднику</translation>
+        <translation type="unfinished">Відкрити в файловому менеджері</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="107"/>
@@ -1410,22 +1411,22 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="454"/>
         <source>Add Folder</source>
-        <translation type="unfinished">Додати папку</translation>
+        <translation type="unfinished">Додати директорію</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="110"/>
         <source>Close Folder</source>
-        <translation type="unfinished">Закрити папку</translation>
+        <translation type="unfinished">Закрити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="109"/>
         <source>Add Folder...</source>
-        <translation type="unfinished">Додати папку...</translation>
+        <translation type="unfinished">Додати директорію...</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="112"/>
         <source>Close All Folders</source>
-        <translation type="unfinished">Закрити всі папки</translation>
+        <translation type="unfinished">Закрити всі директорії</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="279"/>
@@ -1458,7 +1459,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="415"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished">Видалити цю папку і все в ній назавжди?</translation>
+        <translation type="unfinished">Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="351"/>
@@ -1470,35 +1471,35 @@ Do you want to reload the file from disk?</source>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="369"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="372"/>
         <source>Create Folder</source>
-        <translation type="unfinished">Створити папку</translation>
+        <translation type="unfinished">Створити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="370"/>
         <source>A folder with that name already exists!</source>
         <oldsource>The folder name is exists!</oldsource>
-        <translation type="unfinished">Папка вже існує!</translation>
+        <translation type="unfinished">Директорія з таким іменем вже існує!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="373"/>
         <source>Failed to create the folder!</source>
-        <translation type="unfinished">Помилка при створенні папки!</translation>
+        <translation type="unfinished">Помилка при створенні директорії!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="386"/>
         <source>Folder Name</source>
-        <translation type="unfinished">Назва папки</translation>
+        <translation type="unfinished">Ім&apos;я директорії</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="396"/>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="401"/>
         <source>Failed to rename the folder!</source>
-        <translation type="unfinished">Помилка при перейменуванні папки!</translation>
+        <translation type="unfinished">Не вдалося перейменуванні директорію!</translation>
     </message>
     <message>
         <location filename="src/utils/filesystem/filesystemwidget.cpp" line="422"/>
         <source>Failed to delete the folder!</source>
         <oldsource>Failed to remove the folder!</oldsource>
-        <translation type="unfinished">Помилка при видаленні папки!</translation>
+        <translation type="unfinished">Не вдалося видалити директорію!</translation>
     </message>
 </context>
 <context>
@@ -1559,53 +1560,53 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="304"/>
         <source>Revert with:</source>
-        <translation type="unfinished">Обернути на:</translation>
+        <translation type="unfinished">Повернути на:</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="305"/>
         <source>Revert</source>
-        <translation type="unfinished">Обернути</translation>
+        <translation type="unfinished">Повернути</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="306"/>
         <source>Revert all occurrences</source>
-        <translation type="unfinished">Обернути все</translation>
+        <translation type="unfinished">Повернути все</translation>
     </message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="575"/>
         <source>%n matches replaced.</source>
         <translation type="unfinished">
-            <numerusform>%n замінено.</numerusform>
-            <numerusform>%n замінено.</numerusform>
-            <numerusform>%n замінено.</numerusform>
+            <numerusform>%n співпадінь замінено.</numerusform>
+            <numerusform>%n співпадінь замінено.</numerusform>
+            <numerusform>%n співпадінь замінено.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="577"/>
         <source>searching... %n matches found.</source>
         <translation type="unfinished">
-            <numerusform>шукаю... знайдено %n</numerusform>
-            <numerusform>шукаю... знайдено %n</numerusform>
-            <numerusform>шукаю... знайдено %n</numerusform>
+            <numerusform>шукаємо... знайдено %n співпадіння. </numerusform>
+            <numerusform>шукаємо... знайдено %n співпадіння.</numerusform>
+            <numerusform>шукаємо... знайдено %n співпадінь.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="583"/>
         <source>searching ...</source>
-        <translation type="unfinished">шукаю...</translation>
+        <translation type="unfinished">шукаємо ...</translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="589"/>
         <source>No matches found.</source>
-        <translation type="unfinished">Нічого не знайдено</translation>
+        <translation type="unfinished">Співпадінь не знайдено.</translation>
     </message>
     <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="591"/>
         <source>%n matches found.</source>
         <translation type="unfinished">
-            <numerusform>Знайдено %n</numerusform>
-            <numerusform>Знайдено %n</numerusform>
-            <numerusform>Знайдено %n</numerusform>
+            <numerusform>Знайдено %n співпадіння.</numerusform>
+            <numerusform>Знайдено %n співпадіння.</numerusform>
+            <numerusform>Знайдено %n співпадінь.</numerusform>
         </translation>
     </message>
 </context>
@@ -1772,7 +1773,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">Зачинити</translation>
+        <translation type="unfinished">Закрити</translation>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="99"/>
@@ -1803,7 +1804,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="269"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished">Видалити цей файл?</translation>
+        <translation type="unfinished">Видалити цей файл назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
@@ -1814,17 +1815,17 @@ Do you want to reload the file from disk?</source>
         <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
         <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
         <source>Delete Folder</source>
-        <translation type="unfinished">Видалити папку</translation>
+        <translation type="unfinished">Видалити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="292"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished">Видалити цю папку цілком?</translation>
+        <translation type="unfinished">Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderlistview.cpp" line="302"/>
         <source>Failed to delete the folder!</source>
-        <translation type="unfinished">Помилка при видаленні папки!</translation>
+        <translation type="unfinished">Не вдалося видалити директорію!</translation>
     </message>
 </context>
 <context>
@@ -1838,7 +1839,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="149"/>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="unfinished">Видалити цей файл?</translation>
+        <translation type="unfinished">Видалити цей файл назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="159"/>
@@ -1849,17 +1850,17 @@ Do you want to reload the file from disk?</source>
         <location filename="src/utils/folderview/folderview.cpp" line="171"/>
         <location filename="src/utils/folderview/folderview.cpp" line="181"/>
         <source>Delete Folder</source>
-        <translation type="unfinished">Видалити папку</translation>
+        <translation type="unfinished">Видалити директорію</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="172"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
-        <translation type="unfinished">Знищити цю папку і все в ній назавжди?</translation>
+        <translation type="unfinished">Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/folderview.cpp" line="182"/>
         <source>Failed to delete the folder!</source>
-        <translation type="unfinished">Не можу видалити папку!</translation>
+        <translation type="unfinished">Не вдалося видалити директорію!</translation>
     </message>
 </context>
 <context>
@@ -2301,7 +2302,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="89"/>
         <source>Explore Folder</source>
-        <translation type="unfinished">Відкрити папку в провіднику</translation>
+        <translation type="unfinished">Відкрити директорію в файловому менеджері</translation>
     </message>
     <message>
         <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="168"/>
@@ -2427,17 +2428,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="51"/>
         <source>Verify</source>
-        <translation type="unfinished">Перевірити</translation>
+        <translation>Перевірити</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="53"/>
         <source>Format Json</source>
-        <translation type="unfinished">Форматувати</translation>
+        <translation>Форматувати Json</translation>
     </message>
     <message>
         <location filename="src/plugins/jsonedit/jsonedit.cpp" line="55"/>
         <source>Compact Json</source>
-        <translation type="unfinished">Мінімізувати</translation>
+        <translation>Мінімізувати Json</translation>
     </message>
 </context>
 <context>
@@ -2455,12 +2456,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="672"/>
         <source>Close File</source>
-        <translation type="unfinished">Зачинити файл</translation>
+        <translation type="unfinished">Закрити файл</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="675"/>
         <source>Close All Files</source>
-        <translation type="unfinished">Зачинити все</translation>
+        <translation type="unfinished">Закрити все</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="685"/>
@@ -2500,18 +2501,18 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="655"/>
         <source>Open Folder...</source>
-        <translation type="unfinished">Відкрити папку...</translation>
+        <translation type="unfinished">Відкрити директорію...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="658"/>
         <source>Open Folder in New Window...</source>
-        <translation type="unfinished">Відкрити папку у новому вікні...</translation>
+        <translation type="unfinished">Відкрити директорію у новому вікні...</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="663"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
-        <translation type="unfinished">Додати папку...</translation>
+        <translation type="unfinished">Закрити всі директорії</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="666"/>
@@ -2531,7 +2532,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="682"/>
         <source>Close Project</source>
-        <translation type="unfinished">Зачинити проект</translation>
+        <translation type="unfinished">Закрити проект</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteapp.cpp" line="694"/>
@@ -2624,7 +2625,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="200"/>
         <source>Reload folders on startup</source>
-        <translation type="unfinished">Перезавантажувати папки при старті</translation>
+        <translation type="unfinished">Перезавантажувати директорії при старті</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="227"/>
@@ -2962,7 +2963,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="101"/>
         <source>Close</source>
-        <translation type="unfinished">Зачинити</translation>
+        <translation type="unfinished">Закрити</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuildplugin.cpp" line="104"/>
@@ -3686,17 +3687,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="66"/>
         <source>Open a new tab</source>
-        <translation type="unfinished">Відкрити новий таб</translation>
+        <translation>Відкрити нову вкладку</translation>
     </message>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="71"/>
         <source>List All Tabs</source>
-        <translation type="unfinished">Перечислити всі таби</translation>
+        <translation>Перелік вкладок</translation>
     </message>
     <message>
         <location filename="src/liteapp/litetabwidget.cpp" line="77"/>
         <source>Close Tab</source>
-        <translation type="unfinished">Зачинити таб</translation>
+        <translation>Закрити вкладку</translation>
     </message>
 </context>
 <context>
@@ -3716,7 +3717,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="230"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
-        <translation type="unfinished">Вибрати папку з Markdown</translation>
+        <translation type="unfinished">Оберіть директорію з Markdown-файлами:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="241"/>
@@ -3726,7 +3727,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="289"/>
         <source>Select the folder to contain separated markdown exports:</source>
-        <translation type="unfinished">Виберіть папку для розділених Markdown-експортів:</translation>
+        <translation type="unfinished">Виберіть директорію для збереження окремих експортів Markdown:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="302"/>
@@ -3758,7 +3759,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="38"/>
         <source>Import Folder...</source>
         <oldsource>Import Folder</oldsource>
-        <translation type="unfinished">Імпортувати папку...</translation>
+        <translation type="unfinished">Імпортувати директорію...</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="45"/>
@@ -3794,7 +3795,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="106"/>
         <source>Export Folder:</source>
-        <translation type="unfinished">Експортувати папку</translation>
+        <translation type="unfinished">Директорія експорту:</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="116"/>
@@ -3841,13 +3842,13 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="189"/>
         <source>Export Merged HTML...</source>
         <oldsource>Merge Html</oldsource>
-        <translation type="unfinished">Експортувати змішаний HTML</translation>
+        <translation type="unfinished">Експортувати об&apos;єднаний HTML</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="196"/>
         <source>Export Merged PDF...</source>
         <oldsource>Merge PDF</oldsource>
-        <translation type="unfinished">Експортувати змішаний PDF</translation>
+        <translation type="unfinished">Експортувати об&apos;єднаний PDF</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="203"/>
@@ -3859,7 +3860,7 @@ Success: %2.</oldsource>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="210"/>
         <source>Print Merged</source>
         <oldsource>Merge Print</oldsource>
-        <translation type="unfinished">Друк об`єднаного</translation>
+        <translation type="unfinished">Друк об&apos;єднаного</translation>
     </message>
     <message>
         <location filename="src/plugins/markdown/markdownbatchwidget.ui" line="233"/>
@@ -3972,7 +3973,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="24"/>
         <source>GOPATH:</source>
-        <translation type="unfinished"></translation>
+        <translation>GOPATH:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="38"/>
@@ -3983,7 +3984,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="54"/>
         <source>Type</source>
-        <translation type="unfinished">Тип</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="73"/>
@@ -4020,7 +4021,8 @@ Success: %2.</oldsource>
         <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
         <source>Location %1 is not empty.
 Use the target directory anyway?</source>
-        <translation type="unfinished">%1 не порожня. Ви впевнені щодо її використання?</translation>
+        <translation type="unfinished">%1 не порожня.
+Все одно використовувати цю директорію?</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
@@ -4036,7 +4038,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
         <source>No files could be created.</source>
-        <translation type="unfinished">Не вдалося створити жодного файлу</translation>
+        <translation type="unfinished">Не вдалося створити жодного файлу.</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="279"/>
@@ -4047,12 +4049,12 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/newfiledialog.cpp" line="281"/>
         <source>Project template details:</source>
         <oldsource>New project wizard:</oldsource>
-        <translation type="unfinished">Майстер нових проектів:</translation>
+        <translation type="unfinished">Шаблон нового проекту:</translation>
     </message>
     <message>
         <location filename="src/liteapp/newfiledialog.cpp" line="359"/>
         <source>Choose a directory for the new content:</source>
-        <translation type="unfinished">Вибрати директорію для нового контенту:</translation>
+        <translation type="unfinished">Вибрати директорію для нового вмісту:</translation>
     </message>
 </context>
 <context>
@@ -4170,7 +4172,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
         <source>Add Package to Folders</source>
-        <translation type="unfinished">Додати пакет в Папки</translation>
+        <translation type="unfinished">Додати пакет в директорії</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="94"/>
@@ -4193,13 +4195,13 @@ Do you want to replace it?</source>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="193"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
-        <translation type="unfinished">Не знаходжу інсталяцію Go</translation>
+        <translation type="unfinished">Не знаходжу інсталяцію Go.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="198"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
-        <translation type="unfinished">Завантажую список пакетів Go</translation>
+        <translation type="unfinished">Завантажую список пакетів Go...</translation>
     </message>
 </context>
 <context>
@@ -4207,34 +4209,34 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="76"/>
         <source>Reload Package</source>
-        <translation type="unfinished">Перезавантажити пакет</translation>
+        <translation>Перезавантажити пакунок</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="77"/>
         <source>Open Explorer Here</source>
-        <translation type="unfinished">Відкрити папку в провіднику</translation>
+        <translation>Відкрити в файловому менеджері</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="78"/>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="300"/>
         <source>Add Source File</source>
-        <translation type="unfinished">Відкрити файл коду</translation>
+        <translation type="unfinished">Додати вихідний файл</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
         <source>File %1 already exists.</source>
-        <translation type="unfinished">Файл %1 вже існує.</translation>
+        <translation>Файл %1 вже існує.</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
         <source>Could not open %1 for writing.</source>
-        <translation type="unfinished">Неможливо відкрити %1 для запису.</translation>
+        <translation>Неможливо відкрити %1 для запису.</translation>
     </message>
 </context>
 <context>
@@ -4243,45 +4245,45 @@ Do you want to replace it?</source>
         <location filename="src/liteapp/pluginsdialog.ui" line="14"/>
         <source>Installed Plugins</source>
         <oldsource>Install Plugins</oldsource>
-        <translation type="unfinished">Установка додатків</translation>
+        <translation>Встановлені додатки</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.ui" line="45"/>
         <source>Close</source>
-        <translation>Зачинити</translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="51"/>
         <source>Name</source>
-        <translation type="unfinished">Назва</translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="54"/>
         <source>Author</source>
         <oldsource>Anchor</oldsource>
-        <translation type="unfinished">Автор</translation>
+        <translation>Автор</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="52"/>
         <source>Enabled</source>
-        <translation type="unfinished">Включено</translation>
+        <translation>Включено</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="53"/>
         <source>Details</source>
-        <translation type="unfinished">Деталі</translation>
+        <translation>Деталі</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="55"/>
         <source>Version</source>
         <oldsource>Last Ver</oldsource>
-        <translation type="unfinished">Версія</translation>
+        <translation>Версія</translation>
     </message>
     <message>
         <location filename="src/liteapp/pluginsdialog.cpp" line="56"/>
         <source>File Name</source>
         <oldsource>FileName</oldsource>
-        <translation type="unfinished">Им`я файлу</translation>
+        <translation>Им&apos;я файлу</translation>
     </message>
 </context>
 <context>
@@ -4289,12 +4291,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="46"/>
         <source>process exited with code %1</source>
-        <translation type="unfinished">процес завершено із кодом %1</translation>
+        <translation type="unfinished">процес завершився із кодом %1</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="49"/>
         <source>process crashed or was terminated</source>
-        <translation type="unfinished">процес завершився аварійно чи був завершений іззовні</translation>
+        <translation type="unfinished">процес завершився аварійно чи був завершений ззовні</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="52"/>
@@ -4309,7 +4311,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="65"/>
         <source>process crashed or was terminated while running</source>
-        <translation type="unfinished">процес завершився аварійно чи був завершений іззовні</translation>
+        <translation type="unfinished">процес завершився аварійно чи був завершений іззовні під час виконання</translation>
     </message>
     <message>
         <location filename="src/utils/processex/processex.cpp" line="68"/>
@@ -4342,7 +4344,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/projectmanager.cpp" line="119"/>
         <source>Import Directory &lt;%1&gt;</source>
-        <translation type="unfinished">Імпорт папки &lt;%1&gt;</translation>
+        <translation type="unfinished">Імпортувати директорію &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -4350,27 +4352,27 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/folderview/filesystemmodelex.cpp" line="46"/>
         <source>%1 TB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 ТБ</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/filesystemmodelex.cpp" line="48"/>
         <source>%1 GB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 ГБ</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/filesystemmodelex.cpp" line="50"/>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 МБ</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/filesystemmodelex.cpp" line="52"/>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 КБ</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/filesystemmodelex.cpp" line="53"/>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 байт(ів)</translation>
     </message>
 </context>
 <context>
@@ -4378,7 +4380,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/3rdparty/qjson/src/parserrunnable.cpp" line="64"/>
         <source>An error occurred while parsing json: %1</source>
-        <translation type="unfinished">JSON не парситься: %1</translation>
+        <translation type="unfinished">Помилка розбору JSON: %1</translation>
     </message>
 </context>
 <context>
@@ -4386,7 +4388,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="55"/>
         <source>Open Editor by Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Відкрити редактор за ім&apos;ям</translation>
     </message>
 </context>
 <context>
@@ -4394,7 +4396,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="60"/>
         <source>Open Files by Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Відкрити файли за іменами</translation>
     </message>
 </context>
 <context>
@@ -4410,24 +4412,24 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenlines.cpp" line="51"/>
         <source>Go to Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до рядка</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenlines.cpp" line="69"/>
         <location filename="src/plugins/quickopen/quickopenlines.cpp" line="74"/>
         <source>Open a text file first to go to a line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Спершу відкрийте файл для переходу до рядка</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenlines.cpp" line="87"/>
         <source>Type a line number between %1 and %2 to navigate to</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вкажіть номер рядка між %1 та %2 для переходу</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenlines.cpp" line="90"/>
         <source>Go to Line %1</source>
         <oldsource>Go to line %1</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до рядка %1</translation>
     </message>
 </context>
 <context>
@@ -4435,7 +4437,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="61"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Напишіть &apos;?&apos; для отримання довідки з доступних дій</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="77"/>
@@ -4476,18 +4478,18 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenoption.ui" line="20"/>
         <source>QuickOpenFiles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Швидке відкриття файлів</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenoption.ui" line="26"/>
         <location filename="src/plugins/quickopen/quickopenoption.ui" line="79"/>
         <source>Match case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Враховувати регістр</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenoption.ui" line="35"/>
         <source>Max files count:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Максимальне число файлів:</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenoption.ui" line="73"/>
@@ -4535,7 +4537,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.ui" line="46"/>
         <source>Working directory:</source>
-        <translation type="unfinished">Робоча папка:</translation>
+        <translation type="unfinished">Робоча директорія:</translation>
     </message>
     <message>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="82"/>
@@ -4546,7 +4548,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/litedebug/selectexternaldialog.cpp" line="92"/>
         <source>Select the working directory:</source>
         <oldsource>Select Working Directory</oldsource>
-        <translation type="unfinished">Вибрати робочу папку:</translation>
+        <translation type="unfinished">Оберіть робочу директорію:</translation>
     </message>
 </context>
 <context>
@@ -4559,7 +4561,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
         <source>System GOPATH</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Системна GOPATH</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="35"/>
@@ -4569,7 +4571,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="60"/>
         <source>Custom Directories (one per line)</source>
-        <translation type="unfinished">Свої директорії (одна на строку)</translation>
+        <translation type="unfinished">Свої директорії (одна на рядок)</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="71"/>
@@ -4585,7 +4587,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="74"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
-        <translation type="unfinished">Додати папку в GOPATH:</translation>
+        <translation type="unfinished">Додати директорію в GOPATH:</translation>
     </message>
 </context>
 <context>
@@ -4593,12 +4595,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="58"/>
         <source>SideBar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Бічна панель</translation>
     </message>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="59"/>
         <source>Show SideBar</source>
-        <translation type="unfinished">Показати SideBar</translation>
+        <translation type="unfinished">Показати бічну панель</translation>
     </message>
 </context>
 <context>
@@ -4606,16 +4608,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="426"/>
         <source>Hide SideBar</source>
-        <translation type="unfinished">Приховати SideBar</translation>
+        <translation type="unfinished">Приховати бічну панель</translation>
     </message>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="459"/>
         <source>SideBar Windows</source>
-        <translation type="unfinished">Вікна</translation>
+        <translation type="unfinished">Вікна бічних панелей</translation>
     </message>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="460"/>
         <source>Output Windows</source>
+        <translatorcomment>Вікна виведення?</translatorcomment>
         <translation type="unfinished">Вікна виводу</translation>
     </message>
 </context>
@@ -4684,7 +4687,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/splitwindowstyle.cpp" line="242"/>
         <source>Hide Sidebars</source>
-        <translation type="unfinished">Приховати SideBarи</translation>
+        <translation>Приховати бічні панелі</translation>
     </message>
     <message>
         <location filename="src/liteapp/splitwindowstyle.cpp" line="275"/>
@@ -4697,27 +4700,27 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="62"/>
         <source>Cut</source>
-        <translation type="unfinished">Вирізати</translation>
+        <translation>Вирізати</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="65"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="68"/>
         <source>Paste</source>
-        <translation type="unfinished">Вставити</translation>
+        <translation>Вставити</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="71"/>
         <source>Select All</source>
-        <translation type="unfinished">Виділити все</translation>
+        <translation>Виділити все</translation>
     </message>
     <message>
         <location filename="src/utils/textoutput/terminaledit.cpp" line="74"/>
         <source>Clear All</source>
-        <translation type="unfinished">Очистити все</translation>
+        <translation>Очистити все</translation>
     </message>
 </context>
 <context>
@@ -4768,7 +4771,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
-        <translation type="unfinished">Відкрити HTML чи Mardown файл</translation>
+        <translation type="unfinished">Відкрити HTML чи Markdown файл</translation>
     </message>
 </context>
 <context>
@@ -4777,7 +4780,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/webkithtmlwidget/webkithtmlwidgetplugin.cpp" line="74"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
-        <translation type="unfinished">Відкрити HTML чи Mardown файл</translation>
+        <translation type="unfinished">Відкрити HTML чи Markdown файл</translation>
     </message>
 </context>
 <context>
@@ -4785,22 +4788,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="65"/>
         <source>New</source>
-        <translation type="unfinished">Створити...</translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="66"/>
         <source>Open</source>
-        <translation type="unfinished">Відкрити</translation>
+        <translation>Відкрити</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="67"/>
         <source>Open Folder</source>
-        <translation type="unfinished">Відкрити папку</translation>
+        <translation>Відкрити директорію</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="68"/>
         <source>Options</source>
-        <translation type="unfinished">Параметри</translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location filename="src/plugins/welcome/welcomebrowser.cpp" line="216"/>
