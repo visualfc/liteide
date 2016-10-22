@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -211,7 +211,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Use godoc View</source>
         <oldsource>View Godoc Here</oldsource>
-        <translation type="unfinished">Открыть Godoc</translation>
+        <translation>Открыть Godoc</translation>
     </message>
     <message>
         <source>Open Folder...</source>
@@ -427,7 +427,7 @@ LiteIDE это простая кросплатформенная среда ра
     <name>DlvDebuggerOption</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>OpenEditor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OpenEditor</translation>
     </message>
 </context>
 <context>
@@ -588,191 +588,191 @@ LiteIDE это простая кросплатформенная среда ра
     <name>FakeVim::Internal</name>
     <message>
         <source>Use Vim-style Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактирования в стиле Vim</translation>
     </message>
     <message>
         <source>Read .vimrc</source>
-        <translation type="unfinished"></translation>
+        <translation>Читать .vimrc</translation>
     </message>
     <message>
         <source>Path to .vimrc</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к .vimrc</translation>
     </message>
 </context>
 <context>
     <name>FakeVim::Internal::FakeVimHandler</name>
     <message>
         <source>Unknown option: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестный параметр: %1</translation>
     </message>
     <message>
         <source>Argument must be positive: %1=%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Аргумент должен быть положительным: %1=%2</translation>
     </message>
     <message>
         <source>Mark &quot;%1&quot; not set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Метка «%1» не задана.</translation>
     </message>
     <message>
         <source>%1%2%</source>
-        <translation type="unfinished"></translation>
+        <translation>%1%2%</translation>
     </message>
     <message>
         <source>%1All</source>
-        <translation type="unfinished"></translation>
+        <translation>%1Все</translation>
     </message>
     <message>
         <source>Not implemented in FakeVim.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не реализовано в FakeVim.</translation>
     </message>
     <message>
         <source>Unknown option:</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестный параметр:</translation>
     </message>
     <message>
         <source>Invalid argument:</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный аргумент:</translation>
     </message>
     <message>
         <source>Trailing characters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершающие символы:</translation>
     </message>
     <message>
         <source>Move lines into themselves.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемещать строки в себя.</translation>
     </message>
     <message numerus="yes">
         <source>%n lines moved.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Перемещена %n строка.</numerusform>
+            <numerusform>Перемещено %n строки.</numerusform>
+            <numerusform>Перемещено %n строк.</numerusform>
         </translation>
     </message>
     <message>
         <source>File &quot;%1&quot; exists (add ! to override)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл «%1» существует (добавьте ! для перезаписи)</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть файл «%1» для записи</translation>
     </message>
     <message>
         <source>&quot;%1&quot; %2 %3L, %4C written.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; %2 %3L, %4C записано.</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть файл «%1» для чтения</translation>
     </message>
     <message>
         <source>&quot;%1&quot; %2L, %3C</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; %2L, %3C</translation>
     </message>
     <message numerus="yes">
         <source>%n lines filtered.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Отфильтрована %n строка.</numerusform>
+            <numerusform>Отфильтровано %n строки.</numerusform>
+            <numerusform>Отфильтровано %n строк.</numerusform>
         </translation>
     </message>
     <message>
         <source>Cannot open file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть файл %1</translation>
     </message>
     <message>
         <source>Invalid regular expression: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверное регулярное выражение: %1</translation>
     </message>
     <message>
         <source>Pattern not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаблон не найден: %1</translation>
     </message>
     <message>
         <source>Search hit BOTTOM, continuing at TOP.</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск достиг НИЗА и продолжен с ВЕРХА.</translation>
     </message>
     <message>
         <source>Search hit TOP, continuing at BOTTOM.</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск достиг ВЕРХА и продолжен с НИЗА.</translation>
     </message>
     <message>
         <source>Search hit BOTTOM without match for: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск достиг НИЗА, не найдено совпадений с: %1</translation>
     </message>
     <message>
         <source>Search hit TOP without match for: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск достиг ВЕРХА, не найдено совпадений с: %1</translation>
     </message>
     <message numerus="yes">
         <source>%n lines indented.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Сделаны отступы для %n строки.</numerusform>
+            <numerusform>Сделаны отступы для %n строк.</numerusform>
+            <numerusform>Сделаны отступы для %n строк.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n lines %1ed %2 time.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n строка %1 %2 раз(а).</numerusform>
+            <numerusform>%n строки %1 %2 раз(а).</numerusform>
+            <numerusform>%n строк %1 %2 раз(а).</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n lines yanked.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Скопирована %n строка.</numerusform>
+            <numerusform>Скопировано %n строки.</numerusform>
+            <numerusform>Скопировано %n строк.</numerusform>
         </translation>
     </message>
     <message>
         <source>Already at oldest change.</source>
-        <translation type="unfinished"></translation>
+        <translation>Уже на старейшем изменении.</translation>
     </message>
     <message>
         <source>Already at newest change.</source>
-        <translation type="unfinished"></translation>
+        <translation>Уже на новейшем изменении.</translation>
     </message>
 </context>
 <context>
     <name>FakeVim::Internal::FakeVimHandler::Private</name>
     <message>
         <source>Recursive mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Рекурсивное связывание</translation>
     </message>
     <message>
         <source>Type Alt-V, Alt-V to quit FakeVim mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Type Alt-V, Alt-V to quit FakeVim mode.</translation>
     </message>
     <message>
         <source> [New] </source>
-        <translation type="unfinished"></translation>
+        <translation> [Новый] </translation>
     </message>
     <message>
         <source>Not an editor command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не команда редактора: %1</translation>
     </message>
 </context>
 <context>
     <name>FakeVimEdit</name>
     <message>
         <source>Use FakeVim Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать редактирование FakeVim</translation>
     </message>
 </context>
 <context>
     <name>FakeVimEditOption</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation></translation>
     </message>
     <message>
         <source>FakeVim initialization command list (# start is comment):</source>
-        <translation type="unfinished"></translation>
+        <translation>Список команд инициализации FakeVim (с # начинаются комментарии):</translation>
     </message>
 </context>
 <context>
@@ -1255,7 +1255,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Revert with:</source>
-        <translation type="unfinished">Откатить на:</translation>
+        <translation>Откатить на:</translation>
     </message>
     <message>
         <source>Revert</source>
@@ -1263,7 +1263,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Revert all occurrences</source>
-        <translation type="unfinished">Откатить все совпадения</translation>
+        <translation>Откатить все совпадения</translation>
     </message>
     <message numerus="yes">
         <source>%n matches replaced.</source>
@@ -1528,19 +1528,19 @@ Do you want to reload the file from disk?</source>
     <name>GolangAstOption</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation></translation>
     </message>
     <message>
         <source>QuickOpenSymbol</source>
-        <translation type="unfinished"></translation>
+        <translation>QuickOpenSymbol</translation>
     </message>
     <message>
         <source>Show import path</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать путь импорта</translation>
     </message>
     <message>
         <source>Match case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрозависимый поиск</translation>
     </message>
 </context>
 <context>
@@ -1607,7 +1607,7 @@ Do you want to reload the file from disk?</source>
     <name>GolangEdit</name>
     <message>
         <source>View import package use godoc</source>
-        <translation type="unfinished">Обзор импортируемого пакета с помощью godoc</translation>
+        <translation>Обзор импортируемого пакета с помощью godoc</translation>
     </message>
     <message>
         <source>View Expression Information</source>
@@ -1632,7 +1632,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Oracle What</source>
         <oldsource>What</oldsource>
-        <translation type="unfinished">Поиск Oracle</translation>
+        <translation>Поиск Oracle</translation>
     </message>
     <message>
         <source>Callees</source>
@@ -1680,7 +1680,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Refactor</source>
-        <translation type="unfinished"></translation>
+        <translation>Рефакторинг</translation>
     </message>
 </context>
 <context>
@@ -1706,7 +1706,7 @@ Do you want to reload the file from disk?</source>
     <name>GolangFileSearch</name>
     <message>
         <source>Golang Find Usages</source>
-        <translation type="unfinished"></translation>
+        <translation>Использование поиска Golang</translation>
     </message>
 </context>
 <context>
@@ -1804,15 +1804,15 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Verify Present</source>
-        <translation type="unfinished">Проверить презентацию</translation>
+        <translation>Проверить презентацию</translation>
     </message>
     <message>
         <source>Present verify success</source>
-        <translation type="unfinished">Проверка презентации прошла успешно</translation>
+        <translation>Проверка презентации прошла успешно</translation>
     </message>
     <message>
         <source>Present verify false</source>
-        <translation type="unfinished">Проверка презентации прошла неудачно</translation>
+        <translation>Проверка презентации прошла неудачно</translation>
     </message>
     <message>
         <source>Export PDF</source>
@@ -1823,7 +1823,7 @@ Do you want to reload the file from disk?</source>
     <name>GolangSymbol</name>
     <message>
         <source>Quick Open Symbol by Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Быстрое открытие символа по имени</translation>
     </message>
 </context>
 <context>
@@ -2243,7 +2243,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>NativeText</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NativeText</translation>
     </message>
 </context>
 <context>
@@ -2364,7 +2364,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Automatic positioning cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматическое позиционирование курсора</translation>
     </message>
 </context>
 <context>
@@ -2530,7 +2530,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Word Wrap (MimeType)</source>
-        <translation type="unfinished">Перенос слов (MimeType)</translation>
+        <translation>Перенос слов (MimeType)</translation>
     </message>
     <message>
         <source>Toggle Comment</source>
@@ -2720,63 +2720,63 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Go to Previous Block</source>
-        <translation type="unfinished"></translation>
+        <translation>К предыдущему блоку</translation>
     </message>
     <message>
         <source>Go to Next Block</source>
-        <translation type="unfinished"></translation>
+        <translation>К следующему блоку</translation>
     </message>
     <message>
         <source>Go to Matching Brace</source>
-        <translation type="unfinished"></translation>
+        <translation>К соответствующей скобке</translation>
     </message>
     <message>
         <source>Go to Line Start</source>
-        <translation type="unfinished"></translation>
+        <translation>К началу строки</translation>
     </message>
     <message>
         <source>Go to Line End</source>
-        <translation type="unfinished"></translation>
+        <translation>К концу строки</translation>
     </message>
     <message>
         <source>Go to Previous Line</source>
-        <translation type="unfinished"></translation>
+        <translation>К предыдущей строке</translation>
     </message>
     <message>
         <source>Go to Next Line</source>
-        <translation type="unfinished"></translation>
+        <translation>К следующей строке</translation>
     </message>
     <message>
         <source>Go to Previous Character</source>
-        <translation type="unfinished"></translation>
+        <translation>К предыдущему символу</translation>
     </message>
     <message>
         <source>Go to Next Charater</source>
-        <translation type="unfinished"></translation>
+        <translation>К следующему символу</translation>
     </message>
     <message>
         <source>Go to Previous Word</source>
-        <translation type="unfinished"></translation>
+        <translation>К предыдущему слову</translation>
     </message>
     <message>
         <source>Go to Next Word</source>
-        <translation type="unfinished"></translation>
+        <translation>К следующему слову</translation>
     </message>
     <message>
         <source>Go to Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти к строке</translation>
     </message>
     <message>
         <source>Goto</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти</translation>
     </message>
     <message>
         <source>Go to Doc Start</source>
-        <translation type="unfinished"></translation>
+        <translation>К началу документации</translation>
     </message>
     <message>
         <source>Go to Doc End</source>
-        <translation type="unfinished"></translation>
+        <translation>К концу документации</translation>
     </message>
 </context>
 <context>
@@ -2916,7 +2916,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Tab To Spaces</source>
-        <translation type="unfinished">Табуляции в пробелы</translation>
+        <translation>Табуляции в пробелы</translation>
     </message>
     <message>
         <source>File Extensions</source>
@@ -3285,7 +3285,7 @@ Do you want to replace it?</source>
     <name>OpenEditorsWidget</name>
     <message>
         <source>Open Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Открытые документы</translation>
     </message>
 </context>
 <context>
@@ -3308,7 +3308,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>[*] item request restart of LiteIDE</source>
-        <translation type="unfinished"></translation>
+        <translation>[*] элемент требует перезапуска LiteIDE</translation>
     </message>
 </context>
 <context>
@@ -3367,7 +3367,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Use godoc View</source>
-        <translation type="unfinished">Открыть Godoc</translation>
+        <translation>Открыть Godoc</translation>
     </message>
     <message>
         <source>Load Package in New Window</source>
@@ -3430,7 +3430,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File Name:</source>
-        <translation type="unfinished">Имя файла:</translation>
+        <translation>Имя файла:</translation>
     </message>
 </context>
 <context>
@@ -3556,93 +3556,93 @@ Do you want to replace it?</source>
     <name>QuickOpenEditor</name>
     <message>
         <source>Open Editor by Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Открытие редактора по имени</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenFiles</name>
     <message>
         <source>Open Files by Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Отрытие файлов по имени</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenHelp</name>
     <message>
         <source>Show Quick Open Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отображение быстрой справки</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenLines</name>
     <message>
         <source>Go to Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти к строке</translation>
     </message>
     <message>
         <source>Open a text file first to go to a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Перед переходом к строке необходимо открыть текстовый файл</translation>
     </message>
     <message>
         <source>Type a line number between %1 and %2 to navigate to</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите номер желаемой строки от %1 до %2</translation>
     </message>
     <message>
         <source>Go to Line %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Переход к строке %1</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenManager</name>
     <message>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите «?» для получения справки по возможным действиям</translation>
     </message>
     <message>
         <source>Quick Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Быстрое открытие</translation>
     </message>
     <message>
         <source>Quick Open Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Быстрое открытие редактора</translation>
     </message>
     <message>
         <source>Quick Open Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Быстрое открытие символа</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenMimeType</name>
     <message>
         <source>Open Symbol by Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Открытие символа по имени</translation>
     </message>
     <message>
         <source>not found symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>символ не найден</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenOption</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation></translation>
     </message>
     <message>
         <source>QuickOpenFiles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QuickOpenFiles</translation>
     </message>
     <message>
         <source>Match case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрозависимый поиск</translation>
     </message>
     <message>
         <source>Max files count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлов не более:</translation>
     </message>
     <message>
         <source>QuickOpenEditor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QuickOpenEditor</translation>
     </message>
 </context>
 <context>
@@ -3864,7 +3864,7 @@ Do you want to replace it?</source>
     <message>
         <source>False load %1 !</source>
         <translatorcomment>какое-то служебное сообщение</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ложная загрузка %1!</translation>
     </message>
     <message>
         <source>Open Html or Markdown File</source>

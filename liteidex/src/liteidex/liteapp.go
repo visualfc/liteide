@@ -2,6 +2,8 @@
 package main
 
 /*
+#include <stdlib.h>
+
 extern void cdrv_init(void *fn);
 extern int cdrv_main(int argc,char** argv);
 //extern void cdrv_cb(void *cb, void *id, void *reply, int size, int flag, void* ctx);
@@ -37,13 +39,9 @@ func cdrv_main(args []string) int {
 	argc := len(args)
 	var cargs []*C.char
 	for _, arg := range args {
-		size := len(arg)
-		data := make([]C.char, size+1)
-		for i := 0; i < size; i++ {
-			data[i] = (C.char)(arg[i])
-		}
-		data[size] = 0
-		cargs = append(cargs, &data[0])
+		ptr := C.CString(arg)
+		defer C.free(unsafe.Pointer(ptr)) //释放内存
+		cargs = append(cargs, ptr)
 	}
 	C.cdrv_init_ex()
 	return int(C.cdrv_main(C.int(argc), &cargs[0]))
