@@ -55,6 +55,8 @@ protected slots:
 
     void handleExCommandRequested(bool*,ExCommand);
 
+private slots:
+    void moveToMatchingParenthesis(bool *moved, bool *forward, QTextCursor *cursor);
 private:
     FakeVimEdit(const FakeVimEdit&);
     FakeVimEdit& operator=(const FakeVimEdit&);

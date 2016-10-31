@@ -36,6 +36,7 @@
 #include <QToolTip>
 #include <QLabel>
 #include <QStatusBar>
+#include "liteeditorapi/liteeditorapi.h"
 
 using namespace FakeVim::Internal;
 
@@ -175,6 +176,8 @@ void FakeVimEdit::_addFakeVimToEditor(LiteApi::IEditor *editor){
             this, SLOT(handleExCommandRequested(bool*,ExCommand)));
     connect(fakeVimHandler, SIGNAL(commandBufferChanged(QString,int,int,int,QObject*)),
             this, SLOT(showMessage(QString,int)));
+    connect(fakeVimHandler, SIGNAL(moveToMatchingParenthesis(bool *, bool *, QTextCursor *)),
+            this, SLOT(moveToMatchingParenthesis(bool *, bool *,QTextCursor *)));
 
     //init command list
     {
@@ -223,6 +226,30 @@ void FakeVimEdit::handleExCommandRequested(bool *b, ExCommand c)
         }
         m_liteApp->editorManager()->closeEditor(m_editor);
         *b = true;
+    }
+}
+
+void FakeVimEdit::moveToMatchingParenthesis(bool *moved, bool *forward, QTextCursor *cursor)
+{
+    LiteApi::IEditor *editor = m_editor;
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(editor,"Editor");
+    LiteApi::ActionInfo *info = actionContext->actionInfo("GotoMatchBrace");
+
+    info->action->trigger();
+
+    int oldPos = cursor->position();
+    int newPos = this->m_editor->textCursor().position();
+    cursor->setPosition(newPos);
+
+    if(oldPos <= newPos){
+        *forward = true;
+    }else{
+        *forward = false;
+    }
+    if(oldPos == newPos){
+        *moved = false;
+    }else{
+        *moved = true;
     }
 }
 
