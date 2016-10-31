@@ -81,6 +81,7 @@ cp -a -v $LITEIDE_ROOT/LICENSE.LGPL liteide
 cp -a -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -a -v $LITEIDE_ROOT/../README.md liteide
 cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
+cp -a -v $LITEIDE_ROOT/liteide.desktop liteide
 
 cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gotools liteide/bin

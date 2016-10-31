@@ -3,8 +3,13 @@ Encoding=UTF-8
 Type=Application
 Name=LiteIDE
 Comment=IDE for editing and building projects written in the Go programming language
+#Exec=/... your liteide path .../liteide/bin/liteide
+#Icon=/... your liteide path .../liteide/share/liteide/welcome/images/liteide128.xpm
 Exec=liteide
 Icon=liteide
 Terminal=false
 StartupNotify=false
 Categories=Application;Development;
+
+# desktop-file-validate ./liteide.desktop
+# desktop-file-install ./liteide.desktop
