@@ -36,10 +36,22 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./build_linux.sh
 	$ ./deploy_linux_qt4.8_webkit.sh
 
-### Ubuntu
+### Ubuntu 14.04
 	$ git clone https://github.com/visualfc/liteide.git
 	$ sudo apt-get update
 	$ sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui libqtwebkit-dev g++
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ QTDIR=/usr ./build_linux.sh
+	
+	## Run it: ##
+	$ cd ~/liteide/build/liteide/bin
+	$ ./liteide
+
+### Ubuntu 16.04
+	$ git clone https://github.com/visualfc/liteide.git
+	$ sudo apt-get update
+	$ sudo apt-get install qt4-dev-tools libqt4-dev libqtcore4 libqtgui4 libqtwebkit-dev g++
 	$ cd liteide/build
 	$ ./update_pkg.sh
 	$ QTDIR=/usr ./build_linux.sh
