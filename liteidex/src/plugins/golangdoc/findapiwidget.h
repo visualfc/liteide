@@ -56,6 +56,7 @@ protected:
 
 class FindApiEdit : public Utils::FancyLineEdit
 {
+    Q_OBJECT
 public:
     FindApiEdit(QWidget *parent = 0)
         : Utils::FancyLineEdit(parent)
