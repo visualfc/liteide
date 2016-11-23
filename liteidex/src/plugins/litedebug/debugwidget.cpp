@@ -80,7 +80,8 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 
     m_debugLogEdit = new TerminalEdit;
     m_debugLogEdit->setReadOnly(false);
-    m_debugLogEdit->setMaximumBlockCount(1024);
+    m_debugLogEdit->setFilterTermColor(true);
+    m_debugLogEdit->setMaximumBlockCount(10000);
     m_debugLogEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
 
     m_tabWidget->addTab(m_asyncView,tr("Async Record"));

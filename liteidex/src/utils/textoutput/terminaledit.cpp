@@ -56,6 +56,7 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
     m_contextRoMenu = new QMenu(this);
 
     m_bAutoPosCursor = true;
+    m_bFilterTermColor = false;
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -97,15 +98,25 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
     connect(m_clear,SIGNAL(triggered()),this,SLOT(clear()));
 }
 
+void TerminalEdit::setFilterTermColor(bool filter)
+{
+    m_bFilterTermColor = filter;
+}
+
 void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
 {
+    QString str = text;
+    if (m_bFilterTermColor) {
+        static QRegExp rx("\033\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]");
+        str.remove(rx);
+    }
     setUndoRedoEnabled(false);
     QTextCursor cur = this->textCursor();
     cur.movePosition(QTextCursor::End);
     if (fmt) {
         cur.setCharFormat(*fmt);
     }
-    cur.insertText(text);
+    cur.insertText(str);
     this->setTextCursor(cur);
     setUndoRedoEnabled(true);
     m_endPostion = this->textCursor().position();

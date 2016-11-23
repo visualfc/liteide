@@ -31,6 +31,7 @@ class TerminalEdit : public QPlainTextEdit
     Q_OBJECT
 public:
     explicit TerminalEdit(QWidget *parent = 0);
+    void setFilterTermColor(bool filter);
 signals:
     void enterText(const QString &text);
     void dbclickEvent(const QTextCursor &cur);
@@ -62,6 +63,7 @@ protected:
     QAction *m_clear;
     bool    m_bFocusOut;
     bool    m_bAutoPosCursor;
+    bool    m_bFilterTermColor;
 };
 
 

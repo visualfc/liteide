@@ -171,6 +171,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_process = new ProcessEx(this);
     m_output = new TextOutput(m_liteApp);
+    m_output->setFilterTermColor(true);
 
     m_stopAct = new QAction(tr("Stop Action"),this);
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
