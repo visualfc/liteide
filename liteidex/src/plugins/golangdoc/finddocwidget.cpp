@@ -30,6 +30,7 @@
 #include <QToolButton>
 #include <QActionGroup>
 #include <QAction>
+#include <QCoreApplication>
 #include <QPlainTextEdit>
 #include <QTextBrowser>
 //lite_memory_check_begin
@@ -68,6 +69,7 @@ static char help[] =
 
 class SearchEdit : public Utils::FancyLineEdit
 {
+    Q_DECLARE_TR_FUNCTIONS(SearchEdit)
 public:
     SearchEdit(QWidget *parent = 0)
         : Utils::FancyLineEdit(parent)
