@@ -104,6 +104,13 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_oracleProcess = new Process(this);
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
+    m_enableUseGuru = false;
+
+    m_guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
+    if (!m_guruFilePath.isEmpty()) {
+        m_enableUseGuru = true;
+        m_liteApp->appendLog("GolangEdit",QString("Found guru at %1").arg(m_guruFilePath),false);
+    }
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -829,15 +836,24 @@ void GolangEdit::runOracle(const QString &action)
     m_oracleInfo.offset = offset;
     m_oracleInfo.offset2 = offset2;
 
-    QString cmd = LiteApi::getGotools(m_liteApp);
+    QString cmd;
+    QString arginfo;
+    if (m_enableUseGuru) {
+        cmd = LiteApi::getGotools(m_liteApp);
+        arginfo = "oracle -pos";
+    } else {
+        cmd = m_guruFilePath;
+        arginfo = "-pos";
+    }
+
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_oracleProcess->setWorkingDirectory(info.path());
     if (offset2 == -1) {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2\" %3 .").
-                                 arg(info.fileName()).arg(offset).arg(action));
+        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
+                                 arg(arginfo).arg(info.fileName()).arg(offset).arg(action));
     } else {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2,#%3\" %4 .").
-                                 arg(info.fileName()).arg(offset).arg(offset2).arg(action));
+        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
+                                 arg(arginfo).arg(info.fileName()).arg(offset).arg(offset2).arg(action));
 
     }
 }
@@ -850,7 +866,17 @@ void GolangEdit::runOracleByInfo(const QString &action)
     if (m_oracleProcess->isRunning()) {
         return;
     }
-    QString cmd = LiteApi::getGotools(m_liteApp);
+
+    QString cmd;
+    QString arginfo;
+    if (m_enableUseGuru) {
+        cmd = LiteApi::getGotools(m_liteApp);
+        arginfo = "oracle -pos";
+    } else {
+        cmd = m_guruFilePath;
+        arginfo = "-pos";
+    }
+
 
     int offset = m_oracleInfo.offset;
     int offset2 = m_oracleInfo.offset2;
@@ -860,11 +886,11 @@ void GolangEdit::runOracleByInfo(const QString &action)
     m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_oracleProcess->setWorkingDirectory(m_oracleInfo.workPath);
     if (offset2 == -1) {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2\" %3 .").
-                                 arg(m_oracleInfo.fileName).arg(offset).arg(action));
+        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
+                                 arg(arginfo).arg(m_oracleInfo.fileName).arg(offset).arg(action));
     } else {
-        m_oracleProcess->startEx(cmd,QString("oracle -pos \"%1:#%2,#%3\" %4 .").
-                                 arg(m_oracleInfo.fileName).arg(offset).arg(offset2).arg(action));
+        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
+                                 arg(arginfo).arg(m_oracleInfo.fileName).arg(offset).arg(offset2).arg(action));
 
     }
 }

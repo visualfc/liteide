@@ -113,6 +113,8 @@ protected:
     QAction               *m_oracleOutputAct;
     bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
+    bool m_enableUseGuru;
+    QString     m_guruFilePath;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
     QAction *m_findInfoAct;
