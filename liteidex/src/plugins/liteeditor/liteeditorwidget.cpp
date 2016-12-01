@@ -454,3 +454,30 @@ void LiteEditorWidget::updateFont(const QFont &font)
         this->m_completer->popup()->setFont(font);
     }
 }
+
+void LiteEditorWidget::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+    if (urls.isEmpty()) {
+        LiteEditorWidgetBase::dropEvent(event);
+        return;
+    }
+    bool hasFile = false;
+    foreach (QUrl url, urls) {
+        QString fileName = url.toLocalFile();
+        if (!fileName.isEmpty()) {
+            QFileInfo info(fileName);
+            if (info.isFile()) {
+                m_liteApp->fileManager()->openEditor(fileName,true);
+            } else if(info.isDir()) {
+                m_liteApp->fileManager()->addFolderList(fileName);
+            }
+            hasFile = true;
+        }
+    }
+    if (hasFile) {
+        event->accept();
+        return;
+    }
+    LiteEditorWidgetBase::dropEvent(event);
+}

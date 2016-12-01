@@ -65,6 +65,7 @@ public:
     QString wordUnderCursor() const;
     QString textUnderCursor(QTextCursor tc) const;
     QString importUnderCursor(QTextCursor tc) const;
+    virtual void dropEvent(QDropEvent *event);
 protected:
     LiteApi::ICompleter *m_completer;
     QMenu      *m_contextMenu;
