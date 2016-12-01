@@ -101,7 +101,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_findDefProcess = new Process(this);
     m_findInfoProcess = new Process(this);
     m_findLinkProcess = new Process(this);
-    m_oracleProcess = new Process(this);
+    m_sourceQueryProcess = new Process(this);
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
     m_enableUseGuru = false;
@@ -110,6 +110,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     if (!m_guruFilePath.isEmpty()) {
         m_enableUseGuru = true;
         m_liteApp->appendLog("GolangEdit",QString("Found guru at %1").arg(m_guruFilePath),false);
+    } else {
+        m_liteApp->appendLog("GolangEdit",QString("Not found guru!"),false);
     }
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
@@ -132,71 +134,71 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findLinkProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findLinkFinish(int,QProcess::ExitStatus)));
     connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
 
-    connect(m_oracleProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(oracleFinished(int,QProcess::ExitStatus)));
+    connect(m_sourceQueryProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(sourceQueryFinished(int,QProcess::ExitStatus)));
 
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
-    m_oracleOutput = new TextOutput(m_liteApp,true);
+    m_sourceQueryOutput = new TextOutput(m_liteApp,true);
 
-    connect(m_oracleOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickOracleOutput(QTextCursor)));
+    connect(m_sourceQueryOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickSourceQueryOutput(QTextCursor)));
 
-    m_oracleOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_oracleOutput,"oracle",tr("Oracle"),true);
+    m_sourceQueryOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_sourceQueryOutput,"gosourcequery",tr("Go Source Query"),true);
 
-    m_oracleWhatAct = new QAction(tr("Oracle What"),this);
-    actionContext->regAction(m_oracleWhatAct,"OracleWhat","Ctrl+Shift+H");
-    connect(m_oracleWhatAct,SIGNAL(triggered()),this,SLOT(oracleWhat()));
+    m_sourceWhatAct = new QAction(tr("SourceQuery What"),this);
+    actionContext->regAction(m_sourceWhatAct,"SourceQueryWhat","Ctrl+Shift+H");
+    connect(m_sourceWhatAct,SIGNAL(triggered()),this,SLOT(sourceWhat()));
 
-    m_oracleCalleesAct = new QAction(tr("Callees"),this);
-    actionContext->regAction(m_oracleCalleesAct,"OracleCallees","");
-    connect(m_oracleCalleesAct,SIGNAL(triggered()),this,SLOT(oracleCallees()));
+    m_sourceCalleesAct = new QAction(tr("Callees"),this);
+    actionContext->regAction(m_sourceCalleesAct,"SourceQueryCallees","");
+    connect(m_sourceCalleesAct,SIGNAL(triggered()),this,SLOT(sourceCallees()));
 
-    m_oracleCallersAct = new QAction(tr("Callers"),this);
-    actionContext->regAction(m_oracleCallersAct,"OracleCallers","");
-    connect(m_oracleCallersAct,SIGNAL(triggered()),this,SLOT(oracleCallers()));
+    m_sourceCallersAct = new QAction(tr("Callers"),this);
+    actionContext->regAction(m_sourceCallersAct,"SourceQueryCallers","");
+    connect(m_sourceCallersAct,SIGNAL(triggered()),this,SLOT(sourceCallers()));
 
-    m_oracleCallstackAct = new QAction(tr("Callstack"),this);
-    actionContext->regAction(m_oracleCallstackAct,"OracleCallstack","");
-    connect(m_oracleCallstackAct,SIGNAL(triggered()),this,SLOT(oracleCallstack()));
+    m_sourceCallstackAct = new QAction(tr("Callstack"),this);
+    actionContext->regAction(m_sourceCallstackAct,"SourceQueryCallstack","");
+    connect(m_sourceCallstackAct,SIGNAL(triggered()),this,SLOT(sourceCallstack()));
 
-    m_oracleDefinitionAct = new QAction(tr("Definition"),this);
-    actionContext->regAction(m_oracleDefinitionAct,"OracleDefinition","");
-    connect(m_oracleDefinitionAct,SIGNAL(triggered()),this,SLOT(oracleDefinition()));
+    m_sourceDefinitionAct = new QAction(tr("Definition"),this);
+    actionContext->regAction(m_sourceDefinitionAct,"SourceQueryDefinition","");
+    connect(m_sourceDefinitionAct,SIGNAL(triggered()),this,SLOT(sourceDefinition()));
 
-    m_oracleDescribeAct = new QAction(tr("Describe"),this);
-    actionContext->regAction(m_oracleDescribeAct,"OracleDescribe","");
-    connect(m_oracleDescribeAct,SIGNAL(triggered()),this,SLOT(oracleDescribe()));
+    m_sourceDescribeAct = new QAction(tr("Describe"),this);
+    actionContext->regAction(m_sourceDescribeAct,"SourceQueryDescribe","");
+    connect(m_sourceDescribeAct,SIGNAL(triggered()),this,SLOT(sourceDescribe()));
 
-    m_oracleFreevarsAct = new QAction(tr("Freevars"),this);
-    actionContext->regAction(m_oracleFreevarsAct,"OracleFreevars","");
-    connect(m_oracleFreevarsAct,SIGNAL(triggered()),this,SLOT(oracleFreevars()));
+    m_sourceFreevarsAct = new QAction(tr("Freevars"),this);
+    actionContext->regAction(m_sourceFreevarsAct,"SourceQueryFreevars","");
+    connect(m_sourceFreevarsAct,SIGNAL(triggered()),this,SLOT(sourceFreevars()));
 
-    m_oracleImplementsAct = new QAction(tr("Implements"),this);
-    actionContext->regAction(m_oracleImplementsAct,"OracleImplements","");
-    connect(m_oracleImplementsAct,SIGNAL(triggered()),this,SLOT(oracleImplements()));
+    m_sourceImplementsAct = new QAction(tr("Implements"),this);
+    actionContext->regAction(m_sourceImplementsAct,"SourceQueryImplements","");
+    connect(m_sourceImplementsAct,SIGNAL(triggered()),this,SLOT(sourceImplements()));
 
-    m_oraclePeersAct = new QAction(tr("Peers"),this);
-    actionContext->regAction(m_oraclePeersAct,"OraclePeers","");
-    connect(m_oraclePeersAct,SIGNAL(triggered()),this,SLOT(oraclePeers()));
+    m_sourcePeersAct = new QAction(tr("Peers"),this);
+    actionContext->regAction(m_sourcePeersAct,"SourceQueryPeers","");
+    connect(m_sourcePeersAct,SIGNAL(triggered()),this,SLOT(sourcePeers()));
 
-    m_oracleReferrersAct = new QAction(tr("Referrers"),this);
-    actionContext->regAction(m_oracleReferrersAct,"OracleReferrers","");
-    connect(m_oracleReferrersAct,SIGNAL(triggered()),this,SLOT(oracleReferrers()));
+    m_sourceReferrersAct = new QAction(tr("Referrers"),this);
+    actionContext->regAction(m_sourceReferrersAct,"SourceQueryReferrers","");
+    connect(m_sourceReferrersAct,SIGNAL(triggered()),this,SLOT(sourceReferrers()));
 
-    m_oraclePointstoAct = new QAction(tr("Pointsto"),this);
-    actionContext->regAction(m_oraclePointstoAct,"OraclePointsto","");
-    connect(m_oraclePointstoAct,SIGNAL(triggered()),this,SLOT(oraclePointsto()));
+    m_sourcePointstoAct = new QAction(tr("Pointsto"),this);
+    actionContext->regAction(m_sourcePointstoAct,"SourceQueryPointsto","");
+    connect(m_sourcePointstoAct,SIGNAL(triggered()),this,SLOT(sourcePointsto()));
 
-    m_oracleWhicherrs = new QAction(tr("Whicherrs"),this);
-    actionContext->regAction(m_oracleWhicherrs,"OracleWhicherrs","");
-    connect(m_oracleWhicherrs,SIGNAL(triggered()),this,SLOT(oracleWhicherrs()));
+    m_sourceWhicherrs = new QAction(tr("Whicherrs"),this);
+    actionContext->regAction(m_sourceWhicherrs,"SourceQueryWhicherrs","");
+    connect(m_sourceWhicherrs,SIGNAL(triggered()),this,SLOT(sourceWhicherrs()));
 
     this->applyOption(OPTION_GOLANGEDIT);
 }
 
 GolangEdit::~GolangEdit()
 {
-    if (m_oracleOutput) {
-        delete m_oracleOutput;
+    if (m_sourceQueryOutput) {
+        delete m_sourceQueryOutput;
     }
 }
 
@@ -268,19 +270,19 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_renameSymbolGlobalAct);
 
         menu->addSeparator();
-        menu->addAction(m_oracleWhatAct);
-        sub = menu->addMenu("Oracle");
-        sub->addAction(m_oracleCalleesAct);
-        sub->addAction(m_oracleCallersAct);
-        sub->addAction(m_oracleCallstackAct);
-        sub->addAction(m_oracleDefinitionAct);
-        sub->addAction(m_oracleDescribeAct);
-        sub->addAction(m_oracleFreevarsAct);
-        sub->addAction(m_oracleImplementsAct);
-        sub->addAction(m_oraclePeersAct);
-        sub->addAction(m_oraclePointstoAct);
-        sub->addAction(m_oracleWhicherrs);
-        sub->addAction(m_oracleReferrersAct);
+        menu->addAction(m_sourceWhatAct);
+        sub = menu->addMenu(tr("SourceQuery"));
+        sub->addAction(m_sourceCalleesAct);
+        sub->addAction(m_sourceCallersAct);
+        sub->addAction(m_sourceCallstackAct);
+        sub->addAction(m_sourceDefinitionAct);
+        sub->addAction(m_sourceDescribeAct);
+        sub->addAction(m_sourceFreevarsAct);
+        sub->addAction(m_sourceImplementsAct);
+        sub->addAction(m_sourcePeersAct);
+        sub->addAction(m_sourcePointstoAct);
+        sub->addAction(m_sourceReferrersAct);
+        sub->addAction(m_sourceWhicherrs);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -298,19 +300,19 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
 
         menu->addSeparator();
-        menu->addAction(m_oracleWhatAct);
-        sub = menu->addMenu("Oracle");
-        sub->addAction(m_oracleCalleesAct);
-        sub->addAction(m_oracleCallersAct);
-        sub->addAction(m_oracleCallstackAct);
-        sub->addAction(m_oracleDefinitionAct);
-        sub->addAction(m_oracleDescribeAct);
-        sub->addAction(m_oracleFreevarsAct);
-        sub->addAction(m_oracleImplementsAct);
-        sub->addAction(m_oraclePeersAct);
-        sub->addAction(m_oraclePointstoAct);
-        sub->addAction(m_oracleWhicherrs);
-        sub->addAction(m_oracleReferrersAct);
+        menu->addAction(m_sourceWhatAct);
+        sub = menu->addMenu(tr("SourceQuery"));
+        sub->addAction(m_sourceCalleesAct);
+        sub->addAction(m_sourceCallersAct);
+        sub->addAction(m_sourceCallstackAct);
+        sub->addAction(m_sourceDefinitionAct);
+        sub->addAction(m_sourceDescribeAct);
+        sub->addAction(m_sourceFreevarsAct);
+        sub->addAction(m_sourceImplementsAct);
+        sub->addAction(m_sourcePeersAct);
+        sub->addAction(m_sourcePointstoAct);
+        sub->addAction(m_sourceReferrersAct);
+        sub->addAction(m_sourceWhicherrs);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -700,26 +702,26 @@ void GolangEdit::searchTextChanged(const QString &/*word*/)
 
 }
 
-void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
+void GolangEdit::sourceQueryFinished(int code, QProcess::ExitStatus /*status*/)
 {
-    m_oracleOutputAct->setChecked(true);
+    m_sourceQueryOutputAct->setChecked(true);
    // m_oracleOutput->clear();
-    m_oracleOutput->updateExistsTextColor(true);
+    m_sourceQueryOutput->updateExistsTextColor(true);
     if (code != 0) {
-        QByteArray data = m_oracleProcess->readAllStandardError();
-        m_oracleOutput->append(data,Qt::red);
+        QByteArray data = m_sourceQueryProcess->readAllStandardError();
+        m_sourceQueryOutput->append(data,Qt::red);
         return;
     }
-    QByteArray data = m_oracleProcess->readAllStandardOutput();
+    QByteArray data = m_sourceQueryProcess->readAllStandardOutput();
     if (data.isEmpty()) {
-        data = m_oracleProcess->readAllStandardError();
+        data = m_sourceQueryProcess->readAllStandardError();
     }
     if (data.isEmpty()) {
-        m_oracleOutput->append(QString("oracle \"%1\" output is nothing.").arg(m_oracleInfo.action));
+        m_sourceQueryOutput->append(QString("oracle \"%1\" output is nothing.").arg(m_sourceQueryInfo.action));
         return;
     }
-    m_oracleInfo.output = QString::fromUtf8(data);
-    m_oracleInfo.success = true;
+    m_sourceQueryInfo.output = QString::fromUtf8(data);
+    m_sourceQueryInfo.success = true;
    // m_oracleOutput->append(m_oracleInfo.output);
     //remove referrers action
     foreach (QString line, QString::fromUtf8(data).split("\n")) {
@@ -727,12 +729,12 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
         if (line.startsWith("-: modes:")) {
             QString mode = line.mid(9);
            // mode.remove(QRegExp("\\s?\\breferrers\\b"));
-            m_oracleInfo.mode = mode;
+            m_sourceQueryInfo.mode = mode;
         }
-        m_oracleOutput->append(line+"\n");
+        m_sourceQueryOutput->append(line+"\n");
     }
-    if (!m_oracleInfo.mode.isEmpty()) {
-        m_oracleOutput->appendTag(m_oracleInfo.mode+"\n");
+    if (!m_sourceQueryInfo.mode.isEmpty()) {
+        m_sourceQueryOutput->appendTag(m_sourceQueryInfo.mode+"\n");
     }
 }
 
@@ -752,7 +754,7 @@ void GolangEdit::oracleFinished(int code, QProcess::ExitStatus /*status*/)
 //    m_oracleOutput->append(text);
 //}
 
-void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
+void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
 {
     QTextCursor cur = cursor;
     cur.select(QTextCursor::WordUnderCursor);
@@ -760,7 +762,7 @@ void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
     actions << "callees" << "callers" << "callstack" << "definition" << "describe" << "freevars" << "implements" << "peers" << "referrers" << "pointsto" << "whicherrs";
     QString text = cur.selectedText();
     if (actions.contains(text)) {
-        runOracleByInfo(text);
+        runSourceQueryByInfo(text);
         return;
     }
     cur.select(QTextCursor::LineUnderCursor);
@@ -791,19 +793,19 @@ void GolangEdit::dbclickOracleOutput(const QTextCursor &cursor)
         col = 0;
     }
 
-    QDir dir(m_oracleInfo.workPath);
+    QDir dir(m_sourceQueryInfo.workPath);
     if (!QFileInfo(fileName).isAbsolute()) {
         fileName = dir.filePath(fileName);
     }
     if (LiteApi::gotoLine(m_liteApp,fileName,line-1,col,true,true)) {
-        m_oracleOutput->setTextCursor(cur);
+        m_sourceQueryOutput->setTextCursor(cur);
     }
 }
 
-void GolangEdit::runOracle(const QString &action)
+void GolangEdit::runSourceQuery(const QString &action)
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    if (m_oracleProcess->isRunning()) {
+    if (m_sourceQueryProcess->isRunning()) {
         return;
     }
     int offset = -1;
@@ -821,20 +823,20 @@ void GolangEdit::runOracle(const QString &action)
         offset = moveLeft ? m_editor->utf8Position(true)-1: m_editor->utf8Position(true);
     }
 
-    m_oracleOutput->clear();
-    m_oracleOutput->append(QString("wait for oracle %1 ...\n").arg(action));
+    m_sourceQueryOutput->clear();
+    m_sourceQueryOutput->append(QString("wait for source query %1 ...\n").arg(action));
 
     QFileInfo info(m_editor->filePath());
 
-    m_oracleInfo.action = action;
-    m_oracleInfo.workPath = info.path();
-    m_oracleInfo.filePath = info.filePath();
-    m_oracleInfo.fileName = info.fileName();
-    m_oracleInfo.output.clear();
-    m_oracleInfo.success = false;
-    m_oracleInfo.mode.clear();
-    m_oracleInfo.offset = offset;
-    m_oracleInfo.offset2 = offset2;
+    m_sourceQueryInfo.action = action;
+    m_sourceQueryInfo.workPath = info.path();
+    m_sourceQueryInfo.filePath = info.filePath();
+    m_sourceQueryInfo.fileName = info.fileName();
+    m_sourceQueryInfo.output.clear();
+    m_sourceQueryInfo.success = false;
+    m_sourceQueryInfo.mode.clear();
+    m_sourceQueryInfo.offset = offset;
+    m_sourceQueryInfo.offset2 = offset2;
 
     QString cmd;
     QString arginfo;
@@ -846,24 +848,21 @@ void GolangEdit::runOracle(const QString &action)
         arginfo = "-pos";
     }
 
-    m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    m_oracleProcess->setWorkingDirectory(info.path());
+    m_sourceQueryProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_sourceQueryProcess->setWorkingDirectory(info.path());
     if (offset2 == -1) {
-        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
+        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
                                  arg(arginfo).arg(info.fileName()).arg(offset).arg(action));
     } else {
-        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
+        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
                                  arg(arginfo).arg(info.fileName()).arg(offset).arg(offset2).arg(action));
 
     }
 }
 
-void GolangEdit::runOracleByInfo(const QString &action)
+void GolangEdit::runSourceQueryByInfo(const QString &action)
 {
-//    if (action == "referrers") {
-//        return;
-//    }
-    if (m_oracleProcess->isRunning()) {
+    if (m_sourceQueryProcess->isRunning()) {
         return;
     }
 
@@ -878,80 +877,80 @@ void GolangEdit::runOracleByInfo(const QString &action)
     }
 
 
-    int offset = m_oracleInfo.offset;
-    int offset2 = m_oracleInfo.offset2;
+    int offset = m_sourceQueryInfo.offset;
+    int offset2 = m_sourceQueryInfo.offset2;
 
-    m_oracleOutput->append(QString("\nwait for oracle %1 ...\n").arg(action));
+    m_sourceQueryOutput->append(QString("\nwait for source query %1 ...\n").arg(action));
 
-    m_oracleProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    m_oracleProcess->setWorkingDirectory(m_oracleInfo.workPath);
+    m_sourceQueryProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_sourceQueryProcess->setWorkingDirectory(m_sourceQueryInfo.workPath);
     if (offset2 == -1) {
-        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
-                                 arg(arginfo).arg(m_oracleInfo.fileName).arg(offset).arg(action));
+        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
+                                 arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(action));
     } else {
-        m_oracleProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
-                                 arg(arginfo).arg(m_oracleInfo.fileName).arg(offset).arg(offset2).arg(action));
+        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
+                                 arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(offset2).arg(action));
 
     }
 }
 
-void GolangEdit::oracleWhat()
+void GolangEdit::sourceWhat()
 {
-    runOracle("what");
+    runSourceQuery("what");
 }
 
-void GolangEdit::oracleCallees()
+void GolangEdit::sourceCallees()
 {
-    runOracle("callees");
+    runSourceQuery("callees");
 }
 
-void GolangEdit::oracleCallers()
+void GolangEdit::sourceCallers()
 {
-    runOracle("callers");
+    runSourceQuery("callers");
 }
 
-void GolangEdit::oracleCallstack()
+void GolangEdit::sourceCallstack()
 {
-    runOracle("callstack");
+    runSourceQuery("callstack");
 }
 
-void GolangEdit::oracleDefinition()
+void GolangEdit::sourceDefinition()
 {
-    runOracle("definition");
+    runSourceQuery("definition");
 }
 
-void GolangEdit::oracleDescribe()
+void GolangEdit::sourceDescribe()
 {
-    runOracle("describe");
+    runSourceQuery("describe");
 }
 
-void GolangEdit::oracleFreevars()
+void GolangEdit::sourceFreevars()
 {
-    runOracle("freevars");
+    runSourceQuery("freevars");
 }
 
-void GolangEdit::oracleImplements()
+void GolangEdit::sourceImplements()
 {
-    runOracle("implements");
+    runSourceQuery("implements");
 }
 
-void GolangEdit::oraclePeers()
+void GolangEdit::sourcePeers()
 {
-    runOracle("peers");
+    runSourceQuery("peers");
 }
 
-void GolangEdit::oracleReferrers()
+void GolangEdit::sourceReferrers()
 {
-    runOracle("referrers");
+    runSourceQuery("referrers");
 }
 
-void GolangEdit::oraclePointsto()
+void GolangEdit::sourcePointsto()
 {
-    runOracle("pointsto");
+    runSourceQuery("pointsto");
 }
 
-void GolangEdit::oracleWhicherrs()
+void GolangEdit::sourceWhicherrs()
 {
-    runOracle("whicherrs");
+    runSourceQuery("whicherrs");
 }
 

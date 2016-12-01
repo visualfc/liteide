@@ -32,7 +32,7 @@
 #include "golangfilesearch.h"
 
 /*
-    oracle action
+    a tool for answering questions about Go source code.
     callees	  	show possible targets of selected function call
     callers	  	show possible callers of selected function
     callstack 	show path from callgraph root to selected function
@@ -47,7 +47,7 @@
     whicherrs
 */
 
-struct OracleInfo
+struct SourceQuery
 {
     QString workPath;
     QString filePath;
@@ -88,29 +88,29 @@ public slots:
     void findLinkStarted();
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
-    void oracleFinished(int code, QProcess::ExitStatus status);
+    void sourceQueryFinished(int code, QProcess::ExitStatus status);
     //void updateOracleInfo(const QString &action, const QString &text);
-    void dbclickOracleOutput(const QTextCursor &cursor);
-    void runOracle(const QString &action);
-    void runOracleByInfo(const QString &action);
-    void oracleWhat();
-    void oracleCallees();
-    void oracleCallers();
-    void oracleCallstack();
-    void oracleDefinition();
-    void oracleDescribe();
-    void oracleFreevars();
-    void oracleImplements();
-    void oraclePeers();
-    void oracleReferrers();
-    void oraclePointsto();
-    void oracleWhicherrs();
+    void dbclickSourceQueryOutput(const QTextCursor &cursor);
+    void runSourceQuery(const QString &action);
+    void runSourceQueryByInfo(const QString &action);
+    void sourceWhat();
+    void sourceCallees();
+    void sourceCallers();
+    void sourceCallstack();
+    void sourceDefinition();
+    void sourceDescribe();
+    void sourceFreevars();
+    void sourceImplements();
+    void sourcePeers();
+    void sourceReferrers();
+    void sourcePointsto();
+    void sourceWhicherrs();
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
-    TextOutput            *m_oracleOutput;
-    QAction               *m_oracleOutputAct;
+    TextOutput            *m_sourceQueryOutput;
+    QAction               *m_sourceQueryOutputAct;
     bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
     bool m_enableUseGuru;
@@ -124,23 +124,23 @@ protected:
     QAction *m_renameSymbolAct;
     QAction *m_renameSymbolGlobalAct;
     QAction *m_viewGodocAct;
-    QAction *m_oracleWhatAct;
-    QAction *m_oracleCalleesAct;
-    QAction *m_oracleCallersAct;
-    QAction *m_oracleCallstackAct;
-    QAction *m_oracleDefinitionAct;
-    QAction *m_oracleDescribeAct;
-    QAction *m_oracleFreevarsAct;
-    QAction *m_oracleImplementsAct;
-    QAction *m_oraclePeersAct;
-    QAction *m_oracleReferrersAct;
-    QAction *m_oraclePointstoAct;
-    QAction *m_oracleWhicherrs;
+    QAction *m_sourceWhatAct;
+    QAction *m_sourceCalleesAct;
+    QAction *m_sourceCallersAct;
+    QAction *m_sourceCallstackAct;
+    QAction *m_sourceDefinitionAct;
+    QAction *m_sourceDescribeAct;
+    QAction *m_sourceFreevarsAct;
+    QAction *m_sourceImplementsAct;
+    QAction *m_sourcePeersAct;
+    QAction *m_sourceReferrersAct;
+    QAction *m_sourcePointstoAct;
+    QAction *m_sourceWhicherrs;
     Process  *m_findDefProcess;
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
-    Process  *m_oracleProcess;
-    OracleInfo m_oracleInfo;
+    Process  *m_sourceQueryProcess;
+    SourceQuery m_sourceQueryInfo;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;
     QTextCursor m_lastCursor;
