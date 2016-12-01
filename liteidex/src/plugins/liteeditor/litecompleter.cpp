@@ -183,7 +183,7 @@ static void clearTempIndex(QStandardItemModel *model, QModelIndex parent) {
     int i = model->rowCount(parent);
     while (i--) {
         QModelIndex index = model->index(i,0,parent);
-        if (index.data(WordItem::TempRole).toBool() == true) {
+        if (index.data(WordItem::TempRole).toBool() == true || index.data(WordItem::KindRole).toString().isEmpty()) {
             model->removeRow(i,parent);
         } else {
             clearTempIndex(model,index);

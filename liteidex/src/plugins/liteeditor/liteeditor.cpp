@@ -784,6 +784,7 @@ bool LiteEditor::save()
     if (m_bReadOnly) {
         return false;
     }
+    m_completer->clearTemp();
     return saveAs(m_file->filePath());
 }
 
