@@ -297,6 +297,7 @@ CodeCompleterProxyModel::CodeCompleterProxyModel(QObject *parent)
     : QAbstractListModel(parent),m_model(0)
 {
     m_seperator = "::";
+    m_fuzzy = false;
 }
 
 CodeCompleterProxyModel::~CodeCompleterProxyModel()
@@ -523,6 +524,39 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
         return m_items.size();
     }
 
+    //fuzzy completer
+    if (m_fuzzy) {
+        if (!prefix.isEmpty() && !( prefix[0].isLetter() || prefix[0] == '_') ) {
+            return 0;
+        }
+        QString keyRegExp;
+        if (!parentIndex.isValid()) {
+            keyRegExp = "^";
+        }
+        foreach (const QChar &c, prefix) {
+            keyRegExp += c;
+            keyRegExp += "[0-9a-z_]*";
+        }
+
+        QRegExp regExp(keyRegExp);
+        regExp.setCaseSensitivity(Qt::CaseInsensitive);
+
+        int count = m_model->rowCount(parentIndex);
+        QList<QStandardItem*> otherItems;
+        for (int i = 0; i < count; i++) {
+            QModelIndex index = m_model->index(i,0,parentIndex);
+            QStandardItem *item = m_model->itemFromIndex(index);
+            int n = regExp.indexIn(item->text());
+            if (n == 0) {
+                m_items.append(item->clone());
+            } else if (n > 0) {
+                otherItems.append(item->clone());
+            }
+        }
+        m_items.append(otherItems);
+        return m_items.size();
+    }
+
     QString keyRegExp;
     keyRegExp += QLatin1Char('^');
     bool first = true;
@@ -553,6 +587,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
 
         first = false;
     }
+
     QRegExp regExp(keyRegExp);
 
     int count = m_model->rowCount(parentIndex);
@@ -576,6 +611,16 @@ void CodeCompleterProxyModel::setSeparator(const QString &separator)
 QString CodeCompleterProxyModel::separator() const
 {
     return m_seperator;
+}
+
+void CodeCompleterProxyModel::setFuzzy(bool b)
+{
+    m_fuzzy = b;
+}
+
+bool CodeCompleterProxyModel::isFuzzy() const
+{
+    return m_fuzzy;
 }
 
 CodeCompleterEx::CodeCompleterEx(QObject *parent)
@@ -801,6 +846,16 @@ void CodeCompleterEx::setWrapAround(bool wrap)
 bool CodeCompleterEx::wrapAround() const
 {
     return m_wrap;
+}
+
+void CodeCompleterEx::setFuzzy(bool b)
+{
+    m_proxy->setFuzzy(b);
+}
+
+bool CodeCompleterEx::isFuzzy() const
+{
+    return m_proxy->isFuzzy();
 }
 
 void CodeCompleterEx::completerActivated(QModelIndex index)

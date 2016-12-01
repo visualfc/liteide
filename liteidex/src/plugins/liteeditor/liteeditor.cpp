@@ -964,6 +964,7 @@ void LiteEditor::applyOption(QString id)
     bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
     bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
+    bool fuzzyCompleter = m_liteApp->settings()->value(EDITOR_COMPLETER_FUZZY,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool codeFoldVisible = m_liteApp->settings()->value(EDITOR_CODEFOLDVISIBLE,true).toBool();
     bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
@@ -997,6 +998,7 @@ void LiteEditor::applyOption(QString id)
 
     if (m_completer) {
         m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+        m_completer->setFuzzy(fuzzyCompleter);
     }
 
     updateFont();

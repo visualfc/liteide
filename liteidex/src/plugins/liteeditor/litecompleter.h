@@ -58,6 +58,7 @@ public:
     virtual void hidePopup();
     virtual bool isShowPopup();
     virtual void setCaseSensitivity(Qt::CaseSensitivity caseSensitivity);
+    virtual void setFuzzy(bool fuzzy);
     virtual void setCompletionPrefix(const QString &prefix);
     virtual QString completionPrefix() const;
     virtual void setCompletionContext(LiteApi::CompletionContext ctx);

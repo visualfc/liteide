@@ -97,6 +97,8 @@ public:
     int filter(const QString &filter, int cs = LiteApi::CaseInsensitive, LiteApi::CompletionContext ctx = LiteApi::CompleterCodeContext);
     void setSeparator(const QString &separator);
     QString separator() const;
+    void setFuzzy(bool b);
+    bool isFuzzy() const;
 protected:
     bool splitFilter(const QString &filter, QModelIndex &parent, QString &prefix, const QString &sep = ".");
     void clearItems();
@@ -104,6 +106,7 @@ protected:
     QStringList         m_importList;
     QStandardItemModel *m_model;
     QString             m_seperator;
+    bool                m_fuzzy;
 };
 
 class CodeCompleterEx : public QObject
@@ -133,6 +136,8 @@ public:
     QAbstractItemModel *completionModel() const;
     void setWrapAround(bool wrap);
     bool wrapAround() const;
+    void setFuzzy(bool b);
+    bool isFuzzy() const;
 signals:
     void activated(QModelIndex);
 public slots:

@@ -106,6 +106,7 @@ public:
     virtual void setExternalMode(bool b) = 0;
     virtual bool externalMode() const = 0;
     virtual void setCaseSensitivity(Qt::CaseSensitivity caseSensitivity) = 0;
+    virtual void setFuzzy(bool fuzzy) = 0;
     virtual void setCompletionPrefix(const QString &prefix) = 0;
     virtual QString completionPrefix() const = 0;
     virtual void setCompletionContext(CompletionContext ctx) = 0;

@@ -98,6 +98,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
     bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
+    bool fuzzyCompleter = m_liteApp->settings()->value(EDITOR_COMPLETER_FUZZY,false).toBool();
     bool cleanWhitespaceOnSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool codeFoldVisible = m_liteApp->settings()->value(EDITOR_CODEFOLDVISIBLE,true).toBool();
@@ -124,6 +125,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->visualizeWhitespaceCheckBox->setChecked(visualizeWhitespace);
     ui->codeFoldVisibleCheckBox->setChecked(codeFoldVisible);
     ui->completerCaseSensitiveCheckBox->setChecked(caseSensitive);
+    ui->completerFuzzyCheckBox->setChecked(fuzzyCompleter);
     ui->preMinLineEdit->setText(QString("%1").arg(min));
     ui->cleanWhitespaceOnSaveCheckBox->setChecked(cleanWhitespaceOnSave);
     ui->rightLineVisibleCheckBox->setChecked(rightLineVisible);
@@ -228,6 +230,7 @@ void LiteEditorOption::apply()
     bool lineNumberVisible = ui->lineNumberVisibleCheckBox->isChecked();
     bool codeFoldVisible = ui->codeFoldVisibleCheckBox->isChecked();
     bool caseSensitive = ui->completerCaseSensitiveCheckBox->isChecked();
+    bool fuzzyCompleter = ui->completerFuzzyCheckBox->isChecked();
     bool cleanWhitespaceOnSave = ui->cleanWhitespaceOnSaveCheckBox->isChecked();
     bool antialias = ui->antialiasCheckBox->isChecked();
     bool rightLineVisible = ui->rightLineVisibleCheckBox->isChecked();
@@ -260,6 +263,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_DEFAULTWORDWRAP,defaultWordWrap);
     m_liteApp->settings()->setValue(EDITOR_INDENTLINEVISIBLE,indentLineVisible);
     m_liteApp->settings()->setValue(EDITOR_COMPLETER_CASESENSITIVE,caseSensitive);
+    m_liteApp->settings()->setValue(EDITOR_COMPLETER_FUZZY,fuzzyCompleter);
     m_liteApp->settings()->setValue(EDITOR_PREFIXLENGTH,min);
     m_liteApp->settings()->setValue(EDITOR_CLEANWHITESPACEONSAVE,cleanWhitespaceOnSave);
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);

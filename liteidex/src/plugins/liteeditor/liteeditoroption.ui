@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
-    <height>330</height>
+    <width>612</width>
+    <height>377</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -262,6 +262,13 @@
            <widget class="QCheckBox" name="autoIndentCheckBox">
             <property name="text">
              <string>Automatic indentation</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="completerFuzzyCheckBox">
+            <property name="text">
+             <string>Fuzzy code completion</string>
             </property>
            </widget>
           </item>

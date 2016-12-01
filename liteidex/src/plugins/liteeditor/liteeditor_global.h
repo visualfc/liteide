@@ -50,6 +50,7 @@
 #define EDITOR_AUTOBRACE5 "editor/autobraces5"
 #define EDITOR_AUTOBRACE6 "editor/autobraces6"
 #define EDITOR_COMPLETER_CASESENSITIVE "editor/completercasesensitive"
+#define EDITOR_COMPLETER_FUZZY "editor/completerfuzzy"
 #define EDITOR_LINENUMBERVISIBLE "editor/linenumbervisible"
 #define EDITOR_VISUALIZEWHITESPACE "editor/visualizeWhitespace"
 #define EDITOR_PREFIXLENGTH "editor/prefixlength"

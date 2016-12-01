@@ -203,6 +203,26 @@ void LiteCompleter::showPopup()
     }
     //m_completer->model()->sort(0);
     m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
+    QString prefix = m_completer->completionPrefix();
+    if (!prefix.isEmpty()) {
+        bool found = false;
+        for (int i = 0; i < m_completer->completionModel()->rowCount(); i++) {
+            QModelIndex index =  m_completer->completionModel()->index(i,0);
+            QString text = index.data().toString();
+            if (text.startsWith(prefix,Qt::CaseInsensitive)) {
+                if (text.compare(prefix,Qt::CaseInsensitive) == 0) {
+                    m_completer->popup()->setCurrentIndex(index);
+                    break;
+                }
+                if (!found) {
+                    m_completer->popup()->setCurrentIndex(index);
+                }
+                found = true;
+            } else if (found) {
+                break;
+            }
+        }
+    }
     QTextCursor cursor = m_editor->textCursor();
     int offset = m_completer->completionPrefix().length();
     int pos = m_completer->completionPrefix().indexOf(m_completer->separator());
@@ -232,6 +252,11 @@ bool LiteCompleter::isShowPopup()
 void LiteCompleter::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
 {
     m_completer->setCaseSensitivity(caseSensitivity);
+}
+
+void LiteCompleter::setFuzzy(bool fuzzy)
+{
+    m_completer->setFuzzy(fuzzy);
 }
 
 void LiteCompleter::setCompletionPrefix(const QString &prefix)
