@@ -3,6 +3,23 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2016.12.1 Ver X30.3
+* LiteEditor
+	* add fuzzy completion
+	* clear completion temp items at save time
+	* support drop file to open editor
+* GolangEdit
+	* add guru support (backup oracle)
+* DlvDebugger
+	* use native stepout
+	* filter term color
+* LiteBuild
+	* filter term color
+	* FileTest support TESTARGS
+* gotools
+	* gotest support [build|test args]
+	* update vendor for oracle
+	
 ### 2016.7.12 Ver X30.2
 * LiteApp
 	* add new vs-dark css, thanks [tupunco](https://github.com/tupunco)
