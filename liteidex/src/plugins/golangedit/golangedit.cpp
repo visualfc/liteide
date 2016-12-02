@@ -111,7 +111,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
         m_enableUseGuru = true;
         m_liteApp->appendLog("GolangEdit",QString("Found guru at %1").arg(m_guruFilePath),false);
     } else {
-        m_liteApp->appendLog("GolangEdit",QString("Not found guru!"),false);
+        m_liteApp->appendLog("GolangEdit",QString("Not found guru, back to oracle!"),false);
     }
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
@@ -758,23 +758,30 @@ void GolangEdit::sourceQueryFinished(int code, QProcess::ExitStatus /*status*/)
 void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
 {
     QTextCursor cur = cursor;
-    cur.select(QTextCursor::WordUnderCursor);
-    QStringList actions;
-    actions << "callees" << "callers" << "callstack" << "definition" << "describe" << "freevars" << "implements" << "peers" << "referrers" << "pointsto" << "whicherrs";
-    QString text = cur.selectedText();
-    if (actions.contains(text)) {
-        runSourceQueryByInfo(text);
-        return;
-    }
     cur.select(QTextCursor::LineUnderCursor);
-    text = cur.selectedText();
+    QString text = cur.selectedText();
     if (text.isEmpty()) {
         return;
     }
+
+    bool hasGotoLine = false;
     QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
-    if (reg.indexIn(text) < 0) {
+    if (reg.indexIn(text) >= 0) {
+        hasGotoLine = true;
+    }
+
+    if (!hasGotoLine) {
+        QTextCursor cur = cursor;
+        cur.select(QTextCursor::WordUnderCursor);
+        QString text = cur.selectedText();
+        QStringList actions;
+        actions << "callees" << "callers" << "callstack" << "definition" << "describe" << "freevars" << "implements" << "peers" << "referrers" << "pointsto" << "whicherrs";
+        if (actions.contains(text)) {
+            runSourceQueryByInfo(text);
+        }
         return;
     }
+
     QStringList capList = reg.capturedTexts();
     if (capList.count() < 5) {
         return;
