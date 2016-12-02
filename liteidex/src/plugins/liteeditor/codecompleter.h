@@ -99,13 +99,15 @@ public:
     QString separator() const;
     void setFuzzy(bool b);
     bool isFuzzy() const;
+    QString lastPrefix() const;
 protected:
-    bool splitFilter(const QString &filter, QModelIndex &parent, QString &prefix, const QString &sep = ".");
+    bool splitFilter(const QString &filter, QModelIndex &parent, QString &lastPrefix, const QString &sep = ".");
     void clearItems();
     QList<QStandardItem*> m_items;
     QStringList         m_importList;
     QStandardItemModel *m_model;
     QString             m_seperator;
+    QString             m_prefix;
     bool                m_fuzzy;
 };
 
@@ -122,6 +124,7 @@ public:
     QString separator() const;
     void setCompletionPrefix(const QString &prefix);
     QString completionPrefix() const;
+    QString lastPrefix() const;
     void setCompletionContext(LiteApi::CompletionContext ctx);
     LiteApi::CompletionContext completionContext() const;
     void updateFilter();

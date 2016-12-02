@@ -203,7 +203,8 @@ void LiteCompleter::showPopup()
     }
     //m_completer->model()->sort(0);
     m_completer->popup()->setCurrentIndex(m_completer->completionModel()->index(0, 0));
-    QString prefix = m_completer->completionPrefix();
+    QString prefix = m_completer->lastPrefix();
+
     if (!prefix.isEmpty()) {
         bool found = false;
         for (int i = 0; i < m_completer->completionModel()->rowCount(); i++) {

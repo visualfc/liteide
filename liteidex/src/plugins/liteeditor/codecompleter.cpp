@@ -513,6 +513,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
     if (!splitFilter(filter,parentIndex,prefix,m_seperator)) {
         return 0;
     }
+    m_prefix = prefix;
     if (prefix.isEmpty()) {
         int count = m_model->rowCount(parentIndex);
         for (int i = 0; i < count; i++) {
@@ -623,6 +624,11 @@ bool CodeCompleterProxyModel::isFuzzy() const
     return m_fuzzy;
 }
 
+QString CodeCompleterProxyModel::lastPrefix() const
+{
+    return m_prefix;
+}
+
 CodeCompleterEx::CodeCompleterEx(QObject *parent)
     : QObject(parent), m_widget(0)
 {
@@ -703,6 +709,11 @@ void CodeCompleterEx::setCompletionPrefix(const QString &prefix)
 QString CodeCompleterEx::completionPrefix() const
 {
     return m_prefix;
+}
+
+QString CodeCompleterEx::lastPrefix() const
+{
+    return m_proxy->lastPrefix();
 }
 
 void CodeCompleterEx::setCompletionContext(LiteApi::CompletionContext ctx)
