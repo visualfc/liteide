@@ -139,6 +139,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
     m_sourceQueryOutput = new TextOutput(m_liteApp,true);
+    m_sourceQueryOutput->setLineWrap(false);
 
     connect(m_sourceQueryOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickSourceQueryOutput(QTextCursor)));
 
@@ -823,8 +824,20 @@ void GolangEdit::runSourceQuery(const QString &action)
         offset = moveLeft ? m_editor->utf8Position(true)-1: m_editor->utf8Position(true);
     }
 
+    QString cmd;
+    QString arginfo;
+    QString cmdName;
+    if (m_enableUseGuru) {
+        cmd = m_guruFilePath;
+        cmdName = "guru";
+    } else {
+        cmd = LiteApi::getGotools(m_liteApp);
+        arginfo = "oracle -pos";
+        cmdName = "oracle";
+    }
+
     m_sourceQueryOutput->clear();
-    m_sourceQueryOutput->append(QString("wait for source query %1 ...\n").arg(action));
+    m_sourceQueryOutput->append(QString("\nwait for source query \"%1\" %2 ...\n\n").arg(cmdName).arg(action));
 
     QFileInfo info(m_editor->filePath());
 
@@ -838,25 +851,26 @@ void GolangEdit::runSourceQuery(const QString &action)
     m_sourceQueryInfo.offset = offset;
     m_sourceQueryInfo.offset2 = offset2;
 
-    QString cmd;
-    QString arginfo;
-    if (m_enableUseGuru) {
-        cmd = LiteApi::getGotools(m_liteApp);
-        arginfo = "oracle -pos";
-    } else {
-        cmd = m_guruFilePath;
-        arginfo = "-pos";
-    }
 
     m_sourceQueryProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(info.path());
-    if (offset2 == -1) {
-        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
-                                 arg(arginfo).arg(info.fileName()).arg(offset).arg(action));
-    } else {
-        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
-                                 arg(arginfo).arg(info.fileName()).arg(offset).arg(offset2).arg(action));
 
+    if (m_enableUseGuru) {
+        if (offset2 == -1) {
+            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3\"").
+                                     arg(action).arg(info.fileName()).arg(offset));
+        } else {
+            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3,#%4\"").
+                                     arg(action).arg(info.fileName()).arg(offset).arg(offset2));
+        }
+    } else {
+        if (offset2 == -1) {
+            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
+                                     arg(arginfo).arg(info.fileName()).arg(offset).arg(action));
+        } else {
+            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
+                                     arg(arginfo).arg(info.fileName()).arg(offset).arg(offset2).arg(action));
+        }
     }
 }
 
@@ -868,29 +882,40 @@ void GolangEdit::runSourceQueryByInfo(const QString &action)
 
     QString cmd;
     QString arginfo;
+    QString cmdName;
     if (m_enableUseGuru) {
-        cmd = LiteApi::getGotools(m_liteApp);
-        arginfo = "oracle -pos";
-    } else {
         cmd = m_guruFilePath;
         arginfo = "-pos";
+        cmdName = "guru";
+    } else {
+        cmd = LiteApi::getGotools(m_liteApp);
+        arginfo = "oracle -pos";
+        cmdName = "oracle";
     }
-
 
     int offset = m_sourceQueryInfo.offset;
     int offset2 = m_sourceQueryInfo.offset2;
 
-    m_sourceQueryOutput->append(QString("\nwait for source query %1 ...\n").arg(action));
+    m_sourceQueryOutput->append(QString("\nwait for source query \"%1\" %2 ...\n\n").arg(cmdName).arg(action));
 
     m_sourceQueryProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(m_sourceQueryInfo.workPath);
-    if (offset2 == -1) {
-        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
-                                 arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(action));
+    if (m_enableUseGuru) {
+        if (offset2 == -1) {
+            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3\"").
+                                     arg(action).arg(m_sourceQueryInfo.fileName).arg(offset));
+        } else {
+            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3,#%4\"").
+                                     arg(action).arg(m_sourceQueryInfo.fileName).arg(offset).arg(offset2));
+        }
     } else {
-        m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
-                                 arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(offset2).arg(action));
-
+        if (offset2 == -1) {
+            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
+                                     arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(action));
+        } else {
+            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
+                                     arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(offset2).arg(action));
+        }
     }
 }
 
