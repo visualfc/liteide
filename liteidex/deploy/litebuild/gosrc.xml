@@ -12,6 +12,7 @@
 		<custom id="InstallArgs" name="INSTALLARGS" value=""/>
 		<custom id="TestArgs" name="TESTARGS" value="-v"/>
 		<custom id="BenchmarkArgs" name="BENCHMARKARGS" value=""/>
+		<custom id="GenerateArgs" name="GENERATEARGS" value="-v"/>
 		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
 		<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
 		<action id="Run" img="blue/run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
@@ -39,6 +40,7 @@
 		<action id="GoFmtAll" menu="Utils" img="blue/fmt.png" cmd="$(GOFMT)" args="-l -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoVet" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoVetAll" menu="Utils" img="blue/vet.png" cmd="$(GO)" args="tool vet ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoGenerate" menu="Utils" img="blue/get.png" cmd="$(GO)" args="generate $(GENERATEARGS)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoLint" menu="Utils" img="blue/lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Gopm Build" menu="Utils" img="blue/gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<target id="Target" cmd="$(TARGETNAME)" args="$(TARGETARGS)" work="$(BUILD_DIR_PATH)"/>
