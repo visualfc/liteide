@@ -554,6 +554,8 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
                 otherItems.append(item->clone());
             }
         }
+        qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
+        qStableSort(otherItems.begin(), otherItems.end(), ContentLessThan(prefix));
         m_items.append(otherItems);
         return m_items.size();
     }
