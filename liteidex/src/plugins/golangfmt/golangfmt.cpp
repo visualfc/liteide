@@ -174,33 +174,25 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
 
     QByteArray data = process.readAllStandardOutput();
-    /*
-    int vpos = -1;
-    QScrollBar *bar = ed->verticalScrollBar();
-    if (bar) {
-        vpos = bar->sliderPosition();
-    }
-    */
+
     QByteArray state = editor->saveState();
     QTextCursor cur = ed->textCursor();
-    //int pos = cur.position();
     cur.beginEditBlock();
+    bool bUseState = true;
     if (m_diff) {
-        loadDiff(cur,codec->toUnicode(data));
+        bUseState = false;
+        loadDiff(cur,codec->toUnicode(data));        
     } else {
         cur.select(QTextCursor::Document);
         cur.removeSelectedText();
         cur.insertText(codec->toUnicode(data));
     }
-    //cur.setPosition(pos);
     cur.endEditBlock();
     ed->setTextCursor(cur);
-    editor->restoreState(state);
+    if (bUseState) {
+        editor->restoreState(state);
+    }
 
-    //ed->setTextCursor(cur);
-    //if (vpos != -1) {
-    //    bar->setSliderPosition(vpos);
-    //}
     if (save) {
         m_liteApp->editorManager()->saveEditor(editor,false);
     }
@@ -337,28 +329,25 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     if (!error && code == 0) {
         liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
-        int vpos = -1;
-        QScrollBar *bar = ed->verticalScrollBar();
-        if (bar) {
-            vpos = bar->sliderPosition();
-        }
+
+        QByteArray state = editor->saveState();
         QTextCursor cur = ed->textCursor();
-        int pos = cur.position();
         cur.beginEditBlock();
+        bool bUseState = true;
         if (m_diff) {
+            bUseState = false;
             loadDiff(cur,codec->toUnicode(m_data));
         } else {
             cur.select(QTextCursor::Document);
             cur.removeSelectedText();
             cur.insertText(codec->toUnicode(m_data));
         }
-        cur.setPosition(pos);
         cur.endEditBlock();
-
         ed->setTextCursor(cur);
-        if (vpos != -1) {
-            bar->setSliderPosition(vpos);
+        if (bUseState) {
+            editor->restoreState(state);
         }
+
         if (save) {
             m_liteApp->editorManager()->saveEditor(editor,false);
         }
@@ -386,13 +375,31 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     m_data.clear();
 }
 
+//TODO
+int findBlockPos(const QString &orgText, const QString &newText, int pos )
+{
+    if (pos > newText.length()) {
+        return newText.length();
+    }
+    return pos;
+}
+
 void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
 {
+    //save org block
+    int orgBlockNumber = cursor.blockNumber();
+    int orgPosInBlock = cursor.positionInBlock();
+    QString orgBlockText = cursor.block().text();
+    int curBlockNumber = orgBlockNumber;
+    int lastBlockNumber = curBlockNumber;
+
+    //load diff
     QRegExp reg("@@\\s+\\-(\\d+),?(\\d+)?\\s+\\+(\\d+),?(\\d+)?\\s+@@");
     QTextBlock block;
     int line = -1;
     int line_add = 0;
     int block_number = 0;
+
     foreach(QString s, diff.split('\n')) {
         if (s.length() == 0) {
             continue;
@@ -415,6 +422,10 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             continue;
         }
         if (ch == '+') {
+            if (lastBlockNumber >= block_number) {
+                lastBlockNumber = curBlockNumber;
+                curBlockNumber++;
+            }
             block = cursor.document()->findBlockByNumber(block_number);
             if (!block.isValid()) {
                 cursor.movePosition(QTextCursor::End);
@@ -427,6 +438,10 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             }
             block_number++;
         } else if (ch == '-') {
+            if (lastBlockNumber >= (block_number)) {
+                lastBlockNumber = curBlockNumber;
+                curBlockNumber--;
+            }
             block = cursor.document()->findBlockByNumber(block_number);
             cursor.setPosition(block.position());
             if (block.next().isValid()) {
@@ -444,4 +459,14 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             //skip comment
         }
     }
+    //load cur block
+    block = cursor.document()->findBlockByNumber(curBlockNumber);
+    if (block.isValid()) {
+        cursor.setPosition(block.position());
+        int column = findBlockPos(orgBlockText,block.text(),orgPosInBlock);
+        if (column > 0) {
+            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column);
+        }
+    }
 }
+
