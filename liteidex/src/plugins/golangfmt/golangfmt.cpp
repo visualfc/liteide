@@ -380,7 +380,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
 int findBlockPos(const QString &orgText, const QString &newText, int pos )
 {
     diff_match_patch dmp;
-    QList<Diff> diffs = dmp.diff_main(orgText,newText,true);
+    QList<Diff> diffs = dmp.diff_main(orgText,newText,false);
     return dmp.diff_xIndex(diffs,pos);
 }
 
