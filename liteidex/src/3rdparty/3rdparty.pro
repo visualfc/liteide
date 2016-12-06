@@ -15,5 +15,6 @@ SUBDIRS = \
     elidedlabel \
     sundown \
     cplusplus \
-    fakevim
+    fakevim \
+    diff_match_patch
 
