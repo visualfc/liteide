@@ -384,6 +384,39 @@ int findBlockPos(const QString &orgText, const QString &newText, int pos )
     return pos;
 }
 
+int findBlockNumber(const QList<int> &offsetList, int offsetBase, int blockNumber)
+{
+    for (int i = offsetList.size()-1; i>=0; i--) {
+        int iv = offsetList[i];
+        if (iv == -1) {
+            continue;
+        }
+        if (blockNumber >= iv) {
+            if (blockNumber == iv) {
+                return offsetBase+i;
+            } else {
+                if (i == offsetList.size()-1) {
+                    return offsetBase+i+blockNumber-iv;
+                }
+                int offset = i;
+                int v0 = iv;
+                for (int j = i+1; j < offsetList.size(); j++) {
+                    if (offsetList[j] != -1) {
+                        break;
+                    }
+                    offset++;
+                    v0++;
+                    if (v0 == blockNumber) {
+                        break;
+                    }
+                }
+                return offsetBase+offset;
+            }
+        }
+    }
+    return blockNumber;
+}
+
 void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
 {
     //save org block
@@ -391,7 +424,6 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
     int orgPosInBlock = cursor.positionInBlock();
     QString orgBlockText = cursor.block().text();
     int curBlockNumber = orgBlockNumber;
-    int lastBlockNumber = curBlockNumber;
 
     //load diff
     QRegExp reg("@@\\s+\\-(\\d+),?(\\d+)?\\s+\\+(\\d+),?(\\d+)?\\s+@@");
@@ -400,6 +432,8 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
     int line_add = 0;
     int block_number = 0;
 
+    QList<int> offsetList;
+    int offsetBase = 0;
     foreach(QString s, diff.split('\n')) {
         if (s.length() == 0) {
             continue;
@@ -415,6 +449,14 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
                 //block = cursor.document()->findBlockByNumber(line-1);
                 line_add += n2-s2;//n2+n1-(s2+s1);
                 block_number = line-1;
+
+                //find block number
+                curBlockNumber = findBlockNumber(offsetList,offsetBase,curBlockNumber);
+                offsetBase = block_number;
+                offsetList.clear();
+                for (int i = 0; i <= s2; i++) {
+                    offsetList.append(offsetBase+i);
+                }
                 continue;
             }
         }
@@ -422,10 +464,7 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             continue;
         }
         if (ch == '+') {
-            if (lastBlockNumber >= block_number) {
-                lastBlockNumber = curBlockNumber;
-                curBlockNumber++;
-            }
+            offsetList.insert(block_number-offsetBase,-1);
             block = cursor.document()->findBlockByNumber(block_number);
             if (!block.isValid()) {
                 cursor.movePosition(QTextCursor::End);
@@ -438,10 +477,7 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             }
             block_number++;
         } else if (ch == '-') {
-            if (lastBlockNumber >= (block_number)) {
-                lastBlockNumber = curBlockNumber;
-                curBlockNumber--;
-            }
+            offsetList.removeAt(block_number-offsetBase);
             block = cursor.document()->findBlockByNumber(block_number);
             cursor.setPosition(block.position());
             if (block.next().isValid()) {
@@ -459,6 +495,8 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             //skip comment
         }
     }
+    //find block number
+    curBlockNumber = findBlockNumber(offsetList,offsetBase,curBlockNumber);
     //load cur block
     block = cursor.document()->findBlockByNumber(curBlockNumber);
     if (block.isValid()) {
