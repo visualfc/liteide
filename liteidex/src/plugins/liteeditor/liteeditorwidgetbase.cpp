@@ -1361,8 +1361,9 @@ void LiteEditorWidgetBase::gotoLine(int line, int column, bool center)
     const QTextBlock &block = document()->findBlockByNumber(blockNumber);
     if (block.isValid()) {
         QTextCursor cursor(block);
-        if (column > 0) {
-            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column);
+        if (column) {
+            int length = block.text().length();
+            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column > length ? length : column);
         } else {
             int pos = cursor.position();
             while (document()->characterAt(pos).category() == QChar::Separator_Space) {
