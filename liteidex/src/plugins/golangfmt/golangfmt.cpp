@@ -27,6 +27,7 @@
 #include "processex/processex.h"
 #include "litebuildapi/litebuildapi.h"
 #include "liteeditorapi/liteeditorapi.h"
+#include "diff_match_patch/diff_match_patch.h"
 
 #include <QDebug>
 #include <QProcess>
@@ -375,13 +376,12 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     m_data.clear();
 }
 
-//TODO
+// use diff_match_patch
 int findBlockPos(const QString &orgText, const QString &newText, int pos )
 {
-    if (pos > newText.length()) {
-        return newText.length();
-    }
-    return pos;
+    diff_match_patch dmp;
+    QList<Diff> diffs = dmp.diff_main(orgText,newText,true);
+    return dmp.diff_xIndex(diffs,pos);
 }
 
 int findBlockNumber(const QList<int> &offsetList, int offsetBase, int blockNumber)
