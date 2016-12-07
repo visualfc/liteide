@@ -8,6 +8,7 @@
 	* add fuzzy completion
 	* clear completion temp items at save time
 	* support drop file to open editor
+	* add case convert actions
 * GolangEdit
 	* add guru support (backup oracle)
 * GolangFmt
