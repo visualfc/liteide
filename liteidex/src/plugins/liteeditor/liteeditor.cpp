@@ -83,6 +83,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
       m_funcTip(0),
       m_bReadOnly(false)
 {
+    m_cleanCompleterCache = false;
+    m_cleanWhiteSpace = false;
     m_syntax = 0;
     m_widget = new QWidget;
     m_editorWidget = new LiteEditorWidget(app,m_widget);
@@ -807,15 +809,17 @@ bool LiteEditor::save()
     if (m_bReadOnly) {
         return false;
     }
-    m_completer->clearTemp();
+
     return saveAs(m_file->filePath());
 }
 
 bool LiteEditor::saveAs(const QString &fileName)
 {
-    bool cleanWhitespaceonSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
-    if (cleanWhitespaceonSave) {
+    if (m_cleanWhiteSpace) {
         m_editorWidget->cleanWhitespace(true);
+    }
+    if (m_cleanCompleterCache) {
+        m_completer->clearTemp();
     }
     return m_file->save(fileName);
 }
@@ -1001,6 +1005,8 @@ void LiteEditor::applyOption(QString id)
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
     m_editorWidget->setPrefixMin(min);
 
+    m_cleanCompleterCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
+    m_cleanWhiteSpace = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
     m_offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
 
     m_editorWidget->setAutoIndent(autoIndent);

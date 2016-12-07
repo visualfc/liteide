@@ -4,11 +4,13 @@
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
 ### 2016.12.6 Ver X30.3
+* LiteEnv
+	* remove GO15VENDOREXPERIMENT env
 * LiteEditor
-	* add fuzzy completion (default option)
-	* clear completion temp items at save time
+	* add fuzzy completion option, default setup
+	* add clear completion cache when save files option
 	* support drop file to open editor
-	* add case convert actions
+	* add case convert actions	
 * GolangEdit
 	* add guru support (backup oracle)
 * GolangFmt
@@ -20,9 +22,10 @@
 	* filter term color
 	* FileTest support TESTARGS
 * gotools
+	* always use vendor
 	* gotest support [build|test args]
 	* update vendor for oracle
-
+	
 ### 2016.7.12 Ver X30.2
 * LiteApp
 	* add new vs-dark css, thanks [tupunco](https://github.com/tupunco)
@@ -47,7 +50,7 @@
 	* optimization QuickOpenFile and QuickOpenEditor search
 	* add QuickOpen option		
 * gotools
-	* fix vendor error	
+	* fix vendor error		
 
 ### 2016.7.2 Ver X30
 * LiteIDE
@@ -59,7 +62,7 @@
 	* option keyboard map show native text
 * QuickOpen
 	* quick open files action CTRL+P
-	* quick open editor action CTRL+ALT+P
+	* quick open editor action ATL+ALT+P
 	* quick go to line action CTRL+L
 	* quick open help
 * FakeVim
@@ -82,7 +85,6 @@
 * gotools
 	* types fix limit parser
 	* types simple field info
-	 
 
 ### 2016.4.15 Ver X29
 * LiteIDE

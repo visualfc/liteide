@@ -110,6 +110,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
+    bool cleanComplerCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
 
@@ -135,6 +136,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->indentLineCheckBox->setChecked(indentLineVisible);
     ui->wheelZoomingCheckBox->setChecked(wheelZoom);
     ui->offsetCheckBox->setChecked(offsetVisible);
+    ui->cleanCompleterCacheCheckBox->setChecked(cleanComplerCache);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
@@ -240,6 +242,7 @@ void LiteEditorOption::apply()
     bool wheelZoom = ui->wheelZoomingCheckBox->isChecked();
     bool visualizeWhitespace = ui->visualizeWhitespaceCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
+    bool cleanCompleterCache = ui->cleanCompleterCacheCheckBox->isChecked();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
         min = 1;
@@ -270,6 +273,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_WHEEL_SCROLL,wheelZoom);
     m_liteApp->settings()->setValue(EDITOR_OFFSETVISIBLE,offsetVisible);
     m_liteApp->settings()->setValue(EDITOR_VISUALIZEWHITESPACE,visualizeWhitespace);
+    m_liteApp->settings()->setValue(EDITOR_CLEAN_COMPLETERCACHE_SAVE,cleanCompleterCache);
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }

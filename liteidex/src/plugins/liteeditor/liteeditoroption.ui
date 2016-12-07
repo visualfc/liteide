@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -312,6 +312,13 @@
              </spacer>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cleanCompleterCacheCheckBox">
+            <property name="text">
+             <string>Clean completion cache when saving files</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="cleanWhitespaceOnSaveCheckBox">

@@ -206,6 +206,8 @@ public:
     QPalette m_defEditorPalette;
     bool       m_bReadOnly;
     bool     m_offsetVisible;
+    bool     m_cleanCompleterCache;
+    bool     m_cleanWhiteSpace;
     QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
     //QAction *m_closeEditorAct;
