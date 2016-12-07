@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -1627,12 +1627,12 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Oracle</source>
-        <translation>Oracle</translation>
+        <translation type="obsolete">Oracle</translation>
     </message>
     <message>
         <source>Oracle What</source>
         <oldsource>What</oldsource>
-        <translation>Поиск Oracle</translation>
+        <translation type="obsolete">Поиск Oracle</translation>
     </message>
     <message>
         <source>Callees</source>
@@ -1681,6 +1681,18 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Refactor</source>
         <translation>Рефакторинг</translation>
+    </message>
+    <message>
+        <source>Go Source Query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SourceQuery What</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SourceQuery</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2778,6 +2790,26 @@ Success: %2.</oldsource>
         <source>Go to Doc End</source>
         <translation>К концу документации</translation>
     </message>
+    <message>
+        <source>Title Case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper Case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower Case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swap Case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Case</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEditorOption</name>
@@ -2921,6 +2953,10 @@ Success: %2.</oldsource>
     <message>
         <source>File Extensions</source>
         <translation>Расширения файлов</translation>
+    </message>
+    <message>
+        <source>Fuzzy code completion</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
