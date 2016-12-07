@@ -98,7 +98,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
     bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
     bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
-    bool fuzzyCompleter = m_liteApp->settings()->value(EDITOR_COMPLETER_FUZZY,false).toBool();
+    bool fuzzyCompleter = m_liteApp->settings()->value(EDITOR_COMPLETER_FUZZY,true).toBool();
     bool cleanWhitespaceOnSave = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
     bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
     bool codeFoldVisible = m_liteApp->settings()->value(EDITOR_CODEFOLDVISIBLE,true).toBool();

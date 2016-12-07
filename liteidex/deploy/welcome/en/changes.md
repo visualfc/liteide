@@ -5,7 +5,7 @@
 
 ### 2016.12.6 Ver X30.3
 * LiteEditor
-	* add fuzzy completion
+	* add fuzzy completion (default option)
 	* clear completion temp items at save time
 	* support drop file to open editor
 	* add case convert actions
