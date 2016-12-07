@@ -3087,375 +3087,375 @@ Success: %2.</oldsource>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="242"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
         <source>Undo</source>
         <translation>撤消</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="246"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="248"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="250"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="256"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="258"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="261"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
         <source>Select All</source>
         <translation>选择所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="283"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="285"/>
         <source>Go to Doc Start</source>
         <translation>跳转到文件开头</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="289"/>
         <source>Go to Doc End</source>
         <translation>跳转到文件结尾</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="291"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
         <source>Go to Line Start</source>
         <translation>跳转到行开头</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="295"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="297"/>
         <source>Go to Line End</source>
         <translation>跳转到行结尾</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="299"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
         <source>Go to Previous Line</source>
         <translation>跳转到上一行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="303"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="305"/>
         <source>Go to Next Line</source>
         <translation>跳转到下一行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="307"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
         <source>Go to Previous Character</source>
         <translation>跳转到前一字符</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="311"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
         <source>Go to Next Charater</source>
         <translation>跳转到后一字符</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="315"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
         <source>Go to Previous Word</source>
         <translation>跳转到前一单词</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="319"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="321"/>
         <source>Go to Next Word</source>
         <translation>跳转到后一单词</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="340"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="342"/>
         <source>Go to Line</source>
         <translation>跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="382"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="384"/>
         <source>Word Wrap (MimeType)</source>
         <translation>自动换行 (MimeType)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="393"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="395"/>
         <source>Toggle Comment</source>
         <translation>切换注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="396"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
         <source>Toggle Block Commnet</source>
         <translation>切换块注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="399"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="401"/>
         <source>Auto-indent Selection</source>
         <translation>自动代码缩进</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="403"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="405"/>
         <source>Tab To Spaces (MimeType)</source>
         <translation>TAB转空格(MimeType)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="407"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="409"/>
         <source>Line End Windows (\r\n)</source>
         <translation>Windows行结束符 (\r\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="411"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="413"/>
         <source>Line End Unix (\n)</source>
         <translation>Unix行结束符 (\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="415"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="417"/>
         <source>Visualize Whitespace (Global)</source>
         <translation>显示空白 (全局)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="422"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="424"/>
         <source>Move Line Up</source>
         <translation>移动行（向上）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="425"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="427"/>
         <source>Move Line Down</source>
         <translation>移动行（向下）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="428"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="430"/>
         <source>Copy Line Up</source>
         <translation>复制行（向上）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="431"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
         <source>Copy Line Down</source>
         <translation>复制行（向下）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="434"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="436"/>
         <source>Join Lines</source>
         <translation>连接行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="437"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="439"/>
         <source>Title Case</source>
         <translation>首字母大写</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="441"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
         <source>Upper Case</source>
         <translation>大写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="445"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="447"/>
         <source>Lower Case</source>
         <translation>小写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="449"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="451"/>
         <source>Swap Case</source>
         <translation>大小写互换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="606"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="688"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="608"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="690"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="632"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="706"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="634"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="708"/>
         <source>Goto</source>
         <translation>跳转</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="650"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="723"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="652"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="725"/>
         <source>Code Folding</source>
         <translation>代码折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="656"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="658"/>
         <source>Convert Case</source>
         <translation>大小写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1079"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1085"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1087"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1093"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1088"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1094"/>
         <source>Could not open %1 for writing.</source>
         <translation>无法写入文件 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1107"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1113"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1132"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1138"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="270"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation>打印预览...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="264"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
         <source>Export HTML...</source>
         <translation>导出HTML...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
         <source>Export PDF...</source>
         <translation>导出PDF...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="267"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
         <source>Print...</source>
         <translation>打印...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="270"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
         <source>Go to Previous Block</source>
         <oldsource>Go To Previous Block</oldsource>
         <translation>跳转到上一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="277"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
         <source>Select Block</source>
         <translation>选择段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="280"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
         <source>Go to Matching Brace</source>
         <oldsource>Go To Matching Brace</oldsource>
         <translation>跳转到括号匹配</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="323"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="325"/>
         <source>Fold</source>
         <translation>折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="326"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="328"/>
         <source>Unfold</source>
         <translation>展开</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="329"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="331"/>
         <source>Fold All</source>
         <translation>折叠所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="332"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="334"/>
         <source>Unfold All</source>
         <translation>展开所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1200"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1206"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="343"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="345"/>
         <source>Locked</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="346"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="348"/>
         <source>Duplicate</source>
         <translation>重复</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="350"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="352"/>
         <source>Delete Line</source>
         <translation>删除行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="354"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="356"/>
         <source>Copy Line</source>
         <translation>复制行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="358"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="360"/>
         <source>Cut Line</source>
         <translation>剪切行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="362"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="364"/>
         <source>Insert Line Before</source>
         <translation>行前插入</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="366"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="368"/>
         <source>Insert Line After</source>
         <translation>行后插入</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="370"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="372"/>
         <source>Increase Font Size</source>
         <translation>增大字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="373"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="375"/>
         <source>Decrease Font Size</source>
         <translation>减小字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="376"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="378"/>
         <source>Reset Font Size</source>
         <translation>重置字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="379"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="381"/>
         <source>Clean Whitespace</source>
         <translation>清除空白</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="386"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="388"/>
         <source>Code Complete</source>
         <translation>代码完成</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="798"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="800"/>
         <source>Reload File</source>
         <translation>重新读取文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1149"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1155"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>您想要放弃未保存的修改并重新载入%1?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="273"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="275"/>
         <source>Go to Next Block</source>
         <oldsource>Go To Next Block</oldsource>
         <translation>跳转到下一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="662"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="664"/>
         <source>Setup</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1179"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1185"/>
         <source>ReadOnly</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1200"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1206"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>
@@ -3468,12 +3468,12 @@ Success: %2.</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="356"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="363"/>
         <source>Load File</source>
         <translation>读取文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="362"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="369"/>
         <source>Check and convert no printable char to &apos;.&apos;</source>
         <translation>检查并转换不可打印字符为&apos;.&apos;</translation>
     </message>
@@ -3535,37 +3535,47 @@ Success: %2.</oldsource>
         <translation>语法自动完成</translation>
     </message>
     <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="271"/>
+        <source>Fuzzy code completion</source>
+        <translation>模糊代码完成</translation>
+    </message>
+    <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="319"/>
+        <source>Clean completion cache when saving files</source>
+        <translation>保存文件时清除代码完成缓存</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="326"/>
         <source>Clean whitespace when saving files</source>
         <translation>保存文件时清除空白</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="326"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="333"/>
         <source>Enable scroll wheel zooming</source>
         <translation>允许鼠标滚轮缩放</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="385"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="392"/>
         <source>Display VisualizeWhitespace</source>
         <translation>显示空白</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="399"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="406"/>
         <source>Word wrap by default</source>
         <translation>默认自动换行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="378"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="385"/>
         <source>Display code fold</source>
         <translation>显示代码折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="457"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="464"/>
         <source>Display offset position</source>
         <translation>显示偏移位置</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="481"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="488"/>
         <source>File Types</source>
         <translation>文件类型</translation>
     </message>
@@ -3576,22 +3586,22 @@ Success: %2.</oldsource>
         <translation>行为</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="392"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="399"/>
         <source>Display EOF</source>
         <translation>显示EOF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="406"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="413"/>
         <source>Display line numbers</source>
         <translation>显示行号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="413"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="420"/>
         <source>Display indent guide </source>
         <translation>显示缩进指示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="422"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="429"/>
         <source>Display right margin at column</source>
         <translation>显示右侧边线</translation>
     </message>
@@ -3614,28 +3624,28 @@ Success: %2.</oldsource>
         <translation>代码完成前缀长度:</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="350"/>
-        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="372"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="357"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="379"/>
         <source>Display</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="143"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="145"/>
         <source>MIME Type</source>
         <translation>MIME类型</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="144"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="146"/>
         <source>Tab Width</source>
         <translation>Tab宽度</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="145"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="147"/>
         <source>Tab To Spaces</source>
         <translation>TAB转空格</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="146"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="148"/>
         <source>File Extensions</source>
         <translation>文件扩展名</translation>
     </message>

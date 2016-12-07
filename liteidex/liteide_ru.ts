@@ -2958,6 +2958,10 @@ Success: %2.</oldsource>
         <source>Fuzzy code completion</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clean completion cache when saving files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEnvOption</name>
