@@ -33,6 +33,8 @@
 class NavigateManager;
 struct NavigateMark;
 
+typedef QString (TransformationMethod)(const QString &);
+
 class LiteEditorWidgetBase : public QPlainTextEdit
 {
     Q_OBJECT
@@ -163,6 +165,11 @@ public slots:
     void toggleBlockVisible(const QTextBlock &block);
     void foldIndentChanged(QTextBlock block);
     void autoIndent();
+
+    void convertCaseTitle();
+    void convertCaseUpper();
+    void convertCaseLower();
+    void convertCaseSwap();
 public:
     void setMaxTipInfoLines(int maxLines) {
         m_maxTipInfoLines = maxLines;
@@ -256,6 +263,7 @@ public:
     void handleBackspaceKey();
     void setVisualizeWhitespace(bool b);
     QRectF selectionRect(const QTextCursor &cursor);
+    void transformSelection(TransformationMethod method);
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,

@@ -434,6 +434,23 @@ void LiteEditor::createActions()
     m_joinLinesAction = new QAction(tr("Join Lines"),this);
     actionContext->regAction(m_joinLinesAction,"JoinLines","Ctrl+J");
 
+    m_convertCaseTitleAct = new QAction(tr("Title Case"),this);
+    actionContext->regAction(m_convertCaseTitleAct,"TitleCase","");
+    connect(m_convertCaseTitleAct,SIGNAL(triggered()),m_editorWidget,SLOT(convertCaseTitle()));
+
+    m_convertCaseUpperAct = new QAction(tr("Upper Case"),this);
+    actionContext->regAction(m_convertCaseUpperAct,"UpperCase","");
+    connect(m_convertCaseUpperAct,SIGNAL(triggered()),m_editorWidget,SLOT(convertCaseUpper()));
+
+    m_convertCaseLowerAct = new QAction(tr("Lower Case"),this);
+    actionContext->regAction(m_convertCaseLowerAct,"LowerCase","");
+    connect(m_convertCaseLowerAct,SIGNAL(triggered()),m_editorWidget,SLOT(convertCaseLower()));
+
+    m_convertCaseSwapAct = new QAction(tr("Swap Case"),this);
+    actionContext->regAction(m_convertCaseSwapAct,"SwapCase","");
+    connect(m_convertCaseSwapAct,SIGNAL(triggered()),m_editorWidget,SLOT(convertCaseSwap()));
+
+
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
 //    m_widget->addAction(m_unfoldAct);
@@ -635,6 +652,12 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_unfoldAct);
     subMenu->addAction(m_foldAllAct);
     subMenu->addAction(m_unfoldAllAct);
+
+    subMenu = m_editMenu->addMenu(tr("Convert Case"));
+    subMenu->addAction(m_convertCaseTitleAct);
+    subMenu->addAction(m_convertCaseUpperAct);
+    subMenu->addAction(m_convertCaseLowerAct);
+    subMenu->addAction(m_convertCaseSwapAct);
 
     subMenu = m_editMenu->addMenu(tr("Setup"));
     subMenu->addAction(m_visualizeWhitespaceAct);

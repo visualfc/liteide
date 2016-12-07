@@ -236,6 +236,11 @@ public:
     QAction *m_gotoPrevCharacterAct;
     QAction *m_gotoPrevWordAct;
     QAction *m_gotoNextWordAct;
+
+    QAction *m_convertCaseTitleAct;
+    QAction *m_convertCaseUpperAct;
+    QAction *m_convertCaseLowerAct;
+    QAction *m_convertCaseSwapAct;
 };
 
 class EditContext : public LiteApi::IEditContext

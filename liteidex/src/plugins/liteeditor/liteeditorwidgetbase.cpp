@@ -2160,6 +2160,62 @@ void LiteEditorWidgetBase::autoIndent()
     cursor.endEditBlock();
 }
 
+static QString QString_toTitle(const QString &str)
+{
+    QString r = str;
+    for (int i = 0; i < r.length(); i++) {
+        if (i == 0) {
+            r[i] = r[i].toTitleCase();
+        } else {
+            r[i] = r[i].toLower();
+        }
+    }
+    return r;
+}
+
+static QString QString_toUpper(const QString &str)
+{
+    return str.toUpper();
+}
+
+static QString QString_toLower(const QString &str)
+{
+    return str.toLower();
+}
+
+static QString QString_toSwapCase(const QString &str)
+{
+    QString r = str;
+    for (int i = 0; i < r.length(); i++) {
+        if (r[i].isUpper()) {
+            r[i] = r[i].toLower();
+        } else if (r[i].isLower()) {
+            r[i] = r[i].toUpper();
+        }
+    }
+    return r;
+}
+
+void LiteEditorWidgetBase::convertCaseTitle()
+{
+    this->transformSelection(QString_toTitle);
+}
+
+void LiteEditorWidgetBase::convertCaseUpper()
+{
+    this->transformSelection(QString_toUpper);
+}
+
+void LiteEditorWidgetBase::convertCaseLower()
+{
+    this->transformSelection(QString_toLower);
+}
+
+void LiteEditorWidgetBase::convertCaseSwap()
+{
+    this->transformSelection(QString_toSwapCase);
+}
+
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
     if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
@@ -3869,4 +3925,32 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }
+}
+
+void LiteEditorWidgetBase::transformSelection(TransformationMethod method)
+{
+    QTextCursor cursor = this->textCursor();
+    int pos    = cursor.position();
+    int anchor = cursor.anchor();
+
+    if (!cursor.hasSelection()) {
+        // if nothing is selected, select the word over the cursor
+        cursor.select(QTextCursor::WordUnderCursor);
+    }
+
+    QString text = cursor.selectedText();
+    QString transformedText = method(text);
+
+    if (transformedText == text) {
+        // if the transformation does not do anything to the selection, do no create an undo step
+        return;
+    }
+
+    cursor.insertText(transformedText);
+
+    // (re)select the changed text
+    // Note: this assumes the transformation did not change the length,
+    cursor.setPosition(anchor);
+    cursor.setPosition(pos, QTextCursor::KeepAnchor);
+    this->setTextCursor(cursor);
 }
