@@ -263,7 +263,11 @@ public:
     void handleBackspaceKey();
     void setVisualizeWhitespace(bool b);
     QRectF selectionRect(const QTextCursor &cursor);
+    bool hasBlockSelection() const;
     void transformSelection(TransformationMethod method);
+    void transformBlockSelection(TransformationMethod method);
+    int verticalBlockSelectionFirstColumn() const;
+    int verticalBlockSelectionLastColumn() const;
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
