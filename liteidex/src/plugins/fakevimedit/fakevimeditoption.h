@@ -41,6 +41,9 @@ public:
     virtual QString name() const;
     virtual QString mimeType() const;
     virtual void apply();
+private slots:
+    void on_resetCommandsButton_clicked();
+
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;
