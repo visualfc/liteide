@@ -37,6 +37,7 @@
 #include <QLabel>
 #include <QStatusBar>
 #include "liteeditorapi/liteeditorapi.h"
+#include "../liteeditor/liteeditor_global.h"
 
 using namespace FakeVim::Internal;
 
@@ -138,6 +139,10 @@ void FakeVimEdit::_removeFakeVimFromEditor(LiteApi::IEditor *editor){
     if (!ed) {
         return;
     }
+    QString mime = editor->mimeType();
+    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
+    bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
+    ed->setTabOption(tabWidth,useSpace);
 
     QPlainTextEdit *ped = LiteApi::getPlainTextEdit(ed);
 
