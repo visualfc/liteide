@@ -85,6 +85,7 @@ LiteCompleter::LiteCompleter(QObject *parent) :
     m_completer->setCaseSensitivity(Qt::CaseSensitive);
     m_completer->setSeparator(".");
     m_stop = '(';
+    m_prefixMin = 1;
     QObject::connect(m_completer, SIGNAL(activated(QModelIndex)),
                      this, SLOT(insertCompletion(QModelIndex)));
 }
@@ -341,6 +342,16 @@ void LiteCompleter::updateCompleterModel()
 void LiteCompleter::setImportList(const QStringList &importList)
 {
     this->m_completer->setImportList(importList);
+}
+
+void LiteCompleter::setPrefixMin(int min)
+{
+    m_prefixMin = min;
+}
+
+int LiteCompleter::prefixMin() const
+{
+    return m_prefixMin;
 }
 
 void LiteCompleter::setSearchSeparator(bool b)

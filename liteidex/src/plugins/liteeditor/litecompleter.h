@@ -73,6 +73,8 @@ public:
     virtual bool startCompleter(const QString &completionPrefix);
     virtual void updateCompleterModel();
     virtual void setImportList(const QStringList &importList);
+    virtual void setPrefixMin(int min);
+    virtual int prefixMin() const;
 public slots:
     virtual void completionPrefixChanged(QString,bool force);
     virtual void insertCompletion(QModelIndex);
@@ -87,6 +89,7 @@ protected:
     QChar           m_stop;
     bool            m_bSearchSeparator;
     bool            m_bExternalMode;
+    int             m_prefixMin;
 };
 
 #endif // LITECOMPLETER_H

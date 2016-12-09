@@ -52,7 +52,6 @@ LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) 
     LiteEditorWidgetBase(app,parent),
     m_completer(0),
     m_contextMenu(0),
-    m_completionPrefixMin(3),
     m_scrollWheelZooming(true),
     m_bSpellCheckZoneDontComplete(false)
 {
@@ -258,9 +257,10 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         completionPrefix.insert(0,'@');
     }
 
-    if (hasModifier || e->text().isEmpty()||
-                        ( completionPrefix.length() < m_completionPrefixMin && completionPrefix.right(1) != ".")
-                        || eow.contains(e->text().right(1))) {
+    if (hasModifier ||
+            e->text().isEmpty() ||
+            ( (completionPrefix.length() < m_completer->prefixMin()) && (completionPrefix.right(1) != ".") ) ||
+            eow.contains(e->text().right(1))) {
         if (m_completer->popup()->isVisible()) {
             m_completer->popup()->hide();
             //fmt.Print( -> Print
@@ -282,6 +282,7 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
         return;
     }
+
     m_completer->setCompletionContext(LiteApi::CompleterCodeContext);
     emit completionPrefixChanged(completionPrefix,false);
     m_completer->startCompleter(completionPrefix);

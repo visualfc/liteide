@@ -474,6 +474,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
     if (!m_model) {
         return 0;
     }
+
     clearItems();
     if (ctx == LiteApi::CompleterImportContext) {
         QIcon icon("icon:liteeditor/images/keyword.png");

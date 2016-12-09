@@ -1003,7 +1003,6 @@ void LiteEditor::applyOption(QString id)
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
-    m_editorWidget->setPrefixMin(min);
 
     m_cleanCompleterCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
     m_cleanWhiteSpace = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
@@ -1029,6 +1028,7 @@ void LiteEditor::applyOption(QString id)
     if (m_completer) {
         m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
         m_completer->setFuzzy(fuzzyCompleter);
+        m_completer->setPrefixMin(min);
     }
 
     updateFont();

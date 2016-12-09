@@ -453,7 +453,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     if (pre.endsWith('.')) {
         m_preWord = pre;
         offset = 0;
-    } else if (pre.length() == 1) {
+    } else if (pre.length() == m_completer->prefixMin()) {
         m_preWord.clear();
     } else {
         if (!force) {

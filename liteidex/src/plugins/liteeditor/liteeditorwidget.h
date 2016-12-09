@@ -33,11 +33,7 @@ public:
     explicit LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent = 0);
     void setContextMenu(QMenu *contextMenu);
     void setCompleter(LiteApi::ICompleter *completer);
-    void setPrefixMin(int min) {m_completionPrefixMin = min; }
     void setSpellCheckZoneDontComplete(bool b) {m_bSpellCheckZoneDontComplete = b; }
-    int prefixMin() const{
-        return m_completionPrefixMin;
-    }
     void setScrollWheelZooming(bool b) {
         m_scrollWheelZooming = b;
     }
@@ -69,7 +65,6 @@ public:
 protected:
     LiteApi::ICompleter *m_completer;
     QMenu      *m_contextMenu;
-    int m_completionPrefixMin;
     bool m_scrollWheelZooming;
     bool m_bSpellCheckZoneDontComplete;
 };

@@ -123,6 +123,8 @@ public:
     virtual void updateCompleterModel() = 0;
     virtual void updateCompleteInfo(QModelIndex index) = 0;
     virtual void setImportList(const QStringList &importList) = 0;
+    virtual void setPrefixMin(int min) = 0;
+    virtual int prefixMin() const = 0;
 signals:
     void prefixChanged(QTextCursor,QString,bool force);
     void wordCompleted(const QString &func, const QString &kind, const QString &info);
