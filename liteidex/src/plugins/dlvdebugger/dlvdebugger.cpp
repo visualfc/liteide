@@ -201,8 +201,11 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         return false;
     }
     QStringList argsList;
+#ifdef Q_OS_WIN
     argsList << "exec" << "\""+cmd+"\"";
-
+#else
+    argsList << "exec" << cmd;;
+#endif
     if (!arguments.isEmpty()) {
         argsList << "--" << arguments;
     }
