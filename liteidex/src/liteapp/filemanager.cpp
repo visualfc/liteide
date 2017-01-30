@@ -612,6 +612,10 @@ void FileManager::currentEditorChanged(IEditor *editor)
         return;
     }
     QModelIndex index = indexList.first();
+    QModelIndex parent = index.parent();
+    if (parent.isValid()) {
+        m_folderListView->setExpanded(parent,true);
+    }
     m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
     m_folderListView->setCurrentIndex(index);
 }
