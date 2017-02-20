@@ -803,7 +803,7 @@ void FolderListModel::sourceModelReset()
 void FolderListModel::sourceRowsAboutToBeInserted(const QModelIndex &parent, int start, int end)
 {
     //Q_ASSERT(parent.isValid() ? parent.model() == m_model : true);
-    this->beginInsertRows(this->mapFromSource(parent), start, end);
+    //this->beginInsertRows(this->mapFromSource(parent), start, end);
 }
 
 void FolderListModel::sourceRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destParent, int dest)
@@ -825,7 +825,12 @@ void FolderListModel::sourceRowsInserted(const QModelIndex &parent, int start, i
     Q_UNUSED(parent)
     Q_UNUSED(start)
     Q_UNUSED(end)
-    this->endInsertRows();
+    //this->beginInsertRows(this->mapFromSource(parent), start, end);
+    //this->endInsertRows();
+    for (int i = start; i <= end; i++) {
+        this->beginInsertRows(this->mapFromSource(parent), i,i);
+        this->endInsertRows();
+    }
 }
 
 void FolderListModel::sourceRowsMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destParent, int dest)

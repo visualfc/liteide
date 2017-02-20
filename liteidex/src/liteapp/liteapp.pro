@@ -79,7 +79,8 @@ SOURCES += main.cpp\
     splitwindowstyle.cpp \
     sidewindowstyle.cpp \
     outputoption.cpp \
-    openeditorswidget.cpp
+    openeditorswidget.cpp \
+    idletimer.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -112,7 +113,8 @@ HEADERS  += mainwindow.h \
     splitwindowstyle.h \
     sidewindowstyle.h \
     outputoption.h \
-    openeditorswidget.h
+    openeditorswidget.h \
+    idletimer.h
 
 FORMS += \
     aboutdialog.ui \

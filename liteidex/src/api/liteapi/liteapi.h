@@ -781,6 +781,20 @@ public:
     }
 };
 
+class IAppIdleTimer : public QObject
+{
+    Q_OBJECT
+signals:
+    void appIdle(int sec);
+public:
+    virtual void resetTimer() = 0;
+};
+
+inline IAppIdleTimer *GetAppIdleTimer(LiteApi::IApplication *app)
+{
+    return static_cast<IAppIdleTimer*>(app->extension()->findObject("LiteApi.IAppIdleTimer"));
+}
+
 inline bool gotoLine(IApplication *app, const QString &fileName, int line, int col, bool forceCenter, bool saveHistory) {
     if (saveHistory) {
         app->editorManager()->addNavigationHistory();

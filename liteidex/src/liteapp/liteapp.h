@@ -47,7 +47,7 @@ class QSettings;
 class QSplitter;
 class QComboBox;
 class LiteAppOptionFactory;
-
+class AppIdleTimer;
 
 class LiteApp : public IApplication
 {
@@ -148,6 +148,7 @@ protected:
     LiteAppOptionFactory *m_liteAppOptionFactory;
     QList<IPlugin*> m_pluginList;
     static QMap<QString,QVariant> m_cookie;
+    AppIdleTimer     *m_idleTimer;
 protected:
     QAction     *m_newAct;
     QAction     *m_openFileAct;

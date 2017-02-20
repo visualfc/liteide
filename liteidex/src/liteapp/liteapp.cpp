@@ -42,6 +42,7 @@
 #endif
 #include "splitwindowstyle.h"
 #include "sidewindowstyle.h"
+#include "idletimer.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -156,7 +157,13 @@ LiteApp::LiteApp()
     } else {
         m_settings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this);
     }
+
     m_extension = new Extension;
+
+    //install idle timer;
+    m_idleTimer = new AppIdleTimer;
+    m_extension->addObject("LiteApi.IAppIdleTimer",m_idleTimer);
+
     m_mainwindow = new MainWindow(this);
 
     QString style = this->settings()->value(LITEAPP_STYLE,"sidebar").toString();
@@ -167,6 +174,7 @@ LiteApp::LiteApp()
         SideWindowStyle *style = new SideWindowStyle(this,m_mainwindow);
         m_mainwindow->setWindowStyle(style);
     }
+
 
     m_toolWindowManager = new ToolWindowManager;
     m_htmlWidgetManager = new HtmlWidgetManager;

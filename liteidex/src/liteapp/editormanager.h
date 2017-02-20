@@ -100,6 +100,7 @@ public slots:
     void focusChanged(QWidget *old,QWidget *now);
     void aboutToShowListMenu();
     void triggeredListAction(QAction *act);
+    void appIdle(int sec);
 signals:
     void tabAddRequest();
     void doubleClickedTab();

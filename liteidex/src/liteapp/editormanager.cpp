@@ -182,6 +182,11 @@ bool EditorManager::initWithApp(IApplication *app)
     m_lineInfo = new QLabel("000:000");
     bar->addPermanentWidget(m_lineInfo);
 
+    LiteApi::IAppIdleTimer *idleTimer = LiteApi::GetAppIdleTimer(m_liteApp);
+    if (idleTimer) {
+        connect(idleTimer,SIGNAL(appIdle(int)),this,SLOT(appIdle(int)));
+    }
+
     return true;
 }
 
@@ -1054,5 +1059,12 @@ void EditorManager::triggeredListAction(QAction *act)
         return;
     }
     m_editorTabWidget->setCurrentIndex(index);
+}
+
+void EditorManager::appIdle(int sec)
+{    
+    if (sec == 2) {
+    //    this->saveAllEditors(false);
+    }
 }
 

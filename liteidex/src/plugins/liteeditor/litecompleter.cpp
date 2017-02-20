@@ -180,21 +180,24 @@ void LiteCompleter::clear()
     m_model->clear();
 }
 
-static void clearTempIndex(QStandardItemModel *model, QModelIndex parent) {
+static void clearTempIndex(QStandardItemModel *model, QModelIndex parent, const QString &prefix) {
     int i = model->rowCount(parent);
     while (i--) {
         QModelIndex index = model->index(i,0,parent);
+        if (prefix.startsWith(index.data().toString())) {
+            return;
+        }
         if (index.data(WordItem::TempRole).toBool() == true || index.data(WordItem::KindRole).toString().isEmpty()) {
             model->removeRow(i,parent);
         } else {
-            clearTempIndex(model,index);
+            clearTempIndex(model,index, prefix);
         }
     }
 }
 
 void LiteCompleter::clearTemp()
 {
-    clearTempIndex(m_model,QModelIndex());
+    clearTempIndex(m_model,QModelIndex(), this->completionPrefix());
 }
 
 void LiteCompleter::showPopup()
