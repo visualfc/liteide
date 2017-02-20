@@ -227,6 +227,7 @@ LiteApp::LiteApp()
     connect(m_editorManager,SIGNAL(doubleClickedTab()),m_mainwindow,SLOT(showOrHideToolWindow()));
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_fileManager,SLOT(applyOption(QString)));
     connect(m_optionManager,SIGNAL(applyOption(QString)),m_projectManager,SLOT(applyOption(QString)));
+    connect(m_optionManager,SIGNAL(applyOption(QString)),m_editorManager,SLOT(applyOption(QString)));
     connect(m_optionManager,SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
     QAction *esc = new QAction(tr("Escape"),this);

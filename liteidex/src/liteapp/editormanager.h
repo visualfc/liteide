@@ -100,6 +100,7 @@ public slots:
     void focusChanged(QWidget *old,QWidget *now);
     void aboutToShowListMenu();
     void triggeredListAction(QAction *act);
+    void applyOption(QString);
     void appIdle(int sec);
 signals:
     void tabAddRequest();
@@ -133,6 +134,7 @@ protected:
     ColorStyleScheme *m_colorStyleScheme;
     int          m_tabContextIndex;
     QLabel      *m_lineInfo;
+    bool         m_bAutoIdleSaveDocuments;
 };
 
 #endif // EDITORMANAGER_H

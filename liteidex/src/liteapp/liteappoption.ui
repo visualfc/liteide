@@ -123,6 +123,22 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox_10">
+         <property name="title">
+          <string>Automatically save documents</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QCheckBox" name="autoIdleSaveDocumentsCheckBox">
+            <property name="text">
+             <string>Automatically save documents when application is idle</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBox_5">
          <property name="title">
           <string>Monitoring files for modifications</string>
@@ -157,6 +173,7 @@
       <zorder>groupBox_5</zorder>
       <zorder>groupBox_6</zorder>
       <zorder>verticalSpacer</zorder>
+      <zorder>groupBox_10</zorder>
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">

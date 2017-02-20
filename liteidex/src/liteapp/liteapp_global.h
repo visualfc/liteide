@@ -40,6 +40,7 @@
 #define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFile"
 #define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
 #define LITEAPP_AUTOLOADLASTSESSION "LiteApp/AutoLoadLastSession"
+#define LITEAPP_AUTOIDLESAVEDOCUMENTS "LiteApp/AutoIdleSaveDocuments"
 #define LITEAPP_LANGUAGE "General/Language"
 #define LITEAPP_STYLE "LiteApp/WindowStyle"
 #define LITEAPP_SPLASHVISIBLE "LiteApp/SplashVisible"

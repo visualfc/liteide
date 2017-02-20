@@ -136,6 +136,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
 
+    bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+    ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
+
     m_keysModel = new QStandardItemModel(0,5,this);
     m_keysModel->setHeaderData(0,Qt::Horizontal,tr("Command"));
     m_keysModel->setHeaderData(1,Qt::Horizontal,tr("Label"));
@@ -160,7 +163,8 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->importButton,SIGNAL(clicked()),this,SLOT(importShortcuts()));
     connect(ui->exportButton,SIGNAL(clicked()),this,SLOT(exportShortcuts()));
     connect(ui->standardCheckBox,SIGNAL(toggled(bool)),this,SLOT(reloadShortcuts()));
-    connect(ui->autoLoadLastSessionCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoLoadLastSessionToggled(bool)));
+    connect(ui->autoLoadLastSessionCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoLoadLastSessionToggled(bool)));    
+    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoIdleSaveDocumentsToggled(bool)));
     autoLoadLastSessionToggled(ui->autoLoadLastSessionCheckBox->isChecked());
 }
 
@@ -222,6 +226,9 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_FILEWATCHERAUTORELOAD,b7);
     bool b8 = ui->editorTabsEnableWhellCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_EDITTABSENABLEWHELL,b8);
+
+    bool b9 = ui->autoIdleSaveDocumentsCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS,b9);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {
@@ -489,4 +496,9 @@ void LiteAppOption::autoLoadLastSessionToggled(bool b)
 {
     ui->startupReloadFoldersCheckBox->setEnabled(b);
     ui->startupReloadFilesCheckBox->setEnabled(b);
+}
+
+void LiteAppOption::autoIdleSaveDocumentsToggled(bool b)
+{
+
 }

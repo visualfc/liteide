@@ -84,6 +84,8 @@ bool EditorManager::initWithApp(IApplication *app)
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
 
+    m_bAutoIdleSaveDocuments = app->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+
     m_widget = new QWidget;
     //create editor tab widget
     m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
@@ -1061,10 +1063,20 @@ void EditorManager::triggeredListAction(QAction *act)
     m_editorTabWidget->setCurrentIndex(index);
 }
 
+void EditorManager::applyOption(QString id)
+{
+    if (id != OPTION_LITEAPP) {
+        return;
+    }
+    m_bAutoIdleSaveDocuments = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+}
+
 void EditorManager::appIdle(int sec)
 {    
-    if (sec == 2) {
-    //    this->saveAllEditors(false);
+    if (m_bAutoIdleSaveDocuments) {
+        if (sec == 3) {
+            this->saveAllEditors(true);
+        }
     }
 }
 

@@ -53,6 +53,7 @@ public slots:
     void importShortcuts();
     void exportShortcuts();
     void autoLoadLastSessionToggled(bool b);
+    void autoIdleSaveDocumentsToggled(bool b);
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;
