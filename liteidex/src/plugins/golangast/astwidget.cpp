@@ -439,13 +439,26 @@ void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, b
                     bool ok = false;
                     int index = ar[0].toInt(&ok);
                     if (ok && index >= 0 && index < indexFiles.size()) {
-                        int line = ar[1].toInt(&ok);
-                        if (ok) {
-                            int col = ar[2].toInt(&ok);
-                            if (ok) {
-                                AstItemPos pos = {indexFiles[index],line,col};
-                                item->m_posList.append(pos);
-                            }
+                        bool ok1,ok2;
+                        int line = ar[1].toInt(&ok1);
+                        int col = ar[2].toInt(&ok2);
+                        if (ok1 && ok2) {
+                            AstItemPos pos = {indexFiles[index],line,col,-1,-1};
+                            item->m_posList.append(pos);
+                        }
+                    }
+                } else if (ar.size() == 5) {
+                    bool ok = false;
+                    int index = ar[0].toInt(&ok);
+                    if (ok && index >= 0 && index < indexFiles.size()) {
+                        bool ok1,ok2,ok3,ok4;
+                        int line = ar[1].toInt(&ok1);
+                        int col = ar[2].toInt(&ok2);
+                        int endLine = ar[3].toInt(&ok3);
+                        int endCol = ar[4].toInt(&ok4);
+                        if (ok1 && ok2 && ok3 && ok4) {
+                            AstItemPos pos = {indexFiles[index],line,col,endLine,endCol};
+                            item->m_posList.append(pos);
                         }
                     }
                 }
@@ -465,6 +478,40 @@ void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, b
             model->appendRow(item);
         }
         items[level] = item;
+    }
+}
+
+bool AstWidget::trySyncIndex(const QString &filePath, int line, int column)
+{
+    QModelIndexList finds;
+    QFileInfo info(filePath);
+    findModelIndex(QModelIndex(),info.fileName(),line+1,column+1,finds);
+    if (finds.isEmpty()) {
+        return false;
+    }
+    m_tree->setCurrentIndex(finds.last());
+    m_tree->scrollTo(finds.last());
+    return true;
+}
+
+void AstWidget::findModelIndex(const QModelIndex &parent, const QString &fileName, int line, int column, QModelIndexList &finds)
+{
+    for (int i = 0; i < proxyModel->rowCount(parent); i++) {
+        QModelIndex index = proxyModel->index(i,0,parent);
+        GolangAstItem *item = astItemFromIndex(index);
+        if (!item) {
+            continue;
+        }
+        foreach (AstItemPos pos, item->m_posList) {
+            if (pos.fileName == fileName && line >= pos.line && column >= pos.column && line <= pos.endLine) {
+                if (line < pos.endLine || (line == pos.endLine && column <= pos.endColumn) ) {
+                    finds.push_back(index);
+                }
+            }
+        }
+        if (item->hasChildItem()) {
+            findModelIndex(index,fileName,line,column,finds);
+        }
     }
 }
 

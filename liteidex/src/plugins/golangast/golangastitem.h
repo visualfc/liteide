@@ -31,6 +31,8 @@ struct AstItemPos {
     QString fileName;
     int     line;
     int     column;
+    int     endLine;
+    int     endColumn;
 };
 
 class GolangAstItem : public QStandardItem
@@ -41,6 +43,22 @@ public:
     QString             m_tipInfo;
     LiteApi::ASTTAG_ENUM m_tagFlag;
 public:
+    bool hasChildItem() const {
+        switch (m_tagFlag) {
+        case LiteApi::TagPackage:
+        case LiteApi::TagConstFolder:
+        case LiteApi::TagValueFolder:
+        case LiteApi::TagImportFolder:
+        case LiteApi::TagFuncFolder:
+        case LiteApi::TagStruct:
+        case LiteApi::TagInterface:
+        case LiteApi::TagType:
+            return true;
+        default:
+            return false;
+        }
+        return false;
+    }
     bool isFolder() const {
         switch (m_tagFlag) {
         case LiteApi::TagConstFolder:

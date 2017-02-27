@@ -26,6 +26,7 @@
 #include "golangasticon.h"
 #include "astwidget.h"
 #include "liteenvapi/liteenvapi.h"
+#include "golangast_global.h"
 
 #include <QStackedWidget>
 #include <QDockWidget>
@@ -55,6 +56,7 @@ GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     m_liteApp(app)
 {
     m_currentEditor = 0;
+    m_currentPlainTextEditor = 0;
     m_blankWidget = new QLabel(tr("No outline available"));
     m_blankWidget->setAlignment(Qt::AlignCenter);
 
@@ -69,10 +71,17 @@ GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     m_processFile = new QProcess(this);
     m_timerFile = new QTimer(this);
 
-    QAction *projAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_projectAstWidget,"classview",tr("Class View"),false);
-    QAction *fileAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_stackedWidget,"outline",tr("Outline"),false);
-    connect(projAct,SIGNAL(toggled(bool)),this,SLOT(astProjectEnable(bool)));
-    connect(fileAct,SIGNAL(toggled(bool)),this,SLOT(astFileEnable(bool)));
+    m_syncClassViewAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
+    m_syncClassViewAct->setCheckable(true);
+
+    m_syncOutlineAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
+    m_syncOutlineAct->setCheckable(true);
+
+    m_classViewToolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_projectAstWidget,"classview",tr("Class View"),false, QList<QAction*>() << m_syncClassViewAct);
+    m_outlineToolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_stackedWidget,"outline",tr("Outline"),false, QList<QAction*>() << m_syncOutlineAct);
+
+    connect(m_classViewToolAct,SIGNAL(toggled(bool)),this,SLOT(astProjectEnable(bool)));
+    connect(m_outlineToolAct,SIGNAL(toggled(bool)),this,SLOT(astFileEnable(bool)));
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
@@ -83,8 +92,16 @@ GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     connect(m_timer,SIGNAL(timeout()),this,SLOT(updateAstNow()));
     connect(m_processFile,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finishedProcessFile(int,QProcess::ExitStatus)));
     connect(m_timerFile,SIGNAL(timeout()),this,SLOT(updateAstNowFile()));
+    connect(m_syncClassViewAct,SIGNAL(triggered(bool)),this,SLOT(syncClassView(bool)));
+    connect(m_syncOutlineAct,SIGNAL(triggered(bool)),this,SLOT(syncOutline(bool)));
 
     m_liteApp->extension()->addObject("LiteApi.IGolangAst",this);
+
+    m_isSyncClassView = m_liteApp->settings()->value(GOLANGAST_CLASSVIEW_SYNCEDITOR,false).toBool();
+    m_syncClassViewAct->setChecked(m_isSyncClassView);
+
+    m_isSyncOutline = m_liteApp->settings()->value(GOLANGAST_OUTLINE_SYNCEDITOR,false).toBool();
+    m_syncOutlineAct->setChecked(m_isSyncOutline);
 }
 
 GolangAst::~GolangAst()
@@ -281,7 +298,18 @@ void GolangAst::editorChanged(LiteApi::IEditor *editor)
 {
     m_editorFileName.clear();
     m_editorFilePath.clear();
+
+
+    if (m_currentPlainTextEditor) {
+        disconnect(m_currentPlainTextEditor,0,this,0);
+    }
+
     m_currentEditor = editor;
+    m_currentPlainTextEditor = LiteApi::getPlainTextEdit(editor);
+    if (m_currentPlainTextEditor) {
+        connect(m_currentPlainTextEditor,SIGNAL(cursorPositionChanged()),this,SLOT(editorPositionChanged()));
+    }
+
     AstWidget *w = m_editorAstWidgetMap.value(editor);
     if (w) {
         m_stackedWidget->setCurrentWidget(w);
@@ -333,7 +361,7 @@ void GolangAst::updateAstNow()
     }
     QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
-    args << "astview";
+    args << "astview" << "-end";
     args << m_updateFileNames;
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->start(cmd,args);
@@ -354,18 +382,50 @@ void GolangAst::updateAstNowFile()
     }
     QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
-    args << "astview";
+    args << "astview" << "-end";
     args << m_editorFileName;
     m_processFile->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_processFile->start(cmd,args);
 }
 
+void GolangAst::syncClassView(bool b)
+{
+    m_isSyncClassView = b;
+    m_liteApp->settings()->setValue(GOLANGAST_CLASSVIEW_SYNCEDITOR,m_isSyncClassView);
+}
+
+void GolangAst::syncOutline(bool b)
+{
+    m_isSyncOutline = b;
+    m_liteApp->settings()->setValue(GOLANGAST_OUTLINE_SYNCEDITOR,m_isSyncOutline);
+}
+
+void GolangAst::editorPositionChanged()
+{
+    if (!m_currentEditor || !m_currentPlainTextEditor) {
+        return;
+    }
+    QTextCursor cursor = m_currentPlainTextEditor->textCursor();
+    if (m_isSyncClassView && m_classViewToolAct->isChecked()) {
+        m_projectAstWidget->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
+    }
+    if (m_isSyncOutline && m_outlineToolAct->isChecked()) {
+        AstWidget *w = m_editorAstWidgetMap.value(m_currentEditor);
+        if (w) {
+            w->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
+        }
+    }
+}
 
 void GolangAst::finishedProcess(int code,QProcess::ExitStatus status)
 {
     if (code == 0 && status == QProcess::NormalExit) {
        // if (m_liteApp->projectManager()->currentProject()) {
         m_projectAstWidget->updateModel(m_process->readAllStandardOutput());
+        if (m_isSyncClassView) {
+            QTextCursor cursor = m_currentPlainTextEditor->textCursor();
+            m_projectAstWidget->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
+        }
        // }
     } else {
         //qDebug() << m_process->readAllStandardError();
@@ -379,6 +439,10 @@ void GolangAst::finishedProcessFile(int code,QProcess::ExitStatus status)
             AstWidget *w = m_editorAstWidgetMap.value(m_currentEditor);
             if (w) {
                 w->updateModel(m_processFile->readAllStandardOutput());
+                if (m_isSyncOutline) {
+                    QTextCursor cursor = m_currentPlainTextEditor->textCursor();
+                    w->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
+                }
             }
         }
     } else {

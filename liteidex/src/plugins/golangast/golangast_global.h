@@ -36,5 +36,7 @@
 
 #define GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE "golangast/quickopensymbolmatchcase"
 #define GOLANGAST_QUICKOPNE_SYMBOL_IMPORTPATH "golangast/quickopensymbolimportpath"
+#define GOLANGAST_CLASSVIEW_SYNCEDITOR    "golangast/classviewsynceditor"
+#define GOLANGAST_OUTLINE_SYNCEDITOR       "golangast/outlinesynceditor"
 
 #endif // GOLANGAST_GLOBAL_H

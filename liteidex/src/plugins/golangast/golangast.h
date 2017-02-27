@@ -62,6 +62,9 @@ public slots:
     void updateAstNow();
     void updateAstFile();
     void updateAstNowFile();
+    void syncClassView(bool b);
+    void syncOutline(bool b);
+    void editorPositionChanged();
 protected:
     LiteApi::IApplication *m_liteApp;
     QTimer  *m_timer;
@@ -77,7 +80,14 @@ protected:
     QLabel    *m_blankWidget;
     AstWidget *m_projectAstWidget;
     LiteApi::IEditor *m_currentEditor;
+    QPlainTextEdit   *m_currentPlainTextEditor;
     QMap<LiteApi::IEditor*,AstWidget*> m_editorAstWidgetMap;
+    QAction *m_syncClassViewAct;
+    QAction *m_syncOutlineAct;
+    bool    m_isSyncClassView;
+    bool    m_isSyncOutline;
+    QAction *m_classViewToolAct;
+    QAction *m_outlineToolAct;
 };
 
 #endif // GOLANGAST_H
