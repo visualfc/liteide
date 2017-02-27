@@ -572,6 +572,9 @@ QMap<int, QVariant> FolderListModel::itemData(const QModelIndex &proxyIndex) con
 Qt::ItemFlags FolderListModel::flags(const QModelIndex &index) const
 {
     QModelIndex sourceIndex = mapToSource(index);
+    if (!sourceIndex.isValid()) {
+        return Qt::NoItemFlags;
+    }
     return sourceIndex.model()->flags(sourceIndex);
 }
 
