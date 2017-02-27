@@ -186,6 +186,8 @@ void FakeVimEdit::_addFakeVimToEditor(LiteApi::IEditor *editor){
 
     //init command list
     {
+        fakeVimHandler->handleCommand("set shiftwidth=4");
+        fakeVimHandler->handleCommand("set tabstop=4");
         foreach(QString cmd, m_initCommandList) {
             if (cmd.startsWith("#")) {
                 continue;

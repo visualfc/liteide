@@ -44,7 +44,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<FakeVimEditPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/FakeVimEdit");
-        m_info->setVer("X30");
+        m_info->setVer("X31");
         m_info->setName("FakeVimEdit");
         m_info->setAuthor("jsuppe");
         m_info->setInfo("Fake Vim Edit Support");

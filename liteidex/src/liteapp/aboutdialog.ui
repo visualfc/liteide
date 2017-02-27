@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2011-2016 (c) visualfc &amp;lt;visualfc@gmail.com&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2011-2017 (c) visualfc &amp;lt;visualfc@gmail.com&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -106,7 +106,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/li.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/dui.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -119,7 +119,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="liteapp.qrc">:/images/logo/li.png</pixmap>
+          <pixmap resource="liteapp.qrc">:/images/logo/gen.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
