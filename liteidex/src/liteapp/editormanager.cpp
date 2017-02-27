@@ -84,7 +84,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
 
-    m_bAutoIdleSaveDocuments = app->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+    applyOption(OPTION_LITEAPP);
 
     m_widget = new QWidget;
     //create editor tab widget
@@ -1068,13 +1068,17 @@ void EditorManager::applyOption(QString id)
     if (id != OPTION_LITEAPP) {
         return;
     }
-    m_bAutoIdleSaveDocuments = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+    m_isAutoIdleSaveDocuments = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+    m_autoIdleSaveDocumentsTime = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,3).toInt();
+    if (m_autoIdleSaveDocumentsTime < 1) {
+        m_autoIdleSaveDocumentsTime = 1;
+    }
 }
 
 void EditorManager::appIdle(int sec)
 {    
-    if (m_bAutoIdleSaveDocuments) {
-        if (sec == 3) {
+    if (m_isAutoIdleSaveDocuments) {
+        if (sec == m_autoIdleSaveDocumentsTime) {
             this->saveAllEditors(true);
         }
     }

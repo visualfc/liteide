@@ -134,7 +134,8 @@ protected:
     ColorStyleScheme *m_colorStyleScheme;
     int          m_tabContextIndex;
     QLabel      *m_lineInfo;
-    bool         m_bAutoIdleSaveDocuments;
+    bool         m_isAutoIdleSaveDocuments;
+    int          m_autoIdleSaveDocumentsTime;
 };
 
 #endif // EDITORMANAGER_H

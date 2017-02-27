@@ -139,6 +139,12 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
     ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
 
+    int time = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,3).toInt();
+    if (time < 1) {
+        time = 1;
+    }
+    ui->autoIdleSaveDocumentsTimeSpinBox->setValue(time);
+
     m_keysModel = new QStandardItemModel(0,5,this);
     m_keysModel->setHeaderData(0,Qt::Horizontal,tr("Command"));
     m_keysModel->setHeaderData(1,Qt::Horizontal,tr("Label"));
@@ -229,6 +235,9 @@ void LiteAppOption::apply()
 
     bool b9 = ui->autoIdleSaveDocumentsCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS,b9);
+
+    int time = ui->autoIdleSaveDocumentsTimeSpinBox->value();
+    m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,time);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {
