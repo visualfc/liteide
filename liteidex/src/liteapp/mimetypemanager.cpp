@@ -96,7 +96,7 @@ QString MimeTypeManager::findMimeTypeByFile(const QString &fileName) const
         find = "*."+find;
     }
     foreach (IMimeType *mimeType, m_mimeTypeList) {
-        foreach (QString pattern, mimeType->globPatterns()) {
+        foreach (QString pattern, mimeType->allPatterns()) {
             if (find.compare(pattern,Qt::CaseInsensitive) == 0) {
                return mimeType->type();
             }
@@ -109,7 +109,7 @@ QString MimeTypeManager::findMimeTypeBySuffix(const QString &suffix) const
 {
     QString find = "*."+suffix;
     foreach (IMimeType *mimeType, m_mimeTypeList) {
-        foreach (QString pattern, mimeType->globPatterns()) {
+        foreach (QString pattern, mimeType->allPatterns()) {
             if (find.compare(pattern,Qt::CaseInsensitive) == 0) {
                return mimeType->type();
             }
@@ -149,7 +149,7 @@ QStringList MimeTypeManager::findAllFilesByMimeType(const QString &dirPath, cons
     if (mimeType) {
         QDir dir(dirPath);
         for (int i = 0; i <= deep; i++) {
-            QStringList files = dir.entryList(QStringList() << mimeType->globPatterns(),QDir::Files);
+            QStringList files = dir.entryList(QStringList() << mimeType->allPatterns(),QDir::Files);
             if (!files.isEmpty()) {
                 return files;
             }

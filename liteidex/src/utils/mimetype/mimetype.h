@@ -34,9 +34,12 @@ public:
     virtual QString scheme() const;
     virtual QString comment() const;
     virtual QString codec() const;
-    virtual QStringList globPatterns() const;
+    virtual QStringList globPatterns() const;    
     virtual QStringList subClassesOf() const;
     virtual void merge(const IMimeType *mimeType);
+    virtual void setCustomPatterns(const QStringList &custom);
+    virtual QStringList customPatterns() const;
+    virtual QStringList allPatterns() const;
 
     void setPackage(const QString &package);
     void setType(const QString &type);
@@ -58,6 +61,7 @@ protected:
     QStringList m_comment;
     QStringList m_globPatterns;
     QStringList m_subClassesOf;
+    QStringList m_customPatterns;
     QMap<QString,QString> m_localCommentMap;
 };
 #endif // LITEAPI_MIMETYPE_H

@@ -153,8 +153,9 @@ QString MarkdownBatchBrowser::markdownOpenFilter() const
     QStringList filter;
     LiteApi::IMimeType *mimeType = m_liteApp->mimeTypeManager()->findMimeType("text/x-markdown");
     if (mimeType) {
-        types.append(mimeType->globPatterns());
-        filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(mimeType->globPatterns().join(" ")));
+        QStringList patterns = mimeType->allPatterns();
+        types.append(patterns);
+        filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(patterns.join(" ")));
         types.removeDuplicates();
         filter.removeDuplicates();
     }

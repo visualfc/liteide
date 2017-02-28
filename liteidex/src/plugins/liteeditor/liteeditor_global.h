@@ -40,6 +40,7 @@
 #define EDITOR_ANTIALIAS "editor/antialias"
 #define EDITOR_TABWIDTH "editor/tabwidth/"
 #define EDITOR_TABTOSPACES "editor/tabtospaces/"
+#define EDITOR_CUSTOMEXTENSION "editor/customextension/"
 #define EDITOR_NOPRINTCHECK "editor/noprintcheck"
 #define EDITOR_AUTOINDENT "editor/autoindent"
 #define EDITOR_AUTOBRACE0 "editor/autobraces0"

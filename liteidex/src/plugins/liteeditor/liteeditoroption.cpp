@@ -141,11 +141,12 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
 
-    m_mimeModel = new QStandardItemModel(0,4,this);
+    m_mimeModel = new QStandardItemModel(0,5,this);
     m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
     m_mimeModel->setHeaderData(1,Qt::Horizontal,tr("Tab Width"));
     m_mimeModel->setHeaderData(2,Qt::Horizontal,tr("Tab To Spaces"));
     m_mimeModel->setHeaderData(3,Qt::Horizontal,tr("File Extensions"));
+    m_mimeModel->setHeaderData(4,Qt::Horizontal,tr("Custom Extensions"));
     connect(m_mimeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(mimeItemChanged(QStandardItem*)));
 
     ui->mimeTreeView->setModel(m_mimeModel);
@@ -172,11 +173,14 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
             if (imt) {
                 ext->setText(imt->globPatterns().join(";"));
             }
+            QString custom = m_liteApp->settings()->value(EDITOR_CUSTOMEXTENSION+mime,"").toString();
+            QStandardItem *cus = new QStandardItem(custom);
             m_mimeModel->appendRow(QList<QStandardItem*>()
                                   << item
                                   << tab
                                   << useSpace
-                                  << ext);
+                                  << ext
+                                  << cus);
         }
     }
 }
@@ -280,6 +284,7 @@ void LiteEditorOption::apply()
     for (int i = 0; i < m_mimeModel->rowCount(); i++) {
         QString mime = m_mimeModel->item(i,0)->text();
         QString tab = m_mimeModel->item(i,1)->text();
+        QString custom = m_mimeModel->item(i,4)->text();
         bool ok;
         int n = tab.toInt(&ok);
         if (ok && n > 0 && n < 20) {
@@ -287,6 +292,11 @@ void LiteEditorOption::apply()
         }
         bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;        
         m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+mime,b);
+        m_liteApp->settings()->setValue(EDITOR_CUSTOMEXTENSION+mime,custom);
+        LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);
+        if (imt) {
+            imt->setCustomPatterns(custom.split(";"));
+        }
     }
 }
 

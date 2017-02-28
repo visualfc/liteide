@@ -123,6 +123,9 @@ public:
     virtual QStringList globPatterns() const = 0;
     virtual QStringList subClassesOf() const = 0;
     virtual void merge(const IMimeType *mimeType) = 0;
+    virtual void setCustomPatterns(const QStringList &custom) = 0;
+    virtual QStringList customPatterns() const = 0;
+    virtual QStringList allPatterns() const = 0;
 };
 
 class IMimeTypeManager : public IManager
@@ -851,7 +854,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X30.3")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X31")
 
 
 #endif //__LITEAPI_H__

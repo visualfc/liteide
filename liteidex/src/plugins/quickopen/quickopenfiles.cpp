@@ -123,7 +123,7 @@ void QuickOpenFiles::updateFiles()
 {
     QSet<QString> extSet;
     foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
-        foreach (QString ext, type->globPatterns()) {
+        foreach (QString ext, type->allPatterns()) {
             if (ext.startsWith(".")) {
                 extSet << ext.mid(1);
             } else if (ext.startsWith("*.")) {

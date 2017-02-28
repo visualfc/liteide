@@ -78,6 +78,7 @@ LiteEditorFileFactory::LiteEditorFileFactory(LiteApi::IApplication *app, QObject
             }
         }
     }
+
     m_mimeTypes.removeDuplicates();
 
     m_wordApiManager = new EditorApiManager(this);

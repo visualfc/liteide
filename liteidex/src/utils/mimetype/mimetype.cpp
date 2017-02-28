@@ -79,6 +79,7 @@ void MimeType::merge(const IMimeType *mimeType)
     }
     m_subClassesOf.append(mimeType->subClassesOf());
     m_globPatterns.append(mimeType->globPatterns());    
+    m_customPatterns.append(mimeType->customPatterns());
     m_comment.append(mimeType->comment());
 
     if (!mimeType->codec().isEmpty()) {
@@ -92,7 +93,27 @@ void MimeType::merge(const IMimeType *mimeType)
     }
     m_subClassesOf.removeDuplicates();
     m_globPatterns.removeDuplicates();
+    m_customPatterns.removeDuplicates();
     m_comment.removeDuplicates();
+}
+
+void MimeType::setCustomPatterns(const QStringList &custom)
+{
+    m_customPatterns = custom;
+}
+
+QStringList MimeType::customPatterns() const
+{
+    return m_customPatterns;
+}
+
+QStringList MimeType::allPatterns() const
+{
+    QStringList all;
+    all << m_globPatterns;
+    all << m_customPatterns;
+    all.removeDuplicates();
+    return all;
 }
 
 void MimeType::setPackage(const QString &package)

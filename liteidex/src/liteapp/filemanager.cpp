@@ -174,8 +174,9 @@ QString FileManager::openAllTypeFilter() const
     QStringList types;
     QStringList filter;
     foreach (IMimeType *mimeType, m_liteApp->mimeTypeManager()->mimeTypeList()) {
-        types.append(mimeType->globPatterns());
-        filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(mimeType->globPatterns().join(" ")));
+        QStringList patterns = mimeType->allPatterns();
+        types.append(patterns);
+        filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(patterns.join(" ")));
     }
     types.removeDuplicates();
     filter.removeDuplicates();
@@ -193,9 +194,10 @@ QString FileManager::openProjectTypeFilter() const
     QStringList filter;
     QStringList projectMimeTypes = m_liteApp->projectManager()->mimeTypeList();
     foreach (IMimeType *mimeType, m_liteApp->mimeTypeManager()->mimeTypeList()) {
+        QStringList patterns = mimeType->allPatterns();
         if (projectMimeTypes.contains(mimeType->type())) {
-            types.append(mimeType->globPatterns());
-            filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(mimeType->globPatterns().join(" ")));
+            types.append(patterns);
+            filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(patterns.join(" ")));
         }
     }
     types.removeDuplicates();
@@ -215,8 +217,9 @@ QString FileManager::openEditorTypeFilter() const
     QStringList projectMimeTypes = m_liteApp->editorManager()->mimeTypeList();
     foreach (IMimeType *mimeType, m_liteApp->mimeTypeManager()->mimeTypeList()) {
         if (projectMimeTypes.contains(mimeType->type())) {
-            types.append(mimeType->globPatterns());
-            filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(mimeType->globPatterns().join(" ")));
+            QStringList patterns = mimeType->allPatterns();
+            types.append(patterns);
+            filter.append(QString("%1 (%2)").arg(mimeType->comment()).arg(patterns.join(" ")));
         }
     }
     types.removeDuplicates();
