@@ -6,19 +6,20 @@
 ### 2017.3.1 Ver X31
 * LiteApp
 	* add application idle timer automatic save documents option
-	* folderlistview not use proxy model on MacOS (fix sync bug)
+	* folders are not sorted to resolve sync editing errors on MacOS
 * GolangAst
-	* add sync editor action
+	* classview and outline add sync editor action
 * DlvDebugger
-	* fix execution on MacOS
+	* fix dlv execution on MacOS
 * FakeVim
 	* option add load default command list action
 * LiteEditor
-	* restore editor toolbar
-	* add option mimetype custom extsition setup
+	* fix editor restore vertical scrollbar postion
 	* fix codecompleter prefix min setup
+	* restore the editor toolbar
+	* option add mimetype custom extsition setup
 * LiteBuild
-	* build action enable custom $() cmd and args
+	* build config xml file enable custom $() on cmd and args
 
 ### 2016.12.6 Ver X30.3
 * LiteEnv
