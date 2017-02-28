@@ -576,101 +576,106 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="135"/>
+        <location filename="src/liteapp/editormanager.cpp" line="137"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="148"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>Перенести в нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="192"/>
+        <location filename="src/liteapp/editormanager.cpp" line="199"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation type="unfinished">Р&amp;едагувати</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="206"/>
+        <location filename="src/liteapp/editormanager.cpp" line="213"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished">Вперед</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="137"/>
+        <location filename="src/liteapp/editormanager.cpp" line="139"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Закрити інші</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="105"/>
+        <location filename="src/liteapp/editormanager.cpp" line="107"/>
         <source>OpenEditor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="138"/>
+        <location filename="src/liteapp/editormanager.cpp" line="140"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Закрити всі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="139"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close Left Tabs</source>
         <translation>Закрити вкладки зліва</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="140"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close Right Tabs</source>
         <translation>Закрити вкладки справа</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Закрити файли з цієї ж директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Закрити файли з інших директорій</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Копіювати повний шлях в буфер обміну</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Show in Explorer</source>
         <translation>Показати в файловому менеджері</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="197"/>
+        <location filename="src/liteapp/editormanager.cpp" line="204"/>
         <source>Navigate Backward</source>
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="398"/>
+        <location filename="src/liteapp/editormanager.cpp" line="234"/>
+        <source>Edit Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="405"/>
         <source>Save changes to %1?</source>
         <translation>Зберегти зміни в %1?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="399"/>
+        <location filename="src/liteapp/editormanager.cpp" line="406"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Незбережені зміни</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="494"/>
+        <location filename="src/liteapp/editormanager.cpp" line="501"/>
         <source>All Files (*)</source>
         <translation>Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="496"/>
+        <location filename="src/liteapp/editormanager.cpp" line="503"/>
         <source>Save As</source>
         <translation>Зберегти як</translation>
     </message>
@@ -938,7 +943,7 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>FakeVimEdit</name>
     <message>
-        <location filename="src/plugins/fakevimedit/fakevimedit.cpp" line="67"/>
+        <location filename="src/plugins/fakevimedit/fakevimedit.cpp" line="68"/>
         <source>Use FakeVim Editing</source>
         <translation>Викорстовувати редагування FakeVim</translation>
     </message>
@@ -953,6 +958,11 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     <message>
         <location filename="src/plugins/fakevimedit/fakevimeditoption.ui" line="20"/>
         <source>FakeVim initialization command list (# start is comment):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/fakevimedit/fakevimeditoption.ui" line="28"/>
+        <source>Load default init command list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1055,19 +1065,19 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="182"/>
-        <location filename="src/liteapp/filemanager.cpp" line="203"/>
-        <location filename="src/liteapp/filemanager.cpp" line="224"/>
+        <location filename="src/liteapp/filemanager.cpp" line="187"/>
+        <location filename="src/liteapp/filemanager.cpp" line="209"/>
+        <location filename="src/liteapp/filemanager.cpp" line="231"/>
         <source>All Files (*)</source>
         <translation>Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="395"/>
+        <location filename="src/liteapp/filemanager.cpp" line="402"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="396"/>
+        <location filename="src/liteapp/filemanager.cpp" line="403"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -1076,57 +1086,57 @@ Do you want to load?</oldsource>
 Ви хочете його відкрити зараз?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="301"/>
+        <location filename="src/liteapp/filemanager.cpp" line="308"/>
         <source>Open Project or File</source>
         <translation>Відкрити файл чи проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="79"/>
+        <location filename="src/liteapp/filemanager.cpp" line="83"/>
         <source>Show Hidden Files</source>
         <translation type="unfinished">Показувати приховані файли</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="95"/>
+        <location filename="src/liteapp/filemanager.cpp" line="99"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation type="unfinished">Директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="179"/>
-        <location filename="src/liteapp/filemanager.cpp" line="200"/>
-        <location filename="src/liteapp/filemanager.cpp" line="221"/>
+        <location filename="src/liteapp/filemanager.cpp" line="184"/>
+        <location filename="src/liteapp/filemanager.cpp" line="206"/>
+        <location filename="src/liteapp/filemanager.cpp" line="228"/>
         <source>All Support Files (%1)</source>
         <translation type="unfinished">Всі типи файлів що підтримуються (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="314"/>
-        <location filename="src/liteapp/filemanager.cpp" line="332"/>
+        <location filename="src/liteapp/filemanager.cpp" line="321"/>
+        <location filename="src/liteapp/filemanager.cpp" line="339"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation type="unfinished">Оберіть директорію:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="529"/>
+        <location filename="src/liteapp/filemanager.cpp" line="536"/>
         <source>Session</source>
         <translation type="unfinished">Сессія</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="530"/>
+        <location filename="src/liteapp/filemanager.cpp" line="537"/>
         <source>Project</source>
         <translation type="unfinished">Проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="531"/>
+        <location filename="src/liteapp/filemanager.cpp" line="538"/>
         <source>File</source>
         <translation type="unfinished">Файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="532"/>
+        <location filename="src/liteapp/filemanager.cpp" line="539"/>
         <source>Folder</source>
         <translation type="unfinished">Директорія</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="785"/>
+        <location filename="src/liteapp/filemanager.cpp" line="796"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1141,7 +1151,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 Відповідаючи &quot;Так&quot; ви втратите незбережені зміни.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="792"/>
+        <location filename="src/liteapp/filemanager.cpp" line="803"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -1152,7 +1162,7 @@ Do you want to close the editor?</source>
 Ви дійсно хочете закрити редактор?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="822"/>
+        <location filename="src/liteapp/filemanager.cpp" line="833"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1167,7 +1177,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 Відповідаючи &quot;Так&quot; ви втратите незбережені зміни.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="829"/>
+        <location filename="src/liteapp/filemanager.cpp" line="840"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -1178,35 +1188,35 @@ Do you want to reload the file from disk?</source>
 Ви хочете перезавантажити файл з диску?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="351"/>
+        <location filename="src/liteapp/filemanager.cpp" line="358"/>
         <source>Open Files</source>
         <translation>Відкрити файли...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="86"/>
+        <location filename="src/liteapp/filemanager.cpp" line="90"/>
         <source>Synchronize with editor</source>
         <translation type="unfinished">Синхронізувати із редактором</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="90"/>
+        <location filename="src/liteapp/filemanager.cpp" line="94"/>
         <source>Filter</source>
         <translation type="unfinished">Фільтрувати</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="103"/>
+        <location filename="src/liteapp/filemanager.cpp" line="107"/>
         <source>Clear History</source>
         <translation type="unfinished">Очистити історію</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="364"/>
+        <location filename="src/liteapp/filemanager.cpp" line="371"/>
         <source>Open Project</source>
         <translation>Відкрити проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="789"/>
-        <location filename="src/liteapp/filemanager.cpp" line="794"/>
-        <location filename="src/liteapp/filemanager.cpp" line="826"/>
-        <location filename="src/liteapp/filemanager.cpp" line="831"/>
+        <location filename="src/liteapp/filemanager.cpp" line="800"/>
+        <location filename="src/liteapp/filemanager.cpp" line="805"/>
+        <location filename="src/liteapp/filemanager.cpp" line="837"/>
+        <location filename="src/liteapp/filemanager.cpp" line="842"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -1879,17 +1889,23 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>GolangAst</name>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="58"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="60"/>
         <source>No outline available</source>
         <translation type="unfinished">Дерево недоступне</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="74"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="77"/>
+        <source>Synchronize with editor</source>
+        <translation type="unfinished">Синхронізувати із редактором</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangast.cpp" line="80"/>
         <source>Class View</source>
         <translation type="unfinished">Класи</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="73"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="81"/>
         <source>Outline</source>
         <translation type="unfinished">Структура</translation>
     </message>
@@ -2449,113 +2465,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="237"/>
+        <location filename="src/liteapp/liteapp.cpp" line="246"/>
         <source>Event Log</source>
         <translation type="unfinished">Журнал</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="224"/>
+        <location filename="src/liteapp/liteapp.cpp" line="233"/>
         <source>Escape</source>
         <translation type="unfinished">Вихід</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="672"/>
+        <location filename="src/liteapp/liteapp.cpp" line="681"/>
         <source>Close File</source>
         <translation type="unfinished">Закрити файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="675"/>
+        <location filename="src/liteapp/liteapp.cpp" line="684"/>
         <source>Close All Files</source>
         <translation type="unfinished">Закрити все</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="685"/>
+        <location filename="src/liteapp/liteapp.cpp" line="694"/>
         <source>Save File</source>
         <translation type="unfinished">Зберегти файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="688"/>
+        <location filename="src/liteapp/liteapp.cpp" line="697"/>
         <source>Save File As...</source>
         <translation type="unfinished">Зберегти файл як...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="691"/>
+        <location filename="src/liteapp/liteapp.cpp" line="700"/>
         <source>Save All Files</source>
         <translation type="unfinished">Зберегти всі файли</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="678"/>
+        <location filename="src/liteapp/liteapp.cpp" line="687"/>
         <source>Open Project</source>
         <translation>Відкрити проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="240"/>
+        <location filename="src/liteapp/liteapp.cpp" line="249"/>
         <source>Options</source>
         <translation type="unfinished">Параметри</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="658"/>
         <source>New...</source>
         <translation type="unfinished">Новий...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="652"/>
+        <location filename="src/liteapp/liteapp.cpp" line="661"/>
         <source>Open File...</source>
         <translation type="unfinished">Відкрити файл...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="655"/>
+        <location filename="src/liteapp/liteapp.cpp" line="664"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Відкрити директорію...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="658"/>
+        <location filename="src/liteapp/liteapp.cpp" line="667"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Відкрити директорію у новому вікні...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="663"/>
+        <location filename="src/liteapp/liteapp.cpp" line="672"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Закрити всі директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="666"/>
+        <location filename="src/liteapp/liteapp.cpp" line="675"/>
         <source>New Window</source>
         <translation type="unfinished">Нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="669"/>
+        <location filename="src/liteapp/liteapp.cpp" line="678"/>
         <source>Close Window</source>
         <translation type="unfinished">Закрити вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="680"/>
+        <location filename="src/liteapp/liteapp.cpp" line="689"/>
         <source>Save Project</source>
         <translation>Зберегти проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="682"/>
+        <location filename="src/liteapp/liteapp.cpp" line="691"/>
         <source>Close Project</source>
         <translation type="unfinished">Закрити проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="694"/>
+        <location filename="src/liteapp/liteapp.cpp" line="703"/>
         <source>Exit</source>
         <translation>Вихід</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="697"/>
+        <location filename="src/liteapp/liteapp.cpp" line="706"/>
         <source>Full Screen</source>
         <translation type="unfinished">Повний екран</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="701"/>
+        <location filename="src/liteapp/liteapp.cpp" line="710"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Про LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="707"/>
+        <location filename="src/liteapp/liteapp.cpp" line="716"/>
         <source>About Plugins</source>
         <translation type="unfinished">Про розширення</translation>
     </message>
@@ -2579,19 +2595,19 @@ Success: %2.</oldsource>
         <translation>Мова:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="239"/>
+        <location filename="src/liteapp/liteappoption.ui" line="285"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation type="unfinished">Нещодавні файли</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <location filename="src/liteapp/liteappoption.ui" line="291"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation type="unfinished">Максимальна кількість:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <location filename="src/liteapp/liteappoption.ui" line="173"/>
         <source>Monitoring files for modifications</source>
         <translation type="unfinished">Відслідковувати зовнішні зміни файлів</translation>
     </message>
@@ -2616,100 +2632,115 @@ Success: %2.</oldsource>
         <translation type="unfinished">Тема [*]</translation>
     </message>
     <message>
+        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <source>Automatically save documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/liteapp/liteappoption.ui" line="134"/>
+        <source>Automatically save documents when application is idle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="144"/>
+        <source>sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="179"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation type="unfinished">Автоматично перезавантажувати чи закривати вікно редагуванння, якщо файл було змінено/видалено</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="163"/>
-        <location filename="src/liteapp/liteappoption.ui" line="169"/>
+        <location filename="src/liteapp/liteappoption.ui" line="209"/>
+        <location filename="src/liteapp/liteappoption.ui" line="215"/>
         <source>Session</source>
         <translation type="unfinished">Сессія</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="200"/>
+        <location filename="src/liteapp/liteappoption.ui" line="246"/>
         <source>Reload folders on startup</source>
         <translation type="unfinished">Перезавантажувати директорії при старті</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="227"/>
+        <location filename="src/liteapp/liteappoption.ui" line="273"/>
         <source>Reload files on startup</source>
         <translation type="unfinished">Перезавантажувати файли на старті</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="306"/>
+        <location filename="src/liteapp/liteappoption.ui" line="352"/>
         <source>Display</source>
         <translation type="unfinished">Вид</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="312"/>
+        <location filename="src/liteapp/liteappoption.ui" line="358"/>
         <source>Display [*]</source>
         <translation type="unfinished">Вид [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="318"/>
+        <location filename="src/liteapp/liteappoption.ui" line="364"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished">Показувати заставку на старті</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="325"/>
+        <location filename="src/liteapp/liteappoption.ui" line="371"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished">Показувати сторінку &quot;Доброго дня&quot; на старті</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="335"/>
+        <location filename="src/liteapp/liteappoption.ui" line="381"/>
         <source>Editor tab [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="341"/>
+        <location filename="src/liteapp/liteappoption.ui" line="387"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished">Показувати кнопку закриття на кожній вкладці редактора</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="348"/>
+        <location filename="src/liteapp/liteappoption.ui" line="394"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="358"/>
+        <location filename="src/liteapp/liteappoption.ui" line="404"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished">Розмір іконок тулбару [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="431"/>
+        <location filename="src/liteapp/liteappoption.ui" line="477"/>
         <source>Keyboard</source>
         <translation type="unfinished">Клавіатура</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="437"/>
+        <location filename="src/liteapp/liteappoption.ui" line="483"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation type="unfinished">Формат: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="449"/>
+        <location filename="src/liteapp/liteappoption.ui" line="495"/>
         <source>Hide standard commands</source>
         <translation type="unfinished">Приховати стандартні команди</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="456"/>
+        <location filename="src/liteapp/liteappoption.ui" line="502"/>
         <source>Reset</source>
         <translation type="unfinished">Скинути</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="463"/>
+        <location filename="src/liteapp/liteappoption.ui" line="509"/>
         <source>Reset All</source>
         <translation type="unfinished">Скинути все</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="483"/>
+        <location filename="src/liteapp/liteappoption.ui" line="529"/>
         <source>Import...</source>
         <translation type="unfinished">Імпорт...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="490"/>
+        <location filename="src/liteapp/liteappoption.ui" line="536"/>
         <source>Export...</source>
         <translation type="unfinished">Експорт...</translation>
     </message>
@@ -2724,7 +2755,7 @@ Success: %2.</oldsource>
         <translation type="unfinished">Тема:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="175"/>
+        <location filename="src/liteapp/liteappoption.ui" line="221"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Завантажувати останню сессію при старті</translation>
@@ -2740,53 +2771,53 @@ Success: %2.</oldsource>
         <translation type="unfinished">Стиль спліттеру</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="149"/>
         <source>Command</source>
         <translation type="unfinished">Команда</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="141"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="150"/>
         <source>Label</source>
         <translation type="unfinished">Им`я</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="142"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="151"/>
         <source>Shortcuts</source>
         <translation type="unfinished">Комбінації клавіш</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="143"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="152"/>
         <source>NativeText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="144"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="153"/>
         <source>Standard</source>
         <translation type="unfinished">Стандартна</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="422"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished">Імпорт комбінацій клавіатури</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="422"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="456"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished">Файл комбінацій клавіатури(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="429"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="445"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished">Помилка читання комбінацій з %1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="456"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished">Експорт комбінацій клавіатури</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="467"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="483"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished">Помилка запису комбінацій в %1!</translation>
     </message>
@@ -2924,11 +2955,10 @@ Success: %2.</oldsource>
         <translation type="unfinished">Не вдалося зупинити існуючий процес!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1514"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
-        <translation type="unfinished">&gt; Не вдалося розпізнати дію &apos;%1&apos;</translation>
+        <translation type="obsolete">&gt; Не вдалося розпізнати дію &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1562"/>
@@ -3108,375 +3138,384 @@ Success: %2.</oldsource>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Undo</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="248"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="247"/>
         <source>Redo</source>
         <translation>Повторити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="251"/>
         <source>Cut</source>
         <translation>Вирізати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="256"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="255"/>
         <source>Copy</source>
         <translation>Копіювати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="259"/>
         <source>Paste</source>
         <translation>Вставити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
         <source>Select All</source>
         <translation>Виділити все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="285"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="284"/>
         <source>Go to Doc Start</source>
         <translation>Перейти до початку документу</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="289"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
         <source>Go to Doc End</source>
         <translation>Перейти в кінець документу</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="292"/>
         <source>Go to Line Start</source>
         <translation>Перейти на початок рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="297"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="296"/>
         <source>Go to Line End</source>
         <translation>Перейти в кінець рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="300"/>
         <source>Go to Previous Line</source>
         <translation>Перейти до попереднього рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="305"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="304"/>
         <source>Go to Next Line</source>
         <translation>Перейти до наступного рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="308"/>
         <source>Go to Previous Character</source>
         <translation>Перейти до попереднього символа</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="312"/>
         <source>Go to Next Charater</source>
         <translation>Перейти до наступного символа</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="316"/>
         <source>Go to Previous Word</source>
         <translation>Перейти до попереднього слова</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="321"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="320"/>
         <source>Go to Next Word</source>
         <translation>Перейти до наступного слова</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="342"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="341"/>
         <source>Go to Line</source>
         <translation>Перейти до рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="384"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="344"/>
+        <source>File is readonly</source>
+        <translation type="unfinished">Файл тільки для читання</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="347"/>
+        <source>File is writable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="387"/>
         <source>Word Wrap (MimeType)</source>
         <translation type="unfinished">Перенос слів</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="395"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
         <source>Toggle Comment</source>
         <translation>Закоментувати/розкоментувати рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="401"/>
         <source>Toggle Block Commnet</source>
         <translation>Закоментувати/розкоментувати блок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="401"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="404"/>
         <source>Auto-indent Selection</source>
         <translation>Автовідступи у виділеному тексті</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="405"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="408"/>
         <source>Tab To Spaces (MimeType)</source>
         <translation type="unfinished">Табуляцію замінити на пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="409"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="412"/>
         <source>Line End Windows (\r\n)</source>
         <translation>Кінці рядків Windows (\r\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="413"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="416"/>
         <source>Line End Unix (\n)</source>
         <translation>Кінці рядків Unix (\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="417"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="420"/>
         <source>Visualize Whitespace (Global)</source>
         <translation type="unfinished">Візуалізувати пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="424"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="427"/>
         <source>Move Line Up</source>
         <translation>Перемістити рядок угору</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="427"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="430"/>
         <source>Move Line Down</source>
         <translation>Перемістити рядок вниз</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="430"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
         <source>Copy Line Up</source>
         <translation>Копіювати рядок угору</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="436"/>
         <source>Copy Line Down</source>
         <translation>Копіювати рядок вниз</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="436"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="439"/>
         <source>Join Lines</source>
         <translation>Об&apos;єднати рядки</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="439"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="442"/>
         <source>Title Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="446"/>
         <source>Upper Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="447"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="450"/>
         <source>Lower Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="451"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="454"/>
         <source>Swap Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="608"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="690"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="612"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="694"/>
         <source>Advanced</source>
         <translation type="unfinished">Додатково</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="634"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="708"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="638"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="712"/>
         <source>Goto</source>
         <translation>Перейти</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="652"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="725"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="656"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="729"/>
         <source>Code Folding</source>
         <translation>Згортання коду</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="658"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="662"/>
         <source>Convert Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1085"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1090"/>
         <source>Export HTML</source>
         <translation>Експортувати HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1093"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1098"/>
         <source>Export Failed</source>
         <translation>Експорт завершився невдало</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1094"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1099"/>
         <source>Could not open %1 for writing.</source>
         <translation>Не вдалося відкрити %1 для запису.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1113"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1118"/>
         <source>Export PDF</source>
         <translation>Експорт в PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1138"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1143"/>
         <source>Print Document</source>
         <translation>Друк документу</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="270"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation type="unfinished">Перегляд перед друком...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
         <source>Export HTML...</source>
         <translation>Експортувати HTML...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="267"/>
         <source>Export PDF...</source>
         <translation>Експортувати PDF...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
         <source>Print...</source>
         <translation>Друк...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
         <source>Go to Previous Block</source>
         <oldsource>Go To Previous Block</oldsource>
         <translation>Перейти до попереднього блоку</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="278"/>
         <source>Select Block</source>
         <translation>Вибрати блок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="281"/>
         <source>Go to Matching Brace</source>
         <oldsource>Go To Matching Brace</oldsource>
         <translation>Перейти до відповідної фігурної дужки</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="325"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="324"/>
         <source>Fold</source>
         <translation>Згорнути</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="328"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="327"/>
         <source>Unfold</source>
         <translation>Розгорнути</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="331"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="330"/>
         <source>Fold All</source>
         <translation>Згорнути все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="334"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="333"/>
         <source>Unfold All</source>
         <translation>Розгорнути все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1206"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1211"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>Перейти до рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="345"/>
         <source>Locked</source>
-        <translation>Заблоковано</translation>
+        <translation type="obsolete">Заблоковано</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="348"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="351"/>
         <source>Duplicate</source>
         <translation>Дублювати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="352"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="355"/>
         <source>Delete Line</source>
         <translation>Видалити рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="356"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="359"/>
         <source>Copy Line</source>
         <translation>Копіювати рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="360"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="363"/>
         <source>Cut Line</source>
         <translation>Вирізати рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="364"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="367"/>
         <source>Insert Line Before</source>
         <translation>Вставити пустий рядок перед поточним</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="368"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="371"/>
         <source>Insert Line After</source>
         <translation>Вставити пустий рядок після поточного</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="372"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="375"/>
         <source>Increase Font Size</source>
         <translation>Збільшити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="375"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="378"/>
         <source>Decrease Font Size</source>
         <translation>Зменшити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="378"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="381"/>
         <source>Reset Font Size</source>
         <translation>Відновити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="381"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="384"/>
         <source>Clean Whitespace</source>
         <translation type="unfinished">Очистити пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="388"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="391"/>
         <source>Code Complete</source>
         <translation type="unfinished">Доповнити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="800"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="804"/>
         <source>Reload File</source>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1155"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1160"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>Перезавантажити %1 і відкинути незбережені зміни?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="275"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="274"/>
         <source>Go to Next Block</source>
         <oldsource>Go To Next Block</oldsource>
         <translation>Перейти до наступного блоку</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="664"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="668"/>
         <source>Setup</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1185"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1190"/>
         <source>ReadOnly</source>
         <translation>Тільки для читання</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1206"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1211"/>
         <source>Line: </source>
         <translation>Рядок:</translation>
     </message>
@@ -3670,6 +3709,11 @@ Success: %2.</oldsource>
         <source>File Extensions</source>
         <translation>Розширення файлів</translation>
     </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="149"/>
+        <source>Custom Extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEnvOption</name>
@@ -3749,34 +3793,34 @@ Success: %2.</oldsource>
         <translation type="unfinished">Експортер формату Markdown</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="161"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="162"/>
         <source>All Files (*)</source>
         <translation type="unfinished">Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="230"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="231"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
         <translation type="unfinished">Оберіть директорію з Markdown-файлами:</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="241"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="242"/>
         <source>Select Markdown Files</source>
         <translation type="unfinished">Вибрати Markdown-файли</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="289"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="290"/>
         <source>Select the folder to contain separated markdown exports:</source>
         <translation type="unfinished">Виберіть директорію для збереження окремих експортів Markdown:</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="302"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="303"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
         <translation type="unfinished">Експортувати об`єднаний HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="377"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="378"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
         <translation type="unfinished">Експортувати об`єднаний PDF</translation>

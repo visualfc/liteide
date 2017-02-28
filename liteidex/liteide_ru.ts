@@ -541,6 +541,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>OpenEditor</source>
         <translation type="unfinished">OpenEditor</translation>
     </message>
+    <message>
+        <source>Edit Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EnvManager</name>
@@ -773,6 +777,10 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>FakeVim initialization command list (# start is comment):</source>
         <translation>Список команд инициализации FakeVim (с # начинаются комментарии):</translation>
+    </message>
+    <message>
+        <source>Load default init command list</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1523,6 +1531,10 @@ Do you want to reload the file from disk?</source>
         <source>Outline</source>
         <translation>Схема</translation>
     </message>
+    <message>
+        <source>Synchronize with editor</source>
+        <translation type="unfinished">Синхронизировать с редактором</translation>
+    </message>
 </context>
 <context>
     <name>GolangAstOption</name>
@@ -2257,6 +2269,18 @@ Success: %2.</oldsource>
         <source>NativeText</source>
         <translation type="unfinished">NativeText</translation>
     </message>
+    <message>
+        <source>Automatically save documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically save documents when application is idle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
@@ -2362,7 +2386,7 @@ Success: %2.</oldsource>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
-        <translation>&gt; Не удалось распознать действие «%1»</translation>
+        <translation type="obsolete">&gt; Не удалось распознать действие «%1»</translation>
     </message>
     <message>
         <source>Started process successfully</source>
@@ -2664,7 +2688,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Locked</source>
-        <translation>Заблокировано</translation>
+        <translation type="obsolete">Заблокировано</translation>
     </message>
     <message>
         <source>Duplicate</source>
@@ -2808,6 +2832,14 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Convert Case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File is readonly</source>
+        <translation type="unfinished">Файл только для чтения</translation>
+    </message>
+    <message>
+        <source>File is writable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2960,6 +2992,10 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Clean completion cache when saving files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Extensions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -574,101 +574,106 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="135"/>
+        <location filename="src/liteapp/editormanager.cpp" line="137"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="148"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>移动到新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="192"/>
+        <location filename="src/liteapp/editormanager.cpp" line="199"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="206"/>
+        <location filename="src/liteapp/editormanager.cpp" line="213"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="137"/>
+        <location filename="src/liteapp/editormanager.cpp" line="139"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="105"/>
+        <location filename="src/liteapp/editormanager.cpp" line="107"/>
         <source>OpenEditor</source>
         <translation>打开文档</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="138"/>
+        <location filename="src/liteapp/editormanager.cpp" line="140"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="139"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close Left Tabs</source>
         <translation>关闭左侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="140"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close Right Tabs</source>
         <translation>关闭右侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>关闭相同目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>关闭其他目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>复制完整路径到剪贴板</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Show in Explorer</source>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="197"/>
+        <location filename="src/liteapp/editormanager.cpp" line="204"/>
         <source>Navigate Backward</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="398"/>
+        <location filename="src/liteapp/editormanager.cpp" line="234"/>
+        <source>Edit Toolbar</source>
+        <translation>编辑工具栏</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="405"/>
         <source>Save changes to %1?</source>
         <translation>保存修改到 %1 ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="399"/>
+        <location filename="src/liteapp/editormanager.cpp" line="406"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>未保存修改</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="494"/>
+        <location filename="src/liteapp/editormanager.cpp" line="501"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="496"/>
+        <location filename="src/liteapp/editormanager.cpp" line="503"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
@@ -926,7 +931,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>FakeVimEdit</name>
     <message>
-        <location filename="src/plugins/fakevimedit/fakevimedit.cpp" line="67"/>
+        <location filename="src/plugins/fakevimedit/fakevimedit.cpp" line="68"/>
         <source>Use FakeVim Editing</source>
         <translation>使用FakeVim编辑</translation>
     </message>
@@ -942,6 +947,11 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <location filename="src/plugins/fakevimedit/fakevimeditoption.ui" line="20"/>
         <source>FakeVim initialization command list (# start is comment):</source>
         <translation>FakeVim 初始命令列表(以#开始行为注释):</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/fakevimedit/fakevimeditoption.ui" line="28"/>
+        <source>Load default init command list</source>
+        <translation>加载默认的初始化命令列表</translation>
     </message>
 </context>
 <context>
@@ -1043,19 +1053,19 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="182"/>
-        <location filename="src/liteapp/filemanager.cpp" line="203"/>
-        <location filename="src/liteapp/filemanager.cpp" line="224"/>
+        <location filename="src/liteapp/filemanager.cpp" line="187"/>
+        <location filename="src/liteapp/filemanager.cpp" line="209"/>
+        <location filename="src/liteapp/filemanager.cpp" line="231"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="395"/>
+        <location filename="src/liteapp/filemanager.cpp" line="402"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="396"/>
+        <location filename="src/liteapp/filemanager.cpp" line="403"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -1063,72 +1073,72 @@ Do you want to load?</oldsource>
         <translation>项目文件 &apos;%1&apos;已建立,是否加载?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="301"/>
+        <location filename="src/liteapp/filemanager.cpp" line="308"/>
         <source>Open Project or File</source>
         <translation>打开项目或文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="79"/>
+        <location filename="src/liteapp/filemanager.cpp" line="83"/>
         <source>Show Hidden Files</source>
         <translation>显示隐藏文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="86"/>
+        <location filename="src/liteapp/filemanager.cpp" line="90"/>
         <source>Synchronize with editor</source>
         <translation>与编辑器同步</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="90"/>
+        <location filename="src/liteapp/filemanager.cpp" line="94"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="95"/>
+        <location filename="src/liteapp/filemanager.cpp" line="99"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="103"/>
+        <location filename="src/liteapp/filemanager.cpp" line="107"/>
         <source>Clear History</source>
         <translation>清除历史</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="179"/>
-        <location filename="src/liteapp/filemanager.cpp" line="200"/>
-        <location filename="src/liteapp/filemanager.cpp" line="221"/>
+        <location filename="src/liteapp/filemanager.cpp" line="184"/>
+        <location filename="src/liteapp/filemanager.cpp" line="206"/>
+        <location filename="src/liteapp/filemanager.cpp" line="228"/>
         <source>All Support Files (%1)</source>
         <translation>所有支持文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="314"/>
-        <location filename="src/liteapp/filemanager.cpp" line="332"/>
+        <location filename="src/liteapp/filemanager.cpp" line="321"/>
+        <location filename="src/liteapp/filemanager.cpp" line="339"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>选择目录:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="529"/>
+        <location filename="src/liteapp/filemanager.cpp" line="536"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="530"/>
+        <location filename="src/liteapp/filemanager.cpp" line="537"/>
         <source>Project</source>
         <translation>项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="531"/>
+        <location filename="src/liteapp/filemanager.cpp" line="538"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="532"/>
+        <location filename="src/liteapp/filemanager.cpp" line="539"/>
         <source>Folder</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="785"/>
+        <location filename="src/liteapp/filemanager.cpp" line="796"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1142,7 +1152,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="792"/>
+        <location filename="src/liteapp/filemanager.cpp" line="803"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -1153,7 +1163,7 @@ Do you want to close the editor?</source>
 您想要关闭编辑器？</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="822"/>
+        <location filename="src/liteapp/filemanager.cpp" line="833"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1167,7 +1177,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 回答“是”将放弃您的未保存修改。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="829"/>
+        <location filename="src/liteapp/filemanager.cpp" line="840"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -1178,20 +1188,20 @@ Do you want to reload the file from disk?</source>
 您想要重新从磁盘读取？</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="351"/>
+        <location filename="src/liteapp/filemanager.cpp" line="358"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="364"/>
+        <location filename="src/liteapp/filemanager.cpp" line="371"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="789"/>
-        <location filename="src/liteapp/filemanager.cpp" line="794"/>
-        <location filename="src/liteapp/filemanager.cpp" line="826"/>
-        <location filename="src/liteapp/filemanager.cpp" line="831"/>
+        <location filename="src/liteapp/filemanager.cpp" line="800"/>
+        <location filename="src/liteapp/filemanager.cpp" line="805"/>
+        <location filename="src/liteapp/filemanager.cpp" line="837"/>
+        <location filename="src/liteapp/filemanager.cpp" line="842"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
@@ -1858,17 +1868,23 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>GolangAst</name>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="58"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="60"/>
         <source>No outline available</source>
         <translation>没有大纲</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="72"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="74"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="77"/>
+        <source>Synchronize with editor</source>
+        <translation>与编辑器同步</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangast/golangast.cpp" line="80"/>
         <source>Class View</source>
         <translation>类视图</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/golangast.cpp" line="73"/>
+        <location filename="src/plugins/golangast/golangast.cpp" line="81"/>
         <source>Outline</source>
         <translation>大纲</translation>
     </message>
@@ -2428,113 +2444,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="237"/>
+        <location filename="src/liteapp/liteapp.cpp" line="246"/>
         <source>Event Log</source>
         <translation>事件记录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="224"/>
+        <location filename="src/liteapp/liteapp.cpp" line="233"/>
         <source>Escape</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="672"/>
+        <location filename="src/liteapp/liteapp.cpp" line="681"/>
         <source>Close File</source>
         <translation>关闭文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="675"/>
+        <location filename="src/liteapp/liteapp.cpp" line="684"/>
         <source>Close All Files</source>
         <translation>关闭所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="685"/>
+        <location filename="src/liteapp/liteapp.cpp" line="694"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="688"/>
+        <location filename="src/liteapp/liteapp.cpp" line="697"/>
         <source>Save File As...</source>
         <translation>文件另存为...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="691"/>
+        <location filename="src/liteapp/liteapp.cpp" line="700"/>
         <source>Save All Files</source>
         <translation>保存所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="678"/>
+        <location filename="src/liteapp/liteapp.cpp" line="687"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="240"/>
+        <location filename="src/liteapp/liteapp.cpp" line="249"/>
         <source>Options</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="649"/>
+        <location filename="src/liteapp/liteapp.cpp" line="658"/>
         <source>New...</source>
         <translation>新建...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="652"/>
+        <location filename="src/liteapp/liteapp.cpp" line="661"/>
         <source>Open File...</source>
         <translation>打开文件...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="655"/>
+        <location filename="src/liteapp/liteapp.cpp" line="664"/>
         <source>Open Folder...</source>
         <translation>打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="658"/>
+        <location filename="src/liteapp/liteapp.cpp" line="667"/>
         <source>Open Folder in New Window...</source>
         <translation>在新窗口打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="663"/>
+        <location filename="src/liteapp/liteapp.cpp" line="672"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation>关闭所有目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="666"/>
+        <location filename="src/liteapp/liteapp.cpp" line="675"/>
         <source>New Window</source>
         <translation>新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="669"/>
+        <location filename="src/liteapp/liteapp.cpp" line="678"/>
         <source>Close Window</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="680"/>
+        <location filename="src/liteapp/liteapp.cpp" line="689"/>
         <source>Save Project</source>
         <translation>保存项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="682"/>
+        <location filename="src/liteapp/liteapp.cpp" line="691"/>
         <source>Close Project</source>
         <translation>关闭项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="694"/>
+        <location filename="src/liteapp/liteapp.cpp" line="703"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="697"/>
+        <location filename="src/liteapp/liteapp.cpp" line="706"/>
         <source>Full Screen</source>
         <translation>全屏显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="701"/>
+        <location filename="src/liteapp/liteapp.cpp" line="710"/>
         <source>About LiteIDE</source>
         <translation>关于 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="707"/>
+        <location filename="src/liteapp/liteapp.cpp" line="716"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
@@ -2558,19 +2574,19 @@ Success: %2.</oldsource>
         <translation>语言:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="239"/>
+        <location filename="src/liteapp/liteappoption.ui" line="285"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation>历史文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <location filename="src/liteapp/liteappoption.ui" line="291"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>最大记录数:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <location filename="src/liteapp/liteappoption.ui" line="173"/>
         <source>Monitoring files for modifications</source>
         <translation>文件修改监视</translation>
     </message>
@@ -2595,100 +2611,115 @@ Success: %2.</oldsource>
         <translation>主题 [*]</translation>
     </message>
     <message>
+        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <source>Automatically save documents</source>
+        <translation>自动保存文档</translation>
+    </message>
+    <message>
         <location filename="src/liteapp/liteappoption.ui" line="134"/>
+        <source>Automatically save documents when application is idle</source>
+        <translation>应用程序空闲时自动保存文档</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="144"/>
+        <source>sec</source>
+        <translation>秒</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="179"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation>当文件被更改或删除时，自动重新读取或关闭编辑器。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="163"/>
-        <location filename="src/liteapp/liteappoption.ui" line="169"/>
+        <location filename="src/liteapp/liteappoption.ui" line="209"/>
+        <location filename="src/liteapp/liteappoption.ui" line="215"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="200"/>
+        <location filename="src/liteapp/liteappoption.ui" line="246"/>
         <source>Reload folders on startup</source>
         <translation>启动时重新加载目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="227"/>
+        <location filename="src/liteapp/liteappoption.ui" line="273"/>
         <source>Reload files on startup</source>
         <translation>启动时重新加载文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="306"/>
+        <location filename="src/liteapp/liteappoption.ui" line="352"/>
         <source>Display</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="312"/>
+        <location filename="src/liteapp/liteappoption.ui" line="358"/>
         <source>Display [*]</source>
         <translation>显示 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="318"/>
+        <location filename="src/liteapp/liteappoption.ui" line="364"/>
         <source>Show splash screen on startup</source>
         <translation>启动时显示启动画面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="325"/>
+        <location filename="src/liteapp/liteappoption.ui" line="371"/>
         <source>Show welcome page on startup</source>
         <translation>启动时显示欢迎页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="335"/>
+        <location filename="src/liteapp/liteappoption.ui" line="381"/>
         <source>Editor tab [*]</source>
         <translation>编辑器Tab栏 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="341"/>
+        <location filename="src/liteapp/liteappoption.ui" line="387"/>
         <source>Show close buttons on each editor tab</source>
         <translation>在每个文档标签栏都显示关闭按钮</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="348"/>
+        <location filename="src/liteapp/liteappoption.ui" line="394"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation>允许鼠标滚轮导航Tabs</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="358"/>
+        <location filename="src/liteapp/liteappoption.ui" line="404"/>
         <source>Toolbar Icon Size [*]</source>
         <translation>工具栏图标大小 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="431"/>
+        <location filename="src/liteapp/liteappoption.ui" line="477"/>
         <source>Keyboard</source>
         <translation>键盘</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="437"/>
+        <location filename="src/liteapp/liteappoption.ui" line="483"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="449"/>
+        <location filename="src/liteapp/liteappoption.ui" line="495"/>
         <source>Hide standard commands</source>
         <translation>隐藏标准命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="456"/>
+        <location filename="src/liteapp/liteappoption.ui" line="502"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="463"/>
+        <location filename="src/liteapp/liteappoption.ui" line="509"/>
         <source>Reset All</source>
         <translation>重置所有</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="483"/>
+        <location filename="src/liteapp/liteappoption.ui" line="529"/>
         <source>Import...</source>
         <translation>导入...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="490"/>
+        <location filename="src/liteapp/liteappoption.ui" line="536"/>
         <source>Export...</source>
         <translation>导出...</translation>
     </message>
@@ -2703,7 +2734,7 @@ Success: %2.</oldsource>
         <translation>主题:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="175"/>
+        <location filename="src/liteapp/liteappoption.ui" line="221"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation>启动时重新加载会话</translation>
@@ -2719,53 +2750,53 @@ Success: %2.</oldsource>
         <translation>分离样式</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="140"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="149"/>
         <source>Command</source>
         <translation>命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="141"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="150"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="142"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="151"/>
         <source>Shortcuts</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="143"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="152"/>
         <source>NativeText</source>
         <translation>本机文本</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="144"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="153"/>
         <source>Standard</source>
         <translation>标准键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="422"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>导入键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="422"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="456"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>键盘映射方案 (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="429"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="445"/>
         <source>Could not read scheme from %1!</source>
         <translation>无法加载方案%1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="456"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>导出键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="467"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="483"/>
         <source>Could not write scheme to %1!</source>
         <translation>无法写入方案%1!</translation>
     </message>
@@ -2903,11 +2934,10 @@ Success: %2.</oldsource>
         <translation>无法终止已存在进程!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1514"/>
         <source>&gt; Could not parse action &apos;%1&apos;</source>
         <oldsource>&gt; Could not parse action &apos;%1&apos;
 </oldsource>
-        <translation>&gt; 不能解析命令 &apos;%1&apos;</translation>
+        <translation type="obsolete">&gt; 不能解析命令 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1562"/>
@@ -3087,375 +3117,384 @@ Success: %2.</oldsource>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="244"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="243"/>
         <source>Undo</source>
         <translation>撤消</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="248"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="247"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="252"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="251"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="256"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="255"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="260"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="259"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="263"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
         <source>Select All</source>
         <translation>选择所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="285"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="284"/>
         <source>Go to Doc Start</source>
         <translation>跳转到文件开头</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="289"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
         <source>Go to Doc End</source>
         <translation>跳转到文件结尾</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="293"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="292"/>
         <source>Go to Line Start</source>
         <translation>跳转到行开头</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="297"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="296"/>
         <source>Go to Line End</source>
         <translation>跳转到行结尾</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="300"/>
         <source>Go to Previous Line</source>
         <translation>跳转到上一行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="305"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="304"/>
         <source>Go to Next Line</source>
         <translation>跳转到下一行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="308"/>
         <source>Go to Previous Character</source>
         <translation>跳转到前一字符</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="312"/>
         <source>Go to Next Charater</source>
         <translation>跳转到后一字符</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="316"/>
         <source>Go to Previous Word</source>
         <translation>跳转到前一单词</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="321"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="320"/>
         <source>Go to Next Word</source>
         <translation>跳转到后一单词</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="342"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="341"/>
         <source>Go to Line</source>
         <translation>跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="384"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="344"/>
+        <source>File is readonly</source>
+        <translation>文件只读</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="347"/>
+        <source>File is writable</source>
+        <translation>文件可写</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="387"/>
         <source>Word Wrap (MimeType)</source>
         <translation>自动换行 (MimeType)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="395"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
         <source>Toggle Comment</source>
         <translation>切换注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="401"/>
         <source>Toggle Block Commnet</source>
         <translation>切换块注释</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="401"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="404"/>
         <source>Auto-indent Selection</source>
         <translation>自动代码缩进</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="405"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="408"/>
         <source>Tab To Spaces (MimeType)</source>
         <translation>TAB转空格(MimeType)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="409"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="412"/>
         <source>Line End Windows (\r\n)</source>
         <translation>Windows行结束符 (\r\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="413"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="416"/>
         <source>Line End Unix (\n)</source>
         <translation>Unix行结束符 (\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="417"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="420"/>
         <source>Visualize Whitespace (Global)</source>
         <translation>显示空白 (全局)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="424"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="427"/>
         <source>Move Line Up</source>
         <translation>移动行（向上）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="427"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="430"/>
         <source>Move Line Down</source>
         <translation>移动行（向下）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="430"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
         <source>Copy Line Up</source>
         <translation>复制行（向上）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="436"/>
         <source>Copy Line Down</source>
         <translation>复制行（向下）</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="436"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="439"/>
         <source>Join Lines</source>
         <translation>连接行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="439"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="442"/>
         <source>Title Case</source>
         <translation>首字母大写</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="446"/>
         <source>Upper Case</source>
         <translation>大写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="447"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="450"/>
         <source>Lower Case</source>
         <translation>小写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="451"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="454"/>
         <source>Swap Case</source>
         <translation>大小写互换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="608"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="690"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="612"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="694"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="634"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="708"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="638"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="712"/>
         <source>Goto</source>
         <translation>跳转</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="652"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="725"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="656"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="729"/>
         <source>Code Folding</source>
         <translation>代码折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="658"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="662"/>
         <source>Convert Case</source>
         <translation>大小写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1085"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1090"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1093"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1098"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1094"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1099"/>
         <source>Could not open %1 for writing.</source>
         <translation>无法写入文件 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1113"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1118"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1138"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1143"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="270"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation>打印预览...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
         <source>Export HTML...</source>
         <translation>导出HTML...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="267"/>
         <source>Export PDF...</source>
         <translation>导出PDF...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="268"/>
         <source>Print...</source>
         <translation>打印...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="271"/>
         <source>Go to Previous Block</source>
         <oldsource>Go To Previous Block</oldsource>
         <translation>跳转到上一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="278"/>
         <source>Select Block</source>
         <translation>选择段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="281"/>
         <source>Go to Matching Brace</source>
         <oldsource>Go To Matching Brace</oldsource>
         <translation>跳转到括号匹配</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="325"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="324"/>
         <source>Fold</source>
         <translation>折叠</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="328"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="327"/>
         <source>Unfold</source>
         <translation>展开</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="331"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="330"/>
         <source>Fold All</source>
         <translation>折叠所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="334"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="333"/>
         <source>Unfold All</source>
         <translation>展开所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1206"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1211"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>跳转到行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="345"/>
         <source>Locked</source>
-        <translation>只读</translation>
+        <translation type="obsolete">只读</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="348"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="351"/>
         <source>Duplicate</source>
         <translation>重复</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="352"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="355"/>
         <source>Delete Line</source>
         <translation>删除行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="356"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="359"/>
         <source>Copy Line</source>
         <translation>复制行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="360"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="363"/>
         <source>Cut Line</source>
         <translation>剪切行</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="364"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="367"/>
         <source>Insert Line Before</source>
         <translation>行前插入</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="368"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="371"/>
         <source>Insert Line After</source>
         <translation>行后插入</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="372"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="375"/>
         <source>Increase Font Size</source>
         <translation>增大字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="375"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="378"/>
         <source>Decrease Font Size</source>
         <translation>减小字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="378"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="381"/>
         <source>Reset Font Size</source>
         <translation>重置字号</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="381"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="384"/>
         <source>Clean Whitespace</source>
         <translation>清除空白</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="388"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="391"/>
         <source>Code Complete</source>
         <translation>代码完成</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="800"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="804"/>
         <source>Reload File</source>
         <translation>重新读取文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1155"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1160"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>您想要放弃未保存的修改并重新载入%1?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="275"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="274"/>
         <source>Go to Next Block</source>
         <oldsource>Go To Next Block</oldsource>
         <translation>跳转到下一段</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="664"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="668"/>
         <source>Setup</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1185"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1190"/>
         <source>ReadOnly</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1206"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1211"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>
@@ -3649,6 +3688,11 @@ Success: %2.</oldsource>
         <source>File Extensions</source>
         <translation>文件扩展名</translation>
     </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="149"/>
+        <source>Custom Extensions</source>
+        <translation>自定义扩展名</translation>
+    </message>
 </context>
 <context>
     <name>LiteEnvOption</name>
@@ -3728,34 +3772,34 @@ Success: %2.</oldsource>
         <translation>Markdown导出</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="161"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="162"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="230"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="231"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
         <translation>选择Markdown文件所在目录:</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="241"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="242"/>
         <source>Select Markdown Files</source>
         <translation>选择Markdown文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="289"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="290"/>
         <source>Select the folder to contain separated markdown exports:</source>
         <translation>选择处理markdown文件导出目录:</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="302"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="303"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
         <translation>导出合并HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="377"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="378"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
         <translation>导出合并PDF</translation>
