@@ -422,7 +422,7 @@ void GolangAst::finishedProcess(int code,QProcess::ExitStatus status)
     if (code == 0 && status == QProcess::NormalExit) {
        // if (m_liteApp->projectManager()->currentProject()) {
         m_projectAstWidget->updateModel(m_process->readAllStandardOutput());
-        if (m_isSyncClassView) {
+        if (m_isSyncClassView && m_currentPlainTextEditor) {
             QTextCursor cursor = m_currentPlainTextEditor->textCursor();
             m_projectAstWidget->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
         }
@@ -439,7 +439,7 @@ void GolangAst::finishedProcessFile(int code,QProcess::ExitStatus status)
             AstWidget *w = m_editorAstWidgetMap.value(m_currentEditor);
             if (w) {
                 w->updateModel(m_processFile->readAllStandardOutput());
-                if (m_isSyncOutline) {
+                if (m_isSyncOutline && m_currentPlainTextEditor) {
                     QTextCursor cursor = m_currentPlainTextEditor->textCursor();
                     w->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
                 }
