@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2017.2.28 Ver X31
+### 2017.3.1 Ver X31
 * LiteApp
 	* add application idle timer automatic save documents option
 	* folderlistview not use proxy model on MacOS (fix sync bug)
@@ -14,7 +14,11 @@
 * FakeVim
 	* option add load default command list action
 * LiteEditor
-	*  golangcode fix prefix min setup
+	* restore editor toolbar
+	* add option mimetype custom extsition setup
+	* fix codecompleter prefix min setup
+* LiteBuild
+	* build action enable custom $() cmd and args
 
 ### 2016.12.6 Ver X30.3
 * LiteEnv
