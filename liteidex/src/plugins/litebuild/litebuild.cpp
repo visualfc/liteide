@@ -1510,11 +1510,11 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
         cmd = shell;
     }
 
-    if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
-        m_output->appendTag(tr("> Could not parse action '%1'").arg(ba->id())+"\n");
-        m_process->setUserData(ID_TASKLIST,QStringList());
-        return;
-    }
+//    if (cmd.indexOf("$(") >= 0 || args.indexOf("$(") >= 0 || m_workDir.isEmpty()) {
+//        m_output->appendTag(tr("> Could not parse action '%1'").arg(ba->id())+"\n");
+//        m_process->setUserData(ID_TASKLIST,QStringList());
+//        return;
+//    }
 
 
     if (!ba->regex().isEmpty()) {
