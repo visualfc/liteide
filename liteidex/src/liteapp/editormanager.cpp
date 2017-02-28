@@ -651,11 +651,11 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
         }
     }   
     if (editor) {
+        addEditor(editor);
         ITextEditor *textEditor = getTextEditor(editor);
         if (textEditor) {
             textEditor->restoreState(m_liteApp->settings()->value(QString("state_%1").arg(editor->filePath())).toByteArray());
         }
-        addEditor(editor);
     }
     return editor;
 }
