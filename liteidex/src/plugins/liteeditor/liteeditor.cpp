@@ -93,7 +93,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_defEditorPalette = m_editorWidget->palette();
 
     createActions();
-    //createToolBars();
+    createToolBars();
     createMenu();
 
     m_editorWidget->setContextMenu(m_contextMenu);
@@ -107,16 +107,15 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
                              "QToolBar QToolButton::hover { background-color: #ababab;}"\
                              "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
 */
-//    QHBoxLayout *toolLayout = new QHBoxLayout;
-//    toolLayout->setMargin(0);
-//    toolLayout->setSpacing(0);
-//    toolLayout->addWidget(m_editToolBar);
+    QHBoxLayout *toolLayout = new QHBoxLayout;
+    toolLayout->setMargin(0);
+    toolLayout->setSpacing(0);
+    toolLayout->addWidget(m_editToolBar);
 //    //toolLayout->addWidget(m_infoToolBar);
-//    layout->addLayout(toolLayout);
+    layout->addLayout(toolLayout);
 //    QHBoxLayout *hlayout = new QHBoxLayout;
 //    hlayout->addWidget(m_editorWidget);
 //    hlayout->addWidget(m_editorWidget->navigateArea());
-    //layout->addLayout(hlayout);
     layout->addWidget(m_editorWidget);
     m_widget->setLayout(layout);
     m_file = new LiteEditorFile(m_liteApp,this);
@@ -143,7 +142,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
     m_extension->addObject("LiteApi.ITextEditor",this);
     m_extension->addObject("LiteApi.ILiteEditor",this);
-    //m_extension->addObject("LiteApi.QToolBar.Edit",m_editToolBar);
+    m_extension->addObject("LiteApi.QToolBar.Edit",m_editToolBar);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
     m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
@@ -152,7 +151,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
     connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
     connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
-    //connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
+    connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
     connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
     connect(m_editorWidget,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SIGNAL(updateLink(QTextCursor,QPoint,bool)));
     //connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
@@ -342,8 +341,12 @@ void LiteEditor::createActions()
     m_gotoLineAct = new QAction(tr("Go to Line"),this);
     actionContext->regAction(m_gotoLineAct,"GotoLine","Ctrl+L");
 
-    m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("Locked"),this);
+    m_lockAct = new QAction(QIcon("icon:liteeditor/images/lock.png"),tr("File is readonly"),this);
     m_lockAct->setEnabled(false);
+
+    m_unlockAct = new QAction(QIcon("icon:liteeditor/images/unlock.png"),tr("File is writable"),this);
+    m_unlockAct->setEnabled(false);
+
 
     m_duplicateAct = new QAction(tr("Duplicate"),this);
     actionContext->regAction(m_duplicateAct,"Duplicate","Ctrl+Shift+D");
@@ -573,6 +576,7 @@ void LiteEditor::createToolBars()
     m_editToolBar->addSeparator();
     //add lock info
     m_editToolBar->addAction(m_lockAct);
+    m_editToolBar->addAction(m_unlockAct);
 
 
     //add over info
@@ -581,8 +585,8 @@ void LiteEditor::createToolBars()
     m_overInfoAct->setVisible(false);
 
     //add line info
-    m_lineInfo = new QLabelEx("000:000");
-    m_editToolBar->addWidget(m_lineInfo);
+//    m_lineInfo = new QLabelEx("000:000");
+//    m_editToolBar->addWidget(m_lineInfo);
 
     //add close
     //m_closeEditorAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Document"),this);
@@ -827,6 +831,7 @@ bool LiteEditor::saveAs(const QString &fileName)
 void LiteEditor::setReadOnly(bool b)
 {
     m_lockAct->setVisible(b);
+    m_unlockAct->setVisible(!b);
     m_bReadOnly = b;
 }
 
@@ -1370,9 +1375,9 @@ void LiteEditor::resetFontSize()
     this->sendUpdateFont();
 }
 
-void LiteEditor::setEditToolbarVisible(bool /*visible*/)
+void LiteEditor::setEditToolbarVisible(bool visible)
 {
-    //m_editToolBar->setVisible(visible);
+    m_editToolBar->setVisible(visible);
 }
 
 void LiteEditor::comment()

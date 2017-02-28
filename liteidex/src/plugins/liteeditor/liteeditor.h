@@ -196,6 +196,7 @@ public:
     QAction *m_foldAllAct;
     QAction *m_unfoldAllAct;
     QAction *m_lockAct;
+    QAction *m_unlockAct;
     QAction *m_cleanWhitespaceAct;
     QAction *m_wordWrapAct;
     QAction *m_codeCompleteAct;
@@ -208,7 +209,7 @@ public:
     bool     m_offsetVisible;
     bool     m_cleanCompleterCache;
     bool     m_cleanWhiteSpace;
-    QLabelEx  *m_lineInfo;
+    //QLabelEx  *m_lineInfo;
     QAction *m_overInfoAct;
     //QAction *m_closeEditorAct;
     QAction *m_commentAct;
