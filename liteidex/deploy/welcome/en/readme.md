@@ -46,6 +46,14 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * Linux x86 (32-bit or 64-bit)
 * MacOS X10.6
 
+### LiteIDE Command Line
+	liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]
+	 
+	--select-env [system|win32|cross-linux64|...]     select init environment id
+	--local-setting   force use local setting
+	--user-setting    force use user setting
+	--reset-setting   reset current setting ( clear setting file)
+
 ### Website
 * Source code
 	* <https://github.com/visualfc/liteide>

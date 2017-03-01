@@ -40,6 +40,14 @@ _LiteIDE是一个简单，开源，跨平台的Go语言IDE._
 * Linux x86 (32-bit or 64-bit)
 * MacOS X10.6
 
+### LiteIDE 命令行
+	liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]
+	 
+	--select-env [system|win32|cross-linux64|...]     选择初始环境ID
+	--local-setting   强制使用本地配置
+	--user-setting    强制使用用户配置
+	--reset-setting   重置当前配置 ( 清除配置文件 )
+
 ### 网址
 * 源代码下载
 	* <https://github.com/visualfc/liteide>
