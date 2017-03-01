@@ -62,10 +62,15 @@ int main(int argc, char *argv[])
 
     QStringList arguments = app.arguments();
 
+    //init load file or folder list
     QStringList fileList;
-    QString argSelectEnv;
+
     //liteide --select-env [system|win32|cross-linux64|...]
+    //liteide --reset-setting
     QString flagSelectEnv = "--select-env";
+    QString argSelectEnv;
+    QString flagResetSetting = "--reset-setting";
+    bool argResetSetting = false;
     for(int i = 1; i < arguments.size(); i++) {
         QString arg = arguments[i];
         if (arg.startsWith("-")) {
@@ -76,6 +81,8 @@ int main(int argc, char *argv[])
                 if (i < arguments.size()) {
                     argSelectEnv = arguments[i];
                 }
+            } else if (arg == flagResetSetting) {
+                argResetSetting = true;
             }
             continue;
         }
@@ -99,12 +106,19 @@ int main(int argc, char *argv[])
     QString qss;
     QSettings global(resPath+"/liteapp/config/global.ini",QSettings::IniFormat);
     bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+
     if (storeLocal) {
-        const QSettings settings(resPath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
+        QSettings settings(resPath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
+        if (argResetSetting) {
+            settings.clear();
+        }
         locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
         qss = settings.value(LITEAPP_QSS,"default.qss").toString();
     } else {
-        const QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
+        QSettings settings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide");
+        if (argResetSetting) {
+            settings.clear();
+        }
         locale = settings.value(LITEAPP_LANGUAGE,locale).toString();
         qss = settings.value(LITEAPP_QSS,"default.qss").toString();
     }

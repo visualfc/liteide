@@ -254,6 +254,7 @@ LiteApp::LiteApp()
     connect(m_optionAct,SIGNAL(triggered()),m_optionManager,SLOT(exec()));
 
     this->appendLog("LiteApp","Initializing");
+    this->appendLog("Load Setting",m_settings->fileName());
 
     m_liteAppOptionFactory = new LiteAppOptionFactory(this,this);
 
