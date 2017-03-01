@@ -65,12 +65,18 @@ int main(int argc, char *argv[])
     //init load file or folder list
     QStringList fileList;
 
-    //liteide --select-env [system|win32|cross-linux64|...]
-    //liteide --reset-setting
+    //liteide --select-env [system|win32|cross-linux64|...]     select init environment id
+    //liteide --reset-setting   reset current setting
+    //liteide --local-setting   force user local setting
+    //liteide --user-setting    force use user setting
     QString flagSelectEnv = "--select-env";
     QString argSelectEnv;
     QString flagResetSetting = "--reset-setting";
+    QString flagLocalSetting = "--local-setting";
+    QString flagUserSetting = "--user-setting";
     bool argResetSetting = false;
+    bool argLocalSetting = false;
+    bool argUserSetting = false;
     for(int i = 1; i < arguments.size(); i++) {
         QString arg = arguments[i];
         if (arg.startsWith("-")) {
@@ -83,14 +89,25 @@ int main(int argc, char *argv[])
                 }
             } else if (arg == flagResetSetting) {
                 argResetSetting = true;
+            } else if (arg == flagLocalSetting) {
+                argLocalSetting = true;
+            } else if (arg == flagUserSetting) {
+                argUserSetting = true;
             }
             continue;
         }
         fileList.append(arg);
     }
+
     //save to global
     if (!argSelectEnv.isEmpty()) {
         LiteApp::s_cookie.insert(flagSelectEnv,argSelectEnv);
+    }
+    if (argLocalSetting) {
+        LiteApp::s_cookie.insert(flagLocalSetting,true);
+    }
+    if (argUserSetting) {
+        LiteApp::s_cookie.insert(flagUserSetting,true);
     }
 
 #if QT_VERSION >= 0x050100
@@ -106,6 +123,12 @@ int main(int argc, char *argv[])
     QString qss;
     QSettings global(resPath+"/liteapp/config/global.ini",QSettings::IniFormat);
     bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+
+    if (argUserSetting) {
+        storeLocal = false;
+    } else if (argLocalSetting) {
+        storeLocal = true;
+    }
 
     if (storeLocal) {
         QSettings settings(resPath+"/liteapp/config/liteide.ini", QSettings::IniFormat);

@@ -152,6 +152,16 @@ LiteApp::LiteApp()
 {    
     QSettings global(m_resourcePath+"/liteapp/config/global.ini",QSettings::IniFormat);
     bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+
+    QString flagLocalSetting = "--local-setting";
+    QString flagUserSetting = "--user-setting";
+
+    if (s_cookie.value(flagUserSetting).toBool()) {
+        storeLocal = false;
+    } else if (s_cookie.value(flagLocalSetting).toBool()) {
+        storeLocal = true;
+    }
+
     if (storeLocal) {
         m_settings = new QSettings(m_resourcePath+"/liteapp/config/liteide.ini", QSettings::IniFormat);
     } else {
