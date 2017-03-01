@@ -60,6 +60,17 @@ int main(int argc, char *argv[])
 #endif
     QApplication app(argc, argv);
 
+    QStringList arguments = app.arguments();
+
+    QStringList fileList;
+    for(int i = 1; i < arguments.size(); i++) {
+        QString arg = arguments[i];
+        if (arg.startsWith("-")) {
+            continue;
+        }
+        fileList.append(arg);
+    }
+
 #if QT_VERSION >= 0x050100
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
@@ -115,41 +126,18 @@ int main(int argc, char *argv[])
     QDir dir(storage);
     dir.mkdir("liteide");
 
-    QStringList argList;
-    QStringList fileList;
-    if (argc >= 2) {
-        for (int i = 1; i < argc; i++) {
-            QString arg = argv[i];
-            if (arg.startsWith("-")) {
-                argList.append(arg);
-                continue;
-            } else {
-                fileList.append(arg);
-            }
-        }
-    }
 
     IApplication *liteApp = LiteApp::NewApplication(true,0);
 
-    if (fileList.size() == 1) {
-        QString file = fileList.at(0);
+    foreach(QString file, fileList) {
         QFileInfo f(file);
         if (f.isFile()) {
-            liteApp->fileManager()->addFolderList(f.path());
             liteApp->fileManager()->openEditor(file);
         } else if (f.isDir()) {
             liteApp->fileManager()->addFolderList(file);
         }
-    } else {
-        foreach(QString file, fileList) {
-            QFileInfo f(file);
-            if (f.isFile()) {
-                liteApp->fileManager()->openEditor(file);
-            } else if (f.isDir()) {
-                liteApp->fileManager()->addFolderList(file);
-            }
-        }
     }
+
     int ret = app.exec();
     return ret;
 }
