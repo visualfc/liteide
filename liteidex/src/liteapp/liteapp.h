@@ -147,8 +147,9 @@ protected:
     QAction       *m_logAct;
     LiteAppOptionFactory *m_liteAppOptionFactory;
     QList<IPlugin*> m_pluginList;
-    static QMap<QString,QVariant> m_cookie;
     AppIdleTimer     *m_idleTimer;
+public:
+    static QMap<QString,QVariant> s_cookie;
 protected:
     QAction     *m_newAct;
     QAction     *m_openFileAct;

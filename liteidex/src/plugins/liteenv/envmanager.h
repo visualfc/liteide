@@ -70,7 +70,7 @@ public:
 public:
     virtual bool initWithApp(LiteApi::IApplication *app);
     virtual QList<LiteApi::IEnv*> envList() const;
-    virtual LiteApi::IEnv *findEnv(const QString &id) const;
+    virtual LiteApi::IEnv *findEnv(const QString &id, const QString &backup = "system") const;
     virtual void setCurrentEnvId(const QString &id);
     virtual LiteApi::IEnv *currentEnv() const;
     virtual QProcessEnvironment currentEnvironment() const;

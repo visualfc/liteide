@@ -278,15 +278,19 @@ void EnvManager::removeEnv(LiteApi::IEnv *env)
     m_envList.removeAll(env);
 }
 
-LiteApi::IEnv *EnvManager::findEnv(const QString &id) const
+LiteApi::IEnv *EnvManager::findEnv(const QString &id, const QString &backup) const
 {
     foreach (LiteApi::IEnv *env, m_envList) {
         if (env->id() == id) {
             return env;
         }
     }
-    if (!m_envList.empty()) {
-        return m_envList.first();
+    if (!backup.isEmpty()) {
+        foreach (LiteApi::IEnv *env, m_envList) {
+            if (env->id() == backup) {
+                return env;
+            }
+        }
     }
     return NULL;
 }
@@ -421,9 +425,21 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
     QString id = m_liteApp->settings()->value(LITEENV_CURRENTENV,"system").toString();
-    if (!id.isEmpty()) {
-        this->setCurrentEnvId(id);
+
+    //commandline
+    //liteide --select-env system
+    QString flagSelectEnv = "--select-env";
+    QString selectEnv = m_liteApp->globalCookie().value(flagSelectEnv).toString();
+
+    if (!selectEnv.isEmpty()) {
+        id = selectEnv;
+        m_liteApp->globalCookie().remove(flagSelectEnv);
     }
+    if (id.isEmpty()) {
+        id = "system";
+    }
+
+    this->setCurrentEnvId(id);
 
     connect(m_envCmb,SIGNAL(activated(QString)),this,SLOT(envActivated(QString)));
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
@@ -441,7 +457,7 @@ void EnvManager::setCurrentEnvId(const QString &id)
         return;
     }
     for (int i = 0; i < m_envCmb->count(); i++) {
-        if (m_envCmb->itemText(i) == id) {
+        if (m_envCmb->itemText(i) == env->id()) {
             m_envCmb->setCurrentIndex(i);
             break;
         }

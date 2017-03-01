@@ -50,7 +50,7 @@ public:
         m_info->setId("plugin/LiteEnv");
         m_info->setName("LiteEnv");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X27.2");
+        m_info->setVer("X31");
         m_info->setInfo("Environment Manager");
         m_info->setMustLoad(true);
     }

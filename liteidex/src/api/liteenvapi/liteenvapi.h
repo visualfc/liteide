@@ -54,7 +54,7 @@ class IEnvManager : public IManager
 public:
     IEnvManager(QObject *parent = 0) : IManager(parent) {}
     virtual QList<IEnv*> envList() const = 0;
-    virtual IEnv *findEnv(const QString &id) const = 0;
+    virtual IEnv *findEnv(const QString &id, const QString &backup = "system") const = 0;
     virtual void setCurrentEnvId(const QString &id) = 0;
     virtual IEnv *currentEnv() const = 0;
     virtual QProcessEnvironment currentEnvironment() const = 0;

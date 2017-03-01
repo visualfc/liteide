@@ -140,7 +140,7 @@ PluginManager *LiteApp::pluginManager()
     return &manager;
 }
 
-QMap<QString,QVariant> LiteApp::m_cookie;
+QMap<QString,QVariant> LiteApp::s_cookie;
 
 LiteApp::LiteApp()
     : m_rootPath(LiteApp::getRootPath()),
@@ -521,7 +521,7 @@ QSettings *LiteApp::settings()
 
 QMap<QString,QVariant> &LiteApp::globalCookie()
 {
-    return m_cookie;
+    return s_cookie;
 }
 
 QString LiteApp::rootPath() const

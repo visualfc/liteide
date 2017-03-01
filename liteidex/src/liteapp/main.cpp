@@ -63,12 +63,27 @@ int main(int argc, char *argv[])
     QStringList arguments = app.arguments();
 
     QStringList fileList;
+    QString argSelectEnv;
+    //liteide --select-env [system|win32|cross-linux64|...]
+    QString flagSelectEnv = "--select-env";
     for(int i = 1; i < arguments.size(); i++) {
         QString arg = arguments[i];
         if (arg.startsWith("-")) {
+            if (arg.indexOf(flagSelectEnv+"=") == 0) {
+                argSelectEnv = arg.mid(flagSelectEnv.length()+1);
+            } else if (arg == flagSelectEnv) {
+                i++;
+                if (i < arguments.size()) {
+                    argSelectEnv = arguments[i];
+                }
+            }
             continue;
         }
         fileList.append(arg);
+    }
+    //save to global
+    if (!argSelectEnv.isEmpty()) {
+        LiteApp::s_cookie.insert(flagSelectEnv,argSelectEnv);
     }
 
 #if QT_VERSION >= 0x050100
@@ -125,7 +140,6 @@ int main(int argc, char *argv[])
 #endif
     QDir dir(storage);
     dir.mkdir("liteide");
-
 
     IApplication *liteApp = LiteApp::NewApplication(true,0);
 
