@@ -81,7 +81,7 @@ void NewFileDialog::setPathList(const QStringList &pathList)
     m_pathModel->setStringList(pathList);
     if (m_gopath.isEmpty() && !pathList.isEmpty()) {
         m_gopath = pathList.first();
-    }
+    }  
 }
 
 void NewFileDialog::setGopath(const QString &path)
@@ -295,7 +295,7 @@ void  NewFileDialog::activeTemplate(QModelIndex index)
     bool b = true;
     if (m_cur.type == "gopath") {
         location = QFileInfo(m_gopath,"src").filePath();
-        b = false;
+        //b = false;
     } else if (m_cur.type == "project") {
         location = m_projectLocation;
     } else {
@@ -304,7 +304,9 @@ void  NewFileDialog::activeTemplate(QModelIndex index)
     ui->locationLineEdit->setEnabled(b);
     ui->locationBrowseButton->setEnabled(b);
     ui->locationLineEdit->setText(QDir::toNativeSeparators(location));
-    ui->nameLineEdit->clear();
+
+    //update
+    nameLineChanged(ui->nameLineEdit->text());
 }
 
 bool NewFileDialog::processFile(const QString &infile, const QString &outfile)

@@ -56,7 +56,13 @@ GoTool::~GoTool()
 
 QStringList GoTool::liteGopath() const
 {
-    return m_liteApp->settings()->value("liteide/gopath").toStringList();
+    QStringList pathList;
+    QStringList list =  m_liteApp->settings()->value("liteide/gopath").toStringList();
+    foreach(QString path, list) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    return pathList;
 }
 
 void GoTool::setLiteGopath(const QStringList &pathList)

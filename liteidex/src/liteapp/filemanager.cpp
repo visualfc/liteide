@@ -394,6 +394,9 @@ void FileManager::execFileWizard(const QString &projPath, const QString &filePat
     m_newFileDialog->setFileLocation(filePath);
     m_newFileDialog->setProjectLocation(projPath);
     m_newFileDialog->updateLocation();
+    if (pathList.isEmpty() && gopath.isEmpty()) {
+        m_newFileDialog->setGopath(projPath);
+    }
 
     if (m_newFileDialog->exec() == QDialog::Accepted) {
         //emit fileWizardFinished(m_newFileDialog->openPath(),m_newFileDialog->f)
