@@ -3,12 +3,17 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2017.3.1 Ver X31
+### 2017.3.2 Ver X31
 * LiteIDE
 	* add command line `liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]`		
 * LiteApp
 	* add application idle timer automatic save documents option
 	* folders are not sorted to resolve sync editing errors on MacOS
+	* update new file wizard
+* GolangPackage
+	* update GOPATH setup
+* GolangCode
+	* update env load	
 * GolangAst
 	* classview and outline add sync editor action
 * DlvDebugger
