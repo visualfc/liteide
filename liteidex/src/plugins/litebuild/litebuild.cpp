@@ -632,10 +632,9 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
     QProcessEnvironment env =  LiteApi::getGoEnvironment(m_liteApp);
-    if (!LiteApi::hasGoEnv(env)) {
-        return;
-    }
-
+//    if (!LiteApi::hasGoEnv(env)) {
+//        return;
+//    }
     m_liteApp->appendLog("LiteBuild","go environment changed");
     m_process->setEnvironment(env.toStringList());
 

@@ -256,10 +256,10 @@ void GolangFmt::currentEnvChanged(LiteApi::IEnv*)
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_process->setProcessEnvironment(env);
 
-    if (!LiteApi::hasGoEnv(env)) {
-        m_liteApp->appendLog("GolangFmt","Could not find go env", false);
-        return;
-    }
+//    if (!LiteApi::hasGoEnv(env)) {
+//        m_liteApp->appendLog("GolangFmt","Could not find go env", false);
+//        return;
+//    }
 //    m_liteApp->appendLog("GolangFmt","go environment changed");
 //    m_gofmtCmd = FileUtil::lookupGoBin("gofmt",m_liteApp,false);
 //    if (m_gofmtCmd.isEmpty()) {

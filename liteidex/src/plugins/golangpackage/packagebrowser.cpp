@@ -180,9 +180,9 @@ void PackageBrowser::reloadAll()
         return;
     }
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    if (!LiteApi::hasGoEnv(env)) {
-        return;
-    }
+//    if (!LiteApi::hasGoEnv(env)) {
+//        return;
+//    }
     m_liteApp->appendLog("GolangPackages","reload all packages");
     if (m_goTool->isRuning()) {
         return;

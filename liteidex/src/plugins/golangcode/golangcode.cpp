@@ -360,9 +360,9 @@ void GolangCode::loadImportsList()
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    if (!LiteApi::hasGoEnv(env)) {
-        return;
-    }
+//    if (!LiteApi::hasGoEnv(env)) {
+//        return;
+//    }
     m_liteApp->appendLog("GolangCode","go environment changed");
     m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
     m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);

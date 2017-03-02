@@ -177,9 +177,9 @@ void GolangDoc::currentEnvChanged(LiteApi::IEnv*)
 void GolangDoc::loadEnv()
 {    
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);//m_envManager->currentEnvironment();
-    if (!LiteApi::hasGoEnv(env)) {
-        return;
-    }
+//    if (!LiteApi::hasGoEnv(env)) {
+//        return;
+//    }
     m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
 
     m_findProcess->setEnvironment(env.toStringList());
