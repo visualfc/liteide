@@ -57,10 +57,9 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 <https://github.com/visualfc/liteide>
 * Gotools Source code
 <https://github.com/visualfc/gotools>
-* Binary downloads
-<http://sourceforge.net/projects/liteide/files>
-* Latest downloads
-<http://git.oschina.net/visualfc/liteide/attach_files>
+* Release downloads
+	* <http://sourceforge.net/projects/liteide/files>
+	* <https://github.com/visualfc/liteide/releases/latest>
 * Google group
 <https://groups.google.com/group/liteide-dev>
 * How to Install
