@@ -11,13 +11,15 @@ echo .
 
 if x%QTDIR%==x goto qtdir_fail
 
-windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/liteeditor.dll
+cd %LITEIDE_ROOT%
 
-windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/welcome.dll
+windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/liteeditord.dll
 
-windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/litebuild.dll
+windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/welcomed.dll
 
-windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/bin/liteapp.dll
+windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/litebuildd.dll
+
+windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/bin/liteappd.dll
 
 
 
