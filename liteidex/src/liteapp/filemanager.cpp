@@ -59,13 +59,13 @@ bool FileManager::initWithApp(IApplication *app)
         return false;
     }
 
-//#ifdef Q_OS_MAC
-//    m_folderListView = new FolderListView(true,m_liteApp);
-//#else
-//    m_folderListView = new FolderListView(false,m_liteApp);
-//#endif
-
+#ifdef Q_OS_MAC
+    m_folderListView = new FolderListView(true,m_liteApp);
+#else
     m_folderListView = new FolderListView(false,m_liteApp);
+#endif
+
+ //   m_folderListView = new FolderListView(false,m_liteApp);
 
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable

@@ -10,6 +10,7 @@ compress/zlib
 container/heap
 container/list
 container/ring
+context
 crypto
 crypto/aes
 crypto/cipher
@@ -55,12 +56,15 @@ flag
 fmt
 go/ast
 go/build
+go/constant
 go/doc
 go/format
+go/importer
 go/parser
 go/printer
 go/scanner
 go/token
+go/types
 hash
 hash/adler32
 hash/crc32
@@ -86,13 +90,15 @@ math/cmplx
 math/rand
 mime
 mime/multipart
-net
+mime/quotedprintablenet
 net/http
 net/http/cgi
 net/http/cookiejar
 net/http/fcgi
 net/http/httptest
+net/http/httptrace
 net/http/httputil
+net/http/internal
 net/http/pprof
 net/mail
 net/rpc
@@ -106,6 +112,7 @@ os/signal
 os/user
 path
 path/filepath
+plugin
 reflect
 regexp
 regexp/syntax
@@ -114,6 +121,7 @@ runtime/cgo
 runtime/debug
 runtime/pprof
 runtime/race
+runtime/trace
 sort
 strconv
 strings

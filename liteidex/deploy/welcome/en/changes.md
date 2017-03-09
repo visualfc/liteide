@@ -3,6 +3,12 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2017.3.9 Ver X31.1
+* LiteApp
+	* restore folder first on MacOS
+* GolangEdit
+	* update pkglist
+
 ### 2017.3.2 Ver X31
 * LiteIDE
 	* add command line `liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]`		
