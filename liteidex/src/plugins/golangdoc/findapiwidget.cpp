@@ -53,9 +53,9 @@ FindApiThread::~FindApiThread()
     stopFind();
 }
 
-void FindApiThread::setFileName(const QString &fileName)
+void FindApiThread::setRootPath(const QString &rootPath)
 {
-    m_fileName = fileName;
+    m_rootPath = rootPath;
 }
 
 void FindApiThread::findApi(const QString &text)
@@ -77,9 +77,9 @@ void FindApiThread::setMatchCase(bool b)
     m_bMatchCase = b;
 }
 
-void FindApiThread::run()
+void FindApiThread::findInFile(const QString &fileName)
 {
-    QFile f(m_fileName);
+    QFile f(fileName);
     if (!f.open(QFile::ReadOnly)) {
         return;
     }
@@ -257,8 +257,21 @@ void FindApiThread::run()
             }
         }
         if (findText.indexOf(m_text,0,m_bMatchCase?Qt::CaseSensitive:Qt::CaseInsensitive) >= 0) {
-            emit findApiOut(findText,line,findUrl);
+            emit findApiOut(line,line,findUrl);
         }
+    }
+}
+
+void FindApiThread::run()
+{   
+    QDir dir(m_rootPath);
+    if (!dir.exists()) {
+        return;
+    }
+    QStringList names;
+    names << "next.txt" << "except.txt" << "go*.txt";
+    foreach(QFileInfo info,dir.entryInfoList(names)) {
+        findInFile(info.filePath());
     }
 }
 
@@ -296,13 +309,12 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
     this->setLayout(mainLayout);
 
     m_findThread = new FindApiThread(this);
-    m_findThread->setFileName(m_liteApp->storagePath()+"/golangapi.txt");
     connect(m_findThread,SIGNAL(findApiOut(QString,QString,QStringList)),this,SLOT(findApiOut(QString,QString,QStringList)));
     connect(m_findThread,SIGNAL(finished()),this,SLOT(findApiFinished()));
     //connect(m_findThread,SIGNAL(terminated()),this,SLOT(findApiTerminated()));
     //connect(findBtn,SIGNAL(clicked()),this,SLOT(findApi()));
     connect(m_findEdit,SIGNAL(returnPressed()),this,SLOT(findApi()));
-    connect(m_findEdit,SIGNAL(rightButtonClicked()),m_findThread,SLOT(terminate()));
+    //connect(m_findEdit,SIGNAL(rightButtonClicked()),m_findThread,SLOT(terminate()));
     connect(m_listView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedApi(QModelIndex)));
 
     m_rebuildThread = new ProcessEx(this);
@@ -310,17 +322,17 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_findAct = new QAction("Search",this);
     m_caseCheckAct = new QAction("Match case",this);
     m_caseCheckAct->setCheckable(true);
-    m_rebuildAct = new QAction(tr("Rebuild database"),this);
+    //m_rebuildAct = new QAction(tr("Rebuild database"),this);
 
     QMenu *menu = new QMenu(tr("Find"),findBtn);
     menu->addAction(m_caseCheckAct);
     menu->addSeparator();
-    menu->addAction(m_rebuildAct);
+    //menu->addAction(m_rebuildAct);
     findBtn->setMenu(menu);
     findBtn->setDefaultAction(m_findAct);
 
     connect(m_findAct,SIGNAL(triggered()),this,SLOT(findApi()));
-    connect(m_rebuildAct,SIGNAL(triggered()),this,SLOT(rebuildApiData()));
+    //connect(m_rebuildAct,SIGNAL(triggered()),this,SLOT(rebuildApiData()));
 
     m_caseCheckAct->setChecked(m_liteApp->settings()->value("goapisearch/match_case",true).toBool());
 }
@@ -338,13 +350,15 @@ FindApiWidget::~FindApiWidget()
 void FindApiWidget::findApi()
 {
     QString text = m_findEdit->text().trimmed();
-    if (text.length() <= 2) {
+    if (text.length() <= 1) {
         return;
     }
     m_model->clear();
     m_chaseWidget->setAnimated(true);
     m_findEdit->showStopButton(true);
-    m_findThread->setMatchCase(m_caseCheckAct->isChecked());
+    QString goroot = LiteApi::getGOROOT(m_liteApp);
+    m_findThread->setRootPath(QFileInfo(goroot,"api").filePath());
+    m_findThread->setMatchCase(m_caseCheckAct->isChecked());    
     m_findThread->findApi(text);
 }
 
@@ -370,20 +384,20 @@ void FindApiWidget::doubleClickedApi(QModelIndex index)
     emit openApiUrl(index.data(Qt::UserRole+1).toStringList());
 }
 
-void FindApiWidget::rebuildApiData()
-{
-    if (m_rebuildThread->isRunning()) {
-        return;
-    }
-    m_rebuildThread->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    QString cmd = LiteApi::getGotools(m_liteApp);
-    m_rebuildThread->setWorkingDirectory(m_liteApp->storagePath());
-    QStringList args;
-    args << "goapi" << "-o" << "golangapi.txt" << "all";
-    m_rebuildThread->start(cmd,args);
-}
+//void FindApiWidget::rebuildApiData()
+//{
+//    if (m_rebuildThread->isRunning()) {
+//        return;
+//    }
+//    m_rebuildThread->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+//    QString cmd = LiteApi::getGotools(m_liteApp);
+//    m_rebuildThread->setWorkingDirectory(m_liteApp->storagePath());
+//    QStringList args;
+//    args << "goapi" << "-o" << "golangapi.txt" << "all";
+//    m_rebuildThread->start(cmd,args);
+//}
 
-QString FindApiWidget::apiDataFile() const
-{
-    return m_liteApp->storagePath()+"/golangapi.txt";
-}
+//QString FindApiWidget::apiDataFile() const
+//{
+//    return m_liteApp->storagePath()+"/golangapi.txt";
+//}

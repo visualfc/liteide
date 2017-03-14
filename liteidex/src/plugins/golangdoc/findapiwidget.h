@@ -31,6 +31,7 @@
 #include <QWidget>
 #include <QThread>
 #include <QModelIndex>
+#include <QSet>
 
 class QListView;
 class QStandardItemModel;
@@ -43,14 +44,15 @@ public:
 signals:
     void findApiOut(const QString &api, const QString &text, const QStringList &url);
 public:
-    void setFileName(const QString &fileName);
+    void setRootPath(const QString &rootPath);
     void findApi(const QString &text);
     void stopFind();
     void setMatchCase(bool b);
+    void findInFile(const QString &fileName);
 protected:
     virtual void	run ();
     QString m_text;
-    QString m_fileName;    
+    QString m_rootPath;
     bool    m_bMatchCase;
 };
 
@@ -89,9 +91,8 @@ public slots:
     void findApiOut(QString,QString,QStringList);
     void findApiFinished();
     void doubleClickedApi(QModelIndex);
-    void rebuildApiData();
-public:
-    QString apiDataFile() const;
+   // void rebuildApiData();
+    //QString apiDataFile() const;
 protected:
     FindApiThread *m_findThread;
     LiteApi::IApplication *m_liteApp;
@@ -102,7 +103,7 @@ protected:
     ProcessEx             *m_rebuildThread;
     QAction               *m_findAct;
     QAction               *m_caseCheckAct;
-    QAction               *m_rebuildAct;
+    //QAction               *m_rebuildAct;
 };
 
 #endif // FINDAPIWIDGET_H

@@ -67,7 +67,7 @@ public slots:
     virtual void openUrl(const QUrl &url);
     virtual void activeBrowser();
 public slots:
-    void rebuildApiData();
+    //void rebuildApiData();
     void appLoaded();
     void toggledApiSearchWindow(bool);
     void toggledDocSearchWindow(bool);

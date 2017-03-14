@@ -233,20 +233,20 @@ void GolangDoc::activeBrowser()
     m_liteApp->editorManager()->activeBrowser(m_docBrowser);
 }
 
-void GolangDoc::rebuildApiData()
-{
-    if (!m_liteApp->globalCookie().value("golangdoc.goapi.rebuild").toBool()) {
-        QFileInfo info(m_findApiWidget->apiDataFile());
-        if (!info.exists()) {
-            m_findApiWidget->rebuildApiData();
-        }
-        QDateTime dt = info.lastModified();
-        if (dt.toLocalTime().date() < QDate::currentDate()) {
-            m_findApiWidget->rebuildApiData();
-        }
-        m_liteApp->globalCookie().value("golangdoc.goapi.rebuild",true);
-    }
-}
+//void GolangDoc::rebuildApiData()
+//{
+//    if (!m_liteApp->globalCookie().value("golangdoc.goapi.rebuild").toBool()) {
+//        QFileInfo info(m_findApiWidget->apiDataFile());
+//        if (!info.exists()) {
+//            m_findApiWidget->rebuildApiData();
+//        }
+//        QDateTime dt = info.lastModified();
+//        if (dt.toLocalTime().date() < QDate::currentDate()) {
+//            m_findApiWidget->rebuildApiData();
+//        }
+//        m_liteApp->globalCookie().value("golangdoc.goapi.rebuild",true);
+//    }
+//}
 
 void GolangDoc::listPkg()
 {
@@ -868,9 +868,9 @@ void GolangDoc::appLoaded()
 
 void GolangDoc::toggledApiSearchWindow(bool b)
 {
-    if (b) {
-        rebuildApiData();
-    }
+//    if (b) {
+//        rebuildApiData();
+//    }
 }
 
 void GolangDoc::toggledDocSearchWindow(bool /*b*/)
