@@ -116,7 +116,8 @@ void Env::reload()
     loadEnvFile(&f);
     f.close();
     if (!m_env.contains("GOROOT") ||
-            !m_env.contains("GOARCH")) {
+            !m_env.contains("GOARCH") ||
+            !m_env.contains("GOPATH")) {
         loadGoEnv();
     }
 }
