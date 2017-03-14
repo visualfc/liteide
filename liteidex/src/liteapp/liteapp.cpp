@@ -712,8 +712,11 @@ void LiteApp::createActions()
     actionContext->regAction(m_saveAllAct,"SaveAllFiles","");
 
     m_exitAct = new QAction(tr("Exit"),m_mainwindow);
+#ifdef Q_OS_WIN
+    actionContext->regAction(m_exitAct,"Exit","Ctrl+Q");
+#else
     actionContext->regAction(m_exitAct,"Exit",QKeySequence::Quit);
-
+#endif
     m_fullScreent = new QAction(tr("Full Screen"),m_mainwindow);
     m_fullScreent->setCheckable(true);
     actionContext->regAction(m_fullScreent,"FullScreen","Ctrl+Shift+F11");
