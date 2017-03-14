@@ -34,6 +34,7 @@
 #include <QSet>
 
 class QListView;
+class QTreeView;
 class QStandardItemModel;
 class FindApiThread : public QThread
 {
@@ -42,13 +43,13 @@ public:
     FindApiThread(QObject *parent);
     ~FindApiThread();
 signals:
-    void findApiOut(const QString &api, const QString &text, const QStringList &url);
+    void findApiOut(const QString &text, const QString &baseName, const QString &tipInfo, const QStringList &url);
 public:
     void setRootPath(const QString &rootPath);
     void findApi(const QString &text);
     void stopFind();
     void setMatchCase(bool b);
-    void findInFile(const QString &fileName);
+    void findInFile(const QString &filePath, const QString &baseName);
 protected:
     virtual void	run ();
     QString m_text;
@@ -88,7 +89,7 @@ signals:
     void openApiUrl(QStringList);
 public slots:
     void findApi();
-    void findApiOut(QString,QString,QStringList);
+    void findApiOut(const QString &text, const QString &baseName, const QString &tipInfo, const QStringList &url);
     void findApiFinished();
     void doubleClickedApi(QModelIndex);
    // void rebuildApiData();
@@ -98,9 +99,9 @@ protected:
     LiteApi::IApplication *m_liteApp;
     FindApiEdit           *m_findEdit;
     ChaseWidget           *m_chaseWidget;
-    QListView             *m_listView;
+    QTreeView             *m_apiView;
     QStandardItemModel    *m_model;
-    ProcessEx             *m_rebuildThread;
+    //ProcessEx             *m_rebuildThread;
     QAction               *m_findAct;
     QAction               *m_caseCheckAct;
     //QAction               *m_rebuildAct;

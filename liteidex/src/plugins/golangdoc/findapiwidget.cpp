@@ -33,6 +33,8 @@
 #include <QListView>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QTreeView>
+#include <QHeaderView>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -77,9 +79,9 @@ void FindApiThread::setMatchCase(bool b)
     m_bMatchCase = b;
 }
 
-void FindApiThread::findInFile(const QString &fileName)
+void FindApiThread::findInFile(const QString &filePath, const QString &baseName)
 {
-    QFile f(fileName);
+    QFile f(filePath);
     if (!f.open(QFile::ReadOnly)) {
         return;
     }
@@ -257,7 +259,7 @@ void FindApiThread::findInFile(const QString &fileName)
             }
         }
         if (findText.indexOf(m_text,0,m_bMatchCase?Qt::CaseSensitive:Qt::CaseInsensitive) >= 0) {
-            emit findApiOut(line,line,findUrl);
+            emit findApiOut(line,baseName,line,findUrl);
         }
     }
 }
@@ -271,7 +273,7 @@ void FindApiThread::run()
     QStringList names;
     names << "next.txt" << "except.txt" << "go*.txt";
     foreach(QFileInfo info,dir.entryInfoList(names)) {
-        findInFile(info.filePath());
+        findInFile(info.filePath(),info.completeBaseName());
     }
 }
 
@@ -285,10 +287,18 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_chaseWidget->setMinimumSize(QSize(16,16));
     m_chaseWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
-    m_listView = new QListView;
+    m_apiView = new QTreeView;
     m_model = new QStandardItemModel(this);
-    m_listView->setModel(m_model);
-    m_listView->setEditTriggers(QListView::NoEditTriggers);
+    m_model->setColumnCount(2);
+    m_apiView->setModel(m_model);
+    m_apiView->setEditTriggers(QTreeView::NoEditTriggers);
+    m_apiView->setHeaderHidden(true);
+//#if QT_VERSION >= 0x050000
+//    m_apiView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+//#else
+//    m_apiView->header()->setResizeMode(QHeaderView::ResizeToContents);
+//#endif
+    m_apiView->header()->setStretchLastSection(true);
 
     QToolButton *findBtn = new QToolButton;
     findBtn->setPopupMode(QToolButton::MenuButtonPopup);
@@ -304,20 +314,20 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
     mainLayout->setMargin(1);
     mainLayout->setSpacing(1);
     mainLayout->addLayout(findLayout);
-    mainLayout->addWidget(m_listView);
+    mainLayout->addWidget(m_apiView);
 
     this->setLayout(mainLayout);
 
     m_findThread = new FindApiThread(this);
-    connect(m_findThread,SIGNAL(findApiOut(QString,QString,QStringList)),this,SLOT(findApiOut(QString,QString,QStringList)));
+    connect(m_findThread,SIGNAL(findApiOut(QString,QString,QString,QStringList)),this,SLOT(findApiOut(QString,QString,QString,QStringList)));
     connect(m_findThread,SIGNAL(finished()),this,SLOT(findApiFinished()));
     //connect(m_findThread,SIGNAL(terminated()),this,SLOT(findApiTerminated()));
     //connect(findBtn,SIGNAL(clicked()),this,SLOT(findApi()));
     connect(m_findEdit,SIGNAL(returnPressed()),this,SLOT(findApi()));
     //connect(m_findEdit,SIGNAL(rightButtonClicked()),m_findThread,SLOT(terminate()));
-    connect(m_listView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedApi(QModelIndex)));
+    connect(m_apiView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedApi(QModelIndex)));
 
-    m_rebuildThread = new ProcessEx(this);
+    //m_rebuildThread = new ProcessEx(this);
 
     m_findAct = new QAction("Search",this);
     m_caseCheckAct = new QAction("Match case",this);
@@ -340,11 +350,11 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
 FindApiWidget::~FindApiWidget()
 {
     m_liteApp->settings()->setValue("goapisearch/match_case",m_caseCheckAct->isChecked());
-    if (m_rebuildThread->isRunning()) {
-        if (!m_rebuildThread->waitForFinished(10000)) {
-            m_rebuildThread->terminate();
-        }
-    }
+//    if (m_rebuildThread->isRunning()) {
+//        if (!m_rebuildThread->waitForFinished(10000)) {
+//            m_rebuildThread->terminate();
+//        }
+//    }
 }
 
 void FindApiWidget::findApi()
@@ -362,12 +372,14 @@ void FindApiWidget::findApi()
     m_findThread->findApi(text);
 }
 
-void FindApiWidget::findApiOut(QString api, QString text, QStringList url)
+void FindApiWidget::findApiOut(const QString &text, const QString &baseName, const QString &tipInfo, const QStringList &url)
 {
-    QStandardItem *item = new QStandardItem(api);
-    item->setToolTip(text);
-    item->setData(url,Qt::UserRole+1);
-    m_model->appendRow(item);
+    QStandardItem *fitem = new QStandardItem(baseName);
+    fitem->setData(url,Qt::UserRole+1);
+    QStandardItem *item = new QStandardItem(text);
+    item->setToolTip(tipInfo);
+    //item->setData(url,Qt::UserRole+1);
+    m_model->appendRow(QList<QStandardItem*>() << fitem << item);
 }
 
 void FindApiWidget::findApiFinished()
@@ -381,7 +393,8 @@ void FindApiWidget::doubleClickedApi(QModelIndex index)
     if (!index.isValid()) {
         return;
     }
-    emit openApiUrl(index.data(Qt::UserRole+1).toStringList());
+
+    emit openApiUrl(index.sibling(index.row(),0).data(Qt::UserRole+1).toStringList());
 }
 
 //void FindApiWidget::rebuildApiData()

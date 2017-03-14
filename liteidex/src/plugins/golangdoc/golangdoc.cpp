@@ -866,7 +866,7 @@ void GolangDoc::appLoaded()
 {
 }
 
-void GolangDoc::toggledApiSearchWindow(bool b)
+void GolangDoc::toggledApiSearchWindow(bool /*b*/)
 {
 //    if (b) {
 //        rebuildApiData();
