@@ -170,13 +170,14 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("icon",resPath);
     QDir::addSearchPath("icon",resPath+"/liteapp");
     QDir::addSearchPath("icon",":/");
-#if QT_VERSION >= 0x050000
-    QString storage = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-#else
-    QString storage = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#endif
-    QDir dir(storage);
-    dir.mkdir("liteide");
+
+//#if QT_VERSION >= 0x050000
+//    QString storage = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+//#else
+//    QString storage = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+//#endif
+//    QDir dir(storage);
+//    dir.mkdir("liteide");
 
     IApplication *liteApp = LiteApp::NewApplication(true,0);
 

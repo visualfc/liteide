@@ -40,6 +40,7 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
+    virtual void onActive();
 public slots:
     void run();
     void stop();

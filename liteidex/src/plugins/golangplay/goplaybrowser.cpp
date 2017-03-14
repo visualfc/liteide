@@ -57,22 +57,10 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IBrowserEditor(parent),
       m_liteApp(app)
 {
-    QDir dir(m_liteApp->storagePath());
-    dir.mkpath("goplay");
-
-    m_dataPath = dir.path()+"/goplay";
-
-    m_playFile = QFileInfo(dir,"goplay.go").filePath();
-    QFile file(m_playFile);
-    if (file.open(QFile::WriteOnly|QIODevice::Text)) {
-        file.write(data.toUtf8());
-        file.close();
-    }
-
     m_widget = new QWidget;
-    m_editor = m_liteApp->fileManager()->createEditor(data,"text/x-gosrc");
-    m_editor->open(m_playFile,"text/x-gosrc");
     m_output = new TextOutput(m_liteApp);
+
+    m_editor = m_liteApp->fileManager()->createEditor(data,"text/x-gosrc");
 
     QToolBar *toolBar = new QToolBar;
 
@@ -112,7 +100,6 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_widget->setLayout(layout);
 
     m_process = new ProcessEx(this);
-    m_process->setWorkingDirectory(dir.path());
     m_codec = QTextCodec::codecForName("utf-8");
 
     connect(run,SIGNAL(triggered()),this,SLOT(run()));
@@ -148,6 +135,26 @@ QString GoplayBrowser::name() const
 QString GoplayBrowser::mimeType() const
 {
     return "browser/goplay";
+}
+
+void GoplayBrowser::onActive()
+{
+    static bool init = false;
+    if (!init) {
+        init = true;
+        QDir dir(m_liteApp->storagePath());
+        dir.mkpath("goplay");
+        m_dataPath = dir.path()+"/goplay";
+        m_playFile = QFileInfo(dir,"goplay.go").filePath();
+        QFile file(m_playFile);
+        if (file.open(QFile::WriteOnly|QIODevice::Text)) {
+            file.write(data.toUtf8());
+            file.close();
+        }
+        m_process->setWorkingDirectory(dir.path());
+
+        m_editor->open(m_playFile,"text/x-gosrc");
+    }
 }
 
 void GoplayBrowser::run()

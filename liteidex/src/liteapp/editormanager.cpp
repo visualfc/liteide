@@ -550,9 +550,6 @@ IEditor *EditorManager::currentEditor() const
 void EditorManager::setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory)
 {
     if (m_currentEditor == editor) {
-        if (m_currentEditor) {
-            m_currentEditor->onActive();
-        }
         return;
     }
     if (editor && !ignoreNavigationHistory) {
