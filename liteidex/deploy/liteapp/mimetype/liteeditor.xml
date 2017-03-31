@@ -23,6 +23,7 @@
     <glob pattern="*.html"/>
     <glob pattern="*.shtml"/>
     <glob pattern="*.shtm"/>
+    <glob pattern="*.tmpl"/>
   </mime-type>
   <mime-type type="text/xml" codec="utf-8" package="xml">
     <sub-class-of type="text/plain"/>
