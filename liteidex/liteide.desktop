@@ -1,5 +1,5 @@
 [Desktop Entry]
-Encoding=UTF-8
+#Encoding=UTF-8
 Type=Application
 Name=LiteIDE
 Comment=IDE for editing and building projects written in the Go programming language
@@ -9,7 +9,7 @@ Exec=liteide
 Icon=liteide
 Terminal=false
 StartupNotify=false
-Categories=Application;Development;
+Categories=Development;
 
 # desktop-file-validate ./liteide.desktop
 # desktop-file-install ./liteide.desktop
