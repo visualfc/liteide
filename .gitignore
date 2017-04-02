@@ -1,4 +1,4 @@
-/build-liteidex-Desktop_Qt_5_7_0_GCC_64bit-Debug/*
+/build-liteidex-Desktop*
 # C++ objects and libs
 
 *.slo
@@ -34,3 +34,5 @@ liteidex/liteide
 liteidex/src/github.com
 liteidex/src/golang.org/
 
+#macosx
+.DS_Store
