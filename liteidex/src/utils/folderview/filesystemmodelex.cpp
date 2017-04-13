@@ -58,9 +58,9 @@ FileSystemModelEx::FileSystemModelEx(QObject *parent) :
 {
 }
 
-int FileSystemModelEx::columnCount(const QModelIndex &/*parent*/) const
+int FileSystemModelEx::columnCount(const QModelIndex &parent) const
 {
-    return 1;
+    return QFileSystemModel::columnCount(parent);
 }
 QVariant FileSystemModelEx::data(const QModelIndex &index, int role) const
 {

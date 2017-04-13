@@ -1,4 +1,5 @@
 #include "multifoldermodel.h"
+#include "filesystemmodelex.h"
 #include <QFileSystemModel>
 #include <QFileInfo>
 #include <QDirModel>
@@ -108,7 +109,7 @@ MultiFolderModel::~MultiFolderModel()
 
 QModelIndex MultiFolderModel::addRootPath(const QString &path)
 {
-    QFileSystemModel *model = new QFileSystemModel(this);
+    QFileSystemModel *model = new FileSystemModelEx(this);
     model->setFilter(m_filters);
     model->setResolveSymlinks(m_resolveSymlinks);
     model->setReadOnly(m_isReadOnly);
