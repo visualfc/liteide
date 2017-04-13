@@ -8,7 +8,7 @@ MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
 
 #ifdef Q_OS_MAC
     m_model->sort(0);
-    m_model->setSorting(QDir::DirsFirst|QDir::Name);
+    m_model->setSorting(QDir::DirsFirst|QDir::Name|QDir::IgnoreCase);
 #endif
 
     this->setModel(m_model);
