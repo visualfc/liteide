@@ -6,7 +6,13 @@ MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
 {
     m_model = new MultiFolderModel(this);
 
-    this->setHeaderHidden(true);
+#ifdef Q_OS_MAC
+    m_model->sort(0);
+    m_model->setSorting(QDir::DirsFirst|QDir::Name);
+#endif
+
+    this->setModel(m_model);
+    this->setHeaderHidden(false);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));

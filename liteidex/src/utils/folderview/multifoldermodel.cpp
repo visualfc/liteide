@@ -304,10 +304,15 @@ bool MultiFolderModel::rmdir(const QModelIndex &index)
 QList<QModelIndex> MultiFolderModel::indexForPath(const QString &path) const
 {
     QList<QModelIndex> pathList;
+    QString findPath = QDir::cleanPath(QDir::fromNativeSeparators(path));
     foreach (QAbstractItemModel *model, this->sourceModelList()) {
-        QModelIndex index = ((QFileSystemModel*)model)->index(path);
+        QFileSystemModel *fs = (QFileSystemModel*)model;
+        if (!findPath.startsWith(fs->rootPath())) {
+            continue;
+        }
+        QModelIndex index = fs->index(path);
         if (index.isValid()) {
-            pathList << this->mapFromSource(index);
+            pathList << this->mapFromSourceEx(model,index);
         }
     }
     return pathList;

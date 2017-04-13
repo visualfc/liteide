@@ -26,6 +26,7 @@
 #include "fileutil/fileutil.h"
 #include "liteenvapi/liteenvapi.h"
 #include "folderview/folderlistview.h"
+#include "folderview/multifolderview.h"
 #include "liteapp_global.h"
 
 #include <QMenu>
@@ -59,13 +60,12 @@ bool FileManager::initWithApp(IApplication *app)
         return false;
     }
 
-#ifdef Q_OS_MAC
-    m_folderListView = new FolderListView(true,m_liteApp);
-#else
-    m_folderListView = new FolderListView(false,m_liteApp);
-#endif
-
- //   m_folderListView = new FolderListView(false,m_liteApp);
+//#ifdef Q_OS_MAC
+//    m_folderListView = new FolderListView(true,m_liteApp);
+//#else
+//    m_folderListView = new FolderListView(false,m_liteApp);
+//#endif
+    m_folderListView = new MultiFolderView(m_liteApp);
 
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable
@@ -622,10 +622,10 @@ void FileManager::currentEditorChanged(IEditor *editor)
         return;
     }
     QModelIndex index = indexList.first();
-    QModelIndex parent = index.parent();
-    if (parent.isValid()) {
-        m_folderListView->setExpanded(parent,true);
-    }
+//    QModelIndex parent = index.parent();
+//    if (parent.isValid()) {
+//        m_folderListView->setExpanded(parent,true);
+//    }
     m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
     m_folderListView->setCurrentIndex(index);
 }

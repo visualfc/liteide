@@ -32,6 +32,7 @@ using namespace LiteApi;
 class QFileSystemWatcher;
 class NewFileDialog;
 class FolderListView;
+class MultiFolderView;
 
 class FileManager : public IFileManager
 {
@@ -92,7 +93,7 @@ public slots:
     void triggeredSyncEditor(bool b);
 protected:
     NewFileDialog        *m_newFileDialog;
-    FolderListView     *m_folderListView;
+    MultiFolderView     *m_folderListView;
     QFileSystemWatcher   *m_fileWatcher;
     QMap<QString,QDateTime> m_fileStateMap;
     QStringList          m_changedFiles;
