@@ -11,7 +11,12 @@ SOURCES += \
     folderlistview.cpp \
     folderlistmodel.cpp \
     filesystemmodelex.cpp \
-    folderdialog.cpp
+    folderdialog.cpp \
+    abstractmultiproxymodel.cpp \
+    dirsortfilterproxymodel.cpp \
+    multifoldermodel.cpp \
+    multiindexmodel.cpp \
+    multifolderview.cpp
 
 HEADERS += \
     folderview.h \
@@ -19,4 +24,11 @@ HEADERS += \
     folderlistview.h \
     folderlistmodel.h \
     filesystemmodelex.h \
-    folderdialog.h
+    folderdialog.h \
+    abstractmultiproxymodel_p.h \
+    abstractmultiproxymodel.h \
+    dirsortfilterproxymodel.h \
+    multifoldermodel.h \
+    multiindexmodel_p.h \
+    multiindexmodel.h \
+    multifolderview.h
