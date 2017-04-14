@@ -275,7 +275,7 @@ QDateTime MultiFolderModel::lastModified(const QModelIndex &index) const
     return ((QFileSystemModel*)si.model)->lastModified(si.index);
 }
 
-QFileDevice::Permissions MultiFolderModel::permissions(const QModelIndex &index) const
+QFile::Permissions MultiFolderModel::permissions(const QModelIndex &index) const
 {
     SourceModelIndex si = this->mapToSourceEx(index);
     if (!si.isValid()) {
