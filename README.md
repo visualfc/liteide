@@ -52,6 +52,13 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	--user-setting    force use user setting
 	--reset-setting   reset current setting ( clear setting file)
 
+### Development
+#### Build from Source
+Refer to section in [Installing LiteIDE](https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/install.md).
+
+#### Theming
+Theme customisation can be done by modification of the `qss` files located at `liteidex/deploy/liteapp/qss`
+
 ### Website
 * LiteIDE Source code
 <https://github.com/visualfc/liteide>
