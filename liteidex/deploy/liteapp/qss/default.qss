@@ -6,7 +6,7 @@ QTabBar::tab {
      border: 1px solid darkkhaki;
      border-bottom-color: #C2C7CB; /* same as the pane color */
      min-width: 8ex;
-     padding: 2px;
+     padding: 4px;
  }
 QTabBar::tab:selected, QTabBar::tab:hover {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
