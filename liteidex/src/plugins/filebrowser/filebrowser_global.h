@@ -32,6 +32,7 @@
 #  define FILEBROWSERSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define FILEBROWSER_SHOW_HIDDEN_FILES "FileBrowser/ShowHiddenFiles"
+#define FILEBROWSER_SHOWHIDDENFILES "FileBrowser/ShowHiddenFiles"
+#define FILEBROWSER_SHOWDETAILS "FileBrowser/ShowDetails"
 
 #endif // FILEBROWSER_GLOBAL_H

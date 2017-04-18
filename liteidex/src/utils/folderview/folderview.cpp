@@ -82,10 +82,6 @@ FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *pare
     }
     this->setHeaderHidden(true);
 
-    for (int i = 1; i < m_model->columnCount(); i++) {
-        this->header()->hideSection(i);
-    }
-
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
 }
@@ -142,6 +138,16 @@ void FolderView::reload()
 {
     this->collapseAll();
     this->setRootPath(this->rootPath());
+}
+
+bool FolderView::isShowDetails() const
+{
+    return m_model->isShowDetails();
+}
+
+void FolderView::setShowDetails(bool b)
+{
+    m_model->setShowDetails(b);
 }
 
 void FolderView::removeFile()

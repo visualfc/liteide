@@ -73,10 +73,11 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
                             | QDir::Executable /*| QDir::Hidden*/
                             | QDir::NoDotAndDotDot;
 
-    bool bShowHiddenFiles = m_liteApp->settings()->value(FILEBROWSER_SHOW_HIDDEN_FILES,false).toBool();
+    bool bShowHiddenFiles = m_liteApp->settings()->value(FILEBROWSER_SHOWHIDDENFILES,false).toBool();
     if (bShowHiddenFiles) {
         filters |= QDir::Hidden;
     }
+    bool bShowDetails = m_liteApp->settings()->value(FILEBROWSER_SHOWDETAILS,false).toBool();
 
 #ifdef Q_OS_WIN // Symlinked directories can cause file watcher warnings on Win32.
     filters |= QDir::NoSymLinks;
@@ -84,6 +85,14 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     //create filter toolbar
     //m_filterToolBar = new QToolBar(m_widget);
     //m_filterToolBar->setIconSize(QSize(16,16));
+
+#ifdef Q_OS_MAC
+    m_folderView = new FolderView(true,m_liteApp);
+#else
+    m_folderView = new FolderView(false,m_liteApp);
+#endif
+    m_folderView->setRootIsDecorated(true);
+    m_folderView->setFilter(filters);
 
     m_syncAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
     m_syncAct->setCheckable(true);
@@ -96,6 +105,15 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
         m_showHideFilesAct->setChecked(true);
     }
     connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
+
+    m_showDetailsAct = new QAction(tr("Show Details"),this);
+    m_showDetailsAct->setCheckable(true);
+    if (bShowDetails) {
+        m_showDetailsAct->setChecked(true);
+    }
+    connect(m_showDetailsAct,SIGNAL(triggered(bool)),m_folderView,SLOT(setShowDetails(bool)));
+
+    m_folderView->setShowDetails(bShowDetails);
 
     m_executeFileAct = new QAction(tr("Execute File"),this);
     connect(m_executeFileAct,SIGNAL(triggered()),this,SLOT(executeFile()));
@@ -128,13 +146,6 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_rootToolBar->addSeparator();
     m_rootToolBar->addWidget(m_rootCombo);
 
-#ifdef Q_OS_MAC
-    m_folderView = new FolderView(true,m_liteApp);
-#else
-    m_folderView = new FolderView(false,m_liteApp);
-#endif
-    m_folderView->setRootIsDecorated(true);
-    m_folderView->setFilter(filters);
     //mainLayout->addWidget(m_filterToolBar);
     mainLayout->addWidget(m_rootToolBar);
     mainLayout->addWidget(m_folderView);
@@ -154,6 +165,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_filterMenu = new QMenu(tr("Filter"));
     m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
     m_filterMenu->addAction(m_showHideFilesAct);
+    m_filterMenu->addAction(m_showDetailsAct);
     actions << m_filterMenu->menuAction() << m_syncAct;
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"filesystem",tr("File System"),true,actions);
@@ -182,6 +194,9 @@ FileBrowser::~FileBrowser()
     QString root = m_rootCombo->currentText();
     m_liteApp->settings()->setValue("FileBrowser/root",root);
     m_liteApp->settings()->setValue("FileBrowser/synceditor",m_syncAct->isChecked());
+    m_liteApp->settings()->setValue(FILEBROWSER_SHOWHIDDENFILES,m_showHideFilesAct->isChecked());
+    m_liteApp->settings()->setValue(FILEBROWSER_SHOWDETAILS,m_showDetailsAct->isChecked());
+
     delete m_filterMenu;
     delete m_widget;
 }
@@ -264,7 +279,6 @@ void FileBrowser::showHideFiles(bool b)
         filters ^= QDir::Hidden;
     }
     m_folderView->setFilter(filters);
-    m_liteApp->settings()->setValue(FILEBROWSER_SHOW_HIDDEN_FILES,b);
 }
 
 bool FileBrowser::isShowHideFiles() const

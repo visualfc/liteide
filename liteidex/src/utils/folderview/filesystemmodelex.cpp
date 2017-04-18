@@ -53,14 +53,30 @@ QString FileSystemModelEx::fileSize(qint64 bytes)
     return QFileSystemModel::tr("%1 bytes").arg(QLocale().toString(bytes));
 }
 
+void FileSystemModelEx::setShowDetails(bool b)
+{
+    emit layoutAboutToBeChanged();
+    m_isShowDetails = b;
+    emit layoutChanged();
+}
+
+bool FileSystemModelEx::isShowDetails() const
+{
+    return m_isShowDetails;
+}
+
 FileSystemModelEx::FileSystemModelEx(QObject *parent) :
     QFileSystemModel(parent)
 {
+    m_isShowDetails = true;
 }
 
 int FileSystemModelEx::columnCount(const QModelIndex &parent) const
 {
-    return QFileSystemModel::columnCount(parent);
+    if (m_isShowDetails) {
+        return QFileSystemModel::columnCount(parent);
+    }
+    return 1;
 }
 QVariant FileSystemModelEx::data(const QModelIndex &index, int role) const
 {

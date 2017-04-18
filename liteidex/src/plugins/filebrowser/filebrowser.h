@@ -65,6 +65,7 @@ protected:
     QToolBar    *m_rootToolBar;
     QAction *m_syncAct;
     QAction *m_showHideFilesAct;
+    QAction *m_showDetailsAct;
     QAction *m_reloadAct;
     QMenu   *m_filterMenu;
 protected:

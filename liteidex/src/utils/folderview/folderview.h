@@ -30,6 +30,7 @@
 #include "basefoldeview.h"
 
 class QSortFilterProxyModel;
+class FileSystemModelEx;
 class FolderView : public BaseFolderView
 {
     Q_OBJECT
@@ -42,13 +43,16 @@ public:
     QFileInfo fileInfo(const QModelIndex &index);
     QModelIndex indexForPath(const QString &fileName);
     void reload();
+    bool isShowDetails() const;
+public slots:
+    void setShowDetails(bool b);
 public slots:
     void customContextMenuRequested(const QPoint &pos);    
     virtual void removeFolder();
     virtual void removeFile();
 protected:
     QSortFilterProxyModel *m_proxy;
-    QFileSystemModel *m_model;
+    FileSystemModelEx *m_model;
 };
 
 #endif // FOLDERVIEW_H
