@@ -80,6 +80,8 @@ QTabBar::tab:hover {
 
 QTabBar::tab:selected {
 	background-color: #000;
+	border: solid #fff;
+	border-width: 1px 1px 0px;
 	color: white;
 }
 
