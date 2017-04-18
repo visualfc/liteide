@@ -57,14 +57,18 @@ public:
     void setNameFilters(const QStringList &filters);
     QStringList nameFilters() const;
 
+    void setShowDetails(bool b);
+    bool isShowDetails() const;
 public:
     virtual bool lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const;
+    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
 protected:
     QDir::SortFlags m_sorts;
     QDir::Filters   m_filters;
     bool            m_resolveSymlinks;
     bool            m_isReadOnly;
     bool            m_nameFilterDisables;
+    bool            m_isShowDetails;
     QStringList     m_nameFilters;
 };
 

@@ -99,7 +99,7 @@ MultiFolderModel::MultiFolderModel(QObject *parent)
     m_resolveSymlinks = true;
     m_isReadOnly = true;
     m_nameFilterDisables = true;
-
+    m_isShowDetails = true;
 }
 
 MultiFolderModel::~MultiFolderModel()
@@ -409,6 +409,18 @@ QStringList MultiFolderModel::nameFilters() const
     return m_nameFilters;
 }
 
+void MultiFolderModel::setShowDetails(bool b)
+{
+    emit layoutAboutToBeChanged();
+    m_isShowDetails = b;
+    emit layoutChanged();
+}
+
+bool MultiFolderModel::isShowDetails() const
+{
+    return m_isShowDetails;
+}
+
 bool MultiFolderModel::lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const
 {
     QDirSortItemComparator comp(m_sorts);
@@ -417,4 +429,12 @@ bool MultiFolderModel::lessThan(const QAbstractItemModel *sourceModel, const QMo
     n1.item = ((QFileSystemModel*)sourceModel)->fileInfo(left);
     n2.item = ((QFileSystemModel*)sourceModel)->fileInfo(right);
     return comp.sort(n1,n2);
+}
+
+int MultiFolderModel::columnCount(const QModelIndex &parent) const
+{
+    if (m_isShowDetails) {
+        return MultiIndexModel::columnCount(parent);
+    }
+    return 1;
 }

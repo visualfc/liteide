@@ -20,6 +20,9 @@ public:
     void clear();
     void expandFolder(const QString &path, bool expand);
     QList<QModelIndex> indexForPath(const QString &path) const;
+    bool isShowDetails() const;
+public slots:
+    void setShowDetails(bool b);
 public slots:
     void customContextMenuRequested(const QPoint &pos);
     virtual void removeFolder();

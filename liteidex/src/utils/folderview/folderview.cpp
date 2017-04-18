@@ -24,6 +24,7 @@
 #include "folderview.h"
 #include "filesystemmodelex.h"
 #include <QMessageBox>
+#include <QHeaderView>
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
 #if QT_VERSION >= 0x050000
@@ -80,6 +81,11 @@ FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *pare
         this->setModel(m_model);
     }
     this->setHeaderHidden(true);
+
+    for (int i = 1; i < m_model->columnCount(); i++) {
+        this->header()->hideSection(i);
+    }
+
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
 }

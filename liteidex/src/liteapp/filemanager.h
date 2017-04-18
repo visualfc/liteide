@@ -107,6 +107,7 @@ protected:
     QString      m_initPath;
     QMenu*       m_filterMenu;
     QAction*     m_showHideFilesAct;
+    QAction*     m_showDetailsAct;
     QAction*     m_syncEditorAct;
 };
 

@@ -1,5 +1,6 @@
 #include "multifolderview.h"
 #include <QMessageBox>
+#include <QHeaderView>
 
 MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
     : BaseFolderView(app,parent)
@@ -12,7 +13,7 @@ MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
 #endif
 
     this->setModel(m_model);
-    this->setHeaderHidden(false);
+    this->setHeaderHidden(true);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
@@ -76,6 +77,16 @@ void MultiFolderView::expandFolder(const QString &path, bool expand)
 QList<QModelIndex> MultiFolderView::indexForPath(const QString &path) const
 {
     return m_model->indexForPath(path);
+}
+
+void MultiFolderView::setShowDetails(bool b)
+{
+    m_model->setShowDetails(b);
+}
+
+bool MultiFolderView::isShowDetails() const
+{
+    return m_model->isShowDetails();
 }
 
 void MultiFolderView::customContextMenuRequested(const QPoint &pos)

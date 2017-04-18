@@ -78,15 +78,23 @@ bool FileManager::initWithApp(IApplication *app)
         filters |= QDir::Hidden;
     }
     this->showHideFiles(bShowHiddenFiles);
-
-    m_folderListView->setFilter(filters);
-
     m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
     m_showHideFilesAct->setCheckable(true);
     if (bShowHiddenFiles) {
         m_showHideFilesAct->setChecked(true);
     }
     connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
+
+    m_folderListView->setFilter(filters);
+
+    bool bShowDetails = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWDETAILS,false).toBool();
+    m_folderListView->setShowDetails(bShowDetails);
+    m_showDetailsAct = new QAction(tr("Show Details"),this);
+    m_showDetailsAct->setCheckable(true);
+    if (bShowDetails) {
+        m_showDetailsAct->setChecked(true);
+    }
+    connect(m_showDetailsAct,SIGNAL(triggered(bool)),m_folderListView,SLOT(setShowDetails(bool)));
 
     m_syncEditorAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
     m_syncEditorAct->setCheckable(true);
@@ -95,6 +103,7 @@ bool FileManager::initWithApp(IApplication *app)
     m_filterMenu = new QMenu(tr("Filter"));
     m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
     m_filterMenu->addAction(m_showHideFilesAct);
+    m_filterMenu->addAction(m_showDetailsAct);
     actions << m_filterMenu->menuAction() << m_syncEditorAct;
 
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"folders",tr("Folders"),false,actions);
@@ -143,6 +152,7 @@ FileManager::~FileManager()
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
     m_liteApp->settings()->setValue("FileManager/synceditor",m_syncEditorAct->isChecked());
     m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWDETAILS,m_showDetailsAct->isChecked());
     if (m_newFileDialog) {
         delete m_newFileDialog;
     }
@@ -594,6 +604,7 @@ void FileManager::showHideFiles(bool b)
     }
     m_folderListView->setFilter(filters);
 }
+
 void FileManager::activatedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
