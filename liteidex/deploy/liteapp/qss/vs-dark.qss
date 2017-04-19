@@ -1,6 +1,3 @@
-/* ===add file: \liteide\share\liteide\liteapp\qss\vs-dark.qss ===*/
-/* ===FROM: https://gist.github.com/tupunco/fdb713ec9c6189a877e5eb003bd0457d ===*/
-
 /* === Shared === */
 QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
 QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog, QListView,
@@ -46,7 +43,7 @@ QPushButton:disabled {
     color: #333333;
 }
 
-/* === Checkable items === */
+/* === Checkable items === 
 QCheckBox::indicator, QRadioButton::indicator, QTreeView::indicator {
     width: 16px;
     height: 16px;
@@ -69,6 +66,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled, QTreeView::indi
 QCheckBox::indicator::checked:disabled, QRadioButton::indicator::checked:disabled, QTreeView::indicator::checked:disabled {
     background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #444444);
 }
+*/
 
 /* === QComboBox === */
 QComboBox {
@@ -106,6 +104,7 @@ QComboBox::down-arrow:hover {
     border: 2px solid #007ACC;
     background: #007ACC;
 }
+
 
 /* === QGroupBox === */
 QGroupBox {
@@ -367,6 +366,10 @@ QAbstractScrollArea, QLineEdit, QTextEdit, QAbstractSpinBox {
 }
 
 /* === QHeaderView === */
+QHeaderView {
+    background: #222222;
+}
+
 QHeaderView::section {
     background: #222222;
     border: 0;
@@ -396,16 +399,12 @@ QTableView::item:hover {
 
 /* === QTreeView === */
 QTreeView::item {
-    background: #2D2D30;
 }
 
 QTreeView::item:hover {
-    background: #333333;
 }
 
 QTreeView::item:selected {
-    background: #2D2D30;
-    color: #FFFFFF;
 }
 
 QTreeView::branch {
