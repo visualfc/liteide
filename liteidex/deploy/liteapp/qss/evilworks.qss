@@ -1,3 +1,8 @@
+/*
+	Style by evilworks, 2012-2013. pollux@lavabit.com
+	This file is Public Domain.
+*/
+
 /* === Shared === */
 QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
 QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog, QTabBar {
