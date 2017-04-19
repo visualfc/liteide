@@ -1,3 +1,6 @@
+/* ===add file: \liteide\share\liteide\liteapp\qss\vs-dark.qss ===*/
+/* ===FROM: https://gist.github.com/tupunco/fdb713ec9c6189a877e5eb003bd0457d ===*/
+
 /* === Shared === */
 QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
 QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog, QListView,
