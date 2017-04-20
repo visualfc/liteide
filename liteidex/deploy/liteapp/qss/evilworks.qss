@@ -39,7 +39,7 @@ QPushButton:disabled {
 	color: #333333;
 }
 
-/* === QComboBox === */
+/* === QComboBox === 
 QComboBox {
 	background-color: #AAA;
 	border: 1px solid #555;
@@ -51,7 +51,7 @@ QComboBox::drop-down {
 	subcontrol-position: top right;
 	border-left: 1px solid #333333;
 }
-
+*/
 /* === QGroupBox === */
 QGroupBox {
 	border: 1px solid #555;
@@ -277,6 +277,10 @@ QAbstractScrollArea, QLineEdit, QTextEdit, QAbstractSpinBox, QComboBox {
 }
 
 /* === QHeaderView === */
+QHeaderView {
+	background: #666;
+}
+
 QHeaderView::section {
 	height: 20px;
 }
@@ -305,21 +309,17 @@ QTableView::item:hover {
 
 QTableView::item:hover {
 	background: #111111;
-	color: yellow;
+	color: white;
 }
 
 /* === QTreeView === */
 QTreeView::item {
-	background: #AAA;
 }
 
 QTreeView::item:hover {
-	background: #CCC;
 }
 
 QTreeView::item:selected {
-	background: #333;
-	color: #AAA;
 }
 
 QTreeView::branch {
