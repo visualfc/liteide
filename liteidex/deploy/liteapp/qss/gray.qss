@@ -1,0 +1,296 @@
+/* === Shared === */
+QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
+QGroupBox, QStatusBar, QToolButton, QDialog {
+	background-color: #232323;
+	color: #BBBBBB;
+}
+
+/* === QWidget === */
+QWidget:window {
+	background: #232323;
+	color: #BBBBBB;
+}
+
+/* === QPushButton === */
+QPushButton {
+	border: 0.5px solid #232323;
+	padding: 4px;
+	min-width: 65px;
+	min-height: 12px;
+}
+
+QPushButton:hover {
+	background-color: #232323;
+	border-color: #444444;
+}
+
+QPushButton:pressed {
+	background-color: #111111;
+	border-color: #444444;
+	color: white;
+}
+
+QPushButton:disabled {
+	color: #232323;
+}
+
+
+/* === QComboBox === */
+QComboBox {
+	background-color: #282828;
+	border: 1px solid #232323;
+	color: white;
+	padding:1px 2em 1px 3px;
+}
+
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	border-left: 1px solid #232323;
+}
+
+QComboBox::down-arrow {
+	border: 2px solid #232323;
+	width: 6px;
+	height: 6px;
+	background: #5f5f5f;
+}
+
+
+/* === QTabBar === */
+QTabBar::tab {
+	background: transparent;
+	border: 1px solid #232323;
+	border-bottom: none;
+	color: #BBBBBB;
+	padding-left: 5px;
+	padding-right: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+QTabBar::tab:hover {
+	background-color: #232323;
+	border: 1px solid #444444;
+	border-bottom: none;
+}
+
+QTabBar::tab:selected {
+	background-color: #111111;
+	border: 1px solid #232323;
+	border-top: 0px;
+	border-bottom: none;
+	color: white
+}
+
+
+/* === QToolBar === */
+QToolBar {
+	background-color: #232323;
+	border: none;
+	padding: 1px;
+}
+
+QToolBar::separator {
+	width: 6px;
+	background-color: #232323;
+}
+
+/* === QToolButton === */
+QToolButton {
+	border: 1px solid #232323;
+	margin: 1px;
+}
+
+QToolButton:hover {
+	background-color: #232323;
+	border: 1px solid #444444;
+}
+
+QToolButton[popupMode="1"] { /* only for MenuButtonPopup */
+	padding-right: 20px; /* make way for the popup button */
+}
+
+QToolButton::menu-button {
+	border-left: 1px solid #232323;
+	background: transparent;
+    width: 16px;
+}
+
+QToolButton::menu-button:hover {
+	border-left: 1px solid #444444;
+	background: transparent;
+    width: 16px;
+}
+
+QToolButton:checked, QToolButton:pressed {
+	background-color: #111111;
+	color: white;
+}
+
+
+/* === QMenu === */
+QMenu {
+	background-color: #282828;
+	border: 1px solid gray;
+	color: white;
+	padding: 1px;
+}
+
+QMenu::item {
+	padding: 2px 25px 2px 20px;
+	border: 1px solid transparent;
+}
+
+QMenu::item:disabled {
+	color: #666666;
+}
+
+QMenu::item:selected {
+	border-color: gray;
+	background: #232323;
+}
+
+QMenu::icon:checked {
+
+}
+
+QMenu::separator {
+	height: 1px;
+	background: #232323;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+QMenu::indicator {
+	width: 13px;
+	height: 13px;
+}
+
+/* === QMenuBar === */
+QMenuBar {
+	background-color: #282828;
+	color: white;
+}
+
+QMenuBar::item {
+	background: transparent;
+}
+
+QMenuBar::item:disabled {
+	color: gray;
+}
+
+QMenuBar::item:selected {
+	background: #232323;
+}
+
+QMenuBar::item:pressed {
+	background: #444444;
+}
+
+/* === QScrollBar:vertical === */
+QScrollBar:vertical {
+	background: #303030;
+	width: 16px;
+	margin: 16px 0 16px 0;
+}
+
+QScrollBar::handle:vertical {
+    background: #232323;
+    min-height: 16px;
+}
+
+QScrollBar::add-line:vertical {
+    background: #444444;
+    height: 16px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    background: #444444;
+    height: 16px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+}
+
+QScrollBar:up-arrow:vertical, QScrollBar:down-arrow:vertical {
+	border: 2px solid #232323;
+	width: 6px;
+	height: 6px;
+	background: #5f5f5f;
+}
+
+/* === QScrollBar:horizontal === */
+QScrollBar:horizontal {
+	background: #303030;
+	height: 16px;
+	margin: 0 16px 0 16px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #232323;
+    min-width: 16px;
+}
+
+QScrollBar::add-line:horizontal {
+    background: #444444;
+    width: 16px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    background: #444444;
+    width: 16px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+	background: none;
+}
+
+QScrollBar:left-arrow:horizontal, QScrollBar:right-arrow:horizontal {
+	border: 2px solid #232323;
+	width: 6px;
+	height: 6px;
+	background: #5f5f5f;
+}
+
+/* =================== */
+QLineEdit, QListView, QTreeView, QTableView, QAbstractSpinBox {
+	background-color: #282828;
+	color: #BBBBBB;
+	border: 1px solid #232323;
+}
+
+QAbstractScrollArea, QLineEdit, QTextEdit, QAbstractSpinBox {
+	border-color: #232323;
+	border: 1px solid #232323;
+}
+
+
+/* === QHeaderView === */
+QHeaderView {
+	background: #232323;
+}
+
+QHeaderView::section {
+	background: #232323;
+	border: 0;
+	color: #BBBBBB;
+	padding: 3px 0 3px 4px;
+}
+
+/* === Customizations === */
+QFrame#infoLabel {
+	border: 1px inset #232323;
+}
