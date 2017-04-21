@@ -6,7 +6,7 @@
   Public Domain, Henson Lu, 2012
   -->
   <style name="Text" foreground="#ffffff" background="#272822"/>
-  <style name="Extra" foreground="#008B8B" background="#2e3436"/>
+  <style name="Extra" foreground="#90908A" background="#272822"/>
   <style name="Selection" background="#775511"/>
   <style name="CurrentLine" background="#333333"/>
   <style name="IndentLine" foreground="#008B8B"/>
