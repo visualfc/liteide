@@ -63,7 +63,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 ### Mac OS X
 	# Install Qt if not already installed. Tested to work on 5.5, MacOS 10.12.4
  	$ brew install qt@5.5
-	$ brew link --force qt@5.5
+	$ brew link --force qt@5.5 # If another version of Qt was symlinked previously, eg 5.7, you need to unlink first be $ brew unlink qt@5.7
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/Cellar/qt\@5.5/5.5.1_1
 	$ cd liteide/build
