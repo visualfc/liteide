@@ -70,6 +70,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./update_pkg.sh
 	$ ./build_osx_clang.sh
 	$ ./deploy_osx_qt5.sh
+	$ open liteide/LiteIDE.app/Contents/MacOS/LiteIDE
 
 ### OpenBSD
 	$ git clone https://github.com/visualfc/liteide.git
