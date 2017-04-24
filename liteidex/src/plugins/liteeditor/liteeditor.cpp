@@ -653,17 +653,18 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_gotoDocStartAct);
     subMenu->addAction(m_gotoDocEndAct);
 
-    subMenu = m_editMenu->addMenu(tr("Code Folding"));
-    subMenu->addAction(m_foldAct);
-    subMenu->addAction(m_unfoldAct);
-    subMenu->addAction(m_foldAllAct);
-    subMenu->addAction(m_unfoldAllAct);
 
     subMenu = m_editMenu->addMenu(tr("Convert Case"));
     subMenu->addAction(m_convertCaseTitleAct);
     subMenu->addAction(m_convertCaseUpperAct);
     subMenu->addAction(m_convertCaseLowerAct);
     subMenu->addAction(m_convertCaseSwapAct);
+
+    subMenu = m_editMenu->addMenu(tr("Code Folding"));
+    subMenu->addAction(m_foldAct);
+    subMenu->addAction(m_unfoldAct);
+    subMenu->addAction(m_foldAllAct);
+    subMenu->addAction(m_unfoldAllAct);
 
     subMenu = m_editMenu->addMenu(tr("Setup"));
     subMenu->addAction(m_visualizeWhitespaceAct);
@@ -725,6 +726,12 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_gotoNextWordAct);
     subMenu->addAction(m_gotoDocStartAct);
     subMenu->addAction(m_gotoDocEndAct);
+
+    subMenu = m_contextMenu->addMenu(tr("Convert Case"));
+    subMenu->addAction(m_convertCaseTitleAct);
+    subMenu->addAction(m_convertCaseUpperAct);
+    subMenu->addAction(m_convertCaseLowerAct);
+    subMenu->addAction(m_convertCaseSwapAct);
 
     subMenu = m_contextMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);
