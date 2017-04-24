@@ -102,6 +102,11 @@ bool ProcessEx::isRunning() const
     return this->state() == QProcess::Running;
 }
 
+bool ProcessEx::isStop() const
+{
+    return this->state() == QProcess::NotRunning;
+}
+
 void ProcessEx::setUserData(int id, const QVariant &data)
 {
     m_idVarMap.insert(id,data);

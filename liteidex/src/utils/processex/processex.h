@@ -51,6 +51,7 @@ public:
     void setUserData(int id, const QVariant &data);
     QVariant userData(int id) const;
     bool isRunning() const;
+    bool isStop() const;
     void startEx(const QString &cmd, const QString &args);
     static bool startDetachedEx(const QString& cmd, const QStringList &args);
 signals:

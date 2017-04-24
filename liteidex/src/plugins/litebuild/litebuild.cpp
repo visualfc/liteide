@@ -1341,11 +1341,14 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 
 void LiteBuild::stopAction()
 {
-    if (m_process->isRunning()) {
-        if (!m_process->waitForFinished(100)) {
+    if (!m_process->isStop()) {
+        m_process->terminate();
+        m_process->closeReadChannel(QProcess::StandardOutput);
+        m_process->closeReadChannel(QProcess::StandardError);
+        m_process->waitForFinished(100);
+        if (!m_process->isStop()) {
             m_process->kill();
         }
-        m_process->waitForFinished(100);
     }
 }
 
@@ -1357,7 +1360,7 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
     if (activateOutputCheck) {
         m_outputAct->setChecked(activateOutputCheck);
     }
-    if (m_process->isRunning()) {
+    if (!m_process->isStop()) {
         m_output->append(tr("A process is currently running.  Stop the current action first.")+"\n",Qt::red);
         return;
     }
