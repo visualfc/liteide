@@ -693,7 +693,7 @@ void LiteApp::createActions()
     m_closeAct = new QAction(loadIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
     actionContext->regAction(m_closeAct,"CloseFile","Ctrl+W");
 
-    m_closeAllAct = new QAction(loadIcon("icon:images/closeall.png"),tr("Close All Files"),m_mainwindow);
+    m_closeAllAct = new QAction(tr("Close All Files"),m_mainwindow);
     actionContext->regAction(m_closeAllAct,"CloseAllFiles","");
 
     m_openProjectAct = new QAction(loadIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);
