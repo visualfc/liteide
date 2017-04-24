@@ -43,6 +43,7 @@
 #include "splitwindowstyle.h"
 #include "sidewindowstyle.h"
 #include "idletimer.h"
+#include "iconutil/iconutil.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -666,16 +667,16 @@ void LiteApp::createActions()
 {
     IActionContext *actionContext =  m_actionManager->getActionContext(this,"App");
 
-    m_newAct = new QAction(QIcon("icon:images/new.png"),tr("New..."),m_mainwindow);
+    m_newAct = new QAction(loadIcon("icon:images/new.png"),tr("New..."),m_mainwindow);
     actionContext->regAction(m_newAct,"New",QKeySequence::New);
 
-    m_openFileAct = new QAction(QIcon("icon:images/openfile.png"),tr("Open File..."),m_mainwindow);
+    m_openFileAct = new QAction(loadIcon("icon:images/openfile.png"),tr("Open File..."),m_mainwindow);
     actionContext->regAction(m_openFileAct,"OpenFile",QKeySequence::Open);
 
-    m_openFolderAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder..."),m_mainwindow);
+    m_openFolderAct = new QAction(loadIcon("icon:images/openfolder.png"),tr("Open Folder..."),m_mainwindow);
     actionContext->regAction(m_openFolderAct,"OpenFolder","");
 
-    m_openFolderNewWindowAct = new QAction(QIcon("icon:images/openfolder.png"),tr("Open Folder in New Window..."),m_mainwindow);
+    m_openFolderNewWindowAct = new QAction(loadIcon("icon:images/openfolder.png"),tr("Open Folder in New Window..."),m_mainwindow);
     //bool b = m_settings->value(LITEAPP_OPTNFOLDERINNEWWINDOW,true).toBool();
     //m_openFolderNewWindowAct->setVisible(!b);
     actionContext->regAction(m_openFolderNewWindowAct,"OpenFolderNewWindow","");
@@ -689,26 +690,26 @@ void LiteApp::createActions()
     m_closeWindow = new QAction(tr("Close Window"),m_mainwindow);
     actionContext->regAction(m_closeWindow,"CloseWindow","Ctrl+Shift+W");
 
-    m_closeAct = new QAction(QIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
+    m_closeAct = new QAction(loadIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
     actionContext->regAction(m_closeAct,"CloseFile","Ctrl+W");
 
-    m_closeAllAct = new QAction(QIcon("icon:images/closeall.png"),tr("Close All Files"),m_mainwindow);
+    m_closeAllAct = new QAction(loadIcon("icon:images/closeall.png"),tr("Close All Files"),m_mainwindow);
     actionContext->regAction(m_closeAllAct,"CloseAllFiles","");
 
-    m_openProjectAct = new QAction(QIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);    
+    m_openProjectAct = new QAction(loadIcon("icon:images/openproject.png"),tr("Open Project"),m_mainwindow);
 
-    m_saveProjectAct = new QAction(QIcon("icon:images/saveproject.png"),tr("Save Project"),m_mainwindow);
+    m_saveProjectAct = new QAction(loadIcon("icon:images/saveproject.png"),tr("Save Project"),m_mainwindow);
 
-    m_closeProjectAct = new QAction(QIcon("icon:images/closeproject.png"),tr("Close Project"),m_mainwindow);
+    m_closeProjectAct = new QAction(loadIcon("icon:images/closeproject.png"),tr("Close Project"),m_mainwindow);
     actionContext->regAction(m_closeProjectAct,"CloseProject","");
 
-    m_saveAct = new QAction(QIcon("icon:images/save.png"),tr("Save File"),m_mainwindow);
+    m_saveAct = new QAction(loadIcon("icon:images/save.png"),tr("Save File"),m_mainwindow);
     actionContext->regAction(m_saveAct,"SaveFile",QKeySequence::Save);
 
     m_saveAsAct = new QAction(tr("Save File As..."),m_mainwindow);
     actionContext->regAction(m_saveAsAct,"SaveFileAs",QKeySequence::SaveAs);
 
-    m_saveAllAct = new QAction(QIcon("icon:images/saveall.png"),tr("Save All Files"),m_mainwindow);
+    m_saveAllAct = new QAction(loadIcon("icon:images/saveall.png"),tr("Save All Files"),m_mainwindow);
     actionContext->regAction(m_saveAllAct,"SaveAllFiles","");
 
     m_exitAct = new QAction(tr("Exit"),m_mainwindow);
@@ -772,6 +773,7 @@ void LiteApp::createMenus()
     m_fileMenu->addAction(m_newWindow);
     m_fileMenu->addAction(m_closeWindow);
     m_fileMenu->addSeparator();
+
     m_fileMenu->addAction(m_closeAct);
     m_fileMenu->addAction(m_closeAllAct);
     m_fileMenu->addAction(m_closeAllFolderAct);

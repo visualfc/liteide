@@ -18,25 +18,23 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: dirsortfilterproxymodel.h
+// Module: iconutil.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef DIRSORTFILTERPROXYMODEL_H
-#define DIRSORTFILTERPROXYMODEL_H
+#ifndef ICONUTIL_H
+#define ICONUTIL_H
 
-#include <QSortFilterProxyModel>
-#include <QDir>
+#include <QIcon>
+#include <QDebug>
 
-class DirSortFilterProxyModel : public QSortFilterProxyModel
+inline QIcon loadIcon(const QString &fileName)
 {
-public:
-    DirSortFilterProxyModel(QObject *parent);
-    void setSorting(QDir::SortFlags sort);
-    QDir::SortFlags sorting() const;
-protected:
-    virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
-protected:
-    QDir::SortFlags m_sorts;
-};
+    QIcon icon(fileName);
+    if (icon.availableSizes().isEmpty()) {
+        qDebug() << "warning empty icon" << fileName;
+        return QIcon();
+    }
+    return icon;
+}
 
-#endif // DIRSORTFILTERPROXYMODEL_H
+#endif // ICONUTIL_H

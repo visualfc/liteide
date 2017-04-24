@@ -32,6 +32,7 @@ function process_file(file,out,tag)
 end
 
 function make_plugin(files,tag)
+	lfs.mkdir("./output")
 	for k,v in pairs(files) do
 		print(k,v)
 		local out = string.gsub(k,"hello",string.lower(tag))

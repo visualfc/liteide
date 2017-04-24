@@ -18,5 +18,6 @@ SUBDIRS = \
     golangapi \
     filesystem \
     editorutil \
-    folderview
+    folderview \
+    iconutil
 
