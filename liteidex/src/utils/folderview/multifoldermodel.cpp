@@ -138,6 +138,7 @@ QModelIndex MultiFolderModel::addRootPath(const QString &path)
     model->setReadOnly(m_isReadOnly);
     model->setNameFilterDisables(m_nameFilterDisables);
     model->setNameFilters(m_nameFilters);
+    connect(model,SIGNAL(directoryLoaded(QString)),this,SLOT(slotDirectoryLoaded(QString)));
     QModelIndex index = model->setRootPath(path);
     if (this->addSourceModel(model,index)) {
         return this->mapFromSourceEx(model,index);
@@ -342,6 +343,25 @@ QList<QModelIndex> MultiFolderModel::indexForPath(const QString &path) const
     return pathList;
 }
 
+QModelIndex MultiFolderModel::indexForPath(QFileSystemModel *sourceModel, const QString &path) const
+{
+    QString findPath = QDir::cleanPath(QDir::fromNativeSeparators(path));
+    foreach (QAbstractItemModel *model, this->sourceModelList()) {
+        QFileSystemModel *fs = (QFileSystemModel*)model;
+        if (fs != sourceModel) {
+            continue;
+        }
+        if (!findPath.startsWith(fs->rootPath())) {
+            continue;
+        }
+        QModelIndex index = fs->index(path);
+        if (index.isValid()) {
+            return this->mapFromSourceEx(model,index);
+        }
+    }
+    return QModelIndex();
+}
+
 void MultiFolderModel::setFilter(QDir::Filters filters)
 {
     if (m_filters == filters) {
@@ -460,4 +480,9 @@ int MultiFolderModel::columnCount(const QModelIndex &parent) const
         return MultiIndexModel::columnCount(parent);
     }
     return 1;
+}
+
+void MultiFolderModel::slotDirectoryLoaded(const QString &path)
+{
+    emit directoryLoaded((QFileSystemModel*)sender(),path);
 }

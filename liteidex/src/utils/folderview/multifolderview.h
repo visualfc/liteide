@@ -54,6 +54,8 @@ public slots:
     virtual void closeFolder();
     virtual void reloadFolder();
     virtual void closeAllFolders();
+protected slots:
+    void directoryLoaded(QFileSystemModel *model,const QString &path);
 protected:
     MultiFolderModel *m_model;
 };

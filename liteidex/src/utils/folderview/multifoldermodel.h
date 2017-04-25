@@ -31,6 +31,7 @@
 
 class MultiFolderModel : public MultiIndexModel
 {
+    Q_OBJECT
 public:
     explicit MultiFolderModel(QObject* parent = 0);
     virtual ~MultiFolderModel();
@@ -61,6 +62,9 @@ public:
     bool rmdir(const QModelIndex &index);
 
     QList<QModelIndex> indexForPath(const QString &path) const;
+    QModelIndex indexForPath(QFileSystemModel* sourceModel,const QString &path) const;
+signals:
+    void directoryLoaded(QFileSystemModel*,QString);
 public:
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;
@@ -85,6 +89,8 @@ public:
 public:
     virtual bool lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const;
     virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+protected slots:
+    void slotDirectoryLoaded(const QString &path);
 protected:
     QDir::SortFlags m_sorts;
     QDir::Filters   m_filters;

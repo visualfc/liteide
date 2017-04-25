@@ -24,6 +24,7 @@
 #include "multifolderview.h"
 #include <QMessageBox>
 #include <QHeaderView>
+#include <QDebug>
 
 MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
     : BaseFolderView(app,parent)
@@ -40,6 +41,7 @@ MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
+    connect(m_model,SIGNAL(directoryLoaded(QFileSystemModel*,QString)),this,SLOT(directoryLoaded(QFileSystemModel*,QString)));
 }
 
 void MultiFolderView::setFilter(QDir::Filters filters)
@@ -251,3 +253,10 @@ void MultiFolderView::closeAllFolders()
     m_model->clearAll();
 }
 
+void MultiFolderView::directoryLoaded(QFileSystemModel *model, const QString &path)
+{
+    QModelIndex index = m_model->indexForPath(model,path);
+    if (!index.isValid()) {
+        return;
+    }
+}
