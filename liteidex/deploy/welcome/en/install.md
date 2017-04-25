@@ -71,8 +71,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ open liteide/LiteIDE.app/Contents/MacOS/LiteIDE
 
 	# Qt 5
-	# Install Qt if not already installed. Tested to work on 5.5, MacOS 10.12.4. Qt 5.7 and 5.8 seem to result in fatal build errors 
- 	$ brew install qt@5.5
+	# Install Qt if not already installed. Use brew (brew install qt@5.5), or download from http://www.qt.io/download (qt-opensource-mac-x64-clang-5.7.1.dmg)
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/Cellar/qt\@5.5/5.5.1_1
 	$ cd liteide/build
