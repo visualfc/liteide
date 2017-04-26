@@ -133,15 +133,17 @@ void MultiIndexModelPrivate::update_persistent_indexes(const QModelIndexPairList
     for (int i = 0; i < source_indexes.count(); ++i) {
         QModelIndex source_index = source_indexes.at(i).second;
         QModelIndex old_proxy_index = source_indexes.at(i).first;
-        QAbstractItemModel *model = (QAbstractItemModel *)source_index.model();
-        if (model == 0) {
-            continue;
+        if (source_index.isValid()) {
+            QAbstractItemModel *model = (QAbstractItemModel *)source_index.model();
+            createMapping(model,source_index.parent(),false);
+            //createMapping(model,source_index,true);
+            QModelIndex proxy_index = q->mapFromSourceEx(model,source_index);
+            from << old_proxy_index;
+            to << proxy_index;
+        } else {
+            from << old_proxy_index;
+            to << QModelIndex();
         }
-        createMapping(model,source_index.parent(),false);
-        //createMapping(model,source_index,true);
-        QModelIndex proxy_index = q->mapFromSourceEx(model,source_index);
-        from << old_proxy_index;
-        to << proxy_index;
     }
     q->changePersistentIndexList(from, to);
 }

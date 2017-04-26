@@ -49,7 +49,7 @@ class MultiIndexModelPrivate : public AbstractMultiProxyModelPrivate
 public:
   MultiIndexModelPrivate()
   {
-      source_sort_column = 0;
+      source_sort_column = -1;
       sort_order = Qt::AscendingOrder;
       sort_casesensitivity = Qt::CaseSensitive;
       sort_role = Qt::DisplayRole;
