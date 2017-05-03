@@ -998,7 +998,8 @@ void EditorManager::moveToNewWindow()
     if (filePath.isEmpty()) {
         return;
     }
-    IApplication *app = LiteApp::NewApplication(false,m_liteApp);
+    QString sessionName = "dir:"+QFileInfo(filePath).dir().dirName();
+    IApplication *app = m_liteApp->newInstance(sessionName);
     QFileInfo info(filePath);
     if (app->fileManager()->openEditor(filePath)) {
         this->closeEditor(ed);

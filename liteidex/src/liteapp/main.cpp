@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
 //    QDir dir(storage);
 //    dir.mkdir("liteide");
 
-    IApplication *liteApp = LiteApp::NewApplication(true,0);
+    IApplication *liteApp = LiteApp::NewApplication("default",0);
 
     foreach(QString file, fileList) {
         QFileInfo f(file);

@@ -274,7 +274,7 @@ void FileManager::addFolderList(const QString &folder)
 
 IApplication* FileManager::openFolderInNewWindow(const QString &folder)
 {
-    IApplication *app = m_liteApp->newInstance(false);
+    IApplication *app = m_liteApp->newInstance("");
     app->fileManager()->setFolderList(QStringList() << folder);
     return app;
 }
@@ -341,7 +341,7 @@ void FileManager::openFolder()
 
 void FileManager::newInstance()
 {
-    m_liteApp->newInstance(false);
+    m_liteApp->newInstance("");
 }
 
 void FileManager::openFolderNewWindow()
@@ -353,7 +353,7 @@ void FileManager::openFolderNewWindow()
        if (dir.cdUp()) {
            m_initPath = dir.path();
        }
-       IApplication *app = m_liteApp->newInstance(false);
+       IApplication *app = m_liteApp->newInstance("dir:"+dir.dirName());
        app->fileManager()->setFolderList(QStringList() << folder);
    }
 }

@@ -645,7 +645,7 @@ class IApplication : public IObject
     Q_OBJECT
 public:
     virtual ~IApplication() {}
-    virtual IApplication    *newInstance(bool loadSession) = 0;
+    virtual IApplication    *newInstance(const QString &session) = 0;
     virtual bool hasGoProxy() const = 0;
     virtual IGoProxy *createGoProxy(QObject *parent) = 0;
     virtual IProjectManager *projectManager() = 0;
@@ -677,6 +677,7 @@ public:
 
     virtual void loadSession(const QString &ideName) = 0;
     virtual void saveSession(const QString &ideName) = 0;
+    virtual QString currentSession() const = 0;
     virtual void loadState() = 0;
     virtual void saveState() = 0;
 
@@ -854,7 +855,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X31")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X31.2")
 
 
 #endif //__LITEAPI_H__

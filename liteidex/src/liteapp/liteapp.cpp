@@ -128,10 +128,10 @@ QString LiteApp::getStoragePath()
     return root+"/liteide";
 }
 
-IApplication* LiteApp::NewApplication(bool loadSession, IApplication *baseApp)
+IApplication* LiteApp::NewApplication(const QString &sessionName, IApplication *baseApp)
 {
     LiteApp *app = new LiteApp;
-    app->load(loadSession,baseApp);
+    app->load(sessionName,baseApp);
     return app;
 }
 
@@ -312,8 +312,10 @@ static QImage makeSplashImage(LiteApi::IApplication *app)
     return image;
 }
 
-void LiteApp::load(bool bUseSession, IApplication *baseApp)
+void LiteApp::load(const QString &sessionName, IApplication *baseApp)
 {
+    m_currentSession = sessionName;
+
     QSplashScreen *splash = 0;
     bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
     if (baseApp) {
@@ -372,9 +374,11 @@ void LiteApp::load(bool bUseSession, IApplication *baseApp)
     qApp->processEvents();
 
     bool b = m_settings->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
-    if (b && bUseSession) {
-        loadSession("default");
+    if (b && !sessionName.isEmpty()) {
+        loadSession(sessionName);
+        this->appendLog("Load session",sessionName);
     }
+
 
     if (bSplash) {
         m_mainwindow->raise();
@@ -444,7 +448,7 @@ void LiteApp::escape()
 
 void LiteApp::newWindow()
 {
-    LiteApp::newInstance(0);
+    LiteApp::newInstance("default");
 }
 
 void LiteApp::closeWindow()
@@ -476,9 +480,9 @@ IGoProxy *LiteApp::createGoProxy(QObject *parent)
     return new GoProxy(parent);
 }
 
-IApplication *LiteApp::newInstance(bool loadSession)
+IApplication *LiteApp::newInstance(const QString &sessionName)
 {
-    return LiteApp::NewApplication(loadSession,this);
+    return LiteApp::NewApplication(sessionName,this);
 }
 
 IEditorManager *LiteApp::editorManager()
@@ -880,6 +884,10 @@ void LiteApp::saveState()
 
 void LiteApp::loadSession(const QString &name)
 {
+    if (name.isEmpty()) {
+        return;
+    }
+
     QString session = "session/"+name;
     QString projectName = m_settings->value(session+"_project").toString();
     QString scheme = m_settings->value(session+"_scheme").toString();
@@ -918,6 +926,9 @@ void LiteApp::loadSession(const QString &name)
 
 void LiteApp::saveSession(const QString &name)
 {
+    if (name.isEmpty()) {
+        return;
+    }
     QString projectName;
     QString editorName;
     QString scheme;
@@ -947,6 +958,11 @@ void LiteApp::saveSession(const QString &name)
     m_settings->setValue(session+"_cureditor",editorName);
     m_settings->setValue(session+"_alleditor",fileList);
     m_settings->setValue(session+"_folderList",m_fileManager->folderList());
+}
+
+QString LiteApp::currentSession() const
+{
+    return m_currentSession;
 }
 
 void LiteApp::dbclickLogOutput(QTextCursor cur)

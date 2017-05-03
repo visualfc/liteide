@@ -92,7 +92,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    m_liteApp->saveSession("default");
+    m_liteApp->saveSession(m_liteApp->currentSession());
     m_liteApp->saveState();
     m_liteApp->projectManager()->closeProject();
     if (m_liteApp->editorManager()->closeAllEditors()) {
@@ -154,7 +154,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::currentEditorChanged(IEditor *editor)
 {
-    QString title = "LiteIDE";
+    QString title = QString("LiteIDE (%1)").arg(m_liteApp->currentSession());
     if (editor && !editor->filePath().isEmpty()) {
         title += " - " + editor->filePath();
         if (editor->isModified()) {
@@ -166,7 +166,7 @@ void MainWindow::currentEditorChanged(IEditor *editor)
 
 void MainWindow::editorModifyChanged(IEditor *editor, bool b)
 {
-    QString title = "LiteIDE";
+    QString title = QString("LiteIDE (%1)").arg(m_liteApp->currentSession());
     if (editor && !editor->filePath().isEmpty()) {
         title += " - " + editor->filePath();
         if (b == true) {

@@ -58,13 +58,13 @@ public:
     static QString getPluginPath();
     static QString getResoucePath();
     static QString getStoragePath();
-    static IApplication* NewApplication(bool loadSession, IApplication *base = 0);
+    static IApplication* NewApplication(const QString &sessionName, IApplication *base = 0);
     static PluginManager *pluginManager();
 public:
     LiteApp();    
     virtual ~LiteApp();    
     virtual IExtension *extension();
-    virtual IApplication *newInstance(bool loadSession);
+    virtual IApplication *newInstance(const QString &sessionName);
     virtual bool hasGoProxy() const;
     virtual IGoProxy *createGoProxy(QObject *parent);
     virtual IProjectManager *projectManager();
@@ -96,13 +96,14 @@ public:
 
     virtual void loadSession(const QString &ideName);
     virtual void saveSession(const QString &ideName);
+    virtual QString currentSession() const;
     virtual void loadState();
     virtual void saveState();
 
     virtual void appendLog(const QString &model, const QString &log = QString(), bool error = false);
     virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString());
 public:
-    void load(bool bUseSession, IApplication *baseApp);
+    void load(const QString &sessionName, IApplication *baseApp);
     void createActions();
     void createMenus();
     void createToolBars();
@@ -126,6 +127,7 @@ protected slots:
     void exit();
     void applyOption(QString id);
 protected:
+    QString         m_currentSession;
     QString         m_rootPath;
     QString         m_applicationPath;
     QString         m_toolPath;
