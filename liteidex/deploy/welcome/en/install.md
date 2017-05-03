@@ -122,4 +122,4 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
 
-Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
+**Addin** Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
