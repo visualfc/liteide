@@ -61,7 +61,9 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./liteide
 
 ### Mac OS X
-	# Qt 4
+
+**Qt 4**
+
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc #If QT is installed with brew, input: export QTDIR=/usr/local/Cellar/qt/4.8.6
 	$ cd liteide/build
@@ -70,15 +72,30 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./deploy_osx_qt4.sh
 	$ open liteide/LiteIDE.app
 
-	# Qt 5
-	# Install Qt if not already installed. Use brew (eg brew install qt. Other versions of qt@5.5 and qt@5.7 works too), or download from http://www.qt.io/download (qt.io install Qt5.6.2/Qt5.7.1/Qt5.8)
+**Qt 5 sdk install**
+
+Download Qt from http://www.qt.io/download and install. (Qt5.6.2/Qt5.7.1/Qt5.8)
+
+	$ git clone https://github.com/visualfc/liteide.git
+	$ export QTDIR=$HOME/Qt5.6.2/Qt5.6/clang_64
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ ./build_osx_clang.sh
+	$ ./deploy_osx_qt5.sh
+	$ open liteide/LiteIDE.app
+	
+**Qt 5 brew install**	
+
+Use brew install qt (eg brew install qt. Other versions of qt@5.5 and qt@5.7 works too).
+
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/Cellar/qt/5.8.0_2 # or modify accordingly for qt@5.5 and qt@5.7
 	$ cd liteide/build
 	$ ./update_pkg.sh
 	$ ./build_osx_clang.sh
-	$ ./deploy_osx_qt5.sh # exclude if Qt is installed using brew for versions 5.5 and 5.7
 	$ open liteide/LiteIDE.app
+
+Warning! brew install qt rpath incorrect do not use deploy script. 
 
 ### OpenBSD
 	$ git clone https://github.com/visualfc/liteide.git
