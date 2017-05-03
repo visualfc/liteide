@@ -677,16 +677,19 @@ public:
 
     virtual void loadSession(const QString &ideName) = 0;
     virtual void saveSession(const QString &ideName) = 0;
+    virtual QStringList sessionList() const = 0;
     virtual QString currentSession() const = 0;
+
     virtual void loadState() = 0;
     virtual void saveState() = 0;
 
     virtual void appendLog(const QString &model, const QString &log, bool error = false) = 0;
     virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString()) = 0;
-signals:
+signals:    
     void loaded();
     void key_escape();
     void broadcast(QString,QString,QString);
+    void sessionListChanged();
 };
 
 class PluginInfo

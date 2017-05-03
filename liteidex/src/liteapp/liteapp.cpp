@@ -169,6 +169,10 @@ LiteApp::LiteApp()
         m_settings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this);
     }
 
+    m_sessionList = m_settings->value(LITEAPP_SESSIONLIST,"").toStringList();
+    m_sessionList.prepend("default");
+    m_sessionList.removeDuplicates();
+
     m_extension = new Extension;
 
     //install idle timer;
@@ -888,6 +892,11 @@ void LiteApp::loadSession(const QString &name)
         return;
     }
 
+    m_sessionList.append(name);
+    m_sessionList.removeDuplicates();
+
+    m_settings->setValue(LITEAPP_SESSIONLIST,m_sessionList);
+
     QString session = "session/"+name;
     QString projectName = m_settings->value(session+"_project").toString();
     QString scheme = m_settings->value(session+"_scheme").toString();
@@ -922,6 +931,8 @@ void LiteApp::loadSession(const QString &name)
             m_fileManager->openEditor(fileList.last(),true);
         }
     }
+
+    emit sessionListChanged();
 }
 
 void LiteApp::saveSession(const QString &name)
@@ -958,6 +969,11 @@ void LiteApp::saveSession(const QString &name)
     m_settings->setValue(session+"_cureditor",editorName);
     m_settings->setValue(session+"_alleditor",fileList);
     m_settings->setValue(session+"_folderList",m_fileManager->folderList());
+}
+
+QStringList LiteApp::sessionList() const
+{
+    return m_sessionList;
 }
 
 QString LiteApp::currentSession() const

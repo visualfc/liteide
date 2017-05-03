@@ -96,7 +96,9 @@ public:
 
     virtual void loadSession(const QString &ideName);
     virtual void saveSession(const QString &ideName);
+    virtual QStringList sessionList() const;
     virtual QString currentSession() const;
+
     virtual void loadState();
     virtual void saveState();
 
@@ -127,6 +129,7 @@ protected slots:
     void exit();
     void applyOption(QString id);
 protected:
+    QStringList     m_sessionList;
     QString         m_currentSession;
     QString         m_rootPath;
     QString         m_applicationPath;

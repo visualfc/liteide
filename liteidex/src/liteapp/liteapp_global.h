@@ -70,6 +70,8 @@
 
 #define LITEAPP_FILESFILTER_MAXCOUNT "LiteApp/FilesFilterMaxCount"
 
+#define LITEAPP_SESSIONLIST "LiteApp/SessionList"
+
 
 enum TOOLBAR_ICONSIZE {
     TOOLBAR_ICONSIZE_16 = 0,
