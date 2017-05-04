@@ -182,7 +182,9 @@ public:
 
     virtual void openRecent(const QString &name)
     {
-        m_liteApp->loadSession(name);
+        if (name != m_liteApp->currentSession()) {
+            m_liteApp->newInstance(name);
+        }
     }
 protected:
     LiteApi::IApplication *m_liteApp;
