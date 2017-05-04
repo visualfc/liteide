@@ -50,10 +50,6 @@ public:
     virtual IProject *openProject(const QString &fileName);
     virtual IProject *openProjectScheme(const QString &fileName, const QString &scheme);
 
-    virtual QStringList schemeList() const;
-    virtual void addRecentFile(const QString &fileName, const QString &scheme);
-    virtual void removeRecentFile(const QString &fileName, const QString &scheme);
-    virtual QStringList recentFiles(const QString &scheme) const;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const;
     //virtual IApplication* openFolderEx(const QString &folder);
     virtual QStringList folderList() const;
@@ -66,14 +62,8 @@ public:
     QString openEditorTypeFilter() const;
     bool isShowHideFiles() const;
 protected:
-    QString schemeKey(const QString &scheme) const;
-	QString schemeName(const QString &scheme) const;
     void updateFileState(const QString &fileName);
 public slots:
-    void updateRecentFileActions(const QString &scheme);
-    void openRecentFile();
-    void clearRecentFile();
-    void cleanAllRecent();
     void newFile();
     void openFiles();
     void openFolder();
@@ -100,10 +90,6 @@ protected:
     QStringList          m_changedFiles;
     bool                 m_checkActivated;
     bool                 m_fileWatcherAutoReload;
-    QAction              *m_recentSeparator;
-    QMap<QString,QMenu*> m_schemeMenuMap;
-    int         m_maxRecentFiles;
-    QMenu       *m_recentMenu;
     QAction     *m_toolWindowAct;
     QString      m_initPath;
     QMenu*       m_filterMenu;

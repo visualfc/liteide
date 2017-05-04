@@ -111,18 +111,8 @@ bool FileManager::initWithApp(IApplication *app)
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
 
-    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
     m_newFileDialog = 0;
-    m_recentMenu = m_liteApp->actionManager()->loadMenu("menu/recent");
-    QAction *clearAllRecent = new QAction(tr("Clear All History"),this);
-    m_recentSeparator = m_recentMenu->addSeparator();
-    m_recentMenu->addAction(clearAllRecent);
-    foreach (QString key, this->schemeList()) {
-        this->updateRecentFileActions(key);
-    }
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
-    connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
-    connect(clearAllRecent,SIGNAL(triggered()),this,SLOT(cleanAllRecent()));
     connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_folderListView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -147,7 +137,6 @@ FileManager::FileManager()
 
 FileManager::~FileManager()
 {
-    m_liteApp->actionManager()->removeMenu(m_recentMenu);
     delete m_fileWatcher;
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
     m_liteApp->settings()->setValue("FileManager/synceditor",m_syncEditorAct->isChecked());
@@ -254,13 +243,12 @@ void FileManager::setFolderList(const QStringList &folders)
     all.removeDuplicates();
     m_folderListView->setRootPathList(all);
     foreach (QString folder, all) {
-        addRecentFile(folder,"folder");
+        m_liteApp->recentManager()->addRecent(folder,"folder");
     }
     if (m_folderListView->rootPathList().size() == 1) {
         m_folderListView->expandFolder(m_folderListView->rootPathList().first(),true);
     }
 }
-
 
 void FileManager::addFolderList(const QString &folder)
 {
@@ -268,7 +256,7 @@ void FileManager::addFolderList(const QString &folder)
         return;
     }
     m_toolWindowAct->setChecked(true);
-    addRecentFile(folder,"folder");
+    m_liteApp->recentManager()->addRecent(folder,"folder");
     m_folderListView->expandFolder(folder,true);
 }
 
@@ -484,9 +472,9 @@ IEditor *FileManager::openEditor(const QString &_fileName, bool bActive, bool ig
         m_liteApp->editorManager()->setCurrentEditor(editor,ignoreNavigationHistory);
     }
     if (editor) {
-        addRecentFile(fileName,"file");
+        m_liteApp->recentManager()->addRecent(fileName,"file");
     } else {
-        removeRecentFile(fileName,"file");
+        m_liteApp->recentManager()->removeRecent(fileName,"file");
     }
     return editor;
 }
@@ -497,9 +485,9 @@ IProject *FileManager::openProject(const QString &_fileName)
     QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
     IProject *proj = m_liteApp->projectManager()->openProject(fileName,mimeType);
     if (proj) {
-        addRecentFile(fileName,"proj");
+        m_liteApp->recentManager()->addRecent(fileName,"proj");
     } else {
-        removeRecentFile(fileName,"proj");
+        m_liteApp->recentManager()->removeRecent(fileName,"proj");
     }
     return proj;
 }
@@ -533,41 +521,11 @@ IProject *FileManager::openProjectScheme(const QString &_fileName, const QString
     }
     IProject *proj = m_liteApp->projectManager()->openProject(QDir::fromNativeSeparators(fileName),mimeType);
     if (proj) {
-       addRecentFile(fileName,scheme);
+        m_liteApp->recentManager()->addRecent(fileName,scheme);
     } else {
-       removeRecentFile(fileName,scheme);
+        m_liteApp->recentManager()->removeRecent(fileName,scheme);
     }
     return proj;
-}
-
-QString FileManager::schemeKey(const QString &scheme) const
-{
-    return QString("Recent1/%1").arg(scheme);
-}
-
-QString FileManager::schemeName(const QString &scheme) const
-{
-	if (scheme == "session") return tr("Session");
-    else if (scheme == "proj") return tr("Project");
-    else if (scheme == "file") return tr("File");
-    else if (scheme == "folder") return tr("Folder");
-	else return scheme;
-}
-
-QStringList FileManager::recentFiles(const QString &scheme) const
-{
-    return m_liteApp->settings()->value(schemeKey(scheme)).toStringList();;
-}
-
-void FileManager::cleanAllRecent()
-{
-    QStringList keyList = this->schemeList();
-    foreach(QString key, keyList) {
-        m_liteApp->settings()->remove(schemeKey(key));
-    }
-    foreach(QString key, keyList) {
-        emit recentFilesChanged(key);
-    }
 }
 
 void FileManager::applyOption(QString id)
@@ -577,16 +535,6 @@ void FileManager::applyOption(QString id)
     }
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
-    m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
-    foreach (QString scheme, this->schemeList()) {
-        QString key = schemeKey(scheme);
-        QStringList files = m_liteApp->settings()->value(key).toStringList();
-        while (files.size() > m_maxRecentFiles) {
-            files.removeLast();
-        }
-        m_liteApp->settings()->setValue(key, files);
-        emit recentFilesChanged(scheme);
-    }
 }
 
 bool FileManager::isShowHideFiles() const
@@ -647,108 +595,6 @@ void FileManager::triggeredSyncEditor(bool b)
     if (b) {
         this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     }
-}
-
-void FileManager::updateRecentFileActions(const QString &scheme)
-{
-    QMenu *menu = m_schemeMenuMap.value(scheme,0);
-    if (!menu) {
-		QString name = schemeName(scheme);
-        QAction *act = new QAction(name,this);
-        m_recentMenu->insertAction(m_recentSeparator,act);
-        menu = new QMenu(scheme,m_recentMenu);
-        act->setMenu(menu);
-        m_schemeMenuMap.insert(scheme,menu);
-    }
-    if (!menu) {
-        return;
-    }
-    menu->clear();
-    QAction *sep = menu->addSeparator();
-    QAction *clear = menu->addAction(tr("Clear Menu"));
-    clear->setData(scheme);
-    connect(clear,SIGNAL(triggered(bool)),this,SLOT(clearRecentFile()));
-    int count = 0;
-    foreach (QString file, this->recentFiles(scheme)) {
-        if (count++ > m_maxRecentFiles) {
-            return;
-        }
-        QAction *act = new QAction(file,menu);
-        menu->insertAction(sep,act);
-        act->setData(scheme);
-        connect(act,SIGNAL(triggered()),this,SLOT(openRecentFile()));
-    }
-}
-
-void FileManager::openRecentFile()
-{
-    QAction *act = (QAction*)sender();
-    if (!act) {
-        return;
-    }
-    QString scheme = act->data().toString();
-    QString fileName = act->text();
-    if (scheme.isEmpty()) {
-        return;
-    }
-    if (scheme == "file" || scheme == "proj") {
-        this->openFile(fileName);
-    } else if (scheme == "folder") {
-        this->addFolderList(fileName);
-    } else if (scheme == "session") {
-        m_liteApp->newInstance(fileName);
-    }
-    else {
-        this->openProjectScheme(fileName,scheme);
-    }
-}
-
-void FileManager::clearRecentFile()
-{
-    QAction *act = (QAction*)sender();
-    if (act) {
-        QString scheme = act->data().toString();
-        m_liteApp->settings()->remove(schemeKey(scheme));
-        emit recentFilesChanged(scheme);
-    }
-}
-
-QStringList FileManager::schemeList() const
-{
-    QStringList list;
-    m_liteApp->settings()->beginGroup("Recent1");
-    foreach (QString key, m_liteApp->settings()->childKeys() ) {
-        list.append(key);
-    }
-    m_liteApp->settings()->endGroup();
-    return list;
-}
-
-void FileManager::addRecentFile(const QString &_fileName, const QString &scheme)
-{
-    QString fileName = QDir::toNativeSeparators(_fileName);
-    QString key = schemeKey(scheme);
-    QStringList files = m_liteApp->settings()->value(key).toStringList();
-    files.removeAll(fileName);
-    files.prepend(fileName);
-    while (files.size() > m_maxRecentFiles) {
-        files.removeLast();
-    }
-
-    m_liteApp->settings()->setValue(key, files);
-
-    emit recentFilesChanged(scheme);
-}
-
-void FileManager::removeRecentFile(const QString &_fileName, const QString &scheme)
-{
-    QString fileName = QDir::toNativeSeparators(_fileName);
-    QString key = schemeKey(scheme);
-    QStringList files = m_liteApp->settings()->value(key).toStringList();
-    files.removeAll(fileName);
-    m_liteApp->settings()->setValue(key, files);
-
-    emit recentFilesChanged(scheme);
 }
 
 void FileManager::updateFileState(const QString &fileName)

@@ -44,7 +44,8 @@ public:
     virtual void addRecent(const QString &name, const QString &type);
     virtual void removeRecent(const QString &name, const QString &type);
     virtual QStringList recentNameList(const QString &type);
-     virtual void clearRecentNameList(const QString &type);
+    virtual void clearRecentNameList(const QString &type);
+    virtual void openRecent(const QString &name, const QString &type);
 protected:
     void updateRecentMenu(const QString &type);
 public slots:
@@ -181,7 +182,7 @@ public:
 
     virtual void openRecent(const QString &name)
     {
-        m_liteApp->newInstance(name);
+        m_liteApp->loadSession(name);
     }
 protected:
     LiteApi::IApplication *m_liteApp;

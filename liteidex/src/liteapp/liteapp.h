@@ -96,8 +96,8 @@ public:
 
     virtual QList<IPlugin*> pluginList() const;
 
-    virtual void loadSession(const QString &ideName);
-    virtual void saveSession(const QString &ideName);
+    virtual void loadSession(const QString &session);
+    virtual void saveSession(const QString &session);
     virtual QStringList sessionList() const;
     virtual QString currentSession() const;
 

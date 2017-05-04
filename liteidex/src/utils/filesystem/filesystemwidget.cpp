@@ -626,7 +626,7 @@ void FileSystemWidget::treeViewContextMenuRequested(const QPoint &pos)
 void FileSystemWidget::addRootPath(const QString &path)
 {
     if (m_model->addRootPath(path)) {
-        m_liteApp->fileManager()->addRecentFile(path,"folder");
+        m_liteApp->recentManager()->addRecent(path,"folder");
         QModelIndex index = m_model->index(m_model->rowCount()-1,0,QModelIndex());
         if (index.isValid()) {
             m_tree->expand(index);

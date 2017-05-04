@@ -143,6 +143,14 @@ void RecentManager::clearRecentNameList(const QString &type)
     emit recentNameListChanged(type);
 }
 
+void RecentManager::openRecent(const QString &name, const QString &type)
+{
+    IRecent *recent = findRecent(type);
+    if (recent) {
+        recent->openRecent(name);
+    }
+}
+
 void RecentManager::updateRecentMenu(const QString &type)
 {
     IRecent *recent = findRecent(type);

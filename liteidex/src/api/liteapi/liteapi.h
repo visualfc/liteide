@@ -281,6 +281,7 @@ public:
     virtual void removeRecent(const QString &name, const QString &type) = 0;
     virtual QStringList recentNameList(const QString &type) = 0;
     virtual void clearRecentNameList(const QString &type) = 0;
+    virtual void openRecent(const QString &name, const QString &type) = 0;
 signals:
     void recentNameListChanged(const QString &type);
 };
@@ -298,11 +299,6 @@ public:
     virtual IEditor *createEditor(const QString &fileName) = 0;
     virtual IProject *openProject(const QString &fileName) = 0;
     virtual IProject *openProjectScheme(const QString &fileName, const QString &scheme) = 0;
-    // recent
-    virtual QStringList schemeList() const = 0;
-    virtual void addRecentFile(const QString &fileName, const QString &scheme) = 0;
-    virtual void removeRecentFile(const QString &fileName, const QString &scheme) = 0;
-    virtual QStringList recentFiles(const QString &scheme) const = 0;
     virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const = 0;
     //virtual IApplication* openFolderEx(const QString &folder) = 0;
     virtual QStringList folderList() const = 0;
@@ -311,7 +307,6 @@ public:
     virtual IApplication* openFolderInNewWindow(const QString &folder) = 0;
 signals:
     void fileListChanged();
-    void recentFilesChanged(QString);
     void fileWizardFinished(const QString &type, const QString &scheme, const QString &location);
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
 public slots:
@@ -757,8 +752,8 @@ public:
 
     virtual QList<IPlugin*> pluginList() const = 0;
 
-    virtual void loadSession(const QString &ideName) = 0;
-    virtual void saveSession(const QString &ideName) = 0;
+    virtual void loadSession(const QString &sessioin) = 0;
+    virtual void saveSession(const QString &sessioin) = 0;
     virtual QStringList sessionList() const = 0;
     virtual QString currentSession() const = 0;
 

@@ -596,7 +596,7 @@ QString LiteApp::ideName() const
 QString LiteApp::ideCopyright() const
 {
     static QString s_info =
-    "2011-2016(c)\n"
+    "2011-2017(c)\n"
     "visualfc@gmail.com\n"
     "\n"
     "https://github.com/visualfc/liteide\n";
@@ -890,20 +890,20 @@ void LiteApp::saveState()
 }
 
 
-void LiteApp::loadSession(const QString &name)
+void LiteApp::loadSession(const QString &session)
 {
-    if (name.isEmpty()) {
+    if (session.isEmpty()) {
         return;
     }
 
-    m_fileManager->addRecentFile(name,"session");
+    m_recentManager->addRecent(session,"session");
 
-    QString session = "session/"+name;
-    QString projectName = m_settings->value(session+"_project").toString();
-    QString scheme = m_settings->value(session+"_scheme").toString();
-    QString editorName = m_settings->value(session+"_cureditor").toString();
-    QStringList fileList = m_settings->value(session+"_alleditor").toStringList();
-    QStringList folderList = m_settings->value(session+"_folderList").toStringList();
+    QString sessionKey = "session/"+session;
+    QString projectName = m_settings->value(sessionKey+"_project").toString();
+    QString scheme = m_settings->value(sessionKey+"_scheme").toString();
+    QString editorName = m_settings->value(sessionKey+"_cureditor").toString();
+    QStringList fileList = m_settings->value(sessionKey+"_alleditor").toStringList();
+    QStringList folderList = m_settings->value(sessionKey+"_folderList").toStringList();
 
     if (m_settings->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool()) {
         m_fileManager->setFolderList(folderList);
@@ -936,9 +936,9 @@ void LiteApp::loadSession(const QString &name)
     emit sessionListChanged();
 }
 
-void LiteApp::saveSession(const QString &name)
+void LiteApp::saveSession(const QString &session)
 {
-    if (name.isEmpty()) {
+    if (session.isEmpty()) {
         return;
     }
     QString projectName;
@@ -964,17 +964,17 @@ void LiteApp::saveSession(const QString &name)
             fileList.append(ed->filePath());
         }
     }
-    QString session = "session/"+name;
-    m_settings->setValue(session+"_project",projectName);
-    m_settings->setValue(session+"_scheme",scheme);
-    m_settings->setValue(session+"_cureditor",editorName);
-    m_settings->setValue(session+"_alleditor",fileList);
-    m_settings->setValue(session+"_folderList",m_fileManager->folderList());
+    QString sessionKey = "session/"+session;
+    m_settings->setValue(sessionKey+"_project",projectName);
+    m_settings->setValue(sessionKey+"_scheme",scheme);
+    m_settings->setValue(sessionKey+"_cureditor",editorName);
+    m_settings->setValue(sessionKey+"_alleditor",fileList);
+    m_settings->setValue(sessionKey+"_folderList",m_fileManager->folderList());
 }
 
 QStringList LiteApp::sessionList() const
 {
-    return m_fileManager->recentFiles("session");
+    return m_recentManager->recentNameList("session");
 }
 
 QString LiteApp::currentSession() const
