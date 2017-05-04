@@ -129,7 +129,6 @@ protected slots:
     void exit();
     void applyOption(QString id);
 protected:
-    QStringList     m_sessionList;
     QString         m_currentSession;
     QString         m_rootPath;
     QString         m_applicationPath;

@@ -169,10 +169,6 @@ LiteApp::LiteApp()
         m_settings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this);
     }
 
-    m_sessionList = m_settings->value(LITEAPP_SESSIONLIST,"").toStringList();
-    m_sessionList.prepend("default");
-    m_sessionList.removeDuplicates();
-
     m_extension = new Extension;
 
     //install idle timer;
@@ -892,10 +888,7 @@ void LiteApp::loadSession(const QString &name)
         return;
     }
 
-    m_sessionList.append(name);
-    m_sessionList.removeDuplicates();
-
-    m_settings->setValue(LITEAPP_SESSIONLIST,m_sessionList);
+    m_fileManager->addRecentFile(name,"session");
 
     QString session = "session/"+name;
     QString projectName = m_settings->value(session+"_project").toString();
@@ -973,7 +966,7 @@ void LiteApp::saveSession(const QString &name)
 
 QStringList LiteApp::sessionList() const
 {
-    return m_sessionList;
+    return m_fileManager->recentFiles("session");
 }
 
 QString LiteApp::currentSession() const

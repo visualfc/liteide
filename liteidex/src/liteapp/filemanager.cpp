@@ -691,7 +691,10 @@ void FileManager::openRecentFile()
         this->openFile(fileName);
     } else if (scheme == "folder") {
         this->addFolderList(fileName);
-    } else {
+    } else if (scheme == "session") {
+        m_liteApp->newInstance(fileName);
+    }
+    else {
         this->openProjectScheme(fileName,scheme);
     }
 }
