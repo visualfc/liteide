@@ -163,7 +163,7 @@ void GoplayBrowser::run()
     if (!m_editFile.isEmpty()) {
         m_editor->saveAs(m_editFile);
     }
-    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     QString go = FileUtil::lookPath("go",env,false);
     QStringList args;
     args << "run";
