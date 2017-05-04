@@ -262,7 +262,7 @@ void FileManager::addFolderList(const QString &folder)
 
 IApplication* FileManager::openFolderInNewWindow(const QString &folder)
 {
-    IApplication *app = m_liteApp->newInstance("");
+    IApplication *app = m_liteApp->newInstance("dir:"+QDir(folder).dirName());
     app->fileManager()->setFolderList(QStringList() << folder);
     return app;
 }

@@ -38,6 +38,7 @@ public:
 signals:
     void aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
 public slots:
+    virtual void openInNewWindow();
     virtual void openEditor();
     virtual void newFile();
     virtual void newFileWizard();
@@ -57,6 +58,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     QFileInfo m_contextInfo;
     QModelIndex m_contextIndex;
+    QAction *m_openInNewWindowAct;
     QAction *m_openEditorAct;
     QAction *m_newFileAct;
     QAction *m_newFileWizardAct;

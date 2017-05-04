@@ -69,6 +69,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     this->header()->setStretchLastSection(false);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
+    m_openInNewWindowAct = new QAction(tr("Open In New Window"),this);
     m_openEditorAct = new QAction(tr("Open File"),this);
     m_newFileAct = new QAction(tr("New File..."),this);
     m_newFileWizardAct = new QAction(tr("New File Wizard..."),this);
@@ -90,6 +91,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 
     m_closeAllFoldersAct = new QAction(tr("Close All Folders"),this);
 
+    connect(m_openInNewWindowAct,SIGNAL(triggered()),this,SLOT(openInNewWindow()));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
     connect(m_newFileAct,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(m_newFileWizardAct,SIGNAL(triggered()),this,SLOT(newFileWizard()));
@@ -118,6 +120,13 @@ QDir BaseFolderView::contextDir() const
 QFileInfo BaseFolderView::contextFileInfo() const
 {
     return m_contextInfo;
+}
+
+void BaseFolderView::openInNewWindow()
+{
+    if (m_contextInfo.isDir()) {
+        m_liteApp->fileManager()->openFolderInNewWindow(m_contextInfo.filePath());
+    }
 }
 
 void BaseFolderView::openEditor()

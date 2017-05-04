@@ -155,6 +155,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
     if (flag == LiteApi::FILESYSTEM_ROOT) {
         menu.addAction(m_openFolderAct);
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+        menu.addAction(m_openInNewWindowAct);
+        menu.addSeparator();
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
         menu.addAction(m_newFolderAct);
@@ -169,6 +171,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
+        menu.addAction(m_openInNewWindowAct);
+        menu.addSeparator();
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
         menu.addAction(m_newFolderAct);
