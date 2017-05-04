@@ -59,6 +59,7 @@ protected:
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *event);
     virtual void changeEvent(QEvent *e);
+    virtual bool event(QEvent *event);
 signals:
     void fullScreenStateChanged(bool b);
 public slots:
@@ -66,10 +67,16 @@ public slots:
     void currentEditorChanged(LiteApi::IEditor *editor);
     void editorModifyChanged(LiteApi::IEditor *editor, bool b);
     void about();
+    void triggeredWindowsAct();
 protected:
     IApplication     *m_liteApp;
     QAction          *m_aboutAct;
     QSplitter *m_mainSplitter;
+protected:
+    void setActiveWindowAction(QWidget *window);
+    void setWindowTitle(const QString &name, const QString &filePath, bool isModify);
+    static QMap<QWidget*, QAction *> s_windowActions;
+    static QMenu       *s_macDocMenu;
 };
 
 

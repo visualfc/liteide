@@ -160,6 +160,7 @@ LiteApp::LiteApp()
       m_storagePath(LiteApp::getStoragePath())
 {    
     s_appList.append(this);
+
     QSettings global(m_resourcePath+"/liteapp/config/global.ini",QSettings::IniFormat);
     bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
 

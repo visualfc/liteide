@@ -53,6 +53,8 @@
 #endif
 //lite_memory_check_end
 
+QMenu* MainWindow::s_macDocMenu = 0;
+QMap<QWidget*, QAction*> MainWindow::s_windowActions;
 
 MainWindow::MainWindow(IApplication *app, QWidget *parent)
     : ToolMainWindow(parent),
@@ -72,6 +74,22 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent)
 
     m_mainSplitter = new QSplitter(Qt::Vertical,this);
     setCentralWidget(m_mainSplitter);
+
+#if QT_VERSION >= 0x050200
+#ifdef Q_OS_OSX
+    if (!s_macDocMenu) {
+        s_macDocMenu = new QMenu;
+        s_macDocMenu->setAsDockMenu();
+    }
+    if (s_macDocMenu) {
+        QAction *act = new QAction("macOS",this);
+        act->setCheckable(true);
+        s_macDocMenu->addAction(act);
+        connect(act,SIGNAL(triggered(bool)),this,SLOT(triggeredWindowsAct()));
+        s_windowActions.insert(this,act);
+    }
+#endif
+#endif
 }
 
 QSplitter *MainWindow::splitter()
@@ -87,6 +105,7 @@ void MainWindow::setWindowStyle(IWindowStyle *style)
 
 MainWindow::~MainWindow()
 {
+    s_windowActions.remove(this);
     delete m_liteApp;
 }
 
@@ -114,6 +133,14 @@ void MainWindow::changeEvent(QEvent *e)
         bool b = (windowState() & Qt::WindowFullScreen) != 0;
         emit fullScreenStateChanged(b);
     }
+}
+
+bool MainWindow::event(QEvent *event)
+{
+    if (event->type() == QEvent::WindowActivate) {
+        setActiveWindowAction(this);
+    }
+    return ToolMainWindow::event(event);
 }
 
 void MainWindow::setFullScreen(bool b)
@@ -152,28 +179,52 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
 }
 
+void MainWindow::setWindowTitle(const QString &name, const QString &filePath, bool isModify)
+{
+    QAction *act = s_windowActions.value(this);
+    if (act) {
+        QString title = QString("(%1)").arg(m_liteApp->currentSession());
+        if (!name.isEmpty()) {
+            title = name + " - "+title;
+        }
+        act->setText(title);
+    }
+
+    QString title = QString("LiteIDE (%1)").arg(m_liteApp->currentSession());
+    if (!filePath.isEmpty()) {
+        QString path = QDir::toNativeSeparators(filePath);
+        if (isModify) {
+            path += "*";
+        }
+        title = path + " - "+title;
+    } else if (!name.isEmpty()) {
+        title = name + " - "+title;
+    }
+    ToolMainWindow::setWindowTitle(title);
+}
+
 void MainWindow::currentEditorChanged(IEditor *editor)
 {
-    QString title = QString("LiteIDE (%1)").arg(m_liteApp->currentSession());
-    if (editor && !editor->filePath().isEmpty()) {
-        title += " - " + editor->filePath();
-        if (editor->isModified()) {
-            title += " * ";
-        }
+    QString name;
+    QString filePath;
+    bool isModified = false;
+    if (editor) {
+        name = editor->name();
+        filePath = editor->filePath();
+        isModified = editor->isModified();
     }
-    this->setWindowTitle(QDir::toNativeSeparators(title));
+    this->setWindowTitle(name,filePath,isModified);
 }
 
 void MainWindow::editorModifyChanged(IEditor *editor, bool b)
 {
-    QString title = QString("LiteIDE (%1)").arg(m_liteApp->currentSession());
-    if (editor && !editor->filePath().isEmpty()) {
-        title += " - " + editor->filePath();
-        if (b == true) {
-            title += " * ";
-        }
-        this->setWindowTitle(QDir::toNativeSeparators(title));
+    QString name;
+    QString filePath;
+    if (editor) {
+        name = editor->name();
+        filePath = editor->filePath();
     }
+    this->setWindowTitle(name,filePath,b);
 }
 
 void MainWindow::about()
@@ -181,5 +232,33 @@ void MainWindow::about()
     AboutDialog *dlg = new AboutDialog(m_liteApp,m_liteApp->mainWindow());
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->exec();
+}
+
+void MainWindow::triggeredWindowsAct()
+{
+    QAction *act = (QAction*)sender();
+    if (!act) {
+        return;
+    }
+    QWidget *widget = s_windowActions.key(act,0);
+    if (!widget) {
+        return;
+    }
+    QWidget *window = widget->window();
+    if (window == this) {
+        act->setChecked(true);
+        this->setWindowState(windowState() & ~Qt::WindowMinimized);
+    }
+    window->raise();
+    window->activateWindow();
+}
+
+void MainWindow::setActiveWindowAction(QWidget *window)
+{
+    QMapIterator<QWidget*,QAction*> it(s_windowActions);
+    while (it.hasNext()) {
+        it.next();
+        it.value()->setChecked(it.key() == window);
+    }
 }
 
