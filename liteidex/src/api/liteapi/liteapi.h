@@ -211,11 +211,59 @@ public:
     IRecent(QObject *parent = 0) : QObject(parent) {}
     virtual QString type() const = 0;
     virtual QString displyType() const = 0;
-    virtual void addRecent(const QString &name) = 0;
+    virtual void addRecent(const QString &name, int maxRecent) = 0;
     virtual void removeRecent(const QString &name) = 0;
-    virtual QStringList recentNameList() const = 0;
-    virtual void clearRecent() = 0;
+    virtual QStringList recentNameList() = 0;
+    virtual void clearRecentNameList() = 0;
     virtual void openRecent(const QString &name) = 0;
+};
+
+class ISettingRecent : public IRecent
+{
+    Q_OBJECT
+public:
+    ISettingRecent(QSettings *setting, QObject *parent) : IRecent(parent), m_settings(setting)
+    {
+    }
+
+    virtual void addRecent(const QString &name, int maxRecent)
+    {
+        QString key = recentKey();
+        QStringList files = m_settings->value(key).toStringList();
+        files.removeAll(name);
+        files.prepend(name);
+        while (files.size() > maxRecent) {
+            files.removeLast();
+        }
+        m_settings->setValue(key, files);
+    }
+
+    virtual void removeRecent(const QString &name)
+    {
+        QString key = recentKey();
+        QStringList values = m_settings->value(key).toStringList();
+        values.removeAll(name);
+        m_settings->setValue(key, values);
+    }
+
+    virtual QStringList recentNameList()
+    {
+        QString key = recentKey();
+        return m_settings->value(key).toStringList();;
+    }
+
+    virtual void clearRecentNameList()
+    {
+        QString key = recentKey();
+        m_settings->remove(key);
+    }
+protected:
+    QString recentKey() const
+    {
+        return QString("Recent1/%1").arg(type());
+    }
+protected:
+    QSettings   *m_settings;
 };
 
 class IRecentManager : public IManager
@@ -226,12 +274,13 @@ public:
 
     virtual void registerRecent(IRecent *recent) = 0;
     virtual QList<IRecent*> recentList() const = 0;
-    IRecent *findRecent(const QString &type) const = 0;
+    virtual IRecent *findRecent(const QString &type) const = 0;
     virtual QStringList recentTypeList() const = 0;
 
     virtual void addRecent(const QString &name, const QString &type) = 0;
     virtual void removeRecent(const QString &name, const QString &type) = 0;
-    virtual void recentNameList(const QString &type) = 0;
+    virtual QStringList recentNameList(const QString &type) = 0;
+    virtual void clearRecentNameList(const QString &type) = 0;
 signals:
     void recentNameListChanged(const QString &type);
 };
@@ -688,6 +737,7 @@ public:
     virtual IOptionManager  *optionManager() = 0;
     virtual IToolWindowManager *toolWindowManager() = 0;
     virtual IHtmlWidgetManager *htmlWidgetManager() = 0;
+    virtual IRecentManager *recentManager() = 0;
 
     virtual QMainWindow *mainWindow() const = 0;
     virtual QSettings *settings() = 0;

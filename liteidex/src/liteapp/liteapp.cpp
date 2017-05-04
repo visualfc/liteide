@@ -31,6 +31,7 @@
 #include "optionmanager.h"
 #include "toolwindowmanager.h"
 #include "htmlwidgetmanager.h"
+#include "recentmanager.h"
 #include "mainwindow.h"
 #include "liteappoptionfactory.h"
 #include "folderprojectfactory.h"
@@ -195,6 +196,7 @@ LiteApp::LiteApp()
     m_editorManager = new EditorManager;
     m_mimeTypeManager = new MimeTypeManager;
     m_optionManager = new OptionManager;
+    m_recentManager = new RecentManager;
 
     m_goProxy = new GoProxy(this);
     m_actionManager->initWithApp(this);
@@ -203,6 +205,7 @@ LiteApp::LiteApp()
 
     m_toolWindowManager->initWithApp(this);
     m_mimeTypeManager->initWithApp(this);
+    m_recentManager->initWithApp(this);
     m_projectManager->initWithApp(this);
     m_fileManager->initWithApp(this);
     m_editorManager->initWithApp(this);
@@ -523,6 +526,11 @@ IToolWindowManager *LiteApp::toolWindowManager()
 IHtmlWidgetManager *LiteApp::htmlWidgetManager()
 {
     return m_htmlWidgetManager;
+}
+
+IRecentManager *LiteApp::recentManager()
+{
+    return m_recentManager;
 }
 
 QMainWindow *LiteApp::mainWindow() const

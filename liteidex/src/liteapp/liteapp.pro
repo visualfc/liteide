@@ -80,7 +80,8 @@ SOURCES += main.cpp\
     sidewindowstyle.cpp \
     outputoption.cpp \
     openeditorswidget.cpp \
-    idletimer.cpp
+    idletimer.cpp \
+    recentmanager.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -114,7 +115,8 @@ HEADERS  += mainwindow.h \
     sidewindowstyle.h \
     outputoption.h \
     openeditorswidget.h \
-    idletimer.h
+    idletimer.h \
+    recentmanager.h
 
 FORMS += \
     aboutdialog.ui \

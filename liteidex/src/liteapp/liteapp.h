@@ -43,6 +43,7 @@ class OptionManager;
 class ToolWindowManager;
 class HtmlWidgetManager;
 class QuickOpenManager;
+class RecentManager;
 class QSettings;
 class QSplitter;
 class QComboBox;
@@ -75,6 +76,7 @@ public:
     virtual IOptionManager  *optionManager();
     virtual IToolWindowManager *toolWindowManager();
     virtual IHtmlWidgetManager *htmlWidgetManager();
+    virtual IRecentManager *recentManager();
 
     virtual QMainWindow *mainWindow() const;
     virtual QSettings *settings();
@@ -141,6 +143,7 @@ protected:
     MainWindow      *m_mainwindow;
     ToolWindowManager *m_toolWindowManager;
     HtmlWidgetManager *m_htmlWidgetManager;
+    RecentManager     *m_recentManager;
     ActionManager  *m_actionManager;
     ProjectManager *m_projectManager;
     EditorManager   *m_editorManager;
