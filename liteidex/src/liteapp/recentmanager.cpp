@@ -103,9 +103,7 @@ void RecentManager::addRecent(const QString &name, const QString &type)
     }
     recent->addRecent(name,m_maxRecentFiles);
 
-    updateRecentMenu(type);
-
-    emit recentNameListChanged(type);
+    updateAppListRecentMenu(type);
 }
 
 void RecentManager::removeRecent(const QString &name, const QString &type)
@@ -116,9 +114,7 @@ void RecentManager::removeRecent(const QString &name, const QString &type)
     }
     recent->removeRecent(name);
 
-    updateRecentMenu(type);
-
-    emit recentNameListChanged(type);
+    updateAppListRecentMenu(type);
 }
 
 QStringList RecentManager::recentNameList(const QString &type)
@@ -138,9 +134,7 @@ void RecentManager::clearRecentNameList(const QString &type)
     }
     recent->clearRecentNameList();
 
-    updateRecentMenu(type);
-
-    emit recentNameListChanged(type);
+    updateAppListRecentMenu(type);
 }
 
 void RecentManager::openRecent(const QString &name, const QString &type)
@@ -186,6 +180,14 @@ void RecentManager::updateRecentMenu(const QString &type)
     }
 }
 
+void RecentManager::updateAppListRecentMenu(const QString &type)
+{
+    foreach (IApplication *app, m_liteApp->instanceList()) {
+        app->recentManager()->updateRecentMenu(type);
+        emit app->recentManager()->recentNameListChanged(type);
+    }
+}
+
 void RecentManager::applyOption(const QString &opt)
 {
     if (opt != OPTION_LITEAPP) {
@@ -223,8 +225,7 @@ void RecentManager::clearAllRecentMenu()
 {
     foreach (IRecent *recent, m_recentList) {
         recent->clearRecentNameList();
-        updateRecentMenu(recent->type());
-        emit recentNameListChanged(recent->type());
+        updateAppListRecentMenu(recent->type());
     }
 }
 

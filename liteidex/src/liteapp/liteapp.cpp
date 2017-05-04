@@ -142,7 +142,14 @@ PluginManager *LiteApp::pluginManager()
     return &manager;
 }
 
+QList<IApplication *> LiteApp::appList()
+{
+    return s_appList;
+}
+
 QMap<QString,QVariant> LiteApp::s_cookie;
+
+QList<IApplication*> LiteApp::s_appList;
 
 LiteApp::LiteApp()
     : m_rootPath(LiteApp::getRootPath()),
@@ -152,6 +159,7 @@ LiteApp::LiteApp()
       m_resourcePath(LiteApp::getResoucePath()),
       m_storagePath(LiteApp::getStoragePath())
 {    
+    s_appList.append(this);
     QSettings global(m_resourcePath+"/liteapp/config/global.ini",QSettings::IniFormat);
     bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
 
@@ -399,6 +407,7 @@ void LiteApp::load(const QString &sessionName, IApplication *baseApp)
 
 LiteApp::~LiteApp()
 {
+    s_appList.removeAll(this);
     cleanup();
 }
 
@@ -486,6 +495,11 @@ IGoProxy *LiteApp::createGoProxy(QObject *parent)
 IApplication *LiteApp::newInstance(const QString &sessionName)
 {
     return LiteApp::NewApplication(sessionName,this);
+}
+
+QList<IApplication *> LiteApp::instanceList() const
+{
+    return s_appList;
 }
 
 IEditorManager *LiteApp::editorManager()

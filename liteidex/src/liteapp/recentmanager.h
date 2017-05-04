@@ -46,8 +46,9 @@ public:
     virtual QStringList recentNameList(const QString &type);
     virtual void clearRecentNameList(const QString &type);
     virtual void openRecent(const QString &name, const QString &type);
+    virtual void updateRecentMenu(const QString &type);
 protected:
-    void updateRecentMenu(const QString &type);
+    void updateAppListRecentMenu(const QString &type);
 public slots:
     void applyOption(const QString &opt);
     void openRecentAction();

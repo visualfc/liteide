@@ -61,11 +61,13 @@ public:
     static QString getStoragePath();
     static IApplication* NewApplication(const QString &sessionName, IApplication *base = 0);
     static PluginManager *pluginManager();
+    static QList<IApplication*> appList();
 public:
     LiteApp();    
     virtual ~LiteApp();    
     virtual IExtension *extension();
     virtual IApplication *newInstance(const QString &sessionName);
+    virtual QList<IApplication*> instanceList() const;
     virtual bool hasGoProxy() const;
     virtual IGoProxy *createGoProxy(QObject *parent);
     virtual IProjectManager *projectManager();
@@ -157,6 +159,7 @@ protected:
     AppIdleTimer     *m_idleTimer;
 public:
     static QMap<QString,QVariant> s_cookie;
+    static QList<IApplication*> s_appList;
 protected:
     QAction     *m_newAct;
     QAction     *m_openFileAct;

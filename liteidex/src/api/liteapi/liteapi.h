@@ -282,6 +282,7 @@ public:
     virtual QStringList recentNameList(const QString &type) = 0;
     virtual void clearRecentNameList(const QString &type) = 0;
     virtual void openRecent(const QString &name, const QString &type) = 0;
+    virtual void updateRecentMenu(const QString &type) = 0;
 signals:
     void recentNameListChanged(const QString &type);
 };
@@ -722,6 +723,7 @@ class IApplication : public IObject
 public:
     virtual ~IApplication() {}
     virtual IApplication    *newInstance(const QString &session) = 0;
+    virtual QList<IApplication*> instanceList() const = 0;
     virtual bool hasGoProxy() const = 0;
     virtual IGoProxy *createGoProxy(QObject *parent) = 0;
     virtual IProjectManager *projectManager() = 0;
