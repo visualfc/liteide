@@ -204,6 +204,38 @@ enum FILESYSTEM_CONTEXT_FLAG {
     FILESYSTEM_FILES
 };
 
+class IRecent : public QObject
+{
+    Q_OBJECT
+public:
+    IRecent(QObject *parent = 0) : QObject(parent) {}
+    virtual QString type() const = 0;
+    virtual QString displyType() const = 0;
+    virtual void addRecent(const QString &name) = 0;
+    virtual void removeRecent(const QString &name) = 0;
+    virtual QStringList recentNameList() const = 0;
+    virtual void clearRecent() = 0;
+    virtual void openRecent(const QString &name) = 0;
+};
+
+class IRecentManager : public IManager
+{
+    Q_OBJECT
+public:
+    IRecentManager(QObject *parent = 0) : IManager(parent) {}
+
+    virtual void registerRecent(IRecent *recent) = 0;
+    virtual QList<IRecent*> recentList() const = 0;
+    IRecent *findRecent(const QString &type) const = 0;
+    virtual QStringList recentTypeList() const = 0;
+
+    virtual void addRecent(const QString &name, const QString &type) = 0;
+    virtual void removeRecent(const QString &name, const QString &type) = 0;
+    virtual void recentNameList(const QString &type) = 0;
+signals:
+    void recentNameListChanged(const QString &type);
+};
+
 class IFileManager : public IManager
 {
     Q_OBJECT
