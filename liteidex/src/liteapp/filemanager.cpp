@@ -114,15 +114,15 @@ bool FileManager::initWithApp(IApplication *app)
     m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
     m_newFileDialog = 0;
     m_recentMenu = m_liteApp->actionManager()->loadMenu("menu/recent");
-    QAction *cleanAct = new QAction(tr("Clear History"),this);
+    QAction *clearAllRecent = new QAction(tr("Clear All History"),this);
     m_recentSeparator = m_recentMenu->addSeparator();
-    m_recentMenu->addAction(cleanAct);
+    m_recentMenu->addAction(clearAllRecent);
     foreach (QString key, this->schemeList()) {
         this->updateRecentFileActions(key);
     }
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
     connect(this,SIGNAL(recentFilesChanged(QString)),this,SLOT(updateRecentFileActions(QString)));
-    connect(cleanAct,SIGNAL(triggered()),this,SLOT(cleanRecent()));
+    connect(clearAllRecent,SIGNAL(triggered()),this,SLOT(cleanAllRecent()));
     connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_folderListView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -559,7 +559,7 @@ QStringList FileManager::recentFiles(const QString &scheme) const
     return m_liteApp->settings()->value(schemeKey(scheme)).toStringList();;
 }
 
-void FileManager::cleanRecent()
+void FileManager::cleanAllRecent()
 {
     QStringList keyList = this->schemeList();
     foreach(QString key, keyList) {
@@ -663,14 +663,18 @@ void FileManager::updateRecentFileActions(const QString &scheme)
     if (!menu) {
         return;
     }
-    menu->clear();;
+    menu->clear();
+    QAction *sep = menu->addSeparator();
+    QAction *clear = menu->addAction(tr("Clear Menu"));
+    clear->setData(scheme);
+    connect(clear,SIGNAL(triggered(bool)),this,SLOT(clearRecentFile()));
     int count = 0;
     foreach (QString file, this->recentFiles(scheme)) {
         if (count++ > m_maxRecentFiles) {
             return;
         }
         QAction *act = new QAction(file,menu);
-        menu->addAction(act);
+        menu->insertAction(sep,act);
         act->setData(scheme);
         connect(act,SIGNAL(triggered()),this,SLOT(openRecentFile()));
     }
@@ -696,6 +700,16 @@ void FileManager::openRecentFile()
     }
     else {
         this->openProjectScheme(fileName,scheme);
+    }
+}
+
+void FileManager::clearRecentFile()
+{
+    QAction *act = (QAction*)sender();
+    if (act) {
+        QString scheme = act->data().toString();
+        m_liteApp->settings()->remove(schemeKey(scheme));
+        emit recentFilesChanged(scheme);
     }
 }
 

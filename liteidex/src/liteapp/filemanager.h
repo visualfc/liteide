@@ -72,6 +72,8 @@ protected:
 public slots:
     void updateRecentFileActions(const QString &scheme);
     void openRecentFile();
+    void clearRecentFile();
+    void cleanAllRecent();
     void newFile();
     void openFiles();
     void openFolder();
@@ -85,7 +87,6 @@ public slots:
     void editorCreated(LiteApi::IEditor*);
     void editorAboutToClose(LiteApi::IEditor*);
     void checkForReload();
-    void cleanRecent();
     void applyOption(QString);
     void showHideFiles(bool);
     void activatedFolderView(const QModelIndex &index);
