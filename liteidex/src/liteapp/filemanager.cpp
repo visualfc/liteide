@@ -341,8 +341,7 @@ void FileManager::openFolderNewWindow()
        if (dir.cdUp()) {
            m_initPath = dir.path();
        }
-       IApplication *app = m_liteApp->newInstance("dir:"+dir.dirName());
-       app->fileManager()->setFolderList(QStringList() << folder);
+       this->openFolderInNewWindow(folder);
    }
 }
 
