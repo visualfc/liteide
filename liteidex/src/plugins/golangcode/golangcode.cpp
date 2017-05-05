@@ -58,9 +58,9 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_autoUpdatePkg(false)
 {
     g_gocodeInstCount++;
-    m_gocodeProcess = new QProcess(this);
-    m_gocodeSetProcess = new QProcess(this);
-    m_importProcess = new QProcess(this);
+    m_gocodeProcess = new Process(this);
+    m_gocodeSetProcess = new Process(this);
+    m_importProcess = new Process(this);
     m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
     m_gocodeSetProcess->setWorkingDirectory(m_liteApp->applicationPath());
     connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
@@ -91,6 +91,9 @@ void GolangCode::applyOption(QString id)
         args << "true";
     } else {
         args << "false";
+    }
+    if (!m_gocodeSetProcess->isStop()) {
+        m_gocodeSetProcess->stop(100);
     }
     m_gocodeSetProcess->start(m_gocodeCmd,args);
 }
@@ -343,9 +346,8 @@ void GolangCode::loadPkgList()
 
 void GolangCode::loadImportsList()
 {
-    if (m_importProcess->state() != QProcess::NotRunning) {
-        m_importProcess->kill();
-        m_importProcess->waitForFinished(200);
+    if (!m_importProcess->isStop()) {
+        m_importProcess->stop(100);
     }
 
     QString cmd = LiteApi::getGotools(m_liteApp);
@@ -446,7 +448,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
 //       // qDebug() << pre << m_completer->completer()->completionPrefix();
 //       // return;
 //    }
-    if (m_gocodeProcess->state() != QProcess::NotRunning) {
+    if (!m_gocodeProcess->isStop()) {
         return;
     }
     int offset = -1;

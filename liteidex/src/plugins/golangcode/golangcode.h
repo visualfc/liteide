@@ -28,6 +28,7 @@
 #include "liteeditorapi/liteeditorapi.h"
 #include "liteenvapi/liteenvapi.h"
 #include "golangastapi/golangastapi.h"
+#include "processex/processex.h"
 
 class QProcess;
 class QLabel;
@@ -96,9 +97,9 @@ protected:
     QString     m_prefix;
     QString     m_lastPrefix;
     QFileInfo   m_fileInfo;
-    QProcess   *m_gocodeProcess;
-    QProcess   *m_gocodeSetProcess;
-    QProcess   *m_importProcess;
+    Process   *m_gocodeProcess;
+    Process   *m_gocodeSetProcess;
+    Process   *m_importProcess;
     QByteArray  m_writeData;
     LiteApi::IEnvManager *m_envManager;
     LiteApi::IGolangAst *m_golangAst;
