@@ -282,7 +282,7 @@ public:
 
 void EditorManager::addEditor(IEditor *editor)
 {
-    QWidget *w = m_widgetEditorMap.key(editor);
+    QWidget *w = m_widgetEditorMap.key(editor,0);
     if (w == 0) {
         w = editor->widget();
         if (w == 0) {
@@ -661,7 +661,7 @@ void EditorManager::toggleBrowserAction(bool b)
 {
     QAction *act = (QAction*)sender();
     if (act) {
-        IEditor *editor = m_browserActionMap.key(act);
+        IEditor *editor = m_browserActionMap.key(act,0);
         if (editor) {
             if (b) {
                 addEditor(editor);

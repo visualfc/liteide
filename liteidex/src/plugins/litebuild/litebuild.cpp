@@ -1579,7 +1579,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
 void LiteBuild::enterTextBuildOutput(QString text)
 {
-    if (!m_process->isStop()) {
+    if (m_process->isStop()) {
         return;
     }
     QTextCodec *codec = QTextCodec::codecForLocale();
