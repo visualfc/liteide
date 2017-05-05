@@ -38,7 +38,7 @@ public:
 public slots:
     void handleActivated(const QModelIndex &index);
     void updateCurrentItem(LiteApi::IEditor *editor);
-    void contextMenuRequested(QPoint pos);
+    void contextMenuRequested(QPoint);
     void activateEditor(const QModelIndex &index);
     void closeDocument(const QModelIndex &index);
 protected:

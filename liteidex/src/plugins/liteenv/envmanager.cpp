@@ -352,44 +352,44 @@ void EnvManager::emitEnvChanged()
     emit currentEnvChanged(m_curEnv);
 }
 
-static QString defaultEnvid()
-{
-#ifdef Q_OS_WIN
-    if (QSysInfo::WordSize == 32) {
-        return "win32";
-    } else {
-        return "win64";
-    }
-#endif
-#ifdef Q_OS_LINUX
-    if (QSysInfo::WordSize == 32) {
-        return "linux32";
-    } else {
-        return "linux64";
-    }
-#endif
-#ifdef Q_OS_DARWIN
-    if (QSysInfo::WordSize == 32) {
-        return "darwin32";
-    } else {
-        return "darwin64";
-    }
-#endif
-#ifdef Q_OS_FREEBSD
-    if (QSysInfo::WordSize == 32) {
-        return "freebsd32";
-    } else {
-        return "freebsd64";
-    }
-#endif
-#ifdef Q_OS_OPENBSD
-    if (QSysInfo::WordSize == 32) {
-        return "openbsd32";
-    } else {
-        return "openbsd64";
-    }
-#endif
-}
+//static QString defaultEnvid()
+//{
+//#ifdef Q_OS_WIN
+//    if (QSysInfo::WordSize == 32) {
+//        return "win32";
+//    } else {
+//        return "win64";
+//    }
+//#endif
+//#ifdef Q_OS_LINUX
+//    if (QSysInfo::WordSize == 32) {
+//        return "linux32";
+//    } else {
+//        return "linux64";
+//    }
+//#endif
+//#ifdef Q_OS_DARWIN
+//    if (QSysInfo::WordSize == 32) {
+//        return "darwin32";
+//    } else {
+//        return "darwin64";
+//    }
+//#endif
+//#ifdef Q_OS_FREEBSD
+//    if (QSysInfo::WordSize == 32) {
+//        return "freebsd32";
+//    } else {
+//        return "freebsd64";
+//    }
+//#endif
+//#ifdef Q_OS_OPENBSD
+//    if (QSysInfo::WordSize == 32) {
+//        return "openbsd32";
+//    } else {
+//        return "openbsd64";
+//    }
+//#endif
+//}
 
 bool EnvManager::initWithApp(LiteApi::IApplication *app)
 {

@@ -207,7 +207,7 @@ MultiIndexModel::MultiIndexModel(MultiIndexModelPrivate &dd, QObject* parent)
 
 }
 
-bool MultiIndexModel::lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const
+bool MultiIndexModel::lessThan(const QAbstractItemModel */*sourceModel*/, const QModelIndex &left, const QModelIndex &right) const
 {
     Q_D(const MultiIndexModel);
     QVariant l = (left.model() ? left.model()->data(left, d->sort_role) : QVariant());
@@ -277,12 +277,12 @@ int MultiIndexModel::columnCount(const QModelIndex& parent) const
 bool MultiIndexModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent)
 {
     //Q_ASSERT(parent.isValid() ? parent.model() == this : true);
-    Q_D(MultiIndexModel);
+   // Q_D(MultiIndexModel);
     SourceModelIndex source = mapToSourceEx(parent);
     return source.model->dropMimeData(data, action, row, column,source.index);
 }
 
-QMap<QModelIndex,Mapping*>::iterator MultiIndexModelPrivate::createMapping(QAbstractItemModel *model, const QModelIndex &parent, bool forceUpdate, const QString &context) const
+QMap<QModelIndex,Mapping*>::iterator MultiIndexModelPrivate::createMapping(QAbstractItemModel *model, const QModelIndex &parent, bool forceUpdate, const QString &/*context*/) const
 {        
     QMap<QModelIndex,Mapping*>::iterator it = modelMapping[model].find(parent);
     if (it == modelMapping[model].end()) {
@@ -614,7 +614,7 @@ QModelIndexList MultiIndexModel::match(const QModelIndex& start, int role, const
 QModelIndex MultiIndexModel::parent(const QModelIndex& child) const
 {
     Q_ASSERT(child.isValid() ? child.model() == this : true);
-    Q_D(const MultiIndexModel);
+    //Q_D(const MultiIndexModel);
     if (!child.isValid()) {
         return QModelIndex();
     }
@@ -999,7 +999,7 @@ void MultiIndexModelPrivate::sort(QAbstractItemModel *sourceModel )
     emit q->layoutChanged();
 }
 
-void MultiIndexModelPrivate::_q_sourceRowsAboutToBeInserted(const QModelIndex &parent, int start, int end)
+void MultiIndexModelPrivate::_q_sourceRowsAboutToBeInserted(const QModelIndex &parent, int /*start*/, int /*end*/)
 {
     //Q_ASSERT(parent.isValid() ? parent.model() == model : true);
     //Q_Q(MultiIndexModel);

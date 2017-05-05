@@ -91,7 +91,7 @@ void OpenEditorsWidget::updateCurrentItem(LiteApi::IEditor *editor)
     scrollTo(currentIndex());
 }
 
-void OpenEditorsWidget::contextMenuRequested(QPoint pos)
+void OpenEditorsWidget::contextMenuRequested(QPoint /*pos*/)
 {
 
 }

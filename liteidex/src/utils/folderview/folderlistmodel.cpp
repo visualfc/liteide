@@ -803,7 +803,7 @@ void FolderListModel::sourceModelReset()
     this->endResetModel();
 }
 
-void FolderListModel::sourceRowsAboutToBeInserted(const QModelIndex &parent, int start, int end)
+void FolderListModel::sourceRowsAboutToBeInserted(const QModelIndex &/*parent*/, int /*start*/, int /*end*/)
 {
     //Q_ASSERT(parent.isValid() ? parent.model() == m_model : true);
     //this->beginInsertRows(this->mapFromSource(parent), start, end);
