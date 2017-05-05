@@ -211,7 +211,7 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     if (info.suffix() != "go") {
         return;
     }
-    if (m_process->isRunning()) {
+    if (!m_process->isStop()) {
         return;
     }
     QPlainTextEdit *edit = LiteApi::getPlainTextEdit(editor);

@@ -5,6 +5,7 @@ include(../../liteideplugin.pri)
 include (../../api/liteenvapi/liteenvapi.pri)
 include(../../api/golangdocapi/golangdocapi.pri)
 include (../../utils/fileutil/fileutil.pri)
+include (../../utils/processex/processex.pri)
 include (../../utils/symboltreeview/symboltreeview.pri)
 include (../../3rdparty/qjson/qjson.pri)
 

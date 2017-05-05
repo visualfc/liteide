@@ -50,7 +50,6 @@ class ProcessEx : public Process
     Q_OBJECT
 public:
     ProcessEx(QObject *parent);
-    ~ProcessEx();
 signals:
     void extOutput(const QByteArray &data,bool bError);
     void extFinish(bool error,int code, QString msg);

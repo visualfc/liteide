@@ -813,7 +813,7 @@ void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
 void GolangEdit::runSourceQuery(const QString &action)
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    if (m_sourceQueryProcess->isRunning()) {
+    if (!m_sourceQueryProcess->isStop()) {
         return;
     }
     int offset = -1;
@@ -883,7 +883,7 @@ void GolangEdit::runSourceQuery(const QString &action)
 
 void GolangEdit::runSourceQueryByInfo(const QString &action)
 {
-    if (m_sourceQueryProcess->isRunning()) {
+    if (!m_sourceQueryProcess->isStop()) {
         return;
     }
 

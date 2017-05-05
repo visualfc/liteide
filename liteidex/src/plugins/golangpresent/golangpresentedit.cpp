@@ -348,12 +348,7 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
         connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
         connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
     }
-    if (m_process->isRunning()) {
-        m_process->waitForFinished(3000);
-        if (m_process->isRunning()) {
-            return false;
-        }
-    }
+    m_process->stop(200);
     m_exportData.clear();
     m_errorMsg.clear();
     m_process->setUserData(0,type);

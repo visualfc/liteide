@@ -168,9 +168,9 @@ void GoplayBrowser::run()
     QStringList args;
     args << "run";
     args << "goplay.go";
-    if (m_process->isRunning()) {
-        m_process->kill();
-    }
+
+    m_process->stop(100);
+
     m_output->clear();
     m_output->appendTag(tr("Running...")+"\n\n");
     m_process->setEnvironment(env.toStringList());
@@ -180,11 +180,7 @@ void GoplayBrowser::run()
 
 void GoplayBrowser::stop()
 {
-    if (m_process->isRunning()) {
-        if (!m_process->waitForFinished(100)) {
-            m_process->kill();
-        }
-    }
+    m_process->stop(100);
 }
 
 void GoplayBrowser::runOutput(const QByteArray &data,bool)

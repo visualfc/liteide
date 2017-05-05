@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include <QProcess>
 
+class Process;
 class GoTool : public QObject
 {
     Q_OBJECT
@@ -39,7 +40,7 @@ public:
     QStringList liteGopath() const;
     void setProcessEnvironment(const QProcessEnvironment &environment);
     void setLiteGopath(const QStringList &pathList);
-    bool isRuning() const;
+    bool isStop() const;
     void kill();
     void setWorkDir(const QString &dir);
     QString workDir() const;
@@ -59,7 +60,7 @@ protected slots:
     void readOutput();
 protected:
     LiteApi::IApplication *m_liteApp;
-    QProcess *m_process;
+    Process *m_process;
     QString m_gotool;
     QByteArray m_stdOutput;
     QByteArray m_stdError;

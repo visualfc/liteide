@@ -374,12 +374,7 @@ LiteBuild::~LiteBuild()
 
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
 {
-    if (m_process->isRunning()) {
-        if (!m_process->waitForFinished(1000)) {
-            m_process->kill();
-        }
-        m_process->waitForFinished(100);
-    }
+    m_process->stop(200);
     m_process->setWorkingDirectory(workDir);
     QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
     if (gocmd.isEmpty()) {
@@ -650,7 +645,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         m_output->append("go bin not found!",Qt::red);
         return;
     }
-    if (!m_process->isRunning()) {
+    if (!m_process->isStop()) {
         m_output->updateExistsTextColor();
         m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
         this->execCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
@@ -1405,11 +1400,11 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
         m_output->updateExistsTextColor(true);
     }
     m_outputAct->setChecked(true);
-    if (m_process->isRunning()) {        
+    if (!m_process->isStop()) {
         if (ba->isKillOld()) {
             m_output->append(tr("Killing current process...")+"\n");
-            m_process->kill();
-            if (!m_process->waitForFinished(1000)) {
+            m_process->stop(100);
+            if (!m_process->isStop()) {
                 m_output->append(tr("Failed to terminate the existing process!")+"\n",Qt::red);
                 return;
             }
@@ -1443,7 +1438,7 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
 
 void LiteBuild::execAction(const QString &mime, const QString &id)
 {
-    if (m_process->isRunning()) {
+    if (!m_process->isStop()) {
         return;
     }
 
@@ -1584,7 +1579,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
 void LiteBuild::enterTextBuildOutput(QString text)
 {
-    if (!m_process->isRunning()) {
+    if (!m_process->isStop()) {
         return;
     }
     QTextCodec *codec = QTextCodec::codecForLocale();

@@ -24,6 +24,7 @@
 #include "gotool.h"
 #include "liteenvapi/liteenvapi.h"
 #include "fileutil/fileutil.h"
+#include "processex/processex.h"
 #include <QProcess>
 #include <QDir>
 #include <QDebug>
@@ -41,7 +42,7 @@ GoTool::GoTool(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent),
     m_liteApp(app)
 {
-    m_process = new QProcess(this);
+    m_process = new Process(this);
     connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readError()));
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readOutput()));
     connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SIGNAL(error(QProcess::ProcessError)));
@@ -102,18 +103,14 @@ void GoTool::reloadEnv()
     m_process->setProcessEnvironment(env);
 }
 
-bool GoTool::isRuning() const
+bool GoTool::isStop() const
 {
-    return m_process->state() == QProcess::Running;
+    return m_process->isStop();
 }
 
 void GoTool::kill()
 {
-    if (m_process->state() != QProcess::NotRunning) {
-        if (!m_process->waitForFinished(200)) {
-            m_process->kill();
-        }
-    }
+    m_process->stop(200);
 }
 
 void  GoTool::setProcessEnvironment(const QProcessEnvironment &environment)

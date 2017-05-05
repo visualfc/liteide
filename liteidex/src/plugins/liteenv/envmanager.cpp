@@ -24,6 +24,7 @@
 #include "envmanager.h"
 #include "liteenv_global.h"
 #include "fileutil/fileutil.h"
+#include "processex/processex.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -125,14 +126,11 @@ void Env::reload()
 void Env::loadGoEnv()
 {
     if (!m_process) {
-        m_process = new QProcess(this);
+        m_process = new Process(this);
         connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdout()));
         connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStderr()));
     }
-    if (m_process->state() != QProcess::NotRunning) {
-        m_process->kill();
-        m_process->waitForFinished(100);
-    }
+    m_process->stop(100);
     m_goEnvMap.clear();
     QString gocmd = FileUtil::lookPath("go",m_env,false);
     if (gocmd.isEmpty()) {

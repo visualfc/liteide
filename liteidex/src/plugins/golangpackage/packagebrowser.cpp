@@ -184,7 +184,7 @@ void PackageBrowser::reloadAll()
 //        return;
 //    }
     m_liteApp->appendLog("GolangPackages","reload all packages");
-    if (m_goTool->isRuning()) {
+    if (!m_goTool->isStop()) {
         return;
     }
     m_goTool->reloadEnv();

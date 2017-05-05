@@ -29,6 +29,7 @@
 class QComboBox;
 
 class EnvManager;
+class Process;
 class Env : public LiteApi::IEnv
 {
     Q_OBJECT
@@ -58,7 +59,7 @@ protected:
     QProcessEnvironment m_env;
     QMap<QString,QString> m_ideEnvMap;
     QMap<QString,QString> m_goEnvMap;
-    QProcess *m_process;
+    Process *m_process;
 };
 
 class EnvManager : public LiteApi::IEnvManager
