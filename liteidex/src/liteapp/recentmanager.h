@@ -49,6 +49,7 @@ public:
     virtual void updateRecentMenu(const QString &type);
 protected:
     void updateAppListRecentMenu(const QString &type);
+    void emitRecentNameListChanged(const QString &type);
 public slots:
     void applyOption(const QString &opt);
     void openRecentAction();

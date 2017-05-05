@@ -184,8 +184,13 @@ void RecentManager::updateAppListRecentMenu(const QString &type)
 {
     foreach (IApplication *app, m_liteApp->instanceList()) {
         app->recentManager()->updateRecentMenu(type);
-        emit app->recentManager()->recentNameListChanged(type);
+        ((RecentManager*)app->recentManager())->emitRecentNameListChanged(type);
     }
+}
+
+void RecentManager::emitRecentNameListChanged(const QString &type)
+{
+    emit recentNameListChanged(type);
 }
 
 void RecentManager::applyOption(const QString &opt)
