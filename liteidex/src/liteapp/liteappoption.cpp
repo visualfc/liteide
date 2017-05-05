@@ -507,7 +507,7 @@ void LiteAppOption::autoLoadLastSessionToggled(bool b)
     ui->startupReloadFilesCheckBox->setEnabled(b);
 }
 
-void LiteAppOption::autoIdleSaveDocumentsToggled(bool b)
+void LiteAppOption::autoIdleSaveDocumentsToggled(bool /*b*/)
 {
 
 }

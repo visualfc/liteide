@@ -32,7 +32,10 @@ class Process : public QProcess
     Q_OBJECT
 public:
     Process(QObject *parent);
+    virtual ~Process();
     bool isRunning() const;
+    bool isStop() const;
+    void stop(int ms);
     void startEx(const QString &cmd, const QString &args);
     static bool startDetachedEx(const QString& cmd, const QStringList &args);
 public:
@@ -42,18 +45,12 @@ protected:
     QMap<int,QVariant> m_idVarMap;
 };
 
-class ProcessEx : public QProcess
+class ProcessEx : public Process
 {
     Q_OBJECT
 public:
     ProcessEx(QObject *parent);
     ~ProcessEx();
-    void setUserData(int id, const QVariant &data);
-    QVariant userData(int id) const;
-    bool isRunning() const;
-    bool isStop() const;
-    void startEx(const QString &cmd, const QString &args);
-    static bool startDetachedEx(const QString& cmd, const QStringList &args);
 signals:
     void extOutput(const QByteArray &data,bool bError);
     void extFinish(bool error,int code, QString msg);
@@ -66,8 +63,6 @@ protected slots:
 public:
     static QString exitStatusText(int code,QProcess::ExitStatus status);
     static QString processErrorText(QProcess::ProcessError code);
-protected:
-    QMap<int,QVariant> m_idVarMap;
 private:
     bool m_suppressFinish;
 };

@@ -954,7 +954,7 @@ void LiteApp::loadSession(const QString &session)
 
 void LiteApp::saveSession(const QString &session)
 {
-    if (session.isEmpty()) {
+    if (session.isEmpty() || session == "empty") {
         return;
     }
     QString projectName;

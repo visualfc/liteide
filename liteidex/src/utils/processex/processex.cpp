@@ -81,7 +81,7 @@ QString ProcessEx::processErrorText(QProcess::ProcessError code)
 }
 
 ProcessEx::ProcessEx(QObject *parent)
-    : QProcess(parent), m_suppressFinish(false)
+    : Process(parent), m_suppressFinish(false)
 {
     connect(this,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(slotStateChanged(QProcess::ProcessState)));
     connect(this,SIGNAL(readyReadStandardOutput()),this,SLOT(slotReadOutput()));
@@ -89,34 +89,6 @@ ProcessEx::ProcessEx(QObject *parent)
     connect(this,SIGNAL(error(QProcess::ProcessError)),this,SLOT(slotError(QProcess::ProcessError)));
     connect(this,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slotFinished(int,QProcess::ExitStatus)));
 }
-
-ProcessEx::~ProcessEx()
-{
-    if (isRunning()) {
-        this->kill();
-    }
-}
-
-bool ProcessEx::isRunning() const
-{
-    return this->state() == QProcess::Running;
-}
-
-bool ProcessEx::isStop() const
-{
-    return this->state() == QProcess::NotRunning;
-}
-
-void ProcessEx::setUserData(int id, const QVariant &data)
-{
-    m_idVarMap.insert(id,data);
-}
-
-QVariant ProcessEx::userData(int id) const
-{
-    return m_idVarMap.value(id);
-}
-
 
 void ProcessEx::slotStateChanged(QProcess::ProcessState newState)
 {
@@ -167,38 +139,37 @@ void ProcessEx::slotReadError()
     emit extOutput(this->readAllStandardError(),true);
 }
 
-void ProcessEx::startEx(const QString &cmd, const QString &args)
-{
-#ifdef Q_OS_WIN
-    this->setNativeArguments(args);
-    if (cmd.indexOf(" ")) {
-        this->start("\""+cmd+"\"");
-    } else {
-        this->start(cmd);
-    }
-#else
-    this->start(cmd+" "+args);
-#endif
-}
-
-bool ProcessEx::startDetachedEx(const QString& cmd, const QStringList &args)
-{
-#ifdef Q_OS_WIN
-    return (intptr_t)ShellExecuteW(NULL, NULL, (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), NULL, SW_HIDE) > 32;
-#else
-    return QProcess::startDetached(cmd, args);
-#endif
-}
-
-
 Process::Process(QObject *parent) : QProcess(parent)
 {
 
 }
 
+Process::~Process()
+{
+    stop(1);
+}
+
 bool Process::isRunning() const
 {
     return this->state() == QProcess::Running;
+}
+
+bool Process::isStop() const
+{
+    return this->state() == QProcess::NotRunning;
+}
+
+void Process::stop(int ms)
+{
+    if (!isStop()) {
+        terminate();
+        closeReadChannel(QProcess::StandardOutput);
+        closeReadChannel(QProcess::StandardError);
+        waitForFinished(ms);
+        if (!isStop()) {
+            kill();
+        }
+    }
 }
 
 void Process::startEx(const QString &cmd, const QString &args)
