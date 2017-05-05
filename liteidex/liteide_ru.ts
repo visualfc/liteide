@@ -294,6 +294,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Failed to delete the folder!</source>
         <translation>Не удалось удалить папку!</translation>
     </message>
+    <message>
+        <source>Open In New Window</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BuildConfigDialog</name>
@@ -842,6 +846,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>File System</source>
         <translation>Файловая система</translation>
     </message>
+    <message>
+        <source>Show Details</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileBrowserOption</name>
@@ -904,19 +912,19 @@ Do you want to load?</oldsource>
     </message>
     <message>
         <source>Session</source>
-        <translation>Сессия</translation>
+        <translation type="obsolete">Сессия</translation>
     </message>
     <message>
         <source>Project</source>
-        <translation>Проект</translation>
+        <translation type="obsolete">Проект</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation type="obsolete">Файл</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation>Папка</translation>
+        <translation type="obsolete">Папка</translation>
     </message>
     <message>
         <source>%1
@@ -980,7 +988,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Clear History</source>
-        <translation>Очистить историю</translation>
+        <translation type="obsolete">Очистить историю</translation>
     </message>
     <message>
         <source>Open Project</source>
@@ -989,6 +997,17 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
+    </message>
+    <message>
+        <source>Show Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FileRecent</name>
+    <message>
+        <source>Files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1329,7 +1348,7 @@ Do you want to reload the file from disk?</source>
     </message>
     <message>
         <source>Rebuild database</source>
-        <translation>Перестроить базу данных</translation>
+        <translation type="obsolete">Перестроить базу данных</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1496,13 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Failed to delete the folder!</source>
         <translation>Не удалось удалить папку!</translation>
+    </message>
+</context>
+<context>
+    <name>FolderRecent</name>
+    <message>
+        <source>Folders</source>
+        <translation type="unfinished">Папки</translation>
     </message>
 </context>
 <context>
@@ -2141,11 +2167,11 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Reload folders on startup</source>
-        <translation>Обновлять папки при запуске</translation>
+        <translation type="obsolete">Обновлять папки при запуске</translation>
     </message>
     <message>
         <source>Reload files on startup</source>
-        <translation>Обновлять файлы при запуске</translation>
+        <translation type="obsolete">Обновлять файлы при запуске</translation>
     </message>
     <message>
         <source>Display</source>
@@ -2279,6 +2305,10 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload files in session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3277,6 +3307,33 @@ PDF...</translation>
     </message>
 </context>
 <context>
+    <name>MultiFolderView</name>
+    <message>
+        <source>Delete Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
+        <translation type="unfinished">Удалить эту папку со всем содержимым?</translation>
+    </message>
+    <message>
+        <source>Failed to delete the folder!</source>
+        <translation type="unfinished">Не удалось удалить папку!</translation>
+    </message>
+    <message>
+        <source>Delete File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to permanently delete this file?</source>
+        <translation type="unfinished">Удалить этот файл навсегда?</translation>
+    </message>
+    <message>
+        <source>Failed to delete the file!</source>
+        <translation type="unfinished">Не удалось удалить файл!</translation>
+    </message>
+</context>
+<context>
     <name>NewFileDialog</name>
     <message>
         <source>New Project or File</source>
@@ -3722,6 +3779,17 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RecentManager</name>
+    <message>
+        <source>Clear All History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchEdit</name>
     <message>
         <source>Search</source>
@@ -3763,6 +3831,13 @@ Do you want to replace it?</source>
         <source>Select the working directory:</source>
         <oldsource>Select Working Directory</oldsource>
         <translation>Выбор рабочего каталога</translation>
+    </message>
+</context>
+<context>
+    <name>SessionRecent</name>
+    <message>
+        <source>Sessions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -120,12 +120,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation>謝辞...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="572"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="566"/>
         <source>License</source>
         <translation>ライセンス</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="613"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="607"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -205,170 +205,175 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
     <name>BaseFolderView</name>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="72"/>
+        <source>Open In New Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
         <source>Open File</source>
         <translation type="unfinished">ファイルを開く</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
         <source>New File...</source>
         <translation type="unfinished">新しいファイル...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
         <source>New File Wizard...</source>
         <translation type="unfinished">新規ファイルウィザード</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
         <source>Rename File...</source>
         <translation type="unfinished">ファイル名の変更...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="209"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="215"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="218"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="224"/>
         <source>Delete File</source>
         <translation type="unfinished">ファイルを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>New Folder...</source>
         <translation type="unfinished">新しいフォルダ...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
         <source>Rename Folder...</source>
         <translation type="unfinished">フォルダ名の変更...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="279"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="286"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="288"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="295"/>
         <source>Delete Folder</source>
         <translation type="unfinished">フォルダを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
         <source>Open Terminal Here</source>
         <translation type="unfinished">ここでターミナルを開く</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="84"/>
         <source>Open Explorer Here</source>
         <translation type="unfinished">ここでエクスプローラを開く</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="86"/>
         <source>Use godoc View</source>
         <oldsource>View Godoc Here</oldsource>
         <translation type="unfinished">ここでGodocを見る</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="88"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">フォルダを追加...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="88"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
         <source>Reload Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="90"/>
         <source>Close Folder</source>
         <translation type="unfinished">フォルダを閉じる</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="91"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="92"/>
         <source>Close All Folders</source>
         <translation type="unfinished">全てのフォルダを閉じる</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="143"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="153"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="152"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="162"/>
         <source>Create File</source>
         <translation type="unfinished">ファイルを作成</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="144"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="153"/>
         <source>A file with that name already exists!</source>
         <translation type="unfinished">ファイル名は既に使用されています!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="154"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="163"/>
         <source>Failed to create the file!</source>
         <translation type="unfinished">ファイルの作成に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="184"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="190"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="195"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="193"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="204"/>
         <source>Rename File</source>
         <translation type="unfinished">ファイル名を変更</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="184"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="193"/>
         <source>New Name:</source>
         <translation type="unfinished">新しい名前</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="191"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="196"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="200"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="205"/>
         <source>Failed to rename the file!</source>
         <translation type="unfinished">ファイル名の変更に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="210"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="219"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">このファイルを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="216"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="225"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="234"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="237"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="243"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="246"/>
         <source>Create Folder</source>
         <translation type="unfinished">フォルダを作成</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="235"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
         <source>A folder with that name already exists!</source>
         <translation type="unfinished">フォルダ名は既に使用されています!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="247"/>
         <source>Failed to create the folder!</source>
         <translation type="unfinished">フォルダの作成に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="260"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="265"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="269"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="274"/>
         <source>Rename Folder</source>
         <translation type="unfinished">フォルダ名を変更</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="260"/>
         <source>Folder Name</source>
         <translation type="unfinished">フォルダ名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="261"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="266"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="270"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="275"/>
         <source>Failed to rename the folder!</source>
         <translation type="unfinished">フォルダ名の変更に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="280"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="289"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="296"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
@@ -681,25 +686,25 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 <context>
     <name>EnvManager</name>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="398"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="401"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
         <translation>環境ツールバー</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="405"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="408"/>
         <source>Switching current environment</source>
         <oldsource>Switch Current Environment</oldsource>
         <translation type="unfinished">環境</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="408"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="411"/>
         <source>Edit current environment</source>
         <oldsource>Edit Current Environment</oldsource>
         <translation type="unfinished">環境を編集</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="409"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="412"/>
         <source>Reload current environment</source>
         <oldsource>Reload Current Environment</oldsource>
         <translation type="unfinished"></translation>
@@ -975,54 +980,59 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="88"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="97"/>
         <source>Synchronize with editor</source>
         <translation>エディタと同期</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="93"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="102"/>
         <source>Show Hidden Files</source>
         <translation>非表示ファイルを表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="144"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="155"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation>フォルダをルートへ設定</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="100"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="118"/>
         <source>Execute File</source>
         <translation type="unfinished">ファイルを実行</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="91"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="100"/>
         <source>Reload Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="109"/>
+        <source>Show Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="156"/>
         <source>Open Folder in New Window</source>
         <translation>新しいウィンドウでフォルダを開く</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="146"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="157"/>
         <source>Add to Folders</source>
         <translation>フォルダを追加</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="137"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation>親ディレクトリを開く</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="154"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="165"/>
         <source>Filter</source>
         <translation type="unfinished">フィルタ</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="171"/>
         <source>File System</source>
         <translation>ファイルシステム</translation>
     </message>
@@ -1060,12 +1070,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation>全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="402"/>
+        <location filename="src/liteapp/filemanager.cpp" line="403"/>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="403"/>
+        <location filename="src/liteapp/filemanager.cpp" line="404"/>
         <source>Project &apos;%1&apos; has been created.
 Do you want to open it now?</source>
         <oldsource>Project &apos;%1&apos; is created.
@@ -1074,17 +1084,22 @@ Do you want to load?</oldsource>
 読み込みますか?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="308"/>
+        <location filename="src/liteapp/filemanager.cpp" line="307"/>
         <source>Open Project or File</source>
         <translation>プロジェクトもしくはファイルを開く...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="83"/>
+        <location filename="src/liteapp/filemanager.cpp" line="81"/>
         <source>Show Hidden Files</source>
         <translation>非表示ファイルを表示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="99"/>
+        <location filename="src/liteapp/filemanager.cpp" line="92"/>
+        <source>Show Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/filemanager.cpp" line="109"/>
         <source>Folders</source>
         <oldsource>Folers</oldsource>
         <translation>フォルダ</translation>
@@ -1097,34 +1112,30 @@ Do you want to load?</oldsource>
         <translation>サポートしている全てのファイル(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="321"/>
-        <location filename="src/liteapp/filemanager.cpp" line="339"/>
+        <location filename="src/liteapp/filemanager.cpp" line="320"/>
+        <location filename="src/liteapp/filemanager.cpp" line="338"/>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>フォルダを選択:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="536"/>
         <source>Session</source>
-        <translation>セッション</translation>
+        <translation type="obsolete">セッション</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="537"/>
         <source>Project</source>
-        <translation>プロジェクト</translation>
+        <translation type="obsolete">プロジェクト</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="538"/>
         <source>File</source>
-        <translation>ファイル</translation>
+        <translation type="obsolete">ファイル</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="539"/>
         <source>Folder</source>
-        <translation>フォルダ</translation>
+        <translation type="obsolete">フォルダ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="796"/>
+        <location filename="src/liteapp/filemanager.cpp" line="673"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1134,7 +1145,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="803"/>
+        <location filename="src/liteapp/filemanager.cpp" line="680"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -1142,7 +1153,7 @@ Do you want to close the editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="833"/>
+        <location filename="src/liteapp/filemanager.cpp" line="710"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1152,7 +1163,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="840"/>
+        <location filename="src/liteapp/filemanager.cpp" line="717"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -1160,37 +1171,44 @@ Do you want to reload the file from disk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="358"/>
+        <location filename="src/liteapp/filemanager.cpp" line="356"/>
         <source>Open Files</source>
         <translation>ファイルを開く...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="90"/>
+        <location filename="src/liteapp/filemanager.cpp" line="99"/>
         <source>Synchronize with editor</source>
         <translation type="unfinished">エディタと同期</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="94"/>
+        <location filename="src/liteapp/filemanager.cpp" line="103"/>
         <source>Filter</source>
         <translation type="unfinished">フィルタ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="107"/>
         <source>Clear History</source>
-        <translation>履歴をクリア</translation>
+        <translation type="obsolete">履歴をクリア</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="371"/>
+        <location filename="src/liteapp/filemanager.cpp" line="369"/>
         <source>Open Project</source>
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="800"/>
-        <location filename="src/liteapp/filemanager.cpp" line="805"/>
-        <location filename="src/liteapp/filemanager.cpp" line="837"/>
-        <location filename="src/liteapp/filemanager.cpp" line="842"/>
+        <location filename="src/liteapp/filemanager.cpp" line="677"/>
+        <location filename="src/liteapp/filemanager.cpp" line="682"/>
+        <location filename="src/liteapp/filemanager.cpp" line="714"/>
+        <location filename="src/liteapp/filemanager.cpp" line="719"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
+    </message>
+</context>
+<context>
+    <name>FileRecent</name>
+    <message>
+        <location filename="src/liteapp/recentmanager.h" line="82"/>
+        <source>Files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1589,12 +1607,12 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FindApiEdit</name>
     <message>
-        <location filename="src/plugins/golangdoc/findapiwidget.h" line="70"/>
+        <location filename="src/plugins/golangdoc/findapiwidget.h" line="73"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangdoc/findapiwidget.h" line="71"/>
+        <location filename="src/plugins/golangdoc/findapiwidget.h" line="74"/>
         <source>Stop Search</source>
         <translation>検索を中断</translation>
     </message>
@@ -1602,20 +1620,19 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FindApiWidget</name>
     <message>
-        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="269"/>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="284"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="282"/>
-        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="315"/>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="305"/>
+        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="337"/>
         <source>Find</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangdoc/findapiwidget.cpp" line="313"/>
         <source>Rebuild database</source>
-        <translation>データベースを再構成</translation>
+        <translation type="obsolete">データベースを再構成</translation>
     </message>
 </context>
 <context>
@@ -1805,36 +1822,44 @@ Do you want to reload the file from disk?</source>
     </message>
 </context>
 <context>
+    <name>FolderRecent</name>
+    <message>
+        <location filename="src/liteapp/recentmanager.h" line="113"/>
+        <source>Folders</source>
+        <translation type="unfinished">フォルダ</translation>
+    </message>
+</context>
+<context>
     <name>FolderView</name>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="148"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="158"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="160"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="170"/>
         <source>Delete File</source>
         <translation type="unfinished">ファイルを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="149"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="161"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">このファイルを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="159"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="171"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="171"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="181"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="183"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="193"/>
         <source>Delete Folder</source>
         <translation type="unfinished">フォルダを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="172"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="184"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="182"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="194"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
@@ -2256,43 +2281,43 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>GoplayBrowser</name>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="82"/>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="145"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="70"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="132"/>
         <source>Go Playground</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="84"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="72"/>
         <source>Run</source>
         <translation>実行</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="85"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="73"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="86"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="74"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="87"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="75"/>
         <source>Load...</source>
         <translation>読み込み...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="88"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="76"/>
         <source>Save...</source>
         <translation>保存...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="89"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="77"/>
         <source>Explore Folder</source>
         <translation>フォルダを探索</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="168"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="175"/>
         <source>Running...</source>
         <oldsource>Running...
 
@@ -2300,36 +2325,36 @@ Do you want to reload the file from disk?</source>
         <translation>起動中...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="192"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="195"/>
         <source>Error: %1.</source>
         <oldsource>
 Error: %1.</oldsource>
         <translation>エラー: %1</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="194"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="197"/>
         <source>Success: %2.</source>
         <oldsource>
 Success: %2.</oldsource>
         <translation>成功: %2</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="244"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="247"/>
         <source>Load File</source>
         <translation>ファイルを読み込む</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="244"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="247"/>
         <source>Select a file to load:</source>
         <translation>読み込むファイルを選択:</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="260"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="263"/>
         <source>Save File</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="260"/>
+        <location filename="src/plugins/golangplay/goplaybrowser.cpp" line="263"/>
         <source>New File Name:</source>
         <translation>新しいファイルの名前:</translation>
     </message>
@@ -2431,113 +2456,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="246"/>
+        <location filename="src/liteapp/liteapp.cpp" line="269"/>
         <source>Event Log</source>
         <translation>イベントログ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="233"/>
+        <location filename="src/liteapp/liteapp.cpp" line="256"/>
         <source>Escape</source>
         <translation>エスケープ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="681"/>
+        <location filename="src/liteapp/liteapp.cpp" line="726"/>
         <source>Close File</source>
         <translation>ファイルを閉じる</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="684"/>
+        <location filename="src/liteapp/liteapp.cpp" line="729"/>
         <source>Close All Files</source>
         <translation>全てのファイルを閉じる</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="694"/>
+        <location filename="src/liteapp/liteapp.cpp" line="739"/>
         <source>Save File</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="697"/>
+        <location filename="src/liteapp/liteapp.cpp" line="742"/>
         <source>Save File As...</source>
         <translation>名前を付けてファイルを保存...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="700"/>
+        <location filename="src/liteapp/liteapp.cpp" line="745"/>
         <source>Save All Files</source>
         <translation>全てのファイルを保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="687"/>
+        <location filename="src/liteapp/liteapp.cpp" line="732"/>
         <source>Open Project</source>
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="249"/>
+        <location filename="src/liteapp/liteapp.cpp" line="272"/>
         <source>Options</source>
         <translation>オプション</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="658"/>
+        <location filename="src/liteapp/liteapp.cpp" line="703"/>
         <source>New...</source>
         <translation>新規...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="661"/>
+        <location filename="src/liteapp/liteapp.cpp" line="706"/>
         <source>Open File...</source>
         <translation>ファイルを開く...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="664"/>
+        <location filename="src/liteapp/liteapp.cpp" line="709"/>
         <source>Open Folder...</source>
         <translation>フォルダを開く...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="667"/>
+        <location filename="src/liteapp/liteapp.cpp" line="712"/>
         <source>Open Folder in New Window...</source>
         <translation>新しいウィンドウでフォルダを開く...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="672"/>
+        <location filename="src/liteapp/liteapp.cpp" line="717"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">フォルダを追加...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="675"/>
+        <location filename="src/liteapp/liteapp.cpp" line="720"/>
         <source>New Window</source>
         <translation>新しいウィンドウ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="678"/>
+        <location filename="src/liteapp/liteapp.cpp" line="723"/>
         <source>Close Window</source>
         <translation>ウィンドウを閉じる</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="689"/>
+        <location filename="src/liteapp/liteapp.cpp" line="734"/>
         <source>Save Project</source>
         <translation>プロジェクトを保存</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="691"/>
+        <location filename="src/liteapp/liteapp.cpp" line="736"/>
         <source>Close Project</source>
         <translation>プロジェクトを閉じる</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="703"/>
+        <location filename="src/liteapp/liteapp.cpp" line="748"/>
         <source>Exit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="706"/>
+        <location filename="src/liteapp/liteapp.cpp" line="754"/>
         <source>Full Screen</source>
         <translation>全画面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="710"/>
+        <location filename="src/liteapp/liteapp.cpp" line="758"/>
         <source>About LiteIDE</source>
         <translation>Liteide について</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="716"/>
+        <location filename="src/liteapp/liteapp.cpp" line="764"/>
         <source>About Plugins</source>
         <translation>プラグインについて</translation>
     </message>
@@ -2561,13 +2586,18 @@ Success: %2.</oldsource>
         <translation>言語:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="285"/>
+        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <source>Reload files in session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="257"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation>最近使用したファイル</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="291"/>
+        <location filename="src/liteapp/liteappoption.ui" line="263"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>最大個数:</translation>
@@ -2619,94 +2649,92 @@ Success: %2.</oldsource>
         <translation>元のファイルが変更/削除された場合、自動でリロード/クローズする</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="209"/>
-        <location filename="src/liteapp/liteappoption.ui" line="215"/>
+        <location filename="src/liteapp/liteappoption.ui" line="208"/>
+        <location filename="src/liteapp/liteappoption.ui" line="214"/>
         <source>Session</source>
         <translation>セクション</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="246"/>
         <source>Reload folders on startup</source>
-        <translation>起動時にフォルダを再読み込み</translation>
+        <translation type="obsolete">起動時にフォルダを再読み込み</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="273"/>
         <source>Reload files on startup</source>
-        <translation>起動時にファイルを再読み込み</translation>
+        <translation type="obsolete">起動時にファイルを再読み込み</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="352"/>
+        <location filename="src/liteapp/liteappoption.ui" line="324"/>
         <source>Display</source>
         <translation>表示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="358"/>
+        <location filename="src/liteapp/liteappoption.ui" line="330"/>
         <source>Display [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="364"/>
+        <location filename="src/liteapp/liteappoption.ui" line="336"/>
         <source>Show splash screen on startup</source>
         <translation>起動時にスプラッシュ画面を表示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="371"/>
+        <location filename="src/liteapp/liteappoption.ui" line="343"/>
         <source>Show welcome page on startup</source>
         <translation>起動時にようこそのページを表示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="381"/>
+        <location filename="src/liteapp/liteappoption.ui" line="353"/>
         <source>Editor tab [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="387"/>
+        <location filename="src/liteapp/liteappoption.ui" line="359"/>
         <source>Show close buttons on each editor tab</source>
         <translation>タブ毎に閉じるボタンを表示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="394"/>
+        <location filename="src/liteapp/liteappoption.ui" line="366"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="404"/>
+        <location filename="src/liteapp/liteappoption.ui" line="376"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="477"/>
+        <location filename="src/liteapp/liteappoption.ui" line="449"/>
         <source>Keyboard</source>
         <translation>キーボード</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="483"/>
+        <location filename="src/liteapp/liteappoption.ui" line="455"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>整形: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="495"/>
+        <location filename="src/liteapp/liteappoption.ui" line="467"/>
         <source>Hide standard commands</source>
         <translation>標準コマンドを隠す</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="502"/>
+        <location filename="src/liteapp/liteappoption.ui" line="474"/>
         <source>Reset</source>
         <translation>リセット</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="509"/>
+        <location filename="src/liteapp/liteappoption.ui" line="481"/>
         <source>Reset All</source>
         <translation>全てをリセット</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="529"/>
+        <location filename="src/liteapp/liteappoption.ui" line="501"/>
         <source>Import...</source>
         <translation>インポート...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="536"/>
+        <location filename="src/liteapp/liteappoption.ui" line="508"/>
         <source>Export...</source>
         <translation>エクスポート...</translation>
     </message>
@@ -2721,7 +2749,7 @@ Success: %2.</oldsource>
         <translation>テーマ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="221"/>
+        <location filename="src/liteapp/liteappoption.ui" line="220"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation>起動時にセッションを再読み込み</translation>
@@ -2868,53 +2896,53 @@ Success: %2.</oldsource>
         <translation>ビルドオプション</translation>
     </message>
     <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="644"/>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="650"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="656"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>現在の環境は id &quot;%1&quot; を変更します</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="983"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="977"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1321"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1315"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>エラー: %1</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1324"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1318"/>
         <source>Command exited with code %1.</source>
         <translation>コマンドはコード %1 で終了しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1326"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1320"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>成功: %1</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1362"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1415"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1359"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1412"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>プロセスが実行中です。まずアクションを停止して下さい。</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1408"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1405"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>このプロセスを強制終了する...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1411"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1408"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
@@ -2927,14 +2955,14 @@ Success: %2.</oldsource>
         <translation type="obsolete">&gt; アクション &apos;%1&apos; が解析出来ません</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1562"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1559"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>プロセスの起動に成功しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1562"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1559"/>
         <source>Failed to start process</source>
         <translation>プロセスの起動に失敗しました</translation>
     </message>
@@ -3285,49 +3313,50 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="612"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="694"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="695"/>
         <source>Advanced</source>
         <translation>高度な操作</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="638"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="712"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="713"/>
         <source>Goto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="656"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="729"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="663"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="736"/>
         <source>Code Folding</source>
         <translation>コードの折りたたみ</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="662"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="657"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="730"/>
         <source>Convert Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1090"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1097"/>
         <source>Export HTML</source>
         <translation>HTMLへエクスポート</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1098"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1105"/>
         <source>Export Failed</source>
         <translation>エクスポートに失敗しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1099"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1106"/>
         <source>Could not open %1 for writing.</source>
         <translation>%1 を書き込み用に開けませんでした</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1118"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1125"/>
         <source>Export PDF</source>
         <translation>PDFへエクスポート</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1143"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1150"/>
         <source>Print Document</source>
         <translation>印刷</translation>
     </message>
@@ -3390,7 +3419,7 @@ Success: %2.</oldsource>
         <translation>全ての折りたたみを展開</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1211"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1218"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>指定行へ移動</translation>
@@ -3455,12 +3484,12 @@ Success: %2.</oldsource>
         <translation>コード補完</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="804"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="811"/>
         <source>Reload File</source>
         <translation>ファイルを再読み込み</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1160"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1167"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>未保存な変更を破棄して %1 を再読み込みしますか?</translation>
     </message>
@@ -3471,17 +3500,17 @@ Success: %2.</oldsource>
         <translation type="unfinished">次のブロックに移動</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="668"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="669"/>
         <source>Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1190"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1197"/>
         <source>ReadOnly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1211"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1218"/>
         <source>Line: </source>
         <translation>行: </translation>
     </message>
@@ -4009,6 +4038,41 @@ Success: %2.</oldsource>
     </message>
 </context>
 <context>
+    <name>MultiFolderView</name>
+    <message>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="215"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="222"/>
+        <source>Delete Folder</source>
+        <translation type="unfinished">フォルダを削除</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="216"/>
+        <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
+        <translation type="unfinished">このフォルダと全てのコンテンツを完全に削除しますか?</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="223"/>
+        <source>Failed to delete the folder!</source>
+        <translation type="unfinished">フォルダの削除に失敗しました!</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="235"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="242"/>
+        <source>Delete File</source>
+        <translation type="unfinished">ファイルを削除</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="236"/>
+        <source>Are you sure that you want to permanently delete this file?</source>
+        <translation type="unfinished">このファイルを完全に削除しますか?</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="243"/>
+        <source>Failed to delete the file!</source>
+        <translation type="unfinished">ファイルの削除に失敗しました!</translation>
+    </message>
+</context>
+<context>
     <name>NewFileDialog</name>
     <message>
         <location filename="src/liteapp/newfiledialog.ui" line="14"/>
@@ -4103,7 +4167,7 @@ Do you want to replace it?</source>
         <translation>新規プロジェクトウィザード:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="359"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="361"/>
         <source>Choose a directory for the new content:</source>
         <translation>新しいコンテンツを置くディレクトリ選択:</translation>
     </message>
@@ -4549,6 +4613,19 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RecentManager</name>
+    <message>
+        <location filename="src/liteapp/recentmanager.cpp" line="53"/>
+        <source>Clear All History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/recentmanager.cpp" line="168"/>
+        <source>Clear Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchEdit</name>
     <message>
         <location filename="src/plugins/golangdoc/finddocwidget.cpp" line="83"/>
@@ -4600,6 +4677,14 @@ Do you want to replace it?</source>
         <source>Select the working directory:</source>
         <oldsource>Select Working Directory</oldsource>
         <translation>作業ディレクトリを選択</translation>
+    </message>
+</context>
+<context>
+    <name>SessionRecent</name>
+    <message>
+        <location filename="src/liteapp/recentmanager.h" line="144"/>
+        <source>Sessions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4855,7 +4940,7 @@ Do you want to replace it?</source>
         <translation>オプション</translation>
     </message>
     <message>
-        <location filename="src/plugins/welcome/welcomebrowser.cpp" line="216"/>
+        <location filename="src/plugins/welcome/welcomebrowser.cpp" line="207"/>
         <source>Welcome</source>
         <oldsource>Welcome Page</oldsource>
         <translation>ようこそ</translation>

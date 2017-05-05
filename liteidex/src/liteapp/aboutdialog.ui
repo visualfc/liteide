@@ -543,7 +543,7 @@ p, li { white-space: pre-wrap; }
           <bool>true</bool>
          </property>
          <property name="plainText">
-          <string>All contributors that provided patches.
+          <string notr="true">All contributors that provided patches.
 
 The Go Project &lt;http://golang.org&gt;
 The Qt Project &lt;https://qt-project.org&gt;
