@@ -104,7 +104,7 @@ void QuickOpenEditor::indexChanged(const QModelIndex &/*index*/)
 
 }
 
-bool QuickOpenEditor::selected(const QString &text, const QModelIndex &index)
+bool QuickOpenEditor::selected(const QString &/*text*/, const QModelIndex &index)
 {
     if (!index.isValid()) {
         return false;

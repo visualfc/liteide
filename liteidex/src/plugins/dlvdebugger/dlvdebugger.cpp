@@ -487,11 +487,11 @@ void DlvDebugger::readStdError()
 
 
 
-static bool isNameChar(char c)
-{
-    // could be 'stopped' or 'shlibs-added'
-    return (c >= 'a' && c <= 'z') || c == '-';
-}
+//static bool isNameChar(char c)
+//{
+//    // could be 'stopped' or 'shlibs-added'
+//    return (c >= 'a' && c <= 'z') || c == '-';
+//}
 
 void DlvDebugger::handleResponse(const QByteArray &buff)
 {

@@ -84,7 +84,7 @@ public:
     {
         m_cookie.insert(key,value);
     }
-    QByteArray makeCmd(int index) const
+    QByteArray makeCmd(int /*index*/) const
     {
         return m_cmd.toUtf8();
 //#ifdef Q_OS_WIN

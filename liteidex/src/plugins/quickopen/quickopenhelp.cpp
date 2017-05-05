@@ -89,7 +89,7 @@ void QuickOpenHelp::indexChanged(const QModelIndex &/*index*/)
 {
 }
 
-bool QuickOpenHelp::selected(const QString &text, const QModelIndex &index)
+bool QuickOpenHelp::selected(const QString &/*text*/, const QModelIndex &index)
 {
     if (!index.isValid()) {
         return false;

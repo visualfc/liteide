@@ -332,6 +332,9 @@ void LiteApp::load(const QString &sessionName, IApplication *baseApp)
     }
 
     m_currentSession = sessionName;
+    if (!bLoadSession) {
+        m_currentSession = "emtpy";
+    }
 
     QSplashScreen *splash = 0;
     bool bSplash = m_settings->value(LITEAPP_SPLASHVISIBLE,true).toBool();
@@ -923,12 +926,7 @@ void LiteApp::loadSession(const QString &session)
     QStringList fileList = m_settings->value(sessionKey+"_alleditor").toStringList();
     QStringList folderList = m_settings->value(sessionKey+"_folderList").toStringList();
 
-    if (m_settings->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool()) {
-        m_fileManager->setFolderList(folderList);
-        if (!folderList.isEmpty()) {
-
-        }
-    }
+    m_fileManager->setFolderList(folderList);
 
     if (!projectName.isEmpty()) {
         if (scheme.isEmpty()) {

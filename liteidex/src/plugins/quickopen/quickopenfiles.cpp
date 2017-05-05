@@ -168,7 +168,7 @@ void QuickOpenFiles::indexChanged(const QModelIndex &/*index*/)
 {
 }
 
-bool QuickOpenFiles::selected(const QString &text, const QModelIndex &index)
+bool QuickOpenFiles::selected(const QString &/*text*/, const QModelIndex &index)
 {
     if (!index.isValid()) {
         return false;

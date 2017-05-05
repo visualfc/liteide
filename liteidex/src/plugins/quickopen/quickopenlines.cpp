@@ -102,12 +102,12 @@ QModelIndex QuickOpenLines::filterChanged(const QString &text)
     return m_model->index(0,0);
 }
 
-void QuickOpenLines::indexChanged(const QModelIndex &index)
+void QuickOpenLines::indexChanged(const QModelIndex &/*index*/)
 {
 
 }
 
-bool QuickOpenLines::selected(const QString &text, const QModelIndex &index)
+bool QuickOpenLines::selected(const QString &text, const QModelIndex &/*index*/)
 {
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (!editor) {

@@ -119,8 +119,8 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
     ui->editorTabsClosableCheckBox->setChecked(b4);
 
-    bool b5 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool();
-    ui->startupReloadFoldersCheckBox->setChecked(b5);
+//    bool b5 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool();
+//    ui->startupReloadFoldersCheckBox->setChecked(b5);
 
     bool b6 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFILES,true).toBool();
     ui->startupReloadFilesCheckBox->setChecked(b6);
@@ -226,8 +226,8 @@ void LiteAppOption::apply()
     m_liteApp->settings()->setValue(LITEAPP_EDITTABSCLOSABLE,b4);
     bool b5 = ui->startupReloadFilesCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_STARTUPRELOADFILES,b5);
-    bool b6 = ui->startupReloadFoldersCheckBox->isChecked();
-    m_liteApp->settings()->setValue(LITEAPP_STARTUPRELOADFOLDERS,b6);
+//    bool b6 = ui->startupReloadFoldersCheckBox->isChecked();
+//    m_liteApp->settings()->setValue(LITEAPP_STARTUPRELOADFOLDERS,b6);
     bool b7 = ui->fileWatcherAutoReloadCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_FILEWATCHERAUTORELOAD,b7);
     bool b8 = ui->editorTabsEnableWhellCheckBox->isChecked();
@@ -503,7 +503,7 @@ void LiteAppOption::exportShortcuts()
 
 void LiteAppOption::autoLoadLastSessionToggled(bool b)
 {
-    ui->startupReloadFoldersCheckBox->setEnabled(b);
+    //ui->startupReloadFoldersCheckBox->setEnabled(b);
     ui->startupReloadFilesCheckBox->setEnabled(b);
 }
 
