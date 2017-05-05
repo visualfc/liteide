@@ -185,6 +185,8 @@ public:
     {
         if (name != m_liteApp->currentSession()) {
             m_liteApp->newInstance(name);
+        } else {
+            m_liteApp->loadSession(name);
         }
     }
 protected:

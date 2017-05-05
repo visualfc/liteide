@@ -326,6 +326,11 @@ static QImage makeSplashImage(LiteApi::IApplication *app)
 
 void LiteApp::load(const QString &sessionName, IApplication *baseApp)
 {
+    bool bLoadSession = true;
+    if (baseApp == 0) {
+        bLoadSession = m_settings->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
+    }
+
     m_currentSession = sessionName;
 
     QSplashScreen *splash = 0;
@@ -385,12 +390,10 @@ void LiteApp::load(const QString &sessionName, IApplication *baseApp)
 
     qApp->processEvents();
 
-    bool b = m_settings->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
-    if (b && !sessionName.isEmpty()) {
+    if (bLoadSession && !sessionName.isEmpty()) {
         loadSession(sessionName);
         this->appendLog("Load session",sessionName);
     }
-
 
     if (bSplash) {
         m_mainwindow->raise();
