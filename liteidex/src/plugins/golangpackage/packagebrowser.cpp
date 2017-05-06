@@ -23,6 +23,7 @@
 
 #include "packagebrowser.h"
 #include "setupgopathdialog.h"
+#include "golangpackage_global.h"
 #include "liteenvapi/liteenvapi.h"
 #include "golangdocapi/golangdocapi.h"
 #include "qjson/include/QJson/Parser"
@@ -185,7 +186,7 @@ void PackageBrowser::reloadAll()
 //    }
     m_liteApp->appendLog("GolangPackages","reload all packages");
     if (!m_goTool->isStop()) {
-        return;
+        m_goTool->kill();
     }
     m_goTool->reloadEnv();
     if (!m_goTool->exists()) {
@@ -221,16 +222,21 @@ void PackageBrowser::setupGopath()
     SetupGopathDialog *dlg = new SetupGopathDialog(m_liteApp->mainWindow());
     dlg->setSysPathList(m_goTool->sysGopath());
     dlg->setLitePathList(m_goTool->liteGopath());
+    dlg->setUseSysGopath(m_liteApp->settings()->value(LITEIDE_USESYSGOPATH,true).toBool());
+    dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
     if (dlg->exec() == QDialog::Accepted) {
-        QStringList litePath = m_goTool->liteGopath();
+        QStringList orgLitePath = m_goTool->liteGopath();
+        QStringList newLitePath = dlg->litePathList();
         //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
-        if (!hasSameList(litePath,dlg->litePathList())) {
-            m_goTool->setLiteGopath(dlg->litePathList());
-            LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
-            if (env) {
-                env->reloadCurrentEnv();
-            }
+        m_liteApp->settings()->setValue(LITEIDE_USESYSGOPATH,dlg->isUseSysGopath());
+        m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
+        //if (!hasSameList(orgLitePath,newLitePath)) {
+        m_goTool->setLiteGopath(newLitePath);
+        LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
+        if (env) {
+            env->reloadCurrentEnv();
         }
+        //}
     }
 }
 

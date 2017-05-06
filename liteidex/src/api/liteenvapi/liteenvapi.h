@@ -127,6 +127,40 @@ inline bool hasGoEnv(const QProcessEnvironment &env)
     return env.contains("GOROOT") && env.contains("GOARCH");
 }
 
+inline QProcessEnvironment getSysEnvironment(LiteApi::IApplication *app)
+{
+    QProcessEnvironment env = getCurrentEnvironment(app);
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+
+    IEnvManager *mgr = LiteApi::getEnvManager(app);
+    if (mgr) {
+        LiteApi::IEnv *ce = mgr->currentEnv();
+        if (ce) {
+            QMapIterator<QString,QString> i(ce->goEnvMap());
+            while(i.hasNext()) {
+                i.next();
+                env.insert(i.key(),i.value());
+            }
+        }
+    }
+
+    QString goos = env.value("GOOS");
+    if (goos.isEmpty()) {
+        goos = getDefaultGOOS();
+    }
+
+    QString goroot = env.value("GOROOT");
+    if (goroot.isEmpty()) {
+        goroot = getDefaultGOROOT();
+    }
+    return env;
+}
+
+
 inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 {
     QProcessEnvironment env = getCurrentEnvironment(app);
@@ -160,11 +194,15 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 
     QStringList pathList;
 
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
-        pathList.append(QDir::toNativeSeparators(path));
+    if (app->settings()->value("liteide/usesysgopath",true).toBool()) {
+        foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+            pathList.append(QDir::toNativeSeparators(path));
+        }
     }
-    foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
-        pathList.append(QDir::toNativeSeparators(path));
+    if (app->settings()->value("liteide/uselitegopath",true).toBool()) {
+        foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
+            pathList.append(QDir::toNativeSeparators(path));
+        }
     }
     pathList.removeDuplicates();
     env.insert("GOPATH",pathList.join(sep));

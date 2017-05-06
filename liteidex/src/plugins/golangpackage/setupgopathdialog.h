@@ -38,6 +38,10 @@ public:
     ~SetupGopathDialog();
     void setSysPathList(const QStringList &litePathList);
     void setLitePathList(const QStringList &litePathList);
+    void setUseSysGopath(bool b);
+    bool isUseSysGopath() const;
+    void setUseLiteGopath(bool b);
+    bool isUseLiteGopath() const;
     QStringList litePathList() const;
 protected slots:
     void browser();

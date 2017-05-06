@@ -41,6 +41,8 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->browserButton,SIGNAL(clicked()),this,SLOT(browser()));
     connect(ui->clearButton,SIGNAL(clicked()),ui->litePathTextEdit,SLOT(clear()));
+    connect(ui->chkUseSysGopath,SIGNAL(toggled(bool)),ui->sysPathTextEdit,SLOT(setEnabled(bool)));
+    connect(ui->chkUseLiteGopath,SIGNAL(toggled(bool)),ui->litePathTextEdit,SLOT(setEnabled(bool)));
 }
 
 SetupGopathDialog::~SetupGopathDialog()
@@ -61,6 +63,26 @@ void SetupGopathDialog::setLitePathList(const QStringList &pathList)
     foreach (QString path, pathList) {
         ui->litePathTextEdit->appendPlainText(path);
     }
+}
+
+void SetupGopathDialog::setUseSysGopath(bool b)
+{
+    ui->chkUseSysGopath->setChecked(b);
+}
+
+bool SetupGopathDialog::isUseSysGopath() const
+{
+    return ui->chkUseSysGopath->isChecked();
+}
+
+void SetupGopathDialog::setUseLiteGopath(bool b)
+{
+    ui->chkUseLiteGopath->setChecked(b);
+}
+
+bool SetupGopathDialog::isUseLiteGopath() const
+{
+    return ui->chkUseLiteGopath->isChecked();
 }
 
 QStringList SetupGopathDialog::litePathList() const

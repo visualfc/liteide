@@ -32,4 +32,7 @@
 #  define GOLANGPACKAGESHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define LITEIDE_USESYSGOPATH "liteide/usesysgopath"
+#define LITEIDE_USELITEIDEGOPATH "liteide/uselitegopath"
+
 #endif // GOLANGPACKAGE_GLOBAL_H
