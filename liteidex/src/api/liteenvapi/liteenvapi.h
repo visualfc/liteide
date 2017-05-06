@@ -240,9 +240,6 @@ inline QStringList getGOPATH(LiteApi::IApplication *app, bool includeGoroot)
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
-    foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
-        pathList.append(QDir::toNativeSeparators(path));
-    }
     if (!includeGoroot) {
         pathList.removeAll(goroot);
     }

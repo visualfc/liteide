@@ -225,17 +225,18 @@ void PackageBrowser::setupGopath()
     dlg->setUseSysGopath(m_liteApp->settings()->value(LITEIDE_USESYSGOPATH,true).toBool());
     dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
     if (dlg->exec() == QDialog::Accepted) {
-        QStringList orgLitePath = m_goTool->liteGopath();
+        //QStringList orgLitePath = m_goTool->liteGopath();
         QStringList newLitePath = dlg->litePathList();
         //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
         m_liteApp->settings()->setValue(LITEIDE_USESYSGOPATH,dlg->isUseSysGopath());
         m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
         //if (!hasSameList(orgLitePath,newLitePath)) {
         m_goTool->setLiteGopath(newLitePath);
-        LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
-        if (env) {
-            env->reloadCurrentEnv();
-        }
+        this->reloadAll();
+//        LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
+//        if (env) {
+//            env->reloadCurrentEnv();
+//        }
         //}
     }
 }
