@@ -44,6 +44,7 @@ class QActionGroup;
 
 class TabBar : public QTabBar
 {
+    Q_OBJECT
 public:
     TabBar(QWidget *parent = 0) : QTabBar(parent)
     {
