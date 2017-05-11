@@ -69,15 +69,22 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     m_listButton->setToolTip(tr("List All Tabs"));
     m_listButton->setIcon(QIcon("icon:images/listpage.png"));
     m_listButton->setPopupMode(QToolButton::InstantPopup);
+#ifdef Q_OS_MAC
     m_listButton->setStyleSheet(
                 "QToolButton{border:none;}"
                 "QToolButton::menu-indicator{image:none;}");
+#else
+    m_listButton->setStyleSheet(
+                "QToolButton::menu-indicator{image:none;}");
+#endif
 
     m_closeTabAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Tab"),this);
     m_closeButton = new QToolButton(m_dumpToolBar);
     m_closeButton->setDefaultAction(m_closeTabAct);
+#ifdef Q_OS_MAC
     m_closeButton->setStyleSheet(
                 "QToolButton{border:none;}");
+#endif
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
