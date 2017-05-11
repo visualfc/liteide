@@ -51,7 +51,7 @@ public:
         m_info->setId("plugin/filebrowser");
         m_info->setName("FileBrowser");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X27.1");
+        m_info->setVer("X32");
         m_info->setInfo("File System Browser");
     }
 };

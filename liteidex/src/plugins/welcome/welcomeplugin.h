@@ -60,7 +60,7 @@ public:
         m_info->setId("plugin/welcome");
         m_info->setName("Welcome");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X25.2");
+        m_info->setVer("X32");
         m_info->setInfo("Welcome");
     }
 };
