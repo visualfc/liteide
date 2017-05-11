@@ -132,7 +132,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_runToLineAct = new QAction(QIcon("icon:litedebug/images/runtoline.png"),tr("Run to Line"),this);
     actionContext->regAction(m_runToLineAct,"RunToLine","Ctrl+F10");
 
-    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/breakmark.png"),tr("Insert/Remove Breakpoint"),this);
+    m_switchBreakAct = new QAction(QIcon("icon:litedebug/images/insertbreak.png"),tr("Insert/Remove Breakpoint"),this);
     actionContext->regAction(m_switchBreakAct,"Breakpoint","F9");
 
     m_removeAllBreakAct = new QAction(tr("Remove All Breakpoints"),this);
