@@ -57,41 +57,38 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     m_tabBar->setMovable(true);
     m_tabBar->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 
-    m_dumpToolBar = new QToolBar;
-    m_dumpToolBar->setObjectName("toolbar.tabs");
-    m_dumpToolBar->setIconSize(iconSize);
+    m_tabToolBar = new QToolBar;
+    m_tabToolBar->setObjectName("toolbar.tabs");
+    m_tabToolBar->setIconSize(iconSize);
 
     m_tabBarWidget = new QWidget;
 
     m_addTabAct = new QAction(QIcon("icon:images/addpage.png"),tr("Open a new tab"),this);
 
-    m_listButton = new QToolButton(m_dumpToolBar);
+    m_listButton = new QToolButton;
     m_listButton->setToolTip(tr("List All Tabs"));
     m_listButton->setIcon(QIcon("icon:images/listpage.png"));
     m_listButton->setPopupMode(QToolButton::InstantPopup);
-#ifdef Q_OS_MAC
-    m_listButton->setStyleSheet(
-                "QToolButton{border:none;}"
-                "QToolButton::menu-indicator{image:none;}");
-#else
     m_listButton->setStyleSheet(
                 "QToolButton::menu-indicator{image:none;}");
-#endif
 
     m_closeTabAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Tab"),this);
-    m_closeButton = new QToolButton(m_dumpToolBar);
+    m_closeButton = new QToolButton;
     m_closeButton->setDefaultAction(m_closeTabAct);
-#ifdef Q_OS_MAC
-    m_closeButton->setStyleSheet(
-                "QToolButton{border:none;}");
-#endif
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(m_tabBar,1);
-    layout->addWidget(m_listButton);
-    layout->addWidget(m_closeButton);
+    m_tabToolBar->addWidget(m_tabBar);
+    QWidget *dump = new QWidget;
+    dump->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_tabToolBar->addWidget(dump);
+    m_tabToolBar->addWidget(m_listButton);
+    m_tabToolBar->addAction(m_closeTabAct);
+//    layout->addWidget(m_tabBar,1);
+//    layout->addWidget(m_listButton);
+//    layout->addWidget(m_closeButton);
+    layout->addWidget(m_tabToolBar);
 
     m_tabBarWidget->setLayout(layout);
 
@@ -109,7 +106,7 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
 LiteTabWidget::~LiteTabWidget()
 {
     delete m_tabBarWidget;
-    delete m_dumpToolBar;
+  //  delete m_dumpToolBar;
 }
 
 void LiteTabWidget::closeCurrentTab()

@@ -97,7 +97,7 @@ public slots:
     void closeCurrentTab();
     void tabCurrentChanged(int);
 protected:
-    QToolBar        *m_dumpToolBar;
+    QToolBar        *m_tabToolBar;
     QWidget         *m_tabBarWidget;
     TabBar         *m_tabBar;
     QToolButton     *m_listButton;
