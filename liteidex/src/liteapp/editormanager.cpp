@@ -113,7 +113,7 @@ bool EditorManager::initWithApp(IApplication *app)
 //    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border:1px solid} QTabBar::close-button {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}"
 //                                               );
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(1);
+    mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
 //    QToolBar *toolBar = m_editorTabWidget->headerToolBar();
