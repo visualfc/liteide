@@ -1,42 +1,47 @@
 [
- {
-  "info" : "go func(){\n}()",
-  "name" : "gos1",
-  "text" : "go func(){\n\t$$\n}()"
- },
- {
-  "info" : "type name struct{\n}",
-  "name" : "types1",
-  "text" : "type $name$ struct {\n\t\n}"
- },
- {
-  "info" : "type name interface{\n}",
-  "name" : "types2",
-  "text" : "type $name$ interface {\n\t\n}"
- },
- {
-  "info" : "func name() {\n}",
-  "name" : "funcs1",
-  "text" : "func $name$() {\n\t\n}"
- },
- {
-  "info" : "func() {\n}",
-  "name" : "funcs2",
-  "text" : "func() {\n\t$$\n}"
- },
- {
-  "info" : "func() {\n}()",
-  "name" : "funcs3",
-  "text" : "func() {\n\t$$\n}()"
- },
- {
-  "info" : "import (\n)",
-  "name" : "imports1",
-  "text" : "import (\n\t\"$$\"\n)"
- },
- {
-  "info" : "import \"C\"",
-  "name" : "imports2",
-  "text" : "import \"C\""
- }
+    {
+        "info": "go func(){\n}()",
+        "name": "gos1",
+        "text": "go func(){\n\t$$\n}()"
+    },
+    {
+        "info": "type name struct{\n}",
+        "name": "types1",
+        "text": "type $name$ struct {\n\t\n}"
+    },
+    {
+        "info": "type name interface{\n}",
+        "name": "types2",
+        "text": "type $name$ interface {\n\t\n}"
+    },
+    {
+        "info": "func name() {\n}",
+        "name": "funcs1",
+        "text": "func $name$() {\n\t\n}"
+    },
+    {
+        "info": "func() {\n}",
+        "name": "funcs2",
+        "text": "func() {\n\t$$\n}"
+    },
+    {
+        "info": "func() {\n}()",
+        "name": "funcs3",
+        "text": "func() {\n\t$$\n}()"
+    },
+    {
+        "info": "import (\n)",
+        "name": "imports1",
+        "text": "import (\n\t\"$$\"\n)"
+    },
+    {
+        "info": "import \"C\"",
+        "name": "imports2",
+        "text": "import \"C\""
+    },
+    {
+        "info": "if error",
+        "name": "iferr",
+        "text": "if err != nil {\n\t$return err$\n}"
+    }
 ]
