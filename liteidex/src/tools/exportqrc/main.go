@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/xml"
+	"flag"
 	"image"
 	"image/draw"
 	"image/png"
@@ -16,7 +17,21 @@ var (
 	root = "../../../"
 )
 
+var (
+	flagRoot string
+)
+
+func init() {
+	flag.StringVar(&flagRoot, "root", "", "setup liteide root")
+}
+
 func main() {
+	flag.Parse()
+	if flagRoot != "" {
+		root = flagRoot
+	}
+	root, _ := filepath.Abs(root)
+	log.Println("process liteide root", root)
 	var p Process
 	p.ProcessDir(filepath.Join(root, "src/liteapp"))
 	p.ProcessDir(filepath.Join(root, "src/plugins"))
