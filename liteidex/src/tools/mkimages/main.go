@@ -10,7 +10,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 var (
@@ -57,7 +56,7 @@ func (rcc *RCC) IsEmtpy() bool {
 
 func (rcc *RCC) ImagesFiles() (images []string) {
 	for _, file := range rcc.Resource.Files {
-		if strings.HasPrefix(file, "images/") {
+		if filepath.Ext(file) == ".png" {
 			image := filepath.Join(rcc.Dir, file)
 			_, err := os.Lstat(image)
 			if err != nil {
@@ -99,13 +98,17 @@ func (p *Process) ExportQrc(outdir string, rcc RCC, copyFn CopyFunc) error {
 		log.Println("skip empty rcc", rcc.FileName)
 		return nil
 	}
-	outpath := filepath.Join(outdir, rcc.DirName, "images")
+	outpath := filepath.Join(outdir, rcc.DirName)
 	os.MkdirAll(outpath, 0777)
 	for _, file := range images {
-		_, name := filepath.Split(file)
-		dest := filepath.Join(outpath, name)
+		target := file[len(rcc.Dir):]
+		dest := filepath.Join(outpath, target)
+		d, _ := filepath.Split(dest)
+		os.MkdirAll(d, 0777)
 		err := copyFn(file, dest)
-		log.Println(file, err)
+		if err != nil {
+			log.Println(file, err)
+		}
 	}
 	return nil
 }

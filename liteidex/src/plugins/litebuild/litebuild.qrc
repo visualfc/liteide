@@ -2,5 +2,33 @@
     <qresource prefix="/litebuild">
         <file>images/stopaction.png</file>
         <file>images/config.png</file>
+        <file>images/bk.png</file>
+        <file>images/build.png</file>
+        <file>images/builddebug.png</file>
+        <file>images/buildrun.png</file>
+        <file>images/buildtest.png</file>
+        <file>images/clean.png</file>
+        <file>images/cleanall.png</file>
+        <file>images/cover.png</file>
+        <file>images/debug.png</file>
+        <file>images/doc.png</file>
+        <file>images/filebuild.png</file>
+        <file>images/filerun.png</file>
+        <file>images/filetest.png</file>
+        <file>images/fmt.png</file>
+        <file>images/get.png</file>
+        <file>images/gopm.png</file>
+        <file>images/install.png</file>
+        <file>images/lint.png</file>
+        <file>images/rebuild.png</file>
+        <file>images/reget.png</file>
+        <file>images/run.png</file>
+        <file>images/runterm.png</file>
+        <file>images/test.png</file>
+        <file>images/testbench.png</file>
+        <file>images/testcover.png</file>
+        <file>images/update.png</file>
+        <file>images/utils.png</file>
+        <file>images/vet.png</file>
     </qresource>
 </RCC>

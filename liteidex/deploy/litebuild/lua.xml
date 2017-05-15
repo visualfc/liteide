@@ -2,7 +2,7 @@
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="text/x-lua" id="lua" work="$(EDITOR_DIR_PATH)" lock="file" ver="2">
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
-		<action id="Run" key="Ctrl+R" img="gray/run.png" cmd="lua" args="-e io.stdout:setvbuf('no') $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" regex="([\w\d:_\-\\/\.]+):(\d+)" readline="true" />
-		<action id="RunTerm" key="Ctrl+Shift+F5" img="gray/runterm.png" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd lua -e io.stdout:setvbuf(&quot;no&quot;) $(EDITOR_FILE_NAME)" save="editor" output="false" readline="true"/>
+		<action id="Run" key="Ctrl+R" img="run.png" cmd="lua" args="-e io.stdout:setvbuf('no') $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" regex="([\w\d:_\-\\/\.]+):(\d+)" readline="true" />
+		<action id="RunTerm" key="Ctrl+Shift+F5" img="runterm.png" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd lua -e io.stdout:setvbuf(&quot;no&quot;) $(EDITOR_FILE_NAME)" save="editor" output="false" readline="true"/>
 	</mime-type>
 </mime-info>

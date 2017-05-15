@@ -340,8 +340,8 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 act->setTakeall(attrs.value("takeall").toString());
                 QString img = attrs.value("img").toString();
                 if (!img.isEmpty()) {
-                    if (img.at(0) != ':') {
-                        img = QFileInfo(dir,img).canonicalFilePath();
+                    if (!img.contains(":")) {
+                        img = "icon:/litebuild/images/"+img;//QFileInfo(dir,img).canonicalFilePath();
                     }
                     act->setImg(img);
                 }

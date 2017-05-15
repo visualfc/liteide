@@ -12,12 +12,12 @@
 		<custom id="UpdateArgs" name="UPDATEARGS" value=""/>
 		<custom id="BenchmarkArgs" name="BENCHMARKARGS" value=""/>
 		<custom id="DocArgs" name="DOCARGS" value=""/>
-		<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" cmd="$(CARGO)" args="run $(BUILDARGS) $(TARGETARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true" readline="true"/>
-		<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(CARGO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Clean" img="blue/clean.png" key="" cmd="$(CARGO)" args="clean $(CLEANARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Test" img="blue/test.png" key="" cmd="$(CARGO)" args="test $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Bench" img="blue/testbench.png" key="" cmd="$(CARGO)" args="bench $(BENCHMARKARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Update" img="blue/update.png" key="" cmd="$(CARGO)" args="update $(UPDATEARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="Doc" img="blue/doc.png" key="" cmd="$(CARGO)" args="doc $(DOCARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="BuildAndRun" img="buildrun.png" key="Ctrl+R;Ctrl+F7" cmd="$(CARGO)" args="run $(BUILDARGS) $(TARGETARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true" readline="true"/>
+		<action id="Build" img="build.png" key="Ctrl+B;F7" cmd="$(CARGO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Clean" img="clean.png" key="" cmd="$(CARGO)" args="clean $(CLEANARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Test" img="test.png" key="" cmd="$(CARGO)" args="test $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Bench" img="testbench.png" key="" cmd="$(CARGO)" args="bench $(BENCHMARKARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Update" img="update.png" key="" cmd="$(CARGO)" args="update $(UPDATEARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Doc" img="doc.png" key="" cmd="$(CARGO)" args="doc $(DOCARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 	</mime-type>
 </mime-info>
