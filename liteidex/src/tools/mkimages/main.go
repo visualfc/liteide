@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/xml"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var (
@@ -45,6 +47,24 @@ type RCC struct {
 	Resource QResource `xml:"qresource"`
 }
 
+func (rcc *RCC) IsEmtpy() bool {
+	return len(rcc.Resource.Files) == 0
+}
+
+func (rcc *RCC) ImagesFiles() (images []string) {
+	for _, file := range rcc.Resource.Files {
+		if strings.HasPrefix(file, "images/") {
+			image := filepath.Join(rcc.Dir, file)
+			_, err := os.Lstat(image)
+			if err != nil {
+				log.Println("warning, not find image", image)
+			}
+			images = append(images, image)
+		}
+	}
+	return
+}
+
 func (p *Process) ProcessQrc(path string) error {
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -59,13 +79,53 @@ func (p *Process) ProcessQrc(path string) error {
 	rcc.Dir, rcc.FileName = filepath.Split(path)
 	_, rcc.DirName = filepath.Split(filepath.Clean(rcc.Dir))
 	p.rccs = append(p.rccs, rcc)
-	log.Println("->", path)
 	return nil
 }
 
-func (p *Process) Export(path string) error {
+func (p *Process) Export(outdir string) error {
 	for _, rcc := range p.rccs {
-		log.Println(rcc.Dir, rcc.DirName)
+		p.ExportQrc(outdir, rcc)
 	}
 	return nil
+}
+
+func (p *Process) ExportQrc(outdir string, rcc RCC) error {
+	images := rcc.ImagesFiles()
+	if len(images) == 0 {
+		log.Println("skip empty rcc", rcc.FileName)
+		return nil
+	}
+	outpath := filepath.Join(outdir, rcc.DirName)
+	os.MkdirAll(outpath, 0777)
+	for _, file := range images {
+		err := CopyFileTo(file, outpath)
+		log.Println(file, err)
+	}
+	return nil
+}
+
+func CopyFileTo(source string, outdir string) (err error) {
+	_, name := filepath.Split(source)
+	return CopyFile(source, filepath.Join(outdir, name))
+}
+
+func CopyFile(source string, dest string) (err error) {
+	sourcefile, err := os.Open(source)
+	if err != nil {
+		return err
+	}
+	defer sourcefile.Close()
+	destfile, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer destfile.Close()
+	_, err = io.Copy(destfile, sourcefile)
+	if err == nil {
+		sourceinfo, err := os.Stat(source)
+		if err != nil {
+			err = os.Chmod(dest, sourceinfo.Mode())
+		}
+	}
+	return
 }
