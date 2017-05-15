@@ -2,6 +2,9 @@ package main
 
 import (
 	"encoding/xml"
+	"image"
+	"image/draw"
+	"image/png"
 	"io"
 	"io/ioutil"
 	"log"
@@ -18,7 +21,8 @@ func main() {
 	var p Process
 	p.ProcessDir(filepath.Join(root, "src/liteapp"))
 	p.ProcessDir(filepath.Join(root, "src/plugins"))
-	p.Export(filepath.Join(root, "deploy/liteapp/qrc/default"))
+	p.Export(filepath.Join(root, "deploy/liteapp/qrc/default"), CopyFile)
+	p.Export(filepath.Join(root, "deploy/liteapp/qrc/gray"), GrayImage)
 }
 
 type Process struct {
@@ -82,14 +86,14 @@ func (p *Process) ProcessQrc(path string) error {
 	return nil
 }
 
-func (p *Process) Export(outdir string) error {
+func (p *Process) Export(outdir string, copyFn CopyFunc) error {
 	for _, rcc := range p.rccs {
-		p.ExportQrc(outdir, rcc)
+		p.ExportQrc(outdir, rcc, copyFn)
 	}
 	return nil
 }
 
-func (p *Process) ExportQrc(outdir string, rcc RCC) error {
+func (p *Process) ExportQrc(outdir string, rcc RCC, copyFn CopyFunc) error {
 	images := rcc.ImagesFiles()
 	if len(images) == 0 {
 		log.Println("skip empty rcc", rcc.FileName)
@@ -98,15 +102,50 @@ func (p *Process) ExportQrc(outdir string, rcc RCC) error {
 	outpath := filepath.Join(outdir, rcc.DirName, "images")
 	os.MkdirAll(outpath, 0777)
 	for _, file := range images {
-		err := CopyFileTo(file, outpath)
+		_, name := filepath.Split(file)
+		dest := filepath.Join(outpath, name)
+		err := copyFn(file, dest)
 		log.Println(file, err)
 	}
 	return nil
 }
 
-func CopyFileTo(source string, outdir string) (err error) {
-	_, name := filepath.Split(source)
-	return CopyFile(source, filepath.Join(outdir, name))
+type CopyFunc func(string, string) error
+
+func GrayImage(source string, dest string) error {
+	f, err := os.Open(source)
+	if err != nil {
+		return err
+	}
+	srcImage, err := png.Decode(f)
+	if err != nil {
+		return err
+	}
+	dstImage := image.NewRGBA(srcImage.Bounds())
+	draw.Draw(dstImage, dstImage.Bounds(), srcImage, srcImage.Bounds().Min, draw.Src)
+	//	dstImage.
+	b := dstImage.Bounds()
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
+			c := dstImage.RGBAAt(x, y)
+			var avg uint8 = uint8((int(c.R) + int(c.G) + int(c.B)) / 3)
+			//c.R = c.G = c.B = avg
+			c.R = avg
+			c.G = avg
+			c.B = avg
+			dstImage.SetRGBA(x, y, c)
+		}
+	}
+
+	w, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	err = png.Encode(w, dstImage)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func CopyFile(source string, dest string) (err error) {
