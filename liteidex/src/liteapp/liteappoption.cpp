@@ -145,6 +145,18 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     }
     ui->autoIdleSaveDocumentsTimeSpinBox->setValue(time);
 
+    connect(ui->customIconCheckBox,SIGNAL(toggled(bool)),ui->iconPathComboBox,SLOT(setEnabled(bool)));
+
+    bool customeIcon = m_liteApp->settings()->value(LITEIDE_CUSTOMEICON,false).toBool();
+    ui->customIconCheckBox->setChecked(customeIcon);
+
+    QDir iconDir(m_liteApp->resourcePath()+"/liteapp/qrc");
+    foreach (QFileInfo info, iconDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot)) {
+        ui->iconPathComboBox->addItem(info.fileName());
+    }
+    QString iconPath = m_liteApp->settings()->value(LITEIDE_CUSTOMEICONPATH,"default").toString();
+    ui->iconPathComboBox->setCurrentText(iconPath);
+
     m_keysModel = new QStandardItemModel(0,5,this);
     m_keysModel->setHeaderData(0,Qt::Horizontal,tr("Command"));
     m_keysModel->setHeaderData(1,Qt::Horizontal,tr("Label"));
@@ -256,6 +268,12 @@ void LiteAppOption::apply()
             qApp->setStyleSheet(styleSheet);
         }
     }
+
+    bool customelIcon = ui->customIconCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEIDE_CUSTOMEICON,customelIcon);
+
+    QString iconPath = ui->iconPathComboBox->currentText();
+    m_liteApp->settings()->setValue(LITEIDE_CUSTOMEICONPATH,iconPath);
 
     for (int i = 0; i < m_keysModel->rowCount(); i++) {
         QStandardItem *root = m_keysModel->item(i,0);

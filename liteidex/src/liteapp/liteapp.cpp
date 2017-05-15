@@ -179,6 +179,17 @@ LiteApp::LiteApp()
         m_settings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"liteide","liteide",this);
     }
 
+    QStringList searchPathList;
+    if (m_settings->value(LITEIDE_CUSTOMEICON,false).toBool()) {
+        QString iconPath = m_settings->value(LITEIDE_CUSTOMEICONPATH,"default").toString();
+        if (!iconPath.isEmpty()) {
+            searchPathList << m_resourcePath+"/liteapp/qrc/"+iconPath+"/liteapp";
+            searchPathList << m_resourcePath+"/liteapp/qrc/"+iconPath;
+        }
+    }
+    searchPathList << ":/";
+    QDir::setSearchPaths("icon",searchPathList);
+
     m_extension = new Extension;
 
     //install idle timer;

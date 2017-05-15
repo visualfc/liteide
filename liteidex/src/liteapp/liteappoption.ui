@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>529</width>
-    <height>344</height>
+    <width>629</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -123,6 +123,41 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox_11">
+         <property name="title">
+          <string>Custome Icon Libaray [*]</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QCheckBox" name="customIconCheckBox">
+            <property name="text">
+             <string>Load custome icon from liteapp/qrc, fallback build-in icon libaray</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="iconPathComboBox"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBox_10">
          <property name="title">
           <string>Automatically save documents</string>
@@ -202,6 +237,7 @@
       <zorder>groupBox_5</zorder>
       <zorder>groupBox_6</zorder>
       <zorder>groupBox_10</zorder>
+      <zorder>groupBox_11</zorder>
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">

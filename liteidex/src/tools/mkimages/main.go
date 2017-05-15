@@ -18,7 +18,7 @@ func main() {
 	var p Process
 	p.ProcessDir(filepath.Join(root, "src/liteapp"))
 	p.ProcessDir(filepath.Join(root, "src/plugins"))
-	p.Export(filepath.Join(root, "deploy/images/default"))
+	p.Export(filepath.Join(root, "deploy/liteapp/qrc/default"))
 }
 
 type Process struct {
@@ -95,7 +95,7 @@ func (p *Process) ExportQrc(outdir string, rcc RCC) error {
 		log.Println("skip empty rcc", rcc.FileName)
 		return nil
 	}
-	outpath := filepath.Join(outdir, rcc.DirName)
+	outpath := filepath.Join(outdir, rcc.DirName, "images")
 	os.MkdirAll(outpath, 0777)
 	for _, file := range images {
 		err := CopyFileTo(file, outpath)
