@@ -50,6 +50,9 @@ if ERRORLEVEL 1 goto go_fail
 
 cd %BUILD_ROOT%
 
+echo export qrc images
+go run src/tools/exportqrc/main.go -root .
+
 echo deploy liteide ...
 echo .
 

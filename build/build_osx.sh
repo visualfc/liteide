@@ -68,6 +68,9 @@ if [ $? -ge 1 ]; then
 	exit 1
 fi
 
+echo export qrc images
+go run src/tools/exportqrc/main.go -root .
+
 echo deploy ...
 
 cd $BUILD_ROOT

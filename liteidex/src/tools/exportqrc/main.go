@@ -31,7 +31,7 @@ func main() {
 		root = flagRoot
 	}
 	root, _ := filepath.Abs(root)
-	log.Println("process liteide root", root)
+	log.Println("process qrc files in liteide root", root)
 	var p Process
 	p.ProcessDir(filepath.Join(root, "src/liteapp"))
 	p.ProcessDir(filepath.Join(root, "src/plugins"))
