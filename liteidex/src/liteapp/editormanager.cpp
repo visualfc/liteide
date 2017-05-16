@@ -143,7 +143,9 @@ bool EditorManager::initWithApp(IApplication *app)
     QAction *closeSameFolderFiles = new QAction(tr("Close Files in Same Folder"),this);
     QAction *closeOtherFolderFiles = new QAction(tr("Close Files in Other Folders"),this);
     QAction *copyPathToClipboard = new QAction(tr("Copy Full Path to Clipboard"),this);
-    QAction *showInExplorer = new QAction(tr("Show in Explorer"),this);
+    QAction *showInExplorer = new QAction(tr("Show in Explorer"),this);    
+    QAction *openInShell = new QAction(tr("Open Terminal Here"),this);
+
 
     QAction *moveToAct = new QAction(tr("Move to New Window"),this);
 
@@ -158,6 +160,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextFileMenu->addSeparator();
     m_tabContextFileMenu->addAction(copyPathToClipboard);
     m_tabContextFileMenu->addAction(showInExplorer);
+    m_tabContextFileMenu->addAction(openInShell);
     m_tabContextFileMenu->addSeparator();
     m_tabContextFileMenu->addAction(moveToAct);
 
@@ -176,6 +179,7 @@ bool EditorManager::initWithApp(IApplication *app)
     connect(closeOtherFolderFiles,SIGNAL(triggered()),this,SLOT(tabContextCloseOtherFolderFiles()));
     connect(copyPathToClipboard,SIGNAL(triggered()),this,SLOT(tabContextCopyPathToClipboard()));
     connect(showInExplorer,SIGNAL(triggered()),this,SLOT(tabContextShowInExplorer()));
+    connect(openInShell,SIGNAL(triggered()),this,SLOT(tabContextOpenInShell()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
     connect(qApp,SIGNAL(focusChanged(QWidget*,QWidget*)),this,SLOT(focusChanged(QWidget*,QWidget*)));
 
@@ -915,6 +919,15 @@ void EditorManager::tabContextShowInExplorer()
         return;
     }
     FileUtil::openInExplorer(filePath);
+}
+
+void EditorManager::tabContextOpenInShell()
+{
+    QString filePath = tabContextFilePath();
+    if (filePath.isEmpty()) {
+        return;
+    }
+    FileUtil::openInShell(m_liteApp,filePath);
 }
 
 void EditorManager::tabContextCloseOtherFolderFiles()

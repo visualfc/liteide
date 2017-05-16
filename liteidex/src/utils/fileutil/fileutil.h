@@ -45,6 +45,7 @@ struct FileUtil
     static QString lookupLiteBin(const QString &bin, LiteApi::IApplication *app);
     static bool CopyDirectory(const QString &src, const QString &dest);
     static void openInExplorer(const QString &path);
+    static void openInShell(LiteApi::IApplication *app, const QString &path);
 };
 
 struct GoExecute

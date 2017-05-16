@@ -92,6 +92,7 @@ public slots:
     void tabContextCloseSameFolderFiles();
     void tabContextCopyPathToClipboard();
     void tabContextShowInExplorer();
+    void tabContextOpenInShell();
     void goBack();
     void goForward();
     void updateNavigatorActions();
