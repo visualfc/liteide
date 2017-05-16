@@ -125,7 +125,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_11">
          <property name="title">
-          <string>Custome Icon Libaray [*]</string>
+          <string>Icon [*]</string>
          </property>
          <property name="checkable">
           <bool>false</bool>
@@ -137,7 +137,7 @@
              <string>Fallback build-in icon library and liteapp/qrc/default</string>
             </property>
             <property name="text">
-             <string>Load custome icon from liteapp/qrc folder</string>
+             <string>Load the external file icon library</string>
             </property>
            </widget>
           </item>

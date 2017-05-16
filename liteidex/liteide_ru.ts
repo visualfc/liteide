@@ -2311,6 +2311,18 @@ Success: %2.</oldsource>
         <source>Reload files in session</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fallback build-in icon library and liteapp/qrc/default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon [*]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load the external file icon library</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
@@ -3848,7 +3860,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>System GOPATH</source>
-        <translation>Системный GOPATH</translation>
+        <translation type="obsolete">Системный GOPATH</translation>
     </message>
     <message>
         <source>Reload</source>
@@ -3856,7 +3868,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Custom Directories (one per line)</source>
-        <translation>Другие каталоги (один на строке)</translation>
+        <translation type="obsolete">Другие каталоги (один на строке)</translation>
     </message>
     <message>
         <source>Add Directory...</source>
@@ -3870,6 +3882,14 @@ Do you want to replace it?</source>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
         <translation>Выбор каталога для добавления в GOPATH</translation>
+    </message>
+    <message>
+        <source>Use System GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Custom GOPATH (one per line)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

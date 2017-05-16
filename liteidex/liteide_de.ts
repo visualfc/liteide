@@ -2437,7 +2437,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="657"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="659"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">Achtung: Pkg nicht gefunden, bitte eingeben:</translation>
     </message>
@@ -2463,113 +2463,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="269"/>
+        <location filename="src/liteapp/liteapp.cpp" line="282"/>
         <source>Event Log</source>
         <translation type="unfinished">Ereignisanzeige</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="256"/>
+        <location filename="src/liteapp/liteapp.cpp" line="269"/>
         <source>Escape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="726"/>
+        <location filename="src/liteapp/liteapp.cpp" line="739"/>
         <source>Close File</source>
         <translation type="unfinished">Datei schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="729"/>
+        <location filename="src/liteapp/liteapp.cpp" line="742"/>
         <source>Close All Files</source>
         <translation type="unfinished">Alle Dateien schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="739"/>
+        <location filename="src/liteapp/liteapp.cpp" line="752"/>
         <source>Save File</source>
         <translation type="unfinished">Datei speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="755"/>
         <source>Save File As...</source>
         <translation type="unfinished">Datei speichern unter...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="745"/>
+        <location filename="src/liteapp/liteapp.cpp" line="758"/>
         <source>Save All Files</source>
         <translation type="unfinished">Alle Dateien speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="732"/>
+        <location filename="src/liteapp/liteapp.cpp" line="745"/>
         <source>Open Project</source>
         <translation>Projekt öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="272"/>
+        <location filename="src/liteapp/liteapp.cpp" line="285"/>
         <source>Options</source>
         <translation type="unfinished">Optionen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="703"/>
+        <location filename="src/liteapp/liteapp.cpp" line="716"/>
         <source>New...</source>
         <translation type="unfinished">Neu...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="706"/>
+        <location filename="src/liteapp/liteapp.cpp" line="719"/>
         <source>Open File...</source>
         <translation type="unfinished">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="709"/>
+        <location filename="src/liteapp/liteapp.cpp" line="722"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Ordner öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="712"/>
+        <location filename="src/liteapp/liteapp.cpp" line="725"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Ordner in neuem Fenster öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="717"/>
+        <location filename="src/liteapp/liteapp.cpp" line="730"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Ordner hinzufügen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="720"/>
+        <location filename="src/liteapp/liteapp.cpp" line="733"/>
         <source>New Window</source>
         <translation type="unfinished">Neues Fenster</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="723"/>
+        <location filename="src/liteapp/liteapp.cpp" line="736"/>
         <source>Close Window</source>
         <translation type="unfinished">Fenster schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="734"/>
+        <location filename="src/liteapp/liteapp.cpp" line="747"/>
         <source>Save Project</source>
         <translation>Projekt speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="736"/>
+        <location filename="src/liteapp/liteapp.cpp" line="749"/>
         <source>Close Project</source>
         <translation type="unfinished">Projekt schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="748"/>
+        <location filename="src/liteapp/liteapp.cpp" line="761"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="754"/>
+        <location filename="src/liteapp/liteapp.cpp" line="767"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="758"/>
+        <location filename="src/liteapp/liteapp.cpp" line="771"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Über LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="764"/>
+        <location filename="src/liteapp/liteapp.cpp" line="777"/>
         <source>About Plugins</source>
         <translation type="unfinished">Über Plugins</translation>
     </message>
@@ -2593,24 +2593,29 @@ Success: %2.</oldsource>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <source>Icon [*]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="284"/>
         <source>Reload files in session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="257"/>
+        <location filename="src/liteapp/liteappoption.ui" line="296"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation type="unfinished">Zuletzt verwendete Dateien</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="263"/>
+        <location filename="src/liteapp/liteappoption.ui" line="302"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>Maximale Anzahl:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="173"/>
+        <location filename="src/liteapp/liteappoption.ui" line="211"/>
         <source>Monitoring files for modifications</source>
         <translation type="unfinished">Überwache Dateiveränderungen</translation>
     </message>
@@ -2635,30 +2640,41 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <location filename="src/liteapp/liteappoption.ui" line="137"/>
+        <source>Fallback build-in icon library and liteapp/qrc/default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="140"/>
+        <source>Load the external file icon library</source>
+        <oldsource>Load custome icon from liteapp/qrc folder</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="166"/>
         <source>Automatically save documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="134"/>
+        <location filename="src/liteapp/liteappoption.ui" line="172"/>
         <source>Automatically save documents when application is idle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="144"/>
+        <location filename="src/liteapp/liteappoption.ui" line="182"/>
         <source>sec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="179"/>
+        <location filename="src/liteapp/liteappoption.ui" line="217"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation type="unfinished">Automatisches Neuladen oder Schließen des Editor-Fensters,
 wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="208"/>
-        <location filename="src/liteapp/liteappoption.ui" line="214"/>
+        <location filename="src/liteapp/liteappoption.ui" line="247"/>
+        <location filename="src/liteapp/liteappoption.ui" line="253"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2671,78 +2687,78 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="obsolete">Dateien beim Start wiederherstellen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="324"/>
+        <location filename="src/liteapp/liteappoption.ui" line="363"/>
         <source>Display</source>
         <translation type="unfinished">Anzeige</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="330"/>
+        <location filename="src/liteapp/liteappoption.ui" line="369"/>
         <source>Display [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="336"/>
+        <location filename="src/liteapp/liteappoption.ui" line="375"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished">Splash-Screen beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="343"/>
+        <location filename="src/liteapp/liteappoption.ui" line="382"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished">Willkommen-Seite beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="353"/>
+        <location filename="src/liteapp/liteappoption.ui" line="392"/>
         <source>Editor tab [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="359"/>
+        <location filename="src/liteapp/liteappoption.ui" line="398"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished">&quot;Schließen&quot;-Knopf bei jedem Editor-Tab anzeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="366"/>
+        <location filename="src/liteapp/liteappoption.ui" line="405"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="376"/>
+        <location filename="src/liteapp/liteappoption.ui" line="415"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="449"/>
+        <location filename="src/liteapp/liteappoption.ui" line="488"/>
         <source>Keyboard</source>
         <translation>Tastatur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="455"/>
+        <location filename="src/liteapp/liteappoption.ui" line="494"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>Formatierung: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="467"/>
+        <location filename="src/liteapp/liteappoption.ui" line="506"/>
         <source>Hide standard commands</source>
         <translation type="unfinished">Standard-Kommandos verbergen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="474"/>
+        <location filename="src/liteapp/liteappoption.ui" line="513"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="481"/>
+        <location filename="src/liteapp/liteappoption.ui" line="520"/>
         <source>Reset All</source>
         <translation type="unfinished">Alles zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="501"/>
+        <location filename="src/liteapp/liteappoption.ui" line="540"/>
         <source>Import...</source>
         <translation type="unfinished">Importieren...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="508"/>
+        <location filename="src/liteapp/liteappoption.ui" line="547"/>
         <source>Export...</source>
         <translation type="unfinished">Exportieren...</translation>
     </message>
@@ -2757,7 +2773,7 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished">Theme:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="220"/>
+        <location filename="src/liteapp/liteappoption.ui" line="259"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Automatisch letzte Session laden</translation>
@@ -2773,53 +2789,53 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="149"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="165"/>
         <source>Command</source>
         <translation>Kommando</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="150"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="166"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="151"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="167"/>
         <source>Shortcuts</source>
         <translation>Shortcuts</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="152"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="168"/>
         <source>NativeText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="153"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="169"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema importieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished">Tastaturbelegungsschema (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="445"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="467"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht gelesen werden!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema exportieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="483"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="505"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht geschrieben werden!</translation>
     </message>
@@ -3782,7 +3798,7 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="74"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="75"/>
         <source>Close Tab</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4272,56 +4288,56 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>PackageBrowser</name>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="85"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="86"/>
         <source>Manage GOPATH...</source>
         <oldsource>Setup GOPATH</oldsource>
         <translation type="unfinished">GOPATH verwalten...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="84"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="85"/>
         <source>Reload All</source>
         <translation>Alle neu laden</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
         <source>Use godoc View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
         <source>Load Package in New Window</source>
         <translation>Paket in neuem Fenster laden</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="94"/>
         <source>Add Package to Folders</source>
         <translation type="unfinished">Paket zu Ordnern hinzufügen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="94"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="95"/>
         <source>Open Source File</source>
         <translation>Quelldatei öffnen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="95"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="96"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
         <translation type="unfinished">Name in Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="117"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="118"/>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
         <translation>Paket Browser</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="193"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="194"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation type="unfinished">Konnte go in PATH nicht finden.</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="198"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="199"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation type="unfinished">Lade go Paketliste...</translation>
@@ -4702,32 +4718,40 @@ Soll es ersetzt werden?</translation>
         <translation type="unfinished">GOPATH verwalten</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
         <source>System GOPATH</source>
-        <translation>System GOPATH</translation>
+        <translation type="obsolete">System GOPATH</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="35"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="24"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="60"/>
         <source>Custom Directories (one per line)</source>
-        <translation type="unfinished">Benutzderdefinierte Ordner (eines pro Zeile)</translation>
+        <translation type="obsolete">Benutzderdefinierte Ordner (eines pro Zeile)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="71"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="56"/>
+        <source>Use System GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="68"/>
         <source>Add Directory...</source>
         <translation type="unfinished">Ordner hinzufügen...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="78"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="75"/>
         <source>Clear</source>
         <translation type="unfinished">Entfernen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="74"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="110"/>
+        <source>Use Custom GOPATH (one per line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="96"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
         <translation type="unfinished">Verzeichnis zu GOPATH hinzufügen:</translation>

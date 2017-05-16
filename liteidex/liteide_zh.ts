@@ -2443,7 +2443,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="657"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="659"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation>警告，包未发现，按回车导入:</translation>
     </message>
@@ -2469,113 +2469,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="269"/>
+        <location filename="src/liteapp/liteapp.cpp" line="282"/>
         <source>Event Log</source>
         <translation>事件记录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="256"/>
+        <location filename="src/liteapp/liteapp.cpp" line="269"/>
         <source>Escape</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="726"/>
+        <location filename="src/liteapp/liteapp.cpp" line="739"/>
         <source>Close File</source>
         <translation>关闭文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="729"/>
+        <location filename="src/liteapp/liteapp.cpp" line="742"/>
         <source>Close All Files</source>
         <translation>关闭所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="739"/>
+        <location filename="src/liteapp/liteapp.cpp" line="752"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="755"/>
         <source>Save File As...</source>
         <translation>文件另存为...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="745"/>
+        <location filename="src/liteapp/liteapp.cpp" line="758"/>
         <source>Save All Files</source>
         <translation>保存所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="732"/>
+        <location filename="src/liteapp/liteapp.cpp" line="745"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="272"/>
+        <location filename="src/liteapp/liteapp.cpp" line="285"/>
         <source>Options</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="703"/>
+        <location filename="src/liteapp/liteapp.cpp" line="716"/>
         <source>New...</source>
         <translation>新建...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="706"/>
+        <location filename="src/liteapp/liteapp.cpp" line="719"/>
         <source>Open File...</source>
         <translation>打开文件...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="709"/>
+        <location filename="src/liteapp/liteapp.cpp" line="722"/>
         <source>Open Folder...</source>
         <translation>打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="712"/>
+        <location filename="src/liteapp/liteapp.cpp" line="725"/>
         <source>Open Folder in New Window...</source>
         <translation>在新窗口打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="717"/>
+        <location filename="src/liteapp/liteapp.cpp" line="730"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation>关闭所有目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="720"/>
+        <location filename="src/liteapp/liteapp.cpp" line="733"/>
         <source>New Window</source>
         <translation>新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="723"/>
+        <location filename="src/liteapp/liteapp.cpp" line="736"/>
         <source>Close Window</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="734"/>
+        <location filename="src/liteapp/liteapp.cpp" line="747"/>
         <source>Save Project</source>
         <translation>保存项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="736"/>
+        <location filename="src/liteapp/liteapp.cpp" line="749"/>
         <source>Close Project</source>
         <translation>关闭项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="748"/>
+        <location filename="src/liteapp/liteapp.cpp" line="761"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="754"/>
+        <location filename="src/liteapp/liteapp.cpp" line="767"/>
         <source>Full Screen</source>
         <translation>全屏显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="758"/>
+        <location filename="src/liteapp/liteapp.cpp" line="771"/>
         <source>About LiteIDE</source>
         <translation>关于 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="764"/>
+        <location filename="src/liteapp/liteapp.cpp" line="777"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
@@ -2599,24 +2599,29 @@ Success: %2.</oldsource>
         <translation>语言:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="245"/>
+        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <source>Icon [*]</source>
+        <translation>图标 [*]</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="284"/>
         <source>Reload files in session</source>
         <translation>在会话中重新加载文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="257"/>
+        <location filename="src/liteapp/liteappoption.ui" line="296"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation>历史文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="263"/>
+        <location filename="src/liteapp/liteappoption.ui" line="302"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>最大记录数:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="173"/>
+        <location filename="src/liteapp/liteappoption.ui" line="211"/>
         <source>Monitoring files for modifications</source>
         <translation>文件修改监视</translation>
     </message>
@@ -2641,29 +2646,44 @@ Success: %2.</oldsource>
         <translation>主题 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="128"/>
+        <source>Custome Icon Libaray [*]</source>
+        <translation type="obsolete">自定义图标 [*]</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="137"/>
+        <source>Fallback build-in icon library and liteapp/qrc/default</source>
+        <translation>失败时回退内置图标库和 liteapp/qrc/default</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="140"/>
+        <source>Load the external file icon library</source>
+        <oldsource>Load custome icon from liteapp/qrc folder</oldsource>
+        <translation>加载外部文件图标库</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="166"/>
         <source>Automatically save documents</source>
         <translation>自动保存文档</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="134"/>
+        <location filename="src/liteapp/liteappoption.ui" line="172"/>
         <source>Automatically save documents when application is idle</source>
         <translation>应用程序空闲时自动保存文档</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="144"/>
+        <location filename="src/liteapp/liteappoption.ui" line="182"/>
         <source>sec</source>
         <translation>秒</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="179"/>
+        <location filename="src/liteapp/liteappoption.ui" line="217"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation>当文件被更改或删除时，自动重新读取或关闭编辑器。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="208"/>
-        <location filename="src/liteapp/liteappoption.ui" line="214"/>
+        <location filename="src/liteapp/liteappoption.ui" line="247"/>
+        <location filename="src/liteapp/liteappoption.ui" line="253"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
@@ -2676,78 +2696,78 @@ Success: %2.</oldsource>
         <translation type="obsolete">启动时重新加载文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="324"/>
+        <location filename="src/liteapp/liteappoption.ui" line="363"/>
         <source>Display</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="330"/>
+        <location filename="src/liteapp/liteappoption.ui" line="369"/>
         <source>Display [*]</source>
         <translation>显示 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="336"/>
+        <location filename="src/liteapp/liteappoption.ui" line="375"/>
         <source>Show splash screen on startup</source>
         <translation>启动时显示启动画面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="343"/>
+        <location filename="src/liteapp/liteappoption.ui" line="382"/>
         <source>Show welcome page on startup</source>
         <translation>启动时显示欢迎页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="353"/>
+        <location filename="src/liteapp/liteappoption.ui" line="392"/>
         <source>Editor tab [*]</source>
         <translation>编辑器Tab栏 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="359"/>
+        <location filename="src/liteapp/liteappoption.ui" line="398"/>
         <source>Show close buttons on each editor tab</source>
         <translation>在每个文档标签栏都显示关闭按钮</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="366"/>
+        <location filename="src/liteapp/liteappoption.ui" line="405"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation>允许鼠标滚轮导航Tabs</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="376"/>
+        <location filename="src/liteapp/liteappoption.ui" line="415"/>
         <source>Toolbar Icon Size [*]</source>
         <translation>工具栏图标大小 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="449"/>
+        <location filename="src/liteapp/liteappoption.ui" line="488"/>
         <source>Keyboard</source>
         <translation>键盘</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="455"/>
+        <location filename="src/liteapp/liteappoption.ui" line="494"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="467"/>
+        <location filename="src/liteapp/liteappoption.ui" line="506"/>
         <source>Hide standard commands</source>
         <translation>隐藏标准命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="474"/>
+        <location filename="src/liteapp/liteappoption.ui" line="513"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="481"/>
+        <location filename="src/liteapp/liteappoption.ui" line="520"/>
         <source>Reset All</source>
         <translation>重置所有</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="501"/>
+        <location filename="src/liteapp/liteappoption.ui" line="540"/>
         <source>Import...</source>
         <translation>导入...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="508"/>
+        <location filename="src/liteapp/liteappoption.ui" line="547"/>
         <source>Export...</source>
         <translation>导出...</translation>
     </message>
@@ -2762,7 +2782,7 @@ Success: %2.</oldsource>
         <translation>主题:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="220"/>
+        <location filename="src/liteapp/liteappoption.ui" line="259"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation>启动时重新加载会话</translation>
@@ -2778,53 +2798,53 @@ Success: %2.</oldsource>
         <translation>分离样式</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="149"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="165"/>
         <source>Command</source>
         <translation>命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="150"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="166"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="151"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="167"/>
         <source>Shortcuts</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="152"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="168"/>
         <source>NativeText</source>
         <translation>本机文本</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="153"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="169"/>
         <source>Standard</source>
         <translation>标准键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>导入键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="438"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>键盘映射方案 (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="445"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="467"/>
         <source>Could not read scheme from %1!</source>
         <translation>无法加载方案%1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="472"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>导出键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="483"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="505"/>
         <source>Could not write scheme to %1!</source>
         <translation>无法写入方案%1!</translation>
     </message>
@@ -3787,7 +3807,7 @@ Success: %2.</oldsource>
         <translation>显示所有页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/litetabwidget.cpp" line="74"/>
+        <location filename="src/liteapp/litetabwidget.cpp" line="75"/>
         <source>Close Tab</source>
         <translation>关闭页面</translation>
     </message>
@@ -4275,56 +4295,56 @@ Do you want to replace it?</source>
 <context>
     <name>PackageBrowser</name>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="85"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="86"/>
         <source>Manage GOPATH...</source>
         <oldsource>Setup GOPATH</oldsource>
         <translation>管理GOPATH...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="84"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="85"/>
         <source>Reload All</source>
         <translation>重新加载所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="91"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
         <source>Use godoc View</source>
         <translation>使用godoc查看</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="92"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
         <source>Load Package in New Window</source>
         <translation>在新窗口打开包</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="93"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="94"/>
         <source>Add Package to Folders</source>
         <translation>添加Package到目录列表</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="94"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="95"/>
         <source>Open Source File</source>
         <translation>打开源文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="95"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="96"/>
         <source>Copy Name to Clipboard</source>
         <oldsource>Copy Name To Clipboard</oldsource>
         <translation>复制名字到剪切板</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="117"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="118"/>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
         <translation>Package浏览</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="193"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="194"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
         <translation>无法找到GO安装.</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="198"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="199"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation>正在加载go package列表...</translation>
@@ -4706,32 +4726,40 @@ Do you want to replace it?</source>
         <translation>管理GOPATH</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
         <source>System GOPATH</source>
-        <translation>系统 GOPATH</translation>
+        <translation type="obsolete">系统 GOPATH</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="35"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="24"/>
         <source>Reload</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="60"/>
         <source>Custom Directories (one per line)</source>
-        <translation>自定义目录(每行一个)</translation>
+        <translation type="obsolete">自定义目录(每行一个)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="71"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="56"/>
+        <source>Use System GOPATH</source>
+        <translation>使用系统 GOPATH</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="68"/>
         <source>Add Directory...</source>
         <translation>添加目录...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="78"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="75"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="74"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="110"/>
+        <source>Use Custom GOPATH (one per line)</source>
+        <translation>使用自定义 GOPATH （每行一个）</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="96"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
         <translation>选择目录添加到GOPATH:</translation>
