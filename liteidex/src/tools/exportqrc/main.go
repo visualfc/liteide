@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"flag"
 	"image"
+	"image/color"
 	"image/draw"
 	"image/png"
 	"io"
@@ -36,7 +37,7 @@ func main() {
 	p.ProcessDir(filepath.Join(root, "src/liteapp"))
 	p.ProcessDir(filepath.Join(root, "src/plugins"))
 	p.Export(filepath.Join(root, "deploy/liteapp/qrc/default"), CopyFile)
-	p.Export(filepath.Join(root, "deploy/liteapp/qrc/gray"), GrayImage)
+	p.Export(filepath.Join(root, "deploy/liteapp/qrc/gray"), MakeColorImage(GrayColor))
 }
 
 type Process struct {
@@ -131,8 +132,23 @@ func (p *Process) ExportQrc(outdir string, rcc RCC, copyFn CopyFunc) error {
 }
 
 type CopyFunc func(string, string) error
+type ColorFunc func(color.RGBA) color.RGBA
 
-func GrayImage(source string, dest string) error {
+func GrayColor(c color.RGBA) color.RGBA {
+	r := float64(c.R)
+	g := float64(c.G)
+	b := float64(c.B)
+	var avg uint8 = uint8(r*0.299 + g*0.587 + b*0.114)
+	return color.RGBA{avg, avg, avg, c.A}
+}
+
+func MakeColorImage(colorFn ColorFunc) func(string, string) error {
+	return func(source string, dest string) error {
+		return CopyImage(source, dest, colorFn)
+	}
+}
+
+func CopyImage(source string, dest string, colorFn ColorFunc) error {
 	f, err := os.Open(source)
 	if err != nil {
 		return err
@@ -148,16 +164,8 @@ func GrayImage(source string, dest string) error {
 	for y := b.Min.Y; y < b.Max.Y; y++ {
 		for x := b.Min.X; x < b.Max.X; x++ {
 			c := dstImage.RGBAAt(x, y)
-			r := float64(c.R)
-			g := float64(c.G)
-			b := float64(c.B)
-			var avg uint8 = uint8(r*0.299 + g*0.587 + b*0.114)
-			//var avg uint8 = uint8((int(c.R) + int(c.G) + int(c.B)) / 3)
-			//c.R = c.G = c.B = avg
-			c.R = avg
-			c.G = avg
-			c.B = avg
-			dstImage.SetRGBA(x, y, c)
+			d := colorFn(c)
+			dstImage.SetRGBA(x, y, d)
 		}
 	}
 
