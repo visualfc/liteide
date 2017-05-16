@@ -132,14 +132,13 @@ func (p *Process) ExportQrc(outdir string, rcc RCC, copyFn CopyFunc) error {
 }
 
 type CopyFunc func(string, string) error
-type ColorFunc func(color.RGBA) color.RGBA
+type ColorFunc func(r, g, b uint8) (uint8, uint8, uint8)
 
-func GrayColor(c color.RGBA) color.RGBA {
-	r := float64(c.R)
-	g := float64(c.G)
-	b := float64(c.B)
-	var avg uint8 = uint8(r*0.299 + g*0.587 + b*0.114)
-	return color.RGBA{avg, avg, avg, c.A}
+func GrayColor(r uint8, g uint8, b uint8) (uint8, uint8, uint8) {
+	Y, cb, cr := color.RGBToYCbCr(r, g, b)
+	cb = 128
+	cr = 128
+	return color.YCbCrToRGB(Y, cb, cr)
 }
 
 func MakeColorImage(colorFn ColorFunc) func(string, string) error {
@@ -164,8 +163,8 @@ func CopyImage(source string, dest string, colorFn ColorFunc) error {
 	for y := b.Min.Y; y < b.Max.Y; y++ {
 		for x := b.Min.X; x < b.Max.X; x++ {
 			c := dstImage.RGBAAt(x, y)
-			d := colorFn(c)
-			dstImage.SetRGBA(x, y, d)
+			r, g, b := colorFn(c.R, c.G, c.B)
+			dstImage.SetRGBA(x, y, color.RGBA{r, g, b, c.A})
 		}
 	}
 
