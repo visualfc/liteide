@@ -101,6 +101,7 @@ func (p *Process) ProcessQrc(path string) error {
 }
 
 func (p *Process) Export(outdir string, copyFn CopyFunc) error {
+	log.Println("export", outdir)
 	for _, rcc := range p.rccs {
 		p.ExportQrc(outdir, rcc, copyFn)
 	}
@@ -110,11 +111,12 @@ func (p *Process) Export(outdir string, copyFn CopyFunc) error {
 func (p *Process) ExportQrc(outdir string, rcc RCC, copyFn CopyFunc) error {
 	images := rcc.ImagesFiles()
 	if len(images) == 0 {
-		log.Println("skip empty rcc", rcc.FileName)
+		//log.Println("skip empty rcc", rcc.FileName)
 		return nil
 	}
 	outpath := filepath.Join(outdir, rcc.DirName)
 	os.MkdirAll(outpath, 0777)
+	log.Println(rcc.DirName, "->", len(images))
 	for _, file := range images {
 		target := file[len(rcc.Dir):]
 		dest := filepath.Join(outpath, target)
@@ -146,7 +148,11 @@ func GrayImage(source string, dest string) error {
 	for y := b.Min.Y; y < b.Max.Y; y++ {
 		for x := b.Min.X; x < b.Max.X; x++ {
 			c := dstImage.RGBAAt(x, y)
-			var avg uint8 = uint8((int(c.R) + int(c.G) + int(c.B)) / 3)
+			r := float64(c.R)
+			g := float64(c.G)
+			b := float64(c.B)
+			var avg uint8 = uint8(r*0.299 + g*0.587 + b*0.114)
+			//var avg uint8 = uint8((int(c.R) + int(c.G) + int(c.B)) / 3)
 			//c.R = c.G = c.B = avg
 			c.R = avg
 			c.G = avg
