@@ -149,13 +149,17 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
 
     bool customeIcon = m_liteApp->settings()->value(LITEIDE_CUSTOMEICON,false).toBool();
     ui->customIconCheckBox->setChecked(customeIcon);
+    ui->iconPathComboBox->setEnabled(customeIcon);
 
     QDir iconDir(m_liteApp->resourcePath()+"/liteapp/qrc");
     foreach (QFileInfo info, iconDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot)) {
         ui->iconPathComboBox->addItem(info.fileName());
     }
     QString iconPath = m_liteApp->settings()->value(LITEIDE_CUSTOMEICONPATH,"default").toString();
-    ui->iconPathComboBox->setCurrentText(iconPath);
+    index = ui->iconPathComboBox->findText(iconPath,Qt::MatchFixedString);
+    if (index >= 0 && index < ui->iconPathComboBox->count()) {
+        ui->iconPathComboBox->setCurrentIndex(index);
+    }
 
     m_keysModel = new QStandardItemModel(0,5,this);
     m_keysModel->setHeaderData(0,Qt::Horizontal,tr("Command"));
