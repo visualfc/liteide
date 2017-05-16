@@ -15,6 +15,13 @@ QTabBar, QMenu, QMenuBar, QWidget::window  {
 QWidget:window {
 }
 
+/* === WebView === */
+QTextBrowser, QWebView {
+    background-color: #BBBBBB;
+    selection-color: #0a214c; 
+    selection-background-color: #C19A6B;
+}
+
 /* === QToolTip === */
 QToolTip {
     background-color: #EAEBF3;

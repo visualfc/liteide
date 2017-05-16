@@ -17,6 +17,13 @@ QWidget:window {
 	background-color: #888;
 }
 
+/* === WebView === */
+QTextBrowser, QWebView {
+    background-color: #BBBBBB;
+    selection-color: #0a214c; 
+    selection-background-color: #C19A6B;
+}
+
 /* === QPushButton === */
 QPushButton {
 	border: 1px solid #555;
