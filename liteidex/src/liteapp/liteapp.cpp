@@ -188,6 +188,8 @@ LiteApp::LiteApp()
         }
     }
     searchPathList << ":/";
+    searchPathList << m_resourcePath+"/liteapp/qrc/default/liteapp";
+    searchPathList << m_resourcePath+"/liteapp/qrc/default";
     QDir::setSearchPaths("icon",searchPathList);
 
     m_extension = new Extension;

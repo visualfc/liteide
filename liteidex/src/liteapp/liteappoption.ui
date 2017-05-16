@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>488</height>
+    <width>529</width>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -133,8 +133,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
            <widget class="QCheckBox" name="customIconCheckBox">
+            <property name="toolTip">
+             <string>Fallback build-in icon library and liteapp/qrc/default</string>
+            </property>
             <property name="text">
-             <string>Load custome icon from liteapp/qrc, fallback build-in icon libaray</string>
+             <string>Load custome icon from liteapp/qrc folder</string>
             </property>
            </widget>
           </item>
