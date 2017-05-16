@@ -3,6 +3,50 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2017.5.18 Ver X32
+* LiteEditor
+	* reimplemented multifolder model
+	* enable load custom icon library from liteapp/qrc folder (default and folder)
+	* fix webview and debug console qss
+	* update reload icon
+	* add macOS dock menu
+	* recent menu sync multi windows
+	* add themes (carbon.qss gray.qss sublime.qss) for liteide & beautify old themes, thanks for hope hook
+* LiteApp
+	* add the session switching function
+	* fix folder sync editor incorrect on macOS
+	* editor tab context add open terminal here action
+	* folders context menu add open in new windows action (new folder session)
+	* folder view add show showdetails action
+	* add exit liteide ctrl+q on windows
+* LiteFind
+	* find files add auto swith current folder checkbox
+	* find in editor add show replace mode checkbox
+* LiteDebug
+	* console use editor color scheme
+* DlvDebugger
+	* fix process identify for auto exit
+* LiteEnv
+	* default env /usr/local/go on macosx
+* LiteEditor
+	* context menu add convert case menu
+	* go.snippet add iferr
+	* update sublime.xml / sublime-bold.xml, thanks for hopehook <hopehook@qq.com>
+* LiteBuild
+	* fix stop action for kill process
+* GolangPackage
+	* gopath setup add use sysgopath/litegopath check
+* GolangPlay
+	* fix goplay use goenvironment
+* GolangDoc
+	* change golang api index search for go/api folder
+* GolangEdit
+	* fix interface type by gotools
+* gotools
+	* fix types interface method
+* tools
+	* add new exportqrc tool for export liteide all build-in images
+
 ### 2017.3.9 Ver X31.1
 * LiteApp
 	* restore folder first on MacOS
