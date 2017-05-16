@@ -36,5 +36,6 @@
 #define FIND_MATCHCASE "find/matchCase"
 #define FIND_USEREGEXP "find/useRegexp"
 #define FIND_WRAPAROUND "find/wrapAround"
+#define FILESEARCH_AUTOSWITCHDIR "findfiles/autoswitchdir"
 
 #endif // LITEFIND_GLOBAL_H

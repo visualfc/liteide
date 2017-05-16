@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "filesearch.h"
+#include "litefind_global.h"
 #include <QFile>
 #include <QTableWidget>
 #include <QTextStream>
@@ -232,8 +233,13 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     m_findPathCombo = new QComboBox;
     m_findPathCombo->setEditable(true);
     QPushButton *browserBtn = new QPushButton(tr("Browse..."));
-    QPushButton *currentBtn = new QPushButton(tr("Use Current"));
+    QPushButton *currentBtn = new QPushButton(tr("Current Folder"));
+
+    m_autoSwitchPathCheckBox = new QCheckBox;
+    m_autoSwitchPathCheckBox->setText(tr("Auto Switch"));
+
     dirLayout->addWidget(m_findPathCombo,1);
+    dirLayout->addWidget(m_autoSwitchPathCheckBox);
     dirLayout->addWidget(currentBtn);
     dirLayout->addWidget(browserBtn);
 
@@ -273,6 +279,9 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     connect(m_thread,SIGNAL(finished()),this,SIGNAL(findFinished()));
     connect(m_thread,SIGNAL(findResult(LiteApi::FileSearchResult)),this,SIGNAL(findResult(LiteApi::FileSearchResult)));
     connect(m_findCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findInFiles()));
+
+    bool b = m_liteApp->settings()->value(FILESEARCH_AUTOSWITCHDIR,true).toBool();
+    m_autoSwitchPathCheckBox->setChecked(b);
 }
 
 FileSearch::~FileSearch()
@@ -283,6 +292,8 @@ FileSearch::~FileSearch()
     m_liteApp->settings()->setValue("useRegexp",m_useRegexCheckBox->isChecked());
     m_liteApp->settings()->setValue("findSub",m_findSubCheckBox->isChecked());
     m_liteApp->settings()->endGroup();
+
+    m_liteApp->settings()->setValue(FILESEARCH_AUTOSWITCHDIR,m_autoSwitchPathCheckBox->isChecked());
 
     if (m_thread) {
         m_thread->stop();
@@ -321,7 +332,7 @@ void FileSearch::setVisible(bool b)
             if (!text.isEmpty()) {
                 this->m_findCombo->setEditText(text);
             }
-            if (editor && !editor->filePath().isEmpty()) {
+            if (editor && !editor->filePath().isEmpty() && m_autoSwitchPathCheckBox->isChecked()) {
                 QFileInfo info(editor->filePath());
                 m_findPathCombo->setEditText(info.path());
             }
@@ -381,7 +392,7 @@ void FileSearch::activate()
         if (!text.isEmpty()) {
             this->m_findCombo->setEditText(text);
         }
-        if (editor && !editor->filePath().isEmpty()) {
+        if (editor && !editor->filePath().isEmpty() && m_autoSwitchPathCheckBox->isChecked()) {
             QFileInfo info(editor->filePath());
             m_findPathCombo->setEditText(info.path());
         }

@@ -106,6 +106,7 @@ protected:
     QCheckBox   *m_matchWordCheckBox;
     QCheckBox   *m_matchCaseCheckBox;
     QCheckBox   *m_useRegexCheckBox;
+    QCheckBox   *m_autoSwitchPathCheckBox;
     QPushButton *m_findButton;
     QPushButton *m_stopButton;
 };
