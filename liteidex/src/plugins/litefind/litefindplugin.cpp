@@ -116,7 +116,9 @@ void LiteFindPlugin::hideFind()
 
 void LiteFindPlugin::find()
 {
-    m_findEditor->setReplaceMode(false);
+    if (!m_findEditor->isVisible()) {
+        m_findEditor->setReplaceMode(false);
+    }
     m_findEditor->setVisible(true);
 }
 

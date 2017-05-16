@@ -50,9 +50,10 @@ public:
     virtual void setReady(const QString &findText = QString());
     void getFindOption(FindOption *state, bool backWard);
     void setVisible(bool b);
-    void setReplaceMode(bool b);
+    bool isVisible() const;
     void findHelper(FindOption *opt);
 public slots:
+    void setReplaceMode(bool b);
     void hideFind();
     void updateCurrentEditor(LiteApi::IEditor*);
     void findOptionChanged();
@@ -74,6 +75,7 @@ protected:
     QLabel    *m_replaceLabel;
     QPushButton *m_replace;
     QPushButton *m_replaceAll;
+    QCheckBox   *m_showReplaceCheckBox;
     QCheckBox   *m_matchWordCheckBox;
     QCheckBox   *m_matchCaseCheckBox;
     QCheckBox   *m_useRegexCheckBox;
