@@ -26,7 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include "litedebugapi/litedebugapi.h"
-#include "textoutput/terminaledit.h"
+#include "textoutput/textoutput.h"
 
 class QTabWidget;
 class QTreeView;
@@ -69,7 +69,7 @@ protected:
     QTreeView *m_watchView;
     QTreeView *m_statckView;
     QTreeView *m_libraryView;
-    TerminalEdit *m_debugLogEdit;
+    TextOutput *m_debugLogEdit;
     QMenu      *m_watchMenu;
     QAction    *m_addWatchAct;
     //QAction    *m_addLocalWatchAct;

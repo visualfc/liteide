@@ -78,7 +78,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 #endif
     m_libraryView->setEditTriggers(0);
 
-    m_debugLogEdit = new TerminalEdit;
+    m_debugLogEdit = new TextOutput(m_liteApp);
     m_debugLogEdit->setReadOnly(false);
     m_debugLogEdit->setFilterTermColor(true);
     m_debugLogEdit->setMaximumBlockCount(10000);

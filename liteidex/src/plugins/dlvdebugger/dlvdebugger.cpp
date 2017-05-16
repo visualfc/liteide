@@ -475,6 +475,7 @@ void DlvDebugger::readStdError()
 {
     //Process 4084 has exited with status 0
     QString data = QString::fromUtf8(m_process->readAllStandardError());
+    qDebug() << data << m_processId;
     //QRegExp reg;
     emit debugLog(LiteApi::DebugErrorLog,data);
     foreach (QString line, data.split("\n",QString::SkipEmptyParts)) {
@@ -502,7 +503,7 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
         //Process restarted with PID
         int n = buff.indexOf("PID");
         if (n != -1) {
-            m_processId = buff.mid(n+3).trimmed();
+            m_processId = buff.mid(n+3).replace("(dlv)","").trimmed();
         }
     }
     //Process restarted with PID 4532
