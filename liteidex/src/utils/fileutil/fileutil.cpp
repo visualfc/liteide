@@ -366,7 +366,7 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, bo
             return find;
         }
     }
-    QProcessEnvironment env = LiteApi::getCurrentEnvironment(app);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(app);
 #ifdef Q_OS_WIN
     QString sep = ";";
 #else
@@ -374,27 +374,27 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, bo
 #endif
 
     QString goos = env.value("GOOS");
-    if (goos.isEmpty()) {
-        goos = LiteApi::getDefaultGOOS();
-    }
+//    if (goos.isEmpty()) {
+//        goos = LiteApi::getDefaultGOOS();
+//    }
     QString goarch = env.value("GOARCH");
-    QString goroot = env.value("GOROOT");
-    if (goroot.isEmpty()) {
-        goroot = LiteApi::getDefaultGOROOT();
-    }
+//    QString goroot = env.value("GOROOT");
+//    if (goroot.isEmpty()) {
+//        goroot = LiteApi::getDefaultGOROOT();
+//    }
     QStringList pathList;
     foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
-    foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
-        pathList.append(QDir::toNativeSeparators(path));
-    }
-    pathList.removeDuplicates();
-    env.insert("GOPATH",pathList.join(sep));
+//    foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
+//        pathList.append(QDir::toNativeSeparators(path));
+//    }
+//    pathList.removeDuplicates();
+//    env.insert("GOPATH",pathList.join(sep));
 
-    if (!goroot.isEmpty()) {
-        pathList.prepend(goroot);
-    }
+//    if (!goroot.isEmpty()) {
+//        pathList.prepend(goroot);
+//    }
 
     QStringList binList;
     QString gobin = env.value("GOBIN");

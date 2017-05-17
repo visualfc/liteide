@@ -636,7 +636,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     if (!b) {
         return;
-    }
+    }    
 
     QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
     if (gobin.isEmpty()) {
@@ -645,7 +645,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         m_output->append("go bin not found!",Qt::red);
         return;
     }
-    if (!m_process->isStop()) {
+    if (m_process->isStop()) {
         m_output->updateExistsTextColor();
         m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
         this->execCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
