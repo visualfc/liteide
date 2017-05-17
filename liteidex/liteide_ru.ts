@@ -206,7 +206,7 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Open Explorer Here</source>
-        <translation>Открыть папку в проводнике</translation>
+        <translation type="obsolete">Открыть папку в проводнике</translation>
     </message>
     <message>
         <source>Use godoc View</source>
@@ -296,6 +296,22 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Open In New Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show in Explorer</source>
+        <translation type="unfinished">Показать в проводнике</translation>
+    </message>
+    <message>
+        <source>Show in Finder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Containing Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Command Prompt Here</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -547,6 +563,22 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Edit Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Terminal Here</source>
+        <translation type="unfinished">Запустить терминал в папке</translation>
+    </message>
+    <message>
+        <source>Show in Finder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Containing Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Command Prompt Here</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1046,7 +1078,7 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Use Current</source>
         <oldsource>Current</oldsource>
-        <translation>Текущая</translation>
+        <translation type="obsolete">Текущая</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -1071,6 +1103,14 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Open Directory</source>
         <translation>Открытие каталога</translation>
+    </message>
+    <message>
+        <source>Current Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Switch</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1469,6 +1509,10 @@ Do you want to reload the file from disk?</source>
     <message>
         <source>Not found</source>
         <translation>Не найдено</translation>
+    </message>
+    <message>
+        <source>Show Replace</source>
+        <translation type="unfinished">Режим замены</translation>
     </message>
 </context>
 <context>

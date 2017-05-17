@@ -168,8 +168,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
             menu.addAction(m_viewGodocAct);
             menu.addSeparator();
         }
-        menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
+        menu.addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
         menu.addAction(m_openInNewWindowAct);
         menu.addSeparator();
@@ -183,8 +183,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
             menu.addAction(m_viewGodocAct);
             menu.addSeparator();
         }
-        menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
+        menu.addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
         menu.addAction(m_openEditorAct);
         menu.addSeparator();
@@ -197,9 +197,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
             menu.addAction(m_viewGodocAct);
             menu.addSeparator();
         }
-        menu.addAction(m_openShellAct);
         menu.addAction(m_openExplorerAct);
-
+        menu.addAction(m_openShellAct);
     }
     emit aboutToShowContextMenu(&menu,flag,m_contextInfo);
     menu.exec(this->mapToGlobal(pos));

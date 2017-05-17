@@ -80,8 +80,20 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     m_renameFolderAct = new QAction(tr("Rename Folder..."),this);
     m_removeFolderAct = new QAction(tr("Delete Folder"),this);
 
-    m_openShellAct = new QAction(tr("Open Terminal Here"),this);
-    m_openExplorerAct = new QAction(tr("Open Explorer Here"),this);
+#if defined(Q_OS_WIN)
+    m_openExplorerAct = new QAction(tr("Show in Explorer"),this);
+#elif defined(Q_OS_MAC)
+    m_openExplorerAct = new QAction(tr("Show in Finder"),this);
+#else
+    m_openExplorerAct = new QAction(tr("Show Containing Folder"),this);
+#endif
+
+#ifdef Q_OS_WIN
+    m_openShellAct = new QAction(tr("Open Command Prompt Here"),this);
+#else
+    m_openShellActl = new QAction(tr("Open Terminal Here"),this);
+#endif
+
 
     m_viewGodocAct = new QAction(tr("Use godoc View"),this);
 

@@ -143,8 +143,20 @@ bool EditorManager::initWithApp(IApplication *app)
     QAction *closeSameFolderFiles = new QAction(tr("Close Files in Same Folder"),this);
     QAction *closeOtherFolderFiles = new QAction(tr("Close Files in Other Folders"),this);
     QAction *copyPathToClipboard = new QAction(tr("Copy Full Path to Clipboard"),this);
+
+#if defined(Q_OS_WIN)
     QAction *showInExplorer = new QAction(tr("Show in Explorer"),this);    
+#elif defined(Q_OS_MAC)
+    QAction *showInExplorer = new QAction(tr("Show in Finder"),this);
+#else
+    QAction *showInExplorer = new QAction(tr("Show Containing Folder"),this);
+#endif
+
+#ifdef Q_OS_WIN
+    QAction *openInShell = new QAction(tr("Open Command Prompt Here"),this);
+#else
     QAction *openInShell = new QAction(tr("Open Terminal Here"),this);
+#endif
 
 
     QAction *moveToAct = new QAction(tr("Move to New Window"),this);
