@@ -21,14 +21,26 @@
 LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt5来编译源代码，Qt库可以从<https://qt-project.org/downloads>上获取。Mac OS X用户可以不从源代码编译Qt，直接在终端中运行`brew update && brew install qt`，节省大量时间。下面的编译以Qt4为例。
 
 ### Windows
+** Qt4 **
+
 	> git clone https://github.com/visualfc/liteide.git
-	> set QTDIR=c:\Qt\Qt484
+	> set QTDIR=c:\Qt\Qt4.8.5
 	> set MINGWDIR=c:\Qt\MinGW
 	> cd liteide/build
 	> update_pkg.cmd
-	> build_mingw.cmd
-	> deploy_qt4.8_webkit.cmd
+	> build_windows_mingw.cmd
+	> deploy_windows_qt4.8_webkit.cmd
 
+** Qt5.6.2 **
+
+	> git clone https://github.com/visualfc/liteide.git
+	> set QTDIR=C:\Qt\Qt5.6.2\5.6\mingw49_32
+	> set MINGWDIR=C:\Qt\Qt5.6.2\Tools\mingw492_32
+	> cd liteide/build
+	> update_pkg.cmd
+	> build_windows_mingw.cmd
+	> deploy_windows_qt5.6.cmd
+	
 ### Linux
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
@@ -45,8 +57,8 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc #如果Qt是通过brew安装，输入: export QTDIR=/usr/local/Cellar/qt/4.8.6
 	$ cd liteide/build
 	$ ./update_pkg.sh
-	$ ./build_osx.sh
-	$ ./deploy_osx_qt4.sh
+	$ ./build_maoos_qt4.sh
+	$ ./deploy_macos_qt4.sh
 	$ open liteide/LiteIDE.app
 
 **Qt 5 sdk install**
@@ -57,8 +69,8 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ export QTDIR=$HOME/Qt5.6.2/Qt5.6/clang_64
 	$ cd liteide/build
 	$ ./update_pkg.sh
-	$ ./build_osx_clang.sh
-	$ ./deploy_osx_qt5.sh
+	$ ./build_macos_qt5.sh
+	$ ./deploy_macos_qt5.sh
 	$ open liteide/LiteIDE.app
 	
 **Qt 5 brew install**	
@@ -69,10 +81,10 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ export QTDIR=/usr/local/Cellar/qt/5.8.0_2 # or modify accordingly for qt@5.5 and qt@5.7
 	$ cd liteide/build
 	$ ./update_pkg.sh
-	$ ./build_osx_clang.sh
+	$ ./build_macos_qt5.sh
 	$ open liteide/LiteIDE.app
 
-警告！ 使用 brew 安装的 Qt rpath 不正确不要使用 deploy 脚本进行打包。
+警告！ 使用 brew 安装的 Qt rpath 不正确，不要使用 deploy 脚本进行打包。
 
 ### OpenBSD
 	$ git clone https://github.com/visualfc/liteide.git
