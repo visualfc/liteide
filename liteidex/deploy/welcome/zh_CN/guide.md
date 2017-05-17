@@ -122,6 +122,25 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
 
 要构建编译器到交叉编译，需要转到源目录中并运行相应的脚本。下面的例子演示了如何构建一些常见的编译器，你必须自己机器上相应设置来修改环境变量。
 
+**go1.5 以下 ( go1.8 交叉编译时会自动设置 CGO_ENABLED 为 0)**
+
+在Windows平台上交叉编译 64-bit Linux (使用MinGW和GCC):
+
+    > set GOARCH=amd64
+    > set GOOS=linux
+	> set CGO_ENABLED=0
+	> go build std
+
+在Mac OS X平台上交叉编译 32-bit windows:
+
+    > GOARCH=386 GOOS=window CGO_ENABLED=0 go build std
+
+在Mac OS X平台上交叉编译 ARM :
+
+    > GOARCH=arm GOOS=linux CGO_ENABLED=0 go build std
+
+**go 1.0 go1.1 go1.2 go1.3 go1.4**
+
 在Windows平台上交叉编译 64-bit Linux (使用MinGW和GCC):
 
     > set GOARCH=amd64
@@ -130,7 +149,7 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
     > cd %GOROOT%\src
     > all.bat
 
-在Windows平台上交叉编译 32-bit Linux (使用MinGW和GCC):
+在macOS平台上交叉编译 32-bit windows:
 
     > export GOARCH=386
     > export GOOS=windows
@@ -138,7 +157,7 @@ LiteIDE环境设置插件可以让你快速设置切换多个系统环境，以�
     > cd $GOROOT/src
     > ./all.bash
 
-在Mac OS X平台上交叉编译 ARM :
+在macOS平台上交叉编译 ARM :
 
     > export GOARCH=arm
     > export GOOS=linux

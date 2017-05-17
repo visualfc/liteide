@@ -112,6 +112,25 @@ To cross-compile your project for another operating system or architecture, you 
 ### Building Compilers
 To build the compilers for cross-compilation, run the appropriate script from the Go sources directory.  The examples below demonstrate how to build some common compilers; you must modify the environment variables appropriately.
 
+**go1.5 or high (go1.8 cross-compile CGO_ENABLED auto set 0)**
+
+Building cross-compiler for 64-bit Linux on Windows (in MinGW with GCC):
+
+    > set GOARCH=amd64
+    > set GOOS=linux
+	> set CGO_ENABLED=0
+	> go build std
+
+Building cross-compiler for 32-bit Windows on macOS:
+
+    > GOARCH=386 GOOS=window CGO_ENABLED=0 go build std
+
+Building cross-compiler for Linux ARM on macOS:
+
+    > GOARCH=arm GOOS=linux CGO_ENABLED=0 go build std
+
+**go 1.0 go1.1 go1.2 go1.3 go1.4**
+
 Building cross-compiler for 64-bit Linux on Windows (in MinGW with GCC):
 
     > set GOARCH=amd64
@@ -120,7 +139,7 @@ Building cross-compiler for 64-bit Linux on Windows (in MinGW with GCC):
     > cd %GOROOT%\src
     > all.bat
 
-Building cross-compiler for 32-bit Windows on Linux:
+Building cross-compiler for 32-bit Windows on macOS:
 
     > export GOARCH=386
     > export GOOS=windows
@@ -128,7 +147,7 @@ Building cross-compiler for 32-bit Windows on Linux:
     > cd $GOROOT/src
     > ./all.bash
 
-Building cross-compiler for Linux ARM on Mac OS X:
+Building cross-compiler for Linux ARM on macOS:
 
     > export GOARCH=arm
     > export GOOS=linux
@@ -176,34 +195,18 @@ LiteIDE's build system is highly configurable, allowing you to define your own c
 ### Configuring Build Actions
 To modify the available build options, open `View > Options > LiteBuild`.  You can add your own images in this directory to define new icons.  Any XML files in this directory are read to load action buttons.  Double click on an XML file to edit it.  Each XML file defines all of the build actions for one particular type of file.
 
-Example XML for Go (`gosrc.xml`):
+Example XML for Lua (`lua.xml`):
 
-	<?xml version="1.0" encoding="UTF-8"?>
-	<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-		<mime-type type="text/x-gosrc" id="gosrc" work="$(EDITOR_DIR)" ver="1">
-			<config id="Go" name="GO" value="go"/>
-			<config id="GoExec" name="GOEXEC" value="$(LITEAPPDIR)/goexec"/>
-			<config id="ErrRegex" name="ERRREGEX" value="(\w?:?[\w\d_\-\\/\.]+):(\d+):"/>
-			<custom id="TargetArgs" name="TARGETARGS" value=""/>
-			<custom id="BuildArgs" name="BUILDARGS" value=""/>
-			<custom id="InstallArgs" name="INSTALLARGS" value=""/>
-			<action id="Build" img="blue/build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="" regex="$(ERRREGEX)" navigate="true"/>
-			<action id="Install" menu="Build" img="blue/install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
-			<action id="BuildTests" menu="Build" img="blue/buildtest.png" cmd="$(GO)" args="test -c -gcflags &quot;-N -l&quot;" save="all" output="true" codec="" regex="$(ERRREGEX)"/>
-			<action id="Clean" menu="Build" img="blue/clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
-			<action id="CleanAll" menu="Build" img="blue/cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
-			<action id="BuildAndRun" img="blue/buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
-			<action id="Run" menu="BuildAndRun" img="blue/run.png" key="Ctrl+F5" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
-			<action id="RunTerm" menu="BuildAndRun" img="blue/runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOEXEC) $(EDITOR_DIRNAME_GO) $(TARGETARGS)" output="false" readline="true"/>
-			<action id="FileRun" menu="BuildAndRun" img="gray/filerun.png" key="Alt+F6" cmd="$(GO)" args="run $(EDITOR_NAME)" save="editor" output="true" codec="utf-8" readline="true"/>
-			<action id="Test" img="blue/test.png" key = "Ctrl+T" cmd="$(GO)" args="test" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-			<action id="Bench" menu="Test" img="blue/testbench.png" cmd="$(GO)" args="test -test.bench=.*" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-			<action id="Get" menu="Test" img="blue/get.png" cmd="$(GO)" args="get -v ." save="all" output="true" codec="utf-8"/>
-			<action id="Fmt" menu="Test" img="blue/fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
-			<action id="Vet" menu="Test" img="blue/vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true"/>
-			<target id="Target" cmd="$(EDITOR_DIRNAME_GO)" args="$(TARGETARGS)" work="$(EDITOR_DIR)"/>
-		</mime-type>
-	</mime-info>
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-lua" id="lua" work="$(EDITOR_DIR_PATH)" lock="file" ver="2">
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
+		<action id="Run" key="Ctrl+R" img="run.png" cmd="lua" args="-e io.stdout:setvbuf('no') $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" regex="([\w\d:_\-\\/\.]+):(\d+)" readline="true" />
+		<action id="RunTerm" key="Ctrl+Shift+F5" img="runterm.png" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd lua -e io.stdout:setvbuf(&quot;no&quot;) $(EDITOR_FILE_NAME)" save="editor" output="false" readline="true"/>
+	</mime-type>
+</mime-info>
+```
 
 ## Godoc Viewer
 LiteIDE includes an integrated viewer for godoc output.  Documentation can be viewed for the Go language itself or for your own packages.  Open the viewer using `View > Godoc Viewer` for more details.

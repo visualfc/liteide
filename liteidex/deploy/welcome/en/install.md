@@ -21,7 +21,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 
 ### Windows
 
-** Qt4 **
+**Qt4**
 
 	> git clone https://github.com/visualfc/liteide.git
 	> set QTDIR=c:\Qt\Qt4.8.5
@@ -31,7 +31,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	> build_windows_mingw.cmd
 	> deploy_windows_qt4.8_webkit.cmd
 
-** Qt5.6.2 **
+**Qt5.6**
 
 	> git clone https://github.com/visualfc/liteide.git
 	> set QTDIR=C:\Qt\Qt5.6.2\5.6\mingw49_32
@@ -74,7 +74,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
 
-### Mac OS X
+### Mac OS X / macOS
 
 **Qt 4**
 

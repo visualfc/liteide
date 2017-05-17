@@ -21,7 +21,7 @@
 LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt5来编译源代码，Qt库可以从<https://qt-project.org/downloads>上获取。Mac OS X用户可以不从源代码编译Qt，直接在终端中运行`brew update && brew install qt`，节省大量时间。下面的编译以Qt4为例。
 
 ### Windows
-** Qt4 **
+**Qt4**
 
 	> git clone https://github.com/visualfc/liteide.git
 	> set QTDIR=c:\Qt\Qt4.8.5
@@ -31,7 +31,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	> build_windows_mingw.cmd
 	> deploy_windows_qt4.8_webkit.cmd
 
-** Qt5.6.2 **
+**Qt5.6**
 
 	> git clone https://github.com/visualfc/liteide.git
 	> set QTDIR=C:\Qt\Qt5.6.2\5.6\mingw49_32
@@ -49,7 +49,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ ./build_linux.sh
 	$ ./deploy_linux_qt4.8_webkit.sh
 
-### Mac OS X
+### Mac OS X / macOS
 
 **Qt 4**
 
