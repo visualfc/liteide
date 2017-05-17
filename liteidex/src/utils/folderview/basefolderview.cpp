@@ -91,7 +91,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 #ifdef Q_OS_WIN
     m_openShellAct = new QAction(tr("Open Command Prompt Here"),this);
 #else
-    m_openShellActl = new QAction(tr("Open Terminal Here"),this);
+    m_openShellAct = new QAction(tr("Open Terminal Here"),this);
 #endif
 
 
