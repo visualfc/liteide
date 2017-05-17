@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="AWK" version="0.90" kateversion="2.3" section="Scripts" extensions="*.awk" mimetype="text/x-awk">
+  <highlighting>
+    <list name="keywords">
+      <item>if</item>
+      <item>else</item>
+      <item>while</item>
+      <item>do</item>
+      <item>for</item>
+      <item>in</item>
+      <item>continue</item>
+      <item>break</item>
+      <item>print</item>
+      <item>printf</item>
+      <item>getline</item>
+      <item>function</item>
+      <item>return</item>
+      <item>next</item>
+      <item>exit</item>
+    </list>
+    <list name="builtins">
+      <item>ARGC</item>
+      <item>ARGV</item>
+      <item>CONVFMT</item>
+      <item>ENVIRON</item>
+      <item>FILENAME</item>
+      <item>FNR</item>
+      <item>FS</item>
+      <item>NF</item>
+      <item>NR</item>
+      <item>OFMT</item>
+      <item>OFS</item>
+      <item>ORS</item>
+      <item>RS</item>
+      <item>RSTART</item>
+      <item>RLENGTH</item>
+      <item>SUBSEP</item>
+    </list>
+    <list name="functions">
+      <item>gsub</item>
+      <item>gensub</item>
+      <item>index</item>
+      <item>length</item>
+      <item>match</item>
+      <item>split</item>
+      <item>sprintf</item>
+      <item>sub</item>
+      <item>substr</item>
+      <item>tolower</item>
+      <item>toupper</item>
+      <item>atan2</item>
+      <item>cos</item>
+      <item>exp</item>
+      <item>int</item>
+      <item>log</item>
+      <item>rand</item>
+      <item>sin</item>
+      <item>sqrt</item>
+      <item>srand</item>
+      <item>close</item>
+      <item>fflush</item>
+      <item>system</item>
+    </list>
+
+    <contexts>
+
+      <context name="Base" attribute="Normal" lineEndContext="#stay">
+	<RegExpr String="\b(BEGIN|END)\b" attribute="Pattern" context="#stay" />
+	<RegExpr String="/([^\/[]|\\.|\[\]?(\[[^]]+\]|.)+\])+/" attribute="Pattern" context="#stay" />
+	<DetectChar char="{" attribute="Keyword" context="#stay" beginRegion="block" />
+	<DetectChar char="}" attribute="Keyword" context="#stay" endRegion="block" />
+	<DetectChar char="#" attribute="Comment" context="Comment" />
+        <DetectChar char="&quot;" attribute="String"  context="String"/>
+        <keyword String="keywords" attribute="Keyword" context="#stay"/>
+        <keyword String="builtins" attribute="Builtin" context="#stay"/>
+        <keyword String="functions" attribute="Function" context="#stay"/>
+        <Float attribute="Float"   context="#stay"/>
+        <Int   attribute="Decimal" context="#stay"/>
+        <RegExpr String="\$[A-Za-z0-9_]+" attribute="Field" context="#stay"/>
+      </context>
+
+      <context name="String" attribute="String" lineEndContext="#stay">
+        <DetectChar char="&quot;" attribute="String" context="#pop"/>
+        <HlCStringChar attribute="String" context="#stay"/>
+      </context>
+
+      <context name="Comment" attribute="Comment" lineEndContext="#pop">
+	<IncludeRules context="##Alerts" />
+      </context>
+
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal"   defStyleNum="dsNormal"/>
+      <itemData name="Keyword"  defStyleNum="dsKeyword"/>
+      <itemData name="Builtin"  defStyleNum="dsDataType"/>
+      <itemData name="Function" defStyleNum="dsFunction"/>
+      <itemData name="Decimal"  defStyleNum="dsDecVal"/>
+      <itemData name="Float"    defStyleNum="dsFloat"/>
+      <itemData name="String"   defStyleNum="dsString"/>
+      <itemData name="Comment"  defStyleNum="dsComment"/>
+      <itemData name="Pattern"  defStyleNum="dsString"/>
+      <itemData name="Field"    defStyleNum="dsOthers"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="#"/>
+    </comments>
+    <keywords casesensitive="1" />
+  </general>
+</language>
