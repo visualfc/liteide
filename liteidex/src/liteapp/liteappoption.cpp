@@ -136,6 +136,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
 
+    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsTimeSpinBox,SLOT(setEnabled(bool)));
+    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsEmitMessageCheckBox,SLOT(setEnabled(bool)));
+
     bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
     ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
 
@@ -144,6 +147,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         time = 1;
     }
     ui->autoIdleSaveDocumentsTimeSpinBox->setValue(time);
+
+    bool emitmsg = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,true).toBool();
+    ui->autoIdleSaveDocumentsEmitMessageCheckBox->setChecked(emitmsg);
 
     connect(ui->customIconCheckBox,SIGNAL(toggled(bool)),ui->iconPathComboBox,SLOT(setEnabled(bool)));
 
@@ -254,6 +260,9 @@ void LiteAppOption::apply()
 
     int time = ui->autoIdleSaveDocumentsTimeSpinBox->value();
     m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,time);
+
+    bool emitmsg = ui->autoIdleSaveDocumentsEmitMessageCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,emitmsg);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {

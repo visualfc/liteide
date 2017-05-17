@@ -40,8 +40,13 @@
         "text": "import \"C\""
     },
     {
-        "info": "if error",
-        "name": "iferr",
-        "text": "if err != nil {\n\t$return err$\n}"
+        "info": "if error {\n}",
+        "name": "iferr1",
+        "text": "if err != nil {\n\t$$\n}"
+    },
+    {
+        "info": "if error {\n return err }",
+        "name": "iferr2",
+        "text": "if err != nil {\n\treturn err\n}"
     }
 ]

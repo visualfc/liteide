@@ -1096,13 +1096,14 @@ void EditorManager::applyOption(QString id)
     if (m_autoIdleSaveDocumentsTime < 1) {
         m_autoIdleSaveDocumentsTime = 1;
     }
+    m_autoIdleSaveDocumentsEmitMessage = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,true).toBool();
 }
 
 void EditorManager::appIdle(int sec)
 {    
     if (m_isAutoIdleSaveDocuments) {
         if (sec == m_autoIdleSaveDocumentsTime) {
-            this->saveAllEditors(true);
+            this->saveAllEditors(m_autoIdleSaveDocumentsEmitMessage);
         }
     }
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>529</width>
+    <width>580</width>
     <height>402</height>
    </rect>
   </property>
@@ -186,6 +186,16 @@
             </property>
             <property name="maximum">
              <number>120</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoIdleSaveDocumentsEmitMessageCheckBox">
+            <property name="toolTip">
+             <string>emit save message for auto code format, etc...</string>
+            </property>
+            <property name="text">
+             <string>Emit message</string>
             </property>
            </widget>
           </item>

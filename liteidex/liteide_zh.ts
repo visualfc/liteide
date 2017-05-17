@@ -1852,34 +1852,34 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="267"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="277"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="269"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="290"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="300"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="292"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="302"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -2654,24 +2654,35 @@ Success: %2.</oldsource>
         <translation>图标 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="284"/>
+        <location filename="src/liteapp/liteappoption.ui" line="195"/>
+        <source>emit save message for auto code format, etc...</source>
+        <oldsource>emit save message for code format, etc...</oldsource>
+        <translation>发送保存消息供自动代码格式化等...</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="198"/>
+        <source>Emit message</source>
+        <translation>发送消息</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="294"/>
         <source>Reload files in session</source>
         <translation>在会话中重新加载文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="296"/>
+        <location filename="src/liteapp/liteappoption.ui" line="306"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation>历史文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="302"/>
+        <location filename="src/liteapp/liteappoption.ui" line="312"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>最大记录数:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="211"/>
+        <location filename="src/liteapp/liteappoption.ui" line="221"/>
         <source>Monitoring files for modifications</source>
         <translation>文件修改监视</translation>
     </message>
@@ -2726,14 +2737,14 @@ Success: %2.</oldsource>
         <translation>秒</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="217"/>
+        <location filename="src/liteapp/liteappoption.ui" line="227"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation>当文件被更改或删除时，自动重新读取或关闭编辑器。</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="247"/>
-        <location filename="src/liteapp/liteappoption.ui" line="253"/>
+        <location filename="src/liteapp/liteappoption.ui" line="257"/>
+        <location filename="src/liteapp/liteappoption.ui" line="263"/>
         <source>Session</source>
         <translation>会话</translation>
     </message>
@@ -2746,78 +2757,78 @@ Success: %2.</oldsource>
         <translation type="obsolete">启动时重新加载文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="363"/>
+        <location filename="src/liteapp/liteappoption.ui" line="373"/>
         <source>Display</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="369"/>
+        <location filename="src/liteapp/liteappoption.ui" line="379"/>
         <source>Display [*]</source>
         <translation>显示 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="375"/>
+        <location filename="src/liteapp/liteappoption.ui" line="385"/>
         <source>Show splash screen on startup</source>
         <translation>启动时显示启动画面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="382"/>
+        <location filename="src/liteapp/liteappoption.ui" line="392"/>
         <source>Show welcome page on startup</source>
         <translation>启动时显示欢迎页面</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="392"/>
+        <location filename="src/liteapp/liteappoption.ui" line="402"/>
         <source>Editor tab [*]</source>
         <translation>编辑器Tab栏 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="398"/>
+        <location filename="src/liteapp/liteappoption.ui" line="408"/>
         <source>Show close buttons on each editor tab</source>
         <translation>在每个文档标签栏都显示关闭按钮</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="405"/>
+        <location filename="src/liteapp/liteappoption.ui" line="415"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation>允许鼠标滚轮导航Tabs</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="415"/>
+        <location filename="src/liteapp/liteappoption.ui" line="425"/>
         <source>Toolbar Icon Size [*]</source>
         <translation>工具栏图标大小 [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="488"/>
+        <location filename="src/liteapp/liteappoption.ui" line="498"/>
         <source>Keyboard</source>
         <translation>键盘</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="494"/>
+        <location filename="src/liteapp/liteappoption.ui" line="504"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="506"/>
+        <location filename="src/liteapp/liteappoption.ui" line="516"/>
         <source>Hide standard commands</source>
         <translation>隐藏标准命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="513"/>
+        <location filename="src/liteapp/liteappoption.ui" line="523"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="520"/>
+        <location filename="src/liteapp/liteappoption.ui" line="530"/>
         <source>Reset All</source>
         <translation>重置所有</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="540"/>
+        <location filename="src/liteapp/liteappoption.ui" line="550"/>
         <source>Import...</source>
         <translation>导入...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="547"/>
+        <location filename="src/liteapp/liteappoption.ui" line="557"/>
         <source>Export...</source>
         <translation>导出...</translation>
     </message>
@@ -2832,7 +2843,7 @@ Success: %2.</oldsource>
         <translation>主题:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="259"/>
+        <location filename="src/liteapp/liteappoption.ui" line="269"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation>启动时重新加载会话</translation>
@@ -2848,53 +2859,53 @@ Success: %2.</oldsource>
         <translation>分离样式</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="165"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="168"/>
         <source>Command</source>
         <translation>命令</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="166"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="169"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="167"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="170"/>
         <source>Shortcuts</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="168"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="171"/>
         <source>NativeText</source>
         <translation>本机文本</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="169"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="172"/>
         <source>Standard</source>
         <translation>标准键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="466"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>导入键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="466"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="500"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>键盘映射方案 (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="467"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="473"/>
         <source>Could not read scheme from %1!</source>
         <translation>无法加载方案%1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="500"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>导出键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="505"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="511"/>
         <source>Could not write scheme to %1!</source>
         <translation>无法写入方案%1!</translation>
     </message>
@@ -4123,34 +4134,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="215"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="222"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="214"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="221"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="216"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="215"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="223"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="222"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="235"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="242"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="234"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="241"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="236"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="235"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="243"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="242"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>

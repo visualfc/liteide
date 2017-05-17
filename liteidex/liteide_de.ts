@@ -1846,34 +1846,34 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="267"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="277"/>
         <source>Delete File</source>
         <translation type="unfinished">Datei löschen</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="269"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Sind Sie sicher, dass Sie diese Datei unwiderruflich löschen wollen?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="279"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Die Datei konnte nicht gelöscht werden!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="290"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="300"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Ordner löschen</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="292"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Sind Sie sicher, dass Sie den ganzen Ordner und dessen Inhalt unwiderruflich löschen wollen?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="302"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Der Ordner konnte nicht gelöscht werden!</translation>
     </message>
@@ -2648,24 +2648,24 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="284"/>
+        <location filename="src/liteapp/liteappoption.ui" line="294"/>
         <source>Reload files in session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="296"/>
+        <location filename="src/liteapp/liteappoption.ui" line="306"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation type="unfinished">Zuletzt verwendete Dateien</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="302"/>
+        <location filename="src/liteapp/liteappoption.ui" line="312"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>Maximale Anzahl:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="211"/>
+        <location filename="src/liteapp/liteappoption.ui" line="221"/>
         <source>Monitoring files for modifications</source>
         <translation type="unfinished">Überwache Dateiveränderungen</translation>
     </message>
@@ -2716,15 +2716,26 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="217"/>
+        <location filename="src/liteapp/liteappoption.ui" line="195"/>
+        <source>emit save message for auto code format, etc...</source>
+        <oldsource>emit save message for code format, etc...</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="198"/>
+        <source>Emit message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="227"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation type="unfinished">Automatisches Neuladen oder Schließen des Editor-Fensters,
 wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="247"/>
-        <location filename="src/liteapp/liteappoption.ui" line="253"/>
+        <location filename="src/liteapp/liteappoption.ui" line="257"/>
+        <location filename="src/liteapp/liteappoption.ui" line="263"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2737,78 +2748,78 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="obsolete">Dateien beim Start wiederherstellen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="363"/>
+        <location filename="src/liteapp/liteappoption.ui" line="373"/>
         <source>Display</source>
         <translation type="unfinished">Anzeige</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="369"/>
+        <location filename="src/liteapp/liteappoption.ui" line="379"/>
         <source>Display [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="375"/>
+        <location filename="src/liteapp/liteappoption.ui" line="385"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished">Splash-Screen beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="382"/>
+        <location filename="src/liteapp/liteappoption.ui" line="392"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished">Willkommen-Seite beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="392"/>
+        <location filename="src/liteapp/liteappoption.ui" line="402"/>
         <source>Editor tab [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="398"/>
+        <location filename="src/liteapp/liteappoption.ui" line="408"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished">&quot;Schließen&quot;-Knopf bei jedem Editor-Tab anzeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="405"/>
+        <location filename="src/liteapp/liteappoption.ui" line="415"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="415"/>
+        <location filename="src/liteapp/liteappoption.ui" line="425"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="488"/>
+        <location filename="src/liteapp/liteappoption.ui" line="498"/>
         <source>Keyboard</source>
         <translation>Tastatur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="494"/>
+        <location filename="src/liteapp/liteappoption.ui" line="504"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>Formatierung: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="506"/>
+        <location filename="src/liteapp/liteappoption.ui" line="516"/>
         <source>Hide standard commands</source>
         <translation type="unfinished">Standard-Kommandos verbergen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="513"/>
+        <location filename="src/liteapp/liteappoption.ui" line="523"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="520"/>
+        <location filename="src/liteapp/liteappoption.ui" line="530"/>
         <source>Reset All</source>
         <translation type="unfinished">Alles zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="540"/>
+        <location filename="src/liteapp/liteappoption.ui" line="550"/>
         <source>Import...</source>
         <translation type="unfinished">Importieren...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="547"/>
+        <location filename="src/liteapp/liteappoption.ui" line="557"/>
         <source>Export...</source>
         <translation type="unfinished">Exportieren...</translation>
     </message>
@@ -2823,7 +2834,7 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished">Theme:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="259"/>
+        <location filename="src/liteapp/liteappoption.ui" line="269"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Automatisch letzte Session laden</translation>
@@ -2839,53 +2850,53 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="165"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="168"/>
         <source>Command</source>
         <translation>Kommando</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="166"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="169"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="167"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="170"/>
         <source>Shortcuts</source>
         <translation>Shortcuts</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="168"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="171"/>
         <source>NativeText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="169"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="172"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="466"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema importieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="460"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="466"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="500"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished">Tastaturbelegungsschema (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="467"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="473"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht gelesen werden!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="494"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="500"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema exportieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="505"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="511"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht geschrieben werden!</translation>
     </message>
@@ -4114,34 +4125,34 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="215"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="222"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="214"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="221"/>
         <source>Delete Folder</source>
         <translation type="unfinished">Ordner löschen</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="216"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="215"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">Sind Sie sicher, dass Sie den ganzen Ordner und dessen Inhalt unwiderruflich löschen wollen?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="223"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="222"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">Der Ordner konnte nicht gelöscht werden!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="235"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="242"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="234"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="241"/>
         <source>Delete File</source>
         <translation type="unfinished">Datei löschen</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="236"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="235"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">Sind Sie sicher, dass Sie diese Datei unwiderruflich löschen wollen?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="243"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="242"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">Die Datei konnte nicht gelöscht werden!</translation>
     </message>

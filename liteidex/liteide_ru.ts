@@ -2367,6 +2367,14 @@ Success: %2.</oldsource>
         <source>Load the external file icon library</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Emit message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emit save message for auto code format, etc...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
