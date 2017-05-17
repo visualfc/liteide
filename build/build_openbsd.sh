@@ -72,6 +72,11 @@ fi
 echo export qrc images
 go run src/tools/exportqrc/main.go -root .
 
+if [ $? -ge 1 ]; then
+	echo 'error, go run fail'
+	exit 1
+fi
+
 echo deploy ...
 
 cd $BUILD_ROOT

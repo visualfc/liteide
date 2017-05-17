@@ -48,10 +48,11 @@ if ERRORLEVEL 1 goto go_fail
 go install -ldflags "-s" -v github.com/nsf/gocode
 if ERRORLEVEL 1 goto go_fail
 
-cd %BUILD_ROOT%
-
 echo export qrc images
 go run src/tools/exportqrc/main.go -root .
+if ERRORLEVEL 1 goto go_fail
+
+cd %BUILD_ROOT%
 
 echo deploy liteide ...
 echo .
