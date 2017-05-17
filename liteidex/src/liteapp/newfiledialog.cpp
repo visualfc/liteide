@@ -114,10 +114,10 @@ void NewFileDialog::accept()
         return;
     }
 
-    QString location = ui->locationLineEdit->text();
-    QString name = ui->nameLineEdit->text();
+    QString location = ui->locationLineEdit->text().trimmed();
+    QString name = ui->nameLineEdit->text().trimmed();
 
-    if (name.isEmpty()) {
+    if (name.isEmpty() || location.isEmpty()) {
         return;
     }
     QDir dir(location);
