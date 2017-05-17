@@ -58,7 +58,8 @@ QMap<QWidget*, QAction*> MainWindow::s_windowActions;
 
 MainWindow::MainWindow(IApplication *app, QWidget *parent)
     : ToolMainWindow(parent),
-      m_liteApp(app)
+      m_liteApp(app),
+      m_windowClosedCheck(false)
 {
     this->setAttribute(Qt::WA_DeleteOnClose);
     QIcon icon;
@@ -111,10 +112,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    if (this->m_windowClosedCheck) {
+        return;
+    }
     m_liteApp->saveSession(m_liteApp->currentSession());
     m_liteApp->saveState();
     m_liteApp->projectManager()->closeProject();
     if (m_liteApp->editorManager()->closeAllEditors()) {
+        this->m_windowClosedCheck = true;
         event->accept();
     } else {
         event->ignore();

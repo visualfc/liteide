@@ -72,6 +72,7 @@ protected:
     IApplication     *m_liteApp;
     QAction          *m_aboutAct;
     QSplitter *m_mainSplitter;
+    bool              m_windowClosedCheck;
 protected:
     void setActiveWindowAction(QWidget *window);
     void setWindowTitle(const QString &name, const QString &filePath, bool isModify);
