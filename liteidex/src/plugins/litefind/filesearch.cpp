@@ -201,6 +201,7 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     m_findCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     QHBoxLayout *optLayout = new QHBoxLayout;
+    optLayout->setSpacing(6);
     m_matchWordCheckBox = new QCheckBox(tr("Match whole word"));
     m_matchCaseCheckBox = new QCheckBox(tr("Match case"));
     m_useRegexCheckBox = new QCheckBox(tr("Regular expression"));
@@ -212,6 +213,7 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     optLayout->addStretch();
 
     QHBoxLayout *findLayout = new QHBoxLayout;
+    findLayout->setSpacing(6);
     //findLayout->setMargin(0);
     m_findButton = new QPushButton(tr("Search"));
     m_stopButton = new QPushButton(tr("Cancel"));
@@ -230,6 +232,7 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     topLayout->addLayout(optLayout,1,1);
 
     QHBoxLayout *dirLayout = new QHBoxLayout;
+    dirLayout->setSpacing(6);
     m_findPathCombo = new QComboBox;
     m_findPathCombo->setEditable(true);
     QPushButton *browserBtn = new QPushButton(tr("Browse..."));
