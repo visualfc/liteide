@@ -145,19 +145,16 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
     m_mimeModel->setHeaderData(1,Qt::Horizontal,tr("Tab Width"));
     m_mimeModel->setHeaderData(2,Qt::Horizontal,tr("Tab To Spaces"));
-    m_mimeModel->setHeaderData(3,Qt::Horizontal,tr("File Extensions"));
-    m_mimeModel->setHeaderData(4,Qt::Horizontal,tr("Custom Extensions"));
+    m_mimeModel->setHeaderData(3,Qt::Horizontal,tr("Custom Extensions"));
+    m_mimeModel->setHeaderData(4,Qt::Horizontal,tr("File Extensions"));
     connect(m_mimeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(mimeItemChanged(QStandardItem*)));
 
     ui->mimeTreeView->setModel(m_mimeModel);
     ui->mimeTreeView->setRootIsDecorated(false);
-#if QT_VERSION >= 0x050000
-    ui->mimeTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-    ui->mimeTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
 
-    foreach(QString mime, m_liteApp->editorManager()->mimeTypeList()) {
+    QStringList mimeTypes = m_liteApp->editorManager()->mimeTypeList();
+    qStableSort(mimeTypes);
+    foreach(QString mime, mimeTypes) {
         if (mime.startsWith("text/") || mime.startsWith("application/")) {
             QStandardItem *item = new QStandardItem(mime);
             item->setEditable(false);
@@ -179,10 +176,17 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
                                   << item
                                   << tab
                                   << useSpace
-                                  << ext
-                                  << cus);
+                                  << cus
+                                  << ext);
         }
     }
+
+#if QT_VERSION >= 0x050000
+    ui->mimeTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
+    ui->mimeTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
+
 }
 
 QWidget *LiteEditorOption::widget()
@@ -284,7 +288,7 @@ void LiteEditorOption::apply()
     for (int i = 0; i < m_mimeModel->rowCount(); i++) {
         QString mime = m_mimeModel->item(i,0)->text();
         QString tab = m_mimeModel->item(i,1)->text();
-        QString custom = m_mimeModel->item(i,4)->text();
+        QString custom = m_mimeModel->item(i,3)->text();
         bool ok;
         int n = tab.toInt(&ok);
         if (ok && n > 0 && n < 20) {

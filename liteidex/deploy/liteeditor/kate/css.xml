@@ -15,7 +15,7 @@ Changelog:
 
 -->
 
-<language name="CSS" version="2.06" kateversion="2.4" section="Markup" extensions="*.css" indenter="cstyle" mimetype="text/css" author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL">
+<language name="CSS" version="2.06" kateversion="2.4" section="Markup" extensions="*.css;*.qss" indenter="cstyle" mimetype="text/css" author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL">
 
 	<highlighting>
 		<list name="properties">
