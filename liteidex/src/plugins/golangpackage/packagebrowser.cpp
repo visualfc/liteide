@@ -121,6 +121,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_goTool,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
     connect(m_treeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked()));
+    connect(m_treeView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressed(QModelIndex)));
     connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reloadAll()));
     connect(m_setupGopathAct,SIGNAL(triggered()),this,SLOT(setupGopath()));
     connect(m_godocAct,SIGNAL(triggered()),this,SLOT(loadPackageDoc()));
@@ -336,6 +337,22 @@ void PackageBrowser::doubleClicked()
     } else if (type == PackageType::ITEM_PACKAGE) {
         if (loadPackageFolderHelper(index,true)) {
             return;
+        }
+    }
+    if (m_treeView->isExpanded(index)) {
+        m_treeView->collapse(index);
+    } else {
+        m_treeView->expand(index);
+    }
+}
+
+void PackageBrowser::enterKeyPressed(const QModelIndex &index)
+{
+    int type = index.data(PackageType::RoleItem).toInt();
+    if (type == PackageType::ITEM_SOURCE) {
+        QString path = index.data(PackageType::RolePath).toString();
+        if (!path.isEmpty()) {
+            m_liteApp->fileManager()->openEditor(path);
         }
     }
     if (m_treeView->isExpanded(index)) {

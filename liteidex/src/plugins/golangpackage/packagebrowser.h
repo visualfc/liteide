@@ -66,6 +66,7 @@ public slots:
     void error(QProcess::ProcessError);
     void customContextMenuRequested(QPoint);
     void doubleClicked();
+    void enterKeyPressed(const QModelIndex &index);
     void resetTree(const QByteArray &jsonData);
     void copyPackageName();
     void fileWizardFinished(const QString &type, const QString &scheme, const QString &location);
