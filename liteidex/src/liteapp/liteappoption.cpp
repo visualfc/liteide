@@ -151,6 +151,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool emitmsg = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,true).toBool();
     ui->autoIdleSaveDocumentsEmitMessageCheckBox->setChecked(emitmsg);
 
+    bool toolwndshortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
+    ui->toolWindowShortcutsCheckBox->setChecked(toolwndshortcuts);
+
     connect(ui->customIconCheckBox,SIGNAL(toggled(bool)),ui->iconPathComboBox,SLOT(setEnabled(bool)));
 
     bool customeIcon = m_liteApp->settings()->value(LITEIDE_CUSTOMEICON,false).toBool();
@@ -263,6 +266,9 @@ void LiteAppOption::apply()
 
     bool emitmsg = ui->autoIdleSaveDocumentsEmitMessageCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,emitmsg);
+
+    bool toolwindowshortcuts = ui->toolWindowShortcutsCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_TOOLWINDOW_SHORTCUTS,toolwindowshortcuts);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {

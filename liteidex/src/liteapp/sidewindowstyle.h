@@ -156,6 +156,7 @@ protected:
     QList<QAction*> m_hideSideActionList;
     QMenu       *m_sideMenu;
     QMenu       *m_outputMenu;
+    bool         m_useShortcuts;
 };
 
 #endif // SIDEWINDOWSTYLE_H

@@ -24,6 +24,7 @@
 #include "sidewindowstyle.h"
 #include "tooldockwidget.h"
 #include "rotationtoolbutton.h"
+#include "liteapp_global.h"
 
 #include <QStatusBar>
 //lite_memory_check_begin
@@ -444,6 +445,8 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
     m_outputMenu = 0;
 
     connect(m_hideSideAct,SIGNAL(toggled(bool)),this,SLOT(hideSideBar(bool)));
+
+    m_useShortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
 }
 
 SideWindowStyle::~SideWindowStyle()
@@ -596,7 +599,8 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
     if (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea) {
         m_outputBar->addAction(action,widget,id,title,widgetActions);
         int index = m_outputBar->m_actionStateMap.size();
-        if (index <= 9) {
+        action->setText(title);
+        if ((index <= 9) && m_useShortcuts) {
             action->setText(QString("%1: %2").arg(index).arg(title));
             //QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Alt+%1").arg(index));
             QKeySequence ks(QString("Alt+%1").arg(index));
@@ -609,7 +613,8 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
     } else {
         m_sideBar->addAction(action,widget,id,title,widgetActions);
         int index = m_sideBar->m_actionStateMap.size();
-        if (index <= 9) {
+        action->setText(title);
+        if ((index <= 9) && m_useShortcuts) {
             action->setText(QString("%1: %2").arg(index).arg(title));
             //QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Ctrl+Alt+%1").arg(index));
             QKeySequence ks(QString("Ctrl+Alt+%1").arg(index));

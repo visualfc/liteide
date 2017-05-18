@@ -24,6 +24,7 @@
 #include "splitwindowstyle.h"
 #include "rotationtoolbutton.h"
 #include "tooldockwidget.h"
+#include "liteapp_global.h"
 #include <QToolBar>
 #include <QAction>
 #include <QActionGroup>
@@ -261,6 +262,7 @@ SplitWindowStyle::SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *wind
     m_windowMenu = 0;
 
     connect(m_hideSideAct,SIGNAL(toggled(bool)),this,SLOT(hideSideBar(bool)));
+    m_useShortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
 }
 
 SplitWindowStyle::~SplitWindowStyle()
@@ -355,8 +357,9 @@ QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidg
 
     actToolBar->addAction(action,title,split);
 
+    action->setText(title);
     int index = m_actStateMap.size();
-    if (index <= 9) {
+    if ((index <= 9) && m_useShortcuts) {
         action->setText(QString("%1: %2").arg(index).arg(title));
         QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Alt+%1").arg(index));
         LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");

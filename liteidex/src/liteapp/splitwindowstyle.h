@@ -117,6 +117,7 @@ protected:
     QAction     *m_hideSideAct;
     QMenu       *m_windowMenu;
     QList<QAction*> m_hideActionList;
+    bool  m_useShortcuts;
 };
 
 #endif // SPLITWINDOWSSTYLE_H

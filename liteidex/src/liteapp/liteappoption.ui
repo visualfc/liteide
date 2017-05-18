@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>402</height>
+    <width>650</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -70,6 +70,13 @@
           </item>
           <item>
            <widget class="QComboBox" name="styleComboBox"/>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="toolWindowShortcutsCheckBox">
+            <property name="text">
+             <string>Use tool window shortcuts</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_3">

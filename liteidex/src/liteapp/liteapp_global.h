@@ -63,6 +63,7 @@
 #define LITEAPP_FILEWATCHERAUTORELOAD "LiteApp/FileWatcherAutoReload"
 #define LITEIDE_CUSTOMEICONPATH    "LiteApp/CustomeIconPath"
 #define LITEIDE_CUSTOMEICON "LiteApp/CustomeIcon"
+#define LITEAPP_TOOLWINDOW_SHORTCUTS "LiteApp/ToolWindowShortcuts"
 
 #define OUTPUT_FAMILY "output/family"
 #define OUTPUT_FONTSIZE "output/fontsize"
