@@ -79,7 +79,8 @@ public slots:
     void checkForReload();
     void applyOption(QString);
     void showHideFiles(bool);
-    void activatedFolderView(const QModelIndex &index);
+    void doubleClickedFolderView(const QModelIndex &index);
+    void enterKeyPressedFolderView(const QModelIndex &index);
     void currentEditorChanged(LiteApi::IEditor *editor);
     void triggeredSyncEditor(bool b);
 protected:

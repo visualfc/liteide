@@ -211,3 +211,19 @@ void SymbolTreeView::loadState(QAbstractItemModel *model,SymbolTreeState *state)
     verticalScrollBar()->setValue(state->vbar);
     horizontalScrollBar()->setValue(state->hbar);
 }
+
+void SymbolTreeView::keyPressEvent(QKeyEvent *event)
+{
+    // Note: This always eats the event
+    // whereas QAbstractItemView never eats it
+    if ((event->key() == Qt::Key_Return
+            || event->key() == Qt::Key_Enter)
+            && event->modifiers() == 0
+            && QTreeView::currentIndex().isValid()
+            && QTreeView::state() != QAbstractItemView::EditingState) {
+        emit QTreeView::activated(QTreeView::currentIndex());
+        emit enterKeyPressed(QTreeView::currentIndex());
+        return;
+    }
+    QTreeView::keyPressEvent(event);
+}

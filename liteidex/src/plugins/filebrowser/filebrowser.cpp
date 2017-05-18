@@ -177,7 +177,8 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_folderView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     //connect(m_folderView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(openEditor(QModelIndex)));
-    connect(m_folderView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
+    connect(m_folderView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
+    connect(m_folderView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
 
     QString root = m_liteApp->settings()->value("FileBrowser/root","").toString();
     if (!root.isEmpty()) {
@@ -310,7 +311,17 @@ void FileBrowser::executeFile()
     }
 }
 
-void FileBrowser::activatedFolderView(const QModelIndex &index)
+void FileBrowser::enterKeyPressedFolderView(const QModelIndex &index)
+{
+    QFileInfo info = m_folderView->fileInfo(index);
+    if (info.isFile()) {
+        m_liteApp->fileManager()->openEditor(info.filePath());
+    } else if (info.isDir()) {
+        m_folderView->setExpanded(index,!m_folderView->isExpanded(index));
+    }
+}
+
+void FileBrowser::doubleClickedFolderView(const QModelIndex &index)
 {
     QFileInfo info = m_folderView->fileInfo(index);
     if (info.isFile()) {

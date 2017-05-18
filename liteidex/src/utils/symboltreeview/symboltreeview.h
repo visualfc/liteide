@@ -46,12 +46,11 @@ public:
     void loadState(QAbstractItemModel *model,SymbolTreeState *state);
 signals:
     void currentIndexChanged(const QModelIndex &current, const QModelIndex &previous);
+    void enterKeyPressed(QModelIndex);
 protected:
     void focusInEvent(QFocusEvent *event);
     void focusOutEvent(QFocusEvent *event);
-#ifdef Q_WS_MAC
     void keyPressEvent(QKeyEvent *event);
-#endif
     void currentChanged(const QModelIndex &current, const QModelIndex &previous);
     void getTreeExpands(const QModelIndex &parent, QList<QModelIndex> &list) const;
 protected slots:

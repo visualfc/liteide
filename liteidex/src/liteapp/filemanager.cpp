@@ -114,7 +114,8 @@ bool FileManager::initWithApp(IApplication *app)
     m_newFileDialog = 0;
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
     connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
-    connect(m_folderListView,SIGNAL(activated(QModelIndex)),this,SLOT(activatedFolderView(QModelIndex)));
+    connect(m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
+    connect(m_folderListView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
@@ -552,7 +553,7 @@ void FileManager::showHideFiles(bool b)
     m_folderListView->setFilter(filters);
 }
 
-void FileManager::activatedFolderView(const QModelIndex &index)
+void FileManager::doubleClickedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
@@ -560,6 +561,19 @@ void FileManager::activatedFolderView(const QModelIndex &index)
     QFileInfo info = m_folderListView->fileInfo(index);
     if (info.isFile()) {
         this->openEditor(info.filePath());
+    }
+}
+
+void FileManager::enterKeyPressedFolderView(const QModelIndex &index)
+{
+    if (!index.isValid()) {
+        return;
+    }
+    QFileInfo info = m_folderListView->fileInfo(index);
+    if (info.isFile()) {
+        this->openEditor(info.filePath());
+    } else {
+        m_folderListView->setExpanded(index,!m_folderListView->isExpanded(index));
     }
 }
 
