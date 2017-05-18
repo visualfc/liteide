@@ -2216,6 +2216,17 @@ void LiteEditorWidgetBase::convertCaseSwap()
     this->transformSelection(QString_toSwapCase);
 }
 
+static int trailingWhitespaces(const QString &text)
+{
+    int i = 0;
+    while (i < text.size()) {
+        if (!text.at(text.size()-1-i).isSpace())
+            return i;
+        ++i;
+    }
+    return i;
+}
+
 void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 {
     if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
@@ -2313,6 +2324,12 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         e->accept();
         QTextCursor c = textCursor();
         c.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
+        QString text = c.selectedText();
+        int trail = trailingWhitespaces(text);
+        if ( trail >= 2 || (trail == 1 && text.endsWith("\t")) ) {
+            c = textCursor();
+            c.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor,trail);
+        }
         c.removeSelectedText();
         return;
     } else if (!ro && e == QKeySequence::DeleteEndOfWord && !textCursor().hasSelection()) {
@@ -2723,16 +2740,6 @@ void LiteEditorWidgetBase::cleanWhitespace(bool wholeDocument)
     copyCursor.endEditBlock();
 }
 
-static int trailingWhitespaces(const QString &text)
-{
-    int i = 0;
-    while (i < text.size()) {
-        if (!text.at(text.size()-1-i).isSpace())
-            return i;
-        ++i;
-    }
-    return i;
-}
 
 void LiteEditorWidgetBase::cleanWhitespace(QTextCursor &cursor, bool inEntireDocument)
 {
