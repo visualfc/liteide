@@ -59,6 +59,7 @@ public slots:
     void gotoDefinition();
     void viewImportDoc();
     void doubleClicked(QModelIndex);
+    void enterKeyPressed(const QModelIndex &index);
 protected:
     void gotoItemDefinition(GolangAstItem *item);
     bool                m_bOutline;

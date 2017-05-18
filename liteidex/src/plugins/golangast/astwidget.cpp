@@ -69,7 +69,7 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
     this->setLayout(layout);
 
     m_tree->setModel(proxyModel);
-    m_tree->setExpandsOnDoubleClick(false);
+    //m_tree->setExpandsOnDoubleClick(false);
     m_tree->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_gotoPosAct = new QAction(tr("Go To Definition"),this);
@@ -80,6 +80,7 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
 
     m_contextItem = 0;
     connect(m_tree,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
+    connect(m_tree,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressed(QModelIndex)));
     connect(m_filterEdit,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
     connect(m_tree,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(treeContextMenuRequested(QPoint)));
     connect(m_gotoPosAct,SIGNAL(triggered()),this,SLOT(gotoDefinition()));
@@ -217,12 +218,16 @@ void AstWidget::viewImportDoc()
 void AstWidget::doubleClicked(QModelIndex index)
 {
     GolangAstItem *item = astItemFromIndex(index);
+    if (!item->isFolder()) {
+        gotoItemDefinition(item);
+    }
+}
+
+void AstWidget::enterKeyPressed(const QModelIndex &index)
+{
+    GolangAstItem *item = astItemFromIndex(index);
     if (item->isFolder()) {
-        if (m_tree->isExpanded(index)) {
-            m_tree->collapse(index);
-        } else {
-            m_tree->expand(index);
-        }
+        m_tree->setExpanded(index,!m_tree->isExpanded(index));
     } else {
         gotoItemDefinition(item);
     }
