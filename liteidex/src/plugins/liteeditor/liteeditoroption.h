@@ -54,6 +54,7 @@ public:
     QString m_fontFamily;
 private slots:
     void restoreDefaultFont();
+    void filterMonospaceFont(bool b);
 
 private:
     LiteApi::IApplication *m_liteApp;

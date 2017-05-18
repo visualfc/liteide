@@ -144,6 +144,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
     connect(ui->restoreDefaultFontButton,SIGNAL(clicked()),this,SLOT(restoreDefaultFont()));
+    connect(ui->monospaceFontCheckBox,SIGNAL(toggled(bool)),this,SLOT(filterMonospaceFont(bool)));
 
     m_mimeModel = new QStandardItemModel(0,5,this);
     m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
@@ -390,4 +391,10 @@ void LiteEditorOption::restoreDefaultFont()
     ui->antialiasCheckBox->setChecked(true);
 
     updatePointSizes();
+}
+
+void LiteEditorOption::filterMonospaceFont(bool b)
+{
+    ui->fontComboBox->setFontFilters(b ?QFontComboBox::MonospacedFonts :  QFontComboBox::AllFonts);
+    ui->fontComboBox->updateGeometry();
 }
