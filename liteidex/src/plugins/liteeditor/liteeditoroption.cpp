@@ -40,6 +40,18 @@
 #endif
 //lite_memory_check_end
 
+static QString defaultFontFamily()
+{
+#if defined(Q_OS_WIN)
+    return "Courier";
+#elif defined(Q_OS_LINUX)
+    return "Monospace";
+#elif defined(Q_OS_MAC)
+    return "Menlo";
+#else
+    return "Monospace";
+#endif
+}
 
 LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     LiteApi::IOption(parent),
@@ -49,28 +61,19 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
-    QFontDatabase db;
-    const QStringList families = db.families();
-    ui->familyComboBox->addItems(families);
+//    QFontDatabase db;
+//    const QStringList families = db.families();
 
-#if defined(Q_OS_WIN)
-    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Courier").toString();
-#elif defined(Q_OS_LINUX)
-    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
-#elif defined(Q_OS_MAC)
-    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Menlo").toString();
-#else
-    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
-#endif
+    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,defaultFontFamily()).toString();
+
+    ui->fontComboBox->setCurrentFont(QFont(m_fontFamily));
+
     m_fontSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12).toInt();
 
     int fontZoom = m_liteApp->settings()->value(EDITOR_FONTZOOM,100).toInt();
 
     bool antialias = m_liteApp->settings()->value(EDITOR_ANTIALIAS,true).toBool();
     ui->antialiasCheckBox->setChecked(antialias);
-
-    const int idx = families.indexOf(m_fontFamily);
-    ui->familyComboBox->setCurrentIndex(idx);
 
     updatePointSizes();
 
@@ -139,7 +142,8 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->cleanCompleterCacheCheckBox->setChecked(cleanComplerCache);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
-    connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));    
+    connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
+    connect(ui->restoreDefaultFontButton,SIGNAL(clicked()),this,SLOT(restoreDefaultFont()));
 
     m_mimeModel = new QStandardItemModel(0,5,this);
     m_mimeModel->setHeaderData(0,Qt::Horizontal,tr("MIME Type"));
@@ -206,7 +210,7 @@ QString LiteEditorOption::mimeType() const
 
 void LiteEditorOption::apply()
 {
-    m_fontFamily = ui->familyComboBox->currentText();
+    m_fontFamily = ui->fontComboBox->currentFont().family();
     if (ui->sizeComboBox->count()) {
         const QString curSize = ui->sizeComboBox->currentText();
         bool ok = true;
@@ -338,8 +342,8 @@ void LiteEditorOption::updatePointSizes()
 
 QList<int> LiteEditorOption::pointSizesForSelectedFont() const
 {
-    QFontDatabase db;
-    const QString familyName = ui->familyComboBox->currentText();
+    static QFontDatabase db;
+    const QString familyName = ui->fontComboBox->currentFont().family();
     QList<int> sizeLst = db.pointSizes(familyName);
     if (!sizeLst.isEmpty())
         return sizeLst;
@@ -372,4 +376,18 @@ void LiteEditorOption::mimeItemChanged(QStandardItem *item)
             item->setText("4");
         }
     }
+}
+
+
+void LiteEditorOption::restoreDefaultFont()
+{
+    m_fontFamily = defaultFontFamily();
+    ui->fontComboBox->setCurrentFont(QFont(m_fontFamily));
+
+    m_fontSize = 12;
+
+    ui->fontZoomSpinBox->setValue(100);
+    ui->antialiasCheckBox->setChecked(true);
+
+    updatePointSizes();
 }

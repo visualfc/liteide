@@ -52,6 +52,9 @@ public slots:
 public:
     int m_fontSize;
     QString m_fontFamily;
+private slots:
+    void restoreDefaultFont();
+
 private:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
