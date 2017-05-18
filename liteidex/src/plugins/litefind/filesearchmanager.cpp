@@ -206,9 +206,18 @@ void FileSearchManager::findResult(const LiteApi::FileSearchResult &result)
 
 void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchResultItem> &items, bool /*preserveCase*/)
 {
-    if (text.trimmed().isEmpty()) {
-        return;
+    if (text.isEmpty()) {
+        int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("LiteIDE X"),tr("Warning! Replace text is empty.\nWant to remove all the search items?"), QMessageBox::Cancel|QMessageBox::Yes|QMessageBox::No);
+        if (ret != QMessageBox::Yes) {
+            return;
+        }
+    } else if (text.trimmed().isEmpty()) {
+        int ret = QMessageBox::warning(m_liteApp->mainWindow(),tr("LiteIDE X"),tr("Warning! Replace text is whitespace.\nWant to replace to all the search items to whitespace?"), QMessageBox::Cancel|QMessageBox::Yes|QMessageBox::No);
+        if (ret != QMessageBox::Yes) {
+            return;
+        }
     }
+
     if (text == m_searchResultWidget->searchText()) {
         return;
     }
