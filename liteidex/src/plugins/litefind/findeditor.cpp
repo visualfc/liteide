@@ -338,10 +338,11 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
     }
     int number = 0;
     bool wrap = opt->wrapAround;
+    ed->textCursor().beginEditBlock();
     do {
         if (!find.isNull()) {
             number++;
-            find.beginEditBlock();
+            //find.beginEditBlock();
             QString text = find.selectedText();
             if (opt->useRegexp) {
                 text.replace(QRegExp(opt->findText,cs),opt->replaceText);
@@ -350,7 +351,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
             }
             find.removeSelectedText();
             find.insertText(text);
-            find.endEditBlock();
+            //find.endEditBlock();
             ed->setTextCursor(find);
         }
         cursor = ed->textCursor();
@@ -377,6 +378,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
             break;
         }
     } while(!find.isNull());
+    ed->textCursor().endEditBlock();
     if (replaceCount == -1) {
         m_status->setText(QString("Replace:%1").arg(number));
     }
