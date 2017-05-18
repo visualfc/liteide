@@ -2326,7 +2326,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         c.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
         QString text = c.selectedText();
         int trail = trailingWhitespaces(text);
-        if ( trail >= 2 || (trail == 1 && text.endsWith("\t")) ) {
+        if ( trail >= 1 ) {
             c = textCursor();
             c.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor,trail);
         }
