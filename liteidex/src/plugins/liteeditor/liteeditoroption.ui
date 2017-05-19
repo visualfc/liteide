@@ -40,14 +40,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QFontComboBox" name="fontComboBox">
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-              <property name="currentText">
-               <string>Courier</string>
-              </property>
-             </widget>
+             <widget class="QFontComboBox" name="fontComboBox"/>
             </item>
             <item>
              <widget class="QCheckBox" name="monospaceFontCheckBox">
