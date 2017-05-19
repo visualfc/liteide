@@ -21,8 +21,8 @@
 // Module: liteobj.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEOBJ_H__
-#define __LITEOBJ_H__
+#ifndef LITEOBJ_H
+#define LITEOBJ_H
 
 #include <QObject>
 #include <QStringList>
@@ -82,4 +82,4 @@ inline T findExtensionObject(IExtension *ext, const QString & meta)
 
 } //LiteApi
 
-#endif // __LITEOBJ_H__
+#endif // LITEOBJ_H

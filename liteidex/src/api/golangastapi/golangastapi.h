@@ -21,8 +21,8 @@
 // Module: golangastapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __GOLANGASTAPI_H__
-#define __GOLANGASTAPI_H__
+#ifndef GOLANGASTAPI_H
+#define GOLANGASTAPI_H
 
 #include "liteapi/liteapi.h"
 #include <QProcessEnvironment>
@@ -78,5 +78,5 @@ public:
 } //namespace LiteApi
 
 
-#endif //__GOLANGASTAPI_H__
+#endif //GOLANGASTAPI_H
 

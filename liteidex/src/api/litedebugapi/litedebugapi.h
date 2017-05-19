@@ -21,8 +21,8 @@
 // Module: litedebugapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEDEBUGAPI_H__
-#define __LITEDEBUGAPI_H__
+#ifndef LITEDEBUGAPI_H
+#define LITEDEBUGAPI_H
 
 #include "liteapi/liteapi.h"
 #include <QAbstractItemModel>
@@ -148,5 +148,5 @@ inline ILiteDebug *getLiteDebug(LiteApi::IApplication *app)
 
 } //namespace LiteApi
 
-#endif //__LITEDEBUGAPI_H__
+#endif //LITEDEBUGAPI_H
 

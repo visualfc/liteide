@@ -21,8 +21,8 @@
 // Module: litefindapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEFINDAPI_H__
-#define __LITEFINDAPI_H__
+#ifndef LITEFINDAPI_H
+#define LITEFINDAPI_H
 
 #include "liteapi/liteapi.h"
 
@@ -87,5 +87,5 @@ inline IFileSearchManager* getFileSearchManager(LiteApi::IApplication *app)
 
 } //namespace LiteApi
 
-#endif //__LITEFINDAPI_H__
+#endif //LITEFINDAPI_H
 

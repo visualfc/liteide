@@ -21,8 +21,8 @@
 // Module: docbrowserapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEDOCBROWSERAPI_H__
-#define __LITEDOCBROWSERAPI_H__
+#ifndef LITEDOCBROWSERAPI_H
+#define LITEDOCBROWSERAPI_H
 
 #include "liteapi/liteapi.h"
 #include "liteapi/litehtml.h"
@@ -57,5 +57,5 @@ public slots:
 
 }
 
-#endif //__LITEDOCBROWSERAPI_H__
+#endif //LITEDOCBROWSERAPI_H
 

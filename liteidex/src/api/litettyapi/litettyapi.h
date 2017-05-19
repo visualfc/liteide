@@ -21,8 +21,8 @@
 // Module: litettyapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITETTYAPI_H__
-#define __LITETTYAPI_H__
+#ifndef LITETTYAPI_H
+#define LITETTYAPI_H
 
 #include "liteapi/liteapi.h"
 #include <QProcessEnvironment>
@@ -68,5 +68,5 @@ inline ITty *createTty(LiteApi::IApplication *app,QObject *parent)
 } //namespace LiteApi
 
 
-#endif //__LITETTYAPI_H__
+#endif //LITETTYAPI_H
 

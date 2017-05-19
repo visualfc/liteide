@@ -21,8 +21,8 @@
 // Module: liteapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEAPI_H__
-#define __LITEAPI_H__
+#ifndef LITEAPI_H
+#define LITEAPI_H
 
 #include "liteobj.h"
 #include "litehtml.h"
@@ -940,5 +940,5 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X32")
 
 
-#endif //__LITEAPI_H__
+#endif //LITEAPI_H
 

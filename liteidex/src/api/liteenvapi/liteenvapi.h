@@ -21,8 +21,8 @@
 // Module: liteenvapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEENVAPI_H__
-#define __LITEENVAPI_H__
+#ifndef LITEENVAPI_H
+#define LITEENVAPI_H
 
 #include "liteapi/liteapi.h"
 #include <QProcessEnvironment>
@@ -256,5 +256,5 @@ inline QString getGOROOT(LiteApi::IApplication *app)
 } //namespace LiteApi
 
 
-#endif //__LITEENVAPI_H__
+#endif //LITEENVAPI_H
 

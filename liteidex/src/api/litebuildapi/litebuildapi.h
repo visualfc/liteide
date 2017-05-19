@@ -21,8 +21,8 @@
 // Module: litebuildapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEBUILDAPI_H__
-#define __LITEBUILDAPI_H__
+#ifndef LITEBUILDAPI_H
+#define LITEBUILDAPI_H
 
 #include "liteapi/liteapi.h"
 #include <QProcessEnvironment>
@@ -295,5 +295,5 @@ inline ILiteBuild *getLiteBuild(LiteApi::IApplication* app)
 } //namespace LiteApi
 
 
-#endif //__LITEBUILDAPI_H__
+#endif //LITEBUILDAPI_H
 

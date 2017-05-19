@@ -21,8 +21,8 @@
 // Module: quickopenapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __QUICKOPENAPI_H__
-#define __QUICKOPENAPI_H__
+#ifndef QUICKOPENAPI_H
+#define QUICKOPENAPI_H
 
 #include "liteapi/liteapi.h"
 
@@ -97,5 +97,5 @@ inline IQuickOpenManager *getQuickOpenManager(LiteApi::IApplication* app)
 } //namespace LiteApi
 
 
-#endif //__QUICKOPENAPI_H__
+#endif //QUICKOPENAPI_H
 

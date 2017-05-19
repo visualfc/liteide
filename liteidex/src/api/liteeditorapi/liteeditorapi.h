@@ -21,8 +21,8 @@
 // Module: liteeditorapi.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef __LITEEDITORAPI_H__
-#define __LITEEDITORAPI_H__
+#ifndef LITEEDITORAPI_H
+#define LITEEDITORAPI_H
 
 #include "liteapi/liteapi.h"
 #include <QTextCursor>
@@ -337,5 +337,5 @@ inline void selectWordUnderCursor(QTextCursor &tc, bool *moveLeft = 0)
 } //namespace LiteApi
 
 
-#endif //__LITEEDITORAPI_H__
+#endif //LITEEDITORAPI_H
 
