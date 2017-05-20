@@ -189,22 +189,22 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoToolMenu = new QMenu("Go Tool");
 
     m_fmctxGoBuildAct = new QAction("Go Build",this);
-    m_fmctxGoBuildAct->setData("build -v");
+    m_fmctxGoBuildAct->setData("build $(BUILDARGS)");
 
     m_fmctxGoBuildAllAct = new QAction("Go Build All",this);
-    m_fmctxGoBuildAllAct->setData("build -v ./...");
+    m_fmctxGoBuildAllAct->setData("build $(BUILDARGS) ./...");
 
     m_fmctxGoInstallAct = new QAction("Go Install",this);
-    m_fmctxGoInstallAct->setData("install -v");
+    m_fmctxGoInstallAct->setData("install $(INSTALLARGS)");
 
     m_fmctxGoInstallAllAct = new QAction("Go Install All",this);
-    m_fmctxGoInstallAllAct->setData("install -v ./...");
+    m_fmctxGoInstallAllAct->setData("install $(INSTALLARGS) ./...");
 
     m_fmctxGoTestAct = new QAction("Go Test",this);
-    m_fmctxGoTestAct->setData("test -v");
+    m_fmctxGoTestAct->setData("test $(TESTARGS)");
 
     m_fmctxGoTestAllAct = new QAction("Go Test All",this);
-    m_fmctxGoTestAllAct->setData("test -v ./...");
+    m_fmctxGoTestAllAct->setData("test $(TESTARGS) ./...");
 
     m_fmctxGoCleanAct = new QAction("Go Clean",this);
     m_fmctxGoCleanAct->setData("clean -i -x");
@@ -550,9 +550,19 @@ void LiteBuild::fmctxGoTool()
     if (!act) {
         return;
     }
-    // build install test clean
-    QString args = act->data().toString();
+    LiteApi::IBuild *build = m_buildManager->findBuild("text/x-gosrc");
+    if (!build) {
+        m_liteApp->appendLog("litebuild","not found LiteApi::IBuild interface by mime type text/x-gosrc",true);
+        return;
+    }
+
     QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+
+    QString args = act->data().toString();
+    QMap<QString,QString> env = buildEnvMap(build,m_fmctxInfo.filePath());
+    QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    args = this->envToValue(args,env,sysenv);
+
     m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
     m_process->setUserData(ID_REGEXP,m_outputRegex);
     if (!cmd.isEmpty()) {
