@@ -48,9 +48,16 @@ MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
     this->setModel(m_model);
     this->setHeaderHidden(true);
 
+    m_contextMenu = new QMenu(this);
+
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
     connect(m_model,SIGNAL(directoryLoaded(QFileSystemModel*,QString)),this,SLOT(directoryLoaded(QFileSystemModel*,QString)));
+}
+
+MultiFolderView::~MultiFolderView()
+{
+    delete m_contextMenu;
 }
 
 void MultiFolderView::setFilter(QDir::Filters filters)
@@ -125,7 +132,8 @@ bool MultiFolderView::isShowDetails() const
 
 void MultiFolderView::customContextMenuRequested(const QPoint &pos)
 {
-    QMenu menu(this);
+    m_contextMenu->clear();
+
     LiteApi::FILESYSTEM_CONTEXT_FLAG flag = LiteApi::FILESYSTEM_ROOT;
     QModelIndex index = this->indexAt(pos);
     if (index.isValid()) {
@@ -153,55 +161,55 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
     }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
-        menu.addAction(m_openFolderAct);
+        m_contextMenu->addAction(m_openFolderAct);
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
-        menu.addAction(m_openInNewWindowAct);
-        menu.addSeparator();
-        menu.addAction(m_newFileAct);
-        menu.addAction(m_newFileWizardAct);
-        menu.addAction(m_newFolderAct);
-        menu.addSeparator();
-        menu.addAction(m_reloadFolderAct);
-        menu.addAction(m_closeFolderAct);
-        menu.addSeparator();
+        m_contextMenu->addAction(m_openInNewWindowAct);
+        m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_newFileAct);
+        m_contextMenu->addAction(m_newFileWizardAct);
+        m_contextMenu->addAction(m_newFolderAct);
+        m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_reloadFolderAct);
+        m_contextMenu->addAction(m_closeFolderAct);
+        m_contextMenu->addSeparator();
         if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
+            m_contextMenu->addAction(m_viewGodocAct);
+            m_contextMenu->addSeparator();
         }
-        menu.addAction(m_openExplorerAct);
-        menu.addAction(m_openShellAct);
+        m_contextMenu->addAction(m_openExplorerAct);
+        m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
-        menu.addAction(m_openInNewWindowAct);
-        menu.addSeparator();
-        menu.addAction(m_newFileAct);
-        menu.addAction(m_newFileWizardAct);
-        menu.addAction(m_newFolderAct);
-        menu.addAction(m_renameFolderAct);
-        menu.addAction(m_removeFolderAct);
-        menu.addSeparator();
+        m_contextMenu->addAction(m_openInNewWindowAct);
+        m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_newFileAct);
+        m_contextMenu->addAction(m_newFileWizardAct);
+        m_contextMenu->addAction(m_newFolderAct);
+        m_contextMenu->addAction(m_renameFolderAct);
+        m_contextMenu->addAction(m_removeFolderAct);
+        m_contextMenu->addSeparator();
         if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
+            m_contextMenu->addAction(m_viewGodocAct);
+            m_contextMenu->addSeparator();
         }
-        menu.addAction(m_openExplorerAct);
-        menu.addAction(m_openShellAct);
+        m_contextMenu->addAction(m_openExplorerAct);
+        m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
-        menu.addAction(m_openEditorAct);
-        menu.addSeparator();
-        menu.addAction(m_newFileAct);
-        menu.addAction(m_newFileWizardAct);
-        menu.addAction(m_renameFileAct);
-        menu.addAction(m_removeFileAct);
-        menu.addSeparator();
+        m_contextMenu->addAction(m_openEditorAct);
+        m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_newFileAct);
+        m_contextMenu->addAction(m_newFileWizardAct);
+        m_contextMenu->addAction(m_renameFileAct);
+        m_contextMenu->addAction(m_removeFileAct);
+        m_contextMenu->addSeparator();
         if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
+            m_contextMenu->addAction(m_viewGodocAct);
+            m_contextMenu->addSeparator();
         }
-        menu.addAction(m_openExplorerAct);
-        menu.addAction(m_openShellAct);
+        m_contextMenu->addAction(m_openExplorerAct);
+        m_contextMenu->addAction(m_openShellAct);
     }
-    emit aboutToShowContextMenu(&menu,flag,m_contextInfo);
-    menu.exec(this->mapToGlobal(pos));
+    emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
+    m_contextMenu->exec(this->mapToGlobal(pos));
 }
 
 void MultiFolderView::removeFolder()

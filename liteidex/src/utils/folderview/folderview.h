@@ -36,6 +36,7 @@ class FolderView : public BaseFolderView
     Q_OBJECT
 public:
     explicit FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *parent = 0);
+    virtual ~FolderView();
     void setRootPath(const QString &path);
     QString rootPath() const;
     void setFilter(QDir::Filters filters);
@@ -53,6 +54,7 @@ public slots:
 protected:
     QSortFilterProxyModel *m_proxy;
     FileSystemModelEx *m_model;
+    QMenu             *m_contextMenu;
 };
 
 #endif // FOLDERVIEW_H

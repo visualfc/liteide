@@ -33,6 +33,7 @@ public:
     Q_OBJECT
 public:
     explicit MultiFolderView(LiteApi::IApplication *app, QWidget *parent = 0);
+    virtual ~MultiFolderView();
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;
     QFileInfo fileInfo(const QModelIndex &index) const;
@@ -58,6 +59,7 @@ protected slots:
     void directoryLoaded(QFileSystemModel *model,const QString &path);
 protected:
     MultiFolderModel *m_model;
+    QMenu            *m_contextMenu;
 };
 
 #endif // MULTIFOLDERVIEW_H
