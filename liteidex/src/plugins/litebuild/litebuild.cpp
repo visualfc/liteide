@@ -152,9 +152,10 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_configModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
     m_configModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
 
-    m_customModel = new QStandardItemModel(0,2,this);
+    m_customModel = new QStandardItemModel(0,3,this);
     m_customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
     m_customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+    m_customModel->setHeaderData(2,Qt::Horizontal,tr("SharedValue"));
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Build");
 
@@ -480,10 +481,12 @@ void LiteBuild::config()
         for (int i = 0; i < m_customModel->rowCount(); i++) {
             QStandardItem *name = m_customModel->item(i,0);
             QStandardItem *value = m_customModel->item(i,1);
+            QStandardItem *sharedValue = m_customModel->item(i,2);
             //m_customMap.insert(name->text(),value->text());
             QString id = name->data().toString();
             if (!key.isEmpty()) {
                 m_liteApp->settings()->setValue(key+"#"+id,value->text());
+                m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
             }
         }
     }
@@ -808,13 +811,22 @@ QMap<QString,QString> LiteBuild::buildEnvMap(LiteApi::IBuild *build, const QStri
     foreach(LiteApi::BuildCustom *cf, build->customList()) {
         QString name = cf->name();
         QString value = cf->value();
+        QString sharedValue = cf->sharedValue();
+        bool hasShared = cf->hasShared();
         if (!customkey.isEmpty()) {
             value = m_liteApp->settings()->value(customkey+"#"+cf->id(),value).toString();
+            hasShared = m_liteApp->settings()->value(customkey+"#"+cf->id()+"#shared",hasShared).toBool();
         }
         QMapIterator<QString,QString> m(env);
         while(m.hasNext()) {
             m.next();
             value.replace("$("+m.key()+")",m.value());
+            if (hasShared) {
+                sharedValue.replace("$("+m.key()+")",m.value());
+            }
+        }
+        if (hasShared && !sharedValue.isEmpty()) {
+            value += " "+sharedValue;
         }
         env.insert(name,value);
     }
@@ -902,14 +914,26 @@ void LiteBuild::updateBuildConfig(IBuild *build)
         foreach(LiteApi::BuildCustom *cf, build->customList()) {
             QString name = cf->name();
             QString value = cf->value();
+            QString sharedValue = cf->sharedValue();
+            bool sharedChecked = cf->hasShared();
             if (!customkey.isEmpty()) {
                 value = m_liteApp->settings()->value(customkey+"#"+cf->id(),value).toString();
+                sharedChecked = m_liteApp->settings()->value(customkey+"#"+cf->id()+"#shared",true).toBool();
             }
-            QStandardItem *item = new QStandardItem(name);
-            item->setData(cf->id());
+            QStandardItem *nameItem = new QStandardItem(name);
+            QStandardItem *valueItem = new QStandardItem(value);
+            QStandardItem *sharedItem = new QStandardItem(sharedValue);
+            sharedItem->setEnabled(cf->hasShared());
+            if (cf->hasShared()) {
+                sharedItem->setCheckable(true);
+                sharedItem->setCheckState(sharedChecked ? Qt::Checked : Qt::Unchecked);
+            }
+            nameItem->setData(cf->id());
             m_customModel->appendRow(QList<QStandardItem*>()
-                                     << item
-                                     << new QStandardItem(value));
+                                     << nameItem
+                                     << valueItem
+                                     << sharedItem );
+
         }
         foreach(LiteApi::BuildConfig *cf, build->configList()) {
             QString name = cf->name();
