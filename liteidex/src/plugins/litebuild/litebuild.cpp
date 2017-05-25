@@ -404,11 +404,30 @@ QString LiteBuild::envValue(LiteApi::IBuild *build, const QString &value)
                 buildFilePath = QFileInfo(filePath).path();
             }
         }
+    } else {
+        buildFilePath = m_buildRootPath;
     }
 
     QMap<QString,QString> env = buildEnvMap(build,buildFilePath);
     QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
     return this->envToValue(value,env,sysenv);
+}
+
+QString LiteBuild::editorEnvValue(IBuild *build, IEditor *editor, const QString &value)
+{
+    if (!build || !editor) {
+        return value;
+    }
+    QString buildFilePath;
+    QString filePath = editor->filePath();
+    if (!filePath.isEmpty()) {
+        buildFilePath = QFileInfo(filePath).path();
+    }
+
+    QMap<QString,QString> env = buildEnvMap(build,buildFilePath);
+    QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    return this->envToValue(value,env,sysenv);
+
 }
 
 QString LiteBuild::envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env)
@@ -423,6 +442,7 @@ QString LiteBuild::envToValue(const QString &value,QMap<QString,QString> &liteEn
     int pos = 0;
     QStringList list;
     while ((pos = rx.indexIn(v, pos)) != -1) {
+        qDebug() << rx.capturedTexts();
          list << rx.cap(1);
          pos += rx.matchedLength();
     }

@@ -289,6 +289,7 @@ public:
     virtual TargetInfo getTargetInfo() = 0;
     virtual IBuildManager *buildManager() const = 0;   
     virtual QString envValue(LiteApi::IBuild *build, const QString &value) = 0;
+    virtual QString editorEnvValue(LiteApi::IBuild *build, LiteApi::IEditor *editor, const QString &value) = 0;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true) = 0;
     virtual void execAction(const QString &mime,const QString &id) = 0;
     virtual void execCommand(const QString &cmd, const QString &args, const QString &workDir, bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true) = 0;
@@ -299,6 +300,68 @@ inline ILiteBuild *getLiteBuild(LiteApi::IApplication* app)
 {
     return LiteApi::findExtensionObject<ILiteBuild*>(app,"LiteApi.ILiteBuild");
 }
+
+inline IBuild *getGoBuild(LiteApi::IApplication *app)
+{
+    ILiteBuild *build = getLiteBuild(app);
+    if (!build) {
+        return 0;
+    }
+    return build->buildManager()->findBuild("text/x-gosrc");
+}
+
+inline QString parserArgumentValue(const QString &opt, const QString &text)
+{
+    int pos = text.indexOf(opt);
+    if (pos == -1) {
+        return QString();
+    }
+    QString value = text.mid(pos+opt.length());
+    if (value.startsWith('=')) {
+        value = value.mid(1);
+    } else if (value.startsWith(' ')) {
+        value = value.trimmed();
+    }
+    if (value.isEmpty()) {
+        return QString();
+    }
+    if (value.startsWith('\'')) {
+        int pos = value.indexOf('\'',1);
+        if (pos != -1) {
+            return value.left(pos+1);
+        }
+    } else if (value.startsWith('\"')) {
+        int pos = value.indexOf('\"',1);
+        if (pos != -1) {
+            return value.left(pos+1);
+        }
+    } else {
+        int pos = value.indexOf(' ');
+        if (pos != -1) {
+            return value.left(pos);
+        }
+        return value;
+    }
+    return QString();
+}
+
+
+inline QString getGoBuildFlagsArgument(LiteApi::IApplication *app, LiteApi::IEditor *editor, const QString &opt)
+{
+    ILiteBuild *liteBuild = getLiteBuild(app);
+    LiteApi::IBuild *build = getGoBuild(app);
+    if (!liteBuild || !build) {
+        return QString();
+    }
+    QString value = liteBuild->editorEnvValue(build,editor,"$(BUILDFLAGS)");
+    QString tags = parserArgumentValue(opt,value);
+    if (tags.isEmpty()) {
+        value = liteBuild->editorEnvValue(build,editor,"$(BUILDARGS)");
+        tags = parserArgumentValue(opt,value);
+    }
+    return tags;
+}
+
 
 } //namespace LiteApi
 
