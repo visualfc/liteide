@@ -88,7 +88,7 @@ bool GolangFileSearch::replaceMode() const
 void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool replace)
 {
     if (!m_process->isStop()) {
-        return;
+        m_process->stop(100);
     }
 
     bool moveLeft = false;

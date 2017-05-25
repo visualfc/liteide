@@ -371,14 +371,8 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
         }
         return;
     }
-    if (m_findLinkProcess->state() != QProcess::NotRunning) {
-        if (!m_findLinkProcess->waitForFinished(100)) {
-            m_findLinkProcess->kill();
-            if (!m_findLinkProcess->waitForFinished(100)) {
-                m_liteApp->appendLog("golang","find link timeout",false);
-                return;
-            }
-        }
+    if (!m_findLinkProcess->isStop()) {
+        m_findLinkProcess->stop(100);
     }
 
     m_lastLink.clear();
@@ -477,6 +471,11 @@ void GolangEdit::editorJumpToDecl()
     if (text.isEmpty()) {
         return;
     }
+
+    if (!m_findDefProcess->isStop()) {
+        m_findDefProcess->stop(100);
+    }
+
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
     QString cmd = LiteApi::getGotools(m_liteApp);
@@ -551,6 +550,10 @@ void GolangEdit::editorFindInfo()
     if (text.isEmpty()) {
         return;
     }
+    if (!m_findInfoProcess->isStop()) {
+        m_findInfoProcess->stop(100);
+    }
+
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
 
