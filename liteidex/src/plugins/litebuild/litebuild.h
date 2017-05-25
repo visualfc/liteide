@@ -62,6 +62,7 @@ public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void setCurrentBuild(LiteApi::IBuild *build);
     void updateBuildConfig(LiteApi::IBuild *build);
+    void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
     void loadTargetInfo(LiteApi::IBuild *build);
@@ -94,6 +95,7 @@ public slots:
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void fmctxExecuteFile();
     void fmctxGoLockBuild();
+    void fmctxGoBuildConfigure();
     void fmctxGoTool();
     void fmctxGofmt();
     void applyOption(QString);
@@ -127,6 +129,7 @@ protected:
     QMenu       *m_fmctxGoToolMenu;
     QAction     *m_fmctxExecuteFileAct;
     QAction     *m_fmctxGoLockBuildAct;
+    QAction     *m_fmctxGoBuildConfigAct;
     QAction     *m_fmctxGoBuildAct;
     QAction     *m_fmctxGoBuildAllAct;
     QAction     *m_fmctxGoInstallAct;

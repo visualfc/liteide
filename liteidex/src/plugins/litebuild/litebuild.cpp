@@ -185,7 +185,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxExecuteFileAct = new QAction(tr("Execute File"),this);
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
-    m_fmctxGoLockBuildAct = new QAction(tr("Lock Build Path"),this);
+    m_fmctxGoLockBuildAct = new QAction(tr("Lock Go Build Path"),this);
+
+    m_fmctxGoBuildConfigAct = new QAction(tr("Go Build Configuration"),this);
 
     m_fmctxGoToolMenu = new QMenu("Go Tool");
 
@@ -252,6 +254,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoToolMenu->addAction(m_fmctxGoFmtAct);
 
     connect(m_fmctxGoLockBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoLockBuild()));
+    connect(m_fmctxGoBuildConfigAct,SIGNAL(triggered()),this,SLOT(fmctxGoBuildConfigure()));
     connect(m_fmctxGoBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoBuildAllAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
     connect(m_fmctxGoInstallAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
@@ -544,6 +547,7 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
                 act = menu->actions().at(0);
             }
             menu->insertAction(act,m_fmctxGoLockBuildAct);
+            menu->insertAction(act,m_fmctxGoBuildConfigAct);
             menu->insertSeparator(act);            
             //m_fmctxGoTestAct->setEnabled(hasTest);
             menu->insertMenu(act,m_fmctxGoToolMenu);
@@ -565,6 +569,58 @@ void LiteBuild::fmctxGoLockBuild()
 {
     QString buildPath = m_fmctxInfo.filePath();
     this->lockBuildRootByMimeType(buildPath,"text/x-gosrc");
+}
+
+void LiteBuild::fmctxGoBuildConfigure()
+{
+    QString buildPath = m_fmctxInfo.filePath();
+    //this->lockBuildRootByMimeType(buildPath,"text/x-gosrc");
+
+    LiteApi::IBuild *build = m_buildManager->findBuild("text/x-gosrc");
+    if (!build) {
+        m_liteApp->appendLog("LiteBuild","not found LiteApi::IBuild interface by mime type text/x-gosrc");
+        return;
+    }
+
+    BuildConfigDialog dlg;
+    dlg.setBuild(build->id(),buildPath);
+
+    QStandardItemModel *liteideModel = new QStandardItemModel(0,2,this);
+    liteideModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
+    liteideModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+
+    QStandardItemModel *configModel = new QStandardItemModel(0,2,this);
+    configModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
+    configModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+
+    QStandardItemModel *customModel = new QStandardItemModel(0,3,this);
+    customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
+    customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+    customModel->setHeaderData(2,Qt::Horizontal,tr("SharedValue"));
+
+    updateBuildConfigHelp(build,buildPath,liteideModel,configModel,customModel);
+
+    dlg.setModel(liteideModel,configModel,customModel);
+    if (dlg.exec() == QDialog::Accepted) {
+        QString key;
+        if (!buildPath.isEmpty()) {
+            key = "litebuild-custom/"+buildPath;
+        }
+        for (int i = 0; i < customModel->rowCount(); i++) {
+            QStandardItem *name = customModel->item(i,0);
+            QStandardItem *value = customModel->item(i,1);
+            QStandardItem *sharedValue = customModel->item(i,2);
+            //m_customMap.insert(name->text(),value->text());
+            QString id = name->data().toString();
+            if (!key.isEmpty()) {
+                m_liteApp->settings()->setValue(key+"#"+id,value->text());
+                m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
+            }
+        }
+    }
+    delete liteideModel;
+    delete configModel;
+    delete customModel;
 }
 
 void LiteBuild::fmctxGoTool()
@@ -913,22 +969,22 @@ QMap<QString,QString> LiteBuild::buildEnvMap() const
     */
 }
 
-void LiteBuild::updateBuildConfig(IBuild *build)
+void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel)
 {
-    m_liteideModel->removeRows(0,m_liteideModel->rowCount());
+    liteideModel->removeRows(0,liteideModel->rowCount());
     QMapIterator<QString,QString> i(this->liteideEnvMap());
     while (i.hasNext()) {
         i.next();
-        m_liteideModel->appendRow(QList<QStandardItem*>()
+        liteideModel->appendRow(QList<QStandardItem*>()
                                  << new QStandardItem(i.key())
                                  << new QStandardItem(i.value()));
     }
     if (build) {
-        m_configModel->removeRows(0,m_configModel->rowCount());
-        m_customModel->removeRows(0,m_customModel->rowCount());
+        configModel->removeRows(0,configModel->rowCount());
+        customModel->removeRows(0,customModel->rowCount());
         QString customkey;
-        if (!m_buildRootPath.isEmpty()) {
-            customkey = "litebuild-custom/"+m_buildRootPath;
+        if (!buildRootPath.isEmpty()) {
+            customkey = "litebuild-custom/"+buildRootPath;
         }
         QString configkey = "litebuild-config/"+build->id();
         foreach(LiteApi::BuildCustom *cf, build->customList()) {
@@ -949,7 +1005,7 @@ void LiteBuild::updateBuildConfig(IBuild *build)
                 sharedItem->setCheckState(sharedChecked ? Qt::Checked : Qt::Unchecked);
             }
             nameItem->setData(cf->id());
-            m_customModel->appendRow(QList<QStandardItem*>()
+            customModel->appendRow(QList<QStandardItem*>()
                                      << nameItem
                                      << valueItem
                                      << sharedItem );
@@ -963,11 +1019,16 @@ void LiteBuild::updateBuildConfig(IBuild *build)
             }
             QStandardItem *item = new QStandardItem(name);
             item->setData(cf->id());
-            m_configModel->appendRow(QList<QStandardItem*>()
+            configModel->appendRow(QList<QStandardItem*>()
                                      << item
                                      << new QStandardItem(value));
         }
     }
+}
+
+void LiteBuild::updateBuildConfig(IBuild *build)
+{
+    updateBuildConfigHelp(build,m_buildRootPath,m_liteideModel,m_configModel,m_customModel);
 }
 
 void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
