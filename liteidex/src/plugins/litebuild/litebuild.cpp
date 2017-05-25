@@ -493,6 +493,8 @@ void LiteBuild::config()
         return;
     }
 
+    updateBuildConfig(m_build);
+
     BuildConfigDialog dlg;
     dlg.setBuild(m_build->id(),m_buildRootPath);
     dlg.setModel(m_liteideModel,m_configModel,m_customModel);
