@@ -289,7 +289,8 @@ public:
     virtual TargetInfo getTargetInfo() = 0;
     virtual IBuildManager *buildManager() const = 0;   
     virtual QString envValue(LiteApi::IBuild *build, const QString &value) = 0;
-    virtual QString editorEnvValue(LiteApi::IBuild *build, LiteApi::IEditor *editor, const QString &value) = 0;
+    virtual QString buildPathEnvValue(LiteApi::IBuild *build, const QString &buildFilePath, const QString &value) = 0;
+    virtual QString editorBuildFilePath(LiteApi::IEditor *editor) = 0;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true) = 0;
     virtual void execAction(const QString &mime,const QString &id) = 0;
     virtual void execCommand(const QString &cmd, const QString &args, const QString &workDir, bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true) = 0;
@@ -345,23 +346,31 @@ inline QString parserArgumentValue(const QString &opt, const QString &text)
     return QString();
 }
 
-
-inline QString getGoBuildFlagsArgument(LiteApi::IApplication *app, LiteApi::IEditor *editor, const QString &opt)
+inline QString getGoBuildFlagsArgument(LiteApi::IApplication *app, const QString &buildFilePath, const QString &opt)
 {
     ILiteBuild *liteBuild = getLiteBuild(app);
     LiteApi::IBuild *build = getGoBuild(app);
-    if (!liteBuild || !build) {
+    if (!liteBuild || !build ) {
         return QString();
     }
-    QString value = liteBuild->editorEnvValue(build,editor,"$(BUILDFLAGS)");
+    QString value = liteBuild->buildPathEnvValue(build,buildFilePath,"$(BUILDFLAGS)");
     QString tags = parserArgumentValue(opt,value);
     if (tags.isEmpty()) {
-        value = liteBuild->editorEnvValue(build,editor,"$(BUILDARGS)");
+        value = liteBuild->buildPathEnvValue(build,buildFilePath,"$(BUILDARGS)");
         tags = parserArgumentValue(opt,value);
     }
     return tags;
 }
 
+inline QString getGoBuildFlagsArgument(LiteApi::IApplication *app, LiteApi::IEditor *editor, const QString &opt)
+{
+    ILiteBuild *liteBuild = getLiteBuild(app);
+    if (!liteBuild) {
+        return QString();
+    }
+    QString buildFilePath = liteBuild->editorBuildFilePath(editor);
+    return getGoBuildFlagsArgument(app,buildFilePath,opt);
+}
 
 } //namespace LiteApi
 

@@ -52,7 +52,8 @@ public:
     virtual QMap<QString,QString> liteideEnvMap() const;
     virtual LiteApi::TargetInfo getTargetInfo();
     virtual QString envValue(LiteApi::IBuild *build, const QString &value);
-    virtual QString editorEnvValue(LiteApi::IBuild *build, LiteApi::IEditor *editor, const QString &value);
+    virtual QString buildPathEnvValue(LiteApi::IBuild *build, const QString &buildFilePath, const QString &value);
+    virtual QString editorBuildFilePath(LiteApi::IEditor *editor);
     virtual LiteApi::IBuildManager *buildManager() const;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true);
     virtual void execCommand(const QString &cmd, const QString &args, const QString &workDir,bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true);

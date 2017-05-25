@@ -480,8 +480,13 @@ void LiteDebug::startDebug()
 
     LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
 
+    QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,info.workDir,"-tags");
+
     QStringList args;
     args << "build" << "-gcflags" << "\"-N -l\"";
+    if (!tags.isEmpty()) {
+        args << "-tags" << tags;
+    }
     bool b = m_liteBuild->execGoCommand(args,info.workDir,true);
     if (!b) {
         return;
