@@ -68,7 +68,7 @@ QString formatInfo(const QString &info)
 }
 
 GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
-    QObject(parent), m_liteApp(app)
+    QObject(parent), m_liteApp(app), m_gorootSourceReadOnly(false)
 {
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangEdit");
 
@@ -250,13 +250,49 @@ void GolangEdit::applyOption(const QString &option)
     }
     m_enableMouseUnderInfo = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
     m_enableMouseNavigation = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
+    bool gorootSourceReadOnly = m_liteApp->settings()->value(GOLANGEDIT_GOROOTSOURCEREADONLY,false).toBool();
+    if (gorootSourceReadOnly != m_gorootSourceReadOnly) {
+        m_gorootSourceReadOnly = gorootSourceReadOnly;
+        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+        QString goroot = env.value("GOROOT");
+        if (!goroot.isEmpty()) {
+            foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+                if (!editor) {
+                    continue;
+                }
+                QString filePath = editor->filePath();
+                if (filePath.isEmpty()) {
+                    continue;
+                }
+                if (QDir::fromNativeSeparators(filePath).startsWith(QDir::fromNativeSeparators(goroot))) {
+                    editor->setReadOnly(m_gorootSourceReadOnly);
+                }
+            }
+        }
+    }
 }
 
 void GolangEdit::editorCreated(LiteApi::IEditor *editor)
 {
-    if (!editor || editor->mimeType() != "text/x-gosrc") {
+    if (!editor) {
         return;
     }
+    if (m_gorootSourceReadOnly) {
+        QString path = editor->filePath();
+        if ( !path.isEmpty()) {
+            QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+            QString goroot = env.value("GOROOT");
+            if (!goroot.isEmpty()) {
+                if (QDir::fromNativeSeparators(path).startsWith(QDir::fromNativeSeparators(goroot))) {
+                    editor->setReadOnly(true);
+                }
+            }
+        }
+    }
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
+
     //editor->widget()->addAction(m_commentAct);
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {

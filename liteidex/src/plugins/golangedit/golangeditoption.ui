@@ -21,6 +21,13 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QCheckBox" name="gorootSourceReadOnlyCheckBox">
+        <property name="text">
+         <string>Go root source file editor setup read only</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="enableMouseInfoCheckBox">
         <property name="text">
          <string>Enable view expression infomation on mouse</string>

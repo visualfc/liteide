@@ -114,6 +114,7 @@ protected:
     bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
     bool m_enableUseGuru;
+    bool m_gorootSourceReadOnly;
     QString     m_guruFilePath;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;

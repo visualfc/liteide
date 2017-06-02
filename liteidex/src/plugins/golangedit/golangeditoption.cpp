@@ -43,8 +43,10 @@ GolangEditOption::GolangEditOption(LiteApi::IApplication *app,QObject *parent) :
     ui->setupUi(m_widget);
     bool info = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
     bool nav = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
+    bool gorootReadOnly = m_liteApp->settings()->value(GOLANGEDIT_GOROOTSOURCEREADONLY,false).toBool();
     ui->enableMouseInfoCheckBox->setChecked(info);
     ui->enableMouseNavigationCheckBox->setChecked(nav);
+    ui->gorootSourceReadOnlyCheckBox->setChecked(gorootReadOnly);
 }
 
 GolangEditOption::~GolangEditOption()
@@ -72,6 +74,8 @@ void GolangEditOption::apply()
 {
     bool info = ui->enableMouseInfoCheckBox->isChecked();
     bool nav = ui->enableMouseNavigationCheckBox->isChecked();
+    bool gorootReadOnly = ui->gorootSourceReadOnlyCheckBox->isChecked();
     m_liteApp->settings()->setValue(GOLANGEDIT_MOUSEINFO,info);
     m_liteApp->settings()->setValue(GOLANGEDIT_MOUSENAVIGATIOIN,nav);
+    m_liteApp->settings()->setValue(GOLANGEDIT_GOROOTSOURCEREADONLY,gorootReadOnly);
 }

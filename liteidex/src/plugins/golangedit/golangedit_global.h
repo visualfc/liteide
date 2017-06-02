@@ -35,5 +35,6 @@
 #define OPTION_GOLANGEDIT   "option/golangedit"
 #define GOLANGEDIT_MOUSEINFO "golangedit/mouseinfo"
 #define GOLANGEDIT_MOUSENAVIGATIOIN "golangedit/mousenavigation"
+#define GOLANGEDIT_GOROOTSOURCEREADONLY "golangedit/gorootsourcereadonly"
 
 #endif // GOLANGEDIT_GLOBAL_H
