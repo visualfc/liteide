@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QDirModel>
 #include <QDateTime>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -141,6 +142,9 @@ MultiFolderModel::~MultiFolderModel()
 
 QModelIndex MultiFolderModel::addRootPath(const QString &path)
 {
+    if (!QDir::isAbsolutePath(path)) {
+        return QModelIndex();
+    }
     QFileSystemModel *model = new FileSystemModelEx(this);
     model->setFilter(m_filters);
     model->setResolveSymlinks(m_resolveSymlinks);
