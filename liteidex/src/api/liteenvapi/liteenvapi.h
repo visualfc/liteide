@@ -252,6 +252,97 @@ inline QString getGOROOT(LiteApi::IApplication *app)
     return getGoEnvironment(app).value("GOROOT");
 }
 
+inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, const QString &buildFilePath)
+{
+    if (buildFilePath.isEmpty()) {
+        return getGoEnvironment(app);
+    }
+
+    QProcessEnvironment env = getCurrentEnvironment(app);
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+
+    IEnvManager *mgr = LiteApi::getEnvManager(app);
+    if (mgr) {
+        LiteApi::IEnv *ce = mgr->currentEnv();
+        if (ce) {
+            QMapIterator<QString,QString> i(ce->goEnvMap());
+            while(i.hasNext()) {
+                i.next();
+                env.insert(i.key(),i.value());
+            }
+        }
+    }
+
+    QString goos = env.value("GOOS");
+    if (goos.isEmpty()) {
+        goos = getDefaultGOOS();
+    }
+    QString goarch = env.value("GOARCH");
+    QString goroot = env.value("GOROOT");
+    if (goroot.isEmpty()) {
+        goroot = getDefaultGOROOT();
+    }
+
+    QStringList pathList;
+
+    QString customKey = "litebuild-custom/"+buildFilePath;
+
+    bool inherit_gopath = app->settings()->value(customKey+"#inherit_gopath",true).toBool();
+    bool custom_gopath = app->settings()->value(customKey+"#custom_gopath",false).toBool();
+
+    if (inherit_gopath) {
+        if (app->settings()->value("litebuild/usesysgopath",true).toBool()) {
+            foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+                pathList.append(QDir::toNativeSeparators(path));
+            }
+        }
+        if (app->settings()->value("liteide/uselitegopath",true).toBool()) {
+            foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
+                pathList.append(QDir::toNativeSeparators(path));
+            }
+        }
+    }
+    if (custom_gopath) {
+        foreach (QString path, app->settings()->value(customKey+"#gopath").toStringList()) {
+            pathList.append(QDir::toNativeSeparators(path));
+        }
+    }
+    pathList.removeDuplicates();
+    env.insert("GOPATH",pathList.join(sep));
+
+    if (!goroot.isEmpty()) {
+        pathList.prepend(goroot);
+    }
+
+    QStringList binList;
+    QString gobin = env.value("GOBIN");
+    if (!gobin.isEmpty()) {
+        binList.append(gobin);
+    }
+    foreach (QString path, pathList) {
+        binList.append(QFileInfo(path,"bin").filePath());
+        binList.append(QFileInfo(path,"bin/"+goos+"_"+goarch).filePath());
+    }
+    env.insert("PATH",env.value("PATH")+sep+binList.join(sep)+sep);
+    return env;
+}
+
+inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, LiteApi::IEditor *editor)
+{
+    QString buildFilePath;
+    if (editor) {
+        QString filePath = editor->filePath();
+        if (!filePath.isEmpty()) {
+            buildFilePath = QFileInfo(filePath).path();
+        }
+    }
+    return getCustomGoEnvironment(app,buildFilePath);
+}
+
 
 } //namespace LiteApi
 
