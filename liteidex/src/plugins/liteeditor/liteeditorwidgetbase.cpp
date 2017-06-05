@@ -2232,6 +2232,11 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_S) {
         return;
     }
+#ifdef Q_OS_MAC
+    if ((e->modifiers() & Qt::ControlModifier) && e->key() == ',') {
+        return;
+    }
+#endif
     if (e->key() == Qt::Key_Insert ) {
         if (e->modifiers() == Qt::NoModifier) {
             this->setOverwriteMode(!this->overwriteMode());
