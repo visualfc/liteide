@@ -290,12 +290,33 @@ public:
     virtual IBuildManager *buildManager() const = 0;   
     virtual QString envValue(LiteApi::IBuild *build, const QString &value) = 0;
     virtual QString buildPathEnvValue(LiteApi::IBuild *build, const QString &buildFilePath, const QString &value) = 0;
-    virtual QString editorBuildFilePath(LiteApi::IEditor *editor) = 0;
     virtual void appendOutput(const QString &str, const QBrush &brush, bool active, bool updateExistsTextColor = true) = 0;
     virtual void execAction(const QString &mime,const QString &id) = 0;
     virtual void execCommand(const QString &cmd, const QString &args, const QString &workDir, bool updateExistsTextColor = true, bool activateOutputCheck = true, bool navigate = true, bool command = true) = 0;
     virtual bool execGoCommand(const QStringList &args, const QString &work, bool waitFinish = true) = 0;
 };
+
+inline QString sourceBuildFilePath(const QString &filePath)
+{
+    QFileInfo info(filePath);
+    if (info.isDir()) {
+        return info.filePath();
+    }
+    return info.path();
+}
+
+inline QString editorBuildFilePath(IEditor *editor)
+{
+    QString buildFilePath;
+    if (editor) {
+        QString filePath = editor->filePath();
+        if (!filePath.isEmpty()) {
+            buildFilePath = QFileInfo(filePath).path();
+        }
+    }
+    return buildFilePath;
+}
+
 
 inline ILiteBuild *getLiteBuild(LiteApi::IApplication* app)
 {
@@ -368,7 +389,7 @@ inline QString getGoBuildFlagsArgument(LiteApi::IApplication *app, LiteApi::IEdi
     if (!liteBuild) {
         return QString();
     }
-    QString buildFilePath = liteBuild->editorBuildFilePath(editor);
+    QString buildFilePath = editorBuildFilePath(editor);
     return getGoBuildFlagsArgument(app,buildFilePath,opt);
 }
 

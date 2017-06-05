@@ -428,18 +428,6 @@ QString LiteBuild::buildPathEnvValue(IBuild *build, const QString &buildFilePath
 
 }
 
-QString LiteBuild::editorBuildFilePath(IEditor *editor)
-{
-    QString buildFilePath;
-    if (editor) {
-        QString filePath = editor->filePath();
-        if (!filePath.isEmpty()) {
-            buildFilePath = QFileInfo(filePath).path();
-        }
-    }
-    return buildFilePath;
-}
-
 QString LiteBuild::envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env)
 {
     QString v = value;
