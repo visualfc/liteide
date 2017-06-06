@@ -225,10 +225,10 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoGetForceAct->setData("get $(GORCEGETARGS)");
 
     m_fmctxGoVetAct = new QAction("Go Vet",this);
-    m_fmctxGoVetAct->setData("tool vet -v .");
+    m_fmctxGoVetAct->setData("vet $(VETARGS)");
 
     m_fmctxGoVetAllCheckAct = new QAction("Go Vet (enable all checks)",this);
-    m_fmctxGoVetAllCheckAct->setData("tool vet -v -all .");
+    m_fmctxGoVetAllCheckAct->setData("tool vet $(TOOLVETARGS) .");
 
     m_fmctxGoFmtAct = new QAction("GoFmt",this);
 
