@@ -424,7 +424,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     int offset = m_editor->utf8Position(false,cursor.selectionStart());
 
     QFileInfo info(m_editor->filePath());
-    m_findLinkProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_findLinkProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
 
     QStringList args;
@@ -517,7 +517,7 @@ void GolangEdit::editorJumpToDecl()
     QString cmd = LiteApi::getGotools(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
-    m_findDefProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_findDefProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findDefProcess->setWorkingDirectory(info.path());
 
     QStringList args;
@@ -593,7 +593,7 @@ void GolangEdit::editorFindInfo()
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
 
-    m_findInfoProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_findInfoProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
 
 
@@ -943,7 +943,7 @@ void GolangEdit::runSourceQuery(const QString &action)
     m_sourceQueryInfo.offset2 = offset2;
 
 
-    m_sourceQueryProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_sourceQueryProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(info.path());
 
     if (m_enableUseGuru) {
@@ -989,7 +989,7 @@ void GolangEdit::runSourceQueryByInfo(const QString &action)
 
     m_sourceQueryOutput->append(QString("\nwait for source query \"%1\" %2 ...\n\n").arg(cmdName).arg(action));
 
-    m_sourceQueryProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_sourceQueryProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(m_sourceQueryInfo.workPath);
     if (m_enableUseGuru) {
         if (offset2 == -1) {

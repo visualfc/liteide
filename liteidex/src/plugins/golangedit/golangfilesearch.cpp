@@ -112,7 +112,7 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     m_file.close();
     QString cmd = LiteApi::getGotools(m_liteApp);
     QFileInfo info(editor->filePath());
-    m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+    m_process->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,editor).toStringList());
     m_process->setWorkingDirectory(info.path());
 
     QStringList args;
