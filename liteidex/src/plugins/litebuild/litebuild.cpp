@@ -490,7 +490,7 @@ void LiteBuild::config()
 
     updateBuildConfig(m_build);
 
-    BuildConfigDialog dlg;
+    BuildConfigDialog dlg(m_liteApp);
     dlg.setBuild(m_build->id(),m_buildRootPath);
     dlg.setModel(m_liteideModel,m_configModel,m_customModel);
     if (dlg.exec() == QDialog::Accepted) {
@@ -509,6 +509,7 @@ void LiteBuild::config()
                 m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
             }
         }
+        dlg.saveCustomGopath();
     }
 }
 
@@ -579,7 +580,7 @@ void LiteBuild::fmctxGoBuildConfigure()
         return;
     }
 
-    BuildConfigDialog dlg;
+    BuildConfigDialog dlg(m_liteApp);
     dlg.setBuild(build->id(),buildPath);
 
     QStandardItemModel *liteideModel = new QStandardItemModel(0,2,this);
@@ -614,6 +615,7 @@ void LiteBuild::fmctxGoBuildConfigure()
                 m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
             }
         }
+        dlg.saveCustomGopath();
     }
     delete liteideModel;
     delete configModel;
@@ -1471,7 +1473,8 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
         m_output->append(tr("A process is currently running.  Stop the current action first.")+"\n",Qt::red);
         return;
     }
-    QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    //QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    QProcessEnvironment sysenv = LiteApi::getCustomGoEnvironment(m_liteApp,workDir);
     QString cmd = cmd1.trimmed();
     m_output->setReadOnly(false);
     m_process->setEnvironment(sysenv.toStringList());
@@ -1589,7 +1592,8 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
     QMap<QString,QString> env = buildEnvMap(build,buildFilePath);
 
-    QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    //QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    QProcessEnvironment sysenv = LiteApi::getCustomGoEnvironment(m_liteApp,buildFilePath);
 
     QString cmd = this->envToValue(ba->cmd(),env,sysenv);
     QString args = this->envToValue(ba->args(),env,sysenv);

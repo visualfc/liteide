@@ -257,6 +257,11 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
     if (buildFilePath.isEmpty()) {
         return getGoEnvironment(app);
     }
+    QString customKey = "litebuild-custom/"+buildFilePath;
+    bool use_custom_gopath = app->settings()->value(customKey+"#use_custom_gopath",false).toBool();
+    if (!use_custom_gopath) {
+        return getGoEnvironment(app);
+    }
 
     QProcessEnvironment env = getCurrentEnvironment(app);
 #ifdef Q_OS_WIN
@@ -289,21 +294,18 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
 
     QStringList pathList;
 
-    QString customKey = "litebuild-custom/"+buildFilePath;
-
-    bool inherit_gopath = app->settings()->value(customKey+"#inherit_gopath",true).toBool();
+    bool inherit_sys_gopath = app->settings()->value(customKey+"#inherit_sys_gopath",true).toBool();
+    bool inherit_lite_gopath = app->settings()->value(customKey+"#inherit_lite_gopath",true).toBool();
     bool custom_gopath = app->settings()->value(customKey+"#custom_gopath",false).toBool();
 
-    if (inherit_gopath) {
-        if (app->settings()->value("litebuild/usesysgopath",true).toBool()) {
-            foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
-                pathList.append(QDir::toNativeSeparators(path));
-            }
+    if (inherit_sys_gopath) {
+        foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+            pathList.append(QDir::toNativeSeparators(path));
         }
-        if (app->settings()->value("liteide/uselitegopath",true).toBool()) {
-            foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
-                pathList.append(QDir::toNativeSeparators(path));
-            }
+    }
+    if (inherit_lite_gopath) {
+        foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
+            pathList.append(QDir::toNativeSeparators(path));
         }
     }
     if (custom_gopath) {

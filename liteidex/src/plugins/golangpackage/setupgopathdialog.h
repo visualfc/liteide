@@ -45,6 +45,7 @@ public:
     QStringList litePathList() const;
 protected slots:
     void browser();
+
 private:
     Ui::SetupGopathDialog *ui;
 };

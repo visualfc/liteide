@@ -102,3 +102,4 @@ void SetupGopathDialog::browser()
         ui->litePathTextEdit->appendPlainText(dir);
     }
 }
+

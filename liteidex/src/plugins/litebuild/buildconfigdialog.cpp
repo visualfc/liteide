@@ -23,9 +23,11 @@
 
 #include "buildconfigdialog.h"
 #include "ui_buildconfigdialog.h"
+#include "liteenvapi/liteenvapi.h"
 
 #include <QAbstractItemModel>
 #include <QDebug>
+#include <QFileDialog>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -36,8 +38,9 @@
 #endif
 //lite_memory_check_end
 
-BuildConfigDialog::BuildConfigDialog(QWidget *parent) :
+BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent) :
     QDialog(parent),
+    m_liteApp(app),
     ui(new Ui::BuildConfigDialog)
 {
     ui->setupUi(this);
@@ -52,6 +55,9 @@ BuildConfigDialog::BuildConfigDialog(QWidget *parent) :
     ui->customTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->customTableView->resizeColumnsToContents();
     ui->customTableView->verticalHeader()->hide();
+
+    ui->sysGopathEdit->setReadOnly(true);
+    ui->liteGopathEdit->setReadOnly(true);
 
     connect(ui->customTableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(editCustomeTabView(QModelIndex)));
 }
@@ -92,8 +98,71 @@ void BuildConfigDialog::resizeTableView(QTableView *tableView)
 
 void BuildConfigDialog::setBuild(const QString &buildId, const QString &buildFile)
 {
+    m_buildFile = buildFile;
+
     ui->buildIdLabel->setText(buildId);
     ui->buildFileLabel->setText(buildFile);
+
+    QString customKey = "litebuild-custom/"+buildFile;
+
+    bool use_custom_gopath = m_liteApp->settings()->value(customKey+"#use_custom_gopath",false).toBool();
+    ui->useCustomGopathGroupBox->setChecked(use_custom_gopath);
+
+    bool inherit_sys_gopath = m_liteApp->settings()->value(customKey+"#inherit_sys_gopath",true).toBool();
+    bool inherit_lite_gopath = m_liteApp->settings()->value(customKey+"#inherit_lite_gopath",true).toBool();
+    bool custom_gopath = m_liteApp->settings()->value(customKey+"#custom_gopath",false).toBool();
+
+    ui->inheritSysGopathCheckBox->setChecked(inherit_sys_gopath);
+    ui->inheritLiteGopathCheckBox->setChecked(inherit_lite_gopath);
+    ui->customGopathCheckBox->setChecked(custom_gopath);
+
+    QProcessEnvironment env = LiteApi::getSysEnvironment(m_liteApp);
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+
+    QStringList pathList;
+    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    ui->sysGopathEdit->setPlainText(pathList.join("\n"));
+
+    pathList.clear();
+    foreach (QString path, m_liteApp->settings()->value("liteide/gopath").toStringList()) {
+          pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    ui->liteGopathEdit->setPlainText(pathList.join("\n"));
+
+    pathList.clear();
+    foreach (QString path, m_liteApp->settings()->value(customKey+"#gopath").toStringList()) {
+          pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    ui->customGopathEdit->setPlainText(pathList.join("\n"));
+}
+
+void BuildConfigDialog::saveCustomGopath()
+{
+    if (m_buildFile.isEmpty()) {
+        return;
+    }
+
+    QString customKey = "litebuild-custom/"+m_buildFile;
+
+    bool use_custom_gopath = ui->useCustomGopathGroupBox->isChecked();
+    bool inherit_sys_gopath = ui->inheritSysGopathCheckBox->isChecked();
+    bool inherit_lite_gopath = ui->inheritLiteGopathCheckBox->isChecked();
+    bool custom_gopath = ui->customGopathCheckBox->isChecked();
+
+    m_liteApp->settings()->setValue(customKey+"#use_custom_gopath",use_custom_gopath);
+    m_liteApp->settings()->setValue(customKey+"#inherit_sys_gopath",inherit_sys_gopath);
+    m_liteApp->settings()->setValue(customKey+"#inherit_lite_gopath",inherit_lite_gopath);
+    m_liteApp->settings()->setValue(customKey+"#custom_gopath",custom_gopath);
+    m_liteApp->settings()->setValue(customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"));
 }
 
 void BuildConfigDialog::setModel(QAbstractItemModel * liteide,QAbstractItemModel * config, QAbstractItemModel * custom)
@@ -104,4 +173,22 @@ void BuildConfigDialog::setModel(QAbstractItemModel * liteide,QAbstractItemModel
     resizeTableView(ui->liteideTableView);
     resizeTableView(ui->configTableView);
     resizeTableView(ui->customTableView);
+}
+
+void BuildConfigDialog::on_customGopathBrowserButton_clicked()
+{
+    static QString last = QDir::homePath();
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose directory to add to GOPATH:"),
+                                                    last,
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    if (!dir.isEmpty()) {
+        last = dir;
+        ui->liteGopathEdit->appendPlainText(dir);
+    }
+}
+
+void BuildConfigDialog::on_customGopathClear_clicked()
+{
+    ui->liteGopathEdit->clear();
 }

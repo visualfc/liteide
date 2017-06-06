@@ -26,6 +26,7 @@
 
 #include <QDialog>
 #include <QModelIndex>
+#include "liteapi/liteapi.h"
 
 namespace Ui {
     class BuildConfigDialog;
@@ -38,16 +39,24 @@ class BuildConfigDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit BuildConfigDialog(QWidget *parent = 0);
+    explicit BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~BuildConfigDialog();
     void setBuild(const QString &buildId, const QString &buildFile);
+    void saveCustomGopath();
     void setModel(QAbstractItemModel * liteide,QAbstractItemModel * config, QAbstractItemModel * custom);
 public slots:
     void editCustomeTabView(QModelIndex);
 protected:
     void resizeTableView(QTableView *tableView);
-private:    
+private slots:
+    void on_customGopathBrowserButton_clicked();
+
+    void on_customGopathClear_clicked();
+
+private:
+    LiteApi::IApplication *m_liteApp;
     Ui::BuildConfigDialog *ui;
+    QString                m_buildFile;
 };
 
 #endif // BUILDCONFIGDIALOG_H
