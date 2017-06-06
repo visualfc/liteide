@@ -10,10 +10,15 @@
 		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
 		<custom id="BuildArgsi" name="BUILDARGS" value="-i" shared-value="$(BUILDFLAGS)"/>
 		<custom id="ForceBuildArgsi" name="FORCEBUILDARGS" value="-i -a -v" shared-value="$(BUILDFLAGS)"/>
-		<custom id="InstallArgs" name="INSTALLARGS" value="" shared-value="$(BUILDFLAGS)"/>
+		<custom id="InstallArgs" name="INSTALLARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="GetArgs" name="GETARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ForceGetArgs" name="FORCEGETARGS" value="-a -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="UpdateGetArgs" name="UPDATEGETARGS" value="-u -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="TestArgs" name="TESTARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="BenchmarkArgs" name="BENCHMARKARGS" value="" shared-value="$(BUILDFLAGS)"/>
-		<custom id="GenerateArgs" name="GENERATEARGS" value="-v"/>
+		<custom id="VetArgs" name="VETARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ToolVetArgs" name="TOOLVETARGS" value="-all -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="GenerateArgs" name="GENERATEARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
 		<action id="BuildAndRun" img="buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
 		<action id="Run" img="run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
@@ -25,9 +30,9 @@
 		<action id="Install" menu="Build" img="install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Clean" menu="Build" img="clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
 		<action id="CleanAll" menu="Build" img="cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
-		<action id="Get" img="get.png" cmd="$(GO)" args="get -v ." save="all" output="true" codec="utf-8"/>
-		<action id="Get Update Network" menu="Get" img="get.png" cmd="$(GO)" args="get -u -v ." save="all" output="true" codec="utf-8"/>
-		<action id="Get Force Rebuilding" menu="Get" img="reget.png" cmd="$(GO)" args="get -a -v ." save="all" output="true" codec="utf-8"/>
+		<action id="Get" img="get.png" cmd="$(GO)" args="get $(GETARGS) ." save="all" output="true" codec="utf-8"/>
+		<action id="Get Update Network" menu="Get" img="get.png" cmd="$(GO)" args="get $(UPDATEGETARGS) ." save="all" output="true" codec="utf-8"/>
+		<action id="Get Force Rebuilding" menu="Get" img="reget.png" cmd="$(GO)" args="get $(FORCEGETARGS) ." save="all" output="true" codec="utf-8"/>
 		<action id="Test" img="test.png" key = "Ctrl+T" cmd="$(GO)" args="test $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
 		<action id="FileTest" menu="Test" img="filetest.png" key = "Alt+T" cmd="$(GOTOOLS)" args="gotest -f $(EDITOR_FILE_NAME) $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
 		<action id="TestAll" menu="Test" img="test.png" key = "Ctrl+Alt+T" cmd="$(GO)" args="test $(TESTARGS) ./..." save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
@@ -39,8 +44,8 @@
 		<action id="Utils" folder="true" img="utils.png"/>
 		<action id="GoFmt" menu="Utils" img="fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoFmtAll" menu="Utils" img="fmt.png" cmd="$(GOFMT)" args="-l -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
-		<action id="GoVet" menu="Utils" img="vet.png" cmd="$(GO)" args="vet" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
-		<action id="GoVetAll" menu="Utils" img="vet.png" cmd="$(GO)" args="tool vet ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoVet" menu="Utils" img="vet.png" cmd="$(GO)" args="vet $(VETARGS)" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoToolVet" menu="Utils" img="vet.png" cmd="$(GO)" args="tool vet $(TOOLVETARGS) ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoGenerate" menu="Utils" img="get.png" cmd="$(GO)" args="generate $(GENERATEARGS)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoLint" menu="Utils" img="lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Gopm Build" menu="Utils" img="gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>

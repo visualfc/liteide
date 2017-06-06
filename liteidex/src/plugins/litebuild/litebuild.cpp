@@ -216,13 +216,13 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoCleanAllAct->setData("clean -i -x ./...");
 
     m_fmctxGoGetAct = new QAction("Go Get",this);
-    m_fmctxGoGetAct->setData("get -v");
+    m_fmctxGoGetAct->setData("get $(GETARGS)");
 
     m_fmctxGoGetUpdateAct = new QAction("Go Get Update",this);
-    m_fmctxGoGetUpdateAct->setData("get -v -u");
+    m_fmctxGoGetUpdateAct->setData("get $(UPDATEGETARGS)");
 
     m_fmctxGoGetForceAct = new QAction("Go Get Force",this);
-    m_fmctxGoGetForceAct->setData("get -v -a");
+    m_fmctxGoGetForceAct->setData("get $(GORCEGETARGS)");
 
     m_fmctxGoVetAct = new QAction("Go Vet",this);
     m_fmctxGoVetAct->setData("tool vet -v .");
