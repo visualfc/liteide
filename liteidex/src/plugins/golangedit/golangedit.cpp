@@ -106,15 +106,6 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_sourceQueryProcess = new Process(this);
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
-    m_enableUseGuru = false;
-
-    m_guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
-    if (!m_guruFilePath.isEmpty()) {
-        m_enableUseGuru = true;
-        m_liteApp->appendLog("GolangEdit",QString("Found guru at %1").arg(m_guruFilePath),false);
-    } else {
-        m_liteApp->appendLog("GolangEdit",QString("Not found guru, back to oracle!"),false);
-    }
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -918,8 +909,11 @@ void GolangEdit::runSourceQuery(const QString &action)
     QString cmd;
     QString arginfo;
     QString cmdName;
-    if (m_enableUseGuru) {
-        cmd = m_guruFilePath;
+
+    QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
+
+    if (!guruFilePath.isEmpty()) {
+        cmd = guruFilePath;
         cmdName = "guru";
     } else {
         cmd = LiteApi::getGotools(m_liteApp);
@@ -946,7 +940,7 @@ void GolangEdit::runSourceQuery(const QString &action)
     m_sourceQueryProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(info.path());
 
-    if (m_enableUseGuru) {
+    if (!guruFilePath.isEmpty()) {
         if (offset2 == -1) {
             m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3\"").
                                      arg(action).arg(info.fileName()).arg(offset));
@@ -974,8 +968,11 @@ void GolangEdit::runSourceQueryByInfo(const QString &action)
     QString cmd;
     QString arginfo;
     QString cmdName;
-    if (m_enableUseGuru) {
-        cmd = m_guruFilePath;
+
+    QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
+
+    if (!guruFilePath.isEmpty()) {
+        cmd = guruFilePath;
         arginfo = "-pos";
         cmdName = "guru";
     } else {
@@ -991,7 +988,7 @@ void GolangEdit::runSourceQueryByInfo(const QString &action)
 
     m_sourceQueryProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(m_sourceQueryInfo.workPath);
-    if (m_enableUseGuru) {
+    if (!guruFilePath.isEmpty()) {
         if (offset2 == -1) {
             m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3\"").
                                      arg(action).arg(m_sourceQueryInfo.fileName).arg(offset));
