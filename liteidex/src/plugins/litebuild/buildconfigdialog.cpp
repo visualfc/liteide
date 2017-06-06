@@ -24,6 +24,7 @@
 #include "buildconfigdialog.h"
 #include "ui_buildconfigdialog.h"
 #include "liteenvapi/liteenvapi.h"
+#include "liteapi/liteutil.h"
 
 #include <QAbstractItemModel>
 #include <QDebug>
@@ -160,11 +161,16 @@ void BuildConfigDialog::saveCustomGopath()
     bool inherit_lite_gopath = ui->inheritLiteGopathCheckBox->isChecked();
     bool custom_gopath = ui->customGopathCheckBox->isChecked();
 
-    m_liteApp->settings()->setValue(customKey+"#use_custom_gopath",use_custom_gopath);
-    m_liteApp->settings()->setValue(customKey+"#inherit_sys_gopath",inherit_sys_gopath);
-    m_liteApp->settings()->setValue(customKey+"#inherit_lite_gopath",inherit_lite_gopath);
-    m_liteApp->settings()->setValue(customKey+"#custom_gopath",custom_gopath);
-    m_liteApp->settings()->setValue(customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"));
+//    m_liteApp->settings()->setValue(customKey+"#use_custom_gopath",use_custom_gopath);
+//    m_liteApp->settings()->setValue(customKey+"#inherit_sys_gopath",inherit_sys_gopath);
+//    m_liteApp->settings()->setValue(customKey+"#inherit_lite_gopath",inherit_lite_gopath);
+//    m_liteApp->settings()->setValue(customKey+"#custom_gopath",custom_gopath);
+//    m_liteApp->settings()->setValue(customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"));
+    LiteApi::updateAppSetting(m_liteApp,customKey+"#use_custom_gopath",use_custom_gopath,false);
+    LiteApi::updateAppSetting(m_liteApp,customKey+"#inherit_sys_gopath",inherit_sys_gopath,true);
+    LiteApi::updateAppSetting(m_liteApp,customKey+"#inherit_lite_gopath",inherit_lite_gopath,true);
+    LiteApi::updateAppSetting(m_liteApp,customKey+"#custom_gopath",custom_gopath,false);
+    LiteApi::updateAppSetting(m_liteApp,customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"),"");
 }
 
 void BuildConfigDialog::setModel(QAbstractItemModel * liteide,QAbstractItemModel * config, QAbstractItemModel * custom)

@@ -24,6 +24,8 @@
 #include "litebuild.h"
 #include "litebuild_global.h"
 #include "buildmanager.h"
+#include "liteapi/liteapi.h"
+#include "liteapi/liteutil.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
@@ -505,8 +507,13 @@ void LiteBuild::config()
             //m_customMap.insert(name->text(),value->text());
             QString id = name->data().toString();
             if (!key.isEmpty()) {
-                m_liteApp->settings()->setValue(key+"#"+id,value->text());
-                m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
+                QString defValue = value->data().toString();
+                bool defShared = sharedValue->data().toBool();
+                LiteApi::updateAppSetting(m_liteApp,key+"#"+id,value->text(),defValue);
+                LiteApi::updateAppSetting(m_liteApp,key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false,defShared);
+                //m_liteApp->settings()->setValue(key+"#"+id,value->text());
+                //m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
+
             }
         }
         dlg.saveCustomGopath();
@@ -611,8 +618,12 @@ void LiteBuild::fmctxGoBuildConfigure()
             //m_customMap.insert(name->text(),value->text());
             QString id = name->data().toString();
             if (!key.isEmpty()) {
-                m_liteApp->settings()->setValue(key+"#"+id,value->text());
-                m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
+                QString defValue = value->data().toString();
+                bool defShared = sharedValue->data().toBool();
+                LiteApi::updateAppSetting(m_liteApp,key+"#"+id,value->text(),defValue);
+                LiteApi::updateAppSetting(m_liteApp,key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false,defShared);
+//                m_liteApp->settings()->setValue(key+"#"+id,value->text());
+//                m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
             }
         }
         dlg.saveCustomGopath();
@@ -1004,6 +1015,8 @@ void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &bui
                 sharedItem->setCheckState(sharedChecked ? Qt::Checked : Qt::Unchecked);
             }
             nameItem->setData(cf->id());
+            valueItem->setData(cf->value());
+            sharedItem->setData(cf->hasShared());
             customModel->appendRow(QList<QStandardItem*>()
                                      << nameItem
                                      << valueItem

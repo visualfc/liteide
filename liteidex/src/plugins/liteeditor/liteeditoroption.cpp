@@ -24,6 +24,7 @@
 #include "liteeditoroption.h"
 #include "ui_liteeditoroption.h"
 #include "liteeditor_global.h"
+#include "liteapi/liteutil.h"
 #include <QFontDatabase>
 #include <QDir>
 #include <QFileInfo>
@@ -297,11 +298,14 @@ void LiteEditorOption::apply()
         bool ok;
         int n = tab.toInt(&ok);
         if (ok && n > 0 && n < 20) {
-            m_liteApp->settings()->setValue(EDITOR_TABWIDTH+mime,n);
+            //m_liteApp->settings()->setValue(EDITOR_TABWIDTH+mime,n);
+            LiteApi::updateAppSetting(m_liteApp,EDITOR_TABWIDTH+mime,n,4);
         }
         bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;        
-        m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+mime,b);
-        m_liteApp->settings()->setValue(EDITOR_CUSTOMEXTENSION+mime,custom);
+        //m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+mime,b);
+        LiteApi::updateAppSetting(m_liteApp,EDITOR_TABTOSPACES+mime,b,false);
+        //m_liteApp->settings()->setValue(EDITOR_CUSTOMEXTENSION+mime,custom);
+        LiteApi::updateAppSetting(m_liteApp,EDITOR_CUSTOMEXTENSION+mime,custom,"");
         LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);
         if (imt) {
             imt->setCustomPatterns(custom.split(";"));
