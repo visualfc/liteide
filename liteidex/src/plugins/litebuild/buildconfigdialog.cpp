@@ -60,6 +60,8 @@ BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent
     ui->liteGopathEdit->setReadOnly(true);
 
     connect(ui->customTableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(editCustomeTabView(QModelIndex)));
+
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 }
 
 BuildConfigDialog::~BuildConfigDialog()
