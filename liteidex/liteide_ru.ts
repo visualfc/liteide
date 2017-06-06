@@ -345,6 +345,42 @@ LiteIDE это простая кросплатформенная среда ра
         <oldsource>Build Custom</oldsource>
         <translation>Другое</translation>
     </message>
+    <message>
+        <source>GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Custom GOPATH for Build Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inherit System GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inherit LiteIDE GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom GOPATH (one per line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Directory...</source>
+        <translation type="unfinished">Добавить...</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Очистить</translation>
+    </message>
+    <message>
+        <source>Reset all to initial value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose directory to add to GOPATH:</source>
+        <translation type="unfinished">Выбор каталога для добавления в GOPATH</translation>
+    </message>
 </context>
 <context>
     <name>CreateDirDialog</name>
@@ -1140,6 +1176,20 @@ Do you want to reload the file from disk?</source>
         <source>File is readonly</source>
         <translation>Файл только для чтения</translation>
     </message>
+    <message>
+        <source>LiteIDE X</source>
+        <translation type="unfinished">LiteIDE X</translation>
+    </message>
+    <message>
+        <source>Warning! Replace text is empty.
+Want to remove all the search items?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning! Replace text is whitespace.
+Want to replace to all the search items to whitespace?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileSystemWidget</name>
@@ -1795,6 +1845,10 @@ Do you want to reload the file from disk?</source>
         <source>Enable mouse navigation</source>
         <translation>Навигация мышью</translation>
     </message>
+    <message>
+        <source>Go root source file editor setup read only</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangFileSearch</name>
@@ -2375,6 +2429,10 @@ Success: %2.</oldsource>
         <source>emit save message for auto code format, etc...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use tool window shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
@@ -2414,7 +2472,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Lock Build Path</source>
-        <translation>Зафиксировать путь сборки</translation>
+        <translation type="obsolete">Зафиксировать путь сборки</translation>
     </message>
     <message>
         <source>Line Wrap</source>
@@ -2495,6 +2553,18 @@ Success: %2.</oldsource>
     <message>
         <source>Automatic positioning cursor</source>
         <translation>Автоматическое позиционирование курсора</translation>
+    </message>
+    <message>
+        <source>SharedValue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Go Build Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go Build Configuration</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3090,6 +3160,14 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Custom Extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Monospace Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore Default Font</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
