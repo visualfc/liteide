@@ -53,6 +53,8 @@ private slots:
 
     void on_customGopathClear_clicked();
 
+    void on_customResetAllButton_clicked();
+
 private:
     LiteApi::IApplication *m_liteApp;
     Ui::BuildConfigDialog *ui;

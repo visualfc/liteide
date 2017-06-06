@@ -27,6 +27,8 @@
 #include "liteapi/liteutil.h"
 
 #include <QAbstractItemModel>
+#include <QStandardItemModel>
+#include <QStandardItem>
 #include <QDebug>
 #include <QFileDialog>
 //lite_memory_check_begin
@@ -199,4 +201,18 @@ void BuildConfigDialog::on_customGopathBrowserButton_clicked()
 void BuildConfigDialog::on_customGopathClear_clicked()
 {
     ui->liteGopathEdit->clear();
+}
+
+void BuildConfigDialog::on_customResetAllButton_clicked()
+{
+    QStandardItemModel *model = (QStandardItemModel*)(ui->customTableView->model());
+    for (int i = 0; i < model->rowCount(); i++) {
+       // QStandardItem *name = model->item(i,0);
+        QStandardItem *value = model->item(i,1);
+        QStandardItem *sharedValue = model->item(i,2);
+        value->setText(value->data().toString());
+        if (sharedValue->data().toBool()) {
+            sharedValue->setCheckState(Qt::Checked);
+        }
+    }
 }
