@@ -483,10 +483,11 @@ void LiteDebug::startDebug()
     QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,info.workDir,"-tags");
 
     QStringList args;
-    args << "build" << "-gcflags" << "\"-N -l\"";
+    args << "build" << "-gcflags" << "\"-N -l\"" ;
     if (!tags.isEmpty()) {
         args << "-tags" << tags;
     }
+    args << "-o" << info.cmd;
     bool b = m_liteBuild->execGoCommand(args,info.workDir,true);
     if (!b) {
         return;
@@ -498,14 +499,13 @@ void LiteDebug::startDebug()
         return;
     }
 
-    QString fileName = QFileInfo(cmd).fileName();
-
+    //QString fileName = QFileInfo(cmd).fileName();
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor) {
         m_startDebugFile = editor->filePath();
     }
 
-    this->startDebug(fileName,info.args,info.workDir);
+    this->startDebug(info.cmd,info.args,info.workDir);
 }
 
 void LiteDebug::startDebugTests()

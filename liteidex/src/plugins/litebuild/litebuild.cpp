@@ -442,7 +442,6 @@ QString LiteBuild::envToValue(const QString &value,QMap<QString,QString> &liteEn
     int pos = 0;
     QStringList list;
     while ((pos = rx.indexIn(v, pos)) != -1) {
-        qDebug() << rx.capturedTexts();
          list << rx.cap(1);
          pos += rx.matchedLength();
     }
@@ -1008,6 +1007,9 @@ void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &bui
             }
             QStandardItem *nameItem = new QStandardItem(name);
             QStandardItem *valueItem = new QStandardItem(value);
+            if (cf->isReadOnly()) {
+                valueItem->setEnabled(false);
+            }
             QStandardItem *sharedItem = new QStandardItem(sharedValue);
             sharedItem->setEnabled(cf->hasShared());
             if (cf->hasShared()) {

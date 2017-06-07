@@ -362,6 +362,9 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 if (attrs.hasAttribute("shared-value")) {
                     custom->setSharedValue(attrs.value("shared-value").toString());
                 }
+                if (attrs.hasAttribute("readonly")) {
+                    custom->setReadOnly(attrs.value("readonly").toString());
+                }
             } else if (reader.name() == "target" && target == 0 && build != 0) {
                 target = new BuildTarget;
                 target->setId(attrs.value("id").toString());
