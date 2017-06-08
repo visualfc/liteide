@@ -27,6 +27,7 @@
 #include <QDialog>
 #include <QModelIndex>
 #include "liteapi/liteapi.h"
+#include "litebuildapi/litebuildapi.h"
 
 namespace Ui {
     class BuildConfigDialog;
@@ -34,6 +35,7 @@ namespace Ui {
 
 class QAbstractItemModel;
 class QTableView;
+class QStandardItemModel;
 class BuildConfigDialog : public QDialog
 {
     Q_OBJECT
@@ -41,9 +43,10 @@ class BuildConfigDialog : public QDialog
 public:
     explicit BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~BuildConfigDialog();
-    void setBuild(const QString &buildId, const QString &buildFile);
+    void setBuild(LiteApi::IBuild *build, const QString &buildPath, const QMap<QString,QString> &liteEnvMap);
     void saveCustomGopath();
-    void setModel(QAbstractItemModel * liteide,QAbstractItemModel * config, QAbstractItemModel * custom);
+    void saveCustomModel();
+    void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, const QMap<QString,QString> &liteEnvMap, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel);
 public slots:
     void editCustomeTabView(QModelIndex);
 protected:
@@ -58,7 +61,11 @@ private slots:
 private:
     LiteApi::IApplication *m_liteApp;
     Ui::BuildConfigDialog *ui;
-    QString                m_buildFile;
+    QString                m_buildPath;
+    QStandardItemModel *m_liteideModel;
+    QStandardItemModel *m_configModel;
+    QStandardItemModel *m_customModel;
+    QStandardItemModel *m_actionModel;
 };
 
 #endif // BUILDCONFIGDIALOG_H

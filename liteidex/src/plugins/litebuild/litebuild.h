@@ -62,7 +62,7 @@ public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void setCurrentBuild(LiteApi::IBuild *build);
     void updateBuildConfig(LiteApi::IBuild *build);
-    void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel);
+    void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
     void loadTargetInfo(LiteApi::IBuild *build);
@@ -112,9 +112,6 @@ protected:
     QToolBar    *m_buildToolBar;
     QMenu       *m_buildMenu;
     QMap<QString,BuildBarInfo*> m_buildBarInfoMap;
-    QStandardItemModel *m_liteideModel;
-    QStandardItemModel *m_configModel;
-    QStandardItemModel *m_customModel;
     QString m_workDir;
     ProcessEx *m_process;
     TextOutput *m_output;

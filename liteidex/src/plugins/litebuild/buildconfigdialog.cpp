@@ -59,8 +59,35 @@ BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent
     ui->customTableView->resizeColumnsToContents();
     ui->customTableView->verticalHeader()->hide();
 
+    ui->actionTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->actionTableView->resizeColumnsToContents();
+    ui->actionTableView->verticalHeader()->hide();
+
     ui->sysGopathEdit->setReadOnly(true);
     ui->liteGopathEdit->setReadOnly(true);
+
+    m_liteideModel = new QStandardItemModel(0,2,this);
+    m_liteideModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
+    m_liteideModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+
+    m_configModel = new QStandardItemModel(0,2,this);
+    m_configModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
+    m_configModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+
+    m_customModel = new QStandardItemModel(0,3,this);
+    m_customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
+    m_customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
+    m_customModel->setHeaderData(2,Qt::Horizontal,tr("SharedValue"));
+
+    m_actionModel = new QStandardItemModel(0,2,this);
+    m_actionModel->setHeaderData(0,Qt::Horizontal,tr("Id"));
+    m_actionModel->setHeaderData(1,Qt::Horizontal,tr("Cmd"));
+
+    ui->liteideTableView->setModel(m_liteideModel);
+    ui->configTableView->setModel(m_configModel);
+    ui->customTableView->setModel(m_customModel);
+    ui->actionTableView->setModel(m_actionModel);
+    ui->actionTableView->setTextElideMode(Qt::ElideNone);
 
     connect(ui->customTableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(editCustomeTabView(QModelIndex)));
 
@@ -101,14 +128,21 @@ void BuildConfigDialog::resizeTableView(QTableView *tableView)
     }
 }
 
-void BuildConfigDialog::setBuild(const QString &buildId, const QString &buildFile)
-{
-    m_buildFile = buildFile;
+void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPath, const QMap<QString, QString> &liteEnvMap)
+{    
+    m_buildPath = buildPath;
 
-    ui->buildIdLabel->setText(buildId);
-    ui->buildFileLabel->setText(buildFile);
+    updateBuildConfigHelp(build,buildPath,liteEnvMap,m_liteideModel,m_configModel,m_customModel,m_actionModel);
 
-    QString customKey = "litebuild-custom/"+buildFile;
+    resizeTableView(ui->liteideTableView);
+    resizeTableView(ui->configTableView);
+    resizeTableView(ui->customTableView);
+    resizeTableView(ui->actionTableView);
+
+    ui->buildIdLabel->setText(build->id());
+    ui->buildFileLabel->setText(buildPath);
+
+    QString customKey = "litebuild-custom/"+buildPath;
 
     bool use_custom_gopath = m_liteApp->settings()->value(customKey+"#use_custom_gopath",false).toBool();
     ui->useCustomGopathGroupBox->setChecked(use_custom_gopath);
@@ -152,11 +186,11 @@ void BuildConfigDialog::setBuild(const QString &buildId, const QString &buildFil
 
 void BuildConfigDialog::saveCustomGopath()
 {
-    if (m_buildFile.isEmpty()) {
+    if (m_buildPath.isEmpty()) {
         return;
     }
 
-    QString customKey = "litebuild-custom/"+m_buildFile;
+    QString customKey = "litebuild-custom/"+m_buildPath;
 
     bool use_custom_gopath = ui->useCustomGopathGroupBox->isChecked();
     bool inherit_sys_gopath = ui->inheritSysGopathCheckBox->isChecked();
@@ -175,14 +209,24 @@ void BuildConfigDialog::saveCustomGopath()
     LiteApi::updateAppSetting(m_liteApp,customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"),"");
 }
 
-void BuildConfigDialog::setModel(QAbstractItemModel * liteide,QAbstractItemModel * config, QAbstractItemModel * custom)
+void BuildConfigDialog::saveCustomModel()
 {
-    ui->liteideTableView->setModel(liteide);
-    ui->configTableView->setModel(config);
-    ui->customTableView->setModel(custom);
-    resizeTableView(ui->liteideTableView);
-    resizeTableView(ui->configTableView);
-    resizeTableView(ui->customTableView);
+    QString key;
+    if (!m_buildPath.isEmpty()) {
+        key = "litebuild-custom/"+m_buildPath;
+    }
+    for (int i = 0; i < m_customModel->rowCount(); i++) {
+        QStandardItem *name = m_customModel->item(i,0);
+        QStandardItem *value = m_customModel->item(i,1);
+        QStandardItem *sharedValue = m_customModel->item(i,2);
+        QString id = name->data().toString();
+        if (!key.isEmpty()) {
+            QString defValue = value->data().toString();
+            bool defShared = sharedValue->data().toBool();
+            LiteApi::updateAppSetting(m_liteApp,key+"#"+id,value->text(),defValue);
+            LiteApi::updateAppSetting(m_liteApp,key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false,defShared);
+        }
+    }
 }
 
 void BuildConfigDialog::on_customGopathBrowserButton_clicked()
@@ -213,6 +257,88 @@ void BuildConfigDialog::on_customResetAllButton_clicked()
         value->setText(value->data().toString());
         if (sharedValue->data().toBool()) {
             sharedValue->setCheckState(Qt::Checked);
+        }
+    }
+}
+
+void BuildConfigDialog::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, const QMap<QString,QString> &liteEnvMap, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel)
+{
+    liteideModel->removeRows(0,liteideModel->rowCount());
+    QMapIterator<QString,QString> i(liteEnvMap);
+    while (i.hasNext()) {
+        i.next();
+        liteideModel->appendRow(QList<QStandardItem*>()
+                                 << new QStandardItem(i.key())
+                                 << new QStandardItem(i.value()));
+    }
+    if (build) {
+        configModel->removeRows(0,configModel->rowCount());
+        customModel->removeRows(0,customModel->rowCount());
+        actionModel->removeRows(0,actionModel->rowCount());
+        QString customkey;
+        if (!buildRootPath.isEmpty()) {
+            customkey = "litebuild-custom/"+buildRootPath;
+        }
+        QString configkey = "litebuild-config/"+build->id();
+        foreach(LiteApi::BuildCustom *cf, build->customList()) {
+            QString name = cf->name();
+            QString value = cf->value();
+            QString sharedValue = cf->sharedValue();
+            bool sharedChecked = cf->hasShared();
+            if (!customkey.isEmpty()) {
+                value = m_liteApp->settings()->value(customkey+"#"+cf->id(),value).toString();
+                sharedChecked = m_liteApp->settings()->value(customkey+"#"+cf->id()+"#shared",true).toBool();
+            }
+            QStandardItem *nameItem = new QStandardItem(name);
+            QStandardItem *valueItem = new QStandardItem(value);
+            if (cf->isReadOnly()) {
+                valueItem->setEnabled(false);
+            }
+            QStandardItem *sharedItem = new QStandardItem(sharedValue);
+            sharedItem->setEnabled(cf->hasShared());
+            if (cf->hasShared()) {
+                sharedItem->setCheckable(true);
+                sharedItem->setCheckState(sharedChecked ? Qt::Checked : Qt::Unchecked);
+            }
+            nameItem->setData(cf->id());
+            valueItem->setData(cf->value());
+            sharedItem->setData(cf->hasShared());
+            customModel->appendRow(QList<QStandardItem*>()
+                                     << nameItem
+                                     << valueItem
+                                     << sharedItem );
+
+        }
+        foreach(LiteApi::BuildConfig *cf, build->configList()) {
+            QString name = cf->name();
+            QString value = cf->value();
+            if (!configkey.isEmpty()) {
+                value = m_liteApp->settings()->value(configkey+"#"+cf->id(),value).toString();
+            }
+            QStandardItem *item = new QStandardItem(name);
+            item->setData(cf->id());
+            configModel->appendRow(QList<QStandardItem*>()
+                                     << item
+                                     << new QStandardItem(value));
+        }
+        foreach (LiteApi::BuildAction *ba, build->actionList()) {
+            QString id = ba->id();
+            QString cmd = ba->cmd();
+            QString args = ba->args();
+            QStringList task = ba->task();
+            if (task.isEmpty() && cmd.isEmpty()) {
+                continue;
+            }
+            QStandardItem *item = new QStandardItem(id);
+            QString value;
+            if (!task.isEmpty()) {
+                value = "Task: "+task.join(";");
+            } else {
+                value = cmd+" "+args;
+            }
+            actionModel->appendRow(QList<QStandardItem*>()
+                                   << item
+                                   << new QStandardItem(value) );
         }
     }
 }

@@ -146,19 +146,6 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     //m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
-    m_liteideModel = new QStandardItemModel(0,2,this);
-    m_liteideModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
-    m_liteideModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
-
-    m_configModel = new QStandardItemModel(0,2,this);
-    m_configModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
-    m_configModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
-
-    m_customModel = new QStandardItemModel(0,3,this);
-    m_customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
-    m_customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
-    m_customModel->setHeaderData(2,Qt::Horizontal,tr("SharedValue"));
-
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Build");
 
     m_configAct = new QAction(QIcon("icon:litebuild/images/config.png"),tr("Build Configuration..."),this);
@@ -489,32 +476,11 @@ void LiteBuild::config()
         return;
     }
 
-    updateBuildConfig(m_build);
-
     BuildConfigDialog dlg(m_liteApp);
-    dlg.setBuild(m_build->id(),m_buildRootPath);
-    dlg.setModel(m_liteideModel,m_configModel,m_customModel);
-    if (dlg.exec() == QDialog::Accepted) {
-        QString key;
-        if (!m_buildRootPath.isEmpty()) {
-            key = "litebuild-custom/"+m_buildRootPath;
-        }
-        for (int i = 0; i < m_customModel->rowCount(); i++) {
-            QStandardItem *name = m_customModel->item(i,0);
-            QStandardItem *value = m_customModel->item(i,1);
-            QStandardItem *sharedValue = m_customModel->item(i,2);
-            //m_customMap.insert(name->text(),value->text());
-            QString id = name->data().toString();
-            if (!key.isEmpty()) {
-                QString defValue = value->data().toString();
-                bool defShared = sharedValue->data().toBool();
-                LiteApi::updateAppSetting(m_liteApp,key+"#"+id,value->text(),defValue);
-                LiteApi::updateAppSetting(m_liteApp,key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false,defShared);
-                //m_liteApp->settings()->setValue(key+"#"+id,value->text());
-                //m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
+    dlg.setBuild(m_build,m_buildRootPath, this->liteideEnvMap());
 
-            }
-        }
+    if (dlg.exec() == QDialog::Accepted) {
+        dlg.saveCustomModel();
         dlg.saveCustomGopath();
     }
 }
@@ -587,49 +553,12 @@ void LiteBuild::fmctxGoBuildConfigure()
     }
 
     BuildConfigDialog dlg(m_liteApp);
-    dlg.setBuild(build->id(),buildPath);
+    dlg.setBuild(build,buildPath, this->liteideEnvMap());
 
-    QStandardItemModel *liteideModel = new QStandardItemModel(0,2,this);
-    liteideModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
-    liteideModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
-
-    QStandardItemModel *configModel = new QStandardItemModel(0,2,this);
-    configModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
-    configModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
-
-    QStandardItemModel *customModel = new QStandardItemModel(0,3,this);
-    customModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
-    customModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
-    customModel->setHeaderData(2,Qt::Horizontal,tr("SharedValue"));
-
-    updateBuildConfigHelp(build,buildPath,liteideModel,configModel,customModel);
-
-    dlg.setModel(liteideModel,configModel,customModel);
     if (dlg.exec() == QDialog::Accepted) {
-        QString key;
-        if (!buildPath.isEmpty()) {
-            key = "litebuild-custom/"+buildPath;
-        }
-        for (int i = 0; i < customModel->rowCount(); i++) {
-            QStandardItem *name = customModel->item(i,0);
-            QStandardItem *value = customModel->item(i,1);
-            QStandardItem *sharedValue = customModel->item(i,2);
-            //m_customMap.insert(name->text(),value->text());
-            QString id = name->data().toString();
-            if (!key.isEmpty()) {
-                QString defValue = value->data().toString();
-                bool defShared = sharedValue->data().toBool();
-                LiteApi::updateAppSetting(m_liteApp,key+"#"+id,value->text(),defValue);
-                LiteApi::updateAppSetting(m_liteApp,key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false,defShared);
-//                m_liteApp->settings()->setValue(key+"#"+id,value->text());
-//                m_liteApp->settings()->setValue(key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false);
-            }
-        }
+        dlg.saveCustomModel();
         dlg.saveCustomGopath();
     }
-    delete liteideModel;
-    delete configModel;
-    delete customModel;
 }
 
 void LiteBuild::fmctxGoTool()
@@ -978,7 +907,7 @@ QMap<QString,QString> LiteBuild::buildEnvMap() const
     */
 }
 
-void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel)
+void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel)
 {
     liteideModel->removeRows(0,liteideModel->rowCount());
     QMapIterator<QString,QString> i(this->liteideEnvMap());
@@ -991,6 +920,7 @@ void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &bui
     if (build) {
         configModel->removeRows(0,configModel->rowCount());
         customModel->removeRows(0,customModel->rowCount());
+        actionModel->removeRows(0,actionModel->rowCount());
         QString customkey;
         if (!buildRootPath.isEmpty()) {
             customkey = "litebuild-custom/"+buildRootPath;
@@ -1037,12 +967,22 @@ void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &bui
                                      << item
                                      << new QStandardItem(value));
         }
+        foreach (LiteApi::BuildAction *ba, build->actionList()) {
+            QString id = ba->id();
+            QString cmd = ba->cmd();
+            QString args = ba->args();
+            QStandardItem *item = new QStandardItem(id);
+            actionModel->appendRow(QList<QStandardItem*>()
+                                   << item
+                                   << new QStandardItem(cmd)
+                                   << new QStandardItem(args));
+        }
     }
 }
 
 void LiteBuild::updateBuildConfig(IBuild *build)
 {
-    updateBuildConfigHelp(build,m_buildRootPath,m_liteideModel,m_configModel,m_customModel);
+    //updateBuildConfigHelp(build,m_buildRootPath,m_liteideModel,m_configModel,m_customModel,m_actionModel);
 }
 
 void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)

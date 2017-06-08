@@ -505,7 +505,7 @@ void FileSystemWidget::openShell()
     }
     QString cmd = env.value("LITEIDE_TERM");
     QStringList args = env.value("LITEIDE_TERMARGS").split(" ",QString::SkipEmptyParts);
-    qDebug() << cmd;
+    //qDebug() << cmd;
     QString path = dir.path();
 #ifdef Q_OS_MAC
     args.append(path);
