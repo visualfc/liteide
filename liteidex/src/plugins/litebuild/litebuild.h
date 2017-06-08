@@ -61,7 +61,7 @@ public:
 public:
     QString envToValue(const QString &value,QMap<QString,QString> &liteEnv,const QProcessEnvironment &env);
     void setCurrentBuild(LiteApi::IBuild *build);
-    void updateBuildConfig(LiteApi::IBuild *build);
+    void updateBuildConfig(LiteApi::IBuild *);
     void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel);
     void loadProjectInfo(const QString &filePath);
     void loadEditorInfo(const QString &filePath);
@@ -85,6 +85,7 @@ public slots:
     void editorCreated(LiteApi::IEditor *editor);
     void currentEditorChanged(LiteApi::IEditor*);
     void buildAction(LiteApi::IBuild*,LiteApi::BuildAction*);
+    void buildTask(LiteApi::IBuild *build, bool killOld, const QStringList &taskList);
     void execAction(const QString &mime,const QString &id);
     void extOutput(const QByteArray &output,bool bError);
     void extFinish(bool error,int exitCode, QString msg);

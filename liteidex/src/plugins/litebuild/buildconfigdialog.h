@@ -44,8 +44,11 @@ public:
     explicit BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent = 0);
     virtual ~BuildConfigDialog();
     void setBuild(LiteApi::IBuild *build, const QString &buildPath, const QMap<QString,QString> &liteEnvMap);
-    void saveCustomGopath();
-    void saveCustomModel();
+    void saveBuild();
+protected:
+    void saveGopath();
+    void saveCustom();
+    void saveAction();
     void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, const QMap<QString,QString> &liteEnvMap, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel);
 public slots:
     void editCustomeTabView(QModelIndex);

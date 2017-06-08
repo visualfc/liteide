@@ -165,8 +165,7 @@ void Process::stop(int ms)
         terminate();
         closeReadChannel(QProcess::StandardOutput);
         closeReadChannel(QProcess::StandardError);
-        waitForFinished(ms);
-        if (!isStop()) {
+        if (!waitForFinished(ms)) {
             kill();
         }
     }

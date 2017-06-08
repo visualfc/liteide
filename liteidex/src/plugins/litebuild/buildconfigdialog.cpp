@@ -182,9 +182,19 @@ void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPat
     }
     pathList.removeDuplicates();
     ui->customGopathEdit->setPlainText(pathList.join("\n"));
+
+//    QStringList saveAutoRun = m_liteApp->settings()->value(customKey+"#saveautorun").toStringList();
+//    ui->saveAutoRunEdit->setText(saveAutoRun.join(";"));
 }
 
-void BuildConfigDialog::saveCustomGopath()
+void BuildConfigDialog::saveBuild()
+{
+    saveGopath();
+    saveCustom();
+    saveAction();
+}
+
+void BuildConfigDialog::saveGopath()
 {
     if (m_buildPath.isEmpty()) {
         return;
@@ -209,12 +219,14 @@ void BuildConfigDialog::saveCustomGopath()
     LiteApi::updateAppSetting(m_liteApp,customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"),"");
 }
 
-void BuildConfigDialog::saveCustomModel()
+void BuildConfigDialog::saveCustom()
 {
-    QString key;
-    if (!m_buildPath.isEmpty()) {
-        key = "litebuild-custom/"+m_buildPath;
+    if (m_buildPath.isEmpty()) {
+        return;
     }
+    QString key;
+    key = "litebuild-custom/"+m_buildPath;
+
     for (int i = 0; i < m_customModel->rowCount(); i++) {
         QStandardItem *name = m_customModel->item(i,0);
         QStandardItem *value = m_customModel->item(i,1);
@@ -227,6 +239,23 @@ void BuildConfigDialog::saveCustomModel()
             LiteApi::updateAppSetting(m_liteApp,key+"#"+id+"#shared",sharedValue->checkState() == Qt::Checked ? true:false,defShared);
         }
     }
+}
+
+void BuildConfigDialog::saveAction()
+{
+//    if (m_buildPath.isEmpty()) {
+//        return;
+//    }
+//    QString key;
+//    key = "litebuild-custom/"+m_buildPath;
+//    QStringList task;
+//    foreach (QString id, ui->saveAutoRunEdit->text().split(";")) {
+//        id = id.trimmed();
+//        if (!id.isEmpty()) {
+//            task.push_back(id);
+//        }
+//    }
+//    LiteApi::updateAppSetting(m_liteApp,key+"#saveautorun",task,QStringList());
 }
 
 void BuildConfigDialog::on_customGopathBrowserButton_clicked()
@@ -332,7 +361,7 @@ void BuildConfigDialog::updateBuildConfigHelp(LiteApi::IBuild *build, const QStr
             QStandardItem *item = new QStandardItem(id);
             QString value;
             if (!task.isEmpty()) {
-                value = "Task: "+task.join(";");
+                value = task.join(";");
             } else {
                 value = cmd+" "+args;
             }

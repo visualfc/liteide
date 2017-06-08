@@ -480,8 +480,8 @@ void LiteBuild::config()
     dlg.setBuild(m_build,m_buildRootPath, this->liteideEnvMap());
 
     if (dlg.exec() == QDialog::Accepted) {
-        dlg.saveCustomModel();
-        dlg.saveCustomGopath();
+        dlg.saveBuild();
+        updateBuildConfig(m_build);
     }
 }
 
@@ -556,8 +556,7 @@ void LiteBuild::fmctxGoBuildConfigure()
     dlg.setBuild(build,buildPath, this->liteideEnvMap());
 
     if (dlg.exec() == QDialog::Accepted) {
-        dlg.saveCustomModel();
-        dlg.saveCustomGopath();
+        dlg.saveBuild();
     }
 }
 
@@ -980,9 +979,8 @@ void LiteBuild::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &bui
     }
 }
 
-void LiteBuild::updateBuildConfig(IBuild *build)
+void LiteBuild::updateBuildConfig(IBuild */*build*/)
 {
-    //updateBuildConfigHelp(build,m_buildRootPath,m_liteideModel,m_configModel,m_customModel,m_actionModel);
 }
 
 void LiteBuild::setCurrentBuild(LiteApi::IBuild *build)
@@ -1504,6 +1502,51 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
         m_process->setUserData(ID_TASKLIST,task);
         execAction(mime,id);
     }
+}
+
+void LiteBuild::buildTask(IBuild *build, bool killOld, const QStringList &taskList)
+{
+    if (m_bOutputAutoClear) {
+        m_output->clear();
+    } else {
+        m_output->updateExistsTextColor(true);
+    }
+    m_outputAct->setChecked(true);
+
+    if (!m_process->isStop()) {
+        if (!killOld) {
+            return;
+        }
+        m_process->stop(100);
+    }
+
+    QString mime = build->mimeType();
+    QString editor;
+    LiteApi::IEditor *ed = m_liteApp->editorManager()->currentEditor();
+    if (ed) {
+        editor = ed->filePath();
+    }
+
+    m_output->updateExistsTextColor();
+    m_process->setUserData(ID_MIMETYPE,mime);
+    m_process->setUserData(ID_EDITOR,editor);
+    m_process->setUserData(ID_ACTIVATEOUTPUT_CHECK,true);
+
+    QStringList task;
+    foreach (QString id, taskList) {
+        LiteApi::BuildAction *ba = build->findAction(id);
+        if (!ba) {
+            continue;
+        }
+        if (!ba->task().isEmpty()) {
+            task.append(ba->task());
+        } else if (!ba->cmd().isEmpty()) {
+            task.push_back(ba->id());
+        }
+    }
+    QString id = task.takeFirst();
+    m_process->setUserData(ID_TASKLIST,task);
+    execAction(mime,id);
 }
 
 void LiteBuild::execAction(const QString &mime, const QString &id)
