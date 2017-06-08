@@ -78,7 +78,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_gopath">
       <attribute name="title">
@@ -175,7 +175,7 @@
      </widget>
      <widget class="QWidget" name="tab_config">
       <attribute name="title">
-       <string>Build</string>
+       <string>Config</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -185,7 +185,7 @@
      </widget>
      <widget class="QWidget" name="tab_action">
       <attribute name="title">
-       <string>Actioin</string>
+       <string>Action</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>

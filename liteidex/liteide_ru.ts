@@ -338,7 +338,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Build</source>
         <oldsource>Build Config</oldsource>
-        <translation>Сборка</translation>
+        <translation type="obsolete">Сборка</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -380,6 +380,34 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Choose directory to add to GOPATH:</source>
         <translation type="unfinished">Выбор каталога для добавления в GOPATH</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Значение</translation>
+    </message>
+    <message>
+        <source>SharedValue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cmd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Конфигурация</translation>
     </message>
 </context>
 <context>
@@ -2446,11 +2474,11 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation type="obsolete">Имя</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Значение</translation>
+        <translation type="obsolete">Значение</translation>
     </message>
     <message>
         <source>Build Configuration...</source>
@@ -2553,10 +2581,6 @@ Success: %2.</oldsource>
     <message>
         <source>Automatic positioning cursor</source>
         <translation>Автоматическое позиционирование курсора</translation>
-    </message>
-    <message>
-        <source>SharedValue</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lock Go Build Path</source>

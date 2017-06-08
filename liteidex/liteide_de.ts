@@ -458,23 +458,61 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="178"/>
+        <source>Config</source>
+        <translation type="unfinished">Konfiguration</translation>
+    </message>
+    <message>
         <source>Build</source>
         <oldsource>Build Config</oldsource>
-        <translation type="unfinished">Build</translation>
+        <translation type="obsolete">Build</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="188"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="198"/>
         <source>Custom</source>
         <oldsource>Build Custom</oldsource>
         <translation type="unfinished">Benutzerdefiniert</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="209"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="219"/>
         <source>Reset all to initial value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="191"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="70"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="74"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="78"/>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="71"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="75"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="79"/>
+        <source>Value</source>
+        <translation type="unfinished">Wert</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="80"/>
+        <source>SharedValue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="83"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="84"/>
+        <source>Cmd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="264"/>
         <source>Choose directory to add to GOPATH:</source>
         <translation type="unfinished">Verzeichnis zu GOPATH hinzufügen:</translation>
     </message>
@@ -2146,79 +2184,79 @@ Want to replace to all the search items to whitespace?</source>
         <translation type="unfinished">Symbol unter Cursor umbenennen</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="148"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="139"/>
         <source>Go Source Query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="150"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="141"/>
         <source>SourceQuery What</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="154"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="145"/>
         <source>Callees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="158"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="149"/>
         <source>Callers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="162"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="153"/>
         <source>Callstack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="157"/>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="161"/>
         <source>Describe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="174"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="165"/>
         <source>Freevars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="178"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="169"/>
         <source>Implements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="182"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="173"/>
         <source>Peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="186"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="177"/>
         <source>Referrers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="190"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="181"/>
         <source>Pointsto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="194"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="185"/>
         <source>Whicherrs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="307"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="336"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="298"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="327"/>
         <source>Refactor</source>
         <translation type="unfinished">Refaktor</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="313"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="343"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="304"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="334"/>
         <source>SourceQuery</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2987,137 +3025,119 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished">Ausführen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="150"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="154"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="158"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="594"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="598"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="602"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation type="obsolete">Name</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="obsolete">Wert</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="151"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="155"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="159"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="595"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="599"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="603"/>
-        <source>Value</source>
-        <translation>Wert</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="160"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="604"/>
-        <source>SharedValue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="164"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation type="unfinished">Build Konfiguration...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="166"/>
         <source>Stop Action</source>
         <translation>Aktion stoppen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="183"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="170"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation type="unfinished">Ausgabe löschen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="187"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="174"/>
         <source>Execute File</source>
         <translation type="unfinished">Datei ausführen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="190"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
         <source>Lock Go Build Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="192"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
         <source>Go Build Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="286"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="273"/>
         <source>Line Wrap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="290"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="277"/>
         <source>Auto Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="294"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="281"/>
         <source>Automatic positioning cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="309"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="296"/>
         <source>Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="317"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="304"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>Build Ausgabe</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="743"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="749"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="670"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="676"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation type="unfinished">Id &quot;%1&quot; der aktuellem Umgebung ändern</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1104"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1044"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1442"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1382"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished">Fehler: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1445"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1385"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished">Prozess beendet mit Rückgabewert %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1447"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1387"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished">Erfolg: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1486"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1540"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1426"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1480"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished">Es wird bereits ein Prozess ausgeführt. Bitte beenden Sie die aktuelle Aktion zuerst.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1533"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1473"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished">Beende aktuellen Prozess...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1536"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1476"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
@@ -3130,14 +3150,14 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="obsolete">&gt; AKtion &apos;%1&apos; konnte nicht verstanden werden</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1688"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1673"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished">Prozess erfolgreich gestartet</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1688"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1673"/>
         <source>Failed to start process</source>
         <translation type="unfinished">Prozess konnten nicht gestartet werden</translation>
     </message>
