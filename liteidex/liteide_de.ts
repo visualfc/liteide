@@ -3072,12 +3072,14 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
-        <source>Lock Go Build Path</source>
+        <source>Lock Build Path</source>
+        <oldsource>Lock Go Build Path</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
-        <source>Go Build Configuration</source>
+        <source>Build Path Configuration</source>
+        <oldsource>Go Build Configuration</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

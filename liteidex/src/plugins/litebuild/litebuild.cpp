@@ -174,9 +174,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxExecuteFileAct = new QAction(tr("Execute File"),this);
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
-    m_fmctxGoLockBuildAct = new QAction(tr("Lock Go Build Path"),this);
+    m_fmctxGoLockBuildAct = new QAction(tr("Lock Build Path"),this);
 
-    m_fmctxGoBuildConfigAct = new QAction(tr("Go Build Configuration"),this);
+    m_fmctxGoBuildConfigAct = new QAction(tr("Build Path Configuration"),this);
 
     m_fmctxGoToolMenu = new QMenu("Go Tool");
 

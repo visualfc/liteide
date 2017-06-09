@@ -2512,7 +2512,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Lock Build Path</source>
-        <translation type="obsolete">Зафиксировать путь сборки</translation>
+        <translation type="unfinished">Зафиксировать путь сборки</translation>
     </message>
     <message>
         <source>Line Wrap</source>
@@ -2595,11 +2595,7 @@ Success: %2.</oldsource>
         <translation>Автоматическое позиционирование курсора</translation>
     </message>
     <message>
-        <source>Lock Go Build Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go Build Configuration</source>
+        <source>Build Path Configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -3086,18 +3086,15 @@ Success: %2.</oldsource>
         <translation>执行文件</translation>
     </message>
     <message>
-        <source>Lock Build Path</source>
-        <translation type="obsolete">锁定编译目录</translation>
-    </message>
-    <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
-        <source>Lock Go Build Path</source>
+        <source>Lock Build Path</source>
         <translation>锁定编译目录</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
-        <source>Go Build Configuration</source>
-        <translation>编译配置</translation>
+        <source>Build Path Configuration</source>
+        <oldsource>Go Build Configuration</oldsource>
+        <translation>编译目录配置</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="273"/>
