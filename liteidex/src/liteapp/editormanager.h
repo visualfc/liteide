@@ -103,6 +103,7 @@ public slots:
     void triggeredListAction(QAction *act);
     void applyOption(QString);
     void appIdle(int sec);
+    void closeEditorForTab(int index);
 signals:
     void tabAddRequest();
     void doubleClickedTab();
@@ -134,6 +135,7 @@ protected:
     QMenu       *m_tabContextNofileMenu;
     ColorStyleScheme *m_colorStyleScheme;
     int          m_tabContextIndex;
+    int          m_maxEditorCount;
     QLabel      *m_lineInfo;
     bool         m_isAutoIdleSaveDocuments;
     int          m_autoIdleSaveDocumentsTime;

@@ -106,7 +106,10 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     }
 
     int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
-    ui->maxRecentLineEdit->setText(QString("%1").arg(max));
+    //ui->maxRecentLineEdit->setText(QString("%1").arg(max));
+    ui->maxRecentFilesSpinBox->setValue(max);
+    max = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
+    ui->maxEditorCountSpinBox->setValue(max);
     //bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
     //ui->autoCloseProjecEditorsCheckBox->setChecked(b);
     bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
@@ -237,8 +240,11 @@ void LiteAppOption::apply()
         m_liteApp->settings()->setValue(LITEAPP_STYLE,style);
     }
 
-    QString max = ui->maxRecentLineEdit->text();
+    //QString max = ui->maxRecentLineEdit->text();
+    int max = ui->maxRecentFilesSpinBox->value();
     m_liteApp->settings()->setValue(LITEAPP_MAXRECENTFILES,max);
+    max = ui->maxEditorCountSpinBox->value();
+    m_liteApp->settings()->setValue(LITEAPP_MAXEDITORCOUNT,max);
     //bool b = ui->autoCloseProjecEditorsCheckBox->isChecked();
    // m_liteApp->settings()->setValue(LITEAPP_AUTOCLOSEPROEJCTFILES,b);
     bool b1 = ui->autoLoadLastSessionCheckBox->isChecked();

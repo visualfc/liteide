@@ -84,6 +84,8 @@ bool EditorManager::initWithApp(IApplication *app)
     m_currentNavigationHistoryPosition = 0;
     m_colorStyleScheme = new ColorStyleScheme(this);
 
+    m_maxEditorCount = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
+
     applyOption(OPTION_LITEAPP);
 
     m_widget = new QWidget;
@@ -669,6 +671,9 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
         if (textEditor) {
             textEditor->restoreState(m_liteApp->settings()->value(QString("state_%1").arg(editor->filePath())).toByteArray());
         }
+        while (m_editorTabWidget->tabBar()->count() > m_maxEditorCount) {
+            this->closeEditorForTab(0);
+        }
     }
     return editor;
 }
@@ -1097,6 +1102,7 @@ void EditorManager::applyOption(QString id)
         m_autoIdleSaveDocumentsTime = 1;
     }
     m_autoIdleSaveDocumentsEmitMessage = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,true).toBool();
+    m_maxEditorCount = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
 }
 
 void EditorManager::appIdle(int sec)
@@ -1106,5 +1112,12 @@ void EditorManager::appIdle(int sec)
             this->saveAllEditors(m_autoIdleSaveDocumentsEmitMessage);
         }
     }
+}
+
+void EditorManager::closeEditorForTab(int index)
+{
+    QWidget *w = m_editorTabWidget->widget(index);
+    IEditor *ed = m_widgetEditorMap.value(w,0);
+    closeEditor(ed);
 }
 

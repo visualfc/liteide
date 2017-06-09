@@ -38,6 +38,7 @@
 #define OPTION_LITEOUTPUT  "option/liteoutput"
 
 #define LITEAPP_MAXRECENTFILES "LiteApp/MaxRecentFile"
+#define LITEAPP_MAXEDITORCOUNT "LiteApp/MaxEditorCount"
 #define LITEAPP_AUTOCLOSEPROEJCTFILES "LiteApp/AutoCloseProjectEditors"
 #define LITEAPP_AUTOLOADLASTSESSION "LiteApp/AutoLoadLastSession"
 #define LITEAPP_AUTOIDLESAVEDOCUMENTS "LiteApp/AutoIdleSaveDocuments"
