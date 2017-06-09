@@ -57,5 +57,6 @@
         <file>images/sync.png</file>
         <file>images/setup.png</file>
         <file>images/darkclosebutton.png</file>
+        <file>images/options.png</file>
     </qresource>
 </RCC>
