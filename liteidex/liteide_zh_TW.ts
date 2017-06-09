@@ -679,126 +679,126 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="137"/>
+        <location filename="src/liteapp/editormanager.cpp" line="139"/>
         <source>Close</source>
         <translation type="unfinished">關閉</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="162"/>
+        <location filename="src/liteapp/editormanager.cpp" line="164"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="215"/>
+        <location filename="src/liteapp/editormanager.cpp" line="217"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation type="unfinished">編輯</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="229"/>
+        <location filename="src/liteapp/editormanager.cpp" line="231"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="139"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="107"/>
+        <location filename="src/liteapp/editormanager.cpp" line="109"/>
         <source>OpenEditor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="140"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Left Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Right Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="145"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="148"/>
+        <location filename="src/liteapp/editormanager.cpp" line="150"/>
         <source>Show in Explorer</source>
         <translation type="unfinished">開啟目錄瀏覽</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="150"/>
+        <location filename="src/liteapp/editormanager.cpp" line="152"/>
         <source>Show in Finder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="152"/>
+        <location filename="src/liteapp/editormanager.cpp" line="154"/>
         <source>Show Containing Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="156"/>
+        <location filename="src/liteapp/editormanager.cpp" line="158"/>
         <source>Open Command Prompt Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="158"/>
+        <location filename="src/liteapp/editormanager.cpp" line="160"/>
         <source>Open Terminal Here</source>
         <translation type="unfinished">開啟終端機</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="220"/>
+        <location filename="src/liteapp/editormanager.cpp" line="222"/>
         <source>Navigate Backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="250"/>
+        <location filename="src/liteapp/editormanager.cpp" line="252"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="421"/>
+        <location filename="src/liteapp/editormanager.cpp" line="423"/>
         <source>Save changes to %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="422"/>
+        <location filename="src/liteapp/editormanager.cpp" line="424"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation type="unfinished">儲存修改內容</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="517"/>
+        <location filename="src/liteapp/editormanager.cpp" line="519"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="519"/>
+        <location filename="src/liteapp/editormanager.cpp" line="521"/>
         <source>Save As</source>
         <translation>另存爲</translation>
     </message>
@@ -2593,32 +2593,32 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="739"/>
+        <location filename="src/liteapp/liteapp.cpp" line="742"/>
         <source>Close File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="745"/>
         <source>Close All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="752"/>
+        <location filename="src/liteapp/liteapp.cpp" line="755"/>
         <source>Save File</source>
         <translation type="unfinished">儲存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="755"/>
+        <location filename="src/liteapp/liteapp.cpp" line="758"/>
         <source>Save File As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="758"/>
+        <location filename="src/liteapp/liteapp.cpp" line="761"/>
         <source>Save All Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="745"/>
+        <location filename="src/liteapp/liteapp.cpp" line="748"/>
         <source>Open Project</source>
         <translation>開啟專案</translation>
     </message>
@@ -2628,68 +2628,68 @@ Success: %2.</oldsource>
         <translation type="unfinished">選項</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="716"/>
+        <location filename="src/liteapp/liteapp.cpp" line="719"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="719"/>
+        <location filename="src/liteapp/liteapp.cpp" line="722"/>
         <source>Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="722"/>
+        <location filename="src/liteapp/liteapp.cpp" line="725"/>
         <source>Open Folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="725"/>
+        <location filename="src/liteapp/liteapp.cpp" line="728"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="730"/>
+        <location filename="src/liteapp/liteapp.cpp" line="733"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="733"/>
+        <location filename="src/liteapp/liteapp.cpp" line="736"/>
         <source>New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="736"/>
+        <location filename="src/liteapp/liteapp.cpp" line="739"/>
         <source>Close Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="747"/>
+        <location filename="src/liteapp/liteapp.cpp" line="750"/>
         <source>Save Project</source>
         <translation>儲存專案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="749"/>
+        <location filename="src/liteapp/liteapp.cpp" line="752"/>
         <source>Close Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="761"/>
+        <location filename="src/liteapp/liteapp.cpp" line="764"/>
         <source>Exit</source>
         <translation>離開</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="767"/>
+        <location filename="src/liteapp/liteapp.cpp" line="770"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="771"/>
+        <location filename="src/liteapp/liteapp.cpp" line="774"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">關於 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="777"/>
+        <location filename="src/liteapp/liteapp.cpp" line="780"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2730,6 +2730,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="319"/>
+        <location filename="src/liteapp/liteappoption.ui" line="358"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation type="unfinished"></translation>
@@ -2814,78 +2815,93 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="380"/>
+        <location filename="src/liteapp/liteappoption.ui" line="326"/>
+        <source>0-99</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="352"/>
+        <source>Editor Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="365"/>
+        <source>10-999</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="408"/>
         <source>Display</source>
         <translation type="unfinished">顯示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="386"/>
+        <location filename="src/liteapp/liteappoption.ui" line="414"/>
         <source>Display [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="392"/>
+        <location filename="src/liteapp/liteappoption.ui" line="420"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="399"/>
+        <location filename="src/liteapp/liteappoption.ui" line="427"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="409"/>
+        <location filename="src/liteapp/liteappoption.ui" line="437"/>
         <source>Editor tab [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="415"/>
+        <location filename="src/liteapp/liteappoption.ui" line="443"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="422"/>
+        <location filename="src/liteapp/liteappoption.ui" line="450"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="432"/>
+        <location filename="src/liteapp/liteappoption.ui" line="460"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="505"/>
+        <location filename="src/liteapp/liteappoption.ui" line="533"/>
         <source>Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="511"/>
+        <location filename="src/liteapp/liteappoption.ui" line="539"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="523"/>
+        <location filename="src/liteapp/liteappoption.ui" line="551"/>
         <source>Hide standard commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="530"/>
+        <location filename="src/liteapp/liteappoption.ui" line="558"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="537"/>
+        <location filename="src/liteapp/liteappoption.ui" line="565"/>
         <source>Reset All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="557"/>
+        <location filename="src/liteapp/liteappoption.ui" line="585"/>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="564"/>
+        <location filename="src/liteapp/liteappoption.ui" line="592"/>
         <source>Export...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2916,53 +2932,53 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="174"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="177"/>
         <source>Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="175"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="178"/>
         <source>Label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="176"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="179"/>
         <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="177"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="180"/>
         <source>NativeText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="178"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="181"/>
         <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="475"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="481"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="475"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="509"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="481"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="515"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="482"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="488"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="509"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="515"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="520"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="526"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2461,6 +2461,18 @@ Success: %2.</oldsource>
         <source>Use tool window shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>0-99</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>10-999</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
