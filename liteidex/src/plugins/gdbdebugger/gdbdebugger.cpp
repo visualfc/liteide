@@ -203,8 +203,15 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     }
     QStringList argsListInfo;
     argsList << "--interpreter=mi";
-    argsList << QString("--args ")+"\""+program+"\"";
-    argsListInfo << QString("--args ")+"\""+program+"\"";
+
+    QString prog = program;
+    if (prog.startsWith("\"") && prog.endsWith("\"")) {
+        argsList << QString("--args ")+prog;
+        argsListInfo << QString("--args ")+prog;
+    } else {
+        argsList << QString("--args ")+"\""+program+"\"";
+        argsListInfo << QString("--args ")+"\""+program+"\"";
+    }
     if (!arguments.isEmpty()) {
         argsList  << arguments;
         argsListInfo << arguments;
