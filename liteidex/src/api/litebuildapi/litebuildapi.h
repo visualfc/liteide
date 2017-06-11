@@ -187,7 +187,7 @@ protected:
 class BuildCustom
 {
 public:
-    BuildCustom() : m_hasShared(false), m_isReadOnly(false)
+    BuildCustom() : m_hasShared(false), m_isReadOnly(false), m_isEscaped(false)
     {
     }
     void setId(const QString &id) { m_id = id; }
@@ -201,12 +201,17 @@ public:
     {
         m_isReadOnly = QVariant(value).toBool();
     }
+    void setEscaped(const QString &value)
+    {
+        m_isEscaped = QVariant(value).toBool();
+    }
     QString id() const { return m_id; }
     QString name() const { return m_name; }
     QString value() const { return m_value; }
     bool hasShared() const { return m_hasShared; }
     QString sharedValue() const { return m_sharedValue; }
     bool isReadOnly() const { return m_isReadOnly; }
+    bool isEscaped() const { return m_isEscaped; }
 protected:
     QString m_id;
     QString m_name;
@@ -214,6 +219,7 @@ protected:
     QString m_sharedValue;
     bool    m_hasShared;
     bool    m_isReadOnly;
+    bool    m_isEscaped;
 };
 
 class BuildTarget

@@ -838,6 +838,11 @@ QMap<QString,QString> LiteBuild::buildEnvMap(LiteApi::IBuild *build, const QStri
                 sharedValue.replace("$("+m.key()+")",m.value());
             }
         }
+        if (cf->isEscaped()) {
+            if (value.contains(" ")) {
+                value = "\""+value+"\"";
+            }
+        }
         if (hasShared && !sharedValue.isEmpty()) {
             value += " "+sharedValue;
         }
@@ -1450,13 +1455,17 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
                          .arg(cmd).arg(args).arg(workDir));
 #ifdef Q_OS_WIN
     m_process->setNativeArguments(args);
-    if (cmd.indexOf(" ")) {
+    if (cmd.contains(" ")) {
         m_process->start("\""+cmd+"\"");
     } else {
         m_process->start(cmd);
     }
 #else
-    m_process->start(cmd+" "+args);
+    if (cmd.contains(" ")) {
+        m_process->start("\""+cmd+"\"");
+    } else {
+        m_process->start(cmd+" "+args);
+    }
 #endif
 }
 
@@ -1612,6 +1621,9 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     if (ba->cmd() == "$(GO)") {
         shell = FileUtil::lookupGoBin(cmd,m_liteApp,false);
     } else {
+        if (cmd.startsWith("\"") && cmd.endsWith("\"")) {
+            cmd = cmd.mid(1,cmd.length()-2).trimmed();
+        }
         shell = FileUtil::lookPathInDir(cmd,m_workDir);
     }
     if (shell.isEmpty()) {
@@ -1683,10 +1695,18 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
                             .arg(args)
                             .arg(m_workDir));
 #ifdef Q_OS_WIN
-        m_process->setNativeArguments(args);
+    m_process->setNativeArguments(args);
+    if (cmd.contains(" ")) {
         m_process->start("\""+cmd+"\"");
+    } else {
+        m_process->start(cmd);
+    }
 #else
-        m_process->start(cmd + " " + args);
+    if (cmd.contains(" ")) {
+        m_process->start("\""+cmd+"\"");
+    } else {
+        m_process->start(cmd+" "+args);
+    }
 #endif
     }
 }
