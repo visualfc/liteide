@@ -52,7 +52,19 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	--user-setting    force use user setting
 	--reset-setting   reset current setting ( clear setting file)
 
-### Website
+### Documents
+* How to Install
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/install.md>
+* FAQ
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/cn/guide.md>
+* 安装 LiteIDE
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/cn/install.md>
+* FAQ 中文
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/cn/guide.md>
+
+### Links
+* LiteIDE Home 
+<http://liteide.org>
 * LiteIDE Source code
 <https://github.com/visualfc/liteide>
 * Gotools Source code
@@ -62,12 +74,15 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* <https://github.com/visualfc/liteide/releases/latest>
 * Google group
 <https://groups.google.com/group/liteide-dev>
-* How to Install
-<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/install.md>
-* FAQ
-<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/guide.md>
 * Changes
 <https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/changes.md>
 
+
 ### Donate
 * http://visualfc.github.com/support
+
+### New Home Page
+* [Home](http://liteide.org)
+* [English Document](http://liteide.org/en/documents)
+* [中文文档](http://liteide.org/cn/documents)
+* More info at [liteide.org](http://liteide.org)
