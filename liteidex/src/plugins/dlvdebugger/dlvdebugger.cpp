@@ -201,11 +201,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         return false;
     }
     QStringList argsList;
-#ifdef Q_OS_WIN
-    argsList << "exec" << "\""+cmd+"\"";
-#else
-    argsList << "exec" << cmd;;
-#endif
+    argsList << "exec" << cmd;
     if (!arguments.isEmpty()) {
         argsList << "--" << arguments;
     }
@@ -475,7 +471,7 @@ void DlvDebugger::readStdError()
 {
     //Process 4084 has exited with status 0
     QString data = QString::fromUtf8(m_process->readAllStandardError());
-    qDebug() << data << m_processId;
+   // qDebug() << data << m_processId;
     //QRegExp reg;
     emit debugLog(LiteApi::DebugErrorLog,data);
     foreach (QString line, data.split("\n",QString::SkipEmptyParts)) {
