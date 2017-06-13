@@ -186,6 +186,14 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     if (goos.isEmpty()) {
         goos = getDefaultGOOS();
     }
+    if (!env.contains("GOEXE")) {
+        QString goexe;
+        if (goos == "windows") {
+            goexe = ".exe";
+        }
+        env.insert("GOEXE",goexe);
+    }
+
     QString goarch = env.value("GOARCH");
     QString goroot = env.value("GOROOT");
     if (goroot.isEmpty()) {
@@ -286,6 +294,14 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
     if (goos.isEmpty()) {
         goos = getDefaultGOOS();
     }
+    if (!env.contains("GOEXE")) {
+        QString goexe;
+        if (goos == "windows") {
+            goexe = ".exe";
+        }
+        env.insert("GOEXE",goexe);
+    }
+
     QString goarch = env.value("GOARCH");
     QString goroot = env.value("GOROOT");
     if (goroot.isEmpty()) {
