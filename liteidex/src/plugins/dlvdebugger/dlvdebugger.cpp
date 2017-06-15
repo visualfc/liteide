@@ -33,6 +33,13 @@
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QDebug>
+#ifdef Q_OS_WIN
+#define _WIN32_WINNT 0x0501
+#include <windows.h>
+#include <wincon.h>
+#else
+#include <signal.h>
+#endif
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -201,6 +208,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         return false;
     }
     QStringList argsList;
+    //argsList << "--log";
     argsList << "exec" << cmd;
     if (!arguments.isEmpty()) {
         argsList << "--" << arguments;
@@ -220,8 +228,30 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
     return true;
 }
 
+#ifdef Q_OS_WIN
+void send_dlv_sigint(QProcess *process)
+{
+    if (AttachConsole((DWORD)process->pid()))
+     {
+       // Disable Ctrl-C handling for our program
+       SetConsoleCtrlHandler(0, true);
+       GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+
+       // Must wait here. If we don't and re-enable Ctrl-C
+       // handling below too fast, we might terminate ourselves.
+       FreeConsole();
+     }
+}
+#else
+void send_dlv_sigint(QProcess *process)
+{
+    kill(process->pid(),SIGINT);
+}
+#endif
+
 void DlvDebugger::stop()
 {
+    send_dlv_sigint(m_process);
     command("exit");
     if (!m_process->waitForFinished(1000)) {
         m_process->kill();
