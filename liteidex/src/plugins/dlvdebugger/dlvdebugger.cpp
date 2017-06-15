@@ -278,6 +278,9 @@ void send_dlv_sigint(QProcess *process)
 #else
 void send_dlv_sigint(QProcess *process)
 {
+    if (process->pid() <= 0) {
+        return;
+    }
     kill(process->pid(),SIGINT);
 }
 #endif
@@ -480,10 +483,13 @@ void DlvDebugger::command_helper(const GdbCmd &cmd, bool emitOut)
     m_token++;
     QByteArray buf = cmd.makeCmd(m_token);
     m_lastCmd = buf;
-    if (emitOut) {
-     //   emit debugLog(LiteApi::DebugConsoleLog,">>> "+QString::fromUtf8(buf));
-    }
+//    if (emitOut) {
+//        emit debugLog(LiteApi::DebugConsoleLog,">>> "+QString::fromUtf8(buf));
+//    }
     if (m_lastCmd == "continue") {
+        if (m_asyncItem->text() == "runing") {
+            return;
+        }
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("runing");
     }
