@@ -171,6 +171,10 @@ public slots:
     void finished(int);
     void error(QProcess::ProcessError);
     void readTty(const QByteArray &data);
+    void headlessReadStdError();
+    void headlessReadStdOutput();
+    void headlessFinished(int);
+    void headlessError(QProcess::ProcessError err);
 protected:
     void handleResponse(const QByteArray &buff);
 protected:
@@ -190,6 +194,7 @@ protected:
     QString                 m_lastCmd;
     QString                 m_processId;
     QProcess *m_process;
+    QProcess *m_headlessProcess;
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;
     QStandardItemModel *m_watchModel;
@@ -211,6 +216,8 @@ protected:
     bool    m_gdbinit;
     bool    m_gdbexit;
     int     m_token;
+    bool    m_headlessInitAddress;
+    bool    m_headlessMode;
 };
 
 #endif // DLVDEBUGGER_H

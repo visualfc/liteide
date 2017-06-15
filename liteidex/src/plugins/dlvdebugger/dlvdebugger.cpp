@@ -129,6 +129,15 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
 
     m_gdbinit = false;    
     m_gdbexit = false;
+    m_busy = false;
+
+    m_headlessMode = false;
+    m_headlessInitAddress = false;
+    m_headlessProcess = new QProcess(this);
+
+#ifndef Q_OS_WIN
+   m_headlessMode = true;
+#endif
 
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_process,SIGNAL(started()),this,SIGNAL(debugStarted()));
@@ -136,6 +145,12 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
     connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStdError()));
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdOutput()));
+
+    connect(m_headlessProcess,SIGNAL(started()),this,SIGNAL(debugStarted()));
+    connect(m_headlessProcess,SIGNAL(finished(int)),this,SLOT(headlessFinished(int)));
+    connect(m_headlessProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(headlessError(QProcess::ProcessError)));
+    connect(m_headlessProcess,SIGNAL(readyReadStandardError()),this,SLOT(headlessReadStdError()));
+    connect(m_headlessProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(headlessReadStdOutput()));
 }
 
 DlvDebugger::~DlvDebugger()
@@ -199,6 +214,8 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         dlv = FileUtil::lookPath("dlv",env,false);
     }
     m_dlvFilePath = dlv;
+    m_busy = false;
+    m_headlessInitAddress = false;
     m_lastFileLine = 0;
     m_lastFileName.clear();
     //m_checkFuncDecl = false;
@@ -207,23 +224,39 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         m_liteApp->appendLog("DlvDebugger","dlv was not found on system PATH (hint: is Delve installed?)",true);
         return false;
     }
-    QStringList argsList;
-    //argsList << "--log";
-    argsList << "exec" << cmd;
-    if (!arguments.isEmpty()) {
-        argsList << "--" << arguments;
-    }
 
-    clear();
+    if (m_headlessMode) {
+        QStringList argsList;
+        argsList << "--headless" << "--api-version=2";
+        argsList << "exec" << cmd;
+        if (!arguments.isEmpty()) {
+            argsList << "--" << arguments;
+        }
 #ifdef Q_OS_WIN
-    m_process->setNativeArguments(argsList.join(" "));
-    m_process->start("\""+m_dlvFilePath+"\"");
+        m_headlessProcess->setNativeArguments(argsList.join(" "));
+        m_headlessProcess->start("\""+m_dlvFilePath+"\"");
 #else
-    m_process->start(m_dlvFilePath + " " + argsList.join(" "));
+        m_headlessProcess->start(m_dlvFilePath + " " + argsList.join(" "));
+#endif
+        QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_headlessProcess->workingDirectory());
+        emit debugLog(LiteApi::DebugRuntimeLog,log);
+    } else {
+        QStringList argsList;
+        argsList << "exec" << cmd;
+        if (!arguments.isEmpty()) {
+            argsList << "--" << arguments;
+        }
+        clear();
+#ifdef Q_OS_WIN
+        m_process->setNativeArguments(argsList.join(" "));
+        m_process->start("\""+m_dlvFilePath+"\"");
+#else
+        m_process->start(m_dlvFilePath + " " + argsList.join(" "));
 #endif
 
-    QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
-    emit debugLog(LiteApi::DebugRuntimeLog,log);
+        QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
+        emit debugLog(LiteApi::DebugRuntimeLog,log);
+    }
 
     return true;
 }
@@ -251,10 +284,16 @@ void send_dlv_sigint(QProcess *process)
 
 void DlvDebugger::stop()
 {
-    send_dlv_sigint(m_process);
+    //send_dlv_sigint(m_process);
     command("exit");
     if (!m_process->waitForFinished(1000)) {
         m_process->kill();
+    }
+    if (m_headlessMode) {
+        send_dlv_sigint(m_headlessProcess);
+        if (!m_headlessProcess->waitForFinished(1000)) {
+            m_process->kill();
+        }
     }
 }
 
@@ -475,7 +514,11 @@ void DlvDebugger::enterAppText(const QString &text)
     if (m_tty) {
         m_tty->write(text.toUtf8());
     } else {
-        m_process->write(text.toUtf8());
+        if (m_headlessMode) {
+            m_headlessProcess->write(text.toUtf8());
+        } else {
+            m_process->write(text.toUtf8());
+        }
     }
 }
 
@@ -503,7 +546,7 @@ void DlvDebugger::readStdError()
     QString data = QString::fromUtf8(m_process->readAllStandardError());
    // qDebug() << data << m_processId;
     //QRegExp reg;
-    emit debugLog(LiteApi::DebugErrorLog,data);
+    emit debugLog(LiteApi::DebugConsoleLog,data);
     foreach (QString line, data.split("\n",QString::SkipEmptyParts)) {
         if (line.startsWith("Process "+m_processId)) {
             m_processId.clear();
@@ -593,6 +636,7 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
 
 void DlvDebugger::clear()
 {
+    m_headlessInitAddress = false;
     m_gdbinit = false;
     m_gdbexit = false;
     m_busy = false;
@@ -617,7 +661,11 @@ void DlvDebugger::initDebug()
 {
     //get thread id
     m_processId.clear();
-    command("restart");
+
+    if (!m_headlessMode) {
+        command("restart");
+    }
+
     QMapIterator<QString,int> i(m_initBks);
     while (i.hasNext()) {
         i.next();
@@ -679,15 +727,15 @@ static QString valueToolTip(const QString &value)
 
 void DlvDebugger::readStdOutput()
 {
+    QByteArray data = m_process->readAllStandardOutput();
     if (!m_gdbinit) {
         m_gdbinit = true;
         initDebug();
-        return;
     }
 
     int newstart = 0;
     int scan = m_inbuffer.size();
-    m_inbuffer.append(m_process->readAllStandardOutput());
+    m_inbuffer.append(data);
 
     //hack check (dlv)
     static bool first_check = true;
@@ -859,11 +907,11 @@ void DlvDebugger::readStdOutput()
             }
         }
         emitLog = false;
-    } else {
-        emit debugLog(LiteApi::DebugApplationLog,QString::fromUtf8(m_inbuffer));
+    } else if (!m_headlessMode) {
+         emit debugLog(LiteApi::DebugApplationLog,QString::fromUtf8(m_inbuffer));
     }
     if (emitLog) {
-        emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));
+         emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));
     }
     m_inbuffer.clear();
 
@@ -898,7 +946,7 @@ void DlvDebugger::finished(int code)
         m_tty->shutdown();
     }
     emit debugStoped();
-    emit debugLog(LiteApi::DebugRuntimeLog,QString("Program exited with code %1").arg(code));
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv exited with code %1").arg(code));
 }
 
 void DlvDebugger::error(QProcess::ProcessError err)
@@ -914,4 +962,57 @@ void DlvDebugger::error(QProcess::ProcessError err)
 void DlvDebugger::readTty(const QByteArray &data)
 {
     emit debugLog(LiteApi::DebugApplationLog,QString::fromUtf8(data));
+}
+
+void DlvDebugger::headlessReadStdError()
+{
+    QString data = QString::fromUtf8(m_headlessProcess->readAllStandardError());
+    //qDebug() << data;
+    emit debugLog(LiteApi::DebugErrorLog,data);
+}
+
+void DlvDebugger::headlessReadStdOutput()
+{
+    QString data = QString::fromUtf8(m_headlessProcess->readAllStandardOutput());
+    //API server listening at: 127.0.0.1:54151
+    if (!m_headlessInitAddress) {
+        QString tmp = data.trimmed();
+        QString addr;
+        if (tmp.startsWith("API")) {
+            int pos = tmp.lastIndexOf(" ");
+            if (pos != -1) {
+                addr = tmp.mid(pos+1);
+                if (addr.indexOf(":") > 0) {
+                    m_headlessInitAddress = true;
+                }
+            }
+        }
+        if (m_headlessInitAddress) {
+            QStringList argsList;
+            argsList << "connect" << addr;
+#ifdef Q_OS_WIN
+            m_process->setNativeArguments(argsList.join(" "));
+            m_process->start("\""+m_dlvFilePath+"\"");
+#else
+            m_process->start(m_dlvFilePath + " " + argsList.join(" "));
+#endif
+            QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
+            emit debugLog(LiteApi::DebugRuntimeLog,log);
+        }
+    }
+
+    emit debugLog(LiteApi::DebugApplationLog,data);
+}
+
+void DlvDebugger::headlessFinished(int code)
+{
+    clear();
+    emit debugStoped();
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv server exited with code %1").arg(code));
+}
+
+void DlvDebugger::headlessError(QProcess::ProcessError err)
+{
+    emit debugStoped();
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Error! %1").arg(ProcessEx::processErrorText(err)));
 }
