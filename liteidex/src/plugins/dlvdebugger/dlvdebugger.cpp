@@ -284,7 +284,7 @@ void send_dlv_sigint(QProcess *process)
 
 void DlvDebugger::stop()
 {
-    //send_dlv_sigint(m_process);
+    send_dlv_sigint(m_process);
     command("exit");
     if (!m_process->waitForFinished(1000)) {
         m_process->kill();
@@ -292,7 +292,7 @@ void DlvDebugger::stop()
     if (m_headlessMode) {
         send_dlv_sigint(m_headlessProcess);
         if (!m_headlessProcess->waitForFinished(1000)) {
-            m_process->kill();
+            m_headlessProcess->kill();
         }
     }
 }
@@ -568,11 +568,13 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
     if (buff.isEmpty()) {
         return;
     }
-    if (m_processId.isEmpty()) {
-        //Process restarted with PID
-        int n = buff.indexOf("PID");
-        if (n != -1) {
-            m_processId = buff.mid(n+3).replace("(dlv)","").trimmed();
+    if (!m_headlessMode) {
+        if (m_processId.isEmpty()) {
+            //Process restarted with PID
+            int n = buff.indexOf("PID");
+            if (n != -1) {
+                m_processId = buff.mid(n+3).replace("(dlv)","").trimmed();
+            }
         }
     }
     //Process restarted with PID 4532
@@ -956,7 +958,7 @@ void DlvDebugger::error(QProcess::ProcessError err)
         m_tty->shutdown();
     }
     emit debugStoped();
-    emit debugLog(LiteApi::DebugRuntimeLog,QString("Error! %1").arg(ProcessEx::processErrorText(err)));
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv error! %1").arg(ProcessEx::processErrorText(err)));
 }
 
 void DlvDebugger::readTty(const QByteArray &data)
@@ -1014,5 +1016,5 @@ void DlvDebugger::headlessFinished(int code)
 void DlvDebugger::headlessError(QProcess::ProcessError err)
 {
     emit debugStoped();
-    emit debugLog(LiteApi::DebugRuntimeLog,QString("Error! %1").arg(ProcessEx::processErrorText(err)));
+    emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv server error! %1").arg(ProcessEx::processErrorText(err)));
 }
