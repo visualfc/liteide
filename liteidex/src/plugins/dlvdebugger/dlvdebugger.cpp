@@ -129,7 +129,7 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_headlessProcess = new QProcess(this);
 
 #ifndef Q_OS_WIN
-   m_headlessMode = true;
+    m_headlessMode = true;
 #endif
 
    m_dlvRunningCmdList << "c" << "continue"
@@ -227,7 +227,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
 
     if (m_headlessMode) {
         QStringList argsList;
-        argsList << "--headless" << "--api-version=2" << "--log";
+        argsList << "--headless" << "--api-version=2";
         argsList << "exec" << cmd;
         if (!arguments.isEmpty()) {
             argsList << "--" << arguments;
@@ -264,6 +264,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
 void DlvDebugger::stop()
 {
     m_dlvExit = true;
+    m_writeDataBusy = false;
     if (m_headlessMode) {
         SendProcessCtrlC(m_headlessProcess);
         SendProcessCtrlC(m_process);
@@ -279,7 +280,7 @@ void DlvDebugger::stop()
     } else {
         SendProcessCtrlC(m_process);
         command("exit");
-        if (!m_process->waitForFinished(500)) {
+        if (!m_process->waitForFinished(1000)) {
              m_process->kill();
         }
     }
@@ -472,6 +473,7 @@ void DlvDebugger::command_helper(const GdbCmd &cmd)
     m_writeDataBusy = true;
     m_token++;
     m_lastCmd = buf;
+
     if (m_dlvRunningCmdList.contains(buf)) {
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("runing");
@@ -664,6 +666,7 @@ void DlvDebugger::initDebug()
             insertBreakPoint(fileName,line);
         }
     }
+    m_writeDataBusy = false;
     command("break main.main");
     m_writeDataBusy = false;
     command("continue");
@@ -939,6 +942,13 @@ void DlvDebugger::finished(int code)
     clear();
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv exited with code %1").arg(code));
+    // console input exit
+    if (m_headlessMode && (m_headlessProcess->state() != QProcess::NotRunning) ) {
+        SendProcessCtrlC(m_headlessProcess);
+        if (!m_headlessProcess->waitForFinished(500)) {
+            m_headlessProcess->kill();
+        }
+    }
 }
 
 void DlvDebugger::error(QProcess::ProcessError err)
