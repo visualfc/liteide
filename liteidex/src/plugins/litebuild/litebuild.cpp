@@ -1409,13 +1409,14 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 void LiteBuild::stopAction()
 {
     if (!m_process->isStop()) {
-        m_process->terminate();
-        m_process->closeReadChannel(QProcess::StandardOutput);
-        m_process->closeReadChannel(QProcess::StandardError);
-        m_process->waitForFinished(100);
-        if (!m_process->isStop()) {
-            m_process->kill();
+#ifdef Q_OS_WIN
+        m_process->stop(200);
+#else
+        SendProcessCtrlC(m_process);
+        if (!m_process->waitForFinished(200)) {
+            m_process->stop(200);
         }
+#endif
     }
 }
 
@@ -1480,7 +1481,14 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
     if (!m_process->isStop()) {
         if (ba->isKillOld()) {
             m_output->append(tr("Killing current process...")+"\n");
-            m_process->stop(100);
+#ifdef Q_OS_WIN
+            m_process->stop(200);
+#else
+            SendProcessCtrlC(m_process);
+            if (!m_process->waitForFinished(200)) {
+                m_process->stop(200);
+            }
+#endif
             if (!m_process->isStop()) {
                 m_output->append(tr("Failed to terminate the existing process!")+"\n",Qt::red);
                 return;
