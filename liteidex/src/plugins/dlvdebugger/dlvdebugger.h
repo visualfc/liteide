@@ -163,7 +163,7 @@ public:
     virtual void removeAllWatch();
     virtual void showFrame(QModelIndex index);
 protected:
-    void command_helper(const GdbCmd &cmd, bool emitOut);
+    void command_helper(const GdbCmd &cmd);
 public slots:
     void appLoaded();
     void readStdError();
@@ -183,11 +183,8 @@ protected:
 protected:
     QString                 m_lastFileName;
     int                     m_lastFileLine;
-    //funcDecl                m_funcDecl;
-    //bool                    m_checkFuncDecl;
     LiteApi::IApplication   *m_liteApp;
     LiteApi::IEnvManager    *m_envManager;
-    LiteApi::ITty           *m_tty;
     QMap<QString,QString>   m_watchNameMap;
     QStringList             m_updateCmdList;
     QStringList             m_updateCmdHistroy;
@@ -212,9 +209,12 @@ protected:
     GdbHandleState m_handleState;
     QMultiMap<QString,int>  m_initBks;
     QMap<QString,QString> m_locationBkMap;
-    bool    m_busy;
-    bool    m_gdbinit;
-    bool    m_gdbexit;
+    QList<QByteArray> m_cmdList;
+    QList<QByteArray> m_dlvRunningCmdList;
+    bool    m_readDataBusy;
+    bool    m_writeDataBusy;
+    bool    m_dlvInit;
+    bool    m_dlvExit;
     int     m_token;
     bool    m_headlessInitAddress;
     bool    m_headlessMode;

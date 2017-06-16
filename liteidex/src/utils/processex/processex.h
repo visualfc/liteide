@@ -66,4 +66,6 @@ private:
     bool m_suppressFinish;
 };
 
+void SendProcessCtrlC(QProcess *process);
+
 #endif // LITEAPI_PROCESSEX_H

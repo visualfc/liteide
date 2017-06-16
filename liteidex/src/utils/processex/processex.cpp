@@ -23,6 +23,11 @@
 
 #include "processex.h"
 #include <QMap>
+
+#ifndef Q_OS_WIN
+#include <signal.h>
+#endif
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 //lite_memory_check_begin
@@ -203,3 +208,18 @@ QVariant Process::userData(int id) const
 {
     return m_idVarMap.value(id);
 }
+
+#ifdef Q_OS_WIN
+void SendProcessCtrlC(QProcess *process)
+{
+
+}
+#else
+void SendProcessCtrlC(QProcess *process)
+{
+    if (process->pid() <= 0) {
+        return;
+    }
+    kill(process->pid(),SIGINT);
+}
+#endif

@@ -33,13 +33,6 @@
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QDebug>
-#ifdef Q_OS_WIN
-#define _WIN32_WINNT 0x0501
-#include <windows.h>
-#include <wincon.h>
-#else
-#include <signal.h>
-#endif
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -90,8 +83,7 @@ static void GdbMiValueToItem(QStandardItem *item, const GdbMiValue &value)
 DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IDebugger(parent),
     m_liteApp(app),
-    m_envManager(0),
-    m_tty(0)
+    m_envManager(0)
 {
     m_process = new QProcess(this);
     m_asyncModel = new QStandardItemModel(this);
@@ -127,9 +119,10 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
     m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");
 
-    m_gdbinit = false;    
-    m_gdbexit = false;
-    m_busy = false;
+    m_dlvInit = false;
+    m_dlvExit = false;
+    m_readDataBusy = false;
+    m_writeDataBusy = false;
 
     m_headlessMode = false;
     m_headlessInitAddress = false;
@@ -138,6 +131,12 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
 #ifndef Q_OS_WIN
    m_headlessMode = true;
 #endif
+
+   m_dlvRunningCmdList << "c" << "continue"
+        << "n" << "next"
+        << "s" << "step"
+        << "si" << "step-instruction"
+        << "stepout";
 
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_process,SIGNAL(started()),this,SIGNAL(debugStarted()));
@@ -214,7 +213,8 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         dlv = FileUtil::lookPath("dlv",env,false);
     }
     m_dlvFilePath = dlv;
-    m_busy = false;
+    m_readDataBusy = false;
+    m_writeDataBusy = false;
     m_headlessInitAddress = false;
     m_lastFileLine = 0;
     m_lastFileName.clear();
@@ -227,7 +227,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
 
     if (m_headlessMode) {
         QStringList argsList;
-        argsList << "--headless" << "--api-version=2";
+        argsList << "--headless" << "--api-version=2" << "--log";
         argsList << "exec" << cmd;
         if (!arguments.isEmpty()) {
             argsList << "--" << arguments;
@@ -261,41 +261,26 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
     return true;
 }
 
-#ifdef Q_OS_WIN
-void send_dlv_sigint(QProcess *process)
-{
-    if (AttachConsole((DWORD)process->pid()))
-     {
-       // Disable Ctrl-C handling for our program
-       SetConsoleCtrlHandler(0, true);
-       GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
-
-       // Must wait here. If we don't and re-enable Ctrl-C
-       // handling below too fast, we might terminate ourselves.
-       FreeConsole();
-     }
-}
-#else
-void send_dlv_sigint(QProcess *process)
-{
-    if (process->pid() <= 0) {
-        return;
-    }
-    kill(process->pid(),SIGINT);
-}
-#endif
-
 void DlvDebugger::stop()
 {
-    send_dlv_sigint(m_process);
-    command("exit");
-    if (!m_process->waitForFinished(1000)) {
-        m_process->kill();
-    }
+    m_dlvExit = true;
     if (m_headlessMode) {
-        send_dlv_sigint(m_headlessProcess);
-        if (!m_headlessProcess->waitForFinished(1000)) {
+        SendProcessCtrlC(m_headlessProcess);
+        SendProcessCtrlC(m_process);
+        if (!m_headlessProcess->waitForFinished(500)) {
             m_headlessProcess->kill();
+        }
+        if (!m_process->waitForFinished(500)) {
+            command("exit");
+            if (!m_process->waitForFinished(500)) {
+                m_process->kill();
+            }
+        }
+    } else {
+        SendProcessCtrlC(m_process);
+        command("exit");
+        if (!m_process->waitForFinished(500)) {
+             m_process->kill();
         }
     }
 }
@@ -478,18 +463,16 @@ bool DlvDebugger::findBreakPoint(const QString &fileName, int line)
     return m_locationBkMap.contains(location);
 }
 
-void DlvDebugger::command_helper(const GdbCmd &cmd, bool emitOut)
+void DlvDebugger::command_helper(const GdbCmd &cmd)
 {
-    m_token++;
     QByteArray buf = cmd.makeCmd(m_token);
+    if (m_writeDataBusy) {
+        return;
+    }
+    m_writeDataBusy = true;
+    m_token++;
     m_lastCmd = buf;
-//    if (emitOut) {
-//        emit debugLog(LiteApi::DebugConsoleLog,">>> "+QString::fromUtf8(buf));
-//    }
-    if (m_lastCmd == "continue") {
-        if (m_asyncItem->text() == "runing") {
-            return;
-        }
+    if (m_dlvRunningCmdList.contains(buf)) {
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("runing");
     }
@@ -504,7 +487,7 @@ void DlvDebugger::command_helper(const GdbCmd &cmd, bool emitOut)
 
 void DlvDebugger::command(const GdbCmd &cmd)
 {
-    command_helper(cmd,true);
+    command_helper(cmd);
 }
 
 void DlvDebugger::enterAppText(const QString &text)
@@ -517,14 +500,10 @@ void DlvDebugger::enterAppText(const QString &text)
         m_processId.clear();
     }
 
-    if (m_tty) {
-        m_tty->write(text.toUtf8());
+    if (m_headlessMode) {
+        m_headlessProcess->write(text.toUtf8());
     } else {
-        if (m_headlessMode) {
-            m_headlessProcess->write(text.toUtf8());
-        } else {
-            m_process->write(text.toUtf8());
-        }
+        m_process->write(text.toUtf8());
     }
 }
 
@@ -543,7 +522,7 @@ void DlvDebugger::enterDebugText(const QString &text)
 
 void  DlvDebugger::command(const QByteArray &cmd)
 {
-    command_helper(GdbCmd(cmd),false);
+    command_helper(GdbCmd(cmd));
 }
 
 void DlvDebugger::readStdError()
@@ -645,9 +624,10 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
 void DlvDebugger::clear()
 {
     m_headlessInitAddress = false;
-    m_gdbinit = false;
-    m_gdbexit = false;
-    m_busy = false;
+    m_dlvInit = false;
+    m_dlvExit = false;
+    m_readDataBusy = false;
+    m_writeDataBusy = false;
     m_token = 10000000;
     m_handleState.clear();
     m_varNameMap.clear();
@@ -659,6 +639,7 @@ void DlvDebugger::clear()
     m_varChangedItemList.clear();
     m_inbuffer.clear();
     m_locationBkMap.clear();
+    m_cmdList.clear();
     m_framesModel->removeRows(0,m_framesModel->rowCount());
     m_libraryModel->removeRows(0,m_libraryModel->rowCount());
     m_varsModel->removeRows(0,m_varsModel->rowCount());
@@ -684,6 +665,7 @@ void DlvDebugger::initDebug()
         }
     }
     command("break main.main");
+    m_writeDataBusy = false;
     command("continue");
     emit debugLoaded();
 }
@@ -736,9 +718,14 @@ static QString valueToolTip(const QString &value)
 void DlvDebugger::readStdOutput()
 {
     QByteArray data = m_process->readAllStandardOutput();
-    if (!m_gdbinit) {
-        m_gdbinit = true;
+    if (!m_dlvInit) {
+        m_dlvInit = true;
         initDebug();
+    }
+    m_writeDataBusy = false;
+
+    if (m_dlvExit) {
+        return;
     }
 
     int newstart = 0;
@@ -757,7 +744,7 @@ void DlvDebugger::readStdOutput()
     }
 
     // This can trigger when a dialog starts a nested event loop.
-    if (m_busy)
+    if (m_readDataBusy)
         return;
     QStringList dataList;
     while (newstart < m_inbuffer.size()) {
@@ -779,11 +766,11 @@ void DlvDebugger::readStdOutput()
                 continue;
         }
 #endif
-        m_busy = true;
+        m_readDataBusy = true;
         QByteArray data = QByteArray::fromRawData(m_inbuffer.constData() + start, end - start);
         dataList.append(QString::fromUtf8(data));
         handleResponse(data);
-        m_busy = false;
+        m_readDataBusy = false;
     }
 
 //    if (m_checkFuncDecl) {
@@ -923,8 +910,8 @@ void DlvDebugger::readStdOutput()
     }
     m_inbuffer.clear();
 
-    if (m_handleState.exited() && !m_gdbexit) {
-        m_gdbexit = true;
+    if (m_handleState.exited() && !m_dlvExit) {
+        m_dlvExit = true;
         stop();
     } else if (m_handleState.stopped()) {
         m_updateCmdList.clear();
@@ -950,9 +937,6 @@ void DlvDebugger::readStdOutput()
 void DlvDebugger::finished(int code)
 {
     clear();
-    if (m_tty) {
-        m_tty->shutdown();
-    }
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv exited with code %1").arg(code));
 }
@@ -960,9 +944,6 @@ void DlvDebugger::finished(int code)
 void DlvDebugger::error(QProcess::ProcessError err)
 {
     clear();
-    if (m_tty) {
-        m_tty->shutdown();
-    }
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv error! %1").arg(ProcessEx::processErrorText(err)));
 }
