@@ -210,7 +210,7 @@ QVariant Process::userData(int id) const
 }
 
 #ifdef Q_OS_WIN
-void SendProcessCtrlC(QProcess *process)
+void SendProcessCtrlC(QProcess */*process*/)
 {
 
 }
@@ -223,3 +223,87 @@ void SendProcessCtrlC(QProcess *process)
     kill(process->pid(),SIGINT);
 }
 #endif
+
+LiteProcess::LiteProcess(LiteApi::IApplication *app, QObject *parent) :
+    QProcess(parent),
+    m_liteApp(app),
+    m_useCtrlC(false)
+{
+
+}
+
+void LiteProcess::setUseCtrlC(bool use)
+{
+    m_useCtrlC = use;
+}
+
+void LiteProcess::startEx(const QString &cmd, const QString &args)
+{
+#ifdef Q_OS_WIN
+    if (m_useCtrlC) {
+        QString stub = m_liteApp->applicationPath()+"/liteide_ctrlc_stub.exe";
+        QString stubArg = cmd+" "+args;
+        this->setNativeArguments(stubArg);
+        this->start(stub);
+    } else {
+        this->setNativeArguments(args);
+        this->start(cmd);
+    }
+#else
+    this->start(cmd+" "+args);
+#endif
+}
+
+#ifdef Q_OS_WIN
+static BOOL sendMessage(UINT message, HWND hwnd, LPARAM lParam)
+{
+    DWORD dwProcessID;
+    GetWindowThreadProcessId(hwnd, &dwProcessID);
+    if ((DWORD)lParam == dwProcessID) {
+        SendNotifyMessage(hwnd, message, 0, 0);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+BOOL CALLBACK sendShutDownMessageToAllWindowsOfProcess_enumWnd(HWND hwnd, LPARAM lParam)
+{
+    static UINT uiShutDownMessage = RegisterWindowMessage(L"liteide_ctrlcstub_shutdown");
+    return sendMessage(uiShutDownMessage, hwnd, lParam);
+}
+
+BOOL CALLBACK sendInterruptMessageToAllWindowsOfProcess_enumWnd(HWND hwnd, LPARAM lParam)
+{
+    static UINT uiInterruptMessage = RegisterWindowMessage(L"liteide_ctrlcstub_interrupt");
+    return sendMessage(uiInterruptMessage, hwnd, lParam);
+}
+#endif
+
+void LiteProcess::interrupt()
+{
+    if (m_useCtrlC) {
+        return;
+    }
+#ifdef Q_OS_WIN
+    EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, pid()->dwProcessId);
+#else
+    if (pid() > 0) {
+        kill(pid(),SIGINT);
+    }
+#endif
+}
+
+void LiteProcess::terminate()
+{
+    if (m_useCtrlC) {
+#ifdef Q_OS_WIN
+        EnumWindows(sendShutDownMessageToAllWindowsOfProcess_enumWnd, pid()->dwProcessId);
+#else
+        if (pid() > 0) {
+            kill(pid(),SIGINT);
+        }
+#endif
+    } else {
+        QProcess::terminate();
+    }
+}

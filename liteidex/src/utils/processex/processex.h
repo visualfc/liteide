@@ -26,6 +26,7 @@
 
 #include <QProcess>
 #include <QVariant>
+#include "liteapi/liteapi.h"
 
 class Process : public QProcess
 {
@@ -66,6 +67,19 @@ private:
     bool m_suppressFinish;
 };
 
-void SendProcessCtrlC(QProcess *process);
+void SendProcessCtrlC(QProcess *);
+
+class LiteProcess : public QProcess
+{
+public:
+    LiteProcess(LiteApi::IApplication *app, QObject *parent);
+    void setUseCtrlC(bool use);
+    void startEx(const QString &cmd, const QString &args);
+    void interrupt();
+    void terminate();
+protected:
+    LiteApi::IApplication *m_liteApp;
+    bool m_useCtrlC;
+};
 
 #endif // LITEAPI_PROCESSEX_H
