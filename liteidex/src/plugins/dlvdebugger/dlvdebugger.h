@@ -32,6 +32,7 @@
 #include <QSet>
 
 class QProcess;
+class LiteProcess;
 class GdbHandleState
 {
 public:
@@ -190,8 +191,8 @@ protected:
     QStringList             m_updateCmdHistroy;
     QString                 m_lastCmd;
     QString                 m_processId;
-    QProcess *m_process;
-    QProcess *m_headlessProcess;
+    LiteProcess *m_process;
+    LiteProcess *m_headlessProcess;
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;
     QStandardItemModel *m_watchModel;

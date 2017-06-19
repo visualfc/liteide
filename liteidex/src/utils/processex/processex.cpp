@@ -281,14 +281,17 @@ BOOL CALLBACK sendInterruptMessageToAllWindowsOfProcess_enumWnd(HWND hwnd, LPARA
 
 void LiteProcess::interrupt()
 {
-    if (m_useCtrlC) {
+    if (!m_useCtrlC) {
         return;
     }
+    Q_PID processId = this->pid();
 #ifdef Q_OS_WIN
-    EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, pid()->dwProcessId);
+    if (processId) {
+        EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, processId->dwProcessId);
+    }
 #else
-    if (pid() > 0) {
-        kill(pid(),SIGINT);
+    if (processId > 0) {
+        kill(processId,SIGINT);
     }
 #endif
 }
