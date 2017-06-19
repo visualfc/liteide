@@ -281,29 +281,31 @@ BOOL CALLBACK sendInterruptMessageToAllWindowsOfProcess_enumWnd(HWND hwnd, LPARA
 
 void LiteProcess::interrupt()
 {
-    if (!m_useCtrlC) {
-        return;
-    }
-    Q_PID processId = this->pid();
+    if (m_useCtrlC) {
+        Q_PID processId = this->pid();
 #ifdef Q_OS_WIN
-    if (processId) {
-        EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, processId->dwProcessId);
-    }
+        if (processId) {
+            EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, processId->dwProcessId);
+        }
 #else
-    if (processId > 0) {
-        kill(processId,SIGINT);
-    }
+        if (processId > 0) {
+            ::kill(processId,SIGINT);
+        }
 #endif
+    }
 }
 
 void LiteProcess::terminate()
 {
     if (m_useCtrlC) {
+        Q_PID processId = this->pid();
 #ifdef Q_OS_WIN
-        EnumWindows(sendShutDownMessageToAllWindowsOfProcess_enumWnd, pid()->dwProcessId);
+        if (processId) {
+            EnumWindows(sendShutDownMessageToAllWindowsOfProcess_enumWnd, processId->dwProcessId);
+        }
 #else
-        if (pid() > 0) {
-            kill(pid(),SIGINT);
+        if (processId > 0) {
+            ::kill(processId,SIGINT);
         }
 #endif
     } else {
