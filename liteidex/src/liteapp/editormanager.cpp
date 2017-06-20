@@ -68,6 +68,7 @@ EditorManager::~EditorManager()
     delete m_tabContextNofileMenu;
     delete m_editorTabWidget;
     delete m_listMenu;
+    delete m_openEditorWidget;
     m_browserActionMap.clear();
     if (!m_nullMenu->parent()) {
         delete m_nullMenu;

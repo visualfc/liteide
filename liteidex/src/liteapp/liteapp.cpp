@@ -444,6 +444,7 @@ void LiteApp::cleanup()
     qDeleteAll(m_pluginList);
     m_pluginList.clear();
 
+    delete m_idleTimer;
     delete m_projectManager;
     delete m_editorManager;
     delete m_htmlWidgetManager;
@@ -453,6 +454,7 @@ void LiteApp::cleanup()
     delete m_optionManager;
     delete m_logOutput;
     delete m_toolWindowManager;
+    delete m_recentManager;
     delete m_actionManager;
     delete m_extension;
     delete m_settings;

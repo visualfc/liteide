@@ -101,7 +101,7 @@ protected:
     QWidget         *m_tabBarWidget;
     TabBar         *m_tabBar;
     QToolButton     *m_listButton;
-    QToolButton     *m_closeButton;
+    //QToolButton     *m_closeButton;
     QStackedWidget  *m_stackedWidget;
     QList<QWidget*>  m_widgetList;
     QAction         *m_closeTabAct;

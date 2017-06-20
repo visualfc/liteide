@@ -73,8 +73,8 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
                 "QToolButton::menu-indicator{image:none;}");
 
     m_closeTabAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Tab"),this);
-    m_closeButton = new QToolButton;
-    m_closeButton->setDefaultAction(m_closeTabAct);
+    //m_closeButton = new QToolButton;
+    //m_closeButton->setDefaultAction(m_closeTabAct);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
@@ -106,7 +106,6 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
 LiteTabWidget::~LiteTabWidget()
 {
     delete m_tabBarWidget;
-  //  delete m_dumpToolBar;
 }
 
 void LiteTabWidget::closeCurrentTab()

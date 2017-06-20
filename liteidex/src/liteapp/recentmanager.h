@@ -33,7 +33,6 @@ class RecentManager : public IRecentManager
     Q_OBJECT
 public:
     RecentManager(QObject *parent = 0);
-
     virtual bool initWithApp(IApplication *app);
 
     virtual void registerRecent(IRecent *recent);
