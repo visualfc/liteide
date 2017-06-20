@@ -55,54 +55,6 @@ public:
     QByteArray m_reason;
 };
 
-class GdbCmd
-{
-public:
-    GdbCmd()
-    {
-    }
-    GdbCmd(const QString &cmd)
-    {
-        setCmd(cmd);
-    }
-    GdbCmd(const QStringList &cmd)
-    {
-        setCmd(cmd);
-    }
-    void setCmd(const QString &cmd)
-    {
-        m_cmd = cmd;
-        m_cookie.insert("cmd",m_cmd);
-        m_cookie.insert("cmdList",cmd.split(" ",QString::SkipEmptyParts));
-    }
-    void setCmd(const QStringList &cmd)
-    {
-        m_cmd = cmd.join(" ");
-        m_cookie.insert("cmd",m_cmd);
-        m_cookie.insert("cmdList",cmd);
-    }
-    void insert(const QString &key, const QVariant &value)
-    {
-        m_cookie.insert(key,value);
-    }
-    QByteArray makeCmd(int /*index*/) const
-    {
-        return m_cmd.toUtf8();
-//#ifdef Q_OS_WIN
-//        return QString("%1%2").arg(index,8,10,QLatin1Char('0')).arg(m_cmd).toLatin1();
-//#else
-//        return QString("%1%2").arg(index,8,10,QLatin1Char('0')).arg(m_cmd).toUtf8();
-//#endif
-    }
-    QMap<QString,QVariant> cookie() const
-    {
-        return m_cookie;
-    }
-protected:
-    QString m_cmd;
-    QMap<QString,QVariant> m_cookie;
-};
-
 class QStandardItemModel;
 class QStandardItem;
 
@@ -158,13 +110,13 @@ public:
     virtual void removeBreakPoint(const QString &fileName, int line);
     bool findBreakPoint(const QString &fileName,int line);
 public:
-    virtual void command(const GdbCmd &cmd);
     virtual void createWatch(const QString &var);
     virtual void removeWatch(const QString &value);
     virtual void removeAllWatch();
     virtual void showFrame(QModelIndex index);
 protected:
-    void command_helper(const GdbCmd &cmd);
+    void insertBreakPointHelper(const QString &fileName, int line, bool force);
+    void command_helper(const QByteArray &cmd, bool force);
 public slots:
     void appLoaded();
     void readStdError();
@@ -179,6 +131,7 @@ public slots:
 protected:
     void handleResponse(const QByteArray &buff);
 protected:
+    void cleanup();
     void clear();
     void initDebug();
 protected:
@@ -199,7 +152,6 @@ protected:
     QStandardItemModel *m_framesModel;
     QStandardItemModel *m_libraryModel;
     QStandardItem   *m_asyncItem;
-    QMap<int,QVariant> m_tokenCookieMap;
     QMap<QString,QString> m_varNameMap;
     QList<QString> m_watchList;
     QMap<QString,QStandardItem*> m_nameItemMap;
@@ -216,7 +168,6 @@ protected:
     bool    m_writeDataBusy;
     bool    m_dlvInit;
     bool    m_dlvExit;
-    int     m_token;
     bool    m_headlessInitAddress;
     bool    m_headlessMode;
 };

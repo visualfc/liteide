@@ -312,3 +312,8 @@ void LiteProcess::terminate()
         QProcess::terminate();
     }
 }
+
+bool LiteProcess::isStop() const
+{
+    return this->state() == QProcess::NotRunning;
+}

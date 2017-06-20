@@ -211,11 +211,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
         dlv = FileUtil::lookPath("dlv",env,false);
     }
     m_dlvFilePath = dlv;
-    m_readDataBusy = false;
-    m_writeDataBusy = false;
-    m_headlessInitAddress = false;
-    m_lastFileLine = 0;
-    m_lastFileName.clear();
+
     //m_checkFuncDecl = false;
 
     if (m_dlvFilePath.isEmpty()) {
@@ -266,25 +262,28 @@ void DlvDebugger::stop()
         return;
     }
     m_dlvExit = true;
-    m_writeDataBusy = false;
     if (m_headlessMode) {
-        //SendProcessCtrlC(m_headlessProcess);
-        //SendProcessCtrlC(m_process);
-        m_headlessProcess->interrupt();
-        m_process->interrupt();
-        if (!m_headlessProcess->waitForFinished(500)) {
+        if (!m_headlessProcess->isStop()) {
+            m_headlessProcess->interrupt();
+        }
+        if (!m_process->isStop()) {
+            m_process->interrupt();
+        }
+        if (!m_headlessProcess->isStop() && !m_headlessProcess->waitForFinished(500)) {
             m_headlessProcess->kill();
         }
-        if (!m_process->waitForFinished(500)) {
-            command("exit");
+        if (!m_process->isStop() && !m_process->waitForFinished(500)) {
+            command_helper("exit",true);
             if (!m_process->waitForFinished(500)) {
                 m_process->kill();
             }
         }
     } else {
-        m_process->interrupt();
-        command("exit");
-        if (!m_process->waitForFinished(1000)) {
+        if (!m_process->isStop()) {
+            m_process->interrupt();
+        }
+        command_helper("exit",true);
+        if (!m_process->isStop() && !m_process->waitForFinished(1000)) {
              m_process->kill();
         }
     }
@@ -360,7 +359,7 @@ void DlvDebugger::createWatch(const QString &var)
 {
     QString cmd = "vars "+QRegExp::escape(var);
     m_updateCmdHistroy.push_back(cmd);
-    command(cmd);
+    command_helper(cmd.toUtf8(),true);
 }
 
 void DlvDebugger::removeWatch(const QString &value)
@@ -428,6 +427,11 @@ void DlvDebugger::setInitWatchList(const QStringList &names)
 
 void DlvDebugger::insertBreakPoint(const QString &fileName, int line)
 {
+    insertBreakPointHelper(fileName,line,false);
+}
+
+void DlvDebugger::insertBreakPointHelper(const QString &fileName, int line, bool force)
+{
     line++;
     QString location = QString("%1:%2").arg(fileName).arg(line);
     if (m_locationBkMap.contains(location)) {
@@ -439,9 +443,7 @@ void DlvDebugger::insertBreakPoint(const QString &fileName, int line)
     args << "break";
     args << id;
     args << QString("%1:%2").arg(fileName).arg(line);
-    GdbCmd cmd;
-    cmd.setCmd(args);
-    command(cmd);
+    command_helper(args.join(" ").toUtf8(),force);
 }
 
 void DlvDebugger::removeBreakPoint(const QString &fileName, int line)
@@ -456,9 +458,7 @@ void DlvDebugger::removeBreakPoint(const QString &fileName, int line)
     QStringList args;
     args << "clear";
     args << id;
-    GdbCmd cmd;
-    cmd.setCmd(args);
-    command(cmd);
+    command_helper(args.join(" ").toUtf8(),false);
 }
 
 bool DlvDebugger::findBreakPoint(const QString &fileName, int line)
@@ -468,32 +468,23 @@ bool DlvDebugger::findBreakPoint(const QString &fileName, int line)
     return m_locationBkMap.contains(location);
 }
 
-void DlvDebugger::command_helper(const GdbCmd &cmd)
+void DlvDebugger::command_helper(const QByteArray &cmd, bool force)
 {
-    QByteArray buf = cmd.makeCmd(m_token);
-    if (m_writeDataBusy) {
+    if (m_writeDataBusy && !force) {
         return;
     }
     m_writeDataBusy = true;
-    m_token++;
-    m_lastCmd = buf;
+    m_lastCmd = cmd;
 
-    if (m_dlvRunningCmdList.contains(buf)) {
+    if (m_dlvRunningCmdList.contains(cmd)) {
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("runing");
     }
 #ifdef Q_OS_WIN
-    buf.append("\r\n");
+    m_process->write(cmd+"\r\n");
 #else
-    buf.append("\n");
+    m_process->write(cmd+"\n");
 #endif
-    m_tokenCookieMap.insert(m_token,cmd.cookie());
-    m_process->write(buf);
-}
-
-void DlvDebugger::command(const GdbCmd &cmd)
-{
-    command_helper(cmd);
 }
 
 void DlvDebugger::enterAppText(const QString &text)
@@ -523,12 +514,12 @@ void DlvDebugger::enterDebugText(const QString &text)
         m_processId.clear();
     }
 
-    command(text);
+    command(text.toUtf8());
 }
 
 void  DlvDebugger::command(const QByteArray &cmd)
 {
-    command_helper(GdbCmd(cmd));
+    command_helper(cmd,false);
 }
 
 void DlvDebugger::readStdError()
@@ -627,21 +618,26 @@ void DlvDebugger::handleResponse(const QByteArray &buff)
     }
 }
 
+void DlvDebugger::cleanup()
+{
+    stop();
+}
+
 void DlvDebugger::clear()
 {
     m_headlessInitAddress = false;
+    m_lastFileLine = 0;
+    m_lastFileName.clear();
     m_dlvInit = false;
     m_dlvExit = false;
     m_readDataBusy = false;
     m_writeDataBusy = false;
-    m_token = 10000000;
     m_handleState.clear();
     m_varNameMap.clear();
     m_watchNameMap.clear();
     m_watchList.clear();
     m_updateCmdHistroy.clear();
     m_nameItemMap.clear();
-    m_tokenCookieMap.clear();
     m_varChangedItemList.clear();
     m_inbuffer.clear();
     m_locationBkMap.clear();
@@ -658,7 +654,7 @@ void DlvDebugger::initDebug()
     m_processId.clear();
 
     if (!m_headlessMode) {
-        command("restart");
+        command_helper("restart",true);
     }
 
     QMapIterator<QString,int> i(m_initBks);
@@ -668,13 +664,12 @@ void DlvDebugger::initDebug()
         QString fileName = i.key();
         QList<int> lines = m_initBks.values(fileName);
         foreach(int line, lines) {
-            insertBreakPoint(fileName,line);
+            insertBreakPointHelper(fileName,line,true);
         }
     }
-    m_writeDataBusy = false;
-    command("break main.main");
-    m_writeDataBusy = false;
-    command("continue");
+    command_helper("break main.main",true);
+    command_helper("continue",true);
+
     emit debugLoaded();
 }
 
@@ -937,7 +932,7 @@ void DlvDebugger::readStdOutput()
     if (!m_updateCmdList.isEmpty()) {
         foreach(QString cmd, m_updateCmdList.takeFirst().split("|")) {
             m_updateCmdHistroy.push_back(cmd.trimmed());
-            command(cmd.trimmed());
+            command(cmd.trimmed().toUtf8());
         }
     }
 }
@@ -946,19 +941,14 @@ void DlvDebugger::finished(int code)
 {
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv exited with code %1").arg(code));
-    // console input exit
-    if (m_headlessMode && (m_headlessProcess->state() != QProcess::NotRunning) ) {
-        m_headlessProcess->interrupt();
-        if (!m_headlessProcess->waitForFinished(500)) {
-            m_headlessProcess->kill();
-        }
-    }
+    cleanup();
 }
 
 void DlvDebugger::error(QProcess::ProcessError err)
 {
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv error! %1").arg(ProcessEx::processErrorText(err)));
+    cleanup();
 }
 
 void DlvDebugger::readTty(const QByteArray &data)
@@ -1010,10 +1000,12 @@ void DlvDebugger::headlessFinished(int code)
 {
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv server exited with code %1").arg(code));
+    cleanup();
 }
 
 void DlvDebugger::headlessError(QProcess::ProcessError err)
 {
     emit debugStoped();
     emit debugLog(LiteApi::DebugRuntimeLog,QString("Dlv server error! %1").arg(ProcessEx::processErrorText(err)));
+    cleanup();
 }

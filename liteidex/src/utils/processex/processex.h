@@ -77,6 +77,7 @@ public:
     void startEx(const QString &cmd, const QString &args);
     void interrupt();
     void terminate();
+    bool isStop() const;
 protected:
     LiteApi::IApplication *m_liteApp;
     bool m_useCtrlC;
