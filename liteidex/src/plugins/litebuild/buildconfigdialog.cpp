@@ -267,13 +267,13 @@ void BuildConfigDialog::on_customGopathBrowserButton_clicked()
                                                     | QFileDialog::DontResolveSymlinks);
     if (!dir.isEmpty()) {
         last = dir;
-        ui->liteGopathEdit->appendPlainText(dir);
+        ui->customGopathEdit->appendPlainText(dir);
     }
 }
 
 void BuildConfigDialog::on_customGopathClear_clicked()
 {
-    ui->liteGopathEdit->clear();
+    ui->customGopathEdit->clear();
 }
 
 void BuildConfigDialog::on_customResetAllButton_clicked()
