@@ -80,11 +80,11 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * How to Install
 <https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/install.md>
 * FAQ
-<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/cn/guide.md>
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/guide.md>
 * 安装 LiteIDE
-<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/cn/install.md>
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/zh_CN/install.md>
 * FAQ 中文
-<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/cn/guide.md>
+<https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/zh_CN/guide.md>
 
 ### Links
 * LiteIDE Home 
