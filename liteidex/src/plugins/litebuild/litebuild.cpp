@@ -659,23 +659,38 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
     m_liteApp->appendLog("LiteBuild","go environment changed");
     m_process->setEnvironment(env.toStringList());
 
+    m_output->updateExistsTextColor();
+    m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
     bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     if (!b) {
         return;
-    }    
+    }
 
-    QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
-    if (gobin.isEmpty()) {
-        m_output->updateExistsTextColor();
-        m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
-        m_output->append("go bin not found!",Qt::red);
-        return;
+    QString go = FileUtil::lookupGoBin("go",m_liteApp,false);
+    QString goroot = env.value("GOROOT");
+    QString goarch = env.value("GOARCH");
+    QString goos = env.value("GOOS");
+    if (!go.isEmpty()) {
+        m_output->append("Found go bin at "+QDir::toNativeSeparators(go));
+    } else {
+        m_output->append("Could not find go bin, (hint: is Go installed?)",Qt::red);
     }
-    if (m_process->isStop()) {
-        m_output->updateExistsTextColor();
-        m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
-        this->execCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
-    }
+    m_output->append("\nGOROOT="+goroot);
+    m_output->append("\nGOARCH="+goarch);
+    m_output->append("\nGOOS="+goos);
+    m_output->append("\n");
+//    QString gobin = FileUtil::lookupGoBin("go",m_liteApp,true);
+//    if (gobin.isEmpty()) {
+//        m_output->updateExistsTextColor();
+//        m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
+//        m_output->append("go bin not found!",Qt::red);
+//        return;
+//    }
+//    if (m_process->isStop()) {
+//        m_output->updateExistsTextColor();
+//        m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
+//        this->execCommand(gobin,"env",LiteApi::getGOROOT(m_liteApp),false,false);
+//    }
 }
 
 void LiteBuild::loadProjectInfo(const QString &filePath)
