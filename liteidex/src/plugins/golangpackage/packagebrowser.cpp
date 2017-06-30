@@ -171,30 +171,37 @@ void PackageBrowser::fileWizardFinished(const QString&, const QString&, const QS
     }*/
 }
 
-void PackageBrowser::currentEnvChanged(LiteApi::IEnv *)
+void PackageBrowser::currentEnvChanged(LiteApi::IEnv */*env*/)
 {
     reloadAll();
 }
 
 void PackageBrowser::reloadAll()
 {
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    if (!gocmd.isEmpty()) {
+        m_liteApp->appendLog("GolangPackage","Found go bin at "+QDir::toNativeSeparators(gocmd));
+    } else {
+        m_liteApp->appendLog("GolangPackage","Could not find go bin, (hint: is Go installed?)",true);
+    }
+    QString goroot = env.value("GOROOT");
+    m_liteApp->appendLog("GolangPackage","GOROOT="+goroot);
+    QStringList gopathList = LiteApi::getGOPATH(m_liteApp,false);
+#ifdef Q_OS_WIN
+    m_liteApp->appendLog("GolangPackage","GOPATH="+gopathList.join(";"));
+#else
+    m_liteApp->appendLog("GolangPackage","GOPATH="+gopathList.join(":"));
+#endif
+
+    m_bLoaded = false;
     if (!m_toolWindowAct->isChecked()) {
         return;
     }
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
 //    if (!LiteApi::hasGoEnv(env)) {
 //        return;
 //    }
     m_liteApp->appendLog("GolangPackages","reload all packages");
-    if (!m_goTool->isStop()) {
-        m_goTool->kill();
-    }
-    m_goTool->reloadEnv();
-    if (!m_goTool->exists()) {
-        m_model->clear();
-        m_model->appendRow(new QStandardItem(tr("No Go installation was found.")));
-        return;
-    }
     m_bLoaded = true;
     if (m_model->rowCount() == 0) {
         m_model->appendRow(new QStandardItem(tr("Loading Go package list...")));
@@ -202,7 +209,8 @@ void PackageBrowser::reloadAll()
     QString root = LiteApi::getGOROOT(m_liteApp);
     m_goTool->setProcessEnvironment(env);
     m_goTool->setWorkDir(root);
-    m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
+    //m_goTool->start(QStringList() << "list" << "-e" << "-json" << "...");
+    m_goTool->start_list_json();
 }
 
 static bool hasSameList(const QStringList &list1, const QStringList &list2)
@@ -386,7 +394,7 @@ void PackageBrowser::error(QProcess::ProcessError code)
 {
     m_model->clear();
     QString goroot = LiteApi::getGOROOT(m_liteApp);
-    m_model->appendRow(new QStandardItem(QString("Load Package Error %1\nGOROOT=%2\nGO=%3").arg(code).arg(goroot).arg(m_goTool->gotool())));
+    m_model->appendRow(new QStandardItem(QString("Load Package Error %1\nGOROOT=%2").arg(code).arg(goroot)));
 }
 
 void PackageBrowser::finished(int code,QProcess::ExitStatus)
@@ -397,7 +405,7 @@ void PackageBrowser::finished(int code,QProcess::ExitStatus)
     } else {
         m_model->clear();
         QString goroot = LiteApi::getGOROOT(m_liteApp);
-        m_model->appendRow(new QStandardItem(QString("Load Package Error %1\nGOROOT=%2\nGO=%3").arg(code).arg(goroot).arg(m_goTool->gotool())));
+        m_model->appendRow(new QStandardItem(QString("Load Package Error %1\nGOROOT=%2").arg(code).arg(goroot)));
     }
 }
 

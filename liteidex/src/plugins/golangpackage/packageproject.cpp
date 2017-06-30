@@ -146,8 +146,7 @@ void PackageProject::reload()
     if (m_reloadTimer->isActive()) {
         m_reloadTimer->stop();
     }
-    m_goTool->reloadEnv();
-    m_goTool->start(QStringList() << "list" << "-e" << "-json" << ".");
+    m_goTool->start_list_json();
 }
 
 void PackageProject::setJson(const QMap<QString,QVariant> &json)

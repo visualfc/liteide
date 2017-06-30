@@ -50,8 +50,7 @@ GoTool::GoTool(LiteApi::IApplication *app, QObject *parent) :
 }
 
 GoTool::~GoTool()
-{
-    m_process->disconnect();
+{    
     kill();
 }
 
@@ -88,26 +87,9 @@ QStringList GoTool::sysGopath() const
     return pathList;
 }
 
-bool GoTool::exists()
-{
-    return QFileInfo(m_gotool).exists();
-}
-
-void GoTool::reloadEnv()
-{
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    m_gotool = FileUtil::lookupGoBin("go",m_liteApp,false);
-    m_process->setProcessEnvironment(env);
-}
-
-bool GoTool::isStop() const
-{
-    return m_process->isStop();
-}
-
 void GoTool::kill()
 {
-    m_process->stop(100);
+    m_process->stop(200);
 }
 
 void  GoTool::setProcessEnvironment(const QProcessEnvironment &environment)
@@ -125,22 +107,19 @@ QString GoTool::workDir() const
     return m_process->workingDirectory();
 }
 
-void GoTool::start(const QStringList &args)
-{
-    this->kill();
-    m_stdOutput.clear();
-    m_stdError.clear();
-    m_process->start(m_gotool,args);
-}
-
 void GoTool::start_list_json()
 {
     this->kill();
+
     m_stdOutput.clear();
     m_stdError.clear();
+
     QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "pkgs" << "-list" << "-json";
+
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    m_process->setEnvironment(env.toStringList());
     m_process->start(cmd,args);
 }
 

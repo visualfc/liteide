@@ -500,7 +500,7 @@ void EnvManager::reloadCurrentEnv()
     }
     m_curEnv->reload();
     m_liteApp->appendLog("LiteEnv",QString("reload environment %1").arg(m_curEnv->id()),false);
-    emitEnvChanged();
+    //emitEnvChanged();
 }
 
 void EnvManager::broadcast(QString /*module*/,QString /*id*/,QString)

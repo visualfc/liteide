@@ -34,18 +34,13 @@ class GoTool : public QObject
 public:
     explicit GoTool(LiteApi::IApplication *app,QObject *parent = 0);
     virtual ~GoTool();
-    void reloadEnv();
-    bool exists();
     QStringList sysGopath() const;
     QStringList liteGopath() const;
     void setProcessEnvironment(const QProcessEnvironment &environment);
     void setLiteGopath(const QStringList &pathList);
-    bool isStop() const;
     void kill();
     void setWorkDir(const QString &dir);
     QString workDir() const;
-    QString gotool() const { return m_gotool; }
-    void start(const QStringList &args);
     void start_list_json();
     QByteArray stdOutputData() const { return m_stdOutput; }
     QString stdOutputUtf8() const {
@@ -61,7 +56,6 @@ protected slots:
 protected:
     LiteApi::IApplication *m_liteApp;
     Process *m_process;
-    QString m_gotool;
     QByteArray m_stdOutput;
     QByteArray m_stdError;
 };
