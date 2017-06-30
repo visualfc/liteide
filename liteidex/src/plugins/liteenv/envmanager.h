@@ -49,6 +49,8 @@ public:
 protected slots:
     void readStdout();
     void readStderr();
+    void finished(int code, QProcess::ExitStatus);
+    void error(QProcess::ProcessError error);
 protected:
     void updateIdeEnv(QProcessEnvironment &env);
 protected:

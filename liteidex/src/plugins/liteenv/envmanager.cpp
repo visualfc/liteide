@@ -107,20 +107,16 @@ QMap<QString, QString> Env::goEnvMap() const
 
 void Env::reload()
 {
-    if (m_filePath.isEmpty()) {
-        return;
+    if (!m_filePath.isEmpty()) {
+        QFile f(m_filePath);
+        if (f.open(QIODevice::ReadOnly)) {
+            loadEnvFile(&f);
+            f.close();
+            loadGoEnv();
+        }
+    } else {
+        emit goenvChanged(m_id);
     }
-    QFile f(m_filePath);
-    if (!f.open(QIODevice::ReadOnly)) {
-        return;
-    }
-    loadEnvFile(&f);
-    f.close();
-//    if (!m_env.contains("GOROOT") ||
-//            !m_env.contains("GOARCH") ||
-//            !m_env.contains("GOPATH")) {
-        loadGoEnv();
-//    }
 }
 
 void Env::loadGoEnv()
@@ -129,6 +125,8 @@ void Env::loadGoEnv()
         m_process = new Process(this);
         connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdout()));
         connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStderr()));
+        connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
+        connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     }
     m_process->stop(100);
     m_goEnvMap.clear();
@@ -212,6 +210,7 @@ void Env::readStdout()
     QByteArray data = m_process->readAllStandardOutput();
 // set GOARCH=amd64
 // GOARCH="amd64"
+    m_liteApp->appendLog("LiteEnv","go env\n"+QString::fromUtf8(data).trimmed(),false);
     foreach (QByteArray line, data.split('\n')) {
         QString info = QString::fromUtf8(line).trimmed();
         if (info.startsWith("set ")) {
@@ -227,13 +226,28 @@ void Env::readStdout()
             m_goEnvMap[key] = value;
         }
     }
-    emit goenvChanged(m_id);
+//    emit goenvChanged(m_id);
 }
 
 void Env::readStderr()
 {
     QByteArray data = m_process->readAllStandardError();
-    emit goenvError(m_id,QString::fromUtf8(data));
+    m_liteApp->appendLog("LiteEnv","go env\n"+QString::fromUtf8(data).trimmed(),true);
+//    emit goenvError(m_id,QString::fromUtf8(data));
+}
+
+void Env::finished(int code, QProcess::ExitStatus /*status*/)
+{
+    if (code == 0) {
+        emit goenvChanged(m_id);
+    } else {
+        emit goenvError(m_id,QString("go env exit code %1").arg(code));
+    }
+}
+
+void Env::error(QProcess::ProcessError error)
+{
+    emit goenvError(m_id, ProcessEx::processErrorText(error));
 }
 
 void Env::updateIdeEnv(QProcessEnvironment &env)
@@ -310,7 +324,6 @@ void EnvManager::setCurrentEnv(LiteApi::IEnv *env)
         m_liteApp->settings()->setValue(LITEENV_CURRENTENV,m_curEnv->id());
         m_liteApp->appendLog("LiteEnv",QString("load environment %1").arg(m_curEnv->id()),false);
     }
-    emitEnvChanged();
 }
 
 LiteApi::IEnv *EnvManager::currentEnv() const
@@ -348,7 +361,8 @@ void EnvManager::emitEnvChanged()
 {
     if (!m_appLoaded) {
         return;
-    }
+    }    
+
     emit currentEnvChanged(m_curEnv);
 }
 
@@ -504,13 +518,13 @@ void EnvManager::editorSaved(LiteApi::IEditor *editor)
     }
     if (m_curEnv && m_curEnv->filePath() == ed->filePath()) {
         m_curEnv->reload();
-        emitEnvChanged();
     }
 }
 
 void EnvManager::goenvError(const QString &id, const QString &msg)
 {
     m_liteApp->appendLog(QString("%1: go env error").arg(id),msg,true);
+    emitEnvChanged();
 }
 
 void EnvManager::goenvChanged(const QString &id)
