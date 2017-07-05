@@ -1504,7 +1504,7 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
                 m_process->stop(200);
             }
 #endif
-            if (!m_process->isStop()) {
+            if (!m_process->waitForFinished(200)) {
                 m_output->append(tr("Failed to terminate the existing process!")+"\n",Qt::red);
                 return;
             }
