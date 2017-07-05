@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>716</width>
-    <height>618</height>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,9 +105,15 @@
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="sysGopathEdit">
-            <property name="readOnly">
-             <bool>true</bool>
+           <widget class="QLabel" name="sysGopathLabel">
+            <property name="frameShape">
+             <enum>QFrame::Panel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -119,9 +125,15 @@
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="liteGopathEdit">
-            <property name="readOnly">
-             <bool>true</bool>
+           <widget class="QLabel" name="liteGopathLabel">
+            <property name="frameShape">
+             <enum>QFrame::Panel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -165,6 +177,34 @@
           </item>
           <item>
            <widget class="QPlainTextEdit" name="customGopathEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gopathInfoGroupBox">
+         <property name="title">
+          <string>GOPATH information</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QLabel" name="gopathInfoLabel">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Panel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

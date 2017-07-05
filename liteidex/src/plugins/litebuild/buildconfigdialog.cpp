@@ -63,9 +63,6 @@ BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent
     ui->actionTableView->resizeColumnsToContents();
     ui->actionTableView->verticalHeader()->hide();
 
-    ui->sysGopathEdit->setReadOnly(true);
-    ui->liteGopathEdit->setReadOnly(true);
-
     m_liteideModel = new QStandardItemModel(0,2,this);
     m_liteideModel->setHeaderData(0,Qt::Horizontal,tr("Name"));
     m_liteideModel->setHeaderData(1,Qt::Horizontal,tr("Value"));
@@ -167,14 +164,14 @@ void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPat
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeDuplicates();
-    ui->sysGopathEdit->setPlainText(pathList.join("\n"));
+    ui->sysGopathLabel->setText(pathList.join("\n"));
 
     pathList.clear();
     foreach (QString path, m_liteApp->settings()->value("liteide/gopath").toStringList()) {
           pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeDuplicates();
-    ui->liteGopathEdit->setPlainText(pathList.join("\n"));
+    ui->liteGopathLabel->setText(pathList.join("\n"));
 
     pathList.clear();
     foreach (QString path, m_liteApp->settings()->value(customKey+"#gopath").toStringList()) {
@@ -184,7 +181,7 @@ void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPat
     ui->customGopathEdit->setPlainText(pathList.join("\n"));
 
 //    QStringList saveAutoRun = m_liteApp->settings()->value(customKey+"#saveautorun").toStringList();
-//    ui->saveAutoRunEdit->setText(saveAutoRun.join(";"));
+//    ui->saveAutoRunEdit->setText(saveAutoRun.join(";"));    
 }
 
 void BuildConfigDialog::saveBuild()
