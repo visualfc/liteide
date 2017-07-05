@@ -260,6 +260,31 @@ inline QString getGOROOT(LiteApi::IApplication *app)
     return getGoEnvironment(app).value("GOROOT");
 }
 
+inline QString lookupSrcRoot(const QString &buildFilePath)
+{
+    int index = buildFilePath.indexOf("/src/");
+    if (index < 0) {
+        return QString();
+    }
+    return buildFilePath.left(index+4);
+}
+
+inline QString lookupParentHasCustom(LiteApi::IApplication *app, const QString &buildFilePath, const QString &srcRoot)
+{
+    QFileInfo info(buildFilePath);
+    QString parent = info.path();
+
+    if (parent == srcRoot || info.dir().isRoot()) {
+        return QString();
+    }
+    QString customKey = "litebuild-custom/"+parent;
+    bool use_custom_gopath = app->settings()->value(customKey+"#use_custom_gopath",false).toBool();
+    if (use_custom_gopath) {
+        return customKey;
+    }
+    return lookupParentHasCustom(app,parent,srcRoot);
+}
+
 inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, const QString &buildFilePath)
 {
     if (buildFilePath.isEmpty()) {
@@ -267,6 +292,15 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
     }
     QString customKey = "litebuild-custom/"+buildFilePath;
     bool use_custom_gopath = app->settings()->value(customKey+"#use_custom_gopath",false).toBool();
+    if (!use_custom_gopath) {
+        QString srcRoot = lookupSrcRoot(buildFilePath);
+        if (!srcRoot.isEmpty()) {
+            customKey = lookupParentHasCustom(app,buildFilePath,srcRoot);
+            if (!customKey.isEmpty()) {
+                use_custom_gopath = true;
+            }
+        }
+    }
     if (!use_custom_gopath) {
         return getGoEnvironment(app);
     }

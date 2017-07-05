@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>716</width>
-    <height>592</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,7 +78,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_gopath">
       <attribute name="title">
@@ -105,7 +105,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="sysGopathEdit"/>
+           <widget class="QPlainTextEdit" name="sysGopathEdit">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="inheritLiteGopathCheckBox">
@@ -115,7 +119,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="liteGopathEdit"/>
+           <widget class="QPlainTextEdit" name="liteGopathEdit">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
