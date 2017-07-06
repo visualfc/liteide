@@ -144,7 +144,6 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
         connect(env,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
     }
     connect(m_liteApp->fileManager(),SIGNAL(fileWizardFinished(QString,QString,QString)),this,SLOT(fileWizardFinished(QString,QString,QString)));
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 }
 
 PackageBrowser::~PackageBrowser()
@@ -156,11 +155,6 @@ PackageBrowser::~PackageBrowser()
     if (m_widget) {
         delete m_widget;
     }
-}
-
-void PackageBrowser::appLoaded()
-{
-    reloadAll();
 }
 
 void PackageBrowser::toggledToolWindow(bool b)

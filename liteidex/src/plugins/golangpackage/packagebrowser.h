@@ -53,9 +53,8 @@ public:
     explicit PackageBrowser(LiteApi::IApplication *app, QObject *parent = 0);
     ~PackageBrowser();
 signals:
-    
+
 public slots:    
-    void appLoaded();
     void toggledToolWindow(bool);
     void currentEnvChanged(LiteApi::IEnv*);
     void reloadAll();

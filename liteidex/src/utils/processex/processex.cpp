@@ -167,13 +167,20 @@ bool Process::isStop() const
 void Process::stop(int ms)
 {
     if (!isStop()) {
-        terminate();
-        closeReadChannel(QProcess::StandardOutput);
-        closeReadChannel(QProcess::StandardError);
-        if (!waitForFinished(ms)) {
-            kill();
-        }
+        return;
     }
+    terminate();
+    closeReadChannel(QProcess::StandardOutput);
+    closeReadChannel(QProcess::StandardError);
+    if (!waitForFinished(ms)) {
+        kill();
+    }
+}
+
+void Process::stopAndWait(int termMs, int finishMs)
+{
+    stop(termMs);
+    waitForFinished(finishMs);
 }
 
 void Process::startEx(const QString &cmd, const QString &args)

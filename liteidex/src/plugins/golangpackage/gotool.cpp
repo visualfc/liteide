@@ -89,7 +89,7 @@ QStringList GoTool::sysGopath() const
 
 void GoTool::kill()
 {
-    m_process->stop(200);
+    m_process->stopAndWait(100,200);
 }
 
 void  GoTool::setProcessEnvironment(const QProcessEnvironment &environment)
