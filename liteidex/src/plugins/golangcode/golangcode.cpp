@@ -93,7 +93,7 @@ void GolangCode::applyOption(QString id)
         args << "false";
     }
     if (!m_gocodeSetProcess->isStop()) {
-        m_gocodeSetProcess->stop(100);
+        m_gocodeSetProcess->stopAndWait(100,2000);
     }
     m_gocodeSetProcess->start(m_gocodeCmd,args);
 }
@@ -347,7 +347,7 @@ void GolangCode::loadPkgList()
 void GolangCode::loadImportsList()
 {
     if (!m_importProcess->isStop()) {
-        m_importProcess->stop(100);
+        m_importProcess->stopAndWait(100,2000);
     }
 
     QString cmd = LiteApi::getGotools(m_liteApp);

@@ -467,7 +467,7 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
         m_liteApp->appendLog("GolangDoc",QString("not lookup godoc in PATH"),true);
         return;
     }
-    m_godocProcess->stop(200);
+    m_godocProcess->stopAndWait(100,2000);
     m_godocData.clear();
     QStringList args;
     //check additional path

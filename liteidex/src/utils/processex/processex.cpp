@@ -166,7 +166,7 @@ bool Process::isStop() const
 
 void Process::stop(int ms)
 {
-    if (!isStop()) {
+    if (isStop()) {
         return;
     }
     terminate();

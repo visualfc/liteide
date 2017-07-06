@@ -128,7 +128,7 @@ void Env::loadGoEnv()
         connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
         connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     }
-    m_process->stop(100);
+    m_process->stopAndWait(100,200);
     m_goEnvMap.clear();
     QString gocmd = FileUtil::lookPath("go",m_env,false);
     if (gocmd.isEmpty()) {

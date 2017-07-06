@@ -334,7 +334,7 @@ void FindDocWidget::extFinish(bool, int, QString)
 
 void FindDocWidget::abortFind()
 {
-    m_process->stop(200);
+    m_process->stop(100);
 }
 
 void FindDocWidget::stateChanged(QProcess::ProcessState state)

@@ -46,6 +46,7 @@ class GolangFileSearch : public LiteApi::IFileSearch
     Q_OBJECT
 public:
     explicit GolangFileSearch(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual ~GolangFileSearch();
     virtual QString mimeType() const;
     virtual QString displayName() const;
     virtual QWidget* widget() const;

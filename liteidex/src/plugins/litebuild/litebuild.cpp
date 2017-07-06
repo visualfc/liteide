@@ -367,7 +367,7 @@ LiteBuild::~LiteBuild()
 
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
 {
-    m_process->stop(200);
+    m_process->stopAndWait(100,2000);
     m_process->setWorkingDirectory(workDir);
     QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
     if (gocmd.isEmpty()) {
@@ -1422,11 +1422,11 @@ void LiteBuild::stopAction()
 {
     if (!m_process->isStop()) {
 #ifdef Q_OS_WIN
-        m_process->stop(200);
+        m_process->stop(100);
 #else
         SendProcessCtrlC(m_process);
         if (!m_process->waitForFinished(200)) {
-            m_process->stop(200);
+            m_process->stop(100);
         }
 #endif
     }
@@ -1494,14 +1494,14 @@ void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
         if (ba->isKillOld()) {
             m_output->append(tr("Killing current process...")+"\n");
 #ifdef Q_OS_WIN
-            m_process->stop(200);
+            m_process->stop(100);
 #else
             SendProcessCtrlC(m_process);
             if (!m_process->waitForFinished(200)) {
-                m_process->stop(200);
+                m_process->stop(100);
             }
 #endif
-            if (!m_process->waitForFinished(200)) {
+            if (!m_process->waitForFinished(2000)) {
                 m_output->append(tr("Failed to terminate the existing process!")+"\n",Qt::red);
                 return;
             }
@@ -1546,7 +1546,7 @@ void LiteBuild::buildTask(IBuild *build, bool killOld, const QStringList &taskLi
         if (!killOld) {
             return;
         }
-        m_process->stop(100);
+        m_process->stopAndWait(100,2000);
     }
 
     QString mime = build->mimeType();

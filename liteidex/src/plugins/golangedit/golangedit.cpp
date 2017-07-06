@@ -399,7 +399,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
         return;
     }
     if (!m_findLinkProcess->isStop()) {
-        m_findLinkProcess->stop(100);
+        m_findLinkProcess->stopAndWait(100,200);
     }
 
     m_lastLink.clear();
@@ -500,7 +500,7 @@ void GolangEdit::editorJumpToDecl()
     }
 
     if (!m_findDefProcess->isStop()) {
-        m_findDefProcess->stop(100);
+        m_findDefProcess->stopAndWait(100,200);
     }
 
     m_lastCursor = m_plainTextEdit->textCursor();
@@ -578,7 +578,7 @@ void GolangEdit::editorFindInfo()
         return;
     }
     if (!m_findInfoProcess->isStop()) {
-        m_findInfoProcess->stop(100);
+        m_findInfoProcess->stopAndWait(100,200);
     }
 
     m_lastCursor = m_plainTextEdit->textCursor();
@@ -889,7 +889,7 @@ void GolangEdit::runSourceQuery(const QString &action)
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
     if (!m_sourceQueryProcess->isStop()) {
-        return;
+        m_sourceQueryProcess->stopAndWait(100,200);
     }
     int offset = -1;
     int offset2 = -1;
@@ -962,7 +962,7 @@ void GolangEdit::runSourceQuery(const QString &action)
 void GolangEdit::runSourceQueryByInfo(const QString &action)
 {
     if (!m_sourceQueryProcess->isStop()) {
-        return;
+        m_sourceQueryProcess->stopAndWait(100,200);
     }
 
     QString cmd;

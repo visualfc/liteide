@@ -169,7 +169,7 @@ void GoplayBrowser::run()
     args << "run";
     args << "goplay.go";
 
-    m_process->stop(100);
+    m_process->stopAndWait(100,2000);
 
     m_output->clear();
     m_output->appendTag(tr("Running...")+"\n\n");

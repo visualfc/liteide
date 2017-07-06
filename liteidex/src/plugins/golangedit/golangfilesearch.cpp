@@ -45,6 +45,10 @@ GolangFileSearch::GolangFileSearch(LiteApi::IApplication *app, QObject *parent) 
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findUsagesFinish(bool,int,QString)));
 }
 
+GolangFileSearch::~GolangFileSearch()
+{
+}
+
 QString GolangFileSearch::mimeType() const
 {
     return "find/gofilesearch";
@@ -67,7 +71,6 @@ void GolangFileSearch::start()
 
 void GolangFileSearch::cancel()
 {
-
 }
 
 void GolangFileSearch::activate()
@@ -88,7 +91,7 @@ bool GolangFileSearch::replaceMode() const
 void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool replace)
 {
     if (!m_process->isStop()) {
-        m_process->stop(100);
+        m_process->stopAndWait(100,2000);
     }
 
     bool moveLeft = false;
