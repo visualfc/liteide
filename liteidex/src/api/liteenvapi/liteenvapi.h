@@ -269,7 +269,7 @@ inline QString lookupSrcRoot(const QString &buildFilePath)
     return buildFilePath.left(index+4);
 }
 
-inline QString lookupParentHasCustom(LiteApi::IApplication *app, const QString &buildFilePath, const QString &srcRoot)
+inline QString lookupParentHasCustom(LiteApi::IApplication *app, const QString &buildFilePath, const QString &srcRoot, QString *pCustomParent = 0)
 {
     QFileInfo info(buildFilePath);
     QString parent = info.path();
@@ -280,22 +280,26 @@ inline QString lookupParentHasCustom(LiteApi::IApplication *app, const QString &
     QString customKey = "litebuild-custom/"+parent;
     bool use_custom_gopath = app->settings()->value(customKey+"#use_custom_gopath",false).toBool();
     if (use_custom_gopath) {
+        if (pCustomParent) {
+            *pCustomParent = parent;
+        }
         return customKey;
     }
     return lookupParentHasCustom(app,parent,srcRoot);
 }
 
-inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, const QString &buildFilePath)
+inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, const QString &buildFilePath, QString *pCustomBuildPath = 0)
 {
     if (buildFilePath.isEmpty()) {
         return getGoEnvironment(app);
     }
     QString customKey = "litebuild-custom/"+buildFilePath;
+    QString customBuildPath = buildFilePath;
     bool use_custom_gopath = app->settings()->value(customKey+"#use_custom_gopath",false).toBool();
     if (!use_custom_gopath) {
         QString srcRoot = lookupSrcRoot(buildFilePath);
         if (!srcRoot.isEmpty()) {
-            customKey = lookupParentHasCustom(app,buildFilePath,srcRoot);
+            customKey = lookupParentHasCustom(app,buildFilePath,srcRoot, &customBuildPath);
             if (!customKey.isEmpty()) {
                 use_custom_gopath = true;
             }
@@ -303,6 +307,9 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
     }
     if (!use_custom_gopath) {
         return getGoEnvironment(app);
+    }
+    if (pCustomBuildPath) {
+        *pCustomBuildPath = customBuildPath;
     }
 
     QProcessEnvironment env = getCurrentEnvironment(app);

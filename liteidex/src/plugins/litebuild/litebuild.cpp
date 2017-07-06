@@ -480,7 +480,6 @@ void LiteBuild::config()
     dlg.setBuild(m_build,m_buildRootPath, this->liteideEnvMap());
 
     if (dlg.exec() == QDialog::Accepted) {
-        dlg.saveBuild();
         updateBuildConfig(m_build);
     }
 }
@@ -555,9 +554,7 @@ void LiteBuild::fmctxGoBuildConfigure()
     BuildConfigDialog dlg(m_liteApp);
     dlg.setBuild(build,buildPath, this->liteideEnvMap());
 
-    if (dlg.exec() == QDialog::Accepted) {
-        dlg.saveBuild();
-    }
+    dlg.exec();
 }
 
 void LiteBuild::fmctxGoTool()

@@ -36,6 +36,7 @@ namespace Ui {
 class QAbstractItemModel;
 class QTableView;
 class QStandardItemModel;
+class QAbstractButton;
 class BuildConfigDialog : public QDialog
 {
     Q_OBJECT
@@ -52,15 +53,14 @@ protected:
     void updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, const QMap<QString,QString> &liteEnvMap, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel);
 public slots:
     void editCustomeTabView(QModelIndex);
+    void buttonBoxClicked(QAbstractButton *button);
 protected:
     void resizeTableView(QTableView *tableView);
 private slots:
     void on_customGopathBrowserButton_clicked();
-
     void on_customGopathClear_clicked();
-
     void on_customResetAllButton_clicked();
-
+    void updat_gopath_info();
 private:
     LiteApi::IApplication *m_liteApp;
     Ui::BuildConfigDialog *ui;
@@ -69,6 +69,7 @@ private:
     QStandardItemModel *m_configModel;
     QStandardItemModel *m_customModel;
     QStandardItemModel *m_actionModel;
+    static int s_lastViewIndex;
 };
 
 #endif // BUILDCONFIGDIALOG_H

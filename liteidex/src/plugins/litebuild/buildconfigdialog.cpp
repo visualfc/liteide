@@ -41,6 +41,8 @@
 #endif
 //lite_memory_check_end
 
+int BuildConfigDialog::s_lastViewIndex = 0;
+
 BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent) :
     QDialog(parent),
     m_liteApp(app),
@@ -88,11 +90,14 @@ BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent
 
     connect(ui->customTableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(editCustomeTabView(QModelIndex)));
 
-    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    ui->tabWidget->setCurrentIndex(s_lastViewIndex);
+
+    connect(ui->buttonBox,SIGNAL(clicked(QAbstractButton*)),this,SLOT(buttonBoxClicked(QAbstractButton*)));
 }
 
 BuildConfigDialog::~BuildConfigDialog()
 {
+    s_lastViewIndex = ui->tabWidget->currentIndex();
     delete ui;
 }
 
@@ -103,6 +108,20 @@ void BuildConfigDialog::editCustomeTabView(QModelIndex index)
     }
     if (index.column() == 1) {
         ui->customTableView->edit(index);
+    }
+}
+
+void BuildConfigDialog::buttonBoxClicked(QAbstractButton *button)
+{
+    QDialogButtonBox::ButtonRole role = ui->buttonBox->buttonRole(button);
+    if (role == QDialogButtonBox::AcceptRole) {
+        this->saveBuild();
+        this->accept();
+    } else if (role == QDialogButtonBox::RejectRole) {
+        this->reject();
+    } else if (role == QDialogButtonBox::ApplyRole) {
+        this->saveBuild();
+        this->updat_gopath_info();
     }
 }
 
@@ -181,7 +200,9 @@ void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPat
     ui->customGopathEdit->setPlainText(pathList.join("\n"));
 
 //    QStringList saveAutoRun = m_liteApp->settings()->value(customKey+"#saveautorun").toStringList();
-//    ui->saveAutoRunEdit->setText(saveAutoRun.join(";"));    
+//    ui->saveAutoRunEdit->setText(saveAutoRun.join(";"));
+
+    updat_gopath_info();
 }
 
 void BuildConfigDialog::saveBuild()
@@ -285,6 +306,28 @@ void BuildConfigDialog::on_customResetAllButton_clicked()
             sharedValue->setCheckState(Qt::Checked);
         }
     }
+}
+
+void BuildConfigDialog::updat_gopath_info()
+{
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+    QString customPath;
+    QProcessEnvironment env = LiteApi::getCustomGoEnvironment(m_liteApp,m_buildPath,&customPath);
+
+    QString infoHead;
+    if (!customPath.isEmpty()) {
+        infoHead = QString("Use custom GOPATH for build path <b>%1</b>").arg(QDir::toNativeSeparators(customPath));
+    } else {
+        infoHead = "Use LiteIDE Global GOPATH";
+    }
+    QStringList gopathList = env.value("GOPATH").split(sep);
+
+    ui->gopathInfoHeadLabel->setText(infoHead);
+    ui->gopathInfoLabel->setText(gopathList.join("\n"));
 }
 
 void BuildConfigDialog::updateBuildConfigHelp(LiteApi::IBuild *build, const QString &buildRootPath, const QMap<QString,QString> &liteEnvMap, QStandardItemModel *liteideModel, QStandardItemModel *configModel, QStandardItemModel *customModel, QStandardItemModel *actionModel)
