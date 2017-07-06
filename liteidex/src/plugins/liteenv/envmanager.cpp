@@ -343,7 +343,23 @@ void EnvManager::appLoaded()
 {
     m_appLoaded = true;
     m_liteApp->appendLog("EnvManager","init load environment");
-    emitEnvChanged();
+    //emitEnvChanged();
+    QString id = m_liteApp->settings()->value(LITEENV_CURRENTENV,"system").toString();
+
+    //commandline
+    //liteide --select-env system
+    QString flagSelectEnv = "--select-env";
+    QString selectEnv = m_liteApp->globalCookie().value(flagSelectEnv).toString();
+
+    if (!selectEnv.isEmpty()) {
+        id = selectEnv;
+        m_liteApp->globalCookie().remove(flagSelectEnv);
+    }
+    if (id.isEmpty()) {
+        id = "system";
+    }
+
+    this->setCurrentEnvId(id);
 }
 
 void EnvManager::loadEnvFiles(const QString &path)
@@ -437,22 +453,6 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
-    QString id = m_liteApp->settings()->value(LITEENV_CURRENTENV,"system").toString();
-
-    //commandline
-    //liteide --select-env system
-    QString flagSelectEnv = "--select-env";
-    QString selectEnv = m_liteApp->globalCookie().value(flagSelectEnv).toString();
-
-    if (!selectEnv.isEmpty()) {
-        id = selectEnv;
-        m_liteApp->globalCookie().remove(flagSelectEnv);
-    }
-    if (id.isEmpty()) {
-        id = "system";
-    }
-
-    this->setCurrentEnvId(id);
 
     connect(m_envCmb,SIGNAL(activated(QString)),this,SLOT(envActivated(QString)));
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
