@@ -111,3 +111,8 @@ void GoEnvManager::updateGoEnv()
         emit globalGOPATHChanged();
     }
 }
+
+void GoEnvManager::updateCustomGOPATH(const QString &buildPath)
+{
+    emit customGOPATHChanged(buildPath);
+}

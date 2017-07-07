@@ -18,14 +18,14 @@ public:
     virtual QStringList customGOPATH(const QString &buildPath, QString *pCustomBuildPath) const;
     virtual QString findRealCustomBuildPath(const QString &buildPath) const;
     virtual bool hasCustomGOPATH(const QString &buildPath) const;
-    void updateGoEnv();
+    virtual void updateGoEnv();
+    virtual void updateCustomGOPATH(const QString &buildPath);
 protected:
     QString m_gocmd;
     QString m_gotools;
     QString m_goroot;
     QStringList m_gopathList;
     LiteApi::IEnvManager *m_envManager;
-    QProcessEnvironment m_goenv;
 };
 
 #endif // GOENVMANAGER_H

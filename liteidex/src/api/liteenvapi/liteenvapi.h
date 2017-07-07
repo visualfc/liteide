@@ -77,9 +77,11 @@ public:
     virtual QStringList customGOPATH(const QString &buildPath, QString *pCustomBuildPath = 0) const = 0;
     virtual QString findRealCustomBuildPath(const QString &buildPath) const = 0;
     virtual bool hasCustomGOPATH(const QString &buildPath) const = 0;
+    virtual void updateGoEnv() = 0;
+    virtual void updateCustomGOPATH(const QString &buildPath) = 0;
 signals:
-    virtual void globalGOPATHChanged();
-    virtual void buildPathGOPATHChanged(const QString &buildPath);
+    void globalGOPATHChanged();
+    void customGOPATHChanged(const QString &buildPath);
 };
 
 inline IEnvManager *getEnvManager(LiteApi::IApplication* app)
