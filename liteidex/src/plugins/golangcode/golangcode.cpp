@@ -78,12 +78,6 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(loaded()));
     applyOption("option/golangcode");
-    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
-    if (m_gocodeCmd.isEmpty()) {
-         m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
-    } else {
-         m_liteApp->appendLog("GolangCode",QString("Found gocode at %1").arg(m_gocodeCmd));
-    }
 }
 
 void GolangCode::applyOption(QString id)
@@ -292,14 +286,13 @@ GolangCode::~GolangCode()
     delete m_importProcess;
 }
 
-void GolangCode::resetGocode()
+void GolangCode::resetGocode(const QProcessEnvironment &env)
 {
     if (m_gocodeCmd.isEmpty()) {
         return;
     }
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    m_gocodeProcess->setEnvironment(env.toStringList());
-    m_gocodeSetProcess->setEnvironment(env.toStringList());
+    m_gocodeProcess->setProcessEnvironment(env);
+    m_gocodeSetProcess->setProcessEnvironment(env);
     m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "set" << "lib-path" << env.value("GOPATH"));
 }
 
@@ -350,7 +343,7 @@ void GolangCode::loadPkgList()
     m_allImportList = m_importList;
 }
 
-void GolangCode::loadImportsList()
+void GolangCode::loadImportsList(const QProcessEnvironment &env)
 {
     if (!m_importProcess->isStop()) {
         m_importProcess->stopAndWait(100,2000);
@@ -362,6 +355,9 @@ void GolangCode::loadImportsList()
     }
     QStringList args;
     args << "pkgs" << "-list" << "-pkg" << "-skip_goroot";
+
+    m_importProcess->setProcessEnvironment(env);
+
     m_importProcess->start(cmd,args);
 }
 
@@ -373,11 +369,18 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 //    }
     m_liteApp->appendLog("GolangCode","go environment changed");
     m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+
+    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
+    if (m_gocodeCmd.isEmpty()) {
+         m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
+    } else {
+         m_liteApp->appendLog("GolangCode",QString("Found gocode at %1").arg(m_gocodeCmd));
+    }
     m_gocodeProcess->setProcessEnvironment(env);
     m_importProcess->setProcessEnvironment(env);
+    m_gocodeSetProcess->setProcessEnvironment(env);
 
-    resetGocode();
-    loadImportsList();
+    currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
 
 void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
@@ -412,6 +415,14 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
     }
     m_fileInfo.setFile(filePath);
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
+
+    QProcessEnvironment env = LiteApi::getCustomGoEnvironment(m_liteApp,editor);
+    QString gopathenv = env.value("GOPATH");
+    if (gopathenv != m_lastGopathEnv) {
+        m_lastGopathEnv = gopathenv;
+        resetGocode(env);
+        loadImportsList(env);
+    }
 }
 
 void GolangCode::setCompleter(LiteApi::ICompleter *completer)

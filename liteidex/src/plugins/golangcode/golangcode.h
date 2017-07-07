@@ -65,10 +65,10 @@ public:
     explicit GolangCode(LiteApi::IApplication *app, QObject *parent = 0);
     ~GolangCode();
     void setCompleter(LiteApi::ICompleter *completer);
-    void resetGocode();
+    void resetGocode(const QProcessEnvironment &env);
     void cgoComplete();
     void loadPkgList();
-    void loadImportsList();
+    void loadImportsList(const QProcessEnvironment &env);
 public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
@@ -104,6 +104,7 @@ protected:
     LiteApi::IEnvManager *m_envManager;
     LiteApi::IGolangAst *m_golangAst;
     QString     m_gocodeCmd;
+    QString     m_lastGopathEnv;
     bool        m_closeOnExit;
     bool        m_autoUpdatePkg;
 };

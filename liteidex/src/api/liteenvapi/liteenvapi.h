@@ -402,7 +402,6 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, Li
     return getCustomGoEnvironment(app,buildFilePath);
 }
 
-
 } //namespace LiteApi
 
 
