@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "envmanager.h"
+#include "goenvmanager.h"
 #include "liteenv_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
@@ -264,6 +265,7 @@ EnvManager::EnvManager(QObject *parent)
       m_curEnv(0),m_toolBar(0), m_envCmb(0),
       m_appLoaded(false)
 {
+    m_goEnvManager = new GoEnvManager(this);
 }
 
 EnvManager::~EnvManager()
@@ -379,6 +381,7 @@ void EnvManager::emitEnvChanged()
         return;
     }    
 
+    m_goEnvManager->updateGoEnv();
     emit currentEnvChanged(m_curEnv);
 }
 
@@ -453,13 +456,15 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
-
     connect(m_envCmb,SIGNAL(activated(QString)),this,SLOT(envActivated(QString)));
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
     connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
     connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
+
+    m_goEnvManager->initWithApp(app);
+
     return true;
 }
 

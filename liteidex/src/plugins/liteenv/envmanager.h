@@ -29,6 +29,7 @@
 class QComboBox;
 
 class EnvManager;
+class GoEnvManager;
 class Process;
 class Env : public LiteApi::IEnv
 {
@@ -99,6 +100,7 @@ protected:
     QToolBar        *m_toolBar;
     QComboBox       *m_envCmb;
     bool             m_appLoaded;
+    GoEnvManager     *m_goEnvManager;
 };
 
 #endif // ENVMANAGER_H

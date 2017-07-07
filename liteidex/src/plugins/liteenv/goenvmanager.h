@@ -3,13 +3,12 @@
 
 #include "liteenvapi/liteenvapi.h"
 
-using namespace LiteApi;
-
-class GoEnvManager : public IGoEnvManger
+class GoEnvManager : public LiteApi::IGoEnvManger
 {
     Q_OBJECT
 public:
     GoEnvManager(QObject *parent);
+    virtual bool initWithApp(LiteApi::IApplication *app);
     virtual QString gocmd() const;
     virtual QString gotools() const;
     virtual QString GOROOT() const;
@@ -19,11 +18,14 @@ public:
     virtual QStringList customGOPATH(const QString &buildPath, QString *pCustomBuildPath) const;
     virtual QString findRealCustomBuildPath(const QString &buildPath) const;
     virtual bool hasCustomGOPATH(const QString &buildPath) const;
+    void updateGoEnv();
 protected:
     QString m_gocmd;
     QString m_gotools;
     QString m_goroot;
     QStringList m_gopathList;
+    LiteApi::IEnvManager *m_envManager;
+    QProcessEnvironment m_goenv;
 };
 
 #endif // GOENVMANAGER_H

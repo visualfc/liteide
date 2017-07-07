@@ -1,9 +1,23 @@
 #include "goenvmanager.h"
+#include "fileutil/fileutil.h"
+#include <QDir>
+
+using namespace LiteApi;
 
 GoEnvManager::GoEnvManager(QObject *parent)
     : IGoEnvManger(parent)
 {
 
+}
+
+bool GoEnvManager::initWithApp(IApplication *app)
+{
+    if (!IGoEnvManger::initWithApp(app)) {
+        return false;
+    }
+    m_liteApp->extension()->addObject("LiteApi.GoEnvManager",this);
+    m_envManager = LiteApi::getEnvManager(app);
+    return true;
 }
 
 QString GoEnvManager::gocmd() const
@@ -71,4 +85,29 @@ QString GoEnvManager::findRealCustomBuildPath(const QString &buildPath) const
 bool GoEnvManager::hasCustomGOPATH(const QString &buildPath) const
 {
     return !findRealCustomBuildPath(buildPath).isEmpty();
+}
+
+void GoEnvManager::updateGoEnv()
+{
+    m_gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    m_gotools = LiteApi::getGotools(m_liteApp);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    m_goroot = env.value("GOROOT");
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+    QStringList pathList;
+    QString goroot = QDir::toNativeSeparators(env.value("GOROOT"));
+    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeAll(goroot);
+    pathList.removeDuplicates();
+
+    if (m_gopathList != pathList) {
+        m_gopathList = pathList;
+        emit globalGOPATHChanged();
+    }
 }
