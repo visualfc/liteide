@@ -281,6 +281,7 @@ void GolangCode::updateEditorGOPATH()
         m_lastGopathEnv = gopathenv;
         resetGocode(env);
         loadImportsList(env);
+        m_liteApp->appendLog("GolangCode",QString("gocode set lib-path \"%1\"").arg(gopathenv),false);
     }
 }
 
@@ -442,13 +443,7 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
     m_fileInfo.setFile(filePath);
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
 
-    QProcessEnvironment env = LiteApi::getCustomGoEnvironment(m_liteApp,editor);
-    QString gopathenv = env.value("GOPATH");
-    if (gopathenv != m_lastGopathEnv) {
-        m_lastGopathEnv = gopathenv;
-        resetGocode(env);
-        loadImportsList(env);
-    }
+    updateEditorGOPATH();
 }
 
 void GolangCode::setCompleter(LiteApi::ICompleter *completer)
