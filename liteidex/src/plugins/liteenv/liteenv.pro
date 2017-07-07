@@ -11,13 +11,15 @@ DEFINES += LITEENV_LIBRARY
 SOURCES += liteenvplugin.cpp \
     envmanager.cpp \
     liteenvoptionfactory.cpp \
-    liteenvoption.cpp
+    liteenvoption.cpp \
+    goenvmanager.cpp
 
 HEADERS += liteenvplugin.h\
         liteenv_global.h \
     envmanager.h \
     liteenvoptionfactory.h \
-    liteenvoption.h
+    liteenvoption.h \
+    goenvmanager.h
 
 FORMS += \
     liteenvoption.ui

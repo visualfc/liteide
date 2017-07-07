@@ -63,9 +63,33 @@ signals:
     void currentEnvChanged(LiteApi::IEnv*);
 };
 
+class IGoEnvManger: public IManager
+{
+    Q_OBJECT
+public:
+    IGoEnvManger(QObject *parent = 0) : IManager(parent) {}
+    virtual QString gocmd() const = 0;
+    virtual QString gotools() const = 0;
+    virtual QString GOROOT() const = 0;
+    virtual QStringList GOPATH() const = 0;
+    virtual QProcessEnvironment environment() const = 0;
+    virtual QProcessEnvironment customEnvironment(const QString &buildFilePath, QString *pCustomBuildPath = 0) const = 0;
+    virtual QStringList customGOPATH(const QString &buildPath, QString *pCustomBuildPath = 0) const = 0;
+    virtual QString findRealCustomBuildPath(const QString &buildPath) const = 0;
+    virtual bool hasCustomGOPATH(const QString &buildPath) const = 0;
+signals:
+    virtual void globalGOPATHChanged();
+    virtual void buildPathGOPATHChanged(const QString &buildPath);
+};
+
 inline IEnvManager *getEnvManager(LiteApi::IApplication* app)
 {
     return LiteApi::findExtensionObject<IEnvManager*>(app,"LiteApi.IEnvManager");
+}
+
+inline IGoEnvManger *getGoEnvManager(LiteApi::IApplication *app)
+{
+    return LiteApi::findExtensionObject<IGoEnvManger*>(app,"LiteApi.IGoEnvManger");
 }
 
 inline QProcessEnvironment getCurrentEnvironment(LiteApi::IApplication *app)
