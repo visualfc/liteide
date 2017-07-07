@@ -242,11 +242,10 @@ void PackageBrowser::setupGopath()
         //if (!hasSameList(orgLitePath,newLitePath)) {
         m_goTool->setLiteGopath(newLitePath);
         this->reloadAll();
-//        LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
-//        if (env) {
-//            env->reloadCurrentEnv();
-//        }
-        //}
+        LiteApi::IGoEnvManger *env = LiteApi::getGoEnvManager(m_liteApp);
+        if (env) {
+            env->updateGoEnv();
+        }
     }
 }
 

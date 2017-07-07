@@ -76,7 +76,7 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     connect(m_pkgImportTip,SIGNAL(import(QString,int)),this,SLOT(import(QString,int)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(loaded()));
+    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     applyOption("option/golangcode");
 }
 
@@ -98,9 +98,14 @@ void GolangCode::applyOption(QString id)
     m_gocodeSetProcess->start(m_gocodeCmd,args);
 }
 
-void GolangCode::loaded()
+void GolangCode::appLoaded()
 {
     loadPkgList();
+    LiteApi::IGoEnvManger *goEnv = LiteApi::getGoEnvManager(m_liteApp);
+    if (goEnv) {
+        connect(goEnv,SIGNAL(customGOPATHChanged(QString)),this,SLOT(customGOPATHChanged(QString)));
+        connect(goEnv,SIGNAL(globalGOPATHChanged()),this,SLOT(globalGOPATHChanged()));
+    }
 }
 
 void GolangCode::import(const QString &import, int startPos)
@@ -266,6 +271,27 @@ bool GolangCode::findImport(const QString &id)
         block = block.next();
     }
     return false;
+}
+
+void GolangCode::updateEditorGOPATH()
+{
+    QProcessEnvironment env = LiteApi::getCustomGoEnvironment(m_liteApp,m_liteApp->editorManager()->currentEditor());
+    QString gopathenv = env.value("GOPATH");
+    if (gopathenv != m_lastGopathEnv) {
+        m_lastGopathEnv = gopathenv;
+        resetGocode(env);
+        loadImportsList(env);
+    }
+}
+
+void GolangCode::customGOPATHChanged(const QString &/*buildPath*/)
+{
+    updateEditorGOPATH();
+}
+
+void GolangCode::globalGOPATHChanged()
+{
+    updateEditorGOPATH();
 }
 
 void GolangCode::broadcast(QString /*module*/,QString /*id*/,QString)

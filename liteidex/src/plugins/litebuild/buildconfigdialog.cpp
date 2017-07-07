@@ -235,6 +235,11 @@ void BuildConfigDialog::saveGopath()
     LiteApi::updateAppSetting(m_liteApp,customKey+"#inherit_lite_gopath",inherit_lite_gopath,true);
     LiteApi::updateAppSetting(m_liteApp,customKey+"#custom_gopath",custom_gopath,false);
     LiteApi::updateAppSetting(m_liteApp,customKey+"#gopath",ui->customGopathEdit->toPlainText().split("\n"),"");
+
+    LiteApi::IGoEnvManger *goEnv = LiteApi::getGoEnvManager(m_liteApp);
+    if (goEnv) {
+        goEnv->updateCustomGOPATH(m_buildPath);
+    }
 }
 
 void BuildConfigDialog::saveCustom()

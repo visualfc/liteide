@@ -79,10 +79,13 @@ public slots:
     void importFinished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);
     void applyOption(QString);
-    void loaded();
+    void appLoaded();
     void import(const QString &import, int startPos);
     bool findImport(const QString &id);
+    void customGOPATHChanged(const QString &buildPath);
+    void globalGOPATHChanged();
 protected:
+    void updateEditorGOPATH();
     static  int g_gocodeInstCount;
     LiteApi::IApplication *m_liteApp;
     LiteApi::ITextEditor  *m_editor;

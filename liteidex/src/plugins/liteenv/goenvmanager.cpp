@@ -15,7 +15,7 @@ bool GoEnvManager::initWithApp(IApplication *app)
     if (!IGoEnvManger::initWithApp(app)) {
         return false;
     }
-    m_liteApp->extension()->addObject("LiteApi.GoEnvManager",this);
+    m_liteApp->extension()->addObject("LiteApi.IGoEnvManger",this);
     m_envManager = LiteApi::getEnvManager(app);
     return true;
 }
