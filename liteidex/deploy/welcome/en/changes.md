@@ -3,6 +3,23 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2017.7.7 Ver X32.1
+* LiteIDE
+	* build config custom gopath support inherit parent path's  gopath setup
+* GolangCode
+	* update gocode lib-path by build config custom gopath
+* LiteEnv
+	* optimization check go enviroment
+* LiteBuild
+	* build config custom gopath inherit parent path
+	* fix BuildAndRun kill old on window
+	* fix build config custom gopath action
+* GolangPackage
+	* fix load package treeview error
+* DlvDebugger
+	* dlv use headless mode
+	* fix dlv kill process
+
 ### 2017.6.12 Ver X32
 * LiteIDE
 	* support folder build config custom GOPATH
