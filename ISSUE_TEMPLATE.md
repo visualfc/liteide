@@ -1,6 +1,6 @@
 Please answer these questions before submitting your issue. Thanks!
 
-### What version of LiteIDE are you using (LiteIDE About - Version and Qt Version)?
+### What version of LiteIDE are you using (LiteIDE About - Version and Build Qt Version)?
 
 
 ### What version of Go are you using (`go version`)?
