@@ -409,6 +409,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Config</source>
         <translation type="unfinished">Конфигурация</translation>
     </message>
+    <message>
+        <source>GOPATH information</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateDirDialog</name>
@@ -3701,7 +3705,7 @@ Do you want to replace it?</source>
     <message>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
-        <translation>Не удалось найти установку Go.</translation>
+        <translation type="obsolete">Не удалось найти установку Go.</translation>
     </message>
     <message>
         <source>Loading Go package list...</source>

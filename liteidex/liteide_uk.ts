@@ -422,41 +422,46 @@ LiteIDE - це проста кросплатформена IDE з відкрит
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="91"/>
+        <source>GOPATH information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="135"/>
         <source>Use Custom GOPATH for Build Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="103"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="147"/>
         <source>Inherit System GOPATH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="113"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="167"/>
         <source>Inherit LiteIDE GOPATH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="125"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="189"/>
         <source>Custom GOPATH (one per line)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="145"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="209"/>
         <source>Add Directory...</source>
         <translation type="unfinished">Додати директорію...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="152"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="216"/>
         <source>Clear</source>
         <translation type="unfinished">Очистити</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="168"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="232"/>
         <source>LiteIDE</source>
         <translation type="unfinished">LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="178"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="242"/>
         <source>Config</source>
         <translation type="unfinished">Конфігурація</translation>
     </message>
@@ -466,52 +471,52 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <translation type="obsolete">Збірка</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="188"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="252"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="198"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="262"/>
         <source>Custom</source>
         <oldsource>Build Custom</oldsource>
         <translation type="unfinished">Параметри</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="219"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.ui" line="283"/>
         <source>Reset all to initial value</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="69"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="73"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="77"/>
+        <source>Name</source>
+        <translation type="unfinished">Назва</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="70"/>
         <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="74"/>
         <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="78"/>
-        <source>Name</source>
-        <translation type="unfinished">Назва</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="71"/>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="75"/>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="79"/>
         <source>Value</source>
         <translation type="unfinished">Значення</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="80"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="79"/>
         <source>SharedValue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="83"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="82"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="84"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="83"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="264"/>
+        <location filename="src/plugins/litebuild/buildconfigdialog.cpp" line="287"/>
         <source>Choose directory to add to GOPATH:</source>
         <translation type="unfinished">Додати директорію в GOPATH:</translation>
     </message>
@@ -680,126 +685,126 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="139"/>
+        <location filename="src/liteapp/editormanager.cpp" line="140"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="164"/>
+        <location filename="src/liteapp/editormanager.cpp" line="165"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>Перенести в нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="217"/>
+        <location filename="src/liteapp/editormanager.cpp" line="218"/>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
         <translation type="unfinished">Р&amp;едагувати</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="231"/>
+        <location filename="src/liteapp/editormanager.cpp" line="232"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation type="unfinished">Вперед</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Закрити інші</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="109"/>
+        <location filename="src/liteapp/editormanager.cpp" line="110"/>
         <source>OpenEditor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Закрити всі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Left Tabs</source>
         <translation>Закрити вкладки зліва</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Right Tabs</source>
         <translation>Закрити вкладки справа</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="145"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Закрити файли з цієї ж директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Закрити файли з інших директорій</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="147"/>
+        <location filename="src/liteapp/editormanager.cpp" line="148"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Копіювати повний шлях в буфер обміну</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="150"/>
+        <location filename="src/liteapp/editormanager.cpp" line="151"/>
         <source>Show in Explorer</source>
         <translation>Показати в файловому менеджері</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="152"/>
+        <location filename="src/liteapp/editormanager.cpp" line="153"/>
         <source>Show in Finder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="154"/>
+        <location filename="src/liteapp/editormanager.cpp" line="155"/>
         <source>Show Containing Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="158"/>
+        <location filename="src/liteapp/editormanager.cpp" line="159"/>
         <source>Open Command Prompt Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="160"/>
+        <location filename="src/liteapp/editormanager.cpp" line="161"/>
         <source>Open Terminal Here</source>
         <translation type="unfinished">Відкрити термінал тут</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="222"/>
+        <location filename="src/liteapp/editormanager.cpp" line="223"/>
         <source>Navigate Backward</source>
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="252"/>
+        <location filename="src/liteapp/editormanager.cpp" line="253"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="423"/>
+        <location filename="src/liteapp/editormanager.cpp" line="424"/>
         <source>Save changes to %1?</source>
         <translation>Зберегти зміни в %1?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="424"/>
+        <location filename="src/liteapp/editormanager.cpp" line="425"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Незбережені зміни</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="519"/>
+        <location filename="src/liteapp/editormanager.cpp" line="520"/>
         <source>All Files (*)</source>
         <translation>Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="521"/>
+        <location filename="src/liteapp/editormanager.cpp" line="522"/>
         <source>Save As</source>
         <translation>Зберегти як</translation>
     </message>
@@ -807,25 +812,25 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>EnvManager</name>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="401"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="434"/>
         <source>Environment Toolbar</source>
         <oldsource>Environment ToolBar</oldsource>
         <translation type="unfinished">Панель конфігурації оточення</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="408"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="441"/>
         <source>Switching current environment</source>
         <oldsource>Switch Current Environment</oldsource>
         <translation type="unfinished">Перемкнути поточне оточення</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="411"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="444"/>
         <source>Edit current environment</source>
         <oldsource>Edit Current Environment</oldsource>
         <translation type="unfinished">Редагувати поточне оточення</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteenv/envmanager.cpp" line="412"/>
+        <location filename="src/plugins/liteenv/envmanager.cpp" line="445"/>
         <source>Reload current environment</source>
         <oldsource>Reload Current Environment</oldsource>
         <translation type="unfinished">Перезавантажити поточне оточення</translation>
@@ -1353,7 +1358,7 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FileRecent</name>
     <message>
-        <location filename="src/liteapp/recentmanager.h" line="82"/>
+        <location filename="src/liteapp/recentmanager.h" line="81"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2009,7 +2014,7 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderRecent</name>
     <message>
-        <location filename="src/liteapp/recentmanager.h" line="113"/>
+        <location filename="src/liteapp/recentmanager.h" line="112"/>
         <source>Folders</source>
         <translation type="unfinished">Директорії</translation>
     </message>
@@ -2319,7 +2324,7 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>GolangFileSearch</name>
     <message>
-        <location filename="src/plugins/golangedit/golangfilesearch.cpp" line="55"/>
+        <location filename="src/plugins/golangedit/golangfilesearch.cpp" line="59"/>
         <source>Golang Find Usages</source>
         <translation type="unfinished">Знайти використання</translation>
     </message>
@@ -2620,7 +2625,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="659"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="693"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">увага, pkg не знайдено, будь ласка введіть для імпорту:</translation>
     </message>
@@ -2656,32 +2661,32 @@ Success: %2.</oldsource>
         <translation type="unfinished">Вихід</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="744"/>
         <source>Close File</source>
         <translation type="unfinished">Закрити файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="745"/>
+        <location filename="src/liteapp/liteapp.cpp" line="747"/>
         <source>Close All Files</source>
         <translation type="unfinished">Закрити все</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="755"/>
+        <location filename="src/liteapp/liteapp.cpp" line="757"/>
         <source>Save File</source>
         <translation type="unfinished">Зберегти файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="758"/>
+        <location filename="src/liteapp/liteapp.cpp" line="760"/>
         <source>Save File As...</source>
         <translation type="unfinished">Зберегти файл як...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="761"/>
+        <location filename="src/liteapp/liteapp.cpp" line="763"/>
         <source>Save All Files</source>
         <translation type="unfinished">Зберегти всі файли</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="748"/>
+        <location filename="src/liteapp/liteapp.cpp" line="750"/>
         <source>Open Project</source>
         <translation>Відкрити проект...</translation>
     </message>
@@ -2691,68 +2696,68 @@ Success: %2.</oldsource>
         <translation type="unfinished">Параметри</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="719"/>
+        <location filename="src/liteapp/liteapp.cpp" line="721"/>
         <source>New...</source>
         <translation type="unfinished">Новий...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="722"/>
+        <location filename="src/liteapp/liteapp.cpp" line="724"/>
         <source>Open File...</source>
         <translation type="unfinished">Відкрити файл...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="725"/>
+        <location filename="src/liteapp/liteapp.cpp" line="727"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Відкрити директорію...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="728"/>
+        <location filename="src/liteapp/liteapp.cpp" line="730"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Відкрити директорію у новому вікні...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="733"/>
+        <location filename="src/liteapp/liteapp.cpp" line="735"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Закрити всі директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="736"/>
+        <location filename="src/liteapp/liteapp.cpp" line="738"/>
         <source>New Window</source>
         <translation type="unfinished">Нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="739"/>
+        <location filename="src/liteapp/liteapp.cpp" line="741"/>
         <source>Close Window</source>
         <translation type="unfinished">Закрити вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="750"/>
+        <location filename="src/liteapp/liteapp.cpp" line="752"/>
         <source>Save Project</source>
         <translation>Зберегти проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="752"/>
+        <location filename="src/liteapp/liteapp.cpp" line="754"/>
         <source>Close Project</source>
         <translation type="unfinished">Закрити проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="764"/>
+        <location filename="src/liteapp/liteapp.cpp" line="766"/>
         <source>Exit</source>
         <translation>Вихід</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="770"/>
+        <location filename="src/liteapp/liteapp.cpp" line="772"/>
         <source>Full Screen</source>
         <translation type="unfinished">Повний екран</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="774"/>
+        <location filename="src/liteapp/liteapp.cpp" line="776"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Про LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="780"/>
+        <location filename="src/liteapp/liteapp.cpp" line="782"/>
         <source>About Plugins</source>
         <translation type="unfinished">Про розширення</translation>
     </message>
@@ -3135,53 +3140,52 @@ Success: %2.</oldsource>
         <translation type="unfinished">Результати збірки</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="670"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="676"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="660"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation type="unfinished">Ідентифікатор конфігурації &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1044"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1061"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation type="unfinished">Замкнути збірку</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1382"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1399"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished">Помилка: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1385"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1402"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished">Команда завершилась з кодом %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1387"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1404"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished">Все ок: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1426"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1480"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1444"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1509"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished">Процес вже виконується. Потрібно його перервати (меню Збірка/Перервати).</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1473"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1495"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished">Зупиняю поточний процес...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1476"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1505"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
@@ -3194,14 +3198,14 @@ Success: %2.</oldsource>
         <translation type="obsolete">&gt; Не вдалося розпізнати дію &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1673"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1705"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished">Процесс стартував успішно</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1673"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1705"/>
         <source>Failed to start process</source>
         <translation type="unfinished">Помилка старту процесу</translation>
     </message>
@@ -4555,13 +4559,12 @@ Do you want to replace it?</source>
         <translation type="unfinished">Перегляд пакетів</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="195"/>
         <source>No Go installation was found.</source>
         <oldsource>Not find go in PATH...</oldsource>
-        <translation type="unfinished">Не знаходжу інсталяцію Go.</translation>
+        <translation type="obsolete">Не знаходжу інсталяцію Go.</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="200"/>
+        <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="207"/>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation type="unfinished">Завантажую список пакетів Go...</translation>
@@ -4581,23 +4584,28 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/packageproject.cpp" line="78"/>
-        <location filename="src/plugins/golangpackage/packageproject.cpp" line="300"/>
+        <location filename="src/plugins/golangpackage/packageproject.cpp" line="299"/>
         <source>Add Source File</source>
         <translation type="unfinished">Додати вихідний файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
-        <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
+        <location filename="src/plugins/golangpackage/packageproject.cpp" line="299"/>
+        <source>File Name:</source>
+        <translation type="unfinished">Ім`я файлу:</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/packageproject.cpp" line="310"/>
+        <location filename="src/plugins/golangpackage/packageproject.cpp" line="315"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packageproject.cpp" line="311"/>
+        <location filename="src/plugins/golangpackage/packageproject.cpp" line="310"/>
         <source>File %1 already exists.</source>
         <translation>Файл %1 вже існує.</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/packageproject.cpp" line="316"/>
+        <location filename="src/plugins/golangpackage/packageproject.cpp" line="315"/>
         <source>Could not open %1 for writing.</source>
         <translation>Неможливо відкрити %1 для запису.</translation>
     </message>
@@ -4652,47 +4660,47 @@ Do you want to replace it?</source>
 <context>
     <name>ProcessEx</name>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="46"/>
+        <location filename="src/utils/processex/processex.cpp" line="51"/>
         <source>process exited with code %1</source>
         <translation type="unfinished">процес завершився із кодом %1</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="49"/>
+        <location filename="src/utils/processex/processex.cpp" line="54"/>
         <source>process crashed or was terminated</source>
         <translation type="unfinished">процес завершився аварійно чи був завершений ззовні</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="52"/>
+        <location filename="src/utils/processex/processex.cpp" line="57"/>
         <source>process exited with an unknown status</source>
         <translation type="unfinished">процес завершився із невідомим статусом</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="62"/>
+        <location filename="src/utils/processex/processex.cpp" line="67"/>
         <source>process failed to start</source>
         <translation type="unfinished">процес не вдалося запустити</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="65"/>
+        <location filename="src/utils/processex/processex.cpp" line="70"/>
         <source>process crashed or was terminated while running</source>
         <translation type="unfinished">процес завершився аварійно чи був завершений іззовні під час виконання</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="68"/>
+        <location filename="src/utils/processex/processex.cpp" line="73"/>
         <source>timed out waiting for process</source>
         <translation type="unfinished">тайм-аут очікування процессу</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="71"/>
+        <location filename="src/utils/processex/processex.cpp" line="76"/>
         <source>couldn&apos;t read from the process</source>
         <translation type="unfinished">не вдалося прочитати з процесу</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="74"/>
+        <location filename="src/utils/processex/processex.cpp" line="79"/>
         <source>couldn&apos;t write to the process</source>
         <translation type="unfinished">не вдалося записати в процес</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="78"/>
+        <location filename="src/utils/processex/processex.cpp" line="83"/>
         <source>an unknown error occurred</source>
         <translation type="unfinished">невідома помилка</translation>
     </message>
@@ -4930,7 +4938,7 @@ Do you want to replace it?</source>
 <context>
     <name>SessionRecent</name>
     <message>
-        <location filename="src/liteapp/recentmanager.h" line="144"/>
+        <location filename="src/liteapp/recentmanager.h" line="143"/>
         <source>Sessions</source>
         <translation type="unfinished"></translation>
     </message>
