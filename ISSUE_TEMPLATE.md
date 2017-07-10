@@ -6,7 +6,7 @@ Please answer these questions before submitting your issue. Thanks!
 ### What version of Go are you using (`go version`)?
 
 
-### What operating system and processor architecture are you using?
+### What operating system and processor architecture are you using(`go env`)?
 
 
 ### What did you do?
