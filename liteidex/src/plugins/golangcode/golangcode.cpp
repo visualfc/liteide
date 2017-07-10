@@ -275,6 +275,9 @@ bool GolangCode::findImport(const QString &id)
 
 void GolangCode::updateEditorGOPATH()
 {
+    if (m_gocodeCmd.isEmpty()) {
+        return;
+    }
     QProcessEnvironment env = LiteApi::getCustomGoEnvironment(m_liteApp,m_liteApp->editorManager()->currentEditor());
     QString gopathenv = env.value("GOPATH");
     if (gopathenv != m_lastGopathEnv) {
