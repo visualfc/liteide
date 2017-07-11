@@ -619,6 +619,9 @@ void FileManager::updateFileState(const QString &fileName)
         return;
     }
     m_fileStateMap.insert(fileName,QFileInfo(fileName).lastModified());
+    if (!m_fileWatcher->files().contains(fileName)) {
+        m_fileWatcher->addPath(fileName);;
+    }
 }
 
 void FileManager::editorCreated(LiteApi::IEditor *editor)
@@ -629,12 +632,11 @@ void FileManager::editorCreated(LiteApi::IEditor *editor)
     QString fileName = editor->filePath();
     if (!fileName.isEmpty()) {
         updateFileState(fileName);
-        m_fileWatcher->addPath(fileName);
     }
 }
 
 void FileManager::editorAboutToClose(LiteApi::IEditor *editor)
-{
+{    
     if (!editor) {
         return;
     }
@@ -660,6 +662,7 @@ void FileManager::fileChanged(QString fileName)
     if (m_fileStateMap.contains(fileName)) {
         m_changedFiles.insert(fileName);
     }
+
     if (wasempty && !m_changedFiles.isEmpty()) {
         QTimer::singleShot(200, this, SLOT(checkForReload()));
     }
@@ -741,6 +744,9 @@ void FileManager::checkForReload()
                     // Otherwise, apply the default action : reload the new content in the editor.
                     QDateTime lastModified = QFileInfo(fileName).lastModified();
                     QDateTime modified = m_fileStateMap.value(fileName);
+                    if (!m_fileWatcher->files().contains(fileName)) {
+                        m_fileWatcher->addPath(fileName);;
+                    }
                     if (lastModified > modified) {
                         int ret = QMessageBox::Yes;
                         if (lastReloadRet != QMessageBox::YesToAll) {
@@ -764,7 +770,9 @@ void FileManager::checkForReload()
                             QDateTime modified = m_fileStateMap.value(fileName);
                             if (lastModified != modified) {
                                 editor->reload();
+                                m_fileStateMap.insert(fileName,lastModified);
                                 m_liteApp->appendLog("EditorManager",fileName+" reload",false);
+
                             }
                         }
                         if (ret == QMessageBox::YesToAll) {
