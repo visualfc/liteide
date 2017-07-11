@@ -29,6 +29,7 @@
 #include "folderview/multifolderview.h"
 #include "liteapp_global.h"
 
+#include <QApplication>
 #include <QMenu>
 #include <QAction>
 #include <QFileDialog>
@@ -132,8 +133,10 @@ bool FileManager::initWithApp(IApplication *app)
 FileManager::FileManager()
     : m_newFileDialog(0),
       m_folderListView(0),
-      m_checkActivated(false)
+      m_checkBlockActivated(false),
+      m_checkOnFocusChange(false)
 {
+    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(onApplicationFocusChange()));
 }
 
 FileManager::~FileManager()
@@ -638,7 +641,7 @@ void FileManager::editorAboutToClose(LiteApi::IEditor *editor)
     QString fileName = editor->filePath();
     if (!fileName.isEmpty()) {
         m_fileStateMap.remove(fileName);
-        m_changedFiles.removeAll(fileName);
+        m_changedFiles.remove(fileName);
         m_fileWatcher->removePath(fileName);
     }
 }
@@ -654,21 +657,43 @@ void FileManager::editorSaved(LiteApi::IEditor *editor)
 void FileManager::fileChanged(QString fileName)
 {
     const bool wasempty = m_changedFiles.isEmpty();
-    if (!m_changedFiles.contains(fileName)) {
-        m_changedFiles.append(fileName);
+    if (m_fileStateMap.contains(fileName)) {
+        m_changedFiles.insert(fileName);
     }
-    if (wasempty && !m_changedFiles.isEmpty() && !m_checkActivated) {
-        m_checkActivated = true;
+    if (wasempty && !m_changedFiles.isEmpty()) {
         QTimer::singleShot(200, this, SLOT(checkForReload()));
     }
 }
 
+void FileManager::onApplicationFocusChange()
+{
+    if (!m_checkOnFocusChange)
+        return;
+    m_checkOnFocusChange = false;
+    checkForReload();
+}
+
 void FileManager::checkForReload()
 {
+    if (m_changedFiles.isEmpty()) {
+        return;
+    }
+
+    if (this->m_checkBlockActivated)
+        return;
+    if (QApplication::activeModalWidget()) {
+        // We do not want to prompt for modified file if we currently have some modal dialog open.
+        // There is no really sensible way to get notified globally if a window closed,
+        // so just check on every focus change.
+        m_checkOnFocusChange = true;
+        return;
+    }
+
+    this->m_checkBlockActivated = true;
+
     int lastReloadRet = QMessageBox::Yes;
     int lastCloseRet = QMessageBox::Yes;
-begin:
-    QStringList files = m_changedFiles;
+    QStringList files = m_changedFiles.toList();
     m_changedFiles.clear();
     foreach (QString fileName, files) {
         if (!QFile::exists(fileName)) {
@@ -750,10 +775,8 @@ begin:
             }
         }
     }
-    if (!m_changedFiles.isEmpty()) {
-        goto begin;
-    }
-    m_checkActivated = false;
+    m_checkBlockActivated = false;
+    QTimer::singleShot(200, this, SLOT(checkForReload()));
 }
 
 

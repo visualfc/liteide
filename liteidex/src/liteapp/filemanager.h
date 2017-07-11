@@ -83,13 +83,15 @@ public slots:
     void enterKeyPressedFolderView(const QModelIndex &index);
     void currentEditorChanged(LiteApi::IEditor *editor);
     void triggeredSyncEditor(bool b);
+    void onApplicationFocusChange();
 protected:
     NewFileDialog        *m_newFileDialog;
     MultiFolderView     *m_folderListView;
     QFileSystemWatcher   *m_fileWatcher;
     QMap<QString,QDateTime> m_fileStateMap;
-    QStringList          m_changedFiles;
-    bool                 m_checkActivated;
+    QSet<QString>           m_changedFiles;
+    bool                 m_checkBlockActivated;
+    bool                 m_checkOnFocusChange;
     bool                 m_fileWatcherAutoReload;
     QAction     *m_toolWindowAct;
     QString      m_initPath;
