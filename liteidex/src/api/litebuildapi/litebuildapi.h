@@ -283,9 +283,10 @@ signals:
 };
 
 struct TargetInfo {
-    QString cmd;
-    QString args;
-    QString workDir;
+    QString buildRootPath;
+    QString targetName;
+    QString targetArgs;
+    QString targetWorkDir;
 };
 
 class ILiteBuild : public IObject

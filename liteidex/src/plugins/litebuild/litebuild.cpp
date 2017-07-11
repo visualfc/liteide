@@ -802,9 +802,10 @@ LiteApi::TargetInfo LiteBuild::getTargetInfo()
 
         QMap<QString,QString> env = buildEnvMap(m_build,m_buildRootPath);
         QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
-        info.cmd = this->envToValue(target->cmd(),env,sysenv);
-        info.args = this->envToValue(target->args(),env,sysenv);
-        info.workDir = this->envToValue(target->work(),env,sysenv);
+        info.buildRootPath = m_buildRootPath;
+        info.targetName = this->envToValue(target->cmd(),env,sysenv);
+        info.targetArgs = this->envToValue(target->args(),env,sysenv);
+        info.targetWorkDir = this->envToValue(target->work(),env,sysenv);
     }
     return info;
 }
