@@ -185,11 +185,13 @@ QAbstractItemModel *DlvDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
 
 void DlvDebugger::setWorkingDirectory(const QString &dir)
 {
+    m_headlessProcess->setWorkingDirectory(dir);
     m_process->setWorkingDirectory(dir);
 }
 
 void DlvDebugger::setEnvironment (const QStringList &environment)
 {
+    m_headlessProcess->setEnvironment(environment);
     m_process->setEnvironment(environment);
 }
 
