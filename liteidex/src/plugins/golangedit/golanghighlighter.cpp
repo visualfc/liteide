@@ -47,6 +47,7 @@ GolangHighlighter::GolangHighlighter(QTextDocument *document) :
     TextEditor::SyntaxHighlighter(document)
 {
     m_todoList = QString("TODO,BUG,FIXME,NOTE,SECBUG").split(",");
+    m_todoRegexp.setPattern(QString("^(%1)([\\s\\:\\(\\,]|$)").arg(m_todoList.join("|")));
     m_gotagList = QString("+build").split(",");
     TextEditor::SyntaxComment comment;
     comment.singleLineComment = "//";
@@ -495,9 +496,15 @@ void GolangHighlighter::highlightCommentLine(const QString &text, int position, 
         } else if (format.isValid()) {
             if (first) {
                 first = false;
-                if (m_todoList.contains(text.mid(start,tokenLength))) {
-                    setFormat(start,tokenLength,todoFormat);
-                    continue;
+                int index = m_todoRegexp.indexIn(text.mid(start,tokenLength));
+                if (index == 0) {
+                    int todoLen = m_todoRegexp.cap(1).length();
+                    setFormat(start,todoLen,todoFormat);
+                    if (todoLen < length) {
+                        setFormat(start+todoLen,length-todoLen, format);
+                    }
+                    //setFormat(position,length,todoFormat);
+                    break;
                 }
                 if (m_gotagList.contains(text.mid(start,tokenLength))) {
                     setFormat(position,length,todoFormat);

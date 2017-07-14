@@ -27,6 +27,7 @@
 #include "qtc_texteditor/syntaxhighlighter.h"
 
 #include <QTextCharFormat>
+#include <QRegExp>
 
 class GolangHighlighter : public TextEditor::SyntaxHighlighter
 {
@@ -47,6 +48,7 @@ private:
 protected:
     QStringList m_todoList;
     QStringList m_gotagList;
+    QRegExp     m_todoRegexp;
 };
 
 #endif // GOLANGHIGHLIGHTER_H
