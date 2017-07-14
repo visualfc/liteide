@@ -44,7 +44,7 @@ QStringList GolangHighlighterFactory::mimeTypes() const
     return QStringList() << "text/x-gosrc";
 }
 
-TextEditor::SyntaxHighlighter *GolangHighlighterFactory::create(QTextDocument *doc, const QString &/*mimeType*/)
+TextEditor::SyntaxHighlighter *GolangHighlighterFactory::create(LiteApi::ITextEditor *editor, QTextDocument *doc, const QString &/*mimeType*/)
 {
-    return new GolangHighlighter(doc);
+    return new GolangHighlighter(editor,doc);
 }

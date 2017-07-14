@@ -43,7 +43,7 @@
 using namespace TextEditor;
 using namespace CPlusPlus;
 
-GolangHighlighter::GolangHighlighter(QTextDocument *document) :
+GolangHighlighter::GolangHighlighter(LiteApi::ITextEditor *editor, QTextDocument *document) :
     TextEditor::SyntaxHighlighter(document)
 {
     m_todoList = QString("TODO,BUG,FIXME,NOTE,SECBUG").split(",");
@@ -62,6 +62,22 @@ GolangHighlighter::~GolangHighlighter()
 }
 
 void GolangHighlighter::highlightBlock(const QString &text)
+{
+    int blockNumber = this->currentBlock().blockNumber();
+    m_currentTodo.clear();
+    highlightBlockHelper(text);
+    QString old = m_todoInfoMap.value(blockNumber);
+    if (m_currentTodo != old) {
+        if (m_currentTodo.isEmpty()) {
+            m_todoInfoMap.remove(blockNumber);
+        } else {
+            m_todoInfoMap.insert(blockNumber,m_currentTodo);
+        }
+    }
+}
+
+
+void GolangHighlighter::highlightBlockHelper(const QString &text)
 {
     const int previousBlockState_ = previousBlockState();
     int lexerState = 0, initialBraceDepth = 0;
@@ -503,7 +519,7 @@ void GolangHighlighter::highlightCommentLine(const QString &text, int position, 
                     if (todoLen < length) {
                         setFormat(start+todoLen,length-todoLen, format);
                     }
-                    //setFormat(position,length,todoFormat);
+                    m_currentTodo = text.mid(start);
                     break;
                 }
                 if (m_gotagList.contains(text.mid(start,tokenLength))) {

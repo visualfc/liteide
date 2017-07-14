@@ -25,6 +25,7 @@
 #define GOLANGHIGHLIGHTER_H
 
 #include "qtc_texteditor/syntaxhighlighter.h"
+#include "liteapi/liteapi.h"
 
 #include <QTextCharFormat>
 #include <QRegExp>
@@ -34,10 +35,11 @@ class GolangHighlighter : public TextEditor::SyntaxHighlighter
     Q_OBJECT
 
 public:
-    GolangHighlighter(QTextDocument *document = 0);
+    GolangHighlighter(LiteApi::ITextEditor *editor, QTextDocument *document = 0);
     virtual ~GolangHighlighter();
     virtual void highlightBlock(const QString &text);
 private:
+    void highlightBlockHelper(const QString &text);
     void setFoldingIndent(const QTextBlock &block, int indent);
     void highlightWord(QStringRef word, int position, int length);
     void highlightLine(const QString &line, int position, int length,
@@ -49,6 +51,8 @@ protected:
     QStringList m_todoList;
     QStringList m_gotagList;
     QRegExp     m_todoRegexp;
+    QString     m_currentTodo;
+    QMap<int,QString> m_todoInfoMap;
 };
 
 #endif // GOLANGHIGHLIGHTER_H

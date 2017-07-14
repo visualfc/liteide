@@ -43,7 +43,7 @@ QStringList KateHighlighterFactory::mimeTypes() const
     return m_kate->mimeTypes();
 }
 
-TextEditor::SyntaxHighlighter *KateHighlighterFactory::create(QTextDocument *doc, const QString &mimeType)
+TextEditor::SyntaxHighlighter *KateHighlighterFactory::create(LiteApi::ITextEditor */*editor*/, QTextDocument *doc, const QString &mimeType)
 {
     return m_kate->create(doc,mimeType);
 }

@@ -279,7 +279,7 @@ public:
     IHighlighterFactory(QObject *parent) : QObject(parent)
     {}
     virtual QStringList mimeTypes() const = 0;
-    virtual TextEditor::SyntaxHighlighter* create(QTextDocument *doc, const QString &mimeType) = 0;
+    virtual TextEditor::SyntaxHighlighter* create(ITextEditor *editor, QTextDocument *doc, const QString &mimeType) = 0;
 };
 
 class IHighlighterManager :public IManager

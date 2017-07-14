@@ -151,7 +151,7 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
     QTextDocument *doc = editor->document();
     LiteApi::IHighlighterFactory *factory = m_highlighterManager->findFactory(mimeType);
     if (factory) {
-        TextEditor::SyntaxHighlighter *h = factory->create(doc,mimeType);
+        TextEditor::SyntaxHighlighter *h = factory->create(editor,doc,mimeType);
         if (h) {
             editor->setSyntaxHighlighter(h);
             editor->setTextLexer(new KateTextLexer(editor));

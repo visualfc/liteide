@@ -33,7 +33,7 @@ class KateHighlighterFactory : public LiteApi::IHighlighterFactory
 public:
     KateHighlighterFactory(QObject *parent);
     virtual QStringList mimeTypes() const;
-    virtual TextEditor::SyntaxHighlighter* create(QTextDocument *doc, const QString &mimeType);
+    virtual TextEditor::SyntaxHighlighter* create(LiteApi::ITextEditor *editor, QTextDocument *doc, const QString &mimeType);
     void loadPath(const QString &dir);
     KateHighlighter *kate() const { return m_kate; }
 protected:
