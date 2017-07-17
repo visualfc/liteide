@@ -519,7 +519,7 @@ void LiteDebug::startDebug()
         m_startDebugFile = editor->filePath();
     }
 
-    this->startDebug(cmd,info.targetArgs,info.targetWorkDir);
+    this->startDebug(QDir::toNativeSeparators(cmd),info.targetArgs,info.targetWorkDir);
 }
 
 void LiteDebug::startDebugTests()
@@ -564,7 +564,7 @@ void LiteDebug::startDebugTests()
         m_startDebugFile = editor->filePath();
     }
 
-    this->startDebug(cmd,info.targetArgs,info.targetWorkDir);
+    this->startDebug(QDir::toNativeSeparators(cmd),info.targetArgs,info.targetWorkDir);
 }
 
 void LiteDebug::continueRun()
