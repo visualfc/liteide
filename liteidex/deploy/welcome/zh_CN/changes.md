@@ -3,6 +3,16 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2017.7.17 Ver X32.2
+* LiteApp
+	* fix editor file watcher is invalid for many change
+* GolangEdit
+	* fix TODO/BUG/FIXME comment syntax	
+* DlvDebugger
+	* fix dlv headless process workdir
+* LiteDebug
+	* fix debug tests action
+
 ### 2017.7.7 Ver X32.1
 * LiteIDE
 	* build config custom gopath support inherit parent path's  gopath setup
@@ -70,7 +80,7 @@
 * LiteEnv
 	* default env /usr/local/go on macosx
 	* update macosx cross env GOROOT for system
-* LiteEditor	
+* LiteEditor
 	* context menu add convert case menu
 	* go.snippet add iferr
 	* update sublime.xml / sublime-bold.xml, thanks for hopehook <hopehook@qq.com>
@@ -110,7 +120,7 @@
 
 ### 2017.3.2 Ver X31
 * LiteIDE
-	* add command line `liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]`		
+	* add command line `liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]`
 * LiteApp
 	* add application idle timer automatic save documents option
 	* folders are not sorted to resolve sync editing errors on MacOS
@@ -118,7 +128,7 @@
 * GolangPackage
 	* update GOPATH setup
 * GolangCode
-	* update env load	
+	* update env load
 * GolangAst
 	* classview and outline add sync editor action
 * DlvDebugger

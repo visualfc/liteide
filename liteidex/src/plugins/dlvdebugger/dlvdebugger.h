@@ -28,7 +28,9 @@
 #include "liteenvapi/liteenvapi.h"
 #include "litettyapi/litettyapi.h"
 #include "qtc_gdbmi/gdbmi.h"
+#ifdef USE_DLVCLIENT
 #include "dlvclient/dlvclient.h"
+#endif
 
 #include <QSet>
 
@@ -147,7 +149,9 @@ protected:
     QString                 m_processId;
     LiteProcess *m_process;
     LiteProcess *m_headlessProcess;
+#ifdef USE_DLVCLIENT
     DlvClient   *m_dlvClient;
+#endif
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;
     QStandardItemModel *m_watchModel;

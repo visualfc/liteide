@@ -2,6 +2,15 @@
 
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
+### 2017.7.17 Ver X32.2
+* LiteApp
+	* fix editor file watcher is invalid for many change
+* GolangEdit
+	* fix TODO/BUG/FIXME comment syntax	
+* DlvDebugger
+	* fix dlv headless process workdir
+* LiteDebug
+	* fix debug tests action
 
 ### 2017.7.7 Ver X32.1
 * LiteIDE
