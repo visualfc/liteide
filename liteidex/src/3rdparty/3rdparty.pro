@@ -16,5 +16,6 @@ SUBDIRS = \
     sundown \
     cplusplus \
     fakevim \
-    diff_match_patch
+    diff_match_patch \
+    qjsonrpc
 

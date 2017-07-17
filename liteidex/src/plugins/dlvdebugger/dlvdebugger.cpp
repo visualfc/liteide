@@ -85,6 +85,8 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_liteApp(app),
     m_envManager(0)
 {
+    //m_dlvClient = new DlvClient(this);
+
     m_process = new LiteProcess(m_liteApp,this);
     m_process->setUseCtrlC(true);
 

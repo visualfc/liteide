@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>test.bjson</file>
+        <file>test.json</file>
+        <file>test2.json</file>
+        <file>test3.json</file>
+	<file>bom.json</file>
+    </qresource>
+</RCC>

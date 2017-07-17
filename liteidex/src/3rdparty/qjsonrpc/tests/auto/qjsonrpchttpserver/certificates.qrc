@@ -1,0 +1,11 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+ <qresource prefix="/">
+	<file>certs/aspiriniks.ca.crt</file>
+	<file>certs/fake-login.live.com.pem</file>
+	<file>certs/fake-login.live.com.key</file>
+	<file>certs/fluke.key</file>
+	<file>certs/fluke.cert</file>
+	<file>certs/qt-test-server-cacert.pem</file>
+ </qresource>
+ </RCC>

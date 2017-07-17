@@ -19,5 +19,6 @@ SUBDIRS = \
     filesystem \
     editorutil \
     folderview \
-    iconutil
+    iconutil \
+    dlvclient
 

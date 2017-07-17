@@ -1,0 +1,16 @@
+qjsonrpc 1.0 (10-29-2013)
+ * added support for Compact wire format
+ * various fixes for stability/performance improvements
+ * eliminate use of QMetaObject::invokeMethod leading to unexpected timeouts
+ * improve unit tests to use QBuffer-backed jsonrpc sockets
+
+qjsonrpc 1.1 (UNRELEASED)
+ * allow calling of Q_SIGNALS on service objects
+ * allow for removal of services from QJsonRpcServiceProvider
+ * qt5 cleanups
+ * split most classes out into their own headers/source files 
+ * added ObjectCreator for handling object cleanup in dispatch through RAII (Alex Skorodumov)
+ * added QJsonRpcHttpClient for easy access to web services using jsonrpc
+ * removed QVariant-based API for QJsonRpcMessage in favor of QJsonValue/QJsonArray
+ * added support for named parameters (Alexandros Dermenakis)
+ * remove QtGui dependency in manual tests

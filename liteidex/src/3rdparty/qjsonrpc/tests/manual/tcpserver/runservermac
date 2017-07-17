@@ -1,0 +1,2 @@
+#!/bin/bash
+DYLD_FRAMEWORK_PATH=../../../qjson/lib:../../../lib ./server

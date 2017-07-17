@@ -1,0 +1,30 @@
+Format: http://dep.debian.net/deps/dep5
+Upstream-Name: qjsonrpc
+Source: https://gitorious.org/qjsonrpc/
+
+Files: *
+Copyright: 2012-2013 Etienne Savard <esavard (at) symbiosoft.net>
+           2012-2013 Matt Broadstone <mbroadst (at) gmail.com>
+           2012-2013 Matt Godshall <mgodshall (at) devonit.com>
+License: LGPL-3.0+
+
+Files: debian/*
+Copyright: 2013 Devon IT Support <support@devonit.com>
+License: LGPL-3.0+
+
+License: LGPL-3.0+
+ This package is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 3 of the License, or (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License can be found in "/usr/share/common-licenses/LGPL-3".
