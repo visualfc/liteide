@@ -4,8 +4,7 @@ include(http-parser/http-parser.pri)
 INCLUDEPATH += .
 TEMPLATE = lib
 TARGET = qjsonrpc
-QT += core network
-QT -= gui
+QT += core gui network
 
 DEFINES += QJSONRPC_BUILD
 CONFIG += $${QJSONRPC_LIBRARY_TYPE}
@@ -66,24 +65,24 @@ SOURCES += \
     qjsonrpchttpserver.cpp
 
 # install
-headers.files = $${INSTALL_HEADERS}
-headers.path = $${PREFIX}/include/qjsonrpc
-qjson_headers.files = $${QJSON_INSTALL_HEADERS}
-qjson_headers.path = $${PREFIX}/include/qjsonrpc/json
-private_headers.files = $${PRIVATE_HEADERS}
-private_headers.path = $${PREFIX}/include/qjsonrpc/private
-target.path = $${PREFIX}/$${LIBDIR}
-INSTALLS += headers qjson_headers private_headers target
+#headers.files = $${INSTALL_HEADERS}
+#headers.path = $${PREFIX}/include/qjsonrpc
+#qjson_headers.files = $${QJSON_INSTALL_HEADERS}
+#qjson_headers.path = $${PREFIX}/include/qjsonrpc/json
+#private_headers.files = $${PRIVATE_HEADERS}
+#private_headers.path = $${PREFIX}/include/qjsonrpc/private
+#target.path = $${PREFIX}/$${LIBDIR}
+#INSTALLS += headers qjson_headers private_headers target
 
 # pkg-config support
-CONFIG += create_pc create_prl no_install_prl
-QMAKE_PKGCONFIG_DESTDIR = pkgconfig
-QMAKE_PKGCONFIG_LIBDIR = $$target.path
-QMAKE_PKGCONFIG_INCDIR = $$headers.path
+#CONFIG += create_pc create_prl no_install_prl
+#QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+#QMAKE_PKGCONFIG_LIBDIR = $$target.path
+#QMAKE_PKGCONFIG_INCDIR = $$headers.path
 equals(QJSONRPC_LIBRARY_TYPE, staticlib) {
     QMAKE_PKGCONFIG_CFLAGS = -DQJSONRPC_STATIC
 } else {
     QMAKE_PKGCONFIG_CFLAGS = -DQJSONRPC_SHARED
 }
-unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
+#unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
 
