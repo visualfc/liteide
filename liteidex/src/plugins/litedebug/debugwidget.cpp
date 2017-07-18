@@ -243,14 +243,8 @@ void DebugWidget::watchViewContextMenu(QPoint pos)
 void DebugWidget::loadDebugInfo(const QString &id)
 {
     m_watchMap.clear();
-    m_debugger->setInitWatchList(m_liteApp->settings()->value(id+"/watch").toStringList());
-//    foreach(QString var, m_liteApp->settings()->value(id+"/watch").toStringList()) {
-//        if (var.indexOf(".") < 0) {
-//            //local var
-//            m_debugger->createWatch(var,true,false);
-//        }
-//        m_debugger->createWatch(var,false,true);
-//    }
+    QString key = QString("litedebug_watch/%1").arg(id);
+    m_debugger->setInitWatchList(m_liteApp->settings()->value(key).toStringList());
 }
 
 void DebugWidget::saveDebugInfo(const QString &id)
@@ -259,7 +253,12 @@ void DebugWidget::saveDebugInfo(const QString &id)
     foreach(QString var, m_watchMap.values()) {
         vars.append(var);
     }
-    m_liteApp->settings()->setValue(id+"/watch",vars);
+    QString key = QString("litedebug_watch/%1").arg(id);
+    if (vars.isEmpty()) {
+        m_liteApp->settings()->remove(key);
+    } else {
+        m_liteApp->settings()->setValue(key,vars);
+    }
 }
 
 void DebugWidget::addWatch()
