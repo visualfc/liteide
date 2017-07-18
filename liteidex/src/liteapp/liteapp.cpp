@@ -45,6 +45,7 @@
 #include "sidewindowstyle.h"
 #include "idletimer.h"
 #include "iconutil/iconutil.h"
+#include "liteapi/liteutil.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -999,11 +1000,12 @@ void LiteApp::saveSession(const QString &session)
         }
     }
     QString sessionKey = "session/"+session;
-    m_settings->setValue(sessionKey+"_project",projectName);
-    m_settings->setValue(sessionKey+"_scheme",scheme);
-    m_settings->setValue(sessionKey+"_cureditor",editorName);
-    m_settings->setValue(sessionKey+"_alleditor",fileList);
-    m_settings->setValue(sessionKey+"_folderList",m_fileManager->folderList());
+
+    LiteApi::updateSetting(m_settings,sessionKey+"_project",projectName,"");
+    LiteApi::updateSetting(m_settings,sessionKey+"_scheme",scheme,"");
+    LiteApi::updateSetting(m_settings,sessionKey+"_cureditor",editorName,"");
+    LiteApi::updateSetting(m_settings,sessionKey+"_alleditor",fileList,QStringList());
+    LiteApi::updateSetting(m_settings,sessionKey+"_folderList",m_fileManager->folderList(),QStringList());
 }
 
 QStringList LiteApp::sessionList() const
