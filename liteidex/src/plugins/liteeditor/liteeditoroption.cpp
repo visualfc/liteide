@@ -115,6 +115,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     bool cleanComplerCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
+    bool copyToHtml = m_liteApp->settings()->value(EDITOR_ENABLE_COPYTOHTML,true).toBool();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
 
@@ -141,6 +142,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->wheelZoomingCheckBox->setChecked(wheelZoom);
     ui->offsetCheckBox->setChecked(offsetVisible);
     ui->cleanCompleterCacheCheckBox->setChecked(cleanComplerCache);
+    ui->enableCopyToHtmlCheckBox->setChecked(copyToHtml);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
@@ -257,6 +259,7 @@ void LiteEditorOption::apply()
     bool visualizeWhitespace = ui->visualizeWhitespaceCheckBox->isChecked();
     int rightLineWidth = ui->rightLineWidthSpinBox->value();
     bool cleanCompleterCache = ui->cleanCompleterCacheCheckBox->isChecked();
+    bool copyToHtml = ui->enableCopyToHtmlCheckBox->isChecked();
     int min = ui->preMinLineEdit->text().toInt();
     if (min < 0 || min > 10) {
         min = 1;
@@ -288,6 +291,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_OFFSETVISIBLE,offsetVisible);
     m_liteApp->settings()->setValue(EDITOR_VISUALIZEWHITESPACE,visualizeWhitespace);
     m_liteApp->settings()->setValue(EDITOR_CLEAN_COMPLETERCACHE_SAVE,cleanCompleterCache);
+    m_liteApp->settings()->setValue(EDITOR_ENABLE_COPYTOHTML,copyToHtml);
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }

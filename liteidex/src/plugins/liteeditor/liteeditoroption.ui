@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -362,6 +362,13 @@
            <widget class="QCheckBox" name="wheelZoomingCheckBox">
             <property name="text">
              <string>Enable scroll wheel zooming</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="enableCopyToHtmlCheckBox">
+            <property name="text">
+             <string>Add copied text into the clipboard as HTML</string>
             </property>
            </widget>
           </item>

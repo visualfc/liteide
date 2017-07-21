@@ -1015,6 +1015,7 @@ void LiteEditor::applyOption(QString id)
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
+    bool copyToHtml = m_liteApp->settings()->value(EDITOR_ENABLE_COPYTOHTML,true).toBool();
 
     m_cleanCompleterCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
     m_cleanWhiteSpace = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
@@ -1036,6 +1037,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setDefaultWordWrap(defaultWordWrap);
     m_editorWidget->setScrollWheelZooming(wheelZooming);
     m_editorWidget->setVisualizeWhitespace(visualizeWhitespace);
+    m_editorWidget->setCopyToHtml(copyToHtml);
 
     if (m_completer) {
         m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);

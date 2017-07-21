@@ -53,7 +53,8 @@ LiteEditorWidget::LiteEditorWidget(LiteApi::IApplication *app, QWidget *parent) 
     m_completer(0),
     m_contextMenu(0),
     m_scrollWheelZooming(true),
-    m_bSpellCheckZoneDontComplete(false)
+    m_bSpellCheckZoneDontComplete(false),
+    m_bCopyToHtml(true)
 {
     this->m_averageCharWidth = QFontMetrics(this->font()).averageCharWidth();
 }
@@ -377,7 +378,9 @@ QMimeData *LiteEditorWidget::createMimeDataFromSelection() const
         convertToPlainText(text);
         mimeData->setText(text);
         // Copy the selected text as HTML
-        mimeData->setHtml(cursorToHtml(cursor));
+        if (m_bCopyToHtml) {
+            mimeData->setHtml(cursorToHtml(cursor));
+        }
         return mimeData;
     }
     return 0;

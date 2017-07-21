@@ -65,5 +65,6 @@
 #define EDITOR_DEFAULTWORDWRAP "editor/defaultwordwrap"
 #define EDITOR_INDENTLINEVISIBLE "editor/indentlinevisible"
 #define EDITOR_WHEEL_SCROLL "editor/whellscroll"
+#define EDITOR_ENABLE_COPYTOHTML "editor/enablecopytohtml"
 
 #endif // LITEEDITOR_GLOBAL_H

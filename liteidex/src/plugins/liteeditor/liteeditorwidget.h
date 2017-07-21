@@ -37,6 +37,10 @@ public:
     void setScrollWheelZooming(bool b) {
         m_scrollWheelZooming = b;
     }
+    void setCopyToHtml(bool b) {
+        m_bCopyToHtml = b;
+    }
+
 protected:
     void contextMenuEvent(QContextMenuEvent *);
     void keyPressEvent(QKeyEvent *e);
@@ -67,6 +71,7 @@ protected:
     QMenu      *m_contextMenu;
     bool m_scrollWheelZooming;
     bool m_bSpellCheckZoneDontComplete;
+    bool m_bCopyToHtml;
 };
 
 #endif // LITEEDITORWIDGET_H
