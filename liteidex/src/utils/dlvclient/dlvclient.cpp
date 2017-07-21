@@ -9,7 +9,7 @@
 
 DlvClient::DlvClient(QObject *parent) : QObject(parent)
 {
-
+    m_isCommandBlock = false;
 }
 
 bool DlvClient::IsConnect() const
@@ -35,6 +35,7 @@ bool DlvClient::Connect(const QString &service)
         return false;
     }
     m_addr = service;
+    m_isCommandBlock = false;
     m_dlv.reset(new QJsonRpcSocket(tcpSocket,this));
     return true;
 }
@@ -477,43 +478,50 @@ void DlvClient::callMethod(bool notification, const QString &method)
 
 bool DlvClient::callCommand(const QString &cmd)
 {
-    if (!m_replyMutext.tryLock(5000)) {
+    if (m_isCommandBlock) {
         return false;
     }
-
+    m_isCommandBlock = true;
+    m_lastCommand = cmd;
     QVariantMap m;
     m.insert("name",cmd);
     QVariantList arguments;
     arguments << m;
-
     QJsonRpcMessage request = QJsonRpcMessage::createRequest("RPCServer.Command", QJsonArray::fromVariantList(arguments));
-
     QJsonRpcServiceReply *reply = m_dlv->sendMessage(request);
     if (!reply) {
-        m_replyMutext.unlock();
+        m_isCommandBlock = false;
         return false;
     }
-
-    connect(reply,SIGNAL(finished()),this,SLOT(finishedReply()));
-
+    connect(reply,SIGNAL(finished()),this,SLOT(finishedCommandReply()));
     m_lastReply.reset(reply);
     return true;
 }
 
-bool DlvClient::waitReply()
+bool DlvClient::isCommandBlocked() const
 {
-    if (!m_replyMutext.tryLock(5000)) {
-        return false;
-    }
-    m_replyMutext.unlock();
-    return true;
+    return m_isCommandBlock;
 }
 
-void DlvClient::finishedReply()
+
+void DlvClient::finishedCommandReply()
 {
-   QJsonRpcServiceReply *reply = (QJsonRpcServiceReply*)(sender());
-   qDebug() << reply->request().toJson() << reply->response().toJson();
-   m_replyMutext.unlock();
+    m_isCommandBlock = false;
+    QJsonRpcServiceReply *reply = (QJsonRpcServiceReply*)(sender());
+    if (reply->response().type() == QJsonRpcMessage::Error) {
+        int code = reply->response().errorCode();
+        QString msg = reply->response().errorMessage();
+        if (msg.isEmpty()) {
+            ResponseError resp;
+            resp.fromMap(reply->response().toObject().toVariantMap());
+            msg = resp.error;
+        }
+        emit commandError(code,msg);
+    } else {
+        CommandOut out;
+        out.fromMap(reply->response().result().toVariant().toMap());
+        emit commandSuccess(m_lastCommand,out.State);
+    }
 }
 
 bool DlvClient::call(const QString &method, const JsonDataIn *in, JsonDataOut *out, int timeout) const
@@ -522,29 +530,12 @@ bool DlvClient::call(const QString &method, const JsonDataIn *in, JsonDataOut *o
     in->toMap(param);
     QJsonRpcMessage request = QJsonRpcMessage::createRequest("RPCServer."+method, QJsonValue::fromVariant(param));
 
-    qDebug() << "->" << QJsonDocument(request.toObject()).toJson(QJsonDocument::Compact);
-
     QJsonRpcMessage response = m_dlv->sendMessageBlocking(request,timeout);
     if (response.type() == QJsonRpcMessage::Error) {
         qDebug("error(%d): %s", response.errorCode(), response.errorMessage().toLocal8Bit().data());//
         return false;
     }
-    qDebug() << "<-" << QJsonDocument(response.result().toObject()).toJson(QJsonDocument::Compact);;
     out->fromMap(response.result().toVariant().toMap());
-    return true;
-    /*
-   QJsonRpcServiceReply *reply = m_dlv->sendMessage(request);
-
-   connect(reply,SIGNAL(finished()),this,SLOT(finishedReply()));
-
-    QJsonRpcMessage response = m_dlv->sendMessageBlocking(request, timeout);
-    if (response.type() == QJsonRpcMessage::Error) {
-        qDebug("error(%d): %s", response.errorCode(), response.errorMessage().toLocal8Bit().data());//
-        return false;
-    }
-    qDebug() << "<-" << QJsonDocument(response.result().toObject()).toJson(QJsonDocument::Compact);;
-    out->fromMap(response.result().toVariant().toMap());
-    */
     return true;
 }
 

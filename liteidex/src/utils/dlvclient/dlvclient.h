@@ -24,6 +24,19 @@ protected:
     QJsonRpcSocket *m_dlv;
 };
 
+struct ResponseError
+{
+    QString error;
+    QString id;
+    QVariant result;
+    void fromMap(const QVariantMap &map)
+    {
+        error = map["error"].toString();
+        id = map["id"].toInt();
+        result = map["result"];
+    }
+};
+
 class DlvClient : public QObject
 {
     Q_OBJECT
@@ -79,10 +92,15 @@ public:
     int GetAPIVersion() const;
     QString GetDelveVersion() const;
     bool SetAPIVersion(int version) const;
+public:
+    bool isCommandBlocked() const;
+signals:
+    void commandSuccess(const QString &method, const DebuggerState &state);
+    void commandError(int code, const QString &errorMessage);
 public slots:
-    void finishedReply();
     bool callCommand(const QString &cmd);
-    bool waitReply();
+protected slots:
+    void finishedCommandReply();
 protected:
     void callMethod(bool notification, const QString &method);
     bool call(const QString &method, const JsonDataIn *in, JsonDataOut *out, int timeout = 5000) const;
@@ -90,8 +108,8 @@ protected:
     QScopedPointer<QJsonRpcSocket> m_dlv;
     QString m_addr;
     QScopedPointer<QJsonRpcServiceReply> m_lastReply;
-    QMutex m_replyMutext;
-    QWaitCondition m_replayCondition;
+    QString m_lastCommand;
+    volatile bool m_isCommandBlock;
 };
 
 #endif // DLVCLIENT_H
