@@ -11,19 +11,6 @@
 #include "qjsonrpc/src/qjsonrpcsocket.h"
 #include "dlvtypes.h"
 
-class DlvThread : public QThread
-{
-    Q_OBJECT
-public:
-    DlvThread(QJsonRpcSocket *dlv, QObject *parent = 0);
-    void call(const QString &command);
-    virtual void run();
-protected:
-    QString m_command;
-    DebuggerStatePointer m_pDebuggerState;
-    QJsonRpcSocket *m_dlv;
-};
-
 struct ResponseError
 {
     QString error;
@@ -37,6 +24,13 @@ struct ResponseError
     }
 };
 
+#define DLV_COMMAND_NEXT "next"
+#define DLV_COMMAND_STEP "step"
+#define DLV_COMMAND_STEP_OUT "stepOut"
+#define DLV_COMMAND_STEP_INSTRUCTION "stepInstruction"
+#define DLV_COMMAND_CONTINUE "continue"
+#define DLV_COMMAND_REWIND "rewind"
+
 class DlvClient : public QObject
 {
     Q_OBJECT
@@ -45,6 +39,8 @@ public:
     bool IsConnect() const;
     QString Address() const;
     bool Connect(const QString &service);
+    void SetCallTimeout(int timeout);
+    int CallTimeout() const;
     int ProcessPid() const;
     QDateTime LastModified() const;
     bool Detach() const;
@@ -58,6 +54,17 @@ public:
     DebuggerState SwitchThread(int threadID) const;
     DebuggerState SwitchGoroutine(int goroutineID) const;
     DebuggerState Halt() const;
+    DebuggerState Continue() const;
+    DebuggerState Rewind() const;
+    bool CallNext();
+    bool CallStep();
+    bool CallStepOut();
+    bool CallStepInstruction();
+    bool CallSwitchThread(int threadID);
+    bool CallSwitchGoroutine(int goroutineID);
+    bool CallHalt();
+    bool CallContinue();
+    bool CallRewind();
     BreakpointPointer CreateBreakpoint(const Breakpoint &bp) const;
     BreakpointPointer CreateBreakpointByFuncName(const QString &funcName) const;
     BreakpointPointer GetBreakpoint(int id) const;
@@ -99,17 +106,18 @@ signals:
     void commandError(int code, const QString &errorMessage);
 public slots:
     bool callCommand(const QString &cmd);
+    bool callDebuggerCommand(const DebuggerCommand &cmd);
 protected slots:
     void finishedCommandReply();
 protected:
-    void callMethod(bool notification, const QString &method);
-    bool call(const QString &method, const JsonDataIn *in, JsonDataOut *out, int timeout = 5000) const;
+    bool callBlocked(const QString &method, const JsonDataIn *in, JsonDataOut *out) const;
 protected:
     QScopedPointer<QJsonRpcSocket> m_dlv;
     QString m_addr;
     QScopedPointer<QJsonRpcServiceReply> m_lastReply;
-    QString m_lastCommand;
-    volatile bool m_isCommandBlock;
+    DebuggerCommand m_lastCommand;
+    bool m_isCommandBlock;
+    int m_callTimeout;
 };
 
 #endif // DLVCLIENT_H
