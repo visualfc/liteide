@@ -50,7 +50,7 @@ protected slots:
     virtual void activeComboBoxIndex(int);
 protected:
     QToolBar *m_toolBar;
-    QLabel   *m_titleLabel;
+    //QLabel   *m_titleLabel;
     QComboBox *m_comboBox;
     QAction  *m_spacerAct;
     QAction  *m_closeAct;

@@ -25,8 +25,8 @@
 #include "tooldockwidget.h"
 #include "rotationtoolbutton.h"
 #include "liteapp_global.h"
-
 #include <QStatusBar>
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -97,7 +97,7 @@ void SideDockWidget::setCheckedAction(QAction *action)
 {
     current = action;
     for (int i = 0; i < m_comboBox->count(); i++) {
-        if (m_comboBox->itemText(i) == action->text()) {
+        if (m_comboBox->itemData(i).toString() == action->objectName()) {
             m_comboBox->setCurrentIndex(i);
             break;
         }
