@@ -323,6 +323,9 @@ void GolangCode::resetGocode(const QProcessEnvironment &env)
     }
     m_gocodeProcess->setProcessEnvironment(env);
     m_gocodeSetProcess->setProcessEnvironment(env);
+    if (!m_gocodeSetProcess->isStop()) {
+        m_gocodeSetProcess->stopAndWait(100,1000);
+    }
     m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "set" << "lib-path" << env.value("GOPATH"));
 }
 
@@ -376,7 +379,7 @@ void GolangCode::loadPkgList()
 void GolangCode::loadImportsList(const QProcessEnvironment &env)
 {
     if (!m_importProcess->isStop()) {
-        m_importProcess->stopAndWait(100,2000);
+        m_importProcess->stopAndWait(100,1000);
     }
 
     QString cmd = LiteApi::getGotools(m_liteApp);
