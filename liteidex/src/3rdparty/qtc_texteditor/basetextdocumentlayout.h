@@ -225,6 +225,8 @@ public:
     void emitDocumentSizeChanged() { emit documentSizeChanged(documentSize()); }
     void setRequiredWidth(int width);
     QSizeF documentSize() const;
+    void updateMarksLineNumber();
+    void updateMarksBlock(const QTextBlock &block);
 public:
     int lastSaveRevision;
     bool hasMarks;

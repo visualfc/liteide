@@ -60,7 +60,7 @@ class TEXTEDITOR_EXPORT ITextMark : public QObject
 {
     Q_OBJECT
 public:
-    ITextMark(QObject *parent = 0) : QObject(parent) {}
+    ITextMark(QObject *parent = 0) : QObject(parent), m_lineNumber(-1) {}
     virtual ~ITextMark() {}
 
     // determine order on markers on the same line.
@@ -72,6 +72,7 @@ public:
     };
 
     virtual void paint(QPainter *painter, const QRect &rect) const;
+    virtual int lineNumber() const;
     virtual void updateLineNumber(int lineNumber);
     virtual void updateBlock(const QTextBlock &block);
     virtual void removedFromEditor();
@@ -84,6 +85,7 @@ public:
 private:
     QIcon m_icon;
     Priority m_priority;
+    int  m_lineNumber;
 };
 
 typedef QList<ITextMark *> TextMarks;

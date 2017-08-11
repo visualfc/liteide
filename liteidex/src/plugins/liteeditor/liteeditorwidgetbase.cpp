@@ -545,9 +545,27 @@ void LiteEditorWidgetBase::initLoadDocument()
 }
 
 
-void LiteEditorWidgetBase::editContentsChanged(int, int, int)
+void LiteEditorWidgetBase::editContentsChanged(int position, int charsRemoved, int charsAdded)
 {
     m_contentsChanged = true;
+    QTextDocument *doc = this->document();
+    TextEditor::BaseTextDocumentLayout *documentLayout = static_cast<TextEditor::BaseTextDocumentLayout*>(doc->documentLayout());
+    const QTextBlock posBlock = doc->findBlock(position);
+
+    // Keep the line numbers and the block information for the text marks updated
+    if (charsRemoved != 0) {
+        documentLayout->updateMarksLineNumber();
+        documentLayout->updateMarksBlock(posBlock);
+    } else {
+        const QTextBlock nextBlock = doc->findBlock(position + charsAdded);
+        if (posBlock != nextBlock) {
+            documentLayout->updateMarksLineNumber();
+            documentLayout->updateMarksBlock(posBlock);
+            documentLayout->updateMarksBlock(nextBlock);
+        } else {
+            documentLayout->updateMarksBlock(posBlock);
+        }
+    }
 }
 
 struct MatchBracePos {
@@ -2837,7 +2855,7 @@ void LiteEditorWidgetBase::foldIndentChanged(QTextBlock block)
     }
 }
 
-void LiteEditorWidgetBase::updateBlock(QTextBlock)
+void LiteEditorWidgetBase::updateBlock(QTextBlock block)
 {
 
 }

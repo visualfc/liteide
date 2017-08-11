@@ -613,6 +613,26 @@ QSizeF BaseTextDocumentLayout::documentSize() const
     return size;
 }
 
+void BaseTextDocumentLayout::updateMarksLineNumber()
+{
+    QTextBlock block = document()->begin();
+    int blockNumber = 0;
+    while (block.isValid()) {
+        if (const TextBlockUserData *userData = testUserData(block))
+            foreach (ITextMark *mrk, userData->marks())
+                mrk->updateLineNumber(blockNumber + 1);
+        block = block.next();
+        ++blockNumber;
+    }
+}
+
+void BaseTextDocumentLayout::updateMarksBlock(const QTextBlock &block)
+{
+    if (const TextBlockUserData *userData = testUserData(block))
+        foreach (ITextMark *mrk, userData->marks())
+            mrk->updateBlock(block);
+}
+
 BaseTextDocumentLayout::FoldValidator::FoldValidator()
     : m_layout(0)
     , m_requestDocUpdate(false)

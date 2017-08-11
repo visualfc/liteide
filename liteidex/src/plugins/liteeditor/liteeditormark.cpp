@@ -94,6 +94,7 @@ void LiteEditorMark::addMark(int line, int type)
         if (data->marks().contains(mark)) {
             return;
         }
+        mark->updateLineNumber(line);
         data->addMark(mark);
         emit markChanged();
     }

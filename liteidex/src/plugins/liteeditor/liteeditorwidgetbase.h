@@ -92,7 +92,7 @@ protected:
     QByteArray m_tempNavigationState;
 public slots:
     void cleanWhitespace(bool wholeDocument = false);
-    void editContentsChanged(int,int,int);
+    void editContentsChanged(int position, int charsRemoved, int charsAdded);
     virtual void highlightCurrentLine();
     virtual void slotUpdateExtraAreaWidth();
     virtual void slotModificationChanged(bool);

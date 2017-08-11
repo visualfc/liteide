@@ -36,6 +36,7 @@
 //#include <coreplugin/editormanager/editormanager.h>
 
 #include <QtCore/QTextCodec>
+#include <QDebug>
 
 using namespace TextEditor;
 
@@ -44,9 +45,14 @@ void ITextMark::paint(QPainter *painter, const QRect &rect) const
     m_icon.paint(painter, rect, Qt::AlignCenter);
 }
 
+int ITextMark::lineNumber() const
+{
+    return m_lineNumber;
+}
+
 void ITextMark::updateLineNumber(int lineNumber)
 {
-    Q_UNUSED(lineNumber)
+     m_lineNumber = lineNumber;
 }
 
 void ITextMark::updateBlock(const QTextBlock &)
