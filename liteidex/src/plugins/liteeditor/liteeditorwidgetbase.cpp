@@ -499,7 +499,7 @@ void LiteEditorWidgetBase::setEditorMark(LiteApi::IEditorMark *mark)
 {
     m_editorMark = mark;
     if (m_editorMark) {
-        connect(m_editorMark,SIGNAL(markChanged()),m_extraArea,SLOT(update()));
+        connect(m_editorMark,SIGNAL(markListChanged(int)),m_extraArea,SLOT(update()));
     }
 }
 

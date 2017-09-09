@@ -258,7 +258,7 @@ public:
         m_settings->remove(key);
     }
 protected:
-    QString recentKey() const
+    virtual QString recentKey() const
     {
         return QString("Recent1/%1").arg(type());
     }

@@ -138,6 +138,7 @@ public:
     IEditorMarkTypeManager(QObject *parent = 0) : IManager(parent) {}
     virtual void registerMark(int type, const QIcon &icon) = 0;
     virtual QList<int> markTypeList() const = 0;
+    virtual QIcon iconForType(int type) const = 0;
 };
 
 class IEditorMark : public QObject
@@ -150,7 +151,7 @@ public:
     virtual QList<int> markList(int type) const = 0;
     virtual QList<int> lineTypeList(int line) const = 0;
 signals:
-    void markChanged();
+    void markListChanged(int type);
 };
 
 enum EditorNaviagteType{
@@ -271,6 +272,14 @@ inline ITextLexer *getTextLexer(IEditor *editor) {
     }
     return 0;
 }
+
+inline IEditorMark *getEditorMark(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<IEditorMark*>(editor->extension(),"LiteApi.IEditorMark");
+    }
+    return 0;
+}
+
 
 class IHighlighterFactory : public QObject
 {

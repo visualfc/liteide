@@ -82,7 +82,7 @@ public:
     virtual void setPriority(Priority prioriy);
     virtual double widthFactor() const;
 
-private:
+protected:
     QIcon m_icon;
     Priority m_priority;
     int  m_lineNumber;

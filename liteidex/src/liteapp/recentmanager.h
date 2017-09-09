@@ -63,6 +63,60 @@ protected:
     QMap<QString,QMenu*> m_mapRecentTypeMenu;
 };
 
+class BookmarkRecent : public ISettingRecent
+{
+    Q_OBJECT
+public:
+    BookmarkRecent(LiteApi::IApplication *app, QObject *parent) : ISettingRecent(app->settings(),parent), m_liteApp(app)
+    {
+    }
+
+    virtual QString type() const
+    {
+        return "bookmark";
+    }
+
+    virtual QString displyType() const
+    {
+        return tr("Bookmarks");
+    }
+
+    virtual void addRecent(const QString &name,int maxRecent)
+    {
+        ISettingRecent::addRecent(QDir::toNativeSeparators(name), maxRecent);
+    }
+
+    virtual void openRecent(const QString &name)
+    {
+        int pos = name.lastIndexOf(":");
+        if (pos == -1) {
+            return;
+        }
+        bool ok = false;
+        int line = name.mid(pos+1).toInt(&ok);
+        if (!ok) {
+            return;
+        }
+        QString filePath = name.left(pos);
+        LiteApi::IEditor *editor = m_liteApp->fileManager()->openEditor(filePath,true,false);
+        if (!editor) {
+            return;
+        }
+        LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+        if (!textEditor) {
+            return;
+        }
+        textEditor->gotoLine(line,0,true);
+    }
+protected:
+    virtual QString recentKey() const
+    {
+        return QString("Bookmark/%1").arg(type());
+    }
+    LiteApi::IApplication *m_liteApp;
+};
+
+
 class FileRecent : public ISettingRecent
 {
     Q_OBJECT

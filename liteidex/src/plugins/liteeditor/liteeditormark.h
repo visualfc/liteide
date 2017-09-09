@@ -29,16 +29,7 @@
 #include "qtc_texteditor/basetextdocumentlayout.h"
 #include "liteeditor.h"
 
-class LiteTextMark : public TextEditor::ITextMark
-{
-    Q_OBJECT
-public:
-    LiteTextMark(int type, QObject *parent = 0);
-    int type() const { return m_type; }
-protected:
-    int m_type;
-};
-
+class LiteTextMark;
 class LiteEditorMarkTypeManager : public LiteApi::IEditorMarkTypeManager
 {
     Q_OBJECT
@@ -47,29 +38,44 @@ public:
     virtual ~LiteEditorMarkTypeManager();
     virtual void registerMark(int type, const QIcon &icon);
     virtual QList<int> markTypeList() const;
-    virtual LiteTextMark *mark(int type) const;
+    virtual QIcon iconForType(int type) const;
 protected:
-    QMap<int,LiteTextMark*> m_typeMarkMap;
+    QMap<int,QIcon> m_typeIconMap;
 };
 
-typedef QMap<int,QList<int> > MarkTypesMap;
+typedef QMap<int,QMap<int,TextEditor::ITextMark*> > TypeLineMarkMap;
 
 class LiteEditorMark : public LiteApi::IEditorMark
 {
     Q_OBJECT
 public:
-    explicit LiteEditorMark(LiteEditorMarkTypeManager *manager, QTextDocument *document, QObject *parent);
+    explicit LiteEditorMark(LiteEditorMarkTypeManager *manager, LiteEditor *editor);
     virtual void addMark(int line, int type);
     virtual void removeMark(int line, int type);
     virtual QList<int> markList(int type) const;
     virtual QList<int> lineTypeList(int line) const;
+    TextEditor::ITextMark *createMarkByType(int type, int line);
+    void removedFromEditor(TextEditor::ITextMark *mark);
+    void updateLineNumber(TextEditor::ITextMark *mark, int oldLineNumber);
 protected:
     LiteEditorMarkTypeManager *m_manager;
+    LiteEditor * m_editor;
     QTextDocument *m_document;
-    QMap<int,TextEditor::ITextMark*> m_typeMarkMap;
-    MarkTypesMap m_lineMarkTypesMap;
+    TypeLineMarkMap m_typeLineMarkMap;
 };
 
-Q_DECLARE_METATYPE(MarkTypesMap)
+class LiteTextMark : public TextEditor::ITextMark
+{
+    Q_OBJECT
+public:
+    LiteTextMark(LiteEditorMark *editorMark, int type, int lineNumber, QObject *parent = 0);
+    virtual ~LiteTextMark();
+    virtual void removedFromEditor();
+    virtual void updateLineNumber(int lineNumber);
+    int type() const { return m_type; }
+protected:
+    LiteEditorMark *m_editorMark;
+    int m_type;
+};
 
 #endif // LITEEDITORMARK_H
