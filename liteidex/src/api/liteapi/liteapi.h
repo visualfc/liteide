@@ -670,7 +670,7 @@ public:
     virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def) = 0;
     virtual QStringList actionKeys() const = 0;
     virtual ActionInfo *actionInfo(const QString &key) const = 0;
-    virtual void setActionShourtcuts(const QString &id, const QString &shortcuts) = 0;
+    virtual void setActionShortcuts(const QString &id, const QString &shortcuts) = 0;
 };
 
 class IActionManager : public IManager

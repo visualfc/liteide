@@ -22,7 +22,11 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     m_toggleBookmarkAct = new QAction(tr("Toggle Bookmark"),this);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Bookmarks");
-    actionContext->regAction(m_toggleBookmarkAct,"ToggleBookmark","CTRL+M");
+#ifdef Q_OS_MAC
+    actionContext->regAction(m_toggleBookmarkAct,"ToggleBookmark","Meta+M");
+#else
+    actionContext->regAction(m_toggleBookmarkAct,"ToggleBookmark","Ctrl+M");
+#endif
 
     connect(m_toggleBookmarkAct,SIGNAL(triggered()),this,SLOT(toggledBookmark()));
 

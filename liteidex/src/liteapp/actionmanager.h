@@ -37,7 +37,7 @@ public:
     virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def);
     virtual QStringList actionKeys() const;
     virtual ActionInfo *actionInfo(const QString &key) const;
-    virtual void setActionShourtcuts(const QString &id, const QString &shortcuts);
+    virtual void setActionShortcuts(const QString &id, const QString &shortcuts);
 protected:
     LiteApi::IApplication   *m_liteApp;
     QString m_name;

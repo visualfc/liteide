@@ -314,7 +314,7 @@ void ActionManager::setActionShourtcuts(const QString &id, const QString &shortc
     QMapIterator<QObject*,IActionContext*> it(m_objContextMap);
     while(it.hasNext()) {
         it.next();
-        it.value()->setActionShourtcuts(id,shortcuts);
+        it.value()->setActionShortcuts(id,shortcuts);
     }
 }
 
@@ -415,7 +415,7 @@ ActionInfo *ActionContext::actionInfo(const QString &key) const
     return m_actionInfoMap.value(key);
 }
 
-void ActionContext::setActionShourtcuts(const QString &id, const QString &shortcuts)
+void ActionContext::setActionShortcuts(const QString &id, const QString &shortcuts)
 {
     ActionInfo *info = m_actionInfoMap.value(id);
     if (!info) {
