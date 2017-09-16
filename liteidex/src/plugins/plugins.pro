@@ -27,7 +27,8 @@ SUBDIRS = \
     jsonedit \
     rustedit \
     dlvdebugger \
-    fakevimedit
+    fakevimedit \
+    bookmarks
 
 
 contains(DEFINES, LITEIDE_QTWEBKIT) {

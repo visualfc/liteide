@@ -89,6 +89,9 @@ LiteEditorMarkTypeManager::~LiteEditorMarkTypeManager()
 
 void LiteEditorMarkTypeManager::registerMark(int type, const QIcon &icon)
 {
+    if (m_typeIconMap.contains(type)) {
+        qDebug() << "warning!!!" << "LiteEditorMarkTypeManager register mark type" << type << "exist!";
+    }
     m_typeIconMap.insert(type,icon);
 }
 
@@ -231,6 +234,7 @@ QList<int> LiteEditorMark::markTypesByLine(int line) const
     QList<int> typeList;
     TypeLineMarkMapIterator i(m_typeLineMarkMap);
     while (i.hasNext()) {
+        i.next();
         if (i.value().contains(line)) {
             typeList.push_back(i.key());
         }

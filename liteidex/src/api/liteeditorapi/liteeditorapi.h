@@ -283,6 +283,12 @@ inline IEditorMark *getEditorMark(IEditor *editor) {
     return 0;
 }
 
+inline IEditorMarkTypeManager *getEditorMarkTypeManager(IApplication *app) {
+    if (app && app->extension()) {
+        return findExtensionObject<IEditorMarkTypeManager*>(app->extension(),"LiteApi.IEditorMarkTypeManager");
+    }
+    return 0;
+}
 
 class IHighlighterFactory : public QObject
 {
