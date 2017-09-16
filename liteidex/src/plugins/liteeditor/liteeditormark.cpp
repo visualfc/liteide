@@ -229,17 +229,25 @@ QList<QTextBlock> LiteEditorMark::markBlocksByType(int type) const
 QList<int> LiteEditorMark::markTypesByLine(int line) const
 {
     QList<int> typeList;
-    const QTextBlock &block = m_document->findBlockByNumber(line);
-    if (!block.isValid()) {
-        return typeList;
-    }
-    TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::testUserData(block);
-    if (data) {
-        foreach(TextEditor::ITextMark *mark, data->marks()) {
-            typeList.append(((LiteTextMark*)mark)->type());
+    TypeLineMarkMapIterator i(m_typeLineMarkMap);
+    while (i.hasNext()) {
+        if (i.value().contains(line)) {
+            typeList.push_back(i.key());
         }
     }
     return typeList;
+//    QList<int> typeList;
+//    const QTextBlock &block = m_document->findBlockByNumber(line);
+//    if (!block.isValid()) {
+//        return typeList;
+//    }
+//    TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::testUserData(block);
+//    if (data) {
+//        foreach(TextEditor::ITextMark *mark, data->marks()) {
+//            typeList.append(((LiteTextMark*)mark)->type());
+//        }
+//    }
+//    return typeList;
 }
 
 LiteEditor *LiteEditorMark::editor() const

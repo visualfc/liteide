@@ -44,6 +44,8 @@ protected:
 };
 
 typedef QMap<int,QMap<int,TextEditor::ITextMark*> > TypeLineMarkMap;
+typedef QMapIterator<int,QMap<int,TextEditor::ITextMark*> > TypeLineMarkMapIterator;
+
 
 class LiteEditorMark : public LiteApi::IEditorMark
 {
