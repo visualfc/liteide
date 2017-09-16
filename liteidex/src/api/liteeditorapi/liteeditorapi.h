@@ -36,6 +36,7 @@ class SyntaxHighlighter;
 
 namespace LiteApi {
 
+class ILiteEditor;
 class IWordApi
 {
 public:
@@ -148,8 +149,10 @@ public:
     IEditorMark(QObject *parent) : QObject(parent) {}
     virtual void addMark(int line, int type) = 0;
     virtual void removeMark(int line, int type) = 0;
-    virtual QList<int> markList(int type) const = 0;
-    virtual QList<int> lineTypeList(int line) const = 0;
+    virtual QList<int> markLinesByType(int type) const = 0;
+    virtual QList<QTextBlock> markBlocksByType(int type) const = 0;
+    virtual QList<int> markTypesByLine(int line) const = 0;
+    virtual ILiteEditor *editor() const = 0;
 signals:
     void markListChanged(int type);
 };

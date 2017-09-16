@@ -52,11 +52,14 @@ public:
     explicit LiteEditorMark(LiteEditorMarkTypeManager *manager, LiteEditor *editor);
     virtual void addMark(int line, int type);
     virtual void removeMark(int line, int type);
-    virtual QList<int> markList(int type) const;
-    virtual QList<int> lineTypeList(int line) const;
-    TextEditor::ITextMark *createMarkByType(int type, int line);
-    void removedFromEditor(TextEditor::ITextMark *mark);
-    void updateLineNumber(TextEditor::ITextMark *mark, int oldLineNumber);
+    virtual QList<int> markLinesByType(int type) const;
+    virtual QList<QTextBlock> markBlocksByType(int type) const;
+    virtual QList<int> markTypesByLine(int line) const;
+    virtual LiteEditor *editor() const;
+    LiteTextMark *createMarkByType(int type, int line, const QTextBlock &block);
+    void removedFromEditor(LiteTextMark *mark);
+    void updateLineNumber(LiteTextMark *mark, int newLine, int oldLine);
+    void updateLineBlock(LiteTextMark *mark);
 protected:
     LiteEditorMarkTypeManager *m_manager;
     LiteEditor * m_editor;
@@ -68,14 +71,17 @@ class LiteTextMark : public TextEditor::ITextMark
 {
     Q_OBJECT
 public:
-    LiteTextMark(LiteEditorMark *editorMark, int type, int lineNumber, QObject *parent = 0);
+    LiteTextMark(LiteEditorMark *editorMark, int type, int lineNumber, const QTextBlock &block, QObject *parent = 0);
     virtual ~LiteTextMark();
     virtual void removedFromEditor();
     virtual void updateLineNumber(int lineNumber);
+    virtual void updateBlock(const QTextBlock &block);
     int type() const { return m_type; }
+    QTextBlock block() const;
 protected:
     LiteEditorMark *m_editorMark;
     int m_type;
+    QTextBlock m_block;
 };
 
 #endif // LITEEDITORMARK_H

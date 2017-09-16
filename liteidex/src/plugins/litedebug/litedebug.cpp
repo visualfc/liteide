@@ -318,7 +318,7 @@ void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
     if (!editorMark) {
         return;
     }
-    QList<int> bpList = editorMark->markList(LiteApi::BreakPointMark);
+    QList<int> bpList = editorMark->markLinesByType(LiteApi::BreakPointMark);
     QStringList save;
     foreach(int bp, bpList) {
         save.append(QString("%1").arg(bp));
@@ -405,7 +405,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
         }
         QString path = editor->filePath();
         m_fileBpMap.remove(path);
-        foreach(int i,editorMark->markList(LiteApi::BreakPointMark)) {
+        foreach(int i,editorMark->markLinesByType(LiteApi::BreakPointMark)) {
             m_fileBpMap.insert(path,i);
         }
     }
@@ -666,7 +666,7 @@ void LiteDebug::removeAllBreakPoints()
         return;
     }
     QString filePath = textEditor->filePath();
-    foreach(int line, editorMark->markList(LiteApi::BreakPointMark)) {
+    foreach(int line, editorMark->markLinesByType(LiteApi::BreakPointMark)) {
         editorMark->removeMark(line,LiteApi::BreakPointMark);
         m_fileBpMap.remove(filePath,line);
         if (m_debugger && m_debugger->isRunning()) {
@@ -694,7 +694,7 @@ void LiteDebug::toggleBreakPoint()
     if (fileName.isEmpty()) {
         return;
     }
-    QList<int> marks = editorMark->lineTypeList(line);
+    QList<int> marks = editorMark->markTypesByLine(line);
     if (marks.contains(LiteApi::BreakPointMark)) {
         editorMark->removeMark(line,LiteApi::BreakPointMark);
         m_fileBpMap.remove(fileName,line);
