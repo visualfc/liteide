@@ -140,6 +140,7 @@ public:
     virtual void registerMark(int type, const QIcon &icon) = 0;
     virtual QList<int> markTypeList() const = 0;
     virtual QIcon iconForType(int type) const = 0;
+    virtual int indexOfType(int type) const = 0;
 };
 
 class IEditorMark : public QObject

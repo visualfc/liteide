@@ -69,16 +69,15 @@ void ITextMark::setIcon(const QIcon &icon)
     m_icon = icon;
 }
 
-void ITextMark::setPriority(Priority priority)
+int ITextMark::type() const
 {
-    m_priority = priority;
+    return m_type;
 }
 
-ITextMark::Priority ITextMark::priority() const
+int ITextMark::indexOfType() const
 {
-    return m_priority;
+    return m_indexOfType;
 }
-
 
 double ITextMark::widthFactor() const
 {

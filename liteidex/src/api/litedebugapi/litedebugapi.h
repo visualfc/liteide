@@ -47,8 +47,8 @@ enum DEBUG_LOG_TYPE {
 };
 
 enum DEBUG_EDITOR_MARKTYPE {
-    BreakPointMark = 1000,
-    CurrentLineMark = 2000
+    BreakPointMarkType = 2000,
+    CurrentLineMarkType = 3000
 };
 
 class IDebugger : public QObject

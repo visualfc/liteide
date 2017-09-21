@@ -39,6 +39,7 @@ public:
     virtual void registerMark(int type, const QIcon &icon);
     virtual QList<int> markTypeList() const;
     virtual QIcon iconForType(int type) const;
+    virtual int indexOfType(int type) const;
 protected:
     QMap<int,QIcon> m_typeIconMap;
 };
@@ -73,16 +74,14 @@ class LiteTextMark : public TextEditor::ITextMark
 {
     Q_OBJECT
 public:
-    LiteTextMark(LiteEditorMark *editorMark, int type, int lineNumber, const QTextBlock &block, QObject *parent = 0);
+    LiteTextMark(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent = 0);
     virtual ~LiteTextMark();
     virtual void removedFromEditor();
     virtual void updateLineNumber(int lineNumber);
     virtual void updateBlock(const QTextBlock &block);
-    int type() const { return m_type; }
     QTextBlock block() const;
 protected:
     LiteEditorMark *m_editorMark;
-    int m_type;
     QTextBlock m_block;
 };
 

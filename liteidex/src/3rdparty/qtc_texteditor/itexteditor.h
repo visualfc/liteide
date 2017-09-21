@@ -60,17 +60,10 @@ class TEXTEDITOR_EXPORT ITextMark : public QObject
 {
     Q_OBJECT
 public:
-    ITextMark(QObject *parent = 0) : QObject(parent), m_lineNumber(-1) {}
+    ITextMark(QObject *parent = 0) : QObject(parent), m_lineNumber(-1), m_type(-1), m_indexOfType(0) {}
     virtual ~ITextMark() {}
 
-    // determine order on markers on the same line.
-    enum Priority
-    {
-        LowPriority,
-        NormalPriority,
-        HighPriority // shown on top.
-    };
-
+    // determine order on markers on the same line. 
     virtual void paint(QPainter *painter, const QRect &rect) const;
     virtual int lineNumber() const;
     virtual void updateLineNumber(int lineNumber);
@@ -78,14 +71,15 @@ public:
     virtual void removedFromEditor();
     virtual void documentClosing();
     virtual void setIcon(const QIcon &icon);
-    virtual Priority priority() const;
-    virtual void setPriority(Priority prioriy);
+    virtual int type() const;
+    virtual int indexOfType() const;
     virtual double widthFactor() const;
 
 protected:
     QIcon m_icon;
-    Priority m_priority;
     int  m_lineNumber;
+    int  m_type;
+    int  m_indexOfType;
 };
 
 typedef QList<ITextMark *> TextMarks;

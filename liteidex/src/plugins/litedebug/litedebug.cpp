@@ -218,8 +218,8 @@ void LiteDebug::appLoaded()
 
     LiteApi::IEditorMarkTypeManager *markTypeManager = LiteApi::findExtensionObject<LiteApi::IEditorMarkTypeManager*>(m_liteApp,"LiteApi.IEditorMarkTypeManager");
     if (markTypeManager) {
-        markTypeManager->registerMark(BreakPointMark,QIcon("icon:litedebug/images/breakmark.png"));
-        markTypeManager->registerMark(CurrentLineMark,QIcon("icon:litedebug/images/linemark.png"));
+        markTypeManager->registerMark(BreakPointMarkType,QIcon("icon:litedebug/images/breakmark.png"));
+        markTypeManager->registerMark(CurrentLineMarkType,QIcon("icon:litedebug/images/linemark.png"));
     }
     //QMenu *menu = new QMenu(tr("Select Debug"));
     QActionGroup *group = new QActionGroup(this);
@@ -285,7 +285,7 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
     foreach(QString bp, m_liteApp->settings()->value(key).toStringList()) {
         int i = bp.toInt(&ok);
         if (ok) {
-            editorMark->addMark(i,LiteApi::BreakPointMark);
+            editorMark->addMark(i,LiteApi::BreakPointMarkType);
             m_fileBpMap.insert(filePath,i);
         }
     }
@@ -297,7 +297,7 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
 //        }
 //    }
     if (m_lastLine.fileName == filePath) {
-        editorMark->addMark(m_lastLine.line,LiteApi::CurrentLineMark);
+        editorMark->addMark(m_lastLine.line,LiteApi::CurrentLineMarkType);
     }
 
     QToolBar *toolBar = LiteApi::getEditToolBar(editor);
@@ -318,7 +318,7 @@ void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
     if (!editorMark) {
         return;
     }
-    QList<int> bpList = editorMark->markLinesByType(LiteApi::BreakPointMark);
+    QList<int> bpList = editorMark->markLinesByType(LiteApi::BreakPointMarkType);
     QStringList save;
     foreach(int bp, bpList) {
         save.append(QString("%1").arg(bp));
@@ -405,7 +405,7 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
         }
         QString path = editor->filePath();
         m_fileBpMap.remove(path);
-        foreach(int i,editorMark->markLinesByType(LiteApi::BreakPointMark)) {
+        foreach(int i,editorMark->markLinesByType(LiteApi::BreakPointMarkType)) {
             m_fileBpMap.insert(path,i);
         }
     }
@@ -666,8 +666,8 @@ void LiteDebug::removeAllBreakPoints()
         return;
     }
     QString filePath = textEditor->filePath();
-    foreach(int line, editorMark->markLinesByType(LiteApi::BreakPointMark)) {
-        editorMark->removeMark(line,LiteApi::BreakPointMark);
+    foreach(int line, editorMark->markLinesByType(LiteApi::BreakPointMarkType)) {
+        editorMark->removeMark(line,LiteApi::BreakPointMarkType);
         m_fileBpMap.remove(filePath,line);
         if (m_debugger && m_debugger->isRunning()) {
             m_debugger->removeBreakPoint(filePath,line);
@@ -695,14 +695,14 @@ void LiteDebug::toggleBreakPoint()
         return;
     }
     QList<int> marks = editorMark->markTypesByLine(line);
-    if (marks.contains(LiteApi::BreakPointMark)) {
-        editorMark->removeMark(line,LiteApi::BreakPointMark);
+    if (marks.contains(LiteApi::BreakPointMarkType)) {
+        editorMark->removeMark(line,LiteApi::BreakPointMarkType);
         m_fileBpMap.remove(fileName,line);
         if (m_debugger && m_debugger->isRunning()) {
             m_debugger->removeBreakPoint(fileName,line);
         }
     } else {
-        editorMark->addMark(line,LiteApi::BreakPointMark);
+        editorMark->addMark(line,LiteApi::BreakPointMarkType);
         m_fileBpMap.insert(fileName,line);
         if (m_debugger && m_debugger->isRunning()) {
             m_debugger->insertBreakPoint(fileName,line);
@@ -717,7 +717,7 @@ void LiteDebug::clearLastLine()
         if (lastEditor) {
             LiteApi::IEditorMark *lastMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(lastEditor,"LiteApi.IEditorMark");
             if (lastMark) {
-                lastMark->removeMark(m_lastLine.line,LiteApi::CurrentLineMark);
+                lastMark->removeMark(m_lastLine.line,LiteApi::CurrentLineMarkType);
             }
         }
     }
@@ -792,7 +792,7 @@ void LiteDebug::setCurrentLine(const QString &fileName, int line)
             }
             LiteApi::IEditorMark *editMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
             if (editMark) {
-                editMark->addMark(line,LiteApi::CurrentLineMark);
+                editMark->addMark(line,LiteApi::CurrentLineMarkType);
             }
         }
     }
@@ -813,7 +813,7 @@ void LiteDebug::setFrameLine(const QString &fileName, int line)
             }
             LiteApi::IEditorMark *editMark = LiteApi::findExtensionObject<LiteApi::IEditorMark*>(editor,"LiteApi.IEditorMark");
             if (editMark) {
-                editMark->addMark(line,LiteApi::CurrentLineMark);
+                editMark->addMark(line,LiteApi::CurrentLineMarkType);
             }
         }
     }

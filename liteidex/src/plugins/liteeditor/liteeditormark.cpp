@@ -37,12 +37,13 @@
 #endif
 //lite_memory_check_end
 
-LiteTextMark::LiteTextMark(LiteEditorMark *editorMark, int type, int lineNumber, const QTextBlock &block, QObject *parent)
+LiteTextMark::LiteTextMark(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent)
     : TextEditor::ITextMark(parent),
-      m_editorMark(editorMark),
-      m_type(type)
+      m_editorMark(editorMark)
 {
     m_lineNumber = lineNumber;
+    m_type = type;
+    m_indexOfType = indexOfType;
     m_block = block;
 }
 
@@ -105,6 +106,11 @@ QIcon LiteEditorMarkTypeManager::iconForType(int type) const
     return m_typeIconMap.value(type);
 }
 
+int LiteEditorMarkTypeManager::indexOfType(int type) const
+{
+    return m_typeIconMap.keys().indexOf(type);
+}
+
 LiteEditorMark::LiteEditorMark(LiteEditorMarkTypeManager *manager, LiteEditor *editor) :
     LiteApi::IEditorMark(editor),
     m_manager(manager),
@@ -116,7 +122,7 @@ LiteEditorMark::LiteEditorMark(LiteEditorMarkTypeManager *manager, LiteEditor *e
 static TextEditor::ITextMark *findMarkByType(TextEditor::TextBlockUserData *data, int type)
 {
     foreach(TextEditor::ITextMark *mark, data->marks()) {
-        if ( ((LiteTextMark*)mark)->type() == type ) {
+        if ( mark->type() == type ) {
             return mark;
         }
     }
@@ -125,11 +131,12 @@ static TextEditor::ITextMark *findMarkByType(TextEditor::TextBlockUserData *data
 
 LiteTextMark *LiteEditorMark::createMarkByType(int type, int line, const QTextBlock &block)
 {
-    QIcon icon = m_manager->iconForType(type);
-    if (icon.isNull()) {
+    int index = m_manager->indexOfType(type);
+    if (index < 0) {
         return 0;
     }
-    LiteTextMark *mark = new LiteTextMark(this,type,line,block,this);
+    QIcon icon = m_manager->iconForType(type);
+    LiteTextMark *mark = new LiteTextMark(this,type,index,line,block,this);
     mark->setIcon(icon);
     return mark;
 }

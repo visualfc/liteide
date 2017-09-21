@@ -411,7 +411,7 @@ void TextBlockUserData::addMark(ITextMark *mark)
 {
     int i = 0;
     for ( ; i < m_marks.size(); ++i) {
-        if (mark->priority() < m_marks.at(i)->priority())
+        if (mark->type() < m_marks.at(i)->type())
             break;
     }
     m_marks.insert(i, mark);

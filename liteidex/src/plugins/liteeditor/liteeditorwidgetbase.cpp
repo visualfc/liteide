@@ -890,13 +890,11 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
 
             if (TextEditor::TextBlockUserData *userData = static_cast<TextEditor::TextBlockUserData*>(block.userData())) {
                 if (m_marksVisible) {
-                    int xoffset = 0;
+                    int xoffset = 2;
                     foreach (TextEditor::ITextMark *mrk, userData->marks()) {
-                        int x = 0;
                         int radius = fmLineSpacing - 1;
-                        QRect r(x + xoffset, top, radius, radius);
+                        QRect r(xoffset*mrk->indexOfType(), top, radius, radius);
                         mrk->paint(&painter, r);
-                        xoffset += 2;
                     }
                 }
             }
