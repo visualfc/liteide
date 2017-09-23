@@ -144,6 +144,7 @@ public:
     virtual QList<QTextBlock> markBlocksByType(int type) const = 0;
     virtual QList<int> markTypesByLine(int line) const = 0;
     virtual ILiteEditor *editor() const = 0;
+    virtual QString filePath() const = 0;
 signals:
     void markListChanged(int type);
 };

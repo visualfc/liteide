@@ -145,5 +145,8 @@ void BookmarkManager::toggledBookmark()
 
 void BookmarkManager::editorMarkListChanged(LiteApi::IEditorMark *mark, int type)
 {
-    //qDebug() <<  mark << type;
+    if (type != BookMarkType) {
+        return;
+    }
+    qDebug() <<  mark->filePath() << mark->markLinesByType(type);
 }

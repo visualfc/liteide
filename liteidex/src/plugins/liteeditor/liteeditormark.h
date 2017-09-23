@@ -68,6 +68,7 @@ public:
     virtual QList<QTextBlock> markBlocksByType(int type) const;
     virtual QList<int> markTypesByLine(int line) const;
     virtual LiteEditor *editor() const;
+    virtual QString filePath() const;
     LiteTextMark *createMarkByType(int type, int line, const QTextBlock &block);
     void removedFromEditor(LiteTextMark *mark);
     void updateLineNumber(LiteTextMark *mark, int newLine, int oldLine);

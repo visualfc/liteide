@@ -319,3 +319,8 @@ LiteEditor *LiteEditorMark::editor() const
 {
     return m_editor;
 }
+
+QString LiteEditorMark::filePath() const
+{
+    return m_editor->filePath();
+}
