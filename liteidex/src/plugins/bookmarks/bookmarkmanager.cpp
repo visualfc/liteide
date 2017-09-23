@@ -45,7 +45,7 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
         return false;
     }
 
-    LiteApi::IEditorMarkTypeManager *manager = LiteApi::getEditorMarkTypeManager(app);
+    LiteApi::IEditorMarkManager *manager = LiteApi::getEditorMarkManager(app);
     if (!manager) {
         return false;
     }
@@ -64,7 +64,7 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
-
+    connect(manager,SIGNAL(editorMarkListChanged(LiteApi::IEditorMark*,int)),this,SLOT(editorMarkListChanged(LiteApi::IEditorMark*,int)));
     return true;
 }
 
@@ -77,8 +77,6 @@ void BookmarkManager::editorCreated(LiteApi::IEditor *editor)
     if (!mark) {
         return;
     }
-    connect(mark,SIGNAL(markListChanged(int)),this,SLOT(markListChanged(int)));
-    m_editorMarkList.push_back(mark);
 
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
@@ -92,12 +90,14 @@ void BookmarkManager::editorCreated(LiteApi::IEditor *editor)
     }
     bool ok;
     QString key = QString("bookmarks/%1").arg(editor->filePath());
+    QList<int> bpList;
     foreach(QString bp, m_liteApp->settings()->value(key).toStringList()) {
         int i = bp.toInt(&ok);
         if (ok) {
-            mark->addMark(i,BookMarkType);
+            bpList << i;
         }
     }
+    mark->addMarkList(bpList,BookMarkType);
 }
 
 void BookmarkManager::editorAboutToClose(LiteApi::IEditor *editor)
@@ -109,7 +109,6 @@ void BookmarkManager::editorAboutToClose(LiteApi::IEditor *editor)
     if (!mark) {
         return;
     }
-    m_editorMarkList.removeAll(mark);
     QList<int> bpList = mark->markLinesByType(BookMarkType);
     QStringList save;
     foreach(int bp, bpList) {
@@ -121,11 +120,7 @@ void BookmarkManager::editorAboutToClose(LiteApi::IEditor *editor)
     } else {
         m_liteApp->settings()->setValue(key,save);
     }
-}
-
-void BookmarkManager::markListChanged(int type)
-{
-    //qDebug() << type;
+    mark->removeMarkList(bpList,BookMarkType);
 }
 
 void BookmarkManager::toggledBookmark()
@@ -146,4 +141,9 @@ void BookmarkManager::toggledBookmark()
     } else {
         mark->addMark(line,BookMarkType);
     }
+}
+
+void BookmarkManager::editorMarkListChanged(LiteApi::IEditorMark *mark, int type)
+{
+    //qDebug() <<  mark << type;
 }

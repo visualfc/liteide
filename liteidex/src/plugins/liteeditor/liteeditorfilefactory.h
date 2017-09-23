@@ -28,7 +28,7 @@
 #include "highlightermanager.h"
 
 class EditorApiManager;
-class LiteEditorMarkTypeManager;
+class LiteEditorMarkManager;
 class LiteEditor;
 
 class LiteEditorFileFactory : public LiteApi::IEditorFactory
@@ -46,7 +46,7 @@ public slots:
 protected:
     LiteApi::IApplication *m_liteApp;
     EditorApiManager *m_wordApiManager;
-    LiteEditorMarkTypeManager *m_markTypeManager;
+    LiteEditorMarkManager *m_markManager;
     HighlighterManager *m_highlighterManager;
     QStringList m_mimeTypes;
 };

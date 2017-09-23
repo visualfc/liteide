@@ -29,6 +29,7 @@
 
 class QuickOpenPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     QuickOpenPlugin();
     virtual bool load(LiteApi::IApplication *app);

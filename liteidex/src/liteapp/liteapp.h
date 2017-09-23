@@ -115,7 +115,7 @@ public:
     void createToolBars();
     void loadPlugins();
     void loadMimeType();
-    void initPlugins();    
+    void initPlugins();
     void setPluginPath(const QString &path); 
     void setResourcePath(const QString &path);
 protected slots:

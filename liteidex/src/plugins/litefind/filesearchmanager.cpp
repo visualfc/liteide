@@ -95,11 +95,9 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
 
 FileSearchManager::~FileSearchManager()
 {
-    foreach(LiteApi::IFileSearch *search, m_fileSearchList) {
-        delete search;
-    }
-    m_fileSearchList.clear();
-    delete m_widget;
+    //delete m_widget;
+    //qDeleteAll(m_fileSearchList);
+    //m_fileSearchList.clear();
 }
 
 void FileSearchManager::addFileSearch(LiteApi::IFileSearch *search)

@@ -30,18 +30,24 @@
 #include "liteeditor.h"
 
 class LiteTextMark;
-class LiteEditorMarkTypeManager : public LiteApi::IEditorMarkTypeManager
+class LiteEditorMarkManager : public LiteApi::IEditorMarkManager
 {
     Q_OBJECT
 public:
-    LiteEditorMarkTypeManager(QObject *parent = 0);
-    virtual ~LiteEditorMarkTypeManager();
+    LiteEditorMarkManager(QObject *parent = 0);
+    virtual ~LiteEditorMarkManager();
     virtual void registerMark(int type, const QIcon &icon);
     virtual QList<int> markTypeList() const;
     virtual QIcon iconForType(int type) const;
     virtual int indexOfType(int type) const;
+    virtual QList<LiteApi::IEditorMark*> editorMarkList() const;
+    void addMark(LiteApi::IEditorMark *mark);
+    void removeMark(LiteApi::IEditorMark *mark);
+public slots:
+    void markListChanged(int type);
 protected:
     QMap<int,QIcon> m_typeIconMap;
+    QList<LiteApi::IEditorMark*> m_markList;
 };
 
 typedef QMap<int,QMap<int,TextEditor::ITextMark*> > TypeLineMarkMap;
@@ -52,9 +58,12 @@ class LiteEditorMark : public LiteApi::IEditorMark
 {
     Q_OBJECT
 public:
-    explicit LiteEditorMark(LiteEditorMarkTypeManager *manager, LiteEditor *editor);
+    explicit LiteEditorMark(LiteEditorMarkManager *manager, LiteEditor *editor);
+    virtual ~LiteEditorMark();
     virtual void addMark(int line, int type);
+    virtual void addMarkList(const QList<int> &lines, int type);
     virtual void removeMark(int line, int type);
+    virtual void removeMarkList(const QList<int> &lines, int type);
     virtual QList<int> markLinesByType(int type) const;
     virtual QList<QTextBlock> markBlocksByType(int type) const;
     virtual QList<int> markTypesByLine(int line) const;
@@ -64,7 +73,7 @@ public:
     void updateLineNumber(LiteTextMark *mark, int newLine, int oldLine);
     void updateLineBlock(LiteTextMark *mark);
 protected:
-    LiteEditorMarkTypeManager *m_manager;
+    LiteEditorMarkManager *m_manager;
     LiteEditor * m_editor;
     QTextDocument *m_document;
     TypeLineMarkMap m_typeLineMarkMap;

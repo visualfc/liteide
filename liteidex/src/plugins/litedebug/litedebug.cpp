@@ -216,10 +216,10 @@ void LiteDebug::appLoaded()
     m_liteBuild = LiteApi::findExtensionObject<LiteApi::ILiteBuild*>(m_liteApp,"LiteApi.ILiteBuild");
     m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
 
-    LiteApi::IEditorMarkTypeManager *markTypeManager = LiteApi::findExtensionObject<LiteApi::IEditorMarkTypeManager*>(m_liteApp,"LiteApi.IEditorMarkTypeManager");
-    if (markTypeManager) {
-        markTypeManager->registerMark(BreakPointMarkType,QIcon("icon:litedebug/images/breakmark.png"));
-        markTypeManager->registerMark(CurrentLineMarkType,QIcon("icon:litedebug/images/linemark.png"));
+    LiteApi::IEditorMarkManager *markManager = LiteApi::getEditorMarkManager(m_liteApp);
+    if (markManager) {
+        markManager->registerMark(BreakPointMarkType,QIcon("icon:litedebug/images/breakmark.png"));
+        markManager->registerMark(CurrentLineMarkType,QIcon("icon:litedebug/images/linemark.png"));
     }
     //QMenu *menu = new QMenu(tr("Select Debug"));
     QActionGroup *group = new QActionGroup(this);
@@ -282,13 +282,15 @@ void LiteDebug::editorCreated(LiteApi::IEditor *editor)
     m_fileBpMap.remove(filePath);
 
     QString key = QString("litedebug_bp/%1").arg(editor->filePath());
+    QList<int> bpList;
     foreach(QString bp, m_liteApp->settings()->value(key).toStringList()) {
         int i = bp.toInt(&ok);
         if (ok) {
-            editorMark->addMark(i,LiteApi::BreakPointMarkType);
+            bpList << i;
             m_fileBpMap.insert(filePath,i);
         }
     }
+    editorMark->addMarkList(bpList,LiteApi::BreakPointMarkType);
 //    foreach(QString bp, m_liteApp->globalCookie().value(key).toStringList()) {
 //        int i = bp.toInt(&ok);
 //        if (ok) {
@@ -330,6 +332,7 @@ void LiteDebug::editorAboutToClose(LiteApi::IEditor *editor)
     } else {
         m_liteApp->settings()->setValue(key,save);
     }
+    editorMark->removeMarkList(bpList,LiteApi::BreakPointMarkType);
 }
 
 void LiteDebug::currentEditorChanged(IEditor *editor)
@@ -666,13 +669,14 @@ void LiteDebug::removeAllBreakPoints()
         return;
     }
     QString filePath = textEditor->filePath();
-    foreach(int line, editorMark->markLinesByType(LiteApi::BreakPointMarkType)) {
-        editorMark->removeMark(line,LiteApi::BreakPointMarkType);
+    QList<int> bpList = editorMark->markLinesByType(LiteApi::BreakPointMarkType);
+    foreach(int line, bpList) {
         m_fileBpMap.remove(filePath,line);
         if (m_debugger && m_debugger->isRunning()) {
             m_debugger->removeBreakPoint(filePath,line);
         }
     }
+    editorMark->removeMarkList(bpList,LiteApi::BreakPointMarkType);
 }
 
 void LiteDebug::toggleBreakPoint()

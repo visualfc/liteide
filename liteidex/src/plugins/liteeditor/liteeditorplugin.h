@@ -30,6 +30,7 @@
 
 class LiteEditorPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     LiteEditorPlugin();
     virtual bool load(LiteApi::IApplication *app);

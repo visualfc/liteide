@@ -86,9 +86,9 @@ LiteEditorFileFactory::LiteEditorFileFactory(LiteApi::IApplication *app, QObject
         m_liteApp->extension()->addObject("LiteApi.IWordApiManager",m_wordApiManager);
         m_wordApiManager->load(m_liteApp->resourcePath()+"/packages");
     }
-    m_markTypeManager = new LiteEditorMarkTypeManager(this);
-    if (m_markTypeManager->initWithApp(app)) {
-        m_liteApp->extension()->addObject("LiteApi.IEditorMarkTypeManager",m_markTypeManager);
+    m_markManager = new LiteEditorMarkManager(this);
+    if (m_markManager->initWithApp(app)) {
+        m_liteApp->extension()->addObject("LiteApi.IEditorMarkManager",m_markManager);
     }
 }
 
@@ -126,7 +126,7 @@ LiteApi::IEditor *LiteEditorFileFactory::open(const QString &fileName, const QSt
    // m_liteApp->editorManager()->cutForwardNavigationHistory();
     //m_liteApp->editorManager()->addNavigationHistory();
     LiteEditor *editor = new LiteEditor(m_liteApp);
-    editor->setEditorMark(new LiteEditorMark(m_markTypeManager,editor));
+    editor->setEditorMark(new LiteEditorMark(m_markManager,editor));
     if (!editor->open(fileName,mimeType)) {
         delete editor;
         return 0;
@@ -137,7 +137,7 @@ LiteApi::IEditor *LiteEditorFileFactory::open(const QString &fileName, const QSt
 LiteApi::IEditor *LiteEditorFileFactory::create(const QString &contents, const QString &mimeType)
 {
     LiteEditor *editor = new LiteEditor(m_liteApp);
-    editor->setEditorMark(new LiteEditorMark(m_markTypeManager,editor));
+    editor->setEditorMark(new LiteEditorMark(m_markManager,editor));
     if (!editor->createNew(contents,mimeType)) {
         delete editor;
         return 0;

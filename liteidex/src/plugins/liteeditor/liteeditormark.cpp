@@ -78,17 +78,17 @@ QTextBlock LiteTextMark::block() const
     return m_block;
 }
 
-
-LiteEditorMarkTypeManager::LiteEditorMarkTypeManager(QObject *parent) :
-    LiteApi::IEditorMarkTypeManager(parent)
+LiteEditorMarkManager::LiteEditorMarkManager(QObject *parent) :
+    LiteApi::IEditorMarkManager(parent)
 {
 }
 
-LiteEditorMarkTypeManager::~LiteEditorMarkTypeManager()
+LiteEditorMarkManager::~LiteEditorMarkManager()
 {
+
 }
 
-void LiteEditorMarkTypeManager::registerMark(int type, const QIcon &icon)
+void LiteEditorMarkManager::registerMark(int type, const QIcon &icon)
 {
     if (m_typeIconMap.contains(type)) {
         qDebug() << "warning!!!" << "LiteEditorMarkTypeManager register mark type" << type << "exist!";
@@ -96,27 +96,56 @@ void LiteEditorMarkTypeManager::registerMark(int type, const QIcon &icon)
     m_typeIconMap.insert(type,icon);
 }
 
-QList<int> LiteEditorMarkTypeManager::markTypeList() const
+QList<int> LiteEditorMarkManager::markTypeList() const
 {
     return m_typeIconMap.keys();
 }
 
-QIcon LiteEditorMarkTypeManager::iconForType(int type) const
+QIcon LiteEditorMarkManager::iconForType(int type) const
 {
     return m_typeIconMap.value(type);
 }
 
-int LiteEditorMarkTypeManager::indexOfType(int type) const
+int LiteEditorMarkManager::indexOfType(int type) const
 {
     return m_typeIconMap.keys().indexOf(type);
 }
 
-LiteEditorMark::LiteEditorMark(LiteEditorMarkTypeManager *manager, LiteEditor *editor) :
+QList<LiteApi::IEditorMark *> LiteEditorMarkManager::editorMarkList() const
+{
+    return m_markList;
+}
+
+void LiteEditorMarkManager::addMark(LiteApi::IEditorMark *mark)
+{
+    m_markList.append(mark);
+    emit editorMarkCreated(mark);
+    connect(mark,SIGNAL(markListChanged(int)),this,SLOT(markListChanged(int)));
+}
+
+void LiteEditorMarkManager::removeMark(LiteApi::IEditorMark *mark)
+{
+    m_markList.removeAll(mark);
+    emit editorMarkRemoved(mark);
+}
+
+void LiteEditorMarkManager::markListChanged(int type)
+{
+    emit editorMarkListChanged((LiteApi::IEditorMark*)sender(),type);
+}
+
+LiteEditorMark::LiteEditorMark(LiteEditorMarkManager *manager, LiteEditor *editor) :
     LiteApi::IEditorMark(editor),
     m_manager(manager),
     m_editor(editor),
     m_document(editor->document())
 {
+    m_manager->addMark(this);
+}
+
+LiteEditorMark::~LiteEditorMark()
+{
+    m_manager->removeMark(this);
 }
 
 static TextEditor::ITextMark *findMarkByType(TextEditor::TextBlockUserData *data, int type)
@@ -167,42 +196,67 @@ void LiteEditorMark::updateLineBlock(LiteTextMark *mark)
 
 void LiteEditorMark::addMark(int line, int type)
 {
-    const QTextBlock &block = m_document->findBlockByNumber(line);
-    if (!block.isValid()) {
-        return;
-    }
-    TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(block);
-    if (!data) {
-        return;
-    }
-    TextEditor::ITextMark *findMark = findMarkByType(data,type);
-    if (findMark) {
-        return;
-    }
-    LiteTextMark *mark = createMarkByType(type, line, block);
-    data->addMark(mark);
+    addMarkList(QList<int>() << line, type);
+}
 
-    m_typeLineMarkMap[type].insert(line,mark);
-    emit markListChanged(type);
+void LiteEditorMark::addMarkList(const QList<int> &lines, int type)
+{
+    bool changed = false;
+    foreach (int line, lines) {
+        const QTextBlock &block = m_document->findBlockByNumber(line);
+        if (!block.isValid()) {
+            continue;
+        }
+        TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::userData(block);
+        if (!data) {
+            continue;
+        }
+        TextEditor::ITextMark *findMark = findMarkByType(data,type);
+        if (findMark) {
+            continue;
+        }
+        LiteTextMark *mark = createMarkByType(type, line, block);
+        data->addMark(mark);
+
+        m_typeLineMarkMap[type].insert(line,mark);
+        changed = true;
+    }
+
+    if (changed) {
+        emit markListChanged(type);
+    }
 }
 
 
 void LiteEditorMark::removeMark(int line, int type)
 {
-    const QTextBlock &block = m_document->findBlockByNumber(line);
-    if (!block.isValid()) {
-        return;
+    removeMarkList(QList<int>() << line, type);
+}
+
+void LiteEditorMark::removeMarkList(const QList<int> &lines, int type)
+{
+    bool changed = false;
+    foreach (int line, lines) {
+        const QTextBlock &block = m_document->findBlockByNumber(line);
+        if (!block.isValid()) {
+            continue;
+        }
+        TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::testUserData(block);
+        if (!data) {
+            continue;
+        }
+        TextEditor::ITextMark *mark = findMarkByType(data,type);
+        if (!mark) {
+            continue;
+        }
+        data->removeMark(mark);
+
+        m_typeLineMarkMap[type].remove(line);
+        delete mark;
+        changed = true;
     }
-    TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::testUserData(block);
-    if (!data) {
-        return;
-    }
-    TextEditor::ITextMark *mark = findMarkByType(data,type);
-    if (!mark) {
-        return;
-    }
-    if (data->removeMark(mark)) {
-        this->removedFromEditor((LiteTextMark*)mark);
+    if (changed) {
+        emit markListChanged(type);
     }
 }
 

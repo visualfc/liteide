@@ -29,6 +29,7 @@
 
 class BookmarksPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     BookmarksPlugin();
     virtual bool load(LiteApi::IApplication *app);

@@ -30,6 +30,7 @@
 
 class GdbDebuggerPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     GdbDebuggerPlugin();
     virtual bool load(LiteApi::IApplication *app);

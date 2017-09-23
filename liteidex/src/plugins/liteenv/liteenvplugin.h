@@ -31,6 +31,7 @@
 class EnvManager;
 class LiteEnvPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     LiteEnvPlugin();
     virtual bool load(LiteApi::IApplication *app);

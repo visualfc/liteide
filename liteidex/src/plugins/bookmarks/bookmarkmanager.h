@@ -41,11 +41,10 @@ public:
 public slots:
     void editorCreated(LiteApi::IEditor *editor);
     void editorAboutToClose(LiteApi::IEditor *editor);
-    void markListChanged(int type);
     void toggledBookmark();
+    void editorMarkListChanged(LiteApi::IEditorMark *mark, int type);
 protected:
     QAction *m_toggleBookmarkAct;
-    QList<LiteApi::IEditorMark*> m_editorMarkList;
 };
 
 #endif // BOOKMARKMANAGER_H

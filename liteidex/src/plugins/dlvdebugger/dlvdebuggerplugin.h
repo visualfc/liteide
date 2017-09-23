@@ -30,6 +30,7 @@
 
 class DlvDebuggerPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     DlvDebuggerPlugin();
     virtual bool load(LiteApi::IApplication *app);

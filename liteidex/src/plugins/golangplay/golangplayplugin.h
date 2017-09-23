@@ -30,6 +30,7 @@
 
 class GolangPlayPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     GolangPlayPlugin();
     virtual bool load(LiteApi::IApplication *app);

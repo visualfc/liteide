@@ -417,6 +417,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
 
 LiteEditorWidgetBase::~LiteEditorWidgetBase()
 {
+    delete m_editorMark;
 }
 
 static void indentBlock(QTextDocument *doc,

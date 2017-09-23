@@ -131,31 +131,37 @@ signals:
     void wordCompleted(const QString &func, const QString &kind, const QString &info);
 };
 
-// priopity by type value
-class IEditorMarkTypeManager : public IManager
-{
-    Q_OBJECT
-public:
-    IEditorMarkTypeManager(QObject *parent = 0) : IManager(parent) {}
-    virtual void registerMark(int type, const QIcon &icon) = 0;
-    virtual QList<int> markTypeList() const = 0;
-    virtual QIcon iconForType(int type) const = 0;
-    virtual int indexOfType(int type) const = 0;
-};
-
 class IEditorMark : public QObject
 {
     Q_OBJECT
 public:
     IEditorMark(QObject *parent) : QObject(parent) {}
     virtual void addMark(int line, int type) = 0;
+    virtual void addMarkList(const QList<int> &lines, int type) = 0;
     virtual void removeMark(int line, int type) = 0;
+    virtual void removeMarkList(const QList<int> &lines, int type) = 0;
     virtual QList<int> markLinesByType(int type) const = 0;
     virtual QList<QTextBlock> markBlocksByType(int type) const = 0;
     virtual QList<int> markTypesByLine(int line) const = 0;
     virtual ILiteEditor *editor() const = 0;
 signals:
     void markListChanged(int type);
+};
+
+class IEditorMarkManager : public IManager
+{
+    Q_OBJECT
+public:
+    IEditorMarkManager(QObject *parent = 0) : IManager(parent) {}
+    virtual void registerMark(int type, const QIcon &icon) = 0;
+    virtual QList<int> markTypeList() const = 0;
+    virtual QIcon iconForType(int type) const = 0;
+    virtual int indexOfType(int type) const = 0;
+    virtual QList<LiteApi::IEditorMark*> editorMarkList() const = 0;
+signals:
+    void editorMarkCreated(LiteApi::IEditorMark *mark);
+    void editorMarkRemoved(LiteApi::IEditorMark *mark);
+    void editorMarkListChanged(LiteApi::IEditorMark *mark, int type);
 };
 
 enum EditorNaviagteType{
@@ -284,9 +290,9 @@ inline IEditorMark *getEditorMark(IEditor *editor) {
     return 0;
 }
 
-inline IEditorMarkTypeManager *getEditorMarkTypeManager(IApplication *app) {
+inline IEditorMarkManager *getEditorMarkManager(IApplication *app) {
     if (app && app->extension()) {
-        return findExtensionObject<IEditorMarkTypeManager*>(app->extension(),"LiteApi.IEditorMarkTypeManager");
+        return findExtensionObject<IEditorMarkManager*>(app->extension(),"LiteApi.IEditorMarkManager");
     }
     return 0;
 }

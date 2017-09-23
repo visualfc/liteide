@@ -31,6 +31,7 @@
 class FileBrowser;
 class FileBrowserPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     FileBrowserPlugin();
     virtual bool load(LiteApi::IApplication *app);

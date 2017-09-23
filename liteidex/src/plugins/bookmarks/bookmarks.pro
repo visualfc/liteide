@@ -2,6 +2,7 @@ TARGET = bookmarks
 TEMPLATE = lib
 
 include(../../liteideplugin.pri)
+include (../../api/liteeditorapi/liteeditorapi.pri)
 
 DEFINES += BOOKMARKS_LIBRARY
 

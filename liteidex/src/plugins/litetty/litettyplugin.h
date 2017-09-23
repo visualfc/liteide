@@ -29,6 +29,7 @@
 
 class LiteTtyPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     LiteTtyPlugin();
     virtual bool load(LiteApi::IApplication *app);

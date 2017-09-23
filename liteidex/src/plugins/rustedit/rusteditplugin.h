@@ -29,6 +29,7 @@
 
 class RustEditPlugin : public LiteApi::IPlugin
 {
+    Q_OBJECT
 public:
     RustEditPlugin();
     virtual bool load(LiteApi::IApplication *app);

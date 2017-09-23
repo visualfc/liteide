@@ -442,7 +442,12 @@ IExtension *LiteApp::extension()
 
 void LiteApp::cleanup()
 {
-    qDeleteAll(m_pluginList);
+    //delete plugin by depend
+    for ( QList<IPlugin*>::reverse_iterator it = m_pluginList.rbegin(); it != m_pluginList.rend(); it++) {
+        IPlugin* p = *it;
+        //qDebug() << p;
+        delete p;
+    }
     m_pluginList.clear();
 
     delete m_idleTimer;
