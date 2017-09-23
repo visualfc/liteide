@@ -26,6 +26,7 @@
 #include "liteeditorwidget.h"
 #include <QTextDocument>
 #include <QTextBlock>
+#include <QFileInfo>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -344,4 +345,9 @@ LiteEditor *LiteEditorMark::editor() const
 QString LiteEditorMark::filePath() const
 {
     return m_editor->filePath();
+}
+
+QString LiteEditorMark::fileName() const
+{
+    return QFileInfo(m_editor->filePath()).fileName();
 }

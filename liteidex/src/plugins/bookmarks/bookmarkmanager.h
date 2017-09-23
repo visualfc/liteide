@@ -27,11 +27,26 @@
 #include "liteapi/liteapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 
+#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
+#include <QStandardItem>
+
+class MarkNodeItem : public QStandardItem
+{
+public:
+    MarkNodeItem() : mark(0), node(0)
+    {
+    }
+public:
+    LiteApi::IEditorMark     *mark;
+    LiteApi::IEditorMarkNode *node;
+};
 
 enum BOOKMARK_EDITOR_MARKTYPE {
     BookMarkType = 1000
 };
 
+class QTreeView;
 class BookmarkManager : public LiteApi::IManager
 {
     Q_OBJECT
@@ -43,10 +58,14 @@ public slots:
     void editorAboutToClose(LiteApi::IEditor *editor);
     void toggledBookmark();
     void editorMarkListChanged(LiteApi::IEditorMark *mark, int type);
+    void editorMarkNodeCreated(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
+    void editorMarkNodeRemoved(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
+    void editorMarkNodeChanged(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
 protected:
     QAction *m_toggleBookmarkAct;
     QStandardItemModel *m_bookmarkModel;
-    QMultiMap<QString,int> m_bookmarkMap;
+    QSortFilterProxyModel *m_proxyModel;
+    QTreeView *m_treeView;
 };
 
 #endif // BOOKMARKMANAGER_H

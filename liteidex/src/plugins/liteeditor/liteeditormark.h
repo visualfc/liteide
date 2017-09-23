@@ -72,6 +72,7 @@ public:
     virtual QList<int> markTypesByLine(int line) const;
     virtual LiteEditor *editor() const;
     virtual QString filePath() const;
+    virtual QString fileName() const;
     LiteEditorMarkNode *createMarkByType(int type, int line, const QTextBlock &block);
     void removedFromEditor(LiteEditorMarkNode *mark);
     void updateLineNumber(LiteEditorMarkNode *mark, int newLine, int oldLine);

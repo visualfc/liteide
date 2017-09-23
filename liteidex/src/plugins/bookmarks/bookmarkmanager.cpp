@@ -23,6 +23,8 @@
 
 #include "bookmarkmanager.h"
 #include <QStandardItemModel>
+#include <QTreeView>
+#include <QHeaderView>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -37,7 +39,6 @@
 BookmarkManager::BookmarkManager(QObject *parent)
     : LiteApi::IManager(parent)
 {
-    m_bookmarkModel = new QStandardItemModel(this);
 }
 
 bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
@@ -66,6 +67,24 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(manager,SIGNAL(editorMarkListChanged(LiteApi::IEditorMark*,int)),this,SLOT(editorMarkListChanged(LiteApi::IEditorMark*,int)));
+    connect(manager,SIGNAL(editorMarkNodeCreated(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeCreated(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
+    connect(manager,SIGNAL(editorMarkNodeRemoved(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeRemoved(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
+    connect(manager,SIGNAL(editorMarkNodeChanged(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeChanged(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
+
+    m_treeView = new QTreeView;
+    m_treeView->setHeaderHidden(true);
+    m_treeView->setEditTriggers(QTreeView::NoEditTriggers);
+    m_treeView->setRootIsDecorated(false);
+
+    m_bookmarkModel = new QStandardItemModel(this);
+    m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel->setSourceModel(m_bookmarkModel);
+    m_proxyModel->sort(0);
+
+    m_treeView->setModel(m_proxyModel);
+
+    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_treeView,"Bookmarks",tr("Bookmarks"),true);
+
     return true;
 }
 
@@ -149,11 +168,45 @@ void BookmarkManager::editorMarkListChanged(LiteApi::IEditorMark *mark, int type
     if (type != BookMarkType) {
         return;
     }
-    //qDebug() <<  mark->filePath() << mark->markLinesByType(type);
-    QString filePath = mark->filePath();
-    QList<int> lines = mark->markLinesByType(type);
-    QList<int> oldLines = m_bookmarkMap.values(filePath);
-    if (lines != oldLines) {
+}
 
+void BookmarkManager::editorMarkNodeCreated(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node)
+{
+    if (node->type() != BookMarkType) {
+        return;
+    }
+    MarkNodeItem *item = new MarkNodeItem();
+    item->mark = mark;
+    item->node = node;
+    item->setText(QString("%1\t%2").arg(mark->fileName()).arg(node->lineNumber()));
+    item->setToolTip(QString("%1").arg(mark->filePath()));
+    m_bookmarkModel->appendRow(item);
+}
+
+void BookmarkManager::editorMarkNodeRemoved(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node)
+{
+    if (node->type() != BookMarkType) {
+        return;
+    }
+    for (int i = 0; i < m_bookmarkModel->rowCount(); i++) {
+        MarkNodeItem *item = (MarkNodeItem*)m_bookmarkModel->item(i,0);
+        if (item->mark == mark && item->node == node) {
+            m_bookmarkModel->removeRow(i);
+            break;
+        }
+    }
+}
+
+void BookmarkManager::editorMarkNodeChanged(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node)
+{
+    if (node->type() != BookMarkType) {
+        return;
+    }
+    for (int i = 0; i < m_bookmarkModel->rowCount(); i++) {
+        MarkNodeItem *item = (MarkNodeItem*)m_bookmarkModel->item(i,0);
+        if (item->mark == mark && item->node == node) {
+            item->setText(QString("%1\t%2").arg(mark->fileName()).arg(node->lineNumber()));
+            break;
+        }
     }
 }
