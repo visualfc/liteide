@@ -84,7 +84,10 @@ double ITextMark::widthFactor() const
     return 1.0;
 }
 
-
+QTextBlock ITextMark::block() const
+{
+    return QTextBlock();
+}
 
 QMap<QString, QString> ITextEditor::openedTextEditorsContents()
 {

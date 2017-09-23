@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "bookmarkmanager.h"
+#include <QStandardItemModel>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -36,7 +37,7 @@
 BookmarkManager::BookmarkManager(QObject *parent)
     : LiteApi::IManager(parent)
 {
-
+    m_bookmarkModel = new QStandardItemModel(this);
 }
 
 bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
@@ -148,5 +149,11 @@ void BookmarkManager::editorMarkListChanged(LiteApi::IEditorMark *mark, int type
     if (type != BookMarkType) {
         return;
     }
-    qDebug() <<  mark->filePath() << mark->markLinesByType(type);
+    //qDebug() <<  mark->filePath() << mark->markLinesByType(type);
+    QString filePath = mark->filePath();
+    QList<int> lines = mark->markLinesByType(type);
+    QList<int> oldLines = m_bookmarkMap.values(filePath);
+    if (lines != oldLines) {
+
+    }
 }

@@ -29,7 +29,7 @@
 #include "qtc_texteditor/basetextdocumentlayout.h"
 #include "liteeditor.h"
 
-class LiteTextMark;
+class LiteEditorMarkNode;
 class LiteEditorMarkManager : public LiteApi::IEditorMarkManager
 {
     Q_OBJECT
@@ -43,6 +43,9 @@ public:
     virtual QList<LiteApi::IEditorMark*> editorMarkList() const;
     void addMark(LiteApi::IEditorMark *mark);
     void removeMark(LiteApi::IEditorMark *mark);
+    void addMarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
+    void removeMarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
+    void updateMarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
 public slots:
     void markListChanged(int type);
 protected:
@@ -69,10 +72,10 @@ public:
     virtual QList<int> markTypesByLine(int line) const;
     virtual LiteEditor *editor() const;
     virtual QString filePath() const;
-    LiteTextMark *createMarkByType(int type, int line, const QTextBlock &block);
-    void removedFromEditor(LiteTextMark *mark);
-    void updateLineNumber(LiteTextMark *mark, int newLine, int oldLine);
-    void updateLineBlock(LiteTextMark *mark);
+    LiteEditorMarkNode *createMarkByType(int type, int line, const QTextBlock &block);
+    void removedFromEditor(LiteEditorMarkNode *mark);
+    void updateLineNumber(LiteEditorMarkNode *mark, int newLine, int oldLine);
+    void updateLineBlock(LiteEditorMarkNode *mark);
 protected:
     LiteEditorMarkManager *m_manager;
     LiteEditor * m_editor;
@@ -80,12 +83,12 @@ protected:
     TypeLineMarkMap m_typeLineMarkMap;
 };
 
-class LiteTextMark : public TextEditor::ITextMark
+class LiteEditorMarkNode : public TextEditor::ITextMark
 {
     Q_OBJECT
 public:
-    LiteTextMark(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent = 0);
-    virtual ~LiteTextMark();
+    LiteEditorMarkNode(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent = 0);
+    virtual ~LiteEditorMarkNode();
     virtual void removedFromEditor();
     virtual void updateLineNumber(int lineNumber);
     virtual void updateBlock(const QTextBlock &block);

@@ -37,7 +37,7 @@
 #endif
 //lite_memory_check_end
 
-LiteTextMark::LiteTextMark(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent)
+LiteEditorMarkNode::LiteEditorMarkNode(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent)
     : TextEditor::ITextMark(parent),
       m_editorMark(editorMark)
 {
@@ -47,17 +47,17 @@ LiteTextMark::LiteTextMark(LiteEditorMark *editorMark, int type, int indexOfType
     m_block = block;
 }
 
-LiteTextMark::~LiteTextMark()
+LiteEditorMarkNode::~LiteEditorMarkNode()
 {
   //  qDebug() << "~LiteTextMark" << m_type << this->lineNumber();
 }
 
-void LiteTextMark::removedFromEditor()
+void LiteEditorMarkNode::removedFromEditor()
 {
     m_editorMark->removedFromEditor(this);
 }
 
-void LiteTextMark::updateLineNumber(int lineNumber)
+void LiteEditorMarkNode::updateLineNumber(int lineNumber)
 {
     if (m_lineNumber == lineNumber) {
         return;
@@ -67,13 +67,13 @@ void LiteTextMark::updateLineNumber(int lineNumber)
     m_editorMark->updateLineNumber(this, m_lineNumber, old);
 }
 
-void LiteTextMark::updateBlock(const QTextBlock &block)
+void LiteEditorMarkNode::updateBlock(const QTextBlock &block)
 {
     m_block = block;
     m_editorMark->updateLineBlock(this);
  }
 
-QTextBlock LiteTextMark::block() const
+QTextBlock LiteEditorMarkNode::block() const
 {
     return m_block;
 }
@@ -129,6 +129,21 @@ void LiteEditorMarkManager::removeMark(LiteApi::IEditorMark *mark)
     emit editorMarkRemoved(mark);
 }
 
+void LiteEditorMarkManager::addMarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node)
+{
+    emit editorMarkNodeCreated(mark,node);
+}
+
+void LiteEditorMarkManager::removeMarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node)
+{
+    emit editorMarkNodeRemoved(mark,node);
+}
+
+void LiteEditorMarkManager::updateMarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node)
+{
+    emit editorMarkNodeChanged(mark,node);
+}
+
 void LiteEditorMarkManager::markListChanged(int type)
 {
     emit editorMarkListChanged((LiteApi::IEditorMark*)sender(),type);
@@ -158,40 +173,44 @@ static TextEditor::ITextMark *findMarkByType(TextEditor::TextBlockUserData *data
     return 0;
 }
 
-LiteTextMark *LiteEditorMark::createMarkByType(int type, int line, const QTextBlock &block)
+LiteEditorMarkNode *LiteEditorMark::createMarkByType(int type, int line, const QTextBlock &block)
 {
     int index = m_manager->indexOfType(type);
     if (index < 0) {
         return 0;
     }
     QIcon icon = m_manager->iconForType(type);
-    LiteTextMark *mark = new LiteTextMark(this,type,index,line,block,this);
+    LiteEditorMarkNode *mark = new LiteEditorMarkNode(this,type,index,line,block,this);
     mark->setIcon(icon);
     return mark;
 }
 
-void LiteEditorMark::removedFromEditor(LiteTextMark *mark)
+void LiteEditorMark::removedFromEditor(LiteEditorMarkNode *mark)
 {
     int type = mark->type();
     m_typeLineMarkMap[type].remove(mark->lineNumber());
+
+    m_manager->removeMarkNode(this,mark);
 
     emit markListChanged(type);
 
     delete mark;
 }
 
-void LiteEditorMark::updateLineNumber(LiteTextMark *mark, int newLine, int oldLine)
+void LiteEditorMark::updateLineNumber(LiteEditorMarkNode *mark, int newLine, int oldLine)
 {
     int type = mark->type();
     m_typeLineMarkMap[type].remove(oldLine);
     m_typeLineMarkMap[type].insert(newLine,mark);
 
+    m_manager->updateMarkNode(this,mark);
+
     emit markListChanged(type);
 }
 
-void LiteEditorMark::updateLineBlock(LiteTextMark *mark)
+void LiteEditorMark::updateLineBlock(LiteEditorMarkNode *mark)
 {
-  //  qDebug() << mark->block().blockNumber() << mark->block().text();
+    m_manager->updateMarkNode(this,mark);
 }
 
 void LiteEditorMark::addMark(int line, int type)
@@ -215,10 +234,11 @@ void LiteEditorMark::addMarkList(const QList<int> &lines, int type)
         if (findMark) {
             continue;
         }
-        LiteTextMark *mark = createMarkByType(type, line, block);
+        LiteEditorMarkNode *mark = createMarkByType(type, line, block);
         data->addMark(mark);
 
         m_typeLineMarkMap[type].insert(line,mark);
+        m_manager->editorMarkNodeCreated(this,mark);
         changed = true;
     }
 
@@ -252,6 +272,7 @@ void LiteEditorMark::removeMarkList(const QList<int> &lines, int type)
         data->removeMark(mark);
 
         m_typeLineMarkMap[type].remove(line);
+        m_manager->removeMarkNode(this,mark);
         delete mark;
         changed = true;
     }
@@ -285,7 +306,7 @@ QList<QTextBlock> LiteEditorMark::markBlocksByType(int type) const
 {
     QList<QTextBlock> blocks;
     foreach (TextEditor::ITextMark *mark, m_typeLineMarkMap[type].values()) {
-        blocks.push_back(((LiteTextMark*)mark)->block());
+        blocks.push_back(((LiteEditorMarkNode*)mark)->block());
     }
     return blocks;
 }

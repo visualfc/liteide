@@ -149,6 +149,18 @@ signals:
     void markListChanged(int type);
 };
 
+class IEditorMarkNode : public QObject
+{
+    Q_OBJECT
+public:
+    IEditorMarkNode(QObject *parent = 0) : QObject(parent) {}
+    virtual ~IEditorMarkNode() {}
+
+    virtual int lineNumber() const = 0;
+    virtual int type() const = 0;
+    virtual QTextBlock block() const = 0;
+};
+
 class IEditorMarkManager : public IManager
 {
     Q_OBJECT
@@ -163,6 +175,9 @@ signals:
     void editorMarkCreated(LiteApi::IEditorMark *mark);
     void editorMarkRemoved(LiteApi::IEditorMark *mark);
     void editorMarkListChanged(LiteApi::IEditorMark *mark, int type);
+    void editorMarkNodeCreated(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
+    void editorMarkNodeRemoved(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
+    void editorMarkNodeChanged(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
 };
 
 enum EditorNaviagteType{

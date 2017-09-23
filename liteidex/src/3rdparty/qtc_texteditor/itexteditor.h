@@ -35,6 +35,7 @@
 #define ITEXTEDITOR_H
 
 #include "texteditor_global.h"
+#include "liteeditorapi/liteeditorapi.h"
 
 //#include <coreplugin/editormanager/ieditor.h>
 
@@ -56,11 +57,11 @@ namespace TextEditor {
 
 class ITextEditor;
 
-class TEXTEDITOR_EXPORT ITextMark : public QObject
+class TEXTEDITOR_EXPORT ITextMark : public LiteApi::IEditorMarkNode
 {
     Q_OBJECT
 public:
-    ITextMark(QObject *parent = 0) : QObject(parent), m_lineNumber(-1), m_type(-1), m_indexOfType(0) {}
+    ITextMark(QObject *parent = 0) : LiteApi::IEditorMarkNode(parent), m_lineNumber(-1), m_type(-1), m_indexOfType(0) {}
     virtual ~ITextMark() {}
 
     // determine order on markers on the same line. 
@@ -74,6 +75,7 @@ public:
     virtual int type() const;
     virtual int indexOfType() const;
     virtual double widthFactor() const;
+    virtual QTextBlock block() const;
 
 protected:
     QIcon m_icon;

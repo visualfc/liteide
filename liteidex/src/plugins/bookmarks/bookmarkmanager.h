@@ -45,6 +45,8 @@ public slots:
     void editorMarkListChanged(LiteApi::IEditorMark *mark, int type);
 protected:
     QAction *m_toggleBookmarkAct;
+    QStandardItemModel *m_bookmarkModel;
+    QMultiMap<QString,int> m_bookmarkMap;
 };
 
 #endif // BOOKMARKMANAGER_H
