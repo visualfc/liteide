@@ -26,21 +26,9 @@
 
 #include "liteapi/liteapi.h"
 #include "liteeditorapi/liteeditorapi.h"
+#include "bookmarkmodel.h"
 
-#include <QStandardItemModel>
 #include <QSortFilterProxyModel>
-#include <QStandardItem>
-
-class MarkNodeItem : public QStandardItem
-{
-public:
-    MarkNodeItem() : mark(0), node(0)
-    {
-    }
-public:
-    LiteApi::IEditorMark     *mark;
-    LiteApi::IEditorMarkNode *node;
-};
 
 enum BOOKMARK_EDITOR_MARKTYPE {
     BookMarkType = 1000
@@ -63,9 +51,11 @@ public slots:
     void editorMarkNodeChanged(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
 protected:
     QAction *m_toggleBookmarkAct;
-    QStandardItemModel *m_bookmarkModel;
-    QSortFilterProxyModel *m_proxyModel;
+    BookmarkModel *m_bookmarkModel;
+    BookmarkSortProxyModel *m_proxyModel;
     QTreeView *m_treeView;
 };
+
+
 
 #endif // BOOKMARKMANAGER_H
