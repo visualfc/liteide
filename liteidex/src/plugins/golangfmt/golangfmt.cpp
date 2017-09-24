@@ -434,10 +434,17 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
 
     QList<int> offsetList;
     int offsetBase = 0;
-    foreach(QString s, diff.split('\n')) {
+
+    QStringList diffList = diff.split("\n");
+    QString s;
+    int size = diffList.size();
+
+    for (int i = 0; i < size; i++) {
+        s = diffList[i];
         if (s.length() == 0) {
             continue;
         }
+
         QChar ch = s.at(0);
         if (ch == '@') {
             if (reg.indexIn(s) == 0) {
@@ -477,6 +484,20 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             }
             block_number++;
         } else if (ch == '-') {
+            //check modify current block text
+            if ((i < (size-1)) && diffList[i+1].startsWith("+")) {
+                block = cursor.document()->findBlockByNumber(block_number);
+                cursor.setPosition(block.position());
+                QString nextText = diffList[i+1].mid(1);
+                cursor.insertText(nextText);
+                cursor.setPosition(block.position()+nextText.length());
+                cursor.setPosition(block.position()+block.text().length(), QTextCursor::KeepAnchor);
+                cursor.removeSelectedText();
+                i++;
+                block_number++;
+                continue;
+            }
+
             offsetList.removeAt(block_number-offsetBase);
             block = cursor.document()->findBlockByNumber(block_number);
             cursor.setPosition(block.position());
