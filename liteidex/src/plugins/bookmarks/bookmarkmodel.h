@@ -80,6 +80,7 @@ public:
     }
     virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
     {
+        return QSortFilterProxyModel::lessThan(source_left,source_right);
         QString leftPath = source_left.data(BookmarkModel::FilePath).toString();
         QString rightPath = source_right.data(BookmarkModel::FilePath).toString();
         if (leftPath == rightPath) {

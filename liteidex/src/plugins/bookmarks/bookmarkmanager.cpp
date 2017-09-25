@@ -79,9 +79,9 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     m_bookmarkModel = new BookmarkModel(this);
     m_proxyModel = new BookmarkSortProxyModel(this);
     m_proxyModel->setSourceModel(m_bookmarkModel);
-    m_proxyModel->sort(0);
+    //m_proxyModel->sort(0);
 
-    m_treeView->setModel(m_proxyModel);
+    m_treeView->setModel(m_bookmarkModel);
 
     m_treeView->setItemDelegate(new BookmarkDelegate(this));
     m_treeView->setFrameStyle(QFrame::NoFrame);
