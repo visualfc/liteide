@@ -442,10 +442,11 @@ IExtension *LiteApp::extension()
 
 void LiteApp::cleanup()
 {
-    //delete plugin by depend
-    for ( QList<IPlugin*>::reverse_iterator it = m_pluginList.rbegin(); it != m_pluginList.rend(); it++) {
-        IPlugin* p = *it;
-        //qDebug() << p;
+    //delete plugin by reverse depend
+    QListIterator<IPlugin*> it(m_pluginList);
+    it.toBack();
+    while(it.hasPrevious()) {
+        IPlugin *p = it.previous();
         delete p;
     }
     m_pluginList.clear();

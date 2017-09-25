@@ -239,7 +239,7 @@ void LiteEditorMark::addMarkList(const QList<int> &lines, int type)
         data->addMark(mark);
 
         m_typeLineMarkMap[type].insert(line,mark);
-        m_manager->editorMarkNodeCreated(this,mark);
+        m_manager->addMarkNode(this,mark);
         changed = true;
     }
 
