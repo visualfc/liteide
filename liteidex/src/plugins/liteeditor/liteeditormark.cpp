@@ -201,6 +201,7 @@ void LiteEditorMark::removedFromEditor(LiteEditorMarkNode *mark)
 void LiteEditorMark::updateLineNumber(LiteEditorMarkNode *mark, int newLine, int oldLine)
 {
     int type = mark->type();
+
     m_typeLineMarkMap[type].remove(oldLine);
     m_typeLineMarkMap[type].insert(newLine,mark);
 

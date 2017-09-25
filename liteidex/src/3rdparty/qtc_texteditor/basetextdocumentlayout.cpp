@@ -620,7 +620,7 @@ void BaseTextDocumentLayout::updateMarksLineNumber()
     while (block.isValid()) {
         if (const TextBlockUserData *userData = testUserData(block))
             foreach (ITextMark *mrk, userData->marks())
-                mrk->updateLineNumber(blockNumber + 1);
+                mrk->updateLineNumber(blockNumber);
         block = block.next();
         ++blockNumber;
     }
