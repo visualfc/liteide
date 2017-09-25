@@ -28,6 +28,7 @@ public:
     void setLineText(const QString &text)
     {
         m_lineText = text;
+        m_lineText.replace("\t","    ");
     }
     void setNodeText(const QString &node)
     {
