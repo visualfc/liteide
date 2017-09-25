@@ -61,13 +61,13 @@ class TEXTEDITOR_EXPORT ITextMark : public LiteApi::IEditorMarkNode
 {
     Q_OBJECT
 public:
-    ITextMark(QObject *parent = 0) : LiteApi::IEditorMarkNode(parent), m_lineNumber(-1), m_type(-1), m_indexOfType(0) {}
+    ITextMark(QObject *parent = 0) : LiteApi::IEditorMarkNode(parent), m_blockNumber(-1), m_type(-1), m_indexOfType(0) {}
     virtual ~ITextMark() {}
 
     // determine order on markers on the same line. 
     virtual void paint(QPainter *painter, const QRect &rect) const;
-    virtual int lineNumber() const;
-    virtual void updateLineNumber(int lineNumber);
+    virtual int blockNumber() const;
+    virtual void updateBlockNumber(int blockNumber);
     virtual void updateBlock(const QTextBlock &block);
     virtual void removedFromEditor();
     virtual void documentClosing();
@@ -79,7 +79,7 @@ public:
 
 protected:
     QIcon m_icon;
-    int  m_lineNumber;
+    int  m_blockNumber;
     int  m_type;
     int  m_indexOfType;
 };

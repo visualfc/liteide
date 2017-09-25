@@ -5,38 +5,61 @@
 #include <QSortFilterProxyModel>
 #include <QStyledItemDelegate>
 #include <QList>
+#include <QFileInfo>
+#include <QDir>
 #include "liteeditorapi/liteeditorapi.h"
 
 class BookmarkNode
 {
 public:
-    BookmarkNode(LiteApi::IEditorMark *_mark = 0, LiteApi::IEditorMarkNode *_node = 0) : mark(_mark), node(_node)
+    BookmarkNode() : m_lineNumber(-1)
     {
+    }
+public:
+    void setFilePath(const QString &filePath)
+    {
+        m_filePath = QDir::toNativeSeparators(filePath);
+        m_fileName = QFileInfo(m_filePath).fileName();
+    }
+    void setLineNumber(int lineNumber)
+    {
+        m_lineNumber = lineNumber;
+    }
+    void setLineText(const QString &text)
+    {
+        m_lineText = text;
+    }
+    void setNodeText(const QString &node)
+    {
+        m_nodeText = node;
     }
 public:
     QString fileName() const
     {
-        return mark->fileName();
+        return m_fileName;
     }
     QString filePath() const
     {
-        return mark->filePath();
+        return m_filePath;
     }
     int lineNumber() const
     {
-        return node->lineNumber();
+        return m_lineNumber;
     }
     QString lineText() const
     {
-        return node->block().text().simplified();
+        return m_lineText;
     }
     QString noteText() const
     {
-        return QString();
+        return m_nodeText;
     }
 protected:
-    LiteApi::IEditorMark     *mark;
-    LiteApi::IEditorMarkNode *node;
+    int     m_lineNumber;
+    QString m_filePath;
+    QString m_fileName;
+    QString m_lineText;
+    QString m_nodeText;
 };
 
 class BookmarkModel : public QAbstractItemModel
@@ -53,6 +76,7 @@ public:
     void addNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
     void removeNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
     void updateNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node);
+    BookmarkNode *createBookmarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node) const;
     BookmarkNode *bookmarkNodeForIndex(const QModelIndex &index) const;
     BookmarkNode *findBookmarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node) const;
 public:

@@ -45,14 +45,14 @@ void ITextMark::paint(QPainter *painter, const QRect &rect) const
     m_icon.paint(painter, rect, Qt::AlignCenter);
 }
 
-int ITextMark::lineNumber() const
+int ITextMark::blockNumber() const
 {
-    return m_lineNumber;
+    return m_blockNumber;
 }
 
-void ITextMark::updateLineNumber(int lineNumber)
+void ITextMark::updateBlockNumber(int lineNumber)
 {
-     m_lineNumber = lineNumber;
+     m_blockNumber = lineNumber;
 }
 
 void ITextMark::updateBlock(const QTextBlock &)

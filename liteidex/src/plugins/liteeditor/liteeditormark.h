@@ -72,10 +72,9 @@ public:
     virtual QList<int> markTypesByLine(int line) const;
     virtual LiteEditor *editor() const;
     virtual QString filePath() const;
-    virtual QString fileName() const;
     LiteEditorMarkNode *createMarkByType(int type, int line, const QTextBlock &block);
     void removedFromEditor(LiteEditorMarkNode *mark);
-    void updateLineNumber(LiteEditorMarkNode *mark, int newLine, int oldLine);
+    void updateBlockNumber(LiteEditorMarkNode *mark, int newLine, int oldLine);
     void updateLineBlock(LiteEditorMarkNode *mark);
 protected:
     LiteEditorMarkManager *m_manager;
@@ -88,10 +87,10 @@ class LiteEditorMarkNode : public TextEditor::ITextMark
 {
     Q_OBJECT
 public:
-    LiteEditorMarkNode(LiteEditorMark *editorMark, int type, int indexOfType, int lineNumber, const QTextBlock &block, QObject *parent = 0);
+    LiteEditorMarkNode(LiteEditorMark *editorMark, int type, int indexOfType, int blockNumber, const QTextBlock &block, QObject *parent = 0);
     virtual ~LiteEditorMarkNode();
     virtual void removedFromEditor();
-    virtual void updateLineNumber(int lineNumber);
+    virtual void updateBlockNumber(int blockNumber);
     virtual void updateBlock(const QTextBlock &block);
     QTextBlock block() const;
 protected:

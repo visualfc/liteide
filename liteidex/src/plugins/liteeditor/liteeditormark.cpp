@@ -42,7 +42,7 @@ LiteEditorMarkNode::LiteEditorMarkNode(LiteEditorMark *editorMark, int type, int
     : TextEditor::ITextMark(parent),
       m_editorMark(editorMark)
 {
-    m_lineNumber = lineNumber;
+    m_blockNumber = lineNumber;
     m_type = type;
     m_indexOfType = indexOfType;
     m_block = block;
@@ -58,14 +58,14 @@ void LiteEditorMarkNode::removedFromEditor()
     m_editorMark->removedFromEditor(this);
 }
 
-void LiteEditorMarkNode::updateLineNumber(int lineNumber)
+void LiteEditorMarkNode::updateBlockNumber(int lineNumber)
 {
-    if (m_lineNumber == lineNumber) {
+    if (m_blockNumber == lineNumber) {
         return;
     }
-    int old = m_lineNumber;
-    m_lineNumber = lineNumber;
-    m_editorMark->updateLineNumber(this, m_lineNumber, old);
+    int old = m_blockNumber;
+    m_blockNumber = lineNumber;
+    m_editorMark->updateBlockNumber(this, m_blockNumber, old);
 }
 
 void LiteEditorMarkNode::updateBlock(const QTextBlock &block)
@@ -189,7 +189,7 @@ LiteEditorMarkNode *LiteEditorMark::createMarkByType(int type, int line, const Q
 void LiteEditorMark::removedFromEditor(LiteEditorMarkNode *mark)
 {
     int type = mark->type();
-    m_typeLineMarkMap[type].remove(mark->lineNumber());
+    m_typeLineMarkMap[type].remove(mark->blockNumber());
 
     m_manager->removeMarkNode(this,mark);
 
@@ -198,7 +198,7 @@ void LiteEditorMark::removedFromEditor(LiteEditorMarkNode *mark)
     delete mark;
 }
 
-void LiteEditorMark::updateLineNumber(LiteEditorMarkNode *mark, int newLine, int oldLine)
+void LiteEditorMark::updateBlockNumber(LiteEditorMarkNode *mark, int newLine, int oldLine)
 {
     int type = mark->type();
 
@@ -346,9 +346,4 @@ LiteEditor *LiteEditorMark::editor() const
 QString LiteEditorMark::filePath() const
 {
     return m_editor->filePath();
-}
-
-QString LiteEditorMark::fileName() const
-{
-    return QFileInfo(m_editor->filePath()).fileName();
 }

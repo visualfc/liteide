@@ -145,7 +145,6 @@ public:
     virtual QList<int> markTypesByLine(int line) const = 0;
     virtual ILiteEditor *editor() const = 0;
     virtual QString filePath() const = 0;
-    virtual QString fileName() const = 0;
 signals:
     void markListChanged(int type);
 };
@@ -157,7 +156,7 @@ public:
     IEditorMarkNode(QObject *parent = 0) : QObject(parent) {}
     virtual ~IEditorMarkNode() {}
 
-    virtual int lineNumber() const = 0;
+    virtual int blockNumber() const = 0;
     virtual int type() const = 0;
     virtual QTextBlock block() const = 0;
 };

@@ -5,7 +5,7 @@ void BookmarkModel::addNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode
 {
     beginInsertRows(QModelIndex(), m_nodeList.size(), m_nodeList.size());
 
-    BookmarkNode *bn = new BookmarkNode(mark,node);
+    BookmarkNode *bn = createBookmarkNode(mark,node);
     m_nodeList.append(bn);
     m_nodeMap.insert(node,bn);
 
@@ -38,9 +38,20 @@ void BookmarkModel::updateNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkN
     if (!bn) {
         return;
     }
+    bn->setLineNumber(node->blockNumber()+1);
+    bn->setLineText(node->block().text());
     int idx = m_nodeList.indexOf(bn);
 
     emit dataChanged(index(idx, 0, QModelIndex()), index(idx, 2, QModelIndex()));
+}
+
+BookmarkNode *BookmarkModel::createBookmarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node) const
+{
+    BookmarkNode *n = new BookmarkNode();
+    n->setFilePath(mark->filePath());
+    n->setLineNumber(node->blockNumber()+1);
+    n->setLineText(node->block().text());
+    return n;
 }
 
 BookmarkNode *BookmarkModel::bookmarkNodeForIndex(const QModelIndex &index) const
