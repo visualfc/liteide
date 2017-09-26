@@ -28,6 +28,7 @@
 #include "litebuildapi/litebuildapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "diff_match_patch/diff_match_patch.h"
+#include "qtc_texteditor/basetextdocumentlayout.h"
 
 #include <QDebug>
 #include <QProcess>
@@ -487,15 +488,19 @@ void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
             //check modify current block text
             if ((i < (size-1)) && diffList[i+1].startsWith("+")) {
                 block = cursor.document()->findBlockByNumber(block_number);
-                cursor.setPosition(block.position());
                 QString nextText = diffList[i+1].mid(1);
-                cursor.insertText(nextText);
-                cursor.setPosition(block.position()+nextText.length());
-                cursor.setPosition(block.position()+block.text().length(), QTextCursor::KeepAnchor);
-                cursor.removeSelectedText();
-                i++;
-                block_number++;
-                continue;
+                int nSameOfHead = 0;
+                bool checkSame = checkTowStringHead(nextText.simplified(),block.text().simplified(),nSameOfHead);
+                if (checkSame || (nSameOfHead >= 4) ) {
+                    cursor.setPosition(block.position());
+                    cursor.insertText(nextText);
+                    cursor.setPosition(block.position()+nextText.length());
+                    cursor.setPosition(block.position()+block.text().length(), QTextCursor::KeepAnchor);
+                    cursor.removeSelectedText();
+                    i++;
+                    block_number++;
+                    continue;
+                }
             }
 
             offsetList.removeAt(block_number-offsetBase);

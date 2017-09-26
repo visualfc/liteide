@@ -31,6 +31,20 @@
 #include "liteenvapi/liteenvapi.h"
 
 class ProcessEx;
+
+inline bool checkTowStringHead(const QString &s1, const QString &s2, int &nSameOfHead)
+{
+    int size1 = s1.size();
+    int size2 = s2.size();
+    int size = qMin(size1,size2);
+    for(nSameOfHead = 0; nSameOfHead < size; nSameOfHead++) {
+        if (s1[nSameOfHead] != s2[nSameOfHead]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 class GolangFmt : public QObject
 {
     Q_OBJECT
