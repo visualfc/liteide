@@ -218,7 +218,7 @@ void AstWidget::viewImportDoc()
 void AstWidget::doubleClicked(QModelIndex index)
 {
     GolangAstItem *item = astItemFromIndex(index);
-    if (!item->isFolder()) {
+    if (item && !item->isFolder()) {
         gotoItemDefinition(item);
     }
 }
@@ -226,6 +226,9 @@ void AstWidget::doubleClicked(QModelIndex index)
 void AstWidget::enterKeyPressed(const QModelIndex &index)
 {
     GolangAstItem *item = astItemFromIndex(index);
+    if (!item) {
+        return;
+    }
     if (item->isFolder()) {
         m_tree->setExpanded(index,!m_tree->isExpanded(index));
     } else {
