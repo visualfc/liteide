@@ -113,7 +113,7 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
     initialLexerState &= ~0x80; // discard newline expected bit
     int foldingIndent = initialBraceDepth;
     if (TextBlockUserData *userData = BaseTextDocumentLayout::testUserData(currentBlock())) {
-        userData->setFoldingIndent(0);
+        //userData->setFoldingIndent(0);
         userData->setFoldingStartIncluded(false);
         userData->setFoldingEndIncluded(false);
     }
