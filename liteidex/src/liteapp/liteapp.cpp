@@ -1026,8 +1026,14 @@ QString LiteApp::currentSession() const
 
 void LiteApp::dbclickLogOutput(QTextCursor cur)
 {
+    //QRegExp rep("(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):");
+    QString text = cur.block().text().trimmed();
+    //skip time 08:38:49
+    if (text.length() < 9) {
+        return;
+    }
     QRegExp rep("(\\w?\\:?[\\w\\d\\_\\-\\\\/\\.]+):(\\d+):");
-    int index = rep.indexIn(cur.block().text().trimmed());
+    int index = rep.indexIn(text.mid(8));
     if (index < 0)
         return;
     QStringList capList = rep.capturedTexts();
