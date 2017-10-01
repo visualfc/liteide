@@ -179,10 +179,10 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
                 --braceDepth;
                 if (braceDepth < foldingIndent) {
                     // unless we are at the end of the block, we reduce the folding indent
-                    if (i == tokens.size()-1 || tokens.at(i+1).is(T_SEMICOLON))
-                        BaseTextDocumentLayout::userData(currentBlock())->setFoldingEndIncluded(true);
-                    else
-                        foldingIndent = qMin(braceDepth, foldingIndent);
+                    BaseTextDocumentLayout::userData(currentBlock())->setFoldingEndIncluded(true);
+                    //if (i == tokens.size()-1 || tokens.at(i+1).is(T_SEMICOLON))
+                    //else
+                    //    foldingIndent = qMin(braceDepth, foldingIndent);
                 }
             }
         }
