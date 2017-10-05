@@ -76,6 +76,9 @@ public:
     void removedFromEditor(LiteEditorMarkNode *mark);
     void updateBlockNumber(LiteEditorMarkNode *mark, int newLine, int oldLine);
     void updateLineBlock(LiteEditorMarkNode *mark);
+public:
+    QMap<int, QList<int> > saveTypeLinesMap(bool clearAll);
+    void restoreTypeLinesMap(const QMap<int, QList<int> > &maps);
 protected:
     LiteEditorMarkManager *m_manager;
     LiteEditor * m_editor;

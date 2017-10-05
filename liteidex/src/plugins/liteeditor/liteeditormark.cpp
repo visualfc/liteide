@@ -215,6 +215,38 @@ void LiteEditorMark::updateLineBlock(LiteEditorMarkNode *mark)
     m_manager->updateMarkNode(this,mark);
 }
 
+QMap<int, QList<int> > LiteEditorMark::saveTypeLinesMap(bool clearAll)
+{
+    QMap<int, QList<int> > maps;
+    QTextBlock block = m_document->firstBlock();
+    while(block.isValid()) {
+        TextEditor::TextBlockUserData *data = TextEditor::BaseTextDocumentLayout::testUserData(block);
+        if (data) {
+            foreach (LiteApi::IEditorMarkNode *mark, data->marks()) {
+                maps[mark->type()].push_back(mark->blockNumber());
+            }
+            if (clearAll) {
+                qDeleteAll(data->marks());
+                data->clearMarks();
+            }
+        }
+        block = block.next();
+    }
+    if (clearAll) {
+        m_typeLineMarkMap.clear();
+    }
+    return maps;
+}
+
+void LiteEditorMark::restoreTypeLinesMap(const QMap<int, QList<int> > &maps)
+{
+    QMapIterator<int, QList<int> > i(maps);
+    while (i.hasNext()) {
+        i.next();
+        this->addMarkList(i.value(),i.key());
+    }
+}
+
 void LiteEditorMark::addMark(int line, int type)
 {
     addMarkList(QList<int>() << line, type);
