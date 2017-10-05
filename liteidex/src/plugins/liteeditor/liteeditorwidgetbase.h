@@ -159,7 +159,7 @@ public slots:
     void unfold();
     void foldAll();
     void unfoldAll();
-    void updateBlock(QTextBlock);
+    void updateBlock(const QTextBlock &);
     void documentSizeChanged(QSizeF);
     void moveCursorVisible(bool ensureVisible);
     void toggleBlockVisible(const QTextBlock &block);

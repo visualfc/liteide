@@ -123,7 +123,8 @@ void ModelProjectImpl::setModelFile(ModelFileImpl *file)
 
 bool ModelProjectImpl::open(const QString &fileName, const QString &mimeType)
 {
-    bool success =  m_file->open(fileName,mimeType);
+    QString outText;
+    bool success =  m_file->loadText(fileName,mimeType,outText);
     if (success) {
         m_file->updateModel();
         m_tree->expandAll();
@@ -164,7 +165,8 @@ void ModelProjectImpl::editorSaved(LiteApi::IEditor *editor)
     }
 
     if (FileUtil::compareFile(editor->filePath(),m_file->filePath())) {
-        bool success = m_file->reload();
+        QString outText;
+        bool success = m_file->reloadText(outText);
         if (success) {
             m_file->updateModel();
             m_tree->expandAll();

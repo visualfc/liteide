@@ -169,9 +169,9 @@ class IFile : public QObject
 public:
     IFile(QObject *parent = 0) : QObject(parent) {}
     virtual ~IFile() { }
-    virtual bool open(const QString &filePath, const QString &mimeType) = 0;
-    virtual bool reload() = 0;
-    virtual bool save(const QString &filePath) = 0;
+    virtual bool loadText(const QString &filePath, const QString &mimeType, QString &outText) = 0;
+    virtual bool reloadText(QString &outText) = 0;
+    virtual bool saveText(const QString &filePath, const QString &text) = 0;
     virtual bool isReadOnly() const = 0;
     virtual QString filePath() const = 0;
     virtual QString mimeType() const = 0;

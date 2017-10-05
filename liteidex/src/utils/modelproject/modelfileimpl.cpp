@@ -48,7 +48,7 @@ ModelFileImpl::ModelFileImpl(LiteApi::IApplication *app, QObject *parent)
     m_bReadOnly = false;
 }
 
-bool ModelFileImpl::open(const QString &fileName, const QString &mimeType)
+bool ModelFileImpl::loadText(const QString &fileName, const QString &mimeType, QString &/*outText*/)
 {
     m_mimeType = mimeType;
     if (!loadFile(fileName)) {
@@ -59,12 +59,12 @@ bool ModelFileImpl::open(const QString &fileName, const QString &mimeType)
     return true;
 }
 
-bool ModelFileImpl::reload()
+bool ModelFileImpl::reloadText(QString &outText)
 {
     if (m_fileName.isEmpty()) {
         return false;
     }
-    return open(m_fileName,m_mimeType);
+    return loadText(m_fileName,m_mimeType,outText);
 }
 
 bool ModelFileImpl::isReadOnly() const
@@ -72,7 +72,7 @@ bool ModelFileImpl::isReadOnly() const
     return m_bReadOnly;
 }
 
-bool ModelFileImpl::save(const QString &/*fileName*/)
+bool ModelFileImpl::saveText(const QString &/*fileName*/, const QString &/*text*/)
 {
     return false;
 }

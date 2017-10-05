@@ -32,20 +32,18 @@ class LiteEditorFile : public LiteApi::IFile
     Q_OBJECT
 public:
     LiteEditorFile(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual bool create(const QString &contents,const QString &mimeType);
-    virtual bool open(const QString &filePath, const QString &mimeType);
-    virtual bool reload();
-    virtual bool save(const QString &filePath);
+    virtual bool loadText(const QString &filePath, const QString &mimeType, QString &outText);
+    virtual bool reloadText(QString &outText);
+    virtual bool reloadTextByCodec(const QString &codecName, QString &outText);
+    virtual bool saveText(const QString &filePath, const QString &text);
     virtual bool isReadOnly() const;
     virtual QString filePath() const;
+    virtual void setMimeType(const QString &mimeType);
     virtual QString mimeType() const;
 public:
-    void setDocument(QTextDocument *document);
-    QTextDocument  *document();
     void setTextCodec(const QString &name);
     QString textCodec() const;
-    bool reloadByCodec(const QString &codecName);
-    bool open(const QString &filePath, const QString &mimeType, bool bCheckCodec);
+    bool loadFileHelper(const QString &filePath, const QString &mimeType, bool bCheckCodec, QString &outText);
     bool isLineEndUnix() const;
     bool isLineEndWindow() const;
     bool setLineEndUnix(bool b);
@@ -67,7 +65,6 @@ protected:
     LiteApi::IApplication *m_liteApp;
     QString        m_fileName;
     QString        m_mimeType;
-    QTextDocument *m_document;
     QTextCodec    *m_codec;
 };
 

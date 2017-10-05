@@ -165,6 +165,7 @@ public:
     QWidget *m_widget;
     QToolBar *m_editToolBar;
     LiteEditorWidget    *m_editorWidget;
+    QTextDocument       *m_document;
     LiteApi::ICompleter *m_completer;
     TextEditor::SyntaxHighlighter *m_syntax;
     FunctionTooltip     *m_funcTip;

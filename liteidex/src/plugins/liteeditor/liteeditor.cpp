@@ -88,6 +88,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_syntax = 0;
     m_widget = new QWidget;
     m_editorWidget = new LiteEditorWidget(app,m_widget);
+    m_document = m_editorWidget->document();
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
     m_defEditorPalette = m_editorWidget->palette();
@@ -119,8 +120,6 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     layout->addWidget(m_editorWidget);
     m_widget->setLayout(layout);
     m_file = new LiteEditorFile(m_liteApp,this);
-    m_file->setDocument(m_editorWidget->document());
-
 //    QTextOption option =  m_editorWidget->document()->defaultTextOption();
 //    option.setFlags(option.flags() | QTextOption::ShowTabsAndSpaces);
 //    option.setFlags(option.flags() | QTextOption::AddSpaceForLineAndParagraphSeparators);
@@ -130,8 +129,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
     setEditToolbarVisible(true);
 
-    connect(m_file->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
-    connect(m_file->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
+    connect(m_editorWidget->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
+    connect(m_editorWidget->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
     connect(m_liteApp->editorManager(),SIGNAL(editToolbarVisibleChanged(bool)),this,SLOT(setEditToolbarVisible(bool)));
@@ -786,18 +785,20 @@ void LiteEditor::initLoad()
 
 bool LiteEditor::createNew(const QString &contents, const QString &mimeType)
 {
-    bool success = m_file->create(contents,mimeType);
-    if (success) {
-        initLoad();
-    }
-    return success;
+    m_editorWidget->setPlainText(contents);
+    m_file->setMimeType(mimeType);
+    m_file->setLineEndUnix(true);
+    initLoad();
+    return true;
 }
 
 bool LiteEditor::open(const QString &fileName,const QString &mimeType)
 {
-    bool success = m_file->open(fileName,mimeType);
+    QString outText;
+    bool success = m_file->loadText(fileName,mimeType,outText);
     if (success) {
-        initLoad();;
+        m_document->setPlainText(outText);
+        initLoad();
     }
     return success;
 }
@@ -805,8 +806,11 @@ bool LiteEditor::open(const QString &fileName,const QString &mimeType)
 bool LiteEditor::reload()
 {
     QByteArray state = this->saveState();
-    bool success = open(filePath(),mimeType());
+    QString outText;
+    bool success = m_file->loadText(filePath(),mimeType(),outText);
     if (success) {
+        m_document->setPlainText(outText);
+        initLoad();
         this->clearAllNavigateMarks();
         this->setNavigateHead(LiteApi::EditorNavigateReload,tr("Reload File"));
         this->restoreState(state);
@@ -832,7 +836,11 @@ bool LiteEditor::saveAs(const QString &fileName)
     if (m_cleanCompleterCache) {
         m_completer->clearTemp();
     }
-    return m_file->save(fileName);
+    bool b = m_file->saveText(fileName, m_document->toPlainText());
+    if (b) {
+        m_editorWidget->document()->setModified(false);
+    }
+    return b;
 }
 
 void LiteEditor::setReadOnly(bool b)
@@ -852,7 +860,7 @@ bool LiteEditor::isModified() const
     if (!m_file) {
         return false;
     }
-    return m_file->document()->isModified();
+    return m_editorWidget->document()->isModified();
 }
 
 QString LiteEditor::filePath() const
@@ -1165,18 +1173,20 @@ void LiteEditor::codecComboBoxChanged(QString codec)
     if (!m_file) {
         return;
     }
-    if (m_file->document()->isModified()) {
+    if (m_editorWidget->document()->isModified()) {
         QString text = QString(tr("Do you want to permanently discard unsaved modifications and reload %1?")).arg(m_file->filePath());
         int ret = QMessageBox::question(m_liteApp->mainWindow(),"Unsaved Modifications",text,QMessageBox::Yes|QMessageBox::No);
         if (ret != QMessageBox::Yes) {
             return;
         }
     }
-    bool success = m_file->reloadByCodec(codec);
+    QString outText;
+    bool success = m_file->reloadTextByCodec(codec,outText);
     if (success) {
-        emit reloaded();
+        m_document->setPlainText(outText);
         m_editorWidget->initLoadDocument();
         setReadOnly(m_file->isReadOnly());
+        emit reloaded();
     }
     return;
 }
@@ -1235,8 +1245,10 @@ QString LiteEditor::textCodec() const
 
 void LiteEditor::setTextCodec(const QString &codec)
 {
-    bool success = m_file->reloadByCodec(codec);
+    QString outText;
+    bool success = m_file->reloadTextByCodec(codec,outText);
     if (success) {
+        m_document->setPlainText(outText);
         m_editorWidget->initLoadDocument();
         setReadOnly(m_file->isReadOnly());
         emit reloaded();
@@ -1335,6 +1347,7 @@ void LiteEditor::setLineEndUnix(bool b)
     if (m_file->setLineEndUnix(b)) {
         m_lineEndingUnixAct->setChecked(b);
         m_lineEndingWindowAct->setChecked(!b);
+        m_editorWidget->document()->setModified(true);
         m_liteApp->editorManager()->saveEditor(this,false);
     }
 }

@@ -917,7 +917,6 @@ void LiteEditorWidgetBase::extraAreaPaintEvent(QPaintEvent *e)
             painter.restore();
         }
 
-
         if (block.revision() != m_lastSaveRevision) {
             painter.save();
             painter.setRenderHint(QPainter::Antialiasing, false);
@@ -2853,7 +2852,7 @@ void LiteEditorWidgetBase::foldIndentChanged(QTextBlock block)
     }
 }
 
-void LiteEditorWidgetBase::updateBlock(QTextBlock block)
+void LiteEditorWidgetBase::updateBlock(const QTextBlock &/*block*/)
 {
 
 }

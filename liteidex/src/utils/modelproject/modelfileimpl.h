@@ -39,9 +39,9 @@ public:
         ItemFile
     };
 public:
-    virtual bool open(const QString &filePath, const QString &mimeType);
-    virtual bool reload();
-    virtual bool save(const QString &filePath);
+    virtual bool loadText(const QString &filePath, const QString &mimeType, QString &outText);
+    virtual bool reloadText(QString &outText);
+    virtual bool saveText(const QString &filePath, const QString &text);
     virtual bool isReadOnly() const;
     virtual QString filePath() const;
     virtual QString mimeType() const;

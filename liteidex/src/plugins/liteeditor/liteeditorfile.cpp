@@ -49,6 +49,7 @@ LiteEditorFile::LiteEditorFile(LiteApi::IApplication *app, QObject *parent)
     m_codec = QTextCodec::codecForName("utf-8");
     m_hasDecodingError = false;
     m_bReadOnly = false;
+    m_lineTerminatorMode = NativeLineTerminator;
 }
 
 QString LiteEditorFile::filePath() const
@@ -64,46 +65,41 @@ bool LiteEditorFile::isReadOnly() const
     return m_bReadOnly;
 }
 
-bool LiteEditorFile::save(const QString &fileName)
+bool LiteEditorFile::saveText(const QString &fileName, const QString &text)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QIODevice::Truncate)) {
         return false;
     }
     m_fileName = fileName;
-    QString text = m_document->toPlainText();
 
-    if (m_lineTerminatorMode == CRLFLineTerminator)
-        text.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
+    QString saveText = text;
+    if (m_lineTerminatorMode == CRLFLineTerminator) {
+        saveText.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
+    }
 
     if (m_codec) {
-        file.write(m_codec->fromUnicode(text));
+        file.write(m_codec->fromUnicode(saveText));
     } else {
-        file.write(text.toLocal8Bit());
+        file.write(saveText.toLocal8Bit());
     }
-    m_document->setModified(false);
     return true;
 }
 
-bool LiteEditorFile::reloadByCodec(const QString &codecName)
+bool LiteEditorFile::reloadTextByCodec(const QString &codecName, QString &outText)
 {
     setTextCodec(codecName);
-    return open(m_fileName,m_mimeType,false);
+    return loadFileHelper(m_fileName,m_mimeType,false,outText);
 }
 
-bool LiteEditorFile::reload()
+bool LiteEditorFile::reloadText(QString &outText)
 {
-    return open(m_fileName,m_mimeType);
+    return loadText(m_fileName,m_mimeType,outText);
 }
 
 QString LiteEditorFile::mimeType() const
 {
     return m_mimeType;
-}
-
-void LiteEditorFile::setDocument(QTextDocument *document)
-{
-    m_document = document;
 }
 
 void LiteEditorFile::setTextCodec(const QString &name)
@@ -119,12 +115,7 @@ QString LiteEditorFile::textCodec() const
     return m_codec->name();
 }
 
-QTextDocument  *LiteEditorFile::document()
-{
-    return m_document;
-}
-
-bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool bCheckCodec)
+bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mimeType, bool bCheckCodec, QString &outText)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly)) {
@@ -171,7 +162,7 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
 
 
     QTextCodec::ConverterState state;
-    QString text = m_codec->toUnicode(buf,buf.size(),&state);
+    outText = m_codec->toUnicode(buf,buf.size(),&state);
     if (state.invalidChars > 0 || state.remainingChars > 0) {
         m_hasDecodingError = true;
     }
@@ -191,13 +182,13 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
     }
     */
 
-    int lf = text.indexOf('\n');
+    int lf = outText.indexOf('\n');
     if (lf < 0) {
         m_lineTerminatorMode = NativeLineTerminator;
     } else if (lf == 0) {
         m_lineTerminatorMode = LFLineTerminator;
     } else {
-        lf = text.indexOf(QRegExp("[^\r]\n"),lf-1);
+        lf = outText.indexOf(QRegExp("[^\r]\n"),lf-1);
         if (lf >= 0) {
             m_lineTerminatorMode = LFLineTerminator;
         } else {
@@ -207,15 +198,14 @@ bool LiteEditorFile::open(const QString &fileName, const QString &mimeType, bool
 
     bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
     if (noprintCheck && !LiteApi::mimeIsText(mimeType)) {
-        for (int i = 0; i < text.length(); i++) {
-            if (!text[i].isPrint() && !text[i].isSpace() && text[i] != '\r' && text[i] != '\n') {
-                text[i] = '.';
+        for (int i = 0; i < outText.length(); i++) {
+            if (!outText[i].isPrint() && !outText[i].isSpace() && outText[i] != '\r' && outText[i] != '\n') {
+                outText[i] = '.';
                 m_hasDecodingError = true;
             }
         }
     }
 
-    m_document->setPlainText(text);
     return true;
 }
 
@@ -224,15 +214,11 @@ bool LiteEditorFile::setLineEndUnix(bool b)
     if (this->isLineEndUnix() == b) {
         return false;
     }
-    QString text = m_document->toPlainText();
     if (b) {
         m_lineTerminatorMode = LFLineTerminator;
-        text.replace("\r\n","\n");
     } else {
         m_lineTerminatorMode = CRLFLineTerminator;
-        text.replace("\n","\r\n");
     }
-    m_document->setPlainText(text);
     return true;
 }
 
@@ -246,15 +232,12 @@ bool LiteEditorFile::isLineEndWindow() const
     return m_lineTerminatorMode == CRLFLineTerminator;
 }
 
-bool LiteEditorFile::create(const QString &contents, const QString &mimeType)
+void LiteEditorFile::setMimeType(const QString &mimeType)
 {
     m_mimeType = mimeType;
-    m_lineTerminatorMode = LFLineTerminator;
-    m_document->setPlainText(contents);
-    return true;
 }
 
-bool LiteEditorFile::open(const QString &fileName, const QString &mimeType)
+bool LiteEditorFile::loadText(const QString &fileName, const QString &mimeType, QString &outText)
 {    
-    return open(fileName,mimeType,true);
+    return loadFileHelper(fileName,mimeType,true,outText);
 }
