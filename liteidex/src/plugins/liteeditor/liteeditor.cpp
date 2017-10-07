@@ -788,6 +788,8 @@ void LiteEditor::updateEditorInfo()
     setReadOnly(m_file->isReadOnly());
     m_lineEndingUnixAct->setChecked(m_file->isLineEndUnix());
     m_lineEndingWindowAct->setChecked(!m_file->isLineEndUnix());
+
+    editPositionChanged();
 }
 
 bool LiteEditor::createNew(const QString &contents, const QString &mimeType)
@@ -1205,17 +1207,22 @@ void LiteEditor::editPositionChanged()
 //     if (m_file->isLineEndWindow()) {
 //        offset = cur.blockNumber();
 //     }
-     QString line;
+     QStringList infos;
+     infos << QString("%1,%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3);
+
      if (m_offsetVisible) {
-         line = QString("%1:%2 [%3]").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3).arg(this->utf8Position(true));
-     } else {
-         line = QString("%1:%2").arg(cur.blockNumber()+1,3).arg(cur.columnNumber()+1,3);
+         infos << QString("%1").arg(this->utf8Position(true),3);
      }
      if (m_bReadOnly) {
-         m_liteApp->editorManager()->updateEditInfo(QString("[%1] %2").arg(tr("ReadOnly")).arg(line));
-     } else {
-         m_liteApp->editorManager()->updateEditInfo(line);
+         infos << QString(tr("ReadOnly"));
      }
+     infos << m_file->textCodec();
+     if (m_file->isLineEndUnix()) {
+         infos << "LF";
+     } else {
+         infos << "CRLF";
+     }
+     m_liteApp->editorManager()->updateEditInfo(infos.join(" | "));
 }
 
 void LiteEditor::gotoLine()
@@ -1351,10 +1358,9 @@ bool LiteEditor::isLineEndUnix() const
 void LiteEditor::setLineEndUnix(bool b)
 {
     if (m_file->setLineEndUnix(b)) {
-        m_lineEndingUnixAct->setChecked(b);
-        m_lineEndingWindowAct->setChecked(!b);
         m_editorWidget->document()->setModified(true);
         m_liteApp->editorManager()->saveEditor(this,false);
+        this->updateEditorInfo();
     }
 }
 
