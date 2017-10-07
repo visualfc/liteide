@@ -780,6 +780,11 @@ QIcon LiteEditor::icon() const
 void LiteEditor::initLoad()
 {
     m_editorWidget->initLoadDocument();
+    updateEditorInfo();
+}
+
+void LiteEditor::updateEditorInfo()
+{
     setReadOnly(m_file->isReadOnly());
     m_lineEndingUnixAct->setChecked(m_file->isLineEndUnix());
     m_lineEndingWindowAct->setChecked(!m_file->isLineEndUnix());
@@ -811,12 +816,10 @@ bool LiteEditor::reload()
     QString outText;
     bool success = m_file->loadText(filePath(),mimeType(),outText);
     if (success) {
-        //m_document->setPlainText(outText);
         loadTextUseDiff(outText);
-//        initLoad();
-//      this->clearAllNavigateMarks();
+        m_document->setModified(false);
         this->setNavigateHead(LiteApi::EditorNavigateReload,tr("Reload File"));
-//        this->restoreState(state);
+        updateEditorInfo();
         emit reloaded();
     }
     return success;
@@ -1186,9 +1189,9 @@ void LiteEditor::codecComboBoxChanged(QString codec)
     QString outText;
     bool success = m_file->reloadTextByCodec(codec,outText);
     if (success) {
-        m_document->setPlainText(outText);
-        m_editorWidget->initLoadDocument();
-        setReadOnly(m_file->isReadOnly());
+        this->loadTextUseDiff(outText);
+        m_document->setModified(false);
+        updateEditorInfo();
         emit reloaded();
     }
     return;
@@ -1251,9 +1254,9 @@ void LiteEditor::setTextCodec(const QString &codec)
     QString outText;
     bool success = m_file->reloadTextByCodec(codec,outText);
     if (success) {
-        m_document->setPlainText(outText);
-        m_editorWidget->initLoadDocument();
-        setReadOnly(m_file->isReadOnly());
+        this->loadTextUseDiff(outText);
+        m_document->setModified(false);
+        updateEditorInfo();
         emit reloaded();
     }
 }
@@ -1376,7 +1379,8 @@ void LiteEditor::loadDiff(const QString &diff)
 
 void LiteEditor::loadTextUseDiff(const QString &text)
 {
-
+    QString diff = EditorUtil::unifiedDiffText(m_document->toPlainText(),text);
+    loadDiff(diff);
 }
 
 QMenu *LiteEditor::editorMenu() const

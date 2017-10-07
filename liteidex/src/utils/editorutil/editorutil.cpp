@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "editorutil.h"
+#include "difflib.h"
 #include "diff_match_patch/diff_match_patch.h"
 
 #include <QTextBlock>
@@ -396,6 +397,11 @@ void EditorUtil::loadDiff(QTextCursor &cursor, const QString &diff)
             cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column);
         }
     }
+}
+
+QString EditorUtil::unifiedDiffText(const QString &text1, const QString &text2)
+{
+    return UnifiedDiffLines(text1,text2);
 }
 
 

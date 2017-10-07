@@ -7,4 +7,5 @@ include (../../3rdparty/diff_match_patch/diff_match_patch.pri)
 
 SOURCES += editorutil.cpp
 
-HEADERS += editorutil.h
+HEADERS += editorutil.h \
+    difflib.h

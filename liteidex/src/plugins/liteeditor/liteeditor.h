@@ -161,6 +161,7 @@ public:
     void updateFont();
     void sendUpdateFont();
     void initLoad();
+    void updateEditorInfo();
     void findCodecs();
 protected:
     QList<QTextCodec *> m_codecs;

@@ -37,6 +37,7 @@ public:
     static void MarkSelection(QPlainTextEdit *ed, const QString &mark1, const QString &mark2);
     static void MarkSelection(QPlainTextEdit *ed, const QString &mark);
     static void loadDiff(QTextCursor &cursor, const QString &diff);
+    static QString unifiedDiffText(const QString &text1, const QString &text2);
 };
 
 #endif // EDITORUTIL_H

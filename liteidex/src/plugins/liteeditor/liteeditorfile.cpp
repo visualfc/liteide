@@ -196,6 +196,10 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
         }
     }
 
+    if (m_lineTerminatorMode == CRLFLineTerminator) {
+        outText.replace("\r\n","\n");
+    }
+
     bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
     if (noprintCheck && !LiteApi::mimeIsText(mimeType)) {
         for (int i = 0; i < outText.length(); i++) {
