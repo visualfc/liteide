@@ -3,6 +3,7 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 include (../../liteideutils.pri)
+include (../../3rdparty/diff_match_patch/diff_match_patch.pri)
 
 SOURCES += editorutil.cpp
 

@@ -32,19 +32,6 @@
 
 class ProcessEx;
 
-inline bool checkTowStringHead(const QString &s1, const QString &s2, int &nSameOfHead)
-{
-    int size1 = s1.size();
-    int size2 = s2.size();
-    int size = qMin(size1,size2);
-    for(nSameOfHead = 0; nSameOfHead < size; nSameOfHead++) {
-        if (s1[nSameOfHead] != s2[nSameOfHead]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 class GolangFmt : public QObject
 {
     Q_OBJECT
@@ -57,7 +44,6 @@ public slots:
     void currentEnvChanged(LiteApi::IEnv*);
     void fmtOutput(QByteArray,bool);
     void fmtFinish(bool,int,QString);
-    void loadDiff(QTextCursor &cursor, const QString &diff);
     void editorAboutToSave(LiteApi::IEditor*);
     void applyOption(QString);
     void fmtEditor(LiteApi::IEditor*,bool);

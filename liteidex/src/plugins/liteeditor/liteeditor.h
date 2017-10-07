@@ -121,6 +121,9 @@ public:
     virtual bool isLineEndUnix() const;
     virtual void setLineEndUnix(bool b);
     virtual void showToolTipInfo(const QPoint & pos, const QString & text);
+    virtual void loadDiff(const QString &diff);
+    virtual void loadTextUseDiff(const QString &text);
+    virtual QMenu *editorMenu() const;
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
@@ -159,6 +162,7 @@ public:
     void sendUpdateFont();
     void initLoad();
     void findCodecs();
+protected:
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;

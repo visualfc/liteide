@@ -270,7 +270,7 @@ QList<Diff> diff_match_patch::diff_compute(QString text1, QString text2, bool ch
 
   // Perform a real diff.
   if (checklines && (text1.length() < 100 || text2.length() < 100)) {
-    checklines = false;  // Too trivial for the overhead.
+   // checklines = false;  // Too trivial for the overhead.
   }
   QStringList linearray;
   if (checklines) {

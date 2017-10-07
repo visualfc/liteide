@@ -22,6 +22,8 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "editorutil.h"
+#include "diff_match_patch/diff_match_patch.h"
+
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QPlainTextEdit>
@@ -226,19 +228,88 @@ void EditorUtil::MarkSelection(QPlainTextEdit *ed, const QString &mark)
     EditorUtil::MarkSelection(ed,mark,mark);
 }
 
+// use diff_match_patch
+static int findBlockPos(const QString &orgText, const QString &newText, int pos )
+{
+    diff_match_patch dmp;
+    QList<Diff> diffs = dmp.diff_main(orgText,newText,false);
+    return dmp.diff_xIndex(diffs,pos);
+}
+
+static bool checkTowStringHead(const QString &s1, const QString &s2, int &nSameOfHead)
+{
+    int size1 = s1.size();
+    int size2 = s2.size();
+    int size = qMin(size1,size2);
+    for(nSameOfHead = 0; nSameOfHead < size; nSameOfHead++) {
+        if (s1[nSameOfHead] != s2[nSameOfHead]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+static int findBlockNumber(const QList<int> &offsetList, int offsetBase, int blockNumber)
+{
+    for (int i = offsetList.size()-1; i>=0; i--) {
+        int iv = offsetList[i];
+        if (iv == -1) {
+            continue;
+        }
+        if (blockNumber >= iv) {
+            if (blockNumber == iv) {
+                return offsetBase+i;
+            } else {
+                if (i == offsetList.size()-1) {
+                    return offsetBase+i+blockNumber-iv;
+                }
+                int offset = i;
+                int v0 = iv;
+                for (int j = i+1; j < offsetList.size(); j++) {
+                    if (offsetList[j] != -1) {
+                        break;
+                    }
+                    offset++;
+                    v0++;
+                    if (v0 == blockNumber) {
+                        break;
+                    }
+                }
+                return offsetBase+offset;
+            }
+        }
+    }
+    return blockNumber;
+}
+
 void EditorUtil::loadDiff(QTextCursor &cursor, const QString &diff)
 {
-    QRegExp reg("@@\\s+\\-(\\d+),?(\\d*)\\s+\\+(\\d+),?(\\d*)\\s+@@");
-    //@@ -1,11 +1,9 @@
-    //@@ -1,9 +1 @@
-    //@@ -1 +1,9 @@
+    //save org block
+    int orgBlockNumber = cursor.blockNumber();
+    int orgPosInBlock = cursor.positionInBlock();
+    QString orgBlockText = cursor.block().text();
+    int curBlockNumber = orgBlockNumber;
+
+    //load diff
+    QRegExp reg("@@\\s+\\-(\\d+),?(\\d+)?\\s+\\+(\\d+),?(\\d+)?\\s+@@");
     QTextBlock block;
     int line = -1;
     int line_add = 0;
-    foreach(QString s, diff.split('\n')) {
+    int block_number = 0;
+
+    QList<int> offsetList;
+    int offsetBase = 0;
+
+    QStringList diffList = diff.split("\n");
+    QString s;
+    int size = diffList.size();
+
+    for (int i = 0; i < size; i++) {
+        s = diffList[i];
         if (s.length() == 0) {
             continue;
         }
+
         QChar ch = s.at(0);
         if (ch == '@') {
             if (reg.indexIn(s) == 0) {
@@ -247,8 +318,17 @@ void EditorUtil::loadDiff(QTextCursor &cursor, const QString &diff)
                 //int n1 = reg.cap(3).toInt();
                 int n2 = reg.cap(4).toInt();
                 line = line_add+s1;
-                block = cursor.document()->findBlockByNumber(line-1);
+                //block = cursor.document()->findBlockByNumber(line-1);
                 line_add += n2-s2;//n2+n1-(s2+s1);
+                block_number = line-1;
+
+                //find block number
+                curBlockNumber = findBlockNumber(offsetList,offsetBase,curBlockNumber);
+                offsetBase = block_number;
+                offsetList.clear();
+                for (int i = 0; i <= s2; i++) {
+                    offsetList.append(offsetBase+i);
+                }
                 continue;
             }
         }
@@ -256,22 +336,64 @@ void EditorUtil::loadDiff(QTextCursor &cursor, const QString &diff)
             continue;
         }
         if (ch == '+') {
-            cursor.setPosition(block.position());
-            cursor.insertText(s.right(s.length()-1)+"\n");
-            block = cursor.block();
-            //break;
+            offsetList.insert(block_number-offsetBase,-1);
+            block = cursor.document()->findBlockByNumber(block_number);
+            if (!block.isValid()) {
+                cursor.movePosition(QTextCursor::End);
+                cursor.insertBlock();
+                cursor.insertText(s.mid(1));
+            } else {
+                cursor.setPosition(block.position());
+                cursor.insertText(s.mid(1));
+                cursor.insertBlock();
+            }
+            block_number++;
         } else if (ch == '-') {
+            //check modify current block text
+            if ((i < (size-1)) && diffList[i+1].startsWith("+")) {
+                block = cursor.document()->findBlockByNumber(block_number);
+                QString nextText = diffList[i+1].mid(1);
+                int nSameOfHead = 0;
+                bool checkSame = checkTowStringHead(nextText.simplified(),block.text().simplified(),nSameOfHead);
+                if (checkSame || (nSameOfHead >= 4) ) {
+                    cursor.setPosition(block.position());
+                    cursor.insertText(nextText);
+                    cursor.setPosition(block.position()+nextText.length());
+                    cursor.setPosition(block.position()+block.text().length(), QTextCursor::KeepAnchor);
+                    cursor.removeSelectedText();
+                    i++;
+                    block_number++;
+                    continue;
+                }
+            }
+
+            offsetList.removeAt(block_number-offsetBase);
+            block = cursor.document()->findBlockByNumber(block_number);
             cursor.setPosition(block.position());
             if (block.next().isValid()) {
                 cursor.setPosition(block.next().position(), QTextCursor::KeepAnchor);
+                cursor.removeSelectedText();
             } else {
-                cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+                cursor.movePosition(QTextCursor::EndOfBlock);
+                cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+                cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+                cursor.removeSelectedText();
             }
-            cursor.removeSelectedText();
-            block = cursor.block();
         } else if (ch == ' ') {
-            block = block.next();
+            block_number++;
         } else if (ch == '\\') {
+            //skip comment
+        }
+    }
+    //find block number
+    curBlockNumber = findBlockNumber(offsetList,offsetBase,curBlockNumber);
+    //load cur block
+    block = cursor.document()->findBlockByNumber(curBlockNumber);
+    if (block.isValid()) {
+        cursor.setPosition(block.position());
+        int column = findBlockPos(orgBlockText,block.text(),orgPosInBlock);
+        if (column > 0) {
+            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column);
         }
     }
 }

@@ -27,7 +27,6 @@
 #include "processex/processex.h"
 #include "litebuildapi/litebuildapi.h"
 #include "liteeditorapi/liteeditorapi.h"
-#include "diff_match_patch/diff_match_patch.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"
 
 #include <QDebug>
@@ -177,23 +176,24 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
 
     QByteArray data = process.readAllStandardOutput();
 
-    QByteArray state = editor->saveState();
-    QTextCursor cur = ed->textCursor();
-    cur.beginEditBlock();
-    bool bUseState = true;
-    if (m_diff) {
-        bUseState = false;
-        loadDiff(cur,codec->toUnicode(data));        
-    } else {
-        cur.select(QTextCursor::Document);
-        cur.removeSelectedText();
-        cur.insertText(codec->toUnicode(data));
-    }
-    cur.endEditBlock();
-    ed->setTextCursor(cur);
-    if (bUseState) {
-        editor->restoreState(state);
-    }
+//    QByteArray state = editor->saveState();
+//    QTextCursor cur = ed->textCursor();
+//    cur.beginEditBlock();
+//    bool bUseState = true;
+//    if (m_diff) {
+//        bUseState = false;
+//        loadDiff(cur,codec->toUnicode(data));
+//    } else {
+//        cur.select(QTextCursor::Document);
+//        cur.removeSelectedText();
+//        cur.insertText(codec->toUnicode(data));
+//    }
+//    cur.endEditBlock();
+//    ed->setTextCursor(cur);
+//    if (bUseState) {
+//        editor->restoreState(state);
+//    }
+    liteEditor->loadDiff(codec->toUnicode(data));
 
     if (save) {
         m_liteApp->editorManager()->saveEditor(editor,false);
@@ -332,23 +332,7 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     if (!error && code == 0) {
         liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
 
-        QByteArray state = editor->saveState();
-        QTextCursor cur = ed->textCursor();
-        cur.beginEditBlock();
-        bool bUseState = true;
-        if (m_diff) {
-            bUseState = false;
-            loadDiff(cur,codec->toUnicode(m_data));
-        } else {
-            cur.select(QTextCursor::Document);
-            cur.removeSelectedText();
-            cur.insertText(codec->toUnicode(m_data));
-        }
-        cur.endEditBlock();
-        ed->setTextCursor(cur);
-        if (bUseState) {
-            editor->restoreState(state);
-        }
+        liteEditor->loadDiff(codec->toUnicode(m_data));
 
         if (save) {
             m_liteApp->editorManager()->saveEditor(editor,false);
@@ -376,161 +360,3 @@ void GolangFmt::fmtFinish(bool error,int code,QString)
     }
     m_data.clear();
 }
-
-// use diff_match_patch
-int findBlockPos(const QString &orgText, const QString &newText, int pos )
-{
-    diff_match_patch dmp;
-    QList<Diff> diffs = dmp.diff_main(orgText,newText,false);
-    return dmp.diff_xIndex(diffs,pos);
-}
-
-int findBlockNumber(const QList<int> &offsetList, int offsetBase, int blockNumber)
-{
-    for (int i = offsetList.size()-1; i>=0; i--) {
-        int iv = offsetList[i];
-        if (iv == -1) {
-            continue;
-        }
-        if (blockNumber >= iv) {
-            if (blockNumber == iv) {
-                return offsetBase+i;
-            } else {
-                if (i == offsetList.size()-1) {
-                    return offsetBase+i+blockNumber-iv;
-                }
-                int offset = i;
-                int v0 = iv;
-                for (int j = i+1; j < offsetList.size(); j++) {
-                    if (offsetList[j] != -1) {
-                        break;
-                    }
-                    offset++;
-                    v0++;
-                    if (v0 == blockNumber) {
-                        break;
-                    }
-                }
-                return offsetBase+offset;
-            }
-        }
-    }
-    return blockNumber;
-}
-
-void GolangFmt::loadDiff(QTextCursor &cursor, const QString &diff)
-{
-    //save org block
-    int orgBlockNumber = cursor.blockNumber();
-    int orgPosInBlock = cursor.positionInBlock();
-    QString orgBlockText = cursor.block().text();
-    int curBlockNumber = orgBlockNumber;
-
-    //load diff
-    QRegExp reg("@@\\s+\\-(\\d+),?(\\d+)?\\s+\\+(\\d+),?(\\d+)?\\s+@@");
-    QTextBlock block;
-    int line = -1;
-    int line_add = 0;
-    int block_number = 0;
-
-    QList<int> offsetList;
-    int offsetBase = 0;
-
-    QStringList diffList = diff.split("\n");
-    QString s;
-    int size = diffList.size();
-
-    for (int i = 0; i < size; i++) {
-        s = diffList[i];
-        if (s.length() == 0) {
-            continue;
-        }
-
-        QChar ch = s.at(0);
-        if (ch == '@') {
-            if (reg.indexIn(s) == 0) {
-                int s1 = reg.cap(1).toInt();
-                int s2 = reg.cap(2).toInt();
-                //int n1 = reg.cap(3).toInt();
-                int n2 = reg.cap(4).toInt();
-                line = line_add+s1;
-                //block = cursor.document()->findBlockByNumber(line-1);
-                line_add += n2-s2;//n2+n1-(s2+s1);
-                block_number = line-1;
-
-                //find block number
-                curBlockNumber = findBlockNumber(offsetList,offsetBase,curBlockNumber);
-                offsetBase = block_number;
-                offsetList.clear();
-                for (int i = 0; i <= s2; i++) {
-                    offsetList.append(offsetBase+i);
-                }
-                continue;
-            }
-        }
-        if (line == -1) {
-            continue;
-        }
-        if (ch == '+') {
-            offsetList.insert(block_number-offsetBase,-1);
-            block = cursor.document()->findBlockByNumber(block_number);
-            if (!block.isValid()) {
-                cursor.movePosition(QTextCursor::End);
-                cursor.insertBlock();
-                cursor.insertText(s.mid(1));
-            } else {
-                cursor.setPosition(block.position());
-                cursor.insertText(s.mid(1));
-                cursor.insertBlock();
-            }
-            block_number++;
-        } else if (ch == '-') {
-            //check modify current block text
-            if ((i < (size-1)) && diffList[i+1].startsWith("+")) {
-                block = cursor.document()->findBlockByNumber(block_number);
-                QString nextText = diffList[i+1].mid(1);
-                int nSameOfHead = 0;
-                bool checkSame = checkTowStringHead(nextText.simplified(),block.text().simplified(),nSameOfHead);
-                if (checkSame || (nSameOfHead >= 4) ) {
-                    cursor.setPosition(block.position());
-                    cursor.insertText(nextText);
-                    cursor.setPosition(block.position()+nextText.length());
-                    cursor.setPosition(block.position()+block.text().length(), QTextCursor::KeepAnchor);
-                    cursor.removeSelectedText();
-                    i++;
-                    block_number++;
-                    continue;
-                }
-            }
-
-            offsetList.removeAt(block_number-offsetBase);
-            block = cursor.document()->findBlockByNumber(block_number);
-            cursor.setPosition(block.position());
-            if (block.next().isValid()) {
-                cursor.setPosition(block.next().position(), QTextCursor::KeepAnchor);
-                cursor.removeSelectedText();
-            } else {
-                cursor.movePosition(QTextCursor::EndOfBlock);
-                cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
-                cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
-                cursor.removeSelectedText();
-            }
-        } else if (ch == ' ') {
-            block_number++;
-        } else if (ch == '\\') {
-            //skip comment
-        }
-    }
-    //find block number
-    curBlockNumber = findBlockNumber(offsetList,offsetBase,curBlockNumber);
-    //load cur block
-    block = cursor.document()->findBlockByNumber(curBlockNumber);
-    if (block.isValid()) {
-        cursor.setPosition(block.position());
-        int column = findBlockPos(orgBlockText,block.text(),orgPosInBlock);
-        if (column > 0) {
-            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column);
-        }
-    }
-}
-

@@ -32,6 +32,8 @@
 #include "qtc_editutil/uncommentselection.h"
 #include "functiontooltip.h"
 #include "quickopenapi/quickopenapi.h"
+#include "diff_match_patch/diff_match_patch.h"
+#include "editorutil/editorutil.h"
 
 #include <QFileInfo>
 #include <QVBoxLayout>
@@ -177,7 +179,7 @@ LiteEditor::~LiteEditor()
 
 QTextDocument *LiteEditor::document() const
 {
-    return m_editorWidget->document();
+    return m_document;
 }
 
 void LiteEditor::setEditorMark(LiteApi::IEditorMark *mark)
@@ -805,15 +807,16 @@ bool LiteEditor::open(const QString &fileName,const QString &mimeType)
 
 bool LiteEditor::reload()
 {
-    QByteArray state = this->saveState();
+//    QByteArray state = this->saveState();
     QString outText;
     bool success = m_file->loadText(filePath(),mimeType(),outText);
     if (success) {
-        m_document->setPlainText(outText);
-        initLoad();
-        this->clearAllNavigateMarks();
+        //m_document->setPlainText(outText);
+        loadTextUseDiff(outText);
+//        initLoad();
+//      this->clearAllNavigateMarks();
         this->setNavigateHead(LiteApi::EditorNavigateReload,tr("Reload File"));
-        this->restoreState(state);
+//        this->restoreState(state);
         emit reloaded();
     }
     return success;
@@ -1357,6 +1360,30 @@ void LiteEditor::showToolTipInfo(const QPoint &pos, const QString &text)
     m_editorWidget->showToolTipInfo(pos,text);
 }
 
+void LiteEditor::loadDiff(const QString &diff)
+{
+    if (diff.isEmpty()) {
+        return;
+    }
+    QByteArray state = saveState();
+    QTextCursor cur = m_editorWidget->textCursor();
+    cur.beginEditBlock();
+    EditorUtil::loadDiff(cur,diff);
+    cur.endEditBlock();
+    m_editorWidget->setTextCursor(cur);
+    restoreState(state);
+}
+
+void LiteEditor::loadTextUseDiff(const QString &text)
+{
+
+}
+
+QMenu *LiteEditor::editorMenu() const
+{
+    return m_editMenu;
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();
@@ -1579,12 +1606,12 @@ EditContext::EditContext(LiteEditor *editor, QObject *parent)
 
 QWidget *EditContext::focusWidget() const
 {
-    return m_editor->m_editorWidget;
+    return m_editor->editorWidget();
 }
 
 QMenu *EditContext::focusMenu() const
 {
-    return m_editor->m_editMenu;
+    return m_editor->editorMenu();
 }
 
 QToolBar *EditContext::focusToolBar() const
