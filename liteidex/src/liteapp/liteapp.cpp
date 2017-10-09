@@ -447,6 +447,7 @@ void LiteApp::cleanup()
     it.toBack();
     while(it.hasPrevious()) {
         IPlugin *p = it.previous();
+        qDebug() << "clean plugin" << p;
         delete p;
     }
     m_pluginList.clear();

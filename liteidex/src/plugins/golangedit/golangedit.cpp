@@ -93,8 +93,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_renameSymbolGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Rename Symbol Under Cursor")),this);
     actionContext->regAction(m_renameSymbolGlobalAct,"RenameSymbolGOPATH","");
 
-    m_fileSearch = new GolangFileSearch(app,this);
 
+    m_fileSearch = new GolangFileSearch(app,m_liteApp);
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
     if (manager) {
         manager->addFileSearch(m_fileSearch);
@@ -125,7 +125,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findInfoProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findInfoFinish(int,QProcess::ExitStatus)));
     connect(m_findLinkProcess,SIGNAL(started()),this,SLOT(findLinkStarted()));
     connect(m_findLinkProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findLinkFinish(int,QProcess::ExitStatus)));
-    connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
+
+    if (m_fileSearch) {
+        connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
+    }
 
     connect(m_sourceQueryProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(sourceQueryFinished(int,QProcess::ExitStatus)));
 

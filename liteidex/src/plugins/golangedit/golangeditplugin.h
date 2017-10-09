@@ -50,6 +50,7 @@ public:
         m_info->setAuthor("visualfc");
         m_info->setInfo("Golang Edit Support");
         m_info->appendDepend("plugin/liteeditor");
+        m_info->appendDepend("plugin/litefind");
     }
 };
 
