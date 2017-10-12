@@ -169,7 +169,7 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
         QByteArray testName = m_libucd.parse(buf);
         if (!testName.isEmpty()) {
             QTextCodec *c = QTextCodec::codecForName(testName);
-            if (c) {
+            if (c && (c->mibEnum() != m_codec->mibEnum()) ) {
                 QTextCodec::ConverterState testState;
                 QString testText = c->toUnicode(buf,buf.size(),&testState);
                 if (testState.invalidChars == 0 && testState.remainingChars == 0) {
