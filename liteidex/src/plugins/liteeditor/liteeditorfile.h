@@ -67,6 +67,7 @@ protected:
     QString        m_fileName;
     QString        m_mimeType;
     QTextCodec    *m_codec;
+    bool           m_hasUtf8Bom;
     LibUcd         m_libucd;
 };
 
