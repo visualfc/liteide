@@ -66,6 +66,7 @@ protected:
     QString        m_fileName;
     QString        m_mimeType;
     QTextCodec    *m_codec;
+    QTextCodec    *m_localCodec;
 };
 
 #endif //LITEEDITORFILE_H
