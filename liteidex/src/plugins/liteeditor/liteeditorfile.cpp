@@ -47,7 +47,6 @@ LiteEditorFile::LiteEditorFile(LiteApi::IApplication *app, QObject *parent)
 {
     //m_codec = QTextCodec::codecForLocale();
     m_codec = QTextCodec::codecForName("utf-8");
-    m_localCodec = QTextCodec::codecForLocale();
     m_hasDecodingError = false;
     m_bReadOnly = false;
     m_lineTerminatorMode = NativeLineTerminator;
@@ -153,7 +152,7 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
                 codec = QTextCodec::codecForName("UTF-16");
             } else if (bytesRead >= 3 && uchar(buf[0]) == 0xef && uchar(buf[1]) == 0xbb && uchar(buf[2])== 0xbf) {
                 codec = QTextCodec::codecForName("UTF-8");
-            } else if (!codec) {
+            } else if (!codec){
                 codec = QTextCodec::codecForLocale();
             }
             // end code taken from qtextstream
@@ -161,19 +160,24 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
         }
     }
 
-
     QTextCodec::ConverterState state;
     outText = m_codec->toUnicode(buf,buf.size(),&state);
     if (state.invalidChars > 0 || state.remainingChars > 0) {
          m_hasDecodingError = true;
     }
-    if (bCheckCodec && m_hasDecodingError) {
-        QTextCodec::ConverterState testState;
-        QString testText = m_localCodec->toUnicode(buf,buf.size(),&testState);
-        if (testState.invalidChars == 0 && testState.remainingChars == 0) {
-            m_codec = m_localCodec;
-            outText = testText;
-            m_hasDecodingError = false;
+    if (m_hasDecodingError) {
+        QByteArray testName = m_libucd.parse(buf);
+        if (!testName.isEmpty()) {
+            QTextCodec *c = QTextCodec::codecForName(testName);
+            if (c) {
+                QTextCodec::ConverterState testState;
+                QString testText = c->toUnicode(buf,buf.size(),&testState);
+                if (testState.invalidChars == 0 && testState.remainingChars == 0) {
+                    m_hasDecodingError = false;
+                    m_codec = c;
+                    outText = testText;
+                }
+            }
         }
     }
 /*

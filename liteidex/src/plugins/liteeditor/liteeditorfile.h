@@ -25,6 +25,7 @@
 #define LITEEDITORFILE_H
 
 #include "liteapi/liteapi.h"
+#include "editorutil/libucd.h"
 
 class QTextDocument;
 class LiteEditorFile : public LiteApi::IFile
@@ -66,7 +67,7 @@ protected:
     QString        m_fileName;
     QString        m_mimeType;
     QTextCodec    *m_codec;
-    QTextCodec    *m_localCodec;
+    LibUcd         m_libucd;
 };
 
 #endif //LITEEDITORFILE_H

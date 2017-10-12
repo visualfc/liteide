@@ -17,5 +17,6 @@ SUBDIRS = \
     cplusplus \
     fakevim \
     diff_match_patch \
-    qjsonrpc
+    qjsonrpc \
+    libucd
 
