@@ -10,4 +10,5 @@ SOURCES += editorutil.cpp
 
 HEADERS += editorutil.h \
     difflib.h \
-    libucd.h
+    libucd.h \
+    checkdata.h

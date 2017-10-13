@@ -23,6 +23,7 @@
 
 #include "liteeditorfile.h"
 #include "liteeditor_global.h"
+#include "editorutil/checkdata.h"
 #include <QFile>
 #include <QTextDocument>
 #include <QTextCodec>
@@ -118,6 +119,8 @@ QString LiteEditorFile::textCodec() const
 {
     return m_codec->name();
 }
+
+
 
 bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mimeType, bool bCheckCodec, QString &outText)
 {
