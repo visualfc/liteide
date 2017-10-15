@@ -48,6 +48,7 @@ public:
     bool isLineEndUnix() const;
     bool isLineEndWindow() const;
     bool setLineEndUnix(bool b);
+    bool hasDecodingError() const;
 protected:
     enum LineTerminatorMode {
         LFLineTerminator = 0,

@@ -120,8 +120,6 @@ QString LiteEditorFile::textCodec() const
     return m_codec->name();
 }
 
-
-
 bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mimeType, bool bCheckCodec, QString &outText)
 {
     QFile file(fileName);
@@ -136,6 +134,13 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
 
     QByteArray buf = file.readAll();
     m_hasDecodingError = false;
+
+    if (!isTextDataStrict(buf)) {
+        m_liteApp->appendLog("LiteEditor","Binary file not open in the text editor! "+fileName,true);
+        m_hasDecodingError = true;
+        //outText = "error load binary file!!!";
+        return false;
+    }
 
     if (bCheckCodec) {
         m_codec = QTextCodec::codecForName("UTF-8");
@@ -234,6 +239,10 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
         }
     }
 
+    if (m_hasDecodingError) {
+        m_liteApp->appendLog("LiteEditor",QString("Decode file error! file:\"%1\" codec:%2").arg(fileName).arg(textCodec()),true);
+    }
+
     return true;
 }
 
@@ -248,6 +257,11 @@ bool LiteEditorFile::setLineEndUnix(bool b)
         m_lineTerminatorMode = CRLFLineTerminator;
     }
     return true;
+}
+
+bool LiteEditorFile::hasDecodingError() const
+{
+    return m_hasDecodingError;
 }
 
 bool LiteEditorFile::isLineEndUnix() const
