@@ -38,7 +38,7 @@ class SymbolTreeView : public QTreeView
 {
     Q_OBJECT
 public:
-    SymbolTreeView(QWidget *parent = 0);
+    SymbolTreeView(QWidget *parent = 0, bool bResizeToContents = true);
     QModelIndex topViewIndex();
     QList<QModelIndex> expandIndexs() const;
     virtual void reset();

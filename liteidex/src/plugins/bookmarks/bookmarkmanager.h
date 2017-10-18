@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include "liteeditorapi/liteeditorapi.h"
+#include "symboltreeview/symboltreeview.h"
 #include "bookmarkmodel.h"
 
 #include <QSortFilterProxyModel>
@@ -49,11 +50,12 @@ public slots:
     void editorMarkNodeCreated(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
     void editorMarkNodeRemoved(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
     void editorMarkNodeChanged(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
+    void gotoBookmark(const QModelIndex &index);
 protected:
     QAction *m_toggleBookmarkAct;
     BookmarkModel *m_bookmarkModel;
     BookmarkSortProxyModel *m_proxyModel;
-    QTreeView *m_treeView;
+    SymbolTreeView *m_treeView;
 };
 
 

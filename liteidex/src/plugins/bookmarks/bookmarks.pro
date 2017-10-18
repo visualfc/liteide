@@ -3,6 +3,8 @@ TEMPLATE = lib
 
 include(../../liteideplugin.pri)
 include (../../api/liteeditorapi/liteeditorapi.pri)
+include (../../utils/symboltreeview/symboltreeview.pri)
+
 
 DEFINES += BOOKMARKS_LIBRARY
 

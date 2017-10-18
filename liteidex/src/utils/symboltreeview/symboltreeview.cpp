@@ -70,7 +70,7 @@ static QModelIndex indexFromStringList(QAbstractItemModel *model, QStringList &l
     return QModelIndex();
 }
 
-SymbolTreeView::SymbolTreeView(QWidget *parent)
+SymbolTreeView::SymbolTreeView(QWidget *parent, bool bResizeToContents)
     : QTreeView(parent)
 {
     m_bClickedItem = false;
@@ -80,12 +80,14 @@ SymbolTreeView::SymbolTreeView(QWidget *parent)
     setIndentation(indentation() * 9/10);
     {
         this->setHeaderHidden(true);
-    #if QT_VERSION >= 0x050000
-        this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    #else
-        this->header()->setResizeMode(QHeaderView::ResizeToContents);
-    #endif
-        this->header()->setStretchLastSection(false);
+        if (bResizeToContents) {
+#if QT_VERSION >= 0x050000
+            this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
+            this->header()->setResizeMode(QHeaderView::ResizeToContents);
+#endif
+            this->header()->setStretchLastSection(false);
+        }
         this->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
     setContextMenuPolicy(Qt::CustomContextMenu);
