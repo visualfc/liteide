@@ -115,6 +115,9 @@ Cosmin Truta
 Last updated: 2006-May-28
 */
 
+#include <QByteArray>
+#include <QChar>
+
 /* ===========================================================================
  * Check if the data type is TEXT or BINARY, using the following algorithm:
  * - TEXT if the two conditions below are satisfied:
@@ -129,7 +132,22 @@ Last updated: 2006-May-28
  * IN assertion: the fields Freq of dyn_ltree are set.
  */
 
-inline bool isTextDataStrict(const QByteArray &data)
+inline bool IsBinaryCode(unsigned short c)
+{
+    if (c < 7 ||( c > 13 && c < 26) ||( c > 27 && c < 32) )
+        return true;
+    return false;
+}
+
+inline bool IsBinaryChar(unsigned char c)
+{
+    if (c < 7 ||( c > 13 && c < 26) ||( c > 27 && c < 32) )
+        return true;
+    return false;
+}
+
+
+inline bool HasBinaryData(const QByteArray &data, int checkSize /*= 32*/)
 {
     // UTF16 byte order marks
     static const char bigEndianBOM[] = "\xFE\xFF";
@@ -139,34 +157,33 @@ inline bool isTextDataStrict(const QByteArray &data)
 
     // Check the first 32 bytes (see shared-mime spec)
     const char *p = data.constData();
-    const char *e = p + qMin(32, data.size());
+    const char *e = p + qMin(checkSize, data.size());
     for ( ; p < e; ++p) {
-        if ((unsigned char)(*p) < 7 ||
-                ( (unsigned char)(*p) > 13 && (unsigned char)(*p) < 26) ||
-                ( (unsigned char)(*p) > 27 && (unsigned char)(*p) < 32) )
-            return false;
+        if (IsBinaryChar((unsigned char)*p)) {
+            return true;
+        }
     }
 
-    return true;
+    return false;
 }
 
-inline bool isTextData(const QByteArray &data)
-{
-    // UTF16 byte order marks
-    static const char bigEndianBOM[] = "\xFE\xFF";
-    static const char littleEndianBOM[] = "\xFF\xFE";
-    if (data.startsWith(bigEndianBOM) || data.startsWith(littleEndianBOM))
-        return true;
+//inline bool isTextData(const QByteArray &data)
+//{
+//    // UTF16 byte order marks
+//    static const char bigEndianBOM[] = "\xFE\xFF";
+//    static const char littleEndianBOM[] = "\xFF\xFE";
+//    if (data.startsWith(bigEndianBOM) || data.startsWith(littleEndianBOM))
+//        return true;
 
-    // Check the first 32 bytes (see shared-mime spec)
-    const char *p = data.constData();
-    const char *e = p + qMin(32, data.size());
-    for ( ; p < e; ++p) {
-        if ((unsigned char)(*p) < 32 && *p != 9 && *p !=10 && *p != 13)
-            return false;
-    }
+//    // Check the first 32 bytes (see shared-mime spec)
+//    const char *p = data.constData();
+//    const char *e = p + qMin(32, data.size());
+//    for ( ; p < e; ++p) {
+//        if ((unsigned char)(*p) < 32 && *p != 9 && *p !=10 && *p != 13)
+//            return false;
+//    }
 
-    return true;
-}
+//    return true;
+//}
 
 #endif // CHECKDATA_H

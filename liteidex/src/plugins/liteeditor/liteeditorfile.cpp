@@ -135,7 +135,7 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
     QByteArray buf = file.readAll();
     m_hasDecodingError = false;
 
-    if (!isTextDataStrict(buf)) {
+    if (HasBinaryData(buf,32)) {
         m_liteApp->appendLog("LiteEditor","Binary file not open in the text editor! "+fileName,true);
         m_hasDecodingError = true;
         //outText = "error load binary file!!!";
@@ -232,7 +232,11 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
     bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
     if (noprintCheck && !LiteApi::mimeIsText(mimeType)) {
         for (int i = 0; i < outText.length(); i++) {
-            if (!outText[i].isPrint() && !outText[i].isSpace() && outText[i] != '\r' && outText[i] != '\n') {
+//            if (!outText[i].isPrint() && !outText[i].isSpace() && outText[i] != '\r' && outText[i] != '\n') {
+//                outText[i] = '.';
+//                m_hasDecodingError = true;
+//            }
+            if (IsBinaryCode(outText[i].unicode())) {
                 outText[i] = '.';
                 m_hasDecodingError = true;
             }
