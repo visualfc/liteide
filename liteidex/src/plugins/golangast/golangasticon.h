@@ -49,6 +49,8 @@ protected:
     QIcon   iconTypeMethod;
     QIcon   iconTypeFactor;
     QIcon   iconTypeVar;
+    QIcon   iconTodo;
+    QIcon   iconTodos;
 public:
     QIcon   iconGofile;
     QIcon   iconMakefile;
@@ -77,6 +79,8 @@ protected:
     QIcon   iconTypeMethod;
     QIcon   iconTypeFactor;
     QIcon   iconTypeVar;
+    QIcon   iconTodo;
+    QIcon   iconTodos;
 };
 
 class GolangAstIcon
