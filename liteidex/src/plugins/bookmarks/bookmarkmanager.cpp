@@ -71,7 +71,7 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     connect(manager,SIGNAL(editorMarkNodeRemoved(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeRemoved(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
     connect(manager,SIGNAL(editorMarkNodeChanged(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeChanged(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
 
-    m_treeView = new SymbolTreeView(0,false);
+    m_treeView = new SymbolTreeView(false);
     m_treeView->setHeaderHidden(true);
     m_treeView->setEditTriggers(QTreeView::NoEditTriggers);
     m_treeView->setRootIsDecorated(false);

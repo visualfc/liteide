@@ -70,8 +70,20 @@ static QModelIndex indexFromStringList(QAbstractItemModel *model, QStringList &l
     return QModelIndex();
 }
 
-SymbolTreeView::SymbolTreeView(QWidget *parent, bool bResizeToContents)
+SymbolTreeView::SymbolTreeView(QWidget *parent)
     : QTreeView(parent)
+{
+    init(true);
+}
+
+
+SymbolTreeView::SymbolTreeView(bool bResizeToContents, QWidget *parent)
+    : QTreeView(parent)
+{
+    init(bResizeToContents);
+}
+
+void SymbolTreeView::init(bool bResizeToContents)
 {
     m_bClickedItem = false;
     m_hsbPos = 0;
