@@ -355,6 +355,10 @@ static LiteApi::ASTTAG_ENUM toTagFlag(const QString &tag)
         return LiteApi::TagTypeFactor;
     } else if (tag == "tv") {
         return LiteApi::TagTypeValue;
+    } else if (tag == "b") {
+        return LiteApi::TagTodo;
+    } else if (tag == "+b") {
+        return LiteApi::TagTodoFolder;
     }
     return LiteApi::TagNone;
 }
@@ -435,6 +439,11 @@ void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, b
         }
         if (!tip.isEmpty()) {
             item->setToolTip(tip);
+            // todo comment use tip
+            if (tag == "b") {
+                item->setText(tip);
+                item->setToolTip(name);
+            }
         } else if (tag.at(0) == '+') {
             item->setToolTip(QString("%1").arg(tagInfo(tag)));
         } else {
