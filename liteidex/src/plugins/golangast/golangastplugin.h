@@ -49,7 +49,7 @@ public:
         m_info->setId("plugin/golangast");
         m_info->setName("GolangAst");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X32");
+        m_info->setVer("X33");
         m_info->setInfo("Golang Ast View");
         m_info->appendDepend("plugin/quickopen");
     }

@@ -14,17 +14,17 @@
 	* fix liteapp clean plugins reverse order
 	* fix #832, sidebar change action by combox
 * LiteEditor
-	* check binary file to not open
-	* report open file decode error 
-	* setReadOnly for editor widget
-	* fix copy to clipboard tab escape
-	* support load/save utf8 bom
-	* import libucd for load file utf8 fails check codec to load
-	* add codec and lineend info on statusbar
 	* reload file use diff to keep state and mark
-	* update editor mark api and implement
+	* load file check is binary and report
+	* load file check codec use libucd if utf8 decode failed.
+	* load file check decode error and report 
+	* load file is readonly set editor widget readonly
+	* load and save file support utf8 bom
+	* add codec and lineend info on statusbar
 	* add copied text into the clipboard as HTML option
 	* add Solarized Dark color theme, thanks xgdgsc
+	* reimplemented editor mark api
+	* fix copy to clipboard tab escape
 * GolangAst
 	* add TodoList for classview and outline
 	* fix #848, astwidget double clicked index check.
@@ -46,7 +46,7 @@
 * gotools
 	* update stdlib for go1.9.1
 	* astview add TodoList support
-
+	
 ### 2017.7.18 Ver X32.2
 * LiteApp
 	* fix editor file watcher is invalid for many change

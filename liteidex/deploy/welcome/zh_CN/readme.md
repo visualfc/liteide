@@ -7,7 +7,7 @@ LiteIDE X
 
 _LiteIDE是一个简单，开源，跨平台的Go语言IDE._
 
-* 版本: X32
+* 版本: X33
 * 作者: [七叶 (visualfc)](mailto:visualfc@gmail.com)
 
 

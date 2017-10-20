@@ -71,7 +71,7 @@
 #endif
 //lite_memory_check_end
 
-#define LITEIDE_VERSION "X32.2"
+#define LITEIDE_VERSION "X33"
 
 QString LiteApp::getRootPath()
 {
@@ -447,7 +447,7 @@ void LiteApp::cleanup()
     it.toBack();
     while(it.hasPrevious()) {
         IPlugin *p = it.previous();
-        qDebug() << "clean plugin" << p;
+        //qDebug() << "clean plugin" << p;
         delete p;
     }
     m_pluginList.clear();
