@@ -77,9 +77,9 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     m_treeView->setRootIsDecorated(false);
 
     m_bookmarkModel = new BookmarkModel(this);
-    m_proxyModel = new BookmarkSortProxyModel(this);
-    m_proxyModel->setSourceModel(m_bookmarkModel);
-    //m_proxyModel->sort(0);
+//    m_proxyModel = new BookmarkSortProxyModel(this);
+//    m_proxyModel->setSourceModel(m_bookmarkModel);
+//    //m_proxyModel->sort(0);
 
     m_treeView->setModel(m_bookmarkModel);
 

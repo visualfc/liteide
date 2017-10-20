@@ -54,7 +54,7 @@ public slots:
 protected:
     QAction *m_toggleBookmarkAct;
     BookmarkModel *m_bookmarkModel;
-    BookmarkSortProxyModel *m_proxyModel;
+    //BookmarkSortProxyModel *m_proxyModel;
     SymbolTreeView *m_treeView;
 };
 
