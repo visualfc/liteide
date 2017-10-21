@@ -345,10 +345,10 @@ QList<QModelIndex> MultiFolderModel::indexForPath(const QString &path) const
     QString findPath = QDir::cleanPath(QDir::fromNativeSeparators(path));
     foreach (QAbstractItemModel *model, this->sourceModelList()) {
         QFileSystemModel *fs = (QFileSystemModel*)model;
-        if (!findPath.startsWith(fs->rootPath())) {
+        if (!findPath.startsWith(fs->rootPath()+"/")) {
             continue;
         }
-        QModelIndex index = fs->index(path);
+        QModelIndex index = fs->index(findPath);
         if (index.isValid()) {
             pathList << this->mapFromSourceEx(model,index);
         }
