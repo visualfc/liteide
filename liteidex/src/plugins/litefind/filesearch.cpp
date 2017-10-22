@@ -417,6 +417,9 @@ void FileSearch::findInFiles()
     if (text.isEmpty() || path.isEmpty()) {
         return;
     }
+
+    m_liteApp->editorManager()->saveAllEditors(false);
+
     m_thread->findPath = path;
     m_thread->findText = text;
     m_thread->useRegExp = m_useRegexCheckBox->isChecked();
