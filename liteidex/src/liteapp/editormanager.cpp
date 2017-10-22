@@ -1104,7 +1104,6 @@ void EditorManager::applyOption(QString id)
     if (m_autoIdleSaveDocumentsTime < 1) {
         m_autoIdleSaveDocumentsTime = 1;
     }
-    m_autoIdleSaveDocumentsEmitMessage = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,true).toBool();
     m_maxEditorCount = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
 }
 
@@ -1112,7 +1111,7 @@ void EditorManager::appIdle(int sec)
 {    
     if (m_isAutoIdleSaveDocuments) {
         if (sec == m_autoIdleSaveDocumentsTime) {
-            this->saveAllEditors(m_autoIdleSaveDocumentsEmitMessage);
+            this->saveAllEditors(false);
         }
     }
 }
