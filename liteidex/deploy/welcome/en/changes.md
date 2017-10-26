@@ -13,6 +13,7 @@
 	* filemanager auto reload file default YesToAll
 	* fix liteapp clean plugins reverse order
 	* fix #832, sidebar change action by combox
+	* fix folder sync editor same prefix error 
 * LiteEditor
 	* reload file use diff to keep state and mark
 	* load file check is binary and report
@@ -41,6 +42,8 @@
 	* fix cmd to native separator
 * LiteFind
 	* fix memory leak by GolangEdit GolangFileSearch
+	* fix findInFiles berore saveAllEditor
+	* fix FindEditor replace all
 * Bookmarks
 	* new plugin for show open editors bookmarks and jump
 * gotools
