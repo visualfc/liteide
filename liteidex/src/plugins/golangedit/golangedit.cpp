@@ -497,8 +497,9 @@ void GolangEdit::editorViewGodoc()
 void GolangEdit::editorJumpToDecl()
 {
     bool moveLeft = false;
-    QString text = LiteApi::wordUnderCursor(m_plainTextEdit->textCursor(),&moveLeft);
-    if (text.isEmpty()) {
+    int selectStart = 0;
+    QString text = LiteApi::wordUnderCursor(m_plainTextEdit->textCursor(),&moveLeft,&selectStart);
+    if (text.isEmpty() || text.contains(" ")) {
         return;
     }
 
@@ -507,7 +508,7 @@ void GolangEdit::editorJumpToDecl()
     }
 
     m_lastCursor = m_plainTextEdit->textCursor();
-    int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
+    int offset = m_editor->utf8Position(false,selectStart);
     QString cmd = LiteApi::getGotools(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
@@ -576,8 +577,9 @@ void GolangEdit::editorFindInfo()
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
     bool moveLeft = false;
-    QString text = LiteApi::wordUnderCursor(m_plainTextEdit->textCursor(),&moveLeft);
-    if (text.isEmpty()) {
+    int selectStart = 0;
+    QString text = LiteApi::wordUnderCursor(m_plainTextEdit->textCursor(),&moveLeft,&selectStart);
+    if (text.isEmpty() || text.contains(" ")) {
         return;
     }
     if (!m_findInfoProcess->isStop()) {
@@ -585,7 +587,7 @@ void GolangEdit::editorFindInfo()
     }
 
     m_lastCursor = m_plainTextEdit->textCursor();
-    int offset = moveLeft?m_editor->utf8Position()-1:m_editor->utf8Position();
+    int offset = m_editor->utf8Position(false,selectStart);
 
     m_findInfoProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
@@ -901,12 +903,13 @@ void GolangEdit::runSourceQuery(const QString &action)
         offset2 = m_editor->utf8Position(true,cursor.selectionEnd());
     } else {
         bool moveLeft = false;
-        QString text = LiteApi::wordUnderCursor(cursor,&moveLeft);
-        if (text.isEmpty()) {
+        int selectStart = 0;
+        QString text = LiteApi::wordUnderCursor(cursor,&moveLeft,&selectStart);
+        if (text.isEmpty() || text.contains(" ")) {
             return;
         }
         m_liteApp->editorManager()->saveAllEditors(false);
-        offset = moveLeft ? m_editor->utf8Position(true)-1: m_editor->utf8Position(true);
+        offset = m_editor->utf8Position(true,selectStart);
     }
 
     QString cmd;

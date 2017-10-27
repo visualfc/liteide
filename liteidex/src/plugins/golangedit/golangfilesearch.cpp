@@ -95,14 +95,16 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     }
 
     bool moveLeft = false;
-    m_searchText = LiteApi::wordUnderCursor(cursor,&moveLeft);
-    if (m_searchText.isEmpty()) {
+    int selectStart = 0;
+    m_searchText = LiteApi::wordUnderCursor(cursor,&moveLeft,&selectStart);
+    if (m_searchText.isEmpty() || m_searchText.contains(" ")) {
         return;
     }
 
     m_liteApp->editorManager()->saveAllEditors(false);
 
-    int offset = moveLeft ? editor->utf8Position(true)-1: editor->utf8Position(true);
+    //int offset = moveLeft ? editor->utf8Position(true)-1: editor->utf8Position(true);
+    int offset = editor->utf8Position(true,selectStart);
 
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);
     if (!manager) {

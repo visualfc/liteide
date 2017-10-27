@@ -343,7 +343,7 @@ inline IHighlighterManager *getHighlighterManager(LiteApi::IApplication *app)
     return static_cast<IHighlighterManager*>(app->extension()->findObject("LiteApi.IHighlighterManager"));
 }
 
-inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0)
+inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0, int *selectStart = 0)
 {
     QString text = tc.block().text();
     int pos = tc.positionInBlock();
@@ -357,6 +357,9 @@ inline QString wordUnderCursor(QTextCursor tc, bool *moveLeft = 0)
         }
     }
     tc.select(QTextCursor::WordUnderCursor);
+    if (selectStart) {
+        *selectStart = tc.selectionStart();
+    }
     return tc.selectedText();
 }
 
