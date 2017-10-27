@@ -43,6 +43,8 @@ const (
         tag_type_method  = "tm"
         tag_type_factor  = "tf"
         tag_type_value   = "tv"
+        tag_todo         = "b"
+        tag_todo_folder  = "+b"
 )
 */
 
@@ -62,7 +64,9 @@ enum ASTTAG_ENUM {
     TagFuncFolder,
     TagTypeMethod,
     TagTypeFactor,
-    TagTypeValue
+    TagTypeValue,
+    TagTodo,
+    TagTodoFolder
 };
 
 class IGolangAst : public QObject

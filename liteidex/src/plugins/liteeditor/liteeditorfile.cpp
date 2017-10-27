@@ -23,6 +23,7 @@
 
 #include "liteeditorfile.h"
 #include "liteeditor_global.h"
+#include "editorutil/checkdata.h"
 #include <QFile>
 #include <QTextDocument>
 #include <QTextCodec>
@@ -49,6 +50,7 @@ LiteEditorFile::LiteEditorFile(LiteApi::IApplication *app, QObject *parent)
     m_codec = QTextCodec::codecForName("utf-8");
     m_hasDecodingError = false;
     m_bReadOnly = false;
+    m_hasUtf8Bom = false;
     m_lineTerminatorMode = NativeLineTerminator;
 }
 
@@ -79,6 +81,9 @@ bool LiteEditorFile::saveText(const QString &fileName, const QString &text)
     }
 
     if (m_codec) {
+        if (m_hasUtf8Bom && m_codec->name() == "UTF-8") {
+            file.write("\xef\xbb\xbf", 3);
+        }
         file.write(m_codec->fromUnicode(saveText));
     } else {
         file.write(saveText.toLocal8Bit());
@@ -130,7 +135,17 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
     QByteArray buf = file.readAll();
     m_hasDecodingError = false;
 
+    if (HasBinaryData(buf,32)) {
+        m_liteApp->appendLog("LiteEditor","Binary file not open in the text editor! "+fileName,true);
+        m_hasDecodingError = true;
+        //outText = "error load binary file!!!";
+        return false;
+    }
+
     if (bCheckCodec) {
+        m_codec = QTextCodec::codecForName("UTF-8");
+        m_hasUtf8Bom = false;
+
         if (mimeType == "text/html" || mimeType == "text/xml") {
             m_codec = QTextCodec::codecForHtml(buf,QTextCodec::codecForName("utf-8"));
         } else {
@@ -152,7 +167,9 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
                 codec = QTextCodec::codecForName("UTF-16");
             } else if (bytesRead >= 3 && uchar(buf[0]) == 0xef && uchar(buf[1]) == 0xbb && uchar(buf[2])== 0xbf) {
                 codec = QTextCodec::codecForName("UTF-8");
-            } else if (!codec) {
+                buf.remove(0,3);
+                m_hasUtf8Bom = true;
+            } else if (!codec){
                 codec = QTextCodec::codecForLocale();
             }
             // end code taken from qtextstream
@@ -160,14 +177,26 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
         }
     }
 
-
     QTextCodec::ConverterState state;
     outText = m_codec->toUnicode(buf,buf.size(),&state);
     if (state.invalidChars > 0 || state.remainingChars > 0) {
-        m_hasDecodingError = true;
+         m_hasDecodingError = true;
     }
-    //qDebug() << state.invalidChars << state.remainingChars;
-
+    if (m_hasDecodingError && bCheckCodec) {
+        QByteArray testName = m_libucd.parse(buf);
+        if (!testName.isEmpty()) {
+            QTextCodec *c = QTextCodec::codecForName(testName);
+            if (c && (c->mibEnum() != m_codec->mibEnum()) ) {
+                QTextCodec::ConverterState testState;
+                QString testText = c->toUnicode(buf,buf.size(),&testState);
+                if (testState.invalidChars == 0 && testState.remainingChars == 0) {
+                    m_hasDecodingError = false;
+                    m_codec = c;
+                    outText = testText;
+                }
+            }
+        }
+    }
 /*
     QByteArray verifyBuf = m_codec->fromUnicode(text); // slow
     // the minSize trick lets us ignore unicode headers
@@ -203,11 +232,19 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
     bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
     if (noprintCheck && !LiteApi::mimeIsText(mimeType)) {
         for (int i = 0; i < outText.length(); i++) {
-            if (!outText[i].isPrint() && !outText[i].isSpace() && outText[i] != '\r' && outText[i] != '\n') {
+//            if (!outText[i].isPrint() && !outText[i].isSpace() && outText[i] != '\r' && outText[i] != '\n') {
+//                outText[i] = '.';
+//                m_hasDecodingError = true;
+//            }
+            if (IsBinaryCode(outText[i].unicode())) {
                 outText[i] = '.';
                 m_hasDecodingError = true;
             }
         }
+    }
+
+    if (m_hasDecodingError) {
+        m_liteApp->appendLog("LiteEditor",QString("Decode file error! file:\"%1\" codec:%2").arg(fileName).arg(textCodec()),true);
     }
 
     return true;
@@ -224,6 +261,11 @@ bool LiteEditorFile::setLineEndUnix(bool b)
         m_lineTerminatorMode = CRLFLineTerminator;
     }
     return true;
+}
+
+bool LiteEditorFile::hasDecodingError() const
+{
+    return m_hasDecodingError;
 }
 
 bool LiteEditorFile::isLineEndUnix() const

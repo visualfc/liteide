@@ -172,6 +172,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
             QStandardItem *useSpace = new QStandardItem();
             useSpace->setCheckable(true);
             useSpace->setCheckState(tabUseSpace?Qt::Checked:Qt::Unchecked);
+            useSpace->setEditable(false);
             QStandardItem *ext = new QStandardItem;
             ext->setEditable(false);
             LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);

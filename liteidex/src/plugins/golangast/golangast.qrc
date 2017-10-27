@@ -28,5 +28,7 @@
         <file>images/imports.png</file>
         <file>images/type_factor.png</file>
         <file>images/type_factor_p.png</file>
+        <file>images/todo.png</file>
+        <file>images/todos.png</file>
     </qresource>
 </RCC>

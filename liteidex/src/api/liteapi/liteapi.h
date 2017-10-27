@@ -249,7 +249,7 @@ public:
     virtual QStringList recentNameList()
     {
         QString key = recentKey();
-        return m_settings->value(key).toStringList();;
+        return m_settings->value(key).toStringList();
     }
 
     virtual void clearRecentNameList()

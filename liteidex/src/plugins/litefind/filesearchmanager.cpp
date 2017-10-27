@@ -95,9 +95,11 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
 
 FileSearchManager::~FileSearchManager()
 {
-    //delete m_widget;
-    //qDeleteAll(m_fileSearchList);
-    //m_fileSearchList.clear();
+    foreach (LiteApi::IFileSearch *search, m_fileSearchList) {
+        delete search;
+    }
+    m_fileSearchList.clear();
+    delete m_widget;
 }
 
 void FileSearchManager::addFileSearch(LiteApi::IFileSearch *search)
@@ -258,7 +260,7 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
         QList<Find::SearchResultItem> items = doc.replace(it.key(),text,it.value());
         m_searchResultWidget->addResults(items,Find::AddOrdered,true);
     }
-    m_liteApp->editorManager()->saveAllEditors(true);
+    m_liteApp->editorManager()->saveAllEditors(false);
     m_searchResultWidget->setRevertMode(text,m_currentSearch->searchText());
 }
 

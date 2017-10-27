@@ -139,7 +139,6 @@ protected:
     QLabel      *m_lineInfo;
     bool         m_isAutoIdleSaveDocuments;
     int          m_autoIdleSaveDocumentsTime;
-    bool         m_autoIdleSaveDocumentsEmitMessage;
 };
 
 #endif // EDITORMANAGER_H

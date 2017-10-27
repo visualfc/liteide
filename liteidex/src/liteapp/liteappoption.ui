@@ -208,16 +208,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="autoIdleSaveDocumentsEmitMessageCheckBox">
-            <property name="toolTip">
-             <string>emit save message for auto code format, etc...</string>
-            </property>
-            <property name="text">
-             <string>Emit message</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="horizontalSpacer_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -266,9 +256,7 @@
       <zorder>groupBox</zorder>
       <zorder>groupBox_4</zorder>
       <zorder>groupBox_5</zorder>
-      <zorder>groupBox_6</zorder>
       <zorder>groupBox_10</zorder>
-      <zorder>groupBox_11</zorder>
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">

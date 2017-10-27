@@ -110,6 +110,40 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Based on Qt %1 (%2 bit)</source>
         <translation>Основано на Qt %1 (%2 бит)</translation>
     </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All contributors that provided patches.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Go Project &amp;lt;http://golang.org&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Qt Project &amp;lt;https://qt-project.org&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The QtCreator Project &amp;lt;https://qt-project.org&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Kate Project &amp;lt;http://kate-editor.org&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The GNU Software Foundation &amp;lt;https://www.gnu.org&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Markdown parser from sundown &amp;lt;https://github.com/vmg/sundown&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Markdown CSS files from Mou &amp;lt;http://mouapp.com&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Gocode tool &amp;lt;https://github.com/nsf/gocode&amp;gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The LiteIDE logo designed by BESD &amp;lt;http://www.besdlab.cn&amp;gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Last, but not least, the open-source community.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Copyright (c) 2011-2017 LiteIDE. All rights reserved.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;In addition, as a special exception, that plugins developed for LiteIDE, are allowed to remain closed sourced and can be distributed under any license .These rights are included in the file LGPL_EXCEPTION.txt in this package.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionManager</name>
@@ -312,6 +346,24 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Open Command Prompt Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BookmarkManager</name>
+    <message>
+        <source>Toggle Bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BookmarkRecent</name>
+    <message>
+        <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3206,6 +3258,10 @@ Success: %2.</oldsource>
         <source>Restore Default Font</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add copied text into the clipboard as HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEnvOption</name>
@@ -3861,6 +3917,69 @@ Do you want to replace it?</source>
     <message>
         <source>An error occurred while parsing json: %1</source>
         <translation>Возникла ошибка при разборе json: %1</translation>
+    </message>
+</context>
+<context>
+    <name>QJsonParseError</name>
+    <message>
+        <source>no error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unterminated object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missing name separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unterminated array</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missing value separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>illegal value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid termination by number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>illegal number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid UTF8 string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unterminated string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>object is missing after a comma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>too deeply nested document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>too large document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>garbage at the end of the document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

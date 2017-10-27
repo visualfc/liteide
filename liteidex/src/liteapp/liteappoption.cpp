@@ -140,7 +140,6 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     }
 
     connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsTimeSpinBox,SLOT(setEnabled(bool)));
-    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsEmitMessageCheckBox,SLOT(setEnabled(bool)));
 
     bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
     ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
@@ -150,9 +149,6 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         time = 1;
     }
     ui->autoIdleSaveDocumentsTimeSpinBox->setValue(time);
-
-    bool emitmsg = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,true).toBool();
-    ui->autoIdleSaveDocumentsEmitMessageCheckBox->setChecked(emitmsg);
 
     bool toolwndshortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
     ui->toolWindowShortcutsCheckBox->setChecked(toolwndshortcuts);
@@ -269,9 +265,6 @@ void LiteAppOption::apply()
 
     int time = ui->autoIdleSaveDocumentsTimeSpinBox->value();
     m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,time);
-
-    bool emitmsg = ui->autoIdleSaveDocumentsEmitMessageCheckBox->isChecked();
-    m_liteApp->settings()->setValue(LITEAPP_AUTOIDLESAVEDOCUMENTS_EMITMESSAGE,emitmsg);
 
     bool toolwindowshortcuts = ui->toolWindowShortcutsCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_TOOLWINDOW_SHORTCUTS,toolwindowshortcuts);

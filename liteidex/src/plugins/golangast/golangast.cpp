@@ -362,6 +362,7 @@ void GolangAst::updateAstNow()
     QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "astview" << "-end";
+    args << "-todo";
     args << m_updateFileNames;
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->start(cmd,args);
@@ -383,6 +384,7 @@ void GolangAst::updateAstNowFile()
     QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "astview" << "-end";
+    args << "-todo";
     args << m_editorFileName;
     m_processFile->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_processFile->start(cmd,args);

@@ -856,6 +856,7 @@ void LiteEditor::setReadOnly(bool b)
     m_lockAct->setVisible(b);
     m_unlockAct->setVisible(!b);
     m_bReadOnly = b;
+    m_editorWidget->setReadOnly(b);
 }
 
 bool LiteEditor::isReadOnly() const

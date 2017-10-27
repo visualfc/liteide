@@ -71,22 +71,23 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     connect(manager,SIGNAL(editorMarkNodeRemoved(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeRemoved(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
     connect(manager,SIGNAL(editorMarkNodeChanged(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)),this,SLOT(editorMarkNodeChanged(LiteApi::IEditorMark*,LiteApi::IEditorMarkNode*)));
 
-    m_treeView = new QTreeView;
+    m_treeView = new SymbolTreeView(false);
     m_treeView->setHeaderHidden(true);
     m_treeView->setEditTriggers(QTreeView::NoEditTriggers);
     m_treeView->setRootIsDecorated(false);
 
     m_bookmarkModel = new BookmarkModel(this);
-    m_proxyModel = new BookmarkSortProxyModel(this);
-    m_proxyModel->setSourceModel(m_bookmarkModel);
-    //m_proxyModel->sort(0);
+//    m_proxyModel = new BookmarkSortProxyModel(this);
+//    m_proxyModel->setSourceModel(m_bookmarkModel);
+//    //m_proxyModel->sort(0);
 
     m_treeView->setModel(m_bookmarkModel);
 
     m_treeView->setItemDelegate(new BookmarkDelegate(this));
     m_treeView->setFrameStyle(QFrame::NoFrame);
     m_treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_treeView->setFocusPolicy(Qt::NoFocus);
+
+ //   m_treeView->setFocusPolicy(Qt::NoFocus);
 //    m_treeView->setSelectionModel(manager->selectionModel());
 //    m_treeView->setSelectionMode(QAbstractItemView::SingleSelection);
 //    m_treeView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -95,6 +96,9 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
 
 
     m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_treeView,"Bookmarks",tr("Bookmarks"),true);
+
+    connect(m_treeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(gotoBookmark(QModelIndex)));
+    connect(m_treeView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(gotoBookmark(QModelIndex)));
 
     return true;
 }
@@ -222,6 +226,18 @@ void BookmarkManager::editorMarkNodeChanged(LiteApi::IEditorMark *mark, LiteApi:
 //            item->setText(QString("%1\t%2").arg(mark->fileName()).arg(node->lineNumber()));
 //            break;
 //        }
-//    }
+    //    }
+}
+
+void BookmarkManager::gotoBookmark(const QModelIndex &index)
+{
+    if (!index.isValid()) {
+        return;
+    }
+    QString filePath = index.data(BookmarkModel::FilePath).toString();
+    int lineNumber = index.data(BookmarkModel::LineNumber).toInt();
+    if (!filePath.isEmpty() && (lineNumber > 0)) {
+        LiteApi::gotoLine(m_liteApp,filePath,lineNumber-1,0,true,true);
+    }
 }
 

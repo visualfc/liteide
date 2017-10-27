@@ -362,7 +362,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
         }
         if (opt->wrapAround && !wrap) {
             if (find.blockNumber() > line ||
-                    (find.blockNumber() >= line && find.columnNumber() > col) )  {
+                    (find.blockNumber() >= line && find.columnNumber() >= col) )  {
                 break;
             }
         }

@@ -356,7 +356,7 @@ QString LiteEditorWidget::cursorToHtml(QTextCursor cursor) const
     blockFormat.setNonBreakableLines(true);
     tempCursor.setBlockFormat(blockFormat);
     QString html = tempCursor.selection().toHtml();//("utf-8");
-    html.replace("\t","&nbsp&nbsp&nbsp&nbsp");
+    //html.replace("\t","&nbsp&nbsp&nbsp&nbsp");
     delete tempDocument;
     return html;
 }

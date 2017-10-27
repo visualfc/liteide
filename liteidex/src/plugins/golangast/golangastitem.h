@@ -50,6 +50,7 @@ public:
         case LiteApi::TagValueFolder:
         case LiteApi::TagImportFolder:
         case LiteApi::TagFuncFolder:
+        case LiteApi::TagTodoFolder:
         case LiteApi::TagStruct:
         case LiteApi::TagInterface:
         case LiteApi::TagType:
@@ -65,6 +66,7 @@ public:
         case LiteApi::TagValueFolder:
         case LiteApi::TagImportFolder:
         case LiteApi::TagFuncFolder:
+        case LiteApi::TagTodoFolder:
             return true;
         default:
             return false;

@@ -33,6 +33,7 @@
 #include <QStandardPaths>
 #endif
 #include <QDebug>
+#include <QtGlobal>
 #include "mainwindow.h"
 #include "liteapp.h"
 #include "goproxy.h"
@@ -58,6 +59,11 @@ int main(int argc, char *argv[])
         _CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
     #endif
 #endif
+    
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+    
     QApplication app(argc, argv);
 
     QStringList arguments = app.arguments();

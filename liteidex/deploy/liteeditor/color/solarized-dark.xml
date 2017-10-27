@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Solarized-Dark">
+        <!-- Based on the Solarized color scheme by Ethan Schoonover:
+             http://ethanschoonover.com/solarized                     -->
+        <style name="Text" foreground="#839496" background="#002b36"/>
+        <style name="Extra" foreground="#839496" background="#073642"/>
+  <style name="Selection" background="#77ddff"/>
+        <style name="CurrentLine" background="#002b36"/>
+        <style name="IndentLine" foreground="#008B8B"/>
+  <style name="VisualWhitespace" foreground="#c0c0c0"/>
+  <style name="Keyword" foreground="#cb4b16"/>
+  <style name="DataType" foreground="#b58900" /> 
+  <style name="Decimal" foreground="#268bd2"/>
+  <style name="BaseN" foreground="#268bd2"/>
+  <style name="Float" foreground="#268bd2"/>
+  <style name="Char" foreground="#a17b2a"/>
+  <style name="String" foreground="#2aa198"/>
+  <style name="Comment" foreground="#586e75"/>
+  <style name="Alert" foreground="#ff0000"/>
+  <style name="Error" foreground="#dc322f"/>
+  <style name="Function" foreground="#859900"/>
+  <style name="RegionMarker" foreground="#839496"/>
+  <style name="Symbol" foreground="#839496"/>   
+  <style name="BuiltinFunc" foreground="#859900"/>
+  <style name="Predeclared" foreground="#859900"/>
+  <style name="FuncDecl" foreground="#839496"/>
+  <style name="Placeholder" foreground="#a165a1"/>
+  <style name="ToDo" foreground="#536161" bold="true"/>
+</style-scheme>

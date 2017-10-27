@@ -86,11 +86,13 @@ log
 log/syslog
 math
 math/big
+math/bits
 math/cmplx
 math/rand
 mime
 mime/multipart
-mime/quotedprintablenet
+mime/quotedprintable
+net
 net/http
 net/http/cgi
 net/http/cookiejar
@@ -98,7 +100,6 @@ net/http/fcgi
 net/http/httptest
 net/http/httptrace
 net/http/httputil
-net/http/internal
 net/http/pprof
 net/mail
 net/rpc

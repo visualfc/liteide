@@ -25,6 +25,7 @@
 #define LITEEDITORFILE_H
 
 #include "liteapi/liteapi.h"
+#include "editorutil/libucd.h"
 
 class QTextDocument;
 class LiteEditorFile : public LiteApi::IFile
@@ -47,6 +48,7 @@ public:
     bool isLineEndUnix() const;
     bool isLineEndWindow() const;
     bool setLineEndUnix(bool b);
+    bool hasDecodingError() const;
 protected:
     enum LineTerminatorMode {
         LFLineTerminator = 0,
@@ -66,6 +68,8 @@ protected:
     QString        m_fileName;
     QString        m_mimeType;
     QTextCodec    *m_codec;
+    bool           m_hasUtf8Bom;
+    LibUcd         m_libucd;
 };
 
 #endif //LITEEDITORFILE_H

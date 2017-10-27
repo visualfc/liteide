@@ -716,12 +716,12 @@ void FileManager::checkForReload()
                                                               "but you have unsaved modifications in your LiteIDE editor.\n"
                                                               "\nDo you want to close the editor?"
                                                               "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
-                                    ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                                    ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
                                 }
                             } else {
                                 QString text = QString(tr("%1\nThis file has been deleted from the drive.\n"
                                                           "\nDo you want to close the editor?")).arg(fileName);
-                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
                             }
                         }
 
@@ -756,12 +756,12 @@ void FileManager::checkForReload()
                                         "but you have unsaved modifications in your LiteIDE editor.\n"
                                         "\nDo you want to reload the file from disk?"
                                         "\nAnswering \"Yes\" will discard your unsaved changes.")).arg(fileName);
-                                    ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                                    ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No,QMessageBox::YesToAll);
                                 }
                             } else {
                                 QString text = QString(tr("%1\nThis file has been modified on the drive.\n"
                                     "\nDo you want to reload the file from disk?")).arg(fileName);
-                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No);
+                                ret = QMessageBox::question(m_liteApp->mainWindow(),tr("LiteIDE X"),text,QMessageBox::YesToAll|QMessageBox::Yes|QMessageBox::No,QMessageBox::YesToAll);
                             }
                         }
                         if (ret == QMessageBox::YesToAll || ret == QMessageBox::Yes) {

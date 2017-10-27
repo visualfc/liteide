@@ -70,6 +70,8 @@ GolangAstIconPublic::GolangAstIconPublic() :
     iconTypeMethod(QIcon("icon:golangast/images/type_method.png")),
     iconTypeFactor(QIcon("icon:golangast/images/type_factor.png")),
     iconTypeVar(QIcon("icon:golangast/images/type_var.png")),
+    iconTodo(QIcon("icon:golangast/images/todo.png")),
+    iconTodos(QIcon("icon:golangast/images/todos.png")),
     iconGofile(QIcon("icon:golangast/images/gofile.png")),
     iconMakefile(QIcon("icon:golangast/images/makefile.png")),
     iconProfile(QIcon("icon:golangast/images/project.png"))
@@ -109,6 +111,10 @@ QIcon GolangAstIconPublic::iconFromTag(const QString &tag) const
         return iconTypeFactor;
     else if (tag == "tv")
         return iconTypeVar;
+    else if (tag == "b")
+        return iconTodo;
+    else if (tag == "+b")
+        return iconTodos;
     return QIcon();
 }
 
@@ -144,6 +150,10 @@ QIcon GolangAstIconPublic::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) const
         return iconTypeFactor;
     else if (tag == LiteApi::TagTypeValue)
         return iconTypeVar;
+    else if (tag == LiteApi::TagTodo)
+        return iconTodo;
+    else if (tag == LiteApi::TagTodoFolder)
+        return iconTodos;
     return QIcon();
 }
 
@@ -162,7 +172,9 @@ GolangAstIconPrivate::GolangAstIconPrivate() :
     iconConsts(QIcon("icon:golangast/images/consts.png")),
     iconTypeMethod(QIcon("icon:golangast/images/type_method_p.png")),
     iconTypeFactor(QIcon("icon:golangast/images/type_factor_p.png")),
-    iconTypeVar(QIcon("icon:golangast/images/type_var_p.png"))
+    iconTypeVar(QIcon("icon:golangast/images/type_var_p.png")),
+    iconTodo(QIcon("icon:golangast/images/todo.png")),
+    iconTodos(QIcon("icon:golangast/images/todos.png"))
 {
 
 }
@@ -199,6 +211,10 @@ QIcon GolangAstIconPrivate::iconFromTag(const QString &tag) const
         return iconTypeFactor;
     else if (tag == "tv")
         return iconTypeVar;
+    else if (tag == "b")
+        return iconTodo;
+    else if (tag == "+b")
+        return iconTodos;
     return QIcon();
 }
 
@@ -234,6 +250,10 @@ QIcon GolangAstIconPrivate::iconFromTagEnum(LiteApi::ASTTAG_ENUM tag, bool) cons
         return iconTypeFactor;
     else if (tag == LiteApi::TagTypeValue)
         return iconTypeVar;
+    else if (tag == LiteApi::TagTodo)
+        return iconTodo;
+    else if (tag == LiteApi::TagTodoFolder)
+        return iconTodos;
     return QIcon();
 }
 
