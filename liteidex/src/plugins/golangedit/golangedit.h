@@ -49,6 +49,7 @@
 
 struct SourceQuery
 {
+    QString cmdName;
     QString workPath;
     QString filePath;
     QString fileName;
@@ -91,8 +92,8 @@ public slots:
     void sourceQueryFinished(int code, QProcess::ExitStatus status);
     //void updateOracleInfo(const QString &action, const QString &text);
     void dbclickSourceQueryOutput(const QTextCursor &cursor);
-    void runSourceQuery(const QString &action);
-    void runSourceQueryByInfo(const QString &action);
+    void runSourceQueryAction(const QString &action, const QString &scope = ".");
+    void runSourceQueryByInfo(const QString &action, const QString &scope = ".");
     void sourceWhat();
     void sourceCallees();
     void sourceCallers();
@@ -101,6 +102,7 @@ public slots:
     void sourceDescribe();
     void sourceFreevars();
     void sourceImplements();
+    void sourceImplementsGopath();
     void sourcePeers();
     void sourceReferrers();
     void sourcePointsto();
@@ -131,6 +133,7 @@ protected:
     QAction *m_sourceDescribeAct;
     QAction *m_sourceFreevarsAct;
     QAction *m_sourceImplementsAct;
+    QAction *m_sourceImplementsGopathAct;
     QAction *m_sourcePeersAct;
     QAction *m_sourceReferrersAct;
     QAction *m_sourcePointstoAct;

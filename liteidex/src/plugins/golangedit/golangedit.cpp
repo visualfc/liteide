@@ -173,6 +173,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_sourceImplementsAct,"SourceQueryImplements","");
     connect(m_sourceImplementsAct,SIGNAL(triggered()),this,SLOT(sourceImplements()));
 
+    m_sourceImplementsGopathAct = new QAction(tr("Implements(GOPATH)"),this);
+    actionContext->regAction(m_sourceImplementsGopathAct,"SourceQueryImplementsGopath","");
+    connect(m_sourceImplementsGopathAct,SIGNAL(triggered()),this,SLOT(sourceImplementsGopath()));
+
     m_sourcePeersAct = new QAction(tr("Peers"),this);
     actionContext->regAction(m_sourcePeersAct,"SourceQueryPeers","");
     connect(m_sourcePeersAct,SIGNAL(triggered()),this,SLOT(sourcePeers()));
@@ -312,6 +316,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourceDescribeAct);
         sub->addAction(m_sourceFreevarsAct);
         sub->addAction(m_sourceImplementsAct);
+        sub->addAction(m_sourceImplementsGopathAct);
         sub->addAction(m_sourcePeersAct);
         sub->addAction(m_sourcePointstoAct);
         sub->addAction(m_sourceReferrersAct);
@@ -342,6 +347,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourceDescribeAct);
         sub->addAction(m_sourceFreevarsAct);
         sub->addAction(m_sourceImplementsAct);
+        sub->addAction(m_sourceImplementsGopathAct);
         sub->addAction(m_sourcePeersAct);
         sub->addAction(m_sourcePointstoAct);
         sub->addAction(m_sourceReferrersAct);
@@ -810,6 +816,9 @@ void GolangEdit::sourceQueryFinished(int code, QProcess::ExitStatus /*status*/)
         if (line.startsWith("-: modes:")) {
             QString mode = line.mid(9);
            // mode.remove(QRegExp("\\s?\\breferrers\\b"));
+            if (mode.contains("implements")) {
+                mode.replace("implements","implements implements_GOPATH");
+            }
             m_sourceQueryInfo.mode = mode;
         }
         m_sourceQueryOutput->append(line+"\n");
@@ -855,9 +864,13 @@ void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
         cur.select(QTextCursor::WordUnderCursor);
         QString text = cur.selectedText();
         QStringList actions;
-        actions << "callees" << "callers" << "callstack" << "definition" << "describe" << "freevars" << "implements" << "peers" << "referrers" << "pointsto" << "whicherrs";
+        actions << "callees" << "callers" << "callstack" << "definition" << "describe" << "freevars" << "implements" << "implements_GOPATH" << "peers" << "referrers" << "pointsto" << "whicherrs";
         if (actions.contains(text)) {
-            runSourceQueryByInfo(text);
+            if (text.endsWith("_GOPATH")) {
+                runSourceQueryByInfo(text.replace("_GOPATH",""),"...");
+            } else {
+                runSourceQueryByInfo(text);
+            }
         }
         return;
     }
@@ -890,7 +903,7 @@ void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
     }
 }
 
-void GolangEdit::runSourceQuery(const QString &action)
+void GolangEdit::runSourceQueryAction(const QString &action, const QString &scope)
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
     if (!m_sourceQueryProcess->isStop()) {
@@ -913,7 +926,6 @@ void GolangEdit::runSourceQuery(const QString &action)
     }
 
     QString cmd;
-    QString arginfo;
     QString cmdName;
 
     QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
@@ -923,15 +935,17 @@ void GolangEdit::runSourceQuery(const QString &action)
         cmdName = "guru";
     } else {
         cmd = LiteApi::getGotools(m_liteApp);
-        arginfo = "oracle -pos";
         cmdName = "oracle";
     }
 
+    m_sourceQueryOutputAct->setChecked(true);
+
     m_sourceQueryOutput->clear();
-    m_sourceQueryOutput->append(QString("\nwait for source query \"%1\" %2 ...\n\n").arg(cmdName).arg(action));
+    m_sourceQueryOutput->append(QString("\nwait for source query, command \"%1\" action \"%2\" scope \"%3\"\n\n").arg(cmdName).arg(action).arg(scope));
 
     QFileInfo info(m_editor->filePath());
 
+    m_sourceQueryInfo.cmdName = cmdName;
     m_sourceQueryInfo.action = action;
     m_sourceQueryInfo.workPath = info.path();
     m_sourceQueryInfo.filePath = info.filePath();
@@ -946,130 +960,142 @@ void GolangEdit::runSourceQuery(const QString &action)
     m_sourceQueryProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(info.path());
 
+    QString fileName = info.fileName();
+    QStringList args;
     if (!guruFilePath.isEmpty()) {
-        if (offset2 == -1) {
-            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3\"").
-                                     arg(action).arg(info.fileName()).arg(offset));
+        args << "-scope" << scope;
+        args << action;
+        if (offset2 -= 1) {
+            args << QString("\"%1:#%2\"").arg(fileName).arg(offset);
         } else {
-            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3,#%4\"").
-                                     arg(action).arg(info.fileName()).arg(offset).arg(offset2));
+            args << QString("\"%1:#%2,#%3\"").arg(fileName).arg(offset).arg(offset2);
         }
     } else {
-        if (offset2 == -1) {
-            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
-                                     arg(arginfo).arg(info.fileName()).arg(offset).arg(action));
+        args << "oracle";
+        if (offset2 -= 1) {
+            args << QString("-pos \"%1:#%2\"").arg(fileName).arg(offset);
         } else {
-            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
-                                     arg(arginfo).arg(info.fileName()).arg(offset).arg(offset2).arg(action));
+            args << QString("-pos \"%1:#%2,#%3\"").arg(fileName).arg(offset).arg(offset2);
         }
+        args << action;
+        args << scope;
     }
+    m_sourceQueryProcess->startEx(cmd,args.join(" "));
 }
 
-void GolangEdit::runSourceQueryByInfo(const QString &action)
+void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scope)
 {
     if (!m_sourceQueryProcess->isStop()) {
         m_sourceQueryProcess->stopAndWait(100,200);
     }
 
     QString cmd;
-    QString arginfo;
     QString cmdName;
 
     QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
 
     if (!guruFilePath.isEmpty()) {
         cmd = guruFilePath;
-        arginfo = "-pos";
         cmdName = "guru";
     } else {
         cmd = LiteApi::getGotools(m_liteApp);
-        arginfo = "oracle -pos";
         cmdName = "oracle";
     }
 
+    m_sourceQueryInfo.cmdName = cmdName;
     int offset = m_sourceQueryInfo.offset;
     int offset2 = m_sourceQueryInfo.offset2;
 
-    m_sourceQueryOutput->append(QString("\nwait for source query \"%1\" %2 ...\n\n").arg(cmdName).arg(action));
+    m_sourceQueryOutput->append(QString("\nwait for source query, command \"%1\" action \"%2\" scope \"%3\" \n\n").arg(cmdName).arg(action).arg(scope));
 
     m_sourceQueryProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_sourceQueryProcess->setWorkingDirectory(m_sourceQueryInfo.workPath);
+
+    QString fileName = m_sourceQueryInfo.fileName;
+    QStringList args;
     if (!guruFilePath.isEmpty()) {
-        if (offset2 == -1) {
-            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3\"").
-                                     arg(action).arg(m_sourceQueryInfo.fileName).arg(offset));
+        args << "-scope" << scope;
+        args << action;
+        if (offset2 -= 1) {
+            args << QString("\"%1:#%2\"").arg(fileName).arg(offset);
         } else {
-            m_sourceQueryProcess->startEx(cmd,QString("-scope . %1 \"%2:#%3,#%4\"").
-                                     arg(action).arg(m_sourceQueryInfo.fileName).arg(offset).arg(offset2));
+            args << QString("\"%1:#%2,#%3\"").arg(fileName).arg(offset).arg(offset2);
         }
     } else {
-        if (offset2 == -1) {
-            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3\" %4 .").
-                                     arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(action));
+        args << "oracle";
+        if (offset2 -= 1) {
+            args << QString("-pos \"%1:#%2\"").arg(fileName).arg(offset);
         } else {
-            m_sourceQueryProcess->startEx(cmd,QString("%1 \"%2:#%3,#%4\" %5 .").
-                                     arg(arginfo).arg(m_sourceQueryInfo.fileName).arg(offset).arg(offset2).arg(action));
+            args << QString("-pos \"%1:#%2,#%3\"").arg(fileName).arg(offset).arg(offset2);
         }
+        args << action;
+        args << scope;
     }
+    m_sourceQueryProcess->startEx(cmd,args.join(" "));
 }
 
 void GolangEdit::sourceWhat()
 {
-    runSourceQuery("what");
+    runSourceQueryAction("what");
 }
 
 void GolangEdit::sourceCallees()
 {
-    runSourceQuery("callees");
+    runSourceQueryAction("callees");
 }
 
 void GolangEdit::sourceCallers()
 {
-    runSourceQuery("callers");
+    runSourceQueryAction("callers");
 }
 
 void GolangEdit::sourceCallstack()
 {
-    runSourceQuery("callstack");
+    runSourceQueryAction("callstack");
 }
 
 void GolangEdit::sourceDefinition()
 {
-    runSourceQuery("definition");
+    runSourceQueryAction("definition");
 }
 
 void GolangEdit::sourceDescribe()
 {
-    runSourceQuery("describe");
+    runSourceQueryAction("describe");
 }
 
 void GolangEdit::sourceFreevars()
 {
-    runSourceQuery("freevars");
+    runSourceQueryAction("freevars");
 }
 
 void GolangEdit::sourceImplements()
 {
-    runSourceQuery("implements");
+    runSourceQueryAction("implements");
+}
+
+void GolangEdit::sourceImplementsGopath()
+{
+    runSourceQueryAction("implements","...");
 }
 
 void GolangEdit::sourcePeers()
 {
-    runSourceQuery("peers");
+    runSourceQueryAction("peers");
 }
 
 void GolangEdit::sourceReferrers()
 {
-    runSourceQuery("referrers");
+    runSourceQueryAction("referrers");
 }
 
 void GolangEdit::sourcePointsto()
 {
-    runSourceQuery("pointsto");
+    runSourceQueryAction("pointsto");
 }
 
 void GolangEdit::sourceWhicherrs()
 {
-    runSourceQuery("whicherrs");
+    runSourceQueryAction("whicherrs");
 }
 
