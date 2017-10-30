@@ -40,7 +40,7 @@ GolangFileSearch::GolangFileSearch(LiteApi::IApplication *app, QObject *parent) 
     m_process = new ProcessEx(this);
     m_replaceMode = false;
     m_bParserHead = true;
-    connect(m_process,SIGNAL(started()),this,SLOT(findUsagesStarted()));
+//    connect(m_process,SIGNAL(started()),this,SLOT(findUsagesStarted()));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findUsagesOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(findUsagesFinish(bool,int,QString)));
 }
@@ -136,12 +136,12 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     }
     args << ".";
 
+    emit findStarted();
     m_process->startEx(cmd,args.join(" "));
 }
 
 void GolangFileSearch::findUsagesStarted()
 {
-    emit findStarted();
 }
 
 void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
