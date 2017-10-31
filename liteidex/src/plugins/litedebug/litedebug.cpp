@@ -510,7 +510,7 @@ void LiteDebug::startDebug()
     QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,info.targetWorkDir,"-tags");
 
     QStringList args;
-    args << "build" << "-gcflags" << "\"-N -l\"" ;
+    args << "build" << "-a" << "-gcflags" << "\"-N -l\"" ;
     if (!tags.isEmpty()) {
         args << "-tags" << tags;
     }
