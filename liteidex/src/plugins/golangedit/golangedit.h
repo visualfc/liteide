@@ -90,6 +90,7 @@ public slots:
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
     void sourceQueryFinished(int code, QProcess::ExitStatus status);
+    void sourcequeryError(QProcess::ProcessError code);
     //void updateOracleInfo(const QString &action, const QString &text);
     void dbclickSourceQueryOutput(const QTextCursor &cursor);
     void runSourceQueryAction(const QString &action, const QString &scope = ".");
@@ -107,12 +108,15 @@ public slots:
     void sourceReferrers();
     void sourcePointsto();
     void sourceWhicherrs();
+    void sourceQueryStateChanged(QProcess::ProcessState state);
+    void stopSourceQueryProcess();
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
     TextOutput            *m_sourceQueryOutput;
     QAction               *m_sourceQueryOutputAct;
+    QAction               *m_stopSourceQueryAct;
     bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
     bool m_gorootSourceReadOnly;

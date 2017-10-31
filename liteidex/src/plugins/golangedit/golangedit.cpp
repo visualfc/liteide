@@ -131,15 +131,22 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     }
 
     connect(m_sourceQueryProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(sourceQueryFinished(int,QProcess::ExitStatus)));
+    connect(m_sourceQueryProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(sourcequeryError(QProcess::ProcessError)));
 
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
     m_sourceQueryOutput = new TextOutput(m_liteApp,true);
     m_sourceQueryOutput->setLineWrap(false);
 
+    m_stopSourceQueryAct = new QAction(tr("Stop"),this);
+    m_stopSourceQueryAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
+
     connect(m_sourceQueryOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickSourceQueryOutput(QTextCursor)));
 
-    m_sourceQueryOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_sourceQueryOutput,"gosourcequery",tr("Go Source Query"),true);
+    m_sourceQueryOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_sourceQueryOutput,"gosourcequery",tr("Go Source Query"),true,
+                                                                           QList<QAction*>() << m_stopSourceQueryAct);
+    connect(m_sourceQueryProcess,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(sourceQueryStateChanged(QProcess::ProcessState)));
+    connect(m_stopSourceQueryAct,SIGNAL(triggered()),this,SLOT(stopSourceQueryProcess()));
 
     m_sourceWhatAct = new QAction(tr("SourceQuery What"),this);
     actionContext->regAction(m_sourceWhatAct,"SourceQueryWhat","Ctrl+Shift+H");
@@ -828,6 +835,12 @@ void GolangEdit::sourceQueryFinished(int code, QProcess::ExitStatus /*status*/)
     }
 }
 
+void GolangEdit::sourcequeryError(QProcess::ProcessError code)
+{
+    QString data = ProcessEx::processErrorText(code);
+    m_sourceQueryOutput->append(data,Qt::red);
+}
+
 //void GolangEdit::updateOracleInfo(const QString &action, const QString &text)
 //{
 //    //if (action == "what") {
@@ -1097,5 +1110,17 @@ void GolangEdit::sourcePointsto()
 void GolangEdit::sourceWhicherrs()
 {
     runSourceQueryAction("whicherrs");
+}
+
+void GolangEdit::sourceQueryStateChanged(QProcess::ProcessState state)
+{
+    m_stopSourceQueryAct->setEnabled(state == QProcess::Running);
+}
+
+void GolangEdit::stopSourceQueryProcess()
+{
+    if (m_sourceQueryProcess->isRunning()) {
+        m_sourceQueryProcess->stop(200);
+    }
 }
 
