@@ -504,8 +504,12 @@ void LiteDebug::startDebug()
         return;
     }
 
-    m_liteApp->editorManager()->saveAllEditors();
+    QString debugName = info.debugName;
+    if (debugName.isEmpty()) {
+        debugName = "debug";
+    }
 
+    m_liteApp->editorManager()->saveAllEditors();
 
     QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,info.targetWorkDir,"-tags");
 
@@ -514,18 +518,24 @@ void LiteDebug::startDebug()
     if (!tags.isEmpty()) {
         args << "-tags" << tags;
     }
-    args << "-o" << info.targetName;
+    args << "-o" << debugName;
 
     bool b = m_liteBuild->execGoCommand(args,info.targetWorkDir,true);
     if (!b) {
         return;
     }
 
-    QString icmd = info.targetName;
+    QString icmd = debugName;
     if (icmd.startsWith("\"") && icmd.endsWith("\"")) {
         icmd = icmd.mid(1,icmd.length()-2).trimmed();
     }
     QString cmd = FileUtil::lookPathInDir(icmd,info.targetWorkDir);
+    if (cmd.isEmpty()) {
+        if (QFileInfo(info.buildRootPath,debugName).exists()) {
+            cmd = debugName;
+        }
+    }
+
     if (cmd.isEmpty()) {
         m_liteApp->appendLog("debug",QString("not find execute file in path %2").arg(info.targetWorkDir),true);
         return;
@@ -536,6 +546,7 @@ void LiteDebug::startDebug()
     if (editor) {
         m_startDebugFile = editor->filePath();
     }
+    m_removeDebugFilePath = QFileInfo(info.buildRootPath,cmd).filePath();
 
     this->startDebug(QDir::toNativeSeparators(cmd),info.targetArgs,info.targetWorkDir);
 }
@@ -581,6 +592,8 @@ void LiteDebug::startDebugTests()
     if (editor) {
         m_startDebugFile = editor->filePath();
     }
+
+    m_removeDebugFilePath = QFileInfo(info.buildRootPath,cmd).filePath();
 
     this->startDebug(QDir::toNativeSeparators(cmd),info.targetArgs,info.targetWorkDir);
 }
@@ -772,6 +785,11 @@ void LiteDebug::debugStoped()
     if (!m_startDebugFile.isEmpty()) {
         m_liteApp->fileManager()->openEditor(m_startDebugFile,true);
     }
+
+    if (!m_removeDebugFilePath.isEmpty()) {
+        QFile::remove(m_removeDebugFilePath);
+    }
+    m_removeDebugFilePath.clear();
 
     emit debugVisible(false);
 

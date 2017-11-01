@@ -230,10 +230,12 @@ public:
     }
     void setId(const QString &id) { m_id = id; }
     void setCmd(const QString &cmd) { m_cmd = cmd; }
+    void setDebug(const QString &debug) { m_debug = debug; }
     void setArgs(const QString &args) { m_args = args; }
     void setWork(const QString &work) { m_work = work; }
     QString id() const { return m_id; }
     QString cmd() const { return m_cmd; }
+    QString debug() const { return m_debug; }
     QString args() const { return m_args; }
     QString work() const { return m_work; }
     bool isEmpty() {
@@ -242,6 +244,7 @@ public:
 protected:
     QString m_id;
     QString m_cmd;
+    QString m_debug;
     QString m_args;
     QString m_work;
 };
@@ -285,6 +288,7 @@ signals:
 struct TargetInfo {
     QString buildRootPath;
     QString targetName;
+    QString debugName;
     QString targetArgs;
     QString targetWorkDir;
 };

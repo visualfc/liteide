@@ -118,6 +118,7 @@ protected:
     QString  m_startDebugFile;
     CurrentLine m_lastLine;
     QMultiMap<QString,int> m_fileBpMap;
+    QString  m_removeDebugFilePath;
 };
 
 #endif // LITEDEBUG_H

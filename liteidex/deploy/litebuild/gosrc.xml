@@ -5,6 +5,8 @@
 		<config id="GoFmt" name="GOFMT" value="gofmt"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
+		<custom id="DebugBaseName" name="DEBUGBASENAME" value="$(BUILD_DIR_NAME).debug"/>
+		<custom id="DebugName" name = "DEBUGNAME" value="$(DEBUGBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetBaseName" name="TARGETBASENAME" value="$(BUILD_DIR_NAME)"/>
 		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
@@ -53,6 +55,6 @@
 		<action id="GoGenerate" menu="Utils" img="get.png" cmd="$(GO)" args="generate $(GENERATEARGS)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoLint" menu="Utils" img="lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Gopm Build" menu="Utils" img="gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<target id="Target" cmd="$(TARGETNAME)" args="$(TARGETARGS)" work="$(BUILD_DIR_PATH)"/>
+		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" work="$(BUILD_DIR_PATH)"/>
 	</mime-type>
 </mime-info>

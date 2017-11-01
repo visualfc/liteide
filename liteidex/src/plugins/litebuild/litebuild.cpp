@@ -804,6 +804,7 @@ LiteApi::TargetInfo LiteBuild::getTargetInfo()
         QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
         info.buildRootPath = m_buildRootPath;
         info.targetName = this->envToValue(target->cmd(),env,sysenv);
+        info.debugName = this->envToValue(target->debug(),env,sysenv);
         info.targetArgs = this->envToValue(target->args(),env,sysenv);
         info.targetWorkDir = this->envToValue(target->work(),env,sysenv);
     }

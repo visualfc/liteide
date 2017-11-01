@@ -372,6 +372,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 target = new BuildTarget;
                 target->setId(attrs.value("id").toString());
                 target->setCmd(attrs.value("cmd").toString());
+                target->setDebug(attrs.value("debug").toString());
                 target->setArgs(attrs.value("args").toString());
                 target->setWork(attrs.value("work").toString());
             }
