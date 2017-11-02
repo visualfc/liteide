@@ -113,8 +113,10 @@ bool EditorManager::initWithApp(IApplication *app)
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
 
     //m_editorTabWidget->tabBar()->setIconSize(LiteApi::getToolBarIconSize());
+#ifdef Q_OS_MAC
 #if QT_VERSION >= 0x050900
     m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}");
+#endif
 #endif
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
