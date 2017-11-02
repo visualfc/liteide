@@ -3,10 +3,10 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2017.10.20 Ver X33
+### 2017.11.2 Ver X33
 * LiteIDE
 	* optimization editor plugin, load file check codec, reload file by diff
-	* astview add TodoList
+	* add astview TodoList
 	* add new bookmarks plugin
 	* fix liteapp clean plugin order
 * LiteApp
@@ -30,16 +30,24 @@
 	* add TodoList for classview and outline
 	* fix #848, astwidget double clicked index check.
 * GolangCode
-	* update pkglist to go1.9.1
+	* update pkglist to go1.9
 * GolangEdit
+	* add stop source query action
+	* add source query action implement_GOPATH for GOPATH scope
 	* fix golang lexer parser folding end
 	* fix GolangHighlighter fold indent error set
+	* fix findUsage wordUnderCursor offset
+	* fix find usages findStart signal late
 * GolangFmt
 	* load diff check modify current block text
 * GolangCode
 	* fix update gopath process stop and wait
 * LiteDebug
 	* fix cmd to native separator
+	* build target add -a build flag
+	* change debug targget name to target.debug (custom by LiteBuild)
+* LiteBuild
+	* add custom debug name in build config
 * LiteFind
 	* fix memory leak by GolangEdit GolangFileSearch
 	* fix findInFiles berore saveAllEditor
