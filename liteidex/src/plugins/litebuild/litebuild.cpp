@@ -587,7 +587,7 @@ void LiteBuild::fmctxGoTool()
 
 void LiteBuild::fmctxGofmt()
 {
-    QString args = "gofmt -l -w -sortimports=true .";
+    QString args = "gofmt -l -w .";
     QString cmd = LiteApi::getGotools(m_liteApp);
     m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
     m_process->setUserData(ID_REGEXP,m_outputRegex);

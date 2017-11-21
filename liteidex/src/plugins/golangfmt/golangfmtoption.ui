@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>535</width>
+    <width>569</width>
     <height>220</height>
    </rect>
   </property>
@@ -27,13 +27,6 @@
         </property>
         <property name="text">
          <string>Enable update imports line, adding missing ones and removing unreferenced ones.</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxSortImports">
-        <property name="text">
-         <string>Enable sort imports of consecutive import lines in import blocks</string>
         </property>
        </widget>
       </item>

@@ -52,7 +52,6 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     m_liteApp(app),
     m_diff(true),
     m_fixImports(false),
-    m_sorImports(true),
     m_autofmt(true),
     m_syncfmt(false),
     m_timeout(600)
@@ -77,7 +76,6 @@ void GolangFmt::applyOption(QString id)
         return;
     }
     m_fixImports = m_liteApp->settings()->value(GOLANGFMT_FIXIMPORTS,false).toBool();
-    m_sorImports = m_liteApp->settings()->value(GOLANGFMT_SORTIMPORTS,true).toBool();
     m_autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
     m_syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
     m_timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
@@ -130,9 +128,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     if (m_diff) {
         args << "-d";
     }
-    if (m_sorImports) {
-        args << "-sortimports";
-    }
+
     QString cmd = LiteApi::getGotools(m_liteApp);
     process.start(cmd,args);
 
@@ -229,9 +225,6 @@ void GolangFmt::fmtEditor(LiteApi::IEditor *editor, bool save)
     args << "gofmt";
     if (m_fixImports) {
         args << "-fiximports";
-    }
-    if (m_sorImports) {
-        args << "-sortimports";
     }
     if (m_diff) {
         args << "-d";
