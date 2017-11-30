@@ -262,6 +262,19 @@ void FindEditor::getFindOption(FindOption *opt, bool backWard)
 
 QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor, FindOption *opt, bool wrap)
 {
+    int from = cursor.position();
+    if (cursor.hasSelection()) {
+        if (opt->backWard) {
+            from = cursor.selectionStart();
+        } else {
+            from = cursor.selectionEnd();
+        }
+    }
+    return findEditorHelper(doc,from,opt,wrap);
+}
+
+QTextCursor FindEditor::findEditorHelper(QTextDocument *doc, int from, FindOption *opt, bool wrap)
+{
     QTextDocument::FindFlags flags = 0;
     if (opt->backWard) {
         flags |= QTextDocument::FindBackward;
@@ -275,14 +288,6 @@ QTextCursor FindEditor::findEditor(QTextDocument *doc, const QTextCursor &cursor
     Qt::CaseSensitivity cs = Qt::CaseInsensitive;
     if (opt->matchCase) {
         cs = Qt::CaseSensitive;
-    }
-    int from = cursor.position();
-    if (cursor.hasSelection()) {
-        if (opt->backWard) {
-            from = cursor.selectionStart();
-        } else {
-            from = cursor.selectionEnd();
-        }
     }
 
     QTextCursor find;
@@ -318,23 +323,26 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
 
     QTextCursor find;
     QTextCursor cursor = ed->textCursor();
-    int line = cursor.blockNumber();
-    int col = cursor.columnNumber();
+    int startLine = cursor.blockNumber();
+    int startColumn = cursor.columnNumber();
     Qt::CaseSensitivity cs = Qt::CaseInsensitive;
     if (opt->matchCase) {
         cs = Qt::CaseSensitive;
     }
+    int from = cursor.position();
     if ( cursor.hasSelection() ) {
-        QString text = cursor.selectedText();
-        if (opt->useRegexp) {
-            if (text.indexOf(QRegExp(opt->findText,cs),0) != -1) {
-                find = cursor;
-            }
-        } else {
-            if (text.indexOf(opt->findText,0,cs) != -1) {
-                find = cursor;
-            }
-        }
+//        QString text = cursor.selectedText();
+//        if (opt->useRegexp) {
+//            if (text.indexOf(QRegExp(opt->findText,cs),0) != -1) {
+//                find = cursor;
+//            }
+//        } else {
+//            if (text.indexOf(opt->findText,0,cs) != -1) {
+//                find = cursor;
+//            }
+//        }
+        from = cursor.selectionStart();
+        startColumn -= cursor.selectedText().length();
     }
     int number = 0;
     bool wrap = opt->wrapAround;
@@ -344,25 +352,33 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
             number++;
             //find.beginEditBlock();
             QString text = find.selectedText();
+            bool changed = find.blockNumber() == startLine && find.columnNumber() < startColumn;
+            if (changed) {
+                startColumn -= text.length();
+            }
             if (opt->useRegexp) {
                 text.replace(QRegExp(opt->findText,cs),opt->replaceText);
             } else {
                 text.replace(QRegExp(opt->findText,cs,QRegExp::FixedString),opt->replaceText);
             }
             find.removeSelectedText();
+            from = find.position()+ opt->replaceText.length();
             find.insertText(text);
             //find.endEditBlock();
-            ed->setTextCursor(find);
+            //ed->setTextCursor(find);
+            if (changed) {
+                startColumn += text.length();
+            }
         }
-        cursor = ed->textCursor();
-        find = findEditor(ed->document(),cursor,opt,false);
+        //cursor = ed->textCursor();
+        find = findEditorHelper(ed->document(),from,opt,false);
         if (find.isNull() && wrap) {
             wrap = false;
-            find = findEditor(ed->document(),cursor,opt,true);
+            find = findEditorHelper(ed->document(),0,opt,true);
         }
-        if (opt->wrapAround && !wrap) {
-            if (find.blockNumber() > line ||
-                    (find.blockNumber() >= line && find.columnNumber() >= col) )  {
+        if (!find.isNull() && opt->wrapAround && !wrap) {
+             if (find.blockNumber() > startLine ||
+                    (find.blockNumber() == startLine && (find.columnNumber()-find.selectedText().length()) >= startColumn) )  {
                 break;
             }
         }

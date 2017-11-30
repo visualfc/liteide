@@ -65,6 +65,7 @@ public slots:
 public:
     QTextCursor findEditor(QTextDocument *ed, const QTextCursor &cursor, FindOption *opt, bool wrap = true);
     void replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt,int replaceCount = -1);
+    QTextCursor findEditorHelper(QTextDocument *doc, int from, FindOption *opt, bool wrap);
 protected:
     LiteApi::IApplication   *m_liteApp;
     QWidget *m_widget;
