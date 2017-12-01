@@ -61,6 +61,9 @@ struct SourceQuery
     bool    success;
 };
 
+class GoAddTagsDialog;
+class GoRemoveTagsDialog;
+
 class GolangEdit : public QObject
 {
     Q_OBJECT
@@ -144,8 +147,8 @@ protected:
     QAction *m_sourceReferrersAct;
     QAction *m_sourcePointstoAct;
     QAction *m_sourceWhicherrs;
-    QAction *m_addTagsAct;
-    QAction *m_removeTagAct;
+    QAction *m_goAddTagsAct;
+    QAction *m_goRemoveTagAct;
     Process  *m_findDefProcess;
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
@@ -157,6 +160,8 @@ protected:
     QTextCursor m_findLastCursor;
     QByteArray  m_findInfoData;
     GolangFileSearch *m_fileSearch;
+    GoAddTagsDialog  *m_addTagsDlg;
+    GoRemoveTagsDialog *m_removeTagsDlg;
 };
 
 #endif // GOLANGEDIT_H

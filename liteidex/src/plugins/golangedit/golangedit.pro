@@ -23,7 +23,9 @@ SOURCES += golangeditplugin.cpp \
     golanghighlighterfactory.cpp \
     golangtextlexer.cpp \
     golangeditoption.cpp \
-    golangeditoptionfactory.cpp
+    golangeditoptionfactory.cpp \
+    goaddtagsdialog.cpp \
+    goremovetagsdialog.cpp
 
 HEADERS += golangeditplugin.h\
         golangedit_global.h \
@@ -33,7 +35,11 @@ HEADERS += golangeditplugin.h\
     golanghighlighterfactory.h \
     golangtextlexer.h \
     golangeditoption.h \
-    golangeditoptionfactory.h
+    golangeditoptionfactory.h \
+    goaddtagsdialog.h \
+    goremovetagsdialog.h
 
 FORMS += \
-    golangeditoption.ui
+    golangeditoption.ui \
+    goaddtagsdialog.ui \
+    goremovetagsdialog.ui

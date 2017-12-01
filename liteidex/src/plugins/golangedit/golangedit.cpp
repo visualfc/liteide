@@ -28,6 +28,9 @@
 #include "litebuildapi/litebuildapi.h"
 #include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
+#include "goaddtagsdialog.h"
+#include "goremovetagsdialog.h"
+
 #include <QMenu>
 #include <QToolBar>
 #include <QAction>
@@ -200,13 +203,16 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_sourceWhicherrs,"SourceQueryWhicherrs","");
     connect(m_sourceWhicherrs,SIGNAL(triggered()),this,SLOT(sourceWhicherrs()));
 
-    m_addTagsAct = new QAction(tr("Add Tags To Struct Field"),this);
-    actionContext->regAction(m_addTagsAct,"GoAddTags","");
-    connect(m_addTagsAct,SIGNAL(triggered()),this,SLOT(goAddTags()));
+    m_goAddTagsAct = new QAction(tr("Add Tags To Struct Field"),this);
+    actionContext->regAction(m_goAddTagsAct,"GoAddTags","");
+    connect(m_goAddTagsAct,SIGNAL(triggered()),this,SLOT(goAddTags()));
 
-    m_removeTagAct = new QAction(tr("Remove Tags From Struct Field"),this);
-    actionContext->regAction(m_removeTagAct,"GoRemoveTags","");
-    connect(m_removeTagAct,SIGNAL(triggered()),this,SLOT(goRemoveTags()));
+    m_goRemoveTagAct = new QAction(tr("Remove Tags From Struct Field"),this);
+    actionContext->regAction(m_goRemoveTagAct,"GoRemoveTags","");
+    connect(m_goRemoveTagAct,SIGNAL(triggered()),this,SLOT(goRemoveTags()));
+
+    m_addTagsDlg = 0;
+    m_removeTagsDlg = 0;
 
     this->applyOption(OPTION_GOLANGEDIT);
 }
@@ -338,8 +344,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourceWhicherrs);
 
         menu->addSeparator();
-        menu->addAction(m_addTagsAct);
-        menu->addAction(m_removeTagAct);
+        menu->addAction(m_goAddTagsAct);
+        menu->addAction(m_goRemoveTagAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -373,8 +379,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourceWhicherrs);
 
         menu->addSeparator();
-        menu->addAction(m_addTagsAct);
-        menu->addAction(m_removeTagAct);
+        menu->addAction(m_goAddTagsAct);
+        menu->addAction(m_goRemoveTagAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -1142,11 +1148,21 @@ void GolangEdit::stopSourceQueryProcess()
 
 void GolangEdit::goAddTags()
 {
-
+    if (!m_addTagsDlg) {
+        m_addTagsDlg = new GoAddTagsDialog(m_liteApp->mainWindow());
+    }
+    if (m_addTagsDlg->exec() != QDialog::Accepted) {
+        return;
+    }
 }
 
 void GolangEdit::goRemoveTags()
 {
-
+    if (!m_removeTagsDlg) {
+        m_removeTagsDlg = new GoRemoveTagsDialog(m_liteApp->mainWindow());
+    }
+    if (m_removeTagsDlg->exec() != QDialog::Accepted) {
+        return;
+    }
 }
 
