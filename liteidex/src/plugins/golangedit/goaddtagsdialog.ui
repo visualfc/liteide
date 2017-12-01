@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="jsonGroupBox">
      <property name="title">
-      <string>Json</string>
+      <string>JSON Tag</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -46,7 +46,7 @@
    <item>
     <widget class="QGroupBox" name="xmlGroupBox">
      <property name="title">
-      <string>XML</string>
+      <string>XML Tag</string>
      </property>
      <property name="checkable">
       <bool>true</bool>

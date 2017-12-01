@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>117</height>
+    <width>366</width>
+    <height>265</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <property name="title">
       <string>Remove Tags And Options</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
        <widget class="QRadioButton" name="clearAllTagsRadioButton">
         <property name="text">
          <string>Clear All Tags</string>
@@ -30,12 +30,66 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="0">
        <widget class="QRadioButton" name="removeAllOptionsRadioButton">
         <property name="text">
          <string>Clear All Tag Options</string>
         </property>
        </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QRadioButton" name="removeJsonTagRadioButton">
+        <property name="text">
+         <string>Remove JSON Tag</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="removeXmlTagRadioButton">
+        <property name="text">
+         <string>Remove XML Tag</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QRadioButton" name="removeCustomTagRadioButton">
+        <property name="text">
+         <string>Remove Custom Tag</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="customTaglineEdit"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QRadioButton" name="removeJsonOptionRadioButton">
+        <property name="text">
+         <string>Remove JSON Options</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="jsonOptionLineEdit"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QRadioButton" name="removeXmlOptionRadioButton">
+        <property name="text">
+         <string>Remove XML Options</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="xmlOptionLineEdit"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QRadioButton" name="removeCustomOptionRadioButton">
+        <property name="text">
+         <string>Remove Custom Tag Options</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="customOptionLineEdit"/>
       </item>
      </layout>
     </widget>
