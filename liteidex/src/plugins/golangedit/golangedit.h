@@ -110,6 +110,8 @@ public slots:
     void sourceWhicherrs();
     void sourceQueryStateChanged(QProcess::ProcessState state);
     void stopSourceQueryProcess();
+    void goAddTags();
+    void goRemoveTags();
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
@@ -142,6 +144,8 @@ protected:
     QAction *m_sourceReferrersAct;
     QAction *m_sourcePointstoAct;
     QAction *m_sourceWhicherrs;
+    QAction *m_addTagsAct;
+    QAction *m_removeTagAct;
     Process  *m_findDefProcess;
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;

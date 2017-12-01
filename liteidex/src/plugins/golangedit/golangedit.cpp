@@ -200,6 +200,14 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     actionContext->regAction(m_sourceWhicherrs,"SourceQueryWhicherrs","");
     connect(m_sourceWhicherrs,SIGNAL(triggered()),this,SLOT(sourceWhicherrs()));
 
+    m_addTagsAct = new QAction(tr("Add Tags To Struct Field"),this);
+    actionContext->regAction(m_addTagsAct,"GoAddTags","");
+    connect(m_addTagsAct,SIGNAL(triggered()),this,SLOT(goAddTags()));
+
+    m_removeTagAct = new QAction(tr("Remove Tags From Struct Field"),this);
+    actionContext->regAction(m_removeTagAct,"GoRemoveTags","");
+    connect(m_removeTagAct,SIGNAL(triggered()),this,SLOT(goRemoveTags()));
+
     this->applyOption(OPTION_GOLANGEDIT);
 }
 
@@ -328,6 +336,10 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourcePointstoAct);
         sub->addAction(m_sourceReferrersAct);
         sub->addAction(m_sourceWhicherrs);
+
+        menu->addSeparator();
+        menu->addAction(m_addTagsAct);
+        menu->addAction(m_removeTagAct);
     }
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
@@ -359,6 +371,10 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourcePointstoAct);
         sub->addAction(m_sourceReferrersAct);
         sub->addAction(m_sourceWhicherrs);
+
+        menu->addSeparator();
+        menu->addAction(m_addTagsAct);
+        menu->addAction(m_removeTagAct);
     }
     m_editor = LiteApi::getLiteEditor(editor);
     if (m_editor) {
@@ -1122,5 +1138,15 @@ void GolangEdit::stopSourceQueryProcess()
     if (m_sourceQueryProcess->isRunning()) {
         m_sourceQueryProcess->stop(200);
     }
+}
+
+void GolangEdit::goAddTags()
+{
+
+}
+
+void GolangEdit::goRemoveTags()
+{
+
 }
 
