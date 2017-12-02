@@ -14,7 +14,10 @@ class GoRemoveTagsDialog : public QDialog
 public:
     explicit GoRemoveTagsDialog(QWidget *parent = 0);
     ~GoRemoveTagsDialog();
-
+    void setInfo(const QString &info);
+    QString arguments() const;
+public slots:
+    void updateArguments();
 private:
     Ui::GoRemoveTagsDialog *ui;
 };

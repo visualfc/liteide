@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
-    <height>265</height>
+    <width>500</width>
+    <height>429</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Remove Tags From Struct Field</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -26,12 +26,12 @@
          <string>Clear All Tags</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QRadioButton" name="removeAllOptionsRadioButton">
+       <widget class="QRadioButton" name="clearAllOptionsRadioButton">
         <property name="text">
          <string>Clear All Tag Options</string>
         </property>
@@ -56,6 +56,9 @@
         <property name="text">
          <string>Remove Custom Tag</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="4" column="1">
@@ -69,7 +72,20 @@
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLineEdit" name="jsonOptionLineEdit"/>
+       <widget class="QLineEdit" name="jsonOptionLineEdit">
+        <property name="inputMask">
+         <string/>
+        </property>
+        <property name="maxLength">
+         <number>32767</number>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="6" column="0">
        <widget class="QRadioButton" name="removeXmlOptionRadioButton">
@@ -79,7 +95,17 @@
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QLineEdit" name="xmlOptionLineEdit"/>
+       <widget class="QLineEdit" name="xmlOptionLineEdit">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="cursorPosition">
+         <number>0</number>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+       </widget>
       </item>
       <item row="7" column="0">
        <widget class="QRadioButton" name="removeCustomOptionRadioButton">
@@ -89,10 +115,24 @@
        </widget>
       </item>
       <item row="7" column="1">
-       <widget class="QLineEdit" name="customOptionLineEdit"/>
+       <widget class="QLineEdit" name="customOptionLineEdit">
+        <property name="placeholderText">
+         <string>tag=option</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="infoLabel">
+     <property name="text">
+      <string>Info</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="argumentsEdit"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

@@ -115,6 +115,8 @@ public slots:
     void stopSourceQueryProcess();
     void goAddTags();
     void goRemoveTags();
+    void execGoModifyTags(const QString &args);
+    QString getGoModifyTagsInfo() const;
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;

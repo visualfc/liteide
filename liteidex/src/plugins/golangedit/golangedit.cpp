@@ -28,6 +28,7 @@
 #include "litebuildapi/litebuildapi.h"
 #include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
+#include "processex/processex.h"
 #include "goaddtagsdialog.h"
 #include "goremovetagsdialog.h"
 
@@ -1146,23 +1147,115 @@ void GolangEdit::stopSourceQueryProcess()
     }
 }
 
+QString GolangEdit::getGoModifyTagsInfo() const
+{
+    QString text;
+    QString fileName = QFileInfo(m_editor->filePath()).fileName();
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    if (cursor.hasSelection()) {
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        int line1 = cursor.document()->findBlock(start).blockNumber()+1;
+        int line2 = cursor.document()->findBlock(end).blockNumber()+1;
+        if (line1 == line2) {
+            text = QString("gomodifytags -file %1 -line %2").arg(fileName).arg(line1);
+        } else {
+            text = QString("gomodifytags -file %1 -line %2,%3").arg(fileName).arg(line1).arg(line2);
+        }
+    } else {
+        text = QString("gomodifytags -file %1 -offset %2 (Inside a valid structure under the cursor)").arg(fileName).arg(m_editor->utf8Position(true));
+    }
+    return text;
+}
+
+void GolangEdit::execGoModifyTags(const QString &args)
+{
+    if (args.isEmpty()) {
+        return;
+    }
+    QString cmd = FileUtil::lookupGoBin("gomodifytags",m_liteApp,true);
+    if (cmd.isEmpty()) {
+         m_liteApp->appendLog("GolangEdit","Could not find gomodifytags (hint: is gomodifytags installed?)",true);
+         return;
+    }
+    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+    QFileInfo info(m_editor->filePath());
+    Process process(this);
+    process.setEnvironment(env.toStringList());
+    process.setWorkingDirectory(info.path());
+    QString cmdArgs;
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    if (cursor.hasSelection()) {
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        int line1 = cursor.document()->findBlock(start).blockNumber()+1;
+        int line2 = cursor.document()->findBlock(end).blockNumber()+1;
+        if (line1 == line2) {
+            cmdArgs = QString("-file %1 -line %2 %3").arg(info.fileName()).arg(line1).arg(args);
+        } else {
+            cmdArgs = QString("-file %1 -line %2,%3 %4").arg(info.fileName()).arg(line1).arg(line2).arg(args);
+        }
+    } else {
+        cmdArgs = QString("-file %1 -offset %2 %3").arg(info.fileName()).arg(m_editor->utf8Position(true)).arg(args);
+    }
+    process.startEx(cmd,cmdArgs);
+    if (!process.waitForStarted(30000)) {
+        m_liteApp->appendLog("GolangEdit","wait for gomodifytags started timeout",true);
+        return;
+    }
+    if (!process.waitForFinished(30000)) {
+        process.kill();
+        m_liteApp->appendLog("GolangEdit","wait for gomodifytags finished timeout",true);
+        return;
+    }
+    int code = process.exitCode();
+    if (code != 0) {
+        QByteArray error = process.readAllStandardError();
+        m_liteApp->appendLog("GolangEdit",QString("gomodifytags exit code %1, %2").arg(code).arg(QString::fromUtf8(error)),true);
+        return;
+    }
+    QByteArray data = process.readAllStandardOutput();
+    if (data.isEmpty()) {
+        return;
+    }
+    m_editor->loadTextUseDiff(QString::fromUtf8(data));
+}
+
 void GolangEdit::goAddTags()
 {
+    if (m_editor->isModified()) {
+        m_liteApp->editorManager()->saveEditor(m_editor);
+    }
     if (!m_addTagsDlg) {
         m_addTagsDlg = new GoAddTagsDialog(m_liteApp->mainWindow());
     }
+    m_addTagsDlg->setInfo(getGoModifyTagsInfo());
     if (m_addTagsDlg->exec() != QDialog::Accepted) {
         return;
     }
+    QString args = m_addTagsDlg->arguments();
+    if (args.isEmpty()) {
+        return;
+    }
+    execGoModifyTags(args);
 }
 
 void GolangEdit::goRemoveTags()
 {
+    if (m_editor->isModified()) {
+        m_liteApp->editorManager()->saveEditor(m_editor);
+    }
     if (!m_removeTagsDlg) {
         m_removeTagsDlg = new GoRemoveTagsDialog(m_liteApp->mainWindow());
     }
+    m_removeTagsDlg->setInfo(getGoModifyTagsInfo());
     if (m_removeTagsDlg->exec() != QDialog::Accepted) {
         return;
     }
+    QString args = m_removeTagsDlg->arguments();
+    if (args.isEmpty()) {
+        return;
+    }
+    execGoModifyTags(args);
 }
 
