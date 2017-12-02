@@ -68,6 +68,14 @@ if [ $? -ge 1 ]; then
 	exit 1
 fi
 
+go install -ldflags "-s" -v github.com/fatih/gomodifytags
+
+if [ $? -ge 1 ]; then
+	echo 'error, go install fail'
+	exit 1
+fi
+
+
 echo export qrc images
 go run src/tools/exportqrc/main.go -root .
 
@@ -94,6 +102,7 @@ cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gotools liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gocode liteide/bin
+cp -a -v $LITEIDE_ROOT/bin/gomodifytags liteide/bin
 cp -a -v $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/lib/liteide/plugins
 
 cp -r -v $LITEIDE_ROOT/deploy/* liteide/share/liteide/

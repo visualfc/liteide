@@ -51,6 +51,9 @@ if ERRORLEVEL 1 goto go_fail
 go build -ldflags "-s" -o %GOPATH%/bin/gocode.exe -v github.com/nsf/gocode
 if ERRORLEVEL 1 goto go_fail
 
+go build -ldflags "-s" -o %GOPATH%/bin/gomodifytags.exe -v github.com/fatih/gomodifytags
+if ERRORLEVEL 1 goto go_fail
+
 echo export qrc images
 go run src/tools/exportqrc/main.go -root .
 if ERRORLEVEL 1 goto go_fail
@@ -75,6 +78,7 @@ xcopy %LITEIDE_ROOT%\..\CONTRIBUTORS liteide /y
 xcopy %LITEIDE_ROOT%\liteide\bin\* liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\gotools.exe liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\gocode.exe liteide\bin /y
+xcopy %LITEIDE_ROOT%\bin\gomodifytags.exe liteide\bin /y
 xcopy %LITEIDE_ROOT%\liteide\lib\liteide\plugins\*.dll liteide\lib\liteide\plugins /y
 
 xcopy %LITEIDE_ROOT%\deploy liteide\share\liteide /e /y /i

@@ -28,10 +28,12 @@ fi
 
 echo get gocode ...
 rm -f -r src/github.com/nsf/gocode
-go get -v -u -ldflags "-s" "github.com/nsf/gocode"
+go get -v -u "github.com/nsf/gocode"
 echo get gotools ...
 rm -f -r src/github.com/visualfc/gotools
-go get -v -u -ldflags "-s" "github.com/visualfc/gotools"
+go get -v -u "github.com/visualfc/gotools"
+rm -f -r src/github.com/fatih/gomodifytags
+go get -v -u "github.com/fatih/gomodifytags"
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'

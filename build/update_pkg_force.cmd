@@ -30,6 +30,9 @@ go get -v -u "github.com/nsf/gocode"
 echo get gotools ...
 rmdir /s /q src\github.com\visualfc\gotools
 go get -v -u "github.com/visualfc/gotools"
+echo get gomodifytags ...
+rmdir /s /q src\github.com\fatih\gomodifytags
+go get -v -u github.com/fatih/gomodifytags
 
 cd %BUILD_ROOT%
 
