@@ -80,7 +80,7 @@ bool EditorManager::initWithApp(IApplication *app)
     if (!IEditorManager::initWithApp(app)) {
         return false;
     }
-    m_updateMenuInFocus = true;
+    m_updateMenuInFocus = false;
     m_nullMenu = new QMenu;
     m_nullMenu->setEnabled(false);
     m_currentNavigationHistoryPosition = 0;

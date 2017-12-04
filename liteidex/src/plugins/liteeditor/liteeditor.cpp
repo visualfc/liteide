@@ -237,6 +237,13 @@ void LiteEditor::clipbordDataChanged()
     }
 }
 
+static void setActionsShortcutContext(const QList<QAction*> &actionList, Qt::ShortcutContext context)
+{
+    foreach (QAction *act, actionList) {
+        act->setShortcutContext(context);
+    }
+}
+
 void LiteEditor::createActions()
 {
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Editor");
@@ -262,6 +269,9 @@ void LiteEditor::createActions()
 
     m_selectAllAct = new QAction(tr("Select All"),this);
     actionContext->regAction(m_selectAllAct,"SelectAll",QKeySequence::SelectAll);
+
+    setActionsShortcutContext(QList<QAction*>() << m_undoAct << m_redoAct << m_copyAct << m_cutAct
+                          << m_pasteAct << m_selectAllAct, Qt::WidgetShortcut);
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML..."),this);
 #ifndef QT_NO_PRINTER
