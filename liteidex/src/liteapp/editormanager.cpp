@@ -80,6 +80,7 @@ bool EditorManager::initWithApp(IApplication *app)
     if (!IEditorManager::initWithApp(app)) {
         return false;
     }
+    m_updateMenuInFocus = true;
     m_nullMenu = new QMenu;
     m_nullMenu->setEnabled(false);
     m_currentNavigationHistoryPosition = 0;
@@ -570,6 +571,24 @@ IEditor *EditorManager::currentEditor() const
     return m_currentEditor;
 }
 
+void EditorManager::updateEditorMenu(IEditContext *context)
+{
+    if (context && context->focusMenu()) {
+#if defined(Q_OS_OSX)
+        // dirty trick to show the correct edit menu at the first time on Mac OS X
+        m_editMenu->setEnabled(false);
+#endif
+        m_editMenu->menuAction()->setMenu(context->focusMenu());
+        m_editMenu->setEnabled(true);
+    } else {
+        m_editMenu->menuAction()->setMenu(m_nullMenu);
+        m_editMenu->setEnabled(false);
+    }
+    if (context && context->focusToolBar()) {
+        context->focusToolBar()->setEnabled(true);
+    }
+}
+
 void EditorManager::setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory)
 {
     if (m_currentEditor == editor) {
@@ -584,23 +603,11 @@ void EditorManager::setCurrentEditor(IEditor *editor, bool ignoreNavigationHisto
         m_editorTabWidget->setCurrentWidget(editor->widget());
         editor->onActive();
     }
-    /*
-        QMenu *menu = LiteApi::getEditMenu(editor);
-        if (menu) {
-#if defined(Q_OS_OSX)
-            // dirty trick to show the correct edit menu at the first time on Mac OS X
-            m_editMenu->setEnabled(false);
-#endif
-            m_editMenu->menuAction()->setMenu(menu);
-        } else {
-            m_editMenu->menuAction()->setMenu(m_nullMenu);
-        }
-        m_editMenu->setEnabled(menu != 0);
-    } else {
-        m_editMenu->menuAction()->setMenu(m_nullMenu);
-        m_editMenu->setEnabled(false);
+    if (!m_updateMenuInFocus) {
+        IEditContext *context = LiteApi::getEditContext(editor);
+        updateEditorMenu(context);
     }
-    */
+
     emit currentEditorChanged(editor);
 }
 
@@ -1044,21 +1051,11 @@ void EditorManager::moveToNewWindow()
 
 void EditorManager::focusChanged(QWidget *old, QWidget *now)
 {
+    if (!m_updateMenuInFocus) {
+        return;
+    }
     IEditContext *context = m_editContextMap.value(now);
-    if (context && context->focusMenu()) {
-#if defined(Q_OS_OSX)
-        // dirty trick to show the correct edit menu at the first time on Mac OS X
-        m_editMenu->setEnabled(false);
-#endif
-        m_editMenu->menuAction()->setMenu(context->focusMenu());
-        m_editMenu->setEnabled(true);
-    } else {
-        m_editMenu->menuAction()->setMenu(m_nullMenu);
-        m_editMenu->setEnabled(false);
-    }
-    if (context && context->focusToolBar()) {
-        context->focusToolBar()->setEnabled(true);
-    }
+    updateEditorMenu(context);
     context = m_editContextMap.value(old);
     if (context && context->focusToolBar()) {
         context->focusToolBar()->setEnabled(false);

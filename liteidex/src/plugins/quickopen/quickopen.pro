@@ -16,7 +16,8 @@ SOURCES += quickopenplugin.cpp \
     quickopeneditor.cpp \
     quickopenmimetype.cpp \
     quickopenoption.cpp \
-    quickopenoptionfactory.cpp
+    quickopenoptionfactory.cpp \
+    quickopenaction.cpp
 
 HEADERS += quickopenplugin.h\
         quickopen_global.h \
@@ -28,7 +29,8 @@ HEADERS += quickopenplugin.h\
     quickopeneditor.h \
     quickopenmimetype.h \
     quickopenoption.h \
-    quickopenoptionfactory.h
+    quickopenoptionfactory.h \
+    quickopenaction.h
 
 FORMS += \
     quickopenoption.ui

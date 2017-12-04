@@ -104,6 +104,7 @@ public slots:
     void applyOption(QString);
     void appIdle(int sec);
     void closeEditorForTab(int index);
+    void updateEditorMenu(IEditContext *context);
 signals:
     void tabAddRequest();
     void doubleClickedTab();
@@ -138,6 +139,7 @@ protected:
     int          m_maxEditorCount;
     QLabel      *m_lineInfo;
     bool         m_isAutoIdleSaveDocuments;
+    bool         m_updateMenuInFocus;
     int          m_autoIdleSaveDocumentsTime;
 };
 

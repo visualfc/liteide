@@ -27,6 +27,7 @@
 #include "quickopenmimetype.h"
 #include "quickopenhelp.h"
 #include "quickopenoptionfactory.h"
+#include "quickopenaction.h"
 #include <QtPlugin>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -50,6 +51,7 @@ bool QuickOpenPlugin::load(LiteApi::IApplication *app)
     }
     manager->addFilter(":",new QuickOpenLines(app,this));
     manager->addFilter("?",new QuickOpenHelp(app,this));
+    manager->addFilter(">",new QuickOpenAction(app,this));
 
     app->optionManager()->addFactory(new QuickOpenOptionFactory(app,this));
 
