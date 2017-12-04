@@ -58,6 +58,7 @@ public:
 public slots:
     void quickOpen();
     void quickOpenEditor();
+    void quickOpenSymbol();
     void showQuickOpen();
     void hideQuickOpen();
     void filterChanged(const QString &text);

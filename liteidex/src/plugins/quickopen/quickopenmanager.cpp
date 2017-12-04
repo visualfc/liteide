@@ -74,14 +74,10 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_filterMap.insert("~",new QuickOpenEditor(m_liteApp,this));
 
     this->registerQuickOpenMimeType("@");
+
     m_quickOpenAct = new QAction(tr("Quick Open"),this);
-    m_quickOpenAct->setData("");
-
     m_quickOpenEditAct = new QAction(tr("Quick Open Editor"),this);
-    m_quickOpenEditAct->setData("~");
-
     m_quickOpenSymbolAct = new QAction(tr("Quick Open Symbol"),this);
-    m_quickOpenSymbolAct->setData("@");
 
     m_liteApp->actionManager()->setViewMenuSeparator("sep/quickopen",true);
 
@@ -95,8 +91,8 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenSymbolAct,"sep/quickopen");
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
-    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
-    connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
+    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
+    connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenSymbol()));
 
     return true;
 }
@@ -237,6 +233,11 @@ void QuickOpenManager::quickOpen()
 void QuickOpenManager::quickOpenEditor()
 {
     showById("quickopen/editor");
+}
+
+void QuickOpenManager::quickOpenSymbol()
+{
+    showById("quickopen/symbol");
 }
 
 void QuickOpenManager::updateModel()
