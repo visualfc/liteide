@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
-    <height>502</height>
+    <width>550</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="jsonGroupBox">
      <property name="title">
-      <string>JSON Tag</string>
+      <string>Add JSON Tag</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -26,6 +26,18 @@
       <bool>false</bool>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <widget class="QCheckBox" name="jsonOptionsCheckBox">
         <property name="text">
@@ -46,7 +58,7 @@
    <item>
     <widget class="QGroupBox" name="xmlGroupBox">
      <property name="title">
-      <string>XML Tag</string>
+      <string>Add XML Tag</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -55,6 +67,12 @@
       <bool>false</bool>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <widget class="QCheckBox" name="xmlOptionsCheckBox">
         <property name="text">
@@ -75,7 +93,7 @@
    <item>
     <widget class="QGroupBox" name="customGroupBox">
      <property name="title">
-      <string>Custom Tags</string>
+      <string>Add Custom Tags</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -84,6 +102,15 @@
       <bool>false</bool>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
@@ -138,9 +165,21 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Ttransform Option</string>
+      <string>Ttransform</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <widget class="QRadioButton" name="snakeCaseRadioButton">
         <property name="text">
@@ -182,6 +221,35 @@
        <widget class="QLabel" name="transformInfo">
         <property name="text">
          <string notr="true">BaseDomain -&gt; base_domain</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Options</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="sortCheckBox">
+        <property name="text">
+         <string>Sort sorts the tags in increasing order according to the key name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="overrideCheckBox">
+        <property name="text">
+         <string>Override current tags when adding tags</string>
         </property>
        </widget>
       </item>

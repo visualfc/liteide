@@ -24,6 +24,9 @@ GoAddTagsDialog::GoAddTagsDialog(QWidget *parent) :
     connect(ui->camelCaseRadioButton,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
     connect(ui->lispCaseRadioButton,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
 
+    connect(ui->overrideCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+    connect(ui->sortCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+
     ui->snakeCaseRadioButton->setChecked(true);
 }
 
@@ -113,6 +116,12 @@ void GoAddTagsDialog::updateaAguments()
             command += " -add-options "+optList.join(",");
         }
         command += " -transform "+tranform;
+        if (ui->overrideCheckBox->isChecked()) {
+            command += " -override";
+        }
+        if (ui->sortCheckBox->isChecked()) {
+            command += " -sort";
+        }
     }
     ui->argumentsEdit->setPlainText(command);
 }
