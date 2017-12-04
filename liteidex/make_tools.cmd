@@ -8,3 +8,4 @@ if defined %GOPATH (
 
 go install -ldflags "-s" -v github.com/visualfc/gotools
 go install -ldflags "-s" -v github.com/nsf/gocode
+go install -ldflags "-s" -v github.com/fatih/gomodifytags
