@@ -28,6 +28,7 @@
 #include <QSortFilterProxyModel>
 #include <QMenu>
 #include <QAction>
+#include <QTimer>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -181,7 +182,7 @@ bool QuickOpenAction::selected(const QString &/*text*/, const QModelIndex &index
     if (item) {
         QAction *act = m_itemActionMap.value(item);
         if (act) {
-            act->trigger();
+            QTimer::singleShot(1,act,SLOT(trigger()));
             return true;
         }
     }
