@@ -10,23 +10,64 @@
 #include <QEvent>
 #include <QTimer>
 #include <QApplication>
-#include <QBitmap>
 #include <QCursor>
 #include <QDesktopWidget>
+#include <QMimeData>
+#include <QClipboard>
+
+#include <QBitmap>
 #include <QImage>
 #include <QLayout>
 #include <QPainter>
 #include <QPixmap>
 #include <QStyle>
-#include <QWidget>
-#include <QPlainTextEdit>
+
 #include <QTextDocument>
-#include <QTextBrowser>
 #include <QTextCursor>
 #include <QTextBlock>
-#include <QTreeView>
+#include <QTextCharFormat>
+#include <QTextBlockFormat>
+
 #include <QModelIndex>
-#include <QStandardItemModel>
 #include <QStandardItem>
+#include <QAbstractItemModel>
+#include <QAbstractItemView>
+#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
+#include <QStringListModel>
+
+#include <QWidget>
+#include <QStackedWidget>
+#include <QTreeView>
+#include <QListView>
+
+#include <QDialog>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QMessageBox>
+
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
+#include <QAction>
+#include <QActionGroup>
+
+#include <QLabel>
+#include <QFrame>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QScrollBar>
+#include <QToolButton>
+#include <QPlainTextEdit>
+#include <QTextBrowser>
+#include <QToolTip>
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QStackedLayout>
 
 #endif

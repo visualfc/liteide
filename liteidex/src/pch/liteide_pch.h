@@ -15,6 +15,8 @@
 #include <QCoreApplication>
 #include <QList>
 #include <QMap>
+#include <QSet>
+#include <QStack>
 #include <QVariant>
 #include <QObject>
 #include <QRegExp>
@@ -25,6 +27,12 @@
 #include <QScopedPointer>
 #include <QSharedPointer>
 #include <QUrl>
+#include <QDir>
+#include <QFileInfo>
+#include <QFile>
+#include <QTextDocumentWriter>
+#include <QProcess>
+#include <QProcessEnvironment>
 #include <QDebug>
 
 #include <stdlib.h>

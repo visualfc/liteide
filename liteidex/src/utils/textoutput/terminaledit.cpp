@@ -62,15 +62,19 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
 
     m_cut = new QAction(tr("Cut"),this);
     m_cut->setShortcut(QKeySequence::Cut);
+    m_cut->setShortcutContext(Qt::WidgetShortcut);
 
     m_copy = new QAction(tr("Copy"),this);
     m_copy->setShortcut(QKeySequence::Copy);
+    m_copy->setShortcutContext(Qt::WidgetShortcut);
 
     m_paste = new QAction(tr("Paste"),this);
     m_paste->setShortcut(QKeySequence::Paste);
+    m_paste->setShortcutContext(Qt::WidgetShortcut);
 
     m_selectAll = new QAction(tr("Select All"),this);
     m_selectAll->setShortcut(QKeySequence::SelectAll);
+    m_selectAll->setShortcutContext(Qt::WidgetShortcut);
 
     m_clear = new QAction(tr("Clear All"),this);
 
