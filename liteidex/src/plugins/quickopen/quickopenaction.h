@@ -41,6 +41,7 @@ public:
     virtual QModelIndex filterChanged(const QString &text);
     virtual void indexChanged(const QModelIndex &index);
     virtual bool selected(const QString &text, const QModelIndex &index);
+    virtual void cancel();
 protected:
     LiteApi::IApplication *m_liteApp;
     QStandardItemModel    *m_model;

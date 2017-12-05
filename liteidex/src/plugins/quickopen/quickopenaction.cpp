@@ -188,3 +188,8 @@ bool QuickOpenAction::selected(const QString &/*text*/, const QModelIndex &index
     }
     return false;
 }
+
+void QuickOpenAction::cancel()
+{
+
+}

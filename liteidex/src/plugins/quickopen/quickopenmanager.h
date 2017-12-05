@@ -65,6 +65,8 @@ public slots:
     void filterChanged(const QString &text);
     void indexChanage(const QModelIndex &index);
     void selected();
+protected slots:
+    void hidePopup();
 protected:
     QuickOpenWidget *m_widget;
     QAction     *m_quickOpenAct;

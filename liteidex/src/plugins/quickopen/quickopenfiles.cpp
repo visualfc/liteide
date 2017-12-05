@@ -179,3 +179,7 @@ bool QuickOpenFiles::selected(const QString &/*text*/, const QModelIndex &index)
     }
     return true;
 }
+
+void QuickOpenFiles::cancel()
+{
+}

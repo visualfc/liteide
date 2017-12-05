@@ -42,6 +42,7 @@ public:
     virtual QModelIndex filterChanged(const QString &text) = 0;
     virtual void indexChanged(const QModelIndex &index) = 0;
     virtual bool selected(const QString &text, const QModelIndex &index) = 0;
+    virtual void cancel() = 0;
 };
 
 class IQuickOpenAdapter : public QObject

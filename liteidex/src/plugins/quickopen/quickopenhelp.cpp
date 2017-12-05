@@ -99,3 +99,8 @@ bool QuickOpenHelp::selected(const QString &/*text*/, const QModelIndex &index)
     mgr->showBySymbol(key);
     return false;
 }
+
+void QuickOpenHelp::cancel()
+{
+
+}

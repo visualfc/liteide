@@ -115,3 +115,8 @@ bool QuickOpenEditor::selected(const QString &/*text*/, const QModelIndex &index
     }
     return true;
 }
+
+void QuickOpenEditor::cancel()
+{
+
+}

@@ -65,7 +65,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     connect(m_widget->editor(),SIGNAL(returnPressed()),this,SLOT(selected()));
     connect(m_widget->view(),SIGNAL(clicked(QModelIndex)),this,SLOT(selected()));
     connect(m_widget->view(),SIGNAL(activated(QModelIndex)),this,SLOT(selected()));
-    connect(m_widget,SIGNAL(hidePopup()),this,SLOT(hideQuickOpen()));
+    connect(m_widget,SIGNAL(hidePopup()),this,SLOT(hidePopup()));
     connect(m_widget,SIGNAL(indexChanage(QModelIndex)),this,SLOT(indexChanage(QModelIndex)));
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
@@ -271,12 +271,19 @@ void QuickOpenManager::showQuickOpen()
     m_widget->showView();
 }
 
+void QuickOpenManager::hidePopup()
+{
+    if (m_currentFilter) {
+        m_currentFilter->cancel();
+    }
+    m_currentFilter = 0;
+    m_updateMap.clear();
+    m_sym.clear();
+}
+
 void QuickOpenManager::hideQuickOpen()
 {
     m_widget->close();
-    m_updateMap.clear();
-    m_currentFilter = 0;
-    m_sym.clear();
 }
 
 void QuickOpenManager::filterChanged(const QString &text)
@@ -331,6 +338,6 @@ void QuickOpenManager::selected()
     if (!m_currentFilter->selected(text.mid(m_sym.size()),index)) {
         return;
     }
-    this->hideQuickOpen();
+    hideQuickOpen();
 }
 

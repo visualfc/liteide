@@ -139,6 +139,11 @@ bool GolangSymbol::selected(const QString &/*text*/, const QModelIndex &index)
     return gotoIndex(index,false);
 }
 
+void GolangSymbol::cancel()
+{
+
+}
+
 void GolangSymbol::finished(int code, QProcess::ExitStatus status)
 {
     if (code == 0 && status == QProcess::NormalExit) {

@@ -135,3 +135,8 @@ bool QuickOpenLines::selected(const QString &text, const QModelIndex &/*index*/)
     textEditor->gotoLine(line-1,0,true);
     return true;
 }
+
+void QuickOpenLines::cancel()
+{
+
+}

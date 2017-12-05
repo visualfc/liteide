@@ -129,3 +129,10 @@ void QuickOpenMimeType::setNoFoundMessage(const QString &message)
 {
     m_message = message;
 }
+
+void QuickOpenMimeType::cancel()
+{
+    if (m_symbol) {
+        m_symbol->cancel();
+    }
+}

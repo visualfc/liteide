@@ -45,6 +45,7 @@ public:
     virtual void setId(const QString &id);
     virtual void setInfo(const QString &info);
     virtual void setNoFoundMessage(const QString &message);
+    virtual void cancel();
 protected:
     LiteApi::IApplication   *m_liteApp;
     QPointer<LiteApi::IQuickOpen> m_symbol;
