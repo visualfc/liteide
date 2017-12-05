@@ -147,7 +147,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
     connect(m_sourceQueryOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickSourceQueryOutput(QTextCursor)));
 
-    m_sourceQueryOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_sourceQueryOutput,"gosourcequery",tr("Go Source Query"),true,
+    m_sourceQueryOutputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_sourceQueryOutput,"GoSourceQuery",tr("Go Source Query"),true,
                                                                            QList<QAction*>() << m_stopSourceQueryAct);
     connect(m_sourceQueryProcess,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(sourceQueryStateChanged(QProcess::ProcessState)));
     connect(m_stopSourceQueryAct,SIGNAL(triggered()),this,SLOT(stopSourceQueryProcess()));

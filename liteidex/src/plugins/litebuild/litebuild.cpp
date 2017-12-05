@@ -300,7 +300,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_outputMenu->addAction(m_outputAutoPosCursorAct);
 
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,
-                                                                m_output,"buildoutput",
+                                                                m_output,"BuildOutput",
                                                                 tr("Build Output"),
                                                                 false,
                                                                 QList<QAction*>() << m_stopAct << m_clearAct << m_outputMenu->menuAction());

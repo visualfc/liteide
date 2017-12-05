@@ -280,7 +280,7 @@ LiteApp::LiteApp()
 
     m_logOutput = new TextOutput(this);
     //m_outputManager->addOutuput(m_logOutput,tr("Console"));
-    m_logAct = m_toolWindowManager->addToolWindow(Qt::BottomDockWidgetArea,m_logOutput,"eventlog",tr("Event Log"),true);
+    m_logAct = m_toolWindowManager->addToolWindow(Qt::BottomDockWidgetArea,m_logOutput,"EventLog",tr("Event Log"),true);
     connect(m_logOutput,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickLogOutput(QTextCursor)));
 
     m_optionAct = new QAction(loadIcon("icon:images/options.png"),tr("Options"),this);

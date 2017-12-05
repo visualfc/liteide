@@ -107,7 +107,7 @@ bool FileManager::initWithApp(IApplication *app)
     m_filterMenu->addAction(m_showDetailsAct);
     actions << m_filterMenu->menuAction() << m_syncEditorAct;
 
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"folders",tr("Folders"),false,actions);
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"Folders",tr("Folders"),false,actions);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));

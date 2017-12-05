@@ -168,7 +168,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_filterMenu->addAction(m_showDetailsAct);
     actions << m_filterMenu->menuAction() << m_syncAct;
 
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"filesystem",tr("File System"),true,actions);
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"FileSystem",tr("File System"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     //connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activatedFilter(QString)));
     connect(m_rootCombo,SIGNAL(activated(QString)),this,SLOT(activatedRoot(QString)));

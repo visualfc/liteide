@@ -83,7 +83,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     QAction *newSearch = new QAction(tr("New Search"),this);
 
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,
-                                                  m_widget,"searchresult",tr("Search Result"),true,
+                                                  m_widget,"SearchResult",tr("Search Result"),true,
                                                   QList<QAction*>() << newSearch);
     m_liteApp->extension()->addObject("LiteApi.IFileSearchManager",this);
 

@@ -77,8 +77,8 @@ GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     m_syncOutlineAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
     m_syncOutlineAct->setCheckable(true);
 
-    m_classViewToolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_projectAstWidget,"classview",tr("Class View"),false, QList<QAction*>() << m_syncClassViewAct);
-    m_outlineToolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_stackedWidget,"outline",tr("Outline"),false, QList<QAction*>() << m_syncOutlineAct);
+    m_classViewToolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_projectAstWidget,"GoClassView",tr("Go Class View"),false, QList<QAction*>() << m_syncClassViewAct);
+    m_outlineToolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::RightDockWidgetArea,m_stackedWidget,"GoOutline",tr("Go Outline"),false, QList<QAction*>() << m_syncOutlineAct);
 
     connect(m_classViewToolAct,SIGNAL(toggled(bool)),this,SLOT(astProjectEnable(bool)));
     connect(m_outlineToolAct,SIGNAL(toggled(bool)),this,SLOT(astFileEnable(bool)));

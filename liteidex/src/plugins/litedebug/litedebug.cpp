@@ -192,7 +192,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     connect(m_dbgWidget,SIGNAL(debugCmdInput()),this,SLOT(debugCmdInput()));
 
     m_outputAct = m_liteApp->toolWindowManager()->addToolWindow(
-                Qt::BottomDockWidgetArea,m_output,"debugoutput",tr("Debug Output"),false,
+                Qt::BottomDockWidgetArea,m_output,"DebugOutput",tr("Debug Output"),false,
                 QList<QAction*>() << clearAct);
 
     m_continueAct->setEnabled(false);

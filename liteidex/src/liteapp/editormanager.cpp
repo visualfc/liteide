@@ -108,7 +108,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_openEditorWidget = new OpenEditorsWidget(app);
     m_openEditorWidget->setEditorModel(m_editorModel);
 
-    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_openEditorWidget,"OpenEditor",tr("OpenEditor"),true);
+    m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_openEditorWidget,"OpenEditor",tr("Open Editor"),true);
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
