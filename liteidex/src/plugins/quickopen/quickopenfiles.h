@@ -25,14 +25,41 @@
 #define QUICKOPENFILES_H
 
 #include "quickopenapi/quickopenapi.h"
+#include <QThread>
+#include <QSet>
 
 class QStandardItemModel;
 class QSortFilterProxyModel;
+
+class FindFilesThread : public QThread
+{
+    Q_OBJECT
+public:
+    FindFilesThread(QObject *parent);
+    void setFolderList(const QStringList &folderLis, const QSet<QString> &extSet, const QSet<QString> &exceptFiles, int maxCount);
+    void stop(int time = 100);
+protected:
+    virtual void run();
+    void findFolder(QString folder);
+signals:
+    void findResult(const QString &fileName, const QString &filePath);
+protected:
+    QStringList m_folderList;
+    QSet<QString> m_exceptFiles;
+    QSet<QString> m_extSet;
+    QSet<QString> m_processFolderSet;
+    int           m_maxCount;
+    int           m_filesCount;
+    bool          m_cancel;
+};
+
+
 class QuickOpenFiles : public LiteApi::IQuickOpen
 {
     Q_OBJECT
 public:
     QuickOpenFiles(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual ~QuickOpenFiles();
     virtual QString id() const;
     virtual QString info() const;
     virtual void activate();
@@ -42,17 +69,17 @@ public:
     virtual void indexChanged(const QModelIndex &index);
     virtual bool selected(const QString &text, const QModelIndex &index);
     virtual void cancel();
-    void updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<QString> *extSet, QSet<QString> *folderSet, QSet<QString> *editorSet);
+    void startFindThread();
 public slots:
-    void updateFiles();
+    void findResult(const QString &fileName,const QString &filePath);
 protected:
     LiteApi::IApplication *m_liteApp;
+    FindFilesThread *m_thread;
     QStandardItemModel *m_model;
     QSortFilterProxyModel *m_proxyModel;
     QStringList        m_editors;
     Qt::CaseSensitivity m_matchCase;
     int                 m_maxCount;
-    bool                m_cancel;
 };
 
 #endif // QUICKOPENFILES_H

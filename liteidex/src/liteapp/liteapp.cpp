@@ -442,6 +442,8 @@ IExtension *LiteApp::extension()
 
 void LiteApp::cleanup()
 {
+    //
+    emit aboutToQuit();
     //delete plugin by reverse depend
     QListIterator<IPlugin*> it(m_pluginList);
     it.toBack();

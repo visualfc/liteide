@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QTimer>
 #include <QApplication>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -48,7 +49,16 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
     m_proxyModel->setSourceModel(m_model);
     m_matchCase = Qt::CaseInsensitive;
     m_maxCount = 100000;
-    m_cancel = false;
+    m_thread = new FindFilesThread(this);
+    connect(m_thread,SIGNAL(findResult(QString,QString)),this,SLOT(findResult(QString,QString)));
+}
+
+QuickOpenFiles::~QuickOpenFiles()
+{
+    if (m_thread) {
+        m_thread->stop();
+        delete m_thread;
+    }
 }
 
 QString QuickOpenFiles::id() const
@@ -63,40 +73,11 @@ QString QuickOpenFiles::info() const
 
 void QuickOpenFiles::activate()
 {
-    m_cancel = false;
 }
 
 QAbstractItemModel *QuickOpenFiles::model() const
 {
     return m_proxyModel;
-}
-
-void QuickOpenFiles::updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<QString> *extSet, QSet<QString> *folderSet, QSet<QString> *editorSet)
-{
-    if (m_cancel) {
-        return;
-    }
-    if (model->rowCount() >= maxcount) {
-        return;
-    }
-    if (folderSet->contains(folder)) {
-        return;
-    }
-    folderSet->insert(folder);
-    qApp->processEvents();
-    QDir dir(folder);
-    foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
-        if (m_cancel) {
-            return;
-        }
-        if (info.isDir()) {
-            updateFolder(info.filePath(),model,maxcount,extSet,folderSet,editorSet);
-        } else if (info.isFile()) {
-            if (extSet->contains(info.suffix()) && !editorSet->contains(info.filePath()) ) {
-                model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(info.fileName()) << new QStandardItem(info.filePath()));
-            }
-        }
-    }
 }
 
 void QuickOpenFiles::updateModel()
@@ -123,10 +104,10 @@ void QuickOpenFiles::updateModel()
         QStringList ar = text.split(";");
         m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]) );
     }
-    QTimer::singleShot(1,this,SLOT(updateFiles()));
+    startFindThread();
 }
 
-void QuickOpenFiles::updateFiles()
+void QuickOpenFiles::startFindThread()
 {
     QSet<QString> extSet;
     foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
@@ -141,18 +122,24 @@ void QuickOpenFiles::updateFiles()
 
     int count = m_model->rowCount();
     int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
-    QSet<QString> folderSet;
     QSet<QString> editorSet = m_editors.toSet();
 
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    QStringList folderList;
     if (editor && !editor->filePath().isEmpty()) {
-        QString folder = QFileInfo(editor->filePath()).path();
-        updateFolder(folder,m_model,maxcount, &extSet, &folderSet, &editorSet);
+        folderList << QFileInfo(editor->filePath()).path();
     }
+    folderList << m_liteApp->fileManager()->folderList();
 
-    foreach(QString folder, m_liteApp->fileManager()->folderList()) {
-        updateFolder(folder,m_model,maxcount, &extSet, &folderSet, &editorSet);
-    }
+    m_thread->setFolderList(folderList,extSet,editorSet,maxcount);
+
+    m_thread->stop();
+    m_thread->start();
+}
+
+void QuickOpenFiles::findResult(const QString &fileName, const QString &filePath)
+{
+    m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(fileName) << new QStandardItem(filePath));
 }
 
 QModelIndex QuickOpenFiles::filterChanged(const QString &text)
@@ -189,5 +176,68 @@ bool QuickOpenFiles::selected(const QString &/*text*/, const QModelIndex &index)
 
 void QuickOpenFiles::cancel()
 {
+    m_thread->stop();
+}
+
+FindFilesThread::FindFilesThread(QObject *parent) : QThread(parent)
+{
+    m_cancel = false;
+    m_maxCount = 10000;
+    m_filesCount = 0;
+}
+
+void FindFilesThread::setFolderList(const QStringList &folderList, const QSet<QString> &extSet, const QSet<QString> &exceptFiles, int maxCount)
+{
+    m_folderList = folderList;
+    m_extSet = extSet;
+    m_exceptFiles = exceptFiles;
+    m_maxCount = maxCount;
+    m_filesCount = 0;
+    m_processFolderSet.clear();
+    m_cancel = false;
+}
+
+void FindFilesThread::stop(int time)
+{
     m_cancel = true;
+    if (this->isRunning()) {
+        if (!this->wait(time))
+            this->terminate();
+    }
+}
+
+void FindFilesThread::run()
+{
+    m_cancel = false;
+    foreach (QString folder, m_folderList) {
+        findFolder(folder);
+    }
+}
+
+void FindFilesThread::findFolder(QString folder)
+{
+    if (m_cancel) {
+        return;
+    }
+    if (m_processFolderSet.contains(folder)) {
+        return;
+    }
+    m_processFolderSet.insert(folder);
+    QDir dir(folder);
+    foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
+        if (m_cancel) {
+            return;
+        }
+        if (info.isDir()) {
+            findFolder(info.filePath());
+        } else if (info.isFile()) {
+            if (m_extSet.contains(info.suffix()) && !m_exceptFiles.contains(info.filePath()) ) {
+                m_filesCount++;
+                if (m_filesCount > m_maxCount) {
+                    return;
+                }
+                emit findResult(info.fileName(),info.filePath());
+            }
+        }
+    }
 }

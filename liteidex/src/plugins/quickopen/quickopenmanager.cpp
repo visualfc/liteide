@@ -45,11 +45,6 @@ QuickOpenManager::QuickOpenManager(QObject *parent) : LiteApi::IQuickOpenManager
 
 }
 
-QuickOpenManager::~QuickOpenManager()
-{
-
-}
-
 bool QuickOpenManager::initWithApp(IApplication *app)
 {
     if (!IQuickOpenManager::initWithApp(app)) {
@@ -99,6 +94,8 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
     connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenSymbol()));
     connect(m_quickOpenActionAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenAction()));
+
+    connect(m_liteApp,SIGNAL(aboutToQuit()),this,SLOT(appAboutToQuit()));
 
     return true;
 }
@@ -338,6 +335,11 @@ void QuickOpenManager::selected()
     if (!m_currentFilter->selected(text.mid(m_sym.size()),index)) {
         return;
     }
+    hideQuickOpen();
+}
+
+void QuickOpenManager::appAboutToQuit()
+{
     hideQuickOpen();
 }
 

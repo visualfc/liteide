@@ -38,7 +38,6 @@ class QuickOpenManager : public IQuickOpenManager
     Q_OBJECT
 public:
     QuickOpenManager(QObject *parent = 0);
-    virtual ~QuickOpenManager();
     virtual bool initWithApp(IApplication *app);
 public:
     virtual void addFilter(const QString &sym, IQuickOpen *filter);
@@ -65,6 +64,7 @@ public slots:
     void filterChanged(const QString &text);
     void indexChanage(const QModelIndex &index);
     void selected();
+    void appAboutToQuit();
 protected slots:
     void hidePopup();
 protected:
