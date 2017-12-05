@@ -33,6 +33,9 @@
 #include <QTextDocumentWriter>
 #include <QProcess>
 #include <QProcessEnvironment>
+#include <QMimeData>
+#include <QTimer>
+#include <QEvent>
 #include <QDebug>
 
 #include <stdlib.h>

@@ -7,17 +7,13 @@
 
 #if defined __cplusplus
 
-#include <QEvent>
-#include <QTimer>
 #include <QApplication>
 #include <QCursor>
 #include <QDesktopWidget>
-#include <QMimeData>
 #include <QClipboard>
 
 #include <QBitmap>
 #include <QImage>
-#include <QLayout>
 #include <QPainter>
 #include <QPixmap>
 #include <QStyle>
@@ -38,16 +34,20 @@
 
 #include <QWidget>
 #include <QStackedWidget>
+#include <QDockWidget>
 #include <QTreeView>
 #include <QListView>
+#include <QHeaderView>
 
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
 
 #include <QMenu>
 #include <QMenuBar>
+#include <QMenuItem>
 #include <QToolBar>
 #include <QAction>
 #include <QActionGroup>
@@ -64,7 +64,10 @@
 #include <QPlainTextEdit>
 #include <QTextBrowser>
 #include <QToolTip>
+#include <QGroupBox>
+#include <QButtonGroup>
 
+#include <QLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
