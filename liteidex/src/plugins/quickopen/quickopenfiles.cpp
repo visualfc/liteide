@@ -58,7 +58,7 @@ QString QuickOpenFiles::id() const
 
 QString QuickOpenFiles::info() const
 {
-    return tr("Open Files by Name");
+    return tr("Go to File");
 }
 
 void QuickOpenFiles::activate()

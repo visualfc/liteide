@@ -56,7 +56,7 @@ QString QuickOpenAction::id() const
 
 QString QuickOpenAction::info() const
 {
-    return "Show Menu Actions";
+    return "Show All Commands";
 }
 
 void QuickOpenAction::activate()
@@ -139,7 +139,7 @@ void QuickOpenAction::updateModel()
             if (text.isEmpty()) {
                 continue;
             }
-            QStandardItem *item = new QStandardItem(menuName+": "+text);
+            QStandardItem *item = new QStandardItem(menuName+"."+text);
             QStandardItem *info = new QStandardItem();
             if (text != act->text()) {
                 info->setText(act->text());
