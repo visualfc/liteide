@@ -48,6 +48,7 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
     m_proxyModel->setSourceModel(m_model);
     m_matchCase = Qt::CaseInsensitive;
     m_maxCount = 100000;
+    m_cancel = false;
 }
 
 QString QuickOpenFiles::id() const
@@ -62,7 +63,7 @@ QString QuickOpenFiles::info() const
 
 void QuickOpenFiles::activate()
 {
-
+    m_cancel = false;
 }
 
 QAbstractItemModel *QuickOpenFiles::model() const
@@ -70,8 +71,11 @@ QAbstractItemModel *QuickOpenFiles::model() const
     return m_proxyModel;
 }
 
-void updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<QString> *extSet, QSet<QString> *folderSet, QSet<QString> *editorSet)
+void QuickOpenFiles::updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<QString> *extSet, QSet<QString> *folderSet, QSet<QString> *editorSet)
 {
+    if (m_cancel) {
+        return;
+    }
     if (model->rowCount() >= maxcount) {
         return;
     }
@@ -82,6 +86,9 @@ void updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<
     qApp->processEvents();
     QDir dir(folder);
     foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
+        if (m_cancel) {
+            return;
+        }
         if (info.isDir()) {
             updateFolder(info.filePath(),model,maxcount,extSet,folderSet,editorSet);
         } else if (info.isFile()) {
@@ -182,4 +189,5 @@ bool QuickOpenFiles::selected(const QString &/*text*/, const QModelIndex &index)
 
 void QuickOpenFiles::cancel()
 {
+    m_cancel = true;
 }

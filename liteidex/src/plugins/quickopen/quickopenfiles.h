@@ -42,6 +42,7 @@ public:
     virtual void indexChanged(const QModelIndex &index);
     virtual bool selected(const QString &text, const QModelIndex &index);
     virtual void cancel();
+    void updateFolder(QString folder, QStandardItemModel *model, int maxcount, QSet<QString> *extSet, QSet<QString> *folderSet, QSet<QString> *editorSet);
 public slots:
     void updateFiles();
 protected:
@@ -51,6 +52,7 @@ protected:
     QStringList        m_editors;
     Qt::CaseSensitivity m_matchCase;
     int                 m_maxCount;
+    bool                m_cancel;
 };
 
 #endif // QUICKOPENFILES_H
