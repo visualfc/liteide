@@ -95,14 +95,22 @@ void GoRemoveTagsDialog::updateArguments()
             args = "-remove-tags "+tag;
         }
     } else if (ui->removeJsonOptionRadioButton->isChecked()) {
-        QString opt = ui->jsonOptionLineEdit->text().trimmed();
-        if (!opt.isEmpty()) {
-            args = "-remove-options json="+removeHead(opt,"json=");
+        QStringList optList = ui->jsonOptionLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
+        QStringList options;
+        foreach (QString opt, optList) {
+            options << "json="+opt;
+        }
+        if (!options.isEmpty()) {
+            args = "-remove-options "+options.join(",");
         }
     } else if (ui->removeXmlOptionRadioButton->isChecked()) {
-        QString opt = ui->xmlOptionLineEdit->text().trimmed();
-        if (!opt.isEmpty()) {
-            args = "-remove-options xml="+removeHead(opt,"xml=");
+        QStringList optList = ui->xmlOptionLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
+        QStringList options;
+        foreach (QString opt, optList) {
+            options << "json="+opt;
+        }
+        if (!options.isEmpty()) {
+            args = "-remove-options "+options.join(",");
         }
     } else if(ui->removeCustomOptionRadioButton->isChecked()) {
         QString opt = ui->customOptionLineEdit->text().trimmed();
