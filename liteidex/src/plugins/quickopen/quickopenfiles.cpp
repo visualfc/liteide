@@ -50,7 +50,7 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
     m_matchCase = Qt::CaseInsensitive;
     m_maxCount = 100000;
     m_thread = new FindFilesThread(this);
-    connect(m_thread,SIGNAL(findResult(QString,QString)),this,SLOT(findResult(QString,QString)));
+    connect(m_thread,SIGNAL(findResult(QStringList)),this,SLOT(findResult(QStringList)));
 }
 
 QuickOpenFiles::~QuickOpenFiles()
@@ -137,9 +137,11 @@ void QuickOpenFiles::startFindThread()
     m_thread->start();
 }
 
-void QuickOpenFiles::findResult(const QString &fileName, const QString &filePath)
+void QuickOpenFiles::findResult(const QStringList &fileList)
 {
-    m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(fileName) << new QStandardItem(filePath));
+    foreach (QString filePath, fileList) {
+        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(QFileInfo(filePath).fileName()) << new QStandardItem(filePath));
+    }
 }
 
 QModelIndex QuickOpenFiles::filterChanged(const QString &text)
@@ -182,8 +184,9 @@ void QuickOpenFiles::cancel()
 FindFilesThread::FindFilesThread(QObject *parent) : QThread(parent)
 {
     m_cancel = false;
-    m_maxCount = 10000;
+    m_maxFileCount = 10000;
     m_filesCount = 0;
+    m_maxBlockSendCount = 100;
 }
 
 void FindFilesThread::setFolderList(const QStringList &folderList, const QSet<QString> &extSet, const QSet<QString> &exceptFiles, int maxCount)
@@ -191,7 +194,7 @@ void FindFilesThread::setFolderList(const QStringList &folderList, const QSet<QS
     m_folderList = folderList;
     m_extSet = extSet;
     m_exceptFiles = exceptFiles;
-    m_maxCount = maxCount;
+    m_maxFileCount = maxCount;
     m_filesCount = 0;
     m_processFolderSet.clear();
     m_cancel = false;
@@ -214,6 +217,11 @@ void FindFilesThread::run()
     }
 }
 
+void FindFilesThread::sendResult(const QStringList &fileList)
+{
+    emit findResult(fileList);
+}
+
 void FindFilesThread::findFolder(QString folder)
 {
     if (m_cancel) {
@@ -224,20 +232,29 @@ void FindFilesThread::findFolder(QString folder)
     }
     m_processFolderSet.insert(folder);
     QDir dir(folder);
+    QList<QString> fileList;
     foreach (QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
         if (m_cancel) {
             return;
         }
+        QString filePath = info.filePath();
         if (info.isDir()) {
-            findFolder(info.filePath());
+            findFolder(filePath);
         } else if (info.isFile()) {
-            if (m_extSet.contains(info.suffix()) && !m_exceptFiles.contains(info.filePath()) ) {
+            if (m_extSet.contains(info.suffix()) && !m_exceptFiles.contains(filePath) ) {
                 m_filesCount++;
-                if (m_filesCount > m_maxCount) {
+                if (m_filesCount > m_maxFileCount) {
                     return;
                 }
-                emit findResult(info.fileName(),info.filePath());
+                fileList << filePath;
             }
         }
+        if (fileList.size() > m_maxBlockSendCount) {
+            sendResult(fileList);
+            fileList.clear();
+        }
+    }
+    if (!fileList.isEmpty()) {
+        sendResult(fileList);
     }
 }
