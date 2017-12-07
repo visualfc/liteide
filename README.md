@@ -9,33 +9,41 @@ LiteIDE X
 
 _LiteIDE is a simple, open source, cross-platform Go IDE._
 
-* Version: X33
+* Version: X33.1
 * Author: [visualfc](mailto:visualfc@gmail.com)
 
 ### Features
+
 * Core features
-	* System environment management
+	* MIME type management and plug-in support
+	* Custom environment management
 	* Configurable build commands
-	* Simple and open debug system
-	* Kate format for auto-completion and theming
-	* Configurable auto-completion with WordApi
-	* MIME type based system
-	* Plugin support
-	* Quick Open
+	* Quick open file, symbol and commands		
+
+* Advanced code editor
+	* Code editor supports Golang, Markdown and Golang Present
+	* Rapid code navigation tools
+	* Syntax highlighting and color scheme
+	* Code completion
+	* Code folding
+	* Display save revision
+	* Reload file by internal diff way
+	
 * Golang support
-	* Package browser
-	* Class view and outline
-	* Document browser
-	* [Gocode](https://github.com/nsf/gocode) support
-	* GOPATH API index
-	* Code Navigation
-	* Find Usages
-	* Code Refactor
-	* Go playground
-* Additional support
-	* Markdown
-	* Json
-	* Golang Present
+	* Golang build environment management
+	* Compile and test using standard Golang tools and GOPATH
+	* Custom GOPATH support system, IDE and project
+	* Custom project build configuration
+	* Golang package browser
+	* Golang class view and outline
+	* Golang doc search and api index
+	* Source code navigation and information tips
+	* Source code find usages 
+	* Source code refactoring
+	* Integrated [gocode](https://github.com/nsf/gocode)
+	* Integrated [gomodifytags](https://github.com/fatih/gomodifytags)
+	* Support source query tools guru
+	* Debug with GDB and [Delve](https://github.com/derekparker/delve)
 
 ### Supported Systems
 * Windows x86 (32-bit or 64-bit)
@@ -46,26 +54,26 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 ### Latest Release Supported Platform Details
 * Windows
-	* liteidex33.windows-qt5.zip (recommend)
+	* liteide-latest.windows-qt5.zip (recommend)
 		* WindowsXP
 		* Windows 7 8 10
-	* liteidex33.windows-qt4.zip 
+	* liteide-latest.windows-qt4.zip 
 		* WindowsXP 
 		* Windows 7
 * macOS	
-	* liteidex33.macosx-qt5.zip(recommend)
+	* liteide-latest.macosx-qt5.zip(recommend)
 		* MacOS X 10.8 10.9 
 		* macOS 10.10 10.11 10.12
-	* liteidex33.macosx-qt4.zip
+	* liteide-latest.macosx-qt4.zip
 		* MacOS X 10.6 10.7 10.8
 * Linux	
-	* liteidex33.linux-64-qt4-system.tar.bz2
+	* liteide-latest.linux-64-qt4-system.tar.bz2
 		* Linux (64bit) install qt4 library
-	* liteidex33.linux-64-qt4.tar.bz2
+	* liteide-latest.linux-64-qt4.tar.bz2
 		* Linux (64bit) not installed qt4 library
-	* liteidex33.linux-32-qt4-system.tar.bz2
+	* liteide-latest.linux-32-qt4-system.tar.bz2
 		* Linux (32bit) install qt4 library
-	* liteidex33.linux-32-qt4.tar.bz2
+	* liteide-latest.linux-32-qt4.tar.bz2
 		* Linux (32bit) not installed qt4 library
 
 ### LiteIDE Command Line
