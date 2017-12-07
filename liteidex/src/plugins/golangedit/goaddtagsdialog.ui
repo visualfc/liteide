@@ -48,10 +48,10 @@
       <item>
        <widget class="QLineEdit" name="jsonOptionsLineEdit">
         <property name="toolTip">
-         <string>Options are separated by comma </string>
+         <string>Multiple options separated by commas</string>
         </property>
         <property name="text">
-         <string>omitempty,</string>
+         <string notr="true">omitempty,</string>
         </property>
        </widget>
       </item>
@@ -92,10 +92,10 @@
       <item>
        <widget class="QLineEdit" name="xmlOptionsLineEdit">
         <property name="toolTip">
-         <string>Options are separated by comma </string>
+         <string>Multiple options separated by commas</string>
         </property>
         <property name="text">
-         <string>omitempty,</string>
+         <string notr="true">omitempty,</string>
         </property>
        </widget>
       </item>
@@ -149,7 +149,7 @@
         <item>
          <widget class="QLineEdit" name="customTagOptionLineEdit1">
           <property name="toolTip">
-           <string>Options are separated by comma </string>
+           <string>Multiple options separated by commas</string>
           </property>
          </widget>
         </item>
@@ -177,7 +177,7 @@
         <item>
          <widget class="QLineEdit" name="customTagOptionlineEdit2">
           <property name="toolTip">
-           <string>Options are separated by comma </string>
+           <string>Multiple options separated by commas</string>
           </property>
          </widget>
         </item>
@@ -189,7 +189,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Ttransform</string>
+      <string notr="true">Ttransform</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <property name="leftMargin">
@@ -207,7 +207,7 @@
       <item>
        <widget class="QRadioButton" name="snakeCaseRadioButton">
         <property name="text">
-         <string>SnakeCase</string>
+         <string notr="true">SnakeCase</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -217,14 +217,14 @@
       <item>
        <widget class="QRadioButton" name="camelCaseRadioButton">
         <property name="text">
-         <string>CamelCase</string>
+         <string notr="true">CamelCase</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="lispCaseRadioButton">
         <property name="text">
-         <string>LispCase</string>
+         <string notr="true">LispCase</string>
         </property>
        </widget>
       </item>

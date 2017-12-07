@@ -110,40 +110,6 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Based on Qt %1 (%2 bit)</source>
         <translation>Основано на Qt %1 (%2 бит)</translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;All contributors that provided patches.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The Go Project &amp;lt;http://golang.org&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The Qt Project &amp;lt;https://qt-project.org&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The QtCreator Project &amp;lt;https://qt-project.org&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The Kate Project &amp;lt;http://kate-editor.org&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The GNU Software Foundation &amp;lt;https://www.gnu.org&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The Markdown parser from sundown &amp;lt;https://github.com/vmg/sundown&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The Markdown CSS files from Mou &amp;lt;http://mouapp.com&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The Gocode tool &amp;lt;https://github.com/nsf/gocode&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;The LiteIDE logo designed by BESD &amp;lt;http://www.besdlab.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;Last, but not least, the open-source community.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;Copyright (c) 2011-2017 LiteIDE. All rights reserved.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt;&quot;&gt;In addition, as a special exception, that plugins developed for LiteIDE, are allowed to remain closed sourced and can be distributed under any license .These rights are included in the file LGPL_EXCEPTION.txt in this package.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ActionManager</name>
@@ -679,7 +645,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>OpenEditor</source>
-        <translation type="unfinished">OpenEditor</translation>
+        <translation type="obsolete">OpenEditor</translation>
     </message>
     <message>
         <source>Edit Toolbar</source>
@@ -699,6 +665,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open Command Prompt Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1722,6 +1692,116 @@ Want to replace to all the search items to whitespace?</source>
     </message>
 </context>
 <context>
+    <name>GoAddTagsDialog</name>
+    <message>
+        <source>Add Tags To Struct Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add JSON Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished">Параметры</translation>
+    </message>
+    <message>
+        <source>Add XML Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Custom Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup custom tag name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort sorts the tags in increasing order according to the key name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Override current tags when adding tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Информация</translation>
+    </message>
+    <message>
+        <source>Multiple options separated by commas</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GoRemoveTagsDialog</name>
+    <message>
+        <source>Remove Tags From Struct Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Tags And Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear All Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove JSON Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove XML Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Custom Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove JSON Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove XML Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Custom Tag Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tag=option</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Информация</translation>
+    </message>
+    <message>
+        <source>Setup remove custom tag and option, example tag=opt1,tag=opt2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple tags separated by commas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple options separated by commas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear All Tags Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GolangAst</name>
     <message>
         <source>No outline available</source>
@@ -1729,15 +1809,23 @@ Want to replace to all the search items to whitespace?</source>
     </message>
     <message>
         <source>Class View</source>
-        <translation>Обзор классов</translation>
+        <translation type="obsolete">Обзор классов</translation>
     </message>
     <message>
         <source>Outline</source>
-        <translation>Схема</translation>
+        <translation type="obsolete">Схема</translation>
     </message>
     <message>
         <source>Synchronize with editor</source>
         <translation type="unfinished">Синхронизировать с редактором</translation>
+    </message>
+    <message>
+        <source>Go Class View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go Outline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1788,15 +1876,23 @@ Want to replace to all the search items to whitespace?</source>
     </message>
     <message>
         <source>Golang Doc Search</source>
-        <translation>Поиск в документации Golang</translation>
+        <translation type="obsolete">Поиск в документации Golang</translation>
     </message>
     <message>
         <source>Golang Api Index</source>
-        <translation>Документация по Golang API</translation>
+        <translation type="obsolete">Документация по Golang API</translation>
     </message>
     <message>
         <source>Find Package:</source>
         <translation>Найти пакет:</translation>
+    </message>
+    <message>
+        <source>Go Doc Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go Api Index</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1918,6 +2014,14 @@ Want to replace to all the search items to whitespace?</source>
         <source>Implements(GOPATH)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add Tags To Struct Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Tags From Struct Field</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangEditOption</name>
@@ -1971,7 +2075,7 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <source>Enable sort imports of consecutive import lines in import blocks</source>
         <oldsource>Enable Sort imports of consecutive import lines in import blocks</oldsource>
-        <translation>Сортировать пакеты в блоках импорта</translation>
+        <translation type="obsolete">Сортировать пакеты в блоках импорта</translation>
     </message>
     <message>
         <source>Synchronous</source>
@@ -2996,7 +3100,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Setup</source>
-        <translation>Настройка</translation>
+        <translation type="obsolete">Настройка</translation>
     </message>
     <message>
         <source>ReadOnly</source>
@@ -3092,6 +3196,10 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>File is writable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Setup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3756,7 +3864,7 @@ Do you want to replace it?</source>
     <message>
         <source>Package Browser</source>
         <oldsource>Packge Browser</oldsource>
-        <translation>Обзор пакетов</translation>
+        <translation type="obsolete">Обзор пакетов</translation>
     </message>
     <message>
         <source>No Go installation was found.</source>
@@ -3767,6 +3875,10 @@ Do you want to replace it?</source>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation>Загрузка списка пакетов Go...</translation>
+    </message>
+    <message>
+        <source>Go Package Browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3986,14 +4098,22 @@ Do you want to replace it?</source>
     <name>QuickOpenEditor</name>
     <message>
         <source>Open Editor by Name</source>
-        <translation>Открытие редактора по имени</translation>
+        <translation type="obsolete">Открытие редактора по имени</translation>
+    </message>
+    <message>
+        <source>Show All Editors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QuickOpenFiles</name>
     <message>
         <source>Open Files by Name</source>
-        <translation>Отрытие файлов по имени</translation>
+        <translation type="obsolete">Отрытие файлов по имени</translation>
+    </message>
+    <message>
+        <source>Go to File</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4039,6 +4159,10 @@ Do you want to replace it?</source>
     <message>
         <source>Quick Open Symbol</source>
         <translation>Быстрое открытие символа</translation>
+    </message>
+    <message>
+        <source>Quick Open Command</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

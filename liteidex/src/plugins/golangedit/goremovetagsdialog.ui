@@ -33,7 +33,7 @@
       <item row="1" column="0">
        <widget class="QRadioButton" name="clearAllOptionsRadioButton">
         <property name="text">
-         <string>Clear All Tag Options</string>
+         <string>Clear All Tags Options</string>
         </property>
        </widget>
       </item>
@@ -64,7 +64,7 @@
       <item row="4" column="1">
        <widget class="QLineEdit" name="customTaglineEdit">
         <property name="toolTip">
-         <string>Setup tags are separated by comma </string>
+         <string>Multiple tags separated by commas</string>
         </property>
        </widget>
       </item>
@@ -78,7 +78,7 @@
       <item row="5" column="1">
        <widget class="QLineEdit" name="jsonOptionLineEdit">
         <property name="toolTip">
-         <string>Options are separated by comma </string>
+         <string>Multiple options separated by commas</string>
         </property>
        </widget>
       </item>
@@ -92,7 +92,7 @@
       <item row="6" column="1">
        <widget class="QLineEdit" name="xmlOptionLineEdit">
         <property name="toolTip">
-         <string>Options are separated by comma </string>
+         <string>Multiple options separated by commas</string>
         </property>
         <property name="cursorPosition">
          <number>0</number>
@@ -112,7 +112,7 @@
       <item row="7" column="1">
        <widget class="QLineEdit" name="customOptionLineEdit">
         <property name="toolTip">
-         <string>Setup remove custom tag option, example tag=opt1,tag=opt2</string>
+         <string>Setup remove custom tag and option, example tag=opt1,tag=opt2</string>
         </property>
         <property name="placeholderText">
          <string>tag=option</string>
