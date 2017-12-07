@@ -677,7 +677,8 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_foldAllAct);
     subMenu->addAction(m_unfoldAllAct);
 
-    subMenu = m_editMenu->addMenu(tr("File Setup"));
+    subMenu = m_editMenu->addMenu(tr("Settings"));
+    subMenu->menuAction()->setMenuRole(QAction::NoRole);
     subMenu->addAction(m_visualizeWhitespaceAct);
     subMenu->addSeparator();
     subMenu->addAction(m_wordWrapAct);
