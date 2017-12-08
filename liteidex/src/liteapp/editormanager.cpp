@@ -660,7 +660,12 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
     }
     foreach (IEditorFactory *factory, m_factoryList) {
         if (factory->mimeTypes().contains(mimeType)) {
-            editor = factory->open(fileName,mimeType);
+            try {
+                editor = factory->open(fileName,mimeType);
+            } catch(std::bad_alloc &ba) {
+                m_liteApp->appendLog("EditorManager",QString("exception %1! can not load file %2").arg(ba.what()).arg(fileName),true);
+                return 0;
+            }
             if (editor) {
                 break;
             }
@@ -670,7 +675,12 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
         QString type = "liteide/default.editor";
         foreach (IEditorFactory *factory, m_factoryList) {
             if (factory->mimeTypes().contains(type)) {
-                editor = factory->open(fileName,type);
+                try {
+                    editor = factory->open(fileName,type);
+                } catch(std::bad_alloc &ba) {
+                    m_liteApp->appendLog("EditorManager",QString("exception %1! can not load file %2").arg(ba.what()).arg(fileName),true);
+                    return 0;
+                }
                 if (editor) {
                     break;
                 }
