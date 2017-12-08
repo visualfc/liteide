@@ -58,7 +58,8 @@ public slots:
     void quickOpen();
     void quickOpenEditor();
     void quickOpenSymbol();
-    void quickOpenAction();
+    void quickOpenCommand();
+    void quickOpenHelp();
     void showQuickOpen();
     void hideQuickOpen();
     void filterChanged(const QString &text);
@@ -73,6 +74,7 @@ protected:
     QAction     *m_quickOpenEditAct;
     QAction     *m_quickOpenSymbolAct;
     QAction     *m_quickOpenActionAct;
+    QAction     *m_quickOpenHelpAct;
     QMap<QString,IQuickOpen*> m_filterMap;
     QMap<IQuickOpen*,bool> m_updateMap;
     QMap<QString,IQuickOpenMimeType*> m_quickOpenSymbolMap;

@@ -46,7 +46,7 @@ QString QuickOpenHelp::id() const
 
 QString QuickOpenHelp::info() const
 {
-    return tr("Show Quick Open Help");
+    return tr("Show All Quick Open Actions");
 }
 
 void QuickOpenHelp::activate()

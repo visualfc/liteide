@@ -3199,7 +3199,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File Setup</source>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4095,13 +4095,20 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>QuickOpenAction</name>
+    <message>
+        <source>Show and Run Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuickOpenEditor</name>
     <message>
         <source>Open Editor by Name</source>
         <translation type="obsolete">Открытие редактора по имени</translation>
     </message>
     <message>
-        <source>Show All Editors</source>
+        <source>Show All Opened Editors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4120,7 +4127,11 @@ Do you want to replace it?</source>
     <name>QuickOpenHelp</name>
     <message>
         <source>Show Quick Open Help</source>
-        <translation type="unfinished">Отображение быстрой справки</translation>
+        <translation type="obsolete">Отображение быстрой справки</translation>
+    </message>
+    <message>
+        <source>Show All Quick Open Actions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4150,7 +4161,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Quick Open</source>
-        <translation>Быстрое открытие</translation>
+        <translation type="obsolete">Быстрое открытие</translation>
     </message>
     <message>
         <source>Quick Open Editor</source>
@@ -4164,16 +4175,28 @@ Do you want to replace it?</source>
         <source>Quick Open Command</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Quick Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show All Quick Open Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuickOpenMimeType</name>
     <message>
         <source>Open Symbol by Name</source>
-        <translation>Открытие символа по имени</translation>
+        <translation type="obsolete">Открытие символа по имени</translation>
     </message>
     <message>
         <source>not found symbol</source>
         <translation>символ не найден</translation>
+    </message>
+    <message>
+        <source>Go to Symbol in File</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

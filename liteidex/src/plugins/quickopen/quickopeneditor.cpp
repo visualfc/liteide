@@ -52,7 +52,7 @@ QString QuickOpenEditor::id() const
 
 QString QuickOpenEditor::info() const
 {
-    return tr("Show All Editors");
+    return tr("Show All Opened Editors");
 }
 
 void QuickOpenEditor::activate()

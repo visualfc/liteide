@@ -38,7 +38,7 @@ QuickOpenMimeType::QuickOpenMimeType(LiteApi::IApplication *app, QObject *parent
 {
     m_model = new QStandardItemModel(this);
     m_id = "quickopen/symbol";
-    m_info = tr("Open Symbol by Name");
+    m_info = tr("Go to Symbol in File");
     m_message = tr("not found symbol");
 }
 

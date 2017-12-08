@@ -51,12 +51,12 @@ QuickOpenAction::QuickOpenAction(LiteApi::IApplication *app, QObject *parent)
 
 QString QuickOpenAction::id() const
 {
-    return "quickopen/action";
+    return "quickopen/command";
 }
 
 QString QuickOpenAction::info() const
 {
-    return "Show All Commands";
+    return tr("Show and Run Commands");
 }
 
 void QuickOpenAction::activate()

@@ -3632,50 +3632,50 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="623"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="706"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="707"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="649"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="724"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="725"/>
         <source>Goto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="674"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="747"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="748"/>
         <source>Code Folding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="668"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="741"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="742"/>
         <source>Convert Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1126"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1127"/>
         <source>Export HTML</source>
         <translation>匯出HTML文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1134"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1135"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1135"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1136"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1154"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1155"/>
         <source>Export PDF</source>
         <translation>匯出PDF文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1179"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1180"/>
         <source>Print Document</source>
         <translation>列印文件</translation>
     </message>
@@ -3738,7 +3738,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1255"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -3825,16 +3825,17 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="680"/>
-        <source>File Setup</source>
+        <source>Settings</source>
+        <oldsource>File Setup</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="833"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="834"/>
         <source>Reload File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1196"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1197"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3845,12 +3846,12 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1228"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1229"/>
         <source>ReadOnly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1255"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4929,11 +4930,19 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>QuickOpenAction</name>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenaction.cpp" line="59"/>
+        <source>Show and Run Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuickOpenEditor</name>
     <message>
         <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="55"/>
-        <source>Show All Editors</source>
-        <oldsource>Open Editor by Name</oldsource>
+        <source>Show All Opened Editors</source>
+        <oldsource>Show All Editors</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4949,7 +4958,8 @@ Do you want to replace it?</source>
     <name>QuickOpenHelp</name>
     <message>
         <location filename="src/plugins/quickopen/quickopenhelp.cpp" line="49"/>
-        <source>Show Quick Open Help</source>
+        <source>Show All Quick Open Actions</source>
+        <oldsource>Show Quick Open Help</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4981,28 +4991,33 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenManager</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="57"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="58"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="75"/>
-        <source>Quick Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="76"/>
-        <source>Quick Open Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="77"/>
-        <source>Quick Open Symbol</source>
+        <source>Quick Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="78"/>
+        <source>Quick Open Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="79"/>
+        <source>Quick Open Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="80"/>
         <source>Quick Open Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="81"/>
+        <source>Show All Quick Open Actions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5010,7 +5025,8 @@ Do you want to replace it?</source>
     <name>QuickOpenMimeType</name>
     <message>
         <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="41"/>
-        <source>Open Symbol by Name</source>
+        <source>Go to Symbol in File</source>
+        <oldsource>Open Symbol by Name</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

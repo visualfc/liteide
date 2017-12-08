@@ -27,6 +27,7 @@
 #include "quickopeneditor.h"
 #include "quickopenmimetype.h"
 #include "quickopenaction.h"
+#include "quickopenhelp.h"
 #include <QTreeView>
 #include <QDebug>
 
@@ -69,13 +70,15 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     m_filterMap.insert("",m_quickOpenFiles);
     m_filterMap.insert("~",new QuickOpenEditor(m_liteApp,this));
     m_filterMap.insert(">",new QuickOpenAction(m_liteApp,this));
+    m_filterMap.insert("?",new QuickOpenHelp(m_liteApp,this));
 
     this->registerQuickOpenMimeType("@");
 
-    m_quickOpenAct = new QAction(tr("Quick Open"),this);
+    m_quickOpenAct = new QAction(tr("Quick Open File"),this);
     m_quickOpenEditAct = new QAction(tr("Quick Open Editor"),this);
     m_quickOpenSymbolAct = new QAction(tr("Quick Open Symbol"),this);
     m_quickOpenActionAct = new QAction(tr("Quick Open Command"),this);
+    m_quickOpenHelpAct = new QAction(tr("Show All Quick Open Actions"),this);
 
     m_liteApp->actionManager()->setViewMenuSeparator("sep/quickopen",true);
 
@@ -84,16 +87,19 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
     context->regAction(m_quickOpenActionAct,"QuickOpenCommand","CTRL+SHIFT+P");
     context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+SHIFT+O");
+    context->regAction(m_quickOpenHelpAct,"QuickOpenHelp","");
 
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenAct,"sep/quickopen");
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenActionAct,"sep/quickopen");
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenEditAct,"sep/quickopen");
     m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenSymbolAct,"sep/quickopen");
+    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenHelpAct,"sep/quickopen");
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
     connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
     connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenSymbol()));
-    connect(m_quickOpenActionAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenAction()));
+    connect(m_quickOpenActionAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenCommand()));
+    connect(m_quickOpenHelpAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenHelp()));
 
     connect(m_liteApp,SIGNAL(aboutToQuit()),this,SLOT(appAboutToQuit()));
 
@@ -243,9 +249,14 @@ void QuickOpenManager::quickOpenSymbol()
     showById("quickopen/symbol");
 }
 
-void QuickOpenManager::quickOpenAction()
+void QuickOpenManager::quickOpenCommand()
 {
-    showById("quickopen/action");
+    showById("quickopen/command");
+}
+
+void QuickOpenManager::quickOpenHelp()
+{
+    showById("quickopen/help");
 }
 
 void QuickOpenManager::updateModel()

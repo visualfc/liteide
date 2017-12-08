@@ -739,7 +739,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="111"/>
         <source>Open Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文档</translation>
     </message>
     <message>
         <location filename="src/liteapp/editormanager.cpp" line="148"/>
@@ -2457,12 +2457,12 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="207"/>
         <source>Add Tags To Struct Field</source>
-        <translation>添加 Tags 到结构体字段</translation>
+        <translation>添加结构体字段 Tags</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="211"/>
         <source>Remove Tags From Struct Field</source>
-        <translation>从结构体字段删除 Tags</translation>
+        <translation>删除结构体字段 Tags</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="327"/>
@@ -3744,50 +3744,50 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="623"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="706"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="707"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="649"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="724"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="725"/>
         <source>Goto</source>
         <translation>跳转</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="674"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="747"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="748"/>
         <source>Code Folding</source>
         <translation>代码折叠</translation>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="668"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="741"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="742"/>
         <source>Convert Case</source>
         <translation>大小写转换</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1126"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1127"/>
         <source>Export HTML</source>
         <translation>输出HTML文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1134"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1135"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1135"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1136"/>
         <source>Could not open %1 for writing.</source>
         <translation>无法写入文件 %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1154"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1155"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1179"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1180"/>
         <source>Print Document</source>
         <translation>文档打印</translation>
     </message>
@@ -3850,7 +3850,7 @@ Success: %2.</oldsource>
         <translation>展开所有</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1255"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>跳转到行</translation>
@@ -3916,16 +3916,17 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="680"/>
-        <source>File Setup</source>
-        <translation type="unfinished"></translation>
+        <source>Settings</source>
+        <oldsource>File Setup</oldsource>
+        <translation>设置</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="833"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="834"/>
         <source>Reload File</source>
         <translation>重新读取文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1196"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1197"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>您想要放弃未保存的修改并重新载入%1?</translation>
     </message>
@@ -3940,12 +3941,12 @@ Success: %2.</oldsource>
         <translation type="obsolete">设置</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1228"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1229"/>
         <source>ReadOnly</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1255"/>
         <source>Line: </source>
         <translation>行:</translation>
     </message>
@@ -4752,7 +4753,7 @@ Do you want to replace it?</source>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="118"/>
         <source>Go Package Browser</source>
         <oldsource>Package Browser</oldsource>
-        <translation type="unfinished">Package浏览</translation>
+        <translation>Go Package 浏览</translation>
     </message>
     <message>
         <source>No Go installation was found.</source>
@@ -5029,12 +5030,20 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>QuickOpenAction</name>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenaction.cpp" line="59"/>
+        <source>Show and Run Commands</source>
+        <translation>显示和运行命令</translation>
+    </message>
+</context>
+<context>
     <name>QuickOpenEditor</name>
     <message>
         <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="55"/>
-        <source>Show All Editors</source>
-        <oldsource>Open Editor by Name</oldsource>
-        <translation type="unfinished">按名称打开文档</translation>
+        <source>Show All Opened Editors</source>
+        <oldsource>Show All Editors</oldsource>
+        <translation>显示所有打开文档</translation>
     </message>
 </context>
 <context>
@@ -5046,15 +5055,16 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="71"/>
         <source>Go to File</source>
-        <translation type="unfinished"></translation>
+        <translation>跳转到文件</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenHelp</name>
     <message>
         <location filename="src/plugins/quickopen/quickopenhelp.cpp" line="49"/>
-        <source>Show Quick Open Help</source>
-        <translation>显示快速打开的帮助</translation>
+        <source>Show All Quick Open Actions</source>
+        <oldsource>Show Quick Open Help</oldsource>
+        <translation>显示所有快速打开操作</translation>
     </message>
 </context>
 <context>
@@ -5085,37 +5095,47 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenManager</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="57"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="58"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
         <translation>键入&apos;?&apos;在此处获取相关操作的帮助</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="75"/>
         <source>Quick Open</source>
-        <translation>快速打开</translation>
+        <translation type="obsolete">快速打开</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="76"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="77"/>
+        <source>Quick Open File</source>
+        <translation>快速打开文件</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="78"/>
         <source>Quick Open Editor</source>
         <translation>快速打开文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="77"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="79"/>
         <source>Quick Open Symbol</source>
         <translation>快速跳转符号</translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="78"/>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="80"/>
         <source>Quick Open Command</source>
-        <translation type="unfinished"></translation>
+        <translation>快速打开命令</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/quickopen/quickopenmanager.cpp" line="81"/>
+        <source>Show All Quick Open Actions</source>
+        <translation>显示所有快速打开操作</translation>
     </message>
 </context>
 <context>
     <name>QuickOpenMimeType</name>
     <message>
         <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="41"/>
-        <source>Open Symbol by Name</source>
-        <translation>按名称跳转到符号</translation>
+        <source>Go to Symbol in File</source>
+        <oldsource>Open Symbol by Name</oldsource>
+        <translation>跳转到文件中的符号</translation>
     </message>
     <message>
         <location filename="src/plugins/quickopen/quickopenmimetype.cpp" line="42"/>
