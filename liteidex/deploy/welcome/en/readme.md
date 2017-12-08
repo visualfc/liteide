@@ -14,11 +14,12 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 ### Features
 
 * Core features
-	* MIME type management and plug-in support
 	* System environment management
+	* MIME type management 
 	* Configurable build commands
 	* Support files search replace and revert
 	* Quick open file, symbol and commands
+	* Plug-in system
 
 * Advanced code editor
 	* Code editor supports Golang, Markdown and Golang Present
