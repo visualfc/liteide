@@ -16,7 +16,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 * Core features
 	* MIME type management and plug-in support
-	* Custom environment management
+	* System environment management
 	* Configurable build commands
 	* Support files search replace and revert
 	* Quick open file, symbol and commands
