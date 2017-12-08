@@ -47,7 +47,6 @@
 
 #include <QMenu>
 #include <QMenuBar>
-#include <QMenuItem>
 #include <QToolBar>
 #include <QAction>
 #include <QActionGroup>
