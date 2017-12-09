@@ -658,8 +658,10 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
     if (editor) {
         return editor;
     }
+    bool matchFactory = false;
     foreach (IEditorFactory *factory, m_factoryList) {
         if (factory->mimeTypes().contains(mimeType)) {
+            matchFactory = true;
             try {
                 editor = factory->open(fileName,mimeType);
             } catch(std::bad_alloc &ba) {
@@ -671,7 +673,7 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
             }
         }
     }
-    if (editor == 0) {
+    if (editor == 0 && !matchFactory) {
         QString type = "liteide/default.editor";
         foreach (IEditorFactory *factory, m_factoryList) {
             if (factory->mimeTypes().contains(type)) {

@@ -132,6 +132,12 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
     m_mimeType = mimeType;
     m_fileName = fileName;
 
+    if (file.size() > (3 << 24)) {
+        m_liteApp->appendLog("LiteEditor","Large file not open in the text editor! "+fileName,true);
+        m_hasDecodingError = true;
+        return false;
+    }
+
     QByteArray buf = file.readAll();
     m_hasDecodingError = false;
 
