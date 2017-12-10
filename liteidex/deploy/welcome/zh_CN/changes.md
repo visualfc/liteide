@@ -3,6 +3,25 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2017.12.12 Ver X33.1
+* LiteEditor
+	* support quick open command
+	* support gomodifytags
+* LiteApp
+	* standard and rename tool window title
+	* enable edit menu anytime, fix edit menu disable on editor lost focus.
+	* fix editor load large file bad_alloc recover
+* LiteEditor
+	* check and not open large file
+	* fix edit hide edit sub menu 'setup' on macos
+* LiteFind
+	* fix find editor replace all wrap around* GolangEdit
+	* Integrated [gomodifytags](https://github.com/fatih/gomodifytags) and gui tools support gomodifytags all options
+* QuickOpen
+	* add quick open command action (ctrl+shift+p/command+shift+p)
+	* fix quickopenfile cancel loading for esc or liteapp quit
+	* change quickopenfiles use thread
+
 ### 2017.11.2 Ver X33
 * LiteIDE
 	* optimization editor plugin, load file check codec, reload file by diff
