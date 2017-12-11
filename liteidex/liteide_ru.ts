@@ -143,6 +143,18 @@ LiteIDE это простая кросплатформенная среда ра
         <oldsource>Standard ToolBar</oldsource>
         <translation>Стандартная панель</translation>
     </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Build</source>
+        <translation type="unfinished">С&amp;борка</translation>
+    </message>
+    <message>
+        <source>&amp;Debug</source>
+        <translation type="unfinished">&amp;Отладка</translation>
+    </message>
 </context>
 <context>
     <name>AstWidget</name>
@@ -578,7 +590,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>&amp;Edit</source>
         <oldsource>Edit</oldsource>
-        <translation>&amp;Правка</translation>
+        <translation type="obsolete">&amp;Правка</translation>
     </message>
     <message>
         <source>Navigate Forward</source>
@@ -693,6 +705,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Reload current environment</source>
         <oldsource>Reload Current Environment</oldsource>
         <translation>Обновить текущую среду</translation>
+    </message>
+    <message>
+        <source>Select Environment</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2642,7 +2658,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>&amp;Build</source>
-        <translation>С&amp;борка</translation>
+        <translation type="obsolete">С&amp;борка</translation>
     </message>
     <message>
         <source>Name</source>
@@ -2859,7 +2875,7 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>&amp;Debug</source>
-        <translation>&amp;Отладка</translation>
+        <translation type="obsolete">&amp;Отладка</translation>
     </message>
 </context>
 <context>
@@ -3390,7 +3406,7 @@ Success: %2.</oldsource>
     <name>LiteFindPlugin</name>
     <message>
         <source>F&amp;ind</source>
-        <translation>П&amp;оиск</translation>
+        <translation type="obsolete">П&amp;оиск</translation>
     </message>
     <message>
         <source>Find</source>

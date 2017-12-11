@@ -31,6 +31,7 @@ class QStandardItemModel;
 class QSortFilterProxyModel;
 class QuickOpenAction : public LiteApi::IQuickOpen
 {
+    Q_OBJECT
 public:
     QuickOpenAction(LiteApi::IApplication *app, QObject *parent = 0);
     virtual QString id() const;
