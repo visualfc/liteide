@@ -25,7 +25,7 @@
 #include "findeditor.h"
 #include "filesearch.h"
 #include "filesearchmanager.h"
-
+#include "liteapi/liteids.h"
 #include <QMenu>
 #include <QAction>
 #include <QLayout>
@@ -57,7 +57,7 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
         return false;
     }
 
-    QMenu *menu = m_liteApp->actionManager()->insertMenu("menu/find",tr("F&ind"),"menu/help");
+    QMenu *menu = m_liteApp->actionManager()->loadMenu(ID_MENU_FIND);
     if (!menu) {
         return false;
     }

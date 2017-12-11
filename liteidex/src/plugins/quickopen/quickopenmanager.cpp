@@ -28,7 +28,7 @@
 #include "quickopenmimetype.h"
 #include "quickopenaction.h"
 #include "quickopenhelp.h"
-#include "liteapi/liteid.h"
+#include "liteapi/liteids.h"
 #include <QTreeView>
 #include <QDebug>
 

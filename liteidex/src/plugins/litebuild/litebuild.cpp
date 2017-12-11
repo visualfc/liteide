@@ -26,6 +26,7 @@
 #include "buildmanager.h"
 #include "liteapi/liteapi.h"
 #include "liteapi/liteutil.h"
+#include "liteapi/liteids.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
@@ -136,14 +137,10 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     }    
     m_bProjectBuild = false;
 
-    m_buildToolBar = m_liteApp->actionManager()->insertToolBar("toolbar/build",tr("Build Toolbar"),"toolbar/build");
+    m_buildToolBar = m_liteApp->actionManager()->insertToolBar(ID_TOOLBAR_BUILD,tr("Build Toolbar"));
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_buildToolBar->toggleViewAction());
 
-    m_buildMenu = m_liteApp->actionManager()->loadMenu("menu/build");
-    if (!m_buildMenu) {
-        m_buildMenu = m_liteApp->actionManager()->insertMenu("menu/build",tr("&Build"),"menu/help");
-    }
-
+    m_buildMenu = m_liteApp->actionManager()->loadMenu(ID_MENU_BUILD);
     //m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Build");

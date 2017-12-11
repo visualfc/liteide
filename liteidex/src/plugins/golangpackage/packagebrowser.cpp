@@ -29,7 +29,7 @@
 #include "qjson/include/QJson/Parser"
 #include "fileutil/fileutil.h"
 #include "packageproject.h"
-#include "liteapi/liteid.h"
+#include "liteapi/liteids.h"
 #include <QTreeView>
 #include <QStandardItemModel>
 #include <QStandardItem>
@@ -134,7 +134,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     //QAction *act = new QAction(QIcon("icon:images/gopath.png"),tr("GOPATH Setup"),this);
     //connect(act,SIGNAL(triggered()),this,SLOT(setupGopath()));
 
-    QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
+    QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
     if (toolBar) {
         toolBar->addSeparator();
         toolBar->addAction(m_setupGopathAct);

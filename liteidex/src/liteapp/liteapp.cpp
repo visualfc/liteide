@@ -46,6 +46,7 @@
 #include "idletimer.h"
 #include "iconutil/iconutil.h"
 #include "liteapi/liteutil.h"
+#include "liteapi/liteids.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -818,9 +819,9 @@ void LiteApp::createActions()
 
 void LiteApp::createMenus()
 {
-    m_fileMenu = m_actionManager->loadMenu("menu/file");
-    m_viewMenu = m_actionManager->loadMenu("menu/view");
-    m_helpMenu = m_actionManager->loadMenu("menu/help");
+    m_fileMenu = m_actionManager->loadMenu(ID_MENU_FILE);
+    m_viewMenu = m_actionManager->loadMenu(ID_MENU_VIEW);
+    m_helpMenu = m_actionManager->loadMenu(ID_MENU_HELP);
 
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openFileAct);
@@ -862,7 +863,7 @@ void LiteApp::createMenus()
 
 void LiteApp::createToolBars()
 {
-    m_stdToolBar = m_actionManager->loadToolBar("toolbar/std");
+    m_stdToolBar = m_actionManager->loadToolBar(ID_TOOLBAR_STD);
     m_stdToolBar->addAction(m_newAct);
     m_stdToolBar->addSeparator();
     m_stdToolBar->addAction(m_openFileAct);

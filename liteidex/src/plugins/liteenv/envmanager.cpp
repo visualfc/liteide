@@ -26,7 +26,7 @@
 #include "liteenv_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
-#include "liteapi/liteid.h"
+#include "liteapi/liteids.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -36,6 +36,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QAction>
+#include <QActionGroup>
 #include <QSysInfo>
 #include <QProcess>
 #include <QDebug>
@@ -432,7 +433,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     }
     loadEnvFiles(m_liteApp->resourcePath()+"/liteenv");
 
-    m_toolBar = m_liteApp->actionManager()->insertToolBar("toolbar/env",tr("Environment Toolbar"),"toolbar/tabs");
+    m_toolBar = m_liteApp->actionManager()->insertToolBar(ID_TOOLBAR_ENV,tr("Environment Toolbar"));
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
 
     m_envCmb = new QComboBox;
@@ -447,16 +448,25 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
 
+    QMenu *selectMenu = new QMenu(tr("Select Environment"));
+
     m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/env",true,
-                                                  QList<QAction*>() << reloadAct << editAct);
+                                                  QList<QAction*>() << reloadAct << editAct << selectMenu->menuAction());
+
+    m_selectActionGroup = new QActionGroup(this);
 
     foreach (LiteApi::IEnv *env, m_envList) {
         m_envCmb->addItem(env->id());
+        QAction *act = new QAction(env->id(),this);
+        act->setCheckable(true);
+        m_selectActionGroup->addAction(act);
     }
+    selectMenu->addActions(m_selectActionGroup->actions());
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
     connect(m_envCmb,SIGNAL(activated(QString)),this,SLOT(envActivated(QString)));
+    connect(m_selectActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(selectEnvAction(QAction*)));
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
     connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
@@ -477,17 +487,19 @@ void EnvManager::setCurrentEnvId(const QString &id)
     for (int i = 0; i < m_envCmb->count(); i++) {
         if (m_envCmb->itemText(i) == env->id()) {
             m_envCmb->setCurrentIndex(i);
+            QAction *act = m_selectActionGroup->actions().at(i);
+            if (act) {
+                act->setChecked(true);
+            }
             break;
         }
     }
     setCurrentEnv(env);
 }
 
-
 void EnvManager::envActivated(QString id)
 {
-    LiteApi::IEnv *env = findEnv(id);
-    setCurrentEnv(env);
+    setCurrentEnvId(id);
 }
 
 void EnvManager::editCurrentEnv()
@@ -538,4 +550,10 @@ void EnvManager::goenvChanged(const QString &id)
         m_liteApp->appendLog("LiteEnv",QString("reset %1 environment for \"go env\"").arg(id),false);
         emitEnvChanged();
     }
+}
+
+void EnvManager::selectEnvAction(QAction *act)
+{
+    QString id = act->text();
+    setCurrentEnvId(id);
 }

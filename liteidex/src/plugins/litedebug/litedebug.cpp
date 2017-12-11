@@ -25,6 +25,7 @@
 #include "debugmanager.h"
 #include "debugwidget.h"
 #include "fileutil/fileutil.h"
+#include "liteapi/liteids.h"
 #include "litedebug_global.h"
 #include "selectexternaldialog.h"
 
@@ -154,7 +155,7 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     widgetToolBar->addAction(m_stepOutAct);
     widgetToolBar->addAction(m_runToLineAct);
 
-    m_debugMenu = m_liteApp->actionManager()->insertMenu("menu/debug",tr("&Debug"),"menu/help");
+    m_debugMenu = m_liteApp->actionManager()->loadMenu(ID_MENU_DEBUG);
 
     m_debugMenu->addAction(m_startDebugExternal);
     m_debugMenu->addSeparator();

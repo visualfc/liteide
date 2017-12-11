@@ -25,6 +25,7 @@
 #include "tooldockwidget.h"
 #include "rotationtoolbutton.h"
 #include "liteapp_global.h"
+#include "liteapi/liteids.h"
 #include <QStatusBar>
 
 //lite_memory_check_begin
@@ -456,7 +457,7 @@ SideWindowStyle::~SideWindowStyle()
 
 void SideWindowStyle::createToolWindowMenu()
 {
-    QMenu *menu = m_liteApp->actionManager()->loadMenu("menu/view");
+    QMenu *menu = m_liteApp->actionManager()->loadMenu(ID_MENU_VIEW);
     if (menu) {
         menu->addAction(m_hideSideAct);
         m_sideMenu = menu->addMenu(tr("SideBar Windows"));

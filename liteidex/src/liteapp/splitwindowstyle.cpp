@@ -25,6 +25,7 @@
 #include "rotationtoolbutton.h"
 #include "tooldockwidget.h"
 #include "liteapp_global.h"
+#include "liteapi/liteids.h"
 #include <QToolBar>
 #include <QAction>
 #include <QActionGroup>
@@ -272,7 +273,7 @@ SplitWindowStyle::~SplitWindowStyle()
 
 void SplitWindowStyle::createToolWindowMenu()
 {
-    QMenu *menu = m_liteApp->actionManager()->loadMenu("menu/view");
+    QMenu *menu = m_liteApp->actionManager()->loadMenu(ID_MENU_VIEW);
     if (menu) {
         m_windowMenu = menu->addMenu(tr("Tool Windows"));
     }

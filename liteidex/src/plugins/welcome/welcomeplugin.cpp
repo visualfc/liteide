@@ -23,6 +23,7 @@
 
 #include "welcomeplugin.h"
 #include "../../liteapp/liteapp_global.h"
+#include "liteapi/liteids.h"
 #include <QAction>
 #include <QMenu>
 #include <QToolBar>
@@ -65,7 +66,7 @@ bool WelcomePlugin::load(LiteApi::IApplication *app)
         m_welcomeAct->toggle();
     }
 
-    QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
+    QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
     if (toolBar) {
         toolBar->addSeparator();
         m_homeAct = new QAction(QIcon("icon:images/home.png"),tr("Welcome"),this);

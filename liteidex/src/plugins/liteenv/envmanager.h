@@ -86,6 +86,7 @@ protected slots:
     void editorSaved(LiteApi::IEditor*);
     void goenvError(const QString &id, const QString &msg);
     void goenvChanged(const QString &id);    
+    void selectEnvAction(QAction* act);
 public:    
     void setCurrentEnv(LiteApi::IEnv *env);
     void addEnv(LiteApi::IEnv *build);
@@ -101,6 +102,7 @@ protected:
     QComboBox       *m_envCmb;
     bool             m_appLoaded;
     GoEnvManager     *m_goEnvManager;
+    QActionGroup     *m_selectActionGroup;
 };
 
 #endif // ENVMANAGER_H

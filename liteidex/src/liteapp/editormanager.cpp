@@ -23,6 +23,7 @@
 
 #include "editormanager.h"
 #include "liteapp_global.h"
+#include "liteapi/liteids.h"
 #include <QFileInfo>
 #include <QTabWidget>
 #include <QMessageBox>
@@ -218,12 +219,9 @@ bool EditorManager::initWithApp(IApplication *app)
 
 void EditorManager::createActions()
 {
-    m_editMenu = m_liteApp->actionManager()->loadMenu("menu/edit");
-    if (!m_editMenu) {
-        m_editMenu = m_liteApp->actionManager()->insertMenu("menu/edit",tr("&Edit"));
-    }
+    m_editMenu = m_liteApp->actionManager()->loadMenu(ID_MENU_EDIT);
 
-    QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar("toolbar/std");
+    QToolBar *toolBar = m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
 
     m_goBackAct = new QAction(tr("Navigate Backward"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));

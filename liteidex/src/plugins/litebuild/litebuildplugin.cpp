@@ -24,7 +24,7 @@
 #include "litebuildplugin.h"
 #include "litebuild.h"
 #include "litebuildoptionfactory.h"
-#include "liteapi/liteid.h"
+#include "liteapi/liteids.h"
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QComboBox>

@@ -23,6 +23,7 @@
 
 #include "recentmanager.h"
 #include "liteapp_global.h"
+#include "liteapi/liteids.h"
 #include <QMenu>
 #include <QAction>
 //lite_memory_check_begin
@@ -49,7 +50,7 @@ bool RecentManager::initWithApp(IApplication *app)
 
     m_maxRecentFiles = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
 
-    m_recentMenu = m_liteApp->actionManager()->loadMenu("menu/recent");
+    m_recentMenu = m_liteApp->actionManager()->loadMenu(ID_MENU_RECENT);
     QAction *clearAllRecent = new QAction(tr("Clear All History"),this);
     m_recentSeparator = m_recentMenu->addSeparator();
     m_recentMenu->addAction(clearAllRecent);

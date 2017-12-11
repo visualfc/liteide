@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "quickopenwidget.h"
+#include "liteapi/liteids.h"
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QTreeView>
@@ -93,7 +94,7 @@ void QuickOpenWidget::hideEvent(QHideEvent *e)
 
 void QuickOpenWidget::showView()
 {
-    QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar("toolbar/std");
+    QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
     QRect rc = toolBar->frameGeometry();
     QPoint pt = rc.topRight();
     pt.rx() += 4;

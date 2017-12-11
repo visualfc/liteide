@@ -23,7 +23,7 @@
 
 #include "actionmanager.h"
 #include "liteapp_global.h"
-#include "liteapi/liteid.h"
+#include "liteapi/liteids.h"
 #include <QMenuBar>
 #include <QToolBar>
 #include <QAction>
@@ -66,7 +66,7 @@ bool ActionManager::initWithApp(IApplication *app)
     insertMenu(ID_MENU_RECENT,tr("&Recent"));
     insertMenu(ID_MENU_EDIT,tr("&Edit"));
     insertMenu(ID_MENU_FIND,tr("F&ind"));
-    m_viewMenu = insertMenu("menu/view",tr("&View"));
+    m_viewMenu = insertMenu(ID_MENU_VIEW,tr("&View"));
     m_viewMenu->addSeparator();
     m_baseToolBarAct = m_viewMenu->addSeparator();
     m_baseBrowserAct = m_viewMenu->addSeparator();
@@ -76,7 +76,7 @@ bool ActionManager::initWithApp(IApplication *app)
     insertMenu(ID_MENU_DEBUG,tr("&Debug"));
     insertMenu(ID_MENU_HELP,tr("&Help"));
 
-    QToolBar *stdToolBar = insertToolBar("toolbar/std",tr("Standard Toolbar"));
+    QToolBar *stdToolBar = insertToolBar(ID_TOOLBAR_STD,tr("Standard Toolbar"));
 
     insertViewMenu(LiteApi::ViewMenuToolBarPos,stdToolBar->toggleViewAction());
 
