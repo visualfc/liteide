@@ -186,7 +186,7 @@ FindFilesThread::FindFilesThread(QObject *parent) : QThread(parent)
     m_cancel = false;
     m_maxFileCount = 10000;
     m_filesCount = 0;
-    m_maxBlockSendCount = 100;
+    m_maxBlockSendCount = 10;
 }
 
 void FindFilesThread::setFolderList(const QStringList &folderList, const QSet<QString> &extSet, const QSet<QString> &exceptFiles, int maxCount)
@@ -249,7 +249,7 @@ void FindFilesThread::findFolder(QString folder)
                 fileList << filePath;
             }
         }
-        if (fileList.size() > m_maxBlockSendCount) {
+        if (fileList.size() >= m_maxBlockSendCount) {
             sendResult(fileList);
             fileList.clear();
         }
