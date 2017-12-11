@@ -107,7 +107,7 @@ void GoRemoveTagsDialog::updateArguments()
         QStringList optList = ui->xmlOptionLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
         QStringList options;
         foreach (QString opt, optList) {
-            options << "json="+opt;
+            options << "xml="+opt;
         }
         if (!options.isEmpty()) {
             args = "-remove-options "+options.join(",");
