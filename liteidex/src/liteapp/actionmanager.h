@@ -63,6 +63,7 @@ public:
     virtual void insertViewMenu(VIEWMENU_ACTION_POS pos, QAction *act);
     virtual void setViewMenuSeparator(const QString &sepid, bool group);
     virtual void insertViewMenuAction(QAction *act, const QString &sepid);
+    virtual bool insertMenuActions(const QString &idMenu, const QString &idBeforeSep, bool newGroup,  QList<QAction*> &actions);
     virtual IActionContext *getActionContext(QObject *obj, const QString &name);
     virtual QStringList actionKeys() const;
     virtual ActionInfo *actionInfo(const QString &id) const;
@@ -79,6 +80,7 @@ protected:
     QMap<QString,QMenu*>   m_idMenuMap;
     QMap<QString,QToolBar*> m_idToolBarMap;
     QMap<QString,QAction*> m_idSeperatorMap;
+    QMap<QString, QMap<QString,QAction*> > m_idMenuSepMap;
     QMenu *m_viewMenu;
     QAction *m_baseToolBarAct;
     QAction *m_baseBrowserAct;

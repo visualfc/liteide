@@ -10,4 +10,5 @@ DEFINES += LITEAPI_LIBRARY
 HEADERS += liteobj.h \
            liteapi.h \
     litehtml.h \
-    liteutil.h
+    liteutil.h \
+    liteid.h

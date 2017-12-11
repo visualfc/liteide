@@ -29,6 +29,7 @@
 #include "qjson/include/QJson/Parser"
 #include "fileutil/fileutil.h"
 #include "packageproject.h"
+#include "liteapi/liteid.h"
 #include <QTreeView>
 #include <QStandardItemModel>
 #include <QStandardItem>
@@ -95,7 +96,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_openSrcAct = new QAction(tr("Open Source File"),this);
     m_copyNameAct = new QAction(tr("Copy Name to Clipboard"),this);
 
-    m_liteApp->actionManager()->insertViewMenuAction(m_setupGopathAct,"sep/option");
+    m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/gopath",true,QList<QAction*>() << m_setupGopathAct);
 
     m_rootMenu->addAction(m_reloadAct);
     m_rootMenu->addAction(m_setupGopathAct);

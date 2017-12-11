@@ -24,6 +24,7 @@
 #include "litebuildplugin.h"
 #include "litebuild.h"
 #include "litebuildoptionfactory.h"
+#include "liteapi/liteid.h"
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QComboBox>
@@ -110,7 +111,7 @@ bool LiteBuildPlugin::load(LiteApi::IApplication *app)
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_build,"Build");
     QAction *execAct = new QAction(tr("Execute File"),this);
     actionContext->regAction(execAct,"ExecuteFile","Ctrl+`");
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuLastPos,execAct);
+    m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/exec",true,QList<QAction*>() << execAct);
 
     connect(execAct,SIGNAL(triggered()),this,SLOT(showExecute()));
     connect(m_commandCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(execute()));

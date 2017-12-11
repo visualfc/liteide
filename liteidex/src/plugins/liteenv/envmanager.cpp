@@ -26,6 +26,7 @@
 #include "liteenv_global.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
+#include "liteapi/liteid.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -446,9 +447,8 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
 
-    m_liteApp->actionManager()->setViewMenuSeparator("sep/env",true);
-    m_liteApp->actionManager()->insertViewMenuAction(reloadAct,"sep/env");
-    m_liteApp->actionManager()->insertViewMenuAction(editAct,"sep/env");
+    m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/env",true,
+                                                  QList<QAction*>() << reloadAct << editAct);
 
     foreach (LiteApi::IEnv *env, m_envList) {
         m_envCmb->addItem(env->id());

@@ -23,6 +23,7 @@
 
 #include "actionmanager.h"
 #include "liteapp_global.h"
+#include "liteapi/liteid.h"
 #include <QMenuBar>
 #include <QToolBar>
 #include <QAction>
@@ -61,16 +62,19 @@ bool ActionManager::initWithApp(IApplication *app)
         return false;
     }
 
-    insertMenu("menu/file",tr("&File"));
-    insertMenu("menu/recent",tr("&Recent"));
-    insertMenu("menu/edit",tr("&Edit"));
-    insertMenu("menu/find",tr("F&ind"));
+    insertMenu(ID_MENU_FILE,tr("&File"));
+    insertMenu(ID_MENU_RECENT,tr("&Recent"));
+    insertMenu(ID_MENU_EDIT,tr("&Edit"));
+    insertMenu(ID_MENU_FIND,tr("F&ind"));
     m_viewMenu = insertMenu("menu/view",tr("&View"));
     m_viewMenu->addSeparator();
     m_baseToolBarAct = m_viewMenu->addSeparator();
     m_baseBrowserAct = m_viewMenu->addSeparator();
     m_viewMenu->addSeparator();
-    insertMenu("menu/help",tr("&Help"));
+    insertMenu(ID_MENU_TOOLS,tr("&Tools"));
+    insertMenu(ID_MENU_BUILD,tr("&Build"));
+    insertMenu(ID_MENU_DEBUG,tr("&Debug"));
+    insertMenu(ID_MENU_HELP,tr("&Help"));
 
     QToolBar *stdToolBar = insertToolBar("toolbar/std",tr("Standard Toolbar"));
 
@@ -210,6 +214,39 @@ void ActionManager::setViewMenuSeparator(const QString &sepid, bool group)
     }
     QAction *sep = m_viewMenu->addSeparator();
     m_idSeperatorMap.insert(sepid,sep);
+}
+
+bool ActionManager::insertMenuActions(const QString &idMenu, const QString &idBeforeSep, bool newGroup,  QList<QAction*> &actions)
+{
+    if (idMenu.isEmpty()) {
+        return false;
+    }
+    QMenu *menu = loadMenu(idMenu);
+    if (!menu) {
+        return false;
+    }
+    if (newGroup) {
+        QMenu *realMenu = menu->menuAction()->menu();
+        if (realMenu) {
+            if (!realMenu->actions().isEmpty() && !realMenu->actions().last()->isSeparator()) {
+                menu->addSeparator();
+            }
+        } else {
+            menu->addSeparator();
+        }
+    }
+    QAction *sep = 0;
+    if (!idBeforeSep.isEmpty()) {
+        sep = m_idMenuSepMap[idMenu][idBeforeSep];
+        if (!sep) {
+            sep = menu->addSeparator();
+            m_idMenuSepMap[idMenu].insert(idBeforeSep,sep);
+        }
+    }
+    foreach (QAction *act, actions) {
+        menu->insertAction(sep,act);
+    }
+    return true;
 }
 
 void ActionManager::insertViewMenuAction(QAction *act, const QString &sepid)

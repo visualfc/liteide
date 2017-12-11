@@ -28,6 +28,7 @@
 #include "quickopenmimetype.h"
 #include "quickopenaction.h"
 #include "quickopenhelp.h"
+#include "liteapi/liteid.h"
 #include <QTreeView>
 #include <QDebug>
 
@@ -89,11 +90,12 @@ bool QuickOpenManager::initWithApp(IApplication *app)
     context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+SHIFT+O");
     context->regAction(m_quickOpenHelpAct,"QuickOpenHelp","");
 
-    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenAct,"sep/quickopen");
-    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenActionAct,"sep/quickopen");
-    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenEditAct,"sep/quickopen");
-    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenSymbolAct,"sep/quickopen");
-    m_liteApp->actionManager()->insertViewMenuAction(m_quickOpenHelpAct,"sep/quickopen");
+    m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/quickopen",true, QList<QAction*>()
+                                                  << m_quickOpenAct
+                                                  << m_quickOpenActionAct
+                                                  << m_quickOpenEditAct
+                                                  << m_quickOpenSymbolAct
+                                                  << m_quickOpenHelpAct );
 
     connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
     connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
