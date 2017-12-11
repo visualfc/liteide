@@ -7,10 +7,14 @@
 * LiteEditor
 	* support quick open command
 	* support gomodifytags
+	* fix libpng warning on qt5 build 
 * LiteApp
+	* add tools menu for quick open actions
 	* standard and rename tool window title
 	* enable edit menu anytime, fix edit menu disable on editor lost focus.
 	* fix editor load large file bad_alloc recover
+* LiteEnv
+	* add select env to tools menu	
 * LiteEditor
 	* check and not open large file
 	* fix edit hide edit sub menu 'setup' on macos
@@ -19,8 +23,8 @@
 	* Integrated [gomodifytags](https://github.com/fatih/gomodifytags) and gui tools support gomodifytags all options
 * QuickOpen
 	* add quick open command action (ctrl+shift+p/command+shift+p)
+	* quickopenfiles use thread for fast and cancel
 	* fix quickopenfile cancel loading for esc or liteapp quit
-	* change quickopenfiles use thread
 
 ### 2017.11.2 Ver X33
 * LiteIDE

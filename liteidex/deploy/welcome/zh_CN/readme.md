@@ -59,6 +59,14 @@ _LiteIDE 是一个轻量级的开源跨平台 Go语言 IDE._
 	--local-setting   强制使用本地配置
 	--user-setting    强制使用用户配置
 	--reset-setting   重置当前配置 ( 清除配置文件 )
+	
+### 更新 liteide 工具支持新的 Go语言版本
+
+	go get -u github.com/visualfc/gotools
+	go get -u github.com/nsf/gocode
+	
+	Windows/Linux: 复制 GOPATH/bin gotools 和 gocode 到 liteide/bin
+	MacOS: 复制 GOPATH/bin gotools 和 gocode 到 LiteIDE.app/Contents/MacOS	
 
 ### 网址
 * LiteIDE 主页
