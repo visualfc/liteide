@@ -4,7 +4,7 @@
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
 ### 2017.12.12 Ver X33.1
-* LiteEditor
+* LiteIDE
 	* support quick open command
 	* support gomodifytags
 	* fix libpng warning on qt5 build 
