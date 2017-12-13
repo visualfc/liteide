@@ -1,0 +1,97 @@
+# $Id$
+# Maintainer: Alexander F Rødseth <xyproto@archlinux.org>
+# Contributor: spambanane <happy.house@gmx.de>
+# Contributor: Matteo <matteo.dek@gmail.com>
+# Contributor: Matthew Zimmerman <mzimmerman@gmail.com>
+
+pkgname=liteide
+pkgver=33.1
+pkgrel=1
+pkgdesc='IDE for editing and building projects written in the Go programming language'
+license=('LGPL')
+arch=('x86_64')
+url='https://github.com/visualfc/liteide'
+makedepends=('go' 'gendesk' 'git')
+depends=('go-tools' 'qt5-base')
+optdepends=('go: go compiler'
+            'gcc-go: go compiler')
+options=('!strip' '!emptydirs')
+source=("$pkgname-x$pkgver::git+https://github.com/visualfc/liteide.git#tag=x$pkgver")
+md5sums=('SKIP')
+
+prepare() {
+  gendesk -f -n --name LiteIDE --pkgname "$pkgname" --pkgdesc "$pkgdesc"
+  chmod +x "liteide-x$pkgver/build/"*_*.sh
+
+  # Fix for FS#4662 until fixed by upstream
+  cd "liteide-x$pkgver/liteidex/os_deploy/linux/liteenv"
+  sed -i 's|^GOROOT|#GOROOT|g' linux32.env
+  sed -i 's|^GOROOT|#GOROOT|g' linux64.env
+
+  # Fix the libpng warning: iCCP: known incorrect sRGB profile
+  find "$srcdir" -type f -iname "*.png" -exec mogrify -strip '{}' \;
+}
+
+build() {
+  cd "liteide-x$pkgver/build"
+
+  mkdir -p go
+  export GOPATH="$(pwd)/go"
+  export QTDIR=/usr
+
+  ./update_pkg.sh
+  ./build_linux.sh
+
+  # https://github.com/visualfc/liteide/issues/633
+  #go get -u github.com/visualfc/gotools
+  #go get -u github.com/nsf/gocode
+}
+
+package() {
+  cd "liteide-x$pkgver/build/liteide"
+
+  msg2 'Creating directories...'
+  mkdir -p \
+    "$pkgdir/usr/lib/liteide" \
+    "$pkgdir/usr/share/liteide" \
+    "$pkgdir/usr/share/doc/$pkgname"
+
+  msg2 'Packaging executables...'
+  for binary in gomodifytags gotools gocode liteide; do # goimports
+    install -Dm755 "bin/$binary" "$pkgdir/usr/bin/$binary"
+  done
+  ln -s /usr/bin/liteide "$pkgdir/usr/bin/golangide"
+
+  cd "$srcdir/liteide-x$pkgver/liteidex"
+
+  msg2 'Packaging resources...'
+  cp -r deploy/* os_deploy/* "$pkgdir/usr/share/liteide"
+
+  msg2 'Packaging libraries and plugins...'
+  cp -r liteide/lib/liteide/* "$pkgdir/usr/lib/liteide"
+  chmod -x "$pkgdir/usr/lib/liteide/plugins/"*
+
+  msg2 'Packaging license and license exception...'
+  install -Dm644 LICENSE.LGPL \
+    "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 LGPL_EXCEPTION.TXT \
+    "$pkgdir/usr/share/licenses/$pkgname/LGPL_EXCEPTION"
+
+  cd "$srcdir"
+
+  msg2 'Packaging desktop shortcut...'
+  install -Dm644 "$pkgname.desktop" \
+    "$pkgdir/usr/share/applications/$pkgname.desktop"
+  install -d "$pkgdir/usr/share/pixmaps"
+  ln -s /usr/share/liteide/welcome/images/liteide400.png \
+    "$pkgdir/usr/share/pixmaps/$pkgname.png"
+
+  msg2 'Cleaning up...'
+  rm -rf "$pkgdir/usr/share/$pkgname/doc"
+
+  # Fix for FS#38781
+  mv "$pkgdir/usr/share/liteide/linux/liteenv" \
+    "$pkgdir/usr/share/liteide/liteenv"
+}
+
+# vim: ts=2 sw=2 et:
