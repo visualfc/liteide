@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-tcl" id="tcl" work="$(EDITOR_DIR_PATH)" lock="file" ver="2">
+    <config id="ErrRegex" name="ERRREGEX" value="file\s*\&quot;([\w\.]+)\&quot;\s*line\s*(\d+)"/>
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
+		<config id="tclsh" name="TCLSH" value="tclsh"/>
+		<config id="wish" name="WISH" value="wish"/>
+		<custom id="TargetArgs" name="TARGETARGS" value=""/>		
+		<action id="tclsh" key="Ctrl+R" img="run.png" cmd="$(TCLSH)" args="$(EDITOR_FILE_NAME) $(TARGETARGS)" save="editor" output="true" codec="utf-8" regex="$(ERRREGEX)" readline="true" />
+		<action id="wish" key="Ctrl+Shift+R" img="runterm.png" cmd="$(WISH)" args="$(EDITOR_FILE_NAME) $(TARGETARGS)" save="editor" output="true" codec="utf-8" regex="$(ERRREGEX)" readline="true" />
+	</mime-type>
+</mime-info>
