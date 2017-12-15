@@ -43,7 +43,7 @@ KateTextLexer::KateTextLexer(QObject *parent)
 
 bool KateTextLexer::isLangSupport() const
 {
-    return false;
+    return true;
 }
 
 bool KateTextLexer::isInComment(const QTextCursor &cursor) const
@@ -143,4 +143,14 @@ QString KateTextLexer::fetchFunctionTip(const QString &/*func*/, const QString &
 bool KateTextLexer::fetchFunctionArgs(const QString &/*str*/, int &/*argnr*/, int &/*parcount*/)
 {
     return false;
+}
+
+QString KateTextLexer::stringQuoteList() const
+{
+    return QString("\"\'");
+}
+
+bool KateTextLexer::hasStringBackslash() const
+{
+    return true;
 }

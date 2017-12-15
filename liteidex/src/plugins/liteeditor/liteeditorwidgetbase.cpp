@@ -327,6 +327,14 @@ public:
     {
         return false;
     }
+    virtual QString stringQuoteList() const
+    {
+        return QString("\"");
+    }
+    virtual bool hasStringBackslash() const
+    {
+        return false;
+    }
 protected:
     bool m_bAC;
     bool m_bCC;
@@ -2091,6 +2099,9 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
         if (!this->m_textLexer->isLangSupport()) {
             return false;
         }
+        if (!this->m_textLexer->stringQuoteList().contains(lookAhead)) {
+            return false;
+        }
         if(!m_textLexer->isInEmptyString(cursor)) {
              return false;
         }
@@ -2450,8 +2461,19 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
             m_textLexer->isLangSupport() && m_textLexer->isEndOfString(this->textCursor())) {
         QString keyText = e->text();
-        if (keyText == "\"" || keyText == "\'" || keyText == "`") {
+        // keyText == "\"" || keyText == "\'" || keyText == "`")
+        if (m_textLexer->stringQuoteList().contains(keyText)) {
             QTextCursor cursor = textCursor();
+            if (m_textLexer->hasStringBackslash()) {
+                int pos = cursor.position();
+                if (pos > 0) {
+                    QChar ch = document()->characterAt(pos-1);
+                    if (ch == '\\') {
+                        QPlainTextEdit::keyPressEvent(e);
+                        return;
+                    }
+                }
+            }
             if (!cursor.atBlockEnd()) {
                 QString text = cursor.block().text();
                 if (text.mid(cursor.positionInBlock(),1) == keyText) {
@@ -2468,6 +2490,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
 
     if (((e->modifiers() & (Qt::ControlModifier|Qt::AltModifier)) != Qt::ControlModifier) &&
             (m_bLastBraces ||m_textLexer->isCanAutoCompleter(this->textCursor())) ) {        
+
         if (m_bLastBraces) {
             if (e->text() == m_lastBraceText) {
                 QTextCursor cursor = textCursor();
@@ -2482,6 +2505,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
             QPlainTextEdit::keyPressEvent(e);
             return;
         }
+
         m_bLastBraces = false;
         QString keyText = e->text();
         QString mr;
@@ -2500,9 +2524,22 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                 mr = "`";
             }
         }
+
         if (m_textLexer->isInStringOrComment(this->textCursor())) {
             QPlainTextEdit::keyPressEvent(e);
             return;
+        }
+
+        if (m_textLexer->stringQuoteList().contains(mr) && m_textLexer->hasStringBackslash()) {
+            QTextCursor cursor = textCursor();
+            int pos = cursor.position();
+            if (pos > 0) {
+                QChar ch = document()->characterAt(pos-1);
+                if (ch == '\\') {
+                    QPlainTextEdit::keyPressEvent(e);
+                    return;
+                }
+            }
         }
 
         if (keyText == ")" || keyText == "]" || keyText == "}") {

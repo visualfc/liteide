@@ -41,6 +41,8 @@ public:
     virtual int startOfFunctionCall(const QTextCursor &cursor) const;
     virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info);
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount);
+    virtual QString stringQuoteList() const;
+    virtual bool hasStringBackslash() const;
 };
 
 #endif // KATETEXTLEXER_H

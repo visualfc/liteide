@@ -255,6 +255,16 @@ bool GolangTextLexer::fetchFunctionArgs(const QString &str, int &argnr, int &par
     return true;
 }
 
+QString GolangTextLexer::stringQuoteList() const
+{
+    return QString("\"\'`");
+}
+
+bool GolangTextLexer::hasStringBackslash() const
+{
+    return true;
+}
+
 bool GolangTextLexer::isInCommentHelper(const QTextCursor &cursor, Token *retToken) const
 {
     LanguageFeatures features;

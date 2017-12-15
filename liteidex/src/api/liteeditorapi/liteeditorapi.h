@@ -256,6 +256,8 @@ public:
     virtual int startOfFunctionCall(const QTextCursor &cursor) const = 0;
     virtual QString fetchFunctionTip(const QString &func, const QString &kind, const QString &info) = 0;
     virtual bool fetchFunctionArgs(const QString &str, int &argnr, int &parcount) = 0;
+    virtual QString stringQuoteList() const = 0;
+    virtual bool hasStringBackslash() const = 0;
 };
 
 class ILiteEditor : public ITextEditor
