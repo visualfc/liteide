@@ -338,7 +338,8 @@ void GolangCode::cgoComplete()
           << "char" << "schar" << "uchar"
           << "long" << "ulong"
           << "longlong" << "ulonglong"
-          << "float" << "double";
+          << "float" << "double"
+          << "complexfloat" << "complexdouble";
     QIcon icon = m_golangAst->iconFromTagEnum(LiteApi::TagType,true);
     foreach(QString item, types) {
         m_completer->appendChildItem(root,item,"type","",icon,true);
@@ -348,6 +349,7 @@ void GolangCode::cgoComplete()
     m_completer->appendChildItem(root,"GoString","func","func(*C.char) string",icon,true);
     m_completer->appendChildItem(root,"GoStringN","func","func(*C.char, C.int) string",icon,true);
     m_completer->appendChildItem(root,"GoBytes","func","func(unsafe.Pointer, C.int) []byte",icon,true);
+    m_completer->appendChildItem(root,"CBytes","func","func([]byte) unsafe.Pointer",icon,true);
     m_completer->updateCompleterModel();
     m_completer->showPopup();
 }
