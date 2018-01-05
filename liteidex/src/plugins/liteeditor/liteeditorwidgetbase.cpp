@@ -36,6 +36,7 @@
 #include <QScrollBar>
 #include <QInputMethodEvent>
 #include <QTimer>
+#include <cassert>
 #include <cmath>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -47,9 +48,9 @@
 #endif
 //lite_memory_check_end
 
-const int PRIORITYLIST_LENGTH = 5;
+const int PRIORITYLIST_LENGTH = 7;
 const LiteApi::EditorNaviagteType MARKTYPE_PRIORITYLIST[PRIORITYLIST_LENGTH] = {
-        LiteApi::EditorNavigateError, LiteApi::EditorNavigateBad, LiteApi::EditorNavigateWarning, LiteApi::EditorNavigateReload, LiteApi::EditorNavigateNormal
+        LiteApi::EditorNavigateError, LiteApi::EditorNavigateBad, LiteApi::EditorNavigateWarning, LiteApi::EditorNavigateReload, LiteApi::EditorNavigateFind, LiteApi::EditorNavigateSelection, LiteApi::EditorNavigateNormal
     };
 
 inline QColor markTypeColor(LiteApi::EditorNaviagteType type) {
@@ -63,6 +64,10 @@ inline QColor markTypeColor(LiteApi::EditorNaviagteType type) {
     case LiteApi::EditorNavigateNormal:
         return Qt::darkGreen;
     case LiteApi::EditorNavigateReload:
+        return Qt::darkBlue;
+    case LiteApi::EditorNavigateFind:
+        return Qt::darkYellow;
+    case LiteApi::EditorNavigateSelection:
         return Qt::darkBlue;
     }
     return Qt::darkGreen;
@@ -1344,6 +1349,7 @@ void LiteEditorWidgetBase::slotSelectionChanged()
 
     if (m_selectionExpression.pattern() != pattern) {
         m_selectionExpression.setPattern(pattern);
+        updateNavigateMarks(LiteApi::EditorNavigateSelection);
         viewport()->update();
     }
 
@@ -1464,6 +1470,7 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
             m_findExpression.setPattern("");
         }
     }
+    updateNavigateMarks(LiteApi::EditorNavigateFind);
     viewport()->update();
 }
 
@@ -4091,4 +4098,47 @@ void LiteEditorWidgetBase::transformBlockSelection(TransformationMethod method)
     m_blockSelection.lastVisualColumn = rightBound;
     setTextCursor(m_blockSelection.selection(tabSettings()));
     viewport()->update();
+}
+
+// Update selections or find marks.
+void LiteEditorWidgetBase::updateNavigateMarks(LiteApi::EditorNaviagteType type)
+{
+    assert(LiteApi::EditorNavigateFind == type ||
+           LiteApi::EditorNavigateSelection == type);
+    clearAllNavigateMark(type, "");
+    if (!needToMark(type))
+        return;
+
+    QTextDocument *doc = this->document();
+    for (QTextBlock it = doc->begin(); it != doc->end(); it = it.next())
+    {
+        if (!needToMarkBlock(it, type))
+            continue;
+        int lineNumber = it.blockNumber() + 1;
+        insertNavigateMark(lineNumber, type, QString("%1: %2").arg(lineNumber).arg(it.text()), "");
+    }
+}
+
+bool LiteEditorWidgetBase::needToMark(LiteApi::EditorNaviagteType type) const
+{
+    if (LiteApi::EditorNavigateFind == type)
+        return !m_findExpression.isEmpty();
+    if (LiteApi::EditorNavigateSelection == type)
+        return !m_selectionExpression.isEmpty();
+    assert(false);
+    return false;
+}
+
+bool LiteEditorWidgetBase::needToMarkBlock(
+    const QTextBlock &block, LiteApi::EditorNaviagteType type) const
+{
+    QTextCursor cur;
+    int pos = 0;
+    if (LiteApi::EditorNavigateFind == type)
+        return findInBlock(block, m_findExpression, pos, m_findFlags, cur);
+    if (LiteApi::EditorNavigateSelection == type)
+        return findInBlock(block, m_selectionExpression, pos,
+                           QTextDocument::FindWholeWords, cur);
+    assert(false);
+    return false;
 }

@@ -305,6 +305,12 @@ protected slots:
     void uplinkDeployTimeout();
     void uplinkInfoTimeout();
     void stopUplinkTimer();
+private:
+    // Update selections or find marks.
+    void updateNavigateMarks(LiteApi::EditorNaviagteType type);
+    bool needToMark(LiteApi::EditorNaviagteType type) const;
+    bool needToMarkBlock(const QTextBlock &block,
+                         LiteApi::EditorNaviagteType type) const;
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_extraArea;
