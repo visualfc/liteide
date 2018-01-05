@@ -66,6 +66,7 @@ public:
     void extraAreaLeaveEvent(QEvent *e);
     int navigateAreaWidth();
     int isInNavigateMark(const QPoint &pos, int *poffset);
+    NavigateMark* findNavigateMarkByPos(const QPoint &pos, int *poffset, int *pLine);
     bool isInNavigateHead(const QPoint &pos);
     void navigateAreaPaintEvent(QPaintEvent *e);
     void navigateAreaMouseEvent(QMouseEvent *e);
@@ -76,7 +77,7 @@ public:
     void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
     void ensureFinalNewLine(QTextCursor& cursor);
     void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
-    void insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag);
+    void insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag, int startOffset = 0, int endOffset = 0);
     void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
     void clearAllNavigateMarks();
 signals:
@@ -310,7 +311,7 @@ private:
     void updateNavigateMarks(LiteApi::EditorNaviagteType type);
     bool needToMark(LiteApi::EditorNaviagteType type) const;
     bool needToMarkBlock(const QTextBlock &block,
-                         LiteApi::EditorNaviagteType type) const;
+                         LiteApi::EditorNaviagteType type, QTextCursor &cur) const;
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_extraArea;

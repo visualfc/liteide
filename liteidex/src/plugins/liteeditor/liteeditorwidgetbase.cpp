@@ -88,16 +88,20 @@ struct NavigateMark
         LiteApi::EditorNaviagteType type;
         QString msg;
         QString tag;
+        int startOffset;
+        int endOffset;
 
         QColor markColor() {
             return markTypeColor(type);
         }
     };
-    void addNode(LiteApi::EditorNaviagteType type, const QString & msg, const char* tag = "")
+    void addNode(LiteApi::EditorNaviagteType type, const QString & msg, const char* tag = "", int startOffset = 0, int endOffset = 0)
     {
         Node *node = new Node;
         node->type = type;
         node->msg = msg;
+        node->startOffset = startOffset;
+        node->endOffset = endOffset;
         node->tag = QString(tag);
         m_nodeList.append(node);
     }
@@ -141,20 +145,23 @@ public:
     {
         clearAll();
     }
-    void insertMark(int blockNumber, const QString &msg, LiteApi::EditorNaviagteType type, const char* tag = "")
+    void insertMark(int blockNumber, const QString &msg, LiteApi::EditorNaviagteType type, const char* tag = "", int startOffset = 0, int endOffset = 0)
     {
          NavigateMarkMap::iterator it = markMap.find(blockNumber);
          if (it == markMap.end()) {
              NavigateMark *mark = new NavigateMark;
-             mark->addNode(type, msg, tag);
+             mark->addNode(type, msg, tag, startOffset, endOffset);
              markMap.insert(blockNumber,mark);
          } else {
              NavigateMark *mark = it.value();
              NavigateMark::Node *node = mark->findNode(type);
              if (node) {
                  node->msg = msg;
+                 node->tag = tag;
+                 node->startOffset = startOffset;
+                 node->endOffset = endOffset;
              } else {
-                 mark->addNode(type,msg);
+                 mark->addNode(type,msg,tag,startOffset,endOffset);
              }
          }
     }
@@ -1067,6 +1074,32 @@ void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
     }
 }
 
+NavigateMark* LiteEditorWidgetBase::findNavigateMarkByPos(const QPoint &pos, int *poffset, int *pLine)
+{
+    int count = this->blockCount();
+    int height = this->viewport()->rect().height()-2*m_navigateArea->width();
+    int width = m_navigateArea->width();
+    QMapIterator<int,NavigateMark*> i(m_navigateManager->markMap);
+    while(i.hasNext()) {
+        i.next();
+        if (!i.value()->isEmpty()) {
+            int offset = i.key()*height*1.0/count;
+            QRect rect(0,width+offset-1,width,4+1);
+            if (rect.contains(pos)) {
+                if (poffset) {
+                    *poffset = offset+width;
+                }
+                if (pLine) {
+                    *pLine = i.key();
+                }
+                return i.value();
+            }
+        }
+    }
+    return 0;
+}
+
+
 int LiteEditorWidgetBase::isInNavigateMark(const QPoint &pos, int *poffset)
 {
     int count = this->blockCount();
@@ -1103,8 +1136,9 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton &&
         (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonDblClick)) {
-        int line = isInNavigateMark(e->pos(),0);
-        if (line != -1) {
+        int line = -1;
+        NavigateMark *mark = findNavigateMarkByPos(e->pos(),0,&line);
+        if (mark) {
             this->gotoLine(line,0,true);
         }
     } else if (e->type() == QEvent::MouseMove) {
@@ -1115,9 +1149,8 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
             QToolTip::showText(m_navigateArea->mapToGlobal(pos),this->m_navigateManager->m_msg,this->m_navigateArea);
         } else {
             int offset = 0;
-            int line = isInNavigateMark(e->pos(),&offset);
-            if (line != -1) {
-                NavigateMark *mark = m_navigateManager->markMap.value(line);
+            NavigateMark *mark = findNavigateMarkByPos(e->pos(),&offset,0);
+            if (mark) {
 //                NavigateMark::Node *node = mark->findNode(LiteApi::EditorNavigateError);
 //                if (node) {
 //                    tooltip = true;
@@ -2851,9 +2884,9 @@ void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, con
     m_navigateArea->update();
 }
 
-void LiteEditorWidgetBase::insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
+void LiteEditorWidgetBase::insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "", int startOffset, int endOffset)
 {
-    m_navigateManager->insertMark(blockNumber,msg,type,tag);
+    m_navigateManager->insertMark(blockNumber,msg,type,tag,startOffset,endOffset);
     m_navigateArea->update();
 }
 
@@ -4116,12 +4149,15 @@ void LiteEditorWidgetBase::updateNavigateMarks(LiteApi::EditorNaviagteType type)
         return;
 
     QTextDocument *doc = this->document();
+    QTextCursor cur;
     for (QTextBlock it = doc->begin(); it != doc->end(); it = it.next())
     {
-        if (!needToMarkBlock(it, type))
+        if (!needToMarkBlock(it, type,cur))
             continue;
         int blockNumber = it.blockNumber();
-        insertNavigateMark(blockNumber, type, QString("%1: %2").arg(blockNumber+1).arg(it.text()), "");
+        int startOffset = cur.selectionStart()-it.position();
+        int endOffset = cur.selectionEnd()-it.position();
+        insertNavigateMark(blockNumber, type, QString("%1: %2").arg(blockNumber+1).arg(it.text()), "",startOffset,endOffset);
     }
 }
 
@@ -4138,9 +4174,8 @@ bool LiteEditorWidgetBase::needToMark(LiteApi::EditorNaviagteType type) const
 }
 
 bool LiteEditorWidgetBase::needToMarkBlock(
-    const QTextBlock &block, LiteApi::EditorNaviagteType type) const
+    const QTextBlock &block, LiteApi::EditorNaviagteType type, QTextCursor &cur) const
 {
-    QTextCursor cur;
     int pos = 0;
     if (LiteApi::EditorNavigateFind == type)
         return findInBlock(block, m_findExpression, pos, m_findFlags, cur);
