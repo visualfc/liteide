@@ -2857,11 +2857,13 @@ void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteT
 void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
 {
     m_navigateManager->clearAllNavigateMark(types, tag);
+    m_navigateArea->update();
 }
 
 void LiteEditorWidgetBase::clearAllNavigateMarks()
 {
     m_navigateManager->clearAll();
+    m_navigateArea->update();
 }
 
 void LiteEditorWidgetBase::moveCursorVisible(bool ensureVisible)
