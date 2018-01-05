@@ -1471,6 +1471,9 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
         }
     }
     updateNavigateMarks(LiteApi::EditorNavigateFind);
+    if (!m_selectionExpression.isEmpty()) {
+        updateNavigateMarks(LiteApi::EditorNavigateSelection);
+    }
     viewport()->update();
 }
 
@@ -4108,6 +4111,7 @@ void LiteEditorWidgetBase::updateNavigateMarks(LiteApi::EditorNaviagteType type)
     assert(LiteApi::EditorNavigateFind == type ||
            LiteApi::EditorNavigateSelection == type);
     clearAllNavigateMark(type, "");
+
     if (!needToMark(type))
         return;
 
@@ -4123,10 +4127,12 @@ void LiteEditorWidgetBase::updateNavigateMarks(LiteApi::EditorNaviagteType type)
 
 bool LiteEditorWidgetBase::needToMark(LiteApi::EditorNaviagteType type) const
 {
-    if (LiteApi::EditorNavigateFind == type)
+    if (LiteApi::EditorNavigateFind == type) {
         return !m_findExpression.isEmpty();
-    if (LiteApi::EditorNavigateSelection == type)
-        return !m_selectionExpression.isEmpty();
+    }
+    if (LiteApi::EditorNavigateSelection == type) {
+        return !m_selectionExpression.isEmpty() && m_findExpression.isEmpty();
+    }
     assert(false);
     return false;
 }
