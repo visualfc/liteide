@@ -185,6 +185,8 @@ enum EditorNaviagteType{
     EditorNavigateWarning = 2,
     EditorNavigateError = 4,
     EditorNavigateReload = 8,
+    EditorNavigateFind = 16,
+    EditorNavigateSelection = 32,
     EditorNavigateBad = EditorNavigateWarning|EditorNavigateError
 };
 
