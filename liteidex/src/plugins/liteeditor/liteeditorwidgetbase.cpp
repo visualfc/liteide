@@ -141,13 +141,13 @@ public:
     {
         clearAll();
     }
-    void insertMark(int line, const QString &msg, LiteApi::EditorNaviagteType type, const char* tag = "")
+    void insertMark(int blockNumber, const QString &msg, LiteApi::EditorNaviagteType type, const char* tag = "")
     {
-         NavigateMarkMap::iterator it = markMap.find(line);
+         NavigateMarkMap::iterator it = markMap.find(blockNumber);
          if (it == markMap.end()) {
              NavigateMark *mark = new NavigateMark;
              mark->addNode(type, msg, tag);
-             markMap.insert(line,mark);
+             markMap.insert(blockNumber,mark);
          } else {
              NavigateMark *mark = it.value();
              NavigateMark::Node *node = mark->findNode(type);
@@ -2848,9 +2848,9 @@ void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, con
     m_navigateArea->update();
 }
 
-void LiteEditorWidgetBase::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
+void LiteEditorWidgetBase::insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
 {
-    m_navigateManager->insertMark(line,msg,type,tag);
+    m_navigateManager->insertMark(blockNumber,msg,type,tag);
     m_navigateArea->update();
 }
 
@@ -4116,8 +4116,8 @@ void LiteEditorWidgetBase::updateNavigateMarks(LiteApi::EditorNaviagteType type)
     {
         if (!needToMarkBlock(it, type))
             continue;
-        int lineNumber = it.blockNumber() + 1;
-        insertNavigateMark(lineNumber, type, QString("%1: %2").arg(lineNumber).arg(it.text()), "");
+        int blockNumber = it.blockNumber();
+        insertNavigateMark(blockNumber, type, QString("%1: %2").arg(blockNumber+1).arg(it.text()), "");
     }
 }
 

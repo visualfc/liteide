@@ -76,7 +76,7 @@ public:
     void cleanWhitespace(QTextCursor &cursor, bool inEntireDocument);
     void ensureFinalNewLine(QTextCursor& cursor);
     void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
-    void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag);
+    void insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag);
     void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
     void clearAllNavigateMarks();
 signals:
