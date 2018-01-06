@@ -108,7 +108,7 @@ public slots:
     void setDefaultWordWrap(bool wrap);
 public slots:
     void gotoMatchBrace();
-    void gotoLine(int line, int column, bool center);
+    void gotoLine(int blockNumber, int column, bool center, int selection = 0) ;
 
     void gotoLineStart();
     void gotoLineStartWithSelection();

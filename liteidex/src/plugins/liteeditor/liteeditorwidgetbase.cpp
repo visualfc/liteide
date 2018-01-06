@@ -1416,23 +1416,35 @@ void LiteEditorWidgetBase::maybeSelectLine()
     }
 }
 
-void LiteEditorWidgetBase::gotoLine(int line, int column, bool center)
+void LiteEditorWidgetBase::gotoLine(int blockNumber, int column, bool center, int selection)
 {
     m_lastCursorChangeWasInteresting = false;
-    const int blockNumber = line;
     const QTextBlock &block = document()->findBlockByNumber(blockNumber);
     if (block.isValid()) {
         QTextCursor cursor(block);
-        if (column) {
-            int length = block.text().length();
-            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column > length ? length : column);
-        } else {
-            int pos = cursor.position();
-            while (document()->characterAt(pos).category() == QChar::Separator_Space) {
-                ++pos;
+        int length = block.text().length();
+        if (column <= length) {
+            cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,column);
+            if ( (selection > 0) && ( (column+selection) < length) ) {
+                cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,selection);
             }
-            cursor.setPosition(pos);
         }
+//        if (column) {
+//            if (column <= length) {
+//                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, column > length ? length : column);
+//                if (selection && ( (column+selection) <= length ) ) {
+//                    cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor, selection);
+//                }
+//            } else {
+//                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, length);
+//            }
+//        } else {
+//            int pos = cursor.position();
+//            while (document()->characterAt(pos).category() == QChar::Separator_Space) {
+//                ++pos;
+//            }
+//            cursor.setPosition(pos);
+//        }
         setTextCursor(cursor);
         if (center) {
             centerCursor();
