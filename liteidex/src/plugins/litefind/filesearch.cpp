@@ -42,6 +42,7 @@
 #include <QTextBrowser>
 #include <QFileDialog>
 #include <QAction>
+#include <QCompleter>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -199,6 +200,10 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     m_findCombo = new QComboBox;
     m_findCombo->setEditable(true);
     m_findCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    QCompleter *c = m_findCombo->completer();
+    if (c) {
+        c->setCaseSensitivity(Qt::CaseSensitive);
+    }
 
     QHBoxLayout *optLayout = new QHBoxLayout;
     optLayout->setSpacing(6);
