@@ -272,11 +272,12 @@ public:
     virtual void setEditorMark(IEditorMark *mark) = 0;
     virtual void setTextLexer(ITextLexer *lexer) = 0;
     virtual void setSpellCheckZoneDontComplete(bool b) = 0;
-    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const char *tag) = 0;
+    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const QString &tag = "", int offset = 0, int selection = 0) = 0;
     virtual void clearNavigateMarak(int line) = 0;
     virtual void clearAllNavigateMarks() = 0;
-    virtual void clearAllNavigateMark(EditorNaviagteType types, const char *tag = "") = 0;
+    virtual void clearAllNavigateMark(EditorNaviagteType types, const QString &tag = "") = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
+    virtual void updateNavigateMark(EditorNaviagteType type) = 0;
     virtual void showLink(const Link &link) = 0;
     virtual void clearLink() = 0;
     virtual void setTabOption(int tabSize, bool tabToSpace) = 0;

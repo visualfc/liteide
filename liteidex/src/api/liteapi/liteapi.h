@@ -388,7 +388,7 @@ public:
     virtual QByteArray utf8Data() const = 0;
     virtual void setWordWrap(bool wrap) = 0;
     virtual bool wordWrap() const = 0;
-    virtual void gotoLine(int line, int column, bool center = false) = 0;
+    virtual void gotoLine(int blockNumber, int column, bool center = false, int selection = 0) = 0;
     virtual void setFindOption(FindOption *opt) = 0;
     virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
     virtual QString textAt(int pos, int length) const = 0;
@@ -939,7 +939,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X33.1-1")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X33.2")
 
 
 #endif //LITEAPI_H

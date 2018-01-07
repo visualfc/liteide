@@ -96,7 +96,7 @@ public:
     virtual QByteArray utf8Data() const;
     virtual void setWordWrap(bool wrap);
     virtual bool wordWrap() const;
-    virtual void gotoLine(int line, int column, bool center);
+    virtual void gotoLine(int blockNumber, int column, bool center, int selection = 0);
     virtual int position(PositionOperation posOp = Current, int at = -1) const;
     virtual QString textAt(int pos, int length) const;
     virtual QRect cursorRect(int pos = -1) const;
@@ -110,10 +110,11 @@ public:
     virtual void setFindOption(LiteApi::FindOption *opt);
     virtual void setSpellCheckZoneDontComplete(bool b);
     virtual void setNavigateHead(LiteApi::EditorNaviagteType type, const QString &msg);
-    virtual void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag);
+    virtual void insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const QString &tag = "", int offset = 0, int selection = 0);
     virtual void clearNavigateMarak(int line);
     virtual void clearAllNavigateMarks();
-    virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag);
+    virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const QString &tag = "");
+    virtual void updateNavigateMark(LiteApi::EditorNaviagteType type);
     virtual void showLink(const LiteApi::Link &link);
     virtual void clearLink();
     virtual void setTabOption(int tabSize, bool tabToSpace);

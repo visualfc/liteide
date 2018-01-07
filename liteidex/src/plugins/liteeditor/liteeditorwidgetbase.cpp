@@ -95,7 +95,7 @@ struct NavigateMark
             return markTypeColor(type);
         }
     };
-    void addNode(LiteApi::EditorNaviagteType type, const QString & msg, const char* tag = "", int offset = 0, int selection = 0)
+    void addNode(LiteApi::EditorNaviagteType type, const QString & msg, const QString &tag = "", int offset = 0, int selection = 0)
     {
         Node *node = new Node;
         node->type = type;
@@ -114,12 +114,12 @@ struct NavigateMark
         }
         return 0;
     }
-    void removeNode(LiteApi::EditorNaviagteType types, const char* tag = "")
+    void removeNode(LiteApi::EditorNaviagteType types, const QString &tag = "")
     {
         QMutableListIterator<Node*> i(m_nodeList);
         while (i.hasNext()) {
             Node *node = i.next();
-            if ((node->type&types) && (QString(tag).isEmpty() || QString(tag) == node->tag)) {
+            if ((node->type&types) && (tag.isEmpty() || tag == node->tag)) {
                 i.remove();
                 delete node;
             }
@@ -145,7 +145,7 @@ public:
     {
         clearAll();
     }
-    void insertMark(int blockNumber, const QString &msg, LiteApi::EditorNaviagteType type, const char* tag = "", int offset = 0, int selection = 0)
+    void insertMark(int blockNumber, const QString &msg, LiteApi::EditorNaviagteType type, const QString &tag = "", int offset = 0, int selection = 0)
     {
          NavigateMarkMap::iterator it = markMap.find(blockNumber);
          if (it == markMap.end()) {
@@ -165,7 +165,7 @@ public:
              }
          }
     }
-    void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char* tag = "")
+    void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const QString &tag = "")
     {
         QMutableMapIterator<int,NavigateMark*> i(markMap);
         while (i.hasNext()) {
@@ -1387,7 +1387,7 @@ void LiteEditorWidgetBase::slotSelectionChanged()
 
     if (m_selectionExpression.pattern() != pattern) {
         m_selectionExpression.setPattern(pattern);
-        updateNavigateMarks(LiteApi::EditorNavigateSelection);
+        updateNavigateMark(LiteApi::EditorNavigateSelection);
         viewport()->update();
     }
 
@@ -1520,9 +1520,9 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
             m_findExpression.setPattern("");
         }
     }
-    updateNavigateMarks(LiteApi::EditorNavigateFind);
+    updateNavigateMark(LiteApi::EditorNavigateFind);
     if (!m_selectionExpression.isEmpty()) {
-        updateNavigateMarks(LiteApi::EditorNavigateSelection);
+        updateNavigateMark(LiteApi::EditorNavigateSelection);
     }
     viewport()->update();
 }
@@ -2901,13 +2901,13 @@ void LiteEditorWidgetBase::setNavigateHead(LiteApi::EditorNaviagteType type, con
     m_navigateArea->update();
 }
 
-void LiteEditorWidgetBase::insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "", int offset, int selection)
+void LiteEditorWidgetBase::insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const QString &tag, int offset, int selection)
 {
     m_navigateManager->insertMark(blockNumber,msg,type,tag,offset,selection);
     m_navigateArea->update();
 }
 
-void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
+void LiteEditorWidgetBase::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const QString &tag)
 {
     m_navigateManager->clearAllNavigateMark(types, tag);
     m_navigateArea->update();
@@ -4155,11 +4155,17 @@ void LiteEditorWidgetBase::transformBlockSelection(TransformationMethod method)
     viewport()->update();
 }
 
-// Update selections or find marks.
-void LiteEditorWidgetBase::updateNavigateMarks(LiteApi::EditorNaviagteType type)
+void LiteEditorWidgetBase::updateNavigateMark(LiteApi::EditorNaviagteType type)
 {
-    assert(LiteApi::EditorNavigateFind == type ||
-           LiteApi::EditorNavigateSelection == type);
+    if (type == LiteApi::EditorNavigateSelection ||
+            type == LiteApi::EditorNavigateFind) {
+        updateFindSelectionMark(type);
+    }
+}
+
+// Update selections or find marks.
+void LiteEditorWidgetBase::updateFindSelectionMark(LiteApi::EditorNaviagteType type)
+{
     clearAllNavigateMark(type, "");
 
     if (!needToMark(type))
@@ -4186,7 +4192,6 @@ bool LiteEditorWidgetBase::needToMark(LiteApi::EditorNaviagteType type) const
     if (LiteApi::EditorNavigateSelection == type) {
         return !m_selectionExpression.isEmpty() && m_findExpression.isEmpty();
     }
-    assert(false);
     return false;
 }
 

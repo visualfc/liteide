@@ -943,10 +943,10 @@ bool LiteEditor::wordWrap() const
     return m_editorWidget->isWordWrap();
 }
 
-void LiteEditor::gotoLine(int line, int column, bool center)
+void LiteEditor::gotoLine(int blockNumber, int column, bool center, int selection)
 {
     m_editorWidget->setFocus();
-    m_editorWidget->gotoLine(line,column,center);
+    m_editorWidget->gotoLine(blockNumber,column,center,selection);
 }
 
 int LiteEditor::position(LiteApi::ITextEditor::PositionOperation posOp, int at) const
@@ -1318,9 +1318,9 @@ void LiteEditor::setNavigateHead(LiteApi::EditorNaviagteType type, const QString
     m_editorWidget->setNavigateHead(type,msg);
 }
 
-void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const char* tag = "")
+void LiteEditor::insertNavigateMark(int line, LiteApi::EditorNaviagteType type, const QString &msg, const QString &tag, int offset, int selection)
 {
-    m_editorWidget->insertNavigateMark(line,type,msg, tag);
+    m_editorWidget->insertNavigateMark(line,type,msg, tag,offset, selection);
 }
 
 void LiteEditor::clearNavigateMarak(int /*line*/)
@@ -1332,9 +1332,14 @@ void LiteEditor::clearAllNavigateMarks()
     m_editorWidget->clearAllNavigateMarks();
 }
 
-void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const char *tag = "")
+void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const QString &tag)
 {
     m_editorWidget->clearAllNavigateMark(types, tag);
+}
+
+void LiteEditor::updateNavigateMark(LiteApi::EditorNaviagteType type)
+{
+    m_editorWidget->updateNavigateMark(type);
 }
 
 void LiteEditor::showLink(const LiteApi::Link &link)
