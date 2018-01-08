@@ -586,7 +586,7 @@ void LiteEditorWidgetBase::editContentsChanged(int position, int charsRemoved, i
         }
     }
     if (!m_findExpression.isEmpty()) {
-        this->updateNavigateMark(LiteApi::EditorNavigateFind);
+        this->updateFindOrSelectionMark(LiteApi::EditorNavigateFind);
     }
 }
 
@@ -1389,7 +1389,7 @@ void LiteEditorWidgetBase::slotSelectionChanged()
 
     if (m_selectionExpression.pattern() != pattern) {
         m_selectionExpression.setPattern(pattern);
-        updateNavigateMark(LiteApi::EditorNavigateSelection);
+        updateFindOrSelectionMark(LiteApi::EditorNavigateSelection);
         viewport()->update();
     }
 
@@ -1522,9 +1522,9 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
             m_findExpression.setPattern("");
         }
     }
-    updateNavigateMark(LiteApi::EditorNavigateFind);
+    updateFindOrSelectionMark(LiteApi::EditorNavigateFind);
     if (!m_selectionExpression.isEmpty()) {
-        updateNavigateMark(LiteApi::EditorNavigateSelection);
+        updateFindOrSelectionMark(LiteApi::EditorNavigateSelection);
     }
     viewport()->update();
 }
@@ -4155,14 +4155,6 @@ void LiteEditorWidgetBase::transformBlockSelection(TransformationMethod method)
     m_blockSelection.lastVisualColumn = rightBound;
     setTextCursor(m_blockSelection.selection(tabSettings()));
     viewport()->update();
-}
-
-void LiteEditorWidgetBase::updateNavigateMark(LiteApi::EditorNaviagteType type)
-{
-    if (type == LiteApi::EditorNavigateSelection ||
-            type == LiteApi::EditorNavigateFind) {
-        updateFindOrSelectionMark(type);
-    }
 }
 
 // Update selections or find marks.

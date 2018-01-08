@@ -277,7 +277,6 @@ public:
     virtual void clearAllNavigateMarks() = 0;
     virtual void clearAllNavigateMark(EditorNaviagteType types, const QString &tag = "") = 0;
     virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
-    virtual void updateNavigateMark(EditorNaviagteType type) = 0;
     virtual void showLink(const Link &link) = 0;
     virtual void clearLink() = 0;
     virtual void setTabOption(int tabSize, bool tabToSpace) = 0;

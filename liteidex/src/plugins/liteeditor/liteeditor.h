@@ -114,7 +114,6 @@ public:
     virtual void clearNavigateMarak(int line);
     virtual void clearAllNavigateMarks();
     virtual void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const QString &tag = "");
-    virtual void updateNavigateMark(LiteApi::EditorNaviagteType type);
     virtual void showLink(const LiteApi::Link &link);
     virtual void clearLink();
     virtual void setTabOption(int tabSize, bool tabToSpace);

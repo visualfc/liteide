@@ -1337,11 +1337,6 @@ void LiteEditor::clearAllNavigateMark(LiteApi::EditorNaviagteType types, const Q
     m_editorWidget->clearAllNavigateMark(types, tag);
 }
 
-void LiteEditor::updateNavigateMark(LiteApi::EditorNaviagteType type)
-{
-    m_editorWidget->updateNavigateMark(type);
-}
-
 void LiteEditor::showLink(const LiteApi::Link &link)
 {
     m_editorWidget->showLink(link);

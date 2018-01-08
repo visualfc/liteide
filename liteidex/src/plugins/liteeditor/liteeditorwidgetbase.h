@@ -80,7 +80,6 @@ public:
     void insertNavigateMark(int blockNumber, LiteApi::EditorNaviagteType type, const QString &msg, const QString &tag, int offset = 0, int selection = 0);
     void clearAllNavigateMark(LiteApi::EditorNaviagteType types, const QString &tag = 0);
     void clearAllNavigateMarks();
-    void updateNavigateMark(LiteApi::EditorNaviagteType type);
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
