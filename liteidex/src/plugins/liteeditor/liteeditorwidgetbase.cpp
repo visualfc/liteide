@@ -36,7 +36,6 @@
 #include <QScrollBar>
 #include <QInputMethodEvent>
 #include <QTimer>
-#include <cassert>
 #include <cmath>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -585,6 +584,9 @@ void LiteEditorWidgetBase::editContentsChanged(int position, int charsRemoved, i
         } else {
             documentLayout->updateMarksBlock(posBlock);
         }
+    }
+    if (!m_findExpression.isEmpty()) {
+        this->updateNavigateMark(LiteApi::EditorNavigateFind);
     }
 }
 
@@ -4159,23 +4161,23 @@ void LiteEditorWidgetBase::updateNavigateMark(LiteApi::EditorNaviagteType type)
 {
     if (type == LiteApi::EditorNavigateSelection ||
             type == LiteApi::EditorNavigateFind) {
-        updateFindSelectionMark(type);
+        updateFindOrSelectionMark(type);
     }
 }
 
 // Update selections or find marks.
-void LiteEditorWidgetBase::updateFindSelectionMark(LiteApi::EditorNaviagteType type)
+void LiteEditorWidgetBase::updateFindOrSelectionMark(LiteApi::EditorNaviagteType type)
 {
     clearAllNavigateMark(type, "");
 
-    if (!needToMark(type))
+    if (!checkFindOrSelectionMark(type))
         return;
 
     QTextDocument *doc = this->document();
     QTextCursor cur;
     for (QTextBlock it = doc->begin(); it != doc->end(); it = it.next())
     {
-        if (!needToMarkBlock(it, type,cur))
+        if (!checkFindOrSelectionMarkBlock(it, type,cur))
             continue;
         int blockNumber = it.blockNumber();
         int offset = cur.selectionStart()-it.position();
@@ -4184,7 +4186,7 @@ void LiteEditorWidgetBase::updateFindSelectionMark(LiteApi::EditorNaviagteType t
     }
 }
 
-bool LiteEditorWidgetBase::needToMark(LiteApi::EditorNaviagteType type) const
+bool LiteEditorWidgetBase::checkFindOrSelectionMark(LiteApi::EditorNaviagteType type) const
 {
     if (LiteApi::EditorNavigateFind == type) {
         return !m_findExpression.isEmpty();
@@ -4195,7 +4197,7 @@ bool LiteEditorWidgetBase::needToMark(LiteApi::EditorNaviagteType type) const
     return false;
 }
 
-bool LiteEditorWidgetBase::needToMarkBlock(
+bool LiteEditorWidgetBase::checkFindOrSelectionMarkBlock(
     const QTextBlock &block, LiteApi::EditorNaviagteType type, QTextCursor &cur) const
 {
     int pos = 0;
@@ -4204,6 +4206,5 @@ bool LiteEditorWidgetBase::needToMarkBlock(
     if (LiteApi::EditorNavigateSelection == type)
         return findInBlock(block, m_selectionExpression, pos,
                            QTextDocument::FindWholeWords, cur);
-    assert(false);
     return false;
 }

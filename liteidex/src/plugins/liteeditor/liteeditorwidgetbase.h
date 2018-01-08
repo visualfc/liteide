@@ -309,9 +309,9 @@ protected slots:
     void stopUplinkTimer();
 private:
     // Update selections or find marks.
-    void updateFindSelectionMark(LiteApi::EditorNaviagteType type);
-    bool needToMark(LiteApi::EditorNaviagteType type) const;
-    bool needToMarkBlock(const QTextBlock &block,
+    void updateFindOrSelectionMark(LiteApi::EditorNaviagteType type);
+    bool checkFindOrSelectionMark(LiteApi::EditorNaviagteType type) const;
+    bool checkFindOrSelectionMarkBlock(const QTextBlock &block,
                          LiteApi::EditorNaviagteType type, QTextCursor &cur) const;
 protected:
     LiteApi::IApplication *m_liteApp;
