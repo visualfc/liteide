@@ -1,5 +1,5 @@
 /* === Shared === */
-QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
+QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox,
 QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog {
 	background-color: #333333;
 	color: #BBBBBB;
@@ -13,9 +13,9 @@ QWidget:window {
 
 /* === WebView === */
 QTextBrowser, QWebView {
-    background-color: #BBBBBB;
-    selection-color: #0a214c; 
-    selection-background-color: #C19A6B;
+	background-color: #BBBBBB;
+	selection-color: #0a214c;
+	selection-background-color: #C19A6B;
 }
 
 /* === QPushButton === */
@@ -122,13 +122,13 @@ QToolButton[popupMode="1"] { /* only for MenuButtonPopup */
 QToolButton::menu-button {
 	border-left: 1px solid #333333;
 	background: transparent;
-    width: 16px;
+	width: 16px;
 }
 
 QToolButton::menu-button:hover {
 	border-left: 1px solid #444444;
 	background: transparent;
-    width: 16px;
+	width: 16px;
 }
 
 QToolButton:checked, QToolButton:pressed {
@@ -197,7 +197,7 @@ QMenuBar::item:selected {
 QMenuBar::item:pressed {
 	background: #444444;
 }
- 
+
 
 /* =================== */
 QLineEdit, QListView, QTreeView, QTableView, QAbstractSpinBox {
