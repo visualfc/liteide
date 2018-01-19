@@ -212,6 +212,82 @@ QAbstractScrollArea, QLineEdit, QTextEdit, QAbstractSpinBox, QComboBox {
 
 }
 
+/* === QScrollBar - Vertical === */
+QScrollBar:vertical {
+	background-color: #272822;
+	border: 2px solid #272822;
+	width: 18px;
+	margin: 18px 0 18px 0px;
+}
+
+	QScrollBar::handle:vertical {
+		background-color: #333333;
+		min-height: 20px;
+	}
+
+	QScrollBar::add-line:vertical {
+		border: none;
+		height: 18px;
+		subcontrol-position: bottom;
+		subcontrol-origin: margin;
+	}
+
+	QScrollBar::sub-line:vertical {
+		border: none;
+		height: 18px;
+		subcontrol-position: top;
+		subcontrol-origin: margin;
+	}
+
+	QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+		background: none;
+	}
+
+	QScrollBar:up-arrow:vertical, QScrollBar:down-arrow:vertical {
+		border: 2px solid #272822;
+		width: 14px;
+		height: 14px;
+		background-color: #333333;
+	}
+
+/* === QScrollBar - Horizontal === */
+QScrollBar:horizontal {
+	background-color: #272822;
+	border: 2px solid #272822;
+	height: 18px;
+	margin: 0px 18px 0 18px;
+}
+
+	QScrollBar::handle:horizontal {
+		background-color: #333333;
+		min-width: 20px;
+	}
+
+	QScrollBar::add-line:horizontal {
+		border: none;
+		width: 18px;
+		subcontrol-position: right;
+		subcontrol-origin: margin;
+	}
+
+	QScrollBar::sub-line:horizontal {
+		border: none;
+		width: 18px;
+		subcontrol-position: left;
+		subcontrol-origin: margin;
+	}
+
+	QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+		background: none;
+	}
+
+	QScrollBar:left-arrow:horizontal, QScrollBar:right-arrow:horizontal {
+		border: 2px solid #272822;
+		width: 14px;
+		height: 14px;
+		background-color: #333333;
+	}
+
 /* === QHeaderView === */
 QHeaderView {
 	background: #333333;
