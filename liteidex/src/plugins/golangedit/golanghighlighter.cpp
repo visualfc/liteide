@@ -44,9 +44,17 @@ using namespace TextEditor;
 using namespace CPlusPlus;
 
 namespace {
-  /**
-   * Checks the "function()" formats. 
-   */
+    /** Enums used to record the state of recognizing function declaration. */
+    enum FuncState {
+        FUNC_STATE_NORMAL = 0,
+        // For function declaration.
+        FUNC_STATE_FUNC,
+        FUNC_STATE_LPAREN,
+        FUNC_STATE_RPAREN,
+        FUNC_STATE_FUNC_DECL,
+    };
+
+  /** Checks the "function()" formats. */
   bool maybeIsFunctionCall(const QList<Token> &tks, int idx) {
       const Token& tk = tks[idx];
       if (!tk.isGoBuiltin() && !tk.is(T_IDENTIFIER)) {
@@ -61,6 +69,41 @@ namespace {
           return tks[i].is(T_LPAREN) || tks[i].is(T_LBRACE);
       }
       return false;
+  }
+
+  FuncState updateFuncState(const Token &tk, FuncState funcState) {
+      if (tk.isComment()) {
+          return funcState;
+      }
+      switch(funcState) {
+          case FUNC_STATE_NORMAL: // fall through.
+          case FUNC_STATE_FUNC_DECL:
+              if (tk.is(T_GO_FUNC)) {
+                  return FUNC_STATE_FUNC;
+              } else {
+                  return FUNC_STATE_NORMAL;
+              }
+          case FUNC_STATE_FUNC:
+              if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
+                  return FUNC_STATE_FUNC_DECL;
+              } else if (tk.is(T_LPAREN)) {
+                  return FUNC_STATE_LPAREN;
+              } else {
+                  return FUNC_STATE_NORMAL;
+              }
+          case FUNC_STATE_LPAREN:
+              if (tk.is(T_RPAREN)) {
+                  return FUNC_STATE_RPAREN;
+              } else {
+                  return FUNC_STATE_LPAREN;
+              }
+          case FUNC_STATE_RPAREN:
+              if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
+                  return FUNC_STATE_FUNC_DECL;
+              } else {
+                  return FUNC_STATE_NORMAL;
+              }
+      }
   }
 }
 
@@ -167,6 +210,7 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
 
     //bool expectPreprocessorKeyword = false;
     //bool onlyHighlightComments = false;
+    FuncState funcState = FUNC_STATE_NORMAL;
     for (int i = 0; i < tokens.size(); ++i) {
         Token &tk = tokens[i];
 
@@ -286,42 +330,6 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
                 if (n < tokens.size() && tokens[n].is(T_IDENTIFIER)) {
                     setContextData("go.package",text.mid(tokens[n].begin(),tokens[n].length()));
                 }
-            } else if (tk.is(T_GO_FUNC)) {
-                int size = tokens.size()-1;
-                int n = i+1;
-                //func (sz *Size) Width()
-                if ((i == 0) && (n < size)) {
-                    if (tokens[n].is(T_LPAREN)) {
-                        while(n++ < size) {
-                            if (tokens[n].is(T_RPAREN)) {
-                                setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
-                                n++;
-                                if ((n < size) && tokens[n].is(T_IDENTIFIER)) {
-                                    setFormat(tokens[n].begin(),tokens[n].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
-//                                    n++;
-//                                    if (n < size && tokens[n].is(T_LPAREN)) {
-//                                        while(n++ < size) {
-//                                            if (tokens[n].is(T_RPAREN) || tokens[n].is(T_COMMA)) {
-//                                                setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
-//                                            }
-//                                        }
-//                                    }
-                                }
-                                break;
-                            }
-                        }
-                    } else if (tokens[n].is(T_IDENTIFIER)) {
-                        setFormat(tokens[n].begin(),tokens[n].length(),m_creatorFormats[SyntaxHighlighter::FuncDecl]);
-//                        n++;
-//                        if (n < size && tokens[n].is(T_LPAREN)) {
-//                            while(n++ < size) {
-//                                if (tokens[n].is(T_RPAREN) || tokens[n].is(T_COMMA)) {
-//                                    setFormat(tokens[n-1].begin(), tokens[n-1].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
-//                                }
-//                            }
-//                        }
-                    }
-                }
             } else if (tk.is(T_GO_TYPE)) {
                 int size = tokens.size()-1;
                 int n = i+1;
@@ -345,6 +353,11 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Function]);
         } else if (tk.is(T_IDENTIFIER)) {
            // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
+        }
+
+        funcState = updateFuncState(tk, funcState);
+        if (FUNC_STATE_FUNC_DECL == funcState) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::FuncDecl]);
         }
     }
 
