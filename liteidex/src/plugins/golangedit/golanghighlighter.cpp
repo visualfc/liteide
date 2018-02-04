@@ -43,6 +43,27 @@
 using namespace TextEditor;
 using namespace CPlusPlus;
 
+namespace {
+  /**
+   * Checks the "function()" formats. 
+   */
+  bool maybeIsFunctionCall(const QList<Token> &tks, int idx) {
+      const Token& tk = tks[idx];
+      if (!tk.isGoBuiltin() && !tk.is(T_IDENTIFIER)) {
+          return false;
+      }
+
+      int tkCnt = tks.size();
+      for (int i = idx + 1; i < tkCnt; ++i) {
+          if (tks[i].isComment()) {
+              continue;
+          }
+          return tks[i].is(T_LPAREN) || tks[i].is(T_LBRACE);
+      }
+      return false;
+  }
+}
+
 GolangHighlighter::GolangHighlighter(LiteApi::ITextEditor *editor, QTextDocument *document) :
     TextEditor::SyntaxHighlighter(document)
 {
@@ -320,6 +341,8 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Predeclared]);
         } else if (i == 0 && tokens.size() > 1 && tokens.at(0).begin() == 0 && tk.is(T_IDENTIFIER) && tokens.at(1).is(T_COLON)) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
+        } else if (maybeIsFunctionCall(tokens, i)) {
+            setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Function]);
         } else if (tk.is(T_IDENTIFIER)) {
            // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
         }
