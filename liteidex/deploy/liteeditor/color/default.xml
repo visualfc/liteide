@@ -17,7 +17,7 @@
   <style name="Comment" foreground="#008000"/>
   <style name="Alert" foreground="#ff0000"/>
   <style name="Error" foreground="#ff0000"/>
-  <style name="Function" foreground="#000080"/>
+  <style name="Function" foreground="#000000"/>
   <style name="RegionMarker" foreground="#000000"/>
   <style name="Symbol" foreground="#000000"/> 
   <style name="BuiltinFunc" foreground="#000080"/>
