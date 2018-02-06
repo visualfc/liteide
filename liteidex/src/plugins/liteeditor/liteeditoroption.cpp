@@ -84,6 +84,9 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     QString stylePath = m_liteApp->resourcePath()+"/liteeditor/color";
     QDir dir(stylePath);
     int index = -1;
+    if (!QFileInfo(stylePath,styleName).exists()) {
+        styleName = "default.xml";
+    }
     foreach(QFileInfo info, dir.entryInfoList(QStringList() << "*.xml")) {
         ui->styleComboBox->addItem(info.fileName());
         if (info.fileName() == styleName) {
