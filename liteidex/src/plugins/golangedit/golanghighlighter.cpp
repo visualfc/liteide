@@ -43,69 +43,74 @@
 using namespace TextEditor;
 using namespace CPlusPlus;
 
-namespace {
-    /** Enums used to record the state of recognizing function declaration. */
-    enum FuncState {
-        FUNC_STATE_NORMAL = 0,
-        // For function declaration.
-        FUNC_STATE_FUNC,
-        FUNC_STATE_LPAREN,
-        FUNC_STATE_RPAREN,
-        FUNC_STATE_FUNC_DECL,
-    };
+namespace
+{
+/** Enums used to record the state of recognizing function declaration. */
+enum FuncState {
+    FUNC_STATE_NORMAL = 0,
+    // For function declaration.
+    FUNC_STATE_FUNC,
+    FUNC_STATE_LPAREN,
+    FUNC_STATE_RPAREN,
+    FUNC_STATE_FUNC_DECL,
+};
 
-  /** Checks the "function()" formats. */
-  bool maybeIsFunctionCall(const QList<Token> &tks, int idx) {
-      const Token& tk = tks[idx];
-      if (!tk.isGoBuiltin() && !tk.is(T_IDENTIFIER)) {
-          return false;
-      }
+/** Checks the "function()" formats. */
+bool maybeIsFunctionCall(const QList<Token> &tks, int idx)
+{
+    const Token& tk = tks[idx];
+    if (!tk.isGoBuiltin() && !tk.is(T_IDENTIFIER)) {
+        return false;
+    }
 
-      int tkCnt = tks.size();
-      for (int i = idx + 1; i < tkCnt; ++i) {
-          if (tks[i].isComment()) {
-              continue;
-          }
-          return tks[i].is(T_LPAREN) || tks[i].is(T_LBRACE);
-      }
-      return false;
-  }
-
-  FuncState updateFuncState(const Token &tk, FuncState funcState) {
-      if (tk.isComment()) {
-          return funcState;
-      }
-      switch(funcState) {
-          case FUNC_STATE_NORMAL: // fall through.
-          case FUNC_STATE_FUNC_DECL:
-              if (tk.is(T_GO_FUNC)) {
-                  return FUNC_STATE_FUNC;
-              } else {
-                  return FUNC_STATE_NORMAL;
-              }
-          case FUNC_STATE_FUNC:
-              if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
-                  return FUNC_STATE_FUNC_DECL;
-              } else if (tk.is(T_LPAREN)) {
-                  return FUNC_STATE_LPAREN;
-              } else {
-                  return FUNC_STATE_NORMAL;
-              }
-          case FUNC_STATE_LPAREN:
-              if (tk.is(T_RPAREN)) {
-                  return FUNC_STATE_RPAREN;
-              } else {
-                  return FUNC_STATE_LPAREN;
-              }
-          case FUNC_STATE_RPAREN:
-              if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
-                  return FUNC_STATE_FUNC_DECL;
-              } else {
-                  return FUNC_STATE_NORMAL;
-              }
-      }
-  }
+    int tkCnt = tks.size();
+    for (int i = idx + 1; i < tkCnt; ++i) {
+        if (tks[i].isComment()) {
+            continue;
+        }
+        return tks[i].is(T_LPAREN); // || tks[i].is(T_LBRACE);
+    }
+    return false;
 }
+
+FuncState updateFuncState(const Token &tk, FuncState funcState)
+{
+    if (tk.isComment()) {
+        return funcState;
+    }
+    switch(funcState) {
+    case FUNC_STATE_NORMAL: // fall through.
+    case FUNC_STATE_FUNC_DECL:
+        if (tk.is(T_GO_FUNC)) {
+            return FUNC_STATE_FUNC;
+        } else {
+            return FUNC_STATE_NORMAL;
+        }
+    case FUNC_STATE_FUNC:
+        if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
+            return FUNC_STATE_FUNC_DECL;
+        } else if (tk.is(T_LPAREN)) {
+            return FUNC_STATE_LPAREN;
+        } else {
+            return FUNC_STATE_NORMAL;
+        }
+    case FUNC_STATE_LPAREN:
+        if (tk.is(T_RPAREN)) {
+            return FUNC_STATE_RPAREN;
+        } else {
+            return FUNC_STATE_LPAREN;
+        }
+    case FUNC_STATE_RPAREN:
+        if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
+            return FUNC_STATE_FUNC_DECL;
+        } else {
+            return FUNC_STATE_NORMAL;
+        }
+    }
+    return funcState;
+}
+
+} //namespace
 
 GolangHighlighter::GolangHighlighter(LiteApi::ITextEditor *editor, QTextDocument *document) :
     TextEditor::SyntaxHighlighter(document)
