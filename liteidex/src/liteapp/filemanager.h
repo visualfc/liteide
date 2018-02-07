@@ -34,6 +34,18 @@ class NewFileDialog;
 class FolderListView;
 class MultiFolderView;
 
+class IFolderWindow : public QObject
+{
+public:
+    IFolderWindow(QObject *parent) : QObject(parent)
+    {
+    }
+    virtual QStringList folderList() const = 0;
+    virtual void setFolderList(const QStringList &folders) = 0;
+    virtual void addFolderList(const QString &folder) = 0;
+    virtual void closeAllFolders() = 0;
+};
+
 class FileManager : public IFileManager
 {
     Q_OBJECT
@@ -60,7 +72,6 @@ public:
     QString openAllTypeFilter() const;
     QString openProjectTypeFilter() const;
     QString openEditorTypeFilter() const;
-    bool isShowHideFiles() const;
 protected:
     void updateFileState(const QString &fileName);
 public slots:
@@ -78,27 +89,17 @@ public slots:
     void editorAboutToClose(LiteApi::IEditor*);
     void checkForReload();
     void applyOption(QString);
-    void showHideFiles(bool);
-    void doubleClickedFolderView(const QModelIndex &index);
-    void enterKeyPressedFolderView(const QModelIndex &index);
-    void currentEditorChanged(LiteApi::IEditor *editor);
-    void triggeredSyncEditor(bool b);
     void onApplicationFocusChange();
 protected:
     NewFileDialog        *m_newFileDialog;
-    MultiFolderView     *m_folderListView;
+    IFolderWindow        *m_folderWindow;
     QFileSystemWatcher   *m_fileWatcher;
     QMap<QString,QDateTime> m_fileStateMap;
     QSet<QString>           m_changedFiles;
     bool                 m_checkBlockActivated;
     bool                 m_checkOnFocusChange;
     bool                 m_fileWatcherAutoReload;
-    QAction     *m_toolWindowAct;
-    QString      m_initPath;
-    QMenu*       m_filterMenu;
-    QAction*     m_showHideFilesAct;
-    QAction*     m_showDetailsAct;
-    QAction*     m_syncEditorAct;
+    QString              m_initPath;
 };
 
 #endif // FILEMANAGER_H
