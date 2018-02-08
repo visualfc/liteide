@@ -18,15 +18,15 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: folderwindow.cpp
+// Module: multifolderwindow.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "folderwindow.h"
+#include "multifolderwindow.h"
 #include "liteapp_global.h"
 #include <QMenu>
 #include <QAction>
 
-FolderWindow::FolderWindow(LiteApi::IApplication *app, QObject *parent) : IFolderWindow(parent)
+MultiFolderWindow::MultiFolderWindow(LiteApi::IApplication *app, QObject *parent) : IFolderWindow(parent)
 {
     m_liteApp = app;
     m_folderListView = new MultiFolderView(app);
@@ -83,7 +83,7 @@ FolderWindow::FolderWindow(LiteApi::IApplication *app, QObject *parent) : IFolde
     }
 }
 
-FolderWindow::~FolderWindow()
+MultiFolderWindow::~MultiFolderWindow()
 {
     m_liteApp->settings()->setValue("FileManager/synceditor",m_syncEditorAct->isChecked());
     m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
@@ -92,17 +92,17 @@ FolderWindow::~FolderWindow()
     delete m_folderListView;
 }
 
-QWidget *FolderWindow::widget()
+QWidget *MultiFolderWindow::widget()
 {
      return m_folderListView;
 }
 
-bool FolderWindow::isShowHideFiles() const
+bool MultiFolderWindow::isShowHideFiles() const
 {
     return m_folderListView->filter() & QDir::Hidden;
 }
 
-void FolderWindow::showHideFiles(bool b)
+void MultiFolderWindow::showHideFiles(bool b)
 {
     QDir::Filters filters = m_folderListView->filter();
     if (b) {
@@ -113,7 +113,7 @@ void FolderWindow::showHideFiles(bool b)
     m_folderListView->setFilter(filters);
 }
 
-void FolderWindow::doubleClickedFolderView(const QModelIndex &index)
+void MultiFolderWindow::doubleClickedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
@@ -124,7 +124,7 @@ void FolderWindow::doubleClickedFolderView(const QModelIndex &index)
     }
 }
 
-void FolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
+void MultiFolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
@@ -137,12 +137,12 @@ void FolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
     }
 }
 
-QStringList FolderWindow::folderList() const
+QStringList MultiFolderWindow::folderList() const
 {
     return m_folderListView->rootPathList();
 }
 
-void FolderWindow::setFolderList(const QStringList &folders)
+void MultiFolderWindow::setFolderList(const QStringList &folders)
 {
     QStringList all = folders;
     all.removeDuplicates();
@@ -155,7 +155,7 @@ void FolderWindow::setFolderList(const QStringList &folders)
     }
 }
 
-void FolderWindow::addFolderList(const QString &folder)
+void MultiFolderWindow::addFolderList(const QString &folder)
 {
     if (!m_folderListView->addRootPath(folder)) {
         return;
@@ -165,12 +165,12 @@ void FolderWindow::addFolderList(const QString &folder)
     m_folderListView->expandFolder(folder,true);
 }
 
-void FolderWindow::closeAllFolders()
+void MultiFolderWindow::closeAllFolders()
 {
     m_folderListView->closeAllFolders();
 }
 
-void FolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
+void MultiFolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
 {
     if (!m_syncEditorAct->isChecked()) {
         return;
@@ -196,7 +196,7 @@ void FolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
     m_folderListView->setCurrentIndex(index);
 }
 
-void FolderWindow::triggeredSyncEditor(bool b)
+void MultiFolderWindow::triggeredSyncEditor(bool b)
 {
     if (b) {
         this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());

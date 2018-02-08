@@ -18,7 +18,7 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: folderwindow.h
+// Module: multifolderwindow.h
 // Creator: visualfc <visualfc@gmail.com>
 
 #ifndef FOLDERWINDOW_H
@@ -28,12 +28,12 @@
 #include "folderview/multifolderview.h"
 #include "filemanager.h"
 
-class FolderWindow : public IFolderWindow
+class MultiFolderWindow : public IFolderWindow
 {
     Q_OBJECT
 public:
-    explicit FolderWindow(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual ~FolderWindow();
+    explicit MultiFolderWindow(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual ~MultiFolderWindow();
     virtual QWidget *widget();
     virtual QStringList folderList() const;
     virtual void setFolderList(const QStringList &folders);
