@@ -29,7 +29,7 @@
 #include "folderview/multifolderview.h"
 #include "liteapp_global.h"
 #include "multifolderwindow.h"
-#include "boxfolderwindow.h"
+#include "splitfolderwindow.h"
 
 #include <QApplication>
 #include <QMenu>
@@ -46,6 +46,7 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QDir>
+#include <QVBoxLayout>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -63,7 +64,6 @@ bool FileManager::initWithApp(IApplication *app)
         return false;
     }
    // m_folderWindow = new MultiFolderWindow(app);
-    m_folderWindow = new BoxFolderWindow(app);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));
@@ -72,6 +72,59 @@ bool FileManager::initWithApp(IApplication *app)
     m_initPath = m_liteApp->settings()->value("FileManager/initpath",QDir::homePath()).toString();
 
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
+
+    m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
+    m_showHideFilesAct->setCheckable(true);
+
+    m_showDetailsAct = new QAction(tr("Show Details"),this);
+    m_showDetailsAct->setCheckable(true);
+
+    m_syncEditorAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
+    m_syncEditorAct->setCheckable(true);
+
+    m_splitModeAct = new QAction(tr("Split Mode"),this);
+    m_splitModeAct->setCheckable(true);
+    bool bSplitMode = m_liteApp->settings()->value(LITEAPP_FOLDERSPLITMODE,false).toBool();
+    if (bSplitMode) {
+        m_folderWindow = new SplitFolderWindow(app);
+    } else {
+        m_folderWindow = new MultiFolderWindow(app);
+    }
+    m_splitModeAct->setChecked(bSplitMode);
+
+    bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
+    m_showHideFilesAct->setChecked(bShowHiddenFiles);
+    m_folderWindow->setShowHideFiles(bShowHiddenFiles);
+
+    bool bShowDetails = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWDETAILS,false).toBool();
+    m_showDetailsAct->setChecked(bShowDetails);
+    m_folderWindow->setShowDetails(bShowDetails);
+
+    bool bSyncEditor = m_liteApp->settings()->value(LITEAPP_FOLDERSSYNCEDITOR,false).toBool();
+    m_syncEditorAct->setChecked(bSyncEditor);
+    m_folderWindow->setSyncEditor(bSyncEditor);
+
+    connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(setShowHideFiles(bool)));
+    connect(m_showDetailsAct,SIGNAL(triggered(bool)),this,SLOT(setShowDetails(bool)));
+    connect(m_syncEditorAct,SIGNAL(triggered(bool)),this,SLOT(setSyncEditor(bool)));
+    connect(m_splitModeAct,SIGNAL(triggered(bool)),this,SLOT(setSplitMode(bool)));
+
+    QList<QAction*> actions;
+    m_filterMenu = new QMenu(tr("Filter"));
+    m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
+    m_filterMenu->addAction(m_showHideFilesAct);
+    m_filterMenu->addAction(m_showDetailsAct);
+    m_filterMenu->addSeparator();
+    m_filterMenu->addAction(m_splitModeAct);
+    actions << m_filterMenu->menuAction() << m_syncEditorAct;
+
+    m_folderWidget = new QWidget;
+    m_layout = new QVBoxLayout;
+    m_layout->setMargin(0);
+    m_folderWidget->setLayout(m_layout);
+    m_layout->addWidget(m_folderWindow->widget());
+
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderWidget,"Folders",tr("Folders"),false,actions);
 
     return true;
 }
@@ -87,6 +140,11 @@ FileManager::FileManager()
 
 FileManager::~FileManager()
 {
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSSYNCEDITOR,m_syncEditorAct->isChecked());
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWDETAILS,m_showDetailsAct->isChecked());
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSPLITMODE,m_splitModeAct->isChecked());
+    delete m_filterMenu;
     delete m_fileWatcher;
     m_liteApp->settings()->setValue("FileManager/initpath",m_initPath);
     if (m_newFileDialog) {
@@ -528,6 +586,37 @@ void FileManager::onApplicationFocusChange()
         return;
     m_checkOnFocusChange = false;
     checkForReload();
+}
+
+void FileManager::setShowHideFiles(bool b)
+{
+    m_folderWindow->setShowHideFiles(b);
+}
+
+void FileManager::setShowDetails(bool b)
+{
+    m_folderWindow->setShowDetails(b);
+}
+
+void FileManager::setSyncEditor(bool b)
+{
+    m_folderWindow->setSyncEditor(b);
+}
+
+void FileManager::setSplitMode(bool b)
+{
+    QStringList folderList = m_folderWindow->folderList();
+    delete m_folderWindow;
+    if (b) {
+        m_folderWindow = new SplitFolderWindow(m_liteApp);
+    } else {
+        m_folderWindow = new MultiFolderWindow(m_liteApp);
+    }
+    m_layout->addWidget(m_folderWindow->widget());
+    m_folderWindow->setFolderList(folderList);
+    m_folderWindow->setShowHideFiles(m_showHideFilesAct->isChecked());
+    m_folderWindow->setShowDetails(m_showDetailsAct->isChecked());
+    m_folderWindow->setSyncEditor(m_syncEditorAct->isChecked());
 }
 
 void FileManager::checkForReload()

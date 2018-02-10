@@ -1,4 +1,27 @@
-#include "boxfolderwindow.h"
+/**************************************************************************
+** This file is part of LiteIDE
+**
+** Copyright (c) 2011-2018 LiteIDE Team. All rights reserved.
+**
+** This library is free software; you can redistribute it and/or
+** modify it under the terms of the GNU Lesser General Public
+** License as published by the Free Software Foundation; either
+** version 2.1 of the License, or (at your option) any later version.
+**
+** This library is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Lesser General Public License for more details.
+**
+** In addition, as a special exception,  that plugins developed for LiteIDE,
+** are allowed to remain closed sourced and can be distributed under any license .
+** These rights are included in the file LGPL_EXCEPTION.txt in this package.
+**
+**************************************************************************/
+// Module: splitfolderwindow.cpp
+// Creator: visualfc <visualfc@gmail.com>
+
+#include "splitfolderwindow.h"
 #include "symboltreeview/symboltreeview.h"
 #include "liteapp_global.h"
 #include <QTreeView>
@@ -11,12 +34,12 @@
 #include <QMenu>
 #include <QDebug>
 
-BoxFolderWindow::BoxFolderWindow(IApplication *app, QObject *parent)
+SplitFolderWindow::SplitFolderWindow(IApplication *app, QObject *parent)
     : IFolderWindow(parent), m_liteApp(app)
 {
     m_spliter = new QSplitter(Qt::Vertical);
 
-    m_tree = new BoxFolderView(app);
+    m_tree = new SplitFolderView(app);
     m_tree->setHeaderHidden(true);
     m_tree->setRootIsDecorated(false);
 
@@ -26,44 +49,12 @@ BoxFolderWindow::BoxFolderWindow(IApplication *app, QObject *parent)
     m_spliter->setStretchFactor(0,0);
     m_spliter->setStretchFactor(1,1);
 
-    QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
+    m_filters = QDir::AllDirs | QDir::Files | QDir::Drives
                             | QDir::Readable| QDir::Writable
                             | QDir::Executable /*| QDir::Hidden*/
                             | QDir::NoDotAndDotDot;
-
-    bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
-    if (bShowHiddenFiles) {
-        filters |= QDir::Hidden;
-    }
-
-    m_filters = filters;
-
-    m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
-    m_showHideFilesAct->setCheckable(true);
-    if (bShowHiddenFiles) {
-        m_showHideFilesAct->setChecked(true);
-    }
-    connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
-
-    m_bShowDetails = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWDETAILS,false).toBool();
-    m_showDetailsAct = new QAction(tr("Show Details"),this);
-    m_showDetailsAct->setCheckable(true);
-    if (m_bShowDetails) {
-        m_showDetailsAct->setChecked(true);
-    }
-    connect(m_showDetailsAct,SIGNAL(triggered(bool)),this,SLOT(setShowDetails(bool)));
-
-    m_syncEditorAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
-    m_syncEditorAct->setCheckable(true);
-
-    QList<QAction*> actions;
-    m_filterMenu = new QMenu(tr("Filter"));
-    m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
-    m_filterMenu->addAction(m_showHideFilesAct);
-    m_filterMenu->addAction(m_showDetailsAct);
-    actions << m_filterMenu->menuAction() << m_syncEditorAct;
-
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_spliter,"Folders",tr("Folders"),false,actions);
+    m_bShowDetails = false;
+    m_bSyncEditor = false;
 
     connect(m_tree,SIGNAL(currentIndexChanged(QModelIndex,QModelIndex)),this,SLOT(currentIndexChanged(QModelIndex,QModelIndex)));
     connect(m_tree,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
@@ -72,47 +63,45 @@ BoxFolderWindow::BoxFolderWindow(IApplication *app, QObject *parent)
 
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
-    connect(m_syncEditorAct,SIGNAL(triggered(bool)),this,SLOT(triggeredSyncEditor(bool)));
-    bool b = m_liteApp->settings()->value(LITEAPP_FOLDERSSYNCEDITOR,false).toBool();
-    if (b) {
-        m_syncEditorAct->setChecked(true);
-    }
-
     QByteArray state = m_liteApp->settings()->value("LiteApp/BoxFolderSplitter").toByteArray();
     m_spliter->restoreState(state);
 }
 
-BoxFolderWindow::~BoxFolderWindow()
+SplitFolderWindow::~SplitFolderWindow()
 {
-    m_liteApp->settings()->setValue(LITEAPP_FOLDERSSYNCEDITOR,m_syncEditorAct->isChecked());
-    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
-    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWDETAILS,m_showDetailsAct->isChecked());
-
     m_liteApp->settings()->setValue("LiteApp/BoxFolderSplitter",m_spliter->saveState());
-
-    delete m_filterMenu;
 
     delete m_spliter;
 }
 
-QStringList BoxFolderWindow::folderList() const
+QString SplitFolderWindow::id() const
+{
+    return "folderwindow/splitfolder";
+}
+
+QWidget *SplitFolderWindow::widget() const
+{
+    return m_spliter;
+}
+
+QStringList SplitFolderWindow::folderList() const
 {
     return m_folderList;
 }
 
-void BoxFolderWindow::setFolderList(const QStringList &folders)
+void SplitFolderWindow::setFolderList(const QStringList &folders)
 {
     foreach (QString folder, folders) {
        addFolderImpl(folder);
     }
 }
 
-void BoxFolderWindow::addFolderList(const QString &folder)
+void SplitFolderWindow::addFolderList(const QString &folder)
 {
     addFolderImpl(folder);
 }
 
-void BoxFolderWindow::closeAllFolders()
+void SplitFolderWindow::closeAllFolders()
 {
     m_folderList.clear();
     m_tree->clear();
@@ -125,7 +114,7 @@ void BoxFolderWindow::closeAllFolders()
     }
 }
 
-void BoxFolderWindow::currentIndexChanged(const QModelIndex &index, const QModelIndex &/*prev*/)
+void SplitFolderWindow::currentIndexChanged(const QModelIndex &index, const QModelIndex &/*prev*/)
 {
     int row = findInStacked(index);
     if (row == -1) {
@@ -146,7 +135,7 @@ void BoxFolderWindow::currentIndexChanged(const QModelIndex &index, const QModel
     m_stacked->setCurrentIndex(row);
 }
 
-void BoxFolderWindow::closeFolderIndex(const QModelIndex &index)
+void SplitFolderWindow::closeFolderIndex(const QModelIndex &index)
 {
     int row = findInStacked(index);
     if (row == -1) {
@@ -158,7 +147,7 @@ void BoxFolderWindow::closeFolderIndex(const QModelIndex &index)
     m_folderList.removeAt(row);
 }
 
-void BoxFolderWindow::reloadFolderIndex(const QModelIndex &index)
+void SplitFolderWindow::reloadFolderIndex(const QModelIndex &index)
 {
     int row = findInStacked(index);
     if (row == -1) {
@@ -168,7 +157,7 @@ void BoxFolderWindow::reloadFolderIndex(const QModelIndex &index)
     widget->reload();
 }
 
-void BoxFolderWindow::showHideFiles(bool b)
+void SplitFolderWindow::setShowHideFiles(bool b)
 {
     if (b) {
         m_filters |= QDir::Hidden;
@@ -184,7 +173,7 @@ void BoxFolderWindow::showHideFiles(bool b)
     }
 }
 
-void BoxFolderWindow::setShowDetails(bool b)
+void SplitFolderWindow::setShowDetails(bool b)
 {
     m_bShowDetails = b;
     FolderView *widget = (FolderView*)m_stacked->currentWidget();
@@ -196,12 +185,17 @@ void BoxFolderWindow::setShowDetails(bool b)
     }
 }
 
-void BoxFolderWindow::currentEditorChanged(IEditor *editor)
+void SplitFolderWindow::setSyncEditor(bool b)
 {
-    if (!m_syncEditorAct->isChecked()) {
-        return;
+    m_bSyncEditor = b;
+    if (b) {
+        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
     }
-    if (!editor) {
+}
+
+void SplitFolderWindow::currentEditorChanged(IEditor *editor)
+{
+    if (!editor || !m_bSyncEditor) {
         return;
     }
     QString filePath = editor->filePath();
@@ -237,14 +231,7 @@ void BoxFolderWindow::currentEditorChanged(IEditor *editor)
     }
 }
 
-void BoxFolderWindow::triggeredSyncEditor(bool b)
-{
-    if (b) {
-        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
-    }
-}
-
-void BoxFolderWindow::doubleClickedFolderView(const QModelIndex &index)
+void SplitFolderWindow::doubleClickedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
@@ -256,7 +243,7 @@ void BoxFolderWindow::doubleClickedFolderView(const QModelIndex &index)
     }
 }
 
-void BoxFolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
+void SplitFolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return;
@@ -270,7 +257,7 @@ void BoxFolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
     }
 }
 
-void BoxFolderWindow::addFolderImpl(const QString &_folder)
+void SplitFolderWindow::addFolderImpl(const QString &_folder)
 {
     QString folder = QDir::toNativeSeparators(_folder);
     if (m_folderList.contains(folder)) {
@@ -279,7 +266,7 @@ void BoxFolderWindow::addFolderImpl(const QString &_folder)
     if (!QDir(folder).exists()) {
         return;
     }
-    FolderView *view = new FolderView(false,m_liteApp);
+    FolderView *view = new FolderView(true,m_liteApp);
     view->setFilter(m_filters);
     view->setShowDetails(m_bShowDetails);
     view->setRootPath(folder);
@@ -292,7 +279,7 @@ void BoxFolderWindow::addFolderImpl(const QString &_folder)
     m_liteApp->recentManager()->addRecent(folder,"folder");
 }
 
-int BoxFolderWindow::findInStacked(const QModelIndex &index)
+int SplitFolderWindow::findInStacked(const QModelIndex &index)
 {
     if (!index.isValid()) {
         return -1;
@@ -302,7 +289,7 @@ int BoxFolderWindow::findInStacked(const QModelIndex &index)
 }
 
 
-BoxFolderView::BoxFolderView(IApplication *app, QWidget *parent)
+SplitFolderView::SplitFolderView(IApplication *app, QWidget *parent)
     : BaseFolderView(app,parent)
 {
     m_model = new QStandardItemModel(this);
@@ -313,7 +300,7 @@ BoxFolderView::BoxFolderView(IApplication *app, QWidget *parent)
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
 }
 
-void BoxFolderView::addRootPath(const QString &folder)
+void SplitFolderView::addRootPath(const QString &folder)
 {
     QStandardItem *item = new QStandardItem(folder);
     item->setData(folder,Qt::UserRole+1);
@@ -323,17 +310,17 @@ void BoxFolderView::addRootPath(const QString &folder)
     this->setCurrentIndex(m_model->indexFromItem(item));
 }
 
-void BoxFolderView::clear()
+void SplitFolderView::clear()
 {
     m_model->clear();
 }
 
-void BoxFolderView::openFolder()
+void SplitFolderView::openFolder()
 {
     m_liteApp->fileManager()->openFolder();
 }
 
-void BoxFolderView::closeFolder()
+void SplitFolderView::closeFolder()
 {
     QModelIndex index = this->currentIndex();
     if (!index.isValid()) {
@@ -343,7 +330,7 @@ void BoxFolderView::closeFolder()
     m_model->removeRow(index.row());
 }
 
-void BoxFolderView::reloadFolder()
+void SplitFolderView::reloadFolder()
 {
     QModelIndex index = this->currentIndex();
     if (!index.isValid()) {
@@ -352,7 +339,7 @@ void BoxFolderView::reloadFolder()
     emit reloadFolderIndex(index);
 }
 
-void BoxFolderView::customContextMenuRequested(const QPoint &pos)
+void SplitFolderView::customContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = this->currentIndex();
     if (!index.isValid()) {

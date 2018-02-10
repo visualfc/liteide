@@ -35,74 +35,31 @@ MultiFolderWindow::MultiFolderWindow(LiteApi::IApplication *app, QObject *parent
                             | QDir::Readable| QDir::Writable
                             | QDir::Executable /*| QDir::Hidden*/
                             | QDir::NoDotAndDotDot;
-
-    bool bShowHiddenFiles = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWHIDENFILES,false).toBool();
-    if (bShowHiddenFiles) {
-        filters |= QDir::Hidden;
-    }
-    this->showHideFiles(bShowHiddenFiles);
-    m_showHideFilesAct = new QAction(tr("Show Hidden Files"),this);
-    m_showHideFilesAct->setCheckable(true);
-    if (bShowHiddenFiles) {
-        m_showHideFilesAct->setChecked(true);
-    }
-    connect(m_showHideFilesAct,SIGNAL(triggered(bool)),this,SLOT(showHideFiles(bool)));
-
     m_folderListView->setFilter(filters);
-
-    bool bShowDetails = m_liteApp->settings()->value(LITEAPP_FOLDERSHOWDETAILS,false).toBool();
-    m_folderListView->setShowDetails(bShowDetails);
-    m_showDetailsAct = new QAction(tr("Show Details"),this);
-    m_showDetailsAct->setCheckable(true);
-    if (bShowDetails) {
-        m_showDetailsAct->setChecked(true);
-    }
-    connect(m_showDetailsAct,SIGNAL(triggered(bool)),m_folderListView,SLOT(setShowDetails(bool)));
-
-    m_syncEditorAct = new QAction(QIcon("icon:images/sync.png"),tr("Synchronize with editor"),this);
-    m_syncEditorAct->setCheckable(true);
-
-    QList<QAction*> actions;
-    m_filterMenu = new QMenu(tr("Filter"));
-    m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
-    m_filterMenu->addAction(m_showHideFilesAct);
-    m_filterMenu->addAction(m_showDetailsAct);
-    actions << m_filterMenu->menuAction() << m_syncEditorAct;
-
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_folderListView,"Folders",tr("Folders"),false,actions);
+    m_bSyncEditor = false;
 
     connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
     connect(m_folderListView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-
-    connect(m_syncEditorAct,SIGNAL(triggered(bool)),this,SLOT(triggeredSyncEditor(bool)));
-    bool b = m_liteApp->settings()->value(LITEAPP_FOLDERSSYNCEDITOR,false).toBool();
-    if (b) {
-        m_syncEditorAct->setChecked(true);
-    }
 }
 
 MultiFolderWindow::~MultiFolderWindow()
 {
-    m_liteApp->settings()->setValue(LITEAPP_FOLDERSSYNCEDITOR,m_syncEditorAct->isChecked());
-    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
-    m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWDETAILS,m_showDetailsAct->isChecked());
-    delete m_filterMenu;
     delete m_folderListView;
 }
 
-QWidget *MultiFolderWindow::widget()
+QWidget *MultiFolderWindow::widget() const
 {
-     return m_folderListView;
+    return m_folderListView;
 }
 
-bool MultiFolderWindow::isShowHideFiles() const
+QString MultiFolderWindow::id() const
 {
-    return m_folderListView->filter() & QDir::Hidden;
+    return "folderwindow/multifolder";
 }
 
-void MultiFolderWindow::showHideFiles(bool b)
+void MultiFolderWindow::setShowHideFiles(bool b)
 {
     QDir::Filters filters = m_folderListView->filter();
     if (b) {
@@ -111,6 +68,19 @@ void MultiFolderWindow::showHideFiles(bool b)
         filters ^= QDir::Hidden;
     }
     m_folderListView->setFilter(filters);
+}
+
+void MultiFolderWindow::setShowDetails(bool b)
+{
+    m_folderListView->setShowDetails(b);
+}
+
+void MultiFolderWindow::setSyncEditor(bool b)
+{
+    m_bSyncEditor = b;
+    if (b) {
+        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
+    }
 }
 
 void MultiFolderWindow::doubleClickedFolderView(const QModelIndex &index)
@@ -160,7 +130,6 @@ void MultiFolderWindow::addFolderList(const QString &folder)
     if (!m_folderListView->addRootPath(folder)) {
         return;
     }
-    m_toolWindowAct->setChecked(true);
     m_liteApp->recentManager()->addRecent(folder,"folder");
     m_folderListView->expandFolder(folder,true);
 }
@@ -172,10 +141,7 @@ void MultiFolderWindow::closeAllFolders()
 
 void MultiFolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
 {
-    if (!m_syncEditorAct->isChecked()) {
-        return;
-    }
-    if (!editor) {
+    if (!editor || !m_bSyncEditor) {
         return;
     }
     QString fileName = editor->filePath();
@@ -194,11 +160,4 @@ void MultiFolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
 //    }
     m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
     m_folderListView->setCurrentIndex(index);
-}
-
-void MultiFolderWindow::triggeredSyncEditor(bool b)
-{
-    if (b) {
-        this->currentEditorChanged(m_liteApp->editorManager()->currentEditor());
-    }
 }

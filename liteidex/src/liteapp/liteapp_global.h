@@ -60,6 +60,7 @@
 #define LITEAPP_FOLDERSHOWHIDENFILES "LiteApp/FolderShowHidenFiles"
 #define LITEAPP_FOLDERSHOWDETAILS "LiteApp/FolderShowDetails"
 #define LITEAPP_FOLDERSSYNCEDITOR "FileManager/synceditor"
+#define LITEAPP_FOLDERSPLITMODE "LiteApp/FolderSplitMode"
 #define LITEAPP_STARTUPRELOADFILES   "LiteApp/StartupReloadFiles"
 #define LITEAPP_STARTUPRELOADFOLDERS   "LiteApp/StartupReloadFolders"
 #define LITEAPP_FILEWATCHERAUTORELOAD "LiteApp/FileWatcherAutoReload"

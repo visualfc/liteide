@@ -33,6 +33,7 @@ class QFileSystemWatcher;
 class NewFileDialog;
 class FolderListView;
 class MultiFolderView;
+class QVBoxLayout;
 
 class IFolderWindow : public QObject
 {
@@ -40,10 +41,15 @@ public:
     IFolderWindow(QObject *parent) : QObject(parent)
     {
     }
+    virtual QString id() const = 0;
+    virtual QWidget *widget() const = 0;
     virtual QStringList folderList() const = 0;
     virtual void setFolderList(const QStringList &folders) = 0;
     virtual void addFolderList(const QString &folder) = 0;
     virtual void closeAllFolders() = 0;
+    virtual void setShowHideFiles(bool b) = 0;
+    virtual void setShowDetails(bool b) = 0;
+    virtual void setSyncEditor(bool b) = 0;
 };
 
 class FileManager : public IFileManager
@@ -90,6 +96,10 @@ public slots:
     void checkForReload();
     void applyOption(QString);
     void onApplicationFocusChange();
+    void setShowHideFiles(bool b);
+    void setShowDetails(bool b);
+    void setSyncEditor(bool b);
+    void setSplitMode(bool b);
 protected:
     NewFileDialog        *m_newFileDialog;
     IFolderWindow        *m_folderWindow;
@@ -100,6 +110,14 @@ protected:
     bool                 m_checkOnFocusChange;
     bool                 m_fileWatcherAutoReload;
     QString              m_initPath;
+    QWidget              *m_folderWidget;
+    QVBoxLayout          *m_layout;
+    QMenu*       m_filterMenu;
+    QAction*     m_showHideFilesAct;
+    QAction*     m_showDetailsAct;
+    QAction*     m_syncEditorAct;
+    QAction*     m_splitModeAct;
+    QAction*     m_toolWindowAct;
 };
 
 #endif // FILEMANAGER_H

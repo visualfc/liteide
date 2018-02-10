@@ -18,22 +18,26 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: multifolderwindow.h
+// Module: splitfolderwindow.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef FOLDERWINDOW_H
-#define FOLDERWINDOW_H
+#ifndef SPLITFOLDERWINDOW_H
+#define SPLITFOLDERWINDOW_H
 
-#include <QObject>
-#include "folderview/multifolderview.h"
 #include "filemanager.h"
+#include "folderview/folderview.h"
 
-class MultiFolderWindow : public IFolderWindow
+class QStackedWidget;
+class QTreeWidget;
+class QSplitter;
+class QStandardItemModel;
+class SplitFolderView;
+class SplitFolderWindow : public IFolderWindow
 {
     Q_OBJECT
 public:
-    explicit MultiFolderWindow(LiteApi::IApplication *app, QObject *parent = 0);
-    virtual ~MultiFolderWindow();
+    SplitFolderWindow(LiteApi::IApplication *app, QObject *parent = 0);
+    virtual ~SplitFolderWindow();
     virtual QString id() const;
     virtual QWidget *widget() const;
     virtual QStringList folderList() const;
@@ -44,13 +48,45 @@ public:
     virtual void setShowDetails(bool b);
     virtual void setSyncEditor(bool b);
 public slots:
+    void currentIndexChanged(const QModelIndex &index,const QModelIndex &prev);
+    void closeFolderIndex(const QModelIndex &index);
+    void reloadFolderIndex(const QModelIndex &index);
+    void currentEditorChanged(LiteApi::IEditor *editor);
     void doubleClickedFolderView(const QModelIndex &index);
     void enterKeyPressedFolderView(const QModelIndex &index);
-    void currentEditorChanged(LiteApi::IEditor *editor);
 protected:
     LiteApi::IApplication *m_liteApp;
-    MultiFolderView *m_folderListView;
+    QSplitter *m_spliter;
+    SplitFolderView *m_tree;
+    QStandardItemModel *m_model;
+    QStackedWidget *m_stacked;
+    QStringList m_folderList;
+    QDir::Filters m_filters;
+    bool m_bShowDetails;
     bool m_bSyncEditor;
+protected:
+    void addFolderImpl(const QString &folder);
+    int findInStacked(const QModelIndex &index);
 };
 
-#endif // FOLDERWINDOW_H
+class SplitFolderView : public BaseFolderView
+{
+    Q_OBJECT
+public:
+    SplitFolderView(LiteApi::IApplication *app, QWidget *parent = 0);
+    void addRootPath(const QString &folder);
+    void clear();
+signals:
+    void closeFolderIndex(const QModelIndex &index);
+    void reloadFolderIndex(const QModelIndex &index);
+public slots:
+    void customContextMenuRequested(const QPoint &pos);
+    virtual void openFolder();
+    virtual void closeFolder();
+    virtual void reloadFolder();
+protected:
+    QStandardItemModel *m_model;
+    QMenu *m_contextMenu;
+};
+
+#endif // SPLITFOLDERWINDOW_H
