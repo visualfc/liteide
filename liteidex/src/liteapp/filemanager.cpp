@@ -29,6 +29,7 @@
 #include "folderview/multifolderview.h"
 #include "liteapp_global.h"
 #include "multifolderwindow.h"
+#include "boxfolderwindow.h"
 
 #include <QApplication>
 #include <QMenu>
@@ -61,7 +62,8 @@ bool FileManager::initWithApp(IApplication *app)
     if (!IFileManager::initWithApp(app)) {
         return false;
     }
-    m_folderWindow = new MultiFolderWindow(app);
+   // m_folderWindow = new MultiFolderWindow(app);
+    m_folderWindow = new BoxFolderWindow(app);
 
     m_fileWatcher = new QFileSystemWatcher(this);
     connect(m_fileWatcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged(QString)));

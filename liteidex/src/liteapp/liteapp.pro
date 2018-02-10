@@ -82,7 +82,8 @@ SOURCES += main.cpp\
     openeditorswidget.cpp \
     idletimer.cpp \
     recentmanager.cpp \
-    multifolderwindow.cpp
+    multifolderwindow.cpp \
+    boxfolderwindow.cpp
 
 HEADERS  += mainwindow.h \
     liteapp.h \
@@ -118,7 +119,8 @@ HEADERS  += mainwindow.h \
     openeditorswidget.h \
     idletimer.h \
     recentmanager.h \
-    multifolderwindow.h
+    multifolderwindow.h \
+    boxfolderwindow.h
 
 FORMS += \
     aboutdialog.ui \

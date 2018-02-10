@@ -77,7 +77,7 @@ MultiFolderWindow::MultiFolderWindow(LiteApi::IApplication *app, QObject *parent
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
 
     connect(m_syncEditorAct,SIGNAL(triggered(bool)),this,SLOT(triggeredSyncEditor(bool)));
-    bool b = m_liteApp->settings()->value("FileManager/synceditor",false).toBool();
+    bool b = m_liteApp->settings()->value(LITEAPP_FOLDERSSYNCEDITOR,false).toBool();
     if (b) {
         m_syncEditorAct->setChecked(true);
     }
@@ -85,7 +85,7 @@ MultiFolderWindow::MultiFolderWindow(LiteApi::IApplication *app, QObject *parent
 
 MultiFolderWindow::~MultiFolderWindow()
 {
-    m_liteApp->settings()->setValue("FileManager/synceditor",m_syncEditorAct->isChecked());
+    m_liteApp->settings()->setValue(LITEAPP_FOLDERSSYNCEDITOR,m_syncEditorAct->isChecked());
     m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWHIDENFILES,m_showHideFilesAct->isChecked());
     m_liteApp->settings()->setValue(LITEAPP_FOLDERSHOWDETAILS,m_showDetailsAct->isChecked());
     delete m_filterMenu;

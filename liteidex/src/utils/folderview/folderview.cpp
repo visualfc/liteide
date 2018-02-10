@@ -134,10 +134,18 @@ QFileInfo FolderView::fileInfo(const QModelIndex &index)
 
 QModelIndex FolderView::indexForPath(const QString &fileName)
 {
-    if (m_proxy)
-        return m_proxy->mapFromSource(m_model->index(fileName));
-    else
-        return m_model->index(fileName);
+    QString filePath = QDir::fromNativeSeparators(fileName);
+    if (!filePath.startsWith(this->rootPath()+"/")) {
+        return QModelIndex();
+    }
+    QModelIndex index = m_model->index(filePath);
+    if (!index.isValid()) {
+        return QModelIndex();
+    }
+    if (m_proxy) {
+        return m_proxy->mapFromSource(index);
+    }
+    return index;
 }
 
 void FolderView::reload()
