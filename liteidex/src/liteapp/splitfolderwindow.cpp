@@ -33,6 +33,15 @@
 #include <QStandardItemModel>
 #include <QMenu>
 #include <QDebug>
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
 SplitFolderWindow::SplitFolderWindow(IApplication *app, QObject *parent)
     : IFolderWindow(parent), m_liteApp(app)
@@ -272,6 +281,7 @@ void SplitFolderWindow::addFolderImpl(const QString &_folder)
     view->setRootPath(folder);
     connect(view,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
     connect(view,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
+    connect(view,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 
     m_stacked->addWidget(view);
     m_folderList.append(folder);
