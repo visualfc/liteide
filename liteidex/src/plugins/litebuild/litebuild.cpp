@@ -176,6 +176,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoBuildConfigAct = new QAction(tr("Build Path Configuration"),this);
 
     m_fmctxGoToolMenu = new QMenu("Go Tool");
+    m_fmctxNoGoToolMenu = new QMenu("Go Tool");
 
     m_fmctxGoBuildAct = new QAction("Go Build",this);
     m_fmctxGoBuildAct->setData("build $(BUILDARGS)");
@@ -238,6 +239,11 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxGoToolMenu->addAction(m_fmctxGoVetAllCheckAct);
     m_fmctxGoToolMenu->addSeparator();
     m_fmctxGoToolMenu->addAction(m_fmctxGoFmtAct);
+
+//    m_fmctxNoGoToolMenu->addAction(m_fmctxGoBuildAllAct);
+    m_fmctxNoGoToolMenu->addAction(m_fmctxGoInstallAllAct);
+    m_fmctxNoGoToolMenu->addAction(m_fmctxGoTestAllAct);
+    m_fmctxNoGoToolMenu->addAction(m_fmctxGoCleanAllAct);
 
     connect(m_fmctxGoLockBuildAct,SIGNAL(triggered()),this,SLOT(fmctxGoLockBuild()));
     connect(m_fmctxGoBuildConfigAct,SIGNAL(triggered()),this,SLOT(fmctxGoBuildConfigure()));
@@ -518,6 +524,13 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
             //m_fmctxGoTestAct->setEnabled(hasTest);
             menu->insertMenu(act,m_fmctxGoToolMenu);
             menu->insertSeparator(act);
+        } else {
+            QAction *act = 0;
+            if (!menu->actions().isEmpty()) {
+                act = menu->actions().at(0);
+            }
+            menu->insertSeparator(act);
+            menu->insertMenu(act,m_fmctxNoGoToolMenu);
         }
     }
 }

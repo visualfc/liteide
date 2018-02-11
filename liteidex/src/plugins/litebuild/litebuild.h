@@ -125,6 +125,7 @@ protected:
     QAction     *m_clearAct;
     QAction     *m_outputAct;
     QMenu       *m_fmctxGoToolMenu;
+    QMenu       *m_fmctxNoGoToolMenu;
     QAction     *m_fmctxExecuteFileAct;
     QAction     *m_fmctxGoLockBuildAct;
     QAction     *m_fmctxGoBuildConfigAct;
