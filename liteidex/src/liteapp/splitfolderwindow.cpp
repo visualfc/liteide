@@ -170,7 +170,7 @@ void SplitFolderWindow::setShowHideFiles(bool b)
 {
     if (b) {
         m_filters |= QDir::Hidden;
-    } else {
+    } else if (m_filters.testFlag(QDir::Hidden)) {
         m_filters ^= QDir::Hidden;
     }
     FolderView *widget = (FolderView*)m_stacked->currentWidget();

@@ -73,7 +73,7 @@ void MultiFolderWindow::setShowHideFiles(bool b)
     QDir::Filters filters = m_folderListView->filter();
     if (b) {
         filters |= QDir::Hidden;
-    } else {
+    } else if (filters.testFlag(QDir::Hidden)){
         filters ^= QDir::Hidden;
     }
     m_folderListView->setFilter(filters);
