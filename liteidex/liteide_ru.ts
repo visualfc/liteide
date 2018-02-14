@@ -1140,6 +1140,10 @@ Do you want to reload the file from disk?</source>
         <source>Show Details</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Split Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileRecent</name>
