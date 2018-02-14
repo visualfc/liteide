@@ -3,6 +3,22 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.02.14 Ver X33.2
+* LiteIDE
+	* add folder tool window split mode swith
+	* add archlinux makepkg
+	* add tcl syntax and build
+* LiteEditor
+	* support function color, thanks [discoverfly](https://github.com/discoverfly)
+	* add default-func color theme
+	* add style for scroll bars in sublime.qss, thanks [hauke96](https://github.com/hauke96)
+	* add marks for selections and findings, thanks [jinq0123](https://github.com/jinq0123)
+* LiteFind
+	* fix editor regexp replace
+* LiteBuild
+	* add context menu go tool action
+
+
 ### 2017.12.12 Ver X33.1
 * LiteIDE
 	* support quick open command
