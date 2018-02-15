@@ -1,3 +1,0 @@
-### ArchLinux
-	
-	$ makepkg -sri
