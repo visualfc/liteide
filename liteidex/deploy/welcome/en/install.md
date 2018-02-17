@@ -65,14 +65,19 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 ### Ubuntu 16.04
 	$ git clone https://github.com/visualfc/liteide.git
 	$ sudo apt-get update
-	$ sudo apt-get install qt4-dev-tools libqt4-dev libqtcore4 libqtgui4 libqtwebkit-dev g++
+	$ sudo apt-get install libqt4-dev
 	$ cd liteide/build
 	$ ./update_pkg.sh
-	$ QTDIR=/usr ./build_linux.sh
+	$ ./build_linux_qt4.sh
 	
 	## Run it: ##
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
+	
+	## Deploy it: ##
+	$ cd liteide/build
+	$ ./deploy_linux_x64_qt4.sh
+		
 
 ### Mac OS X / macOS
 
