@@ -137,3 +137,25 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 	$ ./liteide
 
 **Addin** Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
+
+## Fedora 27
+        $ sudo dnf update
+        $ sudo dnf install qt-devel
+        $ git clone https://github.com/visualfc/liteide.git
+
+Following this step I had to clone the contents of the following repos in liteide/src/github.com
+i.e. liteidex/src/github.com/visualfc/gotools/README.md
+
+* https://github.com/visualfc/gotools
+* https://github.com/nsf/gocode
+* https://github.com/fatih/gomodifytags
+
+        $ cd liteide/build
+        $ ./update_pkg.sh
+        $ QTDIR=/usr/bin
+        $ ./build_linux_fedora27_x64.sh
+
+        ## Run it: ##
+        $ cd ~/liteide/build/liteide/bin
+        $ ./liteide
+
