@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QCheckBox" name="jsonCheckBox">

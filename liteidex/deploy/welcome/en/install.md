@@ -65,14 +65,19 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 ### Ubuntu 16.04
 	$ git clone https://github.com/visualfc/liteide.git
 	$ sudo apt-get update
-	$ sudo apt-get install qt4-dev-tools libqt4-dev libqtcore4 libqtgui4 libqtwebkit-dev g++
+	$ sudo apt-get install libqt4-dev
 	$ cd liteide/build
 	$ ./update_pkg.sh
-	$ QTDIR=/usr ./build_linux.sh
+	$ ./build_linux_qt4.sh
 	
 	## Run it: ##
 	$ cd ~/liteide/build/liteide/bin
 	$ ./liteide
+	
+	## Deploy it: ##
+	$ cd liteide/build
+	$ ./deploy_linux_x64_qt4.sh
+		
 
 ### Mac OS X / macOS
 
@@ -137,3 +142,25 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 	$ ./liteide
 
 **Addin** Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
+
+## Fedora 27
+        $ sudo dnf update
+        $ sudo dnf install qt-devel
+        $ git clone https://github.com/visualfc/liteide.git
+
+Following this step I had to clone the contents of the following repos in liteide/src/github.com
+i.e. liteidex/src/github.com/visualfc/gotools/README.md
+
+* https://github.com/visualfc/gotools
+* https://github.com/nsf/gocode
+* https://github.com/fatih/gomodifytags
+
+        $ cd liteide/build
+        $ ./update_pkg.sh
+        $ export QTDIR=/usr/bin
+        $ ./build_linux_fedora27_x64.sh
+
+        ## Run it: ##
+        $ cd ~/liteide/build/liteide/bin
+        $ ./liteide
+
