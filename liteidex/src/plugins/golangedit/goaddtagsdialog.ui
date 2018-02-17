@@ -7,20 +7,30 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>400</height>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Add Tags To Struct Field</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item>
+    <widget class="QCheckBox" name="jsonCheckBox">
+     <property name="text">
+      <string>Add JSON Tag</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QGroupBox" name="jsonGroupBox">
      <property name="title">
-      <string>Add JSON Tag</string>
+      <string/>
      </property>
      <property name="checkable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="checked">
       <bool>false</bool>
@@ -59,12 +69,19 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="xmlGroupBox">
-     <property name="title">
+    <widget class="QCheckBox" name="xmlCheckBox">
+     <property name="text">
       <string>Add XML Tag</string>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="xmlGroupBox">
+     <property name="title">
+      <string/>
+     </property>
      <property name="checkable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="checked">
       <bool>false</bool>
@@ -103,12 +120,19 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="customGroupBox">
-     <property name="title">
+    <widget class="QCheckBox" name="customCheckBox">
+     <property name="text">
       <string>Add Custom Tags</string>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="customGroupBox">
+     <property name="title">
+      <string/>
+     </property>
      <property name="checkable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="checked">
       <bool>false</bool>
@@ -295,6 +319,19 @@
    </item>
    <item>
     <widget class="QPlainTextEdit" name="argumentsEdit"/>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

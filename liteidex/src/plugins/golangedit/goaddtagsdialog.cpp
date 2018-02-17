@@ -38,15 +38,22 @@ GoAddTagsDialog::GoAddTagsDialog(QWidget *parent) :
     ui(new Ui::GoAddTagsDialog)
 {
     ui->setupUi(this);
-    connect(ui->jsonGroupBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+
+    connect(ui->jsonCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+    connect(ui->jsonCheckBox,SIGNAL(toggled(bool)),ui->jsonGroupBox,SLOT(setEnabled(bool)));
+
     connect(ui->jsonOptionsCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
     connect(ui->jsonOptionsLineEdit,SIGNAL(textChanged(QString)),this,SLOT(updateaAguments()));
 
-    connect(ui->xmlGroupBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+    connect(ui->xmlCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+    connect(ui->xmlCheckBox,SIGNAL(toggled(bool)),ui->xmlGroupBox,SLOT(setEnabled(bool)));
+
     connect(ui->xmlOptionsCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
     connect(ui->xmlOptionsLineEdit,SIGNAL(textChanged(QString)),this,SLOT(updateaAguments()));
 
-    connect(ui->customGroupBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+    connect(ui->customCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
+    connect(ui->customCheckBox,SIGNAL(toggled(bool)),ui->customGroupBox,SLOT(setEnabled(bool)));
+
     connect(ui->customTagNameLineEdit1,SIGNAL(textChanged(QString)),this,SLOT(updateaAguments()));
     connect(ui->customTagOptionLineEdit1,SIGNAL(textChanged(QString)),this,SLOT(updateaAguments()));
     connect(ui->customTagNameLineEdit2,SIGNAL(textChanged(QString)),this,SLOT(updateaAguments()));
@@ -60,6 +67,10 @@ GoAddTagsDialog::GoAddTagsDialog(QWidget *parent) :
     connect(ui->sortCheckBox,SIGNAL(toggled(bool)),this,SLOT(updateaAguments()));
 
     ui->snakeCaseRadioButton->setChecked(true);
+
+    ui->jsonGroupBox->setEnabled(false);
+    ui->xmlGroupBox->setEnabled(false);
+    ui->customGroupBox->setEnabled(false);
 }
 
 GoAddTagsDialog::~GoAddTagsDialog()
@@ -90,7 +101,7 @@ void GoAddTagsDialog::updateaAguments()
     QStringList tagList;
     QStringList optList;
     QString tranform;
-    if (ui->jsonGroupBox->isChecked()) {
+    if (ui->jsonCheckBox->isChecked()) {
         tagList << "json";
         if (ui->jsonOptionsCheckBox->isChecked()) {
             QStringList opt = ui->jsonOptionsLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
@@ -99,7 +110,7 @@ void GoAddTagsDialog::updateaAguments()
             }
         }
     }
-    if (ui->xmlGroupBox->isChecked()) {
+    if (ui->xmlCheckBox->isChecked()) {
         tagList << "xml";
         if (ui->xmlOptionsCheckBox->isChecked()) {
             QStringList opt = ui->xmlOptionsLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
@@ -108,7 +119,7 @@ void GoAddTagsDialog::updateaAguments()
             }
         }
     }
-    if (ui->customGroupBox->isChecked()) {
+    if (ui->customCheckBox->isChecked()) {
         QString tag1 = ui->customTagNameLineEdit1->text().trimmed();
         QStringList opt1 = ui->customTagOptionLineEdit1->text().trimmed().split(",",QString::SkipEmptyParts);
         QString tag2 = ui->customTagNameLineEdit2->text().trimmed();

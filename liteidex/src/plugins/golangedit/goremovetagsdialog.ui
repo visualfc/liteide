@@ -7,13 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>360</height>
+    <height>395</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Remove Tags From Struct Field</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -131,6 +134,19 @@
    </item>
    <item>
     <widget class="QPlainTextEdit" name="argumentsEdit"/>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
