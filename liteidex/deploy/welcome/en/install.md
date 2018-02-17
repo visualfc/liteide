@@ -152,7 +152,7 @@ i.e. liteidex/src/github.com/visualfc/gotools/README.md
 
         $ cd liteide/build
         $ ./update_pkg.sh
-        $ QTDIR=/usr/bin
+        $ export QTDIR=/usr/bin
         $ ./build_linux_fedora27_x64.sh
 
         ## Run it: ##
