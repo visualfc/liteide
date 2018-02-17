@@ -77,6 +77,8 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	## Deploy it: ##
 	$ cd liteide/build
 	$ ./deploy_linux_x64_qt4.sh
+	## 32 bit
+	$ ./deploy_linux_x32_qt4.sh
 		
 
 ### Mac OS X / macOS
