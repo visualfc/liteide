@@ -501,6 +501,11 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
             menu->insertSeparator(act);
         }
     } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+#ifdef Q_OS_MAC
+        if (m_fmctxInfo.isBundle()) {
+            return;
+        }
+#endif
         bool hasGo = false;
         bool hasTest = false;
         foreach(QFileInfo info, QDir(info.filePath()).entryInfoList(QDir::Files)) {

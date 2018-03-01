@@ -259,6 +259,12 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+#ifdef Q_OS_MAC
+        if (m_contextInfo.isBundle()) {
+            m_contextMenu->addAction(m_openBundleAct);
+            m_contextMenu->addSeparator();
+        }
+#endif
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_newFolderAct);
@@ -271,6 +277,12 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
+#ifdef Q_OS_MAC
+        if (m_contextInfo.isBundle()) {
+            m_contextMenu->addAction(m_openBundleAct);
+            m_contextMenu->addSeparator();
+        }
+#endif
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_newFolderAct);
