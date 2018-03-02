@@ -2158,6 +2158,9 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     } else if ( (lookBehind == QLatin1Char('\"') && lookAhead == QLatin1Char('\"')) ||
                (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')) ||
                 (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`'))) {
+        if (!this->m_bLastBraces) {
+            return false;
+        }
         if (!this->m_textLexer->isLangSupport()) {
             return false;
         }
