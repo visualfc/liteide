@@ -2631,6 +2631,30 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                      return;
                 }
             }
+        } else if (keyText == "\"" || keyText == "\'" || keyText == "`") {
+            QTextCursor cursor = textCursor();
+            if (!cursor.atBlockEnd()) {
+                QString text = cursor.block().text();
+                if (text.mid(cursor.positionInBlock(),1) == keyText) {
+                    if (this->checkIsMatchBraces(cursor,keyText)) {
+                        cursor.movePosition(QTextCursor::Right);
+                        setTextCursor(cursor);
+                        return;
+                    }
+                } else {
+                    int pos = cursor.positionInBlock();
+                    if (text.at(pos).isLetterOrNumber()) {
+                        QPlainTextEdit::keyPressEvent(e);
+                        return;
+                    }
+                    if (pos > 0) {
+                        if (text.at(pos-1).isLetterOrNumber()) {
+                            QPlainTextEdit::keyPressEvent(e);
+                            return;
+                        }
+                    }
+                }
+            }
         }
         if (!mr.isNull()) {
             QTextCursor cursor = textCursor();
