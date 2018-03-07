@@ -2141,13 +2141,13 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
         return false;
     }
 
-    QTextCursor c = cursor;
-    c.setPosition(pos - 1);
+//    QTextCursor c = cursor;
+//    c.setPosition(pos - 1);
 
     QTextDocument *doc = cursor.document();
     const QChar lookAhead = doc->characterAt(pos);
     const QChar lookBehind = doc->characterAt(pos - 1);
-    //const QChar lookFurtherBehind = doc->characterAt(pos - 2);
+//    const QChar lookFurtherBehind = doc->characterAt(pos - 2);
 
     if ( (lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')')) ||
          (lookBehind == QLatin1Char('[') && lookAhead == QLatin1Char(']')) ||
@@ -2158,8 +2158,17 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     } else if ( (lookBehind == QLatin1Char('\"') && lookAhead == QLatin1Char('\"')) ||
                (lookBehind == QLatin1Char('\'') && lookAhead == QLatin1Char('\'')) ||
                 (lookBehind == QLatin1Char('`') && lookAhead == QLatin1Char('`'))) {
+
         if (!this->m_bLastBraces) {
-            return false;
+            int bpos = cursor.positionInBlock();
+            if (bpos > 1) {
+                if (bpos >= 2) {
+                    QChar ch = doc->characterAt(pos-2);
+                    if (ch.isLetterOrNumber()) {
+                        return false;
+                    }
+                }
+            }
         }
         if (!this->m_textLexer->isLangSupport()) {
             return false;
