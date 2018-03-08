@@ -41,30 +41,13 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	> build_windows_mingw.cmd
 	> deploy_windows_qt5.6.cmd
 	
-### Linux
-	$ git clone https://github.com/visualfc/liteide.git
-	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
-	$ cd liteide/build
-	$ ./update_pkg.sh
-	$ ./build_linux.sh
-	$ ./deploy_linux_qt4.8_webkit.sh
-	
-### Ubuntu 14.04
-	$ git clone https://github.com/visualfc/liteide.git
-	$ sudo apt-get update
-	$ sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui libqtwebkit-dev g++
-	$ cd liteide/build
-	$ ./update_pkg.sh
-	$ QTDIR=/usr ./build_linux.sh
-	
-	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
-	$ ./liteide
-
-### Ubuntu 16.04
-	$ git clone https://github.com/visualfc/liteide.git
+### Ubuntu 16.04 Qt4
+	## Install Qt4 ##
 	$ sudo apt-get update
 	$ sudo apt-get install libqt4-dev
+
+	## Git clone and build liteide ##
+	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
 	$ ./update_pkg.sh
 	$ ./build_linux_qt4.sh
@@ -78,6 +61,47 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ ./deploy_linux_x64_qt4.sh
 	## 32 bit
 	$ ./deploy_linux_x32_qt4.sh
+	
+### Ubuntu 16.04 Qt5
+	## Install Qt5 ##
+	$ sudo apt-get update
+	$ sudo apt-get install qt5-default
+	
+	## Git clone and build liteide ##
+	$ git clone https://github.com/visualfc/liteide.git
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ ./build_linux_qt4.sh
+	
+	## Run it: ##
+	$ cd ~/liteide/build/liteide/bin
+	$ ./liteide
+	
+	## Deploy it: ##
+	$ cd liteide/build
+	$ ./deploy_linux_x64_qt5.sh
+	## 32 bit
+	$ ./deploy_linux_x32_qt5.sh
+	
+### Ubuntu 14.04
+	$ git clone https://github.com/visualfc/liteide.git
+	$ sudo apt-get update
+	$ sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui libqtwebkit-dev g++
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ QTDIR=/usr ./build_linux.sh
+	
+	## Run it: ##
+	$ cd ~/liteide/build/liteide/bin
+	$ ./liteide
+
+### Linux
+	$ git clone https://github.com/visualfc/liteide.git
+	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
+	$ cd liteide/build
+	$ ./update_pkg.sh
+	$ ./build_linux.sh
+	$ ./deploy_linux_qt4.8_webkit.sh
 
 ### Mac OS X / macOS
 
