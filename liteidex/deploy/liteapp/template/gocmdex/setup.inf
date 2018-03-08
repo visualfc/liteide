@@ -1,7 +1,7 @@
 [SETUP]
-NAME = "Go1 Command Project (Not Use GOPATH)"
+NAME = "Go1 Command Project (Anywhere)"
 AUTHOR = visualfc
-INFO = new go1 command project
+INFO = create Go command project anywhere
 TYPE = project
 FILES = main.go doc.go
 OPEN = main.go

@@ -38,6 +38,7 @@ public:
 signals:
     void aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
 public slots:
+    virtual void openBundle();
     virtual void openInNewWindow();
     virtual void openEditor();
     virtual void newFile();
@@ -74,6 +75,7 @@ protected:
     QAction *m_closeFolderAct;
     QAction *m_reloadFolderAct;
     QAction *m_closeAllFoldersAct;
+    QAction *m_openBundleAct;
 };
 
 #endif // BASEFOLDERVIEW_H

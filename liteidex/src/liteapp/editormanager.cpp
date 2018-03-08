@@ -489,6 +489,8 @@ bool EditorManager::saveEditor(IEditor *editor, bool emitAboutSave)
 
         if (cur->save()) {
             emit editorSaved(cur);
+        } else if (cur->isReadOnly()){
+            m_liteApp->appendLog("Editor",QString("File is read only %1").arg(cur->filePath()),false);
         } else {
             m_liteApp->appendLog("Editor",QString("Failed to save %1").arg(cur->filePath()),true);
         }

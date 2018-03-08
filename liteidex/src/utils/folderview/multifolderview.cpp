@@ -163,6 +163,12 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
     if (flag == LiteApi::FILESYSTEM_ROOT) {
         m_contextMenu->addAction(m_openFolderAct);
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
+#ifdef Q_OS_MAC
+        if (m_contextInfo.isBundle()) {
+            m_contextMenu->addAction(m_openBundleAct);
+            m_contextMenu->addSeparator();
+        }
+#endif
         m_contextMenu->addAction(m_openInNewWindowAct);
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_newFileAct);
@@ -179,6 +185,12 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
+#ifdef Q_OS_MAC
+        if (m_contextInfo.isBundle()) {
+            m_contextMenu->addAction(m_openBundleAct);
+            m_contextMenu->addSeparator();
+        }
+#endif
         m_contextMenu->addAction(m_openInNewWindowAct);
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_newFileAct);

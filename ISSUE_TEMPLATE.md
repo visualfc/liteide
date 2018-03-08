@@ -1,4 +1,5 @@
 Please answer these questions before submitting your issue. Thanks!
+Please download LiteIDE latest version and test before submitting your issue. Thanks!
 
 ### What version of LiteIDE are you using (LiteIDE About - Version and Build Qt Version)?
 

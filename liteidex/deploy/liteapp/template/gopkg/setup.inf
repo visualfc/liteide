@@ -1,7 +1,7 @@
 [SETUP]
 NAME = "Go1 Package Project"
 AUTHOR = visualfc
-INFO = new go1 package project
+INFO = create Go package project GOPATH/src
 TYPE = gopath
 FILES = root.go doc.go
 OPEN = root.go
