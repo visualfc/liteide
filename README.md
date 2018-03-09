@@ -56,15 +56,18 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 ### Latest Release Supported Platform Details
 * Windows
-	* liteide-latest.windows-qt5.zip (recommend) => WindowsXP, Windows 7 8 10
-	* liteide-latest.windows-qt4.zip => WindowsXP, Windows 7
+	* liteide-latest.windows-qt5.zip -> WindowsXP, Windows 7 8 10
+	* liteide-latest.windows-qt4.zip -> WindowsXP, Windows 7
 * macOS
-	* liteide-latest.macosx-qt5.zip(recommend) => macOS 10.10 or higher, MacOS X 10.8 10.9
-	* liteide-latest.macosx-qt4.zip => MacOS X 10.6 10.7 10.8
-* Linux
+	* liteide-latest.macosx-qt5.zip -> macOS 10.8 or higher
+* Linux x64
 	* liteide-latest.linux-64-qt4.tar.bz2 -> Linux (64 bit) build on ubuntu 16.04
-	* liteide-latest.linux-32-qt4.tar.bz2 => Linux (32 bit) build on ubuntu 16.04
-	* liteide-latest.archlinux-pkgbuild.zip => ArchLinux (64 bit) PKGBUILD
+	* liteide-latest.linux-64-qt5.tar.bz2 -> Linux (64 bit) build on ubuntu 16.04
+* Linux x32
+	* liteide-latest.linux-32-qt4.tar.bz2 -> Linux (32 bit) build on ubuntu 16.04
+	* liteide-latest.linux-32-qt5.tar.bz2 -> Linux (32 bit) build on ubuntu 16.04
+* ArchLinux
+	* liteide-latest.archlinux-pkgbuild.zip -> ArchLinux (64 bit) PKGBUILD
 
 ### LiteIDE Command Line
 	liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]
