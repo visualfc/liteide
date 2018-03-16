@@ -71,7 +71,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
 	$ ./update_pkg.sh
-	$ ./build_linux_qt4.sh
+	$ ./build_linux_qt5.sh
 	
 	## Run it: ##
 	$ cd ~/liteide/build/liteide/bin
