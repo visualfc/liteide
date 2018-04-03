@@ -29,6 +29,7 @@
 
 #include "liteapi/liteapi.h"
 #include "liteenvapi/liteenvapi.h"
+#include "gotools/gotools.h"
 
 class ProcessEx;
 
@@ -55,6 +56,7 @@ protected:
     //QString m_gofmtCmd;
     QByteArray m_data;
     QByteArray m_errData;
+    GopherLib *m_gopher;
     bool m_diff;
     bool m_fixImports;
     bool m_autofmt;

@@ -56,6 +56,7 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     m_syncfmt(false),
     m_timeout(600)
 {
+    m_gopher = new GopherLib(this);
     m_process = new ProcessEx(this);
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(fmtOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
@@ -111,9 +112,6 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         timeout = m_timeout;
     }
 
-    QProcess process;
-    process.setProcessEnvironment(LiteApi::getGoEnvironment(m_liteApp));
-
     QStringList args;
     args << "gofmt";
     //format style 0: auto, 1: gofmt 2: fiximports
@@ -129,25 +127,42 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
         args << "-d";
     }
 
-    QString cmd = LiteApi::getGotools(m_liteApp);
-    process.start(cmd,args);
+    bool bresult = false;
+    QString output,errmsg;
+    if (0 && m_gopher->isValid()) {
+        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+        foreach(QString key, env.keys()) {
+           m_gopher->setenv(key,env.value(key));
+        }
+        bresult = m_gopher->invokeArgs(args,text,output,errmsg);
+    } else {
+        QString cmd = LiteApi::getGotools(m_liteApp);
 
-    if (!process.waitForStarted(timeout)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
-        return;
+        QProcess process;
+        process.setProcessEnvironment(LiteApi::getGoEnvironment(m_liteApp));
+        process.start(cmd,args);
+
+        if (!process.waitForStarted(timeout)) {
+            m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
+            return;
+        }
+        process.write(text.toUtf8());
+        process.closeWriteChannel();
+        if (!process.waitForFinished(timeout*4)) {
+            m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout*4),false);
+            return;
+        }
+        if (process.exitCode() != 0) {
+            errmsg = QString::fromUtf8(process.readAllStandardError());
+        } else {
+            bresult = true;
+            output = QString::fromUtf8(process.readAllStandardOutput());
+        }
     }
-    process.write(text.toUtf8());
-    process.closeWriteChannel();
-    if (!process.waitForFinished(timeout*4)) {
-        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout*4),false);
-        return;
-    }
+
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
     liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGFMT_TAG);
-    QTextCodec *codec = QTextCodec::codecForName("utf-8");
-    if (process.exitCode() != 0) {
-        QByteArray error = process.readAllStandardError();
-        QString errmsg = codec->toUnicode(error);
+    if (!bresult) {
         if (!errmsg.isEmpty()) {
             //<standard input>:23:1: expected declaration, found 'INT' 1
              foreach(QString msg,errmsg.split("\n")) {
@@ -170,26 +185,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     }
     liteEditor->setNavigateHead(LiteApi::EditorNavigateNormal,"go code format success");
 
-    QByteArray data = process.readAllStandardOutput();
-
-//    QByteArray state = editor->saveState();
-//    QTextCursor cur = ed->textCursor();
-//    cur.beginEditBlock();
-//    bool bUseState = true;
-//    if (m_diff) {
-//        bUseState = false;
-//        loadDiff(cur,codec->toUnicode(data));
-//    } else {
-//        cur.select(QTextCursor::Document);
-//        cur.removeSelectedText();
-//        cur.insertText(codec->toUnicode(data));
-//    }
-//    cur.endEditBlock();
-//    ed->setTextCursor(cur);
-//    if (bUseState) {
-//        editor->restoreState(state);
-//    }
-    liteEditor->loadDiff(codec->toUnicode(data));
+    liteEditor->loadDiff(output);
 
     if (save) {
         m_liteApp->editorManager()->saveEditor(editor,false);
