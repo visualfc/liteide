@@ -4,7 +4,8 @@ CONFIG += staticlib
 
 include (../../liteideutils.pri)
 
-HEADERS += gotools.h
+HEADERS += gotools.h \
+    libgopher.h
 
 SOURCES += \
     gotools.cpp

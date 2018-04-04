@@ -5,10 +5,7 @@
 #include <QObject>
 #include <QString>
 #include <QLibrary>
-#include "../libgopher/libgopher.h"
-
-//typedef struct { const char *p; ptrdiff_t n; } _GoString_;
-//typedef _GoString_ GoString;
+#include "libgopher.h"
 
 typedef void (*InvokeAsyncFunc)(GoString p0, GoString p1, GoString p2, GoString p3, void* p4, void* p5);
 typedef int (*InvokeFunc)(GoString p0, GoString p1, GoString p2, GoString p3, GoString* p4, GoString* p5);
