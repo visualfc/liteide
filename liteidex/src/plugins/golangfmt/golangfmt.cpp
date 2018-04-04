@@ -130,9 +130,7 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
     QString output,errmsg;
     if (isUseGopher(m_liteApp) && m_gopher.isValid()) {
         QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-        foreach(QString key, env.keys()) {
-           m_gopher.setenv(key,env.value(key));
-        }
+        m_gopher.setEnvironment(env);
         bresult = m_gopher.invokeArgs(args,text,output,errmsg);
     } else {
         QString cmd = LiteApi::getGotools(m_liteApp);

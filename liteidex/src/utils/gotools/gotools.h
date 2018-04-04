@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QLibrary>
+#include <QProcessEnvironment>
 #include "liteapi/liteapi.h"
 #include "libgopher.h"
 
@@ -23,6 +24,12 @@ public:
     GopherLib(QObject *parent = 0);
     bool isValid() const {
         return  fnInvoke != 0 && fnInvokeAsync != 0 && fnSetenv != 0;
+    }
+    void setEnvironment(const  QProcessEnvironment &environment)
+    {
+        foreach (QString key, environment.keys()) {
+            setenv(key,environment.value(key));
+        }
     }
     void setenv(const QString &key, const QString &value)
     {
