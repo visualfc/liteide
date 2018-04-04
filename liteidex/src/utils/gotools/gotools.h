@@ -1,7 +1,6 @@
 #ifndef GOTOOLS_H
 #define GOTOOLS_H
 
-#include <stddef.h>
 #include <QObject>
 #include <QString>
 #include <QLibrary>
@@ -32,7 +31,7 @@ public:
     }
     bool invokeArgs(const QStringList &args, const QString &sin, QString &sout, QString &serr)
     {
-        return invoke(args[0],args.mid(1).join(" "),sin,sout,serr);
+        return invoke(args[0],QStringList(args.mid(1)).join(" "),sin,sout,serr);
     }
     bool invoke(const QString &id, const QString &args, const QString &sin, QString &sout, QString &serr)
     {
@@ -55,7 +54,7 @@ public:
     }
     void invokeAsyncArgs(const QStringList &args, const QString &sin)
     {
-        return invokeAsync(args[0],args.mid(1).join(" "),sin);
+        invokeAsync(args[0],QStringList(args.mid(1)).join(" "),sin);
     }
     void invokeAsync(const QString &id, const QString &args, const QString &sin)
     {
@@ -84,10 +83,10 @@ public:
             emit finished(size == 0 ? 0 : 1, QString::fromUtf8(data,size));
             break;
         case 1:
-            emit stdout(QString::fromUtf8(data,size));
+            emit extStdout(QString::fromUtf8(data,size));
             break;
         case 2:
-            emit stderr(QString::fromUtf8(data,size));
+            emit extStderr(QString::fromUtf8(data,size));
             break;
         default:
             break;
@@ -95,8 +94,8 @@ public:
         return size;
     }
 signals:
-    void stdout(const QString &data);
-    void stderr(const QString &data);
+    void extStdout(const QString &data);
+    void extStderr(const QString &data);
     void finished(int code, const QString &errMessage);
 protected:
     QLibrary lib;
