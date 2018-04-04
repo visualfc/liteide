@@ -4,11 +4,17 @@
 #include <QObject>
 #include <QString>
 #include <QLibrary>
+#include "liteapi/liteapi.h"
 #include "libgopher.h"
 
 typedef void (*InvokeAsyncFunc)(GoString p0, GoString p1, GoString p2, GoString p3, void* p4, void* p5);
 typedef int (*InvokeFunc)(GoString p0, GoString p1, GoString p2, GoString p3, GoString* p4, GoString* p5);
 typedef void (*SetenvFunc)(char* p0, int p1, char* p2, int p3);
+
+inline bool isUseGopher(LiteApi::IApplication *app)
+{
+    return app->settings()->value("LiteApp/UseLibgopher",false).toBool();
+}
 
 class GopherLib : public QObject
 {
@@ -16,7 +22,7 @@ class GopherLib : public QObject
 public:
     GopherLib(QObject *parent = 0);
     bool isValid() const {
-        return fnInvoke != 0 && fnInvokeAsync != 0 && fnSetenv != 0;
+        return  fnInvoke != 0 && fnInvokeAsync != 0 && fnSetenv != 0;
     }
     void setenv(const QString &key, const QString &value)
     {

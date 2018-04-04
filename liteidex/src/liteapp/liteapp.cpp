@@ -47,6 +47,7 @@
 #include "iconutil/iconutil.h"
 #include "liteapi/liteutil.h"
 #include "liteapi/liteids.h"
+#include "gotools/gotools.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>
@@ -425,7 +426,16 @@ void LiteApp::load(const QString &sessionName, IApplication *baseApp)
     this->appendLog("HtmlWidgetFactory",m_htmlWidgetManager->classNameList().join(" "));
     this->appendLog("DefaultHtmlWidgetFactory",m_htmlWidgetManager->defaultClassName());
 
+
     m_goProxy->call("version");
+
+    bool useGopher = m_settings->value(LITEAPP_USE_LIBGOPHER,false).toBool();
+    GopherLib libgopher;
+    if (!libgopher.isValid()) {
+        this->appendLog("LiteApp",QString("libgopher is invalid"));
+    } else {
+        this->appendLog("LiteApp",useGopher ? QString("enable use libgopher"):QString("disable use libgopher"));
+    }
 	
     appendLog("LiteApp","Finished loading");
 }

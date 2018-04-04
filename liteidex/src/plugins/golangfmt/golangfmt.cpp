@@ -56,7 +56,6 @@ GolangFmt::GolangFmt(LiteApi::IApplication *app,QObject *parent) :
     m_syncfmt(false),
     m_timeout(600)
 {
-    m_gopher = new GopherLib(this);
     m_process = new ProcessEx(this);
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(fmtOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(started()),this,SLOT(fmtStarted()));
@@ -129,12 +128,12 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
 
     bool bresult = false;
     QString output,errmsg;
-    if (0 && m_gopher->isValid()) {
+    if (isUseGopher(m_liteApp) && m_gopher.isValid()) {
         QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
         foreach(QString key, env.keys()) {
-           m_gopher->setenv(key,env.value(key));
+           m_gopher.setenv(key,env.value(key));
         }
-        bresult = m_gopher->invokeArgs(args,text,output,errmsg);
+        bresult = m_gopher.invokeArgs(args,text,output,errmsg);
     } else {
         QString cmd = LiteApi::getGotools(m_liteApp);
 

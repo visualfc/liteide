@@ -25,6 +25,7 @@
 #define LITEAPPOPTION_H
 
 #include "liteapi/liteapi.h"
+#include "gotools/gotools.h"
 
 namespace Ui {
     class LiteAppOption;
@@ -59,6 +60,7 @@ private:
     QWidget           *m_widget;
     Ui::LiteAppOption *ui;
     QStandardItemModel *m_keysModel;
+    GopherLib libgopher;
 };
 
 #endif // LITEAPPOPTION_H
