@@ -43,8 +43,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-
-extern void Setenv(GoSlice p0, GoSlice p1);
+extern void Setenv(char* p0, int p1, char* p2, int p3);
 
 extern void InvokeAsync(GoString p0, GoString p1, GoString p2, GoString p3, void* p4, void* p5);
 

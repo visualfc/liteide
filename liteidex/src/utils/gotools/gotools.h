@@ -8,7 +8,7 @@
 
 typedef void (*InvokeAsyncFunc)(GoString p0, GoString p1, GoString p2, GoString p3, void* p4, void* p5);
 typedef int (*InvokeFunc)(GoString p0, GoString p1, GoString p2, GoString p3, GoString* p4, GoString* p5);
-typedef void (*SetenvFunc)(GoSlice p0, GoSlice p1);
+typedef void (*SetenvFunc)(char* p0, int p1, char* p2, int p3);
 
 class GopherLib : public QObject
 {
@@ -20,14 +20,9 @@ public:
     }
     void setenv(const QString &key, const QString &value)
     {
-        QByteArray akey = key.toUtf8();
-        QByteArray avluae = value.toUtf8();
-        GoSlice p0,p1;
-        p0.len = p0.cap = akey.length();
-        p0.data = akey.data();
-        p1.len = p1.cap = avluae.length();
-        p1.data = avluae.data();
-        fnSetenv(p0,p1);
+        QByteArray p0 = key.toUtf8();
+        QByteArray p1 = value.toUtf8();
+        fnSetenv(p0.data(),p0.size(),p1.data(),p1.size());
     }
     bool invokeArgs(const QStringList &args, const QString &sin, QString &sout, QString &serr)
     {

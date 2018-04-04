@@ -62,8 +62,8 @@ func (c *Context) Finished(err error) {
 }
 
 //export Setenv
-func Setenv(key []byte, value []byte) {
-	os.Setenv(string(key), string(value))
+func Setenv(key *C.char, key_size C.int, value *C.char, value_size C.int) {
+	os.Setenv(C.GoStringN(key, key_size), C.GoStringN(value, value_size))
 }
 
 //export InvokeAsync
