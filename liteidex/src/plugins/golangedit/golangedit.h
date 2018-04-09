@@ -30,6 +30,7 @@
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
 #include "golangfilesearch.h"
+#include "gotools/gotools.h"
 
 /*
     a tool for answering questions about Go source code.
@@ -89,6 +90,7 @@ public slots:
     void findDefFinish(int code,QProcess::ExitStatus status);
     void findInfoStarted();
     void findInfoFinish(int, QProcess::ExitStatus);
+    void findInfoGopherOutput(const QByteArray &data,bool bError);
     void findLinkStarted();
     void findLinkFinish(int, QProcess::ExitStatus);
     void searchTextChanged(const QString &word);
@@ -155,6 +157,7 @@ protected:
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
     Process  *m_sourceQueryProcess;
+    GopherLib m_findInfoGopher;
     SourceQuery m_sourceQueryInfo;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;

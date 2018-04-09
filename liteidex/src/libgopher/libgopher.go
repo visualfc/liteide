@@ -21,6 +21,7 @@ import (
 	"unsafe"
 
 	"github.com/visualfc/gotools/astview"
+	"github.com/visualfc/gotools/buildctx"
 	"github.com/visualfc/gotools/command"
 	"github.com/visualfc/gotools/docview"
 	"github.com/visualfc/gotools/finddoc"
@@ -39,9 +40,6 @@ type Context struct {
 }
 
 func (c *Context) Write(data []byte) (n int, err error) {
-	if c.flag == 0 {
-		return int(C.WriteContext(c.ctx, c.cb, c.flag, nil, 0)), nil
-	}
 	cdata := C.CBytes(data)
 	defer C.free(unsafe.Pointer(cdata))
 	return int(C.WriteContext(c.ctx, c.cb, c.flag, (*C.char)(cdata), C.int(len(data)))), nil
@@ -61,19 +59,46 @@ func (c *Context) Finished(err error) {
 	C.WriteContext(c.ctx, c.cb, 0, cdata, C.int(len(s)))
 }
 
+var (
+	buildEnv = make(map[string]string)
+)
+
 //export Setenv
-func Setenv(key *C.char, key_size C.int, value *C.char, value_size C.int) {
-	os.Setenv(C.GoStringN(key, key_size), C.GoStringN(value, value_size))
+func Setenv(ck *C.TString, cv *C.TString) {
+	os.Setenv(C.GoStringN(ck.data, ck.size), C.GoStringN(ck.data, ck.size))
+}
+
+//export SetBuildEnv
+func SetBuildEnv(ck *C.TString, cv *C.TString) {
+	key := C.GoStringN(ck.data, ck.size)
+	value := C.GoStringN(cv.data, cv.size)
+	buildEnv[key] = value
+}
+
+//export ClearBuildEnv
+func ClearBuildEnv() {
+	buildEnv = make(map[string]string)
+}
+
+func init() {
+	buildctx.SetLookupEnv(func(key string) (string, bool) {
+		r, ok := buildEnv[key]
+		return r, ok
+	})
 }
 
 //export InvokeAsync
-func InvokeAsync(id string, args string, sep string, sin string, ctx unsafe.Pointer, cb unsafe.Pointer) {
-	stdout := &Context{ctx, cb, 1}
-	stderr := &Context{ctx, cb, 2}
-	go func() {
+func InvokeAsync(cid *C.TString, cargs *C.TString, csep *C.TString, csin *C.TString, ctx unsafe.Pointer, cb unsafe.Pointer) {
+	id := C.GoStringN(cid.data, cid.size)
+	args := C.GoStringN(cargs.data, cargs.size)
+	sep := C.GoStringN(csep.data, csep.size)
+	sin := C.GoStringN(csin.data, csin.size)
+	go func(id string, args string, sep string, sin string) {
+		stdout := &Context{ctx, cb, 1}
+		stderr := &Context{ctx, cb, 2}
 		err := InvokeHelper(id, args, sep, bytes.NewBufferString(sin), stdout, stderr)
 		stdout.Finished(err)
-	}()
+	}(id, args, sep, sin)
 }
 
 //export Invoke

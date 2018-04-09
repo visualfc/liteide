@@ -6,4 +6,6 @@ GopherLib::GopherLib(QObject *parent) : QObject(parent)
     fnInvokeAsync = (InvokeAsyncFunc)lib.resolve("InvokeAsync");
     fnInvoke = (InvokeFunc)lib.resolve("Invoke");
     fnSetenv = (SetenvFunc)lib.resolve("Setenv");
+    fnSetBuildEnv = (SetBuildEnvFunc)lib.resolve("SetBuildEnv");
+    fnClearBuildEnv = (ClearBuildEnvFunc)lib.resolve("ClearBuildEnv");
 }

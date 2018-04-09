@@ -130,6 +130,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findLinkProcess,SIGNAL(started()),this,SLOT(findLinkStarted()));
     connect(m_findLinkProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findLinkFinish(int,QProcess::ExitStatus)));
 
+    connect(&m_findInfoGopher,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findInfoGopherOutput(QByteArray,bool)));
+
     if (m_fileSearch) {
         connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
     }
@@ -618,16 +620,9 @@ void GolangEdit::editorFindInfo()
     if (text.isEmpty() || text.contains(" ")) {
         return;
     }
-    if (!m_findInfoProcess->isStop()) {
-        m_findInfoProcess->stopAndWait(100,200);
-    }
 
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = m_editor->utf8Position(false,selectStart);
-
-    m_findInfoProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
-    m_findInfoProcess->setWorkingDirectory(info.path());
-
 
     QStringList args;
     args << "types";
@@ -644,6 +639,30 @@ void GolangEdit::editorFindInfo()
     args << "-doc";
     args << ".";
 
+    if (0 && isUseGopher(m_liteApp) && m_findInfoGopher.isValid()) {
+        QStringList args;
+        args << "types";
+        QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
+        if (!tags.isEmpty()) {
+            args << "-tags";
+            args << tags;
+        }
+        args << "-pos";
+        args << QString("%1:%2").arg(info.fileName()).arg(offset);
+        args << "-stdin";
+        args << "-info";
+        args << "-def";
+        args << "-doc";
+        args << info.path();
+        m_findInfoGopher.setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor));
+        m_findInfoGopher.invokeAsyncArgsData(args,m_editor->utf8Data());
+    }
+
+    if (!m_findInfoProcess->isStop()) {
+        m_findInfoProcess->stopAndWait(100,200);
+    }
+    m_findInfoProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
+    m_findInfoProcess->setWorkingDirectory(info.path());
     m_findInfoProcess->startEx(cmd,args.join(" "));
 }
 
@@ -708,6 +727,11 @@ void GolangEdit::findInfoFinish(int code, QProcess::ExitStatus)
             m_editor->showToolTipInfo(pt,info);
         }
     }
+}
+
+void GolangEdit::findInfoGopherOutput(const QByteArray &data, bool bError)
+{
+    qDebug() << bError << data;
 }
 
 void GolangEdit::findLinkStarted()
