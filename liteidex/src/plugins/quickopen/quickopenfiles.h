@@ -55,7 +55,6 @@ protected:
     bool          m_cancel;
 };
 
-
 class QuickOpenFiles : public LiteApi::IQuickOpen
 {
     Q_OBJECT

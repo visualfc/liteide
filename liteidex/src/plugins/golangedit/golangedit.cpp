@@ -815,7 +815,7 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                                     }
                                 }
                             }
-                            m_lastLink.sourceInfo += "\n";
+                            m_lastLink.sourceInfo += "\n\n";
                             m_lastLink.sourceInfo += FindSourceInfo(m_liteApp,fileName,line-1,n).join("\n").replace("\t","    ");
                         }
                         if (m_lastLink.showTip && (info.size() >= 3) ) {
