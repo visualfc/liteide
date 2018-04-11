@@ -405,6 +405,32 @@ void GolangEdit::currentEditorChanged(LiteApi::IEditor *editor)
     m_plainTextEdit = LiteApi::getPlainTextEdit(editor);
 }
 
+QString parserImport(const QString &text,int &start, int &end)
+{
+    QString sep = "\"";
+    start = text.indexOf(sep);
+    end = -1;
+    if (start < 0) {
+        sep = "`";
+        start = text.indexOf(sep);
+    }
+    if (start >= 0) {
+        end = text.indexOf(sep,start+1);
+        if (end > 0) {
+            return text.mid(start+1,end-start-1);
+        }
+    }
+    return QString();
+}
+
+QString parser_import(const QString &text)
+{
+    int start = -1;
+    int end = -1;
+    return parserImport(text,start,end);
+}
+
+
 void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav)
 {
     if (nav) {
@@ -428,8 +454,27 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
         return;
     }
 
-    if (m_lastLink.linkTextStart == cursor.selectionStart() &&
-            m_lastLink.linkTextEnd == cursor.selectionEnd()) {
+    int linkStart = cursor.selectionStart();
+    int linkEnd = cursor.selectionEnd();
+
+    LiteApi::ITextLexer *textLexer = LiteApi::getTextLexer(m_editor);
+    if (textLexer && textLexer->isInImport(cursor)) {
+        int start = -1;
+        int end = -1;
+        QTextBlock block = cursor.block();
+        QString pkg = parserImport(block.text(),start,end);
+        if (!pkg.isEmpty()) {
+            int pkgStart = block.position()+start;
+            int pkgEnd = block.position()+end;
+            if (pkgStart <= linkStart && pkgEnd >= end) {
+                linkStart = pkgStart;
+                linkEnd = pkgEnd;
+            }
+        }
+    }
+
+    if (m_lastLink.linkTextStart == linkStart &&
+            m_lastLink.linkTextEnd == linkEnd) {
         if (m_lastLink.hasValidTarget()) {
             m_lastLink.cursorPos = pos;
             m_lastLink.showTip = true;
@@ -446,8 +491,8 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     m_lastLink.clear();
     m_lastLink.showTip = true;
     m_lastLink.showNav = nav;
-    m_lastLink.linkTextStart = cursor.selectionStart();
-    m_lastLink.linkTextEnd = cursor.selectionEnd();
+    m_lastLink.linkTextStart = linkStart;
+    m_lastLink.linkTextEnd = linkEnd;
     m_lastLink.cursorPos = pos;
 
     QString cmd = LiteApi::getGotools(m_liteApp);
@@ -489,22 +534,6 @@ void GolangEdit::aboutToShowContextMenu()
     m_viewGodocAct->setVisible(b);
 }
 
-QString parser_import(const QString &text)
-{
-    QString sep = "\"";
-    int start = text.indexOf(sep);
-    if (start < 0) {
-        sep = "`";
-        start = text.indexOf(sep);
-    }
-    if (start >= 0) {
-        int end = text.indexOf(sep,start+1);
-        if (end > 0) {
-            return text.mid(start+1,end-start-1);
-        }
-    }
-    return QString();
-}
 
 void GolangEdit::editorViewGodoc()
 {
