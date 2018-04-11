@@ -298,26 +298,35 @@ void QuickOpenManager::hideQuickOpen()
 
 void QuickOpenManager::filterChanged(const QString &text)
 {
-    IQuickOpen *quick = 0;
-    if (!text.isEmpty()) {
-        QMapIterator<QString,IQuickOpen*> i(m_filterMap);
-        while (i.hasNext()) {
-            i.next();
-            if (i.key().isEmpty()) {
-                continue;
-            }
-            if (text.startsWith(i.key())) {
-                quick = i.value();
-                break;
+    bool checkSym = false;
+    if (m_currentFilter == m_quickOpenFiles) {
+        checkSym = true;
+    } else if (!m_sym.isEmpty()) {
+        checkSym = true;
+    }
+    // check register symbol qucik open
+    if (checkSym) {
+        IQuickOpen *quick = 0;
+        if (!text.isEmpty()) {
+            QMapIterator<QString,IQuickOpen*> i(m_filterMap);
+            while (i.hasNext()) {
+                i.next();
+                if (i.key().isEmpty()) {
+                    continue;
+                }
+                if (text.startsWith(i.key())) {
+                    quick = i.value();
+                    break;
+                }
             }
         }
-    }
-    if (quick == 0)  {
-        quick = m_quickOpenFiles;
-    }
-    if (quick != m_currentFilter) {
-        this->setCurrentFilter(quick);
-        updateModel();
+        if (quick == 0)  {
+            quick = m_quickOpenFiles;
+        }
+        if (quick != m_currentFilter) {
+            this->setCurrentFilter(quick);
+            updateModel();
+        }
     }
     if (m_currentFilter) {
         QModelIndex index = m_currentFilter->filterChanged(text.mid(m_sym.size()));

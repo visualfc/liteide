@@ -76,6 +76,7 @@ protected:
     QAction     *m_quickOpenActionAct;
     QAction     *m_quickOpenHelpAct;
     QMap<QString,IQuickOpen*> m_filterMap;
+    QList<IQuickOpen*> m_quickList;
     QMap<IQuickOpen*,bool> m_updateMap;
     QMap<QString,IQuickOpenMimeType*> m_quickOpenSymbolMap;
     QString m_sym;
