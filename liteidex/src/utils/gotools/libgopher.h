@@ -2,6 +2,7 @@
 #define LIBGOPHER_H
 
 #include <stddef.h> /* for ptrdiff_t below */
+#include <QtGlobal>
 
 #ifndef GO_CGO_EXPORT_PROLOGUE_H
 #define GO_CGO_EXPORT_PROLOGUE_H
@@ -24,9 +25,11 @@ typedef int GoInt32;
 typedef unsigned int GoUint32;
 typedef long long GoInt64;
 typedef unsigned long long GoUint64;
-typedef GoInt64 GoInt;
-typedef GoUint64 GoUint;
-typedef __SIZE_TYPE__ GoUintptr;
+
+typedef qptrdiff GoInt;
+typedef quintptr GoUint;
+
+typedef quintptr GoUintptr;
 typedef float GoFloat32;
 typedef double GoFloat64;
 
