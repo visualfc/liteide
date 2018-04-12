@@ -5,6 +5,8 @@ CONFIG += staticlib
 
 include(../../liteideutils.pri)
 
-HEADERS += fileutil.h
+HEADERS += fileutil.h \
+    findfilesthread.h
 
-SOURCES += fileutil.cpp
+SOURCES += fileutil.cpp \
+    findfilesthread.cpp

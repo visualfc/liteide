@@ -51,6 +51,11 @@ QString QuickOpenLines::info() const
     return tr("Go to Line");
 }
 
+QString QuickOpenLines::placeholderText() const
+{
+    return QString();
+}
+
 void QuickOpenLines::activate()
 {
 

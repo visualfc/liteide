@@ -36,6 +36,7 @@ public:
     QuickOpenAction(LiteApi::IApplication *app, QObject *parent = 0);
     virtual QString id() const;
     virtual QString info() const;
+    virtual QString placeholderText() const;
     virtual void activate();
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();

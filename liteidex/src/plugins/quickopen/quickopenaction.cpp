@@ -59,6 +59,11 @@ QString QuickOpenAction::info() const
     return tr("Show and Run Commands");
 }
 
+QString QuickOpenAction::placeholderText() const
+{
+    return QString();
+}
+
 void QuickOpenAction::activate()
 {
 

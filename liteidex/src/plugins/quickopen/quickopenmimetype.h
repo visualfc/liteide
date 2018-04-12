@@ -35,6 +35,7 @@ public:
     QuickOpenMimeType(LiteApi::IApplication *app, QObject *parent);
     virtual QString id() const;
     virtual QString info() const;
+    virtual QString placeholderText() const;
     virtual void activate();
     virtual QAbstractItemModel *model() const;
     virtual void updateModel();

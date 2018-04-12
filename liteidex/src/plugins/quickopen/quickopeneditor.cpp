@@ -55,6 +55,11 @@ QString QuickOpenEditor::info() const
     return tr("Show All Opened Editors");
 }
 
+QString QuickOpenEditor::placeholderText() const
+{
+    return QString();
+}
+
 void QuickOpenEditor::activate()
 {
 

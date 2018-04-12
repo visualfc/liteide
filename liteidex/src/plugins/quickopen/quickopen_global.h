@@ -34,7 +34,9 @@
 
 #define OPTION_QUICKOPEN "option/quickopen"
 #define QUICKOPEN_FILES_MAXCOUNT "quickopen/filesmaxcount"
-#define QUICKOPNE_FILES_MATCHCASE "quickopen/filematchscase"
+#define QUICKOPNE_FILES_MATCHCASE "quickopen/filesmatchscase"
+#define QUICKOPEN_FOLDER_MAXCOUNT "quickopen/foldermaxcount"
+#define QUICKOPNE_FOLDER_MATCHCASE "quickopen/foldermatchscase"
 #define QUICKOPNE_EDITOR_MATCHCASE "quickopen/editormatchcase"
 
 #endif // QUICKOPEN_GLOBAL_H

@@ -210,6 +210,8 @@ struct Link
     {
         linkTextStart = -1;
         linkTextEnd = -1;
+        targetOpenDir.clear();
+        targetOpenDirInfo.clear();
         targetFileName.clear();
         targetInfo.clear();
         sourceInfo.clear();
@@ -234,6 +236,8 @@ struct Link
     int targetColumn;
     bool    showTip;
     bool    showNav;
+    QString targetOpenDir;
+    QString targetOpenDirInfo;
     QString targetFileName;
     QString targetInfo;
     QString sourceInfo;

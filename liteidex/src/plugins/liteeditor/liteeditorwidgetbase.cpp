@@ -23,6 +23,7 @@
 
 #include "liteeditorwidgetbase.h"
 #include "qtc_texteditor/basetextdocumentlayout.h"
+#include "quickopenapi/quickopenapi.h"
 #include <QCoreApplication>
 #include <QApplication>
 #include <QTextBlock>
@@ -3225,7 +3226,21 @@ bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
 {
     if (!link.hasValidTarget()) {
         return false;
-    }            
+    }
+    if (!link.targetOpenDir.isEmpty()) {
+        LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+        if (mgr) {
+            LiteApi::IQuickOpenFolder *folder = LiteApi::getQuickOpenFolder(mgr);
+            if (folder) {
+                folder->setFolder(link.targetOpenDir);
+                folder->setPlaceholderText(link.targetOpenDirInfo);
+                mgr->setCurrentFilter(folder);
+                QPoint pt = this->mapToGlobal(link.cursorPos);
+                mgr->showPopup(&pt);
+                return true;
+            }
+        }
+    }
     LiteApi::gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,true);
     return true;
 }

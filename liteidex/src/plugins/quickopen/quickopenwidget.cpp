@@ -88,18 +88,22 @@ QTreeView *QuickOpenWidget::view()
 
 void QuickOpenWidget::hideEvent(QHideEvent *e)
 {
-    emit hidePopup();
+    emit hideWidget();
     QWidget::hideEvent(e);
 }
 
-void QuickOpenWidget::showView()
+void QuickOpenWidget::showView(QPoint *pos)
 {
-    QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
-    QRect rc = toolBar->frameGeometry();
-    QPoint pt = rc.topRight();
-    pt.rx() += 4;
-    pt.ry() += 2;
-    this->move(m_liteApp->mainWindow()->mapToGlobal(pt));
+    if (pos == 0) {
+        QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
+        QRect rc = toolBar->frameGeometry();
+        QPoint pt = rc.topRight();
+        pt.rx() += 4;
+        pt.ry() += 2;
+        this->move(m_liteApp->mainWindow()->mapToGlobal(pt));
+    } else {
+        this->move(pos->x(),pos->y());
+    }
     m_edit->setFocus();
     this->show();
 }

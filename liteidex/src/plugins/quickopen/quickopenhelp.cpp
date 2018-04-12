@@ -49,6 +49,11 @@ QString QuickOpenHelp::info() const
     return tr("Show All Quick Open Actions");
 }
 
+QString QuickOpenHelp::placeholderText() const
+{
+    return QString();
+}
+
 void QuickOpenHelp::activate()
 {
 
@@ -63,7 +68,7 @@ void QuickOpenHelp::updateModel()
 {
     LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
     m_model->clear();
-    QMapIterator<QString,LiteApi::IQuickOpen*> i(mgr->filterMap());
+    QMapIterator<QString,LiteApi::IQuickOpen*> i(mgr->symFilterMap());
     while(i.hasNext()) {
         i.next();
         if (i.value() == this) {

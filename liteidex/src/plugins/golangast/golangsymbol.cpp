@@ -62,6 +62,11 @@ QString GolangSymbol::info() const
     return tr("Quick Open Symbol by Name");
 }
 
+QString GolangSymbol::placeholderText() const
+{
+    return QString();
+}
+
 void GolangSymbol::activate()
 {
    // m_liteApp->editorManager()->addNavigationHistory();

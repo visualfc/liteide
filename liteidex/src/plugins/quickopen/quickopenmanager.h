@@ -33,6 +33,7 @@
 using namespace LiteApi;
 
 class QuickOpenFiles;
+class QuickOpenFolder;
 class QuickOpenManager : public IQuickOpenManager
 {
     Q_OBJECT
@@ -43,7 +44,7 @@ public:
     virtual void addFilter(const QString &sym, IQuickOpen *filter);
     virtual void removeFilter(IQuickOpen *filter);
     virtual QList<IQuickOpen*> filterList() const;
-    virtual QMap<QString, IQuickOpen *> filterMap() const;
+    virtual QMap<QString, IQuickOpen *> symFilterMap() const;
     virtual void setCurrentFilter(IQuickOpen *filter);
     virtual IQuickOpen *currentFilter() const;
     virtual QModelIndex currentIndex() const;
@@ -51,23 +52,26 @@ public:
     virtual void showBySymbol(const QString &sym);
     virtual IQuickOpen *findById(const QString &id);
     virtual IQuickOpen *findBySymbol(const QString &sym);
+    virtual QWidget *widget() const;
     virtual QTreeView *modelView() const;
+    virtual QLineEdit *lineEdit() const;
+    virtual bool showOpenFolder(const QString &folder, QPoint *pos);
 public:
     virtual IQuickOpenMimeType *registerQuickOpenMimeType(const QString &sym);
+    virtual void showPopup(QPoint *pos = 0);
+    virtual void hidePopup();
 public slots:
     void quickOpen();
     void quickOpenEditor();
     void quickOpenSymbol();
     void quickOpenCommand();
     void quickOpenHelp();
-    void showQuickOpen();
-    void hideQuickOpen();
     void filterChanged(const QString &text);
     void indexChanage(const QModelIndex &index);
     void selected();
     void appAboutToQuit();
 protected slots:
-    void hidePopup();
+    void hideWidget();
 protected:
     QuickOpenWidget *m_widget;
     QAction     *m_quickOpenAct;
@@ -75,13 +79,14 @@ protected:
     QAction     *m_quickOpenSymbolAct;
     QAction     *m_quickOpenActionAct;
     QAction     *m_quickOpenHelpAct;
-    QMap<QString,IQuickOpen*> m_filterMap;
-    QList<IQuickOpen*> m_quickList;
+    QList<IQuickOpen*> m_filterList;
+    QMap<QString,IQuickOpen*> m_symFilterMap;
     QMap<IQuickOpen*,bool> m_updateMap;
     QMap<QString,IQuickOpenMimeType*> m_quickOpenSymbolMap;
     QString m_sym;
     QPointer<IQuickOpen> m_currentFilter;
     QuickOpenFiles *m_quickOpenFiles;
+    QuickOpenFolder *m_quickOpenFolder;
 protected:
     void updateModel();
 };

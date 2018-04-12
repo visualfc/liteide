@@ -31,6 +31,7 @@
 #include "processex/processex.h"
 #include "goaddtagsdialog.h"
 #include "goremovetagsdialog.h"
+#include "quickopenapi/quickopenapi.h"
 
 #include <QMenu>
 #include <QToolBar>
@@ -716,6 +717,27 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
     QRegExp reg(":(\\d+):(\\d+)");
     int pos = reg.lastIndexIn(info);
     if (pos >= 0) {
+        QStringList extra = info.mid(pos+reg.matchedLength()).split(":",QString::SkipEmptyParts);
+        //:fname:fpath:dir
+        if(info.length() > (pos+reg.matchedLength()) ) {
+            if (extra.size() == 3) {
+                QString targetOpenDir = extra[2];
+                QString targetOpenDirInfo = QString(tr("Below files in package %1").arg(extra[1]));
+                if (!targetOpenDir.isEmpty()) {
+                    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+                    if (mgr) {
+                        LiteApi::IQuickOpenFolder *folder = LiteApi::getQuickOpenFolder(mgr);
+                        if (folder) {
+                            folder->setFolder(targetOpenDir);
+                            folder->setPlaceholderText(targetOpenDirInfo);
+                            mgr->setCurrentFilter(folder);
+                            mgr->showPopup();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
         QString fileName = info.left(pos);
         int line = reg.cap(1).toInt();
         int col = reg.cap(2).toInt();
@@ -819,17 +841,34 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
             QStringList info = QString::fromUtf8(data).trimmed().split("\n");
             if (info.size() >= 2) {
                 if (info[0] != "-") {
+                    QString fileInfo = info[0];
                     QRegExp reg(":(\\d+):(\\d+)");
-                    int pos = reg.lastIndexIn(info[0]);
+                    int pos = reg.lastIndexIn(fileInfo);
                     if (pos >= 0) {
-                        QString fileName = info[0].left(pos);
+                        QString fileName = fileInfo.left(pos);
                         int line = reg.cap(1).toInt();
                         int col = reg.cap(2).toInt();
+
+                        bool importExtra = false;
+                        //parser import line extra info
+                        if(fileInfo.length() > (pos+reg.matchedLength()) ) {
+                            QStringList extra = fileInfo.mid(pos+reg.matchedLength()).split(":",QString::SkipEmptyParts);
+                            //:fname:fpath:dir
+                            if (extra.size() == 3) {
+                                importExtra = true;
+                                m_lastLink.targetOpenDir = extra[2];
+                                m_lastLink.targetOpenDirInfo = QString(tr("Below files in package %1").arg(extra[1]));
+                                m_lastLink.targetInfo = formatInfo(info[1]);
+                                m_lastLink.sourceInfo = QString("%1\n\n> %2").arg(formatInfo(info[1])).arg(extra[2]);
+                            }
+                        }
                         m_lastLink.targetFileName = fileName;
                         m_lastLink.targetLine = line-1;
                         m_lastLink.targetColumn = col-1;
-                        m_lastLink.targetInfo = formatInfo(info[1]);
-                        m_lastLink.sourceInfo = QString("%1\n\n> %2:%3").arg(formatInfo(info[1])).arg(fileName).arg(line);
+                        if (!importExtra) {
+                            m_lastLink.targetInfo = formatInfo(info[1]);
+                            m_lastLink.sourceInfo = QString("%1\n\n> %2:%3").arg(formatInfo(info[1])).arg(fileName).arg(line);
+                        }
                         if (m_lastLink.showNav) {
                             int n = 7;
                             if (info.size() >= 3) {
@@ -844,9 +883,12 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                                     }
                                 }
                             }
-                            m_lastLink.sourceInfo += "\n\n";
-                            m_lastLink.sourceInfo += FindSourceInfo(m_liteApp,fileName,line-1,n).join("\n").replace("\t","    ");
+                            if (!importExtra) {
+                                m_lastLink.sourceInfo += "\n\n";
+                                m_lastLink.sourceInfo += FindSourceInfo(m_liteApp,fileName,line-1,n).join("\n").replace("\t","    ");
+                            }
                         }
+                        // show doc
                         if (m_lastLink.showTip && (info.size() >= 3) ) {
                             m_lastLink.targetInfo += "\n";
                             for (int i = 2; i < info.size(); i++) {

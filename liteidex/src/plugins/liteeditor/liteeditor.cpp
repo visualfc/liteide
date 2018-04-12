@@ -1244,7 +1244,7 @@ void LiteEditor::gotoLine()
         LiteApi::IQuickOpen *p = mgr->findById("quickopen/lines");
         if (p) {
             mgr->setCurrentFilter(p);
-            mgr->showQuickOpen();
+            mgr->showPopup();
             return;
         }
     }

@@ -52,6 +52,11 @@ QString QuickOpenMimeType::info() const
     return m_info;
 }
 
+QString QuickOpenMimeType::placeholderText() const
+{
+    return QString();
+}
+
 void QuickOpenMimeType::activate()
 {
     QString mimeType;

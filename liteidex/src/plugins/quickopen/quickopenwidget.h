@@ -39,10 +39,10 @@ public:
     QTreeView *view();
     virtual void hideEvent(QHideEvent *e);
 signals:
-    void hidePopup();
+    void hideWidget();
     void indexChanage(const QModelIndex &index);
-public slots:
-    void showView();
+public:
+    void showView(QPoint *pos = 0);
 protected:
     virtual bool eventFilter(QObject *o, QEvent *e);
 protected:
