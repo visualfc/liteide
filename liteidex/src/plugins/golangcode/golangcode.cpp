@@ -61,11 +61,14 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     g_gocodeInstCount++;
     m_gocodeProcess = new Process(this);
     m_gocodeSetProcess = new Process(this);
+    m_gocodeImportProcess = new Process(this);
     m_importProcess = new Process(this);
     m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
     m_gocodeSetProcess->setWorkingDirectory(m_liteApp->applicationPath());
     connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
     connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
+    connect(m_gocodeImportProcess,SIGNAL(started()),this,SLOT(gocodeImportStarted()));
+    connect(m_gocodeImportProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(gocodeImportFinished(int,QProcess::ExitStatus)));
     connect(m_importProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(importFinished(int,QProcess::ExitStatus)));
     m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
@@ -285,9 +288,17 @@ void GolangCode::updateEditorGOPATH()
     if (gopathenv != m_lastGopathEnv) {
         m_lastGopathEnv = gopathenv;
         resetGocode(env);
-        loadImportsList(env);
+        //loadImportsList(env);
         m_liteApp->appendLog("GolangCode",QString("gocode set lib-path \"%1\"").arg(gopathenv),false);
     }
+    if (!m_gocodeImportProcess->isStop()) {
+        m_gocodeImportProcess->stop(10);
+    }
+    QStringList args;
+    args << "-in" << "" << "-f" << "csv" << "autocomplete" << "main.go" << "21";
+    m_gocodeImportProcess->setProcessEnvironment(env);
+    m_gocodeImportProcess->setWorkingDirectory(m_fileInfo.absolutePath());
+    m_gocodeImportProcess->start(m_gocodeCmd,args);
 }
 
 void GolangCode::customGOPATHChanged(const QString &/*buildPath*/)
@@ -309,13 +320,14 @@ void GolangCode::broadcast(QString /*module*/,QString /*id*/,QString)
 
 GolangCode::~GolangCode()
 {
+    delete m_gocodeProcess;
+    delete m_gocodeSetProcess;
+    delete m_importProcess;
+    delete m_gocodeImportProcess;
     g_gocodeInstCount--;
     if (g_gocodeInstCount == 0 && m_closeOnExit && !m_gocodeCmd.isEmpty()) {
         ProcessEx::startDetachedEx(m_gocodeCmd,QStringList() << "close");
     }
-    delete m_gocodeProcess;
-    delete m_gocodeSetProcess;
-    delete m_importProcess;
 }
 
 void GolangCode::resetGocode(const QProcessEnvironment &env)
@@ -637,11 +649,51 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     }
 }
 
+void GolangCode::gocodeImportStarted()
+{
+    m_gocodeImportProcess->write("package main\nimport \"\"");
+    m_gocodeImportProcess->closeWriteChannel();
+}
+
+void GolangCode::gocodeImportFinished(int code, QProcess::ExitStatus)
+{
+    if (code != 0) {
+        return;
+    }
+    QByteArray data = m_gocodeImportProcess->readAllStandardOutput();
+    QList<QString> lines = QString::fromUtf8(data).split('\n');
+    QStringList importList;
+    m_extraPkgListMap.clear();
+    foreach (QString line, lines) {
+        QStringList ar = line.split(",,");
+        if (ar.count() != 3) {
+            continue;
+        }
+        if (ar.at(0) == "PANIC") {
+            continue;
+        }
+        if (ar[0] != "import") {
+            continue;
+        }
+        if (m_importList.contains(ar[1])) {
+            continue;
+        }
+        QString pkg = ar[1];
+        importList.append(pkg);
+        QStringList pathList = pkg.split("/");
+        m_extraPkgListMap.insert(pathList.last(),pkg);
+    }
+    if (m_completer) {
+        m_completer->setImportList(QStringList() << m_importList << importList);
+    }
+}
+
 void GolangCode::importFinished(int code,QProcess::ExitStatus)
 {
     if (code != 0) {
         return;
     }
+    return;
     QByteArray read = m_importProcess->readAllStandardOutput();
     QString data = QString::fromUtf8(read);
     QStringList importList = data.split('\n');

@@ -76,6 +76,8 @@ public slots:
     void wordCompleted(QString,QString,QString);
     void started();
     void finished(int,QProcess::ExitStatus);
+    void gocodeImportStarted();
+    void gocodeImportFinished(int,QProcess::ExitStatus);
     void importFinished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);
     void applyOption(QString);
@@ -103,6 +105,7 @@ protected:
     QFileInfo   m_fileInfo;
     Process   *m_gocodeProcess;
     Process   *m_gocodeSetProcess;
+    Process   *m_gocodeImportProcess;
     Process   *m_importProcess;
     QByteArray  m_writeData;
     LiteApi::IEnvManager *m_envManager;
