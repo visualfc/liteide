@@ -55,7 +55,8 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_editor(0),
     m_completer(0),
     m_closeOnExit(true),
-    m_autoUpdatePkg(false)
+    m_autoUpdatePkg(false),
+    m_allImportHint(true)
 {
     g_gocodeInstCount++;
     m_gocodeProcess = new Process(this);
@@ -85,6 +86,7 @@ void GolangCode::applyOption(QString id)
     if (id != "option/golangcode") return;
     m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
     m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
+    m_allImportHint = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
     QStringList args;
     args << "set" << "autobuild";
     if (m_autoUpdatePkg) {
@@ -619,11 +621,16 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     if (n == 0 && m_lastPrefix.endsWith(".")) {
         QString id = m_lastPrefix.left(m_lastPrefix.length()-1);
         QStringList pkgs = m_pkgListMap.values(id);
+        pkgs.sort();
+        if (m_allImportHint) {
+            QStringList extras = m_extraPkgListMap.values(id);
+            extras.sort();
+            pkgs << extras;
+        }
         if (!pkgs.isEmpty() && !findImport(id)) {
             QPlainTextEdit *ed = LiteApi::getPlainTextEdit(m_editor);
             if (ed) {
                 int pos = ed->textCursor().position();
-                pkgs.sort();
                 m_pkgImportTip->showPkgHint(pos,pkgs,ed);
             }
         }
@@ -640,9 +647,17 @@ void GolangCode::importFinished(int code,QProcess::ExitStatus)
     QStringList importList = data.split('\n');
     importList.removeDuplicates();
     importList.sort();
+
+    m_extraPkgListMap.clear();
+    foreach (QString line, importList) {
+        QStringList pathList = line.split("/");
+        m_extraPkgListMap.insert(pathList.last(),line);
+    }
+
     m_allImportList = m_importList;
     m_allImportList.append(importList);
     m_allImportList.removeDuplicates();
+
     if (m_completer) {
         m_completer->setImportList(m_allImportList);
     }

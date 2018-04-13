@@ -32,7 +32,8 @@
 #  define GOLANGCODESHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define  GOLANGCODE_EXITCLOSE "golangcode/exitclose"
-#define  GOLANGCODE_AUTOBUILD "golangcode/gocodeautobuild"
+#define GOLANGCODE_EXITCLOSE "golangcode/exitclose"
+#define GOLANGCODE_AUTOBUILD "golangcode/gocodeautobuild"
+#define GOLANGCODE_IMPORTHINT_GOPATH "golangcode/importhintgopath"
 
 #endif // GOLANGCODE_GLOBAL_H

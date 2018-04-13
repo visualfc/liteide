@@ -95,6 +95,7 @@ protected:
     QMultiMap<QString,QString> m_pkgListMap;
     QStringList m_importList;
     QStringList m_allImportList;
+    QMultiMap<QString,QString> m_extraPkgListMap;
     QString     m_gobinCmd;
     QString     m_preWord;
     QString     m_prefix;
@@ -110,6 +111,7 @@ protected:
     QString     m_lastGopathEnv;
     bool        m_closeOnExit;
     bool        m_autoUpdatePkg;
+    bool        m_allImportHint;
 };
 
 #endif // GOLANGCODE_H
