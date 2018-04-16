@@ -514,12 +514,19 @@ void LiteDebug::startDebug()
 
     QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,info.targetWorkDir,"-tags");
 
+
     QStringList args;
-    args << "build" << "-a" << "-gcflags" << "\"-N -l\"" ;
-    if (!tags.isEmpty()) {
-        args << "-tags" << tags;
+    QString buildArgs = info.buildArgs;
+    if (!buildArgs.isEmpty()) {
+        args << "build";
+        args << buildArgs;
+    } else {
+        args << "build" << "-a" << "-gcflags" << "\"-N -l\"" ;
+        if (!tags.isEmpty()) {
+            args << "-tags" << tags;
+        }
+        args << "-o" << debugName;
     }
-    args << "-o" << debugName;
 
     bool b = m_liteBuild->execGoCommand(args,info.targetWorkDir,true);
     if (!b) {
@@ -547,7 +554,7 @@ void LiteDebug::startDebug()
     if (editor) {
         m_startDebugFile = editor->filePath();
     }
-    m_removeDebugFilePath = QFileInfo(info.buildRootPath,cmd).filePath();
+    //m_removeDebugFilePath = QFileInfo(info.buildRootPath,cmd).filePath();
 
     this->startDebug(QDir::toNativeSeparators(cmd),info.targetArgs,info.targetWorkDir);
 }

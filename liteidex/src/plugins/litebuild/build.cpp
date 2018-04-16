@@ -133,6 +133,9 @@ void Build::make()
     }
 
     foreach(LiteApi::BuildAction *ba,m_actionList) {
+        if (ba->isHidden()) {
+            continue;
+        }
         QAction *act = this->makeAction(ba);        
         QString idMenu = ba->menu();
         if (idMenu.isEmpty()) {
@@ -325,6 +328,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 act->setMenu(attrs.value("menu").toString());
                 act->setKey(attrs.value("key").toString());
                 act->setCmd(attrs.value("cmd").toString());
+                act->setDebug(attrs.value("debug").toString());
                 act->setFunc(attrs.value("func").toString());
                 act->setArgs(attrs.value("args").toString());
                 act->setSave(attrs.value("save").toString());
@@ -375,6 +379,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 target->setDebug(attrs.value("debug").toString());
                 target->setArgs(attrs.value("args").toString());
                 target->setWork(attrs.value("work").toString());
+                target->setBuildArgs(attrs.value("buildargs").toString());
             }
             break;
         case QXmlStreamReader::EndElement:

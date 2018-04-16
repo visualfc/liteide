@@ -5,12 +5,13 @@
 		<config id="GoFmt" name="GOFMT" value="gofmt"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
+		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
 		<custom id="DebugBaseName" name="DEBUGBASENAME" value="$(BUILD_DIR_NAME).debug"/>
 		<custom id="DebugName" name = "DEBUGNAME" value="$(DEBUGBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="-a -gcflags &quot;-N -l&quot; -v -o $(DEBUGNAME)" shared-value="$(BUILDFLAGS)"/>
 		<custom id="TargetBaseName" name="TARGETBASENAME" value="$(BUILD_DIR_NAME)"/>
 		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
-		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
 		<custom id="BuildArgsi" name="BUILDARGS" value="-i" shared-value="$(BUILDFLAGS)"/>
 		<custom id="ForceBuildArgsi" name="FORCEBUILDARGS" value="-i -a -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="InstallArgs" name="INSTALLARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
@@ -54,7 +55,10 @@
 		<action id="GoToolVet" menu="Utils" img="vet.png" cmd="$(GO)" args="tool vet $(TOOLVETARGS) ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoGenerate" menu="Utils" img="get.png" cmd="$(GO)" args="generate $(GENERATEARGS)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoLint" menu="Utils" img="lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
-		<action id="Gopm Build" menu="Utils" img="gopm.png" key = "" cmd="gopm" args="--noterm build" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" work="$(BUILD_DIR_PATH)"/>
+		<action id="buildDebug" cmd="$(GO)" args="build $(DEBUGBUILDARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="runDebug" debug="true" cmd="$(DEBUGNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="DebugUtils" img="debug.png" folder="true"/>
+		<action id="Debug" menu="DebugUtils" img="debug.png" key="" task="buildDebug;runDebug"/>
+		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" build="$(DEBUGDEBUGARGS)" work="$(BUILD_DIR_PATH)"/>
 	</mime-type>
 </mime-info>

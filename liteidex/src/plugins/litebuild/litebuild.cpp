@@ -820,6 +820,7 @@ LiteApi::TargetInfo LiteBuild::getTargetInfo()
         info.buildRootPath = m_buildRootPath;
         info.targetName = this->envToValue(target->cmd(),env,sysenv);
         info.debugName = this->envToValue(target->debug(),env,sysenv);
+        info.buildArgs = this->envToValue(target->buildArgs(),env,sysenv);
         info.targetArgs = this->envToValue(target->args(),env,sysenv);
         info.targetWorkDir = this->envToValue(target->work(),env,sysenv);
     }
@@ -1714,6 +1715,17 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
     }
 
     args = args.trimmed();
+
+    //run debug cmd
+    if (ba->isDebug()) {
+        LiteApi::IDebuggerManager *mgr = LiteApi::getDebugManager(m_liteApp);
+        if (mgr) {
+            LiteApi::IDebugger *debug = mgr->currentDebugger();
+            debug->start(cmd,args);
+        }
+        return;
+    }
+
 
     if (!ba->isOutput()) {
         bool b = QProcess::startDetached(cmd,args.split(" "),m_workDir);

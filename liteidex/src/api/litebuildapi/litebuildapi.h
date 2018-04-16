@@ -33,6 +33,7 @@ class BuildAction
 {  
 public:
     BuildAction():
+        m_debug(false),
         m_output(false),
         m_readline(false),
         m_separator(false),
@@ -49,6 +50,9 @@ public:
     void setCmd(const QString &cmd) { m_cmd = cmd; }
     void setArgs(const QString &args) { m_args = args; }
     void setSave(const QString &save) { m_save = save; }
+    void setDebug(const QString &text) {
+        m_debug = QVariant(text).toBool();
+    }
     void setOutput(const QString &text) {
         m_output = QVariant(text).toBool();
     }
@@ -84,6 +88,7 @@ public:
     QString func() const { return m_func; }
     QString args() const { return m_args; }
     QString save() const { return m_save; }
+    bool isDebug() const { return m_debug; }
     bool isOutput() const { return m_output; }
     bool isReadline() const {return m_readline; }
     bool isSeparator() const { return m_separator; }
@@ -105,6 +110,7 @@ public:
         m_img.clear();
         m_save.clear();
         m_task.clear();
+        m_debug = false;
         m_output = false;
         m_readline = false;
         m_separator = false;
@@ -115,7 +121,9 @@ public:
     bool isEmpty() {
         return m_id.isEmpty();
     }
-
+    bool isHidden() {
+        return m_id.isEmpty() || m_id[0].isLower();
+    }
 protected:
     QString m_id;
     QString m_os;
@@ -130,6 +138,7 @@ protected:
     QString m_work;
     QString m_menu;
     QStringList m_task;
+    bool    m_debug;
     bool    m_output;
     bool    m_readline;
     bool    m_separator;
@@ -233,11 +242,13 @@ public:
     void setDebug(const QString &debug) { m_debug = debug; }
     void setArgs(const QString &args) { m_args = args; }
     void setWork(const QString &work) { m_work = work; }
+    void setBuildArgs(const QString &args) { m_buildArgs = args; }
     QString id() const { return m_id; }
     QString cmd() const { return m_cmd; }
     QString debug() const { return m_debug; }
     QString args() const { return m_args; }
     QString work() const { return m_work; }
+    QString buildArgs() const { return m_buildArgs; }
     bool isEmpty() {
         return m_id.isEmpty();
     }
@@ -245,6 +256,7 @@ protected:
     QString m_id;
     QString m_cmd;
     QString m_debug;
+    QString m_buildArgs;
     QString m_args;
     QString m_work;
 };
@@ -289,6 +301,7 @@ struct TargetInfo {
     QString buildRootPath;
     QString targetName;
     QString debugName;
+    QString buildArgs;
     QString targetArgs;
     QString targetWorkDir;
 };
