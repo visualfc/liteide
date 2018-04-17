@@ -84,7 +84,7 @@ public slots:
     void reloadProject();
     void editorCreated(LiteApi::IEditor *editor);
     void currentEditorChanged(LiteApi::IEditor*);
-    void buildAction(LiteApi::IBuild*,LiteApi::BuildAction*);
+    void execBuildAction(LiteApi::IBuild*,LiteApi::BuildAction*);
     void buildTask(LiteApi::IBuild *build, bool killOld, const QStringList &taskList);
     void execAction(const QString &mime,const QString &id);
     void extOutput(const QByteArray &output,bool bError);

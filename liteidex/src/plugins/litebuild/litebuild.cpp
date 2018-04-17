@@ -330,7 +330,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_liteApp->extension()->addObject("LiteApi.ILiteBuild",this);
 
     foreach(LiteApi::IBuild *build, m_buildManager->buildList()) {
-        connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
+        connect(build,SIGNAL(buildAction(LiteApi::IBuild*,LiteApi::BuildAction*)),this,SLOT(execBuildAction(LiteApi::IBuild*,LiteApi::BuildAction*)));
         QList<QAction*> actionList;
         foreach(QAction *act, build->actions()) {
             QMenu *subMenu = act->menu();
@@ -1500,7 +1500,7 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
 #endif
 }
 
-void LiteBuild::buildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
+void LiteBuild::execBuildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
 {  
     if (m_bOutputAutoClear) {
         m_output->clear();

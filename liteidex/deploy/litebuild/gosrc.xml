@@ -58,7 +58,7 @@
 		<action id="buildDebug" cmd="$(GO)" args="build $(DEBUGBUILDARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="runDebug" debug="true" cmd="$(DEBUGNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="DebugUtils" img="debug.png" folder="true"/>
-		<action id="Debug" menu="DebugUtils" img="debug.png" key="" task="buildDebug;runDebug"/>
+		<action id="Debug" menu="DebugUtils" img="debug.png" debug="true" key="" task="buildDebug;runDebug" killold="true"/>
 		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" build="$(DEBUGDEBUGARGS)" work="$(BUILD_DIR_PATH)"/>
 	</mime-type>
 </mime-info>
