@@ -108,10 +108,6 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_startDebugAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging"),this);
     actionContext->regAction(m_startDebugAct,"StartDebug","F5");
 
-    m_startDebugTestAct = new QAction(QIcon("icon:litedebug/images/startdebug.png"),tr("Start Debugging Tests"),this);
-    actionContext->regAction(m_startDebugTestAct,"StartDebugTests","F6");
-
-
     m_continueAct = new QAction(QIcon("icon:litedebug/images/continue.png"),tr("Continue"),this);
     actionContext->regAction(m_continueAct,"Continue","F5");
 
@@ -160,7 +156,6 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
     m_debugMenu->addAction(m_startDebugExternal);
     m_debugMenu->addSeparator();
     m_debugMenu->addAction(m_startDebugAct);
-    m_debugMenu->addAction(m_startDebugTestAct);
     m_debugMenu->addAction(m_continueAct);
     m_debugMenu->addAction(m_stopDebugAct);
     m_debugMenu->addSeparator();
@@ -175,8 +170,6 @@ LiteDebug::LiteDebug(LiteApi::IApplication *app, QObject *parent) :
 
     connect(m_startDebugExternal,SIGNAL(triggered()),this,SLOT(startDebugExternal()));
     connect(m_startDebugAct,SIGNAL(triggered()),this,SLOT(startDebug()));
-    connect(m_startDebugTestAct,SIGNAL(triggered()),this,SLOT(startDebugTests()));
-
     connect(m_continueAct,SIGNAL(triggered()),this,SLOT(continueRun()));
     connect(m_runToLineAct,SIGNAL(triggered()),this,SLOT(runToLine()));
     connect(m_stopDebugAct,SIGNAL(triggered()),this,SLOT(stopDebug()));
@@ -508,53 +501,6 @@ void LiteDebug::startDebug()
             return;
         }
     }
-}
-
-void LiteDebug::startDebugTests()
-{
-    if (!m_debugger) {
-        return;
-    }
-    if (m_debugger->isRunning()) {
-        m_debugger->continueRun();
-        return;
-    }
-
-
-    if (!m_liteBuild) {
-        return;
-    }
-
-    LiteApi::TargetInfo info = m_liteBuild->getTargetInfo();
-    if (info.buildRootPath.isEmpty()) {
-        return;
-    }
-
-    m_liteApp->editorManager()->saveAllEditors();
-
-    QStringList args;
-    args << "test" << "-gcflags" << "\"-N -l\"" << "-c";
-    bool b = m_liteBuild->execGoCommand(args,info.targetWorkDir,true);
-    if (!b) {
-        return;
-    }
-
-    QString testName = QDir(info.buildRootPath).dirName();
-
-    QString cmd = FileUtil::lookPathInDir(testName+".test",info.targetWorkDir);
-    if (cmd.isEmpty()) {
-        m_liteApp->appendLog("debug",QString("not find execute test file %1 in path %2").arg(testName).arg(info.targetWorkDir),true);
-        return;
-    }
-
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (editor) {
-        m_startDebugFile = editor->filePath();
-    }
-
-    m_removeDebugFilePath = QFileInfo(info.buildRootPath,cmd).filePath();
-
-    this->startDebug(QDir::toNativeSeparators(cmd),info.targetArgs,info.targetWorkDir);
 }
 
 void LiteDebug::continueRun()

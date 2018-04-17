@@ -67,7 +67,6 @@ public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void startDebugExternal();
     virtual void startDebug();
-    virtual void startDebugTests();
     virtual void continueRun();
     virtual void runToLine();
     virtual void stopDebug();
@@ -103,7 +102,6 @@ protected:
     QAction      *m_outputAct;
     QAction *m_startDebugExternal;
     QAction *m_startDebugAct;
-    QAction *m_startDebugTestAct;
     QAction *m_stopDebugAct;
     QAction *m_showLineAct;
     QAction *m_stepIntoAct;
