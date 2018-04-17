@@ -6,9 +6,10 @@
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
 		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
-		<custom id="DebugBaseName" name="DEBUGBASENAME" value="$(BUILD_DIR_NAME).debug"/>
-		<custom id="DebugName" name = "DEBUGNAME" value="$(DEBUGBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="DebugName" name = "DEBUGNAME" value="$(TARGETBASENAME).debug$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(TARGETBASENAME).test$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="-a -gcflags &quot;-N -l&quot; -v -o $(DEBUGNAME)" shared-value="$(BUILDFLAGS)"/>
+		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="-gcflags &quot;-N -l&quot; -c -o $(DEBUGTESTNAME)" shared-value="$(BUILDFLAGS)"/>
 		<custom id="TargetBaseName" name="TARGETBASENAME" value="$(BUILD_DIR_NAME)"/>
 		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
@@ -57,8 +58,11 @@
 		<action id="GoLint" menu="Utils" img="lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="buildDebug" cmd="$(GO)" args="build $(DEBUGBUILDARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="runDebug" debug="true" cmd="$(DEBUGNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="buildDebugTest" cmd="$(GO)" args="test $(DEBUGTESTBUILDARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="runDebugTest" debug="true" cmd="$(DEBUGTESTNAME)" args="" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="DebugUtils" img="debug.png" folder="true"/>
 		<action id="Debug" menu="DebugUtils" img="debug.png" debug="true" key="" task="buildDebug;runDebug" killold="true"/>
+		<action id="DebugTest" menu="DebugUtils" img="test.png" debug="true" key="" task="buildDebugTest;runDebugTest" killold="true"/>
 		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" build="$(DEBUGDEBUGARGS)" work="$(BUILD_DIR_PATH)"/>
 	</mime-type>
 </mime-info>

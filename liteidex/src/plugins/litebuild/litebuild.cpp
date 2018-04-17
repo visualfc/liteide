@@ -1718,10 +1718,9 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 
     //run debug cmd
     if (ba->isDebug()) {
-        LiteApi::IDebuggerManager *mgr = LiteApi::getDebugManager(m_liteApp);
-        if (mgr) {
-            LiteApi::IDebugger *debug = mgr->currentDebugger();
-            debug->start(cmd,args);
+        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+        if (debug) {
+            debug->startDebug(cmd,args,m_workDir);
         }
         return;
     }
