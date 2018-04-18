@@ -52,6 +52,7 @@ protected slots:
     void openFolderInNewWindow();
     void addToFolders();
     void executeFile();
+    void debugFile();
     void enterKeyPressedFolderView(const QModelIndex &index);
     void doubleClickedFolderView(const QModelIndex &index);
 protected:
@@ -77,6 +78,7 @@ protected:
     QAction *m_openFolderInNewWindowAct;
     QAction *m_addToFoldersAct;
     QAction *m_executeFileAct;
+    QAction *m_debugFileAct;
 };
 
 #endif // FILEBROWSER_H

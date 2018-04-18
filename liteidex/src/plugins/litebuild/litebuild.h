@@ -95,6 +95,7 @@ public slots:
     void config();
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void fmctxExecuteFile();
+    void fmctxDebugFile();
     void fmctxGoLockBuild();
     void fmctxGoBuildConfigure();
     void fmctxGoTool();
@@ -127,6 +128,7 @@ protected:
     QMenu       *m_fmctxGoToolMenu;
     QMenu       *m_fmctxNoGoToolMenu;
     QAction     *m_fmctxExecuteFileAct;
+    QAction     *m_fmctxDebugFileAct;
     QAction     *m_fmctxGoLockBuildAct;
     QAction     *m_fmctxGoBuildConfigAct;
     QAction     *m_fmctxGoBuildAct;

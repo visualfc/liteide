@@ -25,6 +25,7 @@
 #include "golangdocapi/golangdocapi.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
+#include "litedebugapi/litedebugapi.h"
 #include "fileutil/fileutil.h"
 #include "filebrowser_global.h"
 
@@ -117,6 +118,9 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_executeFileAct = new QAction(tr("Execute File"),this);
     connect(m_executeFileAct,SIGNAL(triggered()),this,SLOT(executeFile()));
+
+    m_debugFileAct = new QAction(tr("Debug File"),this);
+    connect(m_debugFileAct,SIGNAL(triggered()),this,SLOT(debugFile()));
 
 //    m_filterCombo = new QComboBox;
 //    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -254,6 +258,16 @@ void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEX
                 act = menu->actions().at(0);
             }
             menu->insertAction(act,m_executeFileAct);
+            bool hasGo = false;
+            foreach(QFileInfo info, QDir(info.path()).entryInfoList(QDir::Files)) {
+                if (info.suffix() == "go") {
+                    hasGo = true;
+                    break;
+                }
+            }
+            if (hasGo) {
+                menu->insertAction(act,m_debugFileAct);
+            }
             menu->insertSeparator(act);
         }
     } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
@@ -308,6 +322,15 @@ void FileBrowser::executeFile()
         if (!cmd.isEmpty()) {
             build->execCommand(cmd,QString(),info.path(),true,true,false);
         }
+    }
+}
+
+void FileBrowser::debugFile()
+{
+    LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+    if (debug) {
+        QFileInfo info = m_folderView->contextFileInfo();
+        debug->startDebug(info.fileName(),"",info.path());
     }
 }
 

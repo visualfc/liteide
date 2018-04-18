@@ -171,6 +171,9 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_fmctxExecuteFileAct = new QAction(tr("Execute File"),this);
     connect(m_fmctxExecuteFileAct,SIGNAL(triggered()),this,SLOT(fmctxExecuteFile()));
 
+    m_fmctxDebugFileAct = new QAction(tr("Debug File"),this);
+    connect(m_fmctxDebugFileAct,SIGNAL(triggered()),this,SLOT(fmctxDebugFile()));
+
     m_fmctxGoLockBuildAct = new QAction(tr("Lock Build Path"),this);
 
     m_fmctxGoBuildConfigAct = new QAction(tr("Build Path Configuration"),this);
@@ -498,6 +501,16 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
                 act = menu->actions().at(0);
             }
             menu->insertAction(act,m_fmctxExecuteFileAct);
+            bool hasGo = false;
+            foreach(QFileInfo info, QDir(info.path()).entryInfoList(QDir::Files)) {
+                if (info.suffix() == "go") {
+                    hasGo = true;
+                    break;
+                }
+            }
+            if (hasGo) {
+                menu->insertAction(act,m_fmctxDebugFileAct);
+            }
             menu->insertSeparator(act);
         }
     } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
@@ -546,6 +559,17 @@ void LiteBuild::fmctxExecuteFile()
     if (!cmd.isEmpty()) {
         this->stopAction();
         this->execCommand(cmd,QString(),m_fmctxInfo.path(),true,true,false);
+    }
+}
+
+void LiteBuild::fmctxDebugFile()
+{
+    QString cmd = FileUtil::lookPathInDir(m_fmctxInfo.fileName(),m_fmctxInfo.path());
+    if (!cmd.isEmpty()) {
+        LiteApi::ILiteDebug *debug = LiteApi::getLiteDebug(m_liteApp);
+        if (debug) {
+            debug->startDebug(m_fmctxInfo.fileName(),"",m_fmctxInfo.path());
+        }
     }
 }
 
