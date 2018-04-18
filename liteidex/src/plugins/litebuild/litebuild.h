@@ -89,6 +89,7 @@ public slots:
     void execAction(const QString &mime,const QString &id);
     void extOutput(const QByteArray &output,bool bError);
     void extFinish(bool error,int exitCode, QString msg);
+    void debugEnvOutput(const QByteArray &output,bool bError);
     void stopAction();
     void dbclickBuildOutput(const QTextCursor &cur);
     void enterTextBuildOutput(QString);
@@ -116,6 +117,7 @@ protected:
     QMap<QString,BuildBarInfo*> m_buildBarInfoMap;
     QString m_workDir;
     ProcessEx *m_process;
+    ProcessEx *m_debugEnvProcess;
     TextOutput *m_output;
     QMenu      *m_outputMenu;
     QAction    *m_outputLineWrapAct;

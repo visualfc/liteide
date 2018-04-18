@@ -157,6 +157,8 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_buildToolBar->addSeparator();
 
     m_process = new ProcessEx(this);
+    m_debugEnvProcess = new ProcessEx(this);
+
     m_output = new TextOutput(m_liteApp);
     m_output->setFilterTermColor(true);
 
@@ -318,6 +320,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_process,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(extOutput(QByteArray,bool)));
     connect(m_process,SIGNAL(extFinish(bool,int,QString)),this,SLOT(extFinish(bool,int,QString)));
+    connect(m_debugEnvProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(debugEnvOutput(QByteArray,bool)));
     connect(m_output,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickBuildOutput(QTextCursor)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterTextBuildOutput(QString)));
     connect(m_configAct,SIGNAL(triggered()),this,SLOT(config()));
@@ -329,6 +332,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     m_liteAppInfo.insert("LITEIDE_RES_PATH",m_liteApp->resourcePath());
     m_liteAppInfo.insert("LITEIDE_PLUGIN_PATH",m_liteApp->pluginPath());
     m_liteAppInfo.insert("LITEIDE_TOOL_PATH",m_liteApp->toolPath());
+    m_liteAppInfo.insert("LITEIDE_DEBUG_GCFLAGS","-gcflags=\"-N -l\"");
 
     m_liteApp->extension()->addObject("LiteApi.ILiteBuild",this);
 
@@ -697,6 +701,16 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
 
     m_output->updateExistsTextColor();
     m_output->appendTag(tr("Current environment change id \"%1\"").arg(ienv->id())+"\n");
+
+    m_debugEnvProcess->setEnvironment(env.toStringList());
+    if (!m_debugEnvProcess->isStop()) {
+        m_debugEnvProcess->stop(100);
+    }
+    QString gotools = LiteApi::getGotools(m_liteApp);
+    if (!gotools.isEmpty()) {
+        m_debugEnvProcess->start(gotools,QStringList() << "debugflags");
+    }
+
     bool b = m_liteApp->settings()->value(LITEBUILD_ENVCHECK,true).toBool();
     if (!b) {
         return;
@@ -1457,7 +1471,16 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
         }
     } else {
         m_process->setUserData(ID_TASKLIST,QStringList());
-    }    
+    }
+}
+
+void LiteBuild::debugEnvOutput(const QByteArray &output, bool bError)
+{
+    if (bError) {
+        return;
+    }
+    QString flags = QString::fromUtf8(output).trimmed();
+    m_liteAppInfo.insert("LITEIDE_DEBUG_GCFLAGS",flags);
 }
 
 void LiteBuild::stopAction()

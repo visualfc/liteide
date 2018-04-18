@@ -26,8 +26,8 @@
 		<custom id="ToolVetArgs" name="TOOLVETARGS" value="-all -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GenerateArgs" name="GENERATEARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
-		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="-a -gcflags &quot;-N -l&quot; -v -o $(DEBUGNAME)" shared-value="$(BUILDFLAGS)"/>
-		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="-gcflags &quot;-N -l&quot; -c -o $(DEBUGTESTNAME)" shared-value="$(BUILDFLAGS)"/>
+		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -v -o $(DEBUGNAME)"/>
+		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -c -o $(DEBUGTESTNAME)"/>
 		<action id="BuildAndRun" img="buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
 		<action id="Run" img="run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
 		<action id="RunTerm" img="runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd $(TARGETNAME) $(TARGETARGS)" output="false" readline="true"/>
@@ -56,9 +56,9 @@
 		<action id="GoToolVet" menu="Utils" img="vet.png" cmd="$(GO)" args="tool vet $(TOOLVETARGS) ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoGenerate" menu="Utils" img="get.png" cmd="$(GO)" args="generate $(GENERATEARGS)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoLint" menu="Utils" img="lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
-		<action id="buildDebug" cmd="$(GO)" args="build $(DEBUGBUILDARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="buildDebug" cmd="$(GO)" args="build $(DEBUGBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="runDebug" debug="true" cmd="$(DEBUGNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
-		<action id="buildDebugTest" cmd="$(GO)" args="test $(DEBUGTESTBUILDARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="buildDebugTest" cmd="$(GO)" args="test $(DEBUGTESTBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="runDebugTest" debug="true" cmd="$(DEBUGTESTNAME)" args="" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="DebugUtils" img="debug.png" folder="true"/>
 		<action id="Debug" menu="DebugUtils" img="debug.png" debug="true" key="" task="buildDebug;runDebug" killold="true"/>

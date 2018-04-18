@@ -5,4 +5,4 @@ INFO = create Go package project anywhere
 TYPE = project
 FILES = root.go doc.go
 OPEN = root.go
-SCHEME=folder
+SCHEME=folderex
