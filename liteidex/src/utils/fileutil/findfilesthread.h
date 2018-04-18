@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QString>
+#include <QStringList>
 #include <QSet>
 
 class FindFilesThread : public QThread
