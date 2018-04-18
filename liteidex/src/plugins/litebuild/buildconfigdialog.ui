@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>706</width>
-    <height>575</height>
+    <width>790</width>
+    <height>604</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,6 +85,18 @@
        <string>GOPATH</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="gopathInfoGroupBox">
          <property name="title">
@@ -232,6 +244,18 @@
        <string>LiteIDE</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QTableView" name="liteideTableView"/>
        </item>
@@ -242,6 +266,18 @@
        <string>Config</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QTableView" name="configTableView"/>
        </item>
@@ -252,6 +288,18 @@
        <string>Action</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QTableView" name="actionTableView"/>
        </item>
@@ -262,6 +310,18 @@
        <string>Custom</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>

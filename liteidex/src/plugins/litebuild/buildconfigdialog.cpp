@@ -152,8 +152,14 @@ void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPat
 
     resizeTableView(ui->liteideTableView);
     resizeTableView(ui->configTableView);
-    resizeTableView(ui->customTableView);
     resizeTableView(ui->actionTableView);
+    resizeTableView(ui->customTableView);
+
+#if QT_VERSION >= 0x050000
+    ui->customTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::ResizeToContents);
+#else
+    ui->customTableView->horizontalHeader()->setResizeMode(2,QHeaderView::ResizeToContents);
+#endif
 
     ui->buildIdLabel->setText(build->id());
     ui->buildFileLabel->setText(buildPath);
