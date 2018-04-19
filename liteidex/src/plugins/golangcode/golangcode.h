@@ -87,6 +87,7 @@ public slots:
     void customGOPATHChanged(const QString &buildPath);
     void globalGOPATHChanged();
 protected:
+    QStringList parserCgoInEditor(int nmax = 1024);
     void updateEditorGOPATH();
     static  int g_gocodeInstCount;
     LiteApi::IApplication *m_liteApp;

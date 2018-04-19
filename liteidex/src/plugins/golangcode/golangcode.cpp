@@ -364,8 +364,54 @@ void GolangCode::cgoComplete()
     m_completer->appendChildItem(root,"GoStringN","func","func(*C.char, C.int) string",icon,true);
     m_completer->appendChildItem(root,"GoBytes","func","func(unsafe.Pointer, C.int) []byte",icon,true);
     m_completer->appendChildItem(root,"CBytes","func","func([]byte) unsafe.Pointer",icon,true);
+
+    QStringList all = parserCgoInEditor(1024);
+    icon = QIcon("icon:liteeditor/images/findword.png");
+    foreach (QString s, all) {
+        m_completer->appendChildItem(root,s,"","",icon,false);
+    }
+
     m_completer->updateCompleterModel();
     m_completer->showPopup();
+}
+
+QStringList GolangCode::parserCgoInEditor(int nmax)
+{
+    QTextCursor tc = m_editor->textCursor();
+    QTextDocument *doc = m_editor->document();
+    int maxNumber = tc.blockNumber();
+    int blockNumber = tc.blockNumber();
+    QTextBlock block = doc->firstBlock();
+
+    int first = maxNumber-nmax;
+    if (first > 0) {
+        block = doc->findBlockByNumber(first);
+    }
+    maxNumber += nmax;
+
+    QStringList all;
+    QRegExp rx("C\\.([\\w\\-\\_]+)");
+    while (block.isValid()) {
+        if (block.blockNumber() >= maxNumber) {
+            break;
+        }
+        if (block.blockNumber() == blockNumber) {
+            block = block.next();
+            continue;
+        }
+        QString line = block.text().trimmed();
+        if (!line.isEmpty())  {
+             int pos = 0;
+             while ((pos = rx.indexIn(line, pos)) != -1) {
+                 QString cap = rx.cap(1);
+                 all.push_back(cap);
+                 pos += rx.matchedLength();
+             }
+        }
+        block = block.next();
+    }
+    all.removeDuplicates();
+    return all;
 }
 
 void GolangCode::loadPkgList()
