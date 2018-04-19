@@ -41,6 +41,7 @@
 BuildManager::BuildManager(QObject *parent)
     : LiteApi::IBuildManager(parent)
 {
+    m_build = 0;
 }
 
 BuildManager::~BuildManager()
