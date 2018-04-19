@@ -87,6 +87,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 {
     m_cleanCompleterCache = false;
     m_cleanWhiteSpace = false;
+    m_offsetVisible = false;
     m_syntax = 0;
     m_widget = new QWidget;
     m_editorWidget = new LiteEditorWidget(app,m_widget);
