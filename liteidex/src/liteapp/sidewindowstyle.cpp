@@ -176,7 +176,8 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     state->widgetActions = widgetActions;
     m_actionStateMap.insert(action,state);
     dock->setCheckedAction(action);
-    toolBar->insertWidget(spacerAct,btn);
+    //toolBar->insertWidget(spacerAct,btn);
+    toolBar->addWidget(btn);
     if (toolBar->isHidden() && !bHideToolBar) {
         toolBar->show();
     }
@@ -332,7 +333,8 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
     state->widgetActions = widgetActions;
     m_actionStateMap.insert(action,state);
     dock->addAction(action,title);
-    toolBar->insertWidget(spacerAct,btn);
+    //toolBar->insertWidget(spacerAct,btn);
+    toolBar->addWidget(btn);
     if (toolBar->isHidden() && !bHideToolBar) {
         toolBar->show();
     }
@@ -452,7 +454,9 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
 
 SideWindowStyle::~SideWindowStyle()
 {
-
+    delete m_sideMenu;
+    delete m_outputMenu;
+    delete m_sideBar;
 }
 
 void SideWindowStyle::createToolWindowMenu()

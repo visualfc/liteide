@@ -82,7 +82,7 @@ public:
     QMainWindow *window;
     Qt::DockWidgetArea area;
     QToolBar *toolBar;
-    QAction  *spacerAct;
+    //QAction  *spacerAct;
     QList<SideDockWidget*> m_dockList;
     QMap<QAction*,SideActionState*> m_actionStateMap;
     bool bHideToolBar;
@@ -116,7 +116,7 @@ protected slots:
 public:
     Qt::DockWidgetArea area;
     QToolBar *toolBar;
-    QAction  *spacerAct;
+   // QAction  *spacerAct;
     OutputDockWidget *dock;
     QMap<QAction*,OutputActionState*> m_actionStateMap;
     bool bHideToolBar;
