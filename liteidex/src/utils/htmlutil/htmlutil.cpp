@@ -75,8 +75,7 @@ QString HtmlUtil::docToNavdoc(const QString &data, QString &header, QString &nav
             QString line = srcLines.at(0);
             QRegExp reg("<!--([\\w\\s]*)-->");
             if (reg.indexIn(line) >= 0) {
-                header = reg.cap(1);
-                header.trimmed();
+                header = reg.cap(1).trimmed();
             }
         }
     }

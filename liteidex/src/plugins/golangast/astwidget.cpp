@@ -381,7 +381,7 @@ void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, b
             tip = line.mid(pos+1);
             line = line.left(pos);
         }
-        line.trimmed();
+        line = line.trimmed();
         QList<QString> info = line.split(',');
         if (info.size() < 3) {
             continue;

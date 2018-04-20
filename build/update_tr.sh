@@ -17,6 +17,8 @@ if [ -z $QTDIR ]; then
 	exit 1
 fi
 
+export PATH=$QTDIR/bin:$PATH
+
 echo compress translator files
 
 lrelease -compress $LITEIDE_ROOT/liteide_zh.ts -qm $LITEIDE_ROOT/deploy/translations/liteide_zh.qm

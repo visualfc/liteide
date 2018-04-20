@@ -17,6 +17,8 @@ if [ -z $QTDIR ]; then
 	exit 1
 fi
 
+export PATH=$QTDIR/bin:$PATH
+
 echo update translator files
 
 lupdate -no-obsolete $LITEIDE_ROOT/liteidex.pro

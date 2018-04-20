@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -217,10 +217,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Запустить терминал в папке</translation>
     </message>
     <message>
-        <source>Open Explorer Here</source>
-        <translation type="obsolete">Открыть папку в проводнике</translation>
-    </message>
-    <message>
         <source>Use godoc View</source>
         <oldsource>View Godoc Here</oldsource>
         <translation>Открыть Godoc</translation>
@@ -326,6 +322,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Open Command Prompt Here</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open Application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BookmarkManager</name>
@@ -364,11 +364,6 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>LiteIDE</source>
         <translation>LiteIDE</translation>
-    </message>
-    <message>
-        <source>Build</source>
-        <oldsource>Build Config</oldsource>
-        <translation type="obsolete">Сборка</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -588,11 +583,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Переместить в новое окно</translation>
     </message>
     <message>
-        <source>&amp;Edit</source>
-        <oldsource>Edit</oldsource>
-        <translation type="obsolete">&amp;Правка</translation>
-    </message>
-    <message>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Перейти вперёд</translation>
@@ -654,10 +644,6 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Save As</source>
         <translation>Сохранить как...</translation>
-    </message>
-    <message>
-        <source>OpenEditor</source>
-        <translation type="obsolete">OpenEditor</translation>
     </message>
     <message>
         <source>Edit Toolbar</source>
@@ -988,6 +974,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Show Details</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Debug File</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileBrowserOption</name>
@@ -1047,22 +1037,6 @@ Do you want to load?</oldsource>
         <source>Select a folder:</source>
         <oldsource>Open Folder</oldsource>
         <translation>Выбор папки</translation>
-    </message>
-    <message>
-        <source>Session</source>
-        <translation type="obsolete">Сессия</translation>
-    </message>
-    <message>
-        <source>Project</source>
-        <translation type="obsolete">Проект</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Файл</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="obsolete">Папка</translation>
     </message>
     <message>
         <source>%1
@@ -1125,10 +1099,6 @@ Do you want to reload the file from disk?</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <source>Clear History</source>
-        <translation type="obsolete">Очистить историю</translation>
-    </message>
-    <message>
         <source>Open Project</source>
         <translation>Открытие проекта</translation>
     </message>
@@ -1184,11 +1154,6 @@ Do you want to reload the file from disk?</source>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
         <translation>Открыть...</translation>
-    </message>
-    <message>
-        <source>Use Current</source>
-        <oldsource>Current</oldsource>
-        <translation type="obsolete">Текущая</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -1510,10 +1475,6 @@ Want to replace to all the search items to whitespace?</source>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
-    <message>
-        <source>Rebuild database</source>
-        <translation type="obsolete">Перестроить базу данных</translation>
-    </message>
 </context>
 <context>
     <name>FindDocWidget</name>
@@ -1828,14 +1789,6 @@ Want to replace to all the search items to whitespace?</source>
         <translation>Схема недоступна</translation>
     </message>
     <message>
-        <source>Class View</source>
-        <translation type="obsolete">Обзор классов</translation>
-    </message>
-    <message>
-        <source>Outline</source>
-        <translation type="obsolete">Схема</translation>
-    </message>
-    <message>
         <source>Synchronize with editor</source>
         <translation type="unfinished">Синхронизировать с редактором</translation>
     </message>
@@ -1887,20 +1840,24 @@ Want to replace to all the search items to whitespace?</source>
         <source>Close gocode when exiting</source>
         <translation>Закрывать gocode при выходе</translation>
     </message>
+    <message>
+        <source>PKG automitic import prompt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKG automatic import hints for all packages (GOPATH)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKG automatic import hints for standard package</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangDoc</name>
     <message>
         <source>Godoc Search</source>
         <translation>Поиск в Godoc</translation>
-    </message>
-    <message>
-        <source>Golang Doc Search</source>
-        <translation type="obsolete">Поиск в документации Golang</translation>
-    </message>
-    <message>
-        <source>Golang Api Index</source>
-        <translation type="obsolete">Документация по Golang API</translation>
     </message>
     <message>
         <source>Find Package:</source>
@@ -1956,15 +1913,6 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <source>Rename Symbol Under Cursor</source>
         <translation>Переименовать символ под курсором</translation>
-    </message>
-    <message>
-        <source>Oracle</source>
-        <translation type="obsolete">Oracle</translation>
-    </message>
-    <message>
-        <source>Oracle What</source>
-        <oldsource>What</oldsource>
-        <translation type="obsolete">Поиск Oracle</translation>
     </message>
     <message>
         <source>Callees</source>
@@ -2042,6 +1990,10 @@ Want to replace to all the search items to whitespace?</source>
         <source>Remove Tags From Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Below files in package %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangEditOption</name>
@@ -2091,11 +2043,6 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <source>Enable update imports line, adding missing ones and removing unreferenced ones.</source>
         <translation>Обновлять строки импорта, добавляя необходимые и удаляя ненужные</translation>
-    </message>
-    <message>
-        <source>Enable sort imports of consecutive import lines in import blocks</source>
-        <oldsource>Enable Sort imports of consecutive import lines in import blocks</oldsource>
-        <translation type="obsolete">Сортировать пакеты в блоках импорта</translation>
     </message>
     <message>
         <source>Synchronous</source>
@@ -2480,14 +2427,6 @@ Success: %2.</oldsource>
         <translation>Сессия</translation>
     </message>
     <message>
-        <source>Reload folders on startup</source>
-        <translation type="obsolete">Обновлять папки при запуске</translation>
-    </message>
-    <message>
-        <source>Reload files on startup</source>
-        <translation type="obsolete">Обновлять файлы при запуске</translation>
-    </message>
-    <message>
         <source>Display</source>
         <translation>Вид</translation>
     </message>
@@ -2653,24 +2592,32 @@ Success: %2.</oldsource>
         <source>10-999</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable use of dynamic library gopher tool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gopher Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libgopher is valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libgopher is invalid!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
     <message>
         <source>Build Toolbar</source>
         <translation>Панель сборки</translation>
-    </message>
-    <message>
-        <source>&amp;Build</source>
-        <translation type="obsolete">С&amp;борка</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="obsolete">Имя</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Значение</translation>
     </message>
     <message>
         <source>Build Configuration...</source>
@@ -2755,12 +2702,6 @@ Success: %2.</oldsource>
         <translation>Не удалось завершить существующий процесс!</translation>
     </message>
     <message>
-        <source>&gt; Could not parse action &apos;%1&apos;</source>
-        <oldsource>&gt; Could not parse action &apos;%1&apos;
-</oldsource>
-        <translation type="obsolete">&gt; Не удалось распознать действие «%1»</translation>
-    </message>
-    <message>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
@@ -2776,6 +2717,10 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Build Path Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2850,10 +2795,6 @@ Success: %2.</oldsource>
         <translation>Запустить отладку</translation>
     </message>
     <message>
-        <source>Start Debugging Tests</source>
-        <translation>Запустить отладку тестов</translation>
-    </message>
-    <message>
         <source>Step Into</source>
         <translation>Войти</translation>
     </message>
@@ -2876,10 +2817,6 @@ Success: %2.</oldsource>
     <message>
         <source>Remove All Breakpoints</source>
         <translation>Удалить все точки останова</translation>
-    </message>
-    <message>
-        <source>&amp;Debug</source>
-        <translation type="obsolete">&amp;Отладка</translation>
     </message>
 </context>
 <context>
@@ -3063,10 +3000,6 @@ Success: %2.</oldsource>
         <translation>Перейти к строке</translation>
     </message>
     <message>
-        <source>Locked</source>
-        <translation type="obsolete">Заблокировано</translation>
-    </message>
-    <message>
         <source>Duplicate</source>
         <translation>Дублировать</translation>
     </message>
@@ -3117,10 +3050,6 @@ Success: %2.</oldsource>
     <message>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>Перезагрузить %1 с утратой несохранённых изменений?</translation>
-    </message>
-    <message>
-        <source>Setup</source>
-        <translation type="obsolete">Настройка</translation>
     </message>
     <message>
         <source>ReadOnly</source>
@@ -3408,10 +3337,6 @@ Success: %2.</oldsource>
 </context>
 <context>
     <name>LiteFindPlugin</name>
-    <message>
-        <source>F&amp;ind</source>
-        <translation type="obsolete">П&amp;оиск</translation>
-    </message>
     <message>
         <source>Find</source>
         <translation>Найти</translation>
@@ -3882,16 +3807,6 @@ Do you want to replace it?</source>
         <translation>Скопировать имя в буфер обмена</translation>
     </message>
     <message>
-        <source>Package Browser</source>
-        <oldsource>Packge Browser</oldsource>
-        <translation type="obsolete">Обзор пакетов</translation>
-    </message>
-    <message>
-        <source>No Go installation was found.</source>
-        <oldsource>Not find go in PATH...</oldsource>
-        <translation type="obsolete">Не удалось найти установку Go.</translation>
-    </message>
-    <message>
         <source>Loading Go package list...</source>
         <oldsource>Loading go package ...</oldsource>
         <translation>Загрузка списка пакетов Go...</translation>
@@ -4124,10 +4039,6 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenEditor</name>
     <message>
-        <source>Open Editor by Name</source>
-        <translation type="obsolete">Открытие редактора по имени</translation>
-    </message>
-    <message>
         <source>Show All Opened Editors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4135,20 +4046,23 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenFiles</name>
     <message>
-        <source>Open Files by Name</source>
-        <translation type="obsolete">Отрытие файлов по имени</translation>
+        <source>Go to File</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Go to File</source>
+        <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
+        <translation type="unfinished">Введите «?» для получения справки по возможным действиям</translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenFolder</name>
+    <message>
+        <source>Browser Folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QuickOpenHelp</name>
-    <message>
-        <source>Show Quick Open Help</source>
-        <translation type="obsolete">Отображение быстрой справки</translation>
-    </message>
     <message>
         <source>Show All Quick Open Actions</source>
         <translation type="unfinished"></translation>
@@ -4176,14 +4090,6 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenManager</name>
     <message>
-        <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
-        <translation>Введите «?» для получения справки по возможным действиям</translation>
-    </message>
-    <message>
-        <source>Quick Open</source>
-        <translation type="obsolete">Быстрое открытие</translation>
-    </message>
-    <message>
         <source>Quick Open Editor</source>
         <translation>Быстрое открытие редактора</translation>
     </message>
@@ -4206,10 +4112,6 @@ Do you want to replace it?</source>
 </context>
 <context>
     <name>QuickOpenMimeType</name>
-    <message>
-        <source>Open Symbol by Name</source>
-        <translation type="obsolete">Открытие символа по имени</translation>
-    </message>
     <message>
         <source>not found symbol</source>
         <translation>символ не найден</translation>
@@ -4311,16 +4213,8 @@ Do you want to replace it?</source>
         <translation>Управление GOPATH</translation>
     </message>
     <message>
-        <source>System GOPATH</source>
-        <translation type="obsolete">Системный GOPATH</translation>
-    </message>
-    <message>
         <source>Reload</source>
         <translation>Обновить</translation>
-    </message>
-    <message>
-        <source>Custom Directories (one per line)</source>
-        <translation type="obsolete">Другие каталоги (один на строке)</translation>
     </message>
     <message>
         <source>Add Directory...</source>
