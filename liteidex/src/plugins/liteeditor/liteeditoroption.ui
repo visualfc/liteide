@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
+    <width>630</width>
     <height>377</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -455,7 +455,7 @@
           <item>
            <widget class="QCheckBox" name="indentLineCheckBox">
             <property name="text">
-             <string>Display indent guide </string>
+             <string>Display indent guide</string>
             </property>
            </widget>
           </item>

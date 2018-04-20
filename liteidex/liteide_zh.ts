@@ -279,6 +279,11 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="72"/>
+        <source>Open Application</source>
+        <translation>运行应用程序</translation>
+    </message>
+    <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
         <source>Show in Finder</source>
         <translation>在Finder中显示</translation>
@@ -714,120 +719,120 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="139"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="171"/>
+        <location filename="src/liteapp/editormanager.cpp" line="164"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>移动到新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="235"/>
+        <location filename="src/liteapp/editormanager.cpp" line="229"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="148"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="112"/>
+        <location filename="src/liteapp/editormanager.cpp" line="111"/>
         <source>Open Editor</source>
         <translation>打开文档</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="149"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="150"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Left Tabs</source>
         <translation>关闭左侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="151"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Right Tabs</source>
         <translation>关闭右侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="152"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>关闭相同目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="153"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>关闭其他目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="154"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>复制完整路径到剪贴板</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="157"/>
+        <location filename="src/liteapp/editormanager.cpp" line="150"/>
         <source>Show in Explorer</source>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="159"/>
+        <location filename="src/liteapp/editormanager.cpp" line="152"/>
         <source>Show in Finder</source>
         <translation>在Finder中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="161"/>
+        <location filename="src/liteapp/editormanager.cpp" line="154"/>
         <source>Show Containing Folder</source>
         <translation>显示包含文件夹</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="165"/>
+        <location filename="src/liteapp/editormanager.cpp" line="158"/>
         <source>Open Command Prompt Here</source>
         <translation>在此打开命令提示符</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="167"/>
+        <location filename="src/liteapp/editormanager.cpp" line="160"/>
         <source>Open Terminal Here</source>
         <translation>在此打开终端</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="226"/>
+        <location filename="src/liteapp/editormanager.cpp" line="220"/>
         <source>Navigate Backward</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="256"/>
+        <location filename="src/liteapp/editormanager.cpp" line="250"/>
         <source>Edit Toolbar</source>
         <translation>编辑工具栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="427"/>
+        <location filename="src/liteapp/editormanager.cpp" line="421"/>
         <source>Save changes to %1?</source>
         <translation>保存修改到 %1 ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="428"/>
+        <location filename="src/liteapp/editormanager.cpp" line="422"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>未保存修改</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="525"/>
+        <location filename="src/liteapp/editormanager.cpp" line="519"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="527"/>
+        <location filename="src/liteapp/editormanager.cpp" line="521"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
@@ -1167,7 +1172,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="122"/>
         <source>Debug File</source>
-        <translation type="unfinished"></translation>
+        <translation>调试文件</translation>
     </message>
     <message>
         <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
@@ -2268,12 +2273,17 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="20"/>
         <source>PKG automitic import prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>包自动导入提示</translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="26"/>
         <source>PKG automatic import hints for all packages (GOPATH)</source>
-        <translation type="unfinished"></translation>
+        <translation>GOPATH 所有包导入自动提示</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangcode/golangcodeoption.ui" line="33"/>
+        <source>PKG automatic import hints for standard package</source>
+        <translation>标准包导入自动提示</translation>
     </message>
     <message>
         <location filename="src/plugins/golangcode/golangcodeoption.ui" line="43"/>
@@ -2472,7 +2482,7 @@ Want to replace to all the search items to whitespace?</source>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="725"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="860"/>
         <source>Below files in package %1</source>
-        <translation type="unfinished"></translation>
+        <translation>下面的文件属于包 %1</translation>
     </message>
 </context>
 <context>
@@ -2490,7 +2500,7 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangedit/golangeditoption.ui" line="26"/>
         <source>Go root source file editor setup read only</source>
-        <translation>GO 源码目录源文件设置为只读 </translation>
+        <translation>GO 源码目录源文件设置为只读</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangeditoption.ui" line="33"/>
@@ -3023,17 +3033,17 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="184"/>
         <source>Experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>试验功能</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="190"/>
         <source>Enable use of dynamic library gopher tool</source>
-        <translation type="unfinished"></translation>
+        <translation>允许使用 gopher 动态库工具</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="197"/>
         <source>Gopher Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Gopher 信息</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="207"/>
@@ -3207,12 +3217,12 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="191"/>
         <source>libgopher is valid</source>
-        <translation type="unfinished"></translation>
+        <translation>libgopher 有效</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="193"/>
         <source>libgopher is invalid!</source>
-        <translation type="unfinished"></translation>
+        <translation>libgopher 无效!</translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="493"/>
@@ -3273,7 +3283,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="176"/>
         <source>Debug File</source>
-        <translation type="unfinished"></translation>
+        <translation>调试文件</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
@@ -3909,7 +3919,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1256"/>
         <source>Line: </source>
-        <translation>行:</translation>
+        <translation>行: </translation>
     </message>
 </context>
 <context>
@@ -4064,7 +4074,8 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/liteeditor/liteeditoroption.ui" line="458"/>
-        <source>Display indent guide </source>
+        <source>Display indent guide</source>
+        <oldsource>Display indent guide </oldsource>
         <translation>显示缩进指示</translation>
     </message>
     <message>
@@ -5007,7 +5018,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="76"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
-        <translation type="unfinished">键入&apos;?&apos;在此处获取相关操作的帮助</translation>
+        <translation>键入&apos;?&apos;在此处获取相关操作的帮助</translation>
     </message>
 </context>
 <context>
@@ -5015,7 +5026,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/plugins/quickopen/quickopenfolder.cpp" line="71"/>
         <source>Browser Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>浏览目录</translation>
     </message>
 </context>
 <context>

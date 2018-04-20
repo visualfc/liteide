@@ -412,7 +412,7 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Название</translation>
     </message>
     <message>
         <source>Value</source>
@@ -3253,10 +3253,6 @@ Success: %2.</oldsource>
         <translation>Отображать номера строк</translation>
     </message>
     <message>
-        <source>Display indent guide </source>
-        <translation>Отображать отступы</translation>
-    </message>
-    <message>
         <source>Display right margin at column</source>
         <translation>Отображать границу по столбцу</translation>
     </message>
@@ -3317,6 +3313,10 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Add copied text into the clipboard as HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display indent guide</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
