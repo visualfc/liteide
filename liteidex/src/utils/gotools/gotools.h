@@ -46,7 +46,7 @@ class GopherLib : public QObject
 {
     Q_OBJECT
 public:
-    GopherLib(QObject *parent = 0);
+    GopherLib(const QString &libname, QObject *parent = 0);
     bool isValid() const {
         return  fnInvoke != 0 && fnInvokeAsync != 0 && fnSetenv != 0 && fnSetBuildEnv != 0 && fnClearBuildEnv != 0;
     }

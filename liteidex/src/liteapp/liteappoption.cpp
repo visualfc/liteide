@@ -187,13 +187,13 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
 
     ui->standardCheckBox->setChecked(true);
 
-    if (libgopher.isValid()) {
-        ui->gopherInfoLabel->setText(tr("libgopher is valid"));
-    } else {
-        ui->gopherInfoLabel->setText(tr("libgopher is invalid!"));
-    }
-    bool useGopher = m_liteApp->settings()->value(LITEAPP_USE_LIBGOPHER,false).toBool();
-    ui->useLibgopherCheckBox->setChecked(useGopher);
+//    if (libgopher.isValid()) {
+//        ui->gopherInfoLabel->setText(tr("libgopher is valid"));
+//    } else {
+//        ui->gopherInfoLabel->setText(tr("libgopher is invalid!"));
+//    }
+//    bool useGopher = m_liteApp->settings()->value(LITEAPP_USE_LIBGOPHER,false).toBool();
+//    ui->useLibgopherCheckBox->setChecked(useGopher);
 
     connect(m_keysModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(shortcutsChanaged(QStandardItem*)));
     connect(ui->resetAllButton,SIGNAL(clicked()),this,SLOT(resetAllShortcuts()));
@@ -285,16 +285,16 @@ void LiteAppOption::apply()
         }
     }
 
-    bool useGopher = ui->useLibgopherCheckBox->isChecked();
-    bool oldUseGopher = m_liteApp->settings()->value(LITEAPP_USE_LIBGOPHER,false).toBool();
-    if (useGopher != oldUseGopher) {
-        m_liteApp->settings()->setValue(LITEAPP_USE_LIBGOPHER,useGopher);
-        if (!libgopher.isValid()) {
-            m_liteApp->appendLog("LiteApp",QString("libgopher is invalid"));
-        } else {
-            m_liteApp->appendLog("LiteApp",useGopher ? QString("enable use libgopher"):QString("disable use libgopher"));
-        }
-    }
+//    bool useGopher = ui->useLibgopherCheckBox->isChecked();
+//    bool oldUseGopher = m_liteApp->settings()->value(LITEAPP_USE_LIBGOPHER,false).toBool();
+//    if (useGopher != oldUseGopher) {
+//        m_liteApp->settings()->setValue(LITEAPP_USE_LIBGOPHER,useGopher);
+//        if (!libgopher.isValid()) {
+//            m_liteApp->appendLog("LiteApp",QString("libgopher is invalid"));
+//        } else {
+//            m_liteApp->appendLog("LiteApp",useGopher ? QString("enable use libgopher"):QString("disable use libgopher"));
+//        }
+//    }
 
     QString qss = ui->qssComboBox->currentText();
     if (!qss.isEmpty()) {

@@ -10,5 +10,4 @@ cp -r -v os_deploy/macosx/* liteide/bin/LiteIDE.app/Contents/Resources
 cp -v bin/gotools liteide/bin/LiteIDE.app/Contents/MacOS
 cp -v bin/gocode liteide/bin/LiteIDE.app/Contents/MacOS
 cp -v bin/gomodifytags liteide/bin/LiteIDE.app/Contents/MacOS
-cp -v bin/libgopher.dylib liteide/bin/LiteIDE.app/Contents/MacOS
 cp -v src/liteapp/Info.plist liteide/bin/LiteIDE.app/Contents

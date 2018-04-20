@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>650</width>
-    <height>435</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -179,29 +179,6 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_13">
-         <property name="title">
-          <string>Experiment</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_12">
-          <item>
-           <widget class="QCheckBox" name="useLibgopherCheckBox">
-            <property name="text">
-             <string>Enable use of dynamic library gopher tool</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="gopherInfoLabel">
-            <property name="text">
-             <string>Gopher Info</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox_10">
          <property name="title">
           <string>Automatically save documents</string>
@@ -280,7 +257,6 @@
       <zorder>groupBox_4</zorder>
       <zorder>groupBox_5</zorder>
       <zorder>groupBox_10</zorder>
-      <zorder>groupBox_13</zorder>
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">

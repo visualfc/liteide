@@ -157,7 +157,7 @@ protected:
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
     Process  *m_sourceQueryProcess;
-    GopherLib m_findInfoGopher;
+    //GopherLib m_findInfoGopher;
     SourceQuery m_sourceQueryInfo;
     QByteArray  m_findDefData;
     QByteArray  m_srcData;

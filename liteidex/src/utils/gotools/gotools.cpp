@@ -33,9 +33,9 @@
 //lite_memory_check_end
 #include <QDebug>
 
-GopherLib::GopherLib(QObject *parent) : QObject(parent)
+GopherLib::GopherLib(const QString &libname, QObject *parent) : QObject(parent)
 {
-    lib.setFileName("libgopher");
+    lib.setFileName(libname);
     fnInvokeAsync = 0;
     fnInvoke = 0;
     fnSetenv = 0;

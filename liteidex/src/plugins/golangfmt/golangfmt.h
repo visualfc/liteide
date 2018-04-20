@@ -56,7 +56,7 @@ protected:
     //QString m_gofmtCmd;
     QByteArray m_data;
     QByteArray m_errData;
-    GopherLib m_gopher;
+    //GopherLib m_gopher;
     bool m_diff;
     bool m_fixImports;
     bool m_autofmt;

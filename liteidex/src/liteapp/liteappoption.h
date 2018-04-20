@@ -60,7 +60,7 @@ private:
     QWidget           *m_widget;
     Ui::LiteAppOption *ui;
     QStandardItemModel *m_keysModel;
-    GopherLib libgopher;
+    //GopherLib libgopher;
 };
 
 #endif // LITEAPPOPTION_H

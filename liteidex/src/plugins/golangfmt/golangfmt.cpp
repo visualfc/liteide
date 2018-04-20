@@ -128,34 +128,35 @@ void GolangFmt::syncfmtEditor(LiteApi::IEditor *editor, bool save, bool check, i
 
     bool bresult = false;
     QString output,errmsg;
-    if (isUseGopher(m_liteApp) && m_gopher.isValid()) {
-        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-        m_gopher.setEnvironment(env);
-        bresult = m_gopher.invokeArgs(args,text,output,errmsg);
-    } else {
-        QString cmd = LiteApi::getGotools(m_liteApp);
+//    if (isUseGopher(m_liteApp) && m_gopher.isValid()) {
+//        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+//        m_gopher.setEnvironment(env);
+//        bresult = m_gopher.invokeArgs(args,text,output,errmsg);
+//    } else {
+//
+    QString cmd = LiteApi::getGotools(m_liteApp);
 
-        QProcess process;
-        process.setProcessEnvironment(LiteApi::getGoEnvironment(m_liteApp));
-        process.start(cmd,args);
+    QProcess process;
+    process.setProcessEnvironment(LiteApi::getGoEnvironment(m_liteApp));
+    process.start(cmd,args);
 
-        if (!process.waitForStarted(timeout)) {
-            m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
-            return;
-        }
-        process.write(text.toUtf8());
-        process.closeWriteChannel();
-        if (!process.waitForFinished(timeout*4)) {
-            m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout*4),false);
-            return;
-        }
-        if (process.exitCode() != 0) {
-            errmsg = QString::fromUtf8(process.readAllStandardError());
-        } else {
-            bresult = true;
-            output = QString::fromUtf8(process.readAllStandardOutput());
-        }
+    if (!process.waitForStarted(timeout)) {
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms when starting go code format").arg(timeout),false);
+        return;
     }
+    process.write(text.toUtf8());
+    process.closeWriteChannel();
+    if (!process.waitForFinished(timeout*4)) {
+        m_liteApp->appendLog("gofmt",QString("Timed out after %1ms while running go code format").arg(timeout*4),false);
+        return;
+    }
+    if (process.exitCode() != 0) {
+        errmsg = QString::fromUtf8(process.readAllStandardError());
+    } else {
+        bresult = true;
+        output = QString::fromUtf8(process.readAllStandardOutput());
+    }
+  //  }
 
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
     liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOLANGFMT_TAG);
