@@ -431,6 +431,7 @@ void LiteApp::load(const QString &sessionName, IApplication *baseApp)
 
     bool useGopher = m_settings->value(LITEAPP_USE_LIBGOPHER,false).toBool();
     GopherLib libgopher;
+
     if (!libgopher.isValid()) {
         this->appendLog("LiteApp",QString("libgopher is invalid"));
     } else {

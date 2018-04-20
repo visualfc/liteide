@@ -1118,16 +1118,17 @@ void EditorManager::applyOption(QString id)
 #if QT_VERSION >= 0x050900
     QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
     if (qss == "default.qss") {
-    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border: 1px solid #C4C4C3; padding: 4px; min-width: 8ex;}\n\
-QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; padding: 0px; }\n\
+//        m_editorTabWidget->tabBar()->setElideMode(Qt::ElideNone);
+    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border: 1px solid #C4C4C3; padding-top: 4px; padding-bottom: 4px; min-width: 10ex; }\n\
+QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; padding: 1px; }\n\
 QTabBar::tab:selected {margin-left: -2px;margin-right: -2px;border: 1px solid #9B9B9B;border-bottom-color: #C4C4C3;}\n\
 QTabBar::tab:!selected {margin-top: 2px;}\n\
 QTabBar::tab:selected, QTabBar::tab:hover {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #fafafa, stop: 0.4 #f4f4f4,stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);}");
     } else {
-    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border: 1px solid #C4C4C3; padding: 4px; min-width: 8ex;}\n\
-QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; padding: 0px; }\n\
-QTabBar::tab:selected {margin-left: -2px;margin-right: -2px;border: 1px solid #9B9B9B;border-bottom-color: #C4C4C3;}\n\
-QTabBar::tab:!selected {margin-top: 2px;}\n");
+        m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border: 1px solid #C4C4C3; padding-top: 4px; padding-bottom: 4px; min-width: 10ex; }\n\
+    QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; padding: 1px; }\n\
+    QTabBar::tab:selected {margin-left: -2px;margin-right: -2px;border: 1px solid #9B9B9B;border-bottom-color: #C4C4C3;}\n\
+    QTabBar::tab:!selected {margin-top: 2px;}\n");
     }
 #endif
 #endif

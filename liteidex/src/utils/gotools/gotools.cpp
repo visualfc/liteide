@@ -31,13 +31,21 @@
      #define new DEBUG_NEW
 #endif
 //lite_memory_check_end
+#include <QDebug>
 
 GopherLib::GopherLib(QObject *parent) : QObject(parent)
 {
     lib.setFileName("libgopher");
-    fnInvokeAsync = (InvokeAsyncFunc)lib.resolve("InvokeAsync");
-    fnInvoke = (InvokeFunc)lib.resolve("Invoke");
-    fnSetenv = (SetenvFunc)lib.resolve("Setenv");
-    fnSetBuildEnv = (SetBuildEnvFunc)lib.resolve("SetBuildEnv");
-    fnClearBuildEnv = (ClearBuildEnvFunc)lib.resolve("ClearBuildEnv");
+    fnInvokeAsync = 0;
+    fnInvoke = 0;
+    fnSetenv = 0;
+    fnSetBuildEnv = 0;
+    fnClearBuildEnv = 0;
+    if (lib.isLoaded()) {
+        fnInvokeAsync = (InvokeAsyncFunc)lib.resolve("InvokeAsync");
+        fnInvoke = (InvokeFunc)lib.resolve("Invoke");
+        fnSetenv = (SetenvFunc)lib.resolve("Setenv");
+        fnSetBuildEnv = (SetBuildEnvFunc)lib.resolve("SetBuildEnv");
+        fnClearBuildEnv = (ClearBuildEnvFunc)lib.resolve("ClearBuildEnv");
+    }
 }
