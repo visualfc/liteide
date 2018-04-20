@@ -89,7 +89,6 @@ bool EditorManager::initWithApp(IApplication *app)
 
     m_maxEditorCount = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
 
-    applyOption(OPTION_LITEAPP);
 
     m_widget = new QWidget;
     //create editor tab widget
@@ -115,12 +114,6 @@ bool EditorManager::initWithApp(IApplication *app)
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
 
     //m_editorTabWidget->tabBar()->setIconSize(LiteApi::getToolBarIconSize());
-#ifdef Q_OS_MAC
-#if QT_VERSION >= 0x050900
-    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin:0px; image: url(:/images/closetool.png); subcontrol-position: left;}");
-#endif
-#endif
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -214,6 +207,7 @@ bool EditorManager::initWithApp(IApplication *app)
         connect(idleTimer,SIGNAL(appIdle(int)),this,SLOT(appIdle(int)));
     }
 
+    applyOption(OPTION_LITEAPP);
     return true;
 }
 
@@ -1116,6 +1110,28 @@ void EditorManager::applyOption(QString id)
         m_autoIdleSaveDocumentsTime = 1;
     }
     m_maxEditorCount = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
+
+    m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
+    m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
+
+#ifdef Q_OS_MAC
+#if QT_VERSION >= 0x050900
+    QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
+    if (qss == "default.qss") {
+    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border: 1px solid #C4C4C3; padding: 4px; min-width: 8ex;}\n\
+QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; padding: 0px; }\n\
+QTabBar::tab:selected {margin-left: -2px;margin-right: -2px;border: 1px solid #9B9B9B;border-bottom-color: #C4C4C3;}\n\
+QTabBar::tab:!selected {margin-top: 2px;}\n\
+QTabBar::tab:selected, QTabBar::tab:hover {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #fafafa, stop: 0.4 #f4f4f4,stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);}");
+    } else {
+    m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::tab{border: 1px solid #C4C4C3; padding: 4px; min-width: 8ex;}\n\
+QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; padding: 0px; }\n\
+QTabBar::tab:selected {margin-left: -2px;margin-right: -2px;border: 1px solid #9B9B9B;border-bottom-color: #C4C4C3;}\n\
+QTabBar::tab:!selected {margin-top: 2px;}\n");
+    }
+#endif
+#endif
+
 }
 
 void EditorManager::appIdle(int sec)
