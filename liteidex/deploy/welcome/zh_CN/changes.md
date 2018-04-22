@@ -5,8 +5,10 @@
 
 ### 2018.04.20 Ver X33.3
 * LiteIDE
-	* move build&debug golang action from LiteDebug to LiteBuild 
-	* filesystem add open application action for macOS bundle
+	* support import jump to package source file
+	* support import hints for all package on code completer
+	* add build & debug action to build menu
+	* fix build debug gcflags for go version
 * LiteApp
 	* fix tab style sheet for Qt5.9 on macOS
 	* project wizard add gocmdex/gopkgex for anywhere
