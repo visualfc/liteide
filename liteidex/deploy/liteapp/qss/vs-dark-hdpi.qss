@@ -2,11 +2,16 @@
 /* ===FROM: https://gist.github.com/tupunco/fdb713ec9c6189a877e5eb003bd0457d ===*/
 
 /* === Shared === */
+QMainWindow{
+    background-color: #252526;
+    color: #BBBBBB;
+}
+
 QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox, 
 QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog, QListView,
 QTabBar, QMenu, QMenuBar, QWidget::window  {
     background-color: #252526;
-    color: #F1F1F1;
+    color: #BBBBBB;
 }
 
 /* === QWidget === */
@@ -45,7 +50,7 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #2D2D30;
     border-color: #333333;
-    color: #FFFFFF;
+  color: #BBBBBB;
 }
 
 QPushButton:disabled {
@@ -80,7 +85,7 @@ QCheckBox::indicator::checked:disabled, QRadioButton::indicator::checked:disable
 QComboBox {
     background-color: #333337;
     border: 1px solid #434346;
-    color: white;
+  color: #BBBBBB;
     padding:0.8ex 3ex;
 }
 
@@ -129,30 +134,32 @@ QGroupBox::title {
 QTabWidget::pane {
     background: #222222;
     border: 2px solid #333333;
+    color: #BBBBBB;
 }
 
 /* === QTabBar === */
 QTabBar::tab {
     background: transparent;
     border: 1px solid transparent;
-    border-bottom: 2px solid #007ACC;
-    color: #FFFFFF;
+    /*border-bottom: 2px solid #007ACC;*/
+    color: #BBBBBB;
     min-width: 10ex;
     padding: 1ex 4ex;
 }
 
 QTabBar::tab:hover {
     background-color: #1C97EA;
-    border-bottom: 2px solid #007ACC;
+    /*border-bottom: 2px solid #007ACC;*/
     border-bottom: none;
 }
 
 QTabBar::tab:selected {
-    background-color: #007ACC;
-    border: 2px solid #007ACC;
+    background-color: #2D2D30;
+    border: 2px solid #3D3D3D;
     border-top: none;
-    border-bottom: 1px solid #007ACC;
-    color: #FFFFFF;
+    border-top: 1px solid #3D3D3D;
+    border-bottom: 0px solid #3D3D3D;
+    color: #AAAAAA;
 }
 
 /* === QToolBar === */
@@ -225,18 +232,19 @@ RotationToolButton, RotationToolButton:pressed, RotationToolButton:hover, Rotati
     border-top-style: solid;
     border-top-color: transparent;
     background-color: transparent;
-    color: #FFFFFF;
+    color: #AAAAAA;
 }
 RotationToolButton:pressed {
-    color: #FFFFFF;
+    color: #BBBBBB;
 }
 RotationToolButton:hover,RotationToolButton:checked:hover {
     border-top-color: #007ACC;
     color: #007ACC;
 }
 RotationToolButton:checked  {
-    border-top-color: #444444;
-    color: #FFFFFF;
+    border: 1px solid #444444;
+    border-bottom: 0px solid #000000;
+    color: #BBBBBB;
 }
 
 
@@ -244,7 +252,7 @@ RotationToolButton:checked  {
 QMenu {
     background-color: #1B1B1C;
     border: 1px solid #1B1B1C;
-    color: #F1F1F1;
+    color: #BBBBBB;
     padding: 2px;
 }
 
@@ -282,7 +290,7 @@ QMenu::indicator {
 /* === QMenuBar === */
 QMenuBar {
     background-color: #2D2D30;
-    color: white;
+    color: #BBBBBB;
 }
 
 QMenuBar::item {
