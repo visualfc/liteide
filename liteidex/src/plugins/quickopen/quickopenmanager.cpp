@@ -247,6 +247,7 @@ IQuickOpenMimeType *QuickOpenManager::registerQuickOpenMimeType(const QString &s
     if (!symbol) {
         symbol = new QuickOpenMimeType(m_liteApp,this);
         this->addFilter(sym,symbol);
+        m_quickOpenSymbolMap[sym] = symbol;
     }
     return symbol;
 }
