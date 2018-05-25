@@ -45,7 +45,7 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_liteApp(app)
 {
     //this->setFocusPolicy(Qt::NoFocus);
-    m_edit = new Utils::FancyLineEdit;
+    m_edit = new Utils::FilterLineEdit(300);
     m_view = new QTreeView;
     m_view->setHeaderHidden(true);
     m_view->setTextElideMode(Qt::ElideLeft);
@@ -67,6 +67,8 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     this->setMinimumWidth(600);
 
     this->setLayout(layout);
+
+    connect(m_edit,SIGNAL(filterChanged(QString)),this,SIGNAL(filterChanged(QString)));
 
     m_edit->installEventFilter(this);
 }

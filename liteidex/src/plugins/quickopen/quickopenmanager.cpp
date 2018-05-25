@@ -58,7 +58,7 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_widget = new QuickOpenWidget(m_liteApp,m_liteApp->mainWindow());
 
-    connect(m_widget->editor(),SIGNAL(textChanged(QString)),this,SLOT(filterChanged(QString)));
+    connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
     connect(m_widget->editor(),SIGNAL(returnPressed()),this,SLOT(selected()));
     connect(m_widget->view(),SIGNAL(clicked(QModelIndex)),this,SLOT(selected()));
     connect(m_widget->view(),SIGNAL(activated(QModelIndex)),this,SLOT(selected()));

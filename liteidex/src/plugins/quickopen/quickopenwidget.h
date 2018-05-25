@@ -25,7 +25,7 @@
 #define QUICKOPENWIDGET_H
 
 #include "liteapi/liteapi.h"
-#include "../3rdparty/qtc_editutil/fancylineedit.h"
+#include "../3rdparty/qtc_editutil/filterlineedit.h"
 #include <QAbstractItemModel>
 
 class QTreeView;
@@ -41,13 +41,14 @@ public:
 signals:
     void hideWidget();
     void indexChanage(const QModelIndex &index);
+    void filterChanged(const QString &filter);
 public:
     void showView(QPoint *pos = 0);
 protected:
     virtual bool eventFilter(QObject *o, QEvent *e);
 protected:
     LiteApi::IApplication *m_liteApp;
-    Utils::FancyLineEdit *m_edit;
+    Utils::FilterLineEdit *m_edit;
     QTreeView   *m_view;
     bool         m_wrap;
 };

@@ -53,6 +53,7 @@ protected:
     LiteApi::IApplication *m_liteApp;
     FindFilesThread *m_thread;
     QStandardItemModel *m_model;
+    QStandardItemModel *m_filesModel;
     QSortFilterProxyModel *m_proxyModel;
     QStringList        m_editors;
     Qt::CaseSensitivity m_matchCase;

@@ -45,6 +45,7 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
+    m_filesModel = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
     m_matchCase = Qt::CaseInsensitive;
@@ -91,6 +92,8 @@ void QuickOpenFiles::updateModel()
     m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
     m_model->clear();
+    m_filesModel->clear();
+    m_proxyModel->setSourceModel(m_model);
     m_proxyModel->setFilterFixedString("");
     m_proxyModel->setFilterKeyColumn(2);
     m_proxyModel->setFilterCaseSensitivity(m_matchCase);
@@ -107,7 +110,10 @@ void QuickOpenFiles::updateModel()
     qSort(names);
     foreach (QString text, names) {
         QStringList ar = text.split(";");
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]) );
+        QList<QStandardItem*> items;
+        items << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]);
+        m_model->appendRow(items);
+        m_filesModel->appendRow(items);
     }
 
     startFindThread();
@@ -146,13 +152,18 @@ void QuickOpenFiles::startFindThread()
 void QuickOpenFiles::findResult(const QStringList &fileList)
 {
     foreach (QString filePath, fileList) {
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(QFileInfo(filePath).fileName()) << new QStandardItem(filePath));
+        m_filesModel->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(QFileInfo(filePath).fileName()) << new QStandardItem(filePath));
     }
 }
 
 QModelIndex QuickOpenFiles::filterChanged(const QString &text)
 {
     m_proxyModel->setFilterFixedString(text);
+    if (!text.isEmpty()) {
+        m_proxyModel->setSourceModel(m_filesModel);
+    } else {
+        m_proxyModel->setSourceModel(m_model);
+    }
 
     for(int i = 0; i < m_proxyModel->rowCount(); i++) {
         QModelIndex index = m_proxyModel->index(i,1);
