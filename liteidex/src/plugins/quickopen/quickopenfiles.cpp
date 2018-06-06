@@ -110,10 +110,8 @@ void QuickOpenFiles::updateModel()
     qSort(names);
     foreach (QString text, names) {
         QStringList ar = text.split(";");
-        QList<QStandardItem*> items;
-        items << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]);
-        m_model->appendRow(items);
-        m_filesModel->appendRow(items);
+        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]));
+        m_filesModel->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]));
     }
 
     startFindThread();
