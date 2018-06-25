@@ -23,8 +23,14 @@
 
 #include "dlvdebuggerplugin.h"
 #include "dlvdebugger.h"
+
+#ifdef USE_DLVCLIENT
+#include "dlvrpcdebugger.h"
+#endif
+
 #include "dlvdebuggeroptionfactory.h"
 #include "litedebugapi/litedebugapi.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -45,7 +51,11 @@ bool DlvDebuggerPlugin::load(LiteApi::IApplication *app)
     if (!manager) {
         return false;
     }
+#ifdef USE_DLVCLIENT
+    DlvRpcDebugger *debug = new DlvRpcDebugger(app);
+#else
     DlvDebugger *debug = new DlvDebugger(app);
+#endif
     manager->addDebugger(debug);
     manager->setCurrentDebugger(debug);
     //app->optionManager()->addFactory(new DlvDebuggerOptionFactory(app,this));

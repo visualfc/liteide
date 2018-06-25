@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2016 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2018 LiteIDE Team. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -18,25 +18,28 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: dlvdebugger.h
+// Module: dlvrpcdebugger.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef DLVDEBUGGER_H
-#define DLVDEBUGGER_H
+#ifndef DLVRPCDEBUGGER_H
+#define DLVRPCDEBUGGER_H
 
 #include "litedebugapi/litedebugapi.h"
 #include "liteenvapi/liteenvapi.h"
 #include "litettyapi/litettyapi.h"
 #include "qtc_gdbmi/gdbmi.h"
+#ifdef USE_DLVCLIENT
+#include "dlvclient/dlvclient.h"
+#endif
 
 #include <QSet>
 
 class QProcess;
 class LiteProcess;
-class DlvHandleState
+class GdbHandleState
 {
 public:
-    DlvHandleState() : m_exited(false),m_stopped(false) {}
+    GdbHandleState() : m_exited(false),m_stopped(false) {}
     void clear()
     {
         m_reason.clear();
@@ -58,12 +61,30 @@ public:
 class QStandardItemModel;
 class QStandardItem;
 
-class DlvDebugger : public LiteApi::IDebugger
+struct funcDecl {
+    funcDecl()
+    {
+        clear();
+    }
+    void clear()
+    {
+        fileName.clear();;
+        funcName.clear();
+        start = -1;
+        end = -1;
+    }
+    QString fileName;
+    QString funcName;
+    int     start;
+    int     end;
+};
+
+class DlvRpcDebugger : public LiteApi::IDebugger
 {
     Q_OBJECT
 public:
-    DlvDebugger(LiteApi::IApplication *app, QObject *parent = 0);
-    ~DlvDebugger();
+    DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent = 0);
+    ~DlvRpcDebugger();
     enum VarItemDataRole{
         VarNameRole = Qt::UserRole + 1,
         VarNumChildRole,
@@ -110,6 +131,7 @@ public slots:
     void headlessReadStdOutput();
     void headlessFinished(int);
     void headlessError(QProcess::ProcessError err);
+    void clientCommandSuccess(const QString &method, const DebuggerState &state);
 protected:
     void handleResponse(const QByteArray &buff);
 protected:
@@ -128,12 +150,16 @@ protected:
     QString                 m_processId;
     LiteProcess *m_process;
     LiteProcess *m_headlessProcess;
+#ifdef USE_DLVCLIENT
+    DlvClient   *m_dlvClient;
+#endif
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;
     QStandardItemModel *m_watchModel;
     QStandardItemModel *m_framesModel;
     QStandardItemModel *m_libraryModel;
     QStandardItem   *m_asyncItem;
+    QStandardItem   *m_jsonItem;
     QMap<QString,QString> m_varNameMap;
     QList<QString> m_watchList;
     QMap<QString,QStandardItem*> m_nameItemMap;
@@ -141,7 +167,7 @@ protected:
     QString m_dlvFilePath;
     QString m_runtimeFilePath;
     QByteArray m_inbuffer;
-    DlvHandleState m_handleState;
+    GdbHandleState m_handleState;
     QMultiMap<QString,int>  m_initBks;
     QMap<QString,QString> m_locationBkMap;
     QList<QByteArray> m_cmdList;
@@ -152,6 +178,7 @@ protected:
     bool    m_dlvExit;
     bool    m_headlessInitAddress;
     bool    m_headlessMode;
+    bool    m_rpcMode;
 };
 
-#endif // DLVDEBUGGER_H
+#endif // DLVRPCDEBUGGER_H

@@ -569,6 +569,11 @@ bool DlvClient::SetAPIVersion(int version) const
     return callBlocked("SetApiVersion",&in,&out);
 }
 
+QVariant DlvClient::LastJsonData() const
+{
+    return m_lastJsonData;
+}
+
 bool DlvClient::callCommand(const QString &cmd)
 {
     DebuggerCommand dc(cmd);
@@ -604,6 +609,7 @@ void DlvClient::finishedCommandReply()
 {
     m_isCommandBlock = false;
     QJsonRpcServiceReply *reply = (QJsonRpcServiceReply*)(sender());
+    m_lastJsonData = reply->response().result().toVariant();
     if (reply->response().type() == QJsonRpcMessage::Error) {
         int code = reply->response().errorCode();
         QString msg = reply->response().errorMessage();
@@ -631,6 +637,7 @@ bool DlvClient::callBlocked(const QString &method, const JsonDataIn *in, JsonDat
         qDebug("error(%d): %s", response.errorCode(), response.errorMessage().toLocal8Bit().data());//
         return false;
     }
+    m_lastJsonData = response.result().toVariant();
     out->fromMap(response.result().toVariant().toMap());
     return true;
 }

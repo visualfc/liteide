@@ -1,7 +1,7 @@
 TARGET = dlvdebugger
 TEMPLATE = lib
 
-#CONFIG += liteide_use_dlvclient
+CONFIG += liteide_use_dlvclient
 
 include(../../liteideplugin.pri)
 include(../../api/litedebugapi/litedebugapi.pri)
@@ -14,6 +14,10 @@ QT += network
 DEFINES += USE_DLVCLIENT
 include(../../utils/dlvclient/dlvclient.pri)
 include(../../3rdparty/qjsonrpc/qjsonrpc.pri)
+
+SOURCES += dlvrpcdebugger.cpp
+
+HEADERS += dlvrpcdebugger.h
 }
 
 DEFINES += GDBDEBUGER_LIBRARY

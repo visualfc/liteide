@@ -123,6 +123,8 @@ public:
     QString GetDelveVersion() const;
     bool SetAPIVersion(int version) const;
 public:
+    QVariant LastJsonData() const;
+public:
     bool isCommandBlocked() const;
 signals:
     void commandSuccess(const QString &method, const DebuggerState &state);
@@ -139,6 +141,7 @@ protected:
     QString m_addr;
     QScopedPointer<QJsonRpcServiceReply> m_lastReply;
     DebuggerCommand m_lastCommand;
+    mutable QVariant m_lastJsonData;
     bool m_isCommandBlock;
     int m_callTimeout;
 };
