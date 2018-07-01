@@ -174,7 +174,7 @@ protected:
     bool    m_dlvInit;
     bool    m_dlvExit;
     bool    m_headlessInitAddress;
-    void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName,QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
+    void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 };
 
 #endif // DLVRPCDEBUGGER_H

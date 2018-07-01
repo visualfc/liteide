@@ -100,11 +100,11 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_asyncModel->setHeaderData(5,Qt::Horizontal,"Thread ID");
     m_asyncModel->setHeaderData(6,Qt::Horizontal,"Stoped Threads");
     */
-    m_varsModel = new QStandardItemModel(0,3,this);
+    m_varsModel = new QStandardItemModel(0,4,this);
     m_varsModel->setHeaderData(0,Qt::Horizontal,"Name");
     m_varsModel->setHeaderData(1,Qt::Horizontal,"Type");
     m_varsModel->setHeaderData(2,Qt::Horizontal,"Value");
-    //m_varsModel->setHeaderData(2,Qt::Horizontal,"Type");
+    m_varsModel->setHeaderData(3,Qt::Horizontal,"Address");
 
     m_watchModel = new QStandardItemModel(0,2,this);
     m_watchModel->setHeaderData(0,Qt::Horizontal,"Name");
@@ -850,7 +850,7 @@ void DlvRpcDebugger::readStdOutput()
         stop();
     } else if (m_handleState.stopped()) {
         m_updateCmdList.clear();
-        //m_updateCmdList << "stack" << "stack 0 -full";
+        m_updateCmdList << "stack";// << "stack 0 -full";
         foreach (QString s, m_watchNameMap.keys()) {
             if (s.isEmpty()) {
                 continue;
@@ -858,14 +858,14 @@ void DlvRpcDebugger::readStdOutput()
             m_updateCmdList << "vars "+QRegExp::escape(s);
         }
 
-        int id = m_dlvClient->GetState().pCurrentThread->GoroutineID;
-        QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id,0),LoadConfig::Long());
-        QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id,0),LoadConfig::Long());
+        int id = -1;//m_dlvClient->GetState().pCurrentThread->GoroutineID;
+        QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Long());
+        QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Long());
 
         QMap<QString,QString> saveMap;
         m_varsModel->removeRows(0,m_varsModel->rowCount());
-        updateVariableHelper(args,m_varsModel,0,"",saveMap,m_localVarsMap);
-        updateVariableHelper(vars,m_varsModel,0,"",saveMap,m_localVarsMap);
+        updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_localVarsMap);
+        updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
         m_localVarsMap.swap(saveMap);
     }
 
@@ -889,7 +889,7 @@ static Variable parserRealVar(const Variable &var)
     return var;
 }
 
-void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap)
+void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap)
 {
     int index = -1;
     foreach (Variable var, vars) {
@@ -897,17 +897,37 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
         QStandardItem *nameItem = new QStandardItem(var.Name);
         QStandardItem *typeItem = new QStandardItem(var.Type);
         QStandardItem *valueItem = new QStandardItem(var.Value);
+        QStandardItem *addrItem = new QStandardItem(QString("0x%1").arg(var.Addr,0,16));
         QString checkName = parentName+"."+var.Name;
-        if (var.Name.isEmpty()) {
+        // slice []
+        if (flag == 2) {
             checkName = parentName+"."+QString("%1").arg(index);
             nameItem->setText(QString("[%1]").arg(index));
         }
+        QString rtype = var.Type;
         QList<Variable> children = var.Children;
         if (var.Type.startsWith("*")) {
-            children = parserRealVar(var).Children;
+            Variable rv = parserRealVar(var);
+            rtype = rv.Type;
+            children = rv.Children;
+            if (var.Addr != rv.Addr) {
+                addrItem->setText(QString("0x%1 => 0x%2").arg(var.Addr,0,16).arg(rv.Addr,0,16));
+            }
         }
+        //children flag
+        int cflag = 1;
+        if (rtype.startsWith("[]")) {
+            cflag = 2;
+            //valueItem->setText(QString("(len:%1, cap:%2)").arg(var.Len).arg(var.Cap));
+        } else if (rtype.startsWith("map[")) {
+            cflag = 3;
+            //valueItem->setText(QString("(len:%1)").arg(var.Len));
+        } else if (!children.isEmpty()) {
+            //valueItem->setText(QString("(len:%1)").arg(var.Len));
+        }
+
         if (!children.isEmpty()) {
-            updateVariableHelper(children,model,nameItem,checkName,saveMap,checkMap);
+            updateVariableHelper(children,model,nameItem,checkName,cflag,saveMap,checkMap);
         }
         QMap<QString,QString>::const_iterator it = checkMap.find(checkName);
         if (it != checkMap.end() && it.value() != var.Value) {
@@ -919,9 +939,9 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
         }
         saveMap.insert(checkName,var.Value);
         if (parent) {
-            parent->appendRow(QList<QStandardItem*>() << nameItem << typeItem << valueItem);
+            parent->appendRow(QList<QStandardItem*>() << nameItem << typeItem << valueItem << addrItem);
         } else {
-            model->appendRow(QList<QStandardItem*>() << nameItem << typeItem << valueItem);
+            model->appendRow(QList<QStandardItem*>() << nameItem << typeItem << valueItem << addrItem);
         }
     }
 }
@@ -1114,7 +1134,6 @@ void DlvRpcDebugger::updateState(const DebuggerState &state, const QVariant &jso
         items << new QStandardItem(QString("file=%1").arg(fileName));
         items << new QStandardItem(QString("line=%1").arg(line));
         m_asyncItem->appendRows(items);
-        qDebug() << state.pCurrentThread->pBreakpointInfo;
     }
 //    m_asyncItem->removeRows(0,m_asyncItem->rowCount());
 //    buildMapId(m_asyncItem,jsonData,"State");

@@ -635,7 +635,7 @@ bool DlvClient::callBlocked(const QString &method, const JsonDataIn *in, JsonDat
 
     QJsonRpcMessage response = m_dlv->sendMessageBlocking(request,m_callTimeout);
     if (response.type() == QJsonRpcMessage::Error) {
-        qDebug("error(%d): %s", response.errorCode(), response.errorMessage().toLocal8Bit().data());//
+        //qDebug("error(%d): %s", response.errorCode(), response.errorMessage().toLocal8Bit().data());//
         return false;
     }
     m_lastJsonData = response.result().toVariant();
