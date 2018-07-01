@@ -88,8 +88,8 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_process = new LiteProcess(m_liteApp,this);
     m_process->setUseCtrlC(true);
 
-    m_asyncModel = new QStandardItemModel(this);
-    m_asyncItem = new QStandardItem;
+    m_asyncModel = new QStandardItemModel(0,2,this);
+    m_asyncItem = new QStandardItem(0,2);
     m_asyncModel->appendRow(m_asyncItem);
     /*
     m_asyncModel->setHeaderData(0,Qt::Horizontal,"Reason");
@@ -100,9 +100,10 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_asyncModel->setHeaderData(5,Qt::Horizontal,"Thread ID");
     m_asyncModel->setHeaderData(6,Qt::Horizontal,"Stoped Threads");
     */
-    m_varsModel = new QStandardItemModel(0,2,this);
+    m_varsModel = new QStandardItemModel(0,3,this);
     m_varsModel->setHeaderData(0,Qt::Horizontal,"Name");
-    m_varsModel->setHeaderData(1,Qt::Horizontal,"Value");
+    m_varsModel->setHeaderData(1,Qt::Horizontal,"Type");
+    m_varsModel->setHeaderData(2,Qt::Horizontal,"Value");
     //m_varsModel->setHeaderData(2,Qt::Horizontal,"Type");
 
     m_watchModel = new QStandardItemModel(0,2,this);
@@ -118,26 +119,23 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_framesModel->setHeaderData(4,Qt::Horizontal,"Line");
 
     m_libraryModel = new QStandardItemModel(0,2,this);
-    m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
-    m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");
+    //m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
+    //m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");`
+   // m_asynJsonItem = new QStandardItem(0,2);
+   // m_asynJsonItem->setText("stop");
+    //m_libraryModel->appendRow(m_asynJsonItem);
 
     m_dlvInit = false;
     m_dlvExit = false;
     m_readDataBusy = false;
     m_writeDataBusy = false;
 
-    m_headlessMode = true;
-
     m_headlessInitAddress = false;
     m_headlessProcess = new LiteProcess(m_liteApp,this);
     m_headlessProcess->setUseCtrlC(true);
 
-    m_rpcMode = false;
-#ifdef USE_DLVCLIENT
     m_dlvClient = new DlvClient(this);
-    connect(m_dlvClient,SIGNAL(commandSuccess(QString,DebuggerState)),this,SLOT(clientCommandSuccess(QString,DebuggerState)));
-    m_rpcMode = true;
-#endif
+    connect(m_dlvClient,SIGNAL(commandSuccess(QString,DebuggerState,QVariant)),this,SLOT(clientCommandSuccess(QString,DebuggerState,QVariant)));
 
     m_dlvRunningCmdList << "c" << "continue"
         << "n" << "next"
@@ -230,37 +228,20 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
 
     clear();
 
-    if (m_headlessMode) {
-        QStringList argsList;
-        argsList << "--headless" << "--api-version=2" << "--accept-multiclient";
-        argsList << "exec" << cmd;
-        if (!arguments.isEmpty()) {
-            argsList << "--" << arguments;
-        }
-#ifdef Q_OS_WIN
-        //m_headlessProcess->setNativeArguments(argsList.join(" "));
-        m_headlessProcess->startEx("\""+m_dlvFilePath+"\"", argsList.join(" "));
-#else
-        m_headlessProcess->startEx(m_dlvFilePath, argsList.join(" "));
-#endif
-        QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_headlessProcess->workingDirectory());
-        emit debugLog(LiteApi::DebugRuntimeLog,log);
-    } else {
-        QStringList argsList;
-        argsList << "exec" << cmd;
-        if (!arguments.isEmpty()) {
-            argsList << "--" << arguments;
-        }
-#ifdef Q_OS_WIN
-        //m_process->setNativeArguments(argsList.join(" "));
-        m_process->startEx("\""+m_dlvFilePath+"\"",argsList.join(" "));
-#else
-        m_process->startEx(m_dlvFilePath,argsList.join(" "));
-#endif
-
-        QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
-        emit debugLog(LiteApi::DebugRuntimeLog,log);
+    QStringList argsList;
+    argsList << "--headless" << "--api-version=2" << "--accept-multiclient";
+    argsList << "exec" << cmd;
+    if (!arguments.isEmpty()) {
+        argsList << "--" << arguments;
     }
+#ifdef Q_OS_WIN
+    //m_headlessProcess->setNativeArguments(argsList.join(" "));
+    m_headlessProcess->startEx("\""+m_dlvFilePath+"\"", argsList.join(" "));
+#else
+    m_headlessProcess->startEx(m_dlvFilePath, argsList.join(" "));
+#endif
+    QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_headlessProcess->workingDirectory());
+    emit debugLog(LiteApi::DebugRuntimeLog,log);
 
     return true;
 }
@@ -271,36 +252,26 @@ void DlvRpcDebugger::stop()
         return;
     }
     m_dlvExit = true;
-    if (m_headlessMode) {
-        if (!m_headlessProcess->isStop()) {
-            m_headlessProcess->interrupt();
-        }
-        if (!m_process->isStop()) {
-            m_process->interrupt();
-        }
-        if (!m_headlessProcess->isStop() && !m_headlessProcess->waitForFinished(500)) {
-            m_headlessProcess->kill();
-        }
-        if (!m_process->isStop() && !m_process->waitForFinished(500)) {
-            command_helper("exit",true);
-            if (!m_process->waitForFinished(500)) {
-                m_process->kill();
-            }
-        }
-    } else {
-        if (!m_process->isStop()) {
-            m_process->interrupt();
-        }
+    if (!m_headlessProcess->isStop()) {
+        m_headlessProcess->interrupt();
+    }
+    if (!m_process->isStop()) {
+        m_process->interrupt();
+    }
+    if (!m_headlessProcess->isStop() && !m_headlessProcess->waitForFinished(500)) {
+        m_headlessProcess->kill();
+    }
+    if (!m_process->isStop() && !m_process->waitForFinished(500)) {
         command_helper("exit",true);
-        if (!m_process->isStop() && !m_process->waitForFinished(1000)) {
-             m_process->kill();
+        if (!m_process->waitForFinished(500)) {
+            m_process->kill();
         }
     }
 }
 
 bool DlvRpcDebugger::isRunning()
 {
-    return m_process->state() != QProcess::NotRunning;
+    return m_headlessProcess->state() != QProcess::NotRunning;
 }
 
 void DlvRpcDebugger::continueRun()
@@ -321,35 +292,6 @@ void DlvRpcDebugger::stepInto()
 void DlvRpcDebugger::stepOut()
 {
     command("stepout");
-//    QString cmd = LiteApi::getGotools(m_liteApp);
-//    QProcess process;
-//    process.setEnvironment(LiteApi::getCurrentEnvironment(m_liteApp).toStringList());
-//    QFileInfo info(m_lastFileName);
-//    process.setWorkingDirectory(info.path());
-//    QStringList args;
-//    args << "finddecl" << "-file" << info.fileName() << "-line" << QString("%1").arg(m_lastFileLine+1);
-//    process.start(cmd,args);
-//    if (!process.waitForFinished(3000)) {
-//        emit debugLog(LiteApi::DebugErrorLog,"error wait find decl process");
-//        process.kill();
-//        return;
-//    }
-//    if (process.exitCode() != 0) {
-//        emit debugLog(LiteApi::DebugErrorLog,"error get find decl result");
-//        return;
-//    }
-//    QByteArray data = process.readAll().trimmed();
-//    QStringList ar = QString::fromUtf8(data).split(" ");
-//    if (ar.size() != 4 || ar[0] != "func") {
-//        emit debugLog(LiteApi::DebugErrorLog,"error find func decl in line");
-//        return;
-//    }
-//    m_funcDecl.fileName = m_lastFileName;
-//    m_funcDecl.funcName = ar[1];
-//    m_funcDecl.start = ar[2].toInt()-1;
-//    m_funcDecl.end = ar[3].toInt()-1;
-//    m_checkFuncDecl = true;
-//    command("next");
 }
 
 void DlvRpcDebugger::runToLine(const QString &fileName, int line)
@@ -506,11 +448,7 @@ void DlvRpcDebugger::enterAppText(const QString &text)
         m_processId.clear();
     }
 
-    if (m_headlessMode) {
-        m_headlessProcess->write(text.toUtf8());
-    } else {
-        m_process->write(text.toUtf8());
-    }
+    m_headlessProcess->write(text.toUtf8());
 }
 
 void DlvRpcDebugger::enterDebugText(const QString &text)
@@ -558,15 +496,6 @@ void DlvRpcDebugger::handleResponse(const QByteArray &buff)
 {
     if (buff.isEmpty()) {
         return;
-    }
-    if (!m_headlessMode) {
-        if (m_processId.isEmpty()) {
-            //Process restarted with PID
-            int n = buff.indexOf("PID");
-            if (n != -1) {
-                m_processId = buff.mid(n+3).replace("(dlv)","").trimmed();
-            }
-        }
     }
     //Process restarted with PID 4532
     //> main.main() H:/goproj/src/hello/main.go:13 (hits goroutine(1):1 total:1) (PC: 0x401172)
@@ -642,7 +571,7 @@ void DlvRpcDebugger::clear()
     m_readDataBusy = false;
     m_writeDataBusy = false;
     m_handleState.clear();
-    m_varNameMap.clear();
+    m_localVarsMap.clear();
     m_watchNameMap.clear();
     m_watchList.clear();
     m_updateCmdHistroy.clear();
@@ -661,10 +590,6 @@ void DlvRpcDebugger::initDebug()
 {
     //get thread id
     m_processId.clear();
-
-    if (!m_headlessMode) {
-        command_helper("restart",true);
-    }
 
     QMapIterator<QString,int> i(m_initBks);
 
@@ -729,10 +654,6 @@ static QString valueToolTip(const QString &value)
 
 void DlvRpcDebugger::readStdOutput()
 {
-    if (m_rpcMode) {
-        return;
-    }
-
     QByteArray data = m_process->readAllStandardOutput();
     if (!m_dlvInit) {
         m_dlvInit = true;
@@ -861,8 +782,8 @@ void DlvRpcDebugger::readStdOutput()
                 QStandardItem *nameItem = new QStandardItem(name);
                 QStandardItem *valueItem = new QStandardItem(value);
                 valueItem->setToolTip(valueToolTip(value));
-                QMap<QString,QString>::iterator it = m_varNameMap.find(name);
-                if (it != m_varNameMap.end() && it.value() != value) {
+                QMap<QString,QString>::iterator it = m_localVarsMap.find(name);
+                if (it != m_localVarsMap.end() && it.value() != value) {
 #if QT_VERSION >= 0x050000
         valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
 #else
@@ -871,7 +792,7 @@ void DlvRpcDebugger::readStdOutput()
                 }
                 m_varsModel->appendRow(QList<QStandardItem*>() << nameItem << valueItem);
             }
-            m_varNameMap = nameMap;
+            m_localVarsMap = nameMap;
         } else if (cmdHistroy.startsWith("vars ")) {
             foreach (QString data, QString::fromUtf8(m_inbuffer).split("\n",QString::SkipEmptyParts)) {
                 int n = data.indexOf("=");
@@ -918,8 +839,6 @@ void DlvRpcDebugger::readStdOutput()
             }
         }
         emitLog = false;
-    } else if (!m_headlessMode) {
-         emit debugLog(LiteApi::DebugApplationLog,QString::fromUtf8(m_inbuffer));
     }
     if (emitLog) {
          emit debugLog(LiteApi::DebugConsoleLog,QString::fromUtf8(m_inbuffer));
@@ -931,13 +850,23 @@ void DlvRpcDebugger::readStdOutput()
         stop();
     } else if (m_handleState.stopped()) {
         m_updateCmdList.clear();
-        m_updateCmdList << "stack" << "stack 0 -full";
+        //m_updateCmdList << "stack" << "stack 0 -full";
         foreach (QString s, m_watchNameMap.keys()) {
             if (s.isEmpty()) {
                 continue;
             }
             m_updateCmdList << "vars "+QRegExp::escape(s);
         }
+
+        int id = m_dlvClient->GetState().pCurrentThread->GoroutineID;
+        QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id,0),LoadConfig::Long());
+        QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id,0),LoadConfig::Long());
+
+        QMap<QString,QString> saveMap;
+        m_varsModel->removeRows(0,m_varsModel->rowCount());
+        updateVariableHelper(args,m_varsModel,0,"",saveMap,m_localVarsMap);
+        updateVariableHelper(vars,m_varsModel,0,"",saveMap,m_localVarsMap);
+        m_localVarsMap.swap(saveMap);
     }
 
     m_handleState.clear();
@@ -946,6 +875,53 @@ void DlvRpcDebugger::readStdOutput()
         foreach(QString cmd, m_updateCmdList.takeFirst().split("|")) {
             m_updateCmdHistroy.push_back(cmd.trimmed());
             command(cmd.trimmed().toUtf8());
+        }
+    }
+}
+
+static Variable parserRealVar(const Variable &var)
+{
+    if (var.Type.startsWith("*")) {
+        if (var.Children.size() == 1) {
+            return parserRealVar(var.Children[0]);
+        }
+    }
+    return var;
+}
+
+void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap)
+{
+    int index = -1;
+    foreach (Variable var, vars) {
+        index++;
+        QStandardItem *nameItem = new QStandardItem(var.Name);
+        QStandardItem *typeItem = new QStandardItem(var.Type);
+        QStandardItem *valueItem = new QStandardItem(var.Value);
+        QString checkName = parentName+"."+var.Name;
+        if (var.Name.isEmpty()) {
+            checkName = parentName+"."+QString("%1").arg(index);
+            nameItem->setText(QString("[%1]").arg(index));
+        }
+        QList<Variable> children = var.Children;
+        if (var.Type.startsWith("*")) {
+            children = parserRealVar(var).Children;
+        }
+        if (!children.isEmpty()) {
+            updateVariableHelper(children,model,nameItem,checkName,saveMap,checkMap);
+        }
+        QMap<QString,QString>::const_iterator it = checkMap.find(checkName);
+        if (it != checkMap.end() && it.value() != var.Value) {
+#if QT_VERSION >= 0x050000
+            valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+#else
+            valueItem->setData(Qt::red,Qt::TextColorRole);
+#endif
+        }
+        saveMap.insert(checkName,var.Value);
+        if (parent) {
+            parent->appendRow(QList<QStandardItem*>() << nameItem << typeItem << valueItem);
+        } else {
+            model->appendRow(QList<QStandardItem*>() << nameItem << typeItem << valueItem);
         }
     }
 }
@@ -975,6 +951,7 @@ void DlvRpcDebugger::headlessReadStdError()
     //qDebug() << data;
     emit debugLog(LiteApi::DebugErrorLog,data);
 }
+
 
 static void buildMap(QStandardItem *item, const QMap<QString, QVariant> &m)
 {
@@ -1008,6 +985,21 @@ static void buildMap(QStandardItem *item, const QMap<QString, QVariant> &m)
     }
 }
 
+static void buildMapId(QStandardItem *item, const QVariant &var, const QString &id)
+{
+    item->setText(id);
+    buildMap(item,var.toMap().value(id).toMap());
+}
+
+static void buildListId(QStandardItem *item, const QVariant &var, const QString &id)
+{
+    item->setText(id);
+    //buildMap(item,var.toMap().value(id).toList());
+    foreach (QVariant li, var.toMap().value(id).toList()) {
+        buildMap(item,li.toMap());
+    }
+}
+
 void DlvRpcDebugger::headlessReadStdOutput()
 {
     QString data = QString::fromUtf8(m_headlessProcess->readAllStandardOutput());
@@ -1025,37 +1017,33 @@ void DlvRpcDebugger::headlessReadStdOutput()
             }
         }
         if (m_headlessInitAddress) {
-#ifdef USE_DLVCLIENT
-             bool b = m_dlvClient->Connect(addr);
-             if (b) {
-                 QMapIterator<QString,int> i(m_initBks);
+             m_dlvClient->Connect(addr);
+//             b = m_dlvInfo->Connect(addr);
+//             if (b) {
+//                 QMapIterator<QString,int> i(m_initBks);
 
-                 while (i.hasNext()) {
-                     i.next();
-                     QString fileName = i.key();
-                     QList<int> lines = m_initBks.values(fileName);
-                     foreach(int line, lines) {
-                         //insertBreakPointHelper(fileName,line,true);
-                         Breakpoint bp;
-                         bp.File = fileName;
-                         bp.Line = line;
-                         BreakpointPointer p = m_dlvClient->CreateBreakpoint(bp);
-                         qDebug() << p;
-                     }
-                 }
-                 m_dlvClient->CreateBreakpointByFuncName("main.main");
-                 DebuggerState state = m_dlvClient->Continue();
-                 //qDebug() << state.pCurrentThread;
-                 //qDebug() << m_dlvClient->LastJsonData().toMap();
-                 m_jsonItem = new QStandardItem;
-                 buildMap(m_jsonItem,m_dlvClient->LastJsonData().toMap());
-                 m_libraryModel->appendRow(m_jsonItem);
-                 //command_helper("break main.main",true);
-                 //command_helper("continue",true);
+//                 while (i.hasNext()) {
+//                     i.next();
+//                     QString fileName = i.key();
+//                     QList<int> lines = m_initBks.values(fileName);
+//                     foreach(int line, lines) {
+//                         //insertBreakPointHelper(fileName,line,true);
+//                         Breakpoint bp;
+//                         bp.File = fileName;
+//                         bp.Line = line;
+//                         BreakpointPointer p = m_dlvClient->CreateBreakpoint(bp);
+//                         qDebug() << p;
+//                     }
+//                 }
+//                 m_dlvClient->CreateBreakpointByFuncName("main.main");
+//                 DebuggerState state = m_dlvClient->Continue();
+//                 updateState(state,m_dlvClient->LastJsonData());
+//                 //command_helper("break main.main",true);
+//                 //command_helper("continue",true);
 
-                 emit debugLoaded();
-             }
-#endif
+//                 emit debugLoaded();
+//                 return;
+//             }
             QStringList argsList;
             argsList << "connect" << addr;
 #ifdef Q_OS_WIN
@@ -1065,7 +1053,7 @@ void DlvRpcDebugger::headlessReadStdOutput()
             m_process->start(m_dlvFilePath + " " + argsList.join(" "));
 #endif
             QString log = QString("%1 %2 [%3]").arg(m_dlvFilePath).arg(argsList.join(" ")).arg(m_process->workingDirectory());
-           emit debugLog(LiteApi::DebugRuntimeLog,log);
+            emit debugLog(LiteApi::DebugRuntimeLog,log);
         }
     }
 
@@ -1086,7 +1074,56 @@ void DlvRpcDebugger::headlessError(QProcess::ProcessError err)
     cleanup();
 }
 
-void DlvRpcDebugger::clientCommandSuccess(const QString &method, const DebuggerState &state)
+void DlvRpcDebugger::clientCommandSuccess(const QString &method, const DebuggerState &state, const QVariant &jsonData)
 {
-    qDebug() << method << state.pCurrentThread;
+//    updateState(state,jsonData);
+//    if (state.Exited) {
+//        return;
+//    }
+
+//    QList<Variable> vars = m_dlvInfo->ListLocalVariables(EvalScope(-1),LoadConfig::Long());
+//    m_varsModel->removeRows(0,m_varsModel->rowCount());
+//    QStandardItem *item = new QStandardItem();
+//    buildListId(item, m_dlvInfo->LastJsonData(),"Variables");
+//    m_varsModel->appendRow(item);
+//    qDebug() << QThread::currentThread();
+}
+
+void DlvRpcDebugger::updateState(const DebuggerState &state, const QVariant &jsonData)
+{
+    if (state.Exited) {
+        stop();
+    }
+    if (state.NextInProgress) {
+        m_asyncItem->setText("Running");
+    } else {
+        m_asyncItem->setText("Stopped");
+    }
+    m_asyncItem->removeRows(0,m_asyncItem->rowCount());
+    if (state.pCurrentThread) {
+        QString fileName = state.pCurrentThread->File;
+        int line = state.pCurrentThread->Line;
+        if (!fileName.isEmpty() && line >= 0) {
+            emit setCurrentLine(fileName,line-1);
+        }
+        QList<QStandardItem*> items;
+        items << new QStandardItem(QString("goroutine(%1)").arg(state.pCurrentThread->GoroutineID));
+        if (state.pCurrentThread->pFunction) {
+            items << new QStandardItem(QString("func=%1").arg(state.pCurrentThread->pFunction->Name));
+        }
+        items << new QStandardItem(QString("file=%1").arg(fileName));
+        items << new QStandardItem(QString("line=%1").arg(line));
+        m_asyncItem->appendRows(items);
+        qDebug() << state.pCurrentThread->pBreakpointInfo;
+    }
+//    m_asyncItem->removeRows(0,m_asyncItem->rowCount());
+//    buildMapId(m_asyncItem,jsonData,"State");
+//    if (!state.pCurrentThread.isNull()) {
+//        QString fileName = state.pCurrentThread->File;
+//        int line = state.pCurrentThread->Line;
+//        if (!fileName.isEmpty() && line >= 0) {
+//            emit setCurrentLine(fileName,line-1);
+//        }
+//    }
+    emit setExpand(LiteApi::ASYNC_MODEL,m_asyncModel->indexFromItem(m_asyncItem),true);
 }

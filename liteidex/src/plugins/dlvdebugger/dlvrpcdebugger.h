@@ -28,10 +28,7 @@
 #include "liteenvapi/liteenvapi.h"
 #include "litettyapi/litettyapi.h"
 #include "qtc_gdbmi/gdbmi.h"
-#ifdef USE_DLVCLIENT
 #include "dlvclient/dlvclient.h"
-#endif
-
 #include <QSet>
 
 class QProcess;
@@ -131,7 +128,8 @@ public slots:
     void headlessReadStdOutput();
     void headlessFinished(int);
     void headlessError(QProcess::ProcessError err);
-    void clientCommandSuccess(const QString &method, const DebuggerState &state);
+    void clientCommandSuccess(const QString &method, const DebuggerState &state, const QVariant &jsonData);
+    void updateState(const DebuggerState &state, const QVariant &jsonData);
 protected:
     void handleResponse(const QByteArray &buff);
 protected:
@@ -150,17 +148,16 @@ protected:
     QString                 m_processId;
     LiteProcess *m_process;
     LiteProcess *m_headlessProcess;
-#ifdef USE_DLVCLIENT
     DlvClient   *m_dlvClient;
-#endif
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;
     QStandardItemModel *m_watchModel;
     QStandardItemModel *m_framesModel;
     QStandardItemModel *m_libraryModel;
     QStandardItem   *m_asyncItem;
-    QStandardItem   *m_jsonItem;
-    QMap<QString,QString> m_varNameMap;
+    QStandardItem   *m_varsItem;
+    QMap<QString,QString> m_localVarsMap;
+    QMap<QString,QString> m_argsVarsMap;
     QList<QString> m_watchList;
     QMap<QString,QStandardItem*> m_nameItemMap;
     QSet<QStandardItem*> m_varChangedItemList;
@@ -177,8 +174,7 @@ protected:
     bool    m_dlvInit;
     bool    m_dlvExit;
     bool    m_headlessInitAddress;
-    bool    m_headlessMode;
-    bool    m_rpcMode;
+    void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName,QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 };
 
 #endif // DLVRPCDEBUGGER_H

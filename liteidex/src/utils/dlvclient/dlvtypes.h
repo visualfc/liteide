@@ -1023,9 +1023,10 @@ struct CommandOut : public JsonDataOut
 {
     virtual void fromMap(const QVariantMap &map)
     {
-        State.fromMap(map["State"].toMap());
+        jsonData = map["State"];
+        State.fromMap(jsonData.toMap());
     }
-
+    QVariant      jsonData;
     DebuggerState State;
 };
 
@@ -1526,7 +1527,7 @@ struct ListFunctionArgsOut : public JsonDataOut
 {
     virtual void fromMap(const QVariantMap & map)
     {
-        foreach (QVariant e, map["Variables"].toList()) {
+        foreach (QVariant e, map["Args"].toList()) {
             Variable v;
             v.fromMap(e.toMap());
             Variables.push_back(v);

@@ -621,8 +621,9 @@ void DlvClient::finishedCommandReply()
         emit commandError(code,msg);
     } else {
         CommandOut out;
-        out.fromMap(reply->response().result().toVariant().toMap());
-        emit commandSuccess(m_lastCommand.Name,out.State);
+        QVariant data = reply->response().result().toVariant();
+        out.fromMap(data.toMap());
+        emit commandSuccess(m_lastCommand.Name,out.State,data.toMap());
     }
 }
 

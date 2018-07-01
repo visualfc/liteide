@@ -51,12 +51,10 @@ bool DlvDebuggerPlugin::load(LiteApi::IApplication *app)
     if (!manager) {
         return false;
     }
-#ifdef USE_DLVCLIENT
-    DlvRpcDebugger *debug = new DlvRpcDebugger(app);
-#else
+    DlvRpcDebugger *debug_rpc = new DlvRpcDebugger(app);
     DlvDebugger *debug = new DlvDebugger(app);
-#endif
     manager->addDebugger(debug);
+    manager->addDebugger(debug_rpc);
     manager->setCurrentDebugger(debug);
     //app->optionManager()->addFactory(new DlvDebuggerOptionFactory(app,this));
     return true;

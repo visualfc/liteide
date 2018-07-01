@@ -127,7 +127,7 @@ public:
 public:
     bool isCommandBlocked() const;
 signals:
-    void commandSuccess(const QString &method, const DebuggerState &state);
+    void commandSuccess(const QString &method, const DebuggerState &state, const QVariant &jsonData);
     void commandError(int code, const QString &errorMessage);
 public slots:
     bool callCommand(const QString &cmd);

@@ -225,7 +225,7 @@ bool DlvDebugger::start(const QString &cmd, const QString &arguments)
 
     if (m_headlessMode) {
         QStringList argsList;
-        argsList << "--headless" << "--api-version=2";
+        argsList << "--headless" << "--api-version=2" << "--accept-multiclient";
         argsList << "exec" << cmd;
         if (!arguments.isEmpty()) {
             argsList << "--" << arguments;
