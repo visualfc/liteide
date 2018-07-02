@@ -170,7 +170,7 @@ void DlvRpcDebugger::appLoaded()
 
 QString DlvRpcDebugger::mimeType() const
 {
-    return QLatin1String("debugger/delve_rpc");
+    return QLatin1String("debugger/delve");
 }
 
 QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
