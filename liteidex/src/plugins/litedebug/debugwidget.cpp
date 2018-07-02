@@ -57,8 +57,9 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_tabWidget = new QTabWidget;
 
     m_asyncView = new QTreeView;
-    m_varsView = new SymbolTreeView;
-    m_watchView = new SymbolTreeView;
+    m_varsView = new SymbolTreeView(false);
+
+    m_watchView = new SymbolTreeView(false);
     m_statckView = new QTreeView;
     m_libraryView = new QTreeView;
 
@@ -158,6 +159,8 @@ static void setResizeView(QTreeView *view)
     if (model->columnCount() <= 1) {
         view->setHeaderHidden(true);
         return;
+    } else {
+        view->setHeaderHidden(false);
     }
 #if QT_VERSION >= 0x050000
     view->header()->setSectionResizeMode(0,QHeaderView::ResizeToContents);

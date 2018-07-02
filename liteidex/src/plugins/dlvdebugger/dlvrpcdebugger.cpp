@@ -88,8 +88,8 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_process = new LiteProcess(m_liteApp,this);
     m_process->setUseCtrlC(true);
 
-    m_asyncModel = new QStandardItemModel(0,2,this);
-    m_asyncItem = new QStandardItem(0,2);
+    m_asyncModel = new QStandardItemModel(0,1,this);
+    m_asyncItem = new QStandardItem;
     m_asyncModel->appendRow(m_asyncItem);
     /*
     m_asyncModel->setHeaderData(0,Qt::Horizontal,"Reason");
@@ -106,10 +106,11 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_varsModel->setHeaderData(2,Qt::Horizontal,"Value");
     m_varsModel->setHeaderData(3,Qt::Horizontal,"Address");
 
-    m_watchModel = new QStandardItemModel(0,2,this);
+    m_watchModel = new QStandardItemModel(0,4,this);
     m_watchModel->setHeaderData(0,Qt::Horizontal,"Name");
-    m_watchModel->setHeaderData(1,Qt::Horizontal,"Value");
-    //m_watchModel->setHeaderData(2,Qt::Horizontal,"Type");
+    m_watchModel->setHeaderData(1,Qt::Horizontal,"Type");
+    m_watchModel->setHeaderData(2,Qt::Horizontal,"Value");
+    m_watchModel->setHeaderData(3,Qt::Horizontal,"Address");
 
     m_framesModel = new QStandardItemModel(0,5,this);
     m_framesModel->setHeaderData(0,Qt::Horizontal,"Level");
@@ -941,6 +942,7 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
         QStandardItem *nameItem = new QStandardItem(var.Name);
         QStandardItem *typeItem = new QStandardItem(var.Type);
         QStandardItem *valueItem = new QStandardItem(var.Value);
+        valueItem->setToolTip(var.Value);
         QStandardItem *addrItem = new QStandardItem(QString("0x%1").arg(var.Addr,0,16));
         QString checkName = parentName+"."+var.Name;
         // slice []
