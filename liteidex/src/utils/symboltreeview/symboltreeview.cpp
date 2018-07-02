@@ -192,8 +192,7 @@ void SymbolTreeView::saveState(SymbolTreeState *state)
 void SymbolTreeView::loadState(QAbstractItemModel *model,SymbolTreeState *state)
 {
     //load state
-    //this->expandToDepth(0);
-
+    //this->expandToDepth(0)
     QListIterator<QStringList> ie(state->expands);
     while (ie.hasNext()) {
         QStringList expandPath = ie.next();
@@ -207,9 +206,12 @@ void SymbolTreeView::loadState(QAbstractItemModel *model,SymbolTreeState *state)
     if (curIndex.isValid()) {
         this->setCurrentIndex(curIndex);
     }
-
-    verticalScrollBar()->setValue(state->vbar);
-    horizontalScrollBar()->setValue(state->hbar);
+    if (state->vbar != -1) {
+        verticalScrollBar()->setValue(state->vbar);
+    }
+    if (state->hbar != -1) {
+        horizontalScrollBar()->setValue(state->hbar);
+    }
 }
 
 void SymbolTreeView::keyPressEvent(QKeyEvent *event)

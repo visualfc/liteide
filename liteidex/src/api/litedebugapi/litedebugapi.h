@@ -92,6 +92,8 @@ signals:
     void setFrameLine(const QString &fileName, int line);
     void watchCreated(const QString &watch,const QString &name);
     void watchRemoved(const QString &watch);
+    void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
+    void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
 };
 
 class IDebuggerManager : public IManager

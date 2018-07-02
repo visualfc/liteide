@@ -57,8 +57,8 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_tabWidget = new QTabWidget;
 
     m_asyncView = new QTreeView;
-    m_varsView = new QTreeView;
-    m_watchView = new QTreeView;
+    m_varsView = new SymbolTreeView;
+    m_watchView = new SymbolTreeView;
     m_statckView = new QTreeView;
     m_libraryView = new QTreeView;
 
@@ -188,6 +188,8 @@ void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
     connect(m_debugger,SIGNAL(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)),this,SLOT(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)));
     connect(m_debugger,SIGNAL(watchCreated(QString,QString)),this,SLOT(watchCreated(QString,QString)));
     connect(m_debugger,SIGNAL(watchRemoved(QString)),this,SLOT(watchRemoved(QString)));
+    connect(m_debugger,SIGNAL(beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE)),this,SLOT(beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE)));
+    connect(m_debugger,SIGNAL(endUpdateModel(LiteApi::DEBUG_MODEL_TYPE)),this,SLOT(endUpdateModel(LiteApi::DEBUG_MODEL_TYPE)));
 }
 
 void DebugWidget::expandedVarsView(QModelIndex index)
@@ -316,5 +318,23 @@ void DebugWidget::doubleClickedStack(QModelIndex index)
         return;
     }
     m_debugger->showFrame(index);
+}
+
+void DebugWidget::beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
+{
+    if (type == LiteApi::VARS_MODEL) {
+        m_varsView->saveState(&m_varsState);
+    } else if (type == LiteApi::WATCHES_MODEL) {
+        m_watchView->saveState(&m_watchState);
+    }
+}
+
+void DebugWidget::endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
+{
+    if (type == LiteApi::VARS_MODEL) {
+        m_varsView->loadState(m_varsView->model(),&m_varsState);
+    } else if (type == LiteApi::WATCHES_MODEL) {
+        m_watchView->loadState(m_watchView->model(),&m_watchState);
+    }
 }
 

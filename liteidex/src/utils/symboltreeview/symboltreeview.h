@@ -28,6 +28,9 @@
 
 struct SymbolTreeState
 {
+    SymbolTreeState() : vbar(-1),hbar(-1)
+    {
+    }
     QList<QStringList> expands;
     QStringList cur;
     int         vbar;

@@ -761,8 +761,13 @@ void DlvRpcDebugger::readStdOutput()
                         data = data.mid(2).trimmed();
                         int n = data.lastIndexOf(":");
                         if (n > 0) {
-                            items << new QStandardItem(data.left(n));
-                            items << new QStandardItem(data.mid(n+1));
+                            QString fileName = data.left(n);
+                            QString fileLine = data.mid(n+1);
+                            if (fileName.startsWith("./")) {
+                                fileName = QDir::cleanPath(m_process->workingDirectory()+"/"+fileName);
+                            }
+                            items << new QStandardItem(fileName);
+                            items << new QStandardItem(fileLine);
                             m_framesModel->appendRow(items);
                         }
                     }
@@ -897,9 +902,11 @@ void DlvRpcDebugger::updateWatch(int id)
         }
     }
     QMap<QString,QString> saveMap;
+    emit beginUpdateModel(LiteApi::WATCHES_MODEL);
     m_watchModel->removeRows(0,m_watchModel->rowCount());
     updateVariableHelper(watch,m_watchModel,0,"",0,saveMap,m_watchVarsMap);
     m_watchVarsMap.swap(saveMap);
+    emit endUpdateModel(LiteApi::WATCHES_MODEL);
 }
 
 void DlvRpcDebugger::updateVariable(int id)
@@ -908,10 +915,12 @@ void DlvRpcDebugger::updateVariable(int id)
     QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Long());
 
     QMap<QString,QString> saveMap;
+    emit beginUpdateModel(LiteApi::VARS_MODEL);
     m_varsModel->removeRows(0,m_varsModel->rowCount());
     updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_localVarsMap);
     updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
     m_localVarsMap.swap(saveMap);
+    emit endUpdateModel(LiteApi::VARS_MODEL);
 }
 
 static Variable parserRealVar(const Variable &var)

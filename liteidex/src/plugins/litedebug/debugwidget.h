@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include "litedebugapi/litedebugapi.h"
 #include "textoutput/textoutput.h"
+#include "symboltreeview/symboltreeview.h"
 
 class QTabWidget;
 class QTreeView;
@@ -59,16 +60,20 @@ public slots:
     void watchCreated(QString,QString);
     void watchRemoved(QString);
     void doubleClickedStack(QModelIndex);
+    void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
+    void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
     LiteApi::IDebugger *m_debugger;
     QTabWidget *m_tabWidget;
     QTreeView *m_asyncView;
-    QTreeView *m_varsView;
-    QTreeView *m_watchView;
+    SymbolTreeView *m_varsView;
+    SymbolTreeView *m_watchView;
     QTreeView *m_statckView;
     QTreeView *m_libraryView;
+    SymbolTreeState m_varsState;
+    SymbolTreeState m_watchState;
     TextOutput *m_debugLogEdit;
     QMenu      *m_watchMenu;
     QAction    *m_addWatchAct;
