@@ -308,9 +308,19 @@ void DlvRpcDebugger::runToLine(const QString &fileName, int line)
 
 void DlvRpcDebugger::createWatch(const QString &var)
 {
-    QString cmd = "vars "+QRegExp::escape(var);
-    m_updateCmdHistroy.push_back(cmd);
-    command_helper(cmd.toUtf8(),true);
+    m_watchNameMap.insert(var,"");
+    if (var.contains(".")) {
+        updateWatch(-1);
+        return;
+    }
+    DebuggerState state = m_dlvClient->GetState();
+    if (!state.pCurrentThread) {
+        return;
+    }
+    updateWatch(state.pCurrentThread->GoroutineID);
+//    QString cmd = "vars "+QRegExp::escape(var);
+//    m_updateCmdHistroy.push_back(cmd);
+//    command_helper(cmd.toUtf8(),true);
 }
 
 void DlvRpcDebugger::removeWatch(const QString &value)
@@ -851,22 +861,13 @@ void DlvRpcDebugger::readStdOutput()
     } else if (m_handleState.stopped()) {
         m_updateCmdList.clear();
         m_updateCmdList << "stack";// << "stack 0 -full";
-        foreach (QString s, m_watchNameMap.keys()) {
-            if (s.isEmpty()) {
-                continue;
-            }
-            m_updateCmdList << "vars "+QRegExp::escape(s);
+
+        DebuggerState state = m_dlvClient->GetState();
+        if (state.pCurrentThread) {
+            int id = state.pCurrentThread->GoroutineID;
+            updateVariable(id);
+            updateWatch(id);
         }
-
-        int id = -1;//m_dlvClient->GetState().pCurrentThread->GoroutineID;
-        QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Long());
-        QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Long());
-
-        QMap<QString,QString> saveMap;
-        m_varsModel->removeRows(0,m_varsModel->rowCount());
-        updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_localVarsMap);
-        updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
-        m_localVarsMap.swap(saveMap);
     }
 
     m_handleState.clear();
@@ -877,6 +878,40 @@ void DlvRpcDebugger::readStdOutput()
             command(cmd.trimmed().toUtf8());
         }
     }
+}
+
+void DlvRpcDebugger::updateWatch(int id)
+{
+    QList<Variable> watch;
+    foreach (QString s, m_watchNameMap.keys()) {
+        if (s.isEmpty()) {
+            continue;
+        }
+        int gid = id;
+        if (s.contains(".")) {
+            gid = -1;
+        }
+        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::Long());
+        if (pt) {
+            watch.push_back(*pt);
+        }
+    }
+    QMap<QString,QString> saveMap;
+    m_watchModel->removeRows(0,m_watchModel->rowCount());
+    updateVariableHelper(watch,m_watchModel,0,"",0,saveMap,m_watchVarsMap);
+    m_watchVarsMap.swap(saveMap);
+}
+
+void DlvRpcDebugger::updateVariable(int id)
+{
+    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Long());
+    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Long());
+
+    QMap<QString,QString> saveMap;
+    m_varsModel->removeRows(0,m_varsModel->rowCount());
+    updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_localVarsMap);
+    updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
+    m_localVarsMap.swap(saveMap);
 }
 
 static Variable parserRealVar(const Variable &var)

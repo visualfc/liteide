@@ -117,6 +117,9 @@ public:
 protected:
     void insertBreakPointHelper(const QString &fileName, int line, bool force);
     void command_helper(const QByteArray &cmd, bool force);
+    void updateWatch(int id);
+    void updateVariable(int id);
+    void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 public slots:
     void appLoaded();
     void readStdError();
@@ -157,7 +160,7 @@ protected:
     QStandardItem   *m_asyncItem;
     QStandardItem   *m_varsItem;
     QMap<QString,QString> m_localVarsMap;
-    QMap<QString,QString> m_argsVarsMap;
+    QMap<QString,QString> m_watchVarsMap;
     QList<QString> m_watchList;
     QMap<QString,QStandardItem*> m_nameItemMap;
     QSet<QStandardItem*> m_varChangedItemList;
@@ -174,7 +177,6 @@ protected:
     bool    m_dlvInit;
     bool    m_dlvExit;
     bool    m_headlessInitAddress;
-    void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 };
 
 #endif // DLVRPCDEBUGGER_H
