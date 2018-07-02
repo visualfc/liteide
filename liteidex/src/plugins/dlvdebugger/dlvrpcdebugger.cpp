@@ -309,7 +309,11 @@ void DlvRpcDebugger::runToLine(const QString &fileName, int line)
 
 void DlvRpcDebugger::createWatch(const QString &var)
 {
+    if (var.isEmpty()) {
+        return;
+    }
     m_watchNameMap.insert(var,"");
+    emit watchCreated(var,var);
     if (var.contains(".")) {
         updateWatch(-1);
         return;
@@ -889,6 +893,7 @@ void DlvRpcDebugger::readStdOutput()
 void DlvRpcDebugger::updateWatch(int id)
 {
     QList<Variable> watch;
+    QList<QString> errList;
     foreach (QString s, m_watchNameMap.keys()) {
         if (s.isEmpty()) {
             continue;
@@ -900,11 +905,24 @@ void DlvRpcDebugger::updateWatch(int id)
         VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::Long());
         if (pt) {
             watch.push_back(*pt);
+        } else {
+            errList.push_back(s);
         }
     }
-    QMap<QString,QString> saveMap;
     emit beginUpdateModel(LiteApi::WATCHES_MODEL);
     m_watchModel->removeRows(0,m_watchModel->rowCount());
+    foreach (QString name, errList) {
+        QStandardItem *item = new QStandardItem(name);
+        item->setData(name,VarNameRole);
+        QStandardItem *type = new QStandardItem("not find");
+#if QT_VERSION >= 0x050000
+            type->setData(QColor(Qt::red),Qt::TextColorRole);
+#else
+            type->setData(Qt::red,Qt::TextColorRole);
+#endif
+        m_watchModel->appendRow(QList<QStandardItem*>() << item << type);
+    }
+    QMap<QString,QString> saveMap;
     updateVariableHelper(watch,m_watchModel,0,"",0,saveMap,m_watchVarsMap);
     m_watchVarsMap.swap(saveMap);
     emit endUpdateModel(LiteApi::WATCHES_MODEL);
@@ -940,6 +958,7 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
     foreach (Variable var, vars) {
         index++;
         QStandardItem *nameItem = new QStandardItem(var.Name);
+        nameItem->setData(var.Name,VarNameRole);
         QStandardItem *typeItem = new QStandardItem(var.Type);
         QStandardItem *valueItem = new QStandardItem(var.Value);
         valueItem->setToolTip(var.Value);
