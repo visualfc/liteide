@@ -407,6 +407,11 @@ void LiteDebug::startDebug(const QString &cmd, const QString &args, const QStrin
         }
     }
 
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        m_startDebugFile = editor->filePath();
+    }
+
     m_debugger->setInitBreakTable(m_fileBpMap);
     m_debugger->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_debugger->setWorkingDirectory(work);

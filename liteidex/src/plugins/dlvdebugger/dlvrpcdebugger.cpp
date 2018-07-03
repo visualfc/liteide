@@ -231,6 +231,7 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
 
     QStringList argsList;
     argsList << "--headless" << "--api-version=2" << "--accept-multiclient";
+    //argsList << "--log";
     argsList << "exec" << cmd;
     if (!arguments.isEmpty()) {
         argsList << "--" << arguments;
