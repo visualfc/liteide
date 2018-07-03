@@ -198,6 +198,11 @@ struct LoadConfig
     int MaxArrayValues;
     int MaxStructFields;
 
+    static LoadConfig Max()
+    {
+        static LoadConfig lc(true,64,128,128,-1);
+        return lc;
+    }
     static LoadConfig Long()
     {
         static LoadConfig lc(true,1,64,64,-1);

@@ -75,9 +75,10 @@ protected:
     QTreeView *m_libraryView;
     QTreeView *m_threadsView;
     QTreeView *m_regsView;
-    QTreeView *m_goroutinesView;
+    SymbolTreeView *m_goroutinesView;
     SymbolTreeState m_varsState;
     SymbolTreeState m_watchState;
+    SymbolTreeState m_goroutinesState;
     TextOutput *m_debugLogEdit;
     QMenu      *m_watchMenu;
     QAction    *m_addWatchAct;

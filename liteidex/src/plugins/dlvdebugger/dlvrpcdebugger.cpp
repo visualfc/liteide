@@ -120,6 +120,16 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_framesModel->setHeaderData(4,Qt::Horizontal,"Line");
 
     m_goroutinesModel = new QStandardItemModel(0,2,this);
+    m_goroutinesModel->setHeaderData(0,Qt::Horizontal,"Goroutine");
+    m_goroutinesModel->setHeaderData(1,Qt::Horizontal,"Value");
+
+    m_threadsModel = new QStandardItemModel(0,6,this);
+    m_threadsModel->setHeaderData(0,Qt::Horizontal,"Thread");
+    m_threadsModel->setHeaderData(1,Qt::Horizontal,"Goroutine");
+    m_threadsModel->setHeaderData(2,Qt::Horizontal,"PC");
+    m_threadsModel->setHeaderData(3,Qt::Horizontal,"Function");
+    m_threadsModel->setHeaderData(4,Qt::Horizontal,"File");
+    m_threadsModel->setHeaderData(5,Qt::Horizontal,"Line");
     //m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
     //m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");`
    // m_asynJsonItem = new QStandardItem(0,2);
@@ -185,6 +195,8 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_framesModel;
     } else if (type == LiteApi::GOROUTINES_MODEL) {
         return m_goroutinesModel;
+    } else if (type == LiteApi::THREADS_MODEL) {
+        return m_threadsModel;
     }
     return 0;
 }
@@ -597,6 +609,7 @@ void DlvRpcDebugger::clear()
     m_locationBkMap.clear();
     m_cmdList.clear();
     m_framesModel->removeRows(0,m_framesModel->rowCount());
+    m_threadsModel->removeRows(0,m_threadsModel->rowCount());
     m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     m_varsModel->removeRows(0,m_varsModel->rowCount());
     m_watchModel->removeRows(0,m_watchModel->rowCount());
@@ -878,6 +891,7 @@ void DlvRpcDebugger::readStdOutput()
             int id = state.pCurrentThread->GoroutineID;
             updateVariable(id);
             updateWatch(id);
+            updateThreads(state.Threads);
             updateGoroutines();
         }
     }
@@ -904,7 +918,7 @@ void DlvRpcDebugger::updateWatch(int id)
         if (s.contains(".")) {
             gid = -1;
         }
-        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::Long());
+        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::Max());
         if (pt) {
             watch.push_back(*pt);
         } else {
@@ -926,22 +940,51 @@ void DlvRpcDebugger::updateWatch(int id)
     }
     QMap<QString,QString> saveMap;
     updateVariableHelper(watch,m_watchModel,0,"",0,saveMap,m_watchVarsMap);
-    m_watchVarsMap.swap(saveMap);
+    m_watchVarsMap = saveMap;
     emit endUpdateModel(LiteApi::WATCHES_MODEL);
 }
 
 void DlvRpcDebugger::updateVariable(int id)
 {
-    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Long());
-    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Long());
+    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Max());
+    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Max());
 
     QMap<QString,QString> saveMap;
     emit beginUpdateModel(LiteApi::VARS_MODEL);
     m_varsModel->removeRows(0,m_varsModel->rowCount());
     updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_localVarsMap);
     updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
-    m_localVarsMap.swap(saveMap);
+    m_localVarsMap = saveMap;
     emit endUpdateModel(LiteApi::VARS_MODEL);
+}
+
+static bool threadIdThan(const Thread &s1, const Thread &s2)
+{
+    if (s1.GoroutineID != s2.GoroutineID) {
+        return s1.GoroutineID > s2.GoroutineID;
+    }
+    return s1.ID < s2.ID;
+}
+
+void DlvRpcDebugger::updateThreads(const QList<Thread> &threads)
+{
+    QList<Thread> ths = threads;
+    qSort(ths.begin(),ths.end(),threadIdThan);
+    emit beginUpdateModel(LiteApi::THREADS_MODEL);
+    m_threadsModel->removeRows(0,m_threadsModel->rowCount());
+    foreach (Thread t, ths) {
+        QStandardItem *item = new QStandardItem(QString("%1").arg(t.ID));
+        QStandardItem *gitem = new QStandardItem(QString("%1").arg(t.GoroutineID));
+        QStandardItem *file = new QStandardItem(t.File);
+        QStandardItem *line = new QStandardItem(QString("%1").arg(t.Line));
+        QStandardItem *pc = new QStandardItem(QString("0x%1").arg(t.PC,0,16));
+        QStandardItem *func = new QStandardItem;
+        if (t.pFunction) {
+            func->setText(t.pFunction->Name);
+        }
+        m_threadsModel->appendRow(QList<QStandardItem*>() << item << gitem << pc << func << file << line);
+    }
+    emit endUpdateModel(LiteApi::THREADS_MODEL);
 }
 
 static void appendLocationItem(QStandardItem *parent, const QString &name, const Location &loc)
@@ -957,6 +1000,7 @@ static void appendLocationItem(QStandardItem *parent, const QString &name, const
 void DlvRpcDebugger::updateGoroutines()
 {
     QList<Goroutine> lst = m_dlvClient->ListGoroutines();
+    emit beginUpdateModel(LiteApi::GOROUTINES_MODEL);
     m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     foreach (Goroutine g, lst) {
         //qDebug() << g.ID << g.ThreadId << g.CurrentLoc.Line << g.GoStatementLoc.Line << g.UserCurrentLoc.Line;
@@ -968,9 +1012,8 @@ void DlvRpcDebugger::updateGoroutines()
         //appendLocationItem(item,"UserCurrentLoc",g.UserCurrentLoc);
         appendLocationItem(item,"GoStatementLoc",g.GoStatementLoc);
         m_goroutinesModel->appendRow(item);
-        QModelIndex index = m_goroutinesModel->indexFromItem(item);
-        emit setExpand(LiteApi::GOROUTINES_MODEL,index,true);
     }
+    emit endUpdateModel(LiteApi::GOROUTINES_MODEL);
 }
 
 static Variable parserRealVar(const Variable &var)

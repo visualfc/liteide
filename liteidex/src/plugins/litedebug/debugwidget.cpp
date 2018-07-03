@@ -58,11 +58,10 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 
     m_asyncView = new QTreeView;
     m_varsView = new SymbolTreeView(false);
-
     m_watchView = new SymbolTreeView(false);
     m_statckView = new QTreeView;
     m_libraryView = new QTreeView;
-    m_goroutinesView = new QTreeView;
+    m_goroutinesView = new SymbolTreeView(false);
     m_threadsView = new QTreeView;
     m_regsView = new QTreeView;
 
@@ -357,6 +356,8 @@ void DebugWidget::beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
         m_varsView->saveState(&m_varsState);
     } else if (type == LiteApi::WATCHES_MODEL) {
         m_watchView->saveState(&m_watchState);
+    } else if (type == LiteApi::GOROUTINES_MODEL) {
+        m_goroutinesView->saveState(&m_goroutinesState);
     }
 }
 
@@ -366,6 +367,8 @@ void DebugWidget::endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
         m_varsView->loadState(m_varsView->model(),&m_varsState);
     } else if (type == LiteApi::WATCHES_MODEL) {
         m_watchView->loadState(m_watchView->model(),&m_watchState);
+    } else if (type == LiteApi::GOROUTINES_MODEL) {
+        m_goroutinesView->loadState(m_goroutinesView->model(),&m_goroutinesState);
     }
 }
 
