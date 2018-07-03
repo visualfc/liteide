@@ -1044,10 +1044,14 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
             nameItem->setText(QString("[%1]").arg(index));
         }
         QString rtype = var.Type;
+        int rlen = var.Len;
+        int rcap = var.Cap;
         QList<Variable> children = var.Children;
         if (var.Type.startsWith("*")) {
             Variable rv = parserRealVar(var);
             rtype = rv.Type;
+            rlen = rv.Len;
+            rcap = rv.Cap;
             children = rv.Children;
             if (var.Addr != rv.Addr) {
                 addrItem->setText(QString("0x%1 => 0x%2").arg(var.Addr,0,16).arg(rv.Addr,0,16));
@@ -1057,12 +1061,17 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
         int cflag = 1;
         if (rtype.startsWith("[]")) {
             cflag = 2;
-            //valueItem->setText(QString("(len:%1, cap:%2)").arg(var.Len).arg(var.Cap));
+            typeItem->setText(QString("%1 <len:%2,cap:%3>").arg(var.Type).arg(rlen).arg(rcap));
+            //valueItem->setText(QString("(len:%1,cap:%2)").arg(var.Len).arg(var.Cap));
         } else if (rtype.startsWith("map[")) {
             cflag = 3;
-            //valueItem->setText(QString("(len:%1)").arg(var.Len));
+            typeItem->setText(QString("%1 <len:%2>").arg(var.Type).arg(rlen));
+        } else if (rtype == "string") {
+            cflag = 4;
+            typeItem->setText(QString("%1 <len:%2>").arg(var.Type).arg(rlen));
         } else if (!children.isEmpty()) {
-            //valueItem->setText(QString("(len:%1)").arg(var.Len));
+            cflag = 5;
+            typeItem->setText(QString("%1 <size:%2>").arg(var.Type).arg(rlen));
         }
 
         if (!children.isEmpty()) {
