@@ -41,6 +41,7 @@ public:
     explicit DebugWidget(LiteApi::IApplication *app,QObject *parent = 0);
     virtual ~DebugWidget();
     virtual QWidget *widget();
+    void updateView(QTreeView *view, LiteApi::IDebugger *debug, LiteApi::DEBUG_MODEL_TYPE type, const QString &title);
 signals:
     void debugCmdInput();
 public slots:
@@ -72,6 +73,9 @@ protected:
     SymbolTreeView *m_watchView;
     QTreeView *m_statckView;
     QTreeView *m_libraryView;
+    QTreeView *m_threadsView;
+    QTreeView *m_regsView;
+    QTreeView *m_goroutinesView;
     SymbolTreeState m_varsState;
     SymbolTreeState m_watchState;
     TextOutput *m_debugLogEdit;

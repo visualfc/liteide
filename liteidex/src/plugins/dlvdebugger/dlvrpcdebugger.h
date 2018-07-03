@@ -119,6 +119,7 @@ protected:
     void command_helper(const QByteArray &cmd, bool force);
     void updateWatch(int id);
     void updateVariable(int id);
+    void updateGoroutines();
     void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 public slots:
     void appLoaded();
@@ -156,6 +157,7 @@ protected:
     QStandardItemModel *m_varsModel;
     QStandardItemModel *m_watchModel;
     QStandardItemModel *m_framesModel;
+    QStandardItemModel *m_goroutinesModel;
     QStandardItemModel *m_libraryModel;
     QStandardItem   *m_asyncItem;
     QStandardItem   *m_varsItem;

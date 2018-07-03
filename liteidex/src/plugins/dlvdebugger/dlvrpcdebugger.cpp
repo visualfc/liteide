@@ -184,7 +184,7 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
     }else if (type == LiteApi::CALLSTACK_MODEL) {
         return m_framesModel;
     } else if (type == LiteApi::LIBRARY_MODEL) {
-        return m_libraryModel;
+        return 0;
     }
     return 0;
 }
@@ -878,6 +878,7 @@ void DlvRpcDebugger::readStdOutput()
             int id = state.pCurrentThread->GoroutineID;
             updateVariable(id);
             updateWatch(id);
+            updateGoroutines();
         }
     }
 
@@ -941,6 +942,14 @@ void DlvRpcDebugger::updateVariable(int id)
     updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
     m_localVarsMap.swap(saveMap);
     emit endUpdateModel(LiteApi::VARS_MODEL);
+}
+
+void DlvRpcDebugger::updateGoroutines()
+{
+    QList<Goroutine> lst = m_dlvClient->ListGoroutines();
+    foreach (Goroutine g, lst) {
+        qDebug() << g.ID << g.ThreadId << g.CurrentLoc.Line << g.GoStatementLoc.Line << g.UserCurrentLoc.Line;
+    }
 }
 
 static Variable parserRealVar(const Variable &var)

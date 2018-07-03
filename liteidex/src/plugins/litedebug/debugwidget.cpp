@@ -62,9 +62,11 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_watchView = new SymbolTreeView(false);
     m_statckView = new QTreeView;
     m_libraryView = new QTreeView;
+    m_goroutinesView = new QTreeView;
+    m_threadsView = new QTreeView;
+    m_regsView = new QTreeView;
 
     m_asyncView->setEditTriggers(0);
-
     m_varsView->setEditTriggers(0);
     m_varsView->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -78,6 +80,9 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_statckView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
     m_libraryView->setEditTriggers(0);
+    m_threadsView->setEditTriggers(0);
+    m_goroutinesView->setEditTriggers(0);
+    m_regsView->setEditTriggers(0);
 
     m_debugLogEdit = new TextOutput(m_liteApp);
     m_debugLogEdit->setReadOnly(false);
@@ -85,12 +90,6 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_debugLogEdit->setMaximumBlockCount(10000);
     m_debugLogEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
 
-    m_tabWidget->addTab(m_asyncView,tr("Async Record"));
-    m_tabWidget->addTab(m_varsView,tr("Variables"));
-    m_tabWidget->addTab(m_watchView,tr("Watch"));
-    m_tabWidget->addTab(m_statckView,tr("Call Stack"));
-    m_tabWidget->addTab(m_libraryView,tr("Libraries"));
-    m_tabWidget->addTab(m_debugLogEdit,tr("Console"));
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -121,6 +120,15 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 
 DebugWidget::~DebugWidget()
 {
+    delete m_asyncView;
+    delete m_varsView;
+    delete m_watchView;
+    delete m_statckView;
+    delete m_threadsView;
+    delete m_goroutinesView;
+    delete m_regsView;
+    delete m_libraryView;
+
     if (m_widget) {
         delete m_widget;
     }
@@ -169,6 +177,16 @@ static void setResizeView(QTreeView *view)
 #endif
 }
 
+void DebugWidget::updateView(QTreeView *view, LiteApi::IDebugger *debug, LiteApi::DEBUG_MODEL_TYPE type, const QString &title)
+{
+    QAbstractItemModel *model = debug->debugModel(type);
+    view->setModel(model);
+    setResizeView(view);
+    if (model != 0) {
+        m_tabWidget->addTab(view,title);
+    }
+}
+
 void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
 {
     if (m_debugger == debug) {
@@ -178,16 +196,17 @@ void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
     if (!m_debugger) {
         return;
     }
-    m_asyncView->setModel(debug->debugModel(LiteApi::ASYNC_MODEL));
-    m_varsView->setModel(debug->debugModel(LiteApi::VARS_MODEL));
-    m_watchView->setModel(debug->debugModel(LiteApi::WATCHES_MODEL));
-    m_statckView->setModel(debug->debugModel(LiteApi::CALLSTACK_MODEL));
-    m_libraryView->setModel(debug->debugModel(LiteApi::LIBRARY_MODEL));
-    setResizeView(m_asyncView);
-    setResizeView(m_varsView);
-    setResizeView(m_watchView);
-    setResizeView(m_statckView);
-    setResizeView(m_libraryView);
+    m_tabWidget->clear();
+    updateView(m_asyncView,debug,LiteApi::ASYNC_MODEL,tr("Async Record"));
+    updateView(m_varsView,debug,LiteApi::VARS_MODEL,tr("Variables"));
+    updateView(m_watchView,debug,LiteApi::WATCHES_MODEL,tr("Watch"));
+    updateView(m_statckView,debug,LiteApi::CALLSTACK_MODEL,tr("Call Stack"));
+    updateView(m_threadsView,debug,LiteApi::THREADS_MODEL,tr("Threads"));
+    updateView(m_goroutinesView,debug,LiteApi::GOROUTINES_MODEL,tr("Goroutines"));
+    updateView(m_regsView,debug,LiteApi::REGS_MODEL,tr("Registers"));
+    updateView(m_libraryView,debug,LiteApi::LIBRARY_MODEL,tr("Libraries"));
+    m_tabWidget->addTab(m_debugLogEdit,tr("Console"));
+
     connect(m_debugger,SIGNAL(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)),this,SLOT(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)));
     connect(m_debugger,SIGNAL(watchCreated(QString,QString)),this,SLOT(watchCreated(QString,QString)));
     connect(m_debugger,SIGNAL(watchRemoved(QString)),this,SLOT(watchRemoved(QString)));
@@ -223,6 +242,15 @@ void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &i
         break;
     case LiteApi::CALLSTACK_MODEL:
         view = m_statckView;
+        break;
+    case LiteApi::THREADS_MODEL:
+        view = m_threadsView;
+        break;
+    case LiteApi::GOROUTINES_MODEL:
+        view = m_goroutinesView;
+        break;
+    case LiteApi::REGS_MODEL:
+        view = m_regsView;
         break;
     case LiteApi::LIBRARY_MODEL:
         view = m_libraryView;
