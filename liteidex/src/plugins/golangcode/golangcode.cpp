@@ -636,7 +636,11 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     QStandardItem *root= m_completer->findRoot(m_preWord);
     foreach (QByteArray bs, all) {
         QStringList word = QString::fromUtf8(bs,bs.size()).split(",,");
-        if (word.count() != 3) {
+        //nsf/gocode count=3
+        //mdempsky/gocode count = 4
+        // ("var", "s4", "string", "")
+        // ("func", "Errorf", "func(format string, a ...interface{}) error", "fmt")
+        if (word.count() < 3) {
             continue;
         }
         if (word.at(0) == "PANIC") {
@@ -708,11 +712,12 @@ void GolangCode::gocodeImportFinished(int code, QProcess::ExitStatus)
     }
     QByteArray data = m_gocodeImportProcess->readAllStandardOutput();
     QList<QString> lines = QString::fromUtf8(data).split('\n');
+
     QStringList importList;
     m_extraPkgListMap.clear();
     foreach (QString line, lines) {
         QStringList ar = line.split(",,");
-        if (ar.count() != 3) {
+        if (ar.count() < 3) {
             continue;
         }
         if (ar.at(0) == "PANIC") {
