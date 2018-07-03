@@ -48,7 +48,7 @@ if defined %GOPATH (
 go build -ldflags "-s" -o %GOPATH%/bin/gotools.exe -v github.com/visualfc/gotools 
 if ERRORLEVEL 1 goto go_fail
 
-go build -ldflags "-s" -o %GOPATH%/bin/gocode.exe -v github.com/nsf/gocode
+go build -ldflags "-s" -o %GOPATH%/bin/gocode.exe -v github.com/mdempsky/gocode
 if ERRORLEVEL 1 goto go_fail
 
 go build -ldflags "-s" -o %GOPATH%/bin/gomodifytags.exe -v github.com/fatih/gomodifytags

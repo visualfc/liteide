@@ -62,7 +62,7 @@ if [ $? -ge 1 ]; then
 	exit 1
 fi
 
-go install -ldflags "-s" -v github.com/nsf/gocode
+go install -ldflags "-s" -v github.com/mdempsky/gocode
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'
