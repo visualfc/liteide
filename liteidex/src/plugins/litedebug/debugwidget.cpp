@@ -78,6 +78,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 #else
     m_statckView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
+
     m_libraryView->setEditTriggers(0);
     m_threadsView->setEditTriggers(0);
     m_goroutinesView->setEditTriggers(0);

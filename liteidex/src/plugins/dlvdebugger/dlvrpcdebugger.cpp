@@ -130,6 +130,10 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_threadsModel->setHeaderData(3,Qt::Horizontal,"Function");
     m_threadsModel->setHeaderData(4,Qt::Horizontal,"File");
     m_threadsModel->setHeaderData(5,Qt::Horizontal,"Line");
+
+    m_registersModel = new QStandardItemModel(0,2,this);
+    m_registersModel->setHeaderData(0,Qt::Horizontal,"Name");
+    m_registersModel->setHeaderData(1,Qt::Horizontal,"Value");
     //m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
     //m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");`
    // m_asynJsonItem = new QStandardItem(0,2);
@@ -197,6 +201,8 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_goroutinesModel;
     } else if (type == LiteApi::THREADS_MODEL) {
         return m_threadsModel;
+    } else if (type == LiteApi::REGS_MODEL) {
+        return m_registersModel;
     }
     return 0;
 }
@@ -599,7 +605,7 @@ void DlvRpcDebugger::clear()
     m_readDataBusy = false;
     m_writeDataBusy = false;
     m_handleState.clear();
-    m_localVarsMap.clear();
+    m_checkVarsMap.clear();
     m_watchNameMap.clear();
     m_watchList.clear();
     m_updateCmdHistroy.clear();
@@ -816,8 +822,8 @@ void DlvRpcDebugger::readStdOutput()
                 QStandardItem *nameItem = new QStandardItem(name);
                 QStandardItem *valueItem = new QStandardItem(value);
                 valueItem->setToolTip(valueToolTip(value));
-                QMap<QString,QString>::iterator it = m_localVarsMap.find(name);
-                if (it != m_localVarsMap.end() && it.value() != value) {
+                QMap<QString,QString>::iterator it = m_checkVarsMap.find(name);
+                if (it != m_checkVarsMap.end() && it.value() != value) {
 #if QT_VERSION >= 0x050000
         valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
 #else
@@ -826,7 +832,7 @@ void DlvRpcDebugger::readStdOutput()
                 }
                 m_varsModel->appendRow(QList<QStandardItem*>() << nameItem << valueItem);
             }
-            m_localVarsMap = nameMap;
+            m_checkVarsMap = nameMap;
         } else if (cmdHistroy.startsWith("vars ")) {
             foreach (QString data, QString::fromUtf8(m_inbuffer).split("\n",QString::SkipEmptyParts)) {
                 int n = data.indexOf("=");
@@ -893,6 +899,7 @@ void DlvRpcDebugger::readStdOutput()
             updateWatch(id);
             updateThreads(state.Threads);
             updateGoroutines();
+            updateRegisters(state.pCurrentThread->ID,true);
         }
     }
 
@@ -939,8 +946,8 @@ void DlvRpcDebugger::updateWatch(int id)
         m_watchModel->appendRow(QList<QStandardItem*>() << item << type);
     }
     QMap<QString,QString> saveMap;
-    updateVariableHelper(watch,m_watchModel,0,"",0,saveMap,m_watchVarsMap);
-    m_watchVarsMap = saveMap;
+    updateVariableHelper(watch,m_watchModel,0,"",0,saveMap,m_checkWatchMap);
+    m_checkWatchMap = saveMap;
     emit endUpdateModel(LiteApi::WATCHES_MODEL);
 }
 
@@ -952,9 +959,9 @@ void DlvRpcDebugger::updateVariable(int id)
     QMap<QString,QString> saveMap;
     emit beginUpdateModel(LiteApi::VARS_MODEL);
     m_varsModel->removeRows(0,m_varsModel->rowCount());
-    updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_localVarsMap);
-    updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_localVarsMap);
-    m_localVarsMap = saveMap;
+    updateVariableHelper(args,m_varsModel,0,"",0,saveMap,m_checkVarsMap);
+    updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_checkVarsMap);
+    m_checkVarsMap = saveMap;
     emit endUpdateModel(LiteApi::VARS_MODEL);
 }
 
@@ -1014,6 +1021,30 @@ void DlvRpcDebugger::updateGoroutines()
         m_goroutinesModel->appendRow(item);
     }
     emit endUpdateModel(LiteApi::GOROUTINES_MODEL);
+}
+
+void DlvRpcDebugger::updateRegisters(int threadid, bool includeFp)
+{
+    QList<Register> regs = m_dlvClient->ListRegisters(threadid,includeFp);
+    emit beginUpdateModel(LiteApi::REGS_MODEL);
+    m_registersModel->removeRows(0,m_registersModel->rowCount());
+    QMap<QString,QString> saveMap;
+    foreach (Register r, regs) {
+        QStandardItem *name = new QStandardItem(r.Name);
+        QStandardItem *valueItem = new QStandardItem(r.Value);
+        QMap<QString,QString>::const_iterator it = m_checkRegsMap.find(r.Name);
+        if (it != m_checkRegsMap.end() && it.value() != r.Value) {
+#if QT_VERSION >= 0x050000
+            valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+#else
+            valueItem->setData(Qt::red,Qt::TextColorRole);
+#endif
+        }
+        saveMap.insert(r.Name,r.Value);
+        m_registersModel->appendRow(QList<QStandardItem*>() << name << valueItem);
+    }
+    m_checkRegsMap = saveMap;
+    emit endUpdateModel(LiteApi::REGS_MODEL);
 }
 
 static Variable parserRealVar(const Variable &var)

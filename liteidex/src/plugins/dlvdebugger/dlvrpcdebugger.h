@@ -121,6 +121,7 @@ protected:
     void updateVariable(int id);
     void updateThreads(const QList<Thread> &ths);
     void updateGoroutines();
+    void updateRegisters(int threadid, bool includeFp);
     void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 public slots:
     void appLoaded();
@@ -160,10 +161,12 @@ protected:
     QStandardItemModel *m_framesModel;
     QStandardItemModel *m_threadsModel;
     QStandardItemModel *m_goroutinesModel;
+    QStandardItemModel *m_registersModel;
     QStandardItem   *m_asyncItem;
     QStandardItem   *m_varsItem;
-    QMap<QString,QString> m_localVarsMap;
-    QMap<QString,QString> m_watchVarsMap;
+    QMap<QString,QString> m_checkVarsMap;
+    QMap<QString,QString> m_checkWatchMap;
+    QMap<QString,QString> m_checkRegsMap;
     QList<QString> m_watchList;
     QMap<QString,QStandardItem*> m_nameItemMap;
     QSet<QStandardItem*> m_varChangedItemList;
