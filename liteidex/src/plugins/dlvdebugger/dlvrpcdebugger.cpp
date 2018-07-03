@@ -119,7 +119,7 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_framesModel->setHeaderData(3,Qt::Horizontal,"File");
     m_framesModel->setHeaderData(4,Qt::Horizontal,"Line");
 
-    m_libraryModel = new QStandardItemModel(0,2,this);
+    m_goroutinesModel = new QStandardItemModel(0,2,this);
     //m_libraryModel->setHeaderData(0,Qt::Horizontal,"Id");
     //m_libraryModel->setHeaderData(1,Qt::Horizontal,"Thread Groups");`
    // m_asynJsonItem = new QStandardItem(0,2);
@@ -183,8 +183,8 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_watchModel;
     }else if (type == LiteApi::CALLSTACK_MODEL) {
         return m_framesModel;
-    } else if (type == LiteApi::LIBRARY_MODEL) {
-        return 0;
+    } else if (type == LiteApi::GOROUTINES_MODEL) {
+        return m_goroutinesModel;
     }
     return 0;
 }
@@ -597,7 +597,7 @@ void DlvRpcDebugger::clear()
     m_locationBkMap.clear();
     m_cmdList.clear();
     m_framesModel->removeRows(0,m_framesModel->rowCount());
-    m_libraryModel->removeRows(0,m_libraryModel->rowCount());
+    m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     m_varsModel->removeRows(0,m_varsModel->rowCount());
     m_watchModel->removeRows(0,m_watchModel->rowCount());
 }
@@ -944,11 +944,32 @@ void DlvRpcDebugger::updateVariable(int id)
     emit endUpdateModel(LiteApi::VARS_MODEL);
 }
 
+static void appendLocationItem(QStandardItem *parent, const QString &name, const Location &loc)
+{
+    QString text = QString("%1:%2").arg(loc.File).arg(loc.Line);
+    if (loc.pFunction) {
+        text += QString(" %1").arg(loc.pFunction->Name);
+    }
+    text += QString(" (0x%1)").arg(loc.PC,0,16);
+    parent->appendRow(QList<QStandardItem*>() << new QStandardItem(name) << new QStandardItem(text));
+}
+
 void DlvRpcDebugger::updateGoroutines()
 {
     QList<Goroutine> lst = m_dlvClient->ListGoroutines();
+    m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     foreach (Goroutine g, lst) {
-        qDebug() << g.ID << g.ThreadId << g.CurrentLoc.Line << g.GoStatementLoc.Line << g.UserCurrentLoc.Line;
+        //qDebug() << g.ID << g.ThreadId << g.CurrentLoc.Line << g.GoStatementLoc.Line << g.UserCurrentLoc.Line;
+        QStandardItem *item = new QStandardItem(QString("Goroutine %1").arg(g.ID));
+        if (g.ThreadId != 0) {
+            item->appendRow(QList<QStandardItem*>() << new QStandardItem("ThreadID") << new QStandardItem(QString("%1").arg(g.ThreadId)));
+        }
+        appendLocationItem(item,"CurrentLoc",g.CurrentLoc);
+        //appendLocationItem(item,"UserCurrentLoc",g.UserCurrentLoc);
+        appendLocationItem(item,"GoStatementLoc",g.GoStatementLoc);
+        m_goroutinesModel->appendRow(item);
+        QModelIndex index = m_goroutinesModel->indexFromItem(item);
+        emit setExpand(LiteApi::GOROUTINES_MODEL,index,true);
     }
 }
 

@@ -394,7 +394,7 @@ struct Location
     }
     void fromMap(const QVariantMap &map)
     {
-        PC = map["pc"].value<quint16>();
+        PC = map["pc"].value<quint64>();
         File = map["file"].toString();
         Line = map["line"].toInt();
         QVariantMap mfn = map["function"].toMap();

@@ -158,7 +158,6 @@ protected:
     QStandardItemModel *m_watchModel;
     QStandardItemModel *m_framesModel;
     QStandardItemModel *m_goroutinesModel;
-    QStandardItemModel *m_libraryModel;
     QStandardItem   *m_asyncItem;
     QStandardItem   *m_varsItem;
     QMap<QString,QString> m_localVarsMap;
