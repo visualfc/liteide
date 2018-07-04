@@ -17,7 +17,10 @@
 	* support threads/gorountines/registers model
 * GolangCode
 	* support <https://github.com/mdempsky/gocode>
-	
+* QuickOpen
+	* add dly filter editor for optimize many files search
+	* fix quick open symbol action
+
 ### 2018.04.23 Ver X33.3
 * LiteIDE
 	* support import jump to package source file
