@@ -623,58 +623,73 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
 <context>
     <name>DebugWidget</name>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="87"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="122"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="321"/>
+        <source>Add Watch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="221"/>
         <source>Async Record</source>
         <oldsource>AsyncRecord</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="88"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="222"/>
         <source>Variables</source>
         <translation>Variablen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="89"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="223"/>
         <source>Watch</source>
         <translation>Überwachen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="90"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="224"/>
         <source>Call Stack</source>
         <oldsource>CallStack</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="91"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="225"/>
+        <source>Threads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="226"/>
+        <source>Goroutines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="227"/>
+        <source>Registers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="228"/>
         <source>Libraries</source>
         <oldsource>Library</oldsource>
         <translation>Bibliotheken</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="92"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="229"/>
         <source>Console</source>
         <translation>Konsole</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="101"/>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="266"/>
-        <source>Add Global Watch</source>
-        <translation>Globale Überwachung hinzufügen</translation>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="321"/>
+        <source>Watch expression (e.g. buf main.var os.Stdout):</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="103"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="124"/>
         <source>Remove Watch</source>
         <translation>Überwachung entfernen</translation>
     </message>
     <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="104"/>
+        <location filename="src/plugins/litedebug/debugwidget.cpp" line="125"/>
         <source>Remove All Watches</source>
         <translation>Alle Überwachungen entfernen</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/litedebug/debugwidget.cpp" line="266"/>
-        <source>Watch expression (e.g. main.var os.Stdout):</source>
-        <translation type="unfinished">Beobachte Ausdruck (Bsp: main.var os.Stdout):</translation>
     </message>
 </context>
 <context>
@@ -733,7 +748,7 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
         <translation>In neues Fenster verschieben</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="229"/>
+        <location filename="src/liteapp/editormanager.cpp" line="230"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Gehe weiter</translation>
@@ -809,33 +824,33 @@ LiteIDE ist eine einfache, quelloffene, plattformunabhängige IDE.</translation>
         <translation type="unfinished">Terminal hier öffnen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="220"/>
+        <location filename="src/liteapp/editormanager.cpp" line="221"/>
         <source>Navigate Backward</source>
         <translation>Gehe zurück</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="250"/>
+        <location filename="src/liteapp/editormanager.cpp" line="251"/>
         <source>Edit Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="421"/>
+        <location filename="src/liteapp/editormanager.cpp" line="422"/>
         <source>Save changes to %1?</source>
         <translation>Änderung an %1 speichern?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="422"/>
+        <location filename="src/liteapp/editormanager.cpp" line="423"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Ungesicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="519"/>
+        <location filename="src/liteapp/editormanager.cpp" line="520"/>
         <source>All Files (*)</source>
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="521"/>
+        <location filename="src/liteapp/editormanager.cpp" line="522"/>
         <source>Save As</source>
         <translation>Speichern unter</translation>
     </message>
@@ -2807,7 +2822,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="811"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="816"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">Achtung: Pkg nicht gefunden, bitte eingeben:</translation>
     </message>
@@ -2843,32 +2858,32 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="765"/>
+        <location filename="src/liteapp/liteapp.cpp" line="756"/>
         <source>Close File</source>
         <translation type="unfinished">Datei schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="768"/>
+        <location filename="src/liteapp/liteapp.cpp" line="759"/>
         <source>Close All Files</source>
         <translation type="unfinished">Alle Dateien schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="778"/>
+        <location filename="src/liteapp/liteapp.cpp" line="769"/>
         <source>Save File</source>
         <translation type="unfinished">Datei speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="781"/>
+        <location filename="src/liteapp/liteapp.cpp" line="772"/>
         <source>Save File As...</source>
         <translation type="unfinished">Datei speichern unter...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="784"/>
+        <location filename="src/liteapp/liteapp.cpp" line="775"/>
         <source>Save All Files</source>
         <translation type="unfinished">Alle Dateien speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="771"/>
+        <location filename="src/liteapp/liteapp.cpp" line="762"/>
         <source>Open Project</source>
         <translation>Projekt öffnen</translation>
     </message>
@@ -2878,68 +2893,68 @@ Success: %2.</oldsource>
         <translation type="unfinished">Optionen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="733"/>
         <source>New...</source>
         <translation type="unfinished">Neu...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="745"/>
+        <location filename="src/liteapp/liteapp.cpp" line="736"/>
         <source>Open File...</source>
         <translation type="unfinished">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="748"/>
+        <location filename="src/liteapp/liteapp.cpp" line="739"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Ordner öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="751"/>
+        <location filename="src/liteapp/liteapp.cpp" line="742"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Ordner in neuem Fenster öffnen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="756"/>
+        <location filename="src/liteapp/liteapp.cpp" line="747"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Ordner hinzufügen...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="759"/>
+        <location filename="src/liteapp/liteapp.cpp" line="750"/>
         <source>New Window</source>
         <translation type="unfinished">Neues Fenster</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="762"/>
+        <location filename="src/liteapp/liteapp.cpp" line="753"/>
         <source>Close Window</source>
         <translation type="unfinished">Fenster schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="773"/>
+        <location filename="src/liteapp/liteapp.cpp" line="764"/>
         <source>Save Project</source>
         <translation>Projekt speichern</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="775"/>
+        <location filename="src/liteapp/liteapp.cpp" line="766"/>
         <source>Close Project</source>
         <translation type="unfinished">Projekt schließen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="787"/>
+        <location filename="src/liteapp/liteapp.cpp" line="778"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="793"/>
+        <location filename="src/liteapp/liteapp.cpp" line="784"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="797"/>
+        <location filename="src/liteapp/liteapp.cpp" line="788"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Über LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="803"/>
+        <location filename="src/liteapp/liteapp.cpp" line="794"/>
         <source>About Plugins</source>
         <translation type="unfinished">Über Plugins</translation>
     </message>
@@ -2968,25 +2983,25 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="324"/>
+        <location filename="src/liteapp/liteappoption.ui" line="300"/>
         <source>Reload files in session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="336"/>
+        <location filename="src/liteapp/liteappoption.ui" line="312"/>
         <source>Recent Files</source>
         <oldsource>Recent File</oldsource>
         <translation type="unfinished">Zuletzt verwendete Dateien</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="342"/>
-        <location filename="src/liteapp/liteappoption.ui" line="381"/>
+        <location filename="src/liteapp/liteappoption.ui" line="318"/>
+        <location filename="src/liteapp/liteappoption.ui" line="357"/>
         <source>Max Count:</source>
         <oldsource>Max Recent:</oldsource>
         <translation>Maximale Anzahl:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="252"/>
+        <location filename="src/liteapp/liteappoption.ui" line="229"/>
         <source>Monitoring files for modifications</source>
         <translation type="unfinished">Überwache Dateiveränderungen</translation>
     </message>
@@ -3028,135 +3043,120 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.ui" line="184"/>
-        <source>Experiment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="190"/>
-        <source>Enable use of dynamic library gopher tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="197"/>
-        <source>Gopher Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.ui" line="207"/>
         <source>Automatically save documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="213"/>
+        <location filename="src/liteapp/liteappoption.ui" line="190"/>
         <source>Automatically save documents when application is idle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="223"/>
+        <location filename="src/liteapp/liteappoption.ui" line="200"/>
         <source>sec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="258"/>
+        <location filename="src/liteapp/liteappoption.ui" line="235"/>
         <source>Auto reload or close editor buffer,if underlying file is modified/deleted.</source>
         <oldsource>Auto reload editor buffer from disk file,if underlying file is modified/deleted.</oldsource>
         <translation type="unfinished">Automatisches Neuladen oder Schließen des Editor-Fensters,
 wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="287"/>
-        <location filename="src/liteapp/liteappoption.ui" line="293"/>
+        <location filename="src/liteapp/liteappoption.ui" line="263"/>
+        <location filename="src/liteapp/liteappoption.ui" line="269"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="349"/>
+        <location filename="src/liteapp/liteappoption.ui" line="325"/>
         <source>0-99</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="375"/>
+        <location filename="src/liteapp/liteappoption.ui" line="351"/>
         <source>Editor Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="388"/>
+        <location filename="src/liteapp/liteappoption.ui" line="364"/>
         <source>10-999</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="431"/>
+        <location filename="src/liteapp/liteappoption.ui" line="407"/>
         <source>Display</source>
         <translation type="unfinished">Anzeige</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="437"/>
+        <location filename="src/liteapp/liteappoption.ui" line="413"/>
         <source>Display [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="443"/>
+        <location filename="src/liteapp/liteappoption.ui" line="419"/>
         <source>Show splash screen on startup</source>
         <translation type="unfinished">Splash-Screen beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="450"/>
+        <location filename="src/liteapp/liteappoption.ui" line="426"/>
         <source>Show welcome page on startup</source>
         <translation type="unfinished">Willkommen-Seite beim Start zeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="460"/>
+        <location filename="src/liteapp/liteappoption.ui" line="436"/>
         <source>Editor tab [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="466"/>
+        <location filename="src/liteapp/liteappoption.ui" line="442"/>
         <source>Show close buttons on each editor tab</source>
         <translation type="unfinished">&quot;Schließen&quot;-Knopf bei jedem Editor-Tab anzeigen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="473"/>
+        <location filename="src/liteapp/liteappoption.ui" line="449"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="483"/>
+        <location filename="src/liteapp/liteappoption.ui" line="459"/>
         <source>Toolbar Icon Size [*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="556"/>
+        <location filename="src/liteapp/liteappoption.ui" line="532"/>
         <source>Keyboard</source>
         <translation>Tastatur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="562"/>
+        <location filename="src/liteapp/liteappoption.ui" line="538"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>Formatierung: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="574"/>
+        <location filename="src/liteapp/liteappoption.ui" line="550"/>
         <source>Hide standard commands</source>
         <translation type="unfinished">Standard-Kommandos verbergen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="581"/>
+        <location filename="src/liteapp/liteappoption.ui" line="557"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="588"/>
+        <location filename="src/liteapp/liteappoption.ui" line="564"/>
         <source>Reset All</source>
         <translation type="unfinished">Alles zurücksetzen</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="608"/>
+        <location filename="src/liteapp/liteappoption.ui" line="584"/>
         <source>Import...</source>
         <translation type="unfinished">Importieren...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="615"/>
+        <location filename="src/liteapp/liteappoption.ui" line="591"/>
         <source>Export...</source>
         <translation type="unfinished">Exportieren...</translation>
     </message>
@@ -3171,7 +3171,7 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished">Theme:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="299"/>
+        <location filename="src/liteapp/liteappoption.ui" line="275"/>
         <source>Reload session on startup</source>
         <oldsource>Auto load last session</oldsource>
         <translation type="unfinished">Automatisch letzte Session laden</translation>
@@ -3210,16 +3210,6 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <location filename="src/liteapp/liteappoption.cpp" line="177"/>
         <source>Standard</source>
         <translation>Standard</translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="191"/>
-        <source>libgopher is valid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="193"/>
-        <source>libgopher is invalid!</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/liteapp/liteappoption.cpp" line="493"/>
@@ -5010,12 +5000,12 @@ Soll es ersetzt werden?</translation>
 <context>
     <name>QuickOpenFiles</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="71"/>
+        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="72"/>
         <source>Go to File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="76"/>
+        <location filename="src/plugins/quickopen/quickopenfiles.cpp" line="77"/>
         <source>Type &apos;?&apos; to get help on the actions you can take from here</source>
         <translation type="unfinished"></translation>
     </message>

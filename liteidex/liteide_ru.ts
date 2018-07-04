@@ -520,10 +520,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Консоль</translation>
     </message>
     <message>
-        <source>Add Global Watch</source>
-        <translation>Добавить в глобальное наблюдения</translation>
-    </message>
-    <message>
         <source>Remove Watch</source>
         <translation>Удалить из наблюдения</translation>
     </message>
@@ -532,8 +528,24 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Удалить все наблюдаемые</translation>
     </message>
     <message>
-        <source>Watch expression (e.g. main.var os.Stdout):</source>
-        <translation>Наблюдаемое выражение (например main.var os.Stdout):</translation>
+        <source>Add Watch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goroutines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Watch expression (e.g. buf main.var os.Stdout):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2590,26 +2602,6 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>10-999</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Experiment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable use of dynamic library gopher tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gopher Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>libgopher is valid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>libgopher is invalid!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
