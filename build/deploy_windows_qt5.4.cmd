@@ -17,6 +17,8 @@ windeployqt --dir liteide/bin liteide/lib/liteide/plugins/liteeditor.dll
 
 windeployqt --dir liteide/bin liteide/lib/liteide/plugins/welcome.dll
 
+windeployqt --dir liteide/bin liteide/lib/liteide/plugins/dlvdebugger.dll
+
 windeployqt --dir liteide/bin liteide/lib/liteide/plugins/litebuild.dll
 
 windeployqt --dir liteide/bin liteide/bin/liteapp.dll

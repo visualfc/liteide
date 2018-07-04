@@ -17,6 +17,8 @@ windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plug
 
 windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/litebuild.dll
 
+windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/lib/liteide/plugins/dlvdebugger.dll
+
 windeployqt --no-angle --no-opengl-sw --dir liteide/bin liteide/bin/liteapp.dll
 
 
