@@ -36,6 +36,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QInputDialog>
+#include <QItemDelegate>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -46,6 +47,23 @@
      #define new DEBUG_NEW
 #endif
 //lite_memory_check_end
+
+class WatchDelegate : public QItemDelegate
+{
+public:
+    WatchDelegate(QObject *parent) : QItemDelegate(parent)
+    {
+    }
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const
+    {
+        if (index.column() == 0) {
+            return QItemDelegate::createEditor(parent,option,index);
+        }
+        return 0;
+    }
+};
 
 
 DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
@@ -84,6 +102,9 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_goroutinesView->setEditTriggers(0);
     m_regsView->setEditTriggers(0);
 
+    m_watchView->setEditTriggers(QAbstractItemView::DoubleClicked);
+    m_watchView->setItemDelegate(new WatchDelegate(this));
+
     m_debugLogEdit = new TextOutput(m_liteApp);
     m_debugLogEdit->setReadOnly(false);
     m_debugLogEdit->setFilterTermColor(true);
@@ -98,7 +119,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_widget->setLayout(layout);
 
     m_watchMenu = new QMenu(m_widget);
-    m_addWatchAct = new QAction(tr("Add Global Watch"),this);
+    m_addWatchAct = new QAction(tr("Add Watch"),this);
     //m_addLocalWatchAct = new QAction(tr("Add Local Watch"),this);
     m_removeWatchAct = new QAction(tr("Remove Watch"),this);
     m_removeAllWatchAct = new QAction(tr("Remove All Watches"),this);
@@ -277,7 +298,8 @@ void DebugWidget::loadDebugInfo(const QString &id)
 {
     m_watchMap.clear();
     QString key = QString("litedebug_watch/%1").arg(id);
-    m_debugger->setInitWatchList(m_liteApp->settings()->value(key).toStringList());
+    QStringList all = m_liteApp->settings()->value(key).toStringList();
+    m_debugger->setInitWatchList(all);
 }
 
 void DebugWidget::saveDebugInfo(const QString &id)
@@ -296,7 +318,7 @@ void DebugWidget::saveDebugInfo(const QString &id)
 
 void DebugWidget::addWatch()
 {
-    QString text = QInputDialog::getText(this->m_widget,tr("Add Global Watch"),tr("Watch expression (e.g. main.var os.Stdout):"));
+    QString text = QInputDialog::getText(this->m_widget,tr("Add Watch"),tr("Watch expression (e.g. buf main.var os.Stdout):"));
     if (text.isEmpty()) {
         return;
     }
@@ -372,4 +394,3 @@ void DebugWidget::endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
         m_goroutinesView->loadState(m_goroutinesView->model(),&m_goroutinesState);
     }
 }
-

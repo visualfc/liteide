@@ -136,6 +136,7 @@ public slots:
     void headlessError(QProcess::ProcessError err);
     void clientCommandSuccess(const QString &method, const DebuggerState &state, const QVariant &jsonData);
     void updateState(const DebuggerState &state, const QVariant &jsonData);
+    void watchItemChanged(QStandardItem* item);
 protected:
     void handleResponse(const QByteArray &buff);
 protected:

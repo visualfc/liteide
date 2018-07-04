@@ -111,6 +111,7 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_watchModel->setHeaderData(1,Qt::Horizontal,"Type");
     m_watchModel->setHeaderData(2,Qt::Horizontal,"Value");
     m_watchModel->setHeaderData(3,Qt::Horizontal,"Address");
+    connect(m_watchModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(watchItemChanged(QStandardItem*)));
 
     m_framesModel = new QStandardItemModel(0,5,this);
     m_framesModel->setHeaderData(0,Qt::Horizontal,"Level");
@@ -331,7 +332,11 @@ void DlvRpcDebugger::createWatch(const QString &var)
     if (var.isEmpty()) {
         return;
     }
-    m_watchNameMap.insert(var,"");
+    if (m_watchList.contains(var)) {
+        return;
+    }
+    //m_watchNameMap.insert(var,"");
+    m_watchList.push_back(var);
     emit watchCreated(var,var);
     if (var.contains(".")) {
         updateWatch(-1);
@@ -349,7 +354,8 @@ void DlvRpcDebugger::createWatch(const QString &var)
 
 void DlvRpcDebugger::removeWatch(const QString &value)
 {
-    m_watchNameMap.remove(value);
+    //m_watchNameMap.remove(value);
+    m_watchList.removeAll(value);
     for (int i = 0; i < m_watchModel->rowCount(); i++) {
         QStandardItem *nameItem = m_watchModel->item(i,0);
         if (nameItem->text() == value) {
@@ -363,6 +369,7 @@ void DlvRpcDebugger::removeWatch(const QString &value)
 void DlvRpcDebugger::removeAllWatch()
 {
     m_watchNameMap.clear();
+    m_watchList.clear();
     m_watchModel->removeRows(0,m_watchModel->rowCount());
 }
 
@@ -405,8 +412,9 @@ void DlvRpcDebugger::setInitBreakTable(const QMultiMap<QString,int> &bks)
 
 void DlvRpcDebugger::setInitWatchList(const QStringList &names)
 {
+    m_watchList = names;
     foreach (QString name, names) {
-        m_watchNameMap.insert(name,"");
+        emit watchCreated(name,name);
     }
 }
 
@@ -917,7 +925,7 @@ void DlvRpcDebugger::updateWatch(int id)
 {
     QList<Variable> watch;
     QList<QString> errList;
-    foreach (QString s, m_watchNameMap.keys()) {
+    foreach (QString s, m_watchList) {
         if (s.isEmpty()) {
             continue;
         }
@@ -1273,19 +1281,9 @@ void DlvRpcDebugger::headlessError(QProcess::ProcessError err)
     cleanup();
 }
 
-void DlvRpcDebugger::clientCommandSuccess(const QString &method, const DebuggerState &state, const QVariant &jsonData)
+void DlvRpcDebugger::clientCommandSuccess(const QString &/*method*/, const DebuggerState &/*state*/, const QVariant &/*jsonData*/)
 {
-//    updateState(state,jsonData);
-//    if (state.Exited) {
-//        return;
-//    }
 
-//    QList<Variable> vars = m_dlvInfo->ListLocalVariables(EvalScope(-1),LoadConfig::Long());
-//    m_varsModel->removeRows(0,m_varsModel->rowCount());
-//    QStandardItem *item = new QStandardItem();
-//    buildListId(item, m_dlvInfo->LastJsonData(),"Variables");
-//    m_varsModel->appendRow(item);
-//    qDebug() << QThread::currentThread();
 }
 
 void DlvRpcDebugger::updateState(const DebuggerState &state, const QVariant &jsonData)
@@ -1324,4 +1322,31 @@ void DlvRpcDebugger::updateState(const DebuggerState &state, const QVariant &jso
 //        }
 //    }
     emit setExpand(LiteApi::ASYNC_MODEL,m_asyncModel->indexFromItem(m_asyncItem),true);
+}
+
+void DlvRpcDebugger::watchItemChanged(QStandardItem *item)
+{
+    if (!item || item->column() != 0) {
+        return;
+    }
+    QString oldName = item->data(VarNameRole).toString();
+    QString newName = item->text();
+    if (oldName == newName) {
+        return;
+    }
+    emit watchRemoved(oldName);
+    if (!m_watchList.contains(newName)) {
+        int i = m_watchList.indexOf(oldName);
+        if (i >= 0) {
+            m_watchList.replace(i,newName);
+        }
+        emit watchCreated(newName,newName);
+    } else {
+        m_watchList.removeAll(oldName);
+    }
+    DebuggerState state = m_dlvClient->GetState();
+    if (!state.pCurrentThread) {
+        return;
+    }
+    updateWatch(state.pCurrentThread->GoroutineID);
 }
