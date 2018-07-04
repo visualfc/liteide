@@ -52,7 +52,7 @@ public:
         m_info->setId("plugin/LiteDebug");
         m_info->setName("LiteDebug");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X33.3");
+        m_info->setVer("X33.4");
         m_info->setInfo("Core Debug Manager");
         m_info->appendDepend("plugin/litebuild");
         m_info->appendDepend("plugin/litefind");

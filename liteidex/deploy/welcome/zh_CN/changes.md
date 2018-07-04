@@ -3,6 +3,21 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.07.04 Ver X33.4
+* LiteIDE
+	* update gocode for mdempsky/gocode support go1.11
+	* update DlvDebugger plugin for Delve detail information
+* LiteDebug
+	* add threads/goroutines/registers view
+	* watch view support double clicked change and update
+* DlvDebugger
+	* add dlv rcp-mode for get more info
+	* variable and watch support detail information
+	* watch support local/package variable
+	* support threads/gorountines/registers model
+* GolangCode
+	* support <https://github.com/mdempsky/gocode>
+	
 ### 2018.04.23 Ver X33.3
 * LiteIDE
 	* support import jump to package source file

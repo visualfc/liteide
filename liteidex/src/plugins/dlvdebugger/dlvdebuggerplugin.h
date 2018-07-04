@@ -50,7 +50,7 @@ public:
         m_info->setId("plugin/DlvDebugger");
         m_info->setName("DlvDebugger");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X32.2");
+        m_info->setVer("X33.4");
         m_info->setInfo("Core Delve Debugger");
         m_info->setMustLoad(true);
     }
