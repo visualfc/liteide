@@ -1110,7 +1110,9 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
             typeItem->setText(QString("%1 <len:%2>").arg(var.Type).arg(rlen));
         } else if (!children.isEmpty()) {
             cflag = 5;
-            typeItem->setText(QString("%1 <size:%2>").arg(var.Type).arg(rlen));
+            if (rlen > 0) {
+                typeItem->setText(QString("%1 <size:%2>").arg(var.Type).arg(rlen));
+            }
         }
 
         if (!children.isEmpty()) {
