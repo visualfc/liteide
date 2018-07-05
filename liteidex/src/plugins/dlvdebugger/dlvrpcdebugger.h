@@ -116,6 +116,7 @@ public:
     virtual void showFrame(QModelIndex index);
 protected:
     void insertBreakPointHelper(const QString &fileName, int line, bool force);
+    void removeBreakPointHelper(const QString &fileName, int line, bool force);
     void command_helper(const QByteArray &cmd, bool force);
     void updateWatch(int id);
     void updateVariable(int id);
