@@ -26,6 +26,7 @@ xcopy %QTDIR%\bin\icuuc51.dll liteide\bin /y
 xcopy %QTDIR%\bin\libwinpthread-1.dll liteide\bin /y
 xcopy %QTDIR%\bin\libgcc_s_dw2-1.dll liteide\bin /y
 xcopy %QTDIR%\bin\libstdc++-6.dll liteide\bin /y
+xcopy %QTDIR%\bin\Qt5Network.dll liteide\bin /y
 
 goto end
 

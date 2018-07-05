@@ -933,7 +933,7 @@ void DlvRpcDebugger::updateWatch(int id)
         if (s.contains(".")) {
             gid = -1;
         }
-        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::Max());
+        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::CustomeLong(16));
         if (pt) {
             watch.push_back(*pt);
         } else {
@@ -961,8 +961,8 @@ void DlvRpcDebugger::updateWatch(int id)
 
 void DlvRpcDebugger::updateVariable(int id)
 {
-    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Max());
-    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Max());
+    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::CustomeLong(16));
+    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::CustomeLong(16));
 
     QMap<QString,QString> saveMap;
     emit beginUpdateModel(LiteApi::VARS_MODEL);
@@ -1110,7 +1110,9 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
             typeItem->setText(QString("%1 <len:%2>").arg(var.Type).arg(rlen));
         } else if (!children.isEmpty()) {
             cflag = 5;
-            typeItem->setText(QString("%1 <size:%2>").arg(var.Type).arg(rlen));
+            if (rlen > 0) {
+                typeItem->setText(QString("%1 <size:%2>").arg(var.Type).arg(rlen));
+            }
         }
 
         if (!children.isEmpty()) {

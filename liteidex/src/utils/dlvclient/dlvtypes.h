@@ -198,9 +198,9 @@ struct LoadConfig
     int MaxArrayValues;
     int MaxStructFields;
 
-    static LoadConfig Max()
+    static LoadConfig CustomeLong(int recurse = 16)
     {
-        static LoadConfig lc(true,64,128,128,-1);
+        static LoadConfig lc(true,recurse,128,128,-1);
         return lc;
     }
     static LoadConfig Long()
