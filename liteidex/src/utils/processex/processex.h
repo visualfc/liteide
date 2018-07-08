@@ -39,7 +39,8 @@ public:
     void stop(int ms);
     void stopAndWait(int termMs, int finishMs);
     void startEx(const QString &cmd, const QString &args);
-    static bool startDetachedEx(const QString& cmd, const QStringList &args);
+    static bool startDetachedExAndHide(const QString& cmd, const QStringList &args);
+    static bool startDetachedEx(const QString &cmd, const QStringList &args, const QString &workDir);
 public:
     void setUserData(int id, const QVariant &data);
     QVariant userData(int id) const;

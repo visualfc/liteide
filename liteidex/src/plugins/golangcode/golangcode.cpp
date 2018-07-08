@@ -326,7 +326,7 @@ GolangCode::~GolangCode()
     delete m_gocodeImportProcess;
     g_gocodeInstCount--;
     if (g_gocodeInstCount == 0 && m_closeOnExit && !m_gocodeCmd.isEmpty()) {
-        ProcessEx::startDetachedEx(m_gocodeCmd,QStringList() << "close");
+        ProcessEx::startDetachedExAndHide(m_gocodeCmd,QStringList() << "close");
     }
 }
 

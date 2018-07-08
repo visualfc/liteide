@@ -30,6 +30,9 @@
 
 #ifdef Q_OS_WIN
 #include <windows.h>
+#include <shellapi.h>
+#endif
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -39,8 +42,6 @@
      #define new DEBUG_NEW
 #endif
 //lite_memory_check_end
-#endif
-
 
 
 QString ProcessEx::exitStatusText(int code, QProcess::ExitStatus status)
@@ -197,12 +198,21 @@ void Process::startEx(const QString &cmd, const QString &args)
 #endif
 }
 
-bool Process::startDetachedEx(const QString &cmd, const QStringList &args)
+bool Process::startDetachedExAndHide(const QString &cmd, const QStringList &args)
 {
 #ifdef Q_OS_WIN
     return (intptr_t)ShellExecuteW(NULL, NULL, (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), NULL, SW_HIDE) > 32;
 #else
     return QProcess::startDetached(cmd, args);
+#endif
+}
+
+bool Process::startDetachedEx(const QString &cmd, const QStringList &args, const QString &workDir)
+{
+#ifdef Q_OS_WIN
+    return (intptr_t)ShellExecuteW(NULL, L"open", (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), (LPCWSTR)workDir.toStdWString().data(), SW_SHOW) > 32;
+#else
+    return QProcess::startDetached(cmd, args, workDir);
 #endif
 }
 

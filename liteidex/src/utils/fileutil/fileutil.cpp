@@ -33,6 +33,7 @@
 #ifdef WIN32
 #include <windows.h>
 #include <shlobj.h>
+#include <shellapi.h>
 #endif
 
 //lite_memory_check_begin
@@ -528,6 +529,15 @@ void FileUtil::openInExplorer(const QString &path)
     }
 }
 
+static bool startDetachedEx(const QString &cmd, const QStringList &args, const QString &workDir)
+{
+#ifdef Q_OS_WIN
+    return (intptr_t)ShellExecuteW(NULL, L"open", (LPCWSTR)cmd.toStdWString().data(), (LPCWSTR)args.join(" ").toStdWString().data(), (LPCWSTR)workDir.toStdWString().data(), SW_SHOW) > 32;
+#else
+    return QProcess::startDetached(cmd, args, workDir);
+#endif
+}
+
 void FileUtil::openInShell(LiteApi::IApplication *app, const QString &file)
 {
     QFileInfo info(file);
@@ -573,6 +583,7 @@ void FileUtil::openInShell(LiteApi::IApplication *app, const QString &file)
         path += "/";
     }
 #endif
-    QProcess::startDetached(cmd,args,path);
+    //QProcess::startDetached(cmd,args,path);
+    startDetachedEx(cmd,args,path);
 }
 
