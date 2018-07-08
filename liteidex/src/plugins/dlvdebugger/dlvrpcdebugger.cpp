@@ -319,9 +319,9 @@ void DlvRpcDebugger::runToLine(const QString &fileName, int line)
 {
     bool find = findBreakPoint(fileName,line);
     if (!find) {
-        insertBreakPoint(fileName,line);
-        command("continue");
-        removeBreakPoint(fileName,line);
+        insertBreakPointHelper(fileName,line,true);
+        command_helper("continue",true);
+        removeBreakPointHelper(fileName,line,true);
     } else {
         command("continue");
     }
@@ -441,6 +441,11 @@ void DlvRpcDebugger::insertBreakPointHelper(const QString &fileName, int line, b
 
 void DlvRpcDebugger::removeBreakPoint(const QString &fileName, int line)
 {
+    removeBreakPointHelper(fileName,line,false);
+}
+
+void DlvRpcDebugger::removeBreakPointHelper(const QString &fileName, int line, bool force)
+{
     line++;
     QString location = QString("%1:%2").arg(fileName).arg(line);
     QString id = m_locationBkMap.value(location);
@@ -451,7 +456,7 @@ void DlvRpcDebugger::removeBreakPoint(const QString &fileName, int line)
     QStringList args;
     args << "clear";
     args << id;
-    command_helper(args.join(" ").toUtf8(),false);
+    command_helper(args.join(" ").toUtf8(),force);
 }
 
 bool DlvRpcDebugger::findBreakPoint(const QString &fileName, int line)
