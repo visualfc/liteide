@@ -242,7 +242,7 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
     //m_checkFuncDecl = false;
 
     if (m_dlvFilePath.isEmpty()) {
-        m_liteApp->appendLog("DlvRpcDebugger","dlv was not found on system PATH (hint: is Delve installed?)",true);
+        m_liteApp->appendLog("DlvRpcDebugger","dlv was not found on system PATH (hint: is Delve installed? \"go get -u github.com/derekparker/delve/cmd/dlv\")",true);
         return false;
     }
 
