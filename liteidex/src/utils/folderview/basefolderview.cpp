@@ -23,7 +23,6 @@
 
 #include "basefoldeview.h"
 #include "liteenvapi/liteenvapi.h"
-#include "litebuildapi/litebuildapi.h"
 #include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
 #include "folderdialog.h"
