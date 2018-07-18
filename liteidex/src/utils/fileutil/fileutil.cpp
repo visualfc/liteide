@@ -359,7 +359,7 @@ bool GoExecute::exec(const QString &workPath, const QString &target, const QStri
 #endif
 }
 
-QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, bool bLiteAppPriority)
+QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, const QProcessEnvironment env, bool bLiteAppPriority)
 {
     if (bLiteAppPriority) {
         QString find = FileUtil::findExecute(app->applicationPath()+"/"+bin);
@@ -367,7 +367,6 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, bo
             return find;
         }
     }
-    QProcessEnvironment env = LiteApi::getGoEnvironment(app);
 #ifdef Q_OS_WIN
     QString sep = ";";
 #else
@@ -412,14 +411,14 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, bo
             return find;
         }
     }
-    return FileUtil::lookupLiteBin(bin,app);
+    return FileUtil::lookupLiteBin(bin,app,env);
 }
 
-QString FileUtil::lookupLiteBin(const QString &bin, LiteApi::IApplication *app)
+QString FileUtil::lookupLiteBin(const QString &bin, LiteApi::IApplication *app, const QProcessEnvironment env)
 {
     QString find = FileUtil::findExecute(app->applicationPath()+"/"+bin);
     if (find.isEmpty()) {
-        find = FileUtil::lookPath(bin,LiteApi::getGoEnvironment(app),true);
+        find = FileUtil::lookPath(bin,env,true);
     }
     return find;
 }

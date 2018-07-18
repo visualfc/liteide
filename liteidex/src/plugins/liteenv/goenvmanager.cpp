@@ -121,9 +121,9 @@ bool GoEnvManager::hasCustomGOPATH(const QString &buildPath) const
 
 void GoEnvManager::updateGoEnv()
 {
-    m_gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
-    m_gotools = LiteApi::getGotools(m_liteApp);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    m_gotools = LiteApi::getGotools(m_liteApp);
+    m_gocmd = FileUtil::lookupGoBin("go",m_liteApp,env,false);
     m_goroot = env.value("GOROOT");
 #ifdef Q_OS_WIN
     QString sep = ";";

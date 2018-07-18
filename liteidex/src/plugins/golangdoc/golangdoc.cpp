@@ -180,7 +180,7 @@ void GolangDoc::loadEnv()
 //    if (!LiteApi::hasGoEnv(env)) {
 //        return;
 //    }
-    m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
+    m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,env,false);
 
     m_findProcess->setEnvironment(env.toStringList());
     m_godocProcess->setEnvironment(env.toStringList());
@@ -461,7 +461,8 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
         return;
     }
     if (m_godocCmd.isEmpty()) {
-        m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,false);
+        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+        m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,env,false);
     }
     if (m_godocCmd.isEmpty()) {
         m_liteApp->appendLog("GolangDoc",QString("not lookup godoc in PATH"),true);

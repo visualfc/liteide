@@ -379,7 +379,8 @@ bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, b
 {
     m_process->stopAndWait(100,2000);
     m_process->setWorkingDirectory(workDir);
-    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,env,false);
     if (gocmd.isEmpty()) {
         return false;
     }
@@ -612,11 +613,11 @@ void LiteBuild::fmctxGoTool()
         return;
     }
 
-    QString cmd = FileUtil::lookupGoBin("go",m_liteApp,false);
 
     QString args = act->data().toString();
     QMap<QString,QString> env = buildEnvMap(build,m_fmctxInfo.filePath());
     QProcessEnvironment sysenv = LiteApi::getGoEnvironment(m_liteApp);
+    QString cmd = FileUtil::lookupGoBin("go",m_liteApp,sysenv,false);
     args = this->envToValue(args,env,sysenv);
 
     m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
@@ -716,7 +717,7 @@ void LiteBuild::currentEnvChanged(LiteApi::IEnv*)
         return;
     }
 
-    QString go = FileUtil::lookupGoBin("go",m_liteApp,false);
+    QString go = FileUtil::lookupGoBin("go",m_liteApp,env,false);
     QString goroot = env.value("GOROOT");
     QString goarch = env.value("GOARCH");
     QString goos = env.value("GOOS");
@@ -1540,9 +1541,9 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
     }
 #else
     if (cmd.contains(" ")) {
-        m_process->start("\""+cmd+"\"");
+        m_process->start("\""+cmd+"\"");//,QIODevice::ReadWrite|QIODevice::Unbuffered);
     } else {
-        m_process->start(cmd+" "+args);
+        m_process->start(cmd+" "+args);//,QIODevice::ReadWrite|QIODevice::Unbuffered);
     }
 #endif
 }
@@ -1704,7 +1705,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
 //    }
     QString shell;
     if (ba->cmd() == "$(GO)") {
-        shell = FileUtil::lookupGoBin(cmd,m_liteApp,false);
+        shell = FileUtil::lookupGoBin(cmd,m_liteApp,sysenv,false);
     } else {
         if (cmd.startsWith("\"") && cmd.endsWith("\"")) {
             cmd = cmd.mid(1,cmd.length()-2).trimmed();

@@ -463,9 +463,9 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 //        return;
 //    }
     m_liteApp->appendLog("GolangCode","go environment changed");
-    m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    m_gobinCmd = FileUtil::lookupGoBin("go",m_liteApp,env,false);
 
-    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,true);
+    m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,env,true);
     if (m_gocodeCmd.isEmpty()) {
          m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
     } else {

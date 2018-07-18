@@ -180,7 +180,7 @@ void PackageBrowser::currentEnvChanged(LiteApi::IEnv */*env*/)
 void PackageBrowser::reloadAll()
 {
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,env,false);
     if (!gocmd.isEmpty()) {
         m_liteApp->appendLog("GolangPackage","Found go bin at "+QDir::toNativeSeparators(gocmd));
     } else {

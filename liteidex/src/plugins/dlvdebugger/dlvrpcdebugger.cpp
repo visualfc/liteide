@@ -233,7 +233,7 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
         m_runtimeFilePath = QFileInfo(QDir(goroot),"src/pkg/runtime/").path();
     }
 
-    QString dlv = FileUtil::lookupGoBin("dlv",m_liteApp,true);
+    QString dlv = FileUtil::lookupGoBin("dlv",m_liteApp,env,true);
     if (dlv.isEmpty()) {
         dlv = FileUtil::lookPath("dlv",env,false);
     }

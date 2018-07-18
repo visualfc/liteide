@@ -1059,7 +1059,8 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
     QString cmd;
     QString cmdName;
 
-    QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,env,true);
 
     if (!guruFilePath.isEmpty()) {
         cmd = guruFilePath;
@@ -1123,7 +1124,8 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
     QString cmd;
     QString cmdName;
 
-    QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,true);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,env,true);
 
     if (!guruFilePath.isEmpty()) {
         cmd = guruFilePath;
@@ -1268,12 +1270,12 @@ void GolangEdit::execGoModifyTags(const QString &args)
     if (args.isEmpty()) {
         return;
     }
-    QString cmd = FileUtil::lookupGoBin("gomodifytags",m_liteApp,true);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString cmd = FileUtil::lookupGoBin("gomodifytags",m_liteApp,env,true);
     if (cmd.isEmpty()) {
          m_liteApp->appendLog("GolangEdit","Could not find gomodifytags (hint: is gomodifytags installed?)",true);
          return;
     }
-    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
     QFileInfo info(m_editor->filePath());
     Process process(this);
     process.setEnvironment(env.toStringList());

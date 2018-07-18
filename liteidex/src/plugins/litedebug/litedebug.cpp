@@ -758,7 +758,8 @@ void LiteDebug::debugCmdInput()
 
 bool LiteDebug::execGocommand(const QStringList &args, const QString &work, bool showLog)
 {
-    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,false);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString gocmd = FileUtil::lookupGoBin("go",m_liteApp,env,false);
     if (gocmd.isEmpty()) {
         debugLog(LiteApi::DebugRuntimeLog,QString("go command not find!").arg(args.join(" "),work));
         return false;
