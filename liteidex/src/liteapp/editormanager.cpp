@@ -24,6 +24,7 @@
 #include "editormanager.h"
 #include "liteapp_global.h"
 #include "liteapi/liteids.h"
+#include "liteenvapi/liteenvapi.h"
 #include <QFileInfo>
 #include <QTabWidget>
 #include <QMessageBox>
@@ -963,7 +964,8 @@ void EditorManager::tabContextOpenInShell()
     if (filePath.isEmpty()) {
         return;
     }
-    FileUtil::openInShell(m_liteApp,filePath);
+    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+    FileUtil::openInShell(env,filePath);
 }
 
 void EditorManager::tabContextCloseOtherFolderFiles()

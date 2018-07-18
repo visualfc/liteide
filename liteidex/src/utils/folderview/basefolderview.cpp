@@ -361,5 +361,6 @@ void BaseFolderView::closeAllFolders()
 
 void BaseFolderView::openShell()
 {
-    FileUtil::openInShell(m_liteApp, contextDir().path());
+    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+    FileUtil::openInShell(env, contextDir().path());
 }
