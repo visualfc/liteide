@@ -240,22 +240,12 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         }
         flag = LiteApi::FILESYSTEM_ROOTFOLDER;
     }
-    bool hasGo = false;
-    foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
-        if (info.suffix() == "go") {
-            hasGo = true;
-        }
-    }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_newFolderAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
@@ -270,10 +260,6 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_newFolderAct);
         m_contextMenu->addAction(m_renameFolderAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
@@ -289,10 +275,6 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_renameFolderAct);
         m_contextMenu->addAction(m_removeFolderAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
@@ -303,10 +285,6 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_renameFileAct);
         m_contextMenu->addAction(m_removeFileAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
 

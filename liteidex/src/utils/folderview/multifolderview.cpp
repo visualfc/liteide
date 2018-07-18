@@ -156,14 +156,6 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextIndex = this->rootIndex();
         m_contextInfo = QFileInfo();
     }
-    bool hasGo = false;
-    if (flag != LiteApi::FILESYSTEM_ROOT) {
-        foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
-            if (info.suffix() == "go") {
-                hasGo = true;
-            }
-        }
-    }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
         m_contextMenu->addAction(m_openFolderAct);
@@ -183,10 +175,6 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_reloadFolderAct);
         m_contextMenu->addAction(m_closeFolderAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
@@ -204,10 +192,6 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_renameFolderAct);
         m_contextMenu->addAction(m_removeFolderAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
@@ -218,10 +202,6 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_renameFileAct);
         m_contextMenu->addAction(m_removeFileAct);
         m_contextMenu->addSeparator();
-        if (hasGo) {
-            m_contextMenu->addAction(m_viewGodocAct);
-            m_contextMenu->addSeparator();
-        }
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     }

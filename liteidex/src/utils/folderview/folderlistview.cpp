@@ -200,14 +200,6 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         m_contextIndex = this->rootIndex();
         m_contextInfo = QFileInfo();
     }
-    bool hasGo = false;
-    if (flag != LiteApi::FILESYSTEM_ROOT) {
-        foreach(QFileInfo info, contextDir().entryInfoList(QDir::Files)) {
-            if (info.suffix() == "go") {
-                hasGo = true;
-            }
-        }
-    }
     //root folder
     if (flag == LiteApi::FILESYSTEM_ROOT) {
         menu.addAction(m_openFolderAct);
@@ -219,10 +211,6 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_reloadFolderAct);
         menu.addAction(m_closeFolderAct);
         menu.addSeparator();
-        if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
-        }
         menu.addAction(m_openExplorerAct);
         menu.addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
@@ -232,10 +220,6 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_renameFolderAct);
         menu.addAction(m_removeFolderAct);
         menu.addSeparator();
-        if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
-        }
         menu.addAction(m_openExplorerAct);
         menu.addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
@@ -246,10 +230,6 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_renameFileAct);
         menu.addAction(m_removeFileAct);
         menu.addSeparator();
-        if (hasGo) {
-            menu.addAction(m_viewGodocAct);
-            menu.addSeparator();
-        }
         menu.addAction(m_openExplorerAct);
         menu.addAction(m_openShellAct);
     }

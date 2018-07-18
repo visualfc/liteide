@@ -362,12 +362,6 @@ void SplitFolderView::customContextMenuRequested(const QPoint &pos)
     m_contextInfo = fileInfo;
 
     LiteApi::FILESYSTEM_CONTEXT_FLAG flag = LiteApi::FILESYSTEM_ROOTFOLDER;
-    bool hasGo = false;
-    foreach(QFileInfo info, QDir(dir).entryInfoList(QDir::Files)) {
-        if (info.suffix() == "go") {
-            hasGo = true;
-        }
-    }
     m_contextMenu->addAction(m_openInNewWindowAct);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_newFileAct);
@@ -378,10 +372,6 @@ void SplitFolderView::customContextMenuRequested(const QPoint &pos)
     m_contextMenu->addAction(m_reloadFolderAct);
     m_contextMenu->addAction(m_closeFolderAct);
     m_contextMenu->addSeparator();
-    if (hasGo) {
-        m_contextMenu->addAction(m_viewGodocAct);
-        m_contextMenu->addSeparator();
-    }
     m_contextMenu->addAction(m_openExplorerAct);
     m_contextMenu->addAction(m_openShellAct);
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);

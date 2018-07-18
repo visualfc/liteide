@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include "liteapi/liteutil.h"
 #include "liteapi/liteids.h"
+#include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
@@ -224,6 +225,8 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_fmctxGoFmtAct = new QAction("GoFmt",this);
 
+    m_fmctxGodocAct = new QAction(tr("Use godoc View"),this);
+
     m_fmctxGoToolMenu->addAction(m_fmctxGoBuildAct);
     m_fmctxGoToolMenu->addAction(m_fmctxGoBuildAllAct);
     m_fmctxGoToolMenu->addSeparator();
@@ -267,6 +270,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_fmctxGoVetAllCheckAct,SIGNAL(triggered()),this,SLOT(fmctxGoTool()));
 
     connect(m_fmctxGoFmtAct,SIGNAL(triggered()),this,SLOT(fmctxGofmt()));
+    connect(m_fmctxGodocAct,SIGNAL(triggered(bool)),this,SLOT(fmctxGodoc()));
 
     connect(m_stopAct,SIGNAL(triggered()),this,SLOT(stopAction()));
     connect(m_clearAct,SIGNAL(triggered()),m_output,SLOT(clear()));
@@ -546,6 +550,12 @@ void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CO
             menu->insertSeparator(act);            
             //m_fmctxGoTestAct->setEnabled(hasTest);
             menu->insertMenu(act,m_fmctxGoToolMenu);
+
+            LiteApi::IGolangDoc *doc = LiteApi::findExtensionObject<LiteApi::IGolangDoc*>(m_liteApp,"LiteApi.IGolangDoc");
+            if (doc) {
+                menu->insertSeparator(act);
+                menu->insertAction(act,m_fmctxGodocAct);
+            }
             menu->insertSeparator(act);
         } else {
             QAction *act = 0;
@@ -639,6 +649,19 @@ void LiteBuild::fmctxGofmt()
         m_liteApp->editorManager()->saveAllEditors();
         this->stopAction();
         this->execCommand(cmd,args,m_fmctxInfo.filePath(),true,true,true,false);
+    }
+}
+
+void LiteBuild::fmctxGodoc()
+{
+    QString path = m_fmctxInfo.filePath();
+    LiteApi::IGolangDoc *doc = LiteApi::findExtensionObject<LiteApi::IGolangDoc*>(m_liteApp,"LiteApi.IGolangDoc");
+    if (doc) {
+        QUrl url;
+        url.setScheme("pdoc");
+        url.setPath(path);
+        doc->openUrl(url);
+        doc->activeBrowser();
     }
 }
 

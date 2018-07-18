@@ -4,6 +4,7 @@ TEMPLATE = lib
 include (../../liteideplugin.pri)
 include (../../api/liteenvapi/liteenvapi.pri)
 include (../../api/litebuildapi/litebuildapi.pri)
+include (../../api/golangdocapi/golangdocapi.pri)
 include (../../3rdparty/elidedlabel/elidedlabel.pri)
 include (../../utils/fileutil/fileutil.pri)
 include (../../utils/processex/processex.pri)

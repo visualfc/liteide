@@ -23,7 +23,6 @@
 
 #include "basefoldeview.h"
 #include "liteenvapi/liteenvapi.h"
-#include "golangdocapi/golangdocapi.h"
 #include "fileutil/fileutil.h"
 #include "folderdialog.h"
 
@@ -94,9 +93,6 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     m_openShellAct = new QAction(tr("Open Terminal Here"),this);
 #endif
 
-
-    m_viewGodocAct = new QAction(tr("Use godoc View"),this);
-
     m_openFolderAct = new QAction(tr("Open Folder..."),this);
     m_reloadFolderAct = new QAction(tr("Reload Folder"),this);
     m_closeFolderAct = new QAction(tr("Close Folder"),this);
@@ -115,7 +111,6 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_removeFolderAct,SIGNAL(triggered()),this,SLOT(removeFolder()));
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
-    connect(m_viewGodocAct,SIGNAL(triggered()),this,SLOT(viewGodoc()));
     connect(m_openFolderAct,SIGNAL(triggered()),this,SLOT(openFolder()));
     connect(m_closeFolderAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
     connect(m_reloadFolderAct,SIGNAL(triggered()),this,SLOT(reloadFolder()));
@@ -325,19 +320,6 @@ void BaseFolderView::removeFolder()
 void BaseFolderView::openExplorer()
 {
     FileUtil::openInExplorer(contextFileInfo().filePath());
-}
-
-void BaseFolderView::viewGodoc()
-{
-    QDir dir = contextDir();
-    LiteApi::IGolangDoc *doc = LiteApi::findExtensionObject<LiteApi::IGolangDoc*>(m_liteApp,"LiteApi.IGolangDoc");
-    if (doc) {
-        QUrl url;
-        url.setScheme("pdoc");
-        url.setPath(dir.path());
-        doc->openUrl(url);
-        doc->activeBrowser();
-    }
 }
 
 void BaseFolderView::openFolder()
