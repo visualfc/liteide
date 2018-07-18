@@ -97,12 +97,8 @@ void QuickOpenWidget::hideEvent(QHideEvent *e)
 void QuickOpenWidget::showView(QPoint *pos)
 {
     if (pos == 0) {
-        QToolBar *toolBar =  m_liteApp->actionManager()->loadToolBar(ID_TOOLBAR_STD);
-        QRect rc = toolBar->frameGeometry();
-        QPoint pt = rc.topRight();
-        pt.rx() += 4;
-        pt.ry() += 2;
-        this->move(m_liteApp->mainWindow()->mapToGlobal(pt));
+        QPoint pt(0,0);
+        this->move(m_liteApp->editorManager()->widget()->mapToGlobal(pt));
     } else {
         this->move(pos->x(),pos->y());
     }
