@@ -75,6 +75,11 @@ QFileInfo MultiFolderView::fileInfo(const QModelIndex &index) const
     return m_model->fileInfo(index);
 }
 
+QString MultiFolderView::fileRootPath(const QModelIndex &index) const
+{
+    return m_model->fileRootPath(index);
+}
+
 bool MultiFolderView::addRootPath(const QString &path)
 {
     if (m_model->isRootPath(path)) {

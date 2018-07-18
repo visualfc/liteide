@@ -276,6 +276,15 @@ QFileInfo MultiFolderModel::fileInfo(const QModelIndex &index) const
     return ((QFileSystemModel*)si.model)->fileInfo(si.index);
 }
 
+QString MultiFolderModel::fileRootPath(const QModelIndex &index) const
+{
+    SourceModelIndex si = this->mapToSourceEx(index);
+    if (!si.isValid()) {
+        return QString();
+    }
+    return ((QFileSystemModel*)si.model)->rootPath();
+}
+
 bool MultiFolderModel::isDir(const QModelIndex &index) const
 {
     SourceModelIndex si = this->mapToSourceEx(index);

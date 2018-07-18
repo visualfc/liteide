@@ -51,6 +51,7 @@ public:
     QString filePath(const QModelIndex &index) const;
     QString fileName(const QModelIndex &index) const;
     QFileInfo fileInfo(const QModelIndex &index) const;
+    QString fileRootPath(const QModelIndex &index) const;
 
     bool isDir(const QModelIndex &index) const;
     qint64 size(const QModelIndex &index) const;
