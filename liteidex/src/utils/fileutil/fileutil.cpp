@@ -588,7 +588,7 @@ void FileUtil::openInShell(const QProcessEnvironment &env, const QString &file)
 #endif
 #ifdef Q_OS_WIN
     if (cmd.isEmpty()) {
-        cmd = "%COMSPEC%";
+        cmd = env.value("COMSPEC");
     }
 #endif
 
