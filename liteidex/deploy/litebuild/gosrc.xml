@@ -11,8 +11,8 @@
 		<custom id="DebugName" name = "DEBUGNAME" value="$(TARGETBASENAME).debug$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(TARGETBASENAME).test$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
-		<custom id="BuildArgsi" name="BUILDARGS" value="-i" shared-value="$(BUILDFLAGS)"/>
-		<custom id="ForceBuildArgsi" name="FORCEBUILDARGS" value="-i -a -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="BuildArgs" name="BUILDARGS" value="" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ForceBuildArgs" name="FORCEBUILDARGS" value="-a -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="InstallArgs" name="INSTALLARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GetArgs" name="GETARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="ForceGetArgs" name="FORCEGETARGS" value="-a -v" shared-value="$(BUILDFLAGS)"/>
