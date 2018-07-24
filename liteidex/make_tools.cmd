@@ -7,5 +7,5 @@ if defined %GOPATH (
 )
 
 go install -ldflags "-s" -v github.com/visualfc/gotools
-go install -ldflags "-s" -v github.com/mdempsky/gocode
+go install -ldflags "-s" -v github.com/visualfc/gocode
 go install -ldflags "-s" -v github.com/fatih/gomodifytags
