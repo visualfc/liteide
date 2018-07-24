@@ -172,6 +172,11 @@ QModelIndex QuickOpenFiles::filterChanged(const QString &text)
     }
     if (m_proxyModel->rowCount() > 0)
         return m_proxyModel->index(0,0);
+    QFileInfo file(text);
+    if (file.exists() && file.isFile()) {
+        m_filesModel->appendRow(QList<QStandardItem*>() << new QStandardItem("f") << new QStandardItem(file.fileName()) << new QStandardItem(file.filePath()));
+        return m_model->index(0,0);
+    }
     return QModelIndex();
 }
 

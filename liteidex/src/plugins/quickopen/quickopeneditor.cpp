@@ -26,6 +26,7 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QStandardItem>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -109,7 +110,7 @@ void QuickOpenEditor::indexChanged(const QModelIndex &/*index*/)
 
 }
 
-bool QuickOpenEditor::selected(const QString &/*text*/, const QModelIndex &index)
+bool QuickOpenEditor::selected(const QString &text, const QModelIndex &index)
 {
     if (!index.isValid()) {
         return false;
