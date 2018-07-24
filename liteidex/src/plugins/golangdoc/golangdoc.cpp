@@ -409,6 +409,9 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
     QString genHeader;
     QString nav;
 
+    if (ba.contains("{{if $.GoogleCN}}")) {
+    }
+
     QString content = HtmlUtil::docToNavdoc(codec->toUnicode(ba),genHeader,nav);
     QString data = m_templateData;
 
@@ -427,6 +430,19 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
     data.replace("#pkg-variables","#variables");
     data.replace("id=\"pkg-constants\"","id=\"constants\"");
     data.replace("id=\"pkg-variables\"","id=\"variables\"");
+
+    //hard code, clean go1.11 docs.html
+    if (data.contains("{{if $.GoogleCN}}")) {
+        data.replace("{{if $.GoogleCN}}","");
+        int i = data.indexOf(" A Tour of Go");
+        if (i > 0) {
+            data.replace(i,13,"");
+        }
+        data.replace("{{if not $.GoogleCN}}","");
+        data.replace("{{else}}","");
+        data.replace("{{end}}","");
+    }
+
     m_docBrowser->setUrlHtml(url,data);
 }
 
