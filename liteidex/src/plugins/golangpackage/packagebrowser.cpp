@@ -515,6 +515,9 @@ void PackageBrowser::resetTree(const QByteArray &data)
                 QDir dir(jsonMap.value("Dir").toString());
                 foreach (QString key, jsonMap.keys()) {
                     QVariant var = jsonMap.value(key);
+                    if (key == "ImportPath") {
+                        var = cleanModPkgName(pkgName);
+                    }
                     if (key.indexOf("Error") >= 0) {
                         QString text = QString("%1 : true").arg(key);
                         QStandardItem *ic = new QStandardItem(text);
