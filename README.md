@@ -34,6 +34,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * Golang support
 	* Support go1.11 Go modules
 	* Support go1.5 Go vendor
+	* Support go1 GOPATH
 	* Golang build environment management
 	* Compile and test using standard Golang tools and GOPATH
 	* Custom GOPATH support system, IDE and project
