@@ -48,7 +48,7 @@ if defined %GOPATH (
 go install -ldflags "-s" -v github.com/visualfc/gotools 
 if ERRORLEVEL 1 goto go_fail
 
-go install -ldflags "-s" -v github.com/mdempsky/gocode
+go install -ldflags "-s" -v github.com/visualfc/gocode
 if ERRORLEVEL 1 goto go_fail
 
 go install -ldflags "-s" -v github.com/fatih/gomodifytags
