@@ -64,7 +64,7 @@ public:
     explicit GolangDoc(LiteApi::IApplication *app, QObject *parent = 0);
     ~GolangDoc();    
 public slots:
-    virtual void openUrl(const QUrl &url);
+    virtual void openUrl(const QUrl &url, const QVariant &addin = QVariant());
     virtual void activeBrowser();
 public slots:
     //void rebuildApiData();
@@ -96,6 +96,7 @@ protected:
 protected:
     LiteApi::IApplication   *m_liteApp;
     QUrl    m_openUrl;
+    QVariant m_openUrlAddin;
     QUrl    m_lastUrl;
     QString m_lastPath;
     FindDocWidget *m_findDocWidget;

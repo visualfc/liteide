@@ -548,6 +548,7 @@ void GolangEdit::editorViewGodoc()
         return;
     }
     QString pkg = parser_import(cursor.block().text());
+    QString orgPkg = pkg;
     if (pkg.isEmpty()) {
         return;
     }
@@ -581,7 +582,11 @@ void GolangEdit::editorViewGodoc()
     QUrl url;
     url.setScheme("pdoc");
     url.setPath(pkg);
-    doc->openUrl(url);
+    QString addin;
+    if (pkg != orgPkg) {
+        addin = orgPkg;
+    }
+    doc->openUrl(url,addin);
     doc->activeBrowser();
 }
 

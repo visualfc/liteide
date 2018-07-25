@@ -70,7 +70,7 @@ class IGolangDoc : public IObject
 public:
     IGolangDoc(QObject *parent) : IObject(parent) {}
 public slots:
-    virtual void openUrl(const QUrl &url) = 0;
+    virtual void openUrl(const QUrl &url, const QVariant &addin = QVariant()) = 0;
     virtual void activeBrowser() = 0;
 };
 

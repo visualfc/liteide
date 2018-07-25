@@ -443,6 +443,13 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
         data.replace("{{end}}","");
     }
 
+    if (!m_openUrlAddin.isNull()) {
+        QString realPath = m_openUrlAddin.toString();
+        if (!realPath.isEmpty()) {
+            data.replace(QString("import \"%1\"").arg(m_lastUrl.path()),QString("import \"%1\"").arg(realPath));
+        }
+    }
+
     m_docBrowser->setUrlHtml(url,data);
 }
 
@@ -749,7 +756,7 @@ void GolangDoc::highlighted(const QUrl &_url)
 //    }
 }
 
-void GolangDoc::openUrl(const QUrl &_url)
+void GolangDoc::openUrl(const QUrl &_url, const QVariant &addin)
 { 
     m_liteApp->mainWindow()->statusBar()->clearMessage();
     QUrl url = parserUrl(_url);
@@ -768,6 +775,7 @@ void GolangDoc::openUrl(const QUrl &_url)
     }
     */
     m_openUrl = url;
+    m_openUrlAddin = addin;
     if (url.path().isEmpty() && !url.fragment().isEmpty()) {
         m_docBrowser->scrollToAnchor(url.fragment());
     } else if (url.scheme() == "find") {
@@ -782,6 +790,7 @@ void GolangDoc::openUrl(const QUrl &_url)
         QDesktopServices::openUrl(url);
     }
 }
+
 
 //void GolangDoc::findTag(const QString &tag)
 //{
