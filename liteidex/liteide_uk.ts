@@ -220,197 +220,196 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>BaseFolderView</name>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="71"/>
         <source>Open In New Window</source>
         <translation>Відкрити в новому вікні</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="72"/>
         <source>Open File</source>
         <translation>Відкрити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="73"/>
         <source>New File...</source>
         <translation>Створити файл...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="74"/>
         <source>New File Wizard...</source>
         <translation>Майстер створення файлу...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
         <source>Rename File...</source>
         <translation>Перейменувати файл...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="237"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="243"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="249"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
         <source>New Folder...</source>
         <translation>Створити директорію...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>Rename Folder...</source>
         <translation>Перейменувати директорію...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="313"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="320"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="314"/>
         <source>Delete Folder</source>
         <translation>Видалити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="95"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="93"/>
         <source>Open Terminal Here</source>
         <translation>Відкрити термінал тут</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
         <source>Show in Explorer</source>
         <oldsource>Open Explorer Here</oldsource>
         <translation>Відкрити в Explorer</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="72"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="70"/>
         <source>Open Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
         <source>Show in Finder</source>
         <translation>Відкрити в Finder</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
         <source>Show Containing Folder</source>
         <translation type="unfinished">Показати в батьківській директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="93"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="91"/>
         <source>Open Command Prompt Here</source>
         <translation>Відкрити командний рядок тут</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="99"/>
         <source>Use godoc View</source>
         <oldsource>View Godoc Here</oldsource>
-        <translation>Показати Godoc</translation>
+        <translation type="vanished">Показати Godoc</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="101"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="96"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
         <translation>Відкрити директорію...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="102"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="97"/>
         <source>Reload Folder</source>
         <translation>Перезавантажити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="103"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="98"/>
         <source>Close Folder</source>
         <translation>Закрити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="105"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="100"/>
         <source>Close All Folders</source>
         <translation>Закрити всі директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="177"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="187"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="171"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="181"/>
         <source>Create File</source>
         <translation>Створення файлу</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="178"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="172"/>
         <source>A file with that name already exists!</source>
         <translation>Файл вже існує!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="188"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="182"/>
         <source>Failed to create the file!</source>
         <translation>Не вдалося створити створити файл!</translation>
     </message>
     <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="212"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="218"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="224"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="229"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="223"/>
         <source>Rename File</source>
         <translation>Перейменувати файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="218"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="212"/>
         <source>New Name:</source>
         <translation>Нове ім&apos;я:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="225"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="230"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="219"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="224"/>
         <source>Failed to rename the file!</source>
         <translation>Не вдалося перейменувати файл!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Видалити цей файл назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="250"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
         <source>Failed to delete the file!</source>
         <translation>Не вдалося видалити файл!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="268"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="271"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="262"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="265"/>
         <source>Create Folder</source>
         <translation>Створення директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="269"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="263"/>
         <source>A folder with that name already exists!</source>
         <translation>Директорія з таким іменем вже існує!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="272"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="266"/>
         <source>Failed to create the folder!</source>
         <translation>Не вдалося створити створити директорію!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="285"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="294"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="299"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="279"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="288"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="293"/>
         <source>Rename Folder</source>
         <translation>Перейменувати директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="285"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="279"/>
         <source>Folder Name</source>
         <translation>Им&apos;я директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="295"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="294"/>
         <source>Failed to rename the folder!</source>
         <translation>Не вдалося перейменувати директорію!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="314"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="308"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="321"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="315"/>
         <source>Failed to delete the folder!</source>
         <translation>Не вдалося видалити директорію!</translation>
     </message>
@@ -735,120 +734,120 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="139"/>
+        <location filename="src/liteapp/editormanager.cpp" line="140"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="164"/>
+        <location filename="src/liteapp/editormanager.cpp" line="165"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>Перенести в нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="230"/>
+        <location filename="src/liteapp/editormanager.cpp" line="231"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Йти вперед</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Закрити інші</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="111"/>
+        <location filename="src/liteapp/editormanager.cpp" line="112"/>
         <source>Open Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Закрити всі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Left Tabs</source>
         <translation>Закрити вкладки зліва</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Right Tabs</source>
         <translation>Закрити вкладки справа</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="145"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Закрити файли з цієї ж директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Закрити файли з інших директорій</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="147"/>
+        <location filename="src/liteapp/editormanager.cpp" line="148"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Копіювати повний шлях в буфер обміну</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="150"/>
+        <location filename="src/liteapp/editormanager.cpp" line="151"/>
         <source>Show in Explorer</source>
         <translation>Показати в Explorer</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="152"/>
+        <location filename="src/liteapp/editormanager.cpp" line="153"/>
         <source>Show in Finder</source>
         <translation>Показати в Finder</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="154"/>
+        <location filename="src/liteapp/editormanager.cpp" line="155"/>
         <source>Show Containing Folder</source>
         <translation>Показати в файловому менеджері</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="158"/>
+        <location filename="src/liteapp/editormanager.cpp" line="159"/>
         <source>Open Command Prompt Here</source>
         <translation>Відкрити командний рядок тут</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="160"/>
+        <location filename="src/liteapp/editormanager.cpp" line="161"/>
         <source>Open Terminal Here</source>
         <translation>Відкрити термінал тут</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="221"/>
+        <location filename="src/liteapp/editormanager.cpp" line="222"/>
         <source>Navigate Backward</source>
         <translation>Йти назад</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="251"/>
+        <location filename="src/liteapp/editormanager.cpp" line="252"/>
         <source>Edit Toolbar</source>
         <translation>Панель редактора</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="422"/>
+        <location filename="src/liteapp/editormanager.cpp" line="423"/>
         <source>Save changes to %1?</source>
         <translation>Зберегти зміни в %1?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="423"/>
+        <location filename="src/liteapp/editormanager.cpp" line="424"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Незбережені зміни</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="520"/>
+        <location filename="src/liteapp/editormanager.cpp" line="521"/>
         <source>All Files (*)</source>
         <translation>Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="522"/>
+        <location filename="src/liteapp/editormanager.cpp" line="523"/>
         <source>Save As</source>
         <translation>Зберегти як</translation>
     </message>
@@ -2012,34 +2011,34 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="267"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="277"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="247"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="257"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="268"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="248"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Видалити цей файл назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="278"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
         <source>Failed to delete the file!</source>
         <translation>Не вдалося видалити файл!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="290"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="300"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="270"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="280"/>
         <source>Delete Folder</source>
         <translation>Видалити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="291"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="271"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="301"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="281"/>
         <source>Failed to delete the folder!</source>
         <translation>Не вдалося видалити директорію!</translation>
     </message>
@@ -2518,8 +2517,8 @@ Want to replace to all the search items to whitespace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="725"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="860"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="753"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="888"/>
         <source>Below files in package %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3268,136 +3267,141 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="140"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="141"/>
         <source>Build Toolbar</source>
         <translation type="unfinished">Панель збірки</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="148"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="149"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation>Параметри збірки...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="165"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="166"/>
         <source>Stop Action</source>
         <translation>Зупинити</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="169"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="170"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation>Очистити журнал</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="173"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="174"/>
         <source>Execute File</source>
         <translation>Виконати файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="176"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="177"/>
         <source>Debug File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="180"/>
         <source>Lock Build Path</source>
         <oldsource>Lock Go Build Path</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="181"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="182"/>
         <source>Build Path Configuration</source>
         <oldsource>Go Build Configuration</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="281"/>
-        <source>Line Wrap</source>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="228"/>
+        <source>Use godoc View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="285"/>
-        <source>Auto Clear</source>
+        <source>Line Wrap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="289"/>
+        <source>Auto Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="293"/>
         <source>Automatic positioning cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="304"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="308"/>
         <source>Setup</source>
         <translation type="unfinished">Настройка</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="312"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="316"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation type="unfinished">Результати збірки</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="703"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="727"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation type="unfinished">Ідентифікатор конфігурації &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1117"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1141"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation type="unfinished">Замкнути збірку</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1455"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1479"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation type="unfinished">Помилка: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1458"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1482"/>
         <source>Command exited with code %1.</source>
         <translation type="unfinished">Команда завершилась з кодом %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1460"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1484"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation type="unfinished">Все ок: %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1509"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1574"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1533"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1598"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished">Процес вже виконується. Потрібно його перервати (меню Збірка/Перервати).</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1560"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1584"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished">Зупиняю поточний процес...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1570"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1594"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation type="unfinished">Не вдалося зупинити існуючий процес!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1780"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1804"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished">Процесс стартував успішно</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1780"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1804"/>
         <source>Failed to start process</source>
         <translation type="unfinished">Помилка старту процесу</translation>
     </message>
@@ -4473,34 +4477,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="234"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="241"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="219"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="226"/>
         <source>Delete Folder</source>
         <translation>Видалити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="235"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="220"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="242"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="227"/>
         <source>Failed to delete the folder!</source>
         <translation>Не вдалося видалити директорію!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="254"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="261"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="239"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="246"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="255"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="240"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Видалити цей файл назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="262"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="247"/>
         <source>Failed to delete the file!</source>
         <translation>Не вдалося видалити файл!</translation>
     </message>
@@ -4835,47 +4839,47 @@ Do you want to replace it?</source>
 <context>
     <name>ProcessEx</name>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="51"/>
+        <location filename="src/utils/processex/processex.cpp" line="52"/>
         <source>process exited with code %1</source>
         <translation>процес завершився із кодом %1</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="54"/>
+        <location filename="src/utils/processex/processex.cpp" line="55"/>
         <source>process crashed or was terminated</source>
         <translation>процес завершився аварійно чи був завершений іззовні</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="57"/>
+        <location filename="src/utils/processex/processex.cpp" line="58"/>
         <source>process exited with an unknown status</source>
         <translation>процес завершився із невідомим статусом</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="67"/>
+        <location filename="src/utils/processex/processex.cpp" line="68"/>
         <source>process failed to start</source>
         <translation>процес не вдалося запустити</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="70"/>
+        <location filename="src/utils/processex/processex.cpp" line="71"/>
         <source>process crashed or was terminated while running</source>
         <translation>процес завершився аварійно чи був завершений іззовні під час виконання</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="73"/>
+        <location filename="src/utils/processex/processex.cpp" line="74"/>
         <source>timed out waiting for process</source>
         <translation>вийшов тамйм очікування процесу</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="76"/>
+        <location filename="src/utils/processex/processex.cpp" line="77"/>
         <source>couldn&apos;t read from the process</source>
         <translation>не вдалося прочитати з процесу</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="79"/>
+        <location filename="src/utils/processex/processex.cpp" line="80"/>
         <source>couldn&apos;t write to the process</source>
         <translation type="unfinished">не вдалося записати в процес</translation>
     </message>
     <message>
-        <location filename="src/utils/processex/processex.cpp" line="83"/>
+        <location filename="src/utils/processex/processex.cpp" line="84"/>
         <source>an unknown error occurred</source>
         <translation>сталася невідома помилка</translation>
     </message>
@@ -5018,7 +5022,7 @@ Do you want to replace it?</source>
 <context>
     <name>QuickOpenEditor</name>
     <message>
-        <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="55"/>
+        <location filename="src/plugins/quickopen/quickopeneditor.cpp" line="56"/>
         <source>Show All Opened Editors</source>
         <oldsource>Show All Editors</oldsource>
         <translation type="unfinished">Відкрити редактор за ім&apos;ям</translation>

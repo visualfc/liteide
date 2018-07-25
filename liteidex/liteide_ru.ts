@@ -219,7 +219,7 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Use godoc View</source>
         <oldsource>View Godoc Here</oldsource>
-        <translation>Открыть Godoc</translation>
+        <translation type="vanished">Открыть Godoc</translation>
     </message>
     <message>
         <source>Open Folder...</source>
@@ -2714,6 +2714,10 @@ Success: %2.</oldsource>
     <message>
         <source>Debug File</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use godoc View</source>
+        <translation type="unfinished">Открыть Godoc</translation>
     </message>
 </context>
 <context>
