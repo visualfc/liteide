@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=liteide
+Exec=liteide
+Icon=liteide
+Comment=LiteIDE is a simple, open source, cross-platform Go IDE.
+Terminal=false
+Categories=Development;
+Name[zh_CN]=liteide
