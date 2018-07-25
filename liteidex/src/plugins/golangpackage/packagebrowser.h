@@ -41,7 +41,8 @@ namespace PackageType {
     };
     enum Role_Type{
         RoleItem = Qt::UserRole+1,
-        RolePath
+        RoleImportPath,
+        RoleDir
     };
 }
 
@@ -73,6 +74,7 @@ public slots:
 protected:
     bool loadPackageFolderHelper(QModelIndex index, bool add = false);
 protected:
+    QMap<QString,QString> m_modPkgMap;
     LiteApi::IApplication *m_liteApp;
     QWidget      *m_widget;
     SymbolTreeView    *m_treeView;

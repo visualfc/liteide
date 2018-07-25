@@ -87,7 +87,7 @@ void PackageTree::loadJson(const QMap<QString, QVariant> &jsonMap)
                     QStandardItem *iv = new QStandardItem(v.toString());
                     iv->setData(type,PackageType::RoleItem);
                     if (type == PackageType::ITEM_SOURCE) {
-                        iv->setData(QFileInfo(dir,v.toString()).filePath(),PackageType::RolePath);
+                        iv->setData(QFileInfo(dir,v.toString()).filePath(),PackageType::RoleDir);
                     }
                     ic->appendRow(iv);
                 }

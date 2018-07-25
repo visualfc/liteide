@@ -262,7 +262,15 @@ void PackageBrowser::loadPackageDoc()
             type != PackageType::ITEM_IMPORT) {
         return;
     }
-    QString pkgName = index.data(Qt::DisplayRole).toString();
+    QString pkgName = index.data(PackageType::RoleImportPath).toString();
+    if (pkgName.isEmpty()) {
+        pkgName = index.data(Qt::DisplayRole).toString();
+        QString modPkg = m_modPkgMap[pkgName];
+        if (!modPkg.isEmpty()) {
+            pkgName = modPkg;
+        }
+        qDebug() << pkgName << modPkg;
+    }
     if (!pkgName.isEmpty()) {
         LiteApi::IGolangDoc *doc = LiteApi::getGolangDoc(m_liteApp);
         if (doc) {
@@ -338,7 +346,7 @@ void PackageBrowser::doubleClicked()
 
     int type = index.data(PackageType::RoleItem).toInt();
     if (type == PackageType::ITEM_SOURCE) {
-        QString path = index.data(PackageType::RolePath).toString();
+        QString path = index.data(PackageType::RoleDir).toString();
         if (!path.isEmpty()) {
             m_liteApp->fileManager()->openEditor(path);
         }
@@ -358,7 +366,7 @@ void PackageBrowser::enterKeyPressed(const QModelIndex &index)
 {
     int type = index.data(PackageType::RoleItem).toInt();
     if (type == PackageType::ITEM_SOURCE) {
-        QString path = index.data(PackageType::RolePath).toString();
+        QString path = index.data(PackageType::RoleDir).toString();
         if (!path.isEmpty()) {
             m_liteApp->fileManager()->openEditor(path);
         }
@@ -409,12 +417,28 @@ void PackageBrowser::finished(int code,QProcess::ExitStatus)
     }
 }
 
+//github.com/gorilla/securecookie@v1.1.1/fuzz
+static QString cleanModPkgName(const QString &pkg)
+{
+    int pos = pkg.indexOf("@");
+    if (pos > 0) {
+        int p2 = pkg.indexOf("/",pos);
+        if (p2 > 0) {
+            return pkg.left(pos)+pkg.mid(p2);
+        } else {
+            return pkg.left(pos);
+        }
+    }
+    return pkg;
+}
+
 void PackageBrowser::resetTree(const QByteArray &data)
 {
     //save state
     SymbolTreeState state;
     m_treeView->saveState(&state);
     m_model->clear();
+    m_modPkgMap.clear();
     //load tree
     QStringList rootList = LiteApi::getGOPATH(m_liteApp,true);
 
@@ -454,19 +478,37 @@ void PackageBrowser::resetTree(const QByteArray &data)
             if (parent == 0) {
                 continue;
             }
-            if (jsonMap.value("Name").toString() == "main") {
-                parent = parent->child(0,0);
+            QString pkgName = jsonMap.value("ImportPath").toString();
+            if (pkgName.contains("@") && pkgName.startsWith("mod/")) {
+                //skip main
+                if (jsonMap.value("Name").toString() == "main") {
+                    continue;
+                }
+                if (parent->rowCount() == 2) {
+                    parent->appendRow(new QStandardItem("pkg/mod"));
+                }
+                parent = parent->child(2,0);
             } else {
-                parent = parent->child(1,0);
+                if (jsonMap.value("Name").toString() == "main") {
+                    parent = parent->child(0,0);
+                } else {
+                    parent = parent->child(1,0);
+                }
             }
             //if (bRoot && pkgName.indexOf("_") == 0) {
             //    parent = 0;
             //}
             if (parent) {
                 QString pkgName = jsonMap.value("ImportPath").toString();
+                QString importPath = pkgName;
+                if (pkgName.contains("@") && pkgName.startsWith("mod/")) {
+                    pkgName.remove(0,4);
+                    m_modPkgMap.insert(cleanModPkgName(pkgName),importPath);
+                }
                 QStandardItem *item = new QStandardItem(pkgName);
                 item->setToolTip(pkgName);
                 item->setData(PackageType::ITEM_PACKAGE,PackageType::RoleItem);
+                item->setData(importPath,PackageType::RoleImportPath);
                 m_pkgJson.insert(pkgName,json);
                 QStandardItem *base = new QStandardItem("BaseInfo");
                 item->appendRow(base);
@@ -502,7 +544,7 @@ void PackageBrowser::resetTree(const QByteArray &data)
                                 QStandardItem *iv = new QStandardItem(v.toString());
                                 iv->setData(type,PackageType::RoleItem);
                                 if (type == PackageType::ITEM_SOURCE) {
-                                    iv->setData(QFileInfo(dir,v.toString()).filePath(),PackageType::RolePath);
+                                    iv->setData(QFileInfo(dir,v.toString()).filePath(),PackageType::RoleDir);
                                 }
                                 ic->appendRow(iv);
                             }
