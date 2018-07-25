@@ -25,8 +25,8 @@ if defined %GOPATH (
 echo GOPATH=%GOPATH%
 
 echo get gocode ...
-rmdir /s /q  src\github.com\nsf\gocode
-go get -v -u "github.com/mdempsky/gocode"
+rmdir /s /q  src\github.com\visualfc\gocode
+go get -v -u "github.com/visualfc/gocode"
 echo get gotools ...
 rmdir /s /q src\github.com\visualfc\gotools
 go get -v -u "github.com/visualfc/gotools"
