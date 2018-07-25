@@ -3,6 +3,37 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.07.26 Ver X34
+* LiteIDE
+	* update gotools support go1.11 modules
+	* update gocode for https://github.com/visualfc/gocode support go1.11 modules
+* LiteApp
+	* refactor folder model code, remove depends
+	* fix dock widget for Qt5.9.6 bug
+	* move view godoc from folderview to litebuild
+* LiteBuild
+	* update BUILDARGS, remove -i for go1.11 build
+* GolangCode
+	* change to github.com/visualfc/gocode for support go1.11 modules
+* GolangDoc
+	* pdoc support real ImportPath display for Go modules or vendor
+	* fix docs.html $.GoogleCN code
+* GolangEdit
+	* support go1.11 modules, view info / jump / find usages
+	* support parser import path for Go modules or vendor for godoc view
+* GolangPackage
+	* add pkg/mod tree for Go modules
+* QuickOpen
+	* fix view pos for editor manager
+	* support open file with fullpath on editor input
+* DlvDebugger
+	* fix continue
+* gotools
+	* types support go1.11 modules
+	* add pkgcheck support modules or vendor check
+* gocode
+	* clone https://github.com/nsf/gocode support go1.11 modules
+
 ### 2018.07.04 Ver X33.4
 * LiteIDE
 	* update gocode for mdempsky/gocode support go1.11

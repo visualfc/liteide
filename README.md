@@ -9,7 +9,7 @@ LiteIDE X
 
 _LiteIDE is a simple, open source, cross-platform Go IDE._
 
-* Version: X33.4
+* Version: X34 (support go1.11 Go modules)
 * Author: [visualfc](mailto:visualfc@gmail.com)
 
 ### Features
@@ -32,6 +32,8 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* Reload file by internal diff way
 
 * Golang support
+	* Support go1.11 Go modules
+	* Support go1.5 Go vendor
 	* Golang build environment management
 	* Compile and test using standard Golang tools and GOPATH
 	* Custom GOPATH support system, IDE and project
@@ -42,7 +44,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* Source code navigation and information tips
 	* Source code find usages
 	* Source code refactoring and revert
-	* Integrated [gocode](https://github.com/nsf/gocode)
+	* Integrated  [gocode](https://github.com/visualfc/gocode) clone of [nsf/gocode](https://github.com/nsf/gocode)
 	* Integrated [gomodifytags](https://github.com/fatih/gomodifytags)
 	* Support source query tools guru
 	* Debug with GDB and [Delve](https://github.com/derekparker/delve)
@@ -80,7 +82,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 ### Update liteide tools for support new Golang Version	
 
 	go get -u github.com/visualfc/gotools
-	go get -u github.com/nsf/gocode
+	go get -u github.com/visualfc/gocode
 	
 	Windows/Linux: copy GOPATH/bin gotools and gocode to liteide/bin
 	MacOS: copy GOPATH/bin gotools and gocode to LiteIDE.app/Contents/MacOS
