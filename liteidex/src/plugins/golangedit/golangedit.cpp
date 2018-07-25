@@ -551,6 +551,29 @@ void GolangEdit::editorViewGodoc()
     if (pkg.isEmpty()) {
         return;
     }
+    //check mod and vendor pkg
+    QString gotools = LiteApi::getGotools(m_liteApp);
+    if (!gotools.isEmpty()) {
+        QProcess process(this);
+        QFileInfo info(m_editor->filePath());
+        process.setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
+        process.setWorkingDirectory(info.path());
+        QStringList args;
+        args << "pkgcheck" << "-pkg" << pkg;
+        process.start(gotools,args);
+        if (!process.waitForFinished(3000)) {
+            process.kill();
+        }
+        QByteArray ar = process.readAllStandardOutput();
+        QString pkgs = QString::fromUtf8(ar).trimmed();
+        if (!pkgs.isEmpty()) {
+            QStringList pkgInfo = pkgs.split(",");
+            if (pkgInfo.size() == 2 && !pkgInfo[0].isEmpty()) {
+                pkg = pkgInfo[0];
+            }
+        }
+    }
+
     LiteApi::IGolangDoc *doc = LiteApi::getGolangDoc(m_liteApp);
     if (!doc) {
         return;
