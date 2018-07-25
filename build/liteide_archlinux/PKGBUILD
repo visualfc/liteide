@@ -5,7 +5,7 @@
 # Contributor: Matthew Zimmerman <mzimmerman@gmail.com>
 
 pkgname=liteide
-pkgver=33.4
+pkgver=34
 pkgrel=1
 pkgdesc='IDE for editing and building projects written in the Go programming language'
 license=('LGPL')
