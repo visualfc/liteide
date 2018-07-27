@@ -80,6 +80,10 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	--user-setting    force use user setting
 	--reset-setting   reset current setting ( clear setting file)
 	
+### LiteIDE X34 Gocode autocompleter
+	Options -> GolangCode -> "Auto update depends package when it's source changed" set check.
+	
+	
 ### Update liteide tools for support new Golang Version	
 
 	go get -u github.com/visualfc/gotools
