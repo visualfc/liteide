@@ -703,7 +703,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
         }
     }
     setExtraSelections(LiteApi::ParenthesesMatchingSelection,extraSelections);
-    this->update();
+    viewport()->update();
 }
 
 static int foldBoxWidth(const QFontMetrics &fm)
