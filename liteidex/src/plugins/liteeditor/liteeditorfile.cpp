@@ -50,6 +50,7 @@ LiteEditorFile::LiteEditorFile(LiteApi::IApplication *app, QObject *parent)
     m_codec = QTextCodec::codecForName("utf-8");
     m_hasDecodingError = false;
     m_bReadOnly = false;
+    m_bBinary = false;
     m_hasUtf8Bom = false;
     m_lineTerminatorMode = NativeLineTerminator;
 }
@@ -65,6 +66,11 @@ bool LiteEditorFile::isReadOnly() const
         return true;
     }
     return m_bReadOnly;
+}
+
+bool LiteEditorFile::isBinary() const
+{
+    return m_bBinary;
 }
 
 bool LiteEditorFile::saveText(const QString &fileName, const QString &text)
@@ -140,82 +146,81 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
 
     QByteArray buf = file.readAll();
     m_hasDecodingError = false;
+    m_bBinary = false;
 
     if (HasBinaryData(buf,32)) {
-        m_liteApp->appendLog("LiteEditor","Binary file not open in the text editor! "+fileName,true);
-        m_hasDecodingError = true;
-        //outText = "error load binary file!!!";
-        return false;
-    }
-
-    if (bCheckCodec) {
-        m_codec = QTextCodec::codecForName("UTF-8");
-        m_hasUtf8Bom = false;
-
-        if (mimeType == "text/html" || mimeType == "text/xml") {
-            m_codec = QTextCodec::codecForHtml(buf,QTextCodec::codecForName("utf-8"));
-        } else {
-            LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mimeType);
-            if (im) {
-                QString codecName = im->codec();
-                if (!codecName.isEmpty()) {
-                    m_codec = QTextCodec::codecForName(codecName.toLatin1());
-                }
-            }
-            int bytesRead = buf.size();
-            QTextCodec *codec = m_codec;
-            // code taken from qtextstream
-            if (bytesRead >= 4 && ((uchar(buf[0]) == 0xff && uchar(buf[1]) == 0xfe && uchar(buf[2]) == 0 && uchar(buf[3]) == 0)
-                                   || (uchar(buf[0]) == 0 && uchar(buf[1]) == 0 && uchar(buf[2]) == 0xfe && uchar(buf[3]) == 0xff))) {
-                codec = QTextCodec::codecForName("UTF-32");
-            } else if (bytesRead >= 2 && ((uchar(buf[0]) == 0xff && uchar(buf[1]) == 0xfe)
-                                          || (uchar(buf[0]) == 0xfe && uchar(buf[1]) == 0xff))) {
-                codec = QTextCodec::codecForName("UTF-16");
-            } else if (bytesRead >= 3 && uchar(buf[0]) == 0xef && uchar(buf[1]) == 0xbb && uchar(buf[2])== 0xbf) {
-                codec = QTextCodec::codecForName("UTF-8");
-                buf.remove(0,3);
-                m_hasUtf8Bom = true;
-            } else if (!codec){
-                codec = QTextCodec::codecForLocale();
-            }
-            // end code taken from qtextstream
-            m_codec = codec;
-        }
-    }
-
-    QTextCodec::ConverterState state;
-    outText = m_codec->toUnicode(buf,buf.size(),&state);
-    if (state.invalidChars > 0 || state.remainingChars > 0) {
-         m_hasDecodingError = true;
-    }
-    if (m_hasDecodingError && bCheckCodec) {
+        m_liteApp->appendLog("LiteEditor","Open binary file in the text editor! "+fileName,true);
+        m_bBinary = true;
         QByteArray testName = m_libucd.parse(buf);
         if (!testName.isEmpty()) {
             QTextCodec *c = QTextCodec::codecForName(testName);
             if (c && (c->mibEnum() != m_codec->mibEnum()) ) {
-                QTextCodec::ConverterState testState;
-                QString testText = c->toUnicode(buf,buf.size(),&testState);
-                if (testState.invalidChars == 0 && testState.remainingChars == 0) {
-                    m_hasDecodingError = false;
-                    m_codec = c;
-                    outText = testText;
+                m_codec = c;
+            }
+        }
+        QTextCodec::ConverterState state;
+        outText = m_codec->toUnicode(buf,buf.size(),&state);
+        if (state.invalidChars > 0 || state.remainingChars > 0) {
+            m_hasDecodingError = true;
+        }
+    } else {
+        if (bCheckCodec) {
+            m_codec = QTextCodec::codecForName("UTF-8");
+            m_hasUtf8Bom = false;
+
+            if (mimeType == "text/html" || mimeType == "text/xml") {
+                m_codec = QTextCodec::codecForHtml(buf,QTextCodec::codecForName("utf-8"));
+            } else {
+                LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mimeType);
+                if (im) {
+                    QString codecName = im->codec();
+                    if (!codecName.isEmpty()) {
+                        m_codec = QTextCodec::codecForName(codecName.toLatin1());
+                    }
+                }
+                int bytesRead = buf.size();
+                QTextCodec *codec = m_codec;
+                // code taken from qtextstream
+                if (bytesRead >= 4 && ((uchar(buf[0]) == 0xff && uchar(buf[1]) == 0xfe && uchar(buf[2]) == 0 && uchar(buf[3]) == 0)
+                                       || (uchar(buf[0]) == 0 && uchar(buf[1]) == 0 && uchar(buf[2]) == 0xfe && uchar(buf[3]) == 0xff))) {
+                    codec = QTextCodec::codecForName("UTF-32");
+                } else if (bytesRead >= 2 && ((uchar(buf[0]) == 0xff && uchar(buf[1]) == 0xfe)
+                                              || (uchar(buf[0]) == 0xfe && uchar(buf[1]) == 0xff))) {
+                    codec = QTextCodec::codecForName("UTF-16");
+                } else if (bytesRead >= 3 && uchar(buf[0]) == 0xef && uchar(buf[1]) == 0xbb && uchar(buf[2])== 0xbf) {
+                    codec = QTextCodec::codecForName("UTF-8");
+                    buf.remove(0,3);
+                    m_hasUtf8Bom = true;
+                } else if (!codec){
+                    codec = QTextCodec::codecForLocale();
+                }
+                // end code taken from qtextstream
+                m_codec = codec;
+            }
+        }
+
+        QTextCodec::ConverterState state;
+        outText = m_codec->toUnicode(buf,buf.size(),&state);
+        if (state.invalidChars > 0 || state.remainingChars > 0) {
+            m_hasDecodingError = true;
+        }
+
+        if (m_hasDecodingError && bCheckCodec) {
+            QByteArray testName = m_libucd.parse(buf);
+            if (!testName.isEmpty()) {
+                QTextCodec *c = QTextCodec::codecForName(testName);
+                if (c && (c->mibEnum() != m_codec->mibEnum()) ) {
+                    QTextCodec::ConverterState testState;
+                    QString testText = c->toUnicode(buf,buf.size(),&testState);
+                    if (testState.invalidChars == 0 && testState.remainingChars == 0) {
+                        m_hasDecodingError = false;
+                        m_codec = c;
+                        outText = testText;
+                    }
                 }
             }
         }
     }
-/*
-    QByteArray verifyBuf = m_codec->fromUnicode(text); // slow
-    // the minSize trick lets us ignore unicode headers
-    int minSize = qMin(verifyBuf.size(), buf.size());
-    m_hasDecodingError = (minSize < buf.size()- 4
-                          || memcmp(verifyBuf.constData() + verifyBuf.size() - minSize,
-                                    buf.constData() + buf.size() - minSize, minSize));
-*/
-    /*
-    if (text.length()*2+4 < buf.length()) {
-        m_hasDecodingError = true;
-    }
-    */
 
     int lf = outText.indexOf('\n');
     if (lf < 0) {

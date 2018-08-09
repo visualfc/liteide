@@ -173,6 +173,7 @@ public:
     virtual bool reloadText(QString &outText) = 0;
     virtual bool saveText(const QString &filePath, const QString &text) = 0;
     virtual bool isReadOnly() const = 0;
+    virtual bool isBinary() const = 0;
     virtual QString filePath() const = 0;
     virtual QString mimeType() const = 0;
 };
@@ -939,7 +940,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X33.2")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X34")
 
 
 #endif //LITEAPI_H

@@ -38,6 +38,7 @@ public:
     virtual bool reloadTextByCodec(const QString &codecName, QString &outText);
     virtual bool saveText(const QString &filePath, const QString &text);
     virtual bool isReadOnly() const;
+    virtual bool isBinary() const;
     virtual QString filePath() const;
     virtual void setMimeType(const QString &mimeType);
     virtual QString mimeType() const;
@@ -64,6 +65,7 @@ protected:
 protected:
     bool m_hasDecodingError;
     bool m_bReadOnly;
+    bool m_bBinary;
     LiteApi::IApplication *m_liteApp;
     QString        m_fileName;
     QString        m_mimeType;

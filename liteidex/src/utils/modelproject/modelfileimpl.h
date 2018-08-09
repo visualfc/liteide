@@ -43,6 +43,7 @@ public:
     virtual bool reloadText(QString &outText);
     virtual bool saveText(const QString &filePath, const QString &text);
     virtual bool isReadOnly() const;
+    virtual bool isBinary() const;
     virtual QString filePath() const;
     virtual QString mimeType() const;
 public:

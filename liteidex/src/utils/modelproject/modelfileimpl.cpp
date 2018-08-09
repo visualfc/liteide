@@ -72,6 +72,11 @@ bool ModelFileImpl::isReadOnly() const
     return m_bReadOnly;
 }
 
+bool ModelFileImpl::isBinary() const
+{
+    return false;
+}
+
 bool ModelFileImpl::saveText(const QString &/*fileName*/, const QString &/*text*/)
 {
     return false;
