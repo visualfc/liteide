@@ -3,6 +3,17 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.08.12 Ver X34.1
+* LiteIDE
+	* update gotools support go1.11 modules
+	* update gocode support go1.11 modules and vendor
+* LiteEditor
+	* enable open binary file for editor
+	* change widget readonly by binary file (ignore text file)
+* gocode
+	* change parser by source use gotools/types
+	* fix parser vendor & modules
+
 ### 2018.07.26 Ver X34
 * LiteIDE
 	* update gotools support go1.11 modules
