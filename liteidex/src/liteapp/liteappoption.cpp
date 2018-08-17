@@ -153,6 +153,9 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     bool toolwndshortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
     ui->toolWindowShortcutsCheckBox->setChecked(toolwndshortcuts);
 
+    bool ext = m_liteApp->settings()->value(LITEAPP_EDITORMOUSEEXTNAVIGATE,true).toBool();
+    ui->editorMouseExtNavigateCheckBox->setChecked(ext);
+
     connect(ui->customIconCheckBox,SIGNAL(toggled(bool)),ui->iconPathComboBox,SLOT(setEnabled(bool)));
 
     bool customeIcon = m_liteApp->settings()->value(LITEIDE_CUSTOMEICON,false).toBool();
@@ -276,6 +279,9 @@ void LiteAppOption::apply()
 
     bool toolwindowshortcuts = ui->toolWindowShortcutsCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEAPP_TOOLWINDOW_SHORTCUTS,toolwindowshortcuts);
+
+    bool ext = ui->editorMouseExtNavigateCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEAPP_EDITORMOUSEEXTNAVIGATE,ext);
 
     int size = ui->buttonGroup->buttons().size();
     for (int i = 0; i < size; i++) {

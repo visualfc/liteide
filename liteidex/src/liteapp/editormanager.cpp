@@ -83,6 +83,7 @@ bool EditorManager::initWithApp(IApplication *app)
         return false;
     }
     m_updateMenuInFocus = false;
+    m_mouseExtNavigate = true;
     m_nullMenu = new QMenu;
     m_nullMenu->setEnabled(false);
     m_currentNavigationHistoryPosition = 0;
@@ -353,22 +354,31 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
         if (ev->button() == Qt::LeftButton) {
             emit doubleClickedTab();
         }
-    } else if (event->type() == QEvent::MouseButtonPress && target == m_editorTabWidget->tabBar()) {
+    } else if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *ev = (QMouseEvent*)event;
-        if (ev->button() == Qt::RightButton) {
-            m_tabContextIndex = m_editorTabWidget->tabBar()->tabAt(ev->pos());
-            if (m_tabContextIndex >= 0) {
-                QString filePath = tabContextFilePath();
-                if (filePath.isEmpty()) {
-                    m_tabContextNofileMenu->popup(ev->globalPos());
-                } else {
-                    m_tabContextFileMenu->popup(ev->globalPos());
-                }
+        if (m_mouseExtNavigate) {
+            if ( ev->button() == Qt::BackButton) {
+                this->goBack();
+            } else if (ev->button() == Qt::ForwardButton) {
+                this->goForward();
             }
-        } else if (ev->button() == Qt::MiddleButton) {
-            int index = m_editorTabWidget->tabBar()->tabAt(ev->pos());
-            if (index >= 0) {
-                editorTabCloseRequested(index);
+        }
+        if (target == m_editorTabWidget->tabBar()) {
+            if (ev->button() == Qt::RightButton) {
+                m_tabContextIndex = m_editorTabWidget->tabBar()->tabAt(ev->pos());
+                if (m_tabContextIndex >= 0) {
+                    QString filePath = tabContextFilePath();
+                    if (filePath.isEmpty()) {
+                        m_tabContextNofileMenu->popup(ev->globalPos());
+                    } else {
+                        m_tabContextFileMenu->popup(ev->globalPos());
+                    }
+                }
+            } else if (ev->button() == Qt::MiddleButton) {
+                int index = m_editorTabWidget->tabBar()->tabAt(ev->pos());
+                if (index >= 0) {
+                    editorTabCloseRequested(index);
+                }
             }
         }
     }
@@ -1116,6 +1126,7 @@ void EditorManager::applyOption(QString id)
 
     m_editorTabWidget->tabBar()->setTabsClosable(m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool());
     m_editorTabWidget->tabBar()->setEnableWheel(m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool());
+    m_mouseExtNavigate = m_liteApp->settings()->value(LITEAPP_EDITORMOUSEEXTNAVIGATE,true).toBool();
 
 #ifdef Q_OS_MAC
 #if QT_VERSION >= 0x050900

@@ -140,6 +140,7 @@ protected:
     QLabel      *m_lineInfo;
     bool         m_isAutoIdleSaveDocuments;
     bool         m_updateMenuInFocus;
+    bool         m_mouseExtNavigate;
     int          m_autoIdleSaveDocumentsTime;
 };
 

@@ -431,29 +431,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_7">
-         <property name="title">
-          <string>Editor tab [*]</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item>
-           <widget class="QCheckBox" name="editorTabsClosableCheckBox">
-            <property name="text">
-             <string>Show close buttons on each editor tab</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="editorTabsEnableWhellCheckBox">
-            <property name="text">
-             <string>Enable mouse wheel navigation on tabs</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox_9">
          <property name="title">
           <string>Toolbar Icon Size [*]</string>
@@ -521,6 +498,65 @@
           <size>
            <width>20</width>
            <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Editor</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="title">
+          <string>Editor tab [*]</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QCheckBox" name="editorTabsClosableCheckBox">
+            <property name="text">
+             <string>Show close buttons on each editor tab</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="editorTabsEnableWhellCheckBox">
+            <property name="text">
+             <string>Enable mouse wheel navigation on tabs</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_13">
+         <property name="title">
+          <string>Editor navigate</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <widget class="QCheckBox" name="editorMouseExtNavigateCheckBox">
+            <property name="text">
+             <string>Enable mouse extra 'Back' button and 'Forward' button for go back and forward</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>270</height>
           </size>
          </property>
         </spacer>
