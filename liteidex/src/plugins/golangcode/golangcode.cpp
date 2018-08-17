@@ -489,8 +489,9 @@ void GolangCode::currentEditorChanged(LiteApi::IEditor *editor)
         LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
         this->setCompleter(completer);
     } else if (editor->mimeType() == "browser/goplay") {
-        LiteApi::IEditor* editor = LiteApi::findExtensionObject<LiteApi::IEditor*>(m_liteApp->extension(),"LiteApi.Goplay.IEditor");
-        if (editor && editor->mimeType() == "text/x-gosrc") {
+        LiteApi::IEditor* pedit = LiteApi::findExtensionObject<LiteApi::IEditor*>(m_liteApp->extension(),"LiteApi.Goplay.IEditor");
+        if (pedit && pedit->mimeType() == "text/x-gosrc") {
+            editor = pedit;
             LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
             this->setCompleter(completer);
         }
