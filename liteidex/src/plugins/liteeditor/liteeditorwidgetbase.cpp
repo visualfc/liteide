@@ -3639,8 +3639,8 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();
 
-    const QFontMetrics fm(this->font());
-    int averageCharWidth = fm.averageCharWidth();
+    const QFontMetricsF fm(this->font());
+    qreal averageCharWidth = fm.averageCharWidth();
     int charOffsetX = this->document()->documentMargin()- this->horizontalScrollBar()->value();
 
     bool hasSelection = cursor.hasSelection();
