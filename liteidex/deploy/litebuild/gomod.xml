@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-gomod" id="go tool" work="$(BUILD_DIR_PATH)" lock="file" ver="2">
+		<config id="Go" name="GO" value="go"/>
+		<config id="GoFmt" name="GOFMT" value="gofmt"/>
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
+		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
+		<custom id="TargetBaseName" name="TARGETBASENAME" value="$(BUILD_DIR_NAME)"/>
+		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="TargetArgs" name="TARGETARGS" value=""/>
+		<custom id="DebugName" name = "DEBUGNAME" value="$(TARGETBASENAME).debug$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(TARGETBASENAME).test$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
+		<custom id="BuildArgs" name="BUILDARGS" value="" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ForceBuildArgs" name="FORCEBUILDARGS" value="-a -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="InstallArgs" name="INSTALLARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="GetArgs" name="GETARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ForceGetArgs" name="FORCEGETARGS" value="-a -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="UpdateGetArgs" name="UPDATEGETARGS" value="-u -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="TestArgs" name="TESTARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="BenchmarkArgs" name="BENCHMARKARGS" value="-test.bench=.* " shared-value="$(BUILDFLAGS)"/>
+		<custom id="TestBuildArgs" name="TESTBUILDARGS" value="-c -gcflags &quot;-N -l&quot;" shared-value="$(BUILDFLAGS)"/>
+		<custom id="TestCoverArgs" name="TESTCOVERARGS" value="-coverprofile cover.out" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ToolCoverArgs" name="TOOLCOVERARGS" value="-func=cover.out"/>
+		<custom id="VetArgs" name="VETARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="ToolVetArgs" name="TOOLVETARGS" value="-all -v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="GenerateArgs" name="GENERATEARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
+		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
+		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -v -o $(DEBUGNAME)"/>
+		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -c -o $(DEBUGTESTNAME)"/>
+		<action id="BuildAndRun" img="buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
+		<action id="Run" img="run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true"/>
+		<action id="RunTerm" img="runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd $(TARGETNAME) $(TARGETARGS)" output="false" readline="true"/>
+		<action id="RunTerm" os="macosx" img="runterm.png" key="Ctrl+Shift+F5" cmd="/usr/bin/open" args="$(TARGETNAME)" output="false" readline="true"/>
+		<action id="Build" img="build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="ForceBuild" img="rebuild.png" menu="Build" key="Ctrl+Alt+B" cmd="$(GO)" args="build $(FORCEBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Install" menu="Build" img="install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Clean" menu="Build" img="clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
+		<action id="CleanAll" menu="Build" img="cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
+		<action id="Get" img="get.png" cmd="$(GO)" args="get $(GETARGS) ." save="all" output="true" codec="utf-8"/>
+		<action id="Get Update Network" menu="Get" img="get.png" cmd="$(GO)" args="get $(UPDATEGETARGS) ." save="all" output="true" codec="utf-8"/>
+		<action id="Get Force Rebuilding" menu="Get" img="reget.png" cmd="$(GO)" args="get $(FORCEGETARGS) ." save="all" output="true" codec="utf-8"/>
+		<action id="Test" img="test.png" key = "Ctrl+T" cmd="$(GO)" args="test $(TESTARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
+		<action id="TestAll" menu="Test" img="test.png" key = "Ctrl+Alt+T" cmd="$(GO)" args="test $(TESTARGS) ./..." save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" takeall="true" navigate="true"/>
+		<action id="TestBench" menu="Test" img="testbench.png" cmd="$(GO)" args="test $(BENCHMARKARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="TestBuild" menu="Test" img="buildtest.png" cmd="$(GO)" args="test $(TESTBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)"/>
+		<action id="TestCover" menu="Test" img="testcover.png" key="" task="Cover;ToolCover" killold="true"/>
+		<action id="Cover" menu="Test" img="cover.png" key = "" cmd="$(GO)" args="test $(TESTCOVERARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="ToolCover" menu="Test" img="cover.png" key = "" cmd="$(GO)" args="tool cover $(TOOLCOVERARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="Utils" folder="true" img="utils.png"/>
+		<action id="GoFmtAll" menu="Utils" img="fmt.png" cmd="$(GOFMT)" args="-l -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoVet" menu="Utils" img="vet.png" cmd="$(GO)" args="vet $(VETARGS)" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoToolVet" menu="Utils" img="vet.png" cmd="$(GO)" args="tool vet $(TOOLVETARGS) ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoGenerate" menu="Utils" img="get.png" cmd="$(GO)" args="generate $(GENERATEARGS)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GoLint" menu="Utils" img="lint.png" cmd="golint" args="$(GOLINTARGS) $(EDITOR_FILE_NAME)" save="all" output="true" regex="$(ERRREGEX)" takeall="true" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="buildDebug" cmd="$(GO)" args="build $(DEBUGBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="runDebug" debug="true" cmd="$(DEBUGNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="buildDebugTest" cmd="$(GO)" args="test $(DEBUGTESTBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="runDebugTest" debug="true" cmd="$(DEBUGTESTNAME)" args="" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="DebugUtils" img="debug.png" folder="true"/>
+		<action id="Debug" menu="DebugUtils" img="debug.png" debug="true" key="" task="buildDebug;runDebug" killold="true"/>
+		<action id="DebugTest" menu="DebugUtils" img="test.png" debug="true" key="" task="buildDebugTest;runDebugTest" killold="true"/>
+		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" build="$(DEBUGDEBUGARGS)" work="$(BUILD_DIR_PATH)"/>
+	</mime-type>
+</mime-info>
