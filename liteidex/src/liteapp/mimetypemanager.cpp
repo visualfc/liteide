@@ -89,12 +89,24 @@ QString MimeTypeManager::findPackageByMimeType(const QString &type) const
 
 QString MimeTypeManager::findMimeTypeByFile(const QString &fileName) const
 {
-    QString find = QFileInfo(fileName).suffix();
-    if (find.isEmpty()) {
-        find = QFileInfo(fileName).fileName();
-    } else {
-        find = "*."+find;
+    QFileInfo info(fileName);
+    QString name = info.fileName();
+    //first check full name
+    foreach (IMimeType *mimeType, m_mimeTypeList) {
+        foreach (QString pattern, mimeType->allPatterns()) {
+            if (!pattern.startsWith("*")) {
+                if (name == pattern) {
+                    return mimeType->type();
+                }
+            }
+        }
     }
+    //check *.ext
+    QString find = info.suffix();
+    if (find.isEmpty()) {
+        return QString();
+    }
+    find = "*."+find;
     foreach (IMimeType *mimeType, m_mimeTypeList) {
         foreach (QString pattern, mimeType->allPatterns()) {
             if (find.compare(pattern,Qt::CaseInsensitive) == 0) {
