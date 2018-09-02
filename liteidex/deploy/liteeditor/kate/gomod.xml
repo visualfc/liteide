@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="GoMod" section="Sources"
+          version="1.00" kateversion="2.4"
+          indenter="cstyle"
+          extensions="go.mod"
+          mimetype="text/x-gomod"
+          priority="5"
+          author="visualfc"
+          license="BSD">
+  <highlighting>
+    <list name="keywords">
+      <item> module </item>
+      <item> require </item>
+      <item> replace </item>
+      <item> exclude </item>
+    </list>
+  <contexts>
+      <context name="Normal"        attribute="Normal Text" lineEndContext="#stay">
+        <keyword      attribute="Keyword"  context="#stay" String="keywords" />
+        <Detect2Chars attribute="Symbol" context="#stay" char="=" char1=">" />
+        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace1" />
+        <DetectChar attribute="Symbol" context="#stay" char=")" endRegion="Brace1" />
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text"  defStyleNum="dsNormal" spellChecking="false"/>
+      <itemData name="Keyword"      defStyleNum="dsKeyword" spellChecking="false"/>
+      <itemData name="Symbol"       defStyleNum="dsSymbol" spellChecking="false"/>
+    </itemDatas>
+  </highlighting>
+</language>
