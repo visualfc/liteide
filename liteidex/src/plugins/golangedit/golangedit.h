@@ -83,8 +83,10 @@ public slots:
     void editorJumpToDecl();
     void editorFindUsages();
     void editorFindUsagesGlobal();
+    void editorFindUsagesSkipGoroot();
     void editorRenameSymbol();
     void editorRenameSymbolGlobal();
+    void editorRenameSymbolSkipGoroot();
     void editorComment();
     void findDefStarted();
     void findDefFinish(int code,QProcess::ExitStatus status);
@@ -135,8 +137,10 @@ protected:
     QAction *m_jumpDeclAct;
     QAction *m_findUseAct;
     QAction *m_findUseGlobalAct;
+    QAction *m_findUseSkipGorootAct;
     QAction *m_renameSymbolAct;
     QAction *m_renameSymbolGlobalAct;
+    QAction *m_renameSymbolSkipGorootAct;
     QAction *m_viewGodocAct;
     QAction *m_sourceWhatAct;
     QAction *m_sourceCalleesAct;

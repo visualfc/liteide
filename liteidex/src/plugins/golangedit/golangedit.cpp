@@ -95,9 +95,14 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_findUseGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Find Usages")),this);
     actionContext->regAction(m_findUseGlobalAct,"FindUsagesGOPATH","CTRL+ALT+U");
 
+    m_findUseSkipGorootAct = new QAction(QString("%1 (GOPATH && Skip GOROOT)").arg(tr("Find Usages")),this);
+    actionContext->regAction(m_findUseSkipGorootAct,"FindUsagesSkipGOROOT","");
+
     m_renameSymbolGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Rename Symbol Under Cursor")),this);
     actionContext->regAction(m_renameSymbolGlobalAct,"RenameSymbolGOPATH","");
 
+    m_renameSymbolSkipGorootAct = new QAction(QString("%1 (GOPATH && Skip GOROOT)").arg(tr("Rename Symbol Under Cursor")),this);
+    actionContext->regAction(m_renameSymbolSkipGorootAct,"RenameSymbolSkipGOROOT","");
 
     m_fileSearch = new GolangFileSearch(app,m_liteApp);
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
@@ -121,7 +126,9 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     connect(m_findUseAct,SIGNAL(triggered()),this,SLOT(editorFindUsages()));
     connect(m_renameSymbolAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbol()));
     connect(m_findUseGlobalAct,SIGNAL(triggered()),this,SLOT(editorFindUsagesGlobal()));
+    connect(m_findUseSkipGorootAct,SIGNAL(triggered()),this,SLOT(editorFindUsagesSkipGoroot()));
     connect(m_renameSymbolGlobalAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbolGlobal()));
+    connect(m_renameSymbolSkipGorootAct,SIGNAL(triggered()),this,SLOT(editorRenameSymbolSkipGoroot()));
     connect(m_findDefProcess,SIGNAL(started()),this,SLOT(findDefStarted()));
     //connect(m_findDefProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findDefOutput(QByteArray,bool)));
     connect(m_findDefProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(findDefFinish(int,QProcess::ExitStatus)));
@@ -326,10 +333,12 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_jumpDeclAct);
         menu->addAction(m_findUseAct);
         menu->addAction(m_findUseGlobalAct);
+        menu->addAction(m_findUseSkipGorootAct);
         menu->addSeparator();
         QMenu *sub = menu->addMenu(tr("Refactor"));
         sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
+        sub->addAction(m_renameSymbolSkipGorootAct);
 
         menu->addSeparator();
         menu->addAction(m_sourceWhatAct);
@@ -360,10 +369,12 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addAction(m_jumpDeclAct);
         menu->addAction(m_findUseAct);
         menu->addAction(m_findUseGlobalAct);
+        menu->addAction(m_findUseSkipGorootAct);
         menu->addSeparator();
         QMenu *sub = menu->addMenu(tr("Refactor"));
         sub->addAction(m_renameSymbolAct);
         sub->addAction(m_renameSymbolGlobalAct);
+        sub->addAction(m_renameSymbolSkipGorootAct);
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
 
         menu->addSeparator();
@@ -631,25 +642,37 @@ void GolangEdit::editorJumpToDecl()
 void GolangEdit::editorFindUsages()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor,false,false);
+    m_fileSearch->findUsages(m_editor,cursor,false,false,false);
 }
 
 void GolangEdit::editorFindUsagesGlobal()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor,true,false);
+    m_fileSearch->findUsages(m_editor,cursor,true,false,false);
+}
+
+void GolangEdit::editorFindUsagesSkipGoroot()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_fileSearch->findUsages(m_editor,cursor,true,true,false);
 }
 
 void GolangEdit::editorRenameSymbol()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor,false,true);
+    m_fileSearch->findUsages(m_editor,cursor,false,false,true);
 }
 
 void GolangEdit::editorRenameSymbolGlobal()
 {
     QTextCursor cursor = m_plainTextEdit->textCursor();
-    m_fileSearch->findUsages(m_editor,cursor,true,true);
+    m_fileSearch->findUsages(m_editor,cursor,true,false,true);
+}
+
+void GolangEdit::editorRenameSymbolSkipGoroot()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_fileSearch->findUsages(m_editor,cursor,true,true,true);
 }
 
 void GolangEdit::editorComment()

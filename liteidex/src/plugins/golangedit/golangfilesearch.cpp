@@ -88,7 +88,7 @@ bool GolangFileSearch::replaceMode() const
     return m_replaceMode;
 }
 
-void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool replace)
+void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool skip_goroot, bool replace)
 {
     if (!m_process->isStop()) {
         m_process->stopAndWait(100,2000);
@@ -133,6 +133,9 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     args << "-use";
     if (global) {
         args << "-all";
+    }
+    if (skip_goroot) {
+        args << "-skip_goroot";
     }
     args << ".";
 
