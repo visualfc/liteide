@@ -34,6 +34,7 @@
 		<action id="RunTerm" os="macosx" img="runterm.png" key="Ctrl+Shift+F5" cmd="/usr/bin/open" args="$(TARGETNAME)" output="false" readline="true"/>
 		<action id="Build" img="build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="ForceBuild" img="rebuild.png" menu="Build" key="Ctrl+Alt+B" cmd="$(GO)" args="build $(FORCEBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="BuildAll" img="buildall.png" menu="Build" key="" cmd="$(GO)" args="build -v ./..." save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Install" menu="Build" img="install.png" key="Ctrl+F8" cmd="$(GO)" args="install $(INSTALLARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Clean" menu="Build" img="clean.png" cmd="$(GO)" args="clean" save="all" output="true"/>
 		<action id="CleanAll" menu="Build" img="cleanall.png" cmd="$(GO)" args="clean -i" save="all" output="true"/>
@@ -60,6 +61,10 @@
 		<action id="DebugUtils" img="debug.png" folder="true"/>
 		<action id="Debug" menu="DebugUtils" img="debug.png" debug="true" key="" task="buildDebug;runDebug" killold="true"/>
 		<action id="DebugTest" menu="DebugUtils" img="test.png" debug="true" key="" task="buildDebugTest;runDebugTest" killold="true"/>
+		<action id="Module" img="module.png" folder="true"/>
+		<action id="Go Module Tidy" menu="Module" img="tidy.png" cmd="$(GO)" args="mod tidy" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="Go Module Verify" menu="Module" img="ver.png" cmd="$(GO)" args="mod verify" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="Go Module Graph" menu="Module" img="graph.png" cmd="$(GO)" args="mod graph" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" build="$(DEBUGDEBUGARGS)" work="$(BUILD_DIR_PATH)"/>
 	</mime-type>
 </mime-info>

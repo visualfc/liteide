@@ -30,5 +30,11 @@
         <file>images/update.png</file>
         <file>images/utils.png</file>
         <file>images/vet.png</file>
+        <file>images/download.png</file>
+        <file>images/module.png</file>
+        <file>images/tidy.png</file>
+        <file>images/ver.png</file>
+        <file>images/buildall.png</file>
+        <file>images/graph.png</file>
     </qresource>
 </RCC>
