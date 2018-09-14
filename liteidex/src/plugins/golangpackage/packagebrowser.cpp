@@ -236,6 +236,15 @@ void PackageBrowser::setupGopath()
     dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
     dlg->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
     dlg->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
+
+    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+    QString info = env.value("GO111MODULE");
+    if (!info.isEmpty()) {
+        dlg->setSysGoModuleInfo(QString("system GO111MODULE=%1").arg(info));
+    } else {
+        dlg->setSysGoModuleInfo("system GO111MODULE unset");
+    }
+
     if (dlg->exec() == QDialog::Accepted) {
         //QStringList orgLitePath = m_goTool->liteGopath();
         QStringList newLitePath = dlg->litePathList();

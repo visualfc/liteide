@@ -99,6 +99,11 @@ bool SetupGopathDialog::isUseGoModule() const
     return ui->chkUseGoModule->isChecked();
 }
 
+void SetupGopathDialog::setSysGoModuleInfo(const QString &value)
+{
+    ui->sysGoModuleInfo->setText(value);
+}
+
 void SetupGopathDialog::setGo111Module(const QString &value)
 {
     ui->cmbGoModule->setCurrentText(value);

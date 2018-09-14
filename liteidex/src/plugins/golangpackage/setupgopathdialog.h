@@ -44,6 +44,7 @@ public:
     bool isUseLiteGopath() const;
     void setUseGoModule(bool b);
     bool isUseGoModule() const;
+    void setSysGoModuleInfo(const QString &value);
     void setGo111Module(const QString &value);
     QString go111Module() const;
     QStringList litePathList() const;
