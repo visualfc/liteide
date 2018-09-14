@@ -84,7 +84,7 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_fileMenu = new QMenu;
 
     m_reloadAct = new QAction(tr("Reload All"),this);
-    m_setupGopathAct = new QAction(QIcon("icon:images/gopath.png"),tr("Manage GOPATH..."),this);
+    m_setupGopathAct = new QAction(QIcon("icon:images/gopath.png"),tr("Manage GOPATH/Modules ..."),this);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GoPkg");
 
@@ -234,12 +234,16 @@ void PackageBrowser::setupGopath()
     dlg->setLitePathList(m_goTool->liteGopath());
     dlg->setUseSysGopath(m_liteApp->settings()->value(LITEIDE_USESYSGOPATH,true).toBool());
     dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
+    dlg->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
+    dlg->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
     if (dlg->exec() == QDialog::Accepted) {
         //QStringList orgLitePath = m_goTool->liteGopath();
         QStringList newLitePath = dlg->litePathList();
         //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
         m_liteApp->settings()->setValue(LITEIDE_USESYSGOPATH,dlg->isUseSysGopath());
         m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
+        m_liteApp->settings()->setValue(LITEIDE_CUSTOMGO111MODULE,dlg->isUseGoModule());
+        m_liteApp->settings()->setValue(LITEIDE_GO111MODULE,dlg->go111Module());
         //if (!hasSameList(orgLitePath,newLitePath)) {
         m_goTool->setLiteGopath(newLitePath);
         this->reloadAll();

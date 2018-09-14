@@ -42,6 +42,10 @@ public:
     bool isUseSysGopath() const;
     void setUseLiteGopath(bool b);
     bool isUseLiteGopath() const;
+    void setUseGoModule(bool b);
+    bool isUseGoModule() const;
+    void setGo111Module(const QString &value);
+    QString go111Module() const;
     QStringList litePathList() const;
 protected slots:
     void browser();

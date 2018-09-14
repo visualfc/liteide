@@ -34,5 +34,7 @@
 
 #define LITEIDE_USESYSGOPATH "liteide/usesysgopath"
 #define LITEIDE_USELITEIDEGOPATH "liteide/uselitegopath"
+#define LITEIDE_CUSTOMGO111MODULE "liteide/use111gomodule"
+#define LITEIDE_GO111MODULE "liteide/go111module"
 
 #endif // GOLANGPACKAGE_GLOBAL_H

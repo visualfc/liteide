@@ -226,8 +226,11 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
         goroot = getDefaultGOROOT();
     }
 
-    QStringList pathList;
+    if (app->settings()->value("liteide/use111gomodule",false).toBool()) {
+        env.insert("GO111MODULE",app->settings()->value("liteide/go111module").toString());
+    }
 
+    QStringList pathList;
     if (app->settings()->value("liteide/usesysgopath",true).toBool()) {
         foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
             pathList.append(QDir::toNativeSeparators(path));
@@ -255,6 +258,7 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
         binList.append(QFileInfo(path,"bin/"+goos+"_"+goarch).filePath());
     }
     env.insert("PATH",env.value("PATH")+sep+binList.join(sep)+sep);
+
     return env;
 }
 

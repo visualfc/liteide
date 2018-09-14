@@ -39,10 +39,14 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     ui(new Ui::SetupGopathDialog)
 {
     ui->setupUi(this);
+    ui->cmbGoModule->addItems(QStringList() << "auto" << "on" << "off");
+    ui->cmbGoModule->setCurrentIndex(0);
+    ui->cmbGoModule->setEnabled(false);
     connect(ui->browserButton,SIGNAL(clicked()),this,SLOT(browser()));
     connect(ui->clearButton,SIGNAL(clicked()),ui->litePathTextEdit,SLOT(clear()));
     connect(ui->chkUseSysGopath,SIGNAL(toggled(bool)),ui->sysPathTextEdit,SLOT(setEnabled(bool)));
     connect(ui->chkUseLiteGopath,SIGNAL(toggled(bool)),ui->litePathTextEdit,SLOT(setEnabled(bool)));
+    connect(ui->chkUseGoModule,SIGNAL(toggled(bool)),ui->cmbGoModule,SLOT(setEnabled(bool)));
 }
 
 SetupGopathDialog::~SetupGopathDialog()
@@ -83,6 +87,26 @@ void SetupGopathDialog::setUseLiteGopath(bool b)
 bool SetupGopathDialog::isUseLiteGopath() const
 {
     return ui->chkUseLiteGopath->isChecked();
+}
+
+void SetupGopathDialog::setUseGoModule(bool b)
+{
+    ui->chkUseGoModule->setChecked(b);
+}
+
+bool SetupGopathDialog::isUseGoModule() const
+{
+    return ui->chkUseGoModule->isChecked();
+}
+
+void SetupGopathDialog::setGo111Module(const QString &value)
+{
+    ui->cmbGoModule->setCurrentText(value);
+}
+
+QString SetupGopathDialog::go111Module() const
+{
+    return ui->cmbGoModule->currentText();
 }
 
 QStringList SetupGopathDialog::litePathList() const
