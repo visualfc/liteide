@@ -24,6 +24,7 @@
 #include "setupgopathdialog.h"
 #include "ui_setupgopathdialog.h"
 #include <QFileDialog>
+#include <QLineEdit>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -106,7 +107,12 @@ void SetupGopathDialog::setSysGoModuleInfo(const QString &value)
 
 void SetupGopathDialog::setGo111Module(const QString &value)
 {
-    ui->cmbGoModule->setCurrentText(value);
+    for (int i = 0; i < ui->cmbGoModule->count(); i++) {
+        if (ui->cmbGoModule->itemText(i) == value) {
+            ui->cmbGoModule->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 QString SetupGopathDialog::go111Module() const
