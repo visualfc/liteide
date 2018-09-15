@@ -300,11 +300,6 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <translation>Відкрити командний рядок тут</translation>
     </message>
     <message>
-        <source>Use godoc View</source>
-        <oldsource>View Godoc Here</oldsource>
-        <translation type="vanished">Показати Godoc</translation>
-    </message>
-    <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="96"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
@@ -734,120 +729,120 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="140"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="165"/>
+        <location filename="src/liteapp/editormanager.cpp" line="166"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>Перенести в нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="231"/>
+        <location filename="src/liteapp/editormanager.cpp" line="232"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Йти вперед</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Закрити інші</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="112"/>
+        <location filename="src/liteapp/editormanager.cpp" line="113"/>
         <source>Open Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Закрити всі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Left Tabs</source>
         <translation>Закрити вкладки зліва</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="145"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Right Tabs</source>
         <translation>Закрити вкладки справа</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Закрити файли з цієї ж директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="147"/>
+        <location filename="src/liteapp/editormanager.cpp" line="148"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Закрити файли з інших директорій</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="148"/>
+        <location filename="src/liteapp/editormanager.cpp" line="149"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Копіювати повний шлях в буфер обміну</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="151"/>
+        <location filename="src/liteapp/editormanager.cpp" line="152"/>
         <source>Show in Explorer</source>
         <translation>Показати в Explorer</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="153"/>
+        <location filename="src/liteapp/editormanager.cpp" line="154"/>
         <source>Show in Finder</source>
         <translation>Показати в Finder</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="155"/>
+        <location filename="src/liteapp/editormanager.cpp" line="156"/>
         <source>Show Containing Folder</source>
         <translation>Показати в файловому менеджері</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="159"/>
+        <location filename="src/liteapp/editormanager.cpp" line="160"/>
         <source>Open Command Prompt Here</source>
         <translation>Відкрити командний рядок тут</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="161"/>
+        <location filename="src/liteapp/editormanager.cpp" line="162"/>
         <source>Open Terminal Here</source>
         <translation>Відкрити термінал тут</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="222"/>
+        <location filename="src/liteapp/editormanager.cpp" line="223"/>
         <source>Navigate Backward</source>
         <translation>Йти назад</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="252"/>
+        <location filename="src/liteapp/editormanager.cpp" line="253"/>
         <source>Edit Toolbar</source>
         <translation>Панель редактора</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="423"/>
+        <location filename="src/liteapp/editormanager.cpp" line="433"/>
         <source>Save changes to %1?</source>
         <translation>Зберегти зміни в %1?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="424"/>
+        <location filename="src/liteapp/editormanager.cpp" line="434"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Незбережені зміни</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="521"/>
+        <location filename="src/liteapp/editormanager.cpp" line="531"/>
         <source>All Files (*)</source>
         <translation>Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="523"/>
+        <location filename="src/liteapp/editormanager.cpp" line="533"/>
         <source>Save As</source>
         <translation>Зберегти як</translation>
     </message>
@@ -2410,115 +2405,117 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="89"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="95"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="98"/>
         <source>Find Usages</source>
         <translation>Знайти вживання</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="92"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="98"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="101"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="104"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>Перейменувати символ під курсором</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="148"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="155"/>
         <source>Stop</source>
         <translation type="unfinished">Зупинити</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="153"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="160"/>
         <source>Go Source Query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="158"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="165"/>
         <source>SourceQuery What</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="162"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="169"/>
         <source>Callees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="173"/>
         <source>Callers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="177"/>
         <source>Callstack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="174"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="181"/>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="178"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="185"/>
         <source>Describe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="182"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="189"/>
         <source>Freevars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="186"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="193"/>
         <source>Implements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="190"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="197"/>
         <source>Implements(GOPATH)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="194"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="201"/>
         <source>Peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="198"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="205"/>
         <source>Referrers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="202"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="209"/>
         <source>Pointsto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="206"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="213"/>
         <source>Whicherrs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="210"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="217"/>
         <source>Add Tags To Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="214"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="221"/>
         <source>Remove Tags From Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="330"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="364"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="338"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="374"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="336"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="371"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="345"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="382"/>
         <source>SourceQuery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="753"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="888"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="776"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="911"/>
         <source>Below files in package %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2849,7 +2846,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="816"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="817"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">увага, pkg не знайдено, будь ласка введіть для імпорту:</translation>
     </message>
@@ -3131,58 +3128,73 @@ Success: %2.</oldsource>
         <translation>Показувати сторінку привітання на старті</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="436"/>
+        <location filename="src/liteapp/liteappoption.ui" line="509"/>
+        <source>Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="515"/>
         <source>Editor tab [*]</source>
         <translation>Вкладки редактора [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="442"/>
+        <location filename="src/liteapp/liteappoption.ui" line="521"/>
         <source>Show close buttons on each editor tab</source>
         <translation>Показувати кнопку закриття на кожній вкладці редактора</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="449"/>
+        <location filename="src/liteapp/liteappoption.ui" line="528"/>
         <source>Enable mouse wheel navigation on tabs</source>
         <oldsource>Enable mouse wheel selected on tab</oldsource>
         <translation>Використовувати перемикання вкладок колесом миші</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="459"/>
+        <location filename="src/liteapp/liteappoption.ui" line="436"/>
         <source>Toolbar Icon Size [*]</source>
         <translation>Розмір іконок пеналів [*]</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="532"/>
+        <location filename="src/liteapp/liteappoption.ui" line="538"/>
+        <source>Editor navigate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="544"/>
+        <source>Enable mouse extra &apos;Back&apos; button and &apos;Forward&apos; button for go back and forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/liteappoption.ui" line="568"/>
         <source>Keyboard</source>
         <translation>Клавіатура</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="538"/>
+        <location filename="src/liteapp/liteappoption.ui" line="574"/>
         <source>Format: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</source>
         <translation>Формат: {Ctrl+B},{Ctrl+Shift+B},{Ctrl+K,Ctrl+U},{Ctrl+Shift+Z;Ctrl+Y}</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="550"/>
+        <location filename="src/liteapp/liteappoption.ui" line="586"/>
         <source>Hide standard commands</source>
         <translation>Приховати стандартні команди</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="557"/>
+        <location filename="src/liteapp/liteappoption.ui" line="593"/>
         <source>Reset</source>
         <translation>Скинути</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="564"/>
+        <location filename="src/liteapp/liteappoption.ui" line="600"/>
         <source>Reset All</source>
         <translation>Скинути все</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="584"/>
+        <location filename="src/liteapp/liteappoption.ui" line="620"/>
         <source>Import...</source>
         <translation>Імпорт...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.ui" line="591"/>
+        <location filename="src/liteapp/liteappoption.ui" line="627"/>
         <source>Export...</source>
         <translation>Експорт...</translation>
     </message>
@@ -3213,53 +3225,53 @@ Success: %2.</oldsource>
         <translation>Стиль розділювача</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="173"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="176"/>
         <source>Command</source>
         <translation>Команда</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="174"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="177"/>
         <source>Label</source>
         <translation>Назва</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="175"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="178"/>
         <source>Shortcuts</source>
         <translation>Комбінації клавіш</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="176"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="179"/>
         <source>NativeText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="177"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="180"/>
         <source>Standard</source>
         <translation>Стандартна</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="493"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="499"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>Імпорт комбінацій клавіатури</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="493"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="527"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="499"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="533"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>Файл комбінацій клавіатури (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="500"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
         <source>Could not read scheme from %1!</source>
         <translation>Не вдалося прочитати комбінації з %1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="527"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="533"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>Експорт комбінацій клавіатури</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="538"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="544"/>
         <source>Could not write scheme to %1!</source>
         <translation>Помилка запису комбінацій в %1!</translation>
     </message>
@@ -3765,27 +3777,27 @@ Success: %2.</oldsource>
         <translation>Змінити регістр</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1128"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1129"/>
         <source>Export HTML</source>
         <translation>Експортувати HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1136"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1137"/>
         <source>Export Failed</source>
         <translation>Експорт завершився невдало</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1137"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1138"/>
         <source>Could not open %1 for writing.</source>
         <translation>Не вдалося відкрити %1 для запису.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1156"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1157"/>
         <source>Export PDF</source>
         <translation>Експорт в PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1181"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1182"/>
         <source>Print Document</source>
         <translation>Друк документу</translation>
     </message>
@@ -3848,7 +3860,7 @@ Success: %2.</oldsource>
         <translation>Розгорнути все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1256"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1257"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>Перейти до рядка</translation>
@@ -3920,7 +3932,7 @@ Success: %2.</oldsource>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1198"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1199"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>Перезавантажити %1 і відкинути незбережені зміни?</translation>
     </message>
@@ -3931,12 +3943,12 @@ Success: %2.</oldsource>
         <translation>Перейти до наступного блоку</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1230"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1231"/>
         <source>ReadOnly</source>
         <translation>Тільки для читання</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1256"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1257"/>
         <source>Line: </source>
         <translation>Рядок:</translation>
     </message>
@@ -4701,8 +4713,8 @@ Do you want to replace it?</source>
     <name>PackageBrowser</name>
     <message>
         <location filename="src/plugins/golangpackage/packagebrowser.cpp" line="87"/>
-        <source>Manage GOPATH...</source>
-        <oldsource>Setup GOPATH</oldsource>
+        <source>Manage GOPATH/Modules ...</source>
+        <oldsource>Manage GOPATH...</oldsource>
         <translation type="unfinished">Управляти GOPATH...</translation>
     </message>
     <message>
@@ -5233,36 +5245,57 @@ Do you want to replace it?</source>
     <name>SetupGopathDialog</name>
     <message>
         <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="14"/>
-        <source>Manage GOPATH</source>
+        <source>Manage GOPATH / Modules</source>
+        <oldsource>Manage GOPATH</oldsource>
         <translation type="unfinished">Управляти GOPATH</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="45"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="94"/>
         <source>Reload</source>
         <translation type="unfinished">Оновити</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="22"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="71"/>
         <source>Use System GOPATH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="92"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
+        <source>Go Modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="26"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="35"/>
+        <source>Custom GO111MODULE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="63"/>
+        <source>GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="141"/>
         <source>Add Directory...</source>
         <translation type="unfinished">Додати директорію...</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="99"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="148"/>
         <source>Clear</source>
         <translation type="unfinished">Очистити</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="69"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="118"/>
         <source>Use Custom GOPATH (one per line)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="96"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="125"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
         <translation type="unfinished">Додати директорію в GOPATH:</translation>

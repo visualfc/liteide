@@ -217,11 +217,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Запустить терминал в папке</translation>
     </message>
     <message>
-        <source>Use godoc View</source>
-        <oldsource>View Godoc Here</oldsource>
-        <translation type="vanished">Открыть Godoc</translation>
-    </message>
-    <message>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
         <translation>Открыть папку...</translation>
@@ -2604,6 +2599,18 @@ Success: %2.</oldsource>
         <source>10-999</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor navigate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable mouse extra &apos;Back&apos; button and &apos;Forward&apos; button for go back and forward</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteBuild</name>
@@ -3773,11 +3780,6 @@ Do you want to replace it?</source>
 <context>
     <name>PackageBrowser</name>
     <message>
-        <source>Manage GOPATH...</source>
-        <oldsource>Setup GOPATH</oldsource>
-        <translation>Управление GOPATH...</translation>
-    </message>
-    <message>
         <source>Reload All</source>
         <translation>Обновить всё</translation>
     </message>
@@ -3809,6 +3811,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Go Package Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage GOPATH/Modules ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4205,10 +4211,6 @@ Do you want to replace it?</source>
 <context>
     <name>SetupGopathDialog</name>
     <message>
-        <source>Manage GOPATH</source>
-        <translation>Управление GOPATH</translation>
-    </message>
-    <message>
         <source>Reload</source>
         <translation>Обновить</translation>
     </message>
@@ -4231,6 +4233,26 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Use Custom GOPATH (one per line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage GOPATH / Modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go Modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom GO111MODULE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GOPATH</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
