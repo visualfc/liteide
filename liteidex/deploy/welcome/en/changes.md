@@ -3,6 +3,27 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.09.15 Ver X34.2
+* LiteIDE
+	* fix gotools & gocode support go1.11 modules sub folder
+	* support custom GO111MODULE setup
+* LiteApp
+	* fix #939 display right margin at column wrong
+	* change mime type check fullname first
+* GolangCode
+	* fix #970 goplay editor cgo crash
+* GolangEdit
+	* find usages / rename symbol add skip GOROOT actions
+* GolangPackage
+	* add custom GO111MODULE setup
+* LiteEditor
+	* add extra mouse navagite go back and forward
+	* add gomod.xml for go.mod syntax
+* LiteBuild
+	* add gomod.xml for go.mod build command
+* gotools & gocode
+	* fix go1.11 modules sub folder
+
 ### 2018.08.12 Ver X34.1
 * LiteIDE
 	* update gotools support go1.11 modules

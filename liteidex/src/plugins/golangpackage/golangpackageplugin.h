@@ -48,7 +48,7 @@ public:
         m_info->setId("plugin/GolangPackage");
         m_info->setName("GolangPackage");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X34");
+        m_info->setVer("X34.2");
         m_info->setMustLoad(true);
         m_info->setInfo("Golang Packages Browser");
         m_info->appendDepend("plugin/liteenv");
