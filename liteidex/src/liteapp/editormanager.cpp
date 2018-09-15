@@ -357,9 +357,9 @@ bool EditorManager::eventFilter(QObject *target, QEvent *event)
     } else if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *ev = (QMouseEvent*)event;
         if (m_mouseExtNavigate) {
-            if ( ev->button() == Qt::BackButton) {
+            if ( ev->button() == 0x00000008/*Qt::BackButton*/) {
                 this->goBack();
-            } else if (ev->button() == Qt::ForwardButton) {
+            } else if (ev->button() == 0x00000010/*Qt::ForwardButton*/) {
                 this->goForward();
             }
         }
