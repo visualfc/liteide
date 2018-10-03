@@ -162,7 +162,7 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
             m_bParserHead = false;
             //package fmt
             //package ast ("go/ast")
-            if (info.startsWith("package")) {
+            if (info.startsWith("package ") || info.startsWith("import ")) {
                 int n = info.indexOf("(");
                 if (n != -1) {
                     info = info.left(n);

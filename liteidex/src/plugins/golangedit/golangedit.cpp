@@ -762,6 +762,10 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
     }
     QByteArray data = m_findDefProcess->readAllStandardOutput();
     if (data.isEmpty()) {
+        QByteArray data = m_findDefProcess->readAllStandardError();
+        if (!data.isEmpty()) {
+            m_liteApp->appendLog("GolangEdit",QString::fromUtf8(data),true);
+        }
         return;
     }
     QString info = QString::fromUtf8(data).trimmed();
