@@ -65,7 +65,8 @@ public:
     explicit GolangCode(LiteApi::IApplication *app, QObject *parent = 0);
     ~GolangCode();
     void setCompleter(LiteApi::ICompleter *completer);
-    void resetGocode(const QProcessEnvironment &env);
+    void gocodeUpdataLibpath(const QProcessEnvironment &env);
+    void gocodeReset(const QProcessEnvironment &env);
     void cgoComplete();
     void loadPkgList();
     void loadImportsList(const QProcessEnvironment &env);

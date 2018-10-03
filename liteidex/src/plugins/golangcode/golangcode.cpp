@@ -287,7 +287,7 @@ void GolangCode::updateEditorGOPATH()
     QString gopathenv = env.value("GOPATH");
     if (gopathenv != m_lastGopathEnv) {
         m_lastGopathEnv = gopathenv;
-        resetGocode(env);
+        gocodeUpdataLibpath(env);
         //loadImportsList(env);
         m_liteApp->appendLog("GolangCode",QString("gocode set lib-path \"%1\"").arg(gopathenv),false);
     }
@@ -330,7 +330,7 @@ GolangCode::~GolangCode()
     }
 }
 
-void GolangCode::resetGocode(const QProcessEnvironment &env)
+void GolangCode::gocodeUpdataLibpath(const QProcessEnvironment &env)
 {
     if (m_gocodeCmd.isEmpty()) {
         return;
@@ -342,6 +342,20 @@ void GolangCode::resetGocode(const QProcessEnvironment &env)
     }
     m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "set" << "lib-path" << env.value("GOPATH"));
 }
+
+void GolangCode::gocodeReset(const QProcessEnvironment &env)
+{
+    if (m_gocodeCmd.isEmpty()) {
+        return;
+    }
+    m_gocodeProcess->setProcessEnvironment(env);
+    m_gocodeSetProcess->setProcessEnvironment(env);
+    if (!m_gocodeSetProcess->isStop()) {
+        m_gocodeSetProcess->stopAndWait(100,1000);
+    }
+    m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "close");
+}
+
 
 void GolangCode::cgoComplete()
 {
@@ -474,6 +488,8 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
     m_gocodeProcess->setProcessEnvironment(env);
     m_importProcess->setProcessEnvironment(env);
     m_gocodeSetProcess->setProcessEnvironment(env);
+
+    gocodeReset(env);
 
     currentEditorChanged(m_liteApp->editorManager()->currentEditor());
 }
