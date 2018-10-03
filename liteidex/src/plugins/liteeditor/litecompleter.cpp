@@ -159,7 +159,7 @@ void LiteCompleter::appendChildItem(QStandardItem *root, QString name, const QSt
                 root->appendRow(item);
             }
         }
-        if (item && item->kind().isEmpty()) {
+        if (item) {
             item->setKind(kind);
             item->setToolTip(info);
             item->setTemp(temp);
