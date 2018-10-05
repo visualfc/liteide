@@ -44,7 +44,7 @@ build() {
 
   # https://github.com/visualfc/liteide/issues/633
   #go get -u github.com/visualfc/gotools
-  #go get -u github.com/nsf/gocode
+  #go get -u github.com/visualfc/gocode
 }
 
 package() {

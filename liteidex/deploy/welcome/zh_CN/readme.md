@@ -7,7 +7,7 @@ LiteIDE X
 
 _LiteIDE 是一个轻量级的开源跨平台 Go语言 IDE._
 
-* 版本: X34.2
+* 版本: X34.3
 * 作者: [七叶 (visualfc)](mailto:visualfc@gmail.com)
 
 ### 功能
@@ -63,7 +63,7 @@ _LiteIDE 是一个轻量级的开源跨平台 Go语言 IDE._
 ### 更新 liteide 工具支持新的 Go语言版本
 
 	go get -u github.com/visualfc/gotools
-	go get -u github.com/nsf/gocode
+	go get -u github.com/visualfc/gocode
 	
 	Windows/Linux: 复制 GOPATH/bin gotools 和 gocode 到 liteide/bin
 	MacOS: 复制 GOPATH/bin gotools 和 gocode 到 LiteIDE.app/Contents/MacOS	
