@@ -119,7 +119,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 
 ### Donate
-* http://visualfc.github.com/support
+* https://visualfc.github.com/support
 
 ### New Home Page
 * [Home](http://liteide.org)

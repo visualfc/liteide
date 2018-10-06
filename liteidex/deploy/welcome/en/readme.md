@@ -81,4 +81,4 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * FAQ
 	* <https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/en/guide.md>	
 * Support LiteIDE
-	* <http://visualfc.github.com/support>
+	* <https://visualfc.github.com/support>

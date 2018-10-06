@@ -80,4 +80,4 @@ _LiteIDE 是一个轻量级的开源跨平台 Go语言 IDE._
 * FAQ
 	* <https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/zh_CN/guide.md>	
 * 支持LiteIDE
-	* <http://visualfc.github.com/support>
+	* <https://visualfc.github.com/support>
