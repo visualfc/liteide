@@ -88,14 +88,6 @@ public:
     bool bHideToolBar;
 };
 
-struct OutputActionState
-{
-    QWidget *toolBtn;
-    QWidget *widget;
-    QList<QAction*> widgetActions;
-    QString id;
-    QString  title;
-};
 
 class OutputActionBar : public QObject
 {
@@ -118,7 +110,7 @@ public:
     QToolBar *toolBar;
    // QAction  *spacerAct;
     OutputDockWidget *dock;
-    QMap<QAction*,OutputActionState*> m_actionStateMap;
+    QMap<QAction*,SideActionState*> m_actionStateMap;
     bool bHideToolBar;
 };
 

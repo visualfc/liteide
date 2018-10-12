@@ -325,7 +325,7 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
     } else if (area == Qt::RightDockWidgetArea) {
         btn->setRotation(RotationToolButton::Clockwise);
     }
-    OutputActionState *state = new OutputActionState;
+    SideActionState *state = new SideActionState;
     state->toolBtn = btn;
     state->widget = widget;
     state->id = id;
@@ -343,7 +343,7 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
 
 void OutputActionBar::removeAction(QAction *action)
 {
-    OutputActionState *state = m_actionStateMap.value(action);
+    SideActionState *state = m_actionStateMap.value(action);
     if (state) {
         delete state->toolBtn;
     }
@@ -369,7 +369,7 @@ void OutputActionBar::setHideToolBar(bool b)
 
 QAction *OutputActionBar::findToolAction(QWidget *widget)
 {
-    QMapIterator<QAction*,OutputActionState*> i(m_actionStateMap);
+    QMapIterator<QAction*,SideActionState*> i(m_actionStateMap);
     while (i.hasNext()) {
         i.next();
         if (i.value()->widget == widget) {
@@ -392,7 +392,7 @@ void OutputActionBar::dockVisible(bool b)
 void OutputActionBar::toggledAction(bool)
 {
     QAction *action = (QAction*)sender();
-    OutputActionState *state = m_actionStateMap.value(action);
+    SideActionState *state = m_actionStateMap.value(action);
     if (!state) {
         return;
     }
