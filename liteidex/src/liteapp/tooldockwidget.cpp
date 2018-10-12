@@ -326,10 +326,18 @@ OutputDockWidget::OutputDockWidget(QSize iconSize, QWidget *parent) :
 void OutputDockWidget::createMenu(Qt::DockWidgetArea /*area*/)
 {    
     QMenu *moveMenu = new QMenu(tr("Move To"),this);
-    QAction *act = new QAction(tr("SideBar"),this);
-    act->setData(Qt::LeftDockWidgetArea);
-    moveMenu->addAction(act);
-    connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
+
+    QAction *leftAct = new QAction(tr("LeftSideBar"),this);
+    QAction *rightAct = new QAction(tr("RightSideBar"),this);
+
+    leftAct->setData(Qt::LeftDockWidgetArea);
+    rightAct->setData(Qt::RightDockWidgetArea);
+
+    moveMenu->addAction(leftAct);
+    moveMenu->addAction(rightAct);
+
+    connect(leftAct,SIGNAL(triggered()),this,SLOT(moveAction()));
+    connect(rightAct,SIGNAL(triggered()),this,SLOT(moveAction()));
 
     QMenu *menu = new QMenu(this);
     menu->addAction(moveMenu->menuAction());

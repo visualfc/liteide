@@ -77,7 +77,7 @@ class SideActionBar : public BaseActionBar
 {
     Q_OBJECT
 public:
-    SideActionBar(QSize m_iconSize, QMainWindow *m_window, Qt::DockWidgetArea m_area = Qt::BottomDockWidgetArea);
+    SideActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area);
     virtual ~SideActionBar();
     void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
     void removeAction(QAction *action);
@@ -85,6 +85,7 @@ public:
     virtual QToolBar *toolBar() const { return m_toolBar; }
     virtual QMap<QAction*,SideActionState*> actionMap() const { return m_actionStateMap; }
     void updateAction(QAction *action);
+    void setShowToolBar(bool visible);
 signals:
     void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*);
 protected slots:
@@ -158,7 +159,8 @@ public slots:
 protected:
     LiteApi::IApplication *m_liteApp;
     QMainWindow *m_mainWindow;
-    SideActionBar *m_sideBar;
+    SideActionBar *m_leftSideBar;
+    SideActionBar *m_rightSideBar;
     OutputActionBar *m_outputBar;
     QMap<Qt::DockWidgetArea, BaseActionBar*> m_actionBarMap;
     QStatusBar  *m_statusBar;
