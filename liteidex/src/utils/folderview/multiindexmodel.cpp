@@ -570,8 +570,8 @@ bool MultiIndexModel::hasChildren(const QModelIndex &parent) const
         return true; //we assume we might have children that can be fetched
 
     return true;
-    Mapping *m = d->createMapping(source.model,source.index,false,"hasChildren").value();
-    return m->source_rows.count() != 0;
+   // Mapping *m = d->createMapping(source.model,source.index,false,"hasChildren").value();
+   // return m->source_rows.count() != 0;
 }
 
 QModelIndex MultiIndexModel::buddy(const QModelIndex &index) const
