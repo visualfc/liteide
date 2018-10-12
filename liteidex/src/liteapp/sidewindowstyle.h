@@ -149,6 +149,7 @@ public:
     void restoreHideSideToolWindows();
     void hideSideToolWindows();
 public slots:
+    void moveActionTo(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction*action);
     virtual void hideOutputWindow();
     virtual void showOrHideToolWindow();
     virtual void hideAllToolWindows();

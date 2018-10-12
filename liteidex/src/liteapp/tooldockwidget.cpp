@@ -64,6 +64,7 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     m_closeAct->setToolTip(tr("Hide Tool Window"));
     m_closeAct->setIcon(QIcon("icon:images/closetool.png"));
     m_toolBar->addAction(m_closeAct);
+
     connect(m_closeAct,SIGNAL(triggered()),this,SLOT(close()));
     connect(m_comboBox,SIGNAL(activated(int)),this,SLOT(activeComboBoxIndex(int)));
 
@@ -324,29 +325,29 @@ OutputDockWidget::OutputDockWidget(QSize iconSize, QWidget *parent) :
 
 void OutputDockWidget::createMenu(Qt::DockWidgetArea /*area*/)
 {    
-//    QMenu *moveMenu = new QMenu(tr("Move To"),this);
-//    QAction *act = new QAction(tr("SideBar"),this);
-//    act->setData(area);
-//    moveMenu->addAction(act);
-//    connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
+    QMenu *moveMenu = new QMenu(tr("Move To"),this);
+    QAction *act = new QAction(tr("SideBar"),this);
+    act->setData(Qt::LeftDockWidgetArea);
+    moveMenu->addAction(act);
+    connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
 
-//    QMenu *menu = new QMenu(this);
-//    menu->addAction(moveMenu->menuAction());
+    QMenu *menu = new QMenu(this);
+    menu->addAction(moveMenu->menuAction());
 
-//    m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-//    m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-//    QWidget *spacer = new QWidget;
-//    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    m_toolBar->insertWidget(m_closeAct,spacer);
+    m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    QWidget *spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    m_toolBar->insertWidget(m_closeAct,spacer);
 
-//    QToolButton *btn = new QToolButton(m_toolBar);
-//    btn->setPopupMode(QToolButton::InstantPopup);
-//    btn->setIcon(QIcon("icon:images/movemenu.png"));
-//    btn->setMenu(menu);
-//    btn->setText(tr("Move To"));
-//    btn->setToolTip(tr("Move To"));
-//    //btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
-//    m_toolBar->insertWidget(m_closeAct,btn);
+    QToolButton *btn = new QToolButton(m_toolBar);
+    btn->setPopupMode(QToolButton::InstantPopup);
+    btn->setIcon(QIcon("icon:images/movemenu.png"));
+    btn->setMenu(menu);
+    btn->setText(tr("Move To"));
+    btn->setToolTip(tr("Move To"));
+    btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
+    m_toolBar->insertWidget(m_closeAct,btn);
 }
 
 void OutputDockWidget::moveAction()

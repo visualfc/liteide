@@ -27,6 +27,7 @@
 #include "liteapp_global.h"
 #include "liteapi/liteids.h"
 #include <QStatusBar>
+#include <QDebug>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -193,12 +194,27 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
 
 void SideActionBar::removeAction(QAction *action)
 {
+    for (int i = 0; i < m_dockList.size(); i++) {
+        SideDockWidget *dock = m_dockList[i];
+        if (dock->checkedAction() == action) {
+            dock->hide();
+            m_window->removeDockWidget(dock);
+            m_dockList.removeAt(i);
+            m_toolBar->removeAction(action);
+            break;
+        }
+    }
+
     SideActionState *state = m_actionStateMap.value(action);
     if (state) {
         delete state->toolBtn;
     }
     m_actionStateMap.remove(action);
     delete state;
+
+    foreach(SideDockWidget *dock, m_dockList) {
+        dock->setActions(m_actionStateMap);
+    }
 }
 
 void SideActionBar::setHideToolBar(bool b)
@@ -345,13 +361,16 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
 
 void OutputActionBar::removeAction(QAction *action)
 {
+    if (action->isChecked()) {
+        action->setChecked(false);
+    }
     SideActionState *state = m_actionStateMap.value(action);
     if (state) {
         delete state->toolBtn;
     }
+    m_dock->removeAction(action);
     m_actionStateMap.remove(action);
     delete state;
-    m_dock->removeAction(action);
     if (m_dock->actions().isEmpty()) {
         m_toolBar->hide();
     }
@@ -418,6 +437,8 @@ SideWindowStyle::SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window
     QSize iconSize = LiteApi::getToolBarIconSize(app);
     m_sideBar = new SideActionBar(iconSize,window,Qt::LeftDockWidgetArea);
     m_outputBar = new OutputActionBar(iconSize,window,Qt::BottomDockWidgetArea);
+    connect(m_sideBar,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)),this,SLOT(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)));
+    connect(m_outputBar,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)),this,SLOT(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)));
 
     m_actionBarMap[Qt::LeftDockWidgetArea] = m_sideBar;
     m_actionBarMap[Qt::BottomDockWidgetArea] = m_outputBar;
@@ -581,8 +602,25 @@ void SideWindowStyle::updateConer()
     m_mainWindow->setCorner(Qt::BottomRightCorner,Qt::RightDockWidgetArea);
 }
 
-void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea /*area*/, Qt::DockWidgetArea /*to*/, QAction */*action*/, bool /*split*/)
+void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool /*split*/)
+ {
+    qDebug() << "move tool window" << from << to;
+    if (from == to) {
+        return;
+    }
+    BaseActionBar *fromBar = m_actionBarMap[from];
+    BaseActionBar *toBar = m_actionBarMap[to];
+    if (!fromBar || !toBar) {
+        return;
+    }
+    SideActionState *state = fromBar->actionMap().value(action);
+    toBar->addAction(action,state->widget,state->id,state->title,state->widgetActions);
+    fromBar->removeAction(action);
+}
+
+void SideWindowStyle::moveActionTo(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action)
 {
+    this->moveToolWindow(from,to,action,false);
 }
 
 QAction *SideWindowStyle::findToolWindow(QWidget *widget)
