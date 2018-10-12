@@ -32,7 +32,7 @@ class ToolWindowManager : public IToolWindowManager
 {
 public:
     virtual QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions = QList<QAction*>());
-    virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action, bool split);
+    virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to,QAction *action, bool split);
     virtual QAction *findToolWindow(QWidget *widget);
     virtual void removeToolWindow(QAction *action);
     virtual void removeToolWindow(QWidget *widget);

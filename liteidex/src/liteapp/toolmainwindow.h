@@ -45,7 +45,7 @@ public slots:
     void showOrHideToolWindow();
     void hideOutputWindow();
     void hideAllToolWindows();
-    void moveToolWindow(Qt::DockWidgetArea area, QAction *action,bool split = false);
+    void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action,bool split = false);
 protected:
     IWindowStyle *m_windowStyle;
 };

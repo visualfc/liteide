@@ -61,7 +61,7 @@ public:
     void removeAction(QAction *action, bool split);
     void setHideToolBar(bool b);
 signals:
-    void moveActionTo(Qt::DockWidgetArea,QAction*,bool);
+    void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*,bool);
 protected slots:
     void dock1Visible(bool);
     void dock2Visible(bool);
@@ -105,7 +105,7 @@ public slots:
     void hideOutputWindow();
     void restoreToolWindows();
     void hideSideBar(bool b);
-    void moveToolWindow(Qt::DockWidgetArea area, QAction *action,bool split = false);
+    void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action,bool split = false);
 protected slots:
     void toggledAction(bool);
 protected:

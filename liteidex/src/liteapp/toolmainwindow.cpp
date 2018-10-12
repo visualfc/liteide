@@ -89,9 +89,9 @@ QAction *ToolMainWindow::addToolWindow(LiteApi::IApplication *app,Qt::DockWidget
     return m_windowStyle->addToolWindow(app,area,widget,id,title,split,widgetActions);
 }
 
-void ToolMainWindow::moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split)
+void ToolMainWindow::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split)
 {
-    m_windowStyle->moveToolWindow(area,action,split);
+    m_windowStyle->moveToolWindow(from,to,action,split);
 }
 
 void ToolMainWindow::showOrHideToolWindow()

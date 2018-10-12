@@ -35,7 +35,7 @@ public:
     virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>()) = 0;
     virtual void removeToolWindow(QAction *action) = 0;
     virtual QAction *findToolWindow(QWidget *wiget) = 0;
-    virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split) = 0;
+    virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to,QAction *action,bool split) = 0;
     virtual void saveToolState() const = 0;
     virtual void restoreToolsState() = 0;
     virtual void updateConer() = 0;

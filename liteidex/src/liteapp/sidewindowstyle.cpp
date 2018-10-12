@@ -45,9 +45,10 @@ SideDockWidget::SideDockWidget(QSize iconSize, QWidget *parent) :
 
 void SideDockWidget::createMenu(Qt::DockWidgetArea area)
 {
+    m_area = area;
     m_moveMenu = new QMenu(tr("Move To"),this);
     QAction *act = new QAction(tr("OutputBar"),this);
-    act->setData(area);
+    act->setData(Qt::BottomDockWidgetArea);
     m_moveMenu->addAction(act);
     connect(act,SIGNAL(triggered()),this,SLOT(moveAction()));
 
@@ -70,7 +71,7 @@ void SideDockWidget::moveAction()
         return;
     }
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
-    emit moveActionTo(area,current);
+    emit moveActionTo(m_area,area,current);
 }
 
 void SideDockWidget::actionChanged()
@@ -166,7 +167,7 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     m_window->addDockWidget(m_area,dock);
 
     connect(dock,SIGNAL(visibilityChanged(bool)),this,SLOT(dockVisible(bool)));
-    connect(dock,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*)));
+    connect(dock,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)));
     connect(dock,SIGNAL(currenActionChanged(QAction*,QAction*)),this,SLOT(currenActionChanged(QAction*,QAction*)));
 
     SideActionState *state = new SideActionState;
@@ -304,7 +305,7 @@ OutputActionBar::OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWi
     window->addDockWidget(m_area,m_dock);
 
     connect(m_dock,SIGNAL(visibilityChanged(bool)),this,SLOT(dockVisible(bool)));
-    connect(m_dock,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*)));
+    connect(m_dock,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*)));
 }
 
 OutputActionBar::~OutputActionBar()
@@ -580,7 +581,7 @@ void SideWindowStyle::updateConer()
     m_mainWindow->setCorner(Qt::BottomRightCorner,Qt::RightDockWidgetArea);
 }
 
-void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea /*area*/, QAction */*action*/, bool /*split*/)
+void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea /*area*/, Qt::DockWidgetArea /*to*/, QAction */*action*/, bool /*split*/)
 {
 }
 

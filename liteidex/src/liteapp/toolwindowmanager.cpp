@@ -39,9 +39,9 @@ QAction *ToolWindowManager::addToolWindow(Qt::DockWidgetArea area, QWidget *widg
     return ((ToolMainWindow*)m_liteApp->mainWindow())->addToolWindow(m_liteApp,area,widget,id,title,split,widgetActions);
 }
 
-void ToolWindowManager::moveToolWindow(Qt::DockWidgetArea area,QAction *action, bool split)
+void ToolWindowManager::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split)
 {
-    ((ToolMainWindow*)m_liteApp->mainWindow())->moveToolWindow(area,action,split);
+    ((ToolMainWindow*)m_liteApp->mainWindow())->moveToolWindow(from,to,action,split);
 }
 
 QAction *ToolWindowManager::findToolWindow(QWidget *widget)

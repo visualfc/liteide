@@ -623,7 +623,7 @@ class IToolWindowManager : public IManager
 public:
     IToolWindowManager(QObject *parent = 0) : IManager(parent) {}
     virtual QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions = QList<QAction*>()) = 0;
-    virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action, bool split) = 0;
+    virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to,QAction *action, bool split) = 0;
     virtual QAction *findToolWindow(QWidget *widget) = 0;
     virtual void removeToolWindow(QAction *action) = 0;
     virtual void removeToolWindow(QWidget *widget) = 0;

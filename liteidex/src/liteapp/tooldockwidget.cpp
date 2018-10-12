@@ -196,6 +196,7 @@ SplitDockWidget::SplitDockWidget(QSize iconSize, QWidget *parent) :
 
 void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
 {
+    m_area = area;
     QMenu *moveMenu = new QMenu(tr("Move To"),this);
     if (area != Qt::TopDockWidgetArea) {
         QAction *act = new QAction(tr("Top"),this);
@@ -277,7 +278,7 @@ void SplitDockWidget::moveAction()
         return;
     }
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
-    emit moveActionTo(area,current,false);
+    emit moveActionTo(m_area,area,current,false);
 }
 
 void SplitDockWidget::moveActionSplit()
@@ -287,7 +288,7 @@ void SplitDockWidget::moveActionSplit()
         return;
     }
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
-    emit moveActionTo(area,current,true);
+    emit moveActionTo(m_area,area,current,true);
 }
 
 void SplitDockWidget::splitAction()
@@ -297,7 +298,7 @@ void SplitDockWidget::splitAction()
         return;
     }
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
-    emit moveActionTo(area,current,true);
+    emit moveActionTo(m_area,area,current,true);
 }
 
 void SplitDockWidget::unsplitAction()
@@ -307,7 +308,7 @@ void SplitDockWidget::unsplitAction()
         return;
     }
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
-    emit moveActionTo(area,current,false);
+    emit moveActionTo(m_area,area,current,false);
 }
 
 
@@ -355,5 +356,5 @@ void OutputDockWidget::moveAction()
         return;
     }
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
-    emit moveActionTo(area,current);
+    emit moveActionTo(Qt::BottomDockWidgetArea,area,current);
 }

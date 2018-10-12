@@ -131,8 +131,8 @@ SplitActionToolBar::SplitActionToolBar(QSize iconSize, QWidget *parent, Qt::Dock
 
     connect(dock1,SIGNAL(visibilityChanged(bool)),this,SLOT(dock1Visible(bool)));
     connect(dock2,SIGNAL(visibilityChanged(bool)),this,SLOT(dock2Visible(bool)));
-    connect(dock1,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)));
-    connect(dock2,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)));
+    connect(dock1,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*,bool)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*,bool)));
+    connect(dock2,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*,bool)),this,SIGNAL(moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*,bool)));
 }
 
 SplitDockWidget *SplitActionToolBar::dock(bool split) const
@@ -233,7 +233,7 @@ SplitWindowStyle::SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *wind
             m_mainWindow->splitDockWidget(actionToolBar->dock1,actionToolBar->dock2,Qt::Horizontal);
         else
             m_mainWindow->splitDockWidget(actionToolBar->dock1,actionToolBar->dock2,Qt::Vertical);
-        connect(actionToolBar,SIGNAL(moveActionTo(Qt::DockWidgetArea,QAction*,bool)),this,SLOT(moveToolWindow(Qt::DockWidgetArea,QAction*,bool)));
+        connect(actionToolBar,SIGNAL(moveActionTo(Qt::DockWidgetArea, Qt::DockWidgetArea,QAction*,bool)),this,SLOT(moveToolWindow(Qt::DockWidgetArea, Qt::DockWidgetArea,QAction*,bool)));
     }
 
     m_mainWindow->setDockNestingEnabled(true);
@@ -375,17 +375,17 @@ QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidg
     return action;
 }
 
-void SplitWindowStyle::moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split)
+void SplitWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split)
 {
     SplitActionState *state = m_actStateMap.value(action);
     if (!state) {
         return;
     }
-    if (state->area == area && state->split == split) {
+    if (state->area == to && state->split == split) {
         return;
     }
-    SplitActionToolBar *actionToolBar = m_areaToolBar.value(area);
-    SplitActionToolBar *oldActToolBar = m_areaToolBar.value(state->area);
+    SplitActionToolBar *actionToolBar = m_areaToolBar.value(to);
+    SplitActionToolBar *oldActToolBar = m_areaToolBar.value(from);
 
     if (action->isChecked()) {
         action->setChecked(false);
@@ -394,7 +394,7 @@ void SplitWindowStyle::moveToolWindow(Qt::DockWidgetArea area,QAction *action,bo
     oldActToolBar->removeAction(action,state->split);
     actionToolBar->addAction(action,state->title,split);
 
-    state->area = area;
+    state->area = to;
     state->split = split;
     action->setChecked(true);
 }

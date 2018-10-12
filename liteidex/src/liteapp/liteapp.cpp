@@ -212,7 +212,6 @@ LiteApp::LiteApp()
         m_mainwindow->setWindowStyle(style);
     }
 
-
     m_toolWindowManager = new ToolWindowManager;
     m_htmlWidgetManager = new HtmlWidgetManager;
     m_actionManager = new ActionManager;

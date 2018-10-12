@@ -49,7 +49,7 @@ public:
     void setCheckedAction(QAction *action);
     void setActions(const QMap<QAction*,SideActionState*> &m);
 signals:
-    void moveActionTo(Qt::DockWidgetArea, QAction*);
+    void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea, QAction*);
     void currenActionChanged(QAction *org, QAction *act);
 protected slots:
     void moveAction();
@@ -58,6 +58,7 @@ protected slots:
 protected:
     QMenu *m_menu;
     QMenu *m_moveMenu;
+    Qt::DockWidgetArea m_area;
 };
 
 class BaseActionBar : public QObject
@@ -85,7 +86,7 @@ public:
     virtual QMap<QAction*,SideActionState*> actionMap() const { return m_actionStateMap; }
     void updateAction(QAction *action);
 signals:
-    void moveActionTo(Qt::DockWidgetArea,QAction*);
+    void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*);
 protected slots:
     void setHideToolBar(bool b);
     void dockVisible(bool);
@@ -117,7 +118,7 @@ public:
     virtual QToolBar *toolBar() const { return m_toolBar; }
     virtual QMap<QAction*,SideActionState*> actionMap() const { return m_actionStateMap; }
 signals:
-    void moveActionTo(Qt::DockWidgetArea,QAction*);
+    void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea,QAction*);
 protected slots:
     void dockVisible(bool);
     void toggledAction(bool b);
@@ -140,7 +141,7 @@ public:
     virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
     virtual void removeToolWindow(QAction *action);
     virtual QAction *findToolWindow(QWidget *widget);
-    virtual void moveToolWindow(Qt::DockWidgetArea area,QAction *action,bool split);
+    virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split);
     virtual void saveToolState() const;
     virtual void restoreToolsState();
     virtual void updateConer();

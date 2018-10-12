@@ -67,12 +67,14 @@ public:
     explicit SplitDockWidget(QSize iconSize, QWidget *parent = 0);
     void createMenu(Qt::DockWidgetArea area, bool split);
 signals:
-    void moveActionTo(Qt::DockWidgetArea, QAction*, bool);
+    void moveActionTo(Qt::DockWidgetArea, Qt::DockWidgetArea, QAction*, bool);
 protected slots:
     void moveAction();
     void splitAction();
     void unsplitAction();
     void moveActionSplit();
+protected:
+    Qt::DockWidgetArea m_area;
 };
 
 class OutputDockWidget : public BaseDockWidget
@@ -82,7 +84,7 @@ public:
     explicit OutputDockWidget(QSize iconSize, QWidget *parent = 0);
     void createMenu(Qt::DockWidgetArea area);
 signals:
-    void moveActionTo(Qt::DockWidgetArea, QAction*);
+    void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea, QAction*);
 protected slots:
     void moveAction();
 };
