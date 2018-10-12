@@ -57,18 +57,32 @@ protected slots:
     virtual void activeComboBoxIndex(int);
 protected:
     QMenu *m_menu;
+    QMenu *m_moveMenu;
 };
 
+class BaseActionBar : public QObject
+{
+public:
+    BaseActionBar(QObject *parent) : QObject(parent)
+    {}
+    virtual void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions) = 0;
+    virtual void removeAction(QAction *action) = 0;
+    virtual QAction *findToolAction(QWidget *widget) const = 0;
+    virtual QToolBar *toolBar() const = 0;
+    virtual QMap<QAction*,SideActionState*> actionMap() const = 0;
+};
 
-class SideActionBar : public QObject
+class SideActionBar : public BaseActionBar
 {
     Q_OBJECT
 public:
-    SideActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
+    SideActionBar(QSize m_iconSize, QMainWindow *m_window, Qt::DockWidgetArea m_area = Qt::BottomDockWidgetArea);
     virtual ~SideActionBar();
     void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
     void removeAction(QAction *action);
-    QAction *findToolAction(QWidget *widget);
+    QAction *findToolAction(QWidget *widget) const;
+    virtual QToolBar *toolBar() const { return m_toolBar; }
+    virtual QMap<QAction*,SideActionState*> actionMap() const { return m_actionStateMap; }
     void updateAction(QAction *action);
 signals:
     void moveActionTo(Qt::DockWidgetArea,QAction*);
@@ -77,41 +91,43 @@ protected slots:
     void dockVisible(bool);
     void toggledAction(bool b);
     void currenActionChanged(QAction *org, QAction *act);
-public:
-    QSize iconSize;
-    QMainWindow *window;
-    Qt::DockWidgetArea area;
-    QToolBar *toolBar;
+protected:
+    QSize m_iconSize;
+    QMainWindow *m_window;
+    Qt::DockWidgetArea m_area;
+    QToolBar *m_toolBar;
     //QAction  *spacerAct;
     QList<SideDockWidget*> m_dockList;
     QMap<QAction*,SideActionState*> m_actionStateMap;
-    bool bHideToolBar;
+    bool m_bHideToolBar;
 };
 
 
-class OutputActionBar : public QObject
+class OutputActionBar : public BaseActionBar
 {
     Q_OBJECT
 public:
-    OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area = Qt::BottomDockWidgetArea);
+    OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea m_area = Qt::BottomDockWidgetArea);
     virtual ~OutputActionBar();
     OutputDockWidget *dockWidget() const;
     void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
     void removeAction(QAction *action);
     void setHideToolBar(bool b);
-    QAction *findToolAction(QWidget *widget);
+    virtual QAction *findToolAction(QWidget *widget) const;
+    virtual QToolBar *toolBar() const { return m_toolBar; }
+    virtual QMap<QAction*,SideActionState*> actionMap() const { return m_actionStateMap; }
 signals:
     void moveActionTo(Qt::DockWidgetArea,QAction*);
 protected slots:
     void dockVisible(bool);
     void toggledAction(bool b);
-public:
-    Qt::DockWidgetArea area;
-    QToolBar *toolBar;
+protected:
+    Qt::DockWidgetArea m_area;
+    QToolBar *m_toolBar;
    // QAction  *spacerAct;
-    OutputDockWidget *dock;
+    OutputDockWidget *m_dock;
     QMap<QAction*,SideActionState*> m_actionStateMap;
-    bool bHideToolBar;
+    bool m_bHideToolBar;
 };
 
 class SideWindowStyle : public IWindowStyle
@@ -142,6 +158,7 @@ protected:
     QMainWindow *m_mainWindow;
     SideActionBar *m_sideBar;
     OutputActionBar *m_outputBar;
+    QMap<Qt::DockWidgetArea, BaseActionBar*> m_actionBarMap;
     QStatusBar  *m_statusBar;
     QAction     *m_hideSideAct;
     QList<QAction*> m_hideActionList;
