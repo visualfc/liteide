@@ -118,6 +118,12 @@ void SideDockWidget::setCheckedAction(QAction *action)
     }
 }
 
+static bool actionThan(const QAction *s1, const QAction *s2)
+{
+    return s1->text() < s2->text();
+}
+
+
 void SideDockWidget::setActions(const QMap<QAction *, SideActionState *> &m)
 {
     m_actions = m.keys();
@@ -125,17 +131,29 @@ void SideDockWidget::setActions(const QMap<QAction *, SideActionState *> &m)
     int cur = 0;
     int index = 0;
     m_menu->clear();
-    QMapIterator<QAction *, SideActionState *> i(m);
-    while(i.hasNext()) {
-        i.next();
-        QAction *act = i.key();
-        m_comboBox->addItem(i.value()->title,act->objectName());
+//    QMapIterator<QAction *, SideActionState *> i(m);
+    QList<QAction*> keys = m.keys();
+    qSort(keys.begin(),keys.end(),actionThan);
+    for (int i = 0; i < keys.size(); i++) {
+        QAction *act = keys[i];
+        m_comboBox->addItem(m.value(act)->title,act->objectName());
         m_menu->addAction(act);
         if (current && (current->objectName() == act->objectName())) {
             cur = index;
         }
         index++;
     }
+//    while(i.hasNext()) {
+//        i.next();
+//        QAction *act = i.key();
+//        m_comboBox->addItem(i.value()->title,act->objectName());
+//        m_menu->addAction(act);
+//        if (current && (current->objectName() == act->objectName())) {
+//            cur = index;
+//        }
+//        index++;
+//    }
+    m_menu->addSeparator();
     m_menu->addMenu(m_moveMenu);
     m_comboBox->setCurrentIndex(cur);
 }
@@ -682,6 +700,9 @@ void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea
                 QKeySequence ks(QString("Ctrl+Alt+%1").arg(index));
                 LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
                 actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
+            } else {
+                LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+                actionContext->regAction(action,"ToolWindow_"+id,"");
             }
         }
     } else if (from != Qt::BottomDockWidgetArea && to == Qt::BottomDockWidgetArea) {
@@ -695,6 +716,9 @@ void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea
                 QKeySequence ks(QString("Ctrl+%1").arg(index));
                 LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
                 actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
+            } else {
+                LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+                actionContext->regAction(action,"ToolWindow_"+id,"");
             }
         }
     }
