@@ -448,9 +448,9 @@ QStringList ActionContext::actionKeys() const
     return m_actionInfoMap.keys();
 }
 
-ActionInfo *ActionContext::actionInfo(const QString &key) const
+ActionInfo *ActionContext::actionInfo(const QString &id) const
 {
-    return m_actionInfoMap.value(key);
+    return m_actionInfoMap.value(id);
 }
 
 void ActionContext::setActionShortcuts(const QString &id, const QString &shortcuts)
