@@ -713,7 +713,7 @@ void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea
             int index = m_outputBar->actionMap().size();
             if (index <= 9) {
                 action->setText(QString("%1: %2").arg(index).arg(title));
-                QKeySequence ks(QString("Ctrl+%1").arg(index));
+                QKeySequence ks(QString("Ctrl+Meta+%1").arg(index));
                 LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
                 actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
             } else {
@@ -763,7 +763,7 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
         if ((index <= 9) && m_useShortcuts) {
             action->setText(QString("%1: %2").arg(index).arg(title));
             //QKeySequence ks(LiteApi::UseMacShortcuts?QString("Ctrl+Alt+%1").arg(index):QString("Alt+%1").arg(index));
-            QKeySequence ks(QString("Ctrl+%1").arg(index));
+            QKeySequence ks(QString("Ctrl+Meta+%1").arg(index));
             LiteApi::IActionContext *actionContext = app->actionManager()->getActionContext(app,"App");
             actionContext->regAction(action,"ToolWindow_"+id,ks.toString());
         }
