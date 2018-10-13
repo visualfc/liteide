@@ -254,7 +254,7 @@ void LiteEditor::createActions()
     m_undoAct->setEnabled(false);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
-    actionContext->regAction(m_redoAct,"Redo","Ctrl+Shift+Z; Ctrl+Y");
+    actionContext->regAction(m_redoAct,"Redo",QKeySequence::Redo);
     m_redoAct->setEnabled(false);
     
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
