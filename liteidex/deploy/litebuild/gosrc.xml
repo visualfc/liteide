@@ -9,9 +9,6 @@
 		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
 		<custom id="TargetWorkDir" name = "TARGTWORKDIR" value="$(BUILD_DIR_PATH)"/>
-		<custom id="DebugName" name = "DEBUGNAME" value="$(TARGETBASENAME).debug$(GOEXE)" readonly="true" escaped="true"/>
-		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(TARGETBASENAME).test$(GOEXE)" readonly="true" escaped="true"/>
-		<custom id="DebugWorkDir" name = "DEBUGWORKDIR" value="$(BUILD_DIR_PATH)"/>
 		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
 		<custom id="BuildArgs" name="BUILDARGS" value="" shared-value="$(BUILDFLAGS)"/>
 		<custom id="ForceBuildArgs" name="FORCEBUILDARGS" value="-a -v" shared-value="$(BUILDFLAGS)"/>
@@ -28,6 +25,9 @@
 		<custom id="ToolVetArgs" name="TOOLVETARGS" value="-all -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GenerateArgs" name="GENERATEARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
+		<custom id="DebugName" name = "DEBUGNAME" value="$(TARGETBASENAME).debug$(GOEXE)" escaped="true"/>
+		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(TARGETBASENAME).test$(GOEXE)" escaped="true"/>
+		<custom id="DebugWorkDir" name = "DEBUGWORKDIR" value="$(TARGTWORKDIR)"/>
 		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -v -o $(DEBUGNAME)"/>
 		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -c -o $(DEBUGTESTNAME)"/>
 		<action id="BuildAndRun" img="buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
