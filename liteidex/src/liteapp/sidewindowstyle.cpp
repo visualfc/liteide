@@ -188,7 +188,7 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     }
 
     SideDockWidget *dock = new SideDockWidget(m_iconSize, m_window);
-    dock->setObjectName(QString("side_dock_x_%1").arg(id));
+    dock->setObjectName(dockWidgetObjName(id));
     dock->setWindowTitle(title);
     dock->setAllowedAreas(m_area);
     dock->setFeatures(QDockWidget::DockWidgetClosable);
@@ -284,6 +284,11 @@ void SideActionBar::dockVisible(bool b)
     }
 }
 
+QString SideActionBar::dockWidgetObjName(const QString &id) const
+{
+    return QString("side_dock_x_%1").arg(id);
+}
+
 void SideActionBar::updateAction(QAction *action)
 {
     SideActionState *state = m_actionStateMap.value(action);
@@ -295,7 +300,7 @@ void SideActionBar::updateAction(QAction *action)
                 }
                 dock->setWidget(state->widget);
                 dock->setWidgetActions(state->widgetActions);
-                dock->setObjectName(QString("side_dock_%1").arg(state->id));
+                dock->setObjectName(dockWidgetObjName(state->id));
                 dock->setWindowTitle(state->title);
             } else {
                 dock->hide();

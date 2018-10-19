@@ -102,6 +102,7 @@ protected:
     QList<SideDockWidget*> m_dockList;
     QMap<QAction*,SideActionState*> m_actionStateMap;
     bool m_bHideToolBar;
+    QString dockWidgetObjName(const QString &id) const;
 };
 
 
