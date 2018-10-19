@@ -92,10 +92,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_renameSymbolAct = new QAction(tr("Rename Symbol Under Cursor"),this);
     actionContext->regAction(m_renameSymbolAct,"RenameSymbol","CTRL+SHIFT+R");
 
-    m_findUseGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Find Usages")),this);
+    m_findUseGlobalAct = new QAction(QString("%1 (GOPATH / Module)").arg(tr("Find Usages")),this);
     actionContext->regAction(m_findUseGlobalAct,"FindUsagesGOPATH","CTRL+ALT+U");
 
-    m_findUseSkipGorootAct = new QAction(QString("%1 (GOPATH && Skip GOROOT)").arg(tr("Find Usages")),this);
+    m_findUseSkipGorootAct = new QAction(QString("%1 (GOPATH / Module) Skip GOROOT").arg(tr("Find Usages")),this);
     actionContext->regAction(m_findUseSkipGorootAct,"FindUsagesSkipGOROOT","");
 
     m_renameSymbolGlobalAct = new QAction(QString("%1 (GOPATH)").arg(tr("Rename Symbol Under Cursor")),this);
