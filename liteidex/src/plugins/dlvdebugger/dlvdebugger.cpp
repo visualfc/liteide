@@ -164,7 +164,7 @@ void DlvDebugger::appLoaded()
 
 QString DlvDebugger::mimeType() const
 {
-    return QLatin1String("debugger/delve");
+    return QLatin1String("debugger/delve1");
 }
 
 QAbstractItemModel *DlvDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)

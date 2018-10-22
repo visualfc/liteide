@@ -902,11 +902,11 @@ void DlvRpcDebugger::readStdOutput()
         m_dlvExit = true;
         stop();
     } else if (m_handleState.stopped()) {
-        m_updateCmdList.clear();
-        m_updateCmdList << "stack";// << "stack 0 -full";
-
         DebuggerState state = m_dlvClient->GetState();
         if (state.pCurrentThread) {
+            m_updateCmdList.clear();
+            m_updateCmdList << "stack";// << "stack 0 -full";
+
             int id = state.pCurrentThread->GoroutineID;
             updateVariable(id);
             updateWatch(id);
@@ -938,7 +938,7 @@ void DlvRpcDebugger::updateWatch(int id)
         if (s.contains(".")) {
             gid = -1;
         }
-        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::CustomeLong(16));
+        VariablePointer pt = m_dlvClient->EvalVariable(EvalScope(gid),s,LoadConfig::Long128(3));
         if (pt) {
             watch.push_back(*pt);
         } else {
@@ -966,8 +966,8 @@ void DlvRpcDebugger::updateWatch(int id)
 
 void DlvRpcDebugger::updateVariable(int id)
 {
-    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::CustomeLong(16));
-    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::CustomeLong(16));
+    QList<Variable> vars = m_dlvClient->ListLocalVariables(EvalScope(id),LoadConfig::Long128(3));
+    QList<Variable> args = m_dlvClient->ListFunctionArgs(EvalScope(id),LoadConfig::Long128(3));
 
     QMap<QString,QString> saveMap;
     emit beginUpdateModel(LiteApi::VARS_MODEL);

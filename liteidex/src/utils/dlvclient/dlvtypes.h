@@ -96,6 +96,88 @@ type Variable struct {
     Unreadable string `json:"unreadable"`
 }
 */
+/*
+type VariableFlags uint16
+
+const (
+    // VariableEscaped is set for local variables that escaped to the heap
+    //
+    // The compiler performs escape analysis on local variables, the variables
+    // that may outlive the stack frame are allocated on the heap instead and
+    // only the address is recorded on the stack. These variables will be
+    // marked with this flag.
+    VariableEscaped = (1 << iota)
+
+    // VariableShadowed is set for local variables that are shadowed by a
+    // variable with the same name in another scope
+    VariableShadowed
+
+    // VariableConstant means this variable is a constant value
+    VariableConstant
+
+    // VariableArgument means this variable is a function argument
+    VariableArgument
+
+    // VariableReturnArgument means this variable is a function return value
+    VariableReturnArgument
+)
+
+// Variable describes a variable.
+type Variable struct {
+    // Name of the variable or struct member
+    Name string `json:"name"`
+    // Address of the variable or struct member
+    Addr uintptr `json:"addr"`
+    // Only the address field is filled (result of evaluating expressions like &<expr>)
+    OnlyAddr bool `json:"onlyAddr"`
+    // Go type of the variable
+    Type string `json:"type"`
+    // Type of the variable after resolving any typedefs
+    RealType string `json:"realType"`
+
+    Flags VariableFlags `json:"flags"`
+
+    Kind reflect.Kind `json:"kind"`
+
+    //Strings have their length capped at proc.maxArrayValues, use Len for the real length of a string
+    //Function variables will store the name of the function in this field
+    Value string `json:"value"`
+
+    // Number of elements in an array or a slice, number of keys for a map, number of struct members for a struct, length of strings
+    Len int64 `json:"len"`
+    // Cap value for slices
+    Cap int64 `json:"cap"`
+
+    // Array and slice elements, member fields of structs, key/value pairs of maps, value of complex numbers
+    // The Name field in this slice will always be the empty string except for structs (when it will be the field name) and for complex numbers (when it will be "real" and "imaginary")
+    // For maps each map entry will have to items in this slice, even numbered items will represent map keys and odd numbered items will represent their values
+    // This field's length is capped at proc.maxArrayValues for slices and arrays and 2*proc.maxArrayValues for maps, in the circumstances where the cap takes effect len(Children) != Len
+    // The other length cap applied to this field is related to maximum recursion depth, when the maximum recursion depth is reached this field is left empty, contrary to the previous one this cap also applies to structs (otherwise structs will always have all their member fields returned)
+    Children []Variable `json:"children"`
+
+    // Base address of arrays, Base address of the backing array for slices (0 for nil slices)
+    // Base address of the backing byte array for strings
+    // address of the struct backing chan and map variables
+    // address of the function entry point for function variables (0 for nil function pointers)
+    Base uintptr `json:"base"`
+
+    // Unreadable addresses will have this field set
+    Unreadable string `json:"unreadable"`
+
+    // LocationExpr describes the location expression of this variable's address
+    LocationExpr string
+    // DeclLine is the line number of this variable's declaration
+    DeclLine int64
+}
+*/
+
+typedef enum _VariableFlags {
+    VariableEscaped = 1,
+    VariableShadowed = 2,
+    VariableConstant = 4,
+    VariableArgument = 8,
+    VariableReturnArgument = 16,
+} VariableFlags;
 
 struct Variable
 {
@@ -109,12 +191,16 @@ struct Variable
     bool OnlyAddr;
     QString Type;
     QString RealType;
-    int Kind;
+    quint16 Flags;
+    quint64 Kind;
     QString Value;
     qint64 Len;
     qint64 Cap;
     QList<Variable> Children;
+    quintptr Base;
     QString Unreadable;
+    QString LocationExpr;
+    qint64 DeclLine;
 
     void fromMap(const QVariantMap &map)
     {
@@ -123,7 +209,8 @@ struct Variable
         OnlyAddr = map["onlyAddr"].toBool();
         Type = map["type"].toString();
         RealType = map["realType"].toString();
-        Kind = map["kind"].toInt();
+        Flags = map["flags"].value<quint16>();
+        Kind = map["kind"].value<quint64>();
         Value = map["value"].toString();
         Len = map["len"].value<qint64>();
         Cap = map["cap"].value<qint64>();
@@ -132,7 +219,10 @@ struct Variable
             v.fromMap(m.toMap());
             Children.push_back(v);
         }
+        Base = map["base"].value<quintptr>();
         Unreadable = map["unreadable"].toString();
+        LocationExpr = map["LocationExpr"].toString();
+        DeclLine = map["DeclLine"].value<qint64>();
     }
 };
 typedef QSharedPointer<Variable> VariablePointer;
@@ -146,16 +236,18 @@ type EvalScope struct {
 
 struct EvalScope
 {
-    EvalScope(int gid = -1, int frame = 0) : GoroutineID(gid), Frame(frame)
+    EvalScope(qint64 gid = -1, qint64 frame = 0, qint64 deferredcall = 0) : GoroutineID(gid), Frame(frame), DeferredCall(deferredcall)
     {
     }
-    int GoroutineID;
-    int Frame;
+    qint64 GoroutineID;
+    qint64 Frame;
+    qint64 DeferredCall;
     QVariantMap toMap() const
     {
         QVariantMap map;
         map["GoroutineID"] = GoroutineID;
         map["Frame"] = Frame;
+        map["DeferredCall"] = DeferredCall;
         return map;
     }
 };
@@ -183,7 +275,7 @@ type LoadConfig struct {
 
 struct LoadConfig
 {
-    LoadConfig(bool followPointers=false, int maxVariableRecurse = 0, int maxStringLen = 64, int maxArrayValues = 64,int maxStructFields = 3)
+    LoadConfig(bool followPointers=false, qint64 maxVariableRecurse = 0, qint64 maxStringLen = 64, qint64 maxArrayValues = 64,qint64 maxStructFields = 3)
         : FollowPointers(followPointers),
           MaxVariableRecurse(maxVariableRecurse),
           MaxStringLen(maxStringLen),
@@ -193,12 +285,12 @@ struct LoadConfig
     }
 
     bool FollowPointers;
-    int MaxVariableRecurse;
-    int MaxStringLen;
-    int MaxArrayValues;
-    int MaxStructFields;
+    qint64 MaxVariableRecurse;
+    qint64 MaxStringLen;
+    qint64 MaxArrayValues;
+    qint64 MaxStructFields;
 
-    static LoadConfig CustomeLong(int recurse = 16)
+    static LoadConfig Long128(int recurse = 3)
     {
         static LoadConfig lc(true,recurse,128,128,-1);
         return lc;
@@ -216,10 +308,10 @@ struct LoadConfig
     void fromMap(const QVariantMap &map)
     {
         FollowPointers = map["FollowPointers"].toBool();
-        MaxVariableRecurse = map["MaxVariableRecurse"].toInt();
-        MaxStringLen = map["MaxStringLen"].toInt();
-        MaxArrayValues = map["MaxArrayValues"].toInt();
-        MaxStructFields = map["MaxStructFields"].toInt();
+        MaxVariableRecurse = map["MaxVariableRecurse"].value<quint64>();
+        MaxStringLen = map["MaxStringLen"].value<quint64>();
+        MaxArrayValues = map["MaxArrayValues"].value<quint64>();
+        MaxStructFields = map["MaxStructFields"].value<quint64>();
     }
     QVariantMap toMap() const
     {
@@ -1240,6 +1332,7 @@ struct ListLocalVarsIn : public JsonDataIn
         map["Cfg"] = Cfg.toMap();
     }
     EvalScope Scope;
+    QString   Expr;
     LoadConfig Cfg;
 };
 
