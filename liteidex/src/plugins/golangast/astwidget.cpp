@@ -25,6 +25,7 @@
 #include "golangastitem.h"
 #include "golangasticon.h"
 #include "golangdocapi/golangdocapi.h"
+#include "liteenvapi/liteenvapi.h"
 
 #include <QAction>
 #include <QMenu>
@@ -207,12 +208,44 @@ void AstWidget::gotoDefinition()
 
 void AstWidget::viewImportDoc()
 {
+    QString pkg = m_contextItem->text();
+    QString orgPkg = pkg;
+    //check mod and vendor pkg
+    QString gotools = LiteApi::getGotools(m_liteApp);
+    if (!gotools.isEmpty()) {
+        QProcess process(this);
+        process.setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
+        process.setWorkingDirectory(m_workPath);
+        QStringList args;
+        args << "pkgcheck" << "-pkg" << pkg;
+        process.start(gotools,args);
+        if (!process.waitForFinished(3000)) {
+            process.kill();
+        }
+        QByteArray ar = process.readAllStandardOutput();
+        QString pkgs = QString::fromUtf8(ar).trimmed();
+        if (!pkgs.isEmpty()) {
+            QStringList pkgInfo = pkgs.split(",");
+            if (pkgInfo.size() == 2 && !pkgInfo[0].isEmpty()) {
+                pkg = pkgInfo[0];
+            }
+        }
+    }
+
     LiteApi::IGolangDoc *doc = LiteApi::getGolangDoc(m_liteApp);
     if (!doc) {
         return;
     }
-    doc->openUrl(QString("pdoc:%1").arg(m_contextItem->text()));
+    QUrl url;
+    url.setScheme("pdoc");
+    url.setPath(pkg);
+    QString addin;
+    if (pkg != orgPkg) {
+        addin = orgPkg;
+    }
+    doc->openUrl(url,addin);
     doc->activeBrowser();
+
 }
 
 void AstWidget::doubleClicked(QModelIndex index)

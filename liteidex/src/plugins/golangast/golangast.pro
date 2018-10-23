@@ -4,6 +4,7 @@ TEMPLATE = lib
 include (../../liteideplugin.pri)
 include (../../api/golangastapi/golangastapi.pri)
 include (../../api/quickopenapi/quickopenapi.pri)
+include (../../api/liteenvapi/liteenvapi.pri)
 include (../../utils/symboltreeview/symboltreeview.pri)
 include (../../3rdparty/qtc_editutil/qtc_editutil.pri)
 

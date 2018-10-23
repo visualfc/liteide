@@ -15,6 +15,8 @@
 	* fast lookup types info by gocode cache
 	* find all usages support Go modules work dir
 	* refactor symbol support Go module work dir
+* GolangAst
+	* support import path gopath/vendor/modules doc view
 * LiteDebug
 	* add automatically add breakpoint main.main when debugging option (default disable)
 * DlvDebugger
