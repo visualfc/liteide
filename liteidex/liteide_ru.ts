@@ -2833,9 +2833,8 @@ Success: %2.</oldsource>
         <translation>Отладка</translation>
     </message>
     <message>
-        <source>Rebuild before debugging</source>
-        <oldsource>Debug before rebuild</oldsource>
-        <translation>Пересобирать перед отладкой</translation>
+        <source>Automatically insert breakpoint main.main when debugging</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3735,6 +3734,21 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>OutputDockWidget</name>
+    <message>
+        <source>Move To</source>
+        <translation type="unfinished">Переместить в</translation>
+    </message>
+    <message>
+        <source>LeftSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RightSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutputOption</name>
     <message>
         <source>Form</source>
@@ -4265,6 +4279,22 @@ Do you want to replace it?</source>
     <message>
         <source>Show SideBar</source>
         <translation>Показать боковую панель</translation>
+    </message>
+    <message>
+        <source>Move To</source>
+        <translation type="unfinished">Переместить в</translation>
+    </message>
+    <message>
+        <source>RightSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LeftSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OutputBar</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

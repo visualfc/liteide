@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="autoBreakMainCheckBox">
         <property name="text">
-         <string>Automatically add breakpoint main.main when debugging</string>
+         <string>Automatically insert breakpoint main.main when debugging</string>
         </property>
        </widget>
       </item>

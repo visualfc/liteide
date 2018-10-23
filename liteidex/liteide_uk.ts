@@ -2388,134 +2388,134 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>GolangEdit</name>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="80"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="89"/>
         <source>View import package use godoc</source>
         <translation type="unfinished">Дивитися godoc користування імпортами</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="83"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="92"/>
         <source>View Expression Information</source>
         <translation>Інформація про вираз</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="86"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="95"/>
         <source>Jump to Declaration</source>
         <translation>Перейти до оголошення</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="89"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="95"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="98"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="104"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="107"/>
         <source>Find Usages</source>
         <translation>Знайти вживання</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="92"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="101"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="104"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="110"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="113"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>Перейменувати символ під курсором</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="155"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="165"/>
         <source>Stop</source>
         <translation type="unfinished">Зупинити</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="160"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
         <source>Go Source Query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="165"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
         <source>SourceQuery What</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="169"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="179"/>
         <source>Callees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="173"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="183"/>
         <source>Callers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="177"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="187"/>
         <source>Callstack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="181"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="191"/>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="185"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="195"/>
         <source>Describe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="189"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="199"/>
         <source>Freevars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="193"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="203"/>
         <source>Implements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="197"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="207"/>
         <source>Implements(GOPATH)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="201"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="211"/>
         <source>Peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="205"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="215"/>
         <source>Referrers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="209"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="219"/>
         <source>Pointsto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="213"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="223"/>
         <source>Whicherrs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="217"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="227"/>
         <source>Add Tags To Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="221"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="231"/>
         <source>Remove Tags From Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="338"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="374"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="348"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="384"/>
         <source>Refactor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="345"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="382"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="355"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="392"/>
         <source>SourceQuery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="776"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="911"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="785"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="920"/>
         <source>Below files in package %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2846,7 +2846,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="817"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="833"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation type="unfinished">увага, pkg не знайдено, будь ласка введіть для імпорту:</translation>
     </message>
@@ -2872,113 +2872,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="285"/>
+        <location filename="src/liteapp/liteapp.cpp" line="283"/>
         <source>Event Log</source>
         <translation>Журнал подій</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="272"/>
+        <location filename="src/liteapp/liteapp.cpp" line="270"/>
         <source>Escape</source>
         <translation type="unfinished">Вихід</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="756"/>
+        <location filename="src/liteapp/liteapp.cpp" line="754"/>
         <source>Close File</source>
         <translation>Закрити файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="759"/>
+        <location filename="src/liteapp/liteapp.cpp" line="757"/>
         <source>Close All Files</source>
         <translation>Закрити всі файли</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="769"/>
+        <location filename="src/liteapp/liteapp.cpp" line="767"/>
         <source>Save File</source>
         <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="772"/>
+        <location filename="src/liteapp/liteapp.cpp" line="770"/>
         <source>Save File As...</source>
         <translation>Зберегти файл як...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="775"/>
+        <location filename="src/liteapp/liteapp.cpp" line="773"/>
         <source>Save All Files</source>
         <translation>Зберегти всі файли</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="762"/>
+        <location filename="src/liteapp/liteapp.cpp" line="760"/>
         <source>Open Project</source>
         <translation type="unfinished">Відкрити проект...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="288"/>
+        <location filename="src/liteapp/liteapp.cpp" line="286"/>
         <source>Options</source>
         <translation type="unfinished">Параметри</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="733"/>
+        <location filename="src/liteapp/liteapp.cpp" line="731"/>
         <source>New...</source>
         <translation type="unfinished">Новий...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="736"/>
+        <location filename="src/liteapp/liteapp.cpp" line="734"/>
         <source>Open File...</source>
         <translation type="unfinished">Відкрити файл...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="739"/>
+        <location filename="src/liteapp/liteapp.cpp" line="737"/>
         <source>Open Folder...</source>
         <translation type="unfinished">Відкрити директорію...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="740"/>
         <source>Open Folder in New Window...</source>
         <translation type="unfinished">Відкрити директорію у новому вікні...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="747"/>
+        <location filename="src/liteapp/liteapp.cpp" line="745"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation type="unfinished">Закрити всі директорії</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="750"/>
+        <location filename="src/liteapp/liteapp.cpp" line="748"/>
         <source>New Window</source>
         <translation type="unfinished">Нове вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="753"/>
+        <location filename="src/liteapp/liteapp.cpp" line="751"/>
         <source>Close Window</source>
         <translation type="unfinished">Закрити вікно</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="764"/>
+        <location filename="src/liteapp/liteapp.cpp" line="762"/>
         <source>Save Project</source>
         <translation>Зберегти проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="766"/>
+        <location filename="src/liteapp/liteapp.cpp" line="764"/>
         <source>Close Project</source>
         <translation type="unfinished">Закрити проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="778"/>
+        <location filename="src/liteapp/liteapp.cpp" line="776"/>
         <source>Exit</source>
         <translation>Вихід</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="784"/>
+        <location filename="src/liteapp/liteapp.cpp" line="782"/>
         <source>Full Screen</source>
         <translation type="unfinished">Повний екран</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="788"/>
+        <location filename="src/liteapp/liteapp.cpp" line="786"/>
         <source>About LiteIDE</source>
         <translation type="unfinished">Про LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="794"/>
+        <location filename="src/liteapp/liteapp.cpp" line="792"/>
         <source>About Plugins</source>
         <translation type="unfinished">Про розширення</translation>
     </message>
@@ -3325,7 +3325,7 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="228"/>
         <source>Use godoc View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Відкрити Godoc</translation>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="285"/>
@@ -3547,9 +3547,9 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
-        <source>Rebuild before debugging</source>
-        <oldsource>Debug before rebuild</oldsource>
-        <translation>Перезібрати перед зневадженням</translation>
+        <source>Automatically insert breakpoint main.main when debugging</source>
+        <oldsource>Automatically add breakpoint main.main when debugging</oldsource>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4657,6 +4657,26 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>OutputDockWidget</name>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="328"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="355"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="356"/>
+        <source>Move To</source>
+        <translation type="unfinished">Перемістити в</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="330"/>
+        <source>LeftSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="331"/>
+        <source>RightSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutputOption</name>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="14"/>
@@ -5295,7 +5315,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="125"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="131"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
         <translation type="unfinished">Додати директорію в GOPATH:</translation>
@@ -5304,12 +5324,32 @@ Do you want to replace it?</source>
 <context>
     <name>SideDockWidget</name>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="60"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="50"/>
+        <source>Move To</source>
+        <translation type="unfinished">Перемістити в</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="54"/>
+        <source>RightSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="57"/>
+        <source>LeftSideBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="61"/>
+        <source>OutputBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="73"/>
         <source>SideBar</source>
         <translation>Бічна панель</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="61"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="74"/>
         <source>Show SideBar</source>
         <translation>Показувати бічну панель</translation>
     </message>
@@ -5317,17 +5357,17 @@ Do you want to replace it?</source>
 <context>
     <name>SideWindowStyle</name>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="430"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="506"/>
         <source>Hide SideBar</source>
         <translation>Приховати бічну панель</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="467"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="544"/>
         <source>SideBar Windows</source>
         <translation>Вікна бічної панелі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="468"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="545"/>
         <source>Output Windows</source>
         <translatorcomment>Вікна виводу?</translatorcomment>
         <translation>Вікна виведення</translation>
@@ -5336,59 +5376,59 @@ Do you want to replace it?</source>
 <context>
     <name>SplitDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="199"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="267"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="268"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="201"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="269"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="270"/>
         <source>Move To</source>
         <translation type="unfinished">Перемістити в</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="201"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="203"/>
         <source>Top</source>
         <translation type="unfinished">Верх</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="205"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="207"/>
         <source>Top (Split)</source>
         <translation type="unfinished">Верх (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="211"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="213"/>
         <source>Bottom</source>
         <translation type="unfinished">Низ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="215"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="217"/>
         <source>Bottom (Split)</source>
         <translation type="unfinished">Низ (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="221"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="223"/>
         <source>Left</source>
         <translation type="unfinished">Ліво</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="225"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="227"/>
         <source>Left (Split)</source>
         <translation type="unfinished">Ліво (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="231"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="233"/>
         <source>Right</source>
         <translation type="unfinished">Право</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="235"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="237"/>
         <source>Right (Split)</source>
         <translation type="unfinished">Право (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="243"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="245"/>
         <source>Unsplit</source>
         <translation type="unfinished">Не розділяти</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="248"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="250"/>
         <source>Split</source>
         <translation type="unfinished">Розділити</translation>
     </message>

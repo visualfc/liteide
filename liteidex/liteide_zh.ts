@@ -2364,134 +2364,134 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>GolangEdit</name>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="80"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="89"/>
         <source>View import package use godoc</source>
         <translation>使用godoc查看导入包</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="83"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="92"/>
         <source>View Expression Information</source>
         <translation>查看表达式信息</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="86"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="95"/>
         <source>Jump to Declaration</source>
         <translation>跳转到声明</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="89"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="95"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="98"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="104"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="107"/>
         <source>Find Usages</source>
         <translation>查找使用</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="92"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="101"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="104"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="110"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="113"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>重命名符号</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="155"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="165"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="160"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
         <source>Go Source Query</source>
         <translation>Go源码查询</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="165"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
         <source>SourceQuery What</source>
         <translation>Go源码查询What</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="169"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="179"/>
         <source>Callees</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="173"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="183"/>
         <source>Callers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="177"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="187"/>
         <source>Callstack</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="181"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="191"/>
         <source>Definition</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="185"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="195"/>
         <source>Describe</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="189"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="199"/>
         <source>Freevars</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="193"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="203"/>
         <source>Implements</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="197"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="207"/>
         <source>Implements(GOPATH)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="201"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="211"/>
         <source>Peers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="205"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="215"/>
         <source>Referrers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="209"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="219"/>
         <source>Pointsto</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="213"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="223"/>
         <source>Whicherrs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="217"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="227"/>
         <source>Add Tags To Struct Field</source>
         <translation>添加结构体字段 Tags</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="221"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="231"/>
         <source>Remove Tags From Struct Field</source>
         <translation>删除结构体字段 Tags</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="338"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="374"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="348"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="384"/>
         <source>Refactor</source>
         <translation>重构</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="345"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="382"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="355"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="392"/>
         <source>SourceQuery</source>
         <translation>Go源码查询</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="776"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="911"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="785"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="920"/>
         <source>Below files in package %1</source>
         <translation>下面的文件属于包 %1</translation>
     </message>
@@ -2822,7 +2822,7 @@ Success: %2.</oldsource>
 <context>
     <name>ImportPkgTip</name>
     <message>
-        <location filename="src/plugins/golangcode/golangcode.cpp" line="817"/>
+        <location filename="src/plugins/golangcode/golangcode.cpp" line="833"/>
         <source>warning, pkg not find, please enter to import :</source>
         <translation>警告，包未发现，按回车导入:</translation>
     </message>
@@ -2848,113 +2848,113 @@ Success: %2.</oldsource>
 <context>
     <name>LiteApp</name>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="285"/>
+        <location filename="src/liteapp/liteapp.cpp" line="283"/>
         <source>Event Log</source>
         <translation>事件记录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="272"/>
+        <location filename="src/liteapp/liteapp.cpp" line="270"/>
         <source>Escape</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="756"/>
+        <location filename="src/liteapp/liteapp.cpp" line="754"/>
         <source>Close File</source>
         <translation>关闭文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="759"/>
+        <location filename="src/liteapp/liteapp.cpp" line="757"/>
         <source>Close All Files</source>
         <translation>关闭所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="769"/>
+        <location filename="src/liteapp/liteapp.cpp" line="767"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="772"/>
+        <location filename="src/liteapp/liteapp.cpp" line="770"/>
         <source>Save File As...</source>
         <translation>文件另存为...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="775"/>
+        <location filename="src/liteapp/liteapp.cpp" line="773"/>
         <source>Save All Files</source>
         <translation>保存所有文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="762"/>
+        <location filename="src/liteapp/liteapp.cpp" line="760"/>
         <source>Open Project</source>
         <translation>打开项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="288"/>
+        <location filename="src/liteapp/liteapp.cpp" line="286"/>
         <source>Options</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="733"/>
+        <location filename="src/liteapp/liteapp.cpp" line="731"/>
         <source>New...</source>
         <translation>新建...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="736"/>
+        <location filename="src/liteapp/liteapp.cpp" line="734"/>
         <source>Open File...</source>
         <translation>打开文件...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="739"/>
+        <location filename="src/liteapp/liteapp.cpp" line="737"/>
         <source>Open Folder...</source>
         <translation>打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="742"/>
+        <location filename="src/liteapp/liteapp.cpp" line="740"/>
         <source>Open Folder in New Window...</source>
         <translation>在新窗口打开目录...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="747"/>
+        <location filename="src/liteapp/liteapp.cpp" line="745"/>
         <source>Close All Folders</source>
         <oldsource>Add Folder...</oldsource>
         <translation>关闭所有目录</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="750"/>
+        <location filename="src/liteapp/liteapp.cpp" line="748"/>
         <source>New Window</source>
         <translation>新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="753"/>
+        <location filename="src/liteapp/liteapp.cpp" line="751"/>
         <source>Close Window</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="764"/>
+        <location filename="src/liteapp/liteapp.cpp" line="762"/>
         <source>Save Project</source>
         <translation>保存项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="766"/>
+        <location filename="src/liteapp/liteapp.cpp" line="764"/>
         <source>Close Project</source>
         <translation>关闭项目</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="778"/>
+        <location filename="src/liteapp/liteapp.cpp" line="776"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="784"/>
+        <location filename="src/liteapp/liteapp.cpp" line="782"/>
         <source>Full Screen</source>
         <translation>全屏显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="788"/>
+        <location filename="src/liteapp/liteapp.cpp" line="786"/>
         <source>About LiteIDE</source>
         <translation>关于 LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteapp.cpp" line="794"/>
+        <location filename="src/liteapp/liteapp.cpp" line="792"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
@@ -3522,9 +3522,9 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/litedebug/litedebugoption.ui" line="26"/>
-        <source>Rebuild before debugging</source>
-        <oldsource>Debug before rebuild</oldsource>
-        <translation>调试前重新编译</translation>
+        <source>Automatically insert breakpoint main.main when debugging</source>
+        <oldsource>Automatically add breakpoint main.main when debugging</oldsource>
+        <translation>调试时自动插入断点 main.main</translation>
     </message>
 </context>
 <context>
@@ -4631,6 +4631,26 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>OutputDockWidget</name>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="328"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="355"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="356"/>
+        <source>Move To</source>
+        <translation>移动到</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="330"/>
+        <source>LeftSideBar</source>
+        <translation>左侧边栏</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="331"/>
+        <source>RightSideBar</source>
+        <translation>右侧边栏</translation>
+    </message>
+</context>
+<context>
     <name>OutputOption</name>
     <message>
         <location filename="src/liteapp/outputoption.ui" line="14"/>
@@ -5269,7 +5289,7 @@ Do you want to replace it?</source>
         <translation>使用自定义 GOPATH （每行一个）</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="125"/>
+        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="131"/>
         <source>Choose directory to add to GOPATH:</source>
         <oldsource>Load GOPATH Directory</oldsource>
         <translation>选择目录添加到GOPATH:</translation>
@@ -5278,12 +5298,32 @@ Do you want to replace it?</source>
 <context>
     <name>SideDockWidget</name>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="60"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="50"/>
+        <source>Move To</source>
+        <translation>移动到</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="54"/>
+        <source>RightSideBar</source>
+        <translation>右侧边栏</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="57"/>
+        <source>LeftSideBar</source>
+        <translation>左侧边栏</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="61"/>
+        <source>OutputBar</source>
+        <translation>输出栏</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="73"/>
         <source>SideBar</source>
         <translation>边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="61"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="74"/>
         <source>Show SideBar</source>
         <translation>显示边栏</translation>
     </message>
@@ -5291,17 +5331,17 @@ Do you want to replace it?</source>
 <context>
     <name>SideWindowStyle</name>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="430"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="506"/>
         <source>Hide SideBar</source>
         <translation>隐藏侧边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="467"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="544"/>
         <source>SideBar Windows</source>
         <translation>侧边栏窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="468"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="545"/>
         <source>Output Windows</source>
         <translation>输出窗口</translation>
     </message>
@@ -5309,59 +5349,59 @@ Do you want to replace it?</source>
 <context>
     <name>SplitDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="199"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="267"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="268"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="201"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="269"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="270"/>
         <source>Move To</source>
         <translation>移动到</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="201"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="203"/>
         <source>Top</source>
         <translation>顶部</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="205"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="207"/>
         <source>Top (Split)</source>
         <translation>顶部(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="211"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="213"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="215"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="217"/>
         <source>Bottom (Split)</source>
         <translation>底部(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="221"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="223"/>
         <source>Left</source>
         <translation>左侧</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="225"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="227"/>
         <source>Left (Split)</source>
         <translation>左侧(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="231"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="233"/>
         <source>Right</source>
         <translation>右侧</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="235"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="237"/>
         <source>Right (Split)</source>
         <translation>右侧(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="243"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="245"/>
         <source>Unsplit</source>
         <translation>不切分</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="248"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="250"/>
         <source>Split</source>
         <translation>切分</translation>
     </message>
