@@ -30,8 +30,6 @@
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
 #include "golangfilesearch.h"
-#include "gotools/gotools.h"
-
 /*
     a tool for answering questions about Go source code.
     callees	  	show possible targets of selected function call

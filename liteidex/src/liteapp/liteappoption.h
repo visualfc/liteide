@@ -25,7 +25,6 @@
 #define LITEAPPOPTION_H
 
 #include "liteapi/liteapi.h"
-#include "gotools/gotools.h"
 
 namespace Ui {
     class LiteAppOption;

@@ -47,7 +47,6 @@
 #include "iconutil/iconutil.h"
 #include "liteapi/liteutil.h"
 #include "liteapi/liteids.h"
-#include "gotools/gotools.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QMenuBar>

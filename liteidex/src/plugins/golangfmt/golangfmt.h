@@ -29,7 +29,6 @@
 
 #include "liteapi/liteapi.h"
 #include "liteenvapi/liteenvapi.h"
-#include "gotools/gotools.h"
 
 class ProcessEx;
 
