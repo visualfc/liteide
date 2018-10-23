@@ -219,6 +219,7 @@ struct Link
         targetColumn = 0;
         showTip = false;
         showNav = false;
+        text.clear();
     }
 
     bool hasValidTarget() const
@@ -242,6 +243,7 @@ struct Link
     QString targetInfo;
     QString sourceInfo;
     QPoint cursorPos;
+    QString text;
 };
 
 class ITextLexer : public QObject

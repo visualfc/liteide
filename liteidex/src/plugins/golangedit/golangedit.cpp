@@ -53,7 +53,7 @@
 
 //type gotools.s struct{}
 //type command.Command struct{Run func(cmd *Command, args []string);Short string;Long string;Flag flag.FlagSet;CustomFlags bool}
-QString formatInfo(const QString &info)
+static QString formatInfo(const QString &info)
 {
     if (!info.startsWith("type")) {
         return info;
@@ -70,6 +70,15 @@ QString formatInfo(const QString &info)
         }
     }
     return info;
+}
+
+static QString getGocode(LiteApi::IApplication *app)
+{
+#ifdef Q_OS_WIN
+    return app->toolPath()+"/gocode.exe";
+#else
+    return app->toolPath()+"/gocode";
+#endif
 }
 
 GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
@@ -116,6 +125,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_sourceQueryProcess = new Process(this);
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
+    m_useGocodeInfo = true;
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -487,14 +497,13 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
 
     if (m_lastLink.linkTextStart == linkStart &&
             m_lastLink.linkTextEnd == linkEnd) {
-        if (m_lastLink.hasValidTarget()) {
+        if (m_lastLink.hasValidTarget() && m_lastLink.text == text) {           
             m_lastLink.cursorPos = pos;
             m_lastLink.showTip = true;
             m_lastLink.showNav = nav;
             m_editor->showLink(m_lastLink);
             return;
         }
-        return;
     }
     if (!m_findLinkProcess->isStop()) {
         m_findLinkProcess->stopAndWait(100,200);
@@ -506,32 +515,36 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     m_lastLink.linkTextStart = linkStart;
     m_lastLink.linkTextEnd = linkEnd;
     m_lastLink.cursorPos = pos;
-
-    QString cmd = LiteApi::getGotools(m_liteApp);
+    m_lastLink.text = text;
 
     m_srcData = m_editor->utf8Data();
     int offset = m_editor->utf8Position(false,cursor.selectionStart());
-
     QFileInfo info(m_editor->filePath());
+
+    QString cmd;
+    QStringList args;
+    if (m_useGocodeInfo) {
+        cmd  = getGocode(m_liteApp);
+        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset);
+    } else {
+        cmd = LiteApi::getGotools(m_liteApp);
+        args << "types";
+        QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
+        if (!tags.isEmpty()) {
+            args << "-tags";
+            args << tags;
+        }
+        args << "-b";
+        args << "-pos";
+        args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
+        args << "-stdin";
+        args << "-info";
+        args << "-def";
+        args << "-doc";
+        args << ".";
+    }
     m_findLinkProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
-
-    QStringList args;
-    args << "types";
-    QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
-    if (!tags.isEmpty()) {
-        args << "-tags";
-        args << tags;
-    }
-    args << "-b";
-    args << "-pos";
-    args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
-    args << "-stdin";
-    args << "-info";
-    args << "-def";
-    args << "-doc";
-    args << ".";
-
     m_findLinkProcess->startEx(cmd,args.join(" "));
 }
 
@@ -616,26 +629,31 @@ void GolangEdit::editorJumpToDecl()
 
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = m_editor->utf8Position(false,selectStart);
-    QString cmd = LiteApi::getGotools(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
+
+    QString cmd;
+    QStringList args;
+    if (m_useGocodeInfo) {
+        cmd  = getGocode(m_liteApp);
+        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset);
+    } else {
+        cmd = LiteApi::getGotools(m_liteApp);
+        args << "types";
+        QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
+        if (!tags.isEmpty()) {
+            args << "-tags";
+            args << tags;
+        }
+        args << "-pos";
+        args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
+        args << "-stdin";
+        args << "-def";
+        args << ".";
+    }
+
     m_findDefProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findDefProcess->setWorkingDirectory(info.path());
-
-    QStringList args;
-    args << "types";
-    QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
-    if (!tags.isEmpty()) {
-        args << "-tags";
-        args << tags;
-    }
-    args << "-pos";
-    args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
-    args << "-stdin";
-    args << "-def";
-    args << ".";
-
-
     m_findDefProcess->startEx(cmd,args.join(" "));
 }
 
@@ -692,7 +710,6 @@ void GolangEdit::editorComment()
 
 void GolangEdit::editorFindInfo()
 {
-    QString cmd = LiteApi::getGotools(m_liteApp);
     m_srcData = m_editor->utf8Data();
     QFileInfo info(m_editor->filePath());
     bool moveLeft = false;
@@ -705,39 +722,27 @@ void GolangEdit::editorFindInfo()
     m_lastCursor = m_plainTextEdit->textCursor();
     int offset = m_editor->utf8Position(false,selectStart);
 
+    QString cmd;
     QStringList args;
-    args << "types";
-    QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
-    if (!tags.isEmpty()) {
-        args << "-tags";
-        args << tags;
+    if (m_useGocodeInfo) {
+        cmd  = getGocode(m_liteApp);
+        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset);
+    } else {
+        cmd = LiteApi::getGotools(m_liteApp);
+        args << "types";
+        QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
+        if (!tags.isEmpty()) {
+            args << "-tags";
+            args << tags;
+        }
+        args << "-pos";
+        args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
+        args << "-stdin";
+        args << "-info";
+        args << "-def";
+        args << "-doc";
+        args << ".";
     }
-    args << "-pos";
-    args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
-    args << "-stdin";
-    args << "-info";
-    args << "-def";
-    args << "-doc";
-    args << ".";
-
-//    if (0 && isUseGopher(m_liteApp) && m_findInfoGopher.isValid()) {
-//        QStringList args;
-//        args << "types";
-//        QString tags = LiteApi::getGoBuildFlagsArgument(m_liteApp,m_editor,"-tags");
-//        if (!tags.isEmpty()) {
-//            args << "-tags";
-//            args << tags;
-//        }
-//        args << "-pos";
-//        args << QString("%1:%2").arg(info.fileName()).arg(offset);
-//        args << "-stdin";
-//        args << "-info";
-//        args << "-def";
-//        args << "-doc";
-//        args << info.path();
-//        m_findInfoGopher.setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor));
-//        m_findInfoGopher.invokeAsyncArgsData(args,m_editor->utf8Data());
-//    }
 
     if (!m_findInfoProcess->isStop()) {
         m_findInfoProcess->stopAndWait(100,200);
@@ -953,8 +958,12 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         m_editor->showLink(m_lastLink);
                     }
                 } else if (info[0] == "-") {
-                    m_lastLink.targetInfo = info[1];
-                    m_lastLink.sourceInfo = info[1];
+                    QString infos = info[1];
+                    if (infos == "nil") {
+                        infos = "zero value nil";
+                    }
+                    m_lastLink.targetInfo = infos;
+                    m_lastLink.sourceInfo = infos;
                     m_editor->showLink(m_lastLink);
                 } else {
                     m_editor->clearLink();

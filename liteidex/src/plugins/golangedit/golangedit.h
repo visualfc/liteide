@@ -131,6 +131,7 @@ protected:
     bool m_enableMouseUnderInfo;
     bool m_enableMouseNavigation;
     bool m_gorootSourceReadOnly;
+    bool m_useGocodeInfo;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
     QAction *m_findInfoAct;
