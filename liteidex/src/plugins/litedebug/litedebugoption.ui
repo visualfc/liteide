@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>92</height>
+    <width>435</width>
+    <height>113</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,9 +21,9 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="rebuildCheckBox">
+       <widget class="QCheckBox" name="autoBreakMainCheckBox">
         <property name="text">
-         <string>Rebuild before debugging</string>
+         <string>Automatically add breakpoint main.main when debugging</string>
         </property>
        </widget>
       </item>

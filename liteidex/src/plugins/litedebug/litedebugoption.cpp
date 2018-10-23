@@ -41,8 +41,8 @@ LiteDebugOption::LiteDebugOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::LiteDebugOption)
 {
     ui->setupUi(m_widget);
-    bool b = m_liteApp->settings()->value(LITEDEBUG_REBUILD,false).toBool();
-    ui->rebuildCheckBox->setChecked(b);
+    bool b = m_liteApp->settings()->value(LITEDEBUG_AUTOBREAKMAIN,false).toBool();
+    ui->autoBreakMainCheckBox->setChecked(b);
 }
 
 LiteDebugOption::~LiteDebugOption()
@@ -68,6 +68,6 @@ QString LiteDebugOption::mimeType() const
 
 void LiteDebugOption::apply()
 {
-    bool b = ui->rebuildCheckBox->isChecked();
-    m_liteApp->settings()->setValue(LITEDEBUG_REBUILD,b);
+    bool b = ui->autoBreakMainCheckBox->isChecked();
+    m_liteApp->settings()->setValue(LITEDEBUG_AUTOBREAKMAIN,b);
 }

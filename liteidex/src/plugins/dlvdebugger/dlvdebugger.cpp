@@ -25,6 +25,7 @@
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "dlvdebuggeroption.h"
+#include "../litedebug/litedebug_global.h"
 
 #include <QStandardItemModel>
 #include <QProcess>
@@ -669,7 +670,9 @@ void DlvDebugger::initDebug()
             insertBreakPointHelper(fileName,line,true);
         }
     }
-    command_helper("break main.main",true);
+    if (m_liteApp->settings()->value(LITEDEBUG_AUTOBREAKMAIN,false).toBool()) {
+        command_helper("break main.main",true);
+    }
     command_helper("continue",true);
 
     emit debugLoaded();

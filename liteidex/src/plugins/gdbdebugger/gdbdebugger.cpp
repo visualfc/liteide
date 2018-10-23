@@ -25,6 +25,7 @@
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "gdbdebuggeroption.h"
+#include "../litedebug/litedebug_global.h"
 
 #include <QStandardItemModel>
 #include <QProcess>
@@ -1128,7 +1129,9 @@ void GdbDebugger::initGdb()
             insertBreakPoint(fileName,line);
         }
     }
-    command("-break-insert main.main");
+    if (m_liteApp->settings()->value(LITEDEBUG_AUTOBREAKMAIN,false).toBool()) {
+        command("-break-insert main.main");
+    }
 
     command("-exec-run");
     debugLoaded();
