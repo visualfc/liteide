@@ -3,6 +3,31 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.10.24 Ver X35
+* LiteIDE
+	* all support Go1.11 Go modules
+	* fast lookup types info by cache
+* LiteApp
+	* side window style enable move tool window to any left/right/bottom side.
+	* side window style output bar shortcut change to command+meta+number (macos) or ctrl+shift+number
+* GolangEdit
+	* fast lookup types info by gocode cache
+	* find all usages support Go modules work dir
+	* refactor symbol support Go module work dir
+* DlvDebugger
+	* fix dlv list variables blocking, change LoadConfig recurse to 3
+* LiteBuild
+	* update gosrc.xml for support custom target workdir
+
+* gotools & gocode
+	* import https://github/visualfc/fastmod for fast parse go.mod depends
+	* fast parse Go modules and fix issues https://github.com/visualfc/liteide/issues/986
+* gotools
+	* find all usages support Go module work dir
+* gotools
+	* fast completer for Go module project
+	* provide types info for liteide by cache
+
 ### 2018.10.05 Ver X34.3
 * LiteIDE
 	* fix support go1.11 modules
