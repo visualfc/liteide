@@ -31,8 +31,11 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* Reload file by internal diff way
 
 * Golang support
+	* Support go1.11 Go modules
+	* Support go1.5 Go vendor
+	* Support go1 GOPATH
 	* Golang build environment management
-	* Compile and test using standard Golang tools and GOPATH
+	* Compile and test using standard Golang tools
 	* Custom GOPATH support system, IDE and project
 	* Custom project build configuration
 	* Golang package browser
@@ -41,7 +44,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* Source code navigation and information tips
 	* Source code find usages
 	* Source code refactoring and revert
-	* Integrated [gocode](https://github.com/nsf/gocode)
+	* Integrated  [gocode](https://github.com/visualfc/gocode) clone of [nsf/gocode](https://github.com/nsf/gocode)
 	* Integrated [gomodifytags](https://github.com/fatih/gomodifytags)
 	* Support source query tools guru
 	* Debug with GDB and [Delve](https://github.com/derekparker/delve)

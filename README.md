@@ -32,11 +32,11 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	* Reload file by internal diff way
 
 * Golang support
-	* Support go1.11 Go modules
-	* Support go1.5 Go vendor
-	* Support go1 GOPATH
+	* Support Go1.11 Go modules
+	* Support Go1.5 Go vendor
+	* Support Go1 GOPATH
 	* Golang build environment management
-	* Compile and test using standard Golang tools and GOPATH
+	* Compile and test using standard Golang tools
 	* Custom GOPATH support system, IDE and project
 	* Custom project build configuration
 	* Golang package browser

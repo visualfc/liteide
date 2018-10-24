@@ -30,8 +30,11 @@ _LiteIDE 是一个轻量级的开源跨平台 Go语言 IDE._
 	* 重读文件使用代码差异方式
 	
 * Go 语言支持
+	* 支持 Go1.11 Go modules
+	* 支持 Go1.5 Go vendor
+	* 支持 Go1 GOPATH
 	* Go 编译环境管理
-	* 使用标准 Go 工具和 GOPATH 编译和测试
+	* 使用标准 Go 工具编译和测试
 	* 自定义 GOPATH 支持 系统定义、IDE 定义和项目定义
 	* 自定义项目编译配置
 	* Go 包浏览器
@@ -40,7 +43,7 @@ _LiteIDE 是一个轻量级的开源跨平台 Go语言 IDE._
 	* 代码导航和信息提示
 	* 代码查找引用
 	* 代码重构和恢复
-	* 集成 [gocode](https://github.com/nsf/gocode)
+	* 集成 [gocode](https://github.com/visualfc/gocode) clone of [nsf/gocode](https://github.com/nsf/gocode)
 	* 集成 [gomodifytags](https://github.com/fatih/gomodifytags)
 	* 支持代码查询工具 guru
 	* 调试支持 GDB 和 [Delve](https://github.com/derekparker/delve)
