@@ -773,7 +773,9 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
         }
         return;
     }
-    QString info = QString::fromUtf8(data).trimmed();
+
+    QStringList infos = QString::fromUtf8(data).trimmed().split("\n");
+    QString info = infos.at(0);
     QRegExp reg(":(\\d+):(\\d+)");
     int pos = reg.lastIndexIn(info);
     if (pos >= 0) {
