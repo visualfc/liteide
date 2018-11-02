@@ -572,10 +572,11 @@ void GolangEdit::editorViewGodoc()
         return;
     }
     QString pkg = parser_import(cursor.block().text());
-    QString orgPkg = pkg;
     if (pkg.isEmpty()) {
         return;
     }
+    QString pkgPath = pkg;
+    QString addin;
     //check mod and vendor pkg
     QString gotools = LiteApi::getGotools(m_liteApp);
     if (!gotools.isEmpty()) {
@@ -593,8 +594,14 @@ void GolangEdit::editorViewGodoc()
         QString pkgs = QString::fromUtf8(ar).trimmed();
         if (!pkgs.isEmpty()) {
             QStringList pkgInfo = pkgs.split(",");
+            //vendor_path,vendor
+            //mod_fullpath,mod
+            //pkg_path,pkg
             if (pkgInfo.size() == 2 && !pkgInfo[0].isEmpty()) {
-                pkg = pkgInfo[0];
+                pkgPath = pkgInfo[0];
+            }
+            if (pkgInfo[1] == "vendor" || pkgInfo[1] == "mod")  {
+                addin = pkg;
             }
         }
     }
@@ -605,11 +612,7 @@ void GolangEdit::editorViewGodoc()
     }
     QUrl url;
     url.setScheme("pdoc");
-    url.setPath(pkg);
-    QString addin;
-    if (pkg != orgPkg) {
-        addin = orgPkg;
-    }
+    url.setPath(pkgPath);
     doc->openUrl(url,addin);
     doc->activeBrowser();
 }

@@ -447,6 +447,12 @@ void GolangDoc::updateHtmlDoc(const QUrl &url, const QByteArray &ba, const QStri
         QString realPath = m_openUrlAddin.toString();
         if (!realPath.isEmpty()) {
             data.replace(QString("import \"%1\"").arg(m_lastUrl.path()),QString("import \"%1\"").arg(realPath));
+            if (data.contains("import \".\"")) {
+                QDir dir(m_lastUrl.path());
+                if (dir.exists()) {
+                    data.replace(QString("import \".\""),QString("import \"%1\"").arg(realPath));
+                }
+            }
         }
     }
 
