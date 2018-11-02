@@ -64,6 +64,9 @@ TextEditor::SyntaxHighlighter *KateHighlighter::create(QTextDocument *doc, const
         comment.multiLineCommentStart = def->multiLineCommentStart();
         comment.multiLineCommentEnd = def->multiLineCommentEnd();
         comment.isCommentAfterWhiteSpaces = def->isCommentAfterWhiteSpaces();
+        if (comment.isCommentAfterWhiteSpaces) {
+            comment.isCommentAfterWhiteSpacesAddSpace = true;
+        }
         h->setupComment(comment);
         h->setDefaultContext(def->initialContext());
     }

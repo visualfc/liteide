@@ -21,12 +21,21 @@
         <Detect2Chars attribute="Symbol" context="#stay" char="=" char1=">" />
         <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace1" />
         <DetectChar attribute="Symbol" context="#stay" char=")" endRegion="Brace1" />
+        <Detect2Chars attribute="Comment" context="Comment" char="/" char1="/"/>
       </context>
+		<context name="Comment" attribute="Comment" lineEndContext="#pop">
+		</context>
     </contexts>
     <itemDatas>
       <itemData name="Normal Text"  defStyleNum="dsNormal" spellChecking="false"/>
       <itemData name="Keyword"      defStyleNum="dsKeyword" spellChecking="false"/>
       <itemData name="Symbol"       defStyleNum="dsSymbol" spellChecking="false"/>
+      <itemData name="Comment"      defStyleNum="dsComment" afterwhitespace="true"/>
     </itemDatas>
   </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="//" position="afterwhitespace"/>
+    </comments>
+  </general>
 </language>
