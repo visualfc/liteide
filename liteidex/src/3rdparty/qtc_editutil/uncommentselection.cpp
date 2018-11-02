@@ -41,6 +41,7 @@ using namespace Utils;
 
 CommentDefinition::CommentDefinition() :
     m_afterWhiteSpaces(false),
+    m_afterWhiteSpacesAddSpace(false),
     m_singleLine(QLatin1String("//")),
     m_multiLineStart(QLatin1String("/*")),
     m_multiLineEnd(QLatin1String("*/"))
@@ -49,6 +50,12 @@ CommentDefinition::CommentDefinition() :
 CommentDefinition &CommentDefinition::setAfterWhiteSpaces(const bool afterWhiteSpaces)
 {
     m_afterWhiteSpaces = afterWhiteSpaces;
+    return *this;
+}
+
+CommentDefinition &CommentDefinition::setAfterWhiteSpacesAddSpace(const bool afterWhiteSpacesAddSpace)
+{
+    m_afterWhiteSpacesAddSpace = afterWhiteSpacesAddSpace;
     return *this;
 }
 
@@ -72,6 +79,9 @@ CommentDefinition &CommentDefinition::setMultiLineEnd(const QString &multiLineEn
 
 bool CommentDefinition::isAfterWhiteSpaces() const
 { return m_afterWhiteSpaces; }
+
+bool CommentDefinition::isAfterWhiteSpacesAddSpace() const
+{   return m_afterWhiteSpacesAddSpace; }
 
 const QString &CommentDefinition::singleLine() const
 { return m_singleLine; }
@@ -274,6 +284,13 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const Com
                         cursor.movePosition(QTextCursor::NextCharacter,
                                             QTextCursor::KeepAnchor,
                                             singleLineLength);
+                        if (definition.isAfterWhiteSpacesAddSpace()) {
+                            if (i < text.size()-singleLineLength) {
+                                if (text.at(i+singleLineLength) == QChar::Space) {
+                                    cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,1);
+                                }
+                            }
+                        }
                         cursor.removeSelectedText();
                         break;
                     }
@@ -297,7 +314,11 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const Com
                         if (firstSpacesOffset == -1) {
                             firstSpacesOffset = cursor.position()-cursor.block().position();
                         }
-                        cursor.insertText(definition.singleLine());
+                        if (definition.isAfterWhiteSpaces() && definition.isAfterWhiteSpacesAddSpace()) {
+                            cursor.insertText(definition.singleLine()+" ");
+                        } else {
+                            cursor.insertText(definition.singleLine());
+                        }
                         break;
                     }
                 }

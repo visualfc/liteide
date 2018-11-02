@@ -122,7 +122,8 @@ GolangHighlighter::GolangHighlighter(LiteApi::ITextEditor *editor, QTextDocument
     comment.singleLineComment = "//";
     comment.multiLineCommentStart = "/*";
     comment.multiLineCommentEnd = "*/";
-    comment.isCommentAfterWhiteSpaces = false;
+    comment.isCommentAfterWhiteSpaces = true;
+    comment.isCommentAfterWhiteSpacesAddSpace = true;
     setupComment(comment);
 }
 

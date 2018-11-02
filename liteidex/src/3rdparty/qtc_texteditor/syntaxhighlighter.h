@@ -62,7 +62,7 @@ namespace TextEditor {
 class SyntaxHighlighterPrivate;
 
 struct SyntaxComment {
-    SyntaxComment() : isCommentAfterWhiteSpaces(false)
+    SyntaxComment() : isCommentAfterWhiteSpaces(true), isCommentAfterWhiteSpacesAddSpace (true)
     {}
     bool isEmpty() const {
         return singleLineComment.isEmpty() &&
@@ -73,6 +73,7 @@ struct SyntaxComment {
     QString multiLineCommentStart;
     QString multiLineCommentEnd;
     bool isCommentAfterWhiteSpaces;
+    bool isCommentAfterWhiteSpacesAddSpace;
 };
 
 class TEXTEDITOR_EXPORT SyntaxHighlighter : public QObject

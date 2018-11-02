@@ -55,12 +55,14 @@ public:
     CommentDefinition();
 
     CommentDefinition &setAfterWhiteSpaces(const bool);
+    CommentDefinition &setAfterWhiteSpacesAddSpace(const bool);
     CommentDefinition &setAfterMaxSpaces(int spaces);
     CommentDefinition &setSingleLine(const QString &singleLine);
     CommentDefinition &setMultiLineStart(const QString &multiLineStart);
     CommentDefinition &setMultiLineEnd(const QString &multiLineEnd);
 
     bool isAfterWhiteSpaces() const;
+    bool isAfterWhiteSpacesAddSpace() const;
     const QString &singleLine() const;
     const QString &multiLineStart() const;
     const QString &multiLineEnd() const;
@@ -72,6 +74,7 @@ public:
 
 private:
     bool m_afterWhiteSpaces;
+    bool m_afterWhiteSpacesAddSpace;
     QString m_singleLine;
     QString m_multiLineStart;
     QString m_multiLineEnd;

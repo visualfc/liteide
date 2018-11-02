@@ -1461,6 +1461,7 @@ void LiteEditor::comment()
     TextEditor::SyntaxComment comment = m_syntax->comment();
     Utils::CommentDefinition cd;
     cd.setAfterWhiteSpaces(comment.isCommentAfterWhiteSpaces);
+    cd.setAfterWhiteSpacesAddSpace(comment.isCommentAfterWhiteSpacesAddSpace);
     cd.setSingleLine(comment.singleLineComment);
     cd.setMultiLineStart(comment.multiLineCommentStart);
     cd.setMultiLineEnd(comment.multiLineCommentEnd);
