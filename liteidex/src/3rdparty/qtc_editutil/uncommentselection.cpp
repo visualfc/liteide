@@ -40,8 +40,8 @@
 using namespace Utils;
 
 CommentDefinition::CommentDefinition() :
-    m_afterWhiteSpaces(false),
-    m_afterWhiteSpacesAddSpace(false),
+    m_afterWhiteSpaces(true),
+    m_afterWhiteSpacesAddSpace(true),
     m_singleLine(QLatin1String("//")),
     m_multiLineStart(QLatin1String("/*")),
     m_multiLineEnd(QLatin1String("*/"))
