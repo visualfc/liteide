@@ -2,11 +2,12 @@
 <style-scheme version="1.0" name="Solarized-Light">
 	<!-- Based on the Solarized color scheme by Ethan Schoonover:
 	     http://ethanschoonover.com/solarized                     -->
-	<style name="Text" foreground="#657b83" background="#fdf6e3"/>
- 	<style name="Extra" foreground="#657b83" background="#eee8d5"/>
+  <style name="Text" foreground="#657b83" background="#fdf6e3"/>
+  <style name="Extra" foreground="#657b83" background="#eee8d5"/>
   <style name="Selection" background="#3399ff"/>
- 	<style name="CurrentLine" background="#B4C8C8"/>
- 	<style name="IndentLine" foreground="#008B8B"/>
+  <style name="CurrentLine" background="#B4C8C8"/>
+  <style name="MatchBrackets" background="#808080"/>
+  <style name="IndentLine" foreground="#008B8B"/>
   <style name="VisualWhitespace" foreground="#c0c0c0"/>
   <style name="Keyword" foreground="#cb4b16"/>
   <style name="DataType" foreground="#b58900" /> 

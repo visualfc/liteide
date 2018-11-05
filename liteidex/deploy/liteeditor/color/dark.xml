@@ -4,6 +4,7 @@
 	<style name="Extra" foreground="#008B8B" background="#000000"/>
 	<style name="Selection" background="#214283"/>
 	<style name="CurrentLine" background="#212628"/>
+	<style name="MatchBrackets" background="#808080"/>
 	<style name="IndentLine" foreground="#008B8B"/>
 	<style name="VisualWhitespace" foreground="#F92672"/>
 	<style name="Keyword" foreground="#ffff55" />
@@ -12,7 +13,7 @@
 	<style name="BaseN" foreground="#0000FF"/>
 	<style name="Float" foreground="#ff55ff"/>
 	<style name="Char" foreground="#CE7DDB"/>
-	 <style name="String" foreground="#66FF00"/>
+	<style name="String" foreground="#66FF00"/>
 	<style name="Comment" foreground="#808080"/>
 	<style name="Alert" foreground="#ff0000"/>
 	<style name="Error" foreground="#ff0000"/>

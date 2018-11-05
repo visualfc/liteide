@@ -10,6 +10,7 @@
   <style name="Char" foreground="#EAFF00"/>
   <style name="Comment" foreground="#00FF00"/>
   <style name="CurrentLine" background="#333333"/>
+  <style name="MatchBrackets" background="#808080"/>
   <style name="DataType" foreground="#FF00FF" bold="true"/> 
   <style name="Decimal" foreground="#FFAA00"/>
   <style name="Error" foreground="#FF0000" bold="true"/>

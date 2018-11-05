@@ -5,6 +5,7 @@
   <style name="Extra" foreground="#008B8B" background=""/>
   <style name="Selection" foreground="#333333" background="#b5d5ff"/>
   <style name="CurrentLine" background="#cddbdb"/>
+  <style name="MatchBrackets" background="#808080"/>
   <style name="IndentLine" foreground="#008B8B"/>
   <style name="VisualWhitespace" foreground="#c0c0c0"/>
   <style name="Keyword" foreground="#049695"/>

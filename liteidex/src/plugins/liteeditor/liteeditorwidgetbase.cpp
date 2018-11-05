@@ -374,6 +374,8 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     m_extraForeground = QColor(Qt::darkCyan);
     m_extraBackground = m_extraArea->palette().color(QPalette::Background);
     m_currentLineBackground = QColor(180,200,200,128);
+    m_matchBracketsBackground = QColor(Qt::gray);
+    m_matchBracketsBackground.setAlpha(128);
 
     setLayoutDirection(Qt::LeftToRight);
     viewport()->setMouseTracking(true);
@@ -681,6 +683,7 @@ void LiteEditorWidgetBase::highlightCurrentLine()
             cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,1);
             selection.cursor = cur;
             selection.format.setFontUnderline(true);
+            selection.format.setBackground(m_matchBracketsBackground);
             selection.format.setProperty(LiteEditorWidgetBase::MatchBrace,true);
             extraSelections.append(selection);
 
@@ -730,6 +733,16 @@ void LiteEditorWidgetBase::setCurrentLineColor(const QColor &background)
         m_currentLineBackground = QColor(180,200,200,128);
     }
     m_currentLineBackground.setAlpha(128);
+}
+
+void LiteEditorWidgetBase::setMatchBracketsColor(const QColor &background)
+{
+    if (background.isValid()) {
+        m_matchBracketsBackground = background;
+    } else {
+        m_matchBracketsBackground = Qt::gray;
+    }
+    m_matchBracketsBackground.setAlpha(128);
 }
 
 void LiteEditorWidgetBase::setIndentLineColor(const QColor &foreground)

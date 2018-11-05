@@ -1568,6 +1568,7 @@ void LiteEditor::loadColorStyleScheme()
     const ColorStyle *text = colorScheme->findStyle("Text");
     const ColorStyle *selection = colorScheme->findStyle("Selection");
     const ColorStyle *currentLine = colorScheme->findStyle("CurrentLine");
+    const ColorStyle *matchBrackets = colorScheme->findStyle("MatchBrackets");
     const ColorStyle *visualWhitespace = colorScheme->findStyle("VisualWhitespace");
     if (extra) {
         m_editorWidget->setExtraColor(extra->foregound(),extra->background());
@@ -1577,6 +1578,9 @@ void LiteEditor::loadColorStyleScheme()
     }
     if (currentLine) {
         m_editorWidget->setCurrentLineColor(currentLine->background());
+    }
+    if (matchBrackets) {
+        m_editorWidget->setMatchBracketsColor(matchBrackets->background());
     }
     if (visualWhitespace) {
         m_editorWidget->setVisualizeWhitespaceColor(visualWhitespace->foregound());

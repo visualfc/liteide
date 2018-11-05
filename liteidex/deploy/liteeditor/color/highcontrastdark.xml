@@ -4,6 +4,7 @@
   <style name="Selection" background="#800000"/>
   <style name="Extra" foreground="#FFFFFF" background="#222222"/>
   <style name="CurrentLine" background="#222222"/>
+  <style name="MatchBrackets" background="#808080"/>
   <style name="IndentLine" foreground="#64B1FF"/>
   <style name="VisualWhitespace" foreground="#FFFFFF"/>
   <style name="Keyword" foreground="#64B1FF" bold="true"/>

@@ -58,6 +58,7 @@ public:
     QWidget* navigateArea();
     void setExtraColor(const QColor &foreground,const QColor &background);
     void setCurrentLineColor(const QColor &background);
+    void setMatchBracketsColor(const QColor &background);
     void setIndentLineColor(const QColor &foreground);
     void setVisualizeWhitespaceColor(const QColor &foreground);
     int extraAreaWidth();
@@ -324,6 +325,7 @@ protected:
     QColor  m_extraBackground;
     QColor  m_indentLineForeground;
     QColor  m_currentLineBackground;
+    QColor  m_matchBracketsBackground;
     QColor  m_visualizeWhitespaceForeground;
     QRegExp m_selectionExpression;
     QRegExp m_findExpression;

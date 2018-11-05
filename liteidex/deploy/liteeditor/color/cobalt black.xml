@@ -7,6 +7,7 @@
   <style name="Extra" foreground="#008B8B" background="#111111"/>
   <style name="Selection" background="#505050"/>
   <style name="CurrentLine" background="#252525"/>
+  <style name="MatchBrackets" background="#808080"/>
   <style name="IndentLine" foreground="#008B8B"/>
   <style name="VisualWhitespace" foreground="#c0c0c0"/>
   <style name="Keyword" foreground="#ff9d04" />
