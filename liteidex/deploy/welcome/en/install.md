@@ -53,7 +53,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./build_linux_qt4.sh
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 	
 	## Deploy it: ##
@@ -74,7 +74,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ ./build_linux_qt5.sh
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 	
 	## Deploy it: ##
@@ -93,7 +93,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ QTDIR=/usr ./build_linux.sh
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 
 ### Linux
@@ -150,7 +150,7 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 
 	## Run it: ##
 	$ export LD_LIBRARY_PATH=$HOME/liteide/build/liteide/bin:$LD_LIBRARY_PATH
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 
 ### Raspbian Jessie
@@ -163,7 +163,7 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 	The build process from a µSD card takes approx. 105 minutes on a RPi 2.
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 
 **Addin** Be sure to set `QTDIR` (and `MINGWDIR` for Windows users) accordingly based on your local environment.
@@ -186,6 +186,6 @@ i.e. liteidex/src/github.com/visualfc/gotools/README.md
         $ ./build_linux_fedora27_x64.sh
 
         ## Run it: ##
-        $ cd ~/liteide/build/liteide/bin
+        $ cd liteide/build/liteide/bin
         $ ./liteide
 
