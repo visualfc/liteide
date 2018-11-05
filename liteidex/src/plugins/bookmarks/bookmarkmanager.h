@@ -41,6 +41,7 @@ class BookmarkManager : public LiteApi::IManager
     Q_OBJECT
 public:
     BookmarkManager(QObject *parent = 0);
+    virtual ~BookmarkManager();
     virtual bool initWithApp(LiteApi::IApplication *app);
 public slots:
     void editorCreated(LiteApi::IEditor *editor);
@@ -51,11 +52,24 @@ public slots:
     void editorMarkNodeRemoved(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
     void editorMarkNodeChanged(LiteApi::IEditorMark *mark,LiteApi::IEditorMarkNode *node);
     void gotoBookmark(const QModelIndex &index);
+    void contextMenuRequested(QPoint pt);
+    void gotoBookmarkAction();
+    void removeBookmarkAction();
+    void removeFileBookmarksAction();
+    void removeAllFileBookmarksAction();
+protected:
+    void removeFileBookmarks(const QString &filePath);
 protected:
     QAction *m_toggleBookmarkAct;
     BookmarkModel *m_bookmarkModel;
-    //BookmarkSortProxyModel *m_proxyModel;
+    BookmarkSortProxyModel *m_proxyModel;
     SymbolTreeView *m_treeView;
+    QAction *m_gotoBookmarkAct;
+    QAction *m_removeBookmarkAct;
+    QAction *m_removeFileBookmaraksAct;
+    QAction *m_removeAllFileBookmarksAct;
+    QMenu   *m_contextMenu;
+    QModelIndex m_contextIndex;
 };
 
 

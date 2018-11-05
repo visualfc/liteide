@@ -73,8 +73,8 @@ void BookmarkModel::updateNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkN
     bn->setLineNumber(node->blockNumber()+1);
     bn->setLineText(node->block().text());
     int idx = m_nodeList.indexOf(bn);
-
-    emit dataChanged(index(idx, 0, QModelIndex()), index(idx, 2, QModelIndex()));
+    QModelIndex i = index(idx,0,QModelIndex());
+    emit dataChanged(i,i);
 }
 
 BookmarkNode *BookmarkModel::createBookmarkNode(LiteApi::IEditorMark *mark, LiteApi::IEditorMarkNode *node) const

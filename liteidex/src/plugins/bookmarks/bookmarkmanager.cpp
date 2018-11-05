@@ -41,6 +41,11 @@ BookmarkManager::BookmarkManager(QObject *parent)
 {
 }
 
+BookmarkManager::~BookmarkManager()
+{
+    delete m_contextMenu;
+}
+
 bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
 {
     if (!IManager::initWithApp(app)) {
@@ -77,15 +82,27 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
     m_treeView->setRootIsDecorated(false);
 
     m_bookmarkModel = new BookmarkModel(this);
-//    m_proxyModel = new BookmarkSortProxyModel(this);
-//    m_proxyModel->setSourceModel(m_bookmarkModel);
-//    //m_proxyModel->sort(0);
+    m_proxyModel = new BookmarkSortProxyModel(this);
+    m_proxyModel->setSourceModel(m_bookmarkModel);
+    m_proxyModel->sort(0);
 
-    m_treeView->setModel(m_bookmarkModel);
+    m_treeView->setModel(m_proxyModel);
 
     m_treeView->setItemDelegate(new BookmarkDelegate(this));
     m_treeView->setFrameStyle(QFrame::NoFrame);
     m_treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    m_gotoBookmarkAct = new QAction(tr("Goto bookmark"),this);
+    m_removeBookmarkAct = new QAction(tr("Remove bookmark"),this);
+    m_removeFileBookmaraksAct = new QAction(tr("Remove all bookmarks for this file"),this);
+    m_removeAllFileBookmarksAct = new QAction(tr("Remove all bookmarks for all files"),this);
+
+    m_contextMenu = new QMenu;
+    m_contextMenu->addAction(m_gotoBookmarkAct);
+    m_contextMenu->addAction(m_removeBookmarkAct);
+    m_contextMenu->addAction(m_removeFileBookmaraksAct);
+    m_contextMenu->addAction(m_removeAllFileBookmarksAct);
 
  //   m_treeView->setFocusPolicy(Qt::NoFocus);
 //    m_treeView->setSelectionModel(manager->selectionModel());
@@ -99,6 +116,12 @@ bool BookmarkManager::initWithApp(LiteApi::IApplication *app)
 
     connect(m_treeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(gotoBookmark(QModelIndex)));
     connect(m_treeView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(gotoBookmark(QModelIndex)));
+    connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
+
+    connect(m_gotoBookmarkAct,SIGNAL(triggered(bool)),this,SLOT(gotoBookmarkAction()));
+    connect(m_removeBookmarkAct,SIGNAL(triggered(bool)),this,SLOT(removeBookmarkAction()));
+    connect(m_removeFileBookmaraksAct,SIGNAL(triggered(bool)),this,SLOT(removeFileBookmarksAction()));
+    connect(m_removeAllFileBookmarksAct,SIGNAL(triggered(bool)),this,SLOT(removeAllFileBookmarksAction()));
 
     return true;
 }
@@ -238,6 +261,80 @@ void BookmarkManager::gotoBookmark(const QModelIndex &index)
     int lineNumber = index.data(BookmarkModel::LineNumber).toInt();
     if (!filePath.isEmpty() && (lineNumber > 0)) {
         LiteApi::gotoLine(m_liteApp,filePath,lineNumber-1,0,true,true);
+    }
+}
+
+void BookmarkManager::contextMenuRequested(QPoint pt)
+{
+    QModelIndex index =  m_treeView->indexAt(pt);
+    m_contextIndex = index;
+    if (!index.isValid()) {
+        return;
+    }
+    m_contextMenu->popup(m_treeView->mapToGlobal(pt));
+}
+
+void BookmarkManager::gotoBookmarkAction()
+{
+    gotoBookmark(m_contextIndex);
+}
+
+void BookmarkManager::removeBookmarkAction()
+{
+    if (!m_contextIndex.isValid()) {
+        return;
+    }
+    QString filePath = m_contextIndex.data(BookmarkModel::FilePath).toString();
+    int line = m_contextIndex.data(BookmarkModel::LineNumber).toInt()-1;
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filePath,true);
+    if (!editor) {
+        return;
+    }
+    LiteApi::IEditorMark *mark = LiteApi::getEditorMark(editor);
+    if (!mark) {
+        return;
+    }
+    QList<int> types = mark->markTypesByLine(line);
+    if (types.contains(BookMarkType)) {
+        mark->removeMark(line,BookMarkType);
+    }
+}
+
+void BookmarkManager::removeFileBookmarksAction()
+{
+    if (!m_contextIndex.isValid()) {
+        return;
+    }
+    QString filePath = m_contextIndex.data(BookmarkModel::FilePath).toString();
+    removeFileBookmarks(filePath);
+}
+
+void BookmarkManager::removeFileBookmarks(const QString &filePath)
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filePath,true);
+    if (!editor) {
+        return;
+    }
+    LiteApi::IEditorMark *mark = LiteApi::getEditorMark(editor);
+    if (!mark) {
+        return;
+    }
+    QList<int> lines = mark->markLinesByType(BookMarkType);
+    mark->removeMarkList(lines,BookMarkType);
+}
+
+
+void BookmarkManager::removeAllFileBookmarksAction()
+{
+    int count = m_bookmarkModel->rowCount();
+    QSet<QString> files;
+    for (int i = 0; i < count; i++) {
+        QModelIndex index = m_bookmarkModel->index(i,0);
+        QString filePath = index.data(BookmarkModel::FilePath).toString();
+        files.insert(filePath);
+    }
+    foreach (QString file, files) {
+        removeFileBookmarks(file);
     }
 }
 
