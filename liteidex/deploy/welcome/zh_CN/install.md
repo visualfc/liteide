@@ -53,7 +53,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ ./build_linux_qt4.sh
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 	
 	## Deploy it: ##
@@ -74,7 +74,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ ./build_linux_qt5.sh
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 	
 	## Deploy it: ##
@@ -92,7 +92,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ QTDIR=/usr ./build_linux.sh
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 
 ### Linux
@@ -149,7 +149,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 
 	## Run it: ##
 	$ export LD_LIBRARY_PATH=$HOME/liteide/build/liteide/bin:$LD_LIBRARY_PATH
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 
 ### Raspbian Jessie
@@ -162,7 +162,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	The build process from a µSD card takes approx. 105 minutes on a RPi 2.
 	
 	## Run it: ##
-	$ cd ~/liteide/build/liteide/bin
+	$ cd liteide/build/liteide/bin
 	$ ./liteide
 
 
