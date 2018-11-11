@@ -601,7 +601,6 @@ void FileUtil::openInShell(const QProcessEnvironment &env, const QString &file)
         path += "/";
     }
 #endif
-    //QProcess::startDetached(cmd,args,path);
     startDetachedEx(cmd,args,path);
 }
 
