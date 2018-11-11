@@ -193,12 +193,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 <context>
     <name>AstWidget</name>
     <message>
-        <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
+        <location filename="src/plugins/golangast/astwidget.cpp" line="76"/>
         <source>Go To Definition</source>
         <translation>定義へ移動</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/astwidget.cpp" line="76"/>
+        <location filename="src/plugins/golangast/astwidget.cpp" line="77"/>
         <source>View Import Document</source>
         <translation>インポートドキュメントを表示</translation>
     </message>
@@ -411,12 +411,32 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 <context>
     <name>BookmarkManager</name>
     <message>
-        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="56"/>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="61"/>
         <source>Toggle Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="96"/>
+        <source>Goto bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="97"/>
+        <source>Remove bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="98"/>
+        <source>Remove all bookmarks for this file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="99"/>
+        <source>Remove all bookmarks for all files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="115"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2475,8 +2495,8 @@ Want to replace to all the search items to whitespace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="785"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="920"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="790"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="925"/>
         <source>Below files in package %1</source>
         <translation type="unfinished"></translation>
     </message>

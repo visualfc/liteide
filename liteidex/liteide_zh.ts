@@ -193,12 +193,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>AstWidget</name>
     <message>
-        <location filename="src/plugins/golangast/astwidget.cpp" line="75"/>
+        <location filename="src/plugins/golangast/astwidget.cpp" line="76"/>
         <source>Go To Definition</source>
         <translation>跳转到声明</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangast/astwidget.cpp" line="76"/>
+        <location filename="src/plugins/golangast/astwidget.cpp" line="77"/>
         <source>View Import Document</source>
         <translation>查看Import文档</translation>
     </message>
@@ -411,12 +411,32 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>BookmarkManager</name>
     <message>
-        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="56"/>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="61"/>
         <source>Toggle Bookmark</source>
         <translation>切换书签</translation>
     </message>
     <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="96"/>
+        <source>Goto bookmark</source>
+        <translation>跳转书签</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="97"/>
+        <source>Remove bookmark</source>
+        <translation>删除书签</translation>
+    </message>
+    <message>
         <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="98"/>
+        <source>Remove all bookmarks for this file</source>
+        <translation>删除这个文件的全部书签</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="99"/>
+        <source>Remove all bookmarks for all files</source>
+        <translation>删除全部书签</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/bookmarks/bookmarkmanager.cpp" line="115"/>
         <source>Bookmarks</source>
         <translation>书签</translation>
     </message>
@@ -2490,8 +2510,8 @@ Want to replace to all the search items to whitespace?</source>
         <translation>Go源码查询</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="785"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="920"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="790"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="925"/>
         <source>Below files in package %1</source>
         <translation>下面的文件属于包 %1</translation>
     </message>

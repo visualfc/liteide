@@ -332,6 +332,22 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Goto bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove all bookmarks for this file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove all bookmarks for all files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BookmarkRecent</name>
