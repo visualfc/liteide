@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2018.10.12 Ver X35.2
+### 2018.11.12 Ver X35.2
 * LiteIDE
 	* fixed types info jump position
 	* optimization types info lookup cache
