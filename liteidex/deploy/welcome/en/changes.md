@@ -3,6 +3,32 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2018.10.12 Ver X35.2
+* LiteIDE
+	* fixed types info jump position
+	* optimization types info lookup cache
+* LiteEditor
+	* single line comment set after white spaces and add space
+	* go.mod editor support comment action
+	* color scheme support MatchBrackets background, default gray #808080
+* Bookmarks
+	* sort bookmark model by name/line, add context menu goto/remove/removeThisFile/removeAllFiles action
+* GolangDoc
+	* fix mod package godoc import path view
+* GolangEdit
+	* fix lookup types info by gocode cache
+* gotools & gocode
+	* fixed types jump info position
+	* optimization types info lookup cache
+
+### 2018.10.24 Ver X35.1
+* LiteIDE
+	* BUG fixed, gocode code jump and import line jump
+* GolangEdit
+	* fix jump def for import line
+* gotools & gocode
+	* fix types jump
+
 ### 2018.10.24 Ver X35
 * LiteIDE
 	* all support Go1.11 Go modules
