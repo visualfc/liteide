@@ -601,6 +601,15 @@ void FileUtil::openInShell(const QProcessEnvironment &env, const QString &file)
         path += "/";
     }
 #endif
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    QProcess p;
+    p.setWorkingDirectory(path);
+    p.setProcessEnvironment(env);
+    p.setProgram(cmd);
+    p.setArguments(args);
+    p.startDetached();
+#else
     startDetachedEx(cmd,args,path);
+#endif
 }
 
