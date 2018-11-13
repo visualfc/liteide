@@ -545,7 +545,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     }
     m_findLinkProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findLinkProcess->setWorkingDirectory(info.path());
-    m_findLinkProcess->startEx(cmd,args.join(" "));
+    m_findLinkProcess->startEx(cmd,args);
 }
 
 void GolangEdit::aboutToShowContextMenu()
@@ -657,7 +657,7 @@ void GolangEdit::editorJumpToDecl()
 
     m_findDefProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findDefProcess->setWorkingDirectory(info.path());
-    m_findDefProcess->startEx(cmd,args.join(" "));
+    m_findDefProcess->startEx(cmd,args);
 }
 
 void GolangEdit::editorFindUsages()
@@ -752,7 +752,7 @@ void GolangEdit::editorFindInfo()
     }
     m_findInfoProcess->setEnvironment(LiteApi::getCustomGoEnvironment(m_liteApp,m_editor).toStringList());
     m_findInfoProcess->setWorkingDirectory(info.path());
-    m_findInfoProcess->startEx(cmd,args.join(" "));
+    m_findInfoProcess->startEx(cmd,args);
 }
 
 void GolangEdit::findDefStarted()
@@ -1181,7 +1181,7 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
         args << action;
         args << scope;
     }
-    m_sourceQueryProcess->startEx(cmd,args.join(" "));
+    m_sourceQueryProcess->startEx(cmd,args);
 }
 
 void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scope)
@@ -1233,7 +1233,7 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
         args << action;
         args << scope;
     }
-    m_sourceQueryProcess->startEx(cmd,args.join(" "));
+    m_sourceQueryProcess->startEx(cmd,args);
 }
 
 void GolangEdit::sourceWhat()
@@ -1364,7 +1364,7 @@ void GolangEdit::execGoModifyTags(const QString &args)
     } else {
         cmdArgs = QString("-file %1 -offset %2 %3").arg(info.fileName()).arg(m_editor->utf8Position(true)).arg(args);
     }
-    process.startEx(cmd,cmdArgs);
+    process.startEx(cmd,cmdArgs.split(" "));
     if (!process.waitForStarted(30000)) {
         m_liteApp->appendLog("GolangEdit","wait for gomodifytags started timeout",true);
         return;

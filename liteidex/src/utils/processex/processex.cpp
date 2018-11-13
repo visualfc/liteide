@@ -184,17 +184,26 @@ void Process::stopAndWait(int termMs, int finishMs)
     waitForFinished(finishMs);
 }
 
+void Process::startEx(const QString &cmd, const QStringList &args)
+{
+    this->startEx(cmd,args.join(" "));
+}
+
 void Process::startEx(const QString &cmd, const QString &args)
 {
 #ifdef Q_OS_WIN
     this->setNativeArguments(args);
-    if (cmd.indexOf(" ")) {
+    if (cmd.contains(' ')) {
         this->start("\""+cmd+"\"");
     } else {
         this->start(cmd);
     }
 #else
-    this->start(cmd+" "+args);
+    if (cmd.contains(' ')) {
+        this->start("\""+cmd+"\" "+args);
+    } else {
+        this->start(cmd+" "+args);
+    }
 #endif
 }
 

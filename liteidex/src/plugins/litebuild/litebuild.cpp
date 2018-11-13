@@ -1555,20 +1555,7 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
     m_process->setWorkingDirectory(workDir);
     m_output->appendTag(QString("%1 %2 [%3]\n")
                          .arg(cmd).arg(args).arg(workDir));
-#ifdef Q_OS_WIN
-    m_process->setNativeArguments(args);
-    if (cmd.contains(" ")) {
-        m_process->start("\""+cmd+"\"");
-    } else {
-        m_process->start(cmd);
-    }
-#else
-    if (cmd.contains(" ")) {
-        m_process->start("\""+cmd+"\"");//,QIODevice::ReadWrite|QIODevice::Unbuffered);
-    } else {
-        m_process->start(cmd+" "+args);//,QIODevice::ReadWrite|QIODevice::Unbuffered);
-    }
-#endif
+    m_process->startEx(cmd,args);
 }
 
 void LiteBuild::execBuildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
@@ -1813,20 +1800,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
                             .arg(QDir::cleanPath(cmd))
                             .arg(args)
                             .arg(m_workDir));
-#ifdef Q_OS_WIN
-    m_process->setNativeArguments(args);
-    if (cmd.contains(" ")) {
-        m_process->start("\""+cmd+"\"");
-    } else {
-        m_process->start(cmd);
-    }
-#else
-    if (cmd.contains(" ")) {
-        m_process->start("\""+cmd+"\"");
-    } else {
-        m_process->start(cmd+" "+args);
-    }
-#endif
+        m_process->startEx(cmd,args);
     }
 }
 

@@ -354,9 +354,9 @@ bool GolangPresentEdit::startExportHtmlDoc(EXPORT_TYPE type)
     m_process->setUserData(0,type);
     m_editor->clearAllNavigateMark(LiteApi::EditorNavigateBad, GOPRESENT_TAG);
     if (type == EXPORT_TYPE_VERIFY) {
-        m_process->startEx(cmd,"gopresent -v -i "+info.fileName().toUtf8());
+        m_process->startEx(cmd,QStringList() << "gopresent" << "-v" << "-i" << info.fileName().toUtf8());
     } else {
-        m_process->startEx(cmd,"gopresent -stdout -i "+info.fileName().toUtf8());
+        m_process->startEx(cmd,QStringList() << "gopresent" << "-stdout" << "-i " << info.fileName().toUtf8());
     }
     return true;
 }

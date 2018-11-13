@@ -140,7 +140,7 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     args << ".";
 
     emit findStarted();
-    m_process->startEx(cmd,args.join(" "));
+    m_process->startEx(cmd,args);
 }
 
 void GolangFileSearch::findUsagesStarted()

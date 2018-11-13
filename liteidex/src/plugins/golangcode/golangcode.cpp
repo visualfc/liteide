@@ -100,7 +100,7 @@ void GolangCode::applyOption(QString id)
     if (!m_gocodeSetProcess->isStop()) {
         m_gocodeSetProcess->stopAndWait(100,2000);
     }
-    m_gocodeSetProcess->start(m_gocodeCmd,args);
+    m_gocodeSetProcess->startEx(m_gocodeCmd,args);
 }
 
 void GolangCode::appLoaded()
@@ -298,7 +298,7 @@ void GolangCode::updateEditorGOPATH()
     args << "-in" << "" << "-f" << "csv" << "autocomplete" << "main.go" << "21";
     m_gocodeImportProcess->setProcessEnvironment(env);
     m_gocodeImportProcess->setWorkingDirectory(m_fileInfo.absolutePath());
-    m_gocodeImportProcess->start(m_gocodeCmd,args);
+    m_gocodeImportProcess->startEx(m_gocodeCmd,args);
 }
 
 void GolangCode::customGOPATHChanged(const QString &/*buildPath*/)
@@ -340,7 +340,7 @@ void GolangCode::gocodeUpdataLibpath(const QProcessEnvironment &env)
     if (!m_gocodeSetProcess->isStop()) {
         m_gocodeSetProcess->stopAndWait(100,1000);
     }
-    m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "set" << "lib-path" << env.value("GOPATH"));
+    m_gocodeSetProcess->startEx(m_gocodeCmd,QStringList() << "set" << "lib-path" << env.value("GOPATH"));
 }
 
 void GolangCode::gocodeReset(const QProcessEnvironment &env)
@@ -353,7 +353,7 @@ void GolangCode::gocodeReset(const QProcessEnvironment &env)
     if (!m_gocodeSetProcess->isStop()) {
         m_gocodeSetProcess->stopAndWait(100,1000);
     }
-    m_gocodeSetProcess->start(m_gocodeCmd,QStringList() << "close");
+    m_gocodeSetProcess->startEx(m_gocodeCmd,QStringList() << "close");
 }
 
 
@@ -467,7 +467,7 @@ void GolangCode::loadImportsList(const QProcessEnvironment &env)
 
     m_importProcess->setProcessEnvironment(env);
 
-    m_importProcess->start(cmd,args);
+    m_importProcess->startEx(cmd,args);
 }
 
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
@@ -604,10 +604,10 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
     src = src.replace("\r\n","\n");
     m_writeData = src.left(cur.position()).toUtf8();
     QStringList args;
-    args << "-in" << "" << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length()+offset);
+    args << "-f" << "csv" << "autocomplete" << m_fileInfo.fileName() << QString::number(m_writeData.length()+offset);
     m_writeData = src.toUtf8();
     m_gocodeProcess->setWorkingDirectory(m_fileInfo.absolutePath());
-    m_gocodeProcess->start(m_gocodeCmd,args);
+    m_gocodeProcess->startEx(m_gocodeCmd,args);
 }
 
 void GolangCode::wordCompleted(QString,QString,QString)
