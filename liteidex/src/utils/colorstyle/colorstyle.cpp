@@ -102,7 +102,7 @@ bool ColorStyleScheme::load(QIODevice *dev, const QString &/*fileName*/)
                 }
                 tmp = attrs.value("italic").toString().toLower();
                 if (tmp == "true") {
-                    style->setItalic("true");
+                    style->setItalic(true);
                 }
             }
             break;
