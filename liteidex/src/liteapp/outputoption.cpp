@@ -120,6 +120,9 @@ void OutputOption::apply()
     m_liteApp->settings()->setValue(OUTPUT_FONTSIZE,m_fontSize);
     m_liteApp->settings()->setValue(OUTPUT_FONTZOOM,fontZoom);
 
+    bool antialias = ui->antialiasCheckBox->isChecked();
+    m_liteApp->settings()->setValue(OUTPUT_ANTIALIAS,antialias);
+
     bool colorScheme = ui->useColorSchemeCheckBox->isChecked();
     int maxLines = ui->spinBoxOutputMaxLines->value();
 
