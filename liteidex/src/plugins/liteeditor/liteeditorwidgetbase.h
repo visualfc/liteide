@@ -93,6 +93,7 @@ public:
 protected:
     QByteArray m_tempNavigationState;
 public slots:
+    void verticalScrollBarRangeChanged(int minnum,int maxnum);
     void cleanWhitespace(bool wholeDocument = false);
     void editContentsChanged(int position, int charsRemoved, int charsAdded);
     virtual void highlightCurrentLine();

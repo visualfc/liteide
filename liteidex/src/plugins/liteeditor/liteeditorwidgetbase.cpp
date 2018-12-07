@@ -423,6 +423,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(slotUpdateRequest(QRect, int)));
     connect(this->document(),SIGNAL(contentsChange(int,int,int)),this,SLOT(editContentsChanged(int,int,int)));
     connect(this,SIGNAL(selectionChanged()),this,SLOT(slotSelectionChanged()));
+    connect(this->verticalScrollBar(),SIGNAL(rangeChanged(int,int)),this,SLOT(verticalScrollBarRangeChanged(int,int)));
 
     QTextDocument *doc = this->document();
     if (doc) {
@@ -1306,6 +1307,18 @@ QByteArray LiteEditorWidgetBase::saveState() const
     stream << m_wordWrap;
 
     return state;
+}
+
+void LiteEditorWidgetBase::verticalScrollBarRangeChanged(int minnum, int maxnum)
+{
+    QScrollBar *bar = this->verticalScrollBar();
+    bar->blockSignals(true);
+    int h = this->document()->size().height();
+    if (h > 1) {
+        h--;
+    }
+    bar->setMaximum(minnum+h);
+    bar->blockSignals(false);
 }
 
 bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
