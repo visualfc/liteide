@@ -46,12 +46,12 @@
     <glob pattern="*.cc"/>
     <glob pattern="*.c++"/>
     <glob pattern="*.h"/>
-	<glob pattern="*.hpp"/>
-	<glob pattern="*.hh"/>
-	<glob pattern="*.hxx"/>
-	<glob pattern="*.h++"/>
-	<glob pattern="*.hcc"/>
-	<glob pattern="*.moc"/>
+    <glob pattern="*.hpp"/>
+    <glob pattern="*.hh"/>
+    <glob pattern="*.hxx"/>
+    <glob pattern="*.h++"/>
+    <glob pattern="*.hcc"/>
+    <glob pattern="*.moc"/>
   </mime-type>
   <mime-type type="text/yaml" codec="utf-8" package="yaml" tabwidth="2">
     <sub-class-of type="text/plain"/>
