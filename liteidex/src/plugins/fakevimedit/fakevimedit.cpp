@@ -307,12 +307,13 @@ void FakeVimEdit::currentEditorChanged(LiteApi::IEditor *editor)
     QPlainTextEdit *ped = LiteApi::getPlainTextEdit(editor);
 
     if (m_enableUseFakeVim){
-        if(m_editorMap.contains(ped))
-            return;
-        else
+        if(!m_editorMap.contains(ped)) {
             _addFakeVimToEditor(editor);
+        }
     }else{
-        _removeFakeVimFromEditor(editor);
+        if (m_editorMap.contains(ped)) {
+            _removeFakeVimFromEditor(editor);
+        }
     }
 }
 
