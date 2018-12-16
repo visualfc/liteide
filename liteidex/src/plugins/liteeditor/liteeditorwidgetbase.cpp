@@ -2174,6 +2174,8 @@ bool LiteEditorWidgetBase::autoBackspace(QTextCursor &cursor)
     QTextDocument *doc = cursor.document();
     const QChar lookAhead = doc->characterAt(pos);
     const QChar lookBehind = doc->characterAt(pos - 1);
+
+
 //    const QChar lookFurtherBehind = doc->characterAt(pos - 2);
 
     if ( (lookBehind == QLatin1Char('(') && lookAhead == QLatin1Char(')')) ||
@@ -2487,6 +2489,17 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
                                    | Qt::AltModifier
                                    | Qt::MetaModifier)) == Qt::NoModifier
                 && !cursor.hasSelection()) {
+
+                int pos = cursor.position();
+                if (pos >= 1) {
+                    QTextDocument *doc = cursor.document();
+                    const QChar lookAhead = doc->characterAt(pos-1);
+                    if (lookAhead == ' ') {
+                        this->indentText(cursor,false);
+                        e->accept();
+                        return;
+                    }
+                }
                 if (this->autoBackspace(cursor)) {
                     this->setTextCursor(cursor);
                     e->accept();
@@ -2829,6 +2842,7 @@ end:
 
 QString LiteEditorWidgetBase::tabText(int n) const
 {
+    qDebug() << m_bTabUseSpace << m_nTabSize;
     if (m_bTabUseSpace) {
         return QString(m_nTabSize*n,' ');
     }

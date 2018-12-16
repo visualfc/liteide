@@ -1079,9 +1079,19 @@ void LiteEditor::applyOption(QString id)
 
     QString mime = this->m_file->mimeType();
     m_editorWidget->setMimeType(mime);
-    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-    bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
-    this->setTabOption(tabWidth,useSpace);
+
+    bool tabToSpace = true;
+    int tabWidth = 4;
+    LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mime);
+    if (im) {
+        tabToSpace = im->tabToSpace();
+        tabWidth = im->tabWidth();
+    }
+
+    tabToSpace = m_liteApp->settings()->value(MIMETYPE_TABTOSPACE+mime,tabToSpace).toBool();
+    tabWidth = m_liteApp->settings()->value(MIMETYPE_TABWIDTH+mime,tabWidth).toInt();
+
+    this->setTabOption(tabWidth,tabToSpace);
     m_visualizeWhitespaceAct->setChecked(visualizeWhitespace);
 }
 
@@ -1479,7 +1489,7 @@ void LiteEditor::autoIndent()
 
 void LiteEditor::tabToSpacesToggled(bool b)
 {
-    m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+this->mimeType(),b);
+    m_liteApp->settings()->setValue(MIMETYPE_TABTOSPACE+this->mimeType(),b);
     m_editorWidget->setTabToSpaces(b);
 }
 

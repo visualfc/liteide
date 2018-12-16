@@ -63,6 +63,16 @@ QString MimeType::codec() const
     return m_codec;
 }
 
+bool MimeType::tabToSpace() const
+{
+    return m_tabToSpace;
+}
+
+int MimeType::tabWidth() const
+{
+    return m_tabWidth;
+}
+
 QStringList MimeType::globPatterns() const
 {
     return m_globPatterns;
@@ -90,6 +100,12 @@ void MimeType::merge(const IMimeType *mimeType)
     }
     if (!mimeType->package().isEmpty()) {
         m_package = mimeType->package();
+    }
+    if (!mimeType->tabToSpace()) {
+        m_tabToSpace = mimeType->tabToSpace();
+    }
+    if (mimeType->tabWidth() != -1) {
+        m_tabWidth = mimeType->tabWidth();
     }
     m_subClassesOf.removeDuplicates();
     m_globPatterns.removeDuplicates();
@@ -134,6 +150,22 @@ void MimeType::setScheme(const QString &scheme)
 void MimeType::setCodec(const QString &codec)
 {
     m_codec = codec;
+}
+
+void MimeType::setTabToSpace(const QString &s)
+{
+    if (s == "false" || s == "0") {
+        m_tabToSpace = false;
+    }
+}
+
+void MimeType::setTabWidth(const QString &s)
+{
+    bool ok = false;
+    int n = s.toInt(&ok);
+    if (ok) {
+        m_tabWidth = n;
+    }
 }
 
 void MimeType::setComment(const QString &comment)
@@ -194,6 +226,8 @@ bool MimeType::loadMimeTypes(LiteApi::IMimeTypeManager *manager, QIODevice *dev,
                 mimeType->setPackage(attrs.value("package").toString());
                 mimeType->setCodec(attrs.value("codec").toString());
                 mimeType->setScheme(attrs.value("scheme").toString());
+                mimeType->setTabToSpace(attrs.value("tabtospace").toString());
+                mimeType->setTabWidth(attrs.value("tabwidth").toString());
             } else if (reader.name() == "sub-class-of" && mimeType) {
                 mimeType->appendSubClassesOf(attrs.value("type").toString());
             } else if (reader.name() == "comment" && mimeType) {

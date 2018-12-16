@@ -169,18 +169,27 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
         if (mime.startsWith("text/") || mime.startsWith("application/")) {
             QStandardItem *item = new QStandardItem(mime);
             item->setEditable(false);
-            QString tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,"4").toString();
-            bool tabUseSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
-            QStandardItem *tab = new QStandardItem(tabWidth);
+
+            bool tabToSpace = true;
+            int tabWidth = 4;
+            LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mime);
+            if (im) {
+                tabToSpace = im->tabToSpace();
+                tabWidth = im->tabWidth();
+            }
+
+            tabToSpace = m_liteApp->settings()->value(MIMETYPE_TABTOSPACE+mime,tabToSpace).toBool();
+            tabWidth = m_liteApp->settings()->value(MIMETYPE_TABWIDTH+mime,tabWidth).toInt();
+
+            QStandardItem *tab = new QStandardItem(QString("%1").arg(tabWidth));
             QStandardItem *useSpace = new QStandardItem();
             useSpace->setCheckable(true);
-            useSpace->setCheckState(tabUseSpace?Qt::Checked:Qt::Unchecked);
+            useSpace->setCheckState(tabToSpace?Qt::Checked:Qt::Unchecked);
             useSpace->setEditable(false);
             QStandardItem *ext = new QStandardItem;
             ext->setEditable(false);
-            LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);
-            if (imt) {
-                ext->setText(imt->globPatterns().join(";"));
+            if (im) {
+                ext->setText(im->globPatterns().join(";"));
             }
             QString custom = m_liteApp->settings()->value(EDITOR_CUSTOMEXTENSION+mime,"").toString();
             QStandardItem *cus = new QStandardItem(custom);
@@ -306,12 +315,12 @@ void LiteEditorOption::apply()
         bool ok;
         int n = tab.toInt(&ok);
         if (ok && n > 0 && n < 20) {
-            //m_liteApp->settings()->setValue(EDITOR_TABWIDTH+mime,n);
-            LiteApi::updateAppSetting(m_liteApp,EDITOR_TABWIDTH+mime,n,4);
+            //m_liteApp->settings()->setValue(MIMETYPE_TABWIDTH+mime,n);
+            LiteApi::updateAppSetting(m_liteApp,MIMETYPE_TABWIDTH+mime,n,4);
         }
         bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;        
-        //m_liteApp->settings()->setValue(EDITOR_TABTOSPACES+mime,b);
-        LiteApi::updateAppSetting(m_liteApp,EDITOR_TABTOSPACES+mime,b,false);
+        //m_liteApp->settings()->setValue(MIMETYPE_TABTOSPACE+mime,b);
+        LiteApi::updateAppSetting(m_liteApp,MIMETYPE_TABTOSPACE+mime,b,true);
         //m_liteApp->settings()->setValue(EDITOR_CUSTOMEXTENSION+mime,custom);
         LiteApi::updateAppSetting(m_liteApp,EDITOR_CUSTOMEXTENSION+mime,custom,"");
         LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);

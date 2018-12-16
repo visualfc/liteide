@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-  <mime-type type="text/x-gosrc" codec="utf-8" package="go">
+  <mime-type type="text/x-gosrc" codec="utf-8" package="go" tabtospace="false" tabwidth="4">
     <sub-class-of type="text/plain"/>
     <comment>Golang Source File</comment>
     <glob pattern="*.go"/>
   </mime-type>
-  <mime-type type="text/x-rust" codec="utf-8" package="rust">
+  <mime-type type="text/x-rust" codec="utf-8" package="rust" tabwidth="4">
     <sub-class-of type="text/plain"/>
     <comment>Rust Source File</comment>
     <glob pattern="*.rs"/>
   </mime-type>
-  <mime-type type="text/x-lua" codec="utf-8" package="lua">
+  <mime-type type="text/x-lua" codec="utf-8" package="lua" tabwidth="4">
     <sub-class-of type="text/plain"/>
     <comment>Lua Source File</comment>
     <glob pattern="*.lua"/>
     <glob pattern="*.wlua"/>
   </mime-type>
-  <mime-type type="text/html" codec="utf-8" package="html">
+  <mime-type type="text/html" codec="utf-8" package="html" tabwidth="2">
     <sub-class-of type="text/plain"/>
     <comment>HTML Source File</comment>
     <glob pattern="*.htm"/>
@@ -25,7 +25,7 @@
     <glob pattern="*.shtm"/>
     <glob pattern="*.tpl"/>
   </mime-type>
-  <mime-type type="text/xml" codec="utf-8" package="xml">
+  <mime-type type="text/xml" codec="utf-8" package="xml" tabwidth="2">
     <sub-class-of type="text/plain"/>
     <comment>XML Source File</comment>
     <glob pattern="*.docbook"/>
@@ -37,7 +37,7 @@
     <glob pattern="*.xspf"/>
     <glob pattern="*.plist"/>
   </mime-type>
-  <mime-type type="text/x-csrc" codec="utf-8" package="c">
+  <mime-type type="text/x-csrc" codec="utf-8" package="c" tabwidth="4">
     <sub-class-of type="text/plain"/>
     <comment>C Source File</comment>
     <glob pattern="*.c"/>
@@ -52,5 +52,11 @@
 	<glob pattern="*.h++"/>
 	<glob pattern="*.hcc"/>
 	<glob pattern="*.moc"/>
+  </mime-type>
+  <mime-type type="text/yaml" codec="utf-8" package="yaml" tabwidth="2">
+    <sub-class-of type="text/plain"/>
+    <comment>YAML Source File</comment>
+    <glob pattern="*.yaml"/>
+    <glob pattern="*.yml"/>
   </mime-type>
 </mime-info>

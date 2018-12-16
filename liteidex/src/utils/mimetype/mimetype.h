@@ -29,11 +29,16 @@
 class MimeType : public LiteApi::IMimeType
 {
 public:
+    MimeType(): m_tabToSpace(true), m_tabWidth(4)
+    {
+    }
     virtual QString package() const;
     virtual QString type() const;
     virtual QString scheme() const;
     virtual QString comment() const;
     virtual QString codec() const;
+    virtual bool tabToSpace() const;
+    virtual int tabWidth() const;
     virtual QStringList globPatterns() const;    
     virtual QStringList subClassesOf() const;
     virtual void merge(const IMimeType *mimeType);
@@ -45,6 +50,8 @@ public:
     void setType(const QString &type);
     void setScheme(const QString &scheme);
     void setCodec(const QString &codec);
+    void setTabToSpace(const QString &s);
+    void setTabWidth(const QString &s);
     void setComment(const QString &comment);
     void appendGlobPatterns(const QString &globPattern);
     void appendSubClassesOf(const QString &subClassOf);
@@ -54,6 +61,8 @@ public:
     static bool loadMimeTypes(LiteApi::IMimeTypeManager *manager, const QString &fileName);
     static bool loadMimeTypes(LiteApi::IMimeTypeManager *manager, QIODevice *dev, const QString &fileName);
 protected:
+    bool    m_tabToSpace; // default true
+    int     m_tabWidth; //default -1
     QString m_package;
     QString m_type;
     QString m_scheme;
@@ -64,4 +73,5 @@ protected:
     QStringList m_customPatterns;
     QMap<QString,QString> m_localCommentMap;
 };
+
 #endif // LITEAPI_MIMETYPE_H

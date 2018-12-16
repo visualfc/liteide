@@ -120,6 +120,8 @@ public:
     virtual QString scheme() const = 0;
     virtual QString comment() const = 0;
     virtual QString codec() const = 0;
+    virtual bool tabToSpace() const = 0;
+    virtual int tabWidth() const = 0;
     virtual QStringList globPatterns() const = 0;
     virtual QStringList subClassesOf() const = 0;
     virtual void merge(const IMimeType *mimeType) = 0;
@@ -940,7 +942,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X35")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X35.3")
 
 
 #endif //LITEAPI_H

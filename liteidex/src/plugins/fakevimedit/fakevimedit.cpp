@@ -140,9 +140,17 @@ void FakeVimEdit::_removeFakeVimFromEditor(LiteApi::IEditor *editor){
         return;
     }
     QString mime = editor->mimeType();
-    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-    bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
-    ed->setTabOption(tabWidth,useSpace);
+
+    bool tabToSpace = true;
+    int tabWidth = 4;
+    LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mime);
+    if (im) {
+        tabToSpace = im->tabToSpace();
+        tabWidth = im->tabWidth();
+    }
+    tabWidth = m_liteApp->settings()->value(MIMETYPE_TABWIDTH+mime,tabWidth).toInt();
+    tabToSpace = m_liteApp->settings()->value(MIMETYPE_TABTOSPACE+mime,tabToSpace).toBool();
+    ed->setTabOption(tabWidth,tabToSpace);
 
     QPlainTextEdit *ped = LiteApi::getPlainTextEdit(ed);
 
