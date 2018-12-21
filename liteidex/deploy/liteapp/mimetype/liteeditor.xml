@@ -5,6 +5,11 @@
     <comment>Golang Source File</comment>
     <glob pattern="*.go"/>
   </mime-type>
+  <mime-type type="text/x-qlang" codec="utf-8" package="qlang" tabtospace="false" tabwidth="4">
+    <sub-class-of type="text/plain"/>
+    <comment>Qlang Source File</comment>
+    <glob pattern="*.ql"/>
+  </mime-type>
   <mime-type type="text/x-rust" codec="utf-8" package="rust" tabwidth="4">
     <sub-class-of type="text/plain"/>
     <comment>Rust Source File</comment>
