@@ -29,7 +29,6 @@
 #include "extension/extension.h"
 #include "goproxy.h"
 
-
 using namespace LiteApi;
 
 class MainWindow;
