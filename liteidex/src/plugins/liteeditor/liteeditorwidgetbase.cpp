@@ -1707,7 +1707,7 @@ void LiteEditorWidgetBase::duplicate()
 void LiteEditorWidgetBase::cutLine()
 {
     maybeSelectLine();
-    cut();
+    QPlainTextEdit::cut();
 }
 
 // ctrl+ins
@@ -2425,30 +2425,30 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
     this->m_moveLineUndoHack = false;
     bool ro = isReadOnly();
 
-    if (m_inBlockSelectionMode) {
-        if (e == QKeySequence::Cut) {
-            if (!ro) {
-                cut();
-                e->accept();
-                return;
-            }
-        } else if (e == QKeySequence::Delete || e->key() == Qt::Key_Backspace) {
-            if (!ro) {
+    if (e == QKeySequence::Cut) {
+        if (!ro) {
+            cut();
+            e->accept();
+            return;
+        }
+    } else if (e == QKeySequence::Delete || e->key() == Qt::Key_Backspace) {
+        if (!ro) {
+            if (m_inBlockSelectionMode) {
                 removeBlockSelection();
                 e->accept();
                 return;
             }
-        } else if (e == QKeySequence::Paste) {
-            if (!ro) {
-                paste();
-                e->accept();
-                return;
-            }
-        } else if (e == QKeySequence::SelectAll) {
-            selectAll();
+        }
+    } else if (e == QKeySequence::Paste) {
+        if (!ro) {
+            paste();
             e->accept();
             return;
         }
+    } else if (e == QKeySequence::SelectAll) {
+        selectAll();
+        e->accept();
+        return;
     }
 
     if ( e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return ) {
@@ -3593,8 +3593,11 @@ void LiteEditorWidgetBase::cut()
         removeBlockSelection();
         return;
     }
+    QTextCursor cur = this->textCursor();
+    if (!cur.hasSelection()) {
+        maybeSelectLine();
+    }
     QPlainTextEdit::cut();
-    //collectToCircularClipboard();
 }
 
 void LiteEditorWidgetBase::selectAll()

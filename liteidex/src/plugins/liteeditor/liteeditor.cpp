@@ -259,7 +259,7 @@ void LiteEditor::createActions()
     
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
     actionContext->regAction(m_cutAct,"Cut",QKeySequence::Cut);
-    m_cutAct->setEnabled(false);
+    //m_cutAct->setEnabled(false);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
     actionContext->regAction(m_copyAct,"Copy",QKeySequence::Copy);
@@ -487,7 +487,7 @@ void LiteEditor::createActions()
 
     connect(m_editorWidget,SIGNAL(undoAvailable(bool)),m_undoAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(redoAvailable(bool)),m_redoAct,SLOT(setEnabled(bool)));
-    connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_cutAct,SLOT(setEnabled(bool)));
+    //connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_cutAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_copyAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(wordWrapChanged(bool)),m_wordWrapAct,SLOT(setChecked(bool)));
 
