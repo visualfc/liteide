@@ -3169,6 +3169,18 @@ Success: %2.</oldsource>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tab To Spaces</source>
+        <translation type="unfinished">Табуляции в пробелы</translation>
+    </message>
+    <message>
+        <source>Spaces To Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEditorOption</name>

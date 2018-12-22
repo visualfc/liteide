@@ -3405,35 +3405,35 @@ Success: %2.</oldsource>
     </message>
     <message>
         <location filename="src/plugins/litebuild/litebuild.cpp" line="1533"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1598"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1585"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation type="unfinished">Процес вже виконується. Потрібно його перервати (меню Збірка/Перервати).</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1584"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1571"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation type="unfinished">Зупиняю поточний процес...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1594"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1581"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation type="unfinished">Не вдалося зупинити існуючий процес!</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1804"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1791"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation type="unfinished">Процесс стартував успішно</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1804"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1791"/>
         <source>Failed to start process</source>
         <translation type="unfinished">Помилка старту процесу</translation>
     </message>
@@ -3773,51 +3773,67 @@ Success: %2.</oldsource>
         <translation>Змінити на зворотній</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="624"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="708"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="470"/>
+        <source>Tab To Spaces</source>
+        <translation type="unfinished">Табуляцію в пробіли</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="474"/>
+        <source>Spaces To Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="631"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="719"/>
         <source>Advanced</source>
         <translation>Додатково</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="650"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="726"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="657"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="737"/>
         <source>Goto</source>
         <translation>Перейти</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="675"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="749"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="682"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="760"/>
+        <source>Convert Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="686"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="764"/>
         <source>Code Folding</source>
         <translation>Згортання коду</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="669"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="743"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="676"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="754"/>
         <source>Convert Case</source>
         <translation>Змінити регістр</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1129"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1168"/>
         <source>Export HTML</source>
         <translation>Експортувати HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1137"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1176"/>
         <source>Export Failed</source>
         <translation>Експорт завершився невдало</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1138"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1177"/>
         <source>Could not open %1 for writing.</source>
         <translation>Не вдалося відкрити %1 для запису.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1157"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1196"/>
         <source>Export PDF</source>
         <translation>Експорт в PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1182"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1221"/>
         <source>Print Document</source>
         <translation>Друк документу</translation>
     </message>
@@ -3880,7 +3896,7 @@ Success: %2.</oldsource>
         <translation>Розгорнути все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1257"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1296"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>Перейти до рядка</translation>
@@ -3941,18 +3957,19 @@ Success: %2.</oldsource>
         <translation type="unfinished">Доповнити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="681"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="692"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="770"/>
         <source>Settings</source>
         <oldsource>File Setup</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="835"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="864"/>
         <source>Reload File</source>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1199"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1238"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>Перезавантажити %1 і відкинути незбережені зміни?</translation>
     </message>
@@ -3963,12 +3980,12 @@ Success: %2.</oldsource>
         <translation>Перейти до наступного блоку</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1231"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1270"/>
         <source>ReadOnly</source>
         <translation>Тільки для читання</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1257"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1296"/>
         <source>Line: </source>
         <translation>Рядок:</translation>
     </message>
