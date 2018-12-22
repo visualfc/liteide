@@ -44,6 +44,7 @@
 #include <QAction>
 #include <QCompleter>
 #include <QDebug>
+#include "editorutil/checkdata.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -94,6 +95,12 @@ void FindThread::findFile(const QRegExp &reg, const QString &fileName)
     if (!file.open(QIODevice::ReadOnly)) {
         return;
     }
+    //skip binary data
+    QByteArray head = file.read(32);
+    if (HasBinaryData(head,32)) {
+        return;
+    }
+    file.seek(0);
 
     QTextStream stream(&file);
     stream.setCodec("utf-8");
