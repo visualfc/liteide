@@ -412,6 +412,13 @@ QString FileSearch::searchText() const
     return m_thread->findText;
 }
 
+void FileSearch::setSearchInfo(const QString &text, const QString &filter, const QString &path)
+{
+    m_findCombo->setEditText(text);
+    m_filterCombo->setEditText(filter);
+    m_findPathCombo->setEditText(path);
+}
+
 void FileSearch::findInFiles()
 {
     if (m_thread->isRunning()) {

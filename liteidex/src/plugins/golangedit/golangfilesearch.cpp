@@ -88,6 +88,11 @@ bool GolangFileSearch::replaceMode() const
     return m_replaceMode;
 }
 
+void GolangFileSearch::setSearchInfo(const QString &/*text*/, const QString &/*filter*/, const QString &/*path*/)
+{
+
+}
+
 void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool skip_goroot, bool replace)
 {
     if (!m_process->isStop()) {

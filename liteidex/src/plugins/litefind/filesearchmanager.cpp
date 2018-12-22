@@ -82,6 +82,9 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
 
     QAction *newSearch = new QAction(tr("New Search"),this);
 
+    m_fmctxFileSearchAction = new QAction(tr("File Search"),this);
+    connect(m_fmctxFileSearchAction,SIGNAL(triggered(bool)),this,SLOT(fmctxFileSearch()));
+
     m_toolAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,
                                                   m_widget,"SearchResult",tr("Search Result"),true,
                                                   QList<QAction*>() << newSearch);
@@ -91,6 +94,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     connect(m_searchItemCombox,SIGNAL(currentIndexChanged(int)),this,SLOT(currentSearchItemChanged(int)));
     connect(m_searchResultWidget,SIGNAL(activated(Find::SearchResultItem)),this,SLOT(activated(Find::SearchResultItem)));
     connect(m_searchResultWidget,SIGNAL(replaceButtonClicked(QString,QList<Find::SearchResultItem>,bool)),this,SLOT(doReplace(QString,QList<Find::SearchResultItem>,bool)));
+    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 }
 
 FileSearchManager::~FileSearchManager()
@@ -140,6 +144,40 @@ void FileSearchManager::setCurrentSearch(LiteApi::IFileSearch *search)
     m_searchResultWidget->setShowReplaceUI(m_currentSearch->replaceMode());
     m_searchResultWidget->setCancelSupported(m_currentSearch->canCancel());
     m_currentSearch->activate();
+}
+
+void FileSearchManager::showFileSearch(const QString &text, const QString &filter, const QString &path)
+{
+    LiteApi::IFileSearch *search = this->findFileSearch("search/filesystem");
+    if (!search) {
+        return;
+    }
+    m_toolAct->setChecked(true);
+    m_widget->setCurrentWidget(m_searchWidget);
+    setCurrentSearch(search);
+    search->setSearchInfo(text,filter,path);
+}
+
+void FileSearchManager::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG /*flag*/, const QFileInfo &info)
+{
+    if (!info.isDir()) {
+        return;
+    }
+    menu->addSeparator();
+    menu->addAction(m_fmctxFileSearchAction);
+    m_fmctxFileInfo = info;
+}
+
+void FileSearchManager::fmctxFileSearch()
+{
+    bool hasGo = false;
+    foreach(QFileInfo info, QDir(m_fmctxFileInfo.filePath()).entryInfoList(QDir::Files)) {
+        if (info.suffix() == "go") {
+            hasGo = true;
+            break;
+        }
+    }
+    showFileSearch("",hasGo ? "*.go": "*",m_fmctxFileInfo.filePath());
 }
 
 void FileSearchManager::activated(const Find::SearchResultItem &item)
