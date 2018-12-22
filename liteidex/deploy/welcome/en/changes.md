@@ -4,8 +4,8 @@
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
 ### 2018.12.22 Ver X35.3
-* LiteEditor
-    * optimization gotools & gocode, update editor scroll and tabtospace.
+* LiteIDE
+    * optimization gotools & gocode, update editor scroll and tabtospace, update find plugin.
 * LiteApp
     * fix liteoutput antialias setup invalid
 * LiteEditor
@@ -14,6 +14,9 @@
     * add convert tab/spaces action
     * set editor default use tabtospace
     * tabtospace/tabwidth set by litapp/mimetype/liteeditor.xml or options
+* LiteFind
+    * file search check and skip binary file
+    * add folders/filesystem context menu file search action
 * GolangEdit, GolangCode, LiteBuild
     * fix process start with cmd contains space on macOS
 * gotools & gocode
