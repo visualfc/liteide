@@ -10,6 +10,7 @@
     * fix liteoutput antialias setup invalid
 * LiteEditor
     * enable vertical scrollbar move last block to top viewport
+    * the cut action supports cut the current line if not selected
     * add convert tab/spaces action
     * set editor default use tabtospace
     * tabtospace/tabwidth set by litapp/mimetype/liteeditor.xml or options
