@@ -15,40 +15,40 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 ### Features
 
 * Core features
-	* System environment management
-	* MIME type management 
-	* Configurable build commands
-	* Support files search replace and revert
-	* Quick open file, symbol and commands
-	* Plug-in system
+    * System environment management
+    * MIME type management 
+    * Configurable build commands
+    * Support files search replace and revert
+    * Quick open file, symbol and commands
+    * Plug-in system
 
 * Advanced code editor
-	* Code editor supports Golang, Markdown and Golang Present
-	* Rapid code navigation tools
-	* Syntax highlighting and color scheme
-	* Code completion
-	* Code folding
-	* Display save revision
-	* Reload file by internal diff way
+    * Code editor supports Golang, Markdown and Golang Present
+    * Rapid code navigation tools
+    * Syntax highlighting and color scheme
+    * Code completion
+    * Code folding
+    * Display save revision
+    * Reload file by internal diff way
 
 * Golang support
-	* Support Go1.11 Go modules
-	* Support Go1.5 Go vendor
-	* Support Go1 GOPATH
-	* Golang build environment management
-	* Compile and test using standard Golang tools
-	* Custom GOPATH support system, IDE and project
-	* Custom project build configuration
-	* Golang package browser
-	* Golang class view and outline
-	* Golang doc search and api index
-	* Source code navigation and information tips
-	* Source code find usages
-	* Source code refactoring and revert
-	* Integrated  [gocode](https://github.com/visualfc/gocode) clone of [nsf/gocode](https://github.com/nsf/gocode)
-	* Integrated [gomodifytags](https://github.com/fatih/gomodifytags)
-	* Support source query tools guru
-	* Debug with GDB and [Delve](https://github.com/derekparker/delve)
+    * Support Go1.11 Go modules
+    * Support Go1.5 Go vendor
+    * Support Go1 GOPATH
+    * Golang build environment management
+    * Compile and test using standard Golang tools
+    * Custom GOPATH support system, IDE and project
+    * Custom project build configuration
+    * Golang package browser
+    * Golang class view and outline
+    * Golang doc search and api index
+    * Source code navigation and information tips
+    * Source code find usages
+    * Source code refactoring and revert
+    * Integrated  [gocode](https://github.com/visualfc/gocode) clone of [nsf/gocode](https://github.com/nsf/gocode)
+    * Integrated [gomodifytags](https://github.com/fatih/gomodifytags)
+    * Support source query tools guru
+    * Debug with GDB and [Delve](https://github.com/derekparker/delve)
 
 ### Supported Systems
 * Windows x86 (32-bit or 64-bit)
@@ -59,18 +59,18 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 ### Latest Release Supported Platform Details
 * Windows
-	* liteide-latest.windows-qt5.zip -> WindowsXP, Windows 7 8 10
-	* liteide-latest.windows-qt4.zip -> WindowsXP, Windows 7
+    * liteide-latest.windows-qt5.zip -> WindowsXP, Windows 7 8 10
+    * liteide-latest.windows-qt4.zip -> WindowsXP, Windows 7
 * macOS
-	* liteide-latest.macosx-qt5.zip -> macOS 10.8 or higher
+    * liteide-latest.macosx-qt5.zip -> macOS 10.8 or higher
 * Linux x64
-	* liteide-latest.linux-64-qt4.tar.bz2 -> Linux (64 bit) build on ubuntu 16.04
-	* liteide-latest.linux-64-qt5.tar.bz2 -> Linux (64 bit) build on ubuntu 16.04
+    * liteide-latest.linux-64-qt4.tar.bz2 -> Linux (64 bit) build on ubuntu 16.04
+    * liteide-latest.linux-64-qt5.tar.bz2 -> Linux (64 bit) build on ubuntu 16.04
 * Linux x32
-	* liteide-latest.linux-32-qt4.tar.bz2 -> Linux (32 bit) build on ubuntu 16.04
-	* liteide-latest.linux-32-qt5.tar.bz2 -> Linux (32 bit) build on ubuntu 16.04
+    * liteide-latest.linux-32-qt4.tar.bz2 -> Linux (32 bit) build on ubuntu 16.04
+    * liteide-latest.linux-32-qt5.tar.bz2 -> Linux (32 bit) build on ubuntu 16.04
 * ArchLinux
-	* liteide-latest.archlinux-pkgbuild.zip -> ArchLinux (64 bit) PKGBUILD
+    * liteide-latest.archlinux-pkgbuild.zip -> ArchLinux (64 bit) PKGBUILD
 
 ### LiteIDE Command Line
 	liteide [files|folder] [--select-env id] [--local-setting] [--user-setting] [--reset-setting]
