@@ -467,6 +467,13 @@ void LiteEditor::createActions()
     actionContext->regAction(m_convertCaseSwapAct,"SwapCase","");
     connect(m_convertCaseSwapAct,SIGNAL(triggered()),m_editorWidget,SLOT(convertCaseSwap()));
 
+    m_convertTabToSpaces = new QAction(tr("Tab To Spaces"),this);
+    actionContext->regAction(m_convertTabToSpaces,"TabToSpaces","");
+    connect(m_convertTabToSpaces,SIGNAL(triggered()),m_editorWidget,SLOT(convertTabToSpaces()));
+
+    m_convertSpacesToTab = new QAction(tr("Spaces To Tab"),this);
+    actionContext->regAction(m_convertSpacesToTab,"SpacesToTab","");
+    connect(m_convertSpacesToTab,SIGNAL(triggered()),m_editorWidget,SLOT(convertSpacesToTab()));
 
     connect(m_codeCompleteAct,SIGNAL(triggered()),m_editorWidget,SLOT(codeCompleter()));
 //    m_widget->addAction(m_foldAct);
@@ -672,6 +679,10 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_convertCaseLowerAct);
     subMenu->addAction(m_convertCaseSwapAct);
 
+    subMenu = m_editMenu->addMenu(tr("Convert Tab"));
+    subMenu->addAction(m_convertTabToSpaces);
+    subMenu->addAction(m_convertSpacesToTab);
+
     subMenu = m_editMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);
     subMenu->addAction(m_unfoldAct);
@@ -746,11 +757,29 @@ void LiteEditor::createMenu()
     subMenu->addAction(m_convertCaseLowerAct);
     subMenu->addAction(m_convertCaseSwapAct);
 
+    subMenu = m_contextMenu->addMenu(tr("Convert Tab"));
+    subMenu->addAction(m_convertTabToSpaces);
+    subMenu->addAction(m_convertSpacesToTab);
+
     subMenu = m_contextMenu->addMenu(tr("Code Folding"));
     subMenu->addAction(m_foldAct);
     subMenu->addAction(m_unfoldAct);
     subMenu->addAction(m_foldAllAct);
     subMenu->addAction(m_unfoldAllAct);
+
+    subMenu = m_contextMenu->addMenu(tr("Settings"));
+    subMenu->menuAction()->setMenuRole(QAction::NoRole);
+    subMenu->addAction(m_visualizeWhitespaceAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_wordWrapAct);
+    subMenu->addAction(m_tabToSpacesAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_increaseFontSizeAct);
+    subMenu->addAction(m_decreaseFontSizeAct);
+    subMenu->addAction(m_resetFontSizeAct);
+    subMenu->addSeparator();
+    subMenu->addAction(m_lineEndingWindowAct);
+    subMenu->addAction(m_lineEndingUnixAct);
 
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_commentAct);

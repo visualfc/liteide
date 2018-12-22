@@ -2345,6 +2345,49 @@ void LiteEditorWidgetBase::convertCaseSwap()
     this->transformSelection(QString_toSwapCase);
 }
 
+void LiteEditorWidgetBase::convertTabToSpaces()
+{
+    switchTabToSpace(true);
+}
+
+void LiteEditorWidgetBase::convertSpacesToTab()
+{
+    switchTabToSpace(false);
+}
+
+void LiteEditorWidgetBase::switchTabToSpace(bool tabtospace)
+{
+    if (hasBlockSelection()) {
+         return;
+    }
+    QTextCursor cursor = this->textCursor();
+
+    if (!cursor.hasSelection()) {
+        //TODO select tab or spaces
+        return;
+    }
+    int pos = cursor.selectionStart();
+
+    QString text = cursor.selectedText();
+    QString transformedText = text;
+    if (tabtospace) {
+        transformedText.replace("\t",QString(m_nTabSize,' '));
+    } else {
+        transformedText.replace(QString(m_nTabSize,' '),"\t");
+    }
+
+    if (transformedText == text) {
+        return;
+    }
+
+    cursor.insertText(transformedText);
+
+    cursor.setPosition(pos);
+    cursor.setPosition(pos+transformedText.length(), QTextCursor::KeepAnchor);
+    this->setTextCursor(cursor);
+}
+
+
 static int trailingWhitespaces(const QString &text)
 {
     int i = 0;

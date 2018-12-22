@@ -173,6 +173,10 @@ public slots:
     void convertCaseUpper();
     void convertCaseLower();
     void convertCaseSwap();
+
+    void convertTabToSpaces();
+    void convertSpacesToTab();
+    void switchTabToSpace(bool tabtospace);
 public:
     void setMaxTipInfoLines(int maxLines) {
         m_maxTipInfoLines = maxLines;

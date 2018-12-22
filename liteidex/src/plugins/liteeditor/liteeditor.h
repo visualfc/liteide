@@ -250,6 +250,9 @@ protected:
     QAction *m_convertCaseUpperAct;
     QAction *m_convertCaseLowerAct;
     QAction *m_convertCaseSwapAct;
+
+    QAction *m_convertTabToSpaces;
+    QAction *m_convertSpacesToTab;
 };
 
 class EditContext : public LiteApi::IEditContext
