@@ -26,6 +26,7 @@
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
 #include "litedebugapi/litedebugapi.h"
+#include "litefindapi/litefindapi.h"
 #include "fileutil/fileutil.h"
 #include "filebrowser_global.h"
 
@@ -121,6 +122,9 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_debugFileAct = new QAction(tr("Debug File"),this);
     connect(m_debugFileAct,SIGNAL(triggered()),this,SLOT(debugFile()));
+
+    m_fmctxFileSearchAction = new QAction(tr("File Search"),this);
+    connect(m_fmctxFileSearchAction,SIGNAL(triggered()),this,SLOT(fmctxFileSearchAction()));
 
 //    m_filterCombo = new QComboBox;
 //    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -272,6 +276,8 @@ void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEX
         }
     } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
         menu->addSeparator();
+        menu->addAction(m_fmctxFileSearchAction);
+        menu->addSeparator();
         if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
             menu->addAction(m_cdupAct);
         } else {
@@ -280,6 +286,22 @@ void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEX
         menu->addAction(m_addToFoldersAct);
         menu->addAction(m_openFolderInNewWindowAct);
     }
+}
+
+void FileBrowser::fmctxFileSearchAction()
+{
+    LiteApi::IFileSearchManager *mgr = LiteApi::getFileSearchManager(m_liteApp);
+    if (!mgr) {
+        return;
+    }
+    bool hasGo = false;
+    foreach(QFileInfo info, m_folderView->contextDir().entryInfoList(QDir::Files)) {
+        if (info.suffix() == "go") {
+            hasGo = true;
+            break;
+        }
+    }
+    mgr->showFileSearch("",hasGo ? "*.go": "*",m_folderView->contextDir().path());
 }
 
 void FileBrowser::showHideFiles(bool b)

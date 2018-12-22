@@ -7,6 +7,8 @@ include(../../utils/folderview/folderview.pri)
 include(../../utils/symboltreeview/symboltreeview.pri)
 include(../../api/litebuildapi/litebuildapi.pri)
 include(../../api/golangdocapi/golangdocapi.pri)
+include(../../api/litefindapi/litefindapi.pri)
+
 
 DEFINES += FILEBROWSER_LIBRARY
 
