@@ -10,7 +10,8 @@
     * fix liteoutput antialias setup invalid
 * LiteEditor
     * enable vertical scrollbar move last block to top viewport
-    * set editor default use tabtospace, 
+    * add convert tab/spaces action
+    * set editor default use tabtospace
     * tabtospace/tabwidth set by litapp/mimetype/liteeditor.xml or options
 * GolangEdit, GolangCode, LiteBuild
     * fix process start with cmd contains space on macOS
