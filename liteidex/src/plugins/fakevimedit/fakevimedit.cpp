@@ -141,7 +141,7 @@ void FakeVimEdit::_removeFakeVimFromEditor(LiteApi::IEditor *editor){
     }
     QString mime = editor->mimeType();
 
-    bool tabToSpace = true;
+    bool tabToSpace = false;
     int tabWidth = 4;
     LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mime);
     if (im) {

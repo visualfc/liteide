@@ -101,7 +101,7 @@ void MimeType::merge(const IMimeType *mimeType)
     if (!mimeType->package().isEmpty()) {
         m_package = mimeType->package();
     }
-    if (!mimeType->tabToSpace()) {
+    if (mimeType->tabToSpace()) {
         m_tabToSpace = mimeType->tabToSpace();
     }
     if (mimeType->tabWidth() != -1) {
@@ -154,8 +154,8 @@ void MimeType::setCodec(const QString &codec)
 
 void MimeType::setTabToSpace(const QString &s)
 {
-    if (s == "false" || s == "0") {
-        m_tabToSpace = false;
+    if (s == "true" || s == "1") {
+        m_tabToSpace = true;
     }
 }
 

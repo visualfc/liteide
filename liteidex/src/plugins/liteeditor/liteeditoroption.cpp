@@ -170,7 +170,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
             QStandardItem *item = new QStandardItem(mime);
             item->setEditable(false);
 
-            bool tabToSpace = true;
+            bool tabToSpace = false;
             int tabWidth = 4;
             LiteApi::IMimeType *im = m_liteApp->mimeTypeManager()->findMimeType(mime);
             if (im) {
@@ -320,7 +320,7 @@ void LiteEditorOption::apply()
         }
         bool b = m_mimeModel->item(i,2)->checkState() == Qt::Checked;        
         //m_liteApp->settings()->setValue(MIMETYPE_TABTOSPACE+mime,b);
-        LiteApi::updateAppSetting(m_liteApp,MIMETYPE_TABTOSPACE+mime,b,true);
+        LiteApi::updateAppSetting(m_liteApp,MIMETYPE_TABTOSPACE+mime,b,false);
         //m_liteApp->settings()->setValue(EDITOR_CUSTOMEXTENSION+mime,custom);
         LiteApi::updateAppSetting(m_liteApp,EDITOR_CUSTOMEXTENSION+mime,custom,"");
         LiteApi::IMimeType *imt = m_liteApp->mimeTypeManager()->findMimeType(mime);

@@ -114,6 +114,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * Release downloads
 	* <http://sourceforge.net/projects/liteide/files>
 	* <https://github.com/visualfc/liteide/releases/latest>
+	* [百度网盘](<https://pan.baidu.com/s/1wYHSEfG1TJRC2iOkE_saJg)  密码:jzrc
 * Google group
 <https://groups.google.com/group/liteide-dev>
 * Changes

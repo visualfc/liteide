@@ -74,6 +74,7 @@
 
 #define LITEIDE_VERSION "X35.3"
 
+
 QString LiteApp::getRootPath()
 {
     QDir rootDir = QApplication::applicationDirPath();

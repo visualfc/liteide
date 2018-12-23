@@ -29,7 +29,7 @@
 class MimeType : public LiteApi::IMimeType
 {
 public:
-    MimeType(): m_tabToSpace(true), m_tabWidth(4)
+    MimeType(): m_tabToSpace(false), m_tabWidth(4)
     {
     }
     virtual QString package() const;
@@ -61,8 +61,8 @@ public:
     static bool loadMimeTypes(LiteApi::IMimeTypeManager *manager, const QString &fileName);
     static bool loadMimeTypes(LiteApi::IMimeTypeManager *manager, QIODevice *dev, const QString &fileName);
 protected:
-    bool    m_tabToSpace; // default true
-    int     m_tabWidth; //default -1
+    bool    m_tabToSpace; // default false
+    int     m_tabWidth; //default 4
     QString m_package;
     QString m_type;
     QString m_scheme;

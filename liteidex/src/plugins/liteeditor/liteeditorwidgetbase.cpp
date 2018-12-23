@@ -2885,7 +2885,6 @@ end:
 
 QString LiteEditorWidgetBase::tabText(int n) const
 {
-    qDebug() << m_bTabUseSpace << m_nTabSize;
     if (m_bTabUseSpace) {
         return QString(m_nTabSize*n,' ');
     }
