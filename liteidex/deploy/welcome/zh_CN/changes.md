@@ -21,7 +21,7 @@
     * fix process start with cmd contains space on macOS
 * GolangDoc
     * support check go1.12 godoc remove -html, use text mode
-    
+
 * gotools & gocode
     * fix lookup named method embedded
     * optimization, check save/load pkgconfig
