@@ -76,7 +76,7 @@ MarkdownEdit::MarkdownEdit(LiteApi::IApplication *app, LiteApi::IEditor *editor,
         return;
     }
 
-    m_editor->setWordWrap(true);
+    m_editor->setLineWrap(true);
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Markdown");
 

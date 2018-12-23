@@ -40,6 +40,7 @@ public:
     virtual void addFactory(IOptionFactory *factory);
     virtual void removeFactory(IOptionFactory *factory);
     virtual QList<IOptionFactory*> factoryList() const;
+    virtual void emitApplyOption(QString mimetype);
 public slots:
     virtual void exec();
     void loadOption(const QString &opt);

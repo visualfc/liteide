@@ -236,7 +236,7 @@ void JsonEdit::editorCreated(LiteApi::IEditor *editor)
     if (!ed) {
         return;
     }
-    ed->setWordWrap(true);
+    ed->setLineWrap(true);
     ed->setEnableAutoIndentAction(false);
 
     QMenu *menu = LiteApi::getContextMenu(editor);

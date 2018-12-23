@@ -396,9 +396,9 @@ void LiteEditor::createActions()
     m_cleanWhitespaceAct = new QAction(tr("Clean Whitespace"),this);
     actionContext->regAction(m_cleanWhitespaceAct,"CleanWhitespace","");
 
-    m_wordWrapAct = new QAction(tr("Word Wrap (MimeType)"),this);
-    m_wordWrapAct->setCheckable(true);
-    actionContext->regAction(m_wordWrapAct,"WordWrap","");
+    m_mimeLineWrapAct = new QAction(tr("Line Wrap (MimeType)"),this);
+    m_mimeLineWrapAct->setCheckable(true);
+    actionContext->regAction(m_mimeLineWrapAct,"LineWrap","");
 
     m_codeCompleteAct = new QAction(tr("Code Complete"),this);
 #ifdef Q_OS_MAC
@@ -417,9 +417,9 @@ void LiteEditor::createActions()
     actionContext->regAction(m_autoIndentAct,"AutoIndent","Ctrl+I");
     m_autoIndentAct->setVisible(false);
 
-    m_tabToSpacesAct = new QAction(tr("Tab To Spaces (MimeType)"),this);
-    actionContext->regAction(m_tabToSpacesAct,"TabToSpaces","");
-    m_tabToSpacesAct->setCheckable(true);
+    m_mimeTabToSpacesAct = new QAction(tr("Tab To Spaces (MimeType)"),this);
+    actionContext->regAction(m_mimeTabToSpacesAct,"TabToSpaces","");
+    m_mimeTabToSpacesAct->setCheckable(true);
 
     m_lineEndingWindowAct = new QAction(tr("Line End Windows (\\r\\n)"),this);
     actionContext->regAction(m_lineEndingWindowAct,"LineEndingWindow","");
@@ -489,7 +489,6 @@ void LiteEditor::createActions()
     connect(m_editorWidget,SIGNAL(redoAvailable(bool)),m_redoAct,SLOT(setEnabled(bool)));
     //connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_cutAct,SLOT(setEnabled(bool)));
     connect(m_editorWidget,SIGNAL(copyAvailable(bool)),m_copyAct,SLOT(setEnabled(bool)));
-    connect(m_editorWidget,SIGNAL(wordWrapChanged(bool)),m_wordWrapAct,SLOT(setChecked(bool)));
 
     connect(m_undoAct,SIGNAL(triggered()),m_editorWidget,SLOT(undo()));
     connect(m_redoAct,SIGNAL(triggered()),m_editorWidget,SLOT(redo()));
@@ -513,12 +512,14 @@ void LiteEditor::createActions()
     connect(m_decreaseFontSizeAct,SIGNAL(triggered()),this,SLOT(decreaseFontSize()));
     connect(m_resetFontSizeAct,SIGNAL(triggered()),this,SLOT(resetFontSize()));
     connect(m_cleanWhitespaceAct,SIGNAL(triggered()),m_editorWidget,SLOT(cleanWhitespace()));
-    connect(m_wordWrapAct,SIGNAL(triggered(bool)),m_editorWidget,SLOT(setWordWrapOverride(bool)));
     connect(m_commentAct,SIGNAL(triggered()),this,SLOT(comment()));
     connect(m_blockCommentAct,SIGNAL(triggered()),this,SLOT(blockComment()));
     connect(m_autoIndentAct,SIGNAL(triggered()),this,SLOT(autoIndent()));
-    connect(m_tabToSpacesAct,SIGNAL(toggled(bool)),this,SLOT(tabToSpacesToggled(bool)));
+
+    connect(m_mimeLineWrapAct,SIGNAL(triggered(bool)),this,SLOT(toggledLineWrapMode(bool)));
+    connect(m_mimeTabToSpacesAct,SIGNAL(toggled(bool)),this,SLOT(toggledTabToSpaces(bool)));
     connect(m_visualizeWhitespaceAct,SIGNAL(toggled(bool)),this,SLOT(toggledVisualizeWhitespace(bool)));
+
     connect(m_moveLineUpAction,SIGNAL(triggered()),m_editorWidget,SLOT(moveLineUp()));
     connect(m_moveLineDownAction,SIGNAL(triggered()),m_editorWidget,SLOT(moveLineDown()));
     connect(m_copyLineUpAction,SIGNAL(triggered()),m_editorWidget,SLOT(copyLineUp()));
@@ -693,8 +694,8 @@ void LiteEditor::createMenu()
     subMenu->menuAction()->setMenuRole(QAction::NoRole);
     subMenu->addAction(m_visualizeWhitespaceAct);
     subMenu->addSeparator();
-    subMenu->addAction(m_wordWrapAct);
-    subMenu->addAction(m_tabToSpacesAct);
+    subMenu->addAction(m_mimeLineWrapAct);
+    subMenu->addAction(m_mimeTabToSpacesAct);
     subMenu->addSeparator();
     subMenu->addAction(m_increaseFontSizeAct);
     subMenu->addAction(m_decreaseFontSizeAct);
@@ -771,8 +772,8 @@ void LiteEditor::createMenu()
     subMenu->menuAction()->setMenuRole(QAction::NoRole);
     subMenu->addAction(m_visualizeWhitespaceAct);
     subMenu->addSeparator();
-    subMenu->addAction(m_wordWrapAct);
-    subMenu->addAction(m_tabToSpacesAct);
+    subMenu->addAction(m_mimeLineWrapAct);
+    subMenu->addAction(m_mimeTabToSpacesAct);
     subMenu->addSeparator();
     subMenu->addAction(m_increaseFontSizeAct);
     subMenu->addAction(m_decreaseFontSizeAct);
@@ -964,14 +965,15 @@ QByteArray LiteEditor::utf8Data() const {
     return src.toUtf8();
 }
 
-void LiteEditor::setWordWrap(bool wrap)
+void LiteEditor::setLineWrap(bool wrap)
 {
-    m_editorWidget->setWordWrapOverride(wrap);
+    m_editorWidget->setLineWrap(wrap);
+    m_mimeLineWrapAct->setChecked(wrap);
 }
 
-bool LiteEditor::wordWrap() const
+bool LiteEditor::isLineWrap() const
 {
-    return m_editorWidget->isWordWrap();
+    return m_editorWidget->isLineWrap();
 }
 
 void LiteEditor::gotoLine(int blockNumber, int column, bool center, int selection)
@@ -1093,7 +1095,6 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setIndentLineVisible(indentLineVisible);
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
-    m_editorWidget->setDefaultWordWrap(defaultWordWrap);
     m_editorWidget->setScrollWheelZooming(wheelZooming);
     m_editorWidget->setVisualizeWhitespace(visualizeWhitespace);
     m_editorWidget->setCopyToHtml(copyToHtml);
@@ -1116,11 +1117,12 @@ void LiteEditor::applyOption(QString id)
         tabToSpace = im->tabToSpace();
         tabWidth = im->tabWidth();
     }
-
+    bool linewrap = m_liteApp->settings()->value(MIMETYPE_LINEWRAP+mime,defaultWordWrap).toBool();
     tabToSpace = m_liteApp->settings()->value(MIMETYPE_TABTOSPACE+mime,tabToSpace).toBool();
     tabWidth = m_liteApp->settings()->value(MIMETYPE_TABWIDTH+mime,tabWidth).toInt();
 
     this->setTabOption(tabWidth,tabToSpace);
+    this->setLineWrap(linewrap);
     m_visualizeWhitespaceAct->setChecked(visualizeWhitespace);
 }
 
@@ -1388,6 +1390,7 @@ void LiteEditor::clearLink()
     m_editorWidget->clearLink();
 }
 
+
 void LiteEditor::setTabOption(int tabSize, bool tabToSpace)
 {
     m_editorWidget->setTabSize(tabSize);
@@ -1395,7 +1398,7 @@ void LiteEditor::setTabOption(int tabSize, bool tabToSpace)
     if (m_syntax) {
         m_syntax->setTabSize(tabSize);
     }
-    m_tabToSpacesAct->setChecked(tabToSpace);
+    m_mimeTabToSpacesAct->setChecked(tabToSpace);
 }
 
 void LiteEditor::setEnableAutoIndentAction(bool b)
@@ -1516,16 +1519,24 @@ void LiteEditor::autoIndent()
     m_editorWidget->autoIndent();
 }
 
-void LiteEditor::tabToSpacesToggled(bool b)
+void LiteEditor::toggledTabToSpaces(bool b)
 {
     m_liteApp->settings()->setValue(MIMETYPE_TABTOSPACE+this->mimeType(),b);
-    m_editorWidget->setTabToSpaces(b);
+    m_liteApp->optionManager()->emitApplyOption(OPTION_LITEEDITOR);
+    //m_editorWidget->setTabToSpaces(b);
 }
 
 void LiteEditor::toggledVisualizeWhitespace(bool b)
 {
     m_liteApp->settings()->setValue(EDITOR_VISUALIZEWHITESPACE,b);
-    m_editorWidget->setVisualizeWhitespace(b);
+    m_liteApp->optionManager()->emitApplyOption(OPTION_LITEEDITOR);
+    //m_editorWidget->setVisualizeWhitespace(b);
+}
+
+void LiteEditor::toggledLineWrapMode(bool b)
+{
+    m_liteApp->settings()->setValue(MIMETYPE_LINEWRAP+this->mimeType(),b);
+    m_liteApp->optionManager()->emitApplyOption(OPTION_LITEEDITOR);
 }
 
 void LiteEditor::triggeredLineEnding(QAction *action)

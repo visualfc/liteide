@@ -34,6 +34,7 @@
 
 #define MIMETYPE_TABWIDTH "mimetype/tabwidth/"
 #define MIMETYPE_TABTOSPACE "mimetype/tabtospace/"
+#define MIMETYPE_LINEWRAP "mimetype/linewrap/"
 
 #define OPTION_LITEEDITOR "option/liteeditor"
 #define EDITOR_STYLE "editor/style"

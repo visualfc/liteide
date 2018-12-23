@@ -26,6 +26,12 @@
     <glob pattern="*.lua"/>
     <glob pattern="*.wlua"/>
   </mime-type>
+  <mime-type type="text/x-python" codec="utf-8" package="lua" tabtospace="true" tabwidth="4">
+    <sub-class-of type="text/plain"/>
+    <comment>Python Source File</comment>
+    <glob pattern="*.py"/>
+    <glob pattern="*.wpy"/>
+  </mime-type>
   <mime-type type="text/html" codec="utf-8" package="html" tabtospace="true" tabwidth="2">
     <sub-class-of type="text/plain"/>
     <comment>HTML Source File</comment>

@@ -389,8 +389,8 @@ public:
     virtual int column() const = 0;
     virtual int utf8Position(bool realFile = false, int pos = -1) const = 0;
     virtual QByteArray utf8Data() const = 0;
-    virtual void setWordWrap(bool wrap) = 0;
-    virtual bool wordWrap() const = 0;
+    virtual void setLineWrap(bool wrap) = 0;
+    virtual bool isLineWrap() const = 0;
     virtual void gotoLine(int blockNumber, int column, bool center = false, int selection = 0) = 0;
     virtual void setFindOption(FindOption *opt) = 0;
     virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
@@ -588,6 +588,7 @@ public:
     virtual void addFactory(IOptionFactory *factory) = 0;
     virtual void removeFactory(IOptionFactory *factory) = 0;
     virtual QList<IOptionFactory*> factoryList() const = 0;
+    virtual void emitApplyOption(QString mimetype) = 0;
 public slots:
     virtual void exec() = 0;
 signals:

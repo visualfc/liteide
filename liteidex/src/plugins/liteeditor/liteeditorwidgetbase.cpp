@@ -379,9 +379,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
 
     setLayoutDirection(Qt::LeftToRight);
     viewport()->setMouseTracking(true);
-    m_defaultWordWrap = false;
-    m_wordWrapOverridden = false;
-    m_wordWrap = false;
+
     m_lineNumbersVisible = true;
     m_navigateWidgetVisible = true;
     m_marksVisible = true;
@@ -1302,10 +1300,6 @@ QByteArray LiteEditorWidgetBase::saveState() const
     }
     stream << foldedBlocks;
 
-    // store word wrap state
-    stream << m_wordWrapOverridden;
-    stream << m_wordWrap;
-
     return state;
 }
 
@@ -1358,12 +1352,6 @@ bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
     verticalScrollBar()->setValue(vval);
     horizontalScrollBar()->setValue(hval);
     saveCurrentCursorPositionForNavigation();
-
-    if (version >= 2) {
-        stream >> m_wordWrapOverridden;
-        stream >> m_wordWrap;
-        setWordWrap(m_wordWrap);
-    }
 
     return true;
 }
@@ -1556,29 +1544,14 @@ void LiteEditorWidgetBase::setFindOption(LiteApi::FindOption *opt)
     viewport()->update();
 }
 
-void LiteEditorWidgetBase::setWordWrap(bool wrap)
+void LiteEditorWidgetBase::setLineWrap(bool wrap)
 {
     setLineWrapMode(wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-    m_wordWrap = wrap;
-    emit wordWrapChanged(wrap);
 }
 
-bool LiteEditorWidgetBase::isWordWrap() const
+bool LiteEditorWidgetBase::isLineWrap() const
 {
     return this->lineWrapMode() != QPlainTextEdit::NoWrap;
-}
-
-void LiteEditorWidgetBase::setWordWrapOverride(bool wrap)
-{
-    m_wordWrapOverridden = true;
-    this->setWordWrap(wrap);
-}
-
-void LiteEditorWidgetBase::setDefaultWordWrap(bool wrap)
-{
-    if (!m_wordWrapOverridden) {
-        this->setWordWrap(wrap);
-    }
 }
 
 void LiteEditorWidgetBase::gotoLineStart()

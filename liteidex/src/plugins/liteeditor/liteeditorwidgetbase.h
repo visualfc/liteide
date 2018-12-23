@@ -84,7 +84,6 @@ public:
 signals:
     void navigationStateChanged(const QByteArray &array);
     void overwriteModeChanged(bool);
-    void wordWrapChanged(bool);
     void updateLink(const QTextCursor &curosr, const QPoint &pos, bool nav);
 public:
     void saveCurrentCursorPositionForNavigation();
@@ -106,8 +105,6 @@ public slots:
     QChar characterAt(int pos) const;
     void handleHomeKey(bool anchor);    
     void setFindOption(LiteApi::FindOption *opt);
-    void setWordWrapOverride(bool wrap);
-    void setDefaultWordWrap(bool wrap);
 public slots:
     void gotoMatchBrace();
     void gotoLine(int blockNumber, int column, bool center, int selection = 0) ;
@@ -252,8 +249,8 @@ public:
     bool indentLineVisible() const {
         return m_indentLineVisible;
     }
-    bool isWordWrap() const;
-    void setWordWrap(bool wrap);
+    bool isLineWrap() const;
+    void setLineWrap(bool wrap);
     void maybeSelectLine();
     bool isSpellCheckingAt(QTextCursor cur) const;
     void showLink(const LiteApi::Link &link);
@@ -338,9 +335,6 @@ protected:
     LiteApi::Link       m_currentLink;
     QString m_mimeType;
     bool m_moveLineUndoHack;
-    bool m_defaultWordWrap;
-    bool m_wordWrapOverridden;
-    bool m_wordWrap;
     bool m_lineNumbersVisible;
     bool m_navigateWidgetVisible;
     bool m_marksVisible;    

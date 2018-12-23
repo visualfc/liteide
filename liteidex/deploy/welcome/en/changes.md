@@ -5,14 +5,16 @@
 
 ### 2018.12.22 Ver X35.3
 * LiteIDE
-    * optimization gotools & gocode, editor scroll and tabtospace, find plugin.
+    * optimization gotools & gocode, update editor and find plugin.
 * LiteApp
     * fix liteoutput antialias setup invalid
 * LiteEditor
     * enable vertical scrollbar move last block to top viewport
-    * the cut action supports cut the current line if not selected
+    * add the cut current line operator for cut action if not selected
     * add convert tab/spaces action
-    * tabtospace/tabwidth set by litapp/mimetype/liteeditor.xml or options
+    * add tabtospace/tabwidth set by litapp/mimetype/liteeditor.xml or options
+    * update line wrap mode for mimetype
+    * update tabtospace mode for mimetype
 * LiteFind
     * file search check and skip binary file
     * add folders/filesystem context menu file search action
@@ -20,7 +22,7 @@
     * fix process start with cmd contains space on macOS
 * GolangDoc
     * support check go1.12 godoc remove -html, use text mode
-    
+
 * gotools & gocode
     * fix lookup named method embedded
     * optimization, check save/load pkgconfig

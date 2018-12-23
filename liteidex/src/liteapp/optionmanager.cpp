@@ -70,6 +70,11 @@ QList<IOptionFactory*> OptionManager::factoryList() const
     return m_factoryList;
 }
 
+void OptionManager::emitApplyOption(QString mimetype)
+{
+    emit applyOption(mimetype);
+}
+
 void OptionManager::exec()
 {
     if (m_browser == 0) {
