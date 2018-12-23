@@ -10,6 +10,11 @@
     <comment>Qlang Source File</comment>
     <glob pattern="*.ql"/>
   </mime-type>
+  <mime-type type="text/x-gomod" codec="utf-8" package="gomod" tabtospace="false" tabwidth="4">
+    <sub-class-of type="text/plain"/>
+    <comment>Golang module</comment>
+    <glob pattern="go.mod"/>
+  </mime-type>
   <mime-type type="text/x-rust" codec="utf-8" package="rust" tabwidth="4">
     <sub-class-of type="text/plain"/>
     <comment>Rust Source File</comment>
