@@ -5,7 +5,7 @@
 
 ### 2018.12.22 Ver X35.3
 * LiteIDE
-    * optimization gotools & gocode, update editor scroll and tabtospace, update find plugin.
+    * optimization gotools & gocode, editor scroll and tabtospace, find plugin.
 * LiteApp
     * fix liteoutput antialias setup invalid
 * LiteEditor
@@ -19,9 +19,13 @@
     * add folders/filesystem context menu file search action
 * GolangEdit, GolangCode, LiteBuild
     * fix process start with cmd contains space on macOS
+* GolangDoc
+    * support check go1.12 godoc remove -html, use text mode
+    
 * gotools & gocode
     * fix lookup named method embedded
     * optimization, check save/load pkgconfig
+    * add godoc command for check go1.12 use text mode
 * gocode
     * fixed global var completion
 
