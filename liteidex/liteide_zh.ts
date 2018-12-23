@@ -1168,64 +1168,69 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="98"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="99"/>
         <source>Synchronize with editor</source>
         <translation>与编辑器同步</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="103"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="104"/>
         <source>Show Hidden Files</source>
         <translation>显示隐藏文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="163"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation>设置为顶层目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="120"/>
         <source>Execute File</source>
         <translation>执行文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="101"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="102"/>
         <source>Reload Folder</source>
         <translation>重新读取目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="110"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="111"/>
         <source>Show Details</source>
         <translation>显示详细信息</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="122"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="123"/>
         <source>Debug File</source>
         <translation>调试文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="126"/>
+        <source>File Search</source>
+        <translation>文件搜索</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="164"/>
         <source>Open Folder in New Window</source>
         <translation>在新窗口打开目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="161"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="165"/>
         <source>Add to Folders</source>
         <translation>添加到目录列表</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="141"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation>打开上级目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="169"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="173"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="175"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="179"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -1405,80 +1410,80 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FileSearch</name>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="210"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="217"/>
         <source>Match whole word</source>
         <oldsource>Match word</oldsource>
         <translation>全词匹配</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="211"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="218"/>
         <source>Match case</source>
         <translation>区分大小写</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="212"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="219"/>
         <source>Regular expression</source>
         <translation>使用正则表达式</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="213"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="220"/>
         <source>Scan subdirectories</source>
         <oldsource>Look in subdirs</oldsource>
         <translation>搜索子目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="234"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="241"/>
         <source>Search for:</source>
         <translation>搜索内容:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="236"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
         <source>Options:</source>
         <translation>选项:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="250"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
         <translation>浏览...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="266"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="273"/>
         <source>Filter:</source>
         <translation>过滤:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="358"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="365"/>
         <source>Files on File System</source>
         <translation>文件系统中的文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="223"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="230"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="224"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="231"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="244"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="251"/>
         <source>Current Folder</source>
         <translation>当前目录</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="247"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="254"/>
         <source>Auto Switch</source>
         <translation>自动切换</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="271"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="278"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="466"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="480"/>
         <source>Open Directory</source>
         <translation>打开目录</translation>
     </message>
@@ -1502,37 +1507,42 @@ Do you want to reload the file from disk?</source>
         <translation>新搜索</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="86"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="85"/>
+        <source>File Search</source>
+        <translation>文件搜索</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="89"/>
         <source>Search Result</source>
         <translation>搜索结果</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="210"/>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="215"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="248"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="253"/>
         <source>LiteIDE X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="210"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="248"/>
         <source>Warning! Replace text is empty.
 Want to remove all the search items?</source>
         <translation>警告！替换文本为空
 想要删除所有搜索到的项目？</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="215"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="253"/>
         <source>Warning! Replace text is whitespace.
 Want to replace to all the search items to whitespace?</source>
         <translation>警告！替换文本为空白字符
 想要替换所有搜索到的项目为空白？</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="242"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="280"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
         <translation>下面的文件没有可写权限，你想要更改可写权限？</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="245"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="283"/>
         <source>File is readonly</source>
         <translation>文件只读</translation>
     </message>

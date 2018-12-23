@@ -1001,6 +1001,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Debug File</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File Search</source>
+        <translation type="unfinished">Поиск файлов</translation>
+    </message>
 </context>
 <context>
     <name>FileBrowserOption</name>
@@ -1251,6 +1255,10 @@ Want to remove all the search items?</source>
         <source>Warning! Replace text is whitespace.
 Want to replace to all the search items to whitespace?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Search</source>
+        <translation type="unfinished">Поиск файлов</translation>
     </message>
 </context>
 <context>

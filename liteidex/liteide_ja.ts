@@ -1168,64 +1168,69 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="98"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="99"/>
         <source>Synchronize with editor</source>
         <translation>エディタと同期</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="103"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="104"/>
         <source>Show Hidden Files</source>
         <translation>非表示ファイルを表示</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="163"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation>フォルダをルートへ設定</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="120"/>
         <source>Execute File</source>
         <translation type="unfinished">ファイルを実行</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="101"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="102"/>
         <source>Reload Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="110"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="111"/>
         <source>Show Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="122"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="123"/>
         <source>Debug File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="126"/>
+        <source>File Search</source>
+        <translation type="unfinished">ファイル検索</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="164"/>
         <source>Open Folder in New Window</source>
         <translation>新しいウィンドウでフォルダを開く</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="161"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="165"/>
         <source>Add to Folders</source>
         <translation>フォルダを追加</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="141"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation>親ディレクトリを開く</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="169"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="173"/>
         <source>Filter</source>
         <translation type="unfinished">フィルタ</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="175"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="179"/>
         <source>File System</source>
         <translation>ファイルシステム</translation>
     </message>
@@ -1392,80 +1397,80 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FileSearch</name>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="210"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="217"/>
         <source>Match whole word</source>
         <oldsource>Match word</oldsource>
         <translation>単語にマッチ</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="211"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="218"/>
         <source>Match case</source>
         <translation>大文字/小文字の区別</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="212"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="219"/>
         <source>Regular expression</source>
         <translation>正規表現</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="213"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="220"/>
         <source>Scan subdirectories</source>
         <oldsource>Look in subdirs</oldsource>
         <translation>サブディレクトリをスキャン</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="234"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="241"/>
         <source>Search for:</source>
         <translation>検索:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="236"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
         <source>Options:</source>
         <translation>オプション:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="250"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
         <translation>開く...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="266"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="273"/>
         <source>Filter:</source>
         <translation>フィルタ:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="358"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="365"/>
         <source>Files on File System</source>
         <translation>ファイルシステム上のファイル</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="223"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="230"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="224"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="231"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="244"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="251"/>
         <source>Current Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="247"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="254"/>
         <source>Auto Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="271"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="278"/>
         <source>Clear</source>
         <translation>クリア</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="466"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="480"/>
         <source>Open Directory</source>
         <translation>ディレクトリを開く</translation>
     </message>
@@ -1489,35 +1494,40 @@ Do you want to reload the file from disk?</source>
         <translation>新しい検索</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="86"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="85"/>
+        <source>File Search</source>
+        <translation type="unfinished">ファイル検索</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="89"/>
         <source>Search Result</source>
         <translation>検索結果</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="210"/>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="215"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="248"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="253"/>
         <source>LiteIDE X</source>
         <translation type="unfinished">LiteIDE X</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="210"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="248"/>
         <source>Warning! Replace text is empty.
 Want to remove all the search items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="215"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="253"/>
         <source>Warning! Replace text is whitespace.
 Want to replace to all the search items to whitespace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="242"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="280"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
         <translation>以下のファイルは書き込み権限がありません。権限を変更しますか?</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="245"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="283"/>
         <source>File is readonly</source>
         <translation>読み取り専用ファイル</translation>
     </message>

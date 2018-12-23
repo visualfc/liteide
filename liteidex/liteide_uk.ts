@@ -1179,64 +1179,69 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="98"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="99"/>
         <source>Synchronize with editor</source>
         <translation>Синхронізувати із редактором</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="103"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="104"/>
         <source>Show Hidden Files</source>
         <translation>Показувати приховані файли</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="159"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="163"/>
         <source>Set As Root Folder</source>
         <oldsource>Set Folder To Root</oldsource>
         <translation>Встановити кореневою директорією</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="119"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="120"/>
         <source>Execute File</source>
         <translation>Виконати файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="101"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="102"/>
         <source>Reload Folder</source>
         <translation>Перезавантажити директорію</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="110"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="111"/>
         <source>Show Details</source>
         <translation>Показувати подробиці</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="122"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="123"/>
         <source>Debug File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="160"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="126"/>
+        <source>File Search</source>
+        <translation type="unfinished">Пошук в файлах</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="164"/>
         <source>Open Folder in New Window</source>
         <translation>Відкрити директорію у новому вікні</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="161"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="165"/>
         <source>Add to Folders</source>
         <translation>Додати до директорій</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="141"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="145"/>
         <source>Open Parent</source>
         <oldsource>Open to Parent</oldsource>
         <translation type="unfinished">Нагору</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="169"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="173"/>
         <source>Filter</source>
         <translation>Фільтрувати</translation>
     </message>
     <message>
-        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="175"/>
+        <location filename="src/plugins/filebrowser/filebrowser.cpp" line="179"/>
         <source>File System</source>
         <translation>Файлова система</translation>
     </message>
@@ -1419,80 +1424,80 @@ Do you want to reload the file from disk?</source>
 <context>
     <name>FileSearch</name>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="210"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="217"/>
         <source>Match whole word</source>
         <oldsource>Match word</oldsource>
         <translation>Тільки цілі слова</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="211"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="218"/>
         <source>Match case</source>
         <translation>Враховувати регістр</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="212"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="219"/>
         <source>Regular expression</source>
         <translation>Регулярний вираз</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="213"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="220"/>
         <source>Scan subdirectories</source>
         <oldsource>Look in subdirs</oldsource>
         <translation type="unfinished">Рекурсивно</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="234"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="241"/>
         <source>Search for:</source>
         <translation type="unfinished">Шукати:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="236"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
         <source>Options:</source>
         <translation>Параметри:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="243"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="250"/>
         <source>Browse...</source>
         <oldsource>Browser</oldsource>
         <translation>Обрати...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="266"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="273"/>
         <source>Filter:</source>
         <translation>Фільтр:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="358"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="365"/>
         <source>Files on File System</source>
         <translation type="unfinished">Файли на диску</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="223"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="230"/>
         <source>Search</source>
         <translation>Знайти</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="224"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="231"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="244"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="251"/>
         <source>Current Folder</source>
         <translation>Поточна директорія</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="247"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="254"/>
         <source>Auto Switch</source>
         <translation type="unfinished">Визначати автоматично</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="271"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="278"/>
         <source>Clear</source>
         <translation type="unfinished">Очистити</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearch.cpp" line="466"/>
+        <location filename="src/plugins/litefind/filesearch.cpp" line="480"/>
         <source>Open Directory</source>
         <translation>Відкрити директорію</translation>
     </message>
@@ -1516,37 +1521,42 @@ Do you want to reload the file from disk?</source>
         <translation>Новий пошук</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="86"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="85"/>
+        <source>File Search</source>
+        <translation type="unfinished">Пошук в файлах</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="89"/>
         <source>Search Result</source>
         <translation>Результат пошуку</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="210"/>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="215"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="248"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="253"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="210"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="248"/>
         <source>Warning! Replace text is empty.
 Want to remove all the search items?</source>
         <translation type="unfinished">Увага! Текст для заміни пустий.
 Бажаєте видалити всі знайдені результати?</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="215"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="253"/>
         <source>Warning! Replace text is whitespace.
 Want to replace to all the search items to whitespace?</source>
         <translation type="unfinished">Увага! Текст для заміни складається з пробільних символів.
 Бажаєте замінити всі знайдені результати пробільними символами?</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="242"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="280"/>
         <source>The following files have no write permissions. Do you want to change the permissions?</source>
         <translation type="unfinished">Ці файли не мають прав на запис. Бажаєте змінити права?</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="245"/>
+        <location filename="src/plugins/litefind/filesearchmanager.cpp" line="283"/>
         <source>File is readonly</source>
         <translation>Файл тільки для читання</translation>
     </message>
