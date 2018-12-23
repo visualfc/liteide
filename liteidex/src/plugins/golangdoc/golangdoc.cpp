@@ -337,7 +337,7 @@ void GolangDoc::godocOutput(QByteArray data,bool bStderr)
 {
     if (bStderr) {
         QTextCodec *codec = QTextCodec::codecForName("utf8");
-        m_liteApp->appendLog("GolangDoc",codec->toUnicode(data),true);
+        m_liteApp->appendLog("GolangDoc",codec->toUnicode(data),false);
         return;
     }
     m_godocData.append(data);
@@ -358,7 +358,11 @@ void GolangDoc::godocFinish(bool error,int code,QString /*msg*/)
             nav = false;
             header = "Package "+m_openUrl.path();
         }
-        updateHtmlDoc(m_openUrl,m_godocData,header,nav);
+        if (m_godocData.indexOf("<!--") == 0) {
+            updateHtmlDoc(m_openUrl,m_godocData,header,nav);
+        } else {
+            updateTextDoc(m_openUrl,m_godocData,header);
+        }
     }
 }
 
@@ -489,17 +493,21 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
     if (url.scheme() != "pdoc") {
         return;
     }
-    if (m_godocCmd.isEmpty()) {
-        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-        m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,env,false);
-    }
-    if (m_godocCmd.isEmpty()) {
-        m_liteApp->appendLog("GolangDoc",QString("not lookup godoc in PATH"),true);
-        return;
-    }
+//    if (m_godocCmd.isEmpty()) {
+//        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+//        m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,env,false);
+//    }
+//    if (m_godocCmd.isEmpty()) {
+//        m_liteApp->appendLog("GolangDoc",QString("not lookup godoc in PATH"),true);
+//        return;
+//    }
     m_godocProcess->stopAndWait(100,2000);
     m_godocData.clear();
+
+    QString godocCmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
+    args << "godoc";
+
     //check additional path
     bool local = false;
     QDir dir(url.path());
@@ -522,17 +530,17 @@ void GolangDoc::openUrlPdoc(const QUrl &url)
         if (pkgList.size() == 1) {
             m_godocProcess->setWorkingDirectory(m_goroot);
             m_openUrl.setPath(pkgList.at(0));
-            args << "-html=true" << pkgList.at(0);
+            args /*<< "-html=true"*/ << pkgList.at(0);
         } else {
             m_godocProcess->setWorkingDirectory(url.path());
-            args << "-html=true" << ".";
+            args /*<< "-html=true"*/ << ".";
         }
     } else {
         m_godocProcess->setWorkingDirectory(m_goroot);
-        args << "-html=true" << url.path();
+        args /*<< "-html=true"*/ << url.path();
     }
     m_godocProcess->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
-    m_godocProcess->start(m_godocCmd,args);
+    m_godocProcess->start(godocCmd,args);
 }
 
 void GolangDoc::openUrlFile(const QUrl &url)
