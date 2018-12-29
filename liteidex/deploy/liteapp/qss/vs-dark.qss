@@ -247,7 +247,6 @@ QMenu::item:checked {
 
 QMenu::icon:checked {
     background: #FFFFFF;
-    padding: 20px;
 }
 
 QMenu::separator {
