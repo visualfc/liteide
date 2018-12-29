@@ -6,21 +6,21 @@
 		<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
 		<string>True</string>
-    <key>NSHumanReadableCopyright</key>
-        <string>(C) 2011-2014 visualfc@gmail.com</string>
+	<key>NSHumanReadableCopyright</key>
+		<string>Copyright © 2011-2019 visualfc. All rights reserved.</string>
 	<key>CFBundleIconFile</key>
-        <string>liteide.icns</string>
+		<string>liteide.icns</string>
 	<key>CFBundlePackageType</key>
 		<string>APPL</string>
 	<key>CFBundleSignature</key>
-        <string>????</string>
+		<string>????</string>
 	<key>CFBundleExecutable</key>
-        <string>LiteIDE</string>
+		<string>LiteIDE</string>
 	<key>CFBundleIdentifier</key>
 		<string>com.visualfc.liteide</string>
 	<key>CFBundleVersion</key>
-		<string>liteide x version</string>
+		<string>X35</string>
 	<key>CFBundleShortVersionString</key>
-		<string>liteidex</string>
+		<string>35.3</string>
 </dict>
 </plist>
