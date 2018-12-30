@@ -65,6 +65,7 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_importProcess = new Process(this);
     m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
     m_gocodeSetProcess->setWorkingDirectory(m_liteApp->applicationPath());
+    m_gocodeImportProcess->setWorkingDirectory(m_liteApp->applicationPath());
     connect(m_gocodeProcess,SIGNAL(started()),this,SLOT(started()));
     connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     connect(m_gocodeImportProcess,SIGNAL(started()),this,SLOT(gocodeImportStarted()));
@@ -295,7 +296,7 @@ void GolangCode::updateEditorGOPATH()
         m_gocodeImportProcess->stop(10);
     }
     QStringList args;
-    args << "-in" << "" << "-f" << "csv" << "autocomplete" << "main.go" << "21";
+    args << "-f" << "csv" << "autocomplete" << "main.go" << "21";
     m_gocodeImportProcess->setProcessEnvironment(env);
     m_gocodeImportProcess->setWorkingDirectory(m_fileInfo.absolutePath());
     m_gocodeImportProcess->startEx(m_gocodeCmd,args);
