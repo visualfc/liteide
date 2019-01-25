@@ -448,8 +448,8 @@ void GolangCode::loadPkgList()
         }
     }
     m_importList.removeDuplicates();
-    m_importList << "github.com/"
-                 << "golang.org/x/";
+//    m_importList << "github.com/"
+//                 << "golang.org/x/";
     m_allImportList = m_importList;
 }
 
