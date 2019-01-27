@@ -484,29 +484,37 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
             }
             return m_items.size();
         }
-        bool hasSep = filter.contains("/");
-        if (hasSep) {
-            foreach (QString import, m_importList) {
-                if (import.startsWith(filter)) {
-                    m_items.append(new QStandardItem(icon,import));
-                }
-            }
-        } else {
-            QList<QStandardItem*> items;
-            foreach (QString import, m_importList) {
-                if (import.contains("/")) {
-                    foreach (QString path, import.split("/")) {
-                        if (path.startsWith(filter)) {
+        QList<QStandardItem*> items;
+        QList<QStandardItem*> otherItems;
+        int sep = filter.lastIndexOf("/");
+        QString root = filter.left(sep+1);
+        QString check = filter.mid(sep+1);
+        foreach (QString import, m_importList) {
+            if (import.startsWith(root)) {
+                QString text = import.mid(sep+1);
+                if (text.contains("/")) {
+                    foreach (QString path, text.split("/")) {
+                        int n = path.indexOf(check);
+                        if (n == 0) {
                             items.append(new QStandardItem(icon,import));
+                            break;
+                        } else if (n > 0) {
+                            otherItems.append(new QStandardItem(icon,import));
                             break;
                         }
                     }
-                } else if (import.startsWith(filter)) {
-                    m_items.append(new QStandardItem(icon,import));
+                } else {
+                    int n = text.indexOf(check);
+                    if (n == 0) {
+                        items.append(new QStandardItem(icon,import));
+                    } else if (n > 0) {
+                        otherItems.append(new QStandardItem(icon,import));
+                    }
                 }
             }
-            m_items.append(items);
         }
+        m_items.append(items);
+        m_items.append(otherItems);
         return m_items.size();
     }
     QModelIndex parentIndex;
