@@ -484,8 +484,9 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
             }
             return m_items.size();
         }
-        QList<QStandardItem*> items;
-        QList<QStandardItem*> otherItems;
+        QList<QStandardItem*> best;
+        QList<QStandardItem*> second;
+        QList<QStandardItem*> other;
         int sep = filter.lastIndexOf("/");
         QString root = filter.left(sep+1);
         QString check = filter.mid(sep+1);
@@ -496,25 +497,37 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
                     foreach (QString path, text.split("/")) {
                         int n = path.indexOf(check);
                         if (n == 0) {
-                            items.append(new QStandardItem(icon,import));
+                            if (check == path) {
+                                best.append(new QStandardItem(icon,import));
+                            } else {
+                                second.append(new QStandardItem(icon,import));
+                            }
                             break;
                         } else if (n > 0) {
-                            otherItems.append(new QStandardItem(icon,import));
+                            other.append(new QStandardItem(icon,import));
                             break;
                         }
                     }
                 } else {
                     int n = text.indexOf(check);
                     if (n == 0) {
-                        items.append(new QStandardItem(icon,import));
+                        if (check == text) {
+                            best.append(new QStandardItem(icon,import));
+                        } else {
+                            second.append(new QStandardItem(icon,import));
+                        }
                     } else if (n > 0) {
-                        otherItems.append(new QStandardItem(icon,import));
+                        other.append(new QStandardItem(icon,import));
                     }
                 }
             }
         }
-        m_items.append(items);
-        m_items.append(otherItems);
+        qStableSort(best.begin(), best.end(), ContentLessThan(filter));
+        qStableSort(second.begin(), second.end(), ContentLessThan(filter));
+        qStableSort(other.begin(), other.end(), ContentLessThan(filter));
+        m_items.append(best);
+        m_items.append(second);
+        m_items.append(other);
         return m_items.size();
     }
     QModelIndex parentIndex;
