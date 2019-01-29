@@ -452,6 +452,27 @@ QString parser_import(const QString &text)
     return parserImport(text,start,end);
 }
 
+static QString selectionUnderCursor(QTextCursor tc)
+{
+    QString text = tc.block().text();
+    int pos = tc.selectionStart() - tc.block().position();
+    int left = -1;
+    for (int i = pos; i >= 0; i--) {
+        if (!text[i].isLetterOrNumber() && text[i] != '.') {
+            left = i;
+            break;
+        }
+    }
+    int right = text.length();
+    for (int i = pos; i < text.length(); i++) {
+        if (!text[i].isLetterOrNumber())  {
+            right = i;
+            break;
+        }
+    }
+    return text.mid(left+1,right-left-1);
+}
+
 
 void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav)
 {
@@ -525,7 +546,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
     QStringList args;
     if (m_useGocodeInfo) {
         cmd  = getGocode(m_liteApp);
-        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset);
+        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset) << selectionUnderCursor(cursor);
     } else {
         cmd = LiteApi::getGotools(m_liteApp);
         args << "types";
@@ -639,7 +660,7 @@ void GolangEdit::editorJumpToDecl()
     QStringList args;
     if (m_useGocodeInfo) {
         cmd  = getGocode(m_liteApp);
-        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset);
+        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset) << selectionUnderCursor(m_lastCursor);
     } else {
         cmd = LiteApi::getGotools(m_liteApp);
         args << "types";
@@ -729,7 +750,7 @@ void GolangEdit::editorFindInfo()
     QStringList args;
     if (m_useGocodeInfo) {
         cmd  = getGocode(m_liteApp);
-        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset);
+        args << "liteide_typesinfo" << info.fileName() << QString("%1").arg(offset) << selectionUnderCursor(m_lastCursor);
     } else {
         cmd = LiteApi::getGotools(m_liteApp);
         args << "types";
