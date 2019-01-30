@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2016 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2019 visualfc. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -48,7 +48,7 @@ public:
         m_info->setId("plugin/liteeditor");
         m_info->setName("LiteEditor");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X35.3");
+        m_info->setVer("X35.4");
         m_info->setInfo("Core Editor");
         m_info->setMustLoad(true);
     }

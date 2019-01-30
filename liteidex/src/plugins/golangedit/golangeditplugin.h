@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2016 LiteIDE Team. All rights reserved.
+** Copyright (c) 2011-2019 visualfc. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -45,7 +45,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<GolangEditPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/GolangEdit");
-        m_info->setVer("X35.3");
+        m_info->setVer("X35.4");
         m_info->setName("GolangEdit");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Golang Edit Support");
