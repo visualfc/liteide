@@ -136,6 +136,10 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
     args << "-info";
     args << "-use";
+    QString text = selectionUnderCursor(cursor,moveLeft);
+    if (!text.isEmpty()) {
+        args << "-text" << text;
+    }
     if (global) {
         args << "-all";
     }

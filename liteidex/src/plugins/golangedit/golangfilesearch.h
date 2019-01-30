@@ -41,6 +41,30 @@ inline QByteArray trimmedRight(const QByteArray &d)
     return d.left(end+1);
 }
 
+inline QString selectionUnderCursor(QTextCursor tc, bool moveLeft = false)
+{
+    QString text = tc.block().text();
+    int pos = tc.selectionStart() - tc.block().position();
+    if (moveLeft) {
+        pos--;
+    }
+    int left = -1;
+    for (int i = pos; i >= 0; i--) {
+        if (!text[i].isLetterOrNumber() && text[i] != '.') {
+            left = i;
+            break;
+        }
+    }
+    int right = text.length();
+    for (int i = pos; i < text.length(); i++) {
+        if (!text[i].isLetterOrNumber())  {
+            right = i;
+            break;
+        }
+    }
+    return text.mid(left+1,right-left-1);
+}
+
 class GolangFileSearch : public LiteApi::IFileSearch
 {
     Q_OBJECT
