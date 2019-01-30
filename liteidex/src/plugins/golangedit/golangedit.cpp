@@ -40,6 +40,7 @@
 #include <QApplication>
 #include <QToolTip>
 #include <QRegExp>
+#include <QToolButton>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -415,6 +416,15 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         if (m_editor->document()->isEmpty()) {
             m_editor->setLineEndUnix(true);
         }
+    }
+    QToolBar *toolBar = LiteApi::getEditToolBar(editor);
+    if (toolBar) {
+        toolBar->addSeparator();
+        //toolBar->addAction(m_jumpDeclAct);
+        QToolButton *btn = new QToolButton(toolBar);
+        btn->setDefaultAction(m_jumpDeclAct);
+        btn->setIcon(QIcon("icon:liteeditor/images/goto.png"));
+        toolBar->addWidget(btn);
     }
 }
 

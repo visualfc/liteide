@@ -15,5 +15,6 @@
         <file>images/keyword.png</file>
         <file>images/func.png</file>
         <file>images/snippet.png</file>
+        <file>images/goto.png</file>
     </qresource>
 </RCC>
