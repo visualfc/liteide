@@ -806,7 +806,7 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
         QString fileName = info.left(pos);
         int line = reg.cap(1).toInt();
         int col = reg.cap(2).toInt();
-        LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1,true,false);
+        LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1,true,true);
     }
 }
 
