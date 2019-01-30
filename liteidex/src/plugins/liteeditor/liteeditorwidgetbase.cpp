@@ -2886,8 +2886,13 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
         }
         i++;
     }
-    tab += space/m_nTabSize;
-    inText += this->tabText(tab);
+    if (tab == 0) {
+        tab += space/m_nTabSize;
+        inText += QString(m_nTabSize*tab,' ');
+    } else {
+        tab += space/m_nTabSize;
+        inText += this->tabText(tab);
+    }
     if (!text.isEmpty()) {
         if (pos >= text.size()) {
             const QChar ch = text.at(text.size()-1);
