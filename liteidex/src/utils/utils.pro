@@ -20,6 +20,4 @@ SUBDIRS = \
     editorutil \
     folderview \
     iconutil \
-    dlvclient \
-    gotools
-
+    dlvclient
