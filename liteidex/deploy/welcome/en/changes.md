@@ -3,6 +3,29 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2019.01.30 Ver X35.4
+* LiteIDE
+    * source code navigation can be used in wrong source code
+    * imports completer support gomod depends and local imports for gomod project
+    * imports completer support lookup all imports by source for GOPATH project
+* LiteApp
+    * fix vs-dark.qss menu icon bug for windows10
+* LiteEditor
+    * fuzzy golang imports completer
+    * fix complter imports offset
+    * fix enter auto insert tab or space check by previous line
+* GolangCode
+    * fix receive imports line process
+* GolangEdit
+    * support lookup types info wrong source code
+    * add jump to declaration toolbar
+    * fix jump to declaration save history
+
+* gotools & gocode
+    * source code navigation can be used in wrong source code
+    * lookup gomod depends and local imports for gomod project
+    * lookup all imports from source for GOPATH project
+
 ### 2018.12.22 Ver X35.3
 * LiteIDE
     * optimization gotools & gocode, update editor and find plugin.
