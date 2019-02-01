@@ -94,6 +94,7 @@ mkdir -p liteide
 cp -R -v $LITEIDE_ROOT/liteide/bin/LiteIDE.app liteide
 rm liteide/LiteIDE.app/Contents/PlugIns/*.a
 
+cp -R -v $LITEIDE_ROOT/src/liteide/Info.plist liteide/LiteIDE.app/Contents
 cp -R -v $LITEIDE_ROOT/LICENSE.LGPL liteide
 cp -R -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -R -v $LITEIDE_ROOT/../README.md liteide
