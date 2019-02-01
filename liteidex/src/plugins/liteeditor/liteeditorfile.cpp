@@ -86,13 +86,22 @@ bool LiteEditorFile::saveText(const QString &fileName, const QString &text)
         saveText.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
     }
 
+    QByteArray data;
     if (m_codec) {
         if (m_hasUtf8Bom && m_codec->name() == "UTF-8") {
-            file.write("\xef\xbb\xbf", 3);
+            if (file.write("\xef\xbb\xbf", 3) !=3 ) {
+                m_liteApp->appendLog("LiteEditor",QString("write file %1 false, %2").arg(fileName).arg(file.errorString()),true);
+                return false;
+            }
         }
-        file.write(m_codec->fromUnicode(saveText));
+        data = m_codec->fromUnicode(saveText);
     } else {
-        file.write(saveText.toLocal8Bit());
+        data = saveText.toLocal8Bit();
+    }
+    int size = file.write(data);
+    if (size != data.size()) {
+        m_liteApp->appendLog("LiteEditor",QString("write file %1 false, %2").arg(fileName).arg(file.errorString()),true);
+        return false;
     }
     return true;
 }
