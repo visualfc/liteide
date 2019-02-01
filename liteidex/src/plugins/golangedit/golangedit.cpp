@@ -816,6 +816,7 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
         QString fileName = info.left(pos);
         int line = reg.cap(1).toInt();
         int col = reg.cap(2).toInt();
+        col = byteOffsetToColumn(fileName,line,col);
         LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1,true,true);
     }
 }
@@ -905,6 +906,22 @@ static QStringList FindSourceInfo(LiteApi::IApplication *app, const QString &fil
     return lines;
 }
 
+int GolangEdit::byteOffsetToColumn(const QString &fileName, int line, int col)
+{
+    LiteApi::IEditor *edit = m_liteApp->fileManager()->openEditor(fileName,false,false);
+    if (edit) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(edit);
+        QTextBlock block = ed->document()->findBlockByNumber(line-1);
+        if (block.isValid()) {
+            QByteArray line = block.text().toUtf8();
+            if (col > 0) {
+                return QString::fromUtf8(line.left(col)).length();
+            }
+        }
+    }
+    return col;
+}
+
 void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
 {
     if (code != 0) {
@@ -923,6 +940,7 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         QString fileName = fileInfo.left(pos);
                         int line = reg.cap(1).toInt();
                         int col = reg.cap(2).toInt();
+                        col = byteOffsetToColumn(fileName,line,col);
 
                         bool importExtra = false;
                         //parser import line extra info
@@ -1098,17 +1116,17 @@ void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
     if (!ok)
         return;
     int col = fileCol.toInt(&ok);
-    if (ok) {
-        col--;
-    } else {
-        col = 0;
+    if (!ok) {
+        col = 1;
     }
 
     QDir dir(m_sourceQueryInfo.workPath);
     if (!QFileInfo(fileName).isAbsolute()) {
         fileName = dir.filePath(fileName);
     }
-    if (LiteApi::gotoLine(m_liteApp,fileName,line-1,col,true,true)) {
+
+    col = byteOffsetToColumn(fileName,line,col);
+    if (LiteApi::gotoLine(m_liteApp,fileName,line-1,col-1,true,true)) {
         m_sourceQueryOutput->setTextCursor(cur);
     }
 }

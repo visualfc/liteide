@@ -119,6 +119,7 @@ public slots:
     void goRemoveTags();
     void execGoModifyTags(const QString &args);
     QString getGoModifyTagsInfo() const;
+    int byteOffsetToColumn(const QString &fileName, int line, int col);
 protected:
     LiteApi::IApplication *m_liteApp;
     LiteApi::ILiteEditor  *m_editor;
