@@ -25,6 +25,8 @@
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTextDocument>
+#include <QMutableListIterator>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -76,11 +78,25 @@ QList<Find::SearchResultItem> ReplaceDocument::replace(const QString &fileName, 
         cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,item.textMarkLength);
         cursor.removeSelectedText();
         cursor.insertText(text);
-        item.textMarkPos -= offset;
-        item.text.replace(item.textMarkPos,item.textMarkLength,text);
-        offset += text.length()-item.textMarkLength;
+        int newoffset = text.length()-item.textMarkLength;
+        item.textMarkPos = offset+item.textMarkPos;
         item.textMarkLength = text.length();
+        //item.text = block.text();
+        offset += newoffset;
         update_items.push_back(item);
+
+        //update update_items same line number text
+        int lineNumber = block.blockNumber()+1;
+        QMutableListIterator<Find::SearchResultItem> i(update_items);
+        i.toBack();
+        while (i.hasPrevious()) {
+            Find::SearchResultItem &item = i.previous();
+            if (item.lineNumber == lineNumber) {
+                item.text = block.text();
+            } else if (item.lineNumber < lineNumber) {
+                break;
+            }
+        }
     }
     cursor.endEditBlock();
     if (m_document) {
