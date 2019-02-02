@@ -119,6 +119,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     bool cleanComplerCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
     bool copyToHtml = m_liteApp->settings()->value(EDITOR_ENABLE_COPYTOHTML,true).toBool();
+    bool allowVscrollLastLine = m_liteApp->settings()->value(EDITOR_ALLOW_VSCROLL_LASTLINE,true).toBool();
 
     int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
 
@@ -146,6 +147,7 @@ LiteEditorOption::LiteEditorOption(LiteApi::IApplication *app,QObject *parent) :
     ui->offsetCheckBox->setChecked(offsetVisible);
     ui->cleanCompleterCacheCheckBox->setChecked(cleanComplerCache);
     ui->enableCopyToHtmlCheckBox->setChecked(copyToHtml);
+    ui->allowVscrollLastLineCheckBox->setChecked(allowVscrollLastLine);
 
     connect(ui->editPushButton,SIGNAL(clicked()),this,SLOT(editStyleFile()));
     connect(ui->rightLineVisibleCheckBox,SIGNAL(toggled(bool)),ui->rightLineWidthSpinBox,SLOT(setEnabled(bool)));
@@ -278,6 +280,7 @@ void LiteEditorOption::apply()
         min = 1;
     }
     bool offsetVisible = ui->offsetCheckBox->isChecked();
+    bool allowVscrollLastLine = ui->allowVscrollLastLineCheckBox->isChecked();
 
     m_liteApp->settings()->setValue(EDITOR_NOPRINTCHECK,noprintCheck);
     m_liteApp->settings()->setValue(EDITOR_FAMILY,m_fontFamily);
@@ -305,6 +308,7 @@ void LiteEditorOption::apply()
     m_liteApp->settings()->setValue(EDITOR_VISUALIZEWHITESPACE,visualizeWhitespace);
     m_liteApp->settings()->setValue(EDITOR_CLEAN_COMPLETERCACHE_SAVE,cleanCompleterCache);
     m_liteApp->settings()->setValue(EDITOR_ENABLE_COPYTOHTML,copyToHtml);
+    m_liteApp->settings()->setValue(EDITOR_ALLOW_VSCROLL_LASTLINE,allowVscrollLastLine);
     if (rightLineVisible) {
         m_liteApp->settings()->setValue(EDITOR_RIGHTLINEWIDTH,rightLineWidth);
     }

@@ -380,6 +380,7 @@ LiteEditorWidgetBase::LiteEditorWidgetBase(LiteApi::IApplication *app, QWidget *
     setLayoutDirection(Qt::LeftToRight);
     viewport()->setMouseTracking(true);
 
+    m_allowVscrollLastLine = true;
     m_lineNumbersVisible = true;
     m_navigateWidgetVisible = true;
     m_marksVisible = true;
@@ -1305,6 +1306,9 @@ QByteArray LiteEditorWidgetBase::saveState() const
 
 void LiteEditorWidgetBase::verticalScrollBarRangeChanged(int minnum, int maxnum)
 {
+    if (!m_allowVscrollLastLine) {
+        return;
+    }
     QScrollBar *bar = this->verticalScrollBar();
     bar->blockSignals(true);
     int h = this->document()->size().height();
@@ -1313,6 +1317,11 @@ void LiteEditorWidgetBase::verticalScrollBarRangeChanged(int minnum, int maxnum)
     }
     bar->setMaximum(minnum+h);
     bar->blockSignals(false);
+}
+
+
+void LiteEditorWidgetBase::setAllowVscrollLastLine(bool b) {
+    m_allowVscrollLastLine = b;
 }
 
 bool LiteEditorWidgetBase::restoreState(const QByteArray &state)

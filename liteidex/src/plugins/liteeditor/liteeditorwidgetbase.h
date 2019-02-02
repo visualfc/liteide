@@ -249,6 +249,10 @@ public:
     bool indentLineVisible() const {
         return m_indentLineVisible;
     }
+    void setAllowVscrollLastLine(bool b);
+    bool allowVscrollLastLine() const {
+        return m_allowVscrollLastLine;
+    }
     bool isLineWrap() const;
     void setLineWrap(bool wrap);
     void maybeSelectLine();
@@ -341,6 +345,7 @@ protected:
     bool m_codeFoldingVisible;
     bool m_rightLineVisible;
     bool m_eofVisible;
+    bool m_allowVscrollLastLine;
     int  m_rightLineWidth;
     int  m_maxTipInfoLines;
     int  m_inputCursorOffset;

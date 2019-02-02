@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>377</height>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -369,6 +369,13 @@
            <widget class="QCheckBox" name="enableCopyToHtmlCheckBox">
             <property name="text">
              <string>Add copied text into the clipboard as HTML</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="allowVscrollLastLineCheckBox">
+            <property name="text">
+             <string>Allow vertical scrolling to the last line [*]</string>
             </property>
            </widget>
           </item>

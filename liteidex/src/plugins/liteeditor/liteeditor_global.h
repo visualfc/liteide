@@ -68,5 +68,6 @@
 #define EDITOR_INDENTLINEVISIBLE "editor/indentlinevisible"
 #define EDITOR_WHEEL_SCROLL "editor/whellscroll"
 #define EDITOR_ENABLE_COPYTOHTML "editor/enablecopytohtml"
+#define EDITOR_ALLOW_VSCROLL_LASTLINE "editor/allowvscrolllastline"
 
 #endif // LITEEDITOR_GLOBAL_H
