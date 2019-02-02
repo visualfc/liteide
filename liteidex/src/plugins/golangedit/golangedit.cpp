@@ -906,17 +906,45 @@ static QStringList FindSourceInfo(LiteApi::IApplication *app, const QString &fil
     return lines;
 }
 
-int GolangEdit::byteOffsetToColumn(const QString &fileName, int line, int col)
-{
-    LiteApi::IEditor *edit = m_liteApp->fileManager()->openEditor(fileName,false,false);
+static QString FindSourceBlock(LiteApi::IApplication *app, const QString &fileName, int blockNumber) {
+    QString lines;
+    LiteApi::IEditor *edit = app->editorManager()->findEditor(fileName,true);
     if (edit) {
         QPlainTextEdit *ed = LiteApi::getPlainTextEdit(edit);
-        QTextBlock block = ed->document()->findBlockByNumber(line-1);
-        if (block.isValid()) {
-            QByteArray line = block.text().toUtf8();
-            if (col > 0) {
-                return QString::fromUtf8(line.left(col)).length();
+        if (ed) {
+            QTextBlock block = ed->document()->findBlockByNumber(blockNumber);
+            if (block.isValid()) {
+                lines = block.text();
             }
+        }
+    } else {
+        QFile f(fileName);
+        if (f.open(QFile::ReadOnly)) {
+            QTextStream stream(&f);
+            stream.setCodec("utf-8");
+            int curLine = 0;
+            QString text;
+            while(!stream.atEnd()) {
+                text = stream.readLine();
+                if (curLine == blockNumber) {
+                    lines = text;
+                    break;
+                }
+                curLine++;
+            }
+        }
+    }
+    return lines;
+}
+
+
+int GolangEdit::byteOffsetToColumn(const QString &fileName, int line, int col)
+{
+    QString block = FindSourceBlock(m_liteApp,fileName,line-1);
+    if (!block.isEmpty()) {
+        QByteArray line = block.toUtf8();
+        if (col > 0) {
+            return QString::fromUtf8(line.left(col)).length();
         }
     }
     return col;

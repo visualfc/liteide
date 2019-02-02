@@ -1304,7 +1304,7 @@ QByteArray LiteEditorWidgetBase::saveState() const
     return state;
 }
 
-void LiteEditorWidgetBase::verticalScrollBarRangeChanged(int minnum, int maxnum)
+void LiteEditorWidgetBase::verticalScrollBarRangeChanged(int minnum, int /*maxnum*/)
 {
     if (!m_allowVscrollLastLine) {
         return;
