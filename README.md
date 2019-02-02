@@ -78,11 +78,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	--select-env [system|win32|cross-linux64|...]     select init environment id
 	--local-setting   force use local setting
 	--user-setting    force use user setting
-	--reset-setting   reset current setting ( clear setting file)
-	
-### LiteIDE X34 Gocode autocompleter
-	Options -> GolangCode -> "Auto update depends package when it's source changed" set check.
-	
+	--reset-setting   reset current setting ( clear setting file)	
 	
 ### Update liteide tools for support new Golang Version	
 
@@ -112,9 +108,9 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 * Gocode Source code
 <https://github.com/visualfc/gocode>
 * Release downloads
-	* <https://sourceforge.net/projects/liteide/files>
-	* <https://github.com/visualfc/liteide/releases/latest>
-	* [百度网盘](https://pan.baidu.com/s/1wYHSEfG1TJRC2iOkE_saJg)  密码:jzrc
+    * <https://sourceforge.net/projects/liteide/files>
+    * <https://github.com/visualfc/liteide/releases/latest>
+    * [百度网盘](https://pan.baidu.com/s/1wYHSEfG1TJRC2iOkE_saJg)  密码:jzrc
 * Google group
 <https://groups.google.com/group/liteide-dev>
 * Changes
