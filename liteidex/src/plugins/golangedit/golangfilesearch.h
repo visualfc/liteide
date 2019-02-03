@@ -44,11 +44,14 @@ inline QByteArray trimmedRight(const QByteArray &d)
 inline QString selectionUnderCursor(QTextCursor tc, bool moveLeft = false)
 {
     QString text = tc.block().text();
+    if (tc.hasSelection()) {
+        moveLeft = false;
+    }
     int pos = tc.selectionStart() - tc.block().position();
     if (moveLeft) {
         pos--;
     }
-    int left = -1;
+    int left = pos;
     for (int i = pos; i >= 0; i--) {
         if (!text[i].isLetterOrNumber() && text[i] != '.') {
             left = i;
