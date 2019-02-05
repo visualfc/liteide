@@ -2904,10 +2904,6 @@ Success: %2.</oldsource>
         <translation>Выбрать всё</translation>
     </message>
     <message>
-        <source>Word Wrap (MimeType)</source>
-        <translation>Перенос слов (MimeType)</translation>
-    </message>
-    <message>
         <source>Toggle Comment</source>
         <translation>Закомментировать/раскомментировать</translation>
     </message>
@@ -3189,6 +3185,10 @@ Success: %2.</oldsource>
         <source>Convert Tab</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Line Wrap (MimeType)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEditorOption</name>
@@ -3355,6 +3355,10 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Display indent guide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow vertical scrolling to the last line [*]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

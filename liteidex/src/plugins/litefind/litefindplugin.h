@@ -64,7 +64,7 @@ public:
         m_info->setId("plugin/LiteFind");
         m_info->setName("LiteFind");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X33.1");
+        m_info->setVer("X35.5");
         m_info->setInfo("Core Find/Replace");
         m_info->setMustLoad(true);
     }

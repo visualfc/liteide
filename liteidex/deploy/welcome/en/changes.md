@@ -3,6 +3,18 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2019.02.05 Ver X35.5
+* LiteIDE
+    * bug fix version
+* GolangEdit
+    * fix cursor selections usages lookup
+    * add byteOffsetToColumn to fix gotools/guru output byte offset to editor offset
+* LiteEditor
+    * add allow vertical scrolling to the last line option
+    * check file writed size != data.size and show error message
+* LiteFind
+    * update search result item text for all same linenumber
+
 ### 2019.01.30 Ver X35.4
 * LiteIDE
     * source code navigation can be used in wrong source code
