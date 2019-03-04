@@ -270,7 +270,7 @@ void LiteProcess::startEx(const QString &cmd, const QString &args)
         QString stub = m_liteApp->applicationPath()+"/liteide_ctrlc_stub.exe";
         QString stubArg = cmd+" "+args;
         this->setNativeArguments(stubArg);
-        this->start(stub);
+        this->start("\""+stub+"\"");
     } else {
         this->setNativeArguments(args);
         this->start(cmd);
