@@ -2946,6 +2946,9 @@ static QString simpleInfo(const QString &info, int maxLine)
 
 void LiteEditorWidgetBase::showToolTipInfo(const QPoint &pos, const QString &text)
 {
+    if (!this->isActiveWindow()) {
+        return;
+    }
     QToolTip::showText(pos,simpleInfo(text,m_maxTipInfoLines),this);
 }
 
