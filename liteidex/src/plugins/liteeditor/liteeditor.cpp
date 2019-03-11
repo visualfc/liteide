@@ -829,8 +829,8 @@ void LiteEditor::initLoad()
     QFileInfo info(m_file->filePath());
     QString fileName = info.fileName();
     QAction *act = new QAction(fileName,this);
-    act->setData(info.filePath());
-    connect(act,SIGNAL(toggled(bool)),this,SLOT(toggleFilePathAction()));
+    act->setData(info.absoluteDir().path());
+    connect(act,SIGNAL(triggered(bool)),this,SLOT(toggleFilePathAction()));
     QAction *first = m_editToolBar->actions().first();
     m_editToolBar->insertAction(first,act);
 }
@@ -1465,6 +1465,20 @@ QMenu *LiteEditor::editorMenu() const
 void LiteEditor::toggleFilePathAction()
 {
     QAction *act = (QAction*)sender();
+    QString filePath = act->data().toString();
+    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+    if (mgr) {
+        LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
+        if (fileSystem) {
+            fileSystem->setRootPath(filePath);
+            fileSystem->setPlaceholderText(tr("Browser Files"));
+            mgr->setCurrentFilter(fileSystem);
+            QRect rc = m_editToolBar->actionGeometry(act);
+            QPoint pt = m_editToolBar->mapToGlobal(rc.bottomLeft());
+            mgr->showPopup(&pt);
+            return;
+        }
+    }
 }
 
 void LiteEditor::selectNextParam()

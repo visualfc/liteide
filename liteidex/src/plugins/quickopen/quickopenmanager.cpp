@@ -374,6 +374,12 @@ void QuickOpenManager::selected()
     }
     QString text = m_widget->editor()->text();
     QModelIndex index = m_widget->view()->currentIndex();
+    if (index.isValid() && m_widget->view()->model()->hasChildren(index)) {
+        bool expand = m_widget->view()->isExpanded(index);
+        m_widget->view()->setExpanded(index,!expand);
+        return;
+    }
+
     if (!m_currentFilter->selected(text.mid(m_sym.size()),index)) {
         return;
     }
