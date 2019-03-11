@@ -596,10 +596,23 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
         cgoComplete();
         return;
     }
+    if (m_preWord.endsWith(".")) {
+        bool testDigit = true;
+        for (int i = 0; i < m_preWord.size()-1; i++) {
+            if (!m_preWord.at(i).isDigit()) {
+                testDigit = false;
+                break;
+            }
+        }
+        if (testDigit) {
+            return;
+        }
+    }
     if (m_prefix.lastIndexOf("..") > 0) {
         m_pkgImportTip->hide();
         return;
     }
+
 
     QString src = cur.document()->toPlainText();
     src = src.replace("\r\n","\n");

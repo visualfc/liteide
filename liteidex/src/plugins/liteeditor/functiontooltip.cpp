@@ -30,6 +30,7 @@
 #include <QStyleOptionFrame>
 #include <QToolButton>
 #include <QHBoxLayout>
+#include <QToolTip>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -189,6 +190,7 @@ void FunctionTooltip::updateHintText()
 
 void FunctionTooltip::showPopup(int startpos)
 {
+    QToolTip::hideText();
     m_popup->setFixedWidth(m_popup->minimumSizeHint().width());
 
     const QDesktopWidget *desktop = QApplication::desktop();

@@ -279,7 +279,6 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
         }
         return;
     }
-
     m_completer->setCompletionContext(LiteApi::CompleterCodeContext);
     emit completionPrefixChanged(completionPrefix,false);
     m_completer->startCompleter(completionPrefix);
