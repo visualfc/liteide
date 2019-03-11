@@ -3302,11 +3302,11 @@ bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
     if (!link.targetOpenDir.isEmpty()) {
         LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
         if (mgr) {
-            LiteApi::IQuickOpenFolder *folder = LiteApi::getQuickOpenFolder(mgr);
-            if (folder) {
-                folder->setFolder(link.targetOpenDir);
-                folder->setPlaceholderText(link.targetOpenDirInfo);
-                mgr->setCurrentFilter(folder);
+            LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
+            if (fileSystem) {
+                fileSystem->setRootPath(link.targetOpenDir);
+                fileSystem->setPlaceholderText(link.targetOpenDirInfo);
+                mgr->setCurrentFilter(fileSystem);
                 QPoint pt = this->mapToGlobal(link.cursorPos);
                 mgr->showPopup(&pt);
                 return true;
