@@ -77,6 +77,11 @@ QAbstractItemModel *GolangSymbol::model() const
     return m_proxy;
 }
 
+QModelIndex GolangSymbol::rootIndex() const
+{
+    return QModelIndex();
+}
+
 void GolangSymbol::updateModel()
 {
     m_matchCase = m_liteApp->settings()->value(GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE,false).toBool()?Qt::CaseSensitive:Qt::CaseInsensitive;

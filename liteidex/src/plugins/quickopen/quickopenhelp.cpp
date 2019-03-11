@@ -64,6 +64,11 @@ QAbstractItemModel *QuickOpenHelp::model() const
     return m_model;
 }
 
+QModelIndex QuickOpenHelp::rootIndex() const
+{
+    return QModelIndex();
+}
+
 void QuickOpenHelp::updateModel()
 {
     LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);

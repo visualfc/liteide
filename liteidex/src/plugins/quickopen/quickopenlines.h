@@ -37,6 +37,7 @@ public:
     virtual QString placeholderText() const;
     virtual void activate();
     virtual QAbstractItemModel *model() const;
+    virtual QModelIndex rootIndex() const;
     virtual void updateModel();
     virtual QModelIndex filterChanged(const QString &text);
     virtual void indexChanged(const QModelIndex &index);

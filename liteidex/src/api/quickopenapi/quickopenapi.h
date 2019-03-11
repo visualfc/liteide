@@ -40,6 +40,7 @@ public:
     virtual QString placeholderText() const = 0;
     virtual void activate() = 0;
     virtual QAbstractItemModel *model() const = 0;
+    virtual QModelIndex rootIndex() const = 0;
     virtual void updateModel() = 0;
     virtual QModelIndex filterChanged(const QString &text) = 0;
     virtual void indexChanged(const QModelIndex &index) = 0;
@@ -53,6 +54,14 @@ class IQuickOpenFolder : public IQuickOpen
 public:
     IQuickOpenFolder(QObject *parent = 0) : IQuickOpen(parent) {}
     virtual void setFolder(const QString &folder) = 0;
+    virtual void setPlaceholderText(const QString &text) = 0;
+};
+
+class IQuickOpenFileSystem : public IQuickOpen
+{
+public:
+    IQuickOpenFileSystem(QObject *parent = 0) : IQuickOpen(parent) {}
+    virtual void setRootPath(const QString &root) = 0;
     virtual void setPlaceholderText(const QString &text) = 0;
 };
 
@@ -112,6 +121,12 @@ inline IQuickOpenFolder *getQuickOpenFolder(LiteApi::IQuickOpenManager *mgr)
 {
     return (IQuickOpenFolder*)mgr->findById("quickopen/folder");
 }
+
+inline IQuickOpenFileSystem *getQuickOpenFileSystem(LiteApi::IQuickOpenManager *mgr)
+{
+    return (IQuickOpenFileSystem*)mgr->findById("quickopen/filesystem");
+}
+
 
 } //namespace LiteApi
 

@@ -71,6 +71,11 @@ QAbstractItemModel *QuickOpenEditor::model() const
     return m_proxyModel;
 }
 
+QModelIndex QuickOpenEditor::rootIndex() const
+{
+    return QModelIndex();
+}
+
 void QuickOpenEditor::updateModel()
 {
     m_matchCase = m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;

@@ -28,6 +28,7 @@
 #include "liteeditorapi/liteeditorapi.h"
 #include "extension/extension.h"
 #include "elidedlabel/elidedlabel.h"
+#include "folderview/folderview.h"
 #include <QSet>
 #include <QHash>
 #include <QStack>
@@ -128,6 +129,7 @@ signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
 public slots:
+    void toggleFilePathAction();
     void requestFontZoom(int zoom);
     void loadColorStyleScheme();
     void applyOption(QString);

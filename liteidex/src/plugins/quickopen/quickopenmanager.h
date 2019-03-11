@@ -34,6 +34,7 @@ using namespace LiteApi;
 
 class QuickOpenFiles;
 class QuickOpenFolder;
+class QuickOpenFileSystem;
 class QuickOpenManager : public IQuickOpenManager
 {
     Q_OBJECT
@@ -87,6 +88,7 @@ protected:
     QPointer<IQuickOpen> m_currentFilter;
     QuickOpenFiles *m_quickOpenFiles;
     QuickOpenFolder *m_quickOpenFolder;
+    QuickOpenFileSystem *m_quickOpenFileSystem;
 protected:
     void updateModel();
 };

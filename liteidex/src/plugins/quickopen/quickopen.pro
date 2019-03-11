@@ -4,6 +4,7 @@ TEMPLATE = lib
 include (../../liteideplugin.pri)
 include (../../api/quickopenapi/quickopenapi.pri)
 include (../../utils/fileutil/fileutil.pri)
+include (../../utils/folderview/folderview.pri)
 include (../../3rdparty/qtc_editutil/qtc_editutil.pri)
 
 DEFINES += QUICKOPEN_LIBRARY
@@ -19,7 +20,8 @@ SOURCES += quickopenplugin.cpp \
     quickopenoption.cpp \
     quickopenoptionfactory.cpp \
     quickopenaction.cpp \
-    quickopenfolder.cpp
+    quickopenfolder.cpp \
+    quickopenfilesystem.cpp
 
 HEADERS += quickopenplugin.h\
         quickopen_global.h \
@@ -33,7 +35,8 @@ HEADERS += quickopenplugin.h\
     quickopenoption.h \
     quickopenoptionfactory.h \
     quickopenaction.h \
-    quickopenfolder.h
+    quickopenfolder.h \
+    quickopenfilesystem.h
 
 FORMS += \
     quickopenoption.ui

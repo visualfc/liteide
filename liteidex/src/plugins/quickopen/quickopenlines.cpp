@@ -66,6 +66,11 @@ QAbstractItemModel *QuickOpenLines::model() const
     return m_model;
 }
 
+QModelIndex QuickOpenLines::rootIndex() const
+{
+    return QModelIndex();
+}
+
 bool QuickOpenLines::update(const QString &text)
 {
     m_model->clear();

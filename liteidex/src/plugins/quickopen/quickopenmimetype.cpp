@@ -82,6 +82,14 @@ QAbstractItemModel *QuickOpenMimeType::model() const
     return m_model;
 }
 
+QModelIndex QuickOpenMimeType::rootIndex() const
+{
+    if (m_symbol) {
+        return m_symbol->rootIndex();
+    }
+    return QModelIndex();
+}
+
 void QuickOpenMimeType::updateModel()
 {
     if (m_symbol) {

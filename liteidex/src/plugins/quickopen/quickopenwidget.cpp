@@ -73,9 +73,10 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     m_edit->installEventFilter(this);
 }
 
-void QuickOpenWidget::setModel(QAbstractItemModel *model)
+void QuickOpenWidget::setModel(QAbstractItemModel *model,const QModelIndex &rootIndex)
 {
     m_view->setModel(model);
+    m_view->setRootIndex(rootIndex);
 }
 
 QLineEdit *QuickOpenWidget::editor()
@@ -111,35 +112,27 @@ bool QuickOpenWidget::eventFilter(QObject *o, QEvent *e)
     if (e->type() == QEvent::KeyPress) {
         QKeyEvent *ke = static_cast<QKeyEvent *>(e);
         QAbstractItemModel *model = m_view->model();
-
         if (!model) {
             return false;
         }
 
-        int row = m_view->currentIndex().row();
-
         const int key = ke->key();
         switch (key) {
         case Qt::Key_Up: {
-            row--;
-            if (row < 0) {
-                if (m_wrap) {
-                    row = model->rowCount()-1;
-                }
+            QModelIndex index = m_view->indexAbove(m_view->currentIndex());
+            if (!index.isValid()) {
+                index = model->index(model->rowCount(m_view->rootIndex())-1,0,m_view->rootIndex());
             }
-            QModelIndex index = model->index(row,0);
+
             m_view->setCurrentIndex(index);
             emit indexChanage(index);
             return true;
         }
         case Qt::Key_Down: {
-            row++;
-            if (row >= model->rowCount()) {
-                if (m_wrap) {
-                    row = 0;
-                }
+            QModelIndex index = m_view->indexBelow(m_view->currentIndex());
+            if (!index.isValid()) {
+                index = model->index(0,0,m_view->rootIndex());
             }
-            QModelIndex index = model->index(row,0);
             m_view->setCurrentIndex(index);
             emit indexChanage(index);
             return true;

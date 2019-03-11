@@ -801,11 +801,19 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
                 if (!targetOpenDir.isEmpty()) {
                     LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
                     if (mgr) {
-                        LiteApi::IQuickOpenFolder *folder = LiteApi::getQuickOpenFolder(mgr);
-                        if (folder) {
-                            folder->setFolder(targetOpenDir);
-                            folder->setPlaceholderText(targetOpenDirInfo);
-                            mgr->setCurrentFilter(folder);
+//                        LiteApi::IQuickOpenFolder *folder = LiteApi::getQuickOpenFolder(mgr);
+//                        if (folder) {
+//                            folder->setFolder(targetOpenDir);
+//                            folder->setPlaceholderText(targetOpenDirInfo);
+//                            mgr->setCurrentFilter(folder);
+//                            mgr->showPopup();
+//                            return;
+//                        }
+                        LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
+                        if (fileSystem) {
+                            fileSystem->setRootPath(targetOpenDir);
+                            fileSystem->setPlaceholderText(targetOpenDirInfo);
+                            mgr->setCurrentFilter(fileSystem);
                             mgr->showPopup();
                             return;
                         }

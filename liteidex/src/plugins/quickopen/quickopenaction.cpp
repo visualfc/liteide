@@ -74,6 +74,11 @@ QAbstractItemModel *QuickOpenAction::model() const
     return m_proxyModel;
 }
 
+QModelIndex QuickOpenAction::rootIndex() const
+{
+    return QModelIndex();
+}
+
 static QString makeTitle(const QString &id)
 {
     return id[0].toUpper()+id.mid(1);

@@ -29,6 +29,7 @@
 #include "quickopenmimetype.h"
 #include "quickopenaction.h"
 #include "quickopenhelp.h"
+#include "quickopenfilesystem.h"
 #include "liteapi/liteids.h"
 #include <QTreeView>
 #include <QDebug>
@@ -67,9 +68,11 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_quickOpenFiles = new QuickOpenFiles(app,this);
     m_quickOpenFolder = new QuickOpenFolder(app,this);
+    m_quickOpenFileSystem = new QuickOpenFileSystem(app,this);
 
     this->addFilter("",m_quickOpenFiles);
     this->addFilter("",m_quickOpenFolder);
+    this->addFilter("",m_quickOpenFileSystem);
     this->addFilter("~",new QuickOpenEditor(m_liteApp,this));
     this->addFilter(">",new QuickOpenAction(m_liteApp,this));
     this->addFilter("?",new QuickOpenHelp(m_liteApp,this));
@@ -158,7 +161,7 @@ void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
     m_currentFilter = filter;
     if (m_currentFilter) {
         m_sym = m_symFilterMap.key(filter);
-        m_widget->setModel(m_currentFilter->model());
+        m_widget->setModel(m_currentFilter->model(),m_currentFilter->rootIndex());
     }
 }
 

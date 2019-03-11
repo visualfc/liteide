@@ -66,6 +66,7 @@
 #include <QMenu>
 #include <QInputDialog>
 #include <QToolButton>
+#include <QFileSystemModel>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -823,6 +824,15 @@ void LiteEditor::initLoad()
 {
     m_editorWidget->initLoadDocument();
     updateEditorInfo();
+
+    //update path navigate
+    QFileInfo info(m_file->filePath());
+    QString fileName = info.fileName();
+    QAction *act = new QAction(fileName,this);
+    act->setData(info.filePath());
+    connect(act,SIGNAL(toggled(bool)),this,SLOT(toggleFilePathAction()));
+    QAction *first = m_editToolBar->actions().first();
+    m_editToolBar->insertAction(first,act);
 }
 
 void LiteEditor::updateEditorInfo()
@@ -1450,6 +1460,11 @@ void LiteEditor::loadTextUseDiff(const QString &text)
 QMenu *LiteEditor::editorMenu() const
 {
     return m_editMenu;
+}
+
+void LiteEditor::toggleFilePathAction()
+{
+    QAction *act = (QAction*)sender();
 }
 
 void LiteEditor::selectNextParam()

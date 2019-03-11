@@ -86,6 +86,11 @@ QAbstractItemModel *QuickOpenFiles::model() const
     return m_proxyModel;
 }
 
+QModelIndex QuickOpenFiles::rootIndex() const
+{
+    return QModelIndex();
+}
+
 void QuickOpenFiles::updateModel()
 {
     m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();

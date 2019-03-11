@@ -41,32 +41,6 @@
 #endif
 //lite_memory_check_end
 
-class FileSystemProxyModel : public QSortFilterProxyModel
-{
-public:
-    FileSystemProxyModel(QObject *parent) :
-        QSortFilterProxyModel(parent)
-    {
-    }
-    virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const
-    {
-        QFileSystemModel *model = static_cast<QFileSystemModel*>(this->sourceModel());
-        QFileInfo l = model->fileInfo(left);
-        QFileInfo r = model->fileInfo(right);
-        if (l.isDir() && r.isFile()) {
-            return true;
-        } else if (l.isFile() && r.isDir()) {
-            return false;
-        }
-#ifdef Q_OS_WIN
-        if (l.filePath().length() <= 3 || r.filePath().length() <= 3) {
-            return l.filePath().at(0) < r.filePath().at(0);
-        }
-#endif
-        return (l.fileName().compare(r.fileName(),Qt::CaseInsensitive) < 0);
-    }
-};
-
 FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *parent) :
     BaseFolderView(app,parent)
 {

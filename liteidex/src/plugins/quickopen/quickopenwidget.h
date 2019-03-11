@@ -34,7 +34,7 @@ class QuickOpenWidget : public QWidget
     Q_OBJECT
 public:
     explicit QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent = 0);
-    void setModel(QAbstractItemModel *model);
+    void setModel(QAbstractItemModel *model, const QModelIndex &rootIndex);
     QLineEdit *editor();
     QTreeView *view();
     virtual void hideEvent(QHideEvent *e);
