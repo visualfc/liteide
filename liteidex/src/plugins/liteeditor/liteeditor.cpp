@@ -116,6 +116,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     toolLayout->setMargin(0);
     toolLayout->setSpacing(0);
     toolLayout->addWidget(m_editToolBar);
+    toolLayout->addWidget(m_editNavBar);
+    toolLayout->addSpacing(0);
 //    //toolLayout->addWidget(m_infoToolBar);
     layout->addLayout(toolLayout);
 //    QHBoxLayout *hlayout = new QHBoxLayout;
@@ -146,6 +148,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_extension->addObject("LiteApi.ITextEditor",this);
     m_extension->addObject("LiteApi.ILiteEditor",this);
     m_extension->addObject("LiteApi.QToolBar.Edit",m_editToolBar);
+    m_extension->addObject("LiteApi.QToolBar.Edit.Nav",m_editNavBar);
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
     m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
@@ -575,7 +578,12 @@ void LiteEditor::createToolBars()
     m_editToolBar = new QToolBar("editor",m_widget);
     m_editToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 
+    m_editNavBar = new QToolBar("editor.nav",m_widget);
+    m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+
+
     //editor toolbar
+   // m_editToolBar->addSeparator();
     m_editToolBar->addAction(m_undoAct);
     m_editToolBar->addAction(m_redoAct);
     m_editToolBar->addSeparator();
@@ -820,19 +828,46 @@ QIcon LiteEditor::icon() const
     return QIcon();
 }
 
+static QString escaped(const QString &text)
+{
+#if QT_VERSION >= 0x050000
+    return text.toHtmlEscaped();
+#else
+    return Qt::escape(text);
+#endif
+}
+
 void LiteEditor::initLoad()
 {
     m_editorWidget->initLoadDocument();
     updateEditorInfo();
-
+    if (m_file->filePath().isEmpty()) {
+        return;
+    }
     //update path navigate
     QFileInfo info(m_file->filePath());
-    QString fileName = info.fileName();
-    QAction *act = new QAction(fileName,this);
-    act->setData(info.absoluteDir().path());
-    connect(act,SIGNAL(triggered(bool)),this,SLOT(toggleFilePathAction()));
-    QAction *first = m_editToolBar->actions().first();
-    m_editToolBar->insertAction(first,act);
+
+    QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
+    QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
+    m_editNavHeadAct = m_editNavBar->addSeparator();
+    for (int i = 0; i < paths.size(); i++) {
+        QString name = paths[i];
+        QString path = paths.mid(0,i+1).join("/");
+        if (name.isEmpty()) {
+            continue;
+        }
+        if (i != paths.size()-1) {
+            name += ">";
+        }
+        QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
+        QLabel *lbl = new QLabel;
+        lbl->setText(head+text);
+        QAction *act = m_editNavBar->addWidget(lbl);
+        m_editoNavMap.insert(lbl,act);
+        connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(pathLinkActivated(QString)));
+    }
+    QAction *emptyAct = new QAction(this);
+    m_editNavBar->addAction(emptyAct);
 }
 
 void LiteEditor::updateEditorInfo()
@@ -1462,19 +1497,20 @@ QMenu *LiteEditor::editorMenu() const
     return m_editMenu;
 }
 
-void LiteEditor::toggleFilePathAction()
+void LiteEditor::pathLinkActivated(const QString &path)
 {
-    QAction *act = (QAction*)sender();
-    QString filePath = act->data().toString();
+//    QLabel *lbl = (QLabel*)sender();
+//    QAction *act = m_editoNavMap.value(lbl);
+    QString dirpath = QFileInfo(path).absolutePath();
     LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
     if (mgr) {
         LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
         if (fileSystem) {
-            fileSystem->setRootPath(filePath);
+            fileSystem->setRootPath(dirpath);
             fileSystem->setPlaceholderText(tr("Browser Files"));
             mgr->setCurrentFilter(fileSystem);
-            QRect rc = m_editToolBar->actionGeometry(act);
-            QPoint pt = m_editToolBar->mapToGlobal(rc.bottomLeft());
+            QRect rc = m_editNavBar->actionGeometry(m_editNavHeadAct);
+            QPoint pt = m_editNavBar->mapToGlobal(rc.bottomRight());
             mgr->showPopup(&pt);
             return;
         }

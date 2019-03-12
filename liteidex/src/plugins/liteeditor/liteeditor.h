@@ -129,7 +129,7 @@ signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
 public slots:
-    void toggleFilePathAction();
+    void pathLinkActivated(const QString &path);
     void requestFontZoom(int zoom);
     void loadColorStyleScheme();
     void applyOption(QString);
@@ -172,6 +172,9 @@ protected:
     Extension   *m_extension;
     QWidget *m_widget;
     QToolBar *m_editToolBar;
+    QToolBar *m_editNavBar;
+    QAction *m_editNavHeadAct;
+    QMap<QLabel*,QAction*>  m_editoNavMap;
     LiteEditorWidget    *m_editorWidget;
     QTextDocument       *m_document;
     LiteApi::ICompleter *m_completer;
