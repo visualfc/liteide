@@ -86,6 +86,24 @@ void QuickOpenFileSystem::setPlaceholderText(const QString &text)
     m_placehoderText = text;
 }
 
+QModelIndex QuickOpenFileSystem::indexForPath(const QString &filePath) const
+{
+    QModelIndex index = m_model->index(filePath,0);
+    if (m_proxy) {
+        index = m_proxy->mapFromSource(index);
+    }
+    return index;
+}
+
+QString QuickOpenFileSystem::pathForIndex(const QModelIndex &index) const
+{
+    QModelIndex i = index;
+    if (m_proxy) {
+        i = m_proxy->mapToSource(index);
+    }
+    return m_model->filePath(index);
+}
+
 bool QuickOpenFileSystem::selected(const QString &/*text*/, const QModelIndex &index)
 {
     if (!index.isValid()) {

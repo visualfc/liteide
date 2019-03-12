@@ -1498,19 +1498,20 @@ QMenu *LiteEditor::editorMenu() const
 
 void LiteEditor::pathLinkActivated(const QString &path)
 {
-//    QLabel *lbl = (QLabel*)sender();
-//    QAction *act = m_editoNavMap.value(lbl);
     QString dirpath = QFileInfo(path).absolutePath();
     LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
     if (mgr) {
         LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
         if (fileSystem) {
             fileSystem->setRootPath(dirpath);
-            fileSystem->setPlaceholderText(tr("Browser Files"));
+            fileSystem->setPlaceholderText(QString(tr("Browser Files in %1").arg(QDir::toNativeSeparators(dirpath))));
             mgr->setCurrentFilter(fileSystem);
+            QModelIndex index = fileSystem->indexForPath(path);
+            mgr->modelView()->setCurrentIndex(index);
             QRect rc = m_editNavBar->actionGeometry(m_editNavHeadAct);
             QPoint pt = m_editNavBar->mapToGlobal(rc.bottomRight());
             mgr->showPopup(&pt);
+            mgr->modelView()->scrollTo(index);
             return;
         }
     }

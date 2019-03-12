@@ -23,6 +23,8 @@ public:
     virtual void cancel();
     virtual void setRootPath(const QString &path);
     virtual void setPlaceholderText(const QString &text);
+    virtual QModelIndex indexForPath(const QString &indexForPath) const;
+    virtual QString pathForIndex(const QModelIndex &index) const;
 protected:
     LiteApi::IApplication *m_liteApp;
     FileSystemModelEx *m_model;

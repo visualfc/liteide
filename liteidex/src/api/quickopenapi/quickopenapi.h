@@ -63,6 +63,8 @@ public:
     IQuickOpenFileSystem(QObject *parent = 0) : IQuickOpen(parent) {}
     virtual void setRootPath(const QString &root) = 0;
     virtual void setPlaceholderText(const QString &text) = 0;
+    virtual QModelIndex indexForPath(const QString &indexForPath) const = 0;
+    virtual QString pathForIndex(const QModelIndex &index) const = 0;
 };
 
 class IQuickOpenAdapter : public QObject
