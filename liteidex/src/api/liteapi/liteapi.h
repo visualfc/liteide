@@ -497,7 +497,6 @@ signals:
     void editorSaved(LiteApi::IEditor *editor);
     void editorModifyChanged(LiteApi::IEditor *editor, bool b);
     void colorStyleSchemeChanged();
-    void editToolbarVisibleChanged(bool visible);
 };
 
 class IBrowserEditor : public IEditor
@@ -768,12 +767,12 @@ public:
     virtual void saveState() = 0;
 
     virtual void appendLog(const QString &model, const QString &log, bool error = false) = 0;
-    virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString()) = 0;
+    virtual void sendBroadcast(const QString &module, const QString &id, const QVariant &param = QVariant()) = 0;
 signals:    
     void loaded();
     void aboutToQuit();
     void key_escape();
-    void broadcast(QString,QString,QString);
+    void broadcast(QString,QString,QVariant);
     void sessionListChanged();
 };
 

@@ -34,6 +34,13 @@ class LiteEditorPlugin : public LiteApi::IPlugin
 public:
     LiteEditorPlugin();
     virtual bool load(LiteApi::IApplication *app);
+public slots:
+    void editorToolBarVisibleChanged(bool b);
+    void editorNavigateVisibleChanged(bool b);
+protected:
+    LiteApi::IApplication *m_liteApp;
+    QAction *m_toolBarAct;
+    QAction *m_navBarAct;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<LiteEditorPlugin>

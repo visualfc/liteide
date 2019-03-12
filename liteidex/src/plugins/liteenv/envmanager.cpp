@@ -470,7 +470,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
     connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));
     connect(m_liteApp->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
-    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
+    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QVariant)),this,SLOT(broadcast(QString,QString,QVariant)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
 
     m_goEnvManager->initWithApp(app);
@@ -520,7 +520,7 @@ void EnvManager::reloadCurrentEnv()
     //emitEnvChanged();
 }
 
-void EnvManager::broadcast(QString /*module*/,QString /*id*/,QString)
+void EnvManager::broadcast(QString /*module*/,QString /*id*/,QVariant)
 {
 //    if (module == "golangpackage" && id == "reloadgopath") {
 //        reloadCurrentEnv();

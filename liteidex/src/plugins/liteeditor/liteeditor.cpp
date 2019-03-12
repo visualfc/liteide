@@ -133,13 +133,10 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
 
 //    m_editorWidget->document()->setDefaultTextOption(option);
 
-    setEditToolbarVisible(true);
-
     connect(m_editorWidget->document(),SIGNAL(modificationChanged(bool)),this,SIGNAL(modificationChanged(bool)));
     connect(m_editorWidget->document(),SIGNAL(contentsChanged()),this,SIGNAL(contentsChanged()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_liteApp->editorManager(),SIGNAL(colorStyleSchemeChanged()),this,SLOT(loadColorStyleScheme()));
-    connect(m_liteApp->editorManager(),SIGNAL(editToolbarVisibleChanged(bool)),this,SLOT(setEditToolbarVisible(bool)));
 
     //applyOption("option/liteeditor");
 
@@ -163,7 +160,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     //connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
     //connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 
-    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
+    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QVariant)),this,SLOT(broadcast(QString,QString,QVariant)));
 }
 
 LiteEditor::~LiteEditor()
@@ -577,9 +574,11 @@ void LiteEditor::createToolBars()
 {
     m_editToolBar = new QToolBar("editor",m_widget);
     m_editToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+    m_editToolBar->setVisible(m_liteApp->settings()->value(EDITOR_TOOLBAR_VISIBLE,true).toBool());
 
     m_editNavBar = new QToolBar("editor.nav",m_widget);
     m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+    m_editNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
 
     //editor toolbar
@@ -1557,11 +1556,6 @@ void LiteEditor::resetFontSize()
     this->sendUpdateFont();
 }
 
-void LiteEditor::setEditToolbarVisible(bool visible)
-{
-    m_editToolBar->setVisible(visible);
-}
-
 void LiteEditor::comment()
 {
     if (!m_syntax) {
@@ -1611,10 +1605,14 @@ void LiteEditor::triggeredLineEnding(QAction *action)
     this->setLineEndUnix(action == m_lineEndingUnixAct);
 }
 
-void LiteEditor::broadcast(const QString &module, const QString &id, const QString &param)
+void LiteEditor::broadcast(const QString &module, const QString &id, const QVariant &param)
 {
     if (module == "liteeditor" && id == "font" && param != this->filePath()) {
         this->updateFont();
+    } else if (module == "liteeditor" && id == EDITOR_NAVBAR_VISIBLE) {
+        m_editNavBar->setVisible(param.toBool());
+    } else if (module == "liteeditor" && id == EDITOR_TOOLBAR_VISIBLE) {
+        m_editToolBar->setVisible(param.toBool());
     }
 }
 

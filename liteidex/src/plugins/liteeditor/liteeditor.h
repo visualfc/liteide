@@ -151,7 +151,6 @@ public slots:
     void increaseFontSize();
     void decreaseFontSize();
     void resetFontSize();
-    void setEditToolbarVisible(bool visible);
     void comment();
     void blockComment();
     void autoIndent();
@@ -159,7 +158,7 @@ public slots:
     void toggledVisualizeWhitespace(bool b);
     void toggledLineWrapMode(bool b);
     void triggeredLineEnding(QAction *action);
-    void broadcast(const QString &module, const QString &id, const QString &param);
+    void broadcast(const QString &module, const QString &id, const QVariant &param);
 public:
     void updateFont();
     void sendUpdateFont();

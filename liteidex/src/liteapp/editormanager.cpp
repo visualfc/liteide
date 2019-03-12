@@ -65,7 +65,6 @@
 
 EditorManager::~EditorManager()
 {
-    m_liteApp->settings()->setValue(LITEAPP_SHOWEDITTOOLBAR,m_editToolbarAct->isChecked());
     delete m_tabContextFileMenu;
     delete m_tabContextNofileMenu;
     delete m_editorTabWidget;
@@ -249,13 +248,6 @@ void EditorManager::createActions()
 
     connect(m_goBackAct,SIGNAL(triggered()),this,SLOT(goBack()));
     connect(m_goForwardAct,SIGNAL(triggered()),this,SLOT(goForward()));
-
-    m_editToolbarAct = new QAction(tr("Edit Toolbar"),this);
-    m_editToolbarAct->setCheckable(true);
-    m_editToolbarAct->setChecked(m_liteApp->settings()->value(LITEAPP_SHOWEDITTOOLBAR,true).toBool());
-    m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_editToolbarAct);
-
-    connect(m_editToolbarAct,SIGNAL(triggered(bool)),this,SIGNAL(editToolbarVisibleChanged(bool)));
 }
 
 QWidget *EditorManager::widget()
@@ -311,7 +303,6 @@ void EditorManager::addEditor(IEditor *editor)
         m_widgetEditorMap.insert(w,editor);
         emit editorCreated(editor);
         connect(editor,SIGNAL(modificationChanged(bool)),this,SLOT(modificationChanged(bool)));
-        emit editToolbarVisibleChanged(m_editToolbarAct->isChecked());
         LiteApi::IEditContext *context = LiteApi::getEditContext(editor);
         if (context) {
             this->addEditContext(context);

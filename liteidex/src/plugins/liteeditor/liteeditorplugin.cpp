@@ -42,6 +42,7 @@ LiteEditorPlugin::LiteEditorPlugin()
 
 bool LiteEditorPlugin::load(LiteApi::IApplication *app)
 {
+    m_liteApp = app;
     QString style = app->settings()->value(EDITOR_STYLE,"default.xml").toString();
     if (!style.isEmpty()) {
         QString styleFileName = app->resourcePath()+"/liteeditor/color/"+style;
@@ -67,7 +68,31 @@ bool LiteEditorPlugin::load(LiteApi::IApplication *app)
 
     app->optionManager()->addFactory(new LiteEditorOptionFactory(app,this));
 
+    m_toolBarAct = new QAction(tr("Edit ToolBar"));
+    m_toolBarAct->setCheckable(true);
+    m_toolBarAct->setChecked(m_liteApp->settings()->value(EDITOR_TOOLBAR_VISIBLE,true).toBool());
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBarAct);
+    connect(m_toolBarAct,SIGNAL(triggered(bool)),this,SLOT(editorToolBarVisibleChanged(bool)));
+
+    m_navBarAct = new QAction(tr("Edit Navigation Bar"));
+    m_navBarAct->setCheckable(true);
+    m_navBarAct->setChecked(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_navBarAct);
+    connect(m_navBarAct,SIGNAL(triggered(bool)),this,SLOT(editorNavigateVisibleChanged(bool)));
+
     return true;
+}
+
+void LiteEditorPlugin::editorToolBarVisibleChanged(bool b)
+{
+    m_liteApp->settings()->setValue(EDITOR_TOOLBAR_VISIBLE,b);
+    m_liteApp->sendBroadcast("liteeditor",EDITOR_TOOLBAR_VISIBLE,b);
+}
+
+void LiteEditorPlugin::editorNavigateVisibleChanged(bool b)
+{
+    m_liteApp->settings()->setValue(EDITOR_NAVBAR_VISIBLE,b);
+    m_liteApp->sendBroadcast("liteeditor",EDITOR_NAVBAR_VISIBLE,b);
 }
 
 #if QT_VERSION < 0x050000

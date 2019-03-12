@@ -32,6 +32,9 @@
 #  define LITEEDITORSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define EDITOR_TOOLBAR_VISIBLE "editor/toolbar_visible"
+#define EDITOR_NAVBAR_VISIBLE "editor/navbar_visible"
+
 #define MIMETYPE_TABWIDTH "mimetype/tabwidth/"
 #define MIMETYPE_TABTOSPACE "mimetype/tabtospace/"
 #define MIMETYPE_LINEWRAP "mimetype/linewrap/"

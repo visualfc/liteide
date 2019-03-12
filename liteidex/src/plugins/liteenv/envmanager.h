@@ -94,7 +94,7 @@ public:
     void loadEnvFiles(const QString &path);
     void emitEnvChanged();
 public slots:
-    void broadcast(QString module, QString id, QString);
+    void broadcast(QString module, QString id, QVariant);
 protected:
     QList<LiteApi::IEnv*>    m_envList;
     LiteApi::IEnv           *m_curEnv;

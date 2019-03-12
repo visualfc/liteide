@@ -689,7 +689,7 @@ void LiteApp::appendLog(const QString &model, const QString &log, bool error)
     }
 }
 
-void LiteApp::sendBroadcast(const QString &module, const QString &id, const QString &param)
+void LiteApp::sendBroadcast(const QString &module, const QString &id, const QVariant &param)
 {
     emit broadcast(module,id,param);
 }
