@@ -65,6 +65,7 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
     layout->addWidget(m_view);
 
     this->setMinimumWidth(600);
+    this->setMinimumHeight(300);
 
     this->setLayout(layout);
 
