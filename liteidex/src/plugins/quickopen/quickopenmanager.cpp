@@ -162,6 +162,7 @@ void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
     if (m_currentFilter) {
         m_sym = m_symFilterMap.key(filter);
         m_widget->setModel(m_currentFilter->model(),m_currentFilter->rootIndex());
+        m_widget->setTempToolBar(0);
     }
 }
 
@@ -231,6 +232,11 @@ QTreeView *QuickOpenManager::modelView() const
 QLineEdit *QuickOpenManager::lineEdit() const
 {
     return m_widget->editor();
+}
+
+void QuickOpenManager::setTempToolBar(QToolBar *toolBar)
+{
+    m_widget->setTempToolBar(toolBar);
 }
 
 bool QuickOpenManager::showOpenFolder(const QString &folder, QPoint *pos)
@@ -318,7 +324,7 @@ void QuickOpenManager::hideWidget()
 
 void QuickOpenManager::hidePopup()
 {
-    m_widget->close();
+    m_widget->closeWidget();
 }
 
 void QuickOpenManager::filterChanged(const QString &text)

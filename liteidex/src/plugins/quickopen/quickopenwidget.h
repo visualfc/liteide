@@ -29,6 +29,7 @@
 #include <QAbstractItemModel>
 
 class QTreeView;
+class QVBoxLayout;
 class QuickOpenWidget : public QWidget
 {
     Q_OBJECT
@@ -37,10 +38,13 @@ public:
     void setModel(QAbstractItemModel *model, const QModelIndex &rootIndex);
     QLineEdit *editor();
     QTreeView *view();
+    void setTempToolBar(QToolBar *toolBar);
     virtual void hideEvent(QHideEvent *e);
+    void closeWidget();
 signals:
     void hideWidget();
     void indexChanage(const QModelIndex &index);
+    void indexEnter(const QModelIndex &index);
     void filterChanged(const QString &filter);
 public:
     void showView(QPoint *pos = 0);
@@ -50,6 +54,8 @@ protected:
     LiteApi::IApplication *m_liteApp;
     Utils::FilterLineEdit *m_edit;
     QTreeView   *m_view;
+    QVBoxLayout *m_layout;
+    QToolBar    *m_tmpToolBar;
     bool         m_wrap;
 };
 

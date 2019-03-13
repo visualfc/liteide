@@ -130,6 +130,7 @@ signals:
     void tabSettingChanged(int);
 public slots:
     void pathLinkActivated(const QString &path);
+    void quickPathLinkActivated(const QString &path);
     void requestFontZoom(int zoom);
     void loadColorStyleScheme();
     void applyOption(QString);
@@ -172,8 +173,8 @@ protected:
     QWidget *m_widget;
     QToolBar *m_editToolBar;
     QToolBar *m_editNavBar;
+    QToolBar *m_quickNavBar;
     QAction *m_editNavHeadAct;
-    QMap<QLabel*,QAction*>  m_editoNavMap;
     LiteEditorWidget    *m_editorWidget;
     QTextDocument       *m_document;
     LiteApi::ICompleter *m_completer;

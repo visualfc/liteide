@@ -29,6 +29,8 @@
 #include <QFocusEvent>
 #include <QHeaderView>
 #include <QDebug>
+#include <QApplication>
+#include <QToolBar>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -41,7 +43,7 @@
 //lite_memory_check_end
 
 QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
-    QWidget(parent,Qt::Popup),// Qt::ToolTip | Qt::WindowStaysOnTopHint)
+    QWidget(parent, Qt::Popup),// Qt::ToolTip | Qt::WindowStaysOnTopHint),
     m_liteApp(app)
 {
     //this->setFocusPolicy(Qt::NoFocus);
@@ -58,16 +60,18 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
 
     m_wrap = true;
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
-    layout->setSpacing(0);
-    layout->addWidget(m_edit);
-    layout->addWidget(m_view);
+    m_tmpToolBar = 0;
+
+    m_layout = new QVBoxLayout;
+    m_layout->setMargin(0);
+    m_layout->setSpacing(0);
+    m_layout->addWidget(m_edit);
+    m_layout->addWidget(m_view);
 
     this->setMinimumWidth(600);
     this->setMinimumHeight(300);
 
-    this->setLayout(layout);
+    this->setLayout(m_layout);
 
     connect(m_edit,SIGNAL(filterChanged(QString)),this,SIGNAL(filterChanged(QString)));
 
@@ -90,10 +94,38 @@ QTreeView *QuickOpenWidget::view()
     return m_view;
 }
 
+void QuickOpenWidget::setTempToolBar(QToolBar *toolBar)
+{
+    if (m_tmpToolBar) {
+        m_layout->removeWidget(m_tmpToolBar);
+        m_tmpToolBar->hide();
+    }
+    m_tmpToolBar = toolBar;
+    if (toolBar == 0) {
+        return;
+    }
+    m_tmpToolBar->show();
+    m_layout->insertWidget(0,m_tmpToolBar);
+}
+
 void QuickOpenWidget::hideEvent(QHideEvent *e)
 {
     emit hideWidget();
+    if (m_tmpToolBar) {
+        m_layout->removeWidget(m_tmpToolBar);
+        m_tmpToolBar->hide();
+    }
+    m_tmpToolBar = 0;
     QWidget::hideEvent(e);
+}
+
+void QuickOpenWidget::closeWidget()
+{
+    if (m_tmpToolBar) {
+        m_layout->removeWidget(m_tmpToolBar);
+    }
+    m_tmpToolBar = 0;
+    QWidget::close();
 }
 
 void QuickOpenWidget::showView(QPoint *pos)
@@ -136,6 +168,15 @@ bool QuickOpenWidget::eventFilter(QObject *o, QEvent *e)
             }
             m_view->setCurrentIndex(index);
             emit indexChanage(index);
+            return true;
+        }
+        case Qt::Key_Return: {
+            QModelIndex index = m_view->currentIndex();
+            if (model->hasChildren(index)) {
+                m_view->setExpanded(index,!m_view->isExpanded(index));
+            } else {
+                emit indexEnter(index);
+            }
             return true;
         }
         }

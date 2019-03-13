@@ -105,6 +105,7 @@ public:
     virtual QWidget *widget() const = 0;
     virtual QTreeView *modelView() const = 0;
     virtual QLineEdit *lineEdit() const = 0;
+    virtual void setTempToolBar(QToolBar *tooBar) = 0;
 public:
     virtual void showPopup(QPoint *pos = 0) = 0;
     virtual void hidePopup() = 0;

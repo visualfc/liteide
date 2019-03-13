@@ -580,6 +580,9 @@ void LiteEditor::createToolBars()
     m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     m_editNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
+    m_quickNavBar = new QToolBar("quick.nav",m_widget);
+    m_quickNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+    m_quickNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
     //editor toolbar
    // m_editToolBar->addSeparator();
@@ -849,6 +852,7 @@ void LiteEditor::initLoad()
     QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
     QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
     m_editNavHeadAct = m_editNavBar->addSeparator();
+    m_quickNavBar->addSeparator();
     for (int i = 0; i < paths.size(); i++) {
         QString name = paths[i];
         QString path = paths.mid(0,i+1).join("/");
@@ -861,12 +865,18 @@ void LiteEditor::initLoad()
         QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
         QLabel *lbl = new QLabel;
         lbl->setText(head+text);
-        QAction *act = m_editNavBar->addWidget(lbl);
-        m_editoNavMap.insert(lbl,act);
+        m_editNavBar->addWidget(lbl);
         connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(pathLinkActivated(QString)));
+
+        QLabel *lbl2 = new QLabel;
+        lbl2->setText(head+text);
+        m_quickNavBar->addWidget(lbl2);
+        connect(lbl2,SIGNAL(linkActivated(QString)),this,SLOT(quickPathLinkActivated(QString)));
     }
     QAction *emptyAct = new QAction(this);
     m_editNavBar->addAction(emptyAct);
+    QAction *empytAct2 = new QAction(this);
+    m_quickNavBar->addAction(empytAct2);
 }
 
 void LiteEditor::updateEditorInfo()
@@ -1508,11 +1518,29 @@ void LiteEditor::pathLinkActivated(const QString &path)
             mgr->setCurrentFilter(fileSystem);
             QModelIndex index = fileSystem->indexForPath(path);
             mgr->modelView()->setCurrentIndex(index);
+            mgr->setTempToolBar(m_quickNavBar);
             QRect rc = m_editNavBar->actionGeometry(m_editNavHeadAct);
-            QPoint pt = m_editNavBar->mapToGlobal(rc.bottomRight());
+            QPoint pt = m_editNavBar->mapToGlobal(rc.topLeft());
             mgr->showPopup(&pt);
             mgr->modelView()->scrollTo(index);
             return;
+        }
+    }
+}
+
+void LiteEditor::quickPathLinkActivated(const QString &path)
+{
+    QString dirpath = QFileInfo(path).absolutePath();
+    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+    if (mgr) {
+        LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
+        if (fileSystem) {
+            fileSystem->setRootPath(dirpath);
+            fileSystem->setPlaceholderText(QString(tr("Browser Files in %1").arg(QDir::toNativeSeparators(dirpath))));
+            mgr->setCurrentFilter(fileSystem);
+            mgr->modelView()->setRootIndex(fileSystem->rootIndex());
+            QModelIndex index = fileSystem->indexForPath(path);
+            mgr->modelView()->setCurrentIndex(index);
         }
     }
 }

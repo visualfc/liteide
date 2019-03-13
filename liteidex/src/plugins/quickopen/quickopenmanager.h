@@ -56,6 +56,7 @@ public:
     virtual QWidget *widget() const;
     virtual QTreeView *modelView() const;
     virtual QLineEdit *lineEdit() const;
+    virtual void setTempToolBar(QToolBar *toolBar);
     virtual bool showOpenFolder(const QString &folder, QPoint *pos);
 public:
     virtual IQuickOpenMimeType *registerQuickOpenMimeType(const QString &sym);
