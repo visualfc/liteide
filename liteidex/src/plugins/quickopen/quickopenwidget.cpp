@@ -170,15 +170,15 @@ bool QuickOpenWidget::eventFilter(QObject *o, QEvent *e)
             emit indexChanage(index);
             return true;
         }
-        case Qt::Key_Return: {
-            QModelIndex index = m_view->currentIndex();
-            if (model->hasChildren(index)) {
-                m_view->setExpanded(index,!m_view->isExpanded(index));
-            } else {
-                emit indexEnter(index);
-            }
-            return true;
-        }
+//        case Qt::Key_Return: {
+//            QModelIndex index = m_view->currentIndex();
+//            if (model->hasChildren(index)) {
+//                m_view->setExpanded(index,!m_view->isExpanded(index));
+//            } else {
+//                emit indexEnter(index);
+//            }
+//            return true;
+//        }
         }
     } else if (e->type() == QEvent::FocusOut) {
         if (QWidget::focusWidget() == m_view ) {
