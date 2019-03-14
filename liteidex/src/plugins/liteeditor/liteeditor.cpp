@@ -171,6 +171,7 @@ LiteEditor::~LiteEditor()
     if (m_funcTip) {
         delete m_funcTip;
     }
+    delete m_quickNavBar;
     delete m_contextMenu;
     delete m_editMenu;
     delete m_extension;
