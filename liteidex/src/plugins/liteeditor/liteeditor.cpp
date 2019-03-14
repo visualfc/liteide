@@ -1516,6 +1516,7 @@ void LiteEditor::pathLinkActivated(const QString &path)
             fileSystem->setRootPath(dirpath);
             fileSystem->setPlaceholderText(QString(tr("Browser Files in %1").arg(QDir::toNativeSeparators(dirpath))));
             mgr->setCurrentFilter(fileSystem);
+            mgr->modelView()->setRootIndex(fileSystem->rootIndex());
             QModelIndex index = fileSystem->indexForPath(path);
             mgr->modelView()->setCurrentIndex(index);
             mgr->setTempToolBar(m_quickNavBar);
