@@ -162,7 +162,8 @@ void QuickOpenFiles::findResult(const QStringList &fileList)
 QModelIndex QuickOpenFiles::filterChanged(const QString &text)
 {
     m_proxyModel->setFilterFixedString(text);
-    if (!text.isEmpty()) {
+    //check text size >= 3 for files or editor
+    if (text.size() >= 3) {
         m_proxyModel->setSourceModel(m_filesModel);
     } else {
         m_proxyModel->setSourceModel(m_model);
