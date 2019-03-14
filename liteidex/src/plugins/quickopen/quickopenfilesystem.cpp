@@ -61,7 +61,7 @@ QModelIndex QuickOpenFileSystem::filterChanged(const QString &text)
     int count = m_model->rowCount(m_rootIndex);
     for (int i = 0; i < count; i++) {
         QModelIndex index = m_model->index(i,0,m_rootIndex);
-        if (m_model->fileName(index).startsWith(text)) {
+        if (m_model->fileName(index).startsWith(text,Qt::CaseInsensitive)) {
             if (m_proxy) {
                 return m_proxy->mapFromSource(index);
             }

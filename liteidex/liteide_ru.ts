@@ -669,10 +669,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <source>Edit Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open Terminal Here</source>
         <translation type="unfinished">Запустить терминал в папке</translation>
     </message>
@@ -3189,6 +3185,10 @@ Success: %2.</oldsource>
         <source>Line Wrap (MimeType)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Browser Files in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LiteEditorOption</name>
@@ -3359,6 +3359,17 @@ Success: %2.</oldsource>
     </message>
     <message>
         <source>Allow vertical scrolling to the last line [*]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LiteEditorPlugin</name>
+    <message>
+        <source>Edit ToolBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Navigation Bar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4097,6 +4108,13 @@ Do you want to replace it?</source>
     <message>
         <source>Show All Opened Editors</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuickOpenFileSystem</name>
+    <message>
+        <source>File System</source>
+        <translation type="unfinished">Файловая система</translation>
     </message>
 </context>
 <context>
