@@ -506,7 +506,6 @@ void FileUtil::openInExplorer(const QString &path)
     }
 #endif
 #ifdef Q_OS_MAC
-    if (QFileInfo("/usr/bin/osascript").exists()) {
         QStringList scriptArgs;
         scriptArgs << QLatin1String("-e")
                    << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
@@ -517,7 +516,6 @@ void FileUtil::openInExplorer(const QString &path)
                    << QLatin1String("tell application \"Finder\" to activate");
         QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
         return;
-    }
 #endif
     QFileInfo info(path);
     if (info.isDir()) {

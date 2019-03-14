@@ -15,6 +15,8 @@
     * add new path navigation toolbar (use quickfilesystem)
 * GolangCode
     * fix number+dot issues completer
+* FileUtil
+    * show in Finder fast on macOS
 
 ### 2019.02.05 Ver X35.5
 * LiteIDE
