@@ -942,7 +942,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X35.3")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X36")
 
 
 #endif //LITEAPI_H

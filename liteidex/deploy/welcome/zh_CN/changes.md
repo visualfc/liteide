@@ -3,6 +3,19 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2019.03.14 Ver X36
+* LiteIDE
+    * add new editor path navigation toolbar
+* QuickOpen
+    * quickopenfile filter text length less than 3 use editor files, otherwise search in folder files.
+    * add new quickfilesystem filter
+* GolangEdit
+    * use new quickfilesystem for import jump
+* LiteEditor
+    * add new path navigation toolbar (use quickfilesystem)
+* GolangCode
+    * fix number+dot issues completer
+
 ### 2019.02.05 Ver X35.5
 * LiteIDE
     * bug fix version
