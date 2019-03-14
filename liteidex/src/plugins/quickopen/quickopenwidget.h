@@ -27,6 +27,7 @@
 #include "liteapi/liteapi.h"
 #include "../3rdparty/qtc_editutil/filterlineedit.h"
 #include <QAbstractItemModel>
+#include <QScopedPointer>
 
 class QTreeView;
 class QVBoxLayout;
@@ -55,7 +56,7 @@ protected:
     Utils::FilterLineEdit *m_edit;
     QTreeView   *m_view;
     QVBoxLayout *m_layout;
-    QToolBar    *m_tmpToolBar;
+    QScopedPointer<QToolBar>  m_tmpToolBar;
     bool         m_wrap;
 };
 

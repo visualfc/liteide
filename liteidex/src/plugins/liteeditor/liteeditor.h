@@ -166,6 +166,7 @@ public:
     void initLoad();
     void updateEditorInfo();
     void findCodecs();
+    QToolBar *createNavToolBar();
 protected:
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;
@@ -173,7 +174,6 @@ protected:
     QWidget *m_widget;
     QToolBar *m_editToolBar;
     QToolBar *m_editNavBar;
-    QToolBar *m_quickNavBar;
     QAction *m_editNavHeadAct;
     LiteEditorWidget    *m_editorWidget;
     QTextDocument       *m_document;

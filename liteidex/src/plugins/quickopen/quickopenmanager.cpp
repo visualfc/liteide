@@ -162,7 +162,6 @@ void QuickOpenManager::setCurrentFilter(IQuickOpen *filter)
     if (m_currentFilter) {
         m_sym = m_symFilterMap.key(filter);
         m_widget->setModel(m_currentFilter->model(),m_currentFilter->rootIndex());
-        m_widget->setTempToolBar(0);
     }
 }
 

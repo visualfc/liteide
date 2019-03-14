@@ -171,7 +171,6 @@ LiteEditor::~LiteEditor()
     if (m_funcTip) {
         delete m_funcTip;
     }
-    delete m_quickNavBar;
     delete m_contextMenu;
     delete m_editMenu;
     delete m_extension;
@@ -581,10 +580,6 @@ void LiteEditor::createToolBars()
     m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     m_editNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
-    m_quickNavBar = new QToolBar("quick.nav",m_widget);
-    m_quickNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
-    m_quickNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
-
     //editor toolbar
    // m_editToolBar->addSeparator();
     m_editToolBar->addAction(m_undoAct);
@@ -853,7 +848,6 @@ void LiteEditor::initLoad()
     QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
     QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
     m_editNavHeadAct = m_editNavBar->addSeparator();
-    m_quickNavBar->addSeparator();
     for (int i = 0; i < paths.size(); i++) {
         QString name = paths[i];
         QString path = paths.mid(0,i+1).join("/");
@@ -868,16 +862,9 @@ void LiteEditor::initLoad()
         lbl->setText(head+text);
         m_editNavBar->addWidget(lbl);
         connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(pathLinkActivated(QString)));
-
-        QLabel *lbl2 = new QLabel;
-        lbl2->setText(head+text);
-        m_quickNavBar->addWidget(lbl2);
-        connect(lbl2,SIGNAL(linkActivated(QString)),this,SLOT(quickPathLinkActivated(QString)));
     }
     QAction *emptyAct = new QAction(this);
     m_editNavBar->addAction(emptyAct);
-    QAction *empytAct2 = new QAction(this);
-    m_quickNavBar->addAction(empytAct2);
 }
 
 void LiteEditor::updateEditorInfo()
@@ -1507,6 +1494,36 @@ QMenu *LiteEditor::editorMenu() const
     return m_editMenu;
 }
 
+QToolBar *LiteEditor::createNavToolBar()
+{
+    QFileInfo info(m_file->filePath());
+
+    QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
+    QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
+
+    QToolBar *toolBar = new QToolBar;
+    toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+    toolBar->addSeparator();
+    for (int i = 0; i < paths.size(); i++) {
+        QString name = paths[i];
+        QString path = paths.mid(0,i+1).join("/");
+        if (name.isEmpty()) {
+            continue;
+        }
+        if (i != paths.size()-1) {
+            name += ">";
+        }
+        QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
+        QLabel *lbl = new QLabel;
+        lbl->setText(head+text);
+        toolBar->addWidget(lbl);
+        connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(quickPathLinkActivated(QString)));
+    }
+    QAction *empytAct = new QAction(toolBar);
+    toolBar->addAction(empytAct);
+    return  toolBar;
+}
+
 void LiteEditor::pathLinkActivated(const QString &path)
 {
     QString dirpath = QFileInfo(path).absolutePath();
@@ -1520,7 +1537,7 @@ void LiteEditor::pathLinkActivated(const QString &path)
             mgr->modelView()->setRootIndex(fileSystem->rootIndex());
             QModelIndex index = fileSystem->indexForPath(path);
             mgr->modelView()->setCurrentIndex(index);
-            mgr->setTempToolBar(m_quickNavBar);
+            mgr->setTempToolBar(this->createNavToolBar());
             QRect rc = m_editNavBar->actionGeometry(m_editNavHeadAct);
             QPoint pt = m_editNavBar->mapToGlobal(rc.topLeft());
             mgr->showPopup(&pt);

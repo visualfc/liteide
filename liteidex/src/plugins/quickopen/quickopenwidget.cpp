@@ -60,8 +60,6 @@ QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
 
     m_wrap = true;
 
-    m_tmpToolBar = 0;
-
     m_layout = new QVBoxLayout;
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
@@ -82,6 +80,7 @@ void QuickOpenWidget::setModel(QAbstractItemModel *model,const QModelIndex &root
 {
     m_view->setModel(model);
     m_view->setRootIndex(rootIndex);
+    setTempToolBar(0);
 }
 
 QLineEdit *QuickOpenWidget::editor()
@@ -96,35 +95,26 @@ QTreeView *QuickOpenWidget::view()
 
 void QuickOpenWidget::setTempToolBar(QToolBar *toolBar)
 {
-    if (m_tmpToolBar) {
-        m_layout->removeWidget(m_tmpToolBar);
-        m_tmpToolBar->hide();
+    if (!m_tmpToolBar.isNull()) {
+        m_layout->removeWidget(m_tmpToolBar.data());
+        m_tmpToolBar->clear();
     }
-    m_tmpToolBar = toolBar;
-    if (toolBar == 0) {
+    m_tmpToolBar.reset(toolBar);
+    if (!toolBar) {
         return;
     }
     m_tmpToolBar->show();
-    m_layout->insertWidget(0,m_tmpToolBar);
+    m_layout->insertWidget(0,toolBar);
 }
 
 void QuickOpenWidget::hideEvent(QHideEvent *e)
 {
     emit hideWidget();
-    if (m_tmpToolBar) {
-        m_layout->removeWidget(m_tmpToolBar);
-        m_tmpToolBar->hide();
-    }
-    m_tmpToolBar = 0;
     QWidget::hideEvent(e);
 }
 
 void QuickOpenWidget::closeWidget()
 {
-    if (m_tmpToolBar) {
-        m_layout->removeWidget(m_tmpToolBar);
-    }
-    m_tmpToolBar = 0;
     QWidget::close();
 }
 
