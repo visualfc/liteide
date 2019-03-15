@@ -68,13 +68,13 @@ bool LiteEditorPlugin::load(LiteApi::IApplication *app)
 
     app->optionManager()->addFactory(new LiteEditorOptionFactory(app,this));
 
-    m_toolBarAct = new QAction(tr("Edit ToolBar"));
+    m_toolBarAct = new QAction(tr("Edit ToolBar"),this);
     m_toolBarAct->setCheckable(true);
     m_toolBarAct->setChecked(m_liteApp->settings()->value(EDITOR_TOOLBAR_VISIBLE,true).toBool());
     app->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBarAct);
     connect(m_toolBarAct,SIGNAL(triggered(bool)),this,SLOT(editorToolBarVisibleChanged(bool)));
 
-    m_navBarAct = new QAction(tr("Edit Navigation Bar"));
+    m_navBarAct = new QAction(tr("Edit Navigation Bar"),this);
     m_navBarAct->setCheckable(true);
     m_navBarAct->setChecked(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
     app->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_navBarAct);
