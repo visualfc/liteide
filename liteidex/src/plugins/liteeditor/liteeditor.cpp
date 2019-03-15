@@ -845,29 +845,29 @@ void LiteEditor::initLoad()
     }
     //update path navigate
     QFileInfo info(m_file->filePath());
-
-    QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
-    if (paths.size() < 2) {
-        return;
-    }
-    QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
-    m_editNavHeadAct = m_editNavBar->addSeparator();
-    QString last = paths[0];
-    for (int i = 1; i < paths.size(); i++) {
-        QString name = paths[i];
-        if (i == 1) {
-            name = paths[0]+"\\"+paths[1];
+    if (!info.filePath().startsWith("//")) {
+        QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
+        if (paths.size() >= 2) {
+            QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
+            m_editNavHeadAct = m_editNavBar->addSeparator();
+            QString last = paths[0];
+            for (int i = 1; i < paths.size(); i++) {
+                QString name = paths[i];
+                if (i == 1) {
+                    name = paths[0]+"\\"+paths[1];
+                }
+                QString path = last+"/"+paths[i];
+                last = path;
+                if (i != paths.size()-1) {
+                    name += ">";
+                }
+                QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
+                QLabel *lbl = new QLabel;
+                lbl->setText(head+text);
+                m_editNavBar->addWidget(lbl);
+                connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(pathLinkActivated(QString)));
+            }
         }
-        QString path = last+"/"+paths[i];
-        last = path;
-        if (i != paths.size()-1) {
-            name += ">";
-        }
-        QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
-        QLabel *lbl = new QLabel;
-        lbl->setText(head+text);
-        m_editNavBar->addWidget(lbl);
-        connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(pathLinkActivated(QString)));
     }
     QAction *emptyAct = new QAction(this);
     m_editNavBar->addAction(emptyAct);
