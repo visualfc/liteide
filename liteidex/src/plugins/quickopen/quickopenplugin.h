@@ -45,7 +45,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<QuickOpenPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/QuickOpen");
-        m_info->setVer("X34");
+        m_info->setVer("X36");
         m_info->setName("QuickOpen");
         m_info->setAuthor("visualfc");
         m_info->setInfo("QuickOpen");

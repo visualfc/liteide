@@ -19,8 +19,8 @@
 	<key>CFBundleIdentifier</key>
 		<string>com.visualfc.liteide</string>
 	<key>CFBundleVersion</key>
-		<string>X35</string>
+		<string>X36</string>
 	<key>CFBundleShortVersionString</key>
-		<string>35.5</string>
+		<string>36.0</string>
 </dict>
 </plist>
