@@ -847,14 +847,19 @@ void LiteEditor::initLoad()
     QFileInfo info(m_file->filePath());
 
     QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
+    if (paths.size() < 2) {
+        return;
+    }
     QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
     m_editNavHeadAct = m_editNavBar->addSeparator();
+    QString last = paths[0];
     for (int i = 1; i < paths.size(); i++) {
         QString name = paths[i];
-        if (i == 1 && paths[0].endsWith(":")) {
+        if (i == 1) {
             name = paths[0]+"\\"+paths[1];
         }
-        QString path = paths.mid(0,i+1).join("/");
+        QString path = last+"/"+paths[i];
+        last = path;
         if (i != paths.size()-1) {
             name += ">";
         }
@@ -1500,17 +1505,22 @@ QToolBar *LiteEditor::createNavToolBar(QWidget *parent)
     QFileInfo info(m_file->filePath());
 
     QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
+    if (paths.size() < 2) {
+        return 0;
+    }
     QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
 
     QToolBar *toolBar = new QToolBar(parent);
     toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     toolBar->addSeparator();
+    QString last = paths[0];
     for (int i = 1; i < paths.size(); i++) {
         QString name = paths[i];
         if (i == 1 && paths[0].endsWith(":")) {
             name = paths[0]+"\\"+paths[1];
         }
-        QString path = paths.mid(0,i+1).join("/");
+        QString path = last+"/"+paths[i];
+        last = path;
         if (i != paths.size()-1) {
             name += ">";
         }
