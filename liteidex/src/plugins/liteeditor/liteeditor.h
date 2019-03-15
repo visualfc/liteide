@@ -166,7 +166,7 @@ public:
     void initLoad();
     void updateEditorInfo();
     void findCodecs();
-    QToolBar *createNavToolBar();
+    QToolBar *createNavToolBar(QWidget *parent);
 protected:
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;

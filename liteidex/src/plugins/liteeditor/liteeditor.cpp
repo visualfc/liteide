@@ -1494,14 +1494,14 @@ QMenu *LiteEditor::editorMenu() const
     return m_editMenu;
 }
 
-QToolBar *LiteEditor::createNavToolBar()
+QToolBar *LiteEditor::createNavToolBar(QWidget *parent)
 {
     QFileInfo info(m_file->filePath());
 
     QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
     QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
 
-    QToolBar *toolBar = new QToolBar;
+    QToolBar *toolBar = new QToolBar(parent);
     toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     toolBar->addSeparator();
     for (int i = 0; i < paths.size(); i++) {
@@ -1537,7 +1537,7 @@ void LiteEditor::pathLinkActivated(const QString &path)
             mgr->modelView()->setRootIndex(fileSystem->rootIndex());
             QModelIndex index = fileSystem->indexForPath(path);
             mgr->modelView()->setCurrentIndex(index);
-            mgr->setTempToolBar(this->createNavToolBar());
+            mgr->setTempToolBar(this->createNavToolBar(mgr->widget()));
             QRect rc = m_editNavBar->actionGeometry(m_editNavHeadAct);
             QPoint pt = m_editNavBar->mapToGlobal(rc.topLeft());
             mgr->showPopup(&pt);
