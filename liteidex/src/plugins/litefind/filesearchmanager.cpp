@@ -73,7 +73,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     color.textForeground = pal.color(QPalette::Text);
     color.textBackground = pal.color(QPalette::Base);
     color.highlightForeground = pal.color(QPalette::Text);
-    color.highlightBackground = QColor(255,239,11);//pal.color(QPalette::ToolTipBase);
+    color.highlightBackground = QColor(56,169,235);//pal.color(QPalette::ToolTipBase);
     QFont font = m_searchWidget->font();
     m_searchResultWidget->setTextEditorFont(font,color);
 
