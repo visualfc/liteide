@@ -276,6 +276,7 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     }
 
     QMenu *menu = new QMenu(this);
+    menu->addAction(m_floatAct);
     if (split) {
         QAction *unsplitAct = new QAction(tr("Unsplit"),this);
         unsplitAct->setData(area);

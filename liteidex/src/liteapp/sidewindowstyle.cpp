@@ -115,6 +115,7 @@ void SideDockWidget::setCheckedAction(QAction *action)
     for (int i = 0; i < m_comboBox->count(); i++) {
         if (m_comboBox->itemData(i).toString() == action->objectName()) {
             m_comboBox->setCurrentIndex(i);
+            m_titleLabel->setText(m_comboBox->currentText());
             break;
         }
     }

@@ -27,10 +27,9 @@
 #include <QDockWidget>
 #include <QToolBar>
 #include <QComboBox>
+#include <QLabel>
 #include <QPointer>
 #include <QAction>
-
-class QLabel;
 
 class BaseDockWidget : public QDockWidget
 {
