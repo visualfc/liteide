@@ -3705,8 +3705,6 @@ static bool findInBlock(const QTextBlock &block, const QRegExp &expression, int 
 
 void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 {  
-    //QPlainTextEdit::paintEvent(e);
-    //return;
     QPainter painter(viewport());
     QTextDocument *doc = this->document();
     QTextCursor cursor = textCursor();

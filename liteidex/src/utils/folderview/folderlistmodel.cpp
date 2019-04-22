@@ -474,6 +474,11 @@ QList<QModelIndex> FolderListModel::indexForPath(const QString &path) const
     return indexs;
 }
 
+Qt::DropActions FolderListModel::supportedDragActions()
+{
+    return Qt::MoveAction | Qt::CopyAction;
+}
+
 bool FolderListModel::isRootSourceIndex(const QModelIndex &sourceIndex) const
 {
     foreach (SourceModel s, m_modelList) {

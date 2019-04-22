@@ -42,6 +42,8 @@ FolderProject::FolderProject(IApplication *app) :
     m_folderView = new FolderListView(false,m_liteApp);
 #endif
 //    m_folderView = new FolderListView(false,m_liteApp);
+    m_folderView->setDragEnabled(true);
+    m_folderView->setDragDropMode(QAbstractItemView::InternalMove);
 }
 
 FolderProject::~FolderProject()

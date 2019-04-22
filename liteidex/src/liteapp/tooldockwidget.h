@@ -48,12 +48,17 @@ public:
 protected slots:
     virtual void actionChanged();
     virtual void activeComboBoxIndex(int);
+    void  topLevelChanged(bool);
+    void  setFloatingWindow(bool b);
 protected:
     QToolBar *m_toolBar;
-    //QLabel   *m_titleLabel;
+    QLabel   *m_titleLabel;
     QComboBox *m_comboBox;
+    QAction *m_comboBoxAct;
+    QAction *m_titleLabelAct;
     QAction  *m_spacerAct;
     QAction  *m_closeAct;
+    QAction  *m_floatAct;
     QMap<QString,QAction*> m_idActionMap;
     QList<QAction*> m_widgetActions;
     QList<QAction*> m_actions;

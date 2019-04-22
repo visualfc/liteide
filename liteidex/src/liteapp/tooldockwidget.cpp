@@ -53,7 +53,11 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     m_toolBar->setContentsMargins(0, 0, 0, 0);
     m_toolBar->setIconSize(iconSize);
     //m_toolBar->setFixedHeight(24);
-    m_toolBar->addWidget(m_comboBox);
+    m_titleLabel = new QLabel;
+    m_titleLabel->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
+    m_comboBoxAct = m_toolBar->addWidget(m_comboBox);
+    m_titleLabelAct = m_toolBar->addWidget(m_titleLabel);
+    m_titleLabelAct->setChecked(false);
 
     QWidget *spacer = new QWidget;
     spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
@@ -69,7 +73,12 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     connect(m_comboBox,SIGNAL(activated(int)),this,SLOT(activeComboBoxIndex(int)));
 
     this->setTitleBarWidget(m_toolBar);
-/*
+
+    m_floatAct = new QAction(tr("Floating Window"),this);
+    m_floatAct->setCheckable(true);
+    connect(m_floatAct,SIGNAL(triggered(bool)),this,SLOT(setFloatingWindow(bool)));
+    connect(this,SIGNAL(topLevelChanged(bool)),this,SLOT(topLevelChanged(bool)));
+    /*
     m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
                              "QToolBar QToolButton { border:1px ; border-radius: 1px; }"\
                              "QToolBar QToolButton::hover { background-color: #ababab;}"\
@@ -172,6 +181,32 @@ void BaseDockWidget::activeComboBoxIndex(int index)
             }
             break;
         }
+    }
+}
+
+void BaseDockWidget::topLevelChanged(bool b)
+{
+    m_comboBoxAct->setVisible(!b);
+    m_titleLabel->setText(m_comboBox->currentText());
+    m_titleLabelAct->setVisible(b);
+    this->setFeatures(this->features().setFlag(QDockWidget::DockWidgetFloatable,b));
+    m_floatAct->setChecked(b);
+}
+
+void BaseDockWidget::setFloatingWindow(bool b)
+{
+    if (this->isFloating() != b) {
+        DockWidgetFeatures flags = this->features();
+        if (b) {
+            flags |= QDockWidget::DockWidgetFloatable;
+        } else {
+            flags &= (~QDockWidget::DockWidgetFloatable);
+        }
+        this->setFeatures(flags);
+        this->setFloating(b);
+    }
+    if (m_floatAct->isChecked() != b) {
+        m_floatAct->setChecked(b);
     }
 }
 
@@ -340,6 +375,7 @@ void OutputDockWidget::createMenu(Qt::DockWidgetArea /*area*/)
     connect(rightAct,SIGNAL(triggered()),this,SLOT(moveAction()));
 
     QMenu *menu = new QMenu(this);
+    menu->addAction(m_floatAct);
     menu->addAction(moveMenu->menuAction());
 
     m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -364,6 +400,7 @@ void OutputDockWidget::moveAction()
     if (!action) {
         return;
     }
+    this->setFloatingWindow(false);
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
     emit moveActionTo(Qt::BottomDockWidgetArea,area,current);
 }

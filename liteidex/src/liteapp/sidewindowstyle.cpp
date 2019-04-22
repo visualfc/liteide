@@ -82,6 +82,7 @@ void SideDockWidget::moveAction()
     if (!action) {
         return;
     }
+    this->setFloatingWindow(false);
     Qt::DockWidgetArea area = (Qt::DockWidgetArea)action->data().toInt();
     emit moveActionTo(m_area,area,current);
 }
@@ -106,6 +107,7 @@ void SideDockWidget::activeComboBoxIndex(int index)
         }
     }
 }
+
 
 void SideDockWidget::setCheckedAction(QAction *action)
 {
@@ -154,6 +156,7 @@ void SideDockWidget::setActions(const QMap<QAction *, SideActionState *> &m)
 //        index++;
 //    }
     m_menu->addSeparator();
+    m_menu->addAction(m_floatAct);
     m_menu->addMenu(m_moveMenu);
     m_comboBox->setCurrentIndex(cur);
 }
