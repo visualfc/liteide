@@ -1506,6 +1506,17 @@ QMenu *LiteEditor::editorMenu() const
     return m_editMenu;
 }
 
+bool LiteEditor::enableSyntax() const
+{
+    QSizeF sz = m_editorWidget->document()->size();
+    if (sz.width() > 4096) {
+        m_liteApp->appendLog("LiteEditor",QString("document line too long %1(max line length %2), disable syntax!").arg(this->filePath()).arg(sz.width()),true);
+        return false;
+    }
+
+    return true;
+}
+
 QToolBar *LiteEditor::createNavToolBar(QWidget *parent)
 {
     QFileInfo info(m_file->filePath());

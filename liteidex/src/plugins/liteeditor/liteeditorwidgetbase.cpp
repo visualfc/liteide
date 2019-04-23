@@ -3724,6 +3724,8 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
     //QPlainTextEdit::paintEvent
     QRect er = e->rect();
     QRect viewportRect = viewport()->rect();
+    qreal viewportOffsetLeft = viewportRect.left()-offsetX;
+    qreal viewportOffsetRight = viewportRect.right()-offsetX;
 
     painter.setPen(this->palette().color(QPalette::Text));
     painter.fillRect(er,this->palette().brush(QPalette::Base));
@@ -3760,12 +3762,16 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
     while (block.isValid()) {
         QRectF r = blockBoundingRect(block).translated(offset);
-        QTextLayout *layout = block.layout();
 
         if (!block.isVisible()) {
             offset.ry() += r.height();
             block = block.next();
             continue;
+        }
+
+        QTextLayout *layout = block.layout();
+        if (!layout->cacheEnabled()) {
+            layout->setCacheEnabled(true);
         }
 
         if (r.bottom() >= er.top() && r.top() <= er.bottom()) {
@@ -3780,8 +3786,10 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
             QVector<QTextLayout::FormatRange> selections;
             QVector<QTextLayout::FormatRange> prioritySelections;
+
             int blpos = block.position();
             int bllen = block.length();
+
             for (int i = 0; i < context.selections.size(); ++i) {
                 const QAbstractTextDocumentLayout::Selection &range = context.selections.at(i);
                 const int selStart = range.cursor.selectionStart() - blpos;
@@ -3855,7 +3863,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 //                    selections.append(o);
 //                }
 //            }
-
             if (block == textCursor().block()) {
                 QTextLine l = layout->lineForTextPosition(textCursor().positionInBlock());
                 QRectF rr = l.rect();
@@ -3881,7 +3888,9 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
                     qreal left = l.cursorToX(cur.selectionStart()-blpos);
                     qreal right = l.cursorToX(cur.selectionEnd()-blpos);
-                    painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                    if (right >= viewportOffsetLeft && left <= viewportOffsetRight) {
+                        painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                    }
                 }
                 painter.restore();
             } else if (!m_selectionExpression.isEmpty()) {
@@ -3904,7 +3913,9 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                     QTextLine l = layout->lineForTextPosition(cur.selectionStart()-blpos);
                     qreal left = l.cursorToX(cur.selectionStart()-blpos);
                     qreal right = l.cursorToX(cur.selectionEnd()-blpos);
-                    painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                    if (right >= viewportOffsetLeft && left <= viewportOffsetRight) {
+                         painter.drawRoundedRect(offsetX+left,r.top()+l.y(),right-left,l.height(),3,3);
+                    }
                 }
                 painter.restore();
             }
@@ -3982,8 +3993,10 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 }
             }
 
-
-            layout->draw(&painter, offset, selections, er);
+            QRect clip = er;
+            clip.setTop(r.top());
+            clip.setBottom(r.bottom());
+            layout->draw(&painter, offset, selections, clip);
 
             if (!m_inBlockSelectionMode) {
                 if ((drawCursor && !drawCursorAsBlock)

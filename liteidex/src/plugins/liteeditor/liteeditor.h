@@ -125,6 +125,7 @@ public:
     virtual void loadDiff(const QString &diff);
     virtual void loadTextUseDiff(const QString &text);
     virtual QMenu *editorMenu() const;
+    virtual bool enableSyntax() const;
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
