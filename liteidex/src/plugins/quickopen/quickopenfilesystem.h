@@ -31,6 +31,7 @@ class QSortFilterProxyModel;
 class FileSystemModelEx;
 class QuickOpenFileSystem : public LiteApi::IQuickOpenFileSystem
 {
+    Q_OBJECT
 public:
     QuickOpenFileSystem(LiteApi::IApplication *app, QObject *parent);
     virtual QString id() const;
