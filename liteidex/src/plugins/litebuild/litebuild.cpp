@@ -162,6 +162,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 
     m_output = new TextOutput(m_liteApp);
     m_output->setFilterTermColor(true);
+    m_output->setTerminalInput(true);
 
     m_stopAct = new QAction(tr("Stop Action"),this);
     m_stopAct->setIcon(QIcon("icon:litebuild/images/stopaction.png"));
@@ -327,6 +328,8 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_debugEnvProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(debugEnvOutput(QByteArray,bool)));
     connect(m_output,SIGNAL(dbclickEvent(QTextCursor)),this,SLOT(dbclickBuildOutput(QTextCursor)));
     connect(m_output,SIGNAL(enterText(QString)),this,SLOT(enterTextBuildOutput(QString)));
+    connect(m_output,SIGNAL(tabText(QString)),this,SLOT(enterTextBuildOutput(QString)));
+    connect(m_output,SIGNAL(keyUpdown(int)),this,SLOT(keyUpdownBuildOutput(int)));
     connect(m_configAct,SIGNAL(triggered()),this,SLOT(config()));
     connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_checkBoxLockBuild,SIGNAL(toggled(bool)),this,SLOT(lockBuildRoot(bool)));
@@ -1819,6 +1822,14 @@ void LiteBuild::enterTextBuildOutput(QString text)
     } else {
         m_process->write(text.toLatin1());
     }
+}
+
+void LiteBuild::keyUpdownBuildOutput(int key)
+{
+    if (m_process->isStop()) {
+        return;
+    }
+    //TODO
 }
 
 void LiteBuild::dbclickBuildOutput(const QTextCursor &cur)

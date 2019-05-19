@@ -32,8 +32,11 @@ class TerminalEdit : public QPlainTextEdit
 public:
     explicit TerminalEdit(QWidget *parent = 0);
     void setFilterTermColor(bool filter);
+    void setTerminalInput(bool term);
 signals:
     void enterText(const QString &text);
+    void tabText(const QString &text);
+    void keyUpdown(int key);
     void dbclickEvent(const QTextCursor &cur);
 public slots:
     void append(const QString &text, QTextCharFormat *fmt = 0);
@@ -53,7 +56,8 @@ protected:
     virtual void mousePressEvent(QMouseEvent *e);
     virtual void focusOutEvent(QFocusEvent *e);
     virtual void focusInEvent(QFocusEvent *e);
-    int m_endPostion;
+    int m_lastPosition;
+    int m_lastKey;
     QMenu *m_contextMenu;
     QMenu *m_contextRoMenu;
     QAction *m_cut;
@@ -64,6 +68,7 @@ protected:
     bool    m_bFocusOut;
     bool    m_bAutoPosCursor;
     bool    m_bFilterTermColor;
+    bool    m_bTerminalInput;
 };
 
 

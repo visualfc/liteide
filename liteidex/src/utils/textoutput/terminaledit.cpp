@@ -46,7 +46,7 @@
 //lite_memory_check_end
 
 TerminalEdit::TerminalEdit(QWidget *parent) :
-    QPlainTextEdit(parent), m_endPostion(0)
+    QPlainTextEdit(parent), m_lastPosition(0)
 {
     this->setCursorWidth(4);
     this->setAcceptDrops(false);
@@ -57,6 +57,7 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
 
     m_bAutoPosCursor = true;
     m_bFilterTermColor = false;
+    m_bTerminalInput = false;
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -107,6 +108,11 @@ void TerminalEdit::setFilterTermColor(bool filter)
     m_bFilterTermColor = filter;
 }
 
+void TerminalEdit::setTerminalInput(bool term)
+{
+    m_bTerminalInput = term;
+}
+
 void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
 {
     QString str = text;
@@ -117,18 +123,23 @@ void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
     setUndoRedoEnabled(false);
     QTextCursor cur = this->textCursor();
     cur.movePosition(QTextCursor::End);
+
+    if (m_bTerminalInput) {
+        cur.setPosition(m_lastPosition,QTextCursor::KeepAnchor);
+        cur.removeSelectedText();
+    }
     if (fmt) {
         cur.setCharFormat(*fmt);
     }
     cur.insertText(str);
     this->setTextCursor(cur);
     setUndoRedoEnabled(true);
-    m_endPostion = this->textCursor().position();
+    m_lastPosition = this->textCursor().position();
 }
 
 void TerminalEdit::clear()
 {
-    m_endPostion = 0;
+    m_lastPosition = 0;
     QPlainTextEdit::clear();
 }
 
@@ -143,7 +154,7 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
         end = cur.selectionEnd();
     }
 
-    bool bReadOnly = pos < m_endPostion;
+    bool bReadOnly = pos < m_lastPosition;
 
     if (bReadOnly && ( ke == QKeySequence::Paste || ke == QKeySequence::Cut ||
                        ke == QKeySequence::DeleteEndOfWord ||
@@ -154,15 +165,14 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
     if (ke == QKeySequence::DeleteStartOfWord) {
         if (!cur.hasSelection()) {
             cur.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor);
-            if (cur.selectionStart() < m_endPostion) {
-                cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_endPostion-cur.selectionStart());
+            if (cur.selectionStart() < m_lastPosition) {
+                cur.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_lastPosition-cur.selectionStart());
             }
         }
         cur.removeSelectedText();
         return;
     }
-
-
+    m_lastKey = ke->key();
     if (ke->modifiers() == Qt::NoModifier
             || ke->modifiers() == Qt::ShiftModifier
             || ke->modifiers() == Qt::KeypadModifier) {
@@ -176,7 +186,7 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
                     if (bReadOnly) {
                         return;
                     }
-                } else if (pos <= m_endPostion) {
+                } else if (pos <= m_lastPosition) {
                     return;
                 }
             } else if (bReadOnly && (
@@ -190,7 +200,7 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
             if (ke->key() == Qt::Key_Return ||
                     ke->key() == Qt::Key_Enter) {
                 cur.setPosition(end,QTextCursor::MoveAnchor);
-                cur.setPosition(m_endPostion,QTextCursor::KeepAnchor);
+                cur.setPosition(m_lastPosition,QTextCursor::KeepAnchor);
 #ifdef Q_OS_WIN
                 emit enterText(cur.selectedText()+"\r\n");
 #else
@@ -199,7 +209,14 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
                 QPlainTextEdit::keyPressEvent(ke);
                 QTextCursor cur = this->textCursor();
                 cur.movePosition(QTextCursor::End);
-                m_endPostion = cur.position();
+                return;
+            } else if (ke->key() == Qt::Key_Tab){
+                cur.setPosition(end,QTextCursor::MoveAnchor);
+                cur.setPosition(m_lastPosition,QTextCursor::KeepAnchor);
+                emit tabText(cur.selectedText()+"\t");
+                return;
+            } else if (ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down) {
+                emit keyUpdown(ke->key());
                 return;
             }
         }
@@ -265,7 +282,7 @@ void TerminalEdit::cursorPositionChanged()
     if (cur.hasSelection()) {
         pos = cur.selectionStart();
         m_copy->setEnabled(true);
-        if (pos < m_endPostion) {
+        if (pos < m_lastPosition) {
             m_cut->setEnabled(false);
         } else {
             m_cut->setEnabled(!this->isReadOnly());
@@ -274,7 +291,7 @@ void TerminalEdit::cursorPositionChanged()
         m_copy->setEnabled(false);
         m_cut->setEnabled(false);
     }
-    if (pos < m_endPostion) {
+    if (pos < m_lastPosition) {
         m_paste->setEnabled(false);
     } else {
         QClipboard *clipboard = QApplication::clipboard();

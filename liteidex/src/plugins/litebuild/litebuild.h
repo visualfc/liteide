@@ -93,6 +93,7 @@ public slots:
     void stopAction();
     void dbclickBuildOutput(const QTextCursor &cur);
     void enterTextBuildOutput(QString);
+    void keyUpdownBuildOutput(int key);
     void config();
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
     void fmctxExecuteFile();
