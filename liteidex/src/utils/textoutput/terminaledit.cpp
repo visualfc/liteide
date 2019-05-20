@@ -46,7 +46,7 @@
 //lite_memory_check_end
 
 TerminalEdit::TerminalEdit(QWidget *parent) :
-    QPlainTextEdit(parent), m_lastPosition(0)
+    QPlainTextEdit(parent)
 {
     this->setCursorWidth(4);
     this->setAcceptDrops(false);
@@ -58,6 +58,9 @@ TerminalEdit::TerminalEdit(QWidget *parent) :
     m_bAutoPosCursor = true;
     m_bFilterTermColor = false;
     m_bTerminalInput = false;
+    m_lastInputPostion = 0;
+    m_lastPosition = 0;
+    m_lastKey = -1;
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -120,13 +123,15 @@ void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
         static QRegExp rx("\033\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]");
         str.remove(rx);
     }
+    if (str.isEmpty()) {
+        return;
+    }
     setUndoRedoEnabled(false);
     QTextCursor cur = this->textCursor();
     cur.movePosition(QTextCursor::End);
 
-    if (m_bTerminalInput) {
-        cur.setPosition(m_lastPosition,QTextCursor::KeepAnchor);
-        cur.removeSelectedText();
+    if (m_bTerminalInput && m_lastKey != -1) {
+        cur.setPosition(m_lastInputPostion,QTextCursor::KeepAnchor);
     }
     if (fmt) {
         cur.setCharFormat(*fmt);
@@ -135,11 +140,17 @@ void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
     this->setTextCursor(cur);
     setUndoRedoEnabled(true);
     m_lastPosition = this->textCursor().position();
+    if (str.contains("\n") || m_lastKey == -1) {
+        m_lastInputPostion = m_lastPosition;
+    }
+    m_lastKey = -1;
 }
 
 void TerminalEdit::clear()
 {
     m_lastPosition = 0;
+    m_lastInputPostion = 0;
+    m_lastKey = -1;
     QPlainTextEdit::clear();
 }
 
@@ -154,7 +165,7 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
         end = cur.selectionEnd();
     }
 
-    bool bReadOnly = pos < m_lastPosition;
+    bool bReadOnly = pos < m_lastInputPostion;
 
     if (bReadOnly && ( ke == QKeySequence::Paste || ke == QKeySequence::Cut ||
                        ke == QKeySequence::DeleteEndOfWord ||
@@ -186,7 +197,7 @@ void TerminalEdit::keyPressEvent(QKeyEvent *ke)
                     if (bReadOnly) {
                         return;
                     }
-                } else if (pos <= m_lastPosition) {
+                } else if (pos <= m_lastInputPostion) {
                     return;
                 }
             } else if (bReadOnly && (

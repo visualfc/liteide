@@ -57,6 +57,7 @@ protected:
     virtual void focusOutEvent(QFocusEvent *e);
     virtual void focusInEvent(QFocusEvent *e);
     int m_lastPosition;
+    int m_lastInputPostion;
     int m_lastKey;
     QMenu *m_contextMenu;
     QMenu *m_contextRoMenu;

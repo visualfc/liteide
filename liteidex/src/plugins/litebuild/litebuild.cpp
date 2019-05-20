@@ -1829,8 +1829,15 @@ void LiteBuild::keyUpdownBuildOutput(int key)
     if (m_process->isStop()) {
         return;
     }
-    //TODO
+    if (key == Qt::Key_Up) {
+        char buf[] = {0x1b,0x5b,0x41};
+        m_process->write(buf,3);
+    } else if (key == Qt::Key_Down) {
+        char buf[] = {0x1b,0x5b,0x42};
+        m_process->write(buf,3);
+    }
 }
+
 
 void LiteBuild::dbclickBuildOutput(const QTextCursor &cur)
 {
