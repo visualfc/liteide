@@ -181,12 +181,12 @@ This tool updates your Go import lines, adding missing ones and
 removing unreferenced ones.
 
 ## Gocode
-Code completion use gocode <https://github.com/nsf/gocode>.gocode works .a file is read from the project dependencies, so please update project libraries can not rely on code completion.
+Code completion use gocode <https://github.com/nsf/gocode>. gocode works by inspecting the .a files from the project dependencies, so if the code completion is not working properly, please update project dependant packages/libraries.
 
-### update depends packages
-update depends packages for gocode, click build menu or toolbar `Get`(go get)
+### update dependant packages
+update dependant packages for gocode, click build menu or toolbar `Get`(go get)
 
-### auto update depends packages
+### auto update dependant packages
 LiteIDE View->Options->Gocode-> auto update depends packages
 
 ## Build System
