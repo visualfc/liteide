@@ -229,6 +229,9 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     if (app->settings()->value("liteide/use111gomodule",false).toBool()) {
         env.insert("GO111MODULE",app->settings()->value("liteide/go111module").toString());
     }
+    if (app->settings()->value("liteide/usegoproxy",false).toBool()) {
+        env.insert("GOPROXY",app->settings()->value("liteide/goproxy").toString());
+    }
 
     QStringList pathList;
     if (app->settings()->value("liteide/usesysgopath",true).toBool()) {

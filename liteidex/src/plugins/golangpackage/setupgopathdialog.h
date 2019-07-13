@@ -48,6 +48,10 @@ public:
     void setGo111Module(const QString &value);
     QString go111Module() const;
     QStringList litePathList() const;
+    void setUseGoProxy(bool b);
+    bool isUseGoProxy() const;
+    void setGoProxy(const QString &v);
+    QString goProxy() const;
 protected slots:
     void browser();
 

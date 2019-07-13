@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>578</width>
-    <height>456</height>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,18 +28,18 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cmbGoModule"/>
+        </item>
+        <item row="0" column="0">
          <widget class="QCheckBox" name="chkUseGoModule">
           <property name="text">
            <string>Custom GO111MODULE</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QComboBox" name="cmbGoModule"/>
-        </item>
-        <item>
+        <item row="0" column="2">
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -51,6 +51,30 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="chkUseGoProxy">
+          <property name="text">
+           <string>Custom GOPROXY</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QComboBox" name="cmbGoProxy">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>https://goproxy.io</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://proxy.golang.org,direct</string>
+           </property>
+          </item>
+         </widget>
         </item>
        </layout>
       </item>

@@ -43,11 +43,13 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     ui->cmbGoModule->addItems(QStringList() << "auto" << "on" << "off");
     ui->cmbGoModule->setCurrentIndex(0);
     ui->cmbGoModule->setEnabled(false);
+    ui->cmbGoProxy->setEnabled(false);
     connect(ui->browserButton,SIGNAL(clicked()),this,SLOT(browser()));
     connect(ui->clearButton,SIGNAL(clicked()),ui->litePathTextEdit,SLOT(clear()));
     connect(ui->chkUseSysGopath,SIGNAL(toggled(bool)),ui->sysPathTextEdit,SLOT(setEnabled(bool)));
     connect(ui->chkUseLiteGopath,SIGNAL(toggled(bool)),ui->litePathTextEdit,SLOT(setEnabled(bool)));
     connect(ui->chkUseGoModule,SIGNAL(toggled(bool)),ui->cmbGoModule,SLOT(setEnabled(bool)));
+    connect(ui->chkUseGoProxy,SIGNAL(toggled(bool)),ui->cmbGoProxy,SLOT(setEnabled(bool)));
 }
 
 SetupGopathDialog::~SetupGopathDialog()
@@ -125,6 +127,26 @@ QStringList SetupGopathDialog::litePathList() const
     return ui->litePathTextEdit->toPlainText().split("\n",QString::SkipEmptyParts);
 }
 
+void SetupGopathDialog::setUseGoProxy(bool b)
+{
+    ui->chkUseGoProxy->setChecked(b);
+}
+
+bool SetupGopathDialog::isUseGoProxy() const
+{
+    return ui->chkUseGoProxy->isChecked();
+}
+
+void SetupGopathDialog::setGoProxy(const QString &v)
+{
+    ui->cmbGoProxy->lineEdit()->setText(v);
+}
+
+QString SetupGopathDialog::goProxy() const
+{
+    return ui->cmbGoProxy->currentText();
+}
+
 void SetupGopathDialog::browser()
 {
     static QString last = QDir::homePath();
@@ -137,4 +159,3 @@ void SetupGopathDialog::browser()
         ui->litePathTextEdit->appendPlainText(dir);
     }
 }
-

@@ -236,6 +236,8 @@ void PackageBrowser::setupGopath()
     dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
     dlg->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
     dlg->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
+    dlg->setUseGoProxy(m_liteApp->settings()->value(LITEIDE_USEGOPROXY,false).toBool());
+    dlg->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"https://goproxy.io").toString());
 
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
     QString info = env.value("GO111MODULE");
@@ -253,6 +255,8 @@ void PackageBrowser::setupGopath()
         m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
         m_liteApp->settings()->setValue(LITEIDE_CUSTOMGO111MODULE,dlg->isUseGoModule());
         m_liteApp->settings()->setValue(LITEIDE_GO111MODULE,dlg->go111Module());
+        m_liteApp->settings()->setValue(LITEIDE_USEGOPROXY,dlg->isUseGoProxy());
+        m_liteApp->settings()->setValue(LITEIDE_GOPROXY,dlg->goProxy());
         //if (!hasSameList(orgLitePath,newLitePath)) {
         m_goTool->setLiteGopath(newLitePath);
         this->reloadAll();
