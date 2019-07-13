@@ -111,7 +111,7 @@ protected:
     QByteArray  m_findData;
     QString  m_templateData;
     LiteApi::IEnvManager *m_envManager;
-    QString m_godocCmd;
+    //QString m_godocCmd;
     QStringList m_targetList;
     QMap<QString,QString> m_pathFileMap;
     QAction *m_apiSearchWindowAct;
