@@ -180,16 +180,16 @@ void GolangDoc::loadEnv()
 //    if (!LiteApi::hasGoEnv(env)) {
 //        return;
 //    }
-    m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,env,false);
+//    m_godocCmd = FileUtil::lookupGoBin("godoc",m_liteApp,env,false);
 
-    m_findProcess->setEnvironment(env.toStringList());
-    m_godocProcess->setEnvironment(env.toStringList());
+//    m_findProcess->setEnvironment(env.toStringList());
+//    m_godocProcess->setEnvironment(env.toStringList());
 
-    if (!m_godocCmd.isEmpty()) {
-        m_liteApp->appendLog("GolangDoc",QString("Found godoc at %1").arg(m_godocCmd),false);
-    } else {
-        m_liteApp->appendLog("GolangDoc",QString("Could not find godoc, (hint: is godoc installed?)"),true);
-    }
+//    if (!m_godocCmd.isEmpty()) {
+//        m_liteApp->appendLog("GolangDoc",QString("Found godoc at %1").arg(m_godocCmd),false);
+//    } else {
+//        m_liteApp->appendLog("GolangDoc",QString("Could not find godoc, (hint: is godoc installed?)"),true);
+//    }
 
     m_pathFileMap.clear();
     loadGoroot();
