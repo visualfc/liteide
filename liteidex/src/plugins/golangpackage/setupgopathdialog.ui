@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>578</width>
-    <height>477</height>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,12 +66,12 @@
           </property>
           <item>
            <property name="text">
-            <string>https://goproxy.io</string>
+            <string notr="true">https://proxy.golang.org,direct</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>https://proxy.golang.org,direct</string>
+            <string notr="true">https://goproxy.io</string>
            </property>
           </item>
          </widget>

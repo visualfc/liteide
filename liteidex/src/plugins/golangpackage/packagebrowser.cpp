@@ -237,7 +237,7 @@ void PackageBrowser::setupGopath()
     dlg->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
     dlg->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
     dlg->setUseGoProxy(m_liteApp->settings()->value(LITEIDE_USEGOPROXY,false).toBool());
-    dlg->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"https://goproxy.io").toString());
+    dlg->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"").toString());
 
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
     QString info = env.value("GO111MODULE");
@@ -246,7 +246,8 @@ void PackageBrowser::setupGopath()
     } else {
         dlg->setSysGoModuleInfo("system GO111MODULE unset");
     }
-
+    bool useMod = dlg->isUseGoModule();
+    QString goMod = dlg->go111Module();
     if (dlg->exec() == QDialog::Accepted) {
         //QStringList orgLitePath = m_goTool->liteGopath();
         QStringList newLitePath = dlg->litePathList();
@@ -260,9 +261,16 @@ void PackageBrowser::setupGopath()
         //if (!hasSameList(orgLitePath,newLitePath)) {
         m_goTool->setLiteGopath(newLitePath);
         this->reloadAll();
-        LiteApi::IGoEnvManger *env = LiteApi::getGoEnvManager(m_liteApp);
-        if (env) {
-            env->updateGoEnv();
+        if (useMod != dlg->isUseGoModule() || goMod != dlg->go111Module()) {
+            LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
+            if (env) {
+                env->reloadCurrentEnv();
+            }
+        } else {
+            LiteApi::IGoEnvManger *env = LiteApi::getGoEnvManager(m_liteApp);
+            if (env) {
+                env->updateGoEnv();
+            }
         }
     }
 }
