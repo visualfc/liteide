@@ -496,6 +496,17 @@ bool MultiFolderModel::lessThan(const QAbstractItemModel *sourceModel, const QMo
     return comp.sort(n1,n2);
 }
 
+bool MultiFolderModel::filterAcceptsRow(const QAbstractItemModel *sourceModel,  int source_row, const QModelIndex &source_parent) const
+{
+    QFileSystemModel *model = (QFileSystemModel*)sourceModel;
+    QModelIndex index = model->index(source_row,0,source_parent);
+    QFileInfo info = model->fileInfo(index);
+    if (info.fileName().startsWith(".")) {
+        return false;
+    }
+    return true;
+}
+
 int MultiFolderModel::columnCount(const QModelIndex &parent) const
 {
     if (m_isShowDetails) {

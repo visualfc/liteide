@@ -245,6 +245,11 @@ bool MultiIndexModel::lessThan(const QAbstractItemModel */*sourceModel*/, const 
     return false;
 }
 
+bool MultiIndexModel::filterAcceptsRow(const QAbstractItemModel */*sourceModel*/, int /*source_row*/, const QModelIndex &/*source_parent*/) const
+{
+    return true;
+}
+
 /*!
     Destroys this identity model.
 */
@@ -284,6 +289,7 @@ bool MultiIndexModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
 
 QMap<QModelIndex,Mapping*>::iterator MultiIndexModelPrivate::createMapping(QAbstractItemModel *model, const QModelIndex &parent, bool forceUpdate, const QString &/*context*/) const
 {        
+    Q_Q(const MultiIndexModel);
     QMap<QModelIndex,Mapping*>::iterator it = modelMapping[model].find(parent);
     if (it == modelMapping[model].end()) {
         Mapping *m = new Mapping;
@@ -296,12 +302,17 @@ QMap<QModelIndex,Mapping*>::iterator MultiIndexModelPrivate::createMapping(QAbst
     if (forceUpdate) {
         Mapping *m = it.value();
         int rowCount = model->rowCount(parent);
+
         //qDebug() << context << parent.data() << rowCount;
         QVector<int> rows;
-        rows.resize(rowCount);
-        for (int i = 0; i < rowCount; i++) {
-            rows[i] = i;
+        rows.reserve(rowCount);
+        for (int i = 0; i < rowCount; ++i) {
+            if (q->filterAcceptsRow(model,i, parent))
+                rows.append(i);
         }
+//        for (int i = 0; i < rowCount; i++) {
+//            rows[i] = i;
+//        }
         sort_source_rows(model,rows,parent);
         m->rowCount = rowCount;
         m->source_rows.swap(rows);
@@ -690,7 +701,7 @@ int MultiIndexModel::rowCount(const QModelIndex& parent) const
     //qDebug() << parent.isValid() << parent.data().toString();
     //Q_ASSERT(parent.isValid() ? parent.model() == this : true);
      SourceModelIndex source = mapToSourceEx(parent);
-     return source.model->rowCount(source.index);
+     //return source.model->rowCount(source.index);
      QMap<QModelIndex,Mapping*>::iterator it = d->createMapping(source.model,source.index,false,"rowCount");
      return it.value()->source_rows.count();
      //qDebug() << source.model->rowCount(source.index);

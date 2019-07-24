@@ -80,6 +80,7 @@ protected:
     MultiIndexModel(MultiIndexModelPrivate &dd, QObject* parent);
 public:
     virtual bool lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const;
+    virtual bool filterAcceptsRow(const QAbstractItemModel *sourceModel, int source_row, const QModelIndex &source_parent) const;
 private:
     Q_DECLARE_PRIVATE(MultiIndexModel)
     Q_DISABLE_COPY(MultiIndexModel)

@@ -270,7 +270,7 @@ Qt::ItemFlags AbstractMultiProxyModel::flags(const QModelIndex &index) const
     if (!index.isValid()) {
         return Qt::NoItemFlags;
     }
-    SourceModelIndex source = mapToSourceEx(index);    
+    SourceModelIndex source = mapToSourceEx(index);
     return source.model->flags(source.index);
 }
 

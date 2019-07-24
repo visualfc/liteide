@@ -89,6 +89,7 @@ public:
     bool isShowDetails() const;
 public:
     virtual bool lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const;
+    virtual bool filterAcceptsRow(const QAbstractItemModel *sourceModel, int source_row, const QModelIndex &source_parent) const;
     virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
 protected slots:
     void slotDirectoryLoaded(const QString &path);

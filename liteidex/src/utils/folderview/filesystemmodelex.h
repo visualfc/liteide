@@ -67,6 +67,10 @@ public:
 #endif
         return (l.fileName().compare(r.fileName(),Qt::CaseInsensitive) < 0);
     }
+    virtual bool filterAcceptsRow(int /*source_row*/, const QModelIndex &/*source_parent*/) const
+    {
+        return true;
+    }
 };
 
 
