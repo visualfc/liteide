@@ -98,6 +98,16 @@ QDir::Filters FolderView::filter() const
     return m_model->filter();
 }
 
+void FolderView::setNameFilters(const QStringList &filters)
+{
+    m_model->setNameFilters(filters);
+}
+
+QStringList FolderView::nameFilters() const
+{
+    return m_model->nameFilters();
+}
+
 QFileInfo FolderView::fileInfo(const QModelIndex &index)
 {
     if (m_proxy)

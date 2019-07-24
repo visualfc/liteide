@@ -138,7 +138,7 @@ bool DirSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelInde
 {
     QFileSystemModel *model = dynamic_cast<QFileSystemModel*>(this->sourceModel());
     if (!model) {
-        return DirSortFilterProxyModel::lessThan(left,right);
+        return QSortFilterProxyModel::lessThan(left,right);
     }
     QDirSortItemComparator comp(m_sorts);
     QDirSortItem n1;

@@ -138,6 +138,7 @@ void SplitFolderWindow::currentIndexChanged(const QModelIndex &index, const QMod
     if (widget->filter() != m_filters) {
         widget->setFilter(m_filters);
     }
+
     if (widget->isShowDetails() != m_bShowDetails) {
         widget->setShowDetails(m_bShowDetails);
     }

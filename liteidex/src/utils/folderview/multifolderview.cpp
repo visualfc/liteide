@@ -70,6 +70,16 @@ QDir::Filters MultiFolderView::filter() const
     return m_model->filter();
 }
 
+void MultiFolderView::setNameFilters(const QStringList &filters)
+{
+    m_model->setNameFilters(filters);
+}
+
+QStringList MultiFolderView::nameFilters() const
+{
+    return m_model->nameFilters();
+}
+
 QFileInfo MultiFolderView::fileInfo(const QModelIndex &index) const
 {
     return m_model->fileInfo(index);

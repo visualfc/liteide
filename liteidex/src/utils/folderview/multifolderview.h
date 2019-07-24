@@ -36,6 +36,8 @@ public:
     virtual ~MultiFolderView();
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;
+    void setNameFilters(const QStringList &filters);
+    QStringList nameFilters() const;
     QFileInfo fileInfo(const QModelIndex &index) const;
     QString fileRootPath(const QModelIndex &index) const;
 public:

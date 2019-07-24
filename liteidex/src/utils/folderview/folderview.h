@@ -41,6 +41,8 @@ public:
     QString rootPath() const;
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;
+    void setNameFilters(const QStringList &filters);
+    QStringList nameFilters() const;
     QFileInfo fileInfo(const QModelIndex &index);
     QModelIndex indexForPath(const QString &fileName);
     void reload();
