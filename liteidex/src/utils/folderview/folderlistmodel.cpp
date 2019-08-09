@@ -474,7 +474,7 @@ QList<QModelIndex> FolderListModel::indexForPath(const QString &path) const
     return indexs;
 }
 
-Qt::DropActions FolderListModel::supportedDragActions()
+Qt::DropActions FolderListModel::supportedDragActions() const
 {
     return Qt::MoveAction | Qt::CopyAction;
 }

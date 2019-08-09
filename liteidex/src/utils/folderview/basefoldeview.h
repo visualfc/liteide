@@ -54,6 +54,9 @@ public slots:
     virtual void closeFolder();
     virtual void reloadFolder();
     virtual void closeAllFolders();
+    virtual void copyFile();
+    virtual void pasteFile();
+    virtual bool canPasteFile();
 protected:
     LiteApi::IApplication *m_liteApp;
     QFileInfo m_contextInfo;
@@ -74,6 +77,9 @@ protected:
     QAction *m_reloadFolderAct;
     QAction *m_closeAllFoldersAct;
     QAction *m_openBundleAct;
+    QAction *m_copyFileAct;
+    QAction *m_pasteFileAct;
+    bool copy_dir(const QString &src, const QString &dest_root);
 };
 
 #endif // BASEFOLDERVIEW_H

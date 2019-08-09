@@ -31,6 +31,7 @@
 
 class QSortFilterProxyModel;
 class FileSystemModelEx;
+
 class FolderView : public BaseFolderView
 {
     Q_OBJECT

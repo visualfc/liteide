@@ -259,6 +259,9 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_renameFolderAct);
         m_contextMenu->addAction(m_removeFolderAct);
         m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_copyFileAct);
+        m_contextMenu->addAction(m_pasteFileAct);
+        m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
@@ -269,10 +272,14 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_renameFileAct);
         m_contextMenu->addAction(m_removeFileAct);
         m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_copyFileAct);
+        m_contextMenu->addAction(m_pasteFileAct);
+        m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
 
     }
+    m_pasteFileAct->setEnabled(this->canPasteFile());
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
     m_contextMenu->exec(this->mapToGlobal(pos));
 }

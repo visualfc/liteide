@@ -73,7 +73,7 @@ public:
     void setWatcherRoot(bool b);
     bool isWatcherRoot() const;
     QList<QModelIndex> indexForPath(const QString &path) const;
-    virtual Qt::DropActions supportedDragActions();
+    virtual Qt::DropActions supportedDragActions() const;
 protected:
     QFileSystemModel *findSource(const QModelIndex &proxyIndex) const;
     QModelIndex mapFromSource(const QModelIndex& sourceIndex) const;

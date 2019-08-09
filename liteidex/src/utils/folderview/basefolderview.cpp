@@ -40,6 +40,11 @@
 #include <QHeaderView>
 #include <QProcess>
 #include <QProcessEnvironment>
+#include <QApplication>
+#include <QClipboard>
+#include <QMimeData>
+#include <QUrl>
+#include <QFile>
 #include <QDebug>
 
 #ifdef Q_OS_WIN
@@ -99,6 +104,9 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 
     m_closeAllFoldersAct = new QAction(tr("Close All Folders"),this);
 
+    m_copyFileAct = new QAction(tr("Copy"),this);
+    m_pasteFileAct = new QAction(tr("Paste"),this);
+
     connect(m_openBundleAct,SIGNAL(triggered()),this,SLOT(openBundle()));
     connect(m_openInNewWindowAct,SIGNAL(triggered()),this,SLOT(openInNewWindow()));
     connect(m_openEditorAct,SIGNAL(triggered()),this,SLOT(openEditor()));
@@ -115,6 +123,8 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_closeFolderAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
     connect(m_reloadFolderAct,SIGNAL(triggered()),this,SLOT(reloadFolder()));
     connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
+    connect(m_copyFileAct,SIGNAL(triggered()),this,SLOT(copyFile()));
+    connect(m_pasteFileAct,SIGNAL(triggered()),this,SLOT(pasteFile()));
 }
 
 QDir BaseFolderView::contextDir() const
@@ -338,6 +348,104 @@ void BaseFolderView::reloadFolder()
 
 void BaseFolderView::closeAllFolders()
 {
+}
+
+void BaseFolderView::copyFile()
+{
+    QFileInfo info = m_contextInfo;
+    QClipboard *clip = qApp->clipboard();
+    QMimeData *data = new QMimeData();
+    data->setUrls(QList<QUrl>() << QUrl::fromLocalFile(info.filePath()));
+    clip->setMimeData(data);
+}
+
+//static bool copy_dir(const QString &src, const QString &dest)
+//{
+//    QDir dir(src);
+//    QDir destDir(dest);
+//    foreach(QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
+//        if (info.isFile() && !info.isSymLink()) {
+//            QFile::copy(info.filePath(), QFileInfo(destDir,info.fileName()).filePath());
+//        } else if (info.isDir()) {
+//            destDir.mkdir(info.fileName());
+//            if (QFileInfo(destDir,info.fileName()).isDir()) {
+//                copy_dir(info.filePath(),QFileInfo(destDir,info.fileName()).filePath());
+//            }
+//        }
+//    }
+//    return true;
+//}
+
+bool BaseFolderView::copy_dir(const QString &src, const QString &dest_root)
+{
+    QDir dir(src);
+    QDir destDir(dest_root);
+    QString name = QFileInfo(src).fileName();
+    destDir.mkdir(name);
+    if (!destDir.cd(name)) {
+        m_liteApp->appendLog("FolderView",QString("copy dir %1 false!").arg(src),true);
+        return false;
+    }
+    foreach(QFileInfo info, dir.entryInfoList(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot)) {
+        if (info.isFile() && !info.isSymLink()) {
+            bool b = QFile::copy(info.filePath(), QFileInfo(destDir,info.fileName()).filePath());
+            if (!b) {
+                m_liteApp->appendLog("FolderView",QString("copy file %1=>%2 false!").arg(info.filePath()).arg(destDir.absolutePath()),true);
+            }
+        } else if (info.isDir()) {
+            copy_dir(info.filePath(),destDir.absolutePath());
+        }
+    }
+    return true;
+}
+
+void BaseFolderView::pasteFile()
+{
+    QClipboard *clip = qApp->clipboard();
+    const QMimeData *data =  clip->mimeData();
+    if (!data) {
+        return;
+    }
+    if (!data->hasUrls()) {
+        return;
+    }
+    QDir dir = contextDir();
+    foreach (QUrl url, data->urls()) {
+        if (!url.isLocalFile()) {
+            continue;
+        }
+        QString fileName = url.toLocalFile();
+        QFileInfo info(fileName);
+        if (!info.exists()) {
+            continue;
+        }
+        if (info.isFile()) {
+            bool b = QFile::copy(fileName,QFileInfo(dir,info.fileName()).filePath());
+            if (!b) {
+                m_liteApp->appendLog("FolderView",QString("copy file %1=>%2 false!").arg(fileName).arg(dir.absolutePath()),true);
+            }
+        } else if(info.isDir()) {
+            copy_dir(fileName,dir.absolutePath());
+        }
+    }
+}
+
+bool BaseFolderView::canPasteFile()
+{
+    QClipboard *clip = qApp->clipboard();
+    const QMimeData *data =  clip->mimeData();
+    if (!data) {
+        return false;
+    }
+    if (!data->hasUrls()) {
+        return false;
+    }
+    foreach (QUrl url, data->urls()) {
+        if (url.isLocalFile()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void BaseFolderView::openShell()
