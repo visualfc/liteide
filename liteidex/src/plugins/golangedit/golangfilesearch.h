@@ -41,6 +41,14 @@ inline QByteArray trimmedRight(const QByteArray &d)
     return d.left(end+1);
 }
 
+static bool isLetterOrNumber(QChar ch)
+{
+    if (ch.isLetterOrNumber() || ch == "_") {
+        return true;
+    }
+    return false;
+}
+
 inline QString selectionUnderCursor(QTextCursor tc, bool moveLeft = false)
 {
     QString text = tc.block().text();
@@ -53,14 +61,14 @@ inline QString selectionUnderCursor(QTextCursor tc, bool moveLeft = false)
     }
     int left = pos;
     for (int i = pos; i >= 0; i--) {
-        if (!text[i].isLetterOrNumber() && text[i] != '.') {
+        if (!isLetterOrNumber(text[i]) && text[i] != '.') {
             left = i;
             break;
         }
     }
     int right = text.length();
     for (int i = pos; i < text.length(); i++) {
-        if (!text[i].isLetterOrNumber())  {
+        if (!isLetterOrNumber(text[i]))  {
             right = i;
             break;
         }

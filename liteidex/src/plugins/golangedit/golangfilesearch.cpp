@@ -102,6 +102,7 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     bool moveLeft = false;
     int selectStart = 0;
     m_searchText = LiteApi::wordUnderCursor(cursor,&moveLeft,&selectStart);
+
     if (m_searchText.isEmpty() || m_searchText.contains(" ")) {
         return;
     }
