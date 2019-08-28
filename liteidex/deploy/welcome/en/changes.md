@@ -26,6 +26,10 @@
 * Others
     * linux env add x-terminal-emulator
     * update Russian translation, thanks Sergey Belyashov
+* gotools & gocode
+    * fix mod priority vendor check
+* gotools
+    * godoc add go doc -all flags
 
 ### 2019.03.15 Ver X36
 * LiteIDE
