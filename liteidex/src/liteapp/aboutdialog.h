@@ -31,6 +31,7 @@ namespace Ui {
     class AboutDialog;
 }
 
+
 class AboutDialog : public QDialog
 {
     Q_OBJECT

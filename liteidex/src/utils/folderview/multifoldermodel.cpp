@@ -498,12 +498,12 @@ bool MultiFolderModel::lessThan(const QAbstractItemModel *sourceModel, const QMo
 
 bool MultiFolderModel::filterAcceptsRow(const QAbstractItemModel *sourceModel,  int source_row, const QModelIndex &source_parent) const
 {
-    QFileSystemModel *model = (QFileSystemModel*)sourceModel;
-    QModelIndex index = model->index(source_row,0,source_parent);
-    QFileInfo info = model->fileInfo(index);
-    if (info.fileName().startsWith(".")) {
-        return false;
-    }
+//    QFileSystemModel *model = (QFileSystemModel*)sourceModel;
+//    QModelIndex index = model->index(source_row,0,source_parent);
+//    QFileInfo info = model->fileInfo(index);
+//    if (info.fileName().startsWith(".")) {
+//        return false;
+//    }
     return true;
 }
 

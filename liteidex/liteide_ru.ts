@@ -325,6 +325,14 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Open Application</source>
         <translation>Открыть приложение</translation>
     </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Копировать</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Вставить</translation>
+    </message>
 </context>
 <context>
     <name>BookmarkManager</name>
@@ -4332,6 +4340,10 @@ Do you want to replace it?</source>
     <message>
         <source>GOPATH</source>
         <translation>GOPATH</translation>
+    </message>
+    <message>
+        <source>Custom GOPROXY</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

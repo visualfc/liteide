@@ -223,9 +223,11 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
     }
     m_pasteFileAct->setEnabled(this->canPasteFile());
 
-    bool bremove = this->selectionModel()->selectedRows(0).size() == 1;
-    m_removeFileAct->setEnabled(bremove);
-    m_removeFolderAct->setEnabled(bremove);
+    bool check = this->selectionModel()->selectedRows(0).size() == 1;
+    m_removeFileAct->setEnabled(check);
+    m_removeFolderAct->setEnabled(check);
+    m_renameFileAct->setEnabled(check);
+    m_renameFolderAct->setEnabled(check);
 
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
     m_contextMenu->exec(this->mapToGlobal(pos));
