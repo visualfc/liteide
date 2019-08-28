@@ -55,7 +55,7 @@ public:
         m_info->setId("plugin/liteeditor");
         m_info->setName("LiteEditor");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X36");
+        m_info->setVer("X36.1");
         m_info->setInfo("Core Editor");
         m_info->setMustLoad(true);
     }

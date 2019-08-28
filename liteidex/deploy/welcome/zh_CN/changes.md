@@ -3,6 +3,30 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2019.08.28 Ver X36.1
+* LiteIDE
+    * folder view support copy and paste
+    * fix find usages and declinfo for _ start symbol
+    
+* LiteApp
+    * multi folder view support copy and parse
+    * tool window support floating window action
+* LiteEditor
+    * cached text layout, optimization long line paint
+    * check and disable document too long line ( > 4096) syntax.
+* GolangEdit
+    * fix findusage and declinfo for _ start symbol
+* GolangPackage
+    * add custom GOPROXY setup
+    * update GO111MODULE env reload check
+* GolangDoc
+    * remove godoc command, use gotools godoc
+* FileBorwser
+    * folder view support copy and paste
+* Others
+    * linux env add x-terminal-emulator
+    * update Russian translation, thanks Sergey Belyashov
+
 ### 2019.03.15 Ver X36
 * LiteIDE
     * add new editor path navigation toolbar
