@@ -189,7 +189,13 @@ void BaseDockWidget::topLevelChanged(bool b)
     m_comboBoxAct->setVisible(!b);
     m_titleLabel->setText(m_comboBox->currentText());
     m_titleLabelAct->setVisible(b);
-    this->setFeatures(this->features().setFlag(QDockWidget::DockWidgetFloatable,b));
+    DockWidgetFeatures flags = this->features();
+    if (b) {
+        flags |= QDockWidget::DockWidgetFloatable;
+    } else {
+        flags &= (~QDockWidget::DockWidgetFloatable);
+    }
+    this->setFeatures(flags);
     m_floatAct->setChecked(b);
 }
 
