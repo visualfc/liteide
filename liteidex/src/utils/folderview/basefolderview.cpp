@@ -352,10 +352,20 @@ void BaseFolderView::closeAllFolders()
 
 void BaseFolderView::copyFile()
 {
-    QFileInfo info = m_contextInfo;
     QClipboard *clip = qApp->clipboard();
     QMimeData *data = new QMimeData();
-    data->setUrls(QList<QUrl>() << QUrl::fromLocalFile(info.filePath()));
+
+    QList<QUrl> urls;
+    QModelIndexList items = this->selectionCopyOrRemoveList();
+    if (!items.isEmpty()) {
+        foreach (QModelIndex item, items) {
+            urls << QUrl::fromLocalFile(this->fileInfo(item).filePath());
+        }
+    } else {
+        QFileInfo info = m_contextInfo;
+        urls << QUrl::fromLocalFile(info.filePath());
+    }
+    data->setUrls(urls);
     clip->setMimeData(data);
 }
 
@@ -446,6 +456,16 @@ bool BaseFolderView::canPasteFile()
         }
     }
     return false;
+}
+
+QFileInfo BaseFolderView::fileInfo(const QModelIndex &index) const
+{
+    return QFileInfo();
+}
+
+QModelIndexList BaseFolderView::selectionCopyOrRemoveList() const
+{
+    return QModelIndexList();
 }
 
 void BaseFolderView::openShell()

@@ -57,6 +57,10 @@ public slots:
     virtual void copyFile();
     virtual void pasteFile();
     virtual bool canPasteFile();
+public:
+    virtual QFileInfo fileInfo(const QModelIndex &index) const;
+protected:
+    virtual QModelIndexList selectionCopyOrRemoveList() const;
 protected:
     LiteApi::IApplication *m_liteApp;
     QFileInfo m_contextInfo;

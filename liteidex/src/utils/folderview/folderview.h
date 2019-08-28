@@ -44,7 +44,7 @@ public:
     QDir::Filters filter() const;
     void setNameFilters(const QStringList &filters);
     QStringList nameFilters() const;
-    QFileInfo fileInfo(const QModelIndex &index);
+    QFileInfo fileInfo(const QModelIndex &index) const;
     QModelIndex indexForPath(const QString &fileName);
     void reload();
     bool isShowDetails() const;
@@ -55,6 +55,7 @@ public slots:
     virtual void removeFolder();
     virtual void removeFile();
 protected:
+    virtual QModelIndexList selectionCopyOrRemoveList() const;
     QSortFilterProxyModel *m_proxy;
     FileSystemModelEx *m_model;
     QMenu             *m_contextMenu;

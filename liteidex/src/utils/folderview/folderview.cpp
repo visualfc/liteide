@@ -55,6 +55,7 @@ FolderView::FolderView(bool proxyMode, LiteApi::IApplication *app, QWidget *pare
         this->setModel(m_model);
     }
     this->setHeaderHidden(true);
+    this->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     m_contextMenu = new QMenu(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -108,7 +109,7 @@ QStringList FolderView::nameFilters() const
     return m_model->nameFilters();
 }
 
-QFileInfo FolderView::fileInfo(const QModelIndex &index)
+QFileInfo FolderView::fileInfo(const QModelIndex &index) const
 {
     if (m_proxy)
         return m_model->fileInfo(m_proxy->mapToSource(index));
@@ -169,6 +170,37 @@ void FolderView::removeFile()
                                      tr("Failed to delete the file!"));
         }
     }
+}
+
+QModelIndexList FolderView::selectionCopyOrRemoveList() const
+{
+    QModelIndexList selection = this->selectionModel()->selectedRows(0);
+    if (selection.size() <= 1) {
+        return selection;
+    }
+    QStringList dirList;
+    foreach (QModelIndex index, selection) {
+        if (m_model->isDir(index)) {
+            dirList  << QDir::cleanPath(m_model->fileInfo(index).filePath());
+        }
+    }
+    QModelIndexList itemList;
+    foreach (QModelIndex index, selection) {
+        QString filePath = QDir::cleanPath(m_model->fileInfo(index).filePath());
+        QStringList chkList = dirList;
+        chkList.removeAll(filePath);
+        bool find = false;
+        foreach (QString chk, chkList) {
+            if (filePath.startsWith(chk+"/")) {
+                find = true;
+                break;
+            }
+        }
+        if (!find) {
+            itemList << index;
+        }
+    }
+    return itemList;
 }
 
 void FolderView::removeFolder()
@@ -280,6 +312,11 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
 
     }
     m_pasteFileAct->setEnabled(this->canPasteFile());
+
+    bool bremove = this->selectionModel()->selectedRows(0).size() == 1;
+    m_removeFileAct->setEnabled(bremove);
+    m_removeFolderAct->setEnabled(bremove);
+
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
     m_contextMenu->exec(this->mapToGlobal(pos));
 }

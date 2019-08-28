@@ -61,6 +61,7 @@ public slots:
 protected slots:
     void directoryLoaded(QFileSystemModel *model,const QString &path);
 protected:
+    virtual QModelIndexList selectionCopyOrRemoveList() const;
     MultiFolderModel *m_model;
     QMenu            *m_contextMenu;
 };
