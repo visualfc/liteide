@@ -43,7 +43,7 @@ inline QByteArray trimmedRight(const QByteArray &d)
 
 static bool isLetterOrNumber(QChar ch)
 {
-    if (ch.isLetterOrNumber() || ch == "_") {
+    if (ch.isLetterOrNumber() || ch == '_') {
         return true;
     }
     return false;
