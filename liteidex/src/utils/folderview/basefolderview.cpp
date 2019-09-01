@@ -420,6 +420,7 @@ void BaseFolderView::pasteFile()
         return;
     }
     QDir dir = contextDir();
+    QString curPath = QDir::cleanPath(dir.absolutePath());
     foreach (QUrl url, data->urls()) {
         if (!url.isLocalFile()) {
             continue;
@@ -428,13 +429,18 @@ void BaseFolderView::pasteFile()
         QFileInfo info(fileName);
         if (!info.exists()) {
             continue;
-        }
+        }        
         if (info.isFile()) {
             bool b = QFile::copy(fileName,QFileInfo(dir,info.fileName()).filePath());
             if (!b) {
                 m_liteApp->appendLog("FolderView",QString("copy file %1=>%2 false!").arg(fileName).arg(dir.absolutePath()),true);
             }
         } else if(info.isDir()) {
+            QString chkPath = QDir::cleanPath(info.absoluteFilePath());
+            if (curPath == chkPath || curPath.startsWith(chkPath+"/")) {
+                m_liteApp->appendLog("FolderView",QString("cannot copy path self %1").arg(chkPath),true);
+                continue;
+            }
             copy_dir(fileName,dir.absolutePath());
         }
     }
