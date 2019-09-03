@@ -106,6 +106,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 
     m_copyFileAct = new QAction(tr("Copy"),this);
     m_pasteFileAct = new QAction(tr("Paste"),this);
+    m_moveToTrashAct = new QAction(tr("Move To Trash"),this);
 
     connect(m_openBundleAct,SIGNAL(triggered()),this,SLOT(openBundle()));
     connect(m_openInNewWindowAct,SIGNAL(triggered()),this,SLOT(openInNewWindow()));
@@ -125,6 +126,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
     connect(m_copyFileAct,SIGNAL(triggered()),this,SLOT(copyFile()));
     connect(m_pasteFileAct,SIGNAL(triggered()),this,SLOT(pasteFile()));
+    connect(m_moveToTrashAct,SIGNAL(triggered()),this,SLOT(moveToTrash()));
 }
 
 QDir BaseFolderView::contextDir() const
@@ -138,6 +140,11 @@ QDir BaseFolderView::contextDir() const
 QFileInfo BaseFolderView::contextFileInfo() const
 {
     return m_contextInfo;
+}
+
+bool BaseFolderView::canMoveToTrash() const
+{
+    return FileUtil::hasTrash();
 }
 
 void BaseFolderView::openBundle()
@@ -239,21 +246,22 @@ void BaseFolderView::renameFile()
 
 void BaseFolderView::removeFile()
 {
-    QFileInfo info = m_contextInfo;
-    if (!info.isFile()) {
-        return;
-    }
 
-    int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Delete File"),
-                          tr("Are you sure that you want to permanently delete this file?")
-                          +"\n"+info.filePath(),
-                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    if (ret == QMessageBox::Yes) {
-        if (!QFile::remove(info.filePath())) {
-            QMessageBox::information(m_liteApp->mainWindow(),tr("Delete File"),
-                                     tr("Failed to delete the file!"));
-        }
-    }
+//    QFileInfo info = m_contextInfo;
+//    if (!info.isFile()) {
+//        return;
+//    }
+
+//    int ret = QMessageBox::question(m_liteApp->mainWindow(),tr("Delete File"),
+//                          tr("Are you sure that you want to permanently delete this file?")
+//                          +"\n"+info.filePath(),
+//                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+//    if (ret == QMessageBox::Yes) {
+//        if (!QFile::remove(info.filePath())) {
+//            QMessageBox::information(m_liteApp->mainWindow(),tr("Delete File"),
+//                                     tr("Failed to delete the file!"));
+//        }
+//    }
 }
 
 void BaseFolderView::newFolder()
@@ -462,6 +470,40 @@ bool BaseFolderView::canPasteFile()
         }
     }
     return false;
+}
+
+void BaseFolderView::moveToTrash()
+{
+    QModelIndexList indexs = this->selectionCopyOrRemoveList();
+    QStringList fileList;
+    foreach (QModelIndex index, indexs) {
+        QFileInfo info = this->fileInfo(index);
+        fileList << info.filePath();
+    }
+    if (fileList.isEmpty()) {
+        return;
+    }
+    QString info;
+    int size = fileList.size();
+    if (size == 1) {
+        info = QString(tr("Are you sure that you want move to trash this item?"))
+                +"\n"+fileList.join("\n");
+    } else if (size < 6) {
+        info = QString(tr("Are you sure that you want move to trash %1 items?")).arg(size)
+                +"\n"+fileList.join("\n");
+    } else {
+        info = QString(tr("Are you sure that you want move to trash %1 items?")).arg(size);
+    }
+
+    int ret = QMessageBox::question(m_liteApp->mainWindow(), tr("Move to Trash"),info,
+                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        foreach (QString filename, fileList) {
+            if (!FileUtil::moveToTrash(filename)) {
+                m_liteApp->appendLog("FolderView",QString("cannot move file to trash \"%1\"").arg(filename),true);
+            }
+        }
+    }
 }
 
 QFileInfo BaseFolderView::fileInfo(const QModelIndex &index) const

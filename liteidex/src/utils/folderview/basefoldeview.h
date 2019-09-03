@@ -35,6 +35,7 @@ public:
     explicit BaseFolderView(LiteApi::IApplication *app,QWidget *parent = 0);
     QDir contextDir() const;
     QFileInfo contextFileInfo() const;
+    bool canMoveToTrash() const;
 signals:
     void aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
 public slots:
@@ -57,6 +58,7 @@ public slots:
     virtual void copyFile();
     virtual void pasteFile();
     virtual bool canPasteFile();
+    virtual void moveToTrash();
 public:
     virtual QFileInfo fileInfo(const QModelIndex &index) const;
 protected:
@@ -83,6 +85,7 @@ protected:
     QAction *m_openBundleAct;
     QAction *m_copyFileAct;
     QAction *m_pasteFileAct;
+    QAction *m_moveToTrashAct;
     bool copy_dir(const QString &src, const QString &dest_root);
 };
 

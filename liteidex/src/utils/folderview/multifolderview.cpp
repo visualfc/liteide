@@ -200,7 +200,13 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_newFolderAct);
         m_contextMenu->addAction(m_renameFolderAct);
-        m_contextMenu->addAction(m_removeFolderAct);
+
+        if (this->canMoveToTrash()) {
+            m_contextMenu->addAction(m_moveToTrashAct);
+        } else {
+            m_contextMenu->addAction(m_removeFolderAct);
+        }
+
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFileAct);
         m_contextMenu->addAction(m_pasteFileAct);
@@ -213,7 +219,13 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_renameFileAct);
-        m_contextMenu->addAction(m_removeFileAct);
+
+        if (this->canMoveToTrash()) {
+            m_contextMenu->addAction(m_moveToTrashAct);
+        } else {
+            m_contextMenu->addAction(m_removeFileAct);
+        }
+
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFileAct);
         m_contextMenu->addAction(m_pasteFileAct);
@@ -228,6 +240,15 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
     m_removeFolderAct->setEnabled(check);
     m_renameFileAct->setEnabled(check);
     m_renameFolderAct->setEnabled(check);
+
+    check = true;
+    foreach (QModelIndex index, this->selectionCopyOrRemoveList()) {
+        if (this->m_model->isRootIndex(index)) {
+            check = false;
+            break;
+        }
+    }
+    this->m_moveToTrashAct->setEnabled(check && !this->selectionCopyOrRemoveList().isEmpty());
 
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
     m_contextMenu->exec(this->mapToGlobal(pos));

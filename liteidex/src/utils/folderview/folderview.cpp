@@ -180,13 +180,16 @@ QModelIndexList FolderView::selectionCopyOrRemoveList() const
     }
     QStringList dirList;
     foreach (QModelIndex index, selection) {
+        if (m_proxy) {
+            index = m_proxy->mapToSource(index);
+        }
         if (m_model->isDir(index)) {
             dirList  << QDir::cleanPath(m_model->fileInfo(index).filePath());
         }
     }
     QModelIndexList itemList;
     foreach (QModelIndex index, selection) {
-        QString filePath = QDir::cleanPath(m_model->fileInfo(index).filePath());
+        QString filePath = QDir::cleanPath(this->fileInfo(index).filePath());
         QStringList chkList = dirList;
         chkList.removeAll(filePath);
         bool find = false;
@@ -289,7 +292,12 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_newFolderAct);
         m_contextMenu->addAction(m_renameFolderAct);
-        m_contextMenu->addAction(m_removeFolderAct);
+
+        if (this->canMoveToTrash()) {
+            m_contextMenu->addAction(m_moveToTrashAct);
+        } else {
+            m_contextMenu->addAction(m_removeFolderAct);
+        }
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFileAct);
         m_contextMenu->addAction(m_pasteFileAct);
@@ -302,7 +310,13 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);
         m_contextMenu->addAction(m_renameFileAct);
-        m_contextMenu->addAction(m_removeFileAct);
+
+        if (this->canMoveToTrash()) {
+            m_contextMenu->addAction(m_moveToTrashAct);
+        } else {
+            m_contextMenu->addAction(m_removeFileAct);
+        }
+
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFileAct);
         m_contextMenu->addAction(m_pasteFileAct);
@@ -318,6 +332,18 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
     m_removeFolderAct->setEnabled(check);
     m_renameFileAct->setEnabled(check);
     m_renameFolderAct->setEnabled(check);
+
+    check = true;
+    foreach (QModelIndex index, this->selectionCopyOrRemoveList()) {
+        if (m_proxy) {
+            index = m_proxy->mapToSource(index);
+        }
+        if (index == this->rootIndex()) {
+            check = false;
+            break;
+        }
+    }
+    m_moveToTrashAct->setEnabled(check && !this->selectionCopyOrRemoveList().empty());
 
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
     m_contextMenu->exec(this->mapToGlobal(pos));
