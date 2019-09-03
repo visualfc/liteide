@@ -60,6 +60,7 @@ public slots:
     virtual bool canPasteFile();
     virtual void moveToTrash();
 public:
+    virtual void removeIndex(const QModelIndex &index);
     virtual QFileInfo fileInfo(const QModelIndex &index) const;
 protected:
     virtual QModelIndexList selectionCopyOrRemoveList() const;
@@ -86,7 +87,7 @@ protected:
     QAction *m_copyFileAct;
     QAction *m_pasteFileAct;
     QAction *m_moveToTrashAct;
-    bool copy_dir(const QString &src, const QString &dest_root);
+    bool copy_dir(const QString &src, const QString &dest_root, const QString &newName);
 };
 
 #endif // BASEFOLDERVIEW_H

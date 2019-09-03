@@ -48,6 +48,7 @@ public:
     void expandFolder(const QString &path, bool expand);
     QList<QModelIndex> indexForPath(const QString &path) const;
     bool isShowDetails() const;
+    virtual void removeIndex(const QModelIndex &index);
 public slots:
     void setShowDetails(bool b);
 public slots:

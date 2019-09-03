@@ -145,6 +145,11 @@ bool MultiFolderView::isShowDetails() const
     return m_model->isShowDetails();
 }
 
+void MultiFolderView::removeIndex(const QModelIndex &index)
+{
+    m_model->remove(index);
+}
+
 void MultiFolderView::customContextMenuRequested(const QPoint &pos)
 {
     m_contextMenu->clear();

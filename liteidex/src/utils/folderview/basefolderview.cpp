@@ -394,11 +394,14 @@ void BaseFolderView::copyFile()
 //    return true;
 //}
 
-bool BaseFolderView::copy_dir(const QString &src, const QString &dest_root)
+bool BaseFolderView::copy_dir(const QString &src, const QString &dest_root, const QString &newName)
 {
     QDir dir(src);
     QDir destDir(dest_root);
     QString name = QFileInfo(src).fileName();
+    if (!newName.isEmpty()) {
+        name = newName;
+    }
     destDir.mkdir(name);
     if (!destDir.cd(name)) {
         m_liteApp->appendLog("FolderView",QString("copy dir %1 false!").arg(src),true);
@@ -411,7 +414,7 @@ bool BaseFolderView::copy_dir(const QString &src, const QString &dest_root)
                 m_liteApp->appendLog("FolderView",QString("copy file %1=>%2 false!").arg(info.filePath()).arg(destDir.absolutePath()),true);
             }
         } else if (info.isDir()) {
-            copy_dir(info.filePath(),destDir.absolutePath());
+            copy_dir(info.filePath(),destDir.absolutePath(),"");
         }
     }
     return true;
@@ -428,28 +431,104 @@ void BaseFolderView::pasteFile()
         return;
     }
     QDir dir = contextDir();
-    QString curPath = QDir::cleanPath(dir.absolutePath());
+    QString dstPath = QFileInfo(dir.absolutePath()).canonicalFilePath();
+    int allflag = 0;
     foreach (QUrl url, data->urls()) {
         if (!url.isLocalFile()) {
             continue;
         }
         QString fileName = url.toLocalFile();
-        QFileInfo info(fileName);
-        if (!info.exists()) {
+        QFileInfo orginfo(fileName);
+        if (!orginfo.exists()) {
             continue;
-        }        
-        if (info.isFile()) {
-            bool b = QFile::copy(fileName,QFileInfo(dir,info.fileName()).filePath());
-            if (!b) {
-                m_liteApp->appendLog("FolderView",QString("copy file %1=>%2 false!").arg(fileName).arg(dir.absolutePath()),true);
-            }
-        } else if(info.isDir()) {
-            QString chkPath = QDir::cleanPath(info.absoluteFilePath());
-            if (curPath == chkPath || curPath.startsWith(chkPath+"/")) {
+        }
+
+        if(orginfo.isDir()) {
+            QString chkPath = QDir::cleanPath(orginfo.canonicalFilePath());
+            if (chkPath == dstPath || dstPath.startsWith(chkPath+"/")) {
                 m_liteApp->appendLog("FolderView",QString("cannot copy path self %1").arg(chkPath),true);
                 continue;
             }
-            copy_dir(fileName,dir.absolutePath());
+        }
+
+        QString dstName = orginfo.fileName();
+        QString dstFileName = orginfo.canonicalFilePath();
+        // check Duplicate
+        if (orginfo.canonicalPath() == dstPath) {
+            int num = 0;
+            while (QFileInfo(dir,dstName).exists()) {
+                dstName = orginfo.baseName()+" copy";
+                if (num > 0) {
+                    dstName += " "+QString::number(num);
+                }
+                if (!orginfo.completeSuffix().isEmpty()) {
+                    dstName += "."+orginfo.completeSuffix();
+                }
+                num++;
+            }
+            //upadte filename
+            dstFileName = QFileInfo(dir,dstName).filePath();
+        }
+
+        // check over name
+        int flag = 0;
+        if (QFileInfo(dir,dstName).exists()) {
+            if (allflag == 0) {
+                QMessageBox msgbox;
+                msgbox.setIcon(QMessageBox::Question);
+                msgbox.setInformativeText(QString(tr("An item \"%1\" already exists in this location. Do you want to replace it and move old item to trash?")).arg(dstName));
+                QPushButton *stop = msgbox.addButton(tr("Stop"), QMessageBox::RejectRole);
+                QPushButton *keepBoth = msgbox.addButton(tr("Keep Both"), QMessageBox::ActionRole);
+                QPushButton *keepBothAll = msgbox.addButton(tr("Keep Both All"), QMessageBox::ActionRole);
+                QPushButton *replace = msgbox.addButton(tr("Replace"), QMessageBox::ActionRole);
+                QPushButton *replaceAll = msgbox.addButton(tr("Replace All"), QMessageBox::ActionRole);
+                msgbox.setDefaultButton(stop);
+                int ret = msgbox.exec();
+                //stop button
+                if (ret == QMessageBox::Rejected) {
+                    break;
+                }
+                QPushButton *btn = (QPushButton*)msgbox.clickedButton();
+                if (btn == keepBoth) {
+                    flag = 1;
+                } else if (btn == keepBothAll) {
+                    allflag = 1;
+                    flag = 1;
+                } else if (btn == replace) {
+                    flag = 2;
+                } else if (btn == replaceAll) {
+                    allflag = 2;
+                    flag = 2;
+                }
+            } else {
+                flag = allflag;
+            }
+        }
+        if (flag == 1) {
+            int num = 0;
+            while (QFileInfo(dir,dstName).exists()) {
+                dstName = orginfo.baseName();
+                if (num > 0) {
+                    dstName += " "+QString::number(num);
+                }
+                if (!orginfo.completeSuffix().isEmpty()) {
+                    dstName += "."+orginfo.completeSuffix();
+                }
+                num++;
+            }
+            //upadte filename
+            dstFileName = QFileInfo(dir,dstName).filePath();
+        } else if (flag == 2) {
+            FileUtil::moveToTrash(QFileInfo(dir,dstName).filePath());
+        }
+
+        if (orginfo.isFile()) {
+            bool b = QFile::copy(fileName,QFileInfo(dir,dstName).filePath());
+            if (!b) {
+                m_liteApp->appendLog("FolderView",QString("cannot paste file %1").arg(fileName),true);
+            }
+        } else if(orginfo.isDir()) {
+            copy_dir(orginfo.filePath(),dstPath,dstName);
         }
     }
 }
@@ -504,6 +583,11 @@ void BaseFolderView::moveToTrash()
             }
         }
     }
+}
+
+void BaseFolderView::removeIndex(const QModelIndex &index)
+{
+
 }
 
 QFileInfo BaseFolderView::fileInfo(const QModelIndex &index) const

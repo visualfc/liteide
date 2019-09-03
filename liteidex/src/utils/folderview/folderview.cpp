@@ -144,6 +144,15 @@ bool FolderView::isShowDetails() const
     return m_model->isShowDetails();
 }
 
+void FolderView::removeIndex(const QModelIndex &index)
+{
+    QModelIndex i = index;
+    if (m_proxy) {
+        i = m_proxy->mapToSource(index);
+    }
+    m_model->remove(i);
+}
+
 void FolderView::setShowDetails(bool b)
 {
     m_model->setShowDetails(b);

@@ -48,6 +48,7 @@ public:
     QModelIndex indexForPath(const QString &fileName);
     void reload();
     bool isShowDetails() const;
+    virtual void removeIndex(const QModelIndex &index);
 public slots:
     void setShowDetails(bool b);
 public slots:
