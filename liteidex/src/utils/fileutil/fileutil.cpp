@@ -26,8 +26,13 @@
 #include <QDir>
 #include <QProcess>
 #include <QProcessEnvironment>
-#include <QDesktopServices>
 #include <QDebug>
+#include <QProcess>
+#include <QDesktopServices>
+#if QT_VERSION >= 0x050000
+#include <QStandardPaths>
+#endif
+
 
 #ifdef WIN32
 #include <windows.h>
@@ -608,5 +613,158 @@ void FileUtil::openInShell(const QProcessEnvironment &env, const QString &file)
 //    p.startDetached();
 //#else
     startDetachedEx(cmd,args,path);
+}
+
+
+struct Trash
+{
+    Trash()
+    {
+#ifdef Q_OS_LINUX
+        bInitTrash = false;
+        init();
+#endif
+    }
+    bool isValid() const
+    {
+#ifdef Q_OS_MAC
+        return true;
+#endif
+#ifdef Q_OS_WIN
+        return true;
+#endif
+#ifdef Q_OS_LINUX
+        return this->bInitTrash;
+#endif
+        return false;
+    }
+    bool moveToTrash(QString fileName)
+    {
+        QFileInfo fileinfo(fileName);
+        if (!fileinfo.exists()) {
+            return false;
+        }
+#ifdef Q_OS_MAC
+//    int status = QProcess::execute(QString::fromLatin1("osascript"),
+//                                   QStringList() << "-e" << "on run argv"
+//                                   << "-e" << "repeat with f in argv"
+//                                   << "-e" << "set x to (POSIX file f) as string"
+//                                   << "-e" << "tell application \"Finder\" to delete x"
+//                                   << "-e" << "end"
+//                                   << "-e" << "end"
+//                                   << fileName);
+    int status = QProcess::execute("/usr/bin/osascript",
+                                   QStringList() << "-e"
+                                   << QString("tell application \"Finder\" to delete (POSIX file \"%1\")").arg(fileName));
+    return status == 0;
+#endif
+
+#ifdef Q_OS_WIN
+    WCHAR from[ MAX_PATH ];
+    memset( from, 0, sizeof( from ));
+    int l = fileinfo.absoluteFilePath().toWCharArray( from );
+    Q_ASSERT( 0 <= l && l < MAX_PATH );
+    from[ l ] = '\0';
+    SHFILEOPSTRUCT fileop;
+    memset( &fileop, 0, sizeof( fileop ) );
+    fileop.wFunc = FO_DELETE;
+    fileop.pFrom = from;
+    fileop.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT;
+    int rv = SHFileOperation( &fileop );
+    return rv == 0;
+#endif
+
+#ifdef Q_OS_LINUX
+    QFileInfo original( fileName );
+    if( !original.exists() )
+        return false;
+    QString info;
+    info += "[Trash Info]\nPath=";
+    info += original.absoluteFilePath();
+    info += "\nDeletionDate=";
+    info += QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss");
+    info += "\n";
+    QString trashname = original.fileName();
+    QString infopath = TrashPathInfo + "/" + trashname + ".trashinfo";
+    QString filepath = TrashPathFiles + "/" + trashname;
+    int nr = 1;
+    while( QFileInfo( infopath ).exists() || QFileInfo( filepath ).exists() ){
+        nr++;
+        trashname = original.baseName() + "." + QString::number( nr );
+        if( !original.completeSuffix().isEmpty() ){
+            trashname += QString( "." ) + original.completeSuffix();
+        }
+        infopath = TrashPathInfo + "/" + trashname + ".trashinfo";
+        filepath = TrashPathFiles + "/" + trashname;
+    }
+    QDir dir;
+    if( !dir.rename( original.absoluteFilePath(), filepath ) ){
+        return false;
+    }
+    QFile f(infopath);
+    if (f.open(QFile::WriteOnly)) {
+        f.write(info.toUtf8());
+    }
+    return true;
+#endif
+    return false;
+    }
+#ifdef Q_OS_LINUX
+    bool init()
+    {
+        QStringList paths;
+        const char* xdg_data_home = getenv( "XDG_DATA_HOME" );
+        if( xdg_data_home ){
+            QString xdgTrash( xdg_data_home );
+            paths.append( xdgTrash + "/Trash" );
+        }
+#if QT_VERSION >= 0x050000
+        QString home = QStandardPaths::writableLocation( QStandardPaths::HomeLocation );
+#else
+        QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
+        paths.append( home + "/.local/share/Trash" );
+        paths.append( home + "/.trash" );
+        foreach( QString path, paths ){
+            if( TrashPath.isEmpty() ){
+                QDir dir( path );
+                if( dir.exists() ){
+                    TrashPath = path;
+                }
+            }
+        }
+        if( TrashPath.isEmpty() )
+            return 1;
+        TrashPathInfo = TrashPath + "/info";
+        TrashPathFiles = TrashPath + "/files";
+        if( !QDir( TrashPathInfo ).exists() || !QDir( TrashPathFiles ).exists() )
+            return false;
+        bInitTrash = true;
+        return true;
+    }
+#endif
+public:
+#ifdef Q_OS_LINUX
+     bool bInitTrash;
+     QString TrashPath;
+     QString TrashPathInfo;
+     QString TrashPathFiles;
+#endif
+};
+
+static Trash* getTrash()
+{
+    static Trash trash;
+    return &trash;
+}
+
+bool FileUtil::hasTrash()
+{
+    return getTrash()->isValid();
+}
+
+bool FileUtil::moveToTrash(const QString &fileName)
+{
+    return getTrash()->moveToTrash(fileName);
 }
 

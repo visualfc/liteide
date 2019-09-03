@@ -46,6 +46,8 @@ struct FileUtil
     static bool CopyDirectory(const QString &src, const QString &dest);
     static void openInExplorer(const QString &path);
     static void openInShell(const QProcessEnvironment &env, const QString &path);
+    static bool hasTrash();
+    static bool moveToTrash(const QString &fileName);
 };
 
 struct GoExecute
