@@ -117,7 +117,7 @@ QFileInfo FolderView::fileInfo(const QModelIndex &index) const
         return m_model->fileInfo(index);
 }
 
-QModelIndex FolderView::indexForPath(const QString &fileName)
+QModelIndex FolderView::indexForPath(const QString &fileName) const
 {
     QString filePath = QDir::fromNativeSeparators(fileName);
     if (!filePath.startsWith(this->rootPath()+"/")) {
@@ -142,6 +142,11 @@ void FolderView::reload()
 bool FolderView::isShowDetails() const
 {
     return m_model->isShowDetails();
+}
+
+QModelIndex FolderView::findIndexForContext(const QString &filePath) const
+{
+    return this->indexForPath(filePath);
 }
 
 void FolderView::removeIndex(const QModelIndex &index)

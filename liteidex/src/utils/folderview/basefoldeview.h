@@ -60,6 +60,7 @@ public slots:
     virtual bool canPasteFile();
     virtual void moveToTrash();
 public:
+    virtual QModelIndex findIndexForContext(const QString &filePath) const;
     virtual void removeIndex(const QModelIndex &index);
     virtual QFileInfo fileInfo(const QModelIndex &index) const;
 protected:

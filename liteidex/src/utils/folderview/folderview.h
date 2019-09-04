@@ -45,9 +45,10 @@ public:
     void setNameFilters(const QStringList &filters);
     QStringList nameFilters() const;
     QFileInfo fileInfo(const QModelIndex &index) const;
-    QModelIndex indexForPath(const QString &fileName);
+    QModelIndex indexForPath(const QString &fileName) const;
     void reload();
     bool isShowDetails() const;
+    virtual QModelIndex findIndexForContext(const QString &filePath) const;
     virtual void removeIndex(const QModelIndex &index);
 public slots:
     void setShowDetails(bool b);

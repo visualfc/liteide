@@ -145,6 +145,21 @@ bool MultiFolderView::isShowDetails() const
     return m_model->isShowDetails();
 }
 
+QModelIndex MultiFolderView::findIndexForContext(const QString &filePath) const
+{
+    if (!m_contextIndex.isValid()) {
+        return QModelIndex();
+    }
+    QModelIndex si = m_model->mapToSource(m_contextIndex);
+    QModelIndexList list = this->indexForPath(filePath);
+    foreach (QModelIndex index, list) {
+        if (m_model->mapToSource(index).model() == si.model()) {
+            return index;
+        }
+    }
+    return QModelIndex();
+}
+
 void MultiFolderView::removeIndex(const QModelIndex &index)
 {
     m_model->remove(index);

@@ -443,11 +443,17 @@ void BaseFolderView::pasteFile()
             continue;
         }
 
-        if(orginfo.isDir()) {
+        if(orginfo.isDir() && orginfo.canonicalPath() != dstPath) {
             QString chkPath = QDir::cleanPath(orginfo.canonicalFilePath());
             if (chkPath == dstPath || dstPath.startsWith(chkPath+"/")) {
-                m_liteApp->appendLog("FolderView",QString("cannot copy path self %1").arg(chkPath),true);
+                m_liteApp->appendLog("FolderView",QString("You can't paste \"%1\" at this location because you can't paste an item into itselft.").arg(chkPath),true);
                 continue;
+            }
+            if (QFileInfo(dir,orginfo.fileName()).exists()){
+                if (chkPath.startsWith(dstPath+"/"+orginfo.fileName()+"/")) {
+                    m_liteApp->appendLog("FolderView",QString("The folder \"%1\" can't be replaced by an item it contains.").arg(chkPath),true);
+                    continue;
+                }
             }
         }
 
@@ -583,6 +589,11 @@ void BaseFolderView::moveToTrash()
             }
         }
     }
+}
+
+QModelIndex BaseFolderView::findIndexForContext(const QString &/*filePath*/) const
+{
+    return QModelIndex();
 }
 
 void BaseFolderView::removeIndex(const QModelIndex &index)
