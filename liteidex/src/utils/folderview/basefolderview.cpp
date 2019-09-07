@@ -438,7 +438,7 @@ void BaseFolderView::pasteFile()
             continue;
         }
         QString fileName = url.toLocalFile();
-        QFileInfo orginfo(fileName);
+        QFileInfo orginfo(QDir::cleanPath(fileName));
         if (!orginfo.exists()) {
             continue;
         }
@@ -456,6 +456,7 @@ void BaseFolderView::pasteFile()
                 }
             }
         }
+
 
         QString dstName = orginfo.fileName();
         QString dstFileName = orginfo.canonicalFilePath();
@@ -536,6 +537,7 @@ void BaseFolderView::pasteFile()
         } else if(orginfo.isDir()) {
             copy_dir(orginfo.filePath(),dstPath,dstName);
         }
+        qApp->processEvents();
     }
 }
 
