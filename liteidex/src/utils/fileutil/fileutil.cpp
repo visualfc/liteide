@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QDesktopServices>
+#include <QDateTime>
 #if QT_VERSION >= 0x050000
 #include <QStandardPaths>
 #endif
