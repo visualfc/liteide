@@ -312,7 +312,12 @@ void Lexer::scan_helper(Token *tok)
                         yyinp();
                         // ### CPP_CHECK(std::isdigit(_yychar));
                     }
-                } else if (std::isalnum(_yychar) || _yychar == '.' || _yychar == '_' || _yychar == '-') {
+                } else if (_yychar == 'p' || _yychar == 'P'){
+                    yyinp();
+                    if (_yychar == '-') {
+                        yyinp();
+                    }
+                } else if (std::isalnum(_yychar) || _yychar == '.' || _yychar == '_') {
                     yyinp();
                 } else {
                     break;
@@ -781,7 +786,12 @@ void Lexer::scanNumericLiteral(Token *tok)
                 yyinp();
                 // ### CPP_CHECK(std::isdigit(_yychar));
             }
-        } else if (std::isalnum(_yychar) || _yychar == '.' || _yychar == '_' || _yychar == '-') {
+        } else if (_yychar == 'p' || _yychar == 'P'){
+            yyinp();
+            if (_yychar == '-') {
+                yyinp();
+            }
+        } else if (std::isalnum(_yychar) || _yychar == '.' || _yychar == '_') {
             yyinp();
         } else {
             break;
