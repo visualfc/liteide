@@ -3,6 +3,9 @@
 
 #include <QGraphicsView>
 
+class QGestureEvent;
+class QPinchGesture;
+class QPanGesture;
 class ImageEditorWidget : public QGraphicsView
 {
 public:
@@ -15,6 +18,9 @@ public:
 protected:
     void drawBackground(QPainter *p, const QRectF &);
     void wheelEvent(QWheelEvent *event);
+    bool event(QEvent *event);
+    bool gestureEvent(QGestureEvent *event);
+    void pinchTriggered(QPinchGesture *gesture);
 protected:
     QGraphicsItem *m_imageItem;
     double m_scaleFactor;
