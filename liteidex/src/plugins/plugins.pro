@@ -28,8 +28,8 @@ SUBDIRS = \
     rustedit \
     dlvdebugger \
     fakevimedit \
-    bookmarks
-
+    bookmarks \
+    imageeditor
 
 contains(DEFINES, LITEIDE_QTWEBKIT) {
     SUBDIRS += webkithtmlwidget
