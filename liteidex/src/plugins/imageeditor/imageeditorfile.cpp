@@ -105,6 +105,15 @@ void ImageEditorFile::setPaused(bool paused)
     emit isPausedChanged(m_isPaused);
 }
 
+QSize ImageEditorFile::imageSize() const
+{
+    if (m_item) {
+        QRectF sz = m_item->boundingRect();
+        return  QSize(sz.width(),sz.height());
+    }
+    return QSize();
+}
+
 void ImageEditorFile::clear()
 {
     if (m_movie) {

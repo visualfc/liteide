@@ -13,7 +13,7 @@ ImageEditorWidget::ImageEditorWidget()
 {
     setScene(new QGraphicsScene(this));
     setTransformationAnchor(AnchorUnderMouse);
-    setDragMode(ScrollHandDrag);
+    setDragMode(RubberBandDrag);
     setViewportUpdateMode(FullViewportUpdate);
     setFrameShape(QFrame::NoFrame);
     setRenderHint(QPainter::SmoothPixmapTransform);
@@ -51,6 +51,7 @@ void ImageEditorWidget::setImageItem(QGraphicsItem *item)
         item->setZValue(0);
         s->addItem(item);
     }
+    this->resetSize();
 }
 
 
@@ -78,7 +79,7 @@ void ImageEditorWidget::doScale(qreal factor)
         actualFactor = 0.001/currentScale;
 
     scale(actualFactor, actualFactor);
-   // emitScaleFactor();
+    emitScaleFactor();
     QGraphicsPixmapItem *pix = dynamic_cast<QGraphicsPixmapItem*>(m_imageItem);
     if (pix) {
         pix->setTransformationMode(
@@ -140,3 +141,27 @@ void ImageEditorWidget::zoomOut()
 {
     doScale(1.0 / m_scaleFactor);
 }
+
+void ImageEditorWidget::resetSize()
+{
+    resetTransform();
+    emitScaleFactor();
+}
+
+void ImageEditorWidget::fitToView()
+{
+    fitInView(m_imageItem, Qt::KeepAspectRatio);
+    emitScaleFactor();
+}
+
+void ImageEditorWidget::emitScaleFactor()
+{
+    qreal factor = transform().m11();
+    emit scaleFactorChanged(factor);
+}
+
+qreal ImageEditorWidget::scaleFactor() const
+{
+    return transform().m11();
+}
+

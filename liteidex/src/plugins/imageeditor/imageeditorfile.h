@@ -42,6 +42,7 @@ public:
     QString filePath() const {
         return  m_filePath;
     }
+    QSize imageSize() const;
     void clear();
 signals:
     void isPausedChanged(bool);

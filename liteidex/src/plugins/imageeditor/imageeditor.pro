@@ -24,3 +24,6 @@ HEADERS +=\
         imageeditorfile.h \
         imageeditorplugin.h \
         imageeditorwidget.h
+
+RESOURCES += \
+    imageeditor.qrc

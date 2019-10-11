@@ -2,13 +2,63 @@
 #include "imageeditorfile.h"
 #include "imageeditorwidget.h"
 #include <QFileInfo>
+#include <QVBoxLayout>
+#include <QAction>
+#include <QLabel>
 #include <QDebug>
 
 ImageEditor::ImageEditor(LiteApi::IApplication *app)
     : m_liteApp(app)
 {
     m_file = new ImageEditorFile(m_liteApp,this);
-    m_widget = new ImageEditorWidget;
+    m_imageWidget = new ImageEditorWidget;
+    m_widget = new QWidget;
+    m_toolBar = new QToolBar;
+
+    m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+
+    QAction *zoomInAct = new QAction(tr("ZoomIn"),this);
+    zoomInAct->setIcon(QIcon("icon:/imageeditor/images/zoomin.png"));
+
+    QAction *zoomOutAct = new QAction(tr("ZoomOut"),this);
+    zoomOutAct->setIcon(QIcon("icon:/imageeditor/images/zoomout.png"));
+
+    QAction *resetSizeAct = new QAction(tr("Reset to original size"),this);
+    resetSizeAct->setIcon(QIcon("icon:/imageeditor/images/resetsize.png"));
+
+    QAction *fitViewAct = new QAction(tr("Fit to view"),this);
+    fitViewAct->setIcon(QIcon("icon:/imageeditor/images/fitview.png"));
+
+
+    connect(zoomInAct,SIGNAL(triggered()),m_imageWidget,SLOT(zoomIn()));
+    connect(zoomOutAct,SIGNAL(triggered()),m_imageWidget,SLOT(zoomOut()));
+    connect(resetSizeAct,SIGNAL(triggered()),m_imageWidget,SLOT(resetSize()));
+    connect(fitViewAct,SIGNAL(triggered()),m_imageWidget,SLOT(fitToView()));
+
+    connect(m_imageWidget,SIGNAL(scaleFactorChanged(qreal)),this,SLOT(scaleFactorChanged(qreal)));
+
+    m_imageInfo = new QLabel;
+    m_imageInfo->setText("32x32");
+
+    m_scaleInfo = new QLabel;
+    m_scaleInfo->setText("100.00%");
+
+    m_toolBar->addAction(zoomInAct);
+    m_toolBar->addAction(zoomOutAct);
+    m_toolBar->addAction(resetSizeAct);
+    m_toolBar->addAction(fitViewAct);
+    m_toolBar->addSeparator();
+    m_toolBar->addWidget(m_imageInfo);
+    m_toolBar->addSeparator();
+    m_toolBar->addWidget(m_scaleInfo);
+    m_toolBar->addSeparator();
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->addWidget(m_toolBar);
+    layout->addWidget(m_imageWidget);
+    m_widget->setLayout(layout);
 }
 
 ImageEditor::~ImageEditor()
@@ -30,7 +80,9 @@ QString ImageEditor::name() const
 bool ImageEditor::open(const QString &filePath, const QString &mimeType)
 {
     bool b = m_file->open(filePath,mimeType);
-    m_widget->setImageItem(m_file->graphicsItem());
+    m_imageWidget->setImageItem(m_file->graphicsItem());
+    QSize sz = m_file->imageSize();
+    m_imageInfo->setText(QString("%1x%2").arg(sz.width()).arg(sz.height()));
     return  b;
 }
 
@@ -43,7 +95,9 @@ bool ImageEditor::reload()
     QString mimeType = m_file->mimeType();
     m_file->clear();
     bool b = m_file->open(filePath,mimeType);
-    m_widget->setImageItem(m_file->graphicsItem());
+    m_imageWidget->setImageItem(m_file->graphicsItem());
+    QSize sz = m_file->imageSize();
+    m_imageInfo->setText(QString("%1x%2").arg(sz.width()).arg(sz.height()));
     return b;
 }
 
@@ -95,4 +149,10 @@ bool ImageEditor::restoreState(const QByteArray &array)
 void ImageEditor::onActive()
 {
 
+}
+
+void ImageEditor::scaleFactorChanged(qreal factor)
+{
+    QString info = QString::number(factor * 100, 'f', 2) + QLatin1Char('%');
+    m_scaleInfo->setText(info);
 }

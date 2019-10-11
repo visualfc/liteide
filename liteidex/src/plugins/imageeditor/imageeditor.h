@@ -5,8 +5,11 @@
 
 class ImageEditorFile;
 class ImageEditorWidget;
+class QLabel;
+class QToolBar;
 class ImageEditor : public LiteApi::IEditor
 {
+    Q_OBJECT
 public:
     ImageEditor(LiteApi::IApplication *app);
     virtual ~ImageEditor();
@@ -24,10 +27,16 @@ public:
     virtual QByteArray saveState() const;
     virtual bool restoreState(const QByteArray &array);
     virtual void onActive();
+public slots:
+    void scaleFactorChanged(qreal factor);
 protected:
     LiteApi::IApplication *m_liteApp;
     ImageEditorFile *m_file;
-    ImageEditorWidget *m_widget;
+    ImageEditorWidget *m_imageWidget;
+    QWidget *m_widget;
+    QToolBar *m_toolBar;
+    QLabel *m_imageInfo;
+    QLabel *m_scaleInfo;
 };
 
 
