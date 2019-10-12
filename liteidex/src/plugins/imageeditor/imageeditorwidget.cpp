@@ -1,4 +1,5 @@
 #include "imageeditorwidget.h"
+#include "imageeditorfile.h"
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QWheelEvent>
@@ -150,7 +151,14 @@ void ImageEditorWidget::resetSize()
 
 void ImageEditorWidget::fitToView()
 {
-    fitInView(m_imageItem, Qt::KeepAspectRatio);
+    //fitInView(m_imageItem, Qt::KeepAspectRatio);
+    QRect viewRect = this->viewport()->rect();
+    QRect sceneRect = this->mapFromScene(this->sceneRect()).boundingRect();
+    qreal x = qreal(viewRect.width())/sceneRect.width();
+    qreal y = qreal(viewRect.height())/sceneRect.height();
+    //scale(x,y);
+    qreal v = qMin(x,y);
+    scale(v,v);
     emitScaleFactor();
 }
 

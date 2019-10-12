@@ -11,29 +11,6 @@
 #include <QGraphicsSvgItem>
 #endif
 
-class GraphicsMovieItem : public QObject, public QGraphicsPixmapItem
-{
-    Q_OBJECT
-public:
-    GraphicsMovieItem(QMovie *movie)
-        : m_movie(movie)
-    {
-        setPixmap(m_movie->currentPixmap());
-        connect(m_movie,SIGNAL(update(qreal,qreal,qreal,qreal)),this,SLOT(update(qreal,qreal,qreal,qreal)));
-    }
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override
-    {
-        const bool smoothTransform = painter->worldTransform().m11() < 1;
-        painter->setRenderHint(QPainter::SmoothPixmapTransform, smoothTransform);
-        painter->drawPixmap(offset(), m_movie->currentPixmap());
-    }
-
-private:
-    QMovie *m_movie;
-};
-
-
 ImageEditorFile::ImageEditorFile(LiteApi::IApplication *app, QObject *parent)
     : QObject(parent), m_liteApp(app)
 {
@@ -46,7 +23,6 @@ ImageEditorFile::ImageEditorFile(LiteApi::IApplication *app, QObject *parent)
 ImageEditorFile::~ImageEditorFile()
 {
     clear();
-
 }
 
 bool ImageEditorFile::open(const QString &filePath, const QString &mimeType)
@@ -76,11 +52,12 @@ bool ImageEditorFile::open(const QString &filePath, const QString &mimeType)
             return  false;
         }
         m_movie->setCacheMode(QMovie::CacheAll);
+        m_item = new GraphicsMovieItem(m_movie);
         m_type = Movie;
         connect(m_movie,SIGNAL(finished()),m_movie,SLOT(start()));
         m_movie->start();
-        m_isPaused = false;
-        setPaused(true);
+        //m_isPaused = false;
+        //setPaused(true);
     } else {
         QPixmap pixmap(filePath);
         if (pixmap.isNull()) {
@@ -124,4 +101,28 @@ void ImageEditorFile::clear()
     }
     m_filePath.clear();
     m_type = Invalid;
+}
+
+GraphicsMovieItem::GraphicsMovieItem(QMovie *movie)
+    : m_movie(movie)
+{
+    setPixmap(m_movie->currentPixmap());
+    connect(m_movie,SIGNAL(updated(QRect)),this,SLOT(movieUpdate(QRect)));
+}
+
+void GraphicsMovieItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+{
+    const bool smoothTransform = painter->worldTransform().m11() < 1;
+    painter->setRenderHint(QPainter::SmoothPixmapTransform, smoothTransform);
+    painter->drawPixmap(offset(), m_movie->currentPixmap());
+}
+
+QRectF GraphicsMovieItem::boundingRect() const {
+    QRect rc = m_movie->frameRect();
+    return  QRectF(rc);
+}
+
+void GraphicsMovieItem::movieUpdate(const QRect &rc)
+{
+    QGraphicsPixmapItem::update(rc);
 }
