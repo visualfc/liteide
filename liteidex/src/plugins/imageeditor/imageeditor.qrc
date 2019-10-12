@@ -4,5 +4,9 @@
         <file>images/resetsize.png</file>
         <file>images/zoomin.png</file>
         <file>images/zoomout.png</file>
+        <file>images/play.png</file>
+        <file>images/pause.png</file>
+        <file>images/prevframe.png</file>
+        <file>images/nextframe.png</file>
     </qresource>
 </RCC>

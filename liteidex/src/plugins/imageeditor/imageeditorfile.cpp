@@ -55,9 +55,10 @@ bool ImageEditorFile::open(const QString &filePath, const QString &mimeType)
         m_item = new GraphicsMovieItem(m_movie);
         m_type = Movie;
         connect(m_movie,SIGNAL(finished()),m_movie,SLOT(start()));
+        connect(m_movie,SIGNAL(frameChanged(int)),this,SIGNAL(frameChanged(int)));
         m_movie->start();
-        //m_isPaused = false;
-        //setPaused(true);
+        m_isPaused = false;
+        setPaused(true);
     } else {
         QPixmap pixmap(filePath);
         if (pixmap.isNull()) {
@@ -89,6 +90,48 @@ QSize ImageEditorFile::imageSize() const
         return  QSize(sz.width(),sz.height());
     }
     return QSize();
+}
+
+int ImageEditorFile::frameCount() const
+{
+    if (m_type != Movie) {
+        return 1;
+    }
+    return  m_movie->frameCount();
+}
+
+int ImageEditorFile::currentFrame() const
+{
+    if (m_type != Movie) {
+        return  0;
+    }
+    return  m_movie->currentFrameNumber();
+}
+
+bool ImageEditorFile::jumpToNextFrame()
+{
+    if (m_type != Movie) {
+        return  false;
+    }
+    int cur = m_movie->currentFrameNumber();
+    cur++;
+    if (cur < m_movie->frameCount()) {
+        return  m_movie->jumpToFrame(cur);
+    }
+    return  false;
+}
+
+bool ImageEditorFile::jumpToPrevFrame()
+{
+    if (m_type != Movie) {
+        return  false;
+    }
+    int cur = m_movie->currentFrameNumber();
+    cur--;
+    if (cur >= 0) {
+        return m_movie->jumpToFrame(cur);
+    }
+    return  false;
 }
 
 void ImageEditorFile::clear()

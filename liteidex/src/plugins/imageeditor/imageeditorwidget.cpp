@@ -1,5 +1,4 @@
 #include "imageeditorwidget.h"
-#include "imageeditorfile.h"
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QWheelEvent>

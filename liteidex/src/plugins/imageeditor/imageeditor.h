@@ -29,14 +29,19 @@ public:
     virtual void onActive();
 public slots:
     void scaleFactorChanged(qreal factor);
+    void toggledPlay(bool checked);
+    void frameChanged(int frameNumber);
 protected:
     LiteApi::IApplication *m_liteApp;
     ImageEditorFile *m_file;
     ImageEditorWidget *m_imageWidget;
     QWidget *m_widget;
     QToolBar *m_toolBar;
+    QToolBar *m_mvToolBar;
     QLabel *m_imageInfo;
     QLabel *m_scaleInfo;
+    QLabel *m_frameLabel;
+    QAction *m_playAct;
 };
 
 

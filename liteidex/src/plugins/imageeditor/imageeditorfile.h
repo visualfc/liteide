@@ -7,7 +7,7 @@
 class QGraphicsItem;
 class QPixmap;
 class QMovie;
-class ImageEditorFile : QObject
+class ImageEditorFile : public QObject
 {
     Q_OBJECT
 public:
@@ -45,8 +45,15 @@ public:
     }
     QSize imageSize() const;
     void clear();
+public:
+    int frameCount() const;
+    int currentFrame() const;
+public slots:
+    bool jumpToNextFrame();
+    bool jumpToPrevFrame();
 signals:
     void isPausedChanged(bool);
+    void frameChanged(int frameNumber);
 protected:
     LiteApi::IApplication *m_liteApp;
     QString m_mimeType;
@@ -67,7 +74,7 @@ public:
     QRectF boundingRect() const override;
 public slots:
     void movieUpdate(const QRect &rc);
-public:
+protected:
     QMovie *m_movie;
 };
 
