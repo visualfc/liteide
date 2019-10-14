@@ -70,8 +70,8 @@ class GraphicsMovieItem : public QObject, public QGraphicsPixmapItem
     Q_OBJECT
 public:
     GraphicsMovieItem(QMovie *movie);
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
-    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    QRectF boundingRect() const;
 public slots:
     void movieUpdate(const QRect &rc);
 protected:
