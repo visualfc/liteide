@@ -2,19 +2,38 @@
 #include "mimetype/mimetype.h"
 #include "imageeditor.h"
 #include <QImageReader>
+#if QT_VERSION >= 0x050000
+#include <QMimeDatabase>
+#include <QMimeType>
+#endif
 #include <QDebug>
 
 ImageEditorFactory::ImageEditorFactory(IApplication *app, QObject *parent)
     : LiteApi::IEditorFactory(parent), m_liteApp(app)
 {
 #if QT_VERSION >= 0x050000
+    QList<QByteArray> supportFormats = QImageReader::supportedImageFormats();
+    QMimeDatabase db;
     foreach (QByteArray _type, QImageReader::supportedMimeTypes()) {
         QString type = QString::fromUtf8(_type);
+        QMimeType mt = db.mimeTypeForName(type);
+        if (!mt.isValid()) {
+            continue;
+        }
+        QStringList patterns;
+        foreach(QString fmt, mt.suffixes()) {
+            if (supportFormats.contains(fmt.toUtf8())) {
+                patterns << "*."+fmt;
+            }
+        }
+        if (patterns.isEmpty()) {
+            continue;
+        }
         MimeType *mimeType = new MimeType;
         mimeType->setType(type);
-        mimeType->setComment(QString("%1 Image").arg(type));
-        foreach(QByteArray fmt, QImageReader::imageFormatsForMimeType(_type)) {
-            mimeType->appendGlobPatterns("*."+QString::fromUtf8(fmt));
+        mimeType->setComment(mt.comment());
+        foreach (QString p, patterns) {
+            mimeType->appendGlobPatterns(p);
         }
         m_liteApp->mimeTypeManager()->addMimeType(mimeType);
         m_mimeTypes.append(type);
