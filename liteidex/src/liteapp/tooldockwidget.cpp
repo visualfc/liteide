@@ -161,6 +161,7 @@ void BaseDockWidget::actionChanged()
             int index = m_comboBox->findData(action->objectName());
             if (index >= 0) {
                 m_comboBox->setCurrentIndex(index);
+                m_titleLabel->setText(m_comboBox->currentText());
             }
         }
     } else if (action == current) {
