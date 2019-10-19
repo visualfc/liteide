@@ -31,6 +31,7 @@
 #include <QPointer>
 #include <QAction>
 
+class QVBoxLayout;
 class BaseDockWidget : public QDockWidget
 {
     Q_OBJECT
@@ -44,6 +45,11 @@ public:
     virtual void setWidgetActions(QList<QAction*> actions);
     virtual void addAction(QAction *act, const QString &title);
     virtual void removeAction(QAction *act);
+    virtual void setWidget(QWidget *widget);
+    virtual QWidget *widget() const;
+    int currentIndex() const {
+        return m_comboBox->currentIndex();
+    }
 protected slots:
     virtual void actionChanged();
     virtual void activeComboBoxIndex(int);
@@ -51,10 +57,13 @@ protected slots:
     void  setFloatingWindow(bool b);
 protected:
     QToolBar *m_toolBar;
-    QLabel   *m_titleLabel;
+    QWidget  *m_widget;
+    QWidget  *m_mainWidget;
+    QVBoxLayout *m_mainLayout;
+    //QLabel   *m_titleLabel;
     QComboBox *m_comboBox;
     QAction *m_comboBoxAct;
-    QAction *m_titleLabelAct;
+    //QAction *m_titleLabelAct;
     QAction  *m_spacerAct;
     QAction  *m_closeAct;
     QAction  *m_floatAct;
@@ -70,6 +79,7 @@ class SplitDockWidget : public BaseDockWidget
 public:
     explicit SplitDockWidget(QSize iconSize, QWidget *parent = 0);
     void createMenu(Qt::DockWidgetArea area, bool split);
+    void setWindowTitle(const QString &text);
 signals:
     void moveActionTo(Qt::DockWidgetArea, Qt::DockWidgetArea, QAction*, bool);
 protected slots:
@@ -79,6 +89,7 @@ protected slots:
     void moveActionSplit();
 protected:
     Qt::DockWidgetArea m_area;
+    QString m_areaInfo;
 };
 
 class OutputDockWidget : public BaseDockWidget
@@ -87,6 +98,7 @@ class OutputDockWidget : public BaseDockWidget
 public:
     explicit OutputDockWidget(QSize iconSize, QWidget *parent = 0);
     void createMenu(Qt::DockWidgetArea area);
+    virtual void setWindowTitle(const QString &text);
 signals:
     void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea, QAction*);
 protected slots:

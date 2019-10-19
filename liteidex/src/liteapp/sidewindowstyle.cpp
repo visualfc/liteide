@@ -53,9 +53,11 @@ void SideDockWidget::createMenu(Qt::DockWidgetArea area)
     if (area == Qt::LeftDockWidgetArea) {
         sideAct->setText(tr("RightSideBar"));
         sideAct->setData(Qt::RightDockWidgetArea);
+        m_areaInfo = tr("LeftDockWidgt");
     } else {
         sideAct->setText(tr("LeftSideBar"));
         sideAct->setData(Qt::LeftDockWidgetArea);
+        m_areaInfo = tr("RightDockWidget");
     }
     m_moveMenu->addAction(sideAct);
     QAction *outAct = new QAction(tr("OutputBar"),this);
@@ -115,7 +117,7 @@ void SideDockWidget::setCheckedAction(QAction *action)
     for (int i = 0; i < m_comboBox->count(); i++) {
         if (m_comboBox->itemData(i).toString() == action->objectName()) {
             m_comboBox->setCurrentIndex(i);
-            m_titleLabel->setText(m_comboBox->currentText());
+            //m_titleLabel->setText(m_comboBox->currentText());
             break;
         }
     }
@@ -160,6 +162,11 @@ void SideDockWidget::setActions(const QMap<QAction *, SideActionState *> &m)
     m_menu->addAction(m_floatAct);
     m_menu->addMenu(m_moveMenu);
     m_comboBox->setCurrentIndex(cur);
+}
+
+void SideDockWidget::setWindowTitle(const QString &text)
+{
+    BaseDockWidget::setWindowTitle(m_areaInfo+"  -  "+text);
 }
 
 SideActionBar::SideActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area)
@@ -458,7 +465,11 @@ void OutputActionBar::dockVisible(bool b)
     if (action) {
         action->setChecked(m_dock->isVisible());
     } else if (b && !m_dock->actions().isEmpty()) {
-        m_dock->actions().first()->setChecked(true);
+       // m_dock->actions().first()->setChecked(true)
+        int index = m_dock->currentIndex();
+        if (index >= 0 && index < m_dock->actions().size()) {
+            m_dock->actions()[index]->setChecked(true);
+        }
     }
 }
 

@@ -27,6 +27,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QHBoxLayout>
+#include <QHBoxLayout>
 #include <QVariant>
 #include <QMenu>
 #include <QToolButton>
@@ -44,6 +45,14 @@
 BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     QDockWidget(parent), current(0)
 {
+    m_mainWidget = new QWidget;
+    m_widget = 0;
+    QDockWidget::setWidget(m_mainWidget);
+    m_mainLayout = new QVBoxLayout;
+    m_mainLayout->setMargin(0);
+    m_mainLayout->setSpacing(1);
+    m_mainWidget->setLayout(m_mainLayout);
+
     m_comboBox = new QComboBox;
     m_comboBox->setMinimumContentsLength(4);
     //m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -53,11 +62,11 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     m_toolBar->setContentsMargins(0, 0, 0, 0);
     m_toolBar->setIconSize(iconSize);
     //m_toolBar->setFixedHeight(24);
-    m_titleLabel = new QLabel;
-    m_titleLabel->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
+//    m_titleLabel = new QLabel;
+//    m_titleLabel->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
     m_comboBoxAct = m_toolBar->addWidget(m_comboBox);
-    m_titleLabelAct = m_toolBar->addWidget(m_titleLabel);
-    m_titleLabelAct->setChecked(false);
+//    m_titleLabelAct = m_toolBar->addWidget(m_titleLabel);
+//    m_titleLabelAct->setChecked(false);
 
     QWidget *spacer = new QWidget;
     spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
@@ -144,6 +153,24 @@ void BaseDockWidget::removeAction(QAction *action)
     }
 }
 
+void BaseDockWidget::setWidget(QWidget *widget)
+{
+    if (m_widget) {
+        m_mainLayout->removeWidget(m_widget);
+        m_widget->setVisible(false);
+    }
+    m_widget = widget;
+    if (m_widget) {
+        m_mainLayout->addWidget(m_widget);
+        m_widget->setVisible(true);
+    }
+}
+
+QWidget *BaseDockWidget::widget() const
+{
+    return m_widget;
+}
+
 QAction * BaseDockWidget::checkedAction () const
 {
     return current;
@@ -161,7 +188,7 @@ void BaseDockWidget::actionChanged()
             int index = m_comboBox->findData(action->objectName());
             if (index >= 0) {
                 m_comboBox->setCurrentIndex(index);
-                m_titleLabel->setText(m_comboBox->currentText());
+                //m_titleLabel->setText(m_comboBox->currentText());
             }
         }
     } else if (action == current) {
@@ -187,13 +214,22 @@ void BaseDockWidget::activeComboBoxIndex(int index)
 
 void BaseDockWidget::topLevelChanged(bool b)
 {
-    m_comboBoxAct->setVisible(!b);
-    m_titleLabel->setText(m_comboBox->currentText());
-    m_titleLabelAct->setVisible(b);
+   // m_comboBoxAct->setVisible(!b);
+//    m_titleLabel->setText(m_comboBox->currentText());
+//    m_titleLabelAct->setVisible(b);
+    m_closeAct->setVisible(!b);
     DockWidgetFeatures flags = this->features();
     if (b) {
+        this->setTitleBarWidget(0);
+        m_mainLayout->insertWidget(0,m_toolBar);
+        m_mainLayout->setMargin(2);
+        m_toolBar->setVisible(true);
         flags |= QDockWidget::DockWidgetFloatable;
     } else {
+        m_mainLayout->setMargin(0);
+        m_toolBar->setVisible(false);
+        m_mainLayout->removeWidget(m_toolBar);
+        this->setTitleBarWidget(m_toolBar);
         flags &= (~QDockWidget::DockWidgetFloatable);
     }
     this->setFeatures(flags);
@@ -250,6 +286,7 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::TopDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
+        m_areaInfo = split ? tr("TopDockWidget (Split)") : tr("TopDockWidget");
     }
     if (area != Qt::BottomDockWidgetArea) {
         QAction *act = new QAction(tr("Bottom"),this);
@@ -260,6 +297,7 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::BottomDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
+        m_areaInfo = split ? tr("BottomDockWidget (Split)") : tr("BottomDockWidget");
     }
     if (area != Qt::LeftDockWidgetArea) {
         QAction *act = new QAction(tr("Left"),this);
@@ -270,6 +308,7 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::LeftDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
+        m_areaInfo = split ? tr("LeftDockWidget (Split)") : tr("LeftDockWidget");
     }
     if (area != Qt::RightDockWidgetArea) {
         QAction *act = new QAction(tr("Right"),this);
@@ -280,6 +319,7 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::RightDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
+        m_areaInfo = split ? tr("RightDockWidget (Split)") : tr("RightDockWidget");
     }
 
     QMenu *menu = new QMenu(this);
@@ -313,6 +353,11 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
     btn->setToolTip(tr("Move To"));
     btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
     m_toolBar->insertWidget(m_closeAct,btn);
+}
+
+void SplitDockWidget::setWindowTitle(const QString &text)
+{
+    BaseDockWidget::setWindowTitle(m_areaInfo+"  -  "+text);
 }
 
 void SplitDockWidget::moveAction()
@@ -401,6 +446,11 @@ void OutputDockWidget::createMenu(Qt::DockWidgetArea area)
     btn->setToolTip(tr("Move To"));
     btn->setStyleSheet("QToolButton::menu-indicator {image: none;}");
     m_toolBar->insertWidget(m_closeAct,btn);
+}
+
+void OutputDockWidget::setWindowTitle(const QString &text)
+{
+    BaseDockWidget::setWindowTitle(QString(tr("BottomDockWidget"))+"  -  "+text);
 }
 
 void OutputDockWidget::moveAction()

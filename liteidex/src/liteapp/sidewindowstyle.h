@@ -48,6 +48,7 @@ public:
     void createMenu(Qt::DockWidgetArea area);
     void setCheckedAction(QAction *action);
     void setActions(const QMap<QAction*,SideActionState*> &m);
+    virtual void setWindowTitle(const QString &text);
 signals:
     void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea, QAction*);
     void currenActionChanged(QAction *org, QAction *act);
@@ -59,6 +60,7 @@ protected:
     QMenu *m_menu;
     QMenu *m_moveMenu;
     Qt::DockWidgetArea m_area;
+    QString m_areaInfo;
 };
 
 class BaseActionBar : public QObject
