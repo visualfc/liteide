@@ -514,6 +514,13 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
+          <item row="8" column="1">
+           <widget class="QLabel" name="labelTranslator_cl0ne">
+            <property name="text">
+             <string notr="true">Vladislav Glinsky &lt;cl0ne@mithril.org.ua&gt;</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
