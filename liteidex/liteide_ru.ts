@@ -263,11 +263,11 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation>Удалить этот файл навсегда?</translation>
+        <translation type="vanished">Удалить этот файл навсегда?</translation>
     </message>
     <message>
         <source>Failed to delete the file!</source>
-        <translation>Не удалось удалить файл!</translation>
+        <translation type="vanished">Не удалось удалить файл!</translation>
     </message>
     <message>
         <source>Create Folder</source>
@@ -332,6 +332,46 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Paste</source>
         <translation type="unfinished">Вставить</translation>
+    </message>
+    <message>
+        <source>Move To Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An item &quot;%1&quot; already exists in this location. Do you want to replace it and move old item to trash?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished">Остановить</translation>
+    </message>
+    <message>
+        <source>Keep Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Both All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished">Заменить</translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished">Заменить всё</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want move to trash this item?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want move to trash %1 items?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to Trash</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2299,6 +2339,41 @@ Success: %2.</oldsource>
     </message>
 </context>
 <context>
+    <name>ImageEditor</name>
+    <message>
+        <source>ZoomIn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ZoomOut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset to original size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit to view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play movie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause movie</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ImportPkgTip</name>
     <message>
         <source>warning, pkg not find, please enter to import :</source>
@@ -3812,6 +3887,10 @@ Do you want to replace it?</source>
         <source>RightSideBar</source>
         <translation>Правая боковая панель</translation>
     </message>
+    <message>
+        <source>BottomDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OutputOption</name>
@@ -4372,6 +4451,14 @@ Do you want to replace it?</source>
         <source>OutputBar</source>
         <translation>Панель вывода</translation>
     </message>
+    <message>
+        <source>LeftDockWidgt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RightDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SideWindowStyle</name>
@@ -4433,6 +4520,38 @@ Do you want to replace it?</source>
     <message>
         <source>Split</source>
         <translation>Разделить</translation>
+    </message>
+    <message>
+        <source>TopDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TopDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BottomDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BottomDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LeftDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LeftDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RightDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RightDockWidget</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

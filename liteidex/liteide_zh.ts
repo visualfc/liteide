@@ -115,17 +115,17 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>乌克兰文</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="537"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="544"/>
         <source>Thanks to...</source>
         <translation>感谢...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="567"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="574"/>
         <source>License</source>
         <translation>许可协议</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="609"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="616"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -206,17 +206,17 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>BaseDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="67"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="76"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="68"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="77"/>
         <source>Hide Tool Window</source>
         <translation>隐藏工具窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="77"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="86"/>
         <source>Floating Window</source>
         <translation>浮动窗口</translation>
     </message>
@@ -250,8 +250,6 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="247"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="253"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
@@ -267,8 +265,8 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="317"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="324"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="325"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="332"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
@@ -335,90 +333,139 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="181"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="191"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
+        <source>Move To Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="188"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="198"/>
         <source>Create File</source>
         <translation>建立文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="182"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="189"/>
         <source>A file with that name already exists!</source>
         <translation>文件已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="192"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
         <source>Failed to create the file!</source>
         <translation>建立文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="222"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="228"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="233"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="229"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="235"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="240"/>
         <source>Rename File</source>
         <translation>文件更名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="222"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="229"/>
         <source>New Name:</source>
         <translation>新名称:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="229"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="234"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="236"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="241"/>
         <source>Failed to rename the file!</source>
         <translation>重命名文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="248"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="486"/>
+        <source>An item &quot;%1&quot; already exists in this location. Do you want to replace it and move old item to trash?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="487"/>
+        <source>Stop</source>
+        <translation type="unfinished">停止</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="488"/>
+        <source>Keep Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="489"/>
+        <source>Keep Both All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="490"/>
+        <source>Replace</source>
+        <translation type="unfinished">替换</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="491"/>
+        <source>Replace All</source>
+        <translation type="unfinished">替换所有</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="576"/>
+        <source>Are you sure that you want move to trash this item?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="579"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="582"/>
+        <source>Are you sure that you want move to trash %1 items?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="585"/>
+        <source>Move to Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Are you sure that you want to permanently delete this file?</source>
-        <translation>您确定要永久删除这个文件?</translation>
+        <translation type="vanished">您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="254"/>
         <source>Failed to delete the file!</source>
-        <translation>删除文件失败!</translation>
+        <translation type="vanished">删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="272"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="275"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="280"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="283"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="273"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="281"/>
         <source>A folder with that name already exists!</source>
         <translation>目录名已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="276"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="284"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="289"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="298"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="303"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="297"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="306"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="311"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="297"/>
         <source>Folder Name</source>
         <translation>目录名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="299"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="304"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="312"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="318"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="326"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="325"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="333"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -2068,34 +2115,34 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderView</name>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="159"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="169"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="173"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="183"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="160"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="174"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="170"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="184"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="213"/>
-        <location filename="src/utils/folderview/folderview.cpp" line="223"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="230"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="240"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="214"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="231"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderview.cpp" line="224"/>
+        <location filename="src/utils/folderview/folderview.cpp" line="241"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -2857,6 +2904,50 @@ Success: %2.</oldsource>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation>无法写入文件 %1!</translation>
+    </message>
+</context>
+<context>
+    <name>ImageEditor</name>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="23"/>
+        <source>ZoomIn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="26"/>
+        <source>ZoomOut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="29"/>
+        <source>Reset to original size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="32"/>
+        <source>Fit to view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="35"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="204"/>
+        <source>Play movie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="39"/>
+        <source>Prev frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="43"/>
+        <source>Next frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="201"/>
+        <source>Pause movie</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4546,34 +4637,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="243"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="250"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="287"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="294"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="244"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="288"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="251"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="295"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="264"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="271"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="308"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="315"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="265"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="309"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="272"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="316"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
@@ -4715,21 +4806,26 @@ Do you want to replace it?</source>
 <context>
     <name>OutputDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="365"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="393"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="394"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="417"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="445"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="446"/>
         <source>Move To</source>
         <translation>移动到</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="367"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="419"/>
         <source>LeftSideBar</source>
         <translation>左侧边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="368"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="420"/>
         <source>RightSideBar</source>
         <translation>右侧边栏</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="453"/>
+        <source>BottomDockWidget</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5403,22 +5499,32 @@ Do you want to replace it?</source>
         <translation>右侧边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="57"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="56"/>
+        <source>LeftDockWidgt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="58"/>
         <source>LeftSideBar</source>
         <translation>左侧边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="61"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="60"/>
+        <source>RightDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="63"/>
         <source>OutputBar</source>
         <translation>输出栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="73"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="75"/>
         <source>SideBar</source>
         <translation>边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="74"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="76"/>
         <source>Show SideBar</source>
         <translation>显示边栏</translation>
     </message>
@@ -5426,17 +5532,17 @@ Do you want to replace it?</source>
 <context>
     <name>SideWindowStyle</name>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="510"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="521"/>
         <source>Hide SideBar</source>
         <translation>隐藏侧边栏</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="548"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="559"/>
         <source>SideBar Windows</source>
         <translation>侧边栏窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="549"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="560"/>
         <source>Output Windows</source>
         <translation>输出窗口</translation>
     </message>
@@ -5444,59 +5550,99 @@ Do you want to replace it?</source>
 <context>
     <name>SplitDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="236"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="305"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="306"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="279"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="352"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="353"/>
         <source>Move To</source>
         <translation>移动到</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="238"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="281"/>
         <source>Top</source>
         <translation>顶部</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="242"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="285"/>
         <source>Top (Split)</source>
         <translation>顶部(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="248"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="289"/>
+        <source>TopDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="289"/>
+        <source>TopDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="292"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="252"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="296"/>
         <source>Bottom (Split)</source>
         <translation>底部(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="258"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
+        <source>BottomDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
+        <source>BottomDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="303"/>
         <source>Left</source>
         <translation>左侧</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="262"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="307"/>
         <source>Left (Split)</source>
         <translation>左侧(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="268"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="311"/>
+        <source>LeftDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="311"/>
+        <source>LeftDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="314"/>
         <source>Right</source>
         <translation>右侧</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="272"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="318"/>
         <source>Right (Split)</source>
         <translation>右侧(切分)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="281"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="322"/>
+        <source>RightDockWidget (Split)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="322"/>
+        <source>RightDockWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="328"/>
         <source>Unsplit</source>
         <translation>不切分</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="286"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="333"/>
         <source>Split</source>
         <translation>切分</translation>
     </message>
