@@ -2302,7 +2302,7 @@ Success: %2.</oldsource>
     <name>ImportPkgTip</name>
     <message>
         <source>warning, pkg not find, please enter to import :</source>
-        <translation>предупреждение: пакет не найден, введите для импорта: </translation>
+        <translation>предупреждение: пакет не найден, нажмите enter для импорта: </translation>
     </message>
 </context>
 <context>
