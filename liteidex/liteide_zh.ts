@@ -335,7 +335,7 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
         <source>Move To Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>移动到回收站</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="188"/>
@@ -374,48 +374,48 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="486"/>
         <source>An item &quot;%1&quot; already exists in this location. Do you want to replace it and move old item to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>项目 &quot;%1&quot; 本地已存在，确定替换并将旧项目移到到回收站?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="487"/>
         <source>Stop</source>
-        <translation type="unfinished">停止</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="488"/>
         <source>Keep Both</source>
-        <translation type="unfinished"></translation>
+        <translation>保持两者</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="489"/>
         <source>Keep Both All</source>
-        <translation type="unfinished"></translation>
+        <translation>全部保留两者</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="490"/>
         <source>Replace</source>
-        <translation type="unfinished">替换</translation>
+        <translation>替换</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="491"/>
         <source>Replace All</source>
-        <translation type="unfinished">替换所有</translation>
+        <translation>替换所有</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="576"/>
         <source>Are you sure that you want move to trash this item?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定移动项目到回收站?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="579"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="582"/>
         <source>Are you sure that you want move to trash %1 items?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定移动 %1 个项目到回收站?</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="585"/>
         <source>Move to Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>移动到回收站</translation>
     </message>
     <message>
         <source>Are you sure that you want to permanently delete this file?</source>
@@ -2911,43 +2911,43 @@ Success: %2.</oldsource>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="23"/>
         <source>ZoomIn</source>
-        <translation type="unfinished"></translation>
+        <translation>放大</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="26"/>
         <source>ZoomOut</source>
-        <translation type="unfinished"></translation>
+        <translation>缩小</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="29"/>
         <source>Reset to original size</source>
-        <translation type="unfinished"></translation>
+        <translation>重置为原始大小</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="32"/>
         <source>Fit to view</source>
-        <translation type="unfinished"></translation>
+        <translation>适应视图</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="35"/>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="204"/>
         <source>Play movie</source>
-        <translation type="unfinished"></translation>
+        <translation>播放动画</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="39"/>
         <source>Prev frame</source>
-        <translation type="unfinished"></translation>
+        <translation>上一帧</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="43"/>
         <source>Next frame</source>
-        <translation type="unfinished"></translation>
+        <translation>下一帧</translation>
     </message>
     <message>
         <location filename="src/plugins/imageeditor/imageeditor.cpp" line="201"/>
         <source>Pause movie</source>
-        <translation type="unfinished"></translation>
+        <translation>暂停动画</translation>
     </message>
 </context>
 <context>
@@ -4825,7 +4825,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="453"/>
         <source>BottomDockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>底部停靠窗口</translation>
     </message>
 </context>
 <context>
@@ -5501,7 +5501,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="56"/>
         <source>LeftDockWidgt</source>
-        <translation type="unfinished"></translation>
+        <translation>左侧停靠窗口</translation>
     </message>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="58"/>
@@ -5511,7 +5511,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="60"/>
         <source>RightDockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>右侧停靠窗口</translation>
     </message>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="63"/>
@@ -5569,12 +5569,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="289"/>
         <source>TopDockWidget (Split)</source>
-        <translation type="unfinished"></translation>
+        <translation>项部停靠窗口 (切分)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="289"/>
         <source>TopDockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>项部停靠窗口</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="292"/>
@@ -5589,12 +5589,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
         <source>BottomDockWidget (Split)</source>
-        <translation type="unfinished"></translation>
+        <translation>底部停靠窗口 (切分)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
         <source>BottomDockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>底部停靠窗口</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="303"/>
@@ -5609,12 +5609,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="311"/>
         <source>LeftDockWidget (Split)</source>
-        <translation type="unfinished"></translation>
+        <translation>左侧停靠窗口 (切分)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="311"/>
         <source>LeftDockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>左侧停靠窗口</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="314"/>
@@ -5629,12 +5629,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="322"/>
         <source>RightDockWidget (Split)</source>
-        <translation type="unfinished"></translation>
+        <translation>右侧停靠窗口 (切分)</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="322"/>
         <source>RightDockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>右侧停靠窗口</translation>
     </message>
     <message>
         <location filename="src/liteapp/tooldockwidget.cpp" line="328"/>
