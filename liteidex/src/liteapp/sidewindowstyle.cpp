@@ -110,6 +110,18 @@ void SideDockWidget::activeComboBoxIndex(int index)
     }
 }
 
+void SideDockWidget::topLevelChanged(bool b)
+{
+    BaseDockWidget::topLevelChanged(b);
+    if (b) {
+        m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        m_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
+    } else {
+        m_comboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        m_spacer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Minimum);
+    }
+}
+
 
 void SideDockWidget::setCheckedAction(QAction *action)
 {

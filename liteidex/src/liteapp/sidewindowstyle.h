@@ -56,6 +56,7 @@ protected slots:
     void moveAction();
     void actionChanged();
     virtual void activeComboBoxIndex(int);
+    virtual void topLevelChanged(bool b);
 protected:
     QMenu *m_menu;
     QMenu *m_moveMenu;
@@ -65,6 +66,7 @@ protected:
 
 class BaseActionBar : public QObject
 {
+    Q_OBJECT
 public:
     BaseActionBar(QObject *parent) : QObject(parent)
     {}

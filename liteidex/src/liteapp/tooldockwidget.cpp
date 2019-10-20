@@ -57,6 +57,7 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     m_comboBox->setMinimumContentsLength(4);
     //m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     m_comboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    //m_comboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
     m_toolBar = new QToolBar(this);
     m_toolBar->setContentsMargins(0, 0, 0, 0);
@@ -68,10 +69,10 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
 //    m_titleLabelAct = m_toolBar->addWidget(m_titleLabel);
 //    m_titleLabelAct->setChecked(false);
 
-    QWidget *spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    m_spacer = new QWidget;
+    m_spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     m_toolBar->addSeparator();
-    m_spacerAct = m_toolBar->addWidget(spacer);
+    m_spacerAct = m_toolBar->addWidget(m_spacer);
 
     m_closeAct = new QAction(tr("Hide"), m_toolBar);
     m_closeAct->setToolTip(tr("Hide Tool Window"));
@@ -121,7 +122,7 @@ void BaseDockWidget::setWidgetActions(QList<QAction*> actions)
         m_toolBar->removeAction(action);
     }
     m_widgetActions = actions;
-    m_spacerAct->setVisible(!m_widgetActions.isEmpty());
+    //m_spacerAct->setVisible(!m_widgetActions.isEmpty());
     foreach(QAction *action, m_widgetActions) {
         m_toolBar->insertAction(m_spacerAct,action);
         if (action->menu() != 0) {
@@ -157,12 +158,10 @@ void BaseDockWidget::setWidget(QWidget *widget)
 {
     if (m_widget) {
         m_mainLayout->removeWidget(m_widget);
-        m_widget->setVisible(false);
     }
     m_widget = widget;
     if (m_widget) {
         m_mainLayout->addWidget(m_widget);
-        m_widget->setVisible(true);
     }
 }
 
@@ -286,7 +285,6 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::TopDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
-        m_areaInfo = split ? tr("TopDockWidget (Split)") : tr("TopDockWidget");
     }
     if (area != Qt::BottomDockWidgetArea) {
         QAction *act = new QAction(tr("Bottom"),this);
@@ -297,7 +295,6 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::BottomDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
-        m_areaInfo = split ? tr("BottomDockWidget (Split)") : tr("BottomDockWidget");
     }
     if (area != Qt::LeftDockWidgetArea) {
         QAction *act = new QAction(tr("Left"),this);
@@ -308,7 +305,6 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::LeftDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
-        m_areaInfo = split ? tr("LeftDockWidget (Split)") : tr("LeftDockWidget");
     }
     if (area != Qt::RightDockWidgetArea) {
         QAction *act = new QAction(tr("Right"),this);
@@ -319,6 +315,15 @@ void SplitDockWidget::createMenu(Qt::DockWidgetArea area, bool split)
         act1->setData(Qt::RightDockWidgetArea);
         moveMenu->addAction(act1);
         connect(act1,SIGNAL(triggered()),this,SLOT(moveActionSplit()));
+    }
+
+    if (area == Qt::TopDockWidgetArea) {
+        m_areaInfo = split ? tr("TopDockWidget (Split)") : tr("TopDockWidget");
+    } else if (area == Qt::BottomDockWidgetArea) {
+        m_areaInfo = split ? tr("BottomDockWidget (Split)") : tr("BottomDockWidget");
+    } else if (area == Qt::LeftDockWidgetArea) {
+        m_areaInfo = split ? tr("LeftDockWidget (Split)") : tr("LeftDockWidget");
+    } else if (area == Qt::RightDockWidgetArea) {
         m_areaInfo = split ? tr("RightDockWidget (Split)") : tr("RightDockWidget");
     }
 
@@ -451,6 +456,19 @@ void OutputDockWidget::createMenu(Qt::DockWidgetArea area)
 void OutputDockWidget::setWindowTitle(const QString &text)
 {
     BaseDockWidget::setWindowTitle(QString(tr("BottomDockWidget"))+"  -  "+text);
+}
+
+void OutputDockWidget::setWidget(QWidget *widget)
+{
+    if (m_widget) {
+        m_mainLayout->removeWidget(m_widget);
+        m_widget->setVisible(false);
+    }
+    m_widget = widget;
+    if (m_widget) {
+        m_mainLayout->addWidget(m_widget);
+        m_widget->setVisible(true);
+    }
 }
 
 void OutputDockWidget::moveAction()

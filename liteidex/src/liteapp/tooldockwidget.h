@@ -53,7 +53,7 @@ public:
 protected slots:
     virtual void actionChanged();
     virtual void activeComboBoxIndex(int);
-    void  topLevelChanged(bool);
+    virtual void topLevelChanged(bool);
     void  setFloatingWindow(bool b);
 protected:
     QToolBar *m_toolBar;
@@ -64,6 +64,7 @@ protected:
     QComboBox *m_comboBox;
     QAction *m_comboBoxAct;
     //QAction *m_titleLabelAct;
+    QWidget  *m_spacer;
     QAction  *m_spacerAct;
     QAction  *m_closeAct;
     QAction  *m_floatAct;
@@ -99,6 +100,7 @@ public:
     explicit OutputDockWidget(QSize iconSize, QWidget *parent = 0);
     void createMenu(Qt::DockWidgetArea area);
     virtual void setWindowTitle(const QString &text);
+    virtual void setWidget(QWidget *widget);
 signals:
     void moveActionTo(Qt::DockWidgetArea,Qt::DockWidgetArea, QAction*);
 protected slots:
