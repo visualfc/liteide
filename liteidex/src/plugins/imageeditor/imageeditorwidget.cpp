@@ -89,6 +89,14 @@ void ImageEditorWidget::doScale(qreal factor)
 
 void ImageEditorWidget::wheelEvent(QWheelEvent *event)
 {
+    if (event->modifiers() & Qt::ControlModifier) {
+        const int delta = event->delta();
+        if (delta < 0)
+            zoomOut();
+        else if (delta > 0)
+            zoomIn();
+        return;
+    }
     if (event->delta() != 0) {
         int delta = event->delta();
 #if QT_VERSION >= 0x050700
