@@ -20,4 +20,5 @@ SUBDIRS = \
     editorutil \
     folderview \
     iconutil \
-    dlvclient
+    dlvclient \
+    navigate

@@ -29,6 +29,7 @@
 #include "extension/extension.h"
 #include "elidedlabel/elidedlabel.h"
 #include "folderview/folderview.h"
+#include "navigate/navigate.h"
 #include <QSet>
 #include <QHash>
 #include <QStack>
@@ -130,8 +131,6 @@ signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
 public slots:
-    void pathLinkActivated(const QString &path);
-    void quickPathLinkActivated(const QString &path);
     void requestFontZoom(int zoom);
     void loadColorStyleScheme();
     void applyOption(QString);
@@ -167,15 +166,13 @@ public:
     void initLoad();
     void updateEditorInfo();
     void findCodecs();
-    QToolBar *createNavToolBar(QWidget *parent);
 protected:
     QList<QTextCodec *> m_codecs;
     LiteApi::IApplication *m_liteApp;
     Extension   *m_extension;
     QWidget *m_widget;
     QToolBar *m_editToolBar;
-    QToolBar *m_editNavBar;
-    QAction *m_editNavHeadAct;
+    NavigateBar *m_navBar;
     LiteEditorWidget    *m_editorWidget;
     QTextDocument       *m_document;
     LiteApi::ICompleter *m_completer;

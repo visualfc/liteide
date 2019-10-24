@@ -116,7 +116,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     toolLayout->setMargin(0);
     toolLayout->setSpacing(0);
     toolLayout->addWidget(m_editToolBar);
-    toolLayout->addWidget(m_editNavBar);
+    //toolLayout->addWidget(m_editNavBar);
+    toolLayout->addWidget(m_navBar->toolBar());
     toolLayout->addSpacing(0);
 //    //toolLayout->addWidget(m_infoToolBar);
     layout->addLayout(toolLayout);
@@ -145,7 +146,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_extension->addObject("LiteApi.ITextEditor",this);
     m_extension->addObject("LiteApi.ILiteEditor",this);
     m_extension->addObject("LiteApi.QToolBar.Edit",m_editToolBar);
-    m_extension->addObject("LiteApi.QToolBar.Edit.Nav",m_editNavBar);
+    m_extension->addObject("LiteApi.QToolBar.Edit.Nav",m_navBar->toolBar());
     m_extension->addObject("LiteApi.QPlainTextEdit",m_editorWidget);
     m_extension->addObject("LiteApi.ContextMenu",m_contextMenu);
     m_extension->addObject("LiteApi.Menu.Edit",m_editMenu);
@@ -576,9 +577,10 @@ void LiteEditor::createToolBars()
     m_editToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     m_editToolBar->setVisible(m_liteApp->settings()->value(EDITOR_TOOLBAR_VISIBLE,true).toBool());
 
-    m_editNavBar = new QToolBar("editor.nav",m_widget);
-    m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
-    m_editNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
+//    m_editNavBar = new QToolBar("editor.nav",m_widget);
+//    m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+//    m_editNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
+    m_navBar = new NavigateBar(m_liteApp,"editor.nav",this);
 
     //editor toolbar
    // m_editToolBar->addSeparator();
@@ -843,40 +845,7 @@ void LiteEditor::initLoad()
     if (m_file->filePath().isEmpty()) {
         return;
     }
-    //update path navigate
-    QFileInfo info(m_file->filePath());
-    if (!info.filePath().startsWith("//")) {
-        QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
-        if (paths.size() >= 2) {
-            QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
-            //m_editNavHeadAct = m_editNavBar->addSeparator();
-            QString last;
-#ifdef Q_OS_WIN
-            last = paths[0];
-#endif
-            for (int i = 1; i < paths.size(); i++) {
-                QString name = paths[i];
-#ifdef Q_OS_WIN
-                if (i == 1) {
-                    name = paths[0]+"\\"+paths[1];
-                }
-#endif
-                QString path = last+"/"+paths[i];
-                last = path;
-                if (i != paths.size()-1) {
-                    name += ">";
-                }
-                QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
-                QLabel *lbl = new QLabel;
-                lbl->setText(head+text);
-                m_editNavBar->addWidget(lbl);
-                connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(pathLinkActivated(QString)));
-            }
-            m_editNavHeadAct = m_editNavBar->actions().first();
-        }
-    }
-    QAction *emptyAct = new QAction(this);
-    m_editNavBar->addAction(emptyAct);
+    m_navBar->LoadPath(m_file->filePath());
 }
 
 void LiteEditor::updateEditorInfo()
@@ -1517,85 +1486,6 @@ bool LiteEditor::enableSyntax() const
     return true;
 }
 
-QToolBar *LiteEditor::createNavToolBar(QWidget *parent)
-{
-    QFileInfo info(m_file->filePath());
-
-    QStringList paths = QDir::fromNativeSeparators(info.filePath()).split("/");
-    if (paths.size() < 2) {
-        return 0;
-    }
-    QString head = "<style> a{text-decoration: none; color:darkgray;} </style>";
-
-    QToolBar *toolBar = new QToolBar(parent);
-    toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
-    QString last;
-#ifdef Q_OS_WIN
-    last = paths[0];
-#endif
-    for (int i = 1; i < paths.size(); i++) {
-        QString name = paths[i];
-#ifdef Q_OS_WIN
-        if (i == 1) {
-            name = paths[0]+"\\"+paths[1];
-        }
-#endif
-        QString path = last+"/"+paths[i];
-        last = path;
-        if (i != paths.size()-1) {
-            name += ">";
-        }
-        QString text = QString("<a href=\"%1\">%2</a>").arg(escaped(path)).arg(escaped(name));
-        QLabel *lbl = new QLabel;
-        lbl->setText(head+text);
-        toolBar->addWidget(lbl);
-        connect(lbl,SIGNAL(linkActivated(QString)),this,SLOT(quickPathLinkActivated(QString)));
-    }
-    QAction *empytAct = new QAction(toolBar);
-    toolBar->addAction(empytAct);
-    return  toolBar;
-}
-
-void LiteEditor::pathLinkActivated(const QString &path)
-{
-    QString dirpath = QFileInfo(path).absolutePath();
-    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
-    if (mgr) {
-        LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
-        if (fileSystem) {
-            fileSystem->setRootPath(dirpath);
-            fileSystem->setPlaceholderText(QString(tr("Browser Files in %1").arg(QDir::toNativeSeparators(dirpath))));
-            mgr->setCurrentFilter(fileSystem);
-            mgr->modelView()->setRootIndex(fileSystem->rootIndex());
-            QModelIndex index = fileSystem->indexForPath(path);
-            mgr->modelView()->setCurrentIndex(index);
-            mgr->setTempToolBar(this->createNavToolBar(mgr->widget()));
-            QRect rc = m_editNavBar->actionGeometry(m_editNavHeadAct);
-            QPoint pt = m_editNavBar->mapToGlobal(rc.topLeft());
-            mgr->showPopup(&pt);
-            mgr->modelView()->scrollTo(index);
-            return;
-        }
-    }
-}
-
-void LiteEditor::quickPathLinkActivated(const QString &path)
-{
-    QString dirpath = QFileInfo(path).absolutePath();
-    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
-    if (mgr) {
-        LiteApi::IQuickOpenFileSystem *fileSystem = LiteApi::getQuickOpenFileSystem(mgr);
-        if (fileSystem) {
-            fileSystem->setRootPath(dirpath);
-            fileSystem->setPlaceholderText(QString(tr("Browser Files in %1").arg(QDir::toNativeSeparators(dirpath))));
-            mgr->setCurrentFilter(fileSystem);
-            mgr->modelView()->setRootIndex(fileSystem->rootIndex());
-            QModelIndex index = fileSystem->indexForPath(path);
-            mgr->modelView()->setCurrentIndex(index);
-        }
-    }
-}
-
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();
@@ -1690,7 +1580,7 @@ void LiteEditor::broadcast(const QString &module, const QString &id, const QVari
     if (module == "liteeditor" && id == "font" && param != this->filePath()) {
         this->updateFont();
     } else if (module == "liteeditor" && id == EDITOR_NAVBAR_VISIBLE) {
-        m_editNavBar->setVisible(param.toBool());
+        m_navBar->toolBar()->setVisible(param.toBool());
     } else if (module == "liteeditor" && id == EDITOR_TOOLBAR_VISIBLE) {
         m_editToolBar->setVisible(param.toBool());
     }
