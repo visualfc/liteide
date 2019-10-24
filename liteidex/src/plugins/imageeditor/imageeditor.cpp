@@ -8,6 +8,9 @@
 #include <QLabel>
 #include <QDebug>
 
+#define EDITOR_TOOLBAR_VISIBLE "editor/toolbar_visible"
+#define EDITOR_NAVBAR_VISIBLE "editor/navbar_visible"
+
 ImageEditor::ImageEditor(LiteApi::IApplication *app)
     : m_liteApp(app)
 {
@@ -16,6 +19,8 @@ ImageEditor::ImageEditor(LiteApi::IApplication *app)
     m_widget = new QWidget;
     m_toolBar = new QToolBar;
     m_mvToolBar = new QToolBar;
+    m_navBar = new NavigateBar(app,"editor.nav",this);
+    m_navBar->toolBar()->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
     m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
     m_mvToolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
@@ -87,6 +92,7 @@ ImageEditor::ImageEditor(LiteApi::IApplication *app)
     toolLayout->setSpacing(0);
     toolLayout->addWidget(m_toolBar);
     toolLayout->addWidget(m_mvToolBar);
+    toolLayout->addWidget(m_navBar->toolBar());
     toolLayout->addSpacing(0);
 
     QVBoxLayout *layout = new QVBoxLayout;
@@ -95,6 +101,8 @@ ImageEditor::ImageEditor(LiteApi::IApplication *app)
     layout->addLayout(toolLayout);
     layout->addWidget(m_imageWidget);
     m_widget->setLayout(layout);
+
+    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QVariant)),this,SLOT(broadcast(QString,QString,QVariant)));
 }
 
 ImageEditor::~ImageEditor()
@@ -102,6 +110,16 @@ ImageEditor::~ImageEditor()
     delete m_widget;
     delete m_file;
 }
+
+void ImageEditor::broadcast(const QString &module, const QString &id, const QVariant &param)
+{
+    if (module == "liteeditor" && id == "font" && param != this->filePath()) {
+    } else if (module == "liteeditor" && id == EDITOR_NAVBAR_VISIBLE) {
+        m_navBar->toolBar()->setVisible(param.toBool());
+    } else if (module == "liteeditor" && id == EDITOR_TOOLBAR_VISIBLE) {
+    }
+}
+
 
 QWidget *ImageEditor::widget()
 {
@@ -120,6 +138,7 @@ bool ImageEditor::open(const QString &filePath, const QString &mimeType)
     QSize sz = m_file->imageSize();
     m_imageInfo->setText(QString("%1x%2").arg(sz.width()).arg(sz.height()));
     m_mvToolBar->setVisible(m_file->isMovie());
+    m_navBar->LoadPath(filePath);
     return  b;
 }
 

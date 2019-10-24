@@ -2,6 +2,7 @@
 #define IMAGEEDITOR_H
 
 #include "liteapi/liteapi.h"
+#include "navigate/navigate.h"
 
 class ImageEditorFile;
 class ImageEditorWidget;
@@ -31,6 +32,7 @@ public slots:
     void scaleFactorChanged(qreal factor);
     void toggledPlay(bool checked);
     void frameChanged(int frameNumber);
+    void broadcast(const QString &module, const QString &id, const QVariant &param);
 protected:
     LiteApi::IApplication *m_liteApp;
     ImageEditorFile *m_file;
@@ -38,6 +40,7 @@ protected:
     QWidget *m_widget;
     QToolBar *m_toolBar;
     QToolBar *m_mvToolBar;
+    NavigateBar *m_navBar;
     QLabel *m_imageInfo;
     QLabel *m_scaleInfo;
     QLabel *m_frameLabel;

@@ -23,7 +23,7 @@ NavigateBar::NavigateBar(LiteApi::IApplication *app, const QString &title, QObje
 
 NavigateBar::~NavigateBar()
 {
-    delete m_toolBar;
+
 }
 
 void NavigateBar::LoadPath(const QString &path)

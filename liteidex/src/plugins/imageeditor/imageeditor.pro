@@ -7,6 +7,7 @@ else: DEFINES += QT_NO_SVG
 
 include(../../liteideplugin.pri)
 include (../../utils/mimetype/mimetype.pri)
+include (../../utils/navigate/navigate.pri)
 
 DEFINES += IMAGEEDITOR_LIBRARY
 

@@ -579,8 +579,8 @@ void LiteEditor::createToolBars()
 
 //    m_editNavBar = new QToolBar("editor.nav",m_widget);
 //    m_editNavBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
-//    m_editNavBar->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
     m_navBar = new NavigateBar(m_liteApp,"editor.nav",this);
+    m_navBar->toolBar()->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
     //editor toolbar
    // m_editToolBar->addSeparator();
