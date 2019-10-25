@@ -188,6 +188,9 @@ public:
     virtual QStringList mimeTypes() const = 0;
     virtual IEditor *open(const QString &fileName, const QString &mimeType) = 0;
     virtual IEditor *create(const QString &contents, const QString &mimeType) = 0;
+    virtual QString id() const = 0;
+    virtual QString displayName() const = 0;
+    virtual bool testMimeType(const QString &mimeType) = 0;
 };
 
 class IProjectFactory : public QObject
@@ -299,6 +302,7 @@ public:
     virtual void execFileWizard(const QString &projPath, const QString &filePath, const QString &gopath = QString()) = 0;
     virtual bool openFile(const QString &fileName) = 0;
     virtual IEditor *openEditor(const QString &fileName, bool bActive = true, bool ignoreNavigationHistory = false) = 0;
+    virtual IEditor *openEditorByFactory(const QString &fileName, const QString &factoryId, bool bActive = true, bool ignoreNavigationHistory = false) = 0;
     virtual IEditor *createEditor(const QString &contents, const QString &_mimeType) = 0;
     virtual IEditor *createEditor(const QString &fileName) = 0;
     virtual IProject *openProject(const QString &fileName) = 0;
@@ -465,6 +469,7 @@ class IEditorManager : public IManager
 public:
     IEditorManager(QObject *parent = 0) : IManager(parent) {}
     virtual IEditor *openEditor(const QString &fileName, const QString &mimeType) = 0;
+    virtual IEditor *openEditorByFactory(const QString &fileName, const QString &mimeType, const QString &factoryId) = 0;
     virtual void addFactory(IEditorFactory *factory) = 0;
     virtual void removeFactory(IEditorFactory *factory) = 0;
     virtual QList<IEditorFactory*> factoryList() const = 0;
@@ -942,7 +947,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X36")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X36.2")
 
 
 #endif //LITEAPI_H

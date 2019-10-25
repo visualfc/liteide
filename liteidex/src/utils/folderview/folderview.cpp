@@ -323,6 +323,7 @@ void FolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
         m_contextMenu->addAction(m_openEditorAct);
+        m_contextMenu->addMenu(m_openWithMenu);
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);

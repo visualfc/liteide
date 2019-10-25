@@ -59,6 +59,9 @@ public slots:
     virtual void pasteFile();
     virtual bool canPasteFile();
     virtual void moveToTrash();
+    void appLoaded();
+    void openWithEditor();
+    void openWithSystemEditor();
 public:
     virtual QModelIndex findIndexForContext(const QString &filePath) const;
     virtual void removeIndex(const QModelIndex &index);
@@ -88,6 +91,7 @@ protected:
     QAction *m_copyFileAct;
     QAction *m_pasteFileAct;
     QAction *m_moveToTrashAct;
+    QMenu *m_openWithMenu;
     bool copy_dir(const QString &src, const QString &dest_root, const QString &newName);
 };
 

@@ -192,3 +192,18 @@ LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const Q
     editor->loadColorStyleScheme();
     return editor;
 }
+
+QString LiteEditorFileFactory::id() const
+{
+    return  "TextEditor";
+}
+
+QString LiteEditorFileFactory::displayName() const
+{
+    return  tr("Text Editor");
+}
+
+bool LiteEditorFileFactory::testMimeType(const QString &mimeType)
+{
+    return  true;
+}

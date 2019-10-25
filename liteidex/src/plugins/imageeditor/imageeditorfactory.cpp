@@ -76,9 +76,6 @@ QStringList ImageEditorFactory::mimeTypes() const
 
 IEditor *ImageEditorFactory::open(const QString &fileName, const QString &mimeType)
 {
-    if (!m_mimeTypes.contains(mimeType)) {
-        return  0;
-    }
     ImageEditor *view = new ImageEditor(m_liteApp);
     if (!view->open(fileName,mimeType)) {
         delete  view;
@@ -90,4 +87,19 @@ IEditor *ImageEditorFactory::open(const QString &fileName, const QString &mimeTy
 IEditor *ImageEditorFactory::create(const QString &contents, const QString &mimeType)
 {
     return  0;
+}
+
+QString ImageEditorFactory::id() const
+{
+    return "ImageViewer";
+}
+
+QString ImageEditorFactory::displayName() const
+{
+    return  tr("Image Viewer");
+}
+
+bool ImageEditorFactory::testMimeType(const QString &mimeType)
+{
+    return m_mimeTypes.contains(mimeType);
 }

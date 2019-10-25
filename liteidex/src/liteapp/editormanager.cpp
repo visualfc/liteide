@@ -699,6 +699,46 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
     return editor;
 }
 
+IEditor *EditorManager::openEditorByFactory(const QString &fileName, const QString &mimeType, const QString &factoryId)
+{
+    IEditor *editor1 = findEditor(fileName,true);
+    IEditor *editor = 0;
+    foreach (IEditorFactory *factory, m_factoryList) {
+        if (factory->id() == factoryId) {
+            if (factory->testMimeType(mimeType)) {
+                try {
+                    editor = factory->open(fileName,mimeType);
+                } catch(std::bad_alloc &ba) {
+                    m_liteApp->appendLog("EditorManager",QString("exception %1! can not load file %2").arg(ba.what()).arg(fileName),true);
+                    return 0;
+                }
+                if (editor) {
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    if (editor1) {
+        if (editor) {
+            this->closeEditor(editor1);
+        } else {
+            return editor1;
+        }
+    }
+    if (editor) {
+        addEditor(editor);
+        ITextEditor *textEditor = getTextEditor(editor);
+        if (textEditor) {
+            textEditor->restoreState(m_liteApp->settings()->value(QString("state_%1").arg(editor->filePath())).toByteArray());
+        }
+        while (m_editorTabWidget->tabBar()->count() > m_maxEditorCount) {
+            this->closeEditorForTab(0);
+        }
+    }
+    return editor;
+}
+
 void EditorManager::toggleBrowserAction(bool b)
 {
     QAction *act = (QAction*)sender();

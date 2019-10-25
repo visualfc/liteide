@@ -52,6 +52,7 @@ public:
     void createActions();
 public:
     virtual IEditor *openEditor(const QString &fileName, const QString &mimeType);
+    virtual IEditor *openEditorByFactory(const QString &fileName, const QString &mimeType, const QString &factoryId);
     virtual void addFactory(IEditorFactory *factory);
     virtual void removeFactory(IEditorFactory *factory);
     virtual QList<IEditorFactory*>  factoryList() const;

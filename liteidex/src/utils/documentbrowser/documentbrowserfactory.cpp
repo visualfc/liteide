@@ -50,12 +50,24 @@ QStringList DocumentBrowserFactory::mimeTypes() const
 
 LiteApi::IEditor *DocumentBrowserFactory::open(const QString &fileName, const QString &mimeType)
 {
-    if (!m_mimeTypes.contains(mimeType)) {
-        return 0;
-    }
     DocumentBrowser *browser = new DocumentBrowser(m_liteApp,0);
     if (browser->open(fileName,mimeType)) {
         return browser;
     }
     return 0;
+}
+
+QString DocumentBrowserFactory::id() const
+{
+    return  "DocumentBrowser";
+}
+
+QString DocumentBrowserFactory::displayName() const
+{
+    return tr("DocumentBrowser");
+}
+
+bool DocumentBrowserFactory::testMimeType(const QString &mimeType)
+{
+    return  true;
 }

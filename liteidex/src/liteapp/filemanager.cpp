@@ -467,6 +467,22 @@ IEditor *FileManager::openEditor(const QString &_fileName, bool bActive, bool ig
     return editor;
 }
 
+IEditor *FileManager::openEditorByFactory(const QString &_fileName, const QString &factoryId, bool bActive, bool ignoreNavigationHistory)
+{
+    QString fileName = QDir::fromNativeSeparators(QDir::cleanPath(_fileName));
+    QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
+    IEditor *editor = m_liteApp->editorManager()->openEditorByFactory(fileName,mimeType,factoryId);
+    if (editor && bActive) {
+        m_liteApp->editorManager()->setCurrentEditor(editor,ignoreNavigationHistory);
+    }
+    if (editor) {
+        m_liteApp->recentManager()->addRecent(fileName,"file");
+    } else {
+        m_liteApp->recentManager()->removeRecent(fileName,"file");
+    }
+    return editor;
+}
+
 IProject *FileManager::openProject(const QString &_fileName)
 {
     QString fileName = QDir::fromNativeSeparators(_fileName);

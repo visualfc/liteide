@@ -40,6 +40,9 @@ public:
     virtual LiteApi::IEditor *open(const QString &fileName, const QString &mimeType);
     virtual LiteApi::IEditor *create(const QString &contents,const QString &mimeType);
     LiteApi::IEditor *setupEditor(LiteEditor *editor,const QString &mimeType);
+    virtual QString id() const;
+    virtual QString displayName() const;
+    virtual bool testMimeType(const QString &mimeType);
 public slots:
     void colorStyleChanged();
     void tabSettingChanged(int);
