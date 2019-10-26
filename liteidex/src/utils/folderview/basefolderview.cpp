@@ -605,7 +605,7 @@ void BaseFolderView::appLoaded()
         m_openWithMenu->addAction(act);
         connect(act,SIGNAL(triggered()),this,SLOT(openWithEditor()));
     }
-    QAction *act = new QAction(tr("System Editor"));
+    QAction *act = new QAction(tr("System Editor"),this);
     m_openWithMenu->addAction(act);
     connect(act,SIGNAL(triggered()),this,SLOT(openWithSystemEditor()));
 }
