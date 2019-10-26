@@ -7,8 +7,9 @@ class NavigateBar : public QObject
 {
     Q_OBJECT
 public:
-    NavigateBar(LiteApi::IApplication *app, const QString &title, QObject *parent);
+    NavigateBar(LiteApi::IApplication *app, QObject *parent);
     virtual ~NavigateBar();
+    QToolBar* createToolBar(const QString &title, QWidget *parent);
     void LoadPath(const QString &path);
     QToolBar *toolBar() const {
         return  m_toolBar;

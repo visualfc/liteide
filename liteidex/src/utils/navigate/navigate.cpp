@@ -14,16 +14,24 @@ static QString escaped(const QString &text)
 #endif
 }
 
-NavigateBar::NavigateBar(LiteApi::IApplication *app, const QString &title, QObject *parent) :
-    QObject(parent), m_liteApp(app)
+NavigateBar::NavigateBar(LiteApi::IApplication *app, QObject *parent) :
+    QObject(parent), m_liteApp(app), m_toolBar(0)
 {
-    m_toolBar = new QToolBar(title);
-    m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
 }
 
 NavigateBar::~NavigateBar()
 {
 
+}
+
+QToolBar *NavigateBar::createToolBar(const QString &title, QWidget *parent)
+{
+    if (m_toolBar) {
+        return  m_toolBar;
+    }
+    m_toolBar = new QToolBar(title,parent);
+    m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
+    return  m_toolBar;
 }
 
 void NavigateBar::LoadPath(const QString &path)

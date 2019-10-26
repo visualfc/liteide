@@ -19,7 +19,8 @@ ImageEditor::ImageEditor(LiteApi::IApplication *app)
     m_widget = new QWidget;
     m_toolBar = new QToolBar;
     m_mvToolBar = new QToolBar;
-    m_navBar = new NavigateBar(app,"editor.nav",this);
+    m_navBar = new NavigateBar(app,this);
+    m_navBar->createToolBar("editor.nav",m_widget);
     m_navBar->toolBar()->setVisible(m_liteApp->settings()->value(EDITOR_NAVBAR_VISIBLE,true).toBool());
 
     m_toolBar->setIconSize(LiteApi::getToolBarIconSize(m_liteApp));
