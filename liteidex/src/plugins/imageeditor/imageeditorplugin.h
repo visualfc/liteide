@@ -21,7 +21,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<ImageEditorPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/ImageViewer");
-        m_info->setVer("X36");
+        m_info->setVer("X36.2");
         m_info->setName("ImageEditor");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Image Viewer Editor");

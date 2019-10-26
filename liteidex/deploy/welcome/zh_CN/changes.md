@@ -3,6 +3,26 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2019.10.26 Ver X36.2
+* LiteIDE
+    * add new image viewer plugin
+    * folder view support multi copy & paste
+    * folder view support move to trash
+    * fix gocode crash
+    * update uk (Ukrainian) translation, thanks for cl0ne
+* LiteApp
+    * fix floating dock widet style
+    * add dock widget floating toolbar
+    * folder view support multi copy and paste
+    * folder view support move to trash action
+* ImageEditor
+    * add new image viewer plugin
+    * support image viewer and gif video play
+* GolangEdit
+    * support go1.13 number literal syntax highlight
+* gotools & gocode
+    * fix bad parser crash
+
 ### 2019.08.28 Ver X36.1
 * LiteIDE
     * folder view support copy and paste
