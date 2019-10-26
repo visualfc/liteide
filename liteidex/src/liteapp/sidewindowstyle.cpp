@@ -325,8 +325,10 @@ void SideActionBar::updateAction(QAction *action)
                 dock->setWidgetActions(state->widgetActions);
                 dock->setObjectName(dockWidgetObjName(state->id));
                 dock->setWindowTitle(state->title);
+                state->widget->setVisible(true);
             } else {
                 dock->hide();
+                state->widget->setVisible(false);
             }
             break;
         }
@@ -499,9 +501,11 @@ void OutputActionBar::toggledAction(bool)
         m_dock->setWidget(state->widget);
         m_dock->setWidgetActions(state->widgetActions);
         m_dock->setWindowTitle(state->title);
+        state->widget->setVisible(true);
     } else {
         if (!m_dock->checkedAction()) {
             m_dock->hide();
+            state->widget->setVisible(false);
         }
     }
 }

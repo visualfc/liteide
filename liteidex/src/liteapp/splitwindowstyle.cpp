@@ -297,9 +297,11 @@ void SplitWindowStyle::toggledAction(bool)
         dock->setWidget(state->widget);
         dock->setWidgetActions(state->widgetActions);
         dock->setWindowTitle(state->title);
+        state->widget->setVisible(true);
     } else {
         if (!dock->checkedAction()) {
             dock->hide();
+            state->widget->setVisible(false);
         }
     }
 }
