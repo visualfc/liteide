@@ -28,6 +28,7 @@
 
 class DocumentBrowserFactory : public LiteApi::IEditorFactory
 {
+    Q_OBJECT
 public:
     DocumentBrowserFactory(LiteApi::IApplication *app, QObject *parent);
     virtual QStringList mimeTypes() const;

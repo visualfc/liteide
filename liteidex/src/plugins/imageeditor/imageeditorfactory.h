@@ -7,6 +7,7 @@ using namespace LiteApi;
 
 class ImageEditorFactory : public LiteApi::IEditorFactory
 {
+    Q_OBJECT
 public:
     ImageEditorFactory(LiteApi::IApplication *app, QObject *parent);
     virtual QStringList mimeTypes() const;

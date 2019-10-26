@@ -262,14 +262,6 @@ LiteIDE это простая кросплатформенная среда ра
         <translation>Не удалось переименовать файл!</translation>
     </message>
     <message>
-        <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="vanished">Удалить этот файл навсегда?</translation>
-    </message>
-    <message>
-        <source>Failed to delete the file!</source>
-        <translation type="vanished">Не удалось удалить файл!</translation>
-    </message>
-    <message>
         <source>Create Folder</source>
         <translation>Создание папки</translation>
     </message>
@@ -371,6 +363,14 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Move to Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open With</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -644,6 +644,13 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Reset Font Size</source>
         <translation>Стандартный размер шрифта</translation>
+    </message>
+</context>
+<context>
+    <name>DocumentBrowserFactory</name>
+    <message>
+        <source>DocumentBrowser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2374,6 +2381,13 @@ Success: %2.</oldsource>
     </message>
 </context>
 <context>
+    <name>ImageEditorFactory</name>
+    <message>
+        <source>Image Viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ImportPkgTip</name>
     <message>
         <source>warning, pkg not find, please enter to import :</source>
@@ -3274,9 +3288,12 @@ Success: %2.</oldsource>
         <source>Line Wrap (MimeType)</source>
         <translation>Перенос строк (MimeType)</translation>
     </message>
+</context>
+<context>
+    <name>LiteEditorFileFactory</name>
     <message>
-        <source>Browser Files in %1</source>
-        <translation>Обзор файлов в %1</translation>
+        <source>Text Editor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3760,6 +3777,13 @@ PDF...</translation>
     <message>
         <source>Failed to delete the file!</source>
         <translation>Не удалось удалить файл!</translation>
+    </message>
+</context>
+<context>
+    <name>NavigateBar</name>
+    <message>
+        <source>Browser Files in %1</source>
+        <translation type="unfinished">Обзор файлов в %1</translation>
     </message>
 </context>
 <context>

@@ -207,17 +207,17 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>BaseDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="76"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="77"/>
         <source>Hide</source>
         <translation>Приховати</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="77"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="78"/>
         <source>Hide Tool Window</source>
         <translation>Приховати панель</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="86"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="87"/>
         <source>Floating Window</source>
         <translation type="unfinished">Плаваюче вікно</translation>
     </message>
@@ -225,248 +225,250 @@ LiteIDE - це проста кросплатформена IDE з відкрит
 <context>
     <name>BaseFolderView</name>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
         <source>Open In New Window</source>
         <translation>Відкрити в новому вікні</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
         <source>Open File</source>
         <translation>Відкрити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>New File...</source>
         <translation>Створити файл...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
         <source>New File Wizard...</source>
         <translation>Майстер створення файлу...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
         <source>Rename File...</source>
         <translation>Перейменувати файл...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="84"/>
         <source>New Folder...</source>
         <translation>Створити директорію...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="84"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
         <source>Rename Folder...</source>
         <translation>Перейменувати директорію...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="325"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="332"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="86"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="328"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="335"/>
         <source>Delete Folder</source>
         <translation>Видалити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="98"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="99"/>
         <source>Open Terminal Here</source>
         <translation>Відкрити термінал тут</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="88"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
         <source>Show in Explorer</source>
         <oldsource>Open Explorer Here</oldsource>
         <translation>Відкрити в Explorer</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="75"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
         <source>Open Application</source>
         <translation>Відкрити програму</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="90"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="91"/>
         <source>Show in Finder</source>
         <translation>Відкрити в Finder</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="92"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="93"/>
         <source>Show Containing Folder</source>
         <translation>Показати в батьківській директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="96"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="97"/>
         <source>Open Command Prompt Here</source>
         <translation>Відкрити командний рядок тут</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="101"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="102"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
         <translation>Відкрити директорію...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="102"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="103"/>
         <source>Reload Folder</source>
         <translation>Перезавантажити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="103"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="104"/>
         <source>Close Folder</source>
         <translation>Закрити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="105"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="106"/>
         <source>Close All Folders</source>
         <translation>Закрити всі директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="107"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="108"/>
         <source>Copy</source>
         <translation>Копіювати</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="108"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
         <source>Paste</source>
         <translation>Вставити</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="110"/>
         <source>Move To Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="188"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="198"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="191"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="201"/>
         <source>Create File</source>
         <translation>Створити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="189"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="192"/>
         <source>A file with that name already exists!</source>
         <translation>Файл з таким іменем вже існує!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="202"/>
         <source>Failed to create the file!</source>
         <translation>Не вдалося створити створити файл!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="229"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="235"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="240"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="232"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="243"/>
         <source>Rename File</source>
         <translation>Перейменувати файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="229"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="232"/>
         <source>New Name:</source>
         <translation>Нове ім&apos;я:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="236"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="241"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
         <source>Failed to rename the file!</source>
         <translation>Не вдалося перейменувати файл!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="486"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="489"/>
         <source>An item &quot;%1&quot; already exists in this location. Do you want to replace it and move old item to trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="487"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="490"/>
         <source>Stop</source>
         <translation type="unfinished">Зупинити</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="488"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="491"/>
         <source>Keep Both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="489"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="492"/>
         <source>Keep Both All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="490"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="493"/>
         <source>Replace</source>
         <translation type="unfinished">Замінити</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="491"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="494"/>
         <source>Replace All</source>
         <translation type="unfinished">Замінити все</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="576"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="579"/>
         <source>Are you sure that you want move to trash this item?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="579"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="582"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="585"/>
         <source>Are you sure that you want move to trash %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="585"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="588"/>
         <source>Move to Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure that you want to permanently delete this file?</source>
-        <translation type="vanished">Видалити цей файл назавжди?</translation>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="601"/>
+        <source>Open With</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to delete the file!</source>
-        <translation type="vanished">Не вдалося видалити файл!</translation>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="608"/>
+        <source>System Editor</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="280"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="283"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="286"/>
         <source>Create Folder</source>
         <translation>Створити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="281"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="284"/>
         <source>A folder with that name already exists!</source>
         <translation>Директорія з таким іменем вже існує!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="284"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
         <source>Failed to create the folder!</source>
         <translation>Не вдалося створити створити директорію!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="297"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="306"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="311"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="309"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="314"/>
         <source>Rename Folder</source>
         <translation>Перейменувати директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="297"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
         <source>Folder Name</source>
         <translation>Им&apos;я директорії</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="312"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="315"/>
         <source>Failed to rename the folder!</source>
         <translation>Не вдалося перейменувати директорію!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="326"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="329"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="333"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="336"/>
         <source>Failed to delete the folder!</source>
         <translation>Не вдалося видалити директорію!</translation>
     </message>
@@ -806,6 +808,14 @@ LiteIDE - це проста кросплатформена IDE з відкрит
         <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
         <source>Reset Font Size</source>
         <translation>Відновити розмір шрифту</translation>
+    </message>
+</context>
+<context>
+    <name>DocumentBrowserFactory</name>
+    <message>
+        <location filename="src/utils/documentbrowser/documentbrowserfactory.cpp" line="67"/>
+        <source>DocumentBrowser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1390,7 +1400,7 @@ Do you want to load?</oldsource>
         <translation>Оберіть директорію:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="658"/>
+        <location filename="src/liteapp/filemanager.cpp" line="674"/>
         <source>%1
 This file has been deleted from the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1405,7 +1415,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 Відповідаючи &quot;Так&quot; ви втратите незбережені зміни.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="665"/>
+        <location filename="src/liteapp/filemanager.cpp" line="681"/>
         <source>%1
 This file has been deleted from the drive.
 
@@ -1416,7 +1426,7 @@ Do you want to close the editor?</source>
 Бажаєте закрити редактор?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="698"/>
+        <location filename="src/liteapp/filemanager.cpp" line="714"/>
         <source>%1
 This file has been modified on the drive,
 but you have unsaved modifications in your LiteIDE editor.
@@ -1431,7 +1441,7 @@ Answering &quot;Yes&quot; will discard your unsaved changes.</source>
 Відповідаючи &quot;Так&quot; ви втратите незбережені зміни.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="705"/>
+        <location filename="src/liteapp/filemanager.cpp" line="721"/>
         <source>%1
 This file has been modified on the drive.
 
@@ -1462,10 +1472,10 @@ Do you want to reload the file from disk?</source>
         <translation>Відкрити проект</translation>
     </message>
     <message>
-        <location filename="src/liteapp/filemanager.cpp" line="662"/>
-        <location filename="src/liteapp/filemanager.cpp" line="667"/>
-        <location filename="src/liteapp/filemanager.cpp" line="702"/>
-        <location filename="src/liteapp/filemanager.cpp" line="707"/>
+        <location filename="src/liteapp/filemanager.cpp" line="678"/>
+        <location filename="src/liteapp/filemanager.cpp" line="683"/>
+        <location filename="src/liteapp/filemanager.cpp" line="718"/>
+        <location filename="src/liteapp/filemanager.cpp" line="723"/>
         <source>LiteIDE X</source>
         <translation>LiteIDE X</translation>
     </message>
@@ -2092,34 +2102,34 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="247"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="257"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="248"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="248"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Видалити цей файл назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
         <source>Failed to delete the file!</source>
         <translation>Не вдалося видалити файл!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="270"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="280"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="271"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="281"/>
         <source>Delete Folder</source>
         <translation>Видалити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="271"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="281"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
         <source>Failed to delete the folder!</source>
         <translation>Не вдалося видалити директорію!</translation>
     </message>
@@ -2932,44 +2942,52 @@ Success: %2.</oldsource>
 <context>
     <name>ImageEditor</name>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="23"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="28"/>
         <source>ZoomIn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="26"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="31"/>
         <source>ZoomOut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="29"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="34"/>
         <source>Reset to original size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="32"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="37"/>
         <source>Fit to view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="35"/>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="204"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="40"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="223"/>
         <source>Play movie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="39"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="44"/>
         <source>Prev frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="43"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="48"/>
         <source>Next frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="201"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="220"/>
         <source>Pause movie</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageEditorFactory</name>
+    <message>
+        <location filename="src/plugins/imageeditor/imageeditorfactory.cpp" line="99"/>
+        <source>Image Viewer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3703,408 +3721,410 @@ Success: %2.</oldsource>
 <context>
     <name>LiteEditor</name>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="253"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="254"/>
         <source>Undo</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="257"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="258"/>
         <source>Redo</source>
         <translation>Повторити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="261"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="262"/>
         <source>Cut</source>
         <translation>Вирізати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="265"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="266"/>
         <source>Copy</source>
         <translation>Копіювати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="269"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="270"/>
         <source>Paste</source>
         <translation>Вставити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="272"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="273"/>
         <source>Select All</source>
         <translation>Виділити все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="297"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="298"/>
         <source>Go to Doc Start</source>
         <translation>Перейти до початку документу</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="301"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="302"/>
         <source>Go to Doc End</source>
         <translation>Перейти в кінець документу</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="305"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="306"/>
         <source>Go to Line Start</source>
         <translation>Перейти на початок рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="309"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="310"/>
         <source>Go to Line End</source>
         <translation>Перейти в кінець рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="313"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="314"/>
         <source>Go to Previous Line</source>
         <translation>Перейти до попереднього рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="317"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="318"/>
         <source>Go to Next Line</source>
         <translation>Перейти до наступного рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="321"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="322"/>
         <source>Go to Previous Character</source>
         <translation>Перейти до попереднього символа</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="325"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="326"/>
         <source>Go to Next Charater</source>
         <translation>Перейти до наступного символа</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="329"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="330"/>
         <source>Go to Previous Word</source>
         <translation>Перейти до попереднього слова</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="333"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="334"/>
         <source>Go to Next Word</source>
         <translation>Перейти до наступного слова</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="354"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="355"/>
         <source>Go to Line</source>
         <translation>Перейти до рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="357"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="358"/>
         <source>File is readonly</source>
         <translation>Файл тільки для читання</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="360"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="361"/>
         <source>File is writable</source>
         <translation>Файл доступний на запис</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="400"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="401"/>
         <source>Line Wrap (MimeType)</source>
         <oldsource>Word Wrap (MimeType)</oldsource>
         <translation>Перенесення тексту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="411"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="412"/>
         <source>Toggle Comment</source>
         <translation>Закоментувати/розкоментувати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="414"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="415"/>
         <source>Toggle Block Commnet</source>
         <translation>Закоментувати/розкоментувати блок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="417"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="418"/>
         <source>Auto-indent Selection</source>
         <translation>Автовідступи у виділеному тексті</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="421"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="422"/>
         <source>Tab To Spaces (MimeType)</source>
         <translation>Табуляцію замінити на пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="425"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="426"/>
         <source>Line End Windows (\r\n)</source>
         <translation>Кінці рядків Windows (\r\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="429"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="430"/>
         <source>Line End Unix (\n)</source>
         <translation>Кінці рядків Unix (\n)</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="433"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="434"/>
         <source>Visualize Whitespace (Global)</source>
         <translation>Візуалізувати пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="440"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="441"/>
         <source>Move Line Up</source>
         <translation>Пересунути рядок угору</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="443"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="444"/>
         <source>Move Line Down</source>
         <translation>Пересунути рядок вниз</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="446"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="447"/>
         <source>Copy Line Up</source>
         <translation>Копіювати рядок угору</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="449"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="450"/>
         <source>Copy Line Down</source>
         <translation>Копіювати рядок вниз</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="452"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="453"/>
         <source>Join Lines</source>
         <translation>Об&apos;єднати рядки</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="455"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="456"/>
         <source>Title Case</source>
         <translation>Як у реченні</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="459"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="460"/>
         <source>Upper Case</source>
         <translation>ВЕРХНІЙ РЕГІСТР</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="463"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="464"/>
         <source>Lower Case</source>
         <translation>нижній регістр</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="467"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="468"/>
         <source>Swap Case</source>
         <translation>Змінити на зворотній</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="471"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="472"/>
         <source>Tab To Spaces</source>
         <translation>Табуляцію в пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="475"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="476"/>
         <source>Spaces To Tab</source>
         <translation>Пробіли в табуляцію</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="639"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="727"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="641"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="729"/>
         <source>Advanced</source>
         <translation>Додатково</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="665"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="745"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="667"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="747"/>
         <source>Goto</source>
         <translation>Перейти</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="690"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="768"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="692"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="770"/>
         <source>Convert Tab</source>
         <translation>Перетворити табуляцію</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="694"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="772"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="696"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="774"/>
         <source>Code Folding</source>
         <translation>Згортання коду</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1567"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1590"/>
-        <source>Browser Files in %1</source>
-        <translation type="unfinished">Переглянути файли в %1</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="684"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="762"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="686"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="764"/>
         <source>Convert Case</source>
         <translation>Змінити регістр</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1226"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1195"/>
         <source>Export HTML</source>
         <translation>Експортувати HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1234"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1203"/>
         <source>Export Failed</source>
         <translation>Експорт завершився невдало</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1235"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1204"/>
         <source>Could not open %1 for writing.</source>
         <translation>Не вдалося відкрити %1 для запису.</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1254"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1223"/>
         <source>Export PDF</source>
         <translation>Експорт в PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1279"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1248"/>
         <source>Print Document</source>
         <translation>Друк документу</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="283"/>
         <source>Print Preview...</source>
         <oldsource>Print Preview Document</oldsource>
         <translation>Перегляд перед друком...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="278"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="279"/>
         <source>Export HTML...</source>
         <translation>Експортувати HTML...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="280"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="281"/>
         <source>Export PDF...</source>
         <translation>Експортувати PDF...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="281"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="282"/>
         <source>Print...</source>
         <translation>Друк...</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="284"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="285"/>
         <source>Go to Previous Block</source>
         <oldsource>Go To Previous Block</oldsource>
         <translation>Перейти до попереднього блоку</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="291"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="292"/>
         <source>Select Block</source>
         <translation>Вибрати блок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="294"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="295"/>
         <source>Go to Matching Brace</source>
         <oldsource>Go To Matching Brace</oldsource>
         <translation>Перейти до відповідної фігурної дужки</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="337"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="338"/>
         <source>Fold</source>
         <translation>Згорнути</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="340"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="341"/>
         <source>Unfold</source>
         <translation>Розгорнути</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="343"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="344"/>
         <source>Fold All</source>
         <translation>Згорнути все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="346"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="347"/>
         <source>Unfold All</source>
         <translation>Розгорнути все</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1354"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1323"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation>Перейти до рядка</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="364"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="365"/>
         <source>Duplicate</source>
         <translation>Дублювати</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="368"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="369"/>
         <source>Delete Line</source>
         <translation>Видалити рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="372"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="373"/>
         <source>Copy Line</source>
         <translation>Копіювати рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="376"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="377"/>
         <source>Cut Line</source>
         <translation>Вирізати рядок</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="380"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="381"/>
         <source>Insert Line Before</source>
         <translation>Вставити пустий рядок перед поточним</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="384"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="385"/>
         <source>Insert Line After</source>
         <translation>Вставити пустий рядок після поточного</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="388"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="389"/>
         <source>Increase Font Size</source>
         <translation>Збільшити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="391"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="392"/>
         <source>Decrease Font Size</source>
         <translation>Зменшити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="394"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="395"/>
         <source>Reset Font Size</source>
         <translation>Відновити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="397"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="398"/>
         <source>Clean Whitespace</source>
         <translation>Очистити пробіли</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="404"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="405"/>
         <source>Code Complete</source>
         <translation>Доповнити</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="700"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="778"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="702"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="780"/>
         <source>Settings</source>
         <oldsource>File Setup</oldsource>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="919"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="888"/>
         <source>Reload File</source>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1296"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1265"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation>Перезавантажити %1 та відкинути незбережені зміни?</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="287"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="288"/>
         <source>Go to Next Block</source>
         <oldsource>Go To Next Block</oldsource>
         <translation>Перейти до наступного блоку</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1328"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1297"/>
         <source>ReadOnly</source>
         <translation>Тільки для читання</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1354"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1323"/>
         <source>Line: </source>
         <translation>Рядок: </translation>
+    </message>
+</context>
+<context>
+    <name>LiteEditorFileFactory</name>
+    <message>
+        <location filename="src/plugins/liteeditor/liteeditorfilefactory.cpp" line="203"/>
+        <source>Text Editor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4661,36 +4681,45 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="287"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="294"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="288"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="295"/>
         <source>Delete Folder</source>
         <translation>Видалити директорію</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="288"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Видалити цю директорію разом із її вмістом назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="295"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
         <source>Failed to delete the folder!</source>
         <translation>Не вдалося видалити директорію!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="308"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="315"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="309"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="316"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="309"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Видалити цей файл назавжди?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="316"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
         <source>Failed to delete the file!</source>
         <translation>Не вдалося видалити файл!</translation>
+    </message>
+</context>
+<context>
+    <name>NavigateBar</name>
+    <message>
+        <location filename="src/utils/navigate/navigate.cpp" line="115"/>
+        <location filename="src/utils/navigate/navigate.cpp" line="138"/>
+        <source>Browser Files in %1</source>
+        <translation type="unfinished">Переглянути файли в %1</translation>
     </message>
 </context>
 <context>
@@ -4831,24 +4860,24 @@ Do you want to replace it?</source>
 <context>
     <name>OutputDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="417"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="445"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="446"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="422"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="450"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="451"/>
         <source>Move To</source>
         <translation type="unfinished">Пересунути в</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="419"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="424"/>
         <source>LeftSideBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="420"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="425"/>
         <source>RightSideBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="453"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="458"/>
         <source>BottomDockWidget</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5557,17 +5586,17 @@ Do you want to replace it?</source>
 <context>
     <name>SideWindowStyle</name>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="521"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="537"/>
         <source>Hide SideBar</source>
         <translation>Приховати бічну панель</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="559"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="575"/>
         <source>SideBar Windows</source>
         <translation>Вікна бічної панелі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/sidewindowstyle.cpp" line="560"/>
+        <location filename="src/liteapp/sidewindowstyle.cpp" line="576"/>
         <source>Output Windows</source>
         <translatorcomment>Вікна виводу?</translatorcomment>
         <translation>Вікна виведення</translation>
@@ -5576,99 +5605,99 @@ Do you want to replace it?</source>
 <context>
     <name>SplitDockWidget</name>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="279"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="352"/>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="353"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="278"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="357"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="358"/>
         <source>Move To</source>
         <translation type="unfinished">Перемістити в</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="281"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="280"/>
         <source>Top</source>
         <translation type="unfinished">Верх</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="285"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="284"/>
         <source>Top (Split)</source>
         <translation type="unfinished">Верх (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="289"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="321"/>
         <source>TopDockWidget (Split)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="289"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="321"/>
         <source>TopDockWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="292"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="290"/>
         <source>Bottom</source>
         <translation type="unfinished">Низ</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="296"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="294"/>
         <source>Bottom (Split)</source>
         <translation type="unfinished">Низ (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="323"/>
         <source>BottomDockWidget (Split)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="323"/>
         <source>BottomDockWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="303"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="300"/>
         <source>Left</source>
         <translation type="unfinished">Ліво</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="307"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="304"/>
         <source>Left (Split)</source>
         <translation type="unfinished">Ліво (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="311"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="325"/>
         <source>LeftDockWidget (Split)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="311"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="325"/>
         <source>LeftDockWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="314"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="310"/>
         <source>Right</source>
         <translation type="unfinished">Право</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="318"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="314"/>
         <source>Right (Split)</source>
         <translation type="unfinished">Право (розділити)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="322"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="327"/>
         <source>RightDockWidget (Split)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="322"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="327"/>
         <source>RightDockWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="328"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="333"/>
         <source>Unsplit</source>
         <translation type="unfinished">Не розділяти</translation>
     </message>
     <message>
-        <location filename="src/liteapp/tooldockwidget.cpp" line="333"/>
+        <location filename="src/liteapp/tooldockwidget.cpp" line="338"/>
         <source>Split</source>
         <translation type="unfinished">Розділити</translation>
     </message>
