@@ -224,7 +224,7 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
         menu.addAction(m_openEditorAct);
-        menu.addMenu(m_openWithMenu);
+        menu.addMenu(this->openWithMenu());
         menu.addSeparator();
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);

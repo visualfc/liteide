@@ -59,7 +59,7 @@ public slots:
     virtual void pasteFile();
     virtual bool canPasteFile();
     virtual void moveToTrash();
-    void appLoaded();
+    virtual QMenu *openWithMenu();
     void openWithEditor();
     void openWithSystemEditor();
 public:

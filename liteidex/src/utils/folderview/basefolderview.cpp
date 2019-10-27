@@ -129,7 +129,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_pasteFileAct,SIGNAL(triggered()),this,SLOT(pasteFile()));
     connect(m_moveToTrashAct,SIGNAL(triggered()),this,SLOT(moveToTrash()));
 
-    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    m_openWithMenu = 0;
 }
 
 QDir BaseFolderView::contextDir() const
@@ -596,20 +596,6 @@ void BaseFolderView::moveToTrash()
     }
 }
 
-void BaseFolderView::appLoaded()
-{
-    m_openWithMenu = new QMenu(tr("Open With"),this);
-    foreach(LiteApi::IEditorFactory *factory, m_liteApp->editorManager()->factoryList()) {
-        QAction *act = new QAction(factory->displayName(),this);
-        act->setData(factory->id());
-        m_openWithMenu->addAction(act);
-        connect(act,SIGNAL(triggered()),this,SLOT(openWithEditor()));
-    }
-    QAction *act = new QAction(tr("System Editor"),this);
-    m_openWithMenu->addAction(act);
-    connect(act,SIGNAL(triggered()),this,SLOT(openWithSystemEditor()));
-}
-
 void BaseFolderView::openWithEditor()
 {
     QAction *act = (QAction*)sender();
@@ -636,6 +622,24 @@ void BaseFolderView::openWithSystemEditor()
         return;
     }
     QDesktopServices::openUrl(url);
+}
+
+QMenu *BaseFolderView::openWithMenu()
+{
+    if (m_openWithMenu) {
+        return m_openWithMenu;
+    }
+    m_openWithMenu = new QMenu(tr("Open With"),this);
+    foreach(LiteApi::IEditorFactory *factory, m_liteApp->editorManager()->factoryList()) {
+        QAction *act = new QAction(factory->displayName(),this);
+        act->setData(factory->id());
+        m_openWithMenu->addAction(act);
+        connect(act,SIGNAL(triggered()),this,SLOT(openWithEditor()));
+    }
+    QAction *act = new QAction(tr("System Editor"),this);
+    m_openWithMenu->addAction(act);
+    connect(act,SIGNAL(triggered()),this,SLOT(openWithSystemEditor()));
+    return  m_openWithMenu;
 }
 
 QModelIndex BaseFolderView::findIndexForContext(const QString &/*filePath*/) const
