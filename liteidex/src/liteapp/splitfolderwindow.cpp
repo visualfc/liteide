@@ -219,6 +219,7 @@ void SplitFolderWindow::currentEditorChanged(IEditor *editor)
         QModelIndex index = widget->indexForPath(filePath);
         if (index.isValid()) {
             widget->scrollTo(index);
+            widget->clearSelection();
             widget->setCurrentIndex(index);
             return;
         }
@@ -233,6 +234,7 @@ void SplitFolderWindow::currentEditorChanged(IEditor *editor)
         QModelIndex index = widget->indexForPath(filePath);
         if (index.isValid()) {
             widget->scrollTo(index);
+            widget->clearSelection();
             widget->setCurrentIndex(index);
             m_tree->setCurrentIndex(m_tree->model()->index(i,0));
             m_stacked->setCurrentIndex(i);

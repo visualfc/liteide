@@ -153,20 +153,17 @@ void MultiFolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
     if (!editor || !m_bSyncEditor) {
         return;
     }
+
     QString fileName = editor->filePath();
     if (fileName.isEmpty()) {
         return;
     }
     QList<QModelIndex> indexList = m_folderListView->indexForPath(fileName);
     if (indexList.isEmpty()) {
-        m_folderListView->setCurrentIndex(QModelIndex());
         return;
     }
     QModelIndex index = indexList.first();
-//    QModelIndex parent = index.parent();
-//    if (parent.isValid()) {
-//        m_folderListView->setExpanded(parent,true);
-//    }
     m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
+    m_folderListView->clearSelection();
     m_folderListView->setCurrentIndex(index);
 }

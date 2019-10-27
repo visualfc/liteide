@@ -235,6 +235,7 @@ void FileBrowser::currentEditorChanged(LiteApi::IEditor *editor)
         return;
     }
     m_folderView->scrollTo(index,QAbstractItemView::EnsureVisible);
+    m_folderView->clearSelection();
     m_folderView->setCurrentIndex(index);
 }
 
