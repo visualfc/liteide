@@ -1,10 +1,6 @@
 TARGET = imageeditor
 TEMPLATE = lib
 
-!isEmpty(QT.svg.name): QT += svg
-else: DEFINES += QT_NO_SVG
-
-
 include(../../liteideplugin.pri)
 include (../../utils/mimetype/mimetype.pri)
 include (../../utils/navigate/navigate.pri)
@@ -28,3 +24,7 @@ HEADERS +=\
 
 RESOURCES += \
     imageeditor.qrc
+
+!isEmpty(QT.svg.name): QT += svg
+else: DEFINES += QT_NO_SVG
+
