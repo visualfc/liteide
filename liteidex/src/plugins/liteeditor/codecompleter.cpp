@@ -1075,6 +1075,9 @@ bool CodeCompleterEx::eventFilter(QObject *o, QEvent *e)
     case QEvent::ShortcutOverride:    {
         QKeyEvent *ke = static_cast<QKeyEvent *>(e);
         switch (ke->key()) {
+        case Qt::Key_Escape:
+            e->accept();
+            return  true;
         case Qt::Key_N:
         case Qt::Key_P:
             if (ke->modifiers() == Qt::ControlModifier) {
