@@ -52,7 +52,7 @@
 #endif
 //lite_memory_check_end
 
-QString data = "package main\n\nimport(\n\t\"fmt\"\n)\n\nfunc main(){\n\tfmt.Println(\"Hello World\")\n}";
+QString data = "package main\n\nimport (\n\t\"fmt\"\n)\n\nfunc main() {\n\tfmt.Println(\"Hello World\")\n}";
 GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     : LiteApi::IBrowserEditor(parent),
       m_liteApp(app)
