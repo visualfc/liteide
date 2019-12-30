@@ -22,7 +22,8 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "webkitbrowser.h"
-#include "sundown/mdtohtml.h"
+//#include "sundown/mdtohtml.h"
+#include "cmake/cmark.h"
 #include <QWebView>
 #include <QNetworkProxyFactory>
 #include <QToolBar>

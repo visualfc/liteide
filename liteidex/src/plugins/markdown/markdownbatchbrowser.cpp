@@ -23,7 +23,8 @@
 
 #include "markdownbatchbrowser.h"
 #include "ui_markdownbatchwidget.h"
-#include "sundown/mdtohtml.h"
+//#include "sundown/mdtohtml.h"
+#include "cmark/libcmark.h"
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QStandardItem>

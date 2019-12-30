@@ -23,7 +23,8 @@
 
 #include "markdown_global.h"
 #include "htmlpreview.h"
-#include "sundown/mdtohtml.h"
+//#include "sundown/mdtohtml.h"
+#include "cmark/libcmark.h"
 #include <QScrollBar>
 #include <QMenu>
 #include <QAction>
@@ -197,7 +198,7 @@ void HtmlPreview::appLoaded()
         QAction *act = new QAction("textbrowser.css",this);
         act->setCheckable(true);
         m_cssActGroup->addAction(act);
-        fix_qt_textbrowser(true);
+        //fix_qt_textbrowser(true);
         defcss = "textbrowser.css";
     }
 
