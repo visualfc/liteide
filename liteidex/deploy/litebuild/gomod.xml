@@ -65,6 +65,7 @@
 		<action id="Go Module Tidy" menu="Module" img="tidy.png" cmd="$(GO)" args="mod tidy" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Go Module Verify" menu="Module" img="ver.png" cmd="$(GO)" args="mod verify" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Go Module Graph" menu="Module" img="graph.png" cmd="$(GO)" args="mod graph" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="Go Module Vendor" menu="Module" img="ver.png" cmd="$(GO)" args="mod vendor -v" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<target id="Target" cmd="$(TARGETNAME)" debug="$(DEBUGNAME)" args="$(TARGETARGS)" build="$(DEBUGDEBUGARGS)" work="$(BUILD_DIR_PATH)"/>
 	</mime-type>
 </mime-info>
