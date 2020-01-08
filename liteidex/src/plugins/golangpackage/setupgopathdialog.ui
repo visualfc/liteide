@@ -64,16 +64,6 @@
           <property name="editable">
            <bool>true</bool>
           </property>
-          <item>
-           <property name="text">
-            <string notr="true">https://proxy.golang.org,direct</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string notr="true">https://goproxy.io</string>
-           </property>
-          </item>
          </widget>
         </item>
        </layout>

@@ -44,6 +44,12 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     ui->cmbGoModule->setCurrentIndex(0);
     ui->cmbGoModule->setEnabled(false);
     ui->cmbGoProxy->setEnabled(false);
+    ui->cmbGoProxy->addItems(QStringList()
+                            << "https://proxy.golang.org,direct"
+                            << "https://goproxy.io"
+                            << "https://goproxy.io,direct"
+                            << "https://goproxy.cn"
+                            << "https://goproxy.cn,direct");
     connect(ui->browserButton,SIGNAL(clicked()),this,SLOT(browser()));
     connect(ui->clearButton,SIGNAL(clicked()),ui->litePathTextEdit,SLOT(clear()));
     connect(ui->chkUseSysGopath,SIGNAL(toggled(bool)),ui->sysPathTextEdit,SLOT(setEnabled(bool)));
