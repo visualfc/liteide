@@ -646,7 +646,7 @@ QString LiteApp::ideName() const
 QString LiteApp::ideCopyright() const
 {
     static QString s_info =
-    "2011-2019(c)\n"
+    "2011-2020(c)\n"
     "visualfc@gmail.com\n"
     "\n"
     "https://github.com/visualfc/liteide\n";
