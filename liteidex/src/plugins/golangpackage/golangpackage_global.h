@@ -38,5 +38,12 @@
 #define LITEIDE_GO111MODULE "liteide/go111module"
 #define LITEIDE_USEGOPROXY "liteide/usegoproxy"
 #define LITEIDE_GOPROXY "liteide/goproxy"
+#define LITEIDE_USEGOPRIVATE "liteide/usegoprivate"
+#define LITEIDE_GOPRIVATE "liteide/goprivate"
+#define LITEIDE_USEGONOPROXY "liteide/usegonoproxy"
+#define LITEIDE_GONOPROXY "liteide/gonoproxy"
+#define LITEIDE_USEGONOSUMDB "liteide/usegonosumdb"
+#define LITEIDE_GONOSUMDB "liteide/gonosumdb"
+
 
 #endif // GOLANGPACKAGE_GLOBAL_H

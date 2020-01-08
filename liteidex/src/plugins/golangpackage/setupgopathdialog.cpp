@@ -23,6 +23,7 @@
 
 #include "setupgopathdialog.h"
 #include "ui_setupgopathdialog.h"
+#include "golangpackage_global.h"
 #include <QFileDialog>
 #include <QLineEdit>
 //lite_memory_check_begin
@@ -35,6 +36,7 @@
 #endif
 //lite_memory_check_end
 
+
 SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupGopathDialog)
@@ -44,6 +46,10 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     ui->cmbGoModule->setCurrentIndex(0);
     ui->cmbGoModule->setEnabled(false);
     ui->cmbGoProxy->setEnabled(false);
+    ui->editGoPrivate->setEnabled(false);
+    ui->editGoNoProxy->setEnabled(false);
+    ui->editGoNoSumdb->setEnabled(false);
+
     ui->cmbGoProxy->addItems(QStringList()
                             << "https://proxy.golang.org,direct"
                             << "https://goproxy.io"
@@ -56,6 +62,9 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     connect(ui->chkUseLiteGopath,SIGNAL(toggled(bool)),ui->litePathTextEdit,SLOT(setEnabled(bool)));
     connect(ui->chkUseGoModule,SIGNAL(toggled(bool)),ui->cmbGoModule,SLOT(setEnabled(bool)));
     connect(ui->chkUseGoProxy,SIGNAL(toggled(bool)),ui->cmbGoProxy,SLOT(setEnabled(bool)));
+    connect(ui->chkUseGoPrivate,SIGNAL(toggled(bool)),ui->editGoPrivate,SLOT(setEnabled(bool)));
+    connect(ui->chkUseGoNoProxy,SIGNAL(toggled(bool)),ui->editGoNoProxy,SLOT(setEnabled(bool)));
+    connect(ui->chkUseGoNoSumdb,SIGNAL(toggled(bool)),ui->editGoNoSumdb,SLOT(setEnabled(bool)));
 }
 
 SetupGopathDialog::~SetupGopathDialog()
@@ -151,6 +160,62 @@ void SetupGopathDialog::setGoProxy(const QString &v)
 QString SetupGopathDialog::goProxy() const
 {
     return ui->cmbGoProxy->currentText();
+}
+
+void SetupGopathDialog::setUseGoPrivate(ENUM_GO_PRIVATE id, bool b)
+{
+    switch (id) {
+    case GO_PRIVATE:
+        ui->chkUseGoPrivate->setChecked(b);
+        break;
+    case GO_NOPROXY:
+        ui->chkUseGoNoProxy->setChecked(b);
+        break;
+    case GO_NOSUMDB:
+        ui->chkUseGoNoSumdb->setChecked(b);
+        break;
+    }
+}
+
+bool SetupGopathDialog::isUseGoPrivate(ENUM_GO_PRIVATE id) const
+{
+    switch (id) {
+    case GO_PRIVATE:
+        return  ui->chkUseGoPrivate->isChecked();
+    case GO_NOPROXY:
+        return  ui->chkUseGoNoProxy->isChecked();
+    case GO_NOSUMDB:
+        return  ui->chkUseGoNoSumdb->isChecked();
+    }
+    return  false;
+}
+
+void SetupGopathDialog::setGoPrivate(ENUM_GO_PRIVATE id, const QString &value)
+{
+    switch (id) {
+    case GO_PRIVATE:
+        ui->editGoPrivate->setText(value);
+        break;
+    case GO_NOPROXY:
+        ui->editGoNoProxy->setText(value);
+        break;
+    case GO_NOSUMDB:
+        ui->editGoNoSumdb->setText(value);
+        break;
+    }
+}
+
+QString SetupGopathDialog::goPrivate(ENUM_GO_PRIVATE id) const
+{
+    switch (id) {
+    case GO_PRIVATE:
+        return  ui->editGoPrivate->text();
+    case GO_NOPROXY:
+        return  ui->editGoNoProxy->text();
+    case GO_NOSUMDB:
+        return  ui->editGoNoSumdb->text();
+    }
+    return  QString();
 }
 
 void SetupGopathDialog::browser()

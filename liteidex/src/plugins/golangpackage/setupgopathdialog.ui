@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>578</width>
-    <height>478</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,13 +29,17 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="1">
-         <widget class="QComboBox" name="cmbGoModule"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QCheckBox" name="chkUseGoModule">
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="chkUseGoPrivate">
           <property name="text">
-           <string>Custom GO111MODULE</string>
+           <string>Custom GOPRIVATE</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="chkUseGoNoProxy">
+          <property name="text">
+           <string>Custom GONOPROXY</string>
           </property>
          </widget>
         </item>
@@ -46,7 +50,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>20</width>
             <height>20</height>
            </size>
           </property>
@@ -59,12 +63,42 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cmbGoModule"/>
+        </item>
         <item row="1" column="1" colspan="2">
          <widget class="QComboBox" name="cmbGoProxy">
           <property name="editable">
            <bool>true</bool>
           </property>
          </widget>
+        </item>
+        <item row="2" column="1" colspan="2">
+         <widget class="QLineEdit" name="editGoPrivate">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="chkUseGoModule">
+          <property name="text">
+           <string>Custom GO111MODULE</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QCheckBox" name="chkUseGoNoSumdb">
+          <property name="text">
+           <string>Custom GONOSUMDB</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1" colspan="2">
+         <widget class="QLineEdit" name="editGoNoProxy"/>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QLineEdit" name="editGoNoSumdb"/>
         </item>
        </layout>
       </item>

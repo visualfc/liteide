@@ -232,6 +232,15 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     if (app->settings()->value("liteide/usegoproxy",false).toBool()) {
         env.insert("GOPROXY",app->settings()->value("liteide/goproxy").toString());
     }
+    if (app->settings()->value("liteide/usegoprivate",false).toBool()) {
+        env.insert("GOPRIVATE",app->settings()->value("liteide/goprivate").toString());
+    }
+    if (app->settings()->value("liteide/usegonoproxy",false).toBool()) {
+        env.insert("GONOPROXY",app->settings()->value("liteide/gonoproxy").toString());
+    }
+    if (app->settings()->value("liteide/usegonosumdb",false).toBool()) {
+        env.insert("GONOSUMDB",app->settings()->value("liteide/gonosumdb").toString());
+    }
 
     QStringList pathList;
     if (app->settings()->value("liteide/usesysgopath",true).toBool()) {

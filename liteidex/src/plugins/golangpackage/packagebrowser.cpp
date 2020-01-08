@@ -239,6 +239,15 @@ void PackageBrowser::setupGopath()
     dlg->setUseGoProxy(m_liteApp->settings()->value(LITEIDE_USEGOPROXY,false).toBool());
     dlg->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"").toString());
 
+    dlg->setUseGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_USEGOPRIVATE,false).toBool());
+    dlg->setGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_GOPRIVATE,"").toString());
+
+    dlg->setUseGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_USEGONOPROXY,false).toBool());
+    dlg->setGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_GONOPROXY,"").toString());
+
+    dlg->setUseGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_USEGONOSUMDB,false).toBool());
+    dlg->setGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_GONOSUMDB,"").toString());
+
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
     QString info = env.value("GO111MODULE");
     if (!info.isEmpty()) {
@@ -256,8 +265,18 @@ void PackageBrowser::setupGopath()
         m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
         m_liteApp->settings()->setValue(LITEIDE_CUSTOMGO111MODULE,dlg->isUseGoModule());
         m_liteApp->settings()->setValue(LITEIDE_GO111MODULE,dlg->go111Module());
+
         m_liteApp->settings()->setValue(LITEIDE_USEGOPROXY,dlg->isUseGoProxy());
         m_liteApp->settings()->setValue(LITEIDE_GOPROXY,dlg->goProxy());
+
+        m_liteApp->settings()->setValue(LITEIDE_USEGOPRIVATE,dlg->isUseGoPrivate(GO_PRIVATE));
+        m_liteApp->settings()->setValue(LITEIDE_GOPRIVATE,dlg->goPrivate(GO_PRIVATE));
+
+        m_liteApp->settings()->setValue(LITEIDE_USEGONOPROXY,dlg->isUseGoPrivate(GO_NOPROXY));
+        m_liteApp->settings()->setValue(LITEIDE_GONOPROXY,dlg->goPrivate(GO_NOPROXY));
+
+        m_liteApp->settings()->setValue(LITEIDE_USEGONOSUMDB,dlg->isUseGoPrivate(GO_NOSUMDB));
+        m_liteApp->settings()->setValue(LITEIDE_GONOSUMDB,dlg->goPrivate(GO_NOSUMDB));
         //if (!hasSameList(orgLitePath,newLitePath)) {
         m_goTool->setLiteGopath(newLitePath);
         this->reloadAll();

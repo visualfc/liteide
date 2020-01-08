@@ -30,6 +30,12 @@ namespace Ui {
 class SetupGopathDialog;
 }
 
+enum ENUM_GO_PRIVATE{
+    GO_PRIVATE = 0,
+    GO_NOPROXY = 1,
+    GO_NOSUMDB = 2,
+};
+
 class SetupGopathDialog : public QDialog
 {
     Q_OBJECT    
@@ -52,6 +58,10 @@ public:
     bool isUseGoProxy() const;
     void setGoProxy(const QString &v);
     QString goProxy() const;
+    void setUseGoPrivate(ENUM_GO_PRIVATE id, bool b);
+    bool isUseGoPrivate(ENUM_GO_PRIVATE id) const;
+    void setGoPrivate(ENUM_GO_PRIVATE id, const QString &value);
+    QString goPrivate(ENUM_GO_PRIVATE id) const;
 protected slots:
     void browser();
 
