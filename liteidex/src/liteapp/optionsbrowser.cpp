@@ -82,18 +82,44 @@ void OptionsBrowser::addOption(LiteApi::IOption *opt)
     m_widgetOptionMap.insert(item,opt);
 }
 
-int OptionsBrowser::execute()
+int OptionsBrowser::execute(const QString &mimeType)
 {
-    if (ui->listWidget->count() >= 1) {
-        ui->listWidget->setCurrentItem(ui->listWidget->item(0));
-        this->setMinimumHeight(600);
-#ifdef Q_OS_MAC
-        this->setMinimumWidth(900);
-#else
-        this->setMinimumWidth(800);
-#endif
+    if (ui->listWidget->count() == 0) {
+        return exec();
     }
+    QListWidgetItem *item = ui->listWidget->item(0);
+    QMapIterator<QListWidgetItem*,LiteApi::IOption*> i(m_widgetOptionMap);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value()->mimeType() == mimeType) {
+            item = i.key();
+            break;
+        }
+    }
+    ui->listWidget->setCurrentItem(item);
+    LiteApi::IOption *opt = m_widgetOptionMap.value(item);
+    if (opt) {
+        opt->active();
+    }
+    this->setMinimumHeight(600);
+#ifdef Q_OS_MAC
+    this->setMinimumWidth(900);
+#else
+    this->setMinimumWidth(800);
+#endif
     return exec();
+}
+
+QString OptionsBrowser::currenMimeType() const
+{
+    QListWidgetItem *item = ui->listWidget->currentItem();
+    if (item) {
+        LiteApi::IOption *opt = m_widgetOptionMap.value(item);
+        if (opt) {
+            return opt->mimeType();
+        }
+    }
+    return QString();
 }
 
 void OptionsBrowser::itemSelectionChanged()

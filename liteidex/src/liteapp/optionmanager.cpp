@@ -70,14 +70,14 @@ QList<IOptionFactory*> OptionManager::factoryList() const
     return m_factoryList;
 }
 
-void OptionManager::emitApplyOption(QString mimetype)
+void OptionManager::emitApplyOption(const QString &mimetype)
 {
     emit applyOption(mimetype);
 }
 
-void OptionManager::exec()
+void OptionManager::exec(const QString &mimeType)
 {
-    if (m_browser == 0) {
+    if (!m_browser) {
         m_browser = new OptionsBrowser(m_liteApp,m_liteApp->mainWindow());
         connect(m_browser,SIGNAL(applyOption(QString)),this,SIGNAL(applyOption(QString)));
         foreach (IOptionFactory *f, m_factoryList) {
@@ -90,7 +90,12 @@ void OptionManager::exec()
             }
         }
     }
-    m_browser->execute();
+    QString last = m_liteApp->globalCookie().value("optionmanager/current").toString();
+    if (!mimeType.isEmpty()) {
+        last = mimeType;
+    }
+    m_browser->execute(last);
+    m_liteApp->globalCookie().insert("optionmanager/current",m_browser->currenMimeType());
 }
 
 void OptionManager::loadOption(const QString &opt)

@@ -18,16 +18,17 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: setupgopathdialog.h
+// Module: golangpackageoption.h
 // Creator: visualfc <visualfc@gmail.com>
 
 #ifndef SETUPGOPATHDIALOG_H
 #define SETUPGOPATHDIALOG_H
 
 #include <QDialog>
+#include "liteapi/liteapi.h"
 
 namespace Ui {
-class SetupGopathDialog;
+class GolangPackgetOption;
 }
 
 enum ENUM_GO_PRIVATE{
@@ -36,12 +37,12 @@ enum ENUM_GO_PRIVATE{
     GO_NOSUMDB = 2,
 };
 
-class SetupGopathDialog : public QDialog
+class GolangPackageOption : public LiteApi::IOption
 {
     Q_OBJECT    
 public:
-    explicit SetupGopathDialog(QWidget *parent = 0);
-    ~SetupGopathDialog();
+    explicit GolangPackageOption(LiteApi::IApplication *app, QObject *parent = 0);
+    ~GolangPackageOption();
     void setSysPathList(const QStringList &litePathList);
     void setLitePathList(const QStringList &litePathList);
     void setUseSysGopath(bool b);
@@ -62,11 +63,19 @@ public:
     bool isUseGoPrivate(ENUM_GO_PRIVATE id) const;
     void setGoPrivate(ENUM_GO_PRIVATE id, const QString &value);
     QString goPrivate(ENUM_GO_PRIVATE id) const;
+public:
+    virtual QString name() const;
+    virtual QString mimeType() const;
+    virtual void apply();
+    virtual void active();
+    virtual QWidget *widget();
 protected slots:
     void browser();
 
 private:
-    Ui::SetupGopathDialog *ui;
+    LiteApi::IApplication *m_liteApp;
+    Ui::GolangPackgetOption *ui;
+    QWidget *m_widget;
 };
 
 #endif // SETUPGOPATHDIALOG_H

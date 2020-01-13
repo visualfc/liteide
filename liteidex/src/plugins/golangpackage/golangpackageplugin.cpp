@@ -25,6 +25,7 @@
 #include "packagebrowser.h"
 #include "packageproject.h"
 #include "packageprojectfactory.h"
+#include "golangpackageoptionfactory.h"
 #include <QAction>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -45,6 +46,7 @@ bool GolangPackagePlugin::load(LiteApi::IApplication *app)
     new PackageBrowser(app,this);
     //PackageProjectFactory *factory = new PackageProjectFactory(app,this);
     //m_liteApp->projectManager()->addFactory(factory);
+    app->optionManager()->addFactory(new GolangPackageOptionFactory(app,this));
 
     return true;
 }

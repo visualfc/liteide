@@ -18,12 +18,14 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: setupgopathdialog.cpp
+// Module: golangpackageoption.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "setupgopathdialog.h"
+#include "golangpackageoption.h"
 #include "ui_setupgopathdialog.h"
 #include "golangpackage_global.h"
+#include "liteenvapi/liteenvapi.h"
+#include "gotool.h"
 #include <QFileDialog>
 #include <QLineEdit>
 //lite_memory_check_begin
@@ -37,11 +39,13 @@
 //lite_memory_check_end
 
 
-SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SetupGopathDialog)
+GolangPackageOption::GolangPackageOption(LiteApi::IApplication *app, QObject *parent) :
+    LiteApi::IOption(parent),
+    m_liteApp(app),
+    ui(new Ui::GolangPackgetOption),
+    m_widget(new QWidget)
 {
-    ui->setupUi(this);
+    ui->setupUi(m_widget);
     ui->cmbGoModule->addItems(QStringList() << "auto" << "on" << "off");
     ui->cmbGoModule->setCurrentIndex(0);
     ui->cmbGoModule->setEnabled(false);
@@ -67,62 +71,62 @@ SetupGopathDialog::SetupGopathDialog(QWidget *parent) :
     connect(ui->chkUseGoNoSumdb,SIGNAL(toggled(bool)),ui->editGoNoSumdb,SLOT(setEnabled(bool)));
 }
 
-SetupGopathDialog::~SetupGopathDialog()
+GolangPackageOption::~GolangPackageOption()
 {
     delete ui;
 }
 
 
-void SetupGopathDialog::setSysPathList(const QStringList &pathList)
+void GolangPackageOption::setSysPathList(const QStringList &pathList)
 {
     foreach (QString path, pathList) {
         ui->sysPathTextEdit->appendPlainText(path);
     }
 }
 
-void SetupGopathDialog::setLitePathList(const QStringList &pathList)
+void GolangPackageOption::setLitePathList(const QStringList &pathList)
 {
     foreach (QString path, pathList) {
         ui->litePathTextEdit->appendPlainText(path);
     }
 }
 
-void SetupGopathDialog::setUseSysGopath(bool b)
+void GolangPackageOption::setUseSysGopath(bool b)
 {
     ui->chkUseSysGopath->setChecked(b);
 }
 
-bool SetupGopathDialog::isUseSysGopath() const
+bool GolangPackageOption::isUseSysGopath() const
 {
     return ui->chkUseSysGopath->isChecked();
 }
 
-void SetupGopathDialog::setUseLiteGopath(bool b)
+void GolangPackageOption::setUseLiteGopath(bool b)
 {
     ui->chkUseLiteGopath->setChecked(b);
 }
 
-bool SetupGopathDialog::isUseLiteGopath() const
+bool GolangPackageOption::isUseLiteGopath() const
 {
     return ui->chkUseLiteGopath->isChecked();
 }
 
-void SetupGopathDialog::setUseGoModule(bool b)
+void GolangPackageOption::setUseGoModule(bool b)
 {
     ui->chkUseGoModule->setChecked(b);
 }
 
-bool SetupGopathDialog::isUseGoModule() const
+bool GolangPackageOption::isUseGoModule() const
 {
     return ui->chkUseGoModule->isChecked();
 }
 
-void SetupGopathDialog::setSysGoModuleInfo(const QString &value)
+void GolangPackageOption::setSysGoModuleInfo(const QString &value)
 {
     ui->sysGoModuleInfo->setText(value);
 }
 
-void SetupGopathDialog::setGo111Module(const QString &value)
+void GolangPackageOption::setGo111Module(const QString &value)
 {
     for (int i = 0; i < ui->cmbGoModule->count(); i++) {
         if (ui->cmbGoModule->itemText(i) == value) {
@@ -132,37 +136,37 @@ void SetupGopathDialog::setGo111Module(const QString &value)
     }
 }
 
-QString SetupGopathDialog::go111Module() const
+QString GolangPackageOption::go111Module() const
 {
     return ui->cmbGoModule->currentText();
 }
 
-QStringList SetupGopathDialog::litePathList() const
+QStringList GolangPackageOption::litePathList() const
 {
     return ui->litePathTextEdit->toPlainText().split("\n",QString::SkipEmptyParts);
 }
 
-void SetupGopathDialog::setUseGoProxy(bool b)
+void GolangPackageOption::setUseGoProxy(bool b)
 {
     ui->chkUseGoProxy->setChecked(b);
 }
 
-bool SetupGopathDialog::isUseGoProxy() const
+bool GolangPackageOption::isUseGoProxy() const
 {
     return ui->chkUseGoProxy->isChecked();
 }
 
-void SetupGopathDialog::setGoProxy(const QString &v)
+void GolangPackageOption::setGoProxy(const QString &v)
 {
     ui->cmbGoProxy->lineEdit()->setText(v);
 }
 
-QString SetupGopathDialog::goProxy() const
+QString GolangPackageOption::goProxy() const
 {
     return ui->cmbGoProxy->currentText();
 }
 
-void SetupGopathDialog::setUseGoPrivate(ENUM_GO_PRIVATE id, bool b)
+void GolangPackageOption::setUseGoPrivate(ENUM_GO_PRIVATE id, bool b)
 {
     switch (id) {
     case GO_PRIVATE:
@@ -177,7 +181,7 @@ void SetupGopathDialog::setUseGoPrivate(ENUM_GO_PRIVATE id, bool b)
     }
 }
 
-bool SetupGopathDialog::isUseGoPrivate(ENUM_GO_PRIVATE id) const
+bool GolangPackageOption::isUseGoPrivate(ENUM_GO_PRIVATE id) const
 {
     switch (id) {
     case GO_PRIVATE:
@@ -190,7 +194,7 @@ bool SetupGopathDialog::isUseGoPrivate(ENUM_GO_PRIVATE id) const
     return  false;
 }
 
-void SetupGopathDialog::setGoPrivate(ENUM_GO_PRIVATE id, const QString &value)
+void GolangPackageOption::setGoPrivate(ENUM_GO_PRIVATE id, const QString &value)
 {
     switch (id) {
     case GO_PRIVATE:
@@ -205,7 +209,7 @@ void SetupGopathDialog::setGoPrivate(ENUM_GO_PRIVATE id, const QString &value)
     }
 }
 
-QString SetupGopathDialog::goPrivate(ENUM_GO_PRIVATE id) const
+QString GolangPackageOption::goPrivate(ENUM_GO_PRIVATE id) const
 {
     switch (id) {
     case GO_PRIVATE:
@@ -218,10 +222,84 @@ QString SetupGopathDialog::goPrivate(ENUM_GO_PRIVATE id) const
     return  QString();
 }
 
-void SetupGopathDialog::browser()
+QString GolangPackageOption::name() const
+{
+    return "GolangPackage";
+}
+
+QString GolangPackageOption::mimeType() const
+{
+    return "option/golangpackage";
+}
+
+void GolangPackageOption::apply()
+{
+    QStringList newLitePath = this->litePathList();
+    //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
+    m_liteApp->settings()->setValue(LITEIDE_USESYSGOPATH,this->isUseSysGopath());
+    m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,this->isUseLiteGopath());
+    m_liteApp->settings()->setValue(LITEIDE_CUSTOMGO111MODULE,this->isUseGoModule());
+    m_liteApp->settings()->setValue(LITEIDE_GO111MODULE,this->go111Module());
+
+    m_liteApp->settings()->setValue(LITEIDE_USEGOPROXY,this->isUseGoProxy());
+    m_liteApp->settings()->setValue(LITEIDE_GOPROXY,this->goProxy());
+
+    m_liteApp->settings()->setValue(LITEIDE_USEGOPRIVATE,this->isUseGoPrivate(GO_PRIVATE));
+    m_liteApp->settings()->setValue(LITEIDE_GOPRIVATE,this->goPrivate(GO_PRIVATE));
+
+    m_liteApp->settings()->setValue(LITEIDE_USEGONOPROXY,this->isUseGoPrivate(GO_NOPROXY));
+    m_liteApp->settings()->setValue(LITEIDE_GONOPROXY,this->goPrivate(GO_NOPROXY));
+
+    m_liteApp->settings()->setValue(LITEIDE_USEGONOSUMDB,this->isUseGoPrivate(GO_NOSUMDB));
+    m_liteApp->settings()->setValue(LITEIDE_GONOSUMDB,this->goPrivate(GO_NOSUMDB));
+    //if (!hasSameList(orgLitePath,newLitePath)) {
+    setLiteGopath(m_liteApp,newLitePath);
+//    this->reloadAll();
+    LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
+    if (env) {
+        env->reloadCurrentEnv();
+    }
+}
+
+void GolangPackageOption::active()
+{
+    this->setSysPathList(sysGopath(m_liteApp));
+    this->setLitePathList(liteGopath(m_liteApp));
+    this->setUseSysGopath(m_liteApp->settings()->value(LITEIDE_USESYSGOPATH,true).toBool());
+    this->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
+    this->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
+    this->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
+    this->setUseGoProxy(m_liteApp->settings()->value(LITEIDE_USEGOPROXY,false).toBool());
+    this->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"").toString());
+
+    this->setUseGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_USEGOPRIVATE,false).toBool());
+    this->setGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_GOPRIVATE,"").toString());
+
+    this->setUseGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_USEGONOPROXY,false).toBool());
+    this->setGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_GONOPROXY,"").toString());
+
+    this->setUseGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_USEGONOSUMDB,false).toBool());
+    this->setGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_GONOSUMDB,"").toString());
+
+    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+    QString info = env.value("GO111MODULE");
+    if (!info.isEmpty()) {
+        this->setSysGoModuleInfo(QString("system GO111MODULE=%1").arg(info));
+    } else {
+        this->setSysGoModuleInfo("system GO111MODULE unset");
+    }
+
+}
+
+QWidget *GolangPackageOption::widget()
+{
+    return m_widget;
+}
+
+void GolangPackageOption::browser()
 {
     static QString last = QDir::homePath();
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose directory to add to GOPATH:"),
+    QString dir = QFileDialog::getExistingDirectory(m_widget, tr("Choose directory to add to GOPATH:"),
                                                     last,
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);

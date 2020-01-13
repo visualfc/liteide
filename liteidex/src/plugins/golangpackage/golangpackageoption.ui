@@ -1,38 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SetupGopathDialog</class>
- <widget class="QDialog" name="SetupGopathDialog">
+ <class>GolangPackgetOption</class>
+ <widget class="QWidget" name="GolangPackgetOption">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
-    <height>571</height>
+    <width>597</width>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Manage GOPATH / Modules</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Go Modules</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLabel" name="sysGoModuleInfo">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="2" column="0">
-         <widget class="QCheckBox" name="chkUseGoPrivate">
-          <property name="text">
-           <string>Custom GOPRIVATE</string>
+        <property name="horizontalSpacing">
+         <number>10</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>1</number>
+        </property>
+        <item row="2" column="1" colspan="2">
+         <widget class="QLineEdit" name="editGoPrivate">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QLineEdit" name="editGoNoSumdb"/>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QComboBox" name="cmbGoProxy">
+          <property name="editable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -43,40 +79,13 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
+        <item row="3" column="1" colspan="2">
+         <widget class="QLineEdit" name="editGoNoProxy"/>
         </item>
         <item row="1" column="0">
          <widget class="QCheckBox" name="chkUseGoProxy">
           <property name="text">
            <string>Custom GOPROXY</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="cmbGoModule"/>
-        </item>
-        <item row="1" column="1" colspan="2">
-         <widget class="QComboBox" name="cmbGoProxy">
-          <property name="editable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1" colspan="2">
-         <widget class="QLineEdit" name="editGoPrivate">
-          <property name="enabled">
-           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -94,11 +103,28 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1" colspan="2">
-         <widget class="QLineEdit" name="editGoNoProxy"/>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="chkUseGoPrivate">
+          <property name="text">
+           <string>Custom GOPRIVATE</string>
+          </property>
+         </widget>
         </item>
-        <item row="4" column="1" colspan="2">
-         <widget class="QLineEdit" name="editGoNoSumdb"/>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cmbGoModule"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="sysGoModuleInfo">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -111,8 +137,26 @@
       <string>GOPATH</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>-1</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="chkUseSysGopath">
           <property name="text">
@@ -212,51 +256,8 @@
      </layout>
     </widget>
    </item>
-   <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>SetupGopathDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>SetupGopathDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

@@ -18,35 +18,22 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: optionmanager.h
+// Module: golangpackageoptionfactory.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef OPTIONMANAGER_H
-#define OPTIONMANAGER_H
+#ifndef GOLANGPACKAGEOPTIONFACTORY_H
+#define GOLANGPACKAGEOPTIONFACTORY_H
 
 #include "liteapi/liteapi.h"
 
-using namespace LiteApi;
-
-class OptionsBrowser;
-class BrowserEditorImpl;
-class OptionManager : public IOptionManager
+class GolangPackageOptionFactory : public  LiteApi::IOptionFactory
 {
-    Q_OBJECT
 public:
-    OptionManager();
-    ~OptionManager();
-    virtual bool initWithApp(IApplication *app);
-    virtual void addFactory(IOptionFactory *factory);
-    virtual void removeFactory(IOptionFactory *factory);
-    virtual QList<IOptionFactory*> factoryList() const;
-    virtual void emitApplyOption(const QString &mimetype);
-public slots:
-    virtual void exec(const QString &mimeType = QString());
-    void loadOption(const QString &opt);
+    GolangPackageOptionFactory(LiteApi::IApplication *app, QObject *parent);
+    virtual QStringList mimeTypes() const;
+    virtual LiteApi::IOption *create(const QString &mimeType);
 protected:
-    OptionsBrowser  *m_browser;
-    QList<IOptionFactory*>  m_factoryList;
+    LiteApi::IApplication *m_liteApp;
 };
 
-#endif // OPTIONMANAGER_H
+#endif // GOLANGPACKAGEOPTIONFACTORY_H

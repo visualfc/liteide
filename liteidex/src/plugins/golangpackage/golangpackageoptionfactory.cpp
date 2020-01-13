@@ -18,35 +18,28 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: optionmanager.h
+// Module: golangpackageoptionfactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
 
-#ifndef OPTIONMANAGER_H
-#define OPTIONMANAGER_H
+#include "golangpackageoptionfactory.h"
+#include "golangpackageoption.h"
 
-#include "liteapi/liteapi.h"
-
-using namespace LiteApi;
-
-class OptionsBrowser;
-class BrowserEditorImpl;
-class OptionManager : public IOptionManager
+GolangPackageOptionFactory::GolangPackageOptionFactory(LiteApi::IApplication *app, QObject *parent)
+    : LiteApi::IOptionFactory(parent),
+      m_liteApp(app)
 {
-    Q_OBJECT
-public:
-    OptionManager();
-    ~OptionManager();
-    virtual bool initWithApp(IApplication *app);
-    virtual void addFactory(IOptionFactory *factory);
-    virtual void removeFactory(IOptionFactory *factory);
-    virtual QList<IOptionFactory*> factoryList() const;
-    virtual void emitApplyOption(const QString &mimetype);
-public slots:
-    virtual void exec(const QString &mimeType = QString());
-    void loadOption(const QString &opt);
-protected:
-    OptionsBrowser  *m_browser;
-    QList<IOptionFactory*>  m_factoryList;
-};
 
-#endif // OPTIONMANAGER_H
+}
+
+QStringList GolangPackageOptionFactory::mimeTypes() const
+{
+    return QStringList() << "option/golangpackage";
+}
+
+LiteApi::IOption *GolangPackageOptionFactory::create(const QString &mimeType)
+{
+    if (mimeType == "option/golangpackage") {
+        return new GolangPackageOption(m_liteApp,this);
+    }
+    return 0;
+}

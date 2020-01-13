@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "packagebrowser.h"
-#include "setupgopathdialog.h"
+#include "golangpackageoption.h"
 #include "golangpackage_global.h"
 #include "liteenvapi/liteenvapi.h"
 #include "golangdocapi/golangdocapi.h"
@@ -214,84 +214,85 @@ void PackageBrowser::reloadAll()
     m_goTool->start_list_json();
 }
 
-static bool hasSameList(const QStringList &list1, const QStringList &list2)
-{
-    if (list1.size() != list2.size()) {
-        return false;
-    }
-    for (int i = 0; i < list1.size(); i++) {
-        if (list1[i] != list2[i]) {
-            return false;
-        }
-    }
-    return true;
-}
+//static bool hasSameList(const QStringList &list1, const QStringList &list2)
+//{
+//    if (list1.size() != list2.size()) {
+//        return false;
+//    }
+//    for (int i = 0; i < list1.size(); i++) {
+//        if (list1[i] != list2[i]) {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
 
 void PackageBrowser::setupGopath()
 {
-    SetupGopathDialog *dlg = new SetupGopathDialog(m_liteApp->mainWindow());
-    dlg->setSysPathList(m_goTool->sysGopath());
-    dlg->setLitePathList(m_goTool->liteGopath());
-    dlg->setUseSysGopath(m_liteApp->settings()->value(LITEIDE_USESYSGOPATH,true).toBool());
-    dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
-    dlg->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
-    dlg->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
-    dlg->setUseGoProxy(m_liteApp->settings()->value(LITEIDE_USEGOPROXY,false).toBool());
-    dlg->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"").toString());
+    m_liteApp->optionManager()->exec("option/golangpackage");
+//    SetupGopathDialog *dlg = new SetupGopathDialog(m_liteApp->mainWindow());
+//    dlg->setSysPathList(m_goTool->sysGopath());
+//    dlg->setLitePathList(m_goTool->liteGopath());
+//    dlg->setUseSysGopath(m_liteApp->settings()->value(LITEIDE_USESYSGOPATH,true).toBool());
+//    dlg->setUseLiteGopath(m_liteApp->settings()->value(LITEIDE_USELITEIDEGOPATH,true).toBool());
+//    dlg->setUseGoModule(m_liteApp->settings()->value(LITEIDE_CUSTOMGO111MODULE,false).toBool());
+//    dlg->setGo111Module(m_liteApp->settings()->value(LITEIDE_GO111MODULE,"auto").toString());
+//    dlg->setUseGoProxy(m_liteApp->settings()->value(LITEIDE_USEGOPROXY,false).toBool());
+//    dlg->setGoProxy(m_liteApp->settings()->value(LITEIDE_GOPROXY,"").toString());
 
-    dlg->setUseGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_USEGOPRIVATE,false).toBool());
-    dlg->setGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_GOPRIVATE,"").toString());
+//    dlg->setUseGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_USEGOPRIVATE,false).toBool());
+//    dlg->setGoPrivate(GO_PRIVATE,m_liteApp->settings()->value(LITEIDE_GOPRIVATE,"").toString());
 
-    dlg->setUseGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_USEGONOPROXY,false).toBool());
-    dlg->setGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_GONOPROXY,"").toString());
+//    dlg->setUseGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_USEGONOPROXY,false).toBool());
+//    dlg->setGoPrivate(GO_NOPROXY,m_liteApp->settings()->value(LITEIDE_GONOPROXY,"").toString());
 
-    dlg->setUseGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_USEGONOSUMDB,false).toBool());
-    dlg->setGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_GONOSUMDB,"").toString());
+//    dlg->setUseGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_USEGONOSUMDB,false).toBool());
+//    dlg->setGoPrivate(GO_NOSUMDB,m_liteApp->settings()->value(LITEIDE_GONOSUMDB,"").toString());
 
-    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
-    QString info = env.value("GO111MODULE");
-    if (!info.isEmpty()) {
-        dlg->setSysGoModuleInfo(QString("system GO111MODULE=%1").arg(info));
-    } else {
-        dlg->setSysGoModuleInfo("system GO111MODULE unset");
-    }
-    bool useMod = dlg->isUseGoModule();
-    QString goMod = dlg->go111Module();
-    if (dlg->exec() == QDialog::Accepted) {
-        //QStringList orgLitePath = m_goTool->liteGopath();
-        QStringList newLitePath = dlg->litePathList();
-        //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
-        m_liteApp->settings()->setValue(LITEIDE_USESYSGOPATH,dlg->isUseSysGopath());
-        m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
-        m_liteApp->settings()->setValue(LITEIDE_CUSTOMGO111MODULE,dlg->isUseGoModule());
-        m_liteApp->settings()->setValue(LITEIDE_GO111MODULE,dlg->go111Module());
+//    QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
+//    QString info = env.value("GO111MODULE");
+//    if (!info.isEmpty()) {
+//        dlg->setSysGoModuleInfo(QString("system GO111MODULE=%1").arg(info));
+//    } else {
+//        dlg->setSysGoModuleInfo("system GO111MODULE unset");
+//    }
+//    bool useMod = dlg->isUseGoModule();
+//    QString goMod = dlg->go111Module();
+//    if (dlg->exec() == QDialog::Accepted) {
+//        //QStringList orgLitePath = m_goTool->liteGopath();
+//        QStringList newLitePath = dlg->litePathList();
+//        //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
+//        m_liteApp->settings()->setValue(LITEIDE_USESYSGOPATH,dlg->isUseSysGopath());
+//        m_liteApp->settings()->setValue(LITEIDE_USELITEIDEGOPATH,dlg->isUseLiteGopath());
+//        m_liteApp->settings()->setValue(LITEIDE_CUSTOMGO111MODULE,dlg->isUseGoModule());
+//        m_liteApp->settings()->setValue(LITEIDE_GO111MODULE,dlg->go111Module());
 
-        m_liteApp->settings()->setValue(LITEIDE_USEGOPROXY,dlg->isUseGoProxy());
-        m_liteApp->settings()->setValue(LITEIDE_GOPROXY,dlg->goProxy());
+//        m_liteApp->settings()->setValue(LITEIDE_USEGOPROXY,dlg->isUseGoProxy());
+//        m_liteApp->settings()->setValue(LITEIDE_GOPROXY,dlg->goProxy());
 
-        m_liteApp->settings()->setValue(LITEIDE_USEGOPRIVATE,dlg->isUseGoPrivate(GO_PRIVATE));
-        m_liteApp->settings()->setValue(LITEIDE_GOPRIVATE,dlg->goPrivate(GO_PRIVATE));
+//        m_liteApp->settings()->setValue(LITEIDE_USEGOPRIVATE,dlg->isUseGoPrivate(GO_PRIVATE));
+//        m_liteApp->settings()->setValue(LITEIDE_GOPRIVATE,dlg->goPrivate(GO_PRIVATE));
 
-        m_liteApp->settings()->setValue(LITEIDE_USEGONOPROXY,dlg->isUseGoPrivate(GO_NOPROXY));
-        m_liteApp->settings()->setValue(LITEIDE_GONOPROXY,dlg->goPrivate(GO_NOPROXY));
+//        m_liteApp->settings()->setValue(LITEIDE_USEGONOPROXY,dlg->isUseGoPrivate(GO_NOPROXY));
+//        m_liteApp->settings()->setValue(LITEIDE_GONOPROXY,dlg->goPrivate(GO_NOPROXY));
 
-        m_liteApp->settings()->setValue(LITEIDE_USEGONOSUMDB,dlg->isUseGoPrivate(GO_NOSUMDB));
-        m_liteApp->settings()->setValue(LITEIDE_GONOSUMDB,dlg->goPrivate(GO_NOSUMDB));
-        //if (!hasSameList(orgLitePath,newLitePath)) {
-        m_goTool->setLiteGopath(newLitePath);
-        this->reloadAll();
-        if (useMod != dlg->isUseGoModule() || goMod != dlg->go111Module()) {
-            LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
-            if (env) {
-                env->reloadCurrentEnv();
-            }
-        } else {
-            LiteApi::IGoEnvManger *env = LiteApi::getGoEnvManager(m_liteApp);
-            if (env) {
-                env->updateGoEnv();
-            }
-        }
-    }
+//        m_liteApp->settings()->setValue(LITEIDE_USEGONOSUMDB,dlg->isUseGoPrivate(GO_NOSUMDB));
+//        m_liteApp->settings()->setValue(LITEIDE_GONOSUMDB,dlg->goPrivate(GO_NOSUMDB));
+//        //if (!hasSameList(orgLitePath,newLitePath)) {
+//        m_goTool->setLiteGopath(newLitePath);
+//        this->reloadAll();
+//        if (useMod != dlg->isUseGoModule() || goMod != dlg->go111Module()) {
+//            LiteApi::IEnvManager *env = LiteApi::getEnvManager(m_liteApp);
+//            if (env) {
+//                env->reloadCurrentEnv();
+//            }
+//        } else {
+//            LiteApi::IGoEnvManger *env = LiteApi::getGoEnvManager(m_liteApp);
+//            if (env) {
+//                env->updateGoEnv();
+//            }
+//        }
+//    }
 }
 
 void PackageBrowser::loadPackageDoc()

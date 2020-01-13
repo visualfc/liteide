@@ -592,9 +592,9 @@ public:
     virtual void addFactory(IOptionFactory *factory) = 0;
     virtual void removeFactory(IOptionFactory *factory) = 0;
     virtual QList<IOptionFactory*> factoryList() const = 0;
-    virtual void emitApplyOption(QString mimetype) = 0;
+    virtual void emitApplyOption(const QString &mimetype) = 0;
 public slots:
-    virtual void exec() = 0;
+    virtual void exec(const QString &mimeType) = 0;
 signals:
     void applyOption(QString);
 };
@@ -805,6 +805,7 @@ public:
     void appendDepend(const QString &depend) { m_dependList.append(depend); }
     void setMustLoad(bool b) { m_mustLoad = b; }
 protected:
+    bool m_mustLoad;
     QString m_author;
     QString m_info;
     QString m_id;
@@ -812,7 +813,6 @@ protected:
     QString m_filePath;
     QString m_ver;
     QStringList m_dependList;
-    bool m_mustLoad;
 };
 
 class IPlugin : public IObject
@@ -947,7 +947,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X36.2")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X36.3")
 
 
 #endif //LITEAPI_H

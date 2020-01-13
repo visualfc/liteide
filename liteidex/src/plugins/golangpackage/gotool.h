@@ -25,7 +25,42 @@
 #define GOTOOL_H
 
 #include "liteapi/liteapi.h"
+#include "liteenvapi/liteenvapi.h"
 #include <QProcess>
+
+inline QStringList liteGopath(LiteApi::IApplication *app)
+{
+    QStringList pathList;
+    QStringList list =  app->settings()->value("liteide/gopath").toStringList();
+    foreach(QString path, list) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    return pathList;
+}
+
+inline void setLiteGopath(LiteApi::IApplication *app, const QStringList &pathList)
+{
+    app->settings()->setValue("liteide/gopath",pathList);
+}
+
+inline QStringList sysGopath(LiteApi::IApplication *app)
+{
+    QProcessEnvironment env = LiteApi::getSysEnvironment(app);
+//    QString goroot = env.value("GOROOT");
+    QStringList pathList;
+#ifdef Q_OS_WIN
+    QString sep = ";";
+#else
+    QString sep = ":";
+#endif
+    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+        pathList.append(QDir::toNativeSeparators(path));
+    }
+    pathList.removeDuplicates();
+    return pathList;
+}
+
 
 class Process;
 class GoTool : public QObject
@@ -34,8 +69,6 @@ class GoTool : public QObject
 public:
     explicit GoTool(LiteApi::IApplication *app,QObject *parent = 0);
     virtual ~GoTool();
-    QStringList sysGopath() const;
-    QStringList liteGopath() const;
     void setProcessEnvironment(const QProcessEnvironment &environment);
     void setLiteGopath(const QStringList &pathList);
     void kill();

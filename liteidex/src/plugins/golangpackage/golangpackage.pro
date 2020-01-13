@@ -14,9 +14,10 @@ DEFINES += GOLANGPACKAGE_LIBRARY
 
 SOURCES += golangpackageplugin.cpp \
     filepathmodel.cpp \
+    golangpackageoption.cpp \
+    golangpackageoptionfactory.cpp \
     packagebrowser.cpp \
     gotool.cpp \
-    setupgopathdialog.cpp \
     packageproject.cpp \
     packagetree.cpp \
     packageprojectfactory.cpp
@@ -24,12 +25,13 @@ SOURCES += golangpackageplugin.cpp \
 HEADERS += golangpackageplugin.h\
         golangpackage_global.h \
     filepathmodel.h \
+    golangpackageoption.h \
+    golangpackageoptionfactory.h \
     packagebrowser.h \
     gotool.h \
-    setupgopathdialog.h \
     packageproject.h \
     packagetree.h \
     packageprojectfactory.h
 
 FORMS += \
-    setupgopathdialog.ui
+    golangpackageoption.ui

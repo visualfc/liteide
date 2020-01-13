@@ -54,38 +54,6 @@ GoTool::~GoTool()
     kill();
 }
 
-QStringList GoTool::liteGopath() const
-{
-    QStringList pathList;
-    QStringList list =  m_liteApp->settings()->value("liteide/gopath").toStringList();
-    foreach(QString path, list) {
-        pathList.append(QDir::toNativeSeparators(path));
-    }
-    pathList.removeDuplicates();
-    return pathList;
-}
-
-void GoTool::setLiteGopath(const QStringList &pathList)
-{
-    m_liteApp->settings()->setValue("liteide/gopath",pathList);
-}
-
-QStringList GoTool::sysGopath() const
-{
-    QProcessEnvironment env = LiteApi::getSysEnvironment(m_liteApp);
-//    QString goroot = env.value("GOROOT");
-    QStringList pathList;
-#ifdef Q_OS_WIN
-    QString sep = ";";
-#else
-    QString sep = ":";
-#endif
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
-        pathList.append(QDir::toNativeSeparators(path));
-    }
-    pathList.removeDuplicates();
-    return pathList;
-}
 
 void GoTool::kill()
 {
