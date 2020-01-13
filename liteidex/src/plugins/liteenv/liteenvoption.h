@@ -42,7 +42,8 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
-    virtual void apply();
+    virtual void load();
+    virtual void save();
 public slots:
     void doubleClickedFile(QModelIndex);
 private:

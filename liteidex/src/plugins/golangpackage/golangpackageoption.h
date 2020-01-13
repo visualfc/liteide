@@ -66,8 +66,8 @@ public:
 public:
     virtual QString name() const;
     virtual QString mimeType() const;
-    virtual void apply();
-    virtual void active();
+    virtual void save();
+    virtual void load();
     virtual QWidget *widget();
 protected slots:
     void browser();

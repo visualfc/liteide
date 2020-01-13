@@ -41,7 +41,6 @@ GdbDebuggerOption::GdbDebuggerOption(LiteApi::IApplication *app,QObject *parent)
     ui(new Ui::GdbDebuggerOption)
 {
     ui->setupUi(m_widget);
-    ui->useTtyCheckBox->setChecked(isGdbDebuggerUseTty(app));
 }
 
 GdbDebuggerOption::~GdbDebuggerOption()
@@ -64,11 +63,16 @@ QString GdbDebuggerOption::mimeType() const
 {
     return OPTION_GDBDEBUGGER;
 }
-void GdbDebuggerOption::apply()
+
+void GdbDebuggerOption::load()
+{
+    ui->useTtyCheckBox->setChecked(isGdbDebuggerUseTty(m_liteApp));
+}
+
+void GdbDebuggerOption::save()
 {
     m_liteApp->settings()->setValue(GDBDEBUGGER_USETTY,ui->useTtyCheckBox->isChecked());
 }
-
 
 bool isGdbDebuggerUseTty(LiteApi::IApplication *app)
 {

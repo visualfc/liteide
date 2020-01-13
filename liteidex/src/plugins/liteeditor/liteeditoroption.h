@@ -42,8 +42,8 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
-    virtual void apply();
-    virtual void active();
+    virtual void save();
+    virtual void load();
     void updatePointSizes();
     QList<int> pointSizesForSelectedFont() const;
 public slots:

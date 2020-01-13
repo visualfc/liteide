@@ -41,8 +41,6 @@ GolangAstOption::GolangAstOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::GolangAstOption)
 {
     ui->setupUi(m_widget);
-    ui->checkQuickSymbolImportPath->setChecked(m_liteApp->settings()->value(GOLANGAST_QUICKOPNE_SYMBOL_IMPORTPATH,true).toBool());
-    ui->checkQuickSymbolMatchCase->setChecked(m_liteApp->settings()->value(GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE,false).toBool());
 }
 
 GolangAstOption::~GolangAstOption()
@@ -65,7 +63,14 @@ QString GolangAstOption::mimeType() const
 {
     return OPTION_GOLANGAST;
 }
-void GolangAstOption::apply()
+
+void GolangAstOption::load()
+{
+    ui->checkQuickSymbolImportPath->setChecked(m_liteApp->settings()->value(GOLANGAST_QUICKOPNE_SYMBOL_IMPORTPATH,true).toBool());
+    ui->checkQuickSymbolMatchCase->setChecked(m_liteApp->settings()->value(GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE,false).toBool());
+}
+
+void GolangAstOption::save()
 {
     m_liteApp->settings()->setValue(GOLANGAST_QUICKOPNE_SYMBOL_IMPORTPATH,ui->checkQuickSymbolImportPath->isChecked());
     m_liteApp->settings()->setValue(GOLANGAST_QUICKOPEN_SYMBOL_MATCHCASE,ui->checkQuickSymbolMatchCase->isChecked());

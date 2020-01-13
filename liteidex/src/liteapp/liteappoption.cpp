@@ -52,9 +52,6 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
 {
     ui->setupUi(m_widget);
 
-    QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
-    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
-    ui->storeLocalCheckBox->setChecked(storeLocal);
 
     const QString &liteideTrPath = m_liteApp->resourcePath()+"/translations";
     QLocale eng(QLocale::English);
@@ -72,104 +69,13 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
             ui->langComboBox->addItem(text,lc.name());
         }
     }
-    QString locale = QLocale::system().name();
-    locale = m_liteApp->settings()->value(LITEAPP_LANGUAGE,locale).toString();
-    if (!locale.isEmpty()) {
-        for (int i = 0; i < ui->langComboBox->count(); i++) {
-            if (locale == ui->langComboBox->itemData(i).toString()) {
-                ui->langComboBox->setCurrentIndex(i);
-                break;
-            }
-        }
-    }
-    ui->styleComboBox->addItem(tr("SideBarStyle"),"sidebar");
-    ui->styleComboBox->addItem(tr("SplitterStyle"),"splitter");
-    QString style = m_liteApp->settings()->value(LITEAPP_STYLE,"sidebar").toString();
-    for (int i = 0; i < ui->styleComboBox->count(); i++) {
-        if (style == ui->styleComboBox->itemData(i).toString()) {
-            ui->styleComboBox->setCurrentIndex(i);
-            break;
-        }
-    }
-
-    const QString &liteQssPath = m_liteApp->resourcePath()+"/liteapp/qss";
-    QDir qssDir(liteQssPath);
-    if (qssDir.exists()) {
-        foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
-            ui->qssComboBox->addItem(info.fileName());
-        }
-    }
-    QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
-    int index = ui->qssComboBox->findText(qss,Qt::MatchFixedString);
-    if (index >= 0 && index < ui->qssComboBox->count()) {
-        ui->qssComboBox->setCurrentIndex(index);
-    }
-
-    int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
-    //ui->maxRecentLineEdit->setText(QString("%1").arg(max));
-    ui->maxRecentFilesSpinBox->setValue(max);
-    max = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
-    ui->maxEditorCountSpinBox->setValue(max);
-    //bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
-    //ui->autoCloseProjecEditorsCheckBox->setChecked(b);
-    bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
-    ui->autoLoadLastSessionCheckBox->setChecked(b1);
-    bool b2 = m_liteApp->settings()->value(LITEAPP_SPLASHVISIBLE,true).toBool();
-    ui->splashVisibleCheckBox->setChecked(b2);
-    bool b3 = m_liteApp->settings()->value(LITEAPP_WELCOMEPAGEVISIBLE,true).toBool();
-    ui->welcomeVisibleCheckBox->setChecked(b3);
-
-    bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
-    ui->editorTabsClosableCheckBox->setChecked(b4);
-
-//    bool b5 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool();
-//    ui->startupReloadFoldersCheckBox->setChecked(b5);
-
-    bool b6 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFILES,true).toBool();
-    ui->startupReloadFilesCheckBox->setChecked(b6);
-
-    bool b7 = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
-    ui->fileWatcherAutoReloadCheckBox->setChecked(b7);
-
-    bool b8 = m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool();
-    ui->editorTabsEnableWhellCheckBox->setChecked(b8);
-
-    int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
-    if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
-        ui->buttonGroup->buttons().at(id)->setChecked(true);
-    }
-
-    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsTimeSpinBox,SLOT(setEnabled(bool)));
-
-    bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
-    ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
-
-    int time = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,3).toInt();
-    if (time < 1) {
-        time = 1;
-    }
-    ui->autoIdleSaveDocumentsTimeSpinBox->setValue(time);
-
-    bool toolwndshortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
-    ui->toolWindowShortcutsCheckBox->setChecked(toolwndshortcuts);
-
-    bool ext = m_liteApp->settings()->value(LITEAPP_EDITORMOUSEEXTNAVIGATE,true).toBool();
-    ui->editorMouseExtNavigateCheckBox->setChecked(ext);
 
     connect(ui->customIconCheckBox,SIGNAL(toggled(bool)),ui->iconPathComboBox,SLOT(setEnabled(bool)));
 
-    bool customeIcon = m_liteApp->settings()->value(LITEIDE_CUSTOMEICON,false).toBool();
-    ui->customIconCheckBox->setChecked(customeIcon);
-    ui->iconPathComboBox->setEnabled(customeIcon);
 
     QDir iconDir(m_liteApp->resourcePath()+"/liteapp/qrc");
     foreach (QFileInfo info, iconDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot)) {
         ui->iconPathComboBox->addItem(info.fileName());
-    }
-    QString iconPath = m_liteApp->settings()->value(LITEIDE_CUSTOMEICONPATH,"default").toString();
-    index = ui->iconPathComboBox->findText(iconPath,Qt::MatchFixedString);
-    if (index >= 0 && index < ui->iconPathComboBox->count()) {
-        ui->iconPathComboBox->setCurrentIndex(index);
     }
 
     m_keysModel = new QStandardItemModel(0,5,this);
@@ -188,7 +94,6 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     ui->keysTreeView->header()->hideSection(3);
 #endif
 
-    ui->standardCheckBox->setChecked(true);
 
 //    if (libgopher.isValid()) {
 //        ui->gopherInfoLabel->setText(tr("libgopher is valid"));
@@ -206,7 +111,6 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->standardCheckBox,SIGNAL(toggled(bool)),this,SLOT(reloadShortcuts()));
     connect(ui->autoLoadLastSessionCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoLoadLastSessionToggled(bool)));    
     connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoIdleSaveDocumentsToggled(bool)));
-    autoLoadLastSessionToggled(ui->autoLoadLastSessionCheckBox->isChecked());
 }
 
 LiteAppOption::~LiteAppOption()
@@ -229,7 +133,8 @@ QString LiteAppOption::mimeType() const
 {
     return OPTION_LITEAPP;
 }
-void LiteAppOption::apply()
+
+void LiteAppOption::save()
 {
     bool storeLocal = ui->storeLocalCheckBox->isChecked();
     QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
@@ -246,6 +151,7 @@ void LiteAppOption::apply()
         QString style = ui->styleComboBox->itemData(index).toString();
         m_liteApp->settings()->setValue(LITEAPP_STYLE,style);
     }
+
 
     //QString max = ui->maxRecentLineEdit->text();
     int max = ui->maxRecentFilesSpinBox->value();
@@ -342,8 +248,110 @@ void LiteAppOption::apply()
     }
 }
 
-void LiteAppOption::active()
+void LiteAppOption::load()
 {
+    QSettings global(m_liteApp->resourcePath()+"/liteapp/config/global.ini",QSettings::IniFormat);
+    bool storeLocal = global.value(LITEIDE_STORELOCAL,false).toBool();
+    ui->storeLocalCheckBox->setChecked(storeLocal);
+
+    QString locale = QLocale::system().name();
+    locale = m_liteApp->settings()->value(LITEAPP_LANGUAGE,locale).toString();
+    if (!locale.isEmpty()) {
+        for (int i = 0; i < ui->langComboBox->count(); i++) {
+            if (locale == ui->langComboBox->itemData(i).toString()) {
+                ui->langComboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
+    ui->styleComboBox->addItem(tr("SideBarStyle"),"sidebar");
+    ui->styleComboBox->addItem(tr("SplitterStyle"),"splitter");
+    QString style = m_liteApp->settings()->value(LITEAPP_STYLE,"sidebar").toString();
+    for (int i = 0; i < ui->styleComboBox->count(); i++) {
+        if (style == ui->styleComboBox->itemData(i).toString()) {
+            ui->styleComboBox->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    bool customeIcon = m_liteApp->settings()->value(LITEIDE_CUSTOMEICON,false).toBool();
+    ui->customIconCheckBox->setChecked(customeIcon);
+    ui->iconPathComboBox->setEnabled(customeIcon);
+
+    const QString &liteQssPath = m_liteApp->resourcePath()+"/liteapp/qss";
+    QDir qssDir(liteQssPath);
+    if (qssDir.exists()) {
+        foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
+            ui->qssComboBox->addItem(info.fileName());
+        }
+    }
+    QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
+    int index = ui->qssComboBox->findText(qss,Qt::MatchFixedString);
+    if (index >= 0 && index < ui->qssComboBox->count()) {
+        ui->qssComboBox->setCurrentIndex(index);
+    }
+
+    int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
+    //ui->maxRecentLineEdit->setText(QString("%1").arg(max));
+    ui->maxRecentFilesSpinBox->setValue(max);
+    max = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
+    ui->maxEditorCountSpinBox->setValue(max);
+    //bool b = m_liteApp->settings()->value(LITEAPP_AUTOCLOSEPROEJCTFILES,true).toBool();
+    //ui->autoCloseProjecEditorsCheckBox->setChecked(b);
+    bool b1 = m_liteApp->settings()->value(LITEAPP_AUTOLOADLASTSESSION,true).toBool();
+    ui->autoLoadLastSessionCheckBox->setChecked(b1);
+    bool b2 = m_liteApp->settings()->value(LITEAPP_SPLASHVISIBLE,true).toBool();
+    ui->splashVisibleCheckBox->setChecked(b2);
+    bool b3 = m_liteApp->settings()->value(LITEAPP_WELCOMEPAGEVISIBLE,true).toBool();
+    ui->welcomeVisibleCheckBox->setChecked(b3);
+
+    bool b4 = m_liteApp->settings()->value(LITEAPP_EDITTABSCLOSABLE,true).toBool();
+    ui->editorTabsClosableCheckBox->setChecked(b4);
+
+//    bool b5 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFOLDERS,true).toBool();
+//    ui->startupReloadFoldersCheckBox->setChecked(b5);
+
+    bool b6 = m_liteApp->settings()->value(LITEAPP_STARTUPRELOADFILES,true).toBool();
+    ui->startupReloadFilesCheckBox->setChecked(b6);
+
+    bool b7 = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
+    ui->fileWatcherAutoReloadCheckBox->setChecked(b7);
+
+    bool b8 = m_liteApp->settings()->value(LITEAPP_EDITTABSENABLEWHELL,true).toBool();
+    ui->editorTabsEnableWhellCheckBox->setChecked(b8);
+
+    int id = m_liteApp->settings()->value(LITEAPP_TOOLBARICONSIZE,0).toInt();
+    if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
+        ui->buttonGroup->buttons().at(id)->setChecked(true);
+    }
+
+    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsTimeSpinBox,SLOT(setEnabled(bool)));
+
+    bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
+    ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
+
+    int time = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS_TIME,3).toInt();
+    if (time < 1) {
+        time = 1;
+    }
+    ui->autoIdleSaveDocumentsTimeSpinBox->setValue(time);
+
+    bool toolwndshortcuts = m_liteApp->settings()->value(LITEAPP_TOOLWINDOW_SHORTCUTS,true).toBool();
+    ui->toolWindowShortcutsCheckBox->setChecked(toolwndshortcuts);
+
+    bool ext = m_liteApp->settings()->value(LITEAPP_EDITORMOUSEEXTNAVIGATE,true).toBool();
+    ui->editorMouseExtNavigateCheckBox->setChecked(ext);
+
+
+    QString iconPath = m_liteApp->settings()->value(LITEIDE_CUSTOMEICONPATH,"default").toString();
+    index = ui->iconPathComboBox->findText(iconPath,Qt::MatchFixedString);
+    if (index >= 0 && index < ui->iconPathComboBox->count()) {
+        ui->iconPathComboBox->setCurrentIndex(index);
+    }
+
+    ui->standardCheckBox->setChecked(true);
+    autoLoadLastSessionToggled(ui->autoLoadLastSessionCheckBox->isChecked());
+
     this->reloadShortcuts();
 }
 

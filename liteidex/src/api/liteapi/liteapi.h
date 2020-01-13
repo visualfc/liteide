@@ -571,8 +571,8 @@ class IOption : public IView
 public:
     IOption(QObject *parent = 0) : IView(parent) {}
     virtual QString mimeType() const = 0;
-    virtual void apply() = 0;
-    virtual void active() {}
+    virtual void save() = 0;
+    virtual void load() = 0;
 };
 
 class IOptionFactory : public QObject

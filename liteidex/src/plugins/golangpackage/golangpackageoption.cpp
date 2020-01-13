@@ -232,7 +232,7 @@ QString GolangPackageOption::mimeType() const
     return "option/golangpackage";
 }
 
-void GolangPackageOption::apply()
+void GolangPackageOption::save()
 {
     QStringList newLitePath = this->litePathList();
     //m_liteApp->sendBroadcast("golangpackage","reloadgopath");
@@ -261,7 +261,7 @@ void GolangPackageOption::apply()
     }
 }
 
-void GolangPackageOption::active()
+void GolangPackageOption::load()
 {
     this->setSysPathList(sysGopath(m_liteApp));
     this->setLitePathList(liteGopath(m_liteApp));

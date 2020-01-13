@@ -41,12 +41,6 @@ GolangEditOption::GolangEditOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::GolangEditOption)
 {
     ui->setupUi(m_widget);
-    bool info = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
-    bool nav = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
-    bool gorootReadOnly = m_liteApp->settings()->value(GOLANGEDIT_GOROOTSOURCEREADONLY,false).toBool();
-    ui->enableMouseInfoCheckBox->setChecked(info);
-    ui->enableMouseNavigationCheckBox->setChecked(nav);
-    ui->gorootSourceReadOnlyCheckBox->setChecked(gorootReadOnly);
 }
 
 GolangEditOption::~GolangEditOption()
@@ -70,7 +64,17 @@ QString GolangEditOption::mimeType() const
     return OPTION_GOLANGEDIT;
 }
 
-void GolangEditOption::apply()
+void GolangEditOption::load()
+{
+    bool info = m_liteApp->settings()->value(GOLANGEDIT_MOUSEINFO,true).toBool();
+    bool nav = m_liteApp->settings()->value(GOLANGEDIT_MOUSENAVIGATIOIN,true).toBool();
+    bool gorootReadOnly = m_liteApp->settings()->value(GOLANGEDIT_GOROOTSOURCEREADONLY,false).toBool();
+    ui->enableMouseInfoCheckBox->setChecked(info);
+    ui->enableMouseNavigationCheckBox->setChecked(nav);
+    ui->gorootSourceReadOnlyCheckBox->setChecked(gorootReadOnly);
+}
+
+void GolangEditOption::save()
 {
     bool info = ui->enableMouseInfoCheckBox->isChecked();
     bool nav = ui->enableMouseNavigationCheckBox->isChecked();

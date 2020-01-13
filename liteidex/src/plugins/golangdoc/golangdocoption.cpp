@@ -40,11 +40,6 @@ GolangDocOption::GolangDocOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::GolangDocOption)
 {
     ui->setupUi(m_widget);
-
-    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
-    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
-    ui->defContextCheckBox->setChecked(defctx);
-    ui->onlyStdCheckBox->setChecked(std);
 }
 
 GolangDocOption::~GolangDocOption()
@@ -67,7 +62,16 @@ QString GolangDocOption::mimeType() const
 {
     return "option/golangdoc";
 }
-void GolangDocOption::apply()
+
+void GolangDocOption::load()
+{
+    bool defctx = m_liteApp->settings()->value("golangapi/defctx",true).toBool();
+    bool std = m_liteApp->settings()->value("golangapi/std",false).toBool();
+    ui->defContextCheckBox->setChecked(defctx);
+    ui->onlyStdCheckBox->setChecked(std);
+}
+
+void GolangDocOption::save()
 {
     bool defctx = ui->defContextCheckBox->isChecked();
     bool std = ui->onlyStdCheckBox->isChecked();

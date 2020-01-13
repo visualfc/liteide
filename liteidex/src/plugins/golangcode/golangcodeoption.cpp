@@ -41,14 +41,6 @@ GolangCodeOption::GolangCodeOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::GolangCodeOption)
 {
     ui->setupUi(m_widget);
-
-    bool close = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
-    bool allpkg = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
-    ui->exitCloseCheckBox->setChecked(close);
-    ui->autoUpPkgCheckBox->setChecked(uppkg);
-    ui->pkgHintGopathRadioButton->setChecked(allpkg);
-    ui->pkgHintStdRadioButton->setChecked(!allpkg);
 }
 
 GolangCodeOption::~GolangCodeOption()
@@ -72,7 +64,18 @@ QString GolangCodeOption::mimeType() const
     return "option/golangcode";
 }
 
-void GolangCodeOption::apply()
+void GolangCodeOption::load()
+{
+    bool close = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
+    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
+    bool allpkg = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
+    ui->exitCloseCheckBox->setChecked(close);
+    ui->autoUpPkgCheckBox->setChecked(uppkg);
+    ui->pkgHintGopathRadioButton->setChecked(allpkg);
+    ui->pkgHintStdRadioButton->setChecked(!allpkg);
+}
+
+void GolangCodeOption::save()
 {
     bool close = ui->exitCloseCheckBox->isChecked();
     bool uppkg = ui->autoUpPkgCheckBox->isChecked();

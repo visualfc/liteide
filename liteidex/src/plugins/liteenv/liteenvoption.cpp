@@ -56,7 +56,6 @@ LiteEnvOption::LiteEnvOption(LiteApi::IApplication *app,QObject *parent) :
     ui->fileTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
     connect(ui->fileTreeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFile(QModelIndex)));
-
 }
 
 LiteEnvOption::~LiteEnvOption()
@@ -80,7 +79,12 @@ QString LiteEnvOption::mimeType() const
     return "option/liteenv";
 }
 
-void LiteEnvOption::apply()
+void LiteEnvOption::load()
+{
+
+}
+
+void LiteEnvOption::save()
 {
 }
 

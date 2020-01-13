@@ -63,7 +63,13 @@ QString DlvDebuggerOption::mimeType() const
 {
     return OPTION_DLVDEBUGGER;
 }
-void DlvDebuggerOption::apply()
+
+void DlvDebuggerOption::load()
+{
+
+}
+
+void DlvDebuggerOption::save()
 {
 
 }

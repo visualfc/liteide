@@ -40,12 +40,14 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
-    virtual void apply();
+    virtual void save();
+    virtual void load();
     void updatePointSizes();
     QList<int> pointSizesForSelectedFont() const;
 protected:
     int m_fontSize;
     QString m_fontFamily;
+    QStringList m_familyList;
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;

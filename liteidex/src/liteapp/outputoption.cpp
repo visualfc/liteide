@@ -46,37 +46,8 @@ OutputOption::OutputOption(LiteApi::IApplication *app,QObject *parent) :
     ui->setupUi(m_widget);
 
     QFontDatabase db;
-    const QStringList families = db.families();
-    ui->familyComboBox->addItems(families);
-
-#if defined(Q_OS_WIN)
-    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Courier").toString();
-#elif defined(Q_OS_LINUX)
-    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Monospace").toString();
-#elif defined(Q_OS_MAC)
-    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Menlo").toString();
-#else
-    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Monospace").toString();
-#endif
-    m_fontSize = m_liteApp->settings()->value(OUTPUT_FONTSIZE,12).toInt();
-
-    int fontZoom = m_liteApp->settings()->value(OUTPUT_FONTZOOM,100).toInt();
-
-    bool antialias = m_liteApp->settings()->value(OUTPUT_ANTIALIAS,true).toBool();
-    ui->antialiasCheckBox->setChecked(antialias);
-
-    const int idx = families.indexOf(m_fontFamily);
-    ui->familyComboBox->setCurrentIndex(idx);
-
-    updatePointSizes();
-
-    ui->fontZoomSpinBox->setValue(fontZoom);
-
-    bool useColorScheme = m_liteApp->settings()->value(OUTPUT_USECOLORSCHEME,true).toBool();
-    ui->useColorSchemeCheckBox->setChecked(useColorScheme);
-
-    int maxLines = m_liteApp->settings()->value(OUTPUT_MAXLINES,5000).toInt();
-    ui->spinBoxOutputMaxLines->setValue(maxLines);
+    m_familyList = db.families();
+    ui->familyComboBox->addItems(m_familyList);
 }
 
 OutputOption::~OutputOption()
@@ -100,7 +71,7 @@ QString OutputOption::mimeType() const
     return OPTION_LITEOUTPUT;
 }
 
-void OutputOption::apply()
+void OutputOption::save()
 {
     m_fontFamily = ui->familyComboBox->currentText();
     if (ui->sizeComboBox->count()) {
@@ -128,6 +99,38 @@ void OutputOption::apply()
 
     m_liteApp->settings()->setValue(OUTPUT_USECOLORSCHEME,colorScheme);
     m_liteApp->settings()->setValue(OUTPUT_MAXLINES,maxLines);
+}
+
+void OutputOption::load()
+{
+#if defined(Q_OS_WIN)
+    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Courier").toString();
+#elif defined(Q_OS_LINUX)
+    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Monospace").toString();
+#elif defined(Q_OS_MAC)
+    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Menlo").toString();
+#else
+    m_fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY,"Monospace").toString();
+#endif
+    m_fontSize = m_liteApp->settings()->value(OUTPUT_FONTSIZE,12).toInt();
+
+    int fontZoom = m_liteApp->settings()->value(OUTPUT_FONTZOOM,100).toInt();
+
+    bool antialias = m_liteApp->settings()->value(OUTPUT_ANTIALIAS,true).toBool();
+    ui->antialiasCheckBox->setChecked(antialias);
+
+    const int idx = m_familyList.indexOf(m_fontFamily);
+    ui->familyComboBox->setCurrentIndex(idx);
+
+    updatePointSizes();
+
+    ui->fontZoomSpinBox->setValue(fontZoom);
+
+    bool useColorScheme = m_liteApp->settings()->value(OUTPUT_USECOLORSCHEME,true).toBool();
+    ui->useColorSchemeCheckBox->setChecked(useColorScheme);
+
+    int maxLines = m_liteApp->settings()->value(OUTPUT_MAXLINES,5000).toInt();
+    ui->spinBoxOutputMaxLines->setValue(maxLines);
 }
 
 void OutputOption::updatePointSizes()

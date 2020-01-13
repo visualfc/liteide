@@ -67,7 +67,12 @@ QString FileBrowserOption::mimeType() const
     return "option/filebrowser";
 }
 
-void FileBrowserOption::apply()
+void FileBrowserOption::load()
+{
+
+}
+
+void FileBrowserOption::save()
 {
     QString cmd = ui->cmdLineEdit->text().trimmed();
     QString args = ui->argsLineEdit->text().trimmed();

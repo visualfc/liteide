@@ -41,9 +41,6 @@ QuickOpenOption::QuickOpenOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::QuickOpenOption)
 {
     ui->setupUi(m_widget);
-    ui->checkFilesMatchCase->setChecked(m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool());
-    ui->checkEditorMatchCase->setChecked(m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool());
-    ui->spinBoxFilesMaxCount->setValue(m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt());
 }
 
 QuickOpenOption::~QuickOpenOption()
@@ -66,7 +63,15 @@ QString QuickOpenOption::mimeType() const
 {
     return OPTION_QUICKOPEN;
 }
-void QuickOpenOption::apply()
+
+void QuickOpenOption::load()
+{
+    ui->checkFilesMatchCase->setChecked(m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool());
+    ui->checkEditorMatchCase->setChecked(m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool());
+    ui->spinBoxFilesMaxCount->setValue(m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt());
+}
+
+void QuickOpenOption::save()
 {
     m_liteApp->settings()->setValue(QUICKOPNE_FILES_MATCHCASE,ui->checkFilesMatchCase->isChecked());
     m_liteApp->settings()->setValue(QUICKOPNE_EDITOR_MATCHCASE,ui->checkEditorMatchCase->isChecked());

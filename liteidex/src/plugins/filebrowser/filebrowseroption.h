@@ -40,7 +40,8 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
-    virtual void apply();
+    virtual void load();
+    virtual void save();
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;

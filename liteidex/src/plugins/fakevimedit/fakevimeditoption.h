@@ -40,7 +40,8 @@ public:
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
-    virtual void apply();
+    virtual void load();
+    virtual void save();
 private slots:
     void on_resetCommandsButton_clicked();
 

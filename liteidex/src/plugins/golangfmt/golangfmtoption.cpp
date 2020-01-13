@@ -41,15 +41,6 @@ GolangFmtOption::GolangFmtOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::GolangFmtOption)
 {
     ui->setupUi(m_widget);
-
-    bool fixImports = m_liteApp->settings()->value(GOLANGFMT_FIXIMPORTS,false).toBool();
-    bool autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
-    bool syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
-    int timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
-    ui->checkBoxUseGoimports->setChecked(fixImports);
-    ui->checkBoxAutoFmt->setChecked(autofmt);
-    ui->enableSyncCheckBox->setChecked(syncfmt);
-    ui->syncTimeoutLineEdit->setText(QString("%1").arg(timeout));
 }
 
 GolangFmtOption::~GolangFmtOption()
@@ -73,7 +64,20 @@ QString GolangFmtOption::mimeType() const
     return "option/golangfmt";
 }
 
-void GolangFmtOption::apply()
+void GolangFmtOption::load()
+{
+
+    bool fixImports = m_liteApp->settings()->value(GOLANGFMT_FIXIMPORTS,false).toBool();
+    bool autofmt = m_liteApp->settings()->value(GOLANGFMT_AUTOFMT,true).toBool();
+    bool syncfmt = m_liteApp->settings()->value(GOLANGFMT_USESYNCFMT,true).toBool();
+    int timeout = m_liteApp->settings()->value(GOLANGFMT_SYNCTIMEOUT,500).toInt();
+    ui->checkBoxUseGoimports->setChecked(fixImports);
+    ui->checkBoxAutoFmt->setChecked(autofmt);
+    ui->enableSyncCheckBox->setChecked(syncfmt);
+    ui->syncTimeoutLineEdit->setText(QString("%1").arg(timeout));
+}
+
+void GolangFmtOption::save()
 {
     bool goimports = ui->checkBoxUseGoimports->isChecked();
     bool autofmt = ui->checkBoxAutoFmt->isChecked();
