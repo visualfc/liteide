@@ -3,6 +3,26 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2020.01.15 Ver X36.3
+* LiteIDE
+    * fix and update gotools&gocode for support Go Module. 
+    * refactor option, update all plugin option page
+* LiteApp
+    * refactor option page, load/save and keep option page.
+* LiteEditor
+    * fix code complete escape for Qt5.12
+* Markdown
+    * add CommonMark/cmark for markdown to html, replace sundown
+* GolangPackage
+    * add GOPRIVATE,GONOPROXY,GONOSUMDB option
+    * add goproxy.cn for GOPROXY list
+    * merge GOPATH/GoModule setup to global options.
+* LiteBuild
+    * add `go mod vendor` action
+* gotools & gocode
+    * fix fastmod match full version, example `github.com/mypkg/v2`
+    * types check add basic type
+
 ### 2019.10.30 Ver X36.2
 * LiteIDE
     * add new image viewer plugin
