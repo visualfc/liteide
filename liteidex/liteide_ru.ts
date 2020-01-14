@@ -2164,6 +2164,72 @@ Want to replace to all the search items to whitespace?</source>
     </message>
 </context>
 <context>
+    <name>GolangPackageOption</name>
+    <message>
+        <source>Choose directory to add to GOPATH:</source>
+        <translation type="unfinished">Выбор каталога для добавления в GOPATH</translation>
+    </message>
+</context>
+<context>
+    <name>GolangPackgetOption</name>
+    <message>
+        <source>Manage GOPATH / Modules</source>
+        <translation type="unfinished">Управление GOPATH/Modules</translation>
+    </message>
+    <message>
+        <source>Go Modules</source>
+        <translation type="unfinished">Модули Go</translation>
+    </message>
+    <message>
+        <source>Custom GONOPROXY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom GOPROXY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom GO111MODULE</source>
+        <translation type="unfinished">Особый GO111MODULE</translation>
+    </message>
+    <message>
+        <source>Custom GONOSUMDB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom GOPRIVATE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GOPATH</source>
+        <translation type="unfinished">GOPATH</translation>
+    </message>
+    <message>
+        <source>Use System GOPATH</source>
+        <translation type="unfinished">Использовать системый GOPATH</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished">Обновить</translation>
+    </message>
+    <message>
+        <source>Use Custom GOPATH (one per line)</source>
+        <translation type="unfinished">Особый GOPATH (по-одному в строку)</translation>
+    </message>
+    <message>
+        <source>Add Directory...</source>
+        <translation type="unfinished">Добавить...</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Очистить</translation>
+    </message>
+</context>
+<context>
     <name>GolangPresentEdit</name>
     <message>
         <source>Section (s1)</source>
@@ -4395,58 +4461,6 @@ Do you want to replace it?</source>
     <message>
         <source>Sessions</source>
         <translation>Сессии</translation>
-    </message>
-</context>
-<context>
-    <name>SetupGopathDialog</name>
-    <message>
-        <source>Reload</source>
-        <translation>Обновить</translation>
-    </message>
-    <message>
-        <source>Add Directory...</source>
-        <translation>Добавить...</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Очистить</translation>
-    </message>
-    <message>
-        <source>Choose directory to add to GOPATH:</source>
-        <oldsource>Load GOPATH Directory</oldsource>
-        <translation>Выбор каталога для добавления в GOPATH</translation>
-    </message>
-    <message>
-        <source>Use System GOPATH</source>
-        <translation>Использовать системый GOPATH</translation>
-    </message>
-    <message>
-        <source>Use Custom GOPATH (one per line)</source>
-        <translation>Особый GOPATH (по-одному в строку)</translation>
-    </message>
-    <message>
-        <source>Manage GOPATH / Modules</source>
-        <translation>Управление GOPATH/Modules</translation>
-    </message>
-    <message>
-        <source>Go Modules</source>
-        <translation>Модули Go</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Custom GO111MODULE</source>
-        <translation>Особый GO111MODULE</translation>
-    </message>
-    <message>
-        <source>GOPATH</source>
-        <translation>GOPATH</translation>
-    </message>
-    <message>
-        <source>Custom GOPROXY</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

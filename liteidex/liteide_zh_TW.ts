@@ -121,12 +121,12 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
         <translation>感謝...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="574"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="575"/>
         <source>License</source>
         <translation>許可協議</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="616"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="617"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
@@ -419,12 +419,12 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="601"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="632"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="608"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="639"/>
         <source>System Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -779,33 +779,33 @@ LiteIDE是一個簡單，開源，跨平臺的IDE.</translation>
 <context>
     <name>DocumentBrowser</name>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="67"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
         <source>Back</source>
         <oldsource>Backward</oldsource>
         <translation type="unfinished">返回</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
         <source>Forward</source>
         <translation>前進</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="70"/>
         <source>Reload</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="75"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="76"/>
         <source>Increase Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="78"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="79"/>
         <source>Decrease Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="82"/>
         <source>Reset Font Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2676,6 +2676,87 @@ Want to replace to all the search items to whitespace?</source>
     </message>
 </context>
 <context>
+    <name>GolangPackageOption</name>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.cpp" line="302"/>
+        <source>Choose directory to add to GOPATH:</source>
+        <translation type="unfinished">載入GOPATH目錄</translation>
+    </message>
+</context>
+<context>
+    <name>GolangPackgetOption</name>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="14"/>
+        <source>Manage GOPATH / Modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="35"/>
+        <source>Go Modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="78"/>
+        <source>Custom GONOPROXY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="88"/>
+        <source>Custom GOPROXY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="95"/>
+        <source>Custom GO111MODULE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="102"/>
+        <source>Custom GONOSUMDB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="109"/>
+        <source>Custom GOPRIVATE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="125"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="137"/>
+        <source>GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="163"/>
+        <source>Use System GOPATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="186"/>
+        <source>Reload</source>
+        <translation type="unfinished">刷新</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="210"/>
+        <source>Use Custom GOPATH (one per line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="233"/>
+        <source>Add Directory...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="240"/>
+        <source>Clear</source>
+        <translation type="unfinished">清除</translation>
+    </message>
+</context>
+<context>
     <name>GolangPresentEdit</name>
     <message>
         <location filename="src/plugins/golangpresent/golangpresentedit.cpp" line="64"/>
@@ -2836,66 +2917,66 @@ Success: %2.</oldsource>
 <context>
     <name>HtmlPreview</name>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="71"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="72"/>
         <source>Page Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
         <source>Reload</source>
         <translation type="unfinished">刷新</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="382"/>
         <source>Export Html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="413"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="414"/>
         <source>Export PDF</source>
         <translation type="unfinished">匯出PDF文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="80"/>
         <source>Print Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="82"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="83"/>
         <source>Synchronize preview and code scrollbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="89"/>
         <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="168"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="169"/>
         <source>Plain HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="85"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="86"/>
         <source>Automatically display preview</source>
         <oldsource>Automatically Display Preview</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="99"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="100"/>
         <source>HTML Preview</source>
         <oldsource>Html Preview</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="391"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation type="unfinished">無法寫入文件 %1</translation>
@@ -2904,43 +2985,43 @@ Success: %2.</oldsource>
 <context>
     <name>ImageEditor</name>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="28"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="29"/>
         <source>ZoomIn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="31"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="32"/>
         <source>ZoomOut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="34"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="35"/>
         <source>Reset to original size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="37"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="38"/>
         <source>Fit to view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="40"/>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="223"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="41"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="224"/>
         <source>Play movie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="44"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="45"/>
         <source>Prev frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="48"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="49"/>
         <source>Next frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="220"/>
+        <location filename="src/plugins/imageeditor/imageeditor.cpp" line="221"/>
         <source>Pause movie</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3325,63 +3406,63 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="85"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="267"/>
         <source>SideBarStyle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="86"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="268"/>
         <source>SplitterStyle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="176"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="82"/>
         <source>Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="177"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="83"/>
         <source>Label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="178"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="84"/>
         <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="179"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="85"/>
         <source>NativeText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="180"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="86"/>
         <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="499"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="499"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="533"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="514"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="533"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="544"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="552"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3674,7 +3755,7 @@ Success: %2.</oldsource>
 <context>
     <name>LiteDoc</name>
     <message>
-        <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
+        <location filename="src/plugins/welcome/litedoc.cpp" line="64"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
         <translation type="unfinished">IDE文件瀏覽</translation>
@@ -3849,57 +3930,57 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="641"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="729"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="642"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="730"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="667"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="747"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="668"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="748"/>
         <source>Goto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="692"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="770"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="693"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="771"/>
         <source>Convert Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="696"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="774"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="697"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="775"/>
         <source>Code Folding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="686"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="764"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="687"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="765"/>
         <source>Convert Case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1195"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1196"/>
         <source>Export HTML</source>
         <translation>匯出HTML文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1203"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1204"/>
         <source>Export Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1204"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1205"/>
         <source>Could not open %1 for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1223"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1224"/>
         <source>Export PDF</source>
         <translation>匯出PDF文檔</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1248"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1249"/>
         <source>Print Document</source>
         <translation>列印文件</translation>
     </message>
@@ -3962,7 +4043,7 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1323"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1324"/>
         <source>Go To Line</source>
         <oldsource>Goto Line</oldsource>
         <translation type="unfinished"></translation>
@@ -4048,19 +4129,19 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="702"/>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="780"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="703"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="781"/>
         <source>Settings</source>
         <oldsource>File Setup</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="888"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="889"/>
         <source>Reload File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1265"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1266"/>
         <source>Do you want to permanently discard unsaved modifications and reload %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4071,12 +4152,12 @@ Success: %2.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1297"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1298"/>
         <source>ReadOnly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1323"/>
+        <location filename="src/plugins/liteeditor/liteeditor.cpp" line="1324"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4280,27 +4361,27 @@ Success: %2.</oldsource>
         <translation>顯示</translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="158"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="74"/>
         <source>MIME Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="159"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="75"/>
         <source>Tab Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="160"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="76"/>
         <source>Tab To Spaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="162"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="78"/>
         <source>File Extensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="161"/>
+        <location filename="src/plugins/liteeditor/liteeditoroption.cpp" line="77"/>
         <source>Custom Extensions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4385,40 +4466,40 @@ Success: %2.</oldsource>
 <context>
     <name>MarkdownBatchBrowser</name>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="142"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="143"/>
         <source>Markdown Exporter</source>
         <oldsource>Markdown Batch</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="162"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="163"/>
         <source>All Files (*)</source>
         <translation type="unfinished">所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="231"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="232"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="242"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="243"/>
         <source>Select Markdown Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="290"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="291"/>
         <source>Select the folder to contain separated markdown exports:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="303"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="304"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="378"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="379"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
         <translation type="unfinished">匯出PDF文檔</translation>
@@ -4678,8 +4759,8 @@ Success: %2.</oldsource>
 <context>
     <name>NavigateBar</name>
     <message>
-        <location filename="src/utils/navigate/navigate.cpp" line="115"/>
-        <location filename="src/utils/navigate/navigate.cpp" line="138"/>
+        <location filename="src/utils/navigate/navigate.cpp" line="123"/>
+        <location filename="src/utils/navigate/navigate.cpp" line="146"/>
         <source>Browser Files in %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5437,71 +5518,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>SetupGopathDialog</name>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="14"/>
-        <source>Manage GOPATH / Modules</source>
-        <oldsource>Manage GOPATH</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="118"/>
-        <source>Reload</source>
-        <translation type="unfinished">刷新</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="95"/>
-        <source>Use System GOPATH</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="20"/>
-        <source>Go Modules</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="26"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="38"/>
-        <source>Custom GO111MODULE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="58"/>
-        <source>Custom GOPROXY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="87"/>
-        <source>GOPATH</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="165"/>
-        <source>Add Directory...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="172"/>
-        <source>Clear</source>
-        <translation type="unfinished">清除</translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.ui" line="142"/>
-        <source>Use Custom GOPATH (one per line)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/plugins/golangpackage/setupgopathdialog.cpp" line="153"/>
-        <source>Choose directory to add to GOPATH:</source>
-        <oldsource>Load GOPATH Directory</oldsource>
-        <translation type="unfinished">載入GOPATH目錄</translation>
-    </message>
-</context>
-<context>
     <name>SideDockWidget</name>
     <message>
         <location filename="src/liteapp/sidewindowstyle.cpp" line="50"/>
@@ -5727,28 +5743,28 @@ Do you want to replace it?</source>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="69"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="70"/>
         <source>Navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="72"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="73"/>
         <source>Open Html File</source>
         <oldsource>Open Html</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="119"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="120"/>
         <source>WebKitBrowser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="169"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="170"/>
         <source>False load %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="257"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
         <translation type="unfinished"></translation>
