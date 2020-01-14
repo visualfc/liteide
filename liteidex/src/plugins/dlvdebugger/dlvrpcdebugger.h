@@ -120,6 +120,7 @@ protected:
     void command_helper(const QByteArray &cmd, bool force);
     void updateWatch(int id);
     void updateVariable(int id);
+    void updateStackframe(int id);
     void updateThreads(const QList<Thread> &ths);
     void updateGoroutines();
     void updateRegisters(int threadid, bool includeFp);

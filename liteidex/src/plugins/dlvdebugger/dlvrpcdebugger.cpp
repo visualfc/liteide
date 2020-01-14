@@ -908,9 +908,10 @@ void DlvRpcDebugger::readStdOutput()
         DebuggerState state = m_dlvClient->GetState();
         if (state.pCurrentThread) {
             m_updateCmdList.clear();
-            m_updateCmdList << "stack";// << "stack 0 -full";
+            //m_updateCmdList << "stack";// << "stack 0 -full";
 
             int id = state.pCurrentThread->GoroutineID;
+            updateStackframe(id);
             updateVariable(id);
             updateWatch(id);
             updateThreads(state.Threads);
@@ -979,6 +980,27 @@ void DlvRpcDebugger::updateVariable(int id)
     updateVariableHelper(vars,m_varsModel,0,"",0,saveMap,m_checkVarsMap);
     m_checkVarsMap = saveMap;
     emit endUpdateModel(LiteApi::VARS_MODEL);
+}
+
+void DlvRpcDebugger::updateStackframe(int id)
+{
+    QList<Stackframe> frames = m_dlvClient->Stacktrace(id,128,LoadConfig::Long128(3));
+    m_framesModel->removeRows(0,m_framesModel->rowCount());
+    int index = 0;
+    foreach(Stackframe f, frames) {
+        QList<QStandardItem*> items;
+        items << new QStandardItem(QString("%1").arg(index));
+        items << new QStandardItem(QString("0x%1").arg(qulonglong(f.PC),16,16,QLatin1Char('0')));
+        if (f.pFunction) {
+            items << new QStandardItem(f.pFunction->Name);
+        } else {
+            items << new QStandardItem("");
+        }
+        items << new QStandardItem(f.File);
+        items << new QStandardItem(QString("%1").arg(f.Line));
+        m_framesModel->appendRow(items);
+        index++;
+    }
 }
 
 static bool threadIdThan(const Thread &s1, const Thread &s2)
