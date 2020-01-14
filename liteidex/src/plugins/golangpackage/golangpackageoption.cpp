@@ -79,6 +79,7 @@ GolangPackageOption::~GolangPackageOption()
 
 void GolangPackageOption::setSysPathList(const QStringList &pathList)
 {
+    ui->sysPathTextEdit->clear();
     foreach (QString path, pathList) {
         ui->sysPathTextEdit->appendPlainText(path);
     }
@@ -86,6 +87,7 @@ void GolangPackageOption::setSysPathList(const QStringList &pathList)
 
 void GolangPackageOption::setLitePathList(const QStringList &pathList)
 {
+    ui->litePathTextEdit->clear();
     foreach (QString path, pathList) {
         ui->litePathTextEdit->appendPlainText(path);
     }
