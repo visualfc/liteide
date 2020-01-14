@@ -2694,9 +2694,6 @@ Want to replace to all the search items to whitespace?</source>
         <source>Choose directory to add to GOPATH:</source>
         <translation type="unfinished">Verzeichnis zu GOPATH hinzufügen:</translation>
     </message>
-</context>
-<context>
-    <name>GolangPackgetOption</name>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="14"/>
         <source>Manage GOPATH / Modules</source>
@@ -3419,12 +3416,12 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation type="unfinished">Automatisch letzte Session laden</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="267"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="97"/>
         <source>SideBarStyle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="268"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="98"/>
         <source>SplitterStyle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3454,28 +3451,28 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema importieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation type="unfinished">Tastaturbelegungsschema (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="514"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="513"/>
         <source>Could not read scheme from %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht gelesen werden!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation type="unfinished">Tastaturbelegungsschema exportieren</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="552"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="551"/>
         <source>Could not write scheme to %1!</source>
         <translation type="unfinished">Schema (%1) kann nicht geschrieben werden!</translation>
     </message>

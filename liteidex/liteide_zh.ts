@@ -2697,9 +2697,6 @@ Want to replace to all the search items to whitespace?</source>
         <source>Choose directory to add to GOPATH:</source>
         <translation>选择目录添加到 GOPATH:</translation>
     </message>
-</context>
-<context>
-    <name>GolangPackgetOption</name>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="14"/>
         <source>Manage GOPATH / Modules</source>
@@ -2708,7 +2705,7 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="35"/>
         <source>Go Modules</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="78"/>
@@ -2743,7 +2740,7 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="137"/>
         <source>GOPATH</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="163"/>
@@ -3421,12 +3418,12 @@ Success: %2.</oldsource>
         <translation>启动时重新加载会话</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="267"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="97"/>
         <source>SideBarStyle</source>
         <translation>边栏样式</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="268"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="98"/>
         <source>SplitterStyle</source>
         <translation>分离样式</translation>
     </message>
@@ -3456,28 +3453,28 @@ Success: %2.</oldsource>
         <translation>标准键</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>导入键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>键盘映射方案 (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="514"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="513"/>
         <source>Could not read scheme from %1!</source>
         <translation>无法加载方案%1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>导出键盘映射方案</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="552"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="551"/>
         <source>Could not write scheme to %1!</source>
         <translation>无法写入方案%1!</translation>
     </message>

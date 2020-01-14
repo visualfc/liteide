@@ -2718,11 +2718,8 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.cpp" line="302"/>
         <source>Choose directory to add to GOPATH:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Додати обрану директорію в GOPATH:</translation>
     </message>
-</context>
-<context>
-    <name>GolangPackgetOption</name>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="14"/>
         <source>Manage GOPATH / Modules</source>
@@ -2776,7 +2773,7 @@ Want to replace to all the search items to whitespace?</source>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="186"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перезавантажити</translation>
     </message>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="210"/>
@@ -3444,12 +3441,12 @@ Success: %2.</oldsource>
         <translation>Завантажувати останню сессію при старті</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="267"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="97"/>
         <source>SideBarStyle</source>
         <translation>Стиль бічної панелі</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="268"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="98"/>
         <source>SplitterStyle</source>
         <translation>Стиль розділювача</translation>
     </message>
@@ -3479,28 +3476,28 @@ Success: %2.</oldsource>
         <translation>Стандартна</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>Імпорт комбінацій клавіатури</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>Файл комбінацій клавіатури (%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="514"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="513"/>
         <source>Could not read scheme from %1!</source>
         <translation>Не вдалося прочитати комбінації з %1!</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>Експорт комбінацій клавіатури</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="552"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="551"/>
         <source>Could not write scheme to %1!</source>
         <translation>Помилка запису комбінацій в %1!</translation>
     </message>

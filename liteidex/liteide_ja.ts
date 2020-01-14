@@ -2682,9 +2682,6 @@ Want to replace to all the search items to whitespace?</source>
         <source>Choose directory to add to GOPATH:</source>
         <translation type="unfinished">GOPATHに追加するディレクトリを選択:</translation>
     </message>
-</context>
-<context>
-    <name>GolangPackgetOption</name>
     <message>
         <location filename="src/plugins/golangpackage/golangpackageoption.ui" line="14"/>
         <source>Manage GOPATH / Modules</source>
@@ -3406,12 +3403,12 @@ Success: %2.</oldsource>
         <translation>起動時にセッションを再読み込み</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="267"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="97"/>
         <source>SideBarStyle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="268"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="98"/>
         <source>SplitterStyle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3441,28 +3438,28 @@ Success: %2.</oldsource>
         <translation>標準</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
         <source>Import Keyboard Mapping Scheme</source>
         <translation>キーボードマッピングスキームをインポート</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="507"/>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="506"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Keyboard Mapping Scheme (%1)</source>
         <translation>キーボードマッピングスキーム(%1)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="514"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="513"/>
         <source>Could not read scheme from %1!</source>
         <translation>%1 からスキームを読み込めません</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="541"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="540"/>
         <source>Export Keyboard Mapping Scheme</source>
         <translation>キーボードマッピングスキームをエクスポート</translation>
     </message>
     <message>
-        <location filename="src/liteapp/liteappoption.cpp" line="552"/>
+        <location filename="src/liteapp/liteappoption.cpp" line="551"/>
         <source>Could not write scheme to %1!</source>
         <translation>スキーム %1 を書き込めません!</translation>
     </message>

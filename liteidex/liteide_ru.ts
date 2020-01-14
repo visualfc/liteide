@@ -2169,9 +2169,6 @@ Want to replace to all the search items to whitespace?</source>
         <source>Choose directory to add to GOPATH:</source>
         <translation type="unfinished">Выбор каталога для добавления в GOPATH</translation>
     </message>
-</context>
-<context>
-    <name>GolangPackgetOption</name>
     <message>
         <source>Manage GOPATH / Modules</source>
         <translation type="unfinished">Управление GOPATH/Modules</translation>

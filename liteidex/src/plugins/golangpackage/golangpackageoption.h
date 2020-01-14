@@ -28,7 +28,7 @@
 #include "liteapi/liteapi.h"
 
 namespace Ui {
-class GolangPackgetOption;
+class GolangPackageOption;
 }
 
 enum ENUM_GO_PRIVATE{
@@ -74,7 +74,7 @@ protected slots:
 
 private:
     LiteApi::IApplication *m_liteApp;
-    Ui::GolangPackgetOption *ui;
+    Ui::GolangPackageOption *ui;
     QWidget *m_widget;
 };
 

@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangpackageoption.h"
-#include "ui_setupgopathdialog.h"
+#include "ui_golangpackageoption.h"
 #include "golangpackage_global.h"
 #include "liteenvapi/liteenvapi.h"
 #include "gotool.h"
@@ -42,7 +42,7 @@
 GolangPackageOption::GolangPackageOption(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IOption(parent),
     m_liteApp(app),
-    ui(new Ui::GolangPackgetOption),
+    ui(new Ui::GolangPackageOption),
     m_widget(new QWidget)
 {
     ui->setupUi(m_widget);
