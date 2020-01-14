@@ -19,6 +19,8 @@
     * merge GOPATH/GoModule setup to global options.
 * LiteBuild
     * add `go mod vendor` action
+* DlvDebugger
+    * update stack frame to RPC api
 * gotools & gocode
     * fix fastmod match full version, example `github.com/mypkg/v2`
     * types check add basic type
