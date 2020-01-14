@@ -94,6 +94,15 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     ui->keysTreeView->header()->hideSection(3);
 #endif
 
+    ui->styleComboBox->addItem(tr("SideBarStyle"),"sidebar");
+    ui->styleComboBox->addItem(tr("SplitterStyle"),"splitter");
+    const QString &liteQssPath = m_liteApp->resourcePath()+"/liteapp/qss";
+    QDir qssDir(liteQssPath);
+    if (qssDir.exists()) {
+        foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
+            ui->qssComboBox->addItem(info.fileName());
+        }
+    }
 
 //    if (libgopher.isValid()) {
 //        ui->gopherInfoLabel->setText(tr("libgopher is valid"));
@@ -111,6 +120,7 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
     connect(ui->standardCheckBox,SIGNAL(toggled(bool)),this,SLOT(reloadShortcuts()));
     connect(ui->autoLoadLastSessionCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoLoadLastSessionToggled(bool)));    
     connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),this,SLOT(autoIdleSaveDocumentsToggled(bool)));
+    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsTimeSpinBox,SLOT(setEnabled(bool)));
 }
 
 LiteAppOption::~LiteAppOption()
@@ -264,8 +274,6 @@ void LiteAppOption::load()
             }
         }
     }
-    ui->styleComboBox->addItem(tr("SideBarStyle"),"sidebar");
-    ui->styleComboBox->addItem(tr("SplitterStyle"),"splitter");
     QString style = m_liteApp->settings()->value(LITEAPP_STYLE,"sidebar").toString();
     for (int i = 0; i < ui->styleComboBox->count(); i++) {
         if (style == ui->styleComboBox->itemData(i).toString()) {
@@ -278,13 +286,6 @@ void LiteAppOption::load()
     ui->customIconCheckBox->setChecked(customeIcon);
     ui->iconPathComboBox->setEnabled(customeIcon);
 
-    const QString &liteQssPath = m_liteApp->resourcePath()+"/liteapp/qss";
-    QDir qssDir(liteQssPath);
-    if (qssDir.exists()) {
-        foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
-            ui->qssComboBox->addItem(info.fileName());
-        }
-    }
     QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
     int index = ui->qssComboBox->findText(qss,Qt::MatchFixedString);
     if (index >= 0 && index < ui->qssComboBox->count()) {
@@ -325,7 +326,6 @@ void LiteAppOption::load()
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
 
-    connect(ui->autoIdleSaveDocumentsCheckBox,SIGNAL(toggled(bool)),ui->autoIdleSaveDocumentsTimeSpinBox,SLOT(setEnabled(bool)));
 
     bool b9 = m_liteApp->settings()->value(LITEAPP_AUTOIDLESAVEDOCUMENTS,false).toBool();
     ui->autoIdleSaveDocumentsCheckBox->setChecked(b9);
@@ -341,7 +341,6 @@ void LiteAppOption::load()
 
     bool ext = m_liteApp->settings()->value(LITEAPP_EDITORMOUSEEXTNAVIGATE,true).toBool();
     ui->editorMouseExtNavigateCheckBox->setChecked(ext);
-
 
     QString iconPath = m_liteApp->settings()->value(LITEIDE_CUSTOMEICONPATH,"default").toString();
     index = ui->iconPathComboBox->findText(iconPath,Qt::MatchFixedString);
