@@ -23,7 +23,7 @@
 
 #include "webkitbrowser.h"
 //#include "sundown/mdtohtml.h"
-#include "cmake/cmark.h"
+#include "cmark/libcmark.h"
 #include <QWebView>
 #include <QNetworkProxyFactory>
 #include <QToolBar>
