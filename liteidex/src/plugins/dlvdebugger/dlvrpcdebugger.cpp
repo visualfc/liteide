@@ -985,6 +985,7 @@ void DlvRpcDebugger::updateVariable(int id)
 void DlvRpcDebugger::updateStackframe(int id)
 {
     QList<Stackframe> frames = m_dlvClient->Stacktrace(id,128,LoadConfig::Long128(3));
+    emit beginUpdateModel(LiteApi::CALLSTACK_MODEL);
     m_framesModel->removeRows(0,m_framesModel->rowCount());
     int index = 0;
     foreach(Stackframe f, frames) {
@@ -1001,6 +1002,7 @@ void DlvRpcDebugger::updateStackframe(int id)
         m_framesModel->appendRow(items);
         index++;
     }
+    emit endUpdateModel(LiteApi::CALLSTACK_MODEL);
 }
 
 static bool threadIdThan(const Thread &s1, const Thread &s2)
