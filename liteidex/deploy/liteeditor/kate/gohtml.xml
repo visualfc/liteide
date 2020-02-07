@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="GOHTML" version="1.99" kateversion="2.4" section="Markup" extensions="*.gohtml;*.html.tmpl;*.html.tpl" mimetype="text/gohtml"  author="Sam Schurter" license="LGPL" priority="10">
+
+<highlighting>
+  <list name="go_words"> 
+    <item> define </item> 
+    <item> template </item>
+    <item> range </item> 
+    <item> if </item> 
+    <item> else </item> 
+    <item> end </item>
+    <item> block </item>
+    <item> with </item> 
+    <item> and </item>
+    <item> call </item>
+    <item> html </item>
+    <item> index </item>
+    <item> slice </item>
+    <item> js </item>
+    <item> len </item>
+    <item> not </item>
+    <item> or </item>
+    <item> print </item>
+    <item> printf </item>
+    <item> println </item>
+    <item> urlquery </item>
+    <item> eq </item>
+    <item> ne </item>
+    <item> lt </item>
+    <item> le </item>
+    <item> gt </item>
+    <item> ge </item>
+  </list> 
+<contexts>
+  <context name="Start" attribute="Normal Text" lineEndContext="#stay">
+    <IncludeRules context="##HTML" includeAttrib="true" />
+    <IncludeRules context="FindGo" />
+  </context>
+
+  <context name="FindGo" attribute="Normal Text" lineEndContext="#stay">
+    <Detect2Chars attribute="Command" context="Golang" char="{" char1="{" beginRegion="goCommand" />
+  </context>
+
+  <context name="Golang" attribute="Normal Text" lineEndContext="#stay">
+    <keyword attribute="Keyword" context="#stay" String="go_words" />
+    <Detect2Chars attribute="Command" context="#pop" char="}" char1="}" endRegion="goCommand" />
+    <RegExpr attribute="Dot" context="#stay" String="\.[a-z]*\b" insensitive="true" />
+    <RegExpr attribute="Variable" context="#stay" String="\$[a-z]*\b" insensitive="true" />
+  </context>
+</contexts>
+
+<itemDatas>
+  <itemData name="Command" defStyleNum="dsBaseN" bold="1" />
+  <itemData name="Keyword" defStyleNum="dsFunction" />
+  <itemData name="Dot" defStyleNum="dsKeyword" color="#B470C0" selColor="#00ffff" bold="0" italic="0" spellChecking="false" />
+  <itemData name="Variable" defStyleNum="dsChar" />
+</itemDatas>
+
+</highlighting>
+</language>

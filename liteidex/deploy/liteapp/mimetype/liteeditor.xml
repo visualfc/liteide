@@ -39,7 +39,15 @@
     <glob pattern="*.html"/>
     <glob pattern="*.shtml"/>
     <glob pattern="*.shtm"/>
+  </mime-type>
+  <mime-type type="text/gohtml" codec="utf-8" package="gohtml" tabtospace="true" tabwidth="2">
+    <sub-class-of type="text/html"/>
+    <comment>Go HTML Template File</comment>
+    <glob pattern="*.gohtml"/>
+    <glob pattern="*.html.tmpl"/>
+    <glob pattern="*.html.tpl"/>
     <glob pattern="*.tpl"/>
+    <glob pattern="*.tmpl"/>
   </mime-type>
   <mime-type type="text/xml" codec="utf-8" package="xml" tabtospace="true" tabwidth="2">
     <sub-class-of type="text/plain"/>
