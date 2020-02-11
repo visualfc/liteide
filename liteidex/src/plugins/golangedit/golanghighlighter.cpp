@@ -256,6 +256,8 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
                     //    foldingIndent = qMin(braceDepth, foldingIndent);
                 }
             }
+        } else if (tk.is(T_GO_ELSE)) {
+            --foldingIndent;
         }
         /*
         bool highlightCurrentWordAsPreprocessor = expectPreprocessorKeyword;
