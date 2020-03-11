@@ -548,6 +548,7 @@ void SearchResultWidget::showReplaceMode()
         }
     }
     this->m_replaceTextEdit->setFocus();
+    this->layout()->update();
 }
 
 QList<SearchResultItem> SearchResultWidget::checkedItems() const
