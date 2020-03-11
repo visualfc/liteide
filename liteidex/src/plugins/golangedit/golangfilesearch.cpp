@@ -165,7 +165,7 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
         m_liteApp->appendLog("find usage error",info,true);
         return;
     }
-    QRegExp reg(":(\\d+):(\\d+)");
+    QRegExp reg(":(\\d+):(\\d+)-?(\\d*)");
     foreach (QByteArray line, data.split('\n')) {
         QString info = QString::fromUtf8(line).trimmed();
         if (m_bParserHead) {
@@ -192,6 +192,8 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
             QString fileName = info.left(pos);
             int fileLine = reg.cap(1).toInt();
             int fileCol = reg.cap(2).toInt();
+            bool hasCol2 = false;
+            int fileCol2 = reg.cap(3).toInt(&hasCol2);
             if (m_file.fileName() != fileName) {
                 m_file.close();
                 m_file.setFileName(fileName);
@@ -219,7 +221,11 @@ void GolangFileSearch::findUsagesOutput(QByteArray data, bool bStdErr)
                        fileCol = QString::fromUtf8(line.left(fileCol)).length();
                     }
                 }
-                emit findResult(LiteApi::FileSearchResult(fileName,m_lastLineText,fileLine,fileCol-1,m_searchText.length()));
+                int length = m_searchText.length();
+                if (hasCol2) {
+                    length = fileCol2-fileCol;
+                }
+                emit findResult(LiteApi::FileSearchResult(fileName,m_lastLineText,fileLine,fileCol-1,length));
             }
         }
     }
