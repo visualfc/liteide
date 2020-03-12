@@ -86,8 +86,6 @@ public:
     void setTextEditorFont(const QFont &font, const SearchResultColor color);
 
     void setAutoExpandResults(bool expand);
-    void expandAll();
-    void collapseAll();
 
     void goToNext();
     void goToPrevious();
@@ -123,7 +121,8 @@ private slots:
     void cancel();
     void searchAgain();
     void showReplaceMode();
-
+    void expandAll();
+    void collapseAll();
 private:
     QList<SearchResultItem> checkedItems() const;
     void updateMatchesFoundLabel(bool revert);
@@ -153,6 +152,8 @@ private:
     QLabel *m_matchesFoundLabel;
     QFrame *m_infoWidget;
     QLabel *m_infoLabel;
+    QToolButton *m_collapseAll;
+    QToolButton *m_expandAll;
 };
 
 } // Internal

@@ -199,6 +199,20 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_matchesFoundLabel = new QLabel(topWidget);
     endMatchesFoundLabel();
 
+    m_expandAll = new QToolButton;
+    m_expandAll->setText("+");
+    m_expandAll->setToolTip(tr("Expand all items"));
+    connect(m_expandAll,SIGNAL(clicked()),this,SLOT(expandAll()));
+
+    m_collapseAll = new QToolButton;
+    m_collapseAll->setText("-");
+    m_collapseAll->setToolTip(tr("Collapse all items"));
+    connect(m_collapseAll,SIGNAL(clicked()),this,SLOT(collapseAll()));
+
+    topLayout->addWidget(m_expandAll);
+    topLayout->addWidget(m_collapseAll);
+
+
     topLayout->addWidget(m_descriptionContainer);
     topLayout->addWidget(m_cancelButton);
     topLayout->addWidget(m_searchAgainButton);
@@ -390,16 +404,6 @@ void SearchResultWidget::setAutoExpandResults(bool expand)
     m_searchResultTreeView->setAutoExpandResults(expand);
 }
 
-void SearchResultWidget::expandAll()
-{
-    m_searchResultTreeView->expandAll();
-}
-
-void SearchResultWidget::collapseAll()
-{
-    m_searchResultTreeView->collapseAll();
-}
-
 void SearchResultWidget::goToNext()
 {
     if (m_count == 0)
@@ -528,6 +532,18 @@ void SearchResultWidget::cancel()
 void SearchResultWidget::searchAgain()
 {
     emit searchAgainRequested();
+}
+
+void SearchResultWidget::expandAll()
+{
+   m_searchResultTreeView->expandAll();
+   m_searchResultTreeView->repaint();
+}
+
+void SearchResultWidget::collapseAll()
+{
+    m_searchResultTreeView->collapseAll();
+    m_searchResultTreeView->repaint();
 }
 
 void SearchResultWidget::showReplaceMode()
