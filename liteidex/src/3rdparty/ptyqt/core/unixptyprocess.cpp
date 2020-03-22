@@ -27,12 +27,6 @@ UnixPtyProcess::~UnixPtyProcess()
 
 bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, QStringList environment, qint16 cols, qint16 rows)
 {
-    if (!isAvailable())
-    {
-        m_lastError = QString("WinPty Error: winpty-agent.exe or winpty.dll not found!");
-        return false;
-    }
-
     if (m_shellProcess.state() == QProcess::Running)
         return false;
 
@@ -40,7 +34,7 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     if (fi.isRelative() || !QFile::exists(shellPath))
     {
         //todo add auto-find executable in PATH env var
-        m_lastError = QString("WinPty Error: shell file path must be absolute");
+        m_lastError = QString("Error: shell file path must be absolute");
         return false;
     }
 
