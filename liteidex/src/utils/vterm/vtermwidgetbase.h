@@ -1,0 +1,113 @@
+#ifndef VTERMWIDGETBASE_H
+#define VTERMWIDGETBASE_H
+
+#include <QAbstractScrollArea>
+#include <QDebug>
+
+extern "C" {
+#include "libvterm/include/vterm.h"
+}
+
+typedef struct
+{
+    int row;
+    int col;
+    bool visible;
+    bool blink;
+    int shape;
+    QColor color;
+} QVTermCursor;
+
+typedef struct {
+  int cols;
+  QVector<VTermScreenCell> cells;
+  QString text;
+} ScrollbackLine;
+
+class VTermWidgetBase : public QAbstractScrollArea
+{
+    Q_OBJECT
+public:
+    VTermWidgetBase(int rows, int cols, QWidget *parent);
+    virtual ~VTermWidgetBase();
+    void setFont(const QFont &fnt);
+    void setTermSize(int rows, int cols);
+    void inputWrite(const QByteArray &data);
+    void setDarkMode(bool b);
+    bool isDarkMode() const;
+public:
+    int vterm_damage(VTermRect rect);
+    int vterm_moverect(VTermRect dest, VTermRect src);
+    int vterm_movecursor(VTermPos pos, VTermPos oldpos, int visible);
+    int vterm_settermprop(VTermProp prop, VTermValue *val);
+    int vterm_bell();
+    int vterm_resize(int rows, int cols);
+    int vterm_sb_pushline(int cols, const VTermScreenCell *cells);
+    int vterm_sb_popline(int cols, VTermScreenCell *cells);
+    void setPaletteColor(int index, uint8_t r, uint8_t g, uint8_t b);
+    QRect vtermrect_to_qrect(VTermRect rect);
+    VTermRect qrect_to_vtermrect(QRect rect);
+public:
+    int allRowSize() const;
+    int topVisibleRow() const;
+    int scrollbackRowSize() const;
+    int termRows() const;
+    int termCols() const;
+    QString selectedText() const;
+    QRect selectedRect() const;
+    void setSelection(QPoint start, QPoint end);
+    void selectAll();
+    void clearSelection();
+    bool hasSelection() const;
+    bool isSelection(int row, int col) const;
+protected:
+    void updateSelection(QPoint scenePos);
+protected:
+    bool fetchCell(int row, int col, VTermScreenCell *cell) const;
+    void paintEvent(QPaintEvent *e);
+    void keyPressEvent(QKeyEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
+    void inputMethodEvent(QInputMethodEvent *e);
+    void resizeEvent(QResizeEvent *e);
+    void flushOutput();
+    virtual void write_data(const char *buf, int len);
+    void drawScreenCell(QPainter &p, VTermRect rect);
+signals:
+    void iconNameChanged(QString);
+    void titleChanged(QString);
+    void sizeChanged(int rows, int cols);
+    void output(char *buf, int len);
+    void selectionChanged();
+protected:
+    int m_rows;
+    int m_cols;
+    int  m_propMouse;
+    int m_sbListCapacity;
+    bool m_altScreen;
+    bool m_ignoreScroll;
+    bool m_darkMode;
+    char textbuf[0x1fff];
+    VTerm       *m_vt;
+    VTermScreen *m_screen;
+    VTermState  *m_state;
+    VTermColor   m_defaultFg;
+    VTermColor   m_defaultBg;
+    QColor       m_clrSelect;
+    QSize m_cellSize;
+    QVTermCursor   m_cursor;
+    QList<ScrollbackLine*> m_sbList;
+    VTermScreenCell m_empytCell;
+    VTermRect       m_selected;
+    Qt::MouseButton  m_mouseButton;
+    QRect m_selection;
+    QPoint m_ptOrg;
+    QPoint  m_ptOffset;
+};
+
+VTermModifier qt_to_vtermModifier(Qt::KeyboardModifiers mod);
+VTermKey qt_to_vtermKey(int key, bool keypad);
+
+
+#endif // VTERMWIDGETBASE_H

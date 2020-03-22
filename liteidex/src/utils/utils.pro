@@ -21,4 +21,5 @@ SUBDIRS = \
     folderview \
     iconutil \
     dlvclient \
-    navigate
+    navigate \
+    vterm
