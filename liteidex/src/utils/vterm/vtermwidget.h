@@ -11,7 +11,7 @@ class VTermWidget : public VTermWidgetBase
 public:
     explicit VTermWidget(QWidget *parent);
     virtual ~VTermWidget();
-    void start(const QString &program, const QStringList &arguments, QStringList env);
+    void start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env);
 signals:
     void exited();
 public slots:

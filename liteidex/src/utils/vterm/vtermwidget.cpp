@@ -27,9 +27,9 @@ VTermWidget::~VTermWidget()
     delete m_process;
 }
 
-void VTermWidget::start(const QString &program, const QStringList &arguments, QStringList env)
+void VTermWidget::start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env)
 {
-    m_process->startProcess(program,arguments,env,m_rows,m_cols);
+    m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_rows),qint16(m_cols));
     connect(m_process->notifier(),SIGNAL(readyRead()),this,SLOT(readyRead()));
 }
 

@@ -25,7 +25,7 @@ UnixPtyProcess::~UnixPtyProcess()
     kill();
 }
 
-bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, QStringList environment, qint16 cols, qint16 rows)
+bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows)
 {
     if (m_shellProcess.state() == QProcess::Running)
         return false;
@@ -191,7 +191,7 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     {
         envFormat.insert(line.split("=").first(), line.split("=").last());
     }
-    m_shellProcess.setWorkingDirectory(QCoreApplication::applicationDirPath());
+    m_shellProcess.setWorkingDirectory(workingDirectory);
     m_shellProcess.setProcessEnvironment(envFormat);
     m_shellProcess.setReadChannel(QProcess::StandardOutput);
     m_shellProcess.start(m_shellPath, arguments);

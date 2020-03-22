@@ -29,7 +29,7 @@ public:
     {  }
     virtual ~IPtyProcess() { }
 
-    virtual bool startProcess(const QString &shellPath, const QStringList &arguments, QStringList environment, qint16 cols, qint16 rows) = 0;
+    virtual bool startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows) = 0;
     virtual bool resize(qint16 cols, qint16 rows) = 0;
     virtual bool kill() = 0;
     virtual PtyType type() = 0;
