@@ -99,14 +99,15 @@ int OptionsBrowser::execute(const QString &mimeType)
     ui->listWidget->setCurrentItem(item);
     LiteApi::IOption *opt = m_widgetOptionMap.value(item);
     if (opt) {
+        //ui->scrollArea->resize(opt->widget()->size());
         opt->load();
     }
-    this->setMinimumHeight(600);
-#ifdef Q_OS_MAC
-    this->setMinimumWidth(900);
-#else
-    this->setMinimumWidth(800);
-#endif
+//    this->setMinimumHeight(600);
+//#ifdef Q_OS_MAC
+//    this->setMinimumWidth(900);
+//#else
+//    this->setMinimumWidth(800);
+//#endif
     return exec();
 }
 

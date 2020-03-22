@@ -24,6 +24,8 @@
 #include "optionmanager.h"
 #include "optionsbrowser.h"
 #include <QAction>
+#include <QApplication>
+#include <QDesktopWidget>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -79,6 +81,17 @@ void OptionManager::exec(const QString &mimeType)
 {
     if (!m_browser) {
         m_browser = new OptionsBrowser(m_liteApp,m_liteApp->mainWindow());
+        QRect rc = qApp->desktop()->screenGeometry(m_browser);
+        int width = rc.width();
+        if (width > 900) {
+            width = 900;
+        }
+        int height = rc.height();
+        if (height > 600) {
+            height = 600;
+        }
+        m_browser->resize(width,height);
+
         connect(m_browser,SIGNAL(applyOption(QString)),this,SIGNAL(applyOption(QString)));
         foreach (IOptionFactory *f, m_factoryList) {
             QStringList mimeTypes = f->mimeTypes();
