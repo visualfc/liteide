@@ -1,0 +1,38 @@
+<!doctype html>
+  <html>
+    <head>
+      <link rel="stylesheet" href="node_modules/xterm/dist/xterm.css" />
+      <link rel="stylesheet" href="style.css" />
+      <script src="node_modules/xterm/dist/xterm.js"></script>
+      <script src="node_modules/xterm/dist/addons/attach/attach.js"></script>
+      <script src="node_modules/xterm/dist/addons/fit/fit.js"></script>
+      <!--<script src="node_modules/xterm/dist/addons/winptyCompat/winptyCompat.js"></script> before 3.13.0-->
+    </head>
+    <body>
+      <h1 style="color: #2D2E2C">xterm.js + Pty-Qt + C++</h1>
+      <div id="terminal-container"></div>
+      <script>
+            //document.getElementById('terminal-container').style.width = 80;
+            //document.getElementById('terminal-container').style.height = 24;
+
+            Terminal.applyAddon(attach);  // Apply the `attach` addon
+            Terminal.applyAddon(fit);
+            //Terminal.applyAddon(winptyCompat); //before 3.13.0
+
+            var term = new Terminal({ windowsMode: true }); //after 3.13.0
+            term.on('resize', (size) => {
+                console.log(size);
+            });
+
+            var socket = new WebSocket('ws://localhost:4242/ws');
+
+            term.attach(socket);
+
+            term.open(document.getElementById('terminal-container'));
+            //term.winptyCompatInit(); //before 3.13.0
+            term.fit();
+            term.focus();
+			//install and open "C:\Program Files (x86)\Far Manager\far.exe" for example UI
+      </script>
+    </body>
+  </html>

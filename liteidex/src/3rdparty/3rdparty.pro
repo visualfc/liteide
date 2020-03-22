@@ -20,5 +20,6 @@ SUBDIRS = \
     qjsonrpc \
     libucd \
     cmark \
-    libvterm
+    libvterm \
+    ptyqt
 
