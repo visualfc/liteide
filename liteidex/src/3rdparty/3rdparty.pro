@@ -19,5 +19,6 @@ SUBDIRS = \
     diff_match_patch \
     qjsonrpc \
     libucd \
-    cmark
+    cmark \
+    libvterm
 
