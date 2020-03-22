@@ -48,6 +48,7 @@ public:
     QRect vtermrect_to_qrect(VTermRect rect);
     VTermRect qrect_to_vtermrect(QRect rect);
 public:
+    QPoint mapPointToCell(QPoint pt);
     int allRowSize() const;
     int topVisibleRow() const;
     int scrollbackRowSize() const;
@@ -55,7 +56,7 @@ public:
     int termCols() const;
     QString selectedText() const;
     QRect selectedRect() const;
-    void setSelection(QPoint start, QPoint end);
+    void setSelection(QPoint cellStart, QPoint cellEnd);
     void selectAll();
     void clearSelection();
     bool hasSelection() const;
@@ -69,6 +70,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
+    void mouseDoubleClickEvent(QMouseEvent *e);
     void inputMethodEvent(QInputMethodEvent *e);
     void resizeEvent(QResizeEvent *e);
     void flushOutput();

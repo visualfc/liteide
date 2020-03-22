@@ -182,6 +182,13 @@ VTermRect VTermWidgetBase::qrect_to_vtermrect(QRect rect)
     return rc;
 }
 
+QPoint VTermWidgetBase::mapPointToCell(QPoint pt)
+{
+    int row = pt.y()/m_cellSize.height();
+    int col = pt.x()/m_cellSize.width();
+    return  QPoint(col,row);
+}
+
 int VTermWidgetBase::scrollbackRowSize() const
 {
     return m_sbList.size();
@@ -801,6 +808,11 @@ void VTermWidgetBase::mouseReleaseEvent(QMouseEvent *e)
     this->updateSelection(e->pos());
 }
 
+void VTermWidgetBase::mouseDoubleClickEvent(QMouseEvent *e)
+{
+
+}
+
 void VTermWidgetBase::inputMethodEvent(QInputMethodEvent *e) {
     QVector<uint> str = e->commitString().toUcs4();
     foreach(uint c, str) {
@@ -850,31 +862,31 @@ void VTermWidgetBase::write_data(const char *buf, int len)
      qDebug() <<  "output" << QString::fromUtf8(buf,int(len));
 }
 
-void VTermWidgetBase::setSelection(QPoint start, QPoint end)
+void VTermWidgetBase::setSelection(QPoint cellStart, QPoint cellEnd)
 {
-    if (start.y() > end.y())
-        qSwap(start, end);
-    if (start.y() == end.y() && start.x() > end.x())
-        qSwap(start, end);
+    if (cellStart.y() > cellEnd.y())
+        qSwap(cellStart, cellEnd);
+    if (cellStart.y() == cellEnd.y() && cellStart.x() > cellEnd.x())
+        qSwap(cellStart, cellEnd);
 
-    if (start.x() < 0)
-        start.rx() = 0;
-    if (start.y() < 0)
-        start.ry() = 0;
+    if (cellStart.x() < 0)
+        cellStart.rx() = 0;
+    if (cellStart.y() < 0)
+        cellStart.ry() = 0;
     QSize sz = viewport()->size();
-    if (end.x() > sz.width())
-        end.rx() = sz.width();
-    if (end.y() > sz.height())
-        end.ry() = sz.height();
+    if (cellEnd.x() > sz.width())
+        cellEnd.rx() = sz.width();
+    if (cellEnd.y() > sz.height())
+        cellEnd.ry() = sz.height();
 
-    start.ry() += topVisibleRow();
-    end.ry() += topVisibleRow();
-    m_selection = QRect(start, end);
+    cellStart.ry() += topVisibleRow();
+    cellEnd.ry() += topVisibleRow();
+    m_selection = QRect(cellStart, cellEnd);
 
-    m_selected.start_row = start.y()+topVisibleRow();
-    m_selected.start_col = start.x();
-    m_selected.end_col = start.y();
-    m_selected.end_row = end.y()+topVisibleRow();
+    m_selected.start_row = cellStart.y()+topVisibleRow();
+    m_selected.start_col = cellStart.x();
+    m_selected.end_col = cellStart.y();
+    m_selected.end_row = cellEnd.y()+topVisibleRow();
 
 
     emit selectionChanged();
