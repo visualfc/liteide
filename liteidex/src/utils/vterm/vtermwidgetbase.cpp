@@ -134,6 +134,8 @@ VTermWidgetBase::VTermWidgetBase(int rows, int cols, QWidget *parent)
 
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
+    m_ptOffset = QPoint(4,2);
+
     connect(this,SIGNAL(selectionChanged()),viewport(),SLOT(update()));
 }
 
@@ -155,17 +157,17 @@ VTermWidgetBase::~VTermWidgetBase()
 
 int VTermWidgetBase::vterm_damage(VTermRect rect)
 {
-    //QRect rc = vtermrect_to_qrect(rect);
+//    QRect rc = mapVTermRectToRect(rect);
 //    qDebug() << "vterm_damage1"<< rect.start_row << rect.end_row << rect.start_col <<  rect.end_col;
-    //rect = qrect_to_vtermrect(rc);
-//    qDebug() << "vterm_damage"<< rect.start_row << rect.end_row << rect.start_col <<  rect.end_col;
+//    rect = mapRectToVTermRect(rc);
+//    qDebug() << "vterm_damage2"<< rect.start_row << rect.end_row << rect.start_col <<  rect.end_col;
 
-    viewport()->update(vtermrect_to_qrect(rect));
     this->clearSelection();
+    viewport()->update(mapVTermRectToRect(rect));
     return 1;
 }
 
-QRect VTermWidgetBase::vtermrect_to_qrect(VTermRect rect)
+QRect VTermWidgetBase::mapVTermRectToRect(VTermRect rect)
 {
     QPoint topLeft = QPoint(
             rect.start_col * m_cellSize.width(),
@@ -173,24 +175,27 @@ QRect VTermWidgetBase::vtermrect_to_qrect(VTermRect rect)
     QPoint bottomRight = QPoint(
             (rect.end_col+1) * m_cellSize.width(),
             (rect.end_row+1) * m_cellSize.height());
+    topLeft += m_ptOffset;
+    bottomRight += m_ptOffset;
     return  QRect(topLeft,bottomRight);
 }
 
-VTermRect VTermWidgetBase::qrect_to_vtermrect(QRect rect)
+VTermRect VTermWidgetBase::mapRectToVTermRect(QRect rect)
 {
     VTermRect rc;
-    rc.start_row = rect.top()/m_cellSize.height();
-    rc.end_row = rect.bottom()/m_cellSize.height();
+    rect.translate(-m_ptOffset);
+    rc.start_row = rect.top() /m_cellSize.height();
+    rc.end_row = rect.bottom()/m_cellSize.height()-1;
     rc.start_col = rect.left()/m_cellSize.width();
-    rc.end_col = rect.right()/m_cellSize.width();
+    rc.end_col = rect.right()/m_cellSize.width()-1;
     return rc;
 }
 
 QPoint VTermWidgetBase::mapPointToCell(QPoint pt)
 {
-    int row = pt.y()/m_cellSize.height();
-    int col = pt.x()/m_cellSize.width();
-    return  QPoint(col,row);
+    int row = (pt.y()-m_ptOffset.y())/m_cellSize.height();
+    int col = (pt.x()-m_ptOffset.x())/m_cellSize.width();
+    return  QPoint(col,row+topVisibleRow());
 }
 
 int VTermWidgetBase::scrollbackRowSize() const
@@ -291,8 +296,8 @@ int VTermWidgetBase::vterm_moverect(VTermRect dest, VTermRect src)
 //    qDebug() << "vterm_moverect" << dest.start_row << dest.end_row << src.start_row << src.end_row;
     //viewport()->update();
     QRegion re;
-    re += vtermrect_to_qrect(dest);
-    re += vtermrect_to_qrect(src);
+    re += mapVTermRectToRect(dest);
+    re += mapVTermRectToRect(src);
     viewport()->update(re);
     return 1;
 }
@@ -305,9 +310,9 @@ int VTermWidgetBase::vterm_movecursor(VTermPos pos, VTermPos oldpos, int visible
     m_cursor.visible = visible;
     QRegion re;
     VTermRect rc1 = {pos.row,pos.row,pos.col,pos.col+1};
-    re += vtermrect_to_qrect(rc1);
+    re += mapVTermRectToRect(rc1);
     VTermRect rc2 = {oldpos.row,oldpos.row,oldpos.col,oldpos.col+1};
-    re += vtermrect_to_qrect(rc2);
+    re += mapVTermRectToRect(rc2);
     viewport()->update(re);
     return 1;
 }
@@ -512,7 +517,7 @@ void VTermWidgetBase::paintEvent(QPaintEvent *e)
 //   return;
 //    //qDebug() << "check" << this->verticalScrollBar()->value()-m_sbList.size();
     VTermRect rect;
-    rect.start_row = this->verticalScrollBar()->value()-m_sbList.size();
+    rect.start_row = topVisibleRow();
     rect.end_row = rect.start_row+m_rows;
     rect.start_col = 0;
     rect.end_col = m_cols;
@@ -530,8 +535,8 @@ void VTermWidgetBase::drawScreenCell(QPainter &p, VTermRect rect)
 
 
     VTermScreenCell cell;
-    int xoff = 0;//(this->width()-this->verticalScrollBar()->sizeHint().width() -m_cellSize.width()*m_cols)/2;
-    int yoff = 1-fm.descent();
+    int xoff = m_ptOffset.x();//(this->width()-this->verticalScrollBar()->sizeHint().width() -m_cellSize.width()*m_cols)/2;
+    int yoff = 1-fm.descent()+m_ptOffset.y();
 
     QRect cursorRect;
     QPen oldPen = p.pen();
@@ -605,8 +610,6 @@ void VTermWidgetBase::drawScreenCell(QPainter &p, VTermRect rect)
         }
     }
 
-
-
     if (cursorRect.isEmpty()) {
         return;
     }
@@ -661,8 +664,7 @@ void VTermWidgetBase::mousePressEvent(QMouseEvent *e)
     if (m_trippleClickTimer.isActive()
                 && ( (e->pos() - m_trippleClickPoint).manhattanLength() < QApplication::startDragDistance())) {
         QPoint cell = mapPointToCell(e->pos());
-        int row = cell.y()+topVisibleRow();
-        setSelectionByRow(row);
+        setSelectionByRow(cell.y());
         m_trippleClickTimer.stop();
     } else {
         this->clearSelection();
@@ -673,12 +675,8 @@ void VTermWidgetBase::mousePressEvent(QMouseEvent *e)
 
 void VTermWidgetBase::updateSelection(QPoint scenePos)
 {
-    QPoint start(int((m_ptOrg.x()+m_ptOffset.x()) / m_cellSize.width()),
-                 int((m_ptOrg.y()+m_ptOffset.y()) / m_cellSize.height()));
-    QPoint end(int((scenePos.x()+m_ptOffset.x()) / m_cellSize.width()),
-               int((scenePos.y()+m_ptOffset.y()) / m_cellSize.height()));
-    start.ry() += topVisibleRow();
-    end.ry() += topVisibleRow();
+    QPoint start = mapPointToCell(m_ptOrg);
+    QPoint end = mapPointToCell(scenePos);
     if (start != end) {
         setSelection(start, end);
     }
@@ -699,8 +697,7 @@ void VTermWidgetBase::mouseDoubleClickEvent(QMouseEvent *e)
     m_trippleClickPoint = e->pos();
     m_trippleClickTimer.start(QApplication::doubleClickInterval(),this);
     QPoint cell = mapPointToCell(e->pos());
-    int row = cell.y()+topVisibleRow();
-    setSelectionUnderWord(row,cell.x());
+    setSelectionUnderWord(cell.y(),cell.x());
 }
 
 void VTermWidgetBase::timerEvent(QTimerEvent *e)
@@ -725,8 +722,8 @@ void VTermWidgetBase::resizeEvent(QResizeEvent *e)
     e->accept();
 
     // save scroll
-    int rows = e->size().height()/m_cellSize.height();
-    int cols = (e->size().width()-this->verticalScrollBar()->sizeHint().width()) /m_cellSize.width();
+    int rows = (e->size().height()-m_ptOffset.y()*2) /m_cellSize.height();
+    int cols = (e->size().width()-this->verticalScrollBar()->sizeHint().width() - m_ptOffset.x()*2) /m_cellSize.width();
     int oldMax = this->verticalScrollBar()->maximum();
     int oldValue = this->verticalScrollBar()->value();
 

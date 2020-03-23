@@ -46,8 +46,8 @@ public:
     int vterm_sb_pushline(int cols, const VTermScreenCell *cells);
     int vterm_sb_popline(int cols, VTermScreenCell *cells);
     void setPaletteColor(int index, uint8_t r, uint8_t g, uint8_t b);
-    QRect vtermrect_to_qrect(VTermRect rect);
-    VTermRect qrect_to_vtermrect(QRect rect);
+    QRect mapVTermRectToRect(VTermRect rect);
+    VTermRect mapRectToVTermRect(QRect rect);
 public:
     QPoint mapPointToCell(QPoint pt);
     int allRowSize() const;
