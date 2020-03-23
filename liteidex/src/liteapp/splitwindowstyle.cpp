@@ -295,7 +295,11 @@ void SplitWindowStyle::toggledAction(bool)
             dock->show();
         }
         dock->setWidget(state->widget);
-        dock->setWidgetActions(state->widgetActions);
+        if (!state->widgetList.isEmpty()) {
+            dock->setWidgetList(state->widgetList);
+        } else {
+            dock->setWidgetActions(state->widgetActions);
+        }
         dock->setWindowTitle(state->title);
         state->widget->setVisible(true);
     } else {
@@ -333,7 +337,7 @@ void SplitWindowStyle::removeToolWindow(QAction *action)
     }
 }
 
-QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
+QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions, QList<QWidget*> widgetList)
 {
 //    QMap<QString,SplitInitToolSate>::iterator it = m_initIdStateMap.find(id);
 //    if (it != m_initIdStateMap.end()) {
@@ -354,6 +358,7 @@ QAction *SplitWindowStyle::addToolWindow(LiteApi::IApplication *app,Qt::DockWidg
     state->area = area;
     state->split = split;
     state->widget = widget;
+    state->widgetList = widgetList;
     state->widgetActions = widgetActions;
     state->id = id;
     state->title = title;

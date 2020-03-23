@@ -1897,7 +1897,7 @@ public:
     bool startRecording(const Input &input);
     void record(const Input &input);
     void stopRecording();
-    bool executeRegister(int register);
+    bool executeRegister(int reg);
 
 public:
     QTextEdit *m_textedit;

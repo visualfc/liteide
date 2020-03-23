@@ -31,8 +31,8 @@ using namespace LiteApi;
 class ActionContext : public IActionContext {
 public:
     ActionContext(LiteApi::IApplication *app, const QString &name);
-    virtual QString contextName() const;
     virtual ~ActionContext();
+    virtual QString contextName() const;
     virtual void regAction(QAction *act, const QString &id, const QString &defks, bool standard = false);
     virtual void regAction(QAction *act, const QString &id, const QKeySequence::StandardKey &def);
     virtual QStringList actionKeys() const;

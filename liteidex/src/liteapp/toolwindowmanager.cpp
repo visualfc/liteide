@@ -34,9 +34,9 @@
 #endif
 //lite_memory_check_end
 
-QAction *ToolWindowManager::addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
+QAction *ToolWindowManager::addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions, QList<QWidget *> widgetList)
 {
-    return ((ToolMainWindow*)m_liteApp->mainWindow())->addToolWindow(m_liteApp,area,widget,id,title,split,widgetActions);
+    return ((ToolMainWindow*)m_liteApp->mainWindow())->addToolWindow(m_liteApp,area,widget,id,title,split,widgetActions,widgetList);
 }
 
 void ToolWindowManager::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split)

@@ -35,7 +35,10 @@ public:
     ~ToolMainWindow();
     void setWindowStyle(IWindowStyle *style);
     void createToolWindowMenu();
-    QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
+    QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title,
+                           bool split = false,
+                           QList<QAction*> widgetActions = QList<QAction*>(),
+                           QList<QWidget*> widgetList = QList<QWidget*>());
     void removeToolWindow(QAction *action);
     QAction *findToolWindow(QWidget *wiget);
     QByteArray saveState(int version = 0) const;

@@ -629,7 +629,9 @@ class IToolWindowManager : public IManager
     Q_OBJECT
 public:
     IToolWindowManager(QObject *parent = 0) : IManager(parent) {}
-    virtual QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions = QList<QAction*>()) = 0;
+    virtual QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split,
+                                   QList<QAction*> widgetActions = QList<QAction*>(),
+                                   QList<QWidget*> widgetList = QList<QWidget*>() ) = 0;
     virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to,QAction *action, bool split) = 0;
     virtual QAction *findToolWindow(QWidget *widget) = 0;
     virtual void removeToolWindow(QAction *action) = 0;
@@ -824,6 +826,7 @@ public:
 
 class IPluginFactory : public QObject
 {
+    Q_OBJECT
 public:
     virtual ~IPluginFactory() {}
     virtual QString id() const = 0;
@@ -836,6 +839,7 @@ public:
 
 class IPluginFactoryImpl : public IPluginFactory
 {
+    Q_OBJECT
 public:
     IPluginFactoryImpl() : m_info(new PluginInfo)
     {
@@ -947,7 +951,7 @@ inline QString findPackageByMimeType(LiteApi::IApplication *app, const QString m
 
 } //namespace LiteApi
 
-Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X36.3")
+Q_DECLARE_INTERFACE(LiteApi::IPluginFactory,"LiteApi.IPluginFactory.X37")
 
 
 #endif //LITEAPI_H

@@ -32,7 +32,10 @@ class IWindowStyle : public QObject
 public:
     IWindowStyle(QObject *parent) : QObject(parent) {}
     virtual void createToolWindowMenu() = 0;
-    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>()) = 0;
+    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title,
+                                   bool split = false,
+                                   QList<QAction*> widgetActions = QList<QAction*>(),
+                                   QList<QWidget*> widgetList = QList<QWidget*>()) = 0;
     virtual void removeToolWindow(QAction *action) = 0;
     virtual QAction *findToolWindow(QWidget *wiget) = 0;
     virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to,QAction *action,bool split) = 0;

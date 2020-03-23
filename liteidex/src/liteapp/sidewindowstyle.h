@@ -35,6 +35,7 @@ struct SideActionState
 {
     QWidget *toolBtn;
     QWidget *widget;
+    QList<QWidget*> widgetList;
     QList<QAction*> widgetActions;
     QString id;
     QString title;
@@ -70,7 +71,7 @@ class BaseActionBar : public QObject
 public:
     BaseActionBar(QObject *parent) : QObject(parent)
     {}
-    virtual void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions) = 0;
+    virtual void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions, QList<QWidget*> widgetList) = 0;
     virtual void removeAction(QAction *action) = 0;
     virtual QAction *findToolAction(QWidget *widget) const = 0;
     virtual QToolBar *toolBar() const = 0;
@@ -83,7 +84,7 @@ class SideActionBar : public BaseActionBar
 public:
     SideActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea area);
     virtual ~SideActionBar();
-    void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
+    void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions, QList<QWidget*> widgetList);
     void removeAction(QAction *action);
     QAction *findToolAction(QWidget *widget) const;
     virtual QToolBar *toolBar() const { return m_toolBar; }
@@ -117,7 +118,7 @@ public:
     OutputActionBar(QSize iconSize, QMainWindow *window, Qt::DockWidgetArea m_area = Qt::BottomDockWidgetArea);
     virtual ~OutputActionBar();
     OutputDockWidget *dockWidget() const;
-    void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions);
+    void addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction*> widgetActions, QList<QWidget*> widgetList);
     void removeAction(QAction *action);
     void setHideToolBar(bool b);
     virtual QAction *findToolAction(QWidget *widget) const;
@@ -144,7 +145,9 @@ public:
     SideWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SideWindowStyle();
     virtual void createToolWindowMenu();
-    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
+    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false,
+                                   QList<QAction*> widgetActions = QList<QAction*>(),
+                                   QList<QWidget*> widgetList = QList<QWidget*>());
     virtual void removeToolWindow(QAction *action);
     virtual QAction *findToolWindow(QWidget *widget);
     virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split);

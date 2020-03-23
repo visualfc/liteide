@@ -125,7 +125,29 @@ void BaseDockWidget::setWidgetActions(QList<QAction*> actions)
     //m_spacerAct->setVisible(!m_widgetActions.isEmpty());
     foreach(QAction *action, m_widgetActions) {
         m_toolBar->insertAction(m_spacerAct,action);
-        if (action->menu() != 0) {
+        if (action->menu()) {
+            QWidget *w = m_toolBar->widgetForAction(action);
+            QToolButton *btn = qobject_cast<QToolButton*>(w);
+            if (btn) {
+                btn->setPopupMode(QToolButton::InstantPopup);
+                btn->setStyleSheet("QToolButton::menu-indicator{image:none;}");
+            }
+        }
+    }
+}
+
+void BaseDockWidget::setWidgetList(QList<QWidget *> widgets)
+{
+    foreach(QAction *action, m_widgetActions) {
+        m_toolBar->removeAction(action);
+    }
+    m_widgetActions.clear();
+    m_widgetList = widgets;
+    //m_spacerAct->setVisible(!m_widgetActions.isEmpty());
+    foreach(QWidget *widget, m_widgetList) {
+        QAction *action = m_toolBar->insertWidget(m_spacerAct,widget);
+        m_widgetActions.push_back(action);
+        if (action->menu()) {
             QWidget *w = m_toolBar->widgetForAction(action);
             QToolButton *btn = qobject_cast<QToolButton*>(w);
             if (btn) {

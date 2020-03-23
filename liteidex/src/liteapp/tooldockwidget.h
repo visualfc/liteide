@@ -43,6 +43,7 @@ public:
     virtual QAction * checkedAction() const;
     virtual void setToolMenu(QMenu *menu);
     virtual void setWidgetActions(QList<QAction*> actions);
+    virtual void setWidgetList(QList<QWidget*> widgets);
     virtual void addAction(QAction *act, const QString &title);
     virtual void removeAction(QAction *act);
     virtual void setWidget(QWidget *widget);
@@ -70,6 +71,7 @@ protected:
     QAction  *m_floatAct;
     QMap<QString,QAction*> m_idActionMap;
     QList<QAction*> m_widgetActions;
+    QList<QWidget*> m_widgetList;
     QList<QAction*> m_actions;
     QPointer<QAction> current;
 };

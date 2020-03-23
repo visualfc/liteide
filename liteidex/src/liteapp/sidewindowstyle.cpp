@@ -200,7 +200,7 @@ SideActionBar::~SideActionBar()
     qDeleteAll(m_actionStateMap);
 }
 
-void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction *> widgetActions)
+void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction *> widgetActions, QList<QWidget *> widgetList)
 {
     RotationToolButton *btn = new RotationToolButton;
     btn->setDefaultAction(action);    
@@ -230,6 +230,7 @@ void SideActionBar::addAction(QAction *action, QWidget *widget, const QString &i
     state->id = id;
     state->title = title;
     state->widgetActions = widgetActions;
+    state->widgetList = widgetList;
     m_actionStateMap.insert(action,state);
     dock->setCheckedAction(action);
     //toolBar->insertWidget(spacerAct,btn);
@@ -322,7 +323,11 @@ void SideActionBar::updateAction(QAction *action)
                     dock->show();
                 }
                 dock->setWidget(state->widget);
-                dock->setWidgetActions(state->widgetActions);
+                if (!state->widgetList.isEmpty()) {
+                    dock->setWidgetList(state->widgetList);
+                } else {
+                    dock->setWidgetActions(state->widgetActions);
+                }
                 dock->setObjectName(dockWidgetObjName(state->id));
                 dock->setWindowTitle(state->title);
                 state->widget->setVisible(true);
@@ -407,7 +412,7 @@ OutputDockWidget *OutputActionBar::dockWidget() const
     return m_dock;
 }
 
-void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction *> widgetActions)
+void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString &id, const QString &title, QList<QAction *> widgetActions, QList<QWidget *> widgetList)
 {
     RotationToolButton *btn = new RotationToolButton;
     btn->setDefaultAction(action);
@@ -422,6 +427,7 @@ void OutputActionBar::addAction(QAction *action, QWidget *widget, const QString 
     state->id = id;
     state->title = title;
     state->widgetActions = widgetActions;
+    state->widgetList = widgetList;
     m_actionStateMap.insert(action,state);
     m_dock->addAction(action,title);
     //toolBar->insertWidget(spacerAct,btn);
@@ -499,7 +505,11 @@ void OutputActionBar::toggledAction(bool)
             m_dock->show();
         }
         m_dock->setWidget(state->widget);
-        m_dock->setWidgetActions(state->widgetActions);
+        if (!state->widgetList.isEmpty()) {
+            m_dock->setWidgetList(state->widgetList);
+        } else {
+            m_dock->setWidgetActions(state->widgetActions);
+        }
         m_dock->setWindowTitle(state->title);
         state->widget->setVisible(true);
     } else {
@@ -718,9 +728,8 @@ void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea
     QWidget *widget = state->widget;
     QString id = state->id;
     QString title = state->title;
-    QList<QAction*> widgetActions = state->widgetActions;
     fromBar->removeAction(action);
-    toBar->addAction(action,widget,id,title,widgetActions);
+    toBar->addAction(action,widget,id,title,state->widgetActions,state->widgetList);
     action->setChecked(true);
     //save
     m_liteApp->settings()->setValue("sidebar_area/"+action->objectName(),to);
@@ -787,7 +796,7 @@ void SideWindowStyle::removeToolWindow(QAction */*action*/)
 
 }
 
-QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool /*split*/, QList<QAction *> widgetActions)
+QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool /*split*/, QList<QAction *> widgetActions, QList<QWidget *> widgetList)
 {
     QAction *action = new QAction(this);
     action->setText(title);
@@ -797,7 +806,7 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
     area = (Qt::DockWidgetArea)m_liteApp->settings()->value("sidebar_area/"+id,area).toInt();
 
     if (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea) {
-        m_outputBar->addAction(action,widget,id,title,widgetActions);
+        m_outputBar->addAction(action,widget,id,title,widgetActions,widgetList);
         int index = m_outputBar->actionMap().size();
         action->setText(title);
         if ((index <= 9) && m_useShortcuts) {
@@ -816,7 +825,7 @@ QAction *SideWindowStyle::addToolWindow(LiteApi::IApplication *app, Qt::DockWidg
         }
     } else {
         SideActionBar *sideBar = (area == Qt::LeftDockWidgetArea) ? m_leftSideBar : m_rightSideBar;
-        sideBar->addAction(action,widget,id,title,widgetActions);
+        sideBar->addAction(action,widget,id,title,widgetActions,widgetList);
         int index = m_leftSideBar->actionMap().size()+m_rightSideBar->actionMap().size();
         action->setText(title);
         if ((index <= 9) && m_useShortcuts) {

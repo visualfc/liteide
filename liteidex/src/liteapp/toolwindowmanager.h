@@ -31,7 +31,9 @@ using namespace LiteApi;
 class ToolWindowManager : public IToolWindowManager
 {
 public:
-    virtual QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions = QList<QAction*>());
+    virtual QAction *addToolWindow(Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split,
+                                   QList<QAction*> widgetActions = QList<QAction*>(),
+                                   QList<QWidget*> widgetList = QList<QWidget*>());
     virtual void moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to,QAction *action, bool split);
     virtual QAction *findToolWindow(QWidget *widget);
     virtual void removeToolWindow(QAction *action);

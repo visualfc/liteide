@@ -84,9 +84,9 @@ void ToolMainWindow::removeToolWindow(QAction *action)
     m_windowStyle->removeToolWindow(action);
 }
 
-QAction *ToolMainWindow::addToolWindow(LiteApi::IApplication *app,Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions)
+QAction *ToolMainWindow::addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split, QList<QAction*> widgetActions, QList<QWidget *> widgetList)
 {
-    return m_windowStyle->addToolWindow(app,area,widget,id,title,split,widgetActions);
+    return m_windowStyle->addToolWindow(app,area,widget,id,title,split,widgetActions,widgetList);
 }
 
 void ToolMainWindow::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea to, QAction *action, bool split)

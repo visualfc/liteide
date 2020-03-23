@@ -78,6 +78,7 @@ public:
 struct SplitActionState
 {
     QWidget *widget;
+    QList<QWidget*> widgetList;
     QList<QAction*> widgetActions;
     Qt::DockWidgetArea area;
     bool    split;
@@ -92,7 +93,9 @@ public:
     SplitWindowStyle(LiteApi::IApplication *app, QMainWindow *window, QObject *parent = 0);
     ~SplitWindowStyle();
     virtual void createToolWindowMenu();
-    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false, QList<QAction*> widgetActions = QList<QAction*>());
+    virtual QAction *addToolWindow(LiteApi::IApplication *app, Qt::DockWidgetArea area, QWidget *widget, const QString &id, const QString &title, bool split = false,
+                                   QList<QAction*> widgetActions = QList<QAction*>(),
+                                   QList<QWidget*> widgetList = QList<QWidget*>() );
     virtual void removeToolWindow(QAction *action);
     virtual QAction *findToolWindow(QWidget *wiget);
     virtual void saveToolState() const;
