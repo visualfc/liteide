@@ -442,7 +442,7 @@ bool VTermWidgetBase::fetchCell(int row, int col, VTermScreenCell *cell) const
 void VTermWidgetBase::setFont(const QFont &fnt)
 {
     QFontMetrics fm(fnt);
-    m_cellSize.setWidth(fm.averageCharWidth());
+    m_cellSize.setWidth(fm.maxWidth());
     m_cellSize.setHeight(fm.height());
     QAbstractScrollArea::setFont(fnt);
 }
