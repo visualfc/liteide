@@ -5,12 +5,14 @@
 #include <QPaintEvent>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QTimerEvent>
 #include <QInputMethodEvent>
 #include <QResizeEvent>
 #include <QTextLayout>
 #include <QVector>
 #include <QTextFormat>
 #include <QTextCharFormat>
+#include <QApplication>
 #include <QDebug>
 #include <QImage>
 
@@ -131,6 +133,8 @@ VTermWidgetBase::VTermWidgetBase(int rows, int cols, QWidget *parent)
     vterm_screen_reset(m_screen, 1);
 
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    connect(this,SIGNAL(selectionChanged()),viewport(),SLOT(update()));
 }
 
 void VTermWidgetBase::setPaletteColor(int index, uint8_t r, uint8_t g, uint8_t b)
@@ -781,8 +785,16 @@ void VTermWidgetBase::mousePressEvent(QMouseEvent *e)
 {
 //    vterm_mouse_button(m_vt,e->button(),true,qt_to_vtermModifier(e->modifiers()));
 //    this->viewport()->update();
+    if (m_trippleClickTimer.isActive()
+                && ( (e->pos() - m_trippleClickPoint).manhattanLength() < QApplication::startDragDistance())) {
+        QPoint cell = mapPointToCell(e->pos());
+        int row = cell.y()+topVisibleRow();
+        setSelectionByRow(row);
+        m_trippleClickTimer.stop();
+    } else {
+        this->clearSelection();
+    }
     m_mouseButton = e->button();
-    this->clearSelection();
     m_ptOrg = e->pos();
 }
 
@@ -810,7 +822,15 @@ void VTermWidgetBase::mouseReleaseEvent(QMouseEvent *e)
 
 void VTermWidgetBase::mouseDoubleClickEvent(QMouseEvent *e)
 {
+    m_trippleClickPoint = e->pos();
+    m_trippleClickTimer.start(QApplication::doubleClickInterval(),this);
+}
 
+void VTermWidgetBase::timerEvent(QTimerEvent *e)
+{
+    if (e->timerId() == m_trippleClickTimer.timerId()) {
+        m_trippleClickTimer.stop();
+    }
 }
 
 void VTermWidgetBase::inputMethodEvent(QInputMethodEvent *e) {
@@ -890,13 +910,18 @@ void VTermWidgetBase::setSelection(QPoint cellStart, QPoint cellEnd)
 
 
     emit selectionChanged();
-    viewport()->update();
+ }
+
+void VTermWidgetBase::setSelectionByRow(int row)
+{
+    m_selection = QRect(0,row,m_cols+1,1);
+    emit selectionChanged();
 }
 
 void VTermWidgetBase::selectAll()
 {
     m_selection = QRect(0,-scrollbackRowSize(),m_cols+1,allRowSize());
-    viewport()->update();
+    emit selectionChanged();
 }
 
 void VTermWidgetBase::clearSelection()
@@ -906,7 +931,6 @@ void VTermWidgetBase::clearSelection()
 
     m_selection = QRect();
 
-    viewport()->update();
     emit selectionChanged();
 }
 

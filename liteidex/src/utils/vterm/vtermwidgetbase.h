@@ -2,6 +2,7 @@
 #define VTERMWIDGETBASE_H
 
 #include <QAbstractScrollArea>
+#include <QBasicTimer>
 #include <QDebug>
 
 extern "C" {
@@ -57,6 +58,7 @@ public:
     QString selectedText() const;
     QRect selectedRect() const;
     void setSelection(QPoint cellStart, QPoint cellEnd);
+    void setSelectionByRow(int row);
     void selectAll();
     void clearSelection();
     bool hasSelection() const;
@@ -71,6 +73,7 @@ protected:
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void mouseDoubleClickEvent(QMouseEvent *e);
+    void timerEvent(QTimerEvent *e);
     void inputMethodEvent(QInputMethodEvent *e);
     void resizeEvent(QResizeEvent *e);
     void flushOutput();
@@ -106,6 +109,8 @@ protected:
     QRect m_selection;
     QPoint m_ptOrg;
     QPoint  m_ptOffset;
+    QBasicTimer m_trippleClickTimer;
+    QPoint m_trippleClickPoint;
 };
 
 VTermModifier qt_to_vtermModifier(Qt::KeyboardModifiers mod);
