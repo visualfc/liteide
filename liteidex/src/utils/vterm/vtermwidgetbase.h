@@ -79,6 +79,8 @@ protected:
     void timerEvent(QTimerEvent *e);
     void inputMethodEvent(QInputMethodEvent *e);
     void resizeEvent(QResizeEvent *e);
+    void focusInEvent(QFocusEvent *e);
+    void focusOutEvent(QFocusEvent *e);
     void flushOutput();
     virtual void write_data(const char *buf, int len);
     void drawScreenCell(QPainter &p, VTermRect rect);

@@ -626,7 +626,12 @@ void VTermWidgetBase::drawScreenCell(QPainter &p, VTermRect rect)
         break;
     }
     //p.fillRect(cursorRect,QColor(40,40,40,128));
-    p.fillRect(cursorRect,m_clrCursor);
+    if (this->hasFocus()) {
+        p.fillRect(cursorRect,m_clrCursor);
+    } else {
+        p.setPen(m_clrCursor);
+        p.drawRect(cursorRect);
+    }
 }
 
 void VTermWidgetBase::keyPressEvent(QKeyEvent *e)
@@ -739,6 +744,16 @@ void VTermWidgetBase::resizeEvent(QResizeEvent *e)
     }
 
     QAbstractScrollArea::resizeEvent(e);
+}
+
+void VTermWidgetBase::focusInEvent(QFocusEvent *e)
+{
+    viewport()->update();
+}
+
+void VTermWidgetBase::focusOutEvent(QFocusEvent *e)
+{
+    viewport()->update();
 }
 
 void VTermWidgetBase::flushOutput()
