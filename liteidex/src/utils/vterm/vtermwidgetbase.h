@@ -16,7 +16,6 @@ typedef struct
     bool visible;
     bool blink;
     int shape;
-    QColor color;
 } QVTermCursor;
 
 typedef struct {
@@ -104,6 +103,7 @@ protected:
     VTermColor   m_defaultFg;
     VTermColor   m_defaultBg;
     QColor       m_clrSelect;
+    QColor       m_clrCursor;
     QSize m_cellSize;
     QVTermCursor   m_cursor;
     QList<ScrollbackLine*> m_sbList;

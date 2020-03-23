@@ -476,14 +476,13 @@ void VTermWidgetBase::setDarkMode(bool b)
     if (m_darkMode) {
         vterm_color_rgb(&m_defaultBg,30,30,30);
         vterm_color_rgb(&m_defaultFg,200,200,200);
-        m_cursor.color = QColor(200,200,200,128);
         m_clrSelect = QColor(86,86,84);
     } else {
         vterm_color_rgb(&m_defaultBg,255,255,255);
         vterm_color_rgb(&m_defaultFg,0,0,0);
-        m_cursor.color = QColor(0,0,0,128);
         m_clrSelect = QColor(179,215,253);
     }
+    m_clrCursor = toQColor(&m_defaultFg,128);
 
     vterm_state_set_default_colors(m_state,&m_defaultFg,&m_defaultBg);
 
@@ -627,7 +626,7 @@ void VTermWidgetBase::drawScreenCell(QPainter &p, VTermRect rect)
         break;
     }
     //p.fillRect(cursorRect,QColor(40,40,40,128));
-    p.fillRect(cursorRect,m_cursor.color);
+    p.fillRect(cursorRect,m_clrCursor);
 }
 
 void VTermWidgetBase::keyPressEvent(QKeyEvent *e)
