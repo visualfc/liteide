@@ -776,7 +776,11 @@ void VTermWidgetBase::setSelection(QPoint cellStart, QPoint cellEnd)
     if (cellEnd.y() > endRow())
         cellEnd.ry() = endRow();
 
-    m_selection = QRect(cellStart, cellEnd);
+    if (cellStart.y() >= m_rows) {
+        m_selection = QRect();
+    } else {
+        m_selection = QRect(cellStart, cellEnd);
+    }
 
     m_selected.start_row = cellStart.y()+topVisibleRow();
     m_selected.start_col = cellStart.x();
@@ -788,6 +792,10 @@ void VTermWidgetBase::setSelection(QPoint cellStart, QPoint cellEnd)
 
 void VTermWidgetBase::setSelectionByRow(int row)
 {
+    if (row < startRow() || row >= endRow()) {
+        clearSelection();
+        return;
+    }
     m_selection = QRect(0,row,m_cols+1,1);
     emit selectionChanged();
 }
@@ -810,6 +818,10 @@ bool VTermWidgetBase::adjustFetchCell(int row, int *col, VTermScreenCell *cell)
 
 void VTermWidgetBase::setSelectionUnderWord(int row, int col)
 {
+    if (row < startRow() || row >= endRow() || col < 0 || col >= m_cols) {
+        clearSelection();
+        return;
+    }
     VTermScreenCell cell;
     this->adjustFetchCell(row,&col,&cell);
     if (!cell.chars[0]) {
