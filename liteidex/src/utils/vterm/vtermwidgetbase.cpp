@@ -218,6 +218,16 @@ int VTermWidgetBase::allRowSize() const
     return  m_sbList.size()+m_rows;
 }
 
+int VTermWidgetBase::startRow() const
+{
+    return -scrollbackRowSize();
+}
+
+int VTermWidgetBase::endRow() const
+{
+    return  m_rows;
+}
+
 QString VTermWidgetBase::selectedText() const
 {
     if (m_selection.isNull()) {
@@ -228,7 +238,7 @@ QString VTermWidgetBase::selectedText() const
     QString text;
     VTermScreenCell cell;
     if (m_selection.height() == 1) {
-        for (int col = m_selection.left(); col != m_selection.right() ; ++col) {
+        for (int col = m_selection.left(); col < m_selection.right() ; ++col) {
             bool b = fetchCell(start_row,col,&cell);
             if (!b || !cell.chars[0]) {
                 break;
@@ -240,7 +250,7 @@ QString VTermWidgetBase::selectedText() const
         }
     } else {
         int end_row = start_row+m_selection.height();
-        for (int row = start_row; row != end_row; ++row) {
+        for (int row = start_row; row < end_row; ++row) {
             int start_col = 0;
             int end_col = m_cols;
             if (row == start_row) {
@@ -617,143 +627,6 @@ void VTermWidgetBase::drawScreenCell(QPainter &p, VTermRect rect)
     p.fillRect(cursorRect,m_cursor.color);
 }
 
-// paint use QTextLayout
-/*
-void QVTermWidget::paintEvent(QPaintEvent *e)
-{
-    QFont fnt = this->font();
-    QFontMetrics fm(fnt);
-//    QPixmap pix(e->rect().size());
-//    QPainter p(&pix);
-//    p.setFont(fnt);
-//    p.fillRect(e->rect(),Qt::white);
-    QPainter p(viewport());
-    //p.fillRect(e->rect(),toQColor(&m_defaultBg));
-
-    VTermScreenCell cell;
-    int value = this->verticalScrollBar()->value() - m_sbList.size();
-    int xoff = 0;
-    int yoff = 0;
-
-    QRect cursorRect;
-    for (int row = value; row < m_rows+value; row++) {
-        int y = yoff+(row-value)*m_cellSize.height();
-        QString text;
-        QVector<QTextLayout::FormatRange> fmtRanges;
-        VTermColor last_bg = m_defaultBg;
-        VTermColor last_fg = m_defaultFg;
-        VTermScreenCellAttrs last_attr = m_empytCell.attrs;
-        QTextLayout::FormatRange lastFR;
-        int cursorPos = -1;
-        QPainterPath path;
-        path.setFillRule(Qt::WindingFill);
-        for (int col = 0; col < m_cols; col++) {
-            bool b = fetchCell(row,col,&cell);
-            VTermColor *bg = &cell.bg;
-            VTermColor *fg = &cell.fg;
-            if (cell.attrs.reverse) {
-                qSwap(bg,fg);
-            }
-            if (!vterm_color_is_equal(&m_defaultBg,bg) || !vterm_color_is_equal(&m_defaultFg,fg) || !attrs_is_equal(&last_attr,&cell.attrs) ) {//|| !vterm_color_is_equal(&last_fg,fg)) {
-                if (vterm_color_is_equal(&last_bg,bg) && vterm_color_is_equal(&last_fg,fg) && attrs_is_equal(&last_attr,&cell.attrs)) {
-                    lastFR.length++;
-                } else {
-                    if (lastFR.length) {
-                        fmtRanges.push_back(lastFR);
-
-                    }
-                    lastFR.format = QTextCharFormat();
-                    lastFR.start = text.length();
-                    lastFR.length = 1;
-                    if (!vterm_color_is_equal(&m_defaultBg,bg)) {
-                        lastFR.format.setBackground(QBrush(toQColor(bg)));
-                    }
-                    if (!vterm_color_is_equal(&m_defaultFg,fg)) {
-                        lastFR.format.setForeground(QBrush(toQColor(fg)));
-                    }
-                    if (cell.attrs.bold) {
-                        lastFR.format.setFontWeight(QFont::Bold);
-                    }
-                    if (cell.attrs.italic) {
-                        lastFR.format.setFontItalic(true);
-                    }
-                    if (cell.attrs.strike) {
-                        lastFR.format.setFontStrikeOut(true);
-                    }
-                }
-            }
-            last_fg = *fg;
-            last_bg = *bg;
-            last_attr = cell.attrs;
-            QString c;
-            if (!b || !cell.chars[0]) {
-                text += ' ';
-                cell.width = 1;
-                c = ' ';
-            } else {
-                c = QString::fromUcs4(cell.chars);
-                text += c;
-            }
-
-            if (m_cursor.visible && m_cursor.row == row && m_cursor.col == col) {
-                int pos = text.length()-1;
-                cursorRect = QRect(xoff+fm.width(text.left(pos)),y,fm.width(text.mid(pos)),m_cellSize.height());
-                cursorPos = pos;
-            }
-            if (cell.width > 1) {
-                col += cell.width-1;
-            }
-        }
-        if (lastFR.length) {
-            fmtRanges.push_back(lastFR);
-        }
-//        p.setPen(Qt::black);
-//        p.drawPath(path);
-
-        //p.drawRect(0,y,m_cellWidth,m_cellHeight);
-        //QRect rc(0,0,m_cellWidth)
-        //p.drawText(xoff,y,m_cellWidth*m_cols*2,m_cellHeight,0,text);
-        //p.drawText(xoff,y,m_cellWidth*m_cols,m_cellHeight,Qt::AlignBottom,text);
-        QTextLayout layout(text,fnt);
-        layout.setFormats(fmtRanges);
-        layout.beginLayout();
-        QTextLine line = layout.createLine();
-        //line.setNumColumns(m_cols,m_cols*m_cellSize.width());
-        line.setLineWidth(m_cols*m_cellSize.width());
-        layout.endLayout();
-        QTextOption opt;
-        opt.setUseDesignMetrics(true);
-        layout.setTextOption(opt);//QTextOption(Qt::AlignJustify));
-        layout.draw(&p,QPointF(xoff,y));
-        if (cursorPos >= 0) {
-            layout.drawCursor(&p,QPointF(xoff,y),cursorPos,cursorRect.width());
-        }
-       //  int stringHeight = fm.ascent() + metrics.descent();
-        //p.drawText(xoff,y+fm.ascent(),text);
-        //textList.push_back(text);
-    }
-
-
-    if (cursorRect.isEmpty()) {
-        return;
-    }
-//    VTERM_PROP_CURSORSHAPE_BLOCK = 1,
-//    VTERM_PROP_CURSORSHAPE_UNDERLINE,
-//    VTERM_PROP_CURSORSHAPE_BAR_LEFT,
-    switch (m_cursor.shape) {
-    case VTERM_PROP_CURSORSHAPE_UNDERLINE:
-        cursorRect.setTop(cursorRect.bottom()-2);
-        break;
-    case VTERM_PROP_CURSORSHAPE_BAR_LEFT:
-        cursorRect.setRight(cursorRect.left()+2);
-        break;
-    }
-//    QColor clr = toQColor(&m_defaultFg);
-//    clr.setAlpha(128);
-//    p.fillRect(cursorRect,clr);
-}
-*/
-
 void VTermWidgetBase::keyPressEvent(QKeyEvent *e)
 {
     VTermModifier mod = qt_to_vtermModifier(e->modifiers());
@@ -804,7 +677,8 @@ void VTermWidgetBase::updateSelection(QPoint scenePos)
                  int((m_ptOrg.y()+m_ptOffset.y()) / m_cellSize.height()));
     QPoint end(int((scenePos.x()+m_ptOffset.x()) / m_cellSize.width()),
                int((scenePos.y()+m_ptOffset.y()) / m_cellSize.height()));
-
+    start.ry() += topVisibleRow();
+    end.ry() += topVisibleRow();
     if (start != end) {
         setSelection(start, end);
     }
@@ -824,6 +698,9 @@ void VTermWidgetBase::mouseDoubleClickEvent(QMouseEvent *e)
 {
     m_trippleClickPoint = e->pos();
     m_trippleClickTimer.start(QApplication::doubleClickInterval(),this);
+    QPoint cell = mapPointToCell(e->pos());
+    int row = cell.y()+topVisibleRow();
+    setSelectionUnderWord(row,cell.x());
 }
 
 void VTermWidgetBase::timerEvent(QTimerEvent *e)
@@ -891,23 +768,20 @@ void VTermWidgetBase::setSelection(QPoint cellStart, QPoint cellEnd)
 
     if (cellStart.x() < 0)
         cellStart.rx() = 0;
-    if (cellStart.y() < 0)
-        cellStart.ry() = 0;
-    QSize sz = viewport()->size();
-    if (cellEnd.x() > sz.width())
-        cellEnd.rx() = sz.width();
-    if (cellEnd.y() > sz.height())
-        cellEnd.ry() = sz.height();
+    if (cellStart.y() < startRow())
+        cellStart.ry() = startRow();
 
-    cellStart.ry() += topVisibleRow();
-    cellEnd.ry() += topVisibleRow();
+    if (cellEnd.x() > m_cols)
+        cellEnd.rx() = m_cols;
+    if (cellEnd.y() > endRow())
+        cellEnd.ry() = endRow();
+
     m_selection = QRect(cellStart, cellEnd);
 
     m_selected.start_row = cellStart.y()+topVisibleRow();
     m_selected.start_col = cellStart.x();
     m_selected.end_col = cellStart.y();
     m_selected.end_row = cellEnd.y()+topVisibleRow();
-
 
     emit selectionChanged();
  }
@@ -916,6 +790,76 @@ void VTermWidgetBase::setSelectionByRow(int row)
 {
     m_selection = QRect(0,row,m_cols+1,1);
     emit selectionChanged();
+}
+
+bool VTermWidgetBase::adjustFetchCell(int row, int *col, VTermScreenCell *cell)
+{
+    bool b = this->fetchCell(row,*col,cell);
+    if (!b) {
+        return false;
+    }
+    if (cell->chars[0] == uint32_t(-1)) {
+        bool b = this->fetchCell(row,*col-1,cell);
+        if (b) {
+            *col = *col-1;
+            return true;
+        }
+    }
+    return b;
+}
+
+void VTermWidgetBase::setSelectionUnderWord(int row, int col)
+{
+    VTermScreenCell cell;
+    this->adjustFetchCell(row,&col,&cell);
+    if (!cell.chars[0]) {
+        int ncol = col+1;
+        for (; ncol < m_cols; ++ncol) {
+            this->fetchCell(row,ncol,&cell);
+            if (cell.chars[0]) {
+                break;
+            }
+        }
+        int pcol = col-1;
+        for (;pcol >= 0;--pcol) {
+            this->fetchCell(row,pcol,&cell);
+            if (cell.chars[0]) {
+                break;
+            }
+        }
+        setSelection(QPoint(pcol+1,row),QPoint(ncol,row));
+    } else {
+        bool isSpace = QString::fromUcs4(cell.chars)[0].isSpace();
+        int width = cell.width;
+        int ncol = col+width;
+        for (; ncol < m_cols;) {
+            this->fetchCell(row,ncol,&cell);
+            if (!cell.chars[0]) {
+                break;
+            }
+            QChar c = QString::fromUcs4(cell.chars)[0];
+            if (isSpace && !c.isSpace()) {
+                break;
+            } else if (!isSpace && c.isSpace()) {
+                break;
+            }
+            ncol += cell.width;
+        }
+        int pcol = col-1;
+        for (; pcol >= 0;--pcol) {
+            this->adjustFetchCell(row,&pcol,&cell);
+            if (!cell.chars[0]) {
+                break;
+            }
+            QChar c = QString::fromUcs4(cell.chars)[0];
+            if (isSpace && !c.isSpace()) {
+                break;
+            } else if (!isSpace && c.isSpace()) {
+                break;
+            }
+        }
+        setSelection(QPoint(pcol+cell.width,row),QPoint(ncol,row));
+    }
 }
 
 void VTermWidgetBase::selectAll()

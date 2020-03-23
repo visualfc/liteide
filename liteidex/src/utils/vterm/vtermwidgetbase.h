@@ -51,6 +51,8 @@ public:
 public:
     QPoint mapPointToCell(QPoint pt);
     int allRowSize() const;
+    int startRow() const;
+    int endRow() const;
     int topVisibleRow() const;
     int scrollbackRowSize() const;
     int termRows() const;
@@ -59,10 +61,12 @@ public:
     QRect selectedRect() const;
     void setSelection(QPoint cellStart, QPoint cellEnd);
     void setSelectionByRow(int row);
+    void setSelectionUnderWord(int row, int col);
     void selectAll();
     void clearSelection();
     bool hasSelection() const;
     bool isSelection(int row, int col) const;
+    bool adjustFetchCell(int row, int *col, VTermScreenCell *cell);
 protected:
     void updateSelection(QPoint scenePos);
 protected:
