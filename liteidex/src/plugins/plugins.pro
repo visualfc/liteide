@@ -29,7 +29,8 @@ SUBDIRS = \
     dlvdebugger \
     fakevimedit \
     bookmarks \
-    imageeditor
+    imageeditor \
+    terminal
 
 contains(DEFINES, LITEIDE_QTWEBKIT) {
     SUBDIRS += webkithtmlwidget

@@ -1,0 +1,12 @@
+#ifndef TERMINAL_GLOBAL_H
+#define TERMINAL_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(TERMINAL_LIBRARY)
+#  define TERMINALSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define TERMINALSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // TERMINAL_GLOBAL_H
