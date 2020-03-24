@@ -18,23 +18,38 @@
 ** These rights are included in the file LGPL_EXCEPTION.txt in this package.
 **
 **************************************************************************/
-// Module: terminalplugin.cpp
+// Module: terminal.h
 // Creator: visualfc <visualfc@gmail.com>
 
-#include "terminalplugin.h"
-#include "terminal.h"
-#include <QtPlugin>
+#ifndef TERMINAL_H
+#define TERMINAL_H
 
-TerminalPlugin::TerminalPlugin()
+#include "liteapi/liteapi.h"
+
+class QTabWidget;
+class VTermWidget;
+class QAction;
+class Terminal : public QObject
 {
-}
+    Q_OBJECT
+public:
+    explicit Terminal(LiteApi::IApplication *app, QObject *parent);
 
-bool TerminalPlugin::load(LiteApi::IApplication *app)
-{
-    new Terminal(app,this);
-    return true;
-}
+signals:
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
-#endif
+public slots:
+    void newTerminal();
+    void visibilityChanged(bool b);
+    void termExited();
+    void termTitleChanged(QString title);
+    void tabCloseRequested(int index);
+    void closeCurrenTab();
+protected:
+    LiteApi::IApplication *m_liteApp;
+    QTabWidget *m_tab;
+    QAction *m_toolWindowAct;
+    QAction *m_newTabAct;
+    QAction *m_closeTabAct;
+};
+
+#endif // TERMINAL_H
