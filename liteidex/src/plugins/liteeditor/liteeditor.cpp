@@ -252,29 +252,32 @@ void LiteEditor::createActions()
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"Editor");
 
     m_undoAct = new QAction(QIcon("icon:liteeditor/images/undo.png"),tr("Undo"),this);
-    actionContext->regAction(m_undoAct,"Undo",QKeySequence::Undo);
     m_undoAct->setEnabled(false);
 
     m_redoAct = new QAction(QIcon("icon:liteeditor/images/redo.png"),tr("Redo"),this);
-    actionContext->regAction(m_redoAct,"Redo",QKeySequence::Redo);
     m_redoAct->setEnabled(false);
     
     m_cutAct = new QAction(QIcon("icon:liteeditor/images/cut.png"),tr("Cut"),this);
-    actionContext->regAction(m_cutAct,"Cut",QKeySequence::Cut);
-    //m_cutAct->setEnabled(false);
+    m_cutAct->setEnabled(false);
 
     m_copyAct = new QAction(QIcon("icon:liteeditor/images/copy.png"),tr("Copy"),this);
-    actionContext->regAction(m_copyAct,"Copy",QKeySequence::Copy);
     m_copyAct->setEnabled(false);
 
     m_pasteAct = new QAction(QIcon("icon:liteeditor/images/paste.png"),tr("Paste"),this);
-    actionContext->regAction(m_pasteAct,"Paste",QKeySequence::Paste);
 
     m_selectAllAct = new QAction(tr("Select All"),this);
-    actionContext->regAction(m_selectAllAct,"SelectAll",QKeySequence::SelectAll);
 
+#ifndef Q_OS_MAC
+    actionContext->regAction(m_copyAct,"Copy",QKeySequence::Copy);
+    actionContext->regAction(m_pasteAct,"Paste",QKeySequence::Paste);
+    actionContext->regAction(m_cutAct,"Cut",QKeySequence::Cut);
+    actionContext->regAction(m_selectAllAct,"SelectAll",QKeySequence::SelectAll);
+    actionContext->regAction(m_undoAct,"Undo",QKeySequence::Undo);
+    actionContext->regAction(m_redoAct,"Redo",QKeySequence::Redo);
     setActionsShortcutContext(QList<QAction*>() << m_undoAct << m_redoAct << m_copyAct << m_cutAct
                           << m_pasteAct << m_selectAllAct, Qt::WidgetShortcut);
+#endif
+
 
     m_exportHtmlAct = new QAction(QIcon("icon:liteeditor/images/exporthtml.png"),tr("Export HTML..."),this);
 #ifndef QT_NO_PRINTER
