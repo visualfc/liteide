@@ -467,6 +467,18 @@ bool VTermWidgetBase::fetchCell(int row, int col, VTermScreenCell *cell) const
     return true;
 }
 
+bool VTermWidgetBase::event(QEvent *e)
+{
+    if (e->type() == QEvent::KeyPress) {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+        if (ke->key() == Qt::Key_Tab) {
+            keyPressEvent(ke);
+            return true;
+        }
+    }
+    return QAbstractScrollArea::event(e);
+}
+
 void VTermWidgetBase::setFont(const QFont &fnt)
 {
     QFontMetrics fm(fnt);
@@ -771,11 +783,13 @@ void VTermWidgetBase::resizeEvent(QResizeEvent *e)
 
 void VTermWidgetBase::focusInEvent(QFocusEvent *e)
 {
+    e->accept();
     viewport()->update();
 }
 
 void VTermWidgetBase::focusOutEvent(QFocusEvent *e)
 {
+    e->accept();
     viewport()->update();
 }
 

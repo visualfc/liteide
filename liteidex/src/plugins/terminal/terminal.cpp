@@ -40,7 +40,6 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     m_closeTabAct = new QAction("Terminate",this);
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
 
-
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_tab,"Terminal",tr("Terminal"),true,
                                                                     QList<QAction*>() << m_newTabAct << m_closeTabAct);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
@@ -50,7 +49,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 void Terminal::newTerminal()
 {
     VTermWidget *term = new VTermWidget(m_tab);
-    term->setDarkMode(true);
+    //term->setDarkMode(true);
     QString dir;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor && !editor->filePath().isEmpty()) {

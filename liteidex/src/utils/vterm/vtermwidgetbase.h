@@ -93,6 +93,7 @@ protected:
     void updateSelection(QPoint scenePos);
 protected:
     bool fetchCell(int row, int col, VTermScreenCell *cell) const;
+    bool event(QEvent *e);
     void paintEvent(QPaintEvent *e);
     void keyPressEvent(QKeyEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
