@@ -50,6 +50,7 @@ protected:
     QAction *m_toolWindowAct;
     QAction *m_newTabAct;
     QAction *m_closeTabAct;
+    int m_indexId;
 };
 
 #endif // TERMINAL_H

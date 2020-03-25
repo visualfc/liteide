@@ -27,13 +27,15 @@
 #include <QTabWidget>
 #include <QFileInfo>
 #include <QDir>
+#include <QTime>
 
 Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
-    m_liteApp(app)
+    m_liteApp(app), m_indexId(0)
 {
     m_tab = new QTabWidget;
     m_tab->setDocumentMode(true);
     m_tab->setTabsClosable(true);
+    m_tab->setUsesScrollButtons(true);
 
     m_newTabAct = new QAction("New",this);
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
@@ -59,6 +61,8 @@ void Terminal::newTerminal()
         dir = QDir::homePath();
     }
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString info = QString("\033[1m%1: %2\033[0m\r\n").arg(QTime::currentTime().toString("hh:mm:ss")).arg(dir);
+    term->inputWrite(info.toUtf8());
 #ifdef Q_OS_WIN
    term->start("c:\\windows\\system32\\cmd.exe",QStringList(),dir,env.toStringList());//) << "-i" << "-l",env.toStringList());
 //      m_term->start("C:\\Program Files\\Git\\bin\\bash.exe",QStringList(),env.toStringList());//) << "-i" << "-l",env.toStringList());
@@ -66,7 +70,7 @@ void Terminal::newTerminal()
 #else
     term->start("/bin/bash",QStringList() << "-i" << "-l",dir,env.toStringList());
 #endif
-    int index = m_tab->addTab(term,QString("terminal%1").arg(m_tab->count()+1));
+    int index = m_tab->addTab(term,QString("terminal %1").arg(++m_indexId));
     m_tab->setCurrentIndex(index);
     term->setFocus();
     connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));

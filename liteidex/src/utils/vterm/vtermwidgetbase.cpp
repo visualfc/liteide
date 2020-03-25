@@ -621,6 +621,9 @@ void VTermWidgetBase::drawScreenCell(QPainter &p, VTermRect rect)
                 if (cell.attrs.strike) {
                     fnt.setStrikeOut(true);
                 }
+                if (cell.attrs.underline) {
+                    fnt.setUnderline(true);
+                }
                 p.setFont(fnt);
             }
             last_attr = cell.attrs;
