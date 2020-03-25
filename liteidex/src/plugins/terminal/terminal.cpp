@@ -75,8 +75,12 @@ void Terminal::newTerminal()
 
 void Terminal::visibilityChanged(bool b)
 {
-    if (m_tab->count() == 0) {
+    if (b && m_tab->count() == 0) {
         newTerminal();
+    }
+    QWidget *widget = m_tab->currentWidget();
+    if (widget) {
+        widget->setFocus();
     }
 }
 
