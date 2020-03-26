@@ -25,7 +25,7 @@ UnixPtyProcess::~UnixPtyProcess()
     kill();
 }
 
-bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows)
+bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 rows, qint16 cols)
 {
     if (m_shellProcess.state() == QProcess::Running)
         return false;
@@ -212,8 +212,7 @@ bool UnixPtyProcess::resize(qint16 cols, qint16 rows)
     winp.ws_xpixel = 0;
     winp.ws_ypixel = 0;
 
-    bool res =  ((ioctl(m_shellProcess.m_handleMaster, TIOCSWINSZ, &winp) != -1) );// && (ioctl(m_shellProcess.m_handleSlave, TIOCSWINSZ, &winp) != -1) );
-
+    bool res =  ((ioctl(m_shellProcess.m_handleMaster, TIOCSWINSZ, &winp) != -1)  && (ioctl(m_shellProcess.m_handleSlave, TIOCSWINSZ, &winp) != -1) );
     if (res)
     {
         m_size = QPair<qint16, qint16>(cols, rows);

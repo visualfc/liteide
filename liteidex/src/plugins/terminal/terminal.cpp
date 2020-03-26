@@ -86,6 +86,10 @@ static QString GetWindowsShell()
 void Terminal::newTerminal()
 {
     VTermWidget *term = new VTermWidget(m_tab);
+    int index = m_tab->addTab(term,QString("terminal %1").arg(++m_indexId));
+    m_tab->setCurrentIndex(index);
+    term->setFocus();
+    term->updateGeometry();
     //term->setDarkMode(true);
     QString dir;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -104,14 +108,11 @@ void Terminal::newTerminal()
     QString cmd = GetWindowsShell();
     QString powershell = GetWindowPowerShell();
     QString bash = GetWindowGitBash();
-   term->start(cmd,QStringList(),dir,env.toStringList());
+    term->start(cmd,QStringList(),dir,env.toStringList());
 #else
     term->start("/bin/bash",QStringList() << "-i" << "-l",dir,env.toStringList());
 #endif
-    int index = m_tab->addTab(term,QString("terminal %1").arg(++m_indexId));
-    m_tab->setCurrentIndex(index);
-    term->setFocus();
-    //connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
+    connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));
 }
 
@@ -141,7 +142,7 @@ void Terminal::termTitleChanged(QString title)
     VTermWidget *widget = static_cast<VTermWidget*>(sender());
     int index = m_tab->indexOf(widget);
     if (index >= 0) {
-        m_tab->setTabText(index,title);
+        m_tab->setTabToolTip(index,title);
     }
 }
 
