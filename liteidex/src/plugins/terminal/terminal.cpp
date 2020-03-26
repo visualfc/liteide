@@ -49,6 +49,42 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
 }
 
+#ifdef Q_OS_WIN
+static QString GetWindowGitBash()
+{
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString windir = env.value("ProgramFiles","C:\\Program Files");
+    QFileInfo info(windir,"\\Git\\bin\\bash.exe");
+    if (info.exists()) {
+        return info.filePath();
+    }
+    return "";
+}
+
+
+static QString GetWindowPowerShell()
+{
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString windir = env.value("windir","C:\\Windows");
+    QFileInfo info(windir,"\\System32\\WindowsPowerShell\\v1.0\\powershell.exe");
+    if (info.exists()) {
+        return info.filePath();
+    }
+    return "";
+}
+
+static QString GetWindowsShell()
+{
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString windir = env.value("windir","c:\\windows");
+    QFileInfo info(windir,"\\Sysnative\\cmd.exe");
+    if (info.exists()) {
+        return info.filePath();
+    }
+    return QFileInfo(windir,"\\System32\\cmd.exe").filePath();
+}
+#endif
+
 void Terminal::newTerminal()
 {
     VTermWidget *term = new VTermWidget(m_tab);
@@ -66,9 +102,10 @@ void Terminal::newTerminal()
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
 #ifdef Q_OS_WIN
-   term->start("c:\\windows\\system32\\cmd.exe",QStringList(),dir,env.toStringList());//) << "-i" << "-l",env.toStringList());
-//      m_term->start("C:\\Program Files\\Git\\bin\\bash.exe",QStringList(),env.toStringList());//) << "-i" << "-l",env.toStringList());
-//    m_term->start("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",QStringList(),env.toStringList());//) << "-i" << "-l",env.toStringList());
+    QString cmd = GetWindowsShell();
+    QString powershell = GetWindowPowerShell();
+    QString bash = GetWindowGitBash();
+   term->start(cmd,QStringList(),dir,env.toStringList());
 #else
     term->start("/bin/bash",QStringList() << "-i" << "-l",dir,env.toStringList());
 #endif
