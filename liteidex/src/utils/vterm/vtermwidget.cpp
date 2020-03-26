@@ -48,9 +48,22 @@ VTermWidget::~VTermWidget()
     delete m_process;
 }
 
+bool VTermWidget::isAvailable() const
+{
+    return m_process->isAvailable();
+}
+
 void VTermWidget::start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env)
 {
-    m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_rows),qint16(m_cols));
+    if (!m_process->isAvailable()) {
+        qDebug() << "pty process invalid";
+        return;
+    }
+    bool b = m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_rows),qint16(m_cols));
+    if (!b) {
+        qDebug() << m_process->lastError();
+        return;
+    }
     connect(m_process->notifier(),SIGNAL(readyRead()),this,SLOT(readyRead()));
     connect(this,SIGNAL(sizeChanged(int,int)),this,SLOT(resizePty(int,int)));
     connect(m_process,SIGNAL(exited()),this,SIGNAL(exited()));

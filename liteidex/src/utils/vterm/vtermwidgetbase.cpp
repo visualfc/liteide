@@ -109,6 +109,8 @@ VTermWidgetBase::VTermWidgetBase(int rows, int cols, QWidget *parent)
     this->setAttribute(Qt::WA_InputMethodEnabled,true);
 #ifdef Q_OS_LINUX
     setFont(QFont("DejaVu Sans Mono",11));
+#elif defined(Q_OS_WIN)
+    setFont(QFont("Courier",11));
 #else
     setFont(QFont("Menlo",12));
 #endif
@@ -482,7 +484,11 @@ bool VTermWidgetBase::event(QEvent *e)
 void VTermWidgetBase::setFont(const QFont &fnt)
 {
     QFontMetrics fm(fnt);
+#ifdef Q_OS_WIN
+    m_cellSize.setWidth(fm.averageCharWidth());
+#else
     m_cellSize.setWidth(fm.maxWidth());
+#endif
     m_cellSize.setHeight(fm.height());
     QAbstractScrollArea::setFont(fnt);
 }

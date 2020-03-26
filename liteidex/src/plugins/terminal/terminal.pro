@@ -6,6 +6,10 @@ include(../../utils/vterm/vterm.pri)
 
 DEFINES += TERMINAL_LIBRARY
 
+win32 {
+    QT += network
+}
+
 SOURCES += terminalplugin.cpp \
     terminal.cpp
 

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <QCoreApplication>
 #include <windows.h>
+#include <QDir>
 
 #define DEBUG_VAR_LEGACY "WINPTYDBG"
 #define DEBUG_VAR_ACTUAL "WINPTY_DEBUG"
@@ -118,7 +119,7 @@ static bool winpty_init()
     // winpty.dll.
     if (!hWinPtyDLL)
         hWinPtyDLL = LoadLibraryA(WINPTY_DLL_NAME);
-    qDebug() << "load" << hWinPtyDLL;
+
     if (!hWinPtyDLL)
     {
         return false;
@@ -178,7 +179,7 @@ bool WinPtyProcess::startProcess(const QString &shellPath, const QStringList &ar
         return false;
     }
 
-    m_shellPath = shellPath;
+    m_shellPath = QDir::toNativeSeparators(shellPath);
     m_size = QPair<qint16, qint16>(cols, rows);
 
 #ifdef PTYQT_DEBUG

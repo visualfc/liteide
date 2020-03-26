@@ -29,6 +29,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QTime>
+#include <QFontMetrics>
 
 Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
     m_liteApp(app), m_indexId(0)
@@ -76,12 +77,9 @@ static QString GetWindowPowerShell()
 static QString GetWindowsShell()
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    QString windir = env.value("windir","c:\\windows");
-    QFileInfo info(windir,"\\Sysnative\\cmd.exe");
-    if (info.exists()) {
-        return info.filePath();
-    }
-    return QFileInfo(windir,"\\System32\\cmd.exe").filePath();
+    QString windir = env.value("windir","C:\\Windows");
+    QString filePath = QFileInfo(windir,"System32\\cmd.exe").filePath();
+    return (filePath);
 }
 #endif
 
@@ -97,6 +95,7 @@ void Terminal::newTerminal()
     if (dir.isEmpty()) {
         dir = QDir::homePath();
     }
+    dir = QDir::toNativeSeparators(dir);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     QString info = QString("%1: %2").arg(QTime::currentTime().toString("hh:mm:ss")).arg(dir);
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
@@ -112,7 +111,7 @@ void Terminal::newTerminal()
     int index = m_tab->addTab(term,QString("terminal %1").arg(++m_indexId));
     m_tab->setCurrentIndex(index);
     term->setFocus();
-    connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
+    //connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));
 }
 
