@@ -23,6 +23,7 @@
 
 #include "terminal.h"
 #include "vterm/vtermwidget.h"
+#include "vterm/vtermcolor.h"
 #include "liteenvapi/liteenvapi.h"
 #include <QTabWidget>
 #include <QFileInfo>
@@ -61,8 +62,9 @@ void Terminal::newTerminal()
         dir = QDir::homePath();
     }
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    QString info = QString("\033[1m%1: %2\033[0m\r\n").arg(QTime::currentTime().toString("hh:mm:ss")).arg(dir);
-    term->inputWrite(info.toUtf8());
+    QString info = QString("%1: %2").arg(QTime::currentTime().toString("hh:mm:ss")).arg(dir);
+    term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+    term->inputWrite("\r\n");
 #ifdef Q_OS_WIN
    term->start("c:\\windows\\system32\\cmd.exe",QStringList(),dir,env.toStringList());//) << "-i" << "-l",env.toStringList());
 //      m_term->start("C:\\Program Files\\Git\\bin\\bash.exe",QStringList(),env.toStringList());//) << "-i" << "-l",env.toStringList());

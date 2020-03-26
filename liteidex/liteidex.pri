@@ -98,3 +98,6 @@ linux* {
     }
 }
 
+HEADERS += \
+    $$PWD/src/utils/vterm/vtermcolor.h
+

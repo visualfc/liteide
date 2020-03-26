@@ -10,6 +10,7 @@ include (../../3rdparty/ptyqt/ptyqt.pri)
 
 
 HEADERS += \
+    vtermcolor.h \
     vtermwidget.h \
     vtermwidgetbase.h
 
