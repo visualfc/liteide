@@ -101,14 +101,19 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
         m_cmdList.append(Command("bash",bash));
     }
 #else
-    m_cmdList.append(Command("bash","/bin/bash",QStringList() << "-i" << "-l");
+    m_cmdList.append(Command("bash","/bin/bash",QStringList() << "-i" << "-l"));
+    m_cmdList.append(Command("bash(2)","/bin/bash"));
 #endif
     m_curName = m_liteApp->settings()->value(TERMINAL_CURCMD,m_cmdList[0].name).toString();
 
-    if (!m_cmdList.isEmpty()) {
+    if (m_cmdList.size() > 1) {
         QActionGroup *group = new QActionGroup(this);
         foreach (Command cmd, m_cmdList) {
-            QAction *act = new QAction(cmd.name+"\t"+cmd.path,this);
+            QString info = cmd.name+"\t"+cmd.path;
+            if (!cmd.args.isEmpty()) {
+                info += " "+cmd.args.join(" ");
+            }
+            QAction *act = new QAction(info,this);
             act->setData(cmd.name);
             act->setCheckable(true);
             act->setToolTip(cmd.path);
