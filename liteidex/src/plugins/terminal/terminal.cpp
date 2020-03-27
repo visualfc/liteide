@@ -147,7 +147,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 void Terminal::newTerminal()
 {
     VTermWidget *term = new VTermWidget(m_tab);
-    int index = m_tab->addTab(term,QString("terminal %1").arg(++m_indexId));
+    int index = m_tab->addTab(term,QString("%1 %2").arg(m_curName).arg(++m_indexId));
     m_tab->setCurrentIndex(index);
     term->setFocus();
     term->updateGeometry();
