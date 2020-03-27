@@ -32,6 +32,7 @@
 #include <QFontMetrics>
 
 #define TERMINAL_CURCMD "terminal/curcmd"
+#define TERMINAL_DARKMODE "terminal/darkmode"
 
 #ifdef Q_OS_WIN
 static QString checkFile(const QStringList &dirList, const QString &filePath)
@@ -105,6 +106,14 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     m_cmdList.append(Command("bash(2)","/bin/bash"));
 #endif
     m_curName = m_liteApp->settings()->value(TERMINAL_CURCMD,m_cmdList[0].name).toString();
+    m_darkMode = m_liteApp->settings()->value(TERMINAL_DARKMODE,false).toBool();
+
+    m_darkModeAct = new QAction(tr("Dark Mode"),this);
+    m_darkModeAct->setCheckable(true);
+    m_darkModeAct->setChecked(m_darkMode);
+
+    connect(m_darkModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledDarkMode(bool)));
+    m_filterMenu->addAction(m_darkModeAct);
 
     if (m_cmdList.size() > 1) {
         QActionGroup *group = new QActionGroup(this);
@@ -123,6 +132,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
             group->addAction(act);
         }
         connect(group,SIGNAL(triggered(QAction*)),this,SLOT(triggeredCmd(QAction*)));
+        m_filterMenu->addSeparator();
         m_filterMenu->addActions(group->actions());
         actions << m_filterMenu->menuAction();
     }
@@ -141,7 +151,8 @@ void Terminal::newTerminal()
     m_tab->setCurrentIndex(index);
     term->setFocus();
     term->updateGeometry();
-    //term->setDarkMode(true);
+    term->setDarkMode(m_darkMode);
+
     QString dir;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor && !editor->filePath().isEmpty()) {
@@ -219,4 +230,10 @@ void Terminal::triggeredCmd(QAction *act)
 {
     m_curName = act->data().toString();
     m_liteApp->settings()->setValue(TERMINAL_CURCMD,m_curName);
+}
+
+void Terminal::toggledDarkMode(bool checked)
+{
+    m_darkMode = checked;
+    m_liteApp->settings()->setValue(TERMINAL_DARKMODE,m_darkMode);
 }

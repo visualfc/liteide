@@ -56,6 +56,7 @@ public slots:
     void tabCloseRequested(int index);
     void closeCurrenTab();
     void triggeredCmd(QAction* act);
+    void toggledDarkMode(bool checked);
 protected:
     LiteApi::IApplication *m_liteApp;
     QTabWidget *m_tab;
@@ -63,8 +64,10 @@ protected:
     QAction *m_toolWindowAct;
     QAction *m_newTabAct;
     QAction *m_closeTabAct;
+    QAction *m_darkModeAct;
     QList<Command> m_cmdList;
     QString  m_curName;
+    bool m_darkMode;
     int m_indexId;
 };
 
