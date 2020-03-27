@@ -51,35 +51,41 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 }
 
 #ifdef Q_OS_WIN
+static QString checkFile(const QStringList &dirList, const QString &filePath)
+{
+    foreach (QString root, dirList) {
+        QFileInfo info(root,filePath);
+        if (info.exists()) {
+            return QDir::toNativeSeparators(info.filePath());
+        }
+    }
+    return QString();
+}
+
 static QString GetWindowGitBash()
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    QString windir = env.value("ProgramFiles","C:\\Program Files");
-    QFileInfo info(windir,"\\Git\\bin\\bash.exe");
-    if (info.exists()) {
-        return info.filePath();
-    }
-    return "";
+    QStringList dirList;
+    dirList << env.value("ProgramW6432","C:\\Program Files");
+    dirList << env.value("ProgramFiles","C:\\Program Files");
+    return checkFile(dirList,"Git\\bin\\bash.exe");
 }
 
 
 static QString GetWindowPowerShell()
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    QString windir = env.value("windir","C:\\Windows");
-    QFileInfo info(windir,"\\System32\\WindowsPowerShell\\v1.0\\powershell.exe");
-    if (info.exists()) {
-        return info.filePath();
-    }
-    return "";
+    QStringList dirList;
+    dirList << env.value("windir","C:\\Windows");
+    return checkFile(dirList,"System32\\WindowsPowerShell\\v1.0\\powershell.exe");
 }
 
 static QString GetWindowsShell()
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     QString windir = env.value("windir","C:\\Windows");
-    QString filePath = QFileInfo(windir,"System32\\cmd.exe").filePath();
-    return (filePath);
+    QFileInfo info(windir,"System32\\cmd.exe");
+    return QDir::toNativeSeparators(info.filePath());
 }
 #endif
 
