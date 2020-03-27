@@ -29,6 +29,17 @@
 class QTabWidget;
 class VTermWidget;
 class QAction;
+
+struct Command
+{
+    Command(const QString &_name, const QString &_path, const QStringList &_args = QStringList())
+        : name(_name), path(_path), args(_args)
+    {}
+    QString     name;
+    QString     path;
+    QStringList args;
+};
+
 class Terminal : public QObject
 {
     Q_OBJECT
@@ -44,12 +55,16 @@ public slots:
     void termTitleChanged(QString title);
     void tabCloseRequested(int index);
     void closeCurrenTab();
+    void triggeredCmd(QAction* act);
 protected:
     LiteApi::IApplication *m_liteApp;
     QTabWidget *m_tab;
+    QMenu *m_filterMenu;
     QAction *m_toolWindowAct;
     QAction *m_newTabAct;
     QAction *m_closeTabAct;
+    QList<Command> m_cmdList;
+    QString  m_curName;
     int m_indexId;
 };
 

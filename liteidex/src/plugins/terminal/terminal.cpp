@@ -31,24 +31,7 @@
 #include <QTime>
 #include <QFontMetrics>
 
-Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
-    m_liteApp(app), m_indexId(0)
-{
-    m_tab = new QTabWidget;
-    m_tab->setDocumentMode(true);
-    m_tab->setTabsClosable(true);
-    m_tab->setUsesScrollButtons(true);
-
-    m_newTabAct = new QAction("New",this);
-    connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
-    m_closeTabAct = new QAction("Terminate",this);
-    connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
-
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_tab,"Terminal",tr("Terminal"),true,
-                                                                    QList<QAction*>() << m_newTabAct << m_closeTabAct);
-    connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
-    connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
-}
+#define TERMINAL_CURCMD "terminal/curcmd"
 
 #ifdef Q_OS_WIN
 static QString checkFile(const QStringList &dirList, const QString &filePath)
@@ -89,6 +72,63 @@ static QString GetWindowsShell()
 }
 #endif
 
+Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
+    m_liteApp(app), m_indexId(0)
+{
+    m_tab = new QTabWidget;
+    m_tab->setDocumentMode(true);
+    m_tab->setTabsClosable(true);
+    m_tab->setUsesScrollButtons(true);
+
+    m_newTabAct = new QAction("New",this);
+    connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
+    m_closeTabAct = new QAction("Terminate",this);
+    connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
+
+
+    QList<QAction*> actions;
+    m_filterMenu = new QMenu(tr("Filter"));
+    m_filterMenu->setIcon(QIcon("icon:images/filter.png"));
+#ifdef Q_OS_WIN
+    QString bash = GetWindowGitBash();
+    QString powershell = GetWindowPowerShell();
+    QString cmd = GetWindowsShell();
+    m_cmdList.append(Command("cmd",cmd));
+    if (!powershell.isEmpty()) {
+        m_cmdList.append(Command("powershell",powershell));
+    }
+    if (!bash.isEmpty()) {
+        m_cmdList.append(Command("bash",bash));
+    }
+#else
+    m_cmdList.append(Command("bash","/bin/bash",QStringList() << "-i" << "-l");
+#endif
+    m_curName = m_liteApp->settings()->value(TERMINAL_CURCMD,m_cmdList[0].name).toString();
+
+    if (!m_cmdList.isEmpty()) {
+        QActionGroup *group = new QActionGroup(this);
+        foreach (Command cmd, m_cmdList) {
+            QAction *act = new QAction(cmd.name+"\t"+cmd.path,this);
+            act->setData(cmd.name);
+            act->setCheckable(true);
+            act->setToolTip(cmd.path);
+            if (m_curName == cmd.name) {
+                act->setChecked(true);
+            }
+            group->addAction(act);
+        }
+        connect(group,SIGNAL(triggered(QAction*)),this,SLOT(triggeredCmd(QAction*)));
+        m_filterMenu->addActions(group->actions());
+        actions << m_filterMenu->menuAction();
+    }
+
+    actions << m_newTabAct << m_closeTabAct;
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_tab,"Terminal",tr("Terminal"),true,actions);
+    connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
+    connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
+}
+
+
 void Terminal::newTerminal()
 {
     VTermWidget *term = new VTermWidget(m_tab);
@@ -110,14 +150,18 @@ void Terminal::newTerminal()
     QString info = QString("%1: %2").arg(QTime::currentTime().toString("hh:mm:ss")).arg(dir);
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
-#ifdef Q_OS_WIN
-    QString cmd = GetWindowsShell();
-    QString powershell = GetWindowPowerShell();
-    QString bash = GetWindowGitBash();
-    term->start(cmd,QStringList(),dir,env.toStringList());
-#else
-    term->start("/bin/bash",QStringList() << "-i" << "-l",dir,env.toStringList());
-#endif
+
+    Command cmd = m_cmdList[0];
+    if (m_cmdList.size() > 1) {
+        foreach (Command c, m_cmdList) {
+            if (m_curName == c.name) {
+                cmd = c;
+                break;
+            }
+        }
+    }
+    term->start(cmd.path,cmd.args,dir,env.toStringList());
+
     connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));
 }
@@ -164,4 +208,10 @@ void Terminal::closeCurrenTab()
     if (index >= 0) {
         tabCloseRequested(index);
     }
+}
+
+void Terminal::triggeredCmd(QAction *act)
+{
+    m_curName = act->data().toString();
+    m_liteApp->settings()->setValue(TERMINAL_CURCMD,m_curName);
 }
