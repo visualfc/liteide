@@ -118,7 +118,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 
     m_newTabAct = new QAction("New",this);
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
-    m_closeTabAct = new QAction("Terminate",this);
+    m_closeTabAct = new QAction("Close",this);
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
 
 
@@ -164,6 +164,8 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     m_loginModeAct->setCheckable(true);
     m_loginModeAct->setChecked(m_loginMode);
 
+    m_newTabAct->setText("New ["+m_curName+"]");
+
     connect(m_darkModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledDarkMode(bool)));
     connect(m_loginModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledLoginMode(bool)));
 
@@ -208,6 +210,16 @@ void Terminal::newTerminal()
     term->updateGeometry();
     term->setDarkMode(m_darkMode);
 
+    Command cmd = m_cmdList[0];
+    if (m_cmdList.size() > 1) {
+        foreach (Command c, m_cmdList) {
+            if (m_curName == c.name) {
+                cmd = c;
+                break;
+            }
+        }
+    }
+
     QString dir;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor && !editor->filePath().isEmpty()) {
@@ -218,19 +230,24 @@ void Terminal::newTerminal()
     }
     dir = QDir::toNativeSeparators(dir);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    QString info = QString("%1: %2").arg(QTime::currentTime().toString("hh:mm:ss")).arg(dir);
+    QString info;
+
+    QString attr;
+    if (!cmd.loginArgs.isEmpty()) {
+        if (m_loginMode) {
+            attr = "login shell";
+        } else {
+            attr = "non-login shell";
+        }
+    } else {
+        attr = "open shell";
+    }
+    info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(dir);
+
+
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
 
-    Command cmd = m_cmdList[0];
-    if (m_cmdList.size() > 1) {
-        foreach (Command c, m_cmdList) {
-            if (m_curName == c.name) {
-                cmd = c;
-                break;
-            }
-        }
-    }
     QStringList args = cmd.args;
     if (m_loginMode) {
         args.append(cmd.loginArgs);
@@ -289,6 +306,7 @@ void Terminal::triggeredCmd(QAction *act)
 {
     m_curName = act->data().toString();
     m_liteApp->settings()->setValue(TERMINAL_CURCMD,m_curName);
+    m_newTabAct->setText("New ["+m_curName+"]");
 }
 
 void Terminal::toggledDarkMode(bool checked)
