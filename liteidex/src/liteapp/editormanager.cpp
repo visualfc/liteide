@@ -48,7 +48,6 @@
 #include <QStandardItemModel>
 #include <QHeaderView>
 #include <QDebug>
-#include "litetabwidget.h"
 #include "fileutil/fileutil.h"
 #include "liteapp.h"
 #include "openeditorswidget.h"

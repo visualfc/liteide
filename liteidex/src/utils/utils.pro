@@ -22,4 +22,5 @@ SUBDIRS = \
     iconutil \
     dlvclient \
     navigate \
+    tabwidget \
     vterm

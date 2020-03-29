@@ -13,6 +13,7 @@ include (../utils/extension/extension.pri)
 include (../utils/folderview/folderview.pri)
 include (../utils/symboltreeview/symboltreeview.pri)
 include (../utils/colorstyle/colorstyle.pri)
+include (../utils/tabwidget/tabwidget.pri)
 include (../3rdparty/elidedlabel/elidedlabel.pri)
 include (../3rdparty/qtc_editutil/qtc_editutil.pri)
 include (../3rdparty/qtc_itemview/qtc_itemview.pri)
@@ -61,7 +62,6 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     pluginsdialog.cpp \
     mimetypemanager.cpp \
-    litetabwidget.cpp \
     optionmanager.cpp \
     newfiledialog.cpp \
     optionsbrowser.cpp \
@@ -96,7 +96,6 @@ HEADERS  += mainwindow.h \
     aboutdialog.h \
     pluginsdialog.h \
     mimetypemanager.h \
-    litetabwidget.h \
     optionmanager.h \
     newfiledialog.h \
     optionsbrowser.h \

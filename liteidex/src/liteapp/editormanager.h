@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include "colorstyle/colorstyle.h"
+#include "tabwidget/litetabwidget.h"
 #include <QPointer>
 
 using namespace LiteApi;
