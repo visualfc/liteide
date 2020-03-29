@@ -101,9 +101,10 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
         return false;
     }
 
+#ifdef Q_OS_MAC
     fcntl(m_shellProcess.m_handleMaster, F_SETFL, fcntl(m_shellProcess.m_handleMaster, F_GETFL) | O_NONBLOCK);
     fcntl(m_shellProcess.m_handleSlave, F_SETFL, fcntl(m_shellProcess.m_handleSlave, F_GETFL) | O_NONBLOCK);
-
+#endif
     struct ::termios ttmode;
     rc = tcgetattr(m_shellProcess.m_handleMaster, &ttmode);
     if (rc != 0)
