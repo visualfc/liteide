@@ -33,6 +33,19 @@
 
 #define TERMINAL_CURCMD "terminal/curcmd"
 #define TERMINAL_DARKMODE "terminal/darkmode"
+#define TERMINAL_LOGINMODE "terminal/loginmode"
+
+
+static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
+{
+    Command cmd;
+    cmd.name = name;
+    cmd.path = path;
+    cmd.args = args;
+    cmd.loginArgs = loginArgs;
+    return cmd;
+}
+
 
 #ifdef Q_OS_WIN
 static QString checkFile(const QStringList &dirList, const QString &filePath)
@@ -73,6 +86,28 @@ static QString GetWindowsShell()
 }
 #endif
 
+static QStringList GetUnixShellList()
+{
+    QFile f("/etc/shells");
+    if (!f.open(QFile::ReadOnly)) {
+        return QStringList();
+    }
+    QStringList shells;
+    QString ar = QString::fromUtf8(f.readAll());
+    foreach (QString line, ar.split("\n")) {
+        line = line.trimmed();
+        if (line.isEmpty() || line.startsWith("#")) {
+            continue;
+        }
+        int pos = line.indexOf("#");
+        if (pos > 0) {
+            line = line.left(pos).trimmed();
+        }
+        shells << line;
+    }
+    return  shells;
+}
+
 Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
     m_liteApp(app), m_indexId(0)
 {
@@ -93,27 +128,47 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 #ifdef Q_OS_WIN
     QString bash = GetWindowGitBash();
     QString powershell = GetWindowPowerShell();
-    QString cmd = GetWindowsShell();
-    m_cmdList.append(Command("cmd",cmd));
+    QString shell = GetWindowsShell();
+    m_cmdList.append(makeCommand("cmd",cmd));
     if (!powershell.isEmpty()) {
-        m_cmdList.append(Command("powershell",powershell));
+        m_cmdList.append(makeCommand("powershell",powershell));
     }
     if (!bash.isEmpty()) {
-        m_cmdList.append(Command("bash",bash));
+        m_cmdList.append(makeCommand("bash",bash,QStringList(),QStringList()<<"-l"));
     }
 #else
-    m_cmdList.append(Command("bash","/bin/bash",QStringList() << "-i" << "-l"));
-    m_cmdList.append(Command("bash(2)","/bin/bash"));
+    QStringList shellList = GetUnixShellList();
+    shellList.prepend("/bin/bash");
+    shellList.removeDuplicates();
+    foreach (QString shell, shellList) {
+        QFileInfo info(shell);
+        if (!info.exists()) {
+            continue;
+        }
+        Command cmd;
+        cmd.name = info.fileName();
+        cmd.path = info.filePath();
+        cmd.loginArgs << "-l";
+        m_cmdList << cmd;
+    }
 #endif
     m_curName = m_liteApp->settings()->value(TERMINAL_CURCMD,m_cmdList[0].name).toString();
     m_darkMode = m_liteApp->settings()->value(TERMINAL_DARKMODE,false).toBool();
+    m_loginMode = m_liteApp->settings()->value(TERMINAL_LOGINMODE,true).toBool();
 
     m_darkModeAct = new QAction(tr("Dark Mode"),this);
     m_darkModeAct->setCheckable(true);
     m_darkModeAct->setChecked(m_darkMode);
 
+    m_loginModeAct = new QAction(tr("Login Mode"),this);
+    m_loginModeAct->setCheckable(true);
+    m_loginModeAct->setChecked(m_loginMode);
+
     connect(m_darkModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledDarkMode(bool)));
+    connect(m_loginModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledLoginMode(bool)));
+
     m_filterMenu->addAction(m_darkModeAct);
+    m_filterMenu->addAction(m_loginModeAct);
 
     if (m_cmdList.size() > 1) {
         QActionGroup *group = new QActionGroup(this);
@@ -176,7 +231,11 @@ void Terminal::newTerminal()
             }
         }
     }
-    term->start(cmd.path,cmd.args,dir,env.toStringList());
+    QStringList args = cmd.args;
+    if (m_loginMode) {
+        args.append(cmd.loginArgs);
+    }
+    term->start(cmd.path,args,dir,env.toStringList());
 
     connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));
@@ -236,4 +295,10 @@ void Terminal::toggledDarkMode(bool checked)
 {
     m_darkMode = checked;
     m_liteApp->settings()->setValue(TERMINAL_DARKMODE,m_darkMode);
+}
+
+void Terminal::toggledLoginMode(bool checked)
+{
+    m_loginMode = checked;
+    m_liteApp->settings()->setValue(TERMINAL_LOGINMODE,m_loginMode);
 }

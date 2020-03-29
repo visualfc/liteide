@@ -32,12 +32,11 @@ class QAction;
 
 struct Command
 {
-    Command(const QString &_name, const QString &_path, const QStringList &_args = QStringList())
-        : name(_name), path(_path), args(_args)
-    {}
     QString     name;
     QString     path;
     QStringList args;
+    QStringList loginArgs;
+    QString     info;
 };
 
 class Terminal : public QObject
@@ -57,6 +56,7 @@ public slots:
     void closeCurrenTab();
     void triggeredCmd(QAction* act);
     void toggledDarkMode(bool checked);
+    void toggledLoginMode(bool checked);
 protected:
     LiteApi::IApplication *m_liteApp;
     QTabWidget *m_tab;
@@ -65,9 +65,11 @@ protected:
     QAction *m_newTabAct;
     QAction *m_closeTabAct;
     QAction *m_darkModeAct;
+    QAction *m_loginModeAct;
     QList<Command> m_cmdList;
     QString  m_curName;
     bool m_darkMode;
+    bool m_loginMode;
     int m_indexId;
 };
 
