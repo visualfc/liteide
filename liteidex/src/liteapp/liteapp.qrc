@@ -59,5 +59,6 @@
         <file>images/darkclosebutton.png</file>
         <file>images/options.png</file>
         <file>images/closetab.png</file>
+        <file>images/hidetool.png</file>
     </qresource>
 </RCC>

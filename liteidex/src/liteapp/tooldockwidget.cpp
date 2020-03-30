@@ -76,7 +76,7 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
 
     m_closeAct = new QAction(tr("Hide"), m_toolBar);
     m_closeAct->setToolTip(tr("Hide Tool Window"));
-    m_closeAct->setIcon(QIcon("icon:images/closetool.png"));
+    m_closeAct->setIcon(QIcon("icon:images/hidetool.png"));
     m_toolBar->addAction(m_closeAct);
 
     connect(m_closeAct,SIGNAL(triggered()),this,SLOT(close()));
