@@ -73,14 +73,17 @@ class LiteTabWidget : public QObject
 public:
     explicit LiteTabWidget(QSize iconSize, QObject *parent = 0);
     virtual ~LiteTabWidget();
-    int addTab(QWidget *w,const QString & label, const QString &tip);
+    int addTab(QWidget *w,const QString & label, const QString &tip = QString());
     int addTab(QWidget *w,const QIcon & icon, const QString & label,const QString &tip);
     void removeTab(int index);
     int indexOf(QWidget *w);
     QWidget *widget(int index);
     QWidget *currentWidget();
     TabBar *tabBar();
+    int count() const;
+    int currentIndex() const;
     void setTabText(int index, const QString & text);
+    void setTabToolTip(int index, const QString &tip);
     QList<QWidget*> widgetList() const;
     QWidget *stackedWidget();
     QWidget *tabBarWidget();
@@ -101,7 +104,7 @@ protected:
     QWidget         *m_tabBarWidget;
     TabBar         *m_tabBar;
     QToolButton     *m_listButton;
-    //QToolButton     *m_closeButton;
+    QToolButton     *m_closeButton;
     QStackedWidget  *m_stackedWidget;
     QList<QWidget*>  m_widgetList;
     QAction         *m_closeTabAct;

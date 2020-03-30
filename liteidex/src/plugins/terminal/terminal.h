@@ -25,6 +25,7 @@
 #define TERMINAL_H
 
 #include "liteapi/liteapi.h"
+#include "tabwidget/litetabwidget.h"
 
 class QTabWidget;
 class VTermWidget;
@@ -59,7 +60,8 @@ public slots:
     void toggledLoginMode(bool checked);
 protected:
     LiteApi::IApplication *m_liteApp;
-    QTabWidget *m_tab;
+    QWidget *m_widget;
+    LiteTabWidget *m_tab;
     QMenu *m_filterMenu;
     QAction *m_toolWindowAct;
     QAction *m_newTabAct;

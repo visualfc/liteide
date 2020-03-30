@@ -57,10 +57,6 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     m_tabBar->setMovable(true);
     m_tabBar->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 
-    m_tabToolBar = new QToolBar;
-    m_tabToolBar->setObjectName("toolbar.tabs");
-    m_tabToolBar->setIconSize(iconSize);
-
     m_tabBarWidget = new QWidget;
 
     m_addTabAct = new QAction(QIcon("icon:images/addpage.png"),tr("Open a new tab"),this);
@@ -73,21 +69,23 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
                 "QToolButton::menu-indicator{image:none;}");
 
     m_closeTabAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Tab"),this);
-    //m_closeButton = new QToolButton;
-    //m_closeButton->setDefaultAction(m_closeTabAct);
+//    m_closeButton = new QToolButton;
+//    m_closeButton->setDefaultAction(m_closeTabAct);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
+
+    m_tabBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_tabToolBar = new QToolBar;
+    m_tabToolBar->setObjectName("toolbar.tabs");
+    m_tabToolBar->setIconSize(iconSize);
     m_tabToolBar->addWidget(m_tabBar);
-    QWidget *dump = new QWidget;
-    dump->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_tabToolBar->addWidget(dump);
+    //QWidget *dump = new QWidget;
+    //dump->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    //       m_tabToolBar->addWidget(dump);
     m_tabToolBar->addWidget(m_listButton);
     m_tabToolBar->addAction(m_closeTabAct);
-//    layout->addWidget(m_tabBar,1);
-//    layout->addWidget(m_listButton);
-//    layout->addWidget(m_closeButton);
     layout->addWidget(m_tabToolBar);
 
     m_tabBarWidget->setLayout(layout);
@@ -169,6 +167,16 @@ TabBar *LiteTabWidget::tabBar()
     return m_tabBar;
 }
 
+int LiteTabWidget::count() const
+{
+    return m_tabBar->count();
+}
+
+int LiteTabWidget::currentIndex() const
+{
+    return m_tabBar->currentIndex();
+}
+
 QList<QWidget*> LiteTabWidget::widgetList() const
 {
     return m_widgetList;
@@ -192,6 +200,11 @@ void LiteTabWidget::setListMenu(QMenu *menu)
 void LiteTabWidget::setTabText(int index, const QString & text)
 {
     m_tabBar->setTabText(index,text);
+}
+
+void LiteTabWidget::setTabToolTip(int index, const QString &tip)
+{
+    m_tabBar->setTabToolTip(index,tip);
 }
 
 int LiteTabWidget::indexOf(QWidget *w)

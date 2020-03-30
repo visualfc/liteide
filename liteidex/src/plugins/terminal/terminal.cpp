@@ -30,6 +30,9 @@
 #include <QDir>
 #include <QTime>
 #include <QFontMetrics>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QToolBar>
 
 #define TERMINAL_CURCMD "terminal/curcmd"
 #define TERMINAL_DARKMODE "terminal/darkmode"
@@ -111,10 +114,51 @@ static QStringList GetUnixShellList()
 Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
     m_liteApp(app), m_indexId(0)
 {
-    m_tab = new QTabWidget;
-    m_tab->setDocumentMode(true);
-    m_tab->setTabsClosable(true);
-    m_tab->setUsesScrollButtons(true);
+    m_widget = new QWidget;
+    m_tab = new LiteTabWidget(QSize(16,16));
+    m_tab->tabBar()->setTabsClosable(true);
+    m_tab->tabBar()->setElideMode(Qt::ElideNone);
+
+#ifdef Q_OS_MAC
+#if QT_VERSION >= 0x050900
+    QString qss = m_liteApp->settings()->value("LiteApp/Qss","default.qss").toString();
+    if (qss == "default.qss") {
+        m_tab->tabBar()->setStyleSheet(
+                    "QTabBar::tab {"
+                    "border: 1px solid #C4C4C3;"
+                    "border-bottom-color: #C2C7CB; /* same as the pane color */"
+                    "min-width: 8ex;"
+                    "padding: 4px 2px 4px 2px;"
+                    "}"
+                    "QTabBar::close-button:hover,QTabBar::close-button:selected {"
+                    "margin: 0px;"
+                    "image: url(:/images/closetool.png);"
+                    "subcontrol-position: left;"
+                    "padding: 1px;"
+                    "}"
+                    "QTabBar::tab:selected, QTabBar::tab:hover {"
+                    "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                    "stop: 0 #fafafa, stop: 0.4 #f4f4f4,"
+                    "stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);"
+                    "}"
+                    "QTabBar::tab:selected {"
+                    "border-color: #9B9B9B;"
+                    "border-bottom-color: #C2C7CB; /* same as pane color */"
+                    "}"
+                    "QTabBar::tab:!selected {"
+                    "margin-top: 2px; /* make non-selected tabs look smaller */"
+                    "}");
+    } else {
+      m_tab->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; }");
+    }
+#endif
+#endif
+
+    QVBoxLayout *layout = new QVBoxLayout(m_widget);
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->addWidget(m_tab->tabBarWidget());
+    layout->addWidget(m_tab->stackedWidget());
 
     m_newTabAct = new QAction("New",this);
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
@@ -195,15 +239,15 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     }
 
     actions << m_newTabAct << m_closeTabAct;
-    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_tab,"Terminal",tr("Terminal"),true,actions);
+
+    m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_widget,"Terminal",tr("Terminal"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
 }
 
-
 void Terminal::newTerminal()
 {
-    VTermWidget *term = new VTermWidget(m_tab);
+    VTermWidget *term = new VTermWidget(m_widget);
     int index = m_tab->addTab(term,QString("%1 %2").arg(m_curName).arg(++m_indexId));
     m_tab->setCurrentIndex(index);
     term->setFocus();

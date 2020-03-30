@@ -89,7 +89,6 @@ bool EditorManager::initWithApp(IApplication *app)
 
     m_maxEditorCount = m_liteApp->settings()->value(LITEAPP_MAXEDITORCOUNT,64).toInt();
 
-
     m_widget = new QWidget;
     //create editor tab widget
     m_editorTabWidget = new LiteTabWidget(LiteApi::getToolBarIconSize(m_liteApp));
