@@ -728,8 +728,10 @@ void SideWindowStyle::moveToolWindow(Qt::DockWidgetArea from, Qt::DockWidgetArea
     QWidget *widget = state->widget;
     QString id = state->id;
     QString title = state->title;
+    QList<QAction*> widgetActions = state->widgetActions;
+    QWidgetList  widgetList = state->widgetList;
     fromBar->removeAction(action);
-    toBar->addAction(action,widget,id,title,state->widgetActions,state->widgetList);
+    toBar->addAction(action,widget,id,title,widgetActions,widgetList);
     action->setChecked(true);
     //save
     m_liteApp->settings()->setValue("sidebar_area/"+action->objectName(),to);
