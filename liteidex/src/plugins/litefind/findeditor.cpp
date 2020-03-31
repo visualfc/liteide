@@ -75,7 +75,7 @@ FindEditor::FindEditor(LiteApi::IApplication *app, QObject *parent) :
     m_status->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     QPushButton *close = new QPushButton();
-    close->setIcon(QIcon("icon:images/closetool.png"));
+    close->setIcon(QIcon("icon:images/close.png"));
     close->setIconSize(QSize(16,16));
     close->setFlat(true);
     close->setToolTip(tr("Close"));

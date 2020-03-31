@@ -68,7 +68,7 @@ LiteTabWidget::LiteTabWidget(QSize iconSize, QObject *parent) :
     m_listButton->setStyleSheet(
                 "QToolButton::menu-indicator{image:none;}");
 
-    m_closeTabAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Tab"),this);
+    m_closeTabAct = new QAction(QIcon("icon:images/close.png"),tr("Close Tab"),this);
 //    m_closeButton = new QToolButton;
 //    m_closeButton->setDefaultAction(m_closeTabAct);
 

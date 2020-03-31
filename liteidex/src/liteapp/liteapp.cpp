@@ -752,7 +752,7 @@ void LiteApp::createActions()
     m_closeWindow = new QAction(tr("Close Window"),m_mainwindow);
     actionContext->regAction(m_closeWindow,"CloseWindow","Ctrl+Shift+W");
 
-    m_closeAct = new QAction(loadIcon("icon:images/close.png"),tr("Close File"),m_mainwindow);
+    m_closeAct = new QAction(loadIcon("icon:images/closefile.png"),tr("Close File"),m_mainwindow);
     actionContext->regAction(m_closeAct,"CloseFile","Ctrl+W");
 
     m_closeAllAct = new QAction(tr("Close All Files"),m_mainwindow);

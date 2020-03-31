@@ -132,7 +132,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
                     "}"
                     "QTabBar::close-button:hover,QTabBar::close-button:selected {"
                     "margin: 0px;"
-                    "image: url(:/images/closetool.png);"
+                    "image: url(:/images/close.png);"
                     "subcontrol-position: left;"
                     "padding: 1px;"
                     "}"
@@ -149,7 +149,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
                     "margin-top: 2px; /* make non-selected tabs look smaller */"
                     "}");
     } else {
-      m_tab->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; }");
+      m_tab->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/close.png); subcontrol-position: left; }");
     }
 #endif
 #endif

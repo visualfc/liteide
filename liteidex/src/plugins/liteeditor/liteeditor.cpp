@@ -622,7 +622,7 @@ void LiteEditor::createToolBars()
 //    m_editToolBar->addWidget(m_lineInfo);
 
     //add close
-    //m_closeEditorAct = new QAction(QIcon("icon:images/closetool.png"),tr("Close Document"),this);
+    //m_closeEditorAct = new QAction(QIcon("icon:images/close.png"),tr("Close Document"),this);
     //m_infoToolBar->addAction(m_closeEditorAct);
 }
 

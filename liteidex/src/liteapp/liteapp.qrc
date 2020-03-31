@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/close.png</file>
+        <file>images/closefile.png</file>
         <file>images/closeproject.png</file>
         <file>images/new.png</file>
         <file>images/openfile.png</file>
@@ -32,7 +32,7 @@
         <file>images/reload.png</file>
         <file>images/gopher.png</file>
         <file>images/editclear.png</file>
-        <file>images/closetool.png</file>
+        <file>images/close.png</file>
         <file>images/movemenu.png</file>
         <file>images/openfolder.png</file>
         <file>images/hidesidebar.png</file>

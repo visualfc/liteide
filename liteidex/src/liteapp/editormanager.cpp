@@ -1170,7 +1170,7 @@ void EditorManager::applyOption(QString id)
                     "}"
                     "QTabBar::close-button:hover,QTabBar::close-button:selected {"
                     "margin: 0px;"
-                    "image: url(:/images/closetool.png);"
+                    "image: url(:/images/close.png);"
                     "subcontrol-position: left;"
                     "padding: 1px;"
                     "}"
@@ -1187,7 +1187,7 @@ void EditorManager::applyOption(QString id)
                     "margin-top: 2px; /* make non-selected tabs look smaller */"
                     "}");
     } else {
-      m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/closetool.png); subcontrol-position: left; }");
+      m_editorTabWidget->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/close.png); subcontrol-position: left; }");
     }
 #endif
 #endif
