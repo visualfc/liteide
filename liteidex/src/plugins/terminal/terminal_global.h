@@ -32,4 +32,9 @@
 #  define TERMINALSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define TERMINAL_CURCMD "terminal/curcmd"
+#define TERMINAL_DARKMODE "terminal/darkmode"
+#define TERMINAL_LOGINMODE "terminal/loginmode"
+
+
 #endif // TERMINAL_GLOBAL_H

@@ -58,6 +58,7 @@ public slots:
     void triggeredCmd(QAction* act);
     void toggledDarkMode(bool checked);
     void toggledLoginMode(bool checked);
+    void applyOption(const QString &opt);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;

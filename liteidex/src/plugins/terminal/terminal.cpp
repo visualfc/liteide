@@ -22,6 +22,8 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "terminal.h"
+#include "terminal_global.h"
+#include "../liteapp/liteapp_global.h"
 #include "vterm/vtermwidget.h"
 #include "vterm/vtermcolor.h"
 #include "liteenvapi/liteenvapi.h"
@@ -33,10 +35,6 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QToolBar>
-
-#define TERMINAL_CURCMD "terminal/curcmd"
-#define TERMINAL_DARKMODE "terminal/darkmode"
-#define TERMINAL_LOGINMODE "terminal/loginmode"
 
 
 static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
@@ -119,40 +117,6 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     m_tab->tabBar()->setTabsClosable(true);
     m_tab->tabBar()->setElideMode(Qt::ElideNone);
 
-#ifdef Q_OS_MAC
-#if QT_VERSION >= 0x050900
-    QString qss = m_liteApp->settings()->value("LiteApp/Qss","default.qss").toString();
-    if (qss == "default.qss") {
-        m_tab->tabBar()->setStyleSheet(
-                    "QTabBar::tab {"
-                    "border: 1px solid #C4C4C3;"
-                    "border-bottom-color: #C2C7CB; /* same as the pane color */"
-                    "min-width: 8ex;"
-                    "padding: 4px 2px 4px 2px;"
-                    "}"
-                    "QTabBar::close-button:hover,QTabBar::close-button:selected {"
-                    "margin: 0px;"
-                    "image: url(:/images/close.png);"
-                    "subcontrol-position: left;"
-                    "padding: 1px;"
-                    "}"
-                    "QTabBar::tab:selected, QTabBar::tab:hover {"
-                    "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                    "stop: 0 #fafafa, stop: 0.4 #f4f4f4,"
-                    "stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);"
-                    "}"
-                    "QTabBar::tab:selected {"
-                    "border-color: #9B9B9B;"
-                    "border-bottom-color: #C2C7CB; /* same as pane color */"
-                    "}"
-                    "QTabBar::tab:!selected {"
-                    "margin-top: 2px; /* make non-selected tabs look smaller */"
-                    "}");
-    } else {
-      m_tab->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/close.png); subcontrol-position: left; }");
-    }
-#endif
-#endif
 
     QVBoxLayout *layout = new QVBoxLayout(m_widget);
     layout->setMargin(0);
@@ -243,6 +207,9 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_widget,"Terminal",tr("Terminal"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
+
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    applyOption(OPTION_LITEAPP);
 }
 
 void Terminal::newTerminal()
@@ -363,4 +330,44 @@ void Terminal::toggledLoginMode(bool checked)
 {
     m_loginMode = checked;
     m_liteApp->settings()->setValue(TERMINAL_LOGINMODE,m_loginMode);
+}
+
+void Terminal::applyOption(const QString &opt)
+{
+    if (opt == OPTION_LITEAPP) {
+#ifdef Q_OS_MAC
+#if QT_VERSION >= 0x050900
+    QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();
+    if (qss == "default.qss") {
+        m_tab->tabBar()->setStyleSheet(
+                    "QTabBar::tab {"
+                    "border: 1px solid #C4C4C3;"
+                    "border-bottom-color: #C2C7CB; /* same as the pane color */"
+                    "min-width: 8ex;"
+                    "padding: 4px 2px 4px 2px;"
+                    "}"
+                    "QTabBar::close-button:hover,QTabBar::close-button:selected {"
+                    "margin: 0px;"
+                    "image: url(:/images/close.png);"
+                    "subcontrol-position: left;"
+                    "padding: 1px;"
+                    "}"
+                    "QTabBar::tab:selected, QTabBar::tab:hover {"
+                    "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                    "stop: 0 #fafafa, stop: 0.4 #f4f4f4,"
+                    "stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);"
+                    "}"
+                    "QTabBar::tab:selected {"
+                    "border-color: #9B9B9B;"
+                    "border-bottom-color: #C2C7CB; /* same as pane color */"
+                    "}"
+                    "QTabBar::tab:!selected {"
+                    "margin-top: 2px; /* make non-selected tabs look smaller */"
+                    "}");
+    } else {
+      m_tab->tabBar()->setStyleSheet("QTabBar::close-button:hover,QTabBar::close-button:selected {margin: 0px; image: url(:/images/close.png); subcontrol-position: left; }");
+    }
+#endif
+#endif
+    }
 }

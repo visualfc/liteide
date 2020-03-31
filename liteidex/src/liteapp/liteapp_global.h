@@ -52,7 +52,7 @@
 #define LITEAPP_EDITTABSCLOSABLE "LiteApp/EditTabsClosable"
 #define LITEAPP_EDITTABSENABLEWHELL "LiteApp/EditTabEnableWhell"
 #define LITEAPP_SHOWEDITTOOLBAR "LiteApp/ShowEditToolbar"
-#define LITEAPP_QSS "LitApp/Qss"
+#define LITEAPP_QSS "LiteApp/Qss"
 #define LITEAPP_FULLSCREEN "LiteApp/FullScreen"
 #define LITEAPP_WINSTATE   "LiteApp/WinState"
 #define LITEAPP_SHORTCUTS "keybord_shortcuts/"
