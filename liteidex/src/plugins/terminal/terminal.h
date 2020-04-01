@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include "tabwidget/litetabwidget.h"
+#include <QProcessEnvironment>
 
 class QTabWidget;
 class VTermWidget;
@@ -45,7 +46,9 @@ class Terminal : public QObject
     Q_OBJECT
 public:
     explicit Terminal(LiteApi::IApplication *app, QObject *parent);
-
+    virtual ~Terminal();
+    int openTerminal(const QString &cmdName, bool login, const QString &title, const QString &workdir, const QProcessEnvironment &env);
+    Command lookupCommand(const QString &name);
 signals:
 
 public slots:
@@ -59,6 +62,7 @@ public slots:
     void toggledDarkMode(bool checked);
     void toggledLoginMode(bool checked);
     void applyOption(const QString &opt);
+    void appLoaded();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;

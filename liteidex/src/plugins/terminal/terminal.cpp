@@ -208,29 +208,102 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
 
+    connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     applyOption(OPTION_LITEAPP);
 }
 
-void Terminal::newTerminal()
+Terminal::~Terminal()
 {
+    m_liteApp->settings()->beginGroup("terminal/tabs");
+    m_liteApp->settings()->remove("");
+    for (int i = 0; i < m_tab->count(); i++) {
+        QString key = QString("%1").arg(i);
+        m_liteApp->settings()->setValue(key,m_tab->tabData(i));
+    }
+    m_liteApp->settings()->endGroup();
+}
+
+void Terminal::appLoaded()
+{
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    m_liteApp->settings()->beginGroup("terminal/tabs");
+    foreach(QString key,m_liteApp->settings()->childKeys()) {
+        QMap<QString,QVariant> m = m_liteApp->settings()->value(key).toMap();
+        QString cmd = m["cmd"].toString();
+        bool login = m["login"].toBool();
+        QString title = m["title"].toString();
+        QString dir = m["dir"].toString();
+        if (!cmd.isEmpty() && !title.isEmpty() && !dir.isEmpty()) {
+            openTerminal(cmd,login,title,dir,env);
+        }
+    }
+    m_liteApp->settings()->endGroup();
+    m_indexId = m_tab->count();
+}
+
+
+Command Terminal::lookupCommand(const QString &name)
+{
+    foreach(Command cmd, m_cmdList) {
+        if (cmd.name == name) {
+            return  cmd;
+        }
+    }
+    return m_cmdList[0];
+}
+
+int Terminal::openTerminal(const QString &cmdName, bool login, const QString &title, const QString &workdir, const QProcessEnvironment &env)
+{
+    Command cmd = lookupCommand(cmdName);
     VTermWidget *term = new VTermWidget(m_widget);
-    int index = m_tab->addTab(term,QString("%1 %2").arg(m_curName).arg(++m_indexId));
+
+    int index = m_tab->addTab(term,title);
     m_tab->setCurrentIndex(index);
+
     term->setFocus();
     term->updateGeometry();
     term->setDarkMode(m_darkMode);
 
-    Command cmd = m_cmdList[0];
-    if (m_cmdList.size() > 1) {
-        foreach (Command c, m_cmdList) {
-            if (m_curName == c.name) {
-                cmd = c;
-                break;
-            }
-        }
-    }
+    QMap<QString,QVariant> m;
+    m["cmd"] = cmdName;
+    m["login"] = login;
+    m["title"] = title;
+    m["dir"] = workdir;
+    m_tab->setTabData(index,m);
 
+    QString info;
+    QString attr;
+    if (!cmd.loginArgs.isEmpty()) {
+        if (login) {
+            attr = "login shell";
+        } else {
+            attr = "non-login shell";
+        }
+    } else {
+        attr = "open shell";
+    }
+    info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(workdir);
+
+
+    term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+    term->inputWrite("\r\n");
+
+    QStringList args = cmd.args;
+    if (login) {
+        args.append(cmd.loginArgs);
+    }
+    term->start(cmd.path,args,workdir,env.toStringList());
+
+    connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
+    connect(term,SIGNAL(exited()),this,SLOT(termExited()));
+    return index;
+}
+
+void Terminal::newTerminal()
+{
+    QString cmdName = m_curName;
+    QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     QString dir;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor && !editor->filePath().isEmpty()) {
@@ -241,32 +314,7 @@ void Terminal::newTerminal()
     }
     dir = QDir::toNativeSeparators(dir);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    QString info;
-
-    QString attr;
-    if (!cmd.loginArgs.isEmpty()) {
-        if (m_loginMode) {
-            attr = "login shell";
-        } else {
-            attr = "non-login shell";
-        }
-    } else {
-        attr = "open shell";
-    }
-    info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(dir);
-
-
-    term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
-    term->inputWrite("\r\n");
-
-    QStringList args = cmd.args;
-    if (m_loginMode) {
-        args.append(cmd.loginArgs);
-    }
-    term->start(cmd.path,args,dir,env.toStringList());
-
-    connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
-    connect(term,SIGNAL(exited()),this,SLOT(termExited()));
+    openTerminal(cmdName,m_loginMode,title,dir,env);
 }
 
 void Terminal::visibilityChanged(bool b)
