@@ -12,6 +12,17 @@
 #include <QCoreApplication>
 #include <signal.h>
 
+/* for pty_getproc */
+#if defined(__linux__)
+#include <stdio.h>
+#include <stdint.h>
+#elif defined(__APPLE__)
+#include <sys/sysctl.h>
+#include <libproc.h>
+#endif
+
+static char *pty_getproc(int fd, char *tty);
+
 UnixPtyProcess::UnixPtyProcess()
     : IPtyProcess()
     , m_readMasterNotify(0)
@@ -310,6 +321,17 @@ bool UnixPtyProcess::isAvailable()
     return true;
 }
 
+QString UnixPtyProcess::getUnixProc() const
+{
+    QString tmp;
+    char *buf = pty_getproc(m_shellProcess.m_handleMaster,m_shellProcess.m_handleSlaveName.toUtf8().data());
+    if (buf) {
+        tmp = QString::fromUtf8(buf);
+        free(buf);
+    }
+    return tmp;
+}
+
 void UnixPtyProcess::moveToThread(QThread *targetThread)
 {
     m_shellProcess.moveToThread(targetThread);
@@ -391,3 +413,101 @@ void ShellProcess::setupChildProcess()
         sigaction(signal, &action, 0);
     }
 }
+
+
+/**
+ * pty_getproc
+ * Taken from tmux.
+ */
+
+// Taken from: tmux (http://tmux.sourceforge.net/)
+// Copyright (c) 2009 Nicholas Marriott <nicm@users.sourceforge.net>
+// Copyright (c) 2009 Joshua Elsasser <josh@elsasser.org>
+// Copyright (c) 2009 Todd Carson <toc@daybefore.net>
+//
+// Permission to use, copy, modify, and distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF MIND, USE, DATA OR PROFITS, WHETHER
+// IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
+// OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+#if defined(__linux__)
+
+static char *
+pty_getproc(int fd, char *tty) {
+  FILE *f;
+  char *path, *buf;
+  size_t len;
+  int ch;
+  pid_t pgrp;
+  int r;
+
+  if ((pgrp = tcgetpgrp(fd)) == -1) {
+    return NULL;
+  }
+
+  r = asprintf(&path, "/proc/%lld/cmdline", (long long)pgrp);
+  if (r == -1 || path == NULL) return NULL;
+
+  if ((f = fopen(path, "r")) == NULL) {
+    free(path);
+    return NULL;
+  }
+
+  free(path);
+
+  len = 0;
+  buf = NULL;
+  while ((ch = fgetc(f)) != EOF) {
+    if (ch == '\0') break;
+    buf = (char *)realloc(buf, len + 2);
+    if (buf == NULL) return NULL;
+    buf[len++] = ch;
+  }
+
+  if (buf != NULL) {
+    buf[len] = '\0';
+  }
+
+  fclose(f);
+  return buf;
+}
+
+#elif defined(__APPLE__)
+
+static char *
+pty_getproc(int fd, char *tty) {
+  int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, 0 };
+  size_t size;
+  struct kinfo_proc kp;
+
+  if ((mib[3] = tcgetpgrp(fd)) == -1) {
+    return NULL;
+  }
+
+  size = sizeof kp;
+  if (sysctl(mib, 4, &kp, &size, NULL, 0) == -1) {
+    return NULL;
+  }
+
+  if (*kp.kp_proc.p_comm == '\0') {
+    return NULL;
+  }
+
+  return strdup(kp.kp_proc.p_comm);
+}
+
+#else
+
+static char *
+pty_getproc(int fd, char *tty) {
+  return NULL;
+}
+
+#endif
