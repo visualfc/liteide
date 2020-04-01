@@ -84,6 +84,8 @@ public:
     int currentIndex() const;
     void setTabText(int index, const QString & text);
     void setTabToolTip(int index, const QString &tip);
+    void setTabData(int index, const QVariant &data);
+    QVariant tabData(int index) const;
     QList<QWidget*> widgetList() const;
     QWidget *stackedWidget();
     QWidget *tabBarWidget();

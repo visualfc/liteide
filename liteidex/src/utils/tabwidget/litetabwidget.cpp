@@ -207,6 +207,16 @@ void LiteTabWidget::setTabToolTip(int index, const QString &tip)
     m_tabBar->setTabToolTip(index,tip);
 }
 
+void LiteTabWidget::setTabData(int index, const QVariant &data)
+{
+    m_tabBar->setTabData(index,data);
+}
+
+QVariant LiteTabWidget::tabData(int index) const
+{
+    return m_tabBar->tabData(index);
+}
+
 int LiteTabWidget::indexOf(QWidget *w)
 {
     return m_widgetList.indexOf(w);
