@@ -41,13 +41,46 @@ struct Command
     QString     info;
 };
 
+struct TabInfoData
+{
+    QString cmd;   //command name
+    QString dir;   //work dir
+    QString cwd;   //current work dir
+    QString title; // tab title
+    QString pid; //process id
+    bool    login; // --login
+    bool    open;  // open terminal
+};
+
+inline QDataStream &operator<<(QDataStream &s, const TabInfoData &data)
+{
+    s << data.cmd;
+    s << data.dir;
+    s << data.cwd;
+    s << data.title;
+    s << data.login;
+    return s;
+}
+
+inline QDataStream &operator>>(QDataStream &s, TabInfoData &data)
+{
+    s >> data.cmd;
+    s >> data.dir;
+    s >> data.cwd;
+    s >> data.title;
+    s >> data.login;
+    return s;
+}
+
+Q_DECLARE_METATYPE(TabInfoData)
+
 class Terminal : public QObject
 {
     Q_OBJECT
 public:
     explicit Terminal(LiteApi::IApplication *app, QObject *parent);
     virtual ~Terminal();
-    int openTerminal(const QString &cmdName, bool login, const QString &title, const QString &workdir, const QProcessEnvironment &env);
+    void openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir, const QProcessEnvironment &env);
     Command lookupCommand(const QString &name);
 signals:
 
@@ -57,6 +90,7 @@ public slots:
     void termExited();
     void termTitleChanged(QString title);
     void tabCloseRequested(int index);
+    void tabCurrentChanged(int index);
     void closeCurrenTab();
     void triggeredCmd(QAction* act);
     void toggledDarkMode(bool checked);

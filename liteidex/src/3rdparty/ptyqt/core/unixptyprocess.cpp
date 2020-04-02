@@ -258,6 +258,9 @@ bool UnixPtyProcess::kill()
         ::close(m_shellProcess.m_handleMaster);
         m_shellProcess.m_handleMaster = -1;
     }
+    if (!m_readMasterNotify) {
+        return false;
+    }
 
     if (m_shellProcess.state() == QProcess::Running)
     {

@@ -112,6 +112,9 @@ static QStringList GetUnixShellList()
 Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
     m_liteApp(app), m_indexId(0)
 {
+    qRegisterMetaType<TabInfoData>("TabInfoData");
+    qRegisterMetaTypeStreamOperators<TabInfoData>("TabInfoData");
+
     m_widget = new QWidget;
     m_tab = new LiteTabWidget(QSize(16,16));
     m_tab->tabBar()->setTabsClosable(true);
@@ -207,6 +210,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_widget,"Terminal",tr("Terminal"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
+    connect(m_tab,SIGNAL(currentChanged(int)),this,SLOT(tabCurrentChanged(int)));
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
@@ -226,13 +230,13 @@ static QString getProcessWorkDir(int pid)
     }
     QByteArray ar = p.readAllStandardOutput();
     QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
-    qDebug() << lines;
     if (lines.size() >= 3 && lines[2].startsWith("n")) {
         return lines[2].mid(1);
     }
     return "";
 }
 
+#ifdef Q_OS_MAC
 static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
 {
     QString cmd = QString("lsof -a -p %1 -d cwd -Fn").arg(pids.join(","));
@@ -263,6 +267,13 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
     }
     return kv;
 }
+#else
+static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
+{
+    QMap<QString,QString> kv;
+    return kv;
+}
+#endif
 
 
 Terminal::~Terminal()
@@ -271,18 +282,21 @@ Terminal::~Terminal()
     m_liteApp->settings()->remove("");
     QStringList pids;
     for (int i = 0; i < m_tab->count(); i++) {
-        QMap<QString,QVariant> m = m_tab->tabData(i).toMap();
-        pids.push_back(m["pid"].toString());
+        TabInfoData data = m_tab->tabData(i).value<TabInfoData>();
+        if (!data.pid.isEmpty()) {
+            pids << data.pid;
+        }
     }
+    // check pid
     QMap<QString,QString> kv = getProcessWorkDirList(pids);
     for (int i = 0; i < m_tab->count(); i++) {
         QString key = QString("%1").arg(i);
-        QMap<QString,QVariant> m = m_tab->tabData(i).toMap();
-        QString cwd = kv[m["pid"].toString()];
-        if (!cwd.isEmpty()) {
-            m["cwd"] = cwd;
+        TabInfoData data = m_tab->tabData(i).value<TabInfoData>();
+        data.title = m_tab->tabBar()->tabText(i);
+        if (!data.pid.isEmpty()) {
+            data.cwd = kv[data.pid];
         }
-        m_liteApp->settings()->setValue(key,m);
+        m_liteApp->settings()->setValue(key,QVariant::fromValue(data));
     }
 
     m_liteApp->settings()->endGroup();
@@ -293,21 +307,19 @@ void Terminal::appLoaded()
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     m_liteApp->settings()->beginGroup("terminal/tabs");
     foreach(QString key,m_liteApp->settings()->childKeys()) {
-        QMap<QString,QVariant> m = m_liteApp->settings()->value(key).toMap();
-        QString cmd = m["cmd"].toString();
-        bool login = m["login"].toBool();
-        QString title = m["title"].toString();
-        QString dir = m["dir"].toString();
-        QString cwd = m["cwd"].toString();
-        if (!cwd.isEmpty()) {
-            dir = cwd;
-        }
-        if (!cmd.isEmpty() && !title.isEmpty() && !dir.isEmpty()) {
-            openTerminal(cmd,login,title,dir,env);
+        TabInfoData data = m_liteApp->settings()->value(key).value<TabInfoData>();
+        if (!data.cmd.isEmpty() && !data.title.isEmpty()) {
+            VTermWidget *widget = new VTermWidget(m_widget);
+            int index = m_tab->addTab(widget,data.title);
+            data.open = false;
+            m_tab->setTabData(index,QVariant::fromValue(data));
         }
     }
     m_liteApp->settings()->endGroup();
     m_indexId = m_tab->count();
+    if (m_tab->count() >= 1) {
+        m_tab->setCurrentIndex(m_tab->count()-1);
+    }
 }
 
 
@@ -321,18 +333,21 @@ Command Terminal::lookupCommand(const QString &name)
     return m_cmdList[0];
 }
 
-int Terminal::openTerminal(const QString &cmdName, bool login, const QString &title, const QString &workdir, const QProcessEnvironment &env)
+void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir, const QProcessEnvironment &env)
 {
     Command cmd = lookupCommand(cmdName);
-    VTermWidget *term = new VTermWidget(m_widget);
-
-    int index = m_tab->addTab(term,title);
-    m_tab->setCurrentIndex(index);
 
     term->setFocus();
     term->updateGeometry();
     term->setDarkMode(m_darkMode);
 
+    // check valid or home
+    QString dir;
+    if (QDir(workdir).exists()) {
+        dir = workdir;
+    } else {
+        dir = QDir::homePath();
+    }
 
     QString info;
     QString attr;
@@ -345,8 +360,7 @@ int Terminal::openTerminal(const QString &cmdName, bool login, const QString &ti
     } else {
         attr = "open shell";
     }
-    info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(workdir);
-
+    info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(dir);
 
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
@@ -355,22 +369,22 @@ int Terminal::openTerminal(const QString &cmdName, bool login, const QString &ti
     if (login) {
         args.append(cmd.loginArgs);
     }
-    term->start(cmd.path,args,workdir,env.toStringList());
 
-    QMap<QString,QVariant> m;
-    m["cmd"] = cmdName;
-    m["login"] = login;
-    m["title"] = title;
-    m["dir"] = workdir;
-    m["pid"] = term->process()->pid();
+    term->start(cmd.path,args,dir,env.toStringList());
 
-    m_tab->setTabData(index,m);
+    TabInfoData data;
+    data.cmd = cmdName;
+    data.dir = dir;
+    data.login = login;
+    data.open = true;
+    data.pid = QString("%1").arg(term->process()->pid());
 
+    m_tab->setTabData(index,QVariant::fromValue(data));
 
     connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));
-    return index;
 }
+
 
 void Terminal::newTerminal()
 {
@@ -386,18 +400,27 @@ void Terminal::newTerminal()
     }
     dir = QDir::toNativeSeparators(dir);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
-    openTerminal(cmdName,m_loginMode,title,dir,env);
+    //openNewTerminal(cmdName,m_loginMode,title,dir,env);
+    VTermWidget *term = new VTermWidget(m_widget);
+    int index = m_tab->addTab(term,title);
+    m_tab->setCurrentIndex(index);
+    openTerminal(index,term,cmdName,m_loginMode,dir,env);
 }
 
 void Terminal::visibilityChanged(bool b)
 {
-    if (b && m_tab->count() == 0) {
+    if (!b) {
+        return;
+    }
+    if (m_tab->count() == 0) {
         newTerminal();
     }
     QWidget *widget = m_tab->currentWidget();
     if (widget) {
         widget->setFocus();
     }
+    //deploy load
+    tabCurrentChanged(m_tab->currentIndex());
 }
 
 void Terminal::termExited()
@@ -422,7 +445,34 @@ void Terminal::termTitleChanged(QString title)
 void Terminal::tabCloseRequested(int index)
 {
     VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(index));
-    widget->deleteLater();
+    m_tab->removeTab(index);
+    if (widget) {
+        widget->deleteLater();
+    }
+}
+
+void Terminal::tabCurrentChanged(int index)
+{
+    //deploy load
+    if (!m_widget->isVisible()) {
+        return;
+    }
+    TabInfoData data = m_tab->tabData(index).value<TabInfoData>();
+    if (data.cmd.isEmpty()) {
+        return;
+    }
+    if (data.open) {
+        return;
+    }
+    data.open = true;
+    m_tab->setTabData(index,QVariant::fromValue(data));
+    VTermWidget *term = static_cast<VTermWidget*>(m_tab->widget(index));
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    QString dir = data.dir;
+    if (!data.cwd.isEmpty()) {
+        dir = data.cwd;
+    }
+    openTerminal(index,term,data.cmd,data.login,dir,env);
 }
 
 void Terminal::closeCurrenTab()
