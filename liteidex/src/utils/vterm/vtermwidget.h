@@ -36,6 +36,7 @@ public:
     virtual ~VTermWidget();
     bool isAvailable() const;
     void start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env);
+    IPtyProcess *process() const;
 signals:
     void exited();
 public slots:

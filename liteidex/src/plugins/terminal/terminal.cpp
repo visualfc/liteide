@@ -213,14 +213,78 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     applyOption(OPTION_LITEAPP);
 }
 
+static QString getProcessWorkDir(int pid)
+{
+    QString cmd = QString("lsof -a -p %1 -d cwd -Fn").arg(pid);
+    QProcess p;
+    p.start(cmd);
+    if (!p.waitForStarted(1000)) {
+        return "";
+    }
+    if (!p.waitForFinished(1000)) {
+        return "";
+    }
+    QByteArray ar = p.readAllStandardOutput();
+    QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
+    qDebug() << lines;
+    if (lines.size() >= 3 && lines[2].startsWith("n")) {
+        return lines[2].mid(1);
+    }
+    return "";
+}
+
+static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
+{
+    QString cmd = QString("lsof -a -p %1 -d cwd -Fn").arg(pids.join(","));
+    QMap<QString,QString> kv;
+    QProcess p;
+    p.start(cmd);
+    if (!p.waitForStarted(1000)) {
+        return kv;
+    }
+    if (!p.waitForFinished(3000)) {
+        p.kill();
+        return kv;
+    }
+    QByteArray ar = p.readAllStandardOutput();
+    QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
+//    p4153
+//    fcwd
+//    n/Users/vfc
+    int index = 0;
+    foreach (QString line, lines) {
+        if (index %3 == 2) {
+            QString pid = lines[index-2];
+            if (line.startsWith("n") && pid.startsWith("p")) {
+                kv[pid.mid(1)] = line.mid(1);
+            }
+        }
+        index++;
+    }
+    return kv;
+}
+
+
 Terminal::~Terminal()
 {
     m_liteApp->settings()->beginGroup("terminal/tabs");
     m_liteApp->settings()->remove("");
+    QStringList pids;
+    for (int i = 0; i < m_tab->count(); i++) {
+        QMap<QString,QVariant> m = m_tab->tabData(i).toMap();
+        pids.push_back(m["pid"].toString());
+    }
+    QMap<QString,QString> kv = getProcessWorkDirList(pids);
     for (int i = 0; i < m_tab->count(); i++) {
         QString key = QString("%1").arg(i);
-        m_liteApp->settings()->setValue(key,m_tab->tabData(i));
+        QMap<QString,QVariant> m = m_tab->tabData(i).toMap();
+        QString cwd = kv[m["pid"].toString()];
+        if (!cwd.isEmpty()) {
+            m["cwd"] = cwd;
+        }
+        m_liteApp->settings()->setValue(key,m);
     }
+
     m_liteApp->settings()->endGroup();
 }
 
@@ -234,6 +298,10 @@ void Terminal::appLoaded()
         bool login = m["login"].toBool();
         QString title = m["title"].toString();
         QString dir = m["dir"].toString();
+        QString cwd = m["cwd"].toString();
+        if (!cwd.isEmpty()) {
+            dir = cwd;
+        }
         if (!cmd.isEmpty() && !title.isEmpty() && !dir.isEmpty()) {
             openTerminal(cmd,login,title,dir,env);
         }
@@ -265,12 +333,6 @@ int Terminal::openTerminal(const QString &cmdName, bool login, const QString &ti
     term->updateGeometry();
     term->setDarkMode(m_darkMode);
 
-    QMap<QString,QVariant> m;
-    m["cmd"] = cmdName;
-    m["login"] = login;
-    m["title"] = title;
-    m["dir"] = workdir;
-    m_tab->setTabData(index,m);
 
     QString info;
     QString attr;
@@ -294,6 +356,16 @@ int Terminal::openTerminal(const QString &cmdName, bool login, const QString &ti
         args.append(cmd.loginArgs);
     }
     term->start(cmd.path,args,workdir,env.toStringList());
+
+    QMap<QString,QVariant> m;
+    m["cmd"] = cmdName;
+    m["login"] = login;
+    m["title"] = title;
+    m["dir"] = workdir;
+    m["pid"] = term->process()->pid();
+
+    m_tab->setTabData(index,m);
+
 
     connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));

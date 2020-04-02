@@ -69,6 +69,11 @@ void VTermWidget::start(const QString &program, const QStringList &arguments, co
     connect(m_process,SIGNAL(exited()),this,SIGNAL(exited()));
 }
 
+IPtyProcess *VTermWidget::process() const
+{
+    return m_process;
+}
+
 void VTermWidget::readyRead()
 {
     QByteArray data = m_process->readAll();
