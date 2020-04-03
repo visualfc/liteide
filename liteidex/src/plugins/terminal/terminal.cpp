@@ -300,7 +300,6 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
 //        9194: /home/my
 //        9947: /home/my
         QString cmd = QString("pwdx %1").arg(pids.join(" "));
-        QMap<QString,QString> kv;
         QProcess p;
         p.start(cmd);
         if (!p.waitForStarted(1000)) {
@@ -314,8 +313,9 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
         QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
         foreach (QString line, lines) {
             QStringList ar = line.split(":",QString::SkipEmptyParts);
-            if (ar.size() == 2) {
-                kv[ar[0].trimmed()] = ar[1].trimmed();
+            QString path = ar[1].trimmed();
+            if (ar.size() == 2 && path.startsWith("/")) {
+                kv[ar[0].trimmed()] = path;
             }
         }
     }
