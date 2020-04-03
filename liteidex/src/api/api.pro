@@ -15,4 +15,5 @@ SUBDIRS = \
     docbrowserapi \
     golangdocapi \
     golangastapi \
-    quickopenapi
+    quickopenapi \
+    terminalapi

@@ -25,6 +25,7 @@
 #define TERMINAL_H
 
 #include "liteapi/liteapi.h"
+#include "terminalapi/terminalapi.h"
 #include "tabwidget/litetabwidget.h"
 #include <QProcessEnvironment>
 
@@ -75,12 +76,13 @@ inline QDataStream &operator>>(QDataStream &s, TabInfoData &data)
 
 Q_DECLARE_METATYPE(TabInfoData)
 
-class Terminal : public QObject
+class Terminal : public LiteApi::ITerminal
 {
     Q_OBJECT
 public:
     explicit Terminal(LiteApi::IApplication *app, QObject *parent);
     virtual ~Terminal();
+    virtual void openDefaultTerminal(const QString &workDir);
     void openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir, const QProcessEnvironment &env);
     Command lookupCommand(const QString &name);
 signals:

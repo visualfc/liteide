@@ -38,7 +38,7 @@
 #include <QInputDialog>
 #include <QActionGroup>
 
-
+#ifdef Q_OS_WIN
 static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
 {
     Command cmd;
@@ -49,8 +49,6 @@ static Command makeCommand(const QString &name, const QString &path, const QStri
     return cmd;
 }
 
-
-#ifdef Q_OS_WIN
 static QString checkFile(const QStringList &dirList, const QString &filePath)
 {
     foreach (QString root, dirList) {
@@ -111,7 +109,7 @@ static QStringList GetUnixShellList()
     return  shells;
 }
 
-Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent),
+Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerminal(parent),
     m_liteApp(app), m_indexId(0)
 {
     qRegisterMetaType<TabInfoData>("TabInfoData");
@@ -228,25 +226,8 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     connect(m_tab->tabBar(),SIGNAL(tabBarDoubleClicked(int)),this,SLOT(tabBarDoubleClicked(int)));
 #endif
     applyOption(OPTION_LITEAPP);
-}
 
-static QString getProcessWorkDir(int pid)
-{
-    QString cmd = QString("lsof -a -p %1 -d cwd -Fn").arg(pid);
-    QProcess p;
-    p.start(cmd);
-    if (!p.waitForStarted(1000)) {
-        return "";
-    }
-    if (!p.waitForFinished(1000)) {
-        return "";
-    }
-    QByteArray ar = p.readAllStandardOutput();
-    QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
-    if (lines.size() >= 3 && lines[2].startsWith("n")) {
-        return lines[2].mid(1);
-    }
-    return "";
+    m_liteApp->extension()->addObject("LiteApi.ITerminal",this);
 }
 
 #ifdef Q_OS_MAC
@@ -355,6 +336,19 @@ Terminal::~Terminal()
     delete m_listMenu;
     qDeleteAll(m_listGroup->actions());
     delete m_listGroup;
+}
+
+void Terminal::openDefaultTerminal(const QString &workDir)
+{
+    QString cmdName = m_curName;
+    QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
+    QString dir = QDir::toNativeSeparators(workDir);
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    //openNewTerminal(cmdName,m_loginMode,title,dir,env);
+    VTermWidget *term = new VTermWidget(m_widget);
+    int index = m_tab->addTab(term,title);
+    m_tab->setCurrentIndex(index);
+    openTerminal(index,term,cmdName,m_loginMode,dir,env);
 }
 
 void Terminal::appLoaded()
