@@ -26,8 +26,6 @@
 #include "liteenvapi/liteenvapi.h"
 #include "litebuildapi/litebuildapi.h"
 #include "litedebugapi/litedebugapi.h"
-#include "litefindapi/litefindapi.h"
-#include "terminalapi/terminalapi.h"
 #include "fileutil/fileutil.h"
 #include "filebrowser_global.h"
 
@@ -123,12 +121,6 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_debugFileAct = new QAction(tr("Debug File"),this);
     connect(m_debugFileAct,SIGNAL(triggered()),this,SLOT(debugFile()));
-
-    m_fmctxFileSearchAction = new QAction(tr("File Search"),this);
-    connect(m_fmctxFileSearchAction,SIGNAL(triggered()),this,SLOT(fmctxFileSearchAction()));
-
-    m_fmctxOpenTerminalAction = new QAction(tr("Open in Integrated Terminal"),this);
-    connect(m_fmctxOpenTerminalAction,SIGNAL(triggered()),this,SLOT(fmctxOpenTerminalAction()));
 
 //    m_filterCombo = new QComboBox;
 //    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -259,6 +251,7 @@ void FileBrowser::reloadFileModel()
 
 void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
 {
+    m_liteApp->fileManager()->emitAboutToShowFolderContextMenu(menu,flag,info,"filebrowser");
     if (flag == LiteApi::FILESYSTEM_FILES) {
         QString cmd = FileUtil::lookPathInDir(info.fileName(),info.path());
         if (!cmd.isEmpty()) {
@@ -279,13 +272,7 @@ void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEX
             }
             menu->insertSeparator(act);
         }
-        menu->addSeparator();
-        menu->addAction(m_fmctxOpenTerminalAction);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
-        menu->addSeparator();
-        menu->addAction(m_fmctxFileSearchAction);
-        menu->addSeparator();
-        menu->addAction(m_fmctxOpenTerminalAction);
         menu->addSeparator();
         if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
             menu->addAction(m_cdupAct);
@@ -295,31 +282,6 @@ void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEX
         menu->addAction(m_addToFoldersAct);
         menu->addAction(m_openFolderInNewWindowAct);
     }
-}
-
-void FileBrowser::fmctxFileSearchAction()
-{
-    LiteApi::IFileSearchManager *mgr = LiteApi::getFileSearchManager(m_liteApp);
-    if (!mgr) {
-        return;
-    }
-    bool hasGo = false;
-    foreach(QFileInfo info, m_folderView->contextDir().entryInfoList(QDir::Files)) {
-        if (info.suffix() == "go") {
-            hasGo = true;
-            break;
-        }
-    }
-    mgr->showFileSearch("",hasGo ? "*.go": "*",m_folderView->contextDir().path());
-}
-
-void FileBrowser::fmctxOpenTerminalAction()
-{
-    LiteApi::ITerminal *mgr = LiteApi::getTerminalManager(m_liteApp);
-    if (!mgr) {
-        return;
-    }
-    mgr->openDefaultTerminal(m_folderView->contextDir().path());
 }
 
 void FileBrowser::showHideFiles(bool b)
