@@ -38,7 +38,7 @@ public:
     virtual void openDefaultTerminal(const QString &workDir) = 0;
 };
 
-inline ITerminal* getFileSearchManager(LiteApi::IApplication *app)
+inline ITerminal* getTerminalManager(LiteApi::IApplication *app)
 {
     return LiteApi::findExtensionObject<ITerminal*>(app,"LiteApi.ITerminal");
 }

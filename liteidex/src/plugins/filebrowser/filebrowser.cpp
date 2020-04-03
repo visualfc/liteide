@@ -27,6 +27,7 @@
 #include "litebuildapi/litebuildapi.h"
 #include "litedebugapi/litedebugapi.h"
 #include "litefindapi/litefindapi.h"
+#include "terminalapi/terminalapi.h"
 #include "fileutil/fileutil.h"
 #include "filebrowser_global.h"
 
@@ -125,6 +126,9 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_fmctxFileSearchAction = new QAction(tr("File Search"),this);
     connect(m_fmctxFileSearchAction,SIGNAL(triggered()),this,SLOT(fmctxFileSearchAction()));
+
+    m_fmctxOpenTerminalAction = new QAction(tr("Open in Integrated Terminal"),this);
+    connect(m_fmctxOpenTerminalAction,SIGNAL(triggered()),this,SLOT(fmctxOpenTerminalAction()));
 
 //    m_filterCombo = new QComboBox;
 //    m_filterCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -275,9 +279,13 @@ void FileBrowser::aboutToShowContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEX
             }
             menu->insertSeparator(act);
         }
+        menu->addSeparator();
+        menu->addAction(m_fmctxOpenTerminalAction);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER || flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
         menu->addSeparator();
         menu->addAction(m_fmctxFileSearchAction);
+        menu->addSeparator();
+        menu->addAction(m_fmctxOpenTerminalAction);
         menu->addSeparator();
         if (flag == LiteApi::FILESYSTEM_ROOTFOLDER) {
             menu->addAction(m_cdupAct);
@@ -303,6 +311,15 @@ void FileBrowser::fmctxFileSearchAction()
         }
     }
     mgr->showFileSearch("",hasGo ? "*.go": "*",m_folderView->contextDir().path());
+}
+
+void FileBrowser::fmctxOpenTerminalAction()
+{
+    LiteApi::ITerminal *mgr = LiteApi::getTerminalManager(m_liteApp);
+    if (!mgr) {
+        return;
+    }
+    mgr->openDefaultTerminal(m_folderView->contextDir().path());
 }
 
 void FileBrowser::showHideFiles(bool b)

@@ -47,6 +47,7 @@ public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void aboutToShowContextMenu(QMenu* menu,LiteApi::FILESYSTEM_CONTEXT_FLAG flag,const QFileInfo &fileInfo);
     void fmctxFileSearchAction();
+    void fmctxOpenTerminalAction();
 protected slots:
     void setFolderToRoot();
     void cdUp();
@@ -81,6 +82,7 @@ protected:
     QAction *m_executeFileAct;
     QAction *m_debugFileAct;
     QAction *m_fmctxFileSearchAction;
+    QAction *m_fmctxOpenTerminalAction;
 };
 
 #endif // FILEBROWSER_H
