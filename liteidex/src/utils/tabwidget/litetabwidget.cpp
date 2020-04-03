@@ -202,6 +202,11 @@ void LiteTabWidget::setTabText(int index, const QString & text)
     m_tabBar->setTabText(index,text);
 }
 
+QString LiteTabWidget::tabText(int index) const
+{
+    return m_tabBar->tabText(index);
+}
+
 void LiteTabWidget::setTabToolTip(int index, const QString &tip)
 {
     m_tabBar->setTabToolTip(index,tip);

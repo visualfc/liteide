@@ -35,6 +35,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QToolBar>
+#include <QInputDialog>
 
 
 static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
@@ -214,6 +215,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_tab->tabBar(),SIGNAL(tabBarDoubleClicked(int)),this,SLOT(tabBarDoubleClicked(int)));
     applyOption(OPTION_LITEAPP);
 }
 
@@ -473,6 +475,19 @@ void Terminal::tabCurrentChanged(int index)
         dir = data.cwd;
     }
     openTerminal(index,term,data.cmd,data.login,dir,env);
+}
+
+void Terminal::tabBarDoubleClicked(int index)
+{
+    QString text = m_tab->tabText(index);
+    bool ok = false;
+    text = QInputDialog::getText(m_widget,tr("Terminal"),tr("Rename Tab Title"),QLineEdit::Normal,text,&ok);
+    if (ok && !text.isEmpty()) {
+        m_tab->setTabText(index,text);
+        TabInfoData data = m_tab->tabData(index).value<TabInfoData>();
+        data.title = text;
+        m_tab->setTabData(index,QVariant::fromValue(data));
+    }
 }
 
 void Terminal::closeCurrenTab()

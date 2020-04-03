@@ -91,6 +91,7 @@ public slots:
     void termTitleChanged(QString title);
     void tabCloseRequested(int index);
     void tabCurrentChanged(int index);
+    void tabBarDoubleClicked(int index);
     void closeCurrenTab();
     void triggeredCmd(QAction* act);
     void toggledDarkMode(bool checked);
