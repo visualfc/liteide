@@ -228,6 +228,10 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     applyOption(OPTION_LITEAPP);
 
     m_liteApp->extension()->addObject("LiteApi.ITerminal",this);
+
+    m_fmctxOpenTerminalAct = new QAction(tr("Open in Integrated Terminal"),this);
+    connect(m_fmctxOpenTerminalAct,SIGNAL(triggered()),this,SLOT(fmctxOpenTerminal()));
+    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 }
 
 #ifdef Q_OS_MAC
@@ -340,6 +344,8 @@ Terminal::~Terminal()
 
 void Terminal::openDefaultTerminal(const QString &workDir)
 {
+    m_toolWindowAct->setChecked(true);
+
     QString cmdName = m_curName;
     QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     QString dir = QDir::toNativeSeparators(workDir);
@@ -400,6 +406,24 @@ void Terminal::triggeredListAction(QAction *act)
 {
     int index = act->data().toInt();
     m_tab->setCurrentIndex(index);
+}
+
+void Terminal::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
+{
+    menu->addSeparator();
+    menu->addAction(m_fmctxOpenTerminalAct);
+    m_fmctxFileInfo = info;
+}
+
+void Terminal::fmctxOpenTerminal()
+{
+    QString dir;
+    if (m_fmctxFileInfo.isDir()) {
+        dir = m_fmctxFileInfo.filePath();
+    } else {
+        dir = m_fmctxFileInfo.path();
+    }
+    openDefaultTerminal(dir);
 }
 
 

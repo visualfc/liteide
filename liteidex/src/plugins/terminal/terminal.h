@@ -103,6 +103,8 @@ public slots:
     void appLoaded();
     void aboutToShowListMenu();
     void triggeredListAction(QAction* act);
+    void aboutToShowFolderContextMenu(QMenu* menu,LiteApi::FILESYSTEM_CONTEXT_FLAG flag,const QFileInfo &info);
+    void fmctxOpenTerminal();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
@@ -117,6 +119,8 @@ protected:
     QActionGroup *m_listGroup;
     QList<Command> m_cmdList;
     QString  m_curName;
+    QFileInfo m_fmctxFileInfo;
+    QAction *m_fmctxOpenTerminalAct;
     bool m_darkMode;
     bool m_loginMode;
     int m_indexId;
