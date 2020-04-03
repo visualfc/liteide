@@ -278,10 +278,47 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
     }
     return kv;
 }
+#elif defined(Q_OS_WIN)
+static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
+{
+    QMap<QString,QString> kv;
+    return kv;
+}
 #else
 static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
 {
     QMap<QString,QString> kv;
+    if (QDir("/proc").exists()) {
+        foreach (QString pid, pids) {
+            QFileInfo info("/proc/"+pid+"/cwd");
+            if (info.isSymLink()) {
+                kv[pid] = info.symLinkTarget();
+            }
+        }
+    } else {
+//        pwdx 9194 9947
+//        9194: /home/my
+//        9947: /home/my
+        QString cmd = QString("pwdx %1").arg(pids.join(" "));
+        QMap<QString,QString> kv;
+        QProcess p;
+        p.start(cmd);
+        if (!p.waitForStarted(1000)) {
+            return kv;
+        }
+        if (!p.waitForFinished(3000)) {
+            p.kill();
+            return kv;
+        }
+        QByteArray ar = p.readAllStandardOutput();
+        QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
+        foreach (QString line, lines) {
+            QStringList ar = line.split(":",QString::SkipEmptyParts);
+            if (ar.size() == 2) {
+                kv[ar[0].trimmed()] = ar[1].trimmed();
+            }
+        }
+    }
     return kv;
 }
 #endif
