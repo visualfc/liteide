@@ -256,6 +256,11 @@ IApplication* FileManager::openFolderInNewWindow(const QString &folder)
     return app;
 }
 
+void FileManager::emitAboutToShowFolderContextMenu(QMenu *menu, FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info, const QString &context)
+{
+    emit aboutToShowFolderContextMenu(menu,flag,info);
+}
+
 void FileManager::newFile()
 {
     QString projPath;
