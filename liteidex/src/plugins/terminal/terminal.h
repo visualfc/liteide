@@ -31,6 +31,7 @@
 class QTabWidget;
 class VTermWidget;
 class QAction;
+class QActionGroup;
 
 struct Command
 {
@@ -98,6 +99,8 @@ public slots:
     void toggledLoginMode(bool checked);
     void applyOption(const QString &opt);
     void appLoaded();
+    void aboutToShowListMenu();
+    void triggeredListAction(QAction* act);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
@@ -108,6 +111,8 @@ protected:
     QAction *m_closeTabAct;
     QAction *m_darkModeAct;
     QAction *m_loginModeAct;
+    QMenu   *m_listMenu;
+    QActionGroup *m_listGroup;
     QList<Command> m_cmdList;
     QString  m_curName;
     bool m_darkMode;

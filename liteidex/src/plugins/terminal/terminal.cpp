@@ -36,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QInputDialog>
+#include <QActionGroup>
 
 
 static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
@@ -208,6 +209,14 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 
     actions << m_newTabAct << m_closeTabAct;
 
+
+    m_listMenu = new QMenu;
+    m_listGroup = new QActionGroup(this);
+    m_tab->setListMenu(m_listMenu);
+    connect(m_listMenu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowListMenu()));
+    connect(m_listGroup,SIGNAL(triggered(QAction*)),this,SLOT(triggeredListAction(QAction*)));
+
+
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::BottomDockWidgetArea,m_widget,"Terminal",tr("Terminal"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
@@ -302,6 +311,11 @@ Terminal::~Terminal()
     }
 
     m_liteApp->settings()->endGroup();
+
+    m_listMenu->clear();
+    delete m_listMenu;
+    qDeleteAll(m_listGroup->actions());
+    delete m_listGroup;
 }
 
 void Terminal::appLoaded()
@@ -322,6 +336,37 @@ void Terminal::appLoaded()
     if (m_tab->count() >= 1) {
         m_tab->setCurrentIndex(m_tab->count()-1);
     }
+}
+
+void Terminal::aboutToShowListMenu()
+{
+    m_listMenu->clear();
+    QList<QAction*> actions = m_listGroup->actions();
+    qDeleteAll(actions);
+
+    for (int i = 0; i < m_tab->count(); i++) {
+        TabInfoData data = m_tab->tabData(i).value<TabInfoData>();
+        QString info;
+        if (data.login) {
+            info = QString("%1\t[%2 --login]").arg(m_tab->tabText(i),data.cmd);
+        } else {
+            info = QString("%1\t[%2]").arg(m_tab->tabText(i),data.cmd);
+        }
+        QAction *act = new QAction(info,m_listGroup);
+        act->setData(i);
+        act->setCheckable(true);
+        m_listGroup->addAction(act);
+        if (m_tab->currentIndex() == i) {
+            act->setChecked(true);
+        }
+    }
+    m_listMenu->addActions(m_listGroup->actions());
+}
+
+void Terminal::triggeredListAction(QAction *act)
+{
+    int index = act->data().toInt();
+    m_tab->setCurrentIndex(index);
 }
 
 
