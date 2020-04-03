@@ -142,7 +142,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
     QString bash = GetWindowGitBash();
     QString powershell = GetWindowPowerShell();
     QString shell = GetWindowsShell();
-    m_cmdList.append(makeCommand("cmd",cmd));
+    m_cmdList.append(makeCommand("cmd",shell));
     if (!powershell.isEmpty()) {
         m_cmdList.append(makeCommand("powershell",powershell));
     }
@@ -224,7 +224,9 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : QObject(parent
 
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+#if QT_VERSION >= 0x050000
     connect(m_tab->tabBar(),SIGNAL(tabBarDoubleClicked(int)),this,SLOT(tabBarDoubleClicked(int)));
+#endif
     applyOption(OPTION_LITEAPP);
 }
 
