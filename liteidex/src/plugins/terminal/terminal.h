@@ -103,7 +103,7 @@ public slots:
     void appLoaded();
     void aboutToShowListMenu();
     void triggeredListAction(QAction* act);
-    void aboutToShowFolderContextMenu(QMenu* menu,LiteApi::FILESYSTEM_CONTEXT_FLAG flag,const QFileInfo &info);
+    void aboutToShowFolderContextMenu(QMenu* menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info, const QString &context);
     void fmctxOpenTerminal();
 protected:
     LiteApi::IApplication *m_liteApp;

@@ -95,7 +95,7 @@ public slots:
     void enterTextBuildOutput(QString);
     void keyUpdownBuildOutput(int key);
     void config();
-    void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
+    void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info, const QString &context);
     void fmctxExecuteFile();
     void fmctxDebugFile();
     void fmctxGoLockBuild();

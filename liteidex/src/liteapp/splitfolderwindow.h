@@ -54,6 +54,7 @@ public slots:
     void currentEditorChanged(LiteApi::IEditor *editor);
     void doubleClickedFolderView(const QModelIndex &index);
     void enterKeyPressedFolderView(const QModelIndex &index);
+    void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
 protected:
     LiteApi::IApplication *m_liteApp;
     QSplitter *m_spliter;

@@ -94,7 +94,7 @@ FileSearchManager::FileSearchManager(LiteApi::IApplication *app, QObject *parent
     connect(m_searchItemCombox,SIGNAL(currentIndexChanged(int)),this,SLOT(currentSearchItemChanged(int)));
     connect(m_searchResultWidget,SIGNAL(activated(Find::SearchResultItem)),this,SLOT(activated(Find::SearchResultItem)));
     connect(m_searchResultWidget,SIGNAL(replaceButtonClicked(QString,QList<Find::SearchResultItem>,bool)),this,SLOT(doReplace(QString,QList<Find::SearchResultItem>,bool)));
-    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)));
 }
 
 FileSearchManager::~FileSearchManager()
@@ -158,7 +158,7 @@ void FileSearchManager::showFileSearch(const QString &text, const QString &filte
     search->setSearchInfo(text,filter,path);
 }
 
-void FileSearchManager::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG /*flag*/, const QFileInfo &info)
+void FileSearchManager::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG /*flag*/, const QFileInfo &info, const QString &context)
 {
     if (!info.isDir()) {
         return;

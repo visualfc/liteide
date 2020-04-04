@@ -66,7 +66,7 @@ SplitFolderWindow::SplitFolderWindow(IApplication *app, QObject *parent)
     m_bSyncEditor = false;
 
     connect(m_tree,SIGNAL(currentIndexChanged(QModelIndex,QModelIndex)),this,SLOT(currentIndexChanged(QModelIndex,QModelIndex)));
-    connect(m_tree,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_tree,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_tree,SIGNAL(closeFolderIndex(QModelIndex)),this,SLOT(closeFolderIndex(QModelIndex)));
     connect(m_tree,SIGNAL(reloadFolderIndex(QModelIndex)),this,SLOT(reloadFolderIndex(QModelIndex)));
 
@@ -284,7 +284,7 @@ void SplitFolderWindow::addFolderImpl(const QString &_folder)
     view->setRootPath(folder);
     connect(view,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
     connect(view,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
-    connect(view,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(view,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
 
     m_stacked->addWidget(view);
     m_folderList.append(folder);
@@ -299,6 +299,11 @@ int SplitFolderWindow::findInStacked(const QModelIndex &index)
     }
     QString folder = index.data(Qt::UserRole+1).toString();
     return m_folderList.indexOf(folder);
+}
+
+void SplitFolderWindow::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
+{
+    m_liteApp->fileManager()->emitAboutToShowFolderContextMenu(menu,flag,info,"liteapp/folder");
 }
 
 

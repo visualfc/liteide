@@ -47,7 +47,7 @@ MultiFolderWindow::MultiFolderWindow(LiteApi::IApplication *app, QObject *parent
     m_folderListView->setFilter(filters);
     m_bSyncEditor = false;
 
-    connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_folderListView,SIGNAL(aboutToShowContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
     connect(m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
     connect(m_folderListView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -166,4 +166,9 @@ void MultiFolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
     m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
     m_folderListView->clearSelection();
     m_folderListView->setCurrentIndex(index);
+}
+
+void MultiFolderWindow::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
+{
+    m_liteApp->fileManager()->emitAboutToShowFolderContextMenu(menu,flag,info,"liteapp/folder");
 }

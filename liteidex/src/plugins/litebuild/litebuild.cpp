@@ -331,7 +331,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
     connect(m_output,SIGNAL(tabText(QString)),this,SLOT(enterTextBuildOutput(QString)));
     connect(m_output,SIGNAL(keyUpdown(int)),this,SLOT(keyUpdownBuildOutput(int)));
     connect(m_configAct,SIGNAL(triggered()),this,SLOT(config()));
-    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo)));
+    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)));
     connect(m_checkBoxLockBuild,SIGNAL(toggled(bool)),this,SLOT(lockBuildRoot(bool)));
 
     m_liteAppInfo.insert("LITEIDE_ROOT_PATH",m_liteApp->rootPath());
@@ -502,7 +502,7 @@ void LiteBuild::config()
     }
 }
 
-void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
+void LiteBuild::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info,const QString &context)
 {
     m_fmctxInfo = info;
     if (flag == LiteApi::FILESYSTEM_FILES) {

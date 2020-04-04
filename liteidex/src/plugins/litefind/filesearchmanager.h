@@ -42,7 +42,7 @@ public:
     virtual void setCurrentSearch(LiteApi::IFileSearch *search);
     virtual void showFileSearch(const QString &text, const QString &filter, const QString &path);
 public slots:
-    void aboutToShowFolderContextMenu(QMenu *menu,LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
+    void aboutToShowFolderContextMenu(QMenu *menu,LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info,const QString &context);
     void fmctxFileSearch();
     virtual void newSearch();
     void activated(const Find::SearchResultItem &item);
