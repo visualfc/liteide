@@ -34,7 +34,7 @@
 
 #define TERMINAL_CURCMD "terminal/curcmd"
 #define TERMINAL_DARKMODE "terminal/darkmode"
-#define TERMINAL_LOGINMODE "terminal/loginmode"
+#define TERMINAL_LOGINSHELL "terminal/loginshell"
 
 
 #endif // TERMINAL_GLOBAL_H

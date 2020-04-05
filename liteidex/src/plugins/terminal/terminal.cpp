@@ -165,13 +165,13 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
 #endif
     m_curName = m_liteApp->settings()->value(TERMINAL_CURCMD,m_cmdList[0].name).toString();
     m_darkMode = m_liteApp->settings()->value(TERMINAL_DARKMODE,false).toBool();
-    m_loginMode = m_liteApp->settings()->value(TERMINAL_LOGINMODE,true).toBool();
+    m_loginMode = m_liteApp->settings()->value(TERMINAL_LOGINSHELL,false).toBool();
 
     m_darkModeAct = new QAction(tr("Dark Mode"),this);
     m_darkModeAct->setCheckable(true);
     m_darkModeAct->setChecked(m_darkMode);
 
-    m_loginModeAct = new QAction(tr("Login Mode"),this);
+    m_loginModeAct = new QAction(tr("Login Mode\t(Go environment may be different from LiteIDE)"),this);
     m_loginModeAct->setCheckable(true);
     m_loginModeAct->setChecked(m_loginMode);
 
@@ -349,12 +349,11 @@ void Terminal::openDefaultTerminal(const QString &workDir)
     QString cmdName = m_curName;
     QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     QString dir = QDir::toNativeSeparators(workDir);
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
     VTermWidget *term = new VTermWidget(m_widget);
     int index = m_tab->addTab(term,title);
     m_tab->setCurrentIndex(index);
-    openTerminal(index,term,cmdName,m_loginMode,dir,env);
+    openTerminal(index,term,cmdName,m_loginMode,dir);
 }
 
 void Terminal::appLoaded()
@@ -437,7 +436,7 @@ Command Terminal::lookupCommand(const QString &name)
     return m_cmdList[0];
 }
 
-void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir, const QProcessEnvironment &env)
+void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir)
 {
     Command cmd = lookupCommand(cmdName);
 
@@ -468,10 +467,18 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
 
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
+    if (login) {
+        term->inputWrite(colored("Warning, the Login Shell Go environment may be different from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+        term->inputWrite("\r\n");
+    }
 
     QStringList args = cmd.args;
+    QProcessEnvironment env;
     if (login) {
         args.append(cmd.loginArgs);
+        env = QProcessEnvironment::systemEnvironment();
+    } else {
+        env = LiteApi::getGoEnvironment(m_liteApp);
     }
 
     term->start(cmd.path,args,dir,env.toStringList());
@@ -503,12 +510,11 @@ void Terminal::newTerminal()
         dir = QDir::homePath();
     }
     dir = QDir::toNativeSeparators(dir);
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
     VTermWidget *term = new VTermWidget(m_widget);
     int index = m_tab->addTab(term,title);
     m_tab->setCurrentIndex(index);
-    openTerminal(index,term,cmdName,m_loginMode,dir,env);
+    openTerminal(index,term,cmdName,m_loginMode,dir);
 }
 
 void Terminal::visibilityChanged(bool b)
@@ -571,12 +577,11 @@ void Terminal::tabCurrentChanged(int index)
     data.open = true;
     m_tab->setTabData(index,QVariant::fromValue(data));
     VTermWidget *term = static_cast<VTermWidget*>(m_tab->widget(index));
-    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     QString dir = data.dir;
     if (!data.cwd.isEmpty()) {
         dir = data.cwd;
     }
-    openTerminal(index,term,data.cmd,data.login,dir,env);
+    openTerminal(index,term,data.cmd,data.login,dir);
 }
 
 void Terminal::tabBarDoubleClicked(int index)
@@ -616,7 +621,7 @@ void Terminal::toggledDarkMode(bool checked)
 void Terminal::toggledLoginMode(bool checked)
 {
     m_loginMode = checked;
-    m_liteApp->settings()->setValue(TERMINAL_LOGINMODE,m_loginMode);
+    m_liteApp->settings()->setValue(TERMINAL_LOGINSHELL,m_loginMode);
 }
 
 void Terminal::applyOption(const QString &opt)

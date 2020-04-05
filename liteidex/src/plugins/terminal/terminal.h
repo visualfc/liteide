@@ -83,7 +83,7 @@ public:
     explicit Terminal(LiteApi::IApplication *app, QObject *parent);
     virtual ~Terminal();
     virtual void openDefaultTerminal(const QString &workDir);
-    void openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir, const QProcessEnvironment &env);
+    void openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir);
     Command lookupCommand(const QString &name);
 signals:
 
