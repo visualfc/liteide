@@ -347,11 +347,12 @@ void Terminal::openDefaultTerminal(const QString &workDir)
     m_toolWindowAct->setChecked(true);
 
     QString cmdName = m_curName;
-    QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
+    //QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     QString dir = QDir::toNativeSeparators(workDir);
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
     VTermWidget *term = new VTermWidget(m_widget);
-    int index = m_tab->addTab(term,title);
+    QString title = makeTitle(QFileInfo(dir).fileName());
+    int index = m_tab->addTab(term,title,dir);
     m_tab->setCurrentIndex(index);
     openTerminal(index,term,cmdName,m_loginMode,dir);
 }
@@ -496,11 +497,30 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
     connect(term,SIGNAL(exited()),this,SLOT(termExited()));
 }
 
+QString Terminal::makeTitle(const QString &baseName) const
+{
+    bool rename = false;
+    int index = 0;
+    for (int i = 0; i < m_tab->count(); i++) {
+        QString name = m_tab->tabText(i);
+        if (name == baseName) {
+            rename = true;
+            index++;
+        }
+        if (name.startsWith(baseName+" (")) {
+            index++;
+        }
+    }
+    if (!rename) {
+        return baseName;
+    }
+    return QString("%1 (%2)").arg(baseName).arg(index);
+}
 
 void Terminal::newTerminal()
 {
     QString cmdName = m_curName;
-    QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
+    //QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     QString dir;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     if (editor && !editor->filePath().isEmpty()) {
@@ -510,9 +530,11 @@ void Terminal::newTerminal()
         dir = QDir::homePath();
     }
     dir = QDir::toNativeSeparators(dir);
+    QString title = makeTitle(QFileInfo(dir).fileName());
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
     VTermWidget *term = new VTermWidget(m_widget);
-    int index = m_tab->addTab(term,title);
+    int index = m_tab->addTab(term,title,QDir::toNativeSeparators(dir));
+
     m_tab->setCurrentIndex(index);
     openTerminal(index,term,cmdName,m_loginMode,dir);
 }

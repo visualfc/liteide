@@ -85,6 +85,7 @@ public:
     virtual void openDefaultTerminal(const QString &workDir);
     void openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir);
     Command lookupCommand(const QString &name);
+    QString makeTitle(const QString &baseName) const;
 signals:
 
 public slots:
