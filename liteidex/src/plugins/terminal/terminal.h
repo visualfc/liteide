@@ -47,7 +47,6 @@ struct TabInfoData
 {
     QString cmd;   //command name
     QString dir;   //work dir
-    QString cwd;   //current work dir
     QString title; // tab title
     QString pid; //process id
     bool    login; // --login
@@ -58,7 +57,6 @@ inline QDataStream &operator<<(QDataStream &s, const TabInfoData &data)
 {
     s << data.cmd;
     s << data.dir;
-    s << data.cwd;
     s << data.title;
     s << data.login;
     return s;
@@ -68,7 +66,6 @@ inline QDataStream &operator>>(QDataStream &s, TabInfoData &data)
 {
     s >> data.cmd;
     s >> data.dir;
-    s >> data.cwd;
     s >> data.title;
     s >> data.login;
     return s;
@@ -86,6 +83,7 @@ public:
     void openTerminal(int index, VTermWidget *term, const QString &cmdName, bool login, const QString &workdir);
     Command lookupCommand(const QString &name);
     QString makeTitle(const QString &baseName) const;
+    QString getTabCurrentWorkDir(int index) const;
 signals:
 
 public slots:

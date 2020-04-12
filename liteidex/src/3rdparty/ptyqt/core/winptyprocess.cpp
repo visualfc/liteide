@@ -109,6 +109,7 @@ static bool winpty_init()
     {"winpty_error_msg", (FARPROC*)&winpty_error_msg},
     {"winpty_set_size", (FARPROC*)&winpty_set_size},
     {"winpty_agent_process", (FARPROC*)&winpty_agent_process},
+    {"winpty_get_console_process_list", (FARPROC*)&winpty_get_console_process_list},
     {NULL, NULL}
     };
 
@@ -378,6 +379,15 @@ void WinPtyProcess::moveToThread(QThread *targetThread)
 {
     m_inSocket->moveToThread(targetThread);
     m_outSocket->moveToThread(targetThread);
+}
+
+bool WinPtyProcess::hasProcessList() const
+{
+    int list[64];
+    winpty_error_ptr_t errorPtr = 0;
+    int n = winpty_get_console_process_list(m_ptyHandler,list,64,errorPtr);
+    winpty_error_free(errorPtr);
+    return n >= 1;
 }
 
 void WinPtyProcess::disconnected()

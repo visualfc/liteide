@@ -48,6 +48,7 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
         m_lastError = QString("Error: shell file path must be absolute");
         return false;
     }
+    m_shellName = fi.fileName();
 
     m_shellPath = shellPath;
     m_size = QPair<qint16, qint16>(cols, rows);
@@ -322,6 +323,11 @@ qint64 UnixPtyProcess::write(const QByteArray &byteArray)
 bool UnixPtyProcess::isAvailable()
 {
     return true;
+}
+
+bool UnixPtyProcess::hasProcessList() const
+{
+    return getUnixProc() != m_shellName;
 }
 
 QString UnixPtyProcess::getUnixProc() const

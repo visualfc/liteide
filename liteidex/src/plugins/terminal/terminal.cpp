@@ -329,7 +329,11 @@ Terminal::~Terminal()
         TabInfoData data = m_tab->tabData(i).value<TabInfoData>();
         data.title = m_tab->tabBar()->tabText(i);
         if (!data.pid.isEmpty()) {
-            data.cwd = kv[data.pid];
+            QString dir = kv[data.pid];
+            if (!dir.isEmpty()) {
+                data.dir = dir;
+                data.title = makeTitle(QFileInfo(dir).fileName());
+            }
         }
         m_liteApp->settings()->setValue(key,QVariant::fromValue(data));
     }
@@ -346,9 +350,30 @@ void Terminal::openDefaultTerminal(const QString &workDir)
 {
     m_toolWindowAct->setChecked(true);
 
+    QString dir = QDir::cleanPath(QDir::fromNativeSeparators(workDir));
+
+    for (int i = 0; i < m_tab->count(); i++) {
+        TabInfoData data = m_tab->tabData(i).value<TabInfoData>();
+        QString pwd = getTabCurrentWorkDir(i); // check current work dir is same
+        if (data.dir == dir && pwd == dir) {
+            if (!data.open) {
+                m_tab->setCurrentIndex(i);
+                return;
+            } else {
+                VTermWidget *widget = (VTermWidget*)m_tab->widget(i);
+                if (widget && !widget->process()->hasProcessList()) {
+                    m_tab->setCurrentIndex(i);
+                    widget->setFocus();
+                    return;
+                }
+            }
+        }
+    }
+
+
     QString cmdName = m_curName;
     //QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
-    QString dir = QDir::toNativeSeparators(workDir);
+    dir = QDir::toNativeSeparators(workDir);
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
     VTermWidget *term = new VTermWidget(m_widget);
     QString title = makeTitle(QFileInfo(dir).fileName());
@@ -365,7 +390,7 @@ void Terminal::appLoaded()
         TabInfoData data = m_liteApp->settings()->value(key).value<TabInfoData>();
         if (!data.cmd.isEmpty() && !data.title.isEmpty()) {
             VTermWidget *widget = new VTermWidget(m_widget);
-            int index = m_tab->addTab(widget,data.title);
+            int index = m_tab->addTab(widget,data.title,QDir::toNativeSeparators(data.dir));
             data.open = false;
             m_tab->setTabData(index,QVariant::fromValue(data));
         }
@@ -452,6 +477,7 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
     } else {
         dir = QDir::homePath();
     }
+    dir = QDir::cleanPath(dir);
 
     QString info;
     QString attr;
@@ -486,7 +512,7 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
 
     TabInfoData data;
     data.cmd = cmdName;
-    data.dir = dir;
+    data.dir = QDir::fromNativeSeparators(dir);
     data.login = login;
     data.open = true;
     data.pid = QString("%1").arg(term->process()->pid());
@@ -515,6 +541,22 @@ QString Terminal::makeTitle(const QString &baseName) const
         return baseName;
     }
     return QString("%1 (%2)").arg(baseName).arg(index);
+}
+
+QString Terminal::getTabCurrentWorkDir(int index) const
+{
+    TabInfoData data = m_tab->tabData(index).value<TabInfoData>();
+    if (!data.open) {
+        return data.dir;
+    }
+    VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(index));
+    QString pid = QString("%1").arg(widget->process()->pid());
+    QMap<QString,QString> kv = getProcessWorkDirList(QStringList() << pid);
+    QString dir = kv[pid];
+    if (!dir.isEmpty()) {
+        return dir;
+    }
+    return data.dir;
 }
 
 void Terminal::newTerminal()
@@ -594,16 +636,14 @@ void Terminal::tabCurrentChanged(int index)
         return;
     }
     if (data.open) {
+        VTermWidget *term = static_cast<VTermWidget*>(m_tab->widget(index));
+        term->setFocus();
         return;
     }
     data.open = true;
     m_tab->setTabData(index,QVariant::fromValue(data));
     VTermWidget *term = static_cast<VTermWidget*>(m_tab->widget(index));
-    QString dir = data.dir;
-    if (!data.cwd.isEmpty()) {
-        dir = data.cwd;
-    }
-    openTerminal(index,term,data.cmd,data.login,dir);
+    openTerminal(index,term,data.cmd,data.login,data.dir);
 }
 
 void Terminal::tabBarDoubleClicked(int index)

@@ -47,8 +47,9 @@ public:
     virtual QByteArray readAll();
     virtual qint64 write(const QByteArray &byteArray);
     virtual bool isAvailable();
-    virtual QString getUnixProc() const;
+    virtual bool hasProcessList() const;
     void moveToThread(QThread *targetThread);
+    QString getUnixProc() const;
 public slots:
     void finished(int, QProcess::ExitStatus);
     void readActivated(int socket);
@@ -56,6 +57,7 @@ private:
     ShellProcess m_shellProcess;
     QSocketNotifier *m_readMasterNotify;
     QByteArray m_shellReadBuffer;
+    QString m_shellName;
 
 };
 
