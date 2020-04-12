@@ -384,10 +384,11 @@ void WinPtyProcess::moveToThread(QThread *targetThread)
 bool WinPtyProcess::hasProcessList() const
 {
     int list[64];
-    winpty_error_ptr_t errorPtr = 0;
-    int n = winpty_get_console_process_list(m_ptyHandler,list,64,errorPtr);
-    winpty_error_free(errorPtr);
-    return n >= 1;
+    if (winpty_get_console_process_list) {
+        int n = winpty_get_console_process_list(m_ptyHandler,list,64,0);
+        return n >= 1;
+    }
+    return true;
 }
 
 void WinPtyProcess::disconnected()
