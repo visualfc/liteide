@@ -48,7 +48,11 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
         m_lastError = QString("Error: shell file path must be absolute");
         return false;
     }
+#ifdef Q_OS_MAC
     m_shellName = fi.fileName();
+#else
+    m_shellName = shellPath;
+#endif
 
     m_shellPath = shellPath;
     m_size = QPair<qint16, qint16>(cols, rows);
