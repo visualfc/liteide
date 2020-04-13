@@ -41,6 +41,8 @@
 VTermWidget::VTermWidget(QWidget *parent) : VTermWidgetBase(24,80,parent)
 {
     m_process = PtyQt::createPtyProcess(IPtyProcess::AutoPty);
+    connect(m_process,SIGNAL(started()),this,SIGNAL(started()));
+    connect(m_process,SIGNAL(exited()),this,SIGNAL(exited()));
 }
 
 VTermWidget::~VTermWidget()
@@ -66,7 +68,6 @@ void VTermWidget::start(const QString &program, const QStringList &arguments, co
     }
     connect(m_process->notifier(),SIGNAL(readyRead()),this,SLOT(readyRead()));
     connect(this,SIGNAL(sizeChanged(int,int)),this,SLOT(resizePty(int,int)));
-    connect(m_process,SIGNAL(exited()),this,SIGNAL(exited()));
 }
 
 IPtyProcess *VTermWidget::process() const

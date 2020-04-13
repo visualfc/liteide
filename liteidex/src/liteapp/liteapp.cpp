@@ -302,7 +302,7 @@ LiteApp::LiteApp()
     m_optionManager->addFactory(m_liteAppOptionFactory);
 
     connect(m_goProxy,SIGNAL(stdoutput(QByteArray)),this,SLOT(goproxyDone(QByteArray)));
-    connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideOutputWindow()));
+    //connect(this,SIGNAL(key_escape()),m_mainwindow,SLOT(hideOutputWindow()));
     connect(m_mainwindow,SIGNAL(fullScreenStateChanged(bool)),m_fullScreent,SLOT(setChecked(bool)));
 }
 
@@ -491,6 +491,7 @@ void LiteApp::escape()
         editor->onActive();
     } else {
         emit key_escape();
+        m_mainwindow->hideOutputWindow();
     }
 }
 

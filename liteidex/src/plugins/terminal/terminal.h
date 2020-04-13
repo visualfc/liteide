@@ -84,12 +84,16 @@ public:
     Command lookupCommand(const QString &name);
     QString makeTitle(const QString &baseName) const;
     QString getTabCurrentWorkDir(int index) const;
+    bool eventFilter(QObject *obj, QEvent *e);
+    void loadEnv(int index);
 signals:
 
 public slots:
     void newTerminal();
+    void tabLoadEnv();
     void visibilityChanged(bool b);
     void termExited();
+    void termStarted();
     void termTitleChanged(QString title);
     void tabCloseRequested(int index);
     void tabCurrentChanged(int index);
@@ -112,6 +116,7 @@ protected:
     QAction *m_toolWindowAct;
     QAction *m_newTabAct;
     QAction *m_closeTabAct;
+    QAction *m_loadEnvAct;
     QAction *m_darkModeAct;
     QAction *m_loginModeAct;
     QMenu   *m_listMenu;

@@ -38,6 +38,7 @@ public:
     void start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env);
     IPtyProcess *process() const;
 signals:
+    void started();
     void exited();
 public slots:
     void readyRead();

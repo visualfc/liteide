@@ -29,6 +29,7 @@ UnixPtyProcess::UnixPtyProcess()
 {
     //m_shellProcess.setWorkingDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
     connect(&m_shellProcess,SIGNAL(finished(int, QProcess::ExitStatus)),this,SLOT(finished(int, QProcess::ExitStatus)));
+    connect(&m_shellProcess,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(stateChanged(QProcess::ProcessState)));
 }
 
 UnixPtyProcess::~UnixPtyProcess()
@@ -343,6 +344,13 @@ QString UnixPtyProcess::getUnixProc() const
         free(buf);
     }
     return tmp;
+}
+
+void UnixPtyProcess::stateChanged(QProcess::ProcessState newState)
+{
+    if (newState == QProcess::Starting) {
+        emit started();
+    }
 }
 
 void UnixPtyProcess::moveToThread(QThread *targetThread)

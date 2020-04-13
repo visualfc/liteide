@@ -56,6 +56,7 @@ public:
     void setFont(const QFont &fnt);
     void setTermSize(int rows, int cols);
     void inputWrite(const QByteArray &data);
+    void inputKey(Qt::Key key, Qt::KeyboardModifier mod);
     void setDarkMode(bool b);
     bool isDarkMode() const;
 public:

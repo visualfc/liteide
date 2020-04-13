@@ -37,6 +37,8 @@
 #include <QToolBar>
 #include <QInputDialog>
 #include <QActionGroup>
+#include <QTemporaryFile>
+#include <QApplication>
 
 #ifdef Q_OS_WIN
 static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
@@ -131,6 +133,8 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
     m_closeTabAct = new QAction("Close",this);
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
+    m_loadEnvAct = new QAction("LoadEnv",this);
+    connect(m_loadEnvAct,SIGNAL(triggered()),this,SLOT(tabLoadEnv()));
 
 
     QList<QAction*> actions;
@@ -171,7 +175,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     m_darkModeAct->setCheckable(true);
     m_darkModeAct->setChecked(m_darkMode);
 
-    m_loginModeAct = new QAction(tr("Login Mode\t(Go environment may be different from LiteIDE)"),this);
+    m_loginModeAct = new QAction(tr("Login Mode (shell --login)"),this);
     m_loginModeAct->setCheckable(true);
     m_loginModeAct->setChecked(m_loginMode);
 
@@ -205,7 +209,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
         actions << m_filterMenu->menuAction();
     }
 
-    actions << m_newTabAct << m_closeTabAct;
+    actions << m_newTabAct << m_closeTabAct << m_loadEnvAct;
 
 
     m_listMenu = new QMenu;
@@ -232,6 +236,8 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     m_fmctxOpenTerminalAct = new QAction(tr("Open in Integrated Terminal"),this);
     connect(m_fmctxOpenTerminalAct,SIGNAL(triggered()),this,SLOT(fmctxOpenTerminal()));
     connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)));
+
+    qApp->installEventFilter(this);
 }
 
 #ifdef Q_OS_MAC
@@ -470,6 +476,10 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
     term->updateGeometry();
     term->setDarkMode(m_darkMode);
 
+    connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
+    connect(term,SIGNAL(exited()),this,SLOT(termExited()));
+    connect(term,SIGNAL(started()),this,SLOT(termStarted()));
+
     // check valid or home
     QString dir;
     if (QDir(workdir).exists()) {
@@ -495,7 +505,7 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
     term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
     if (login) {
-        term->inputWrite(colored("Warning, the Login Shell Go environment may be different from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+        term->inputWrite(colored("Warning, the Login Shell Go environment may be different from LiteIDE. Please use LoadEnv action to load environment from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
         term->inputWrite("\r\n");
     }
 
@@ -508,19 +518,19 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
         env = LiteApi::getGoEnvironment(m_liteApp);
     }
 
-    term->start(cmd.path,args,dir,env.toStringList());
-
     TabInfoData data;
     data.cmd = cmdName;
     data.dir = QDir::fromNativeSeparators(dir);
     data.login = login;
+
+    m_tab->setTabData(index,QVariant::fromValue(data));
+
+    term->start(cmd.path,args,dir,env.toStringList());
+
     data.open = true;
     data.pid = QString("%1").arg(term->process()->pid());
 
     m_tab->setTabData(index,QVariant::fromValue(data));
-
-    connect(term,SIGNAL(titleChanged(QString)),this,SLOT(termTitleChanged(QString)));
-    connect(term,SIGNAL(exited()),this,SLOT(termExited()));
 }
 
 QString Terminal::makeTitle(const QString &baseName) const
@@ -559,6 +569,23 @@ QString Terminal::getTabCurrentWorkDir(int index) const
     return data.dir;
 }
 
+bool Terminal::eventFilter(QObject *obj, QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::ShortcutOverride:
+        if (m_toolWindowAct->isChecked() && static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+            e->accept();
+        }
+        break;
+//    case QEvent::KeyPress:
+//        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+//            qDebug() << "escape";
+//        }
+//        break;
+    }
+    return QObject::eventFilter(obj,e);
+}
+
 void Terminal::newTerminal()
 {
     QString cmdName = m_curName;
@@ -579,6 +606,14 @@ void Terminal::newTerminal()
 
     m_tab->setCurrentIndex(index);
     openTerminal(index,term,cmdName,m_loginMode,dir);
+}
+
+void Terminal::tabLoadEnv()
+{
+    int index = m_tab->currentIndex();
+    if (index >= 0) {
+        this->loadEnv(index);
+    }
 }
 
 void Terminal::visibilityChanged(bool b)
@@ -605,6 +640,39 @@ void Terminal::termExited()
         m_tab->removeTab(index);
     }
     widget->deleteLater();
+}
+
+void Terminal::termStarted()
+{
+//    VTermWidget *widget = static_cast<VTermWidget*>(sender());
+//    int index = m_tab->indexOf(widget);
+//    if (index >= 0) {
+//        this->loadEnv(index);
+//    }
+}
+
+void Terminal::loadEnv(int index)
+{
+    VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(index));
+    TabInfoData data = m_tab->tabData(index).value<TabInfoData>();
+    QTemporaryFile file;
+    file.setAutoRemove(false);
+    if (file.open()) {
+        QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+        QStringList list;
+        foreach (QString key, env.keys()) {
+            list << QString("export %1=\"%2\"").arg(key).arg(env.value(key));
+        }
+        file.write("#!/bin/sh\n");
+        file.write("echo Load environment form LiteIDE,\n");
+        file.write(list.join("\n").toUtf8());
+        file.write("\n");
+        file.write("rm "+file.fileName().toUtf8());
+        file.write("\n");
+        file.close();
+    }
+    file.setPermissions(file.permissions() | QFile::ExeUser | QFile::ExeOwner);
+    widget->process()->write("source "+file.fileName().toUtf8()+"\n");
 }
 
 void Terminal::termTitleChanged(QString title)

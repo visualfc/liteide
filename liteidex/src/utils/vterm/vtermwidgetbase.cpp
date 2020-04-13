@@ -511,6 +511,18 @@ void VTermWidgetBase::inputWrite(const QByteArray &data)
     //this->viewport()->update();
 }
 
+void VTermWidgetBase::inputKey(Qt::Key _key, Qt::KeyboardModifier _mod)
+{
+    VTermModifier mod = qt_to_vtermModifier(_mod);
+    VTermKey key = qt_to_vtermKey(_key,_mod & Qt::KeypadModifier);
+    if (key != VTERM_KEY_NONE) {
+        if (key == VTERM_KEY_ESCAPE)
+            mod = VTERM_MOD_NONE;
+        vterm_keyboard_key(m_vt, key, mod);
+    }
+    flushOutput();
+}
+
 void VTermWidgetBase::setDarkMode(bool b)
 {
     m_darkMode = b;

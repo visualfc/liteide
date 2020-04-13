@@ -45,6 +45,7 @@ public:
     const QString lastError() { return m_lastError; }
     bool toggleTrace() { m_trace = !m_trace; return m_trace; }
 signals:
+    void started();
     void exited();
 protected:
     QString m_shellPath;

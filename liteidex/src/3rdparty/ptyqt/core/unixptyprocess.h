@@ -51,6 +51,7 @@ public:
     void moveToThread(QThread *targetThread);
     QString getUnixProc() const;
 public slots:
+    void stateChanged(QProcess::ProcessState newState);
     void finished(int, QProcess::ExitStatus);
     void readActivated(int socket);
 private:
