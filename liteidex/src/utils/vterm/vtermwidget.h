@@ -36,6 +36,7 @@ public:
     virtual ~VTermWidget();
     bool isAvailable() const;
     void start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env);
+    bool isStarted() const;
     IPtyProcess *process() const;
 signals:
     void started();
@@ -49,6 +50,7 @@ protected:
     virtual void keyPressEvent(QKeyEvent *e);
 protected:
     IPtyProcess *m_process;
+    bool m_bStarted;
 };
 
 #endif // VTERMWIDGET_H

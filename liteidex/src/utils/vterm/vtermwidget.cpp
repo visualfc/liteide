@@ -41,6 +41,7 @@
 VTermWidget::VTermWidget(QWidget *parent) : VTermWidgetBase(24,80,parent)
 {
     m_process = PtyQt::createPtyProcess(IPtyProcess::AutoPty);
+    m_bStarted = false;
     connect(m_process,SIGNAL(started()),this,SIGNAL(started()));
     connect(m_process,SIGNAL(exited()),this,SIGNAL(exited()));
 }
@@ -57,6 +58,7 @@ bool VTermWidget::isAvailable() const
 
 void VTermWidget::start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env)
 {
+    m_bStarted = false;
     if (!m_process->isAvailable()) {
         qDebug() << "pty process invalid";
         return;
@@ -66,8 +68,14 @@ void VTermWidget::start(const QString &program, const QStringList &arguments, co
         qDebug() << m_process->lastError();
         return;
     }
+    m_bStarted = true;
     connect(m_process->notifier(),SIGNAL(readyRead()),this,SLOT(readyRead()));
     connect(this,SIGNAL(sizeChanged(int,int)),this,SLOT(resizePty(int,int)));
+}
+
+bool VTermWidget::isStarted() const
+{
+    return m_bStarted;
 }
 
 IPtyProcess *VTermWidget::process() const
@@ -91,6 +99,9 @@ void VTermWidget::resizeEvent(QResizeEvent *e)
 
 void VTermWidget::keyPressEvent(QKeyEvent *e)
 {    
+    if (!m_bStarted) {
+        return;
+    }
 //#ifdef Q_OS_WIN
     // WINDOWS copy & clear selection
     if (hasSelection() && (e == QKeySequence::Copy || e->key() == Qt::Key_Return)) {
@@ -135,10 +146,16 @@ void VTermWidget::keyPressEvent(QKeyEvent *e)
 
 void VTermWidget::resizePty(int rows, int cols)
 {
+    if (!m_bStarted) {
+        return;
+    }
     m_process->resize(cols,rows);
 }
 
 void VTermWidget::write_data(const char *buf, int len)
 {
+    if (!m_bStarted) {
+        return;
+    }
     m_process->write(QByteArray(buf,len));
 }

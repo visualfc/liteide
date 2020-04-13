@@ -152,7 +152,7 @@ WinPtyProcess::WinPtyProcess()
     , m_inSocket(0)
     , m_outSocket(0)
 {
-    winpty_init();
+    m_initPty = winpty_init();
 }
 
 WinPtyProcess::~WinPtyProcess()
@@ -366,13 +366,7 @@ qint64 WinPtyProcess::write(const QByteArray &byteArray)
 
 bool WinPtyProcess::isAvailable()
 {
-#ifdef PTYQT_BUILD_STATIC
-    return QFile::exists(QCoreApplication::applicationDirPath() + "/" + WINPTY_AGENT_NAME);
-#elif PTYQT_BUILD_DYNAMIC
-    return QFile::exists(QCoreApplication::applicationDirPath() + "/" + WINPTY_AGENT_NAME)
-            && QFile::exists(QCoreApplication::applicationDirPath() + "/" + WINPTY_DLL_NAME);
-#endif
-
+    m_initPty;
 }
 
 void WinPtyProcess::moveToThread(QThread *targetThread)
