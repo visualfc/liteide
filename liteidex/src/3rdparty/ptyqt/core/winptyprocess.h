@@ -34,6 +34,7 @@ private:
     QString m_conOutName;
     QLocalSocket *m_inSocket;
     QLocalSocket *m_outSocket;
+    bool m_initPty;
 };
 
 #endif // WINPTYPROCESS_H
