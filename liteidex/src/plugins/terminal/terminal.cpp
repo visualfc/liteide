@@ -133,9 +133,10 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
     m_closeTabAct = new QAction("Close",this);
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
+#ifndef Q_OS_WIN
     m_loadEnvAct = new QAction("LoadEnv",this);
     connect(m_loadEnvAct,SIGNAL(triggered()),this,SLOT(tabLoadEnv()));
-
+#endif
 
     QList<QAction*> actions;
     m_filterMenu = new QMenu(tr("Filter"));
@@ -149,7 +150,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
         m_cmdList.append(makeCommand("powershell",powershell));
     }
     if (!bash.isEmpty()) {
-        m_cmdList.append(makeCommand("bash",bash,QStringList(),QStringList()<<"-l"));
+        m_cmdList.append(makeCommand("bash",bash));
     }
 #else
     QStringList shellList = GetUnixShellList();
@@ -170,22 +171,27 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     m_curName = m_liteApp->settings()->value(TERMINAL_CURCMD,m_cmdList[0].name).toString();
     m_darkMode = m_liteApp->settings()->value(TERMINAL_DARKMODE,false).toBool();
     m_loginMode = m_liteApp->settings()->value(TERMINAL_LOGINSHELL,false).toBool();
+#ifdef Q_OS_WIN
+    m_loginMode = false;
+#endif
 
     m_darkModeAct = new QAction(tr("Dark Mode"),this);
     m_darkModeAct->setCheckable(true);
     m_darkModeAct->setChecked(m_darkMode);
 
-    m_loginModeAct = new QAction(tr("Login Mode (shell --login)"),this);
-    m_loginModeAct->setCheckable(true);
-    m_loginModeAct->setChecked(m_loginMode);
 
     m_newTabAct->setText("New ["+m_curName+"]");
 
     connect(m_darkModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledDarkMode(bool)));
-    connect(m_loginModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledLoginMode(bool)));
 
     m_filterMenu->addAction(m_darkModeAct);
+#ifndef Q_OS_WIN
+    m_loginModeAct = new QAction(tr("Login Mode (shell --login)"),this);
+    m_loginModeAct->setCheckable(true);
+    m_loginModeAct->setChecked(m_loginMode);
     m_filterMenu->addAction(m_loginModeAct);
+    connect(m_loginModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledLoginMode(bool)));
+#endif
 
     if (m_cmdList.size() > 1) {
         QActionGroup *group = new QActionGroup(this);
@@ -209,7 +215,10 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
         actions << m_filterMenu->menuAction();
     }
 
-    actions << m_newTabAct << m_closeTabAct << m_loadEnvAct;
+    actions << m_newTabAct << m_closeTabAct;
+#ifndef Q_OS_WIN
+    actions << m_loadEnvAct;
+#endif
 
 
     m_listMenu = new QMenu;
@@ -498,6 +507,7 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
             attr = "non-login shell";
         }
     } else {
+        login = false;
         attr = "open shell";
     }
     info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(dir);
@@ -661,6 +671,9 @@ void Terminal::loadEnv(int index)
         QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
         QStringList list;
         foreach (QString key, env.keys()) {
+            if (key.contains("(")) {
+                continue;
+            }
             list << QString("export %1=\"%2\"").arg(key).arg(env.value(key));
         }
         file.write("#!/bin/sh\n");
