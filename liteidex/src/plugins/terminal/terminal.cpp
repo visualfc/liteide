@@ -370,7 +370,7 @@ void Terminal::openDefaultTerminal(const QString &workDir)
     for (int i = 0; i < m_tab->count(); i++) {
         TabInfoData data = m_tab->tabData(i).value<TabInfoData>();
         QString pwd = getTabCurrentWorkDir(i); // check current work dir is same
-        if (data.dir == dir && pwd == dir) {
+        if (data.dir == dir && pwd == dir && data.cmd == m_curName) {
             if (!data.open) {
                 m_tab->setCurrentIndex(i);
                 return;
@@ -515,7 +515,9 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
     term->inputWrite(term_color(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
     if (login) {
-        term->inputWrite(term_color("Warning, the Login Shell Go environment may be different from LiteIDE. Please use LoadEnv action to load environment from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+        term->inputWrite(term_color("Warning, the Login Shell Go environment may be different from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+        term->inputWrite("\r\n");
+        term->inputWrite(term_color("Please use LoadEnv action to load environment from LiteIDE if need.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
         term->inputWrite("\r\n");
     }
 
