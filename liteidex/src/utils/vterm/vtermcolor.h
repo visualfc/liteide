@@ -36,7 +36,7 @@ enum TERM_ATTR {
 
 };
 
-inline QString colored(const QString &text, TERM_COLOR fg = TERM_COLOR_DEFAULT,  TERM_COLOR bg = TERM_COLOR_DEFAULT, int attr = TERM_ATTR_NORMAL, bool endResetDefault = true)
+inline QString term_color(const QString &text, TERM_COLOR fg = TERM_COLOR_DEFAULT,  TERM_COLOR bg = TERM_COLOR_DEFAULT, int attr = TERM_ATTR_NORMAL, bool endResetDefault = true)
 {
     if (fg == TERM_COLOR_DEFAULT && bg == TERM_COLOR_DEFAULT && attr == TERM_ATTR_NORMAL) {
         return text;
@@ -87,5 +87,8 @@ inline QString colored(const QString &text, TERM_COLOR fg = TERM_COLOR_DEFAULT, 
     return  QString("\033[%1m%2").arg(attrs.join(";")).arg(text);
 }
 
+inline QString term_bold(const QString &text, int attr = TERM_ATTR_BOLD) {
+    return term_color(text,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,attr,true);
+}
 
 #endif // VTERMCOLOR_H

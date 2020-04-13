@@ -502,10 +502,10 @@ void Terminal::openTerminal(int index, VTermWidget *term, const QString &cmdName
     }
     info = QString("%1: %2 [%3] in %4").arg(QTime::currentTime().toString("hh:mm:ss")).arg(attr).arg(cmd.path).arg(dir);
 
-    term->inputWrite(colored(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+    term->inputWrite(term_color(info,TERM_COLOR_DEFAULT,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
     term->inputWrite("\r\n");
     if (login) {
-        term->inputWrite(colored("Warning, the Login Shell Go environment may be different from LiteIDE. Please use LoadEnv action to load environment from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
+        term->inputWrite(term_color("Warning, the Login Shell Go environment may be different from LiteIDE. Please use LoadEnv action to load environment from LiteIDE.",TERM_COLOR_RED,TERM_COLOR_DEFAULT,TERM_ATTR_BOLD).toUtf8());
         term->inputWrite("\r\n");
     }
 
@@ -664,7 +664,8 @@ void Terminal::loadEnv(int index)
             list << QString("export %1=\"%2\"").arg(key).arg(env.value(key));
         }
         file.write("#!/bin/sh\n");
-        file.write("echo Load environment form LiteIDE,\n");
+        file.write("echo "+term_bold("Load environment form LiteIDE.").toUtf8());
+        file.write("\n");
         file.write(list.join("\n").toUtf8());
         file.write("\n");
         file.write("rm "+file.fileName().toUtf8());
