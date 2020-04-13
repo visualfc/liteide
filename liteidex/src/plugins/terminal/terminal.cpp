@@ -585,15 +585,10 @@ bool Terminal::eventFilter(QObject *obj, QEvent *e)
 {
     switch (e->type()) {
     case QEvent::ShortcutOverride:
-        if (m_toolWindowAct->isChecked() && static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
+        if (qApp->focusWidget() == m_tab->currentWidget() && static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
             e->accept();
         }
         break;
-//    case QEvent::KeyPress:
-//        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Escape) {
-//            qDebug() << "escape";
-//        }
-//        break;
     }
     return QObject::eventFilter(obj,e);
 }
