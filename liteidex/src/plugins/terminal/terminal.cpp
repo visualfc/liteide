@@ -130,11 +130,14 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     layout->addWidget(m_tab->stackedWidget());
 
     m_newTabAct = new QAction("New",this);
+    m_newTabAct->setToolTip(tr("Open a new terminal"));
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
     m_closeTabAct = new QAction("Close",this);
+    m_closeTabAct->setToolTip(tr("Close current terminal"));
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
 #ifndef Q_OS_WIN
     m_loadEnvAct = new QAction("LoadEnv",this);
+    m_loadEnvAct->setToolTip(tr("Current terminal load environment from LiteIDE"));
     connect(m_loadEnvAct,SIGNAL(triggered()),this,SLOT(tabLoadEnv()));
 #endif
 
@@ -661,6 +664,9 @@ void Terminal::termStarted()
 void Terminal::loadEnv(int index)
 {
     VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(index));
+    if (widget->process()->hasProcessList()) {
+        return;
+    }
     TabInfoData data = m_tab->tabData(index).value<TabInfoData>();
     QTemporaryFile file;
     file.setAutoRemove(false);
