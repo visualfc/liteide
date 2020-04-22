@@ -6,7 +6,6 @@ include(../../api/terminalapi/terminalapi.pri)
 include(../../utils/vterm/vterm.pri)
 include(../../utils/tabwidget/tabwidget.pri)
 
-
 DEFINES += TERMINAL_LIBRARY
 
 win32 {

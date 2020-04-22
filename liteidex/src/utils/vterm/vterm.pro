@@ -1,4 +1,4 @@
-TARGET = vterm
+TARGET = vtermwidget
 TEMPLATE = lib
 CONFIG += staticlib
 

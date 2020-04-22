@@ -24,13 +24,14 @@
 #ifndef VTERMWIDGETBASE_H
 #define VTERMWIDGETBASE_H
 
+extern "C" {
+#include "libvterm/include/vterm.h"
+}
+
 #include <QAbstractScrollArea>
 #include <QBasicTimer>
 #include <QDebug>
 
-extern "C" {
-#include "libvterm/include/vterm.h"
-}
 
 typedef struct
 {
