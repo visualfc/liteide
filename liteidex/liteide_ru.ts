@@ -4642,6 +4642,18 @@ Do you want to replace it?</source>
         <source>Rename Tab Title</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Закрыть</translation>
+    </message>
+    <message>
+        <source>LoadEnv</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TerminalEdit</name>

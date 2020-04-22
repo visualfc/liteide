@@ -5736,13 +5736,30 @@ Do you want to replace it?</source>
 <context>
     <name>Terminal</name>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="132"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="186"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="759"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="133"/>
         <source>Open a new terminal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="135"/>
+        <source>Close</source>
+        <translation type="unfinished">Закрити</translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="136"/>
         <source>Close current terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="139"/>
+        <source>LoadEnv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

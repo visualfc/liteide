@@ -5710,14 +5710,31 @@ Do you want to replace it?</source>
 <context>
     <name>Terminal</name>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="132"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="186"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="759"/>
+        <source>New</source>
+        <translation>新建</translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="133"/>
         <source>Open a new terminal</source>
         <translation>新建终端</translation>
     </message>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="135"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="136"/>
         <source>Close current terminal</source>
         <translation>关闭当前终端</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="139"/>
+        <source>LoadEnv</source>
+        <translation>加载环境</translation>
     </message>
     <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="140"/>

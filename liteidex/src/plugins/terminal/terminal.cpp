@@ -129,14 +129,14 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     layout->addWidget(m_tab->tabBarWidget());
     layout->addWidget(m_tab->stackedWidget());
 
-    m_newTabAct = new QAction("New",this);
+    m_newTabAct = new QAction(tr("New"),this);
     m_newTabAct->setToolTip(tr("Open a new terminal"));
     connect(m_newTabAct,SIGNAL(triggered()),this,SLOT(newTerminal()));
-    m_closeTabAct = new QAction("Close",this);
+    m_closeTabAct = new QAction(tr("Close"),this);
     m_closeTabAct->setToolTip(tr("Close current terminal"));
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
 #ifndef Q_OS_WIN
-    m_loadEnvAct = new QAction("LoadEnv",this);
+    m_loadEnvAct = new QAction(tr("LoadEnv"),this);
     m_loadEnvAct->setToolTip(tr("Current terminal load environment from LiteIDE"));
     connect(m_loadEnvAct,SIGNAL(triggered()),this,SLOT(tabLoadEnv()));
 #endif
@@ -183,7 +183,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     m_darkModeAct->setChecked(m_darkMode);
 
 
-    m_newTabAct->setText("New ["+m_curName+"]");
+    m_newTabAct->setText(tr("New")+" ["+m_curName+"]");
 
     connect(m_darkModeAct,SIGNAL(toggled(bool)),this,SLOT(toggledDarkMode(bool)));
 
@@ -756,7 +756,7 @@ void Terminal::triggeredCmd(QAction *act)
 {
     m_curName = act->data().toString();
     m_liteApp->settings()->setValue(TERMINAL_CURCMD,m_curName);
-    m_newTabAct->setText("New ["+m_curName+"]");
+    m_newTabAct->setText(tr("New")+ " ["+m_curName+"]");
 }
 
 void Terminal::toggledDarkMode(bool checked)
