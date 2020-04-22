@@ -1056,10 +1056,6 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Debug File</source>
         <translation>Отладить файл</translation>
     </message>
-    <message>
-        <source>File Search</source>
-        <translation>Поиск файлов</translation>
-    </message>
 </context>
 <context>
     <name>FileBrowserOption</name>
@@ -1540,6 +1536,14 @@ Want to replace to all the search items to whitespace?</source>
             <numerusform>%n совпадения.</numerusform>
             <numerusform>%n совпадений.</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Expand all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collapse all items</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4598,6 +4602,45 @@ Do you want to replace it?</source>
     <message>
         <source>Tool Windows</source>
         <translation>Панели инструментов</translation>
+    </message>
+</context>
+<context>
+    <name>Terminal</name>
+    <message>
+        <source>Open a new terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close current terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current terminal load environment from LiteIDE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished">Фильтр</translation>
+    </message>
+    <message>
+        <source>Dark Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login Mode (shell --login)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terminal</source>
+        <translation type="unfinished">Командная строка</translation>
+    </message>
+    <message>
+        <source>Open in Integrated Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Tab Title</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
