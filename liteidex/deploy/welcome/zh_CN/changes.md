@@ -3,6 +3,40 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2020.04.22 Ver X37
+* LiteIDE
+    * add new terminal plugin
+    * change LiteApi, IToolWindowManager and IFileManager api
+* Terminal:
+    * new terminal plugin
+    * export open in integrated terminal action
+    * support open multiple shells (/etc/shells) on unix
+    * support open cmd/powershell/git bash on window
+    * support dark mode
+    * support login mode --login (unix)
+    * load enviroment from LiteIDE action (unix)
+    * tab style multiple terminal
+    * auto save / restore terminal info
+    * ctrl+c key interrupt support
+    * mouse to select, enter key copy to clipboard (ctrl+c/command+c) 
+    * ctrl+v / command+v to paste from clipboard
+* LiteApp
+    * folder add open integrated terminal action
+    * update hide tool window action icon.
+    * fix SideWindowStyle::moveToolWindow crash
+    * fix #1106, options widget add ScrollArea, enable resize, init check screen size
+* LiteEditor
+    * change copy/paste/cut/selectall/undo/redo unregister shortcut for macos
+* FileBorwser:
+    * add open integrated terminal action
+    * simple, remove litefind/terminal depends
+* LiteFind
+    * SearchResultWidget add expandAll and collapseAll button
+* GolangEdit
+    * fix fold by GO_ELSE
+* gotools & gocode
+    * fix & update for Go 1.14
+
 ### 2020.01.15 Ver X36.3
 * LiteIDE
     * fix and update gotools&gocode for support Go Module. 

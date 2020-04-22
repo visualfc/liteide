@@ -9,7 +9,7 @@ LiteIDE X
 
 _LiteIDE is a simple, open source, cross-platform Go IDE._
 
-* Version: X36.3 (support go1.11 Go modules)
+* Version: X37 (support Go modules)
 * Author: [visualfc](mailto:visualfc@gmail.com)
 
 ### Features
@@ -21,6 +21,7 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
     * Support files search replace and revert
     * Quick open file, symbol and commands
     * Plug-in system
+    * Integrated terminal
 
 * Advanced code editor
     * Code editor supports Golang, Markdown and Golang Present
