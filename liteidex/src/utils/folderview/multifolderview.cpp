@@ -243,6 +243,7 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_newFileAct);
         m_contextMenu->addAction(m_newFileWizardAct);
+        m_contextMenu->addAction(m_newFolderAct);
         m_contextMenu->addAction(m_renameFileAct);
 
         if (this->canMoveToTrash()) {

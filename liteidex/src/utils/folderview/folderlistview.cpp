@@ -228,6 +228,7 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addSeparator();
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
+        menu.addAction(m_newFolderAct);
         menu.addAction(m_renameFileAct);
         menu.addAction(m_removeFileAct);
         menu.addSeparator();
