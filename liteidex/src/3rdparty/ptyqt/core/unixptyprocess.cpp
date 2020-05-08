@@ -12,6 +12,12 @@
 #include <QCoreApplication>
 #include <signal.h>
 
+// support for build with MUSL on Alpine Linux
+#ifndef _PATH_UTMPX
+#include <sys/time.h>
+# define _PATH_UTMPX	"/var/log/utmp"
+#endif
+
 /* for pty_getproc */
 #if defined(__linux__)
 #include <stdio.h>
