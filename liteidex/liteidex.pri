@@ -97,7 +97,3 @@ linux* {
         DEFINES += LITEIDE_QTWEBKIT
     }
 }
-
-HEADERS += \
-    $$PWD/src/utils/vterm/vtermcolor.h
-
