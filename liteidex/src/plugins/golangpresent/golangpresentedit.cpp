@@ -233,7 +233,7 @@ void GolangPresentEdit::extOutput(const QByteArray &data, bool bError)
     } else {
         QString msg = QString::fromUtf8(data);
         m_editor->setNavigateHead(LiteApi::EditorNavigateError,msg);
-        QRegExp re("(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):");
+        QRegExp re("(\\w?:?[\\w\\d_@\\-\\\\/\\.]+):(\\d+):");
         if ((re.indexIn(msg)>=0) && re.captureCount() >= 2) {
             bool ok = false;
             int line = re.cap(2).toInt(&ok);

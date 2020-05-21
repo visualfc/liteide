@@ -4,7 +4,7 @@
 		<config id="Go" name="GO" value="go"/>
 		<config id="GoFmt" name="GOFMT" value="gofmt"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
-		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_\-\\\/\.]+):(\d+)\b"/>
+		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_@\-\\\/\.]+):(\d+)\b"/>
 		<custom id="TargetBaseName" name="TARGETBASENAME" value="$(BUILD_DIR_NAME)"/>
 		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>

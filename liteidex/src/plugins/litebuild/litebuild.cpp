@@ -633,7 +633,7 @@ void LiteBuild::fmctxGoTool()
     QString cmd = FileUtil::lookupGoBin("go",m_liteApp,sysenv,false);
     args = this->envToValue(args,env,sysenv);
 
-    m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
+    m_outputRegex = "(\\w?:?[\\w\\d_@\\-\\\\/\\.]+):(\\d+):";
     m_process->setUserData(ID_REGEXP,m_outputRegex);
     if (!cmd.isEmpty()) {
         m_liteApp->editorManager()->saveAllEditors();
@@ -646,7 +646,7 @@ void LiteBuild::fmctxGofmt()
 {
     QString args = "gofmt -l -w .";
     QString cmd = LiteApi::getGotools(m_liteApp);
-    m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
+    m_outputRegex = "(\\w?:?[\\w\\d_@\\-\\\\/\\.]+):(\\d+):";
     m_process->setUserData(ID_REGEXP,m_outputRegex);
     if (!cmd.isEmpty()) {
         m_liteApp->editorManager()->saveAllEditors();
@@ -1843,7 +1843,7 @@ void LiteBuild::dbclickBuildOutput(const QTextCursor &cur)
 {
     if (m_outputRegex.isEmpty()) {
         //m_outputRegex = "([\\w\\d_\\\\/\\.]+):(\\d+):";
-        m_outputRegex = "(\\w?:?[\\w\\d_\\-\\\\/\\.]+):(\\d+):";
+        m_outputRegex = "(\\w?:?[\\w\\d_@\\-\\\\/\\.]+):(\\d+):";
     }
     QRegExp rep(m_outputRegex);//"([\\w\\d:_\\\\/\\.]+):(\\d+)");
 

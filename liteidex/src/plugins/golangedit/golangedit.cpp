@@ -1110,7 +1110,7 @@ void GolangEdit::dbclickSourceQueryOutput(const QTextCursor &cursor)
     }
 
     bool hasGotoLine = false;
-    QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_\\s\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
+    QRegExp reg("((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\\\/\\.]+):(\\d+)[\\.:]?(\\d+)?\\-?(\\d+)?\\.?(\\d+)?\\b");
     if (reg.indexIn(text) >= 0) {
         hasGotoLine = true;
     }
