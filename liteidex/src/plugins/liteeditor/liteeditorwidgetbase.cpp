@@ -28,6 +28,7 @@
 #include <QApplication>
 #include <QTextBlock>
 #include <QPainter>
+#include <QPainterPath>
 #include <QStyle>
 #include <QDebug>
 #include <QMessageBox>

@@ -26,8 +26,14 @@
 #include <QHostAddress>
 #include <QUrl>
 #include <QDebug>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+#include <qjsondocument.h>
+#else
 #include "qjsonrpc/src/json/qjson_export.h"
 #include "qjsonrpc/src/json/qjsondocument.h"
+#endif
+
 #include "qjsonrpc/src/qjsonrpcservicereply.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
