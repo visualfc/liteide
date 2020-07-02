@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="text/x-goplus" id="goplus tool" work="$(BUILD_DIR_PATH)" lock="dir" ver="2">
+		<config id="qrun" name="QRUN" value="qrun"/>
+		<config id="qfmt" name="QFMT" value="qfmt"/>
+		<config id="qgo" name="QGO" value="qgo"/>
+		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
+		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_@\-\\\/\.]+):(\d+)\b"/>
+		<action id="Run" img="run.png" key="Ctrl+R" cmd="$(QRUN)" args="." output="true" codec="utf-8" save="all" readline="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="FileRun" img="filerun.png" key="Shift+Alt+R" cmd="$(QRUN)" args="$(EDITOR_FILE_NAME)" save="all" output="true" codec="utf-8" readline="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="GenGo" menu="" img="get.png" cmd="$(QGO)" args="." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="Format" menu="" img="fmt.png" cmd="$(QFMT)" args="-w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+	</mime-type>
+</mime-info>
