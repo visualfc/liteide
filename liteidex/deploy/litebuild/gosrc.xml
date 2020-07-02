@@ -21,6 +21,7 @@
 		<custom id="TestBuildArgs" name="TESTBUILDARGS" value="-c -gcflags &quot;-N -l&quot;" shared-value="$(BUILDFLAGS)"/>
 		<custom id="TestCoverArgs" name="TESTCOVERARGS" value="-coverprofile cover.out" shared-value="$(BUILDFLAGS)"/>
 		<custom id="ToolCoverArgs" name="TOOLCOVERARGS" value="-func=cover.out"/>
+		<custom id="ToolCoverHtmlArgs" name="TOOLCOVERHTMLARGS" value="-html=cover.out"/>
 		<custom id="VetArgs" name="VETARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="ToolVetArgs" name="TOOLVETARGS" value="-all -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GenerateArgs" name="GENERATEARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
@@ -50,8 +51,10 @@
 		<action id="TestBench" menu="Test" img="testbench.png" cmd="$(GO)" args="test $(BENCHMARKARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="TestBuild" menu="Test" img="buildtest.png" cmd="$(GO)" args="test $(TESTBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)"/>
 		<action id="TestCover" menu="Test" img="testcover.png" key="" task="Cover;ToolCover" killold="true"/>
+		<action id="TestCoverHtml" menu="Test" img="testcover.png" key="" task="Cover;ToolCoverHtml" killold="true"/>
 		<action id="Cover" menu="Test" img="cover.png" key = "" cmd="$(GO)" args="test $(TESTCOVERARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="ToolCover" menu="Test" img="cover.png" key = "" cmd="$(GO)" args="tool cover $(TOOLCOVERARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
+		<action id="ToolCoverHtml" menu="Test" img="cover.png" key = "" cmd="$(GO)" args="tool cover $(TOOLCOVERHTMLARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="Utils" folder="true" img="utils.png"/>
 		<action id="GoFmt" menu="Utils" img="fmt.png" cmd="$(GO)" args="fmt" save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GoFmtAll" menu="Utils" img="fmt.png" cmd="$(GOFMT)" args="-l -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
