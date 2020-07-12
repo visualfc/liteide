@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="text/x-gosrc" id="go tool" work="$(BUILD_DIR_PATH)" lock="dir" ver="2">
+
+    <custom id="Makefile" name="MAKEFILE" value="Makefile" />
+    <custom id="MakeArgs" name="MAKEARGS" value="" />
+
 		<config id="Go" name="GO" value="go"/>
 		<config id="GoFmt" name="GOFMT" value="gofmt"/>
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
@@ -31,6 +35,9 @@
 		<custom id="DebugWorkDir" name = "DEBUGWORKDIR" value="$(TARGTWORKDIR)"/>
 		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -v -o $(DEBUGNAME)"/>
 		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -c -o $(DEBUGTESTNAME)"/>
+
+		<action id="Make" key="Ctrl+M" img="module.png" cmd="make" args="-f $(MAKEFILE) $(MAKEARGS)" save="editor" output="true" codec="utf-8" regex="$(ERRREGEX)" readline="true" />
+
 		<action id="BuildAndRun" img="buildrun.png" key="Ctrl+R;Ctrl+F7" task="Build;Run" killold="true"/>
 		<action id="Run" img="run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true" work="$(TARGTWORKDIR)"/>
 		<action id="RunTerm" img="runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd $(TARGETNAME) $(TARGETARGS)" output="false" readline="true" work="$(TARGTWORKDIR)"/>
