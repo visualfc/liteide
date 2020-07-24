@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
 ** This file is part of LiteIDE
 **
 ** Copyright (c) 2011-2019 LiteIDE. All rights reserved.
@@ -40,7 +40,7 @@ public:
 protected:
     bool            m_bLoaded;
     QAction         *m_aboutPluginsAct;
-    QList<IPluginFactory*> m_factroyList;
+    QList<IPluginFactory*> m_factoryList;
 };
 
 #endif // PLUGINMANAGER_H

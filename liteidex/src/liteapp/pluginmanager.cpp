@@ -42,12 +42,12 @@
 
 PluginManager::~PluginManager()
 {
-    qDeleteAll(m_factroyList);
+    qDeleteAll(m_factoryList);
 }
 
 QList<IPluginFactory*> PluginManager::factoryList()
 {
-    return m_factroyList;
+    return m_factoryList;
 }
 
 void PluginManager::loadPlugins(const QString &dir)
@@ -92,7 +92,7 @@ void PluginManager::loadPlugins(const QString &dir)
     qSort(keys);
     foreach(int index, keys) {
         foreach(IPluginFactory *p, deps.values(index)) {
-            m_factroyList.append(p);
+            m_factoryList.append(p);
         }
     }
 }
