@@ -45,13 +45,13 @@ if defined %GOPATH (
 	set GOPATH=%CD%
 )
 
-go install -ldflags "-s" -v github.com/visualfc/gotools 
+go install -v github.com/visualfc/gotools 
 if ERRORLEVEL 1 goto go_fail
 
-go install -ldflags "-s" -v github.com/visualfc/gocode
+go install -v github.com/visualfc/gocode
 if ERRORLEVEL 1 goto go_fail
 
-go install -ldflags "-s" -v github.com/fatih/gomodifytags
+go install -v github.com/fatih/gomodifytags
 if ERRORLEVEL 1 goto go_fail
 
 echo export qrc images
