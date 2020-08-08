@@ -105,10 +105,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_findAllUseSkipGorootAct = new QAction(QString("%1 (Module/GOPATH)").arg(tr("Find Usages")),this);
     actionContext->regAction(m_findAllUseSkipGorootAct,"FindAllUsagesSkipGOROOT","CTRL+ALT+U");
 
-    m_findAllUseWithGorootAct = new QAction(QString("%1 (Module/GOPATH) with GOROOT").arg(tr("Find Usages")),this);
+    m_findAllUseWithGorootAct = new QAction(QString(tr("%1 (Module/GOPATH) with GOROOT")).arg(tr("Find Usages")),this);
     actionContext->regAction(m_findAllUseWithGorootAct,"FindAllUsagesWithGOROOT","");
 
-    m_renameAllSymbolWithGorootAct = new QAction(QString("%1 (Module/GOPATH) with GOROOT").arg(tr("Rename Symbol Under Cursor")),this);
+    m_renameAllSymbolWithGorootAct = new QAction(QString(tr("%1 (Module/GOPATH) with GOROOT")).arg(tr("Rename Symbol Under Cursor")),this);
     actionContext->regAction(m_renameAllSymbolWithGorootAct,"RenameAllSymbolWithGOROOT","");
 
     m_renameAllSymbolSkipGorootAct = new QAction(QString("%1 (Module/GOPATH)").arg(tr("Rename Symbol Under Cursor")),this);
