@@ -4048,7 +4048,6 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             for (int i = 0; i < text.length(); i++) {
                 QTextLine line = layout->lineForTextPosition(i);
                 if (line.cursorToX(i) > er.right()) {
-                    qDebug() << "skip" << i << line.x();
                     break;
                 }
                 if (text.at(i) == '\t') {
