@@ -1,4 +1,3 @@
-include(../qjsonrpc.pri)
 include(http-parser/http-parser.pri)
 
 INCLUDEPATH += .

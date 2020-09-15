@@ -13,12 +13,11 @@ private-headers {
 
 QT += network
 QJSONRPC_INCLUDEPATH = $${PWD}/src
-QJSONRPC_LIBS = -lqjsonrpc
+
 contains(QJSONRPC_LIBRARY_TYPE, staticlib) {
     DEFINES += QJSONRPC_STATIC
 } else {
     DEFINES += QJSONRPC_SHARED
-    win32:QJSONRPC_LIBS = -lqjsonrpc1
 }
 
 isEmpty(PREFIX) {
@@ -32,4 +31,4 @@ isEmpty(LIBDIR) {
     LIBDIR = lib
 }
 
- LIBS *= $$QJSONRPC_LIBS
+ LIBS *= -l$$qtLibraryName(qjsonrpc)
