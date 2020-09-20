@@ -274,6 +274,10 @@ void DlvRpcDebugger::stop()
         return;
     }
     m_dlvExit = true;
+
+    m_dlvClient->Detach();
+    m_headlessProcess->waitForFinished(500);
+
     if (!m_headlessProcess->isStop()) {
         m_headlessProcess->interrupt();
     }
