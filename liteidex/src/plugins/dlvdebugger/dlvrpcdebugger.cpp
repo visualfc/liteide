@@ -275,11 +275,12 @@ void DlvRpcDebugger::stop()
     }
     m_dlvExit = true;
 
-    m_dlvClient->Detach();
-    m_headlessProcess->waitForFinished(500);
-
     if (!m_headlessProcess->isStop()) {
-        m_headlessProcess->interrupt();
+        m_dlvClient->Detach();
+        m_headlessProcess->waitForFinished(500);
+        if (!m_headlessProcess->isStop()) {
+            m_headlessProcess->interrupt();
+        }
     }
     if (!m_process->isStop()) {
         m_process->interrupt();
