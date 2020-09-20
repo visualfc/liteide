@@ -135,6 +135,9 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     m_closeTabAct = new QAction(tr("Close"),this);
     m_closeTabAct->setToolTip(tr("Close current terminal"));
     connect(m_closeTabAct,SIGNAL(triggered()),this,SLOT(closeCurrenTab()));
+    m_closeAllTabAct = new QAction(tr("CloseAll"),this);
+    m_closeAllTabAct->setToolTip(tr("Close all terminal"));
+    connect(m_closeAllTabAct,SIGNAL(triggered()),this,SLOT(closeAllTab()));
 #ifndef Q_OS_WIN
     m_loadEnvAct = new QAction(tr("LoadEnv"),this);
     m_loadEnvAct->setToolTip(tr("Current terminal load environment from LiteIDE"));
@@ -218,7 +221,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
         actions << m_filterMenu->menuAction();
     }
 
-    actions << m_newTabAct << m_closeTabAct;
+    actions << m_newTabAct << m_closeTabAct << m_closeAllTabAct;
 #ifndef Q_OS_WIN
     actions << m_loadEnvAct;
 #endif
@@ -749,6 +752,17 @@ void Terminal::closeCurrenTab()
     int index = m_tab->currentIndex();
     if (index >= 0) {
         tabCloseRequested(index);
+    }
+}
+
+void Terminal::closeAllTab()
+{
+    for (int i = m_tab->count()-1; i >= 0; i--) {
+        VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(i));
+        m_tab->removeTab(i);
+        if (widget) {
+            widget->deleteLater();
+        }
     }
 }
 

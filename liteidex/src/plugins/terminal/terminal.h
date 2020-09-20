@@ -99,6 +99,7 @@ public slots:
     void tabCurrentChanged(int index);
     void tabBarDoubleClicked(int index);
     void closeCurrenTab();
+    void closeAllTab();
     void triggeredCmd(QAction* act);
     void toggledDarkMode(bool checked);
     void toggledLoginMode(bool checked);
@@ -116,6 +117,7 @@ protected:
     QAction *m_toolWindowAct;
     QAction *m_newTabAct;
     QAction *m_closeTabAct;
+    QAction *m_closeAllTabAct;
     QAction *m_loadEnvAct;
     QAction *m_darkModeAct;
     QAction *m_loginModeAct;
