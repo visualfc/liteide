@@ -10,7 +10,11 @@
 #define DEBUG_VAR_ACTUAL "WINPTY_DEBUG"
 #define SHOW_CONSOLE_VAR "WINPTY_SHOW_CONSOLE"
 #define WINPTY_AGENT_NAME "winpty-agent.exe"
+#ifdef Q_OS_WIN64
+#define WINPTY_DLL_NAME "winpty64.dll"
+#else
 #define WINPTY_DLL_NAME "winpty32.dll"
+#endif
 
 //#define WINPTY_DLL "winpty.dll"
 
@@ -131,8 +135,9 @@ static bool winpty_init()
         if ((*winpty_entry[i].ptr = (FARPROC)GetProcAddress(hWinPtyDLL,
                                                             winpty_entry[i].name)) == NULL)
         {
-            hWinPtyDLL = NULL;
-            return false;
+            qDebug() << "GetProcAddress false" << winpty_entry[i].name;
+       //     hWinPtyDLL = NULL;
+       //     return false;
         }
     }
 
@@ -366,7 +371,7 @@ qint64 WinPtyProcess::write(const QByteArray &byteArray)
 
 bool WinPtyProcess::isAvailable()
 {
-    m_initPty;
+    return m_initPty;
 }
 
 void WinPtyProcess::moveToThread(QThread *targetThread)
