@@ -93,7 +93,7 @@ void GolangFileSearch::setSearchInfo(const QString &/*text*/, const QString &/*f
 
 }
 
-void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool skip_goroot, bool replace)
+void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool skip_goroot, bool skip_tests, bool replace)
 {
     if (!m_process->isStop()) {
         m_process->stopAndWait(100,2000);
@@ -147,6 +147,9 @@ void GolangFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curs
     if (skip_goroot) {
         args << "-skip_goroot";
     }
+    if (skip_tests) {
+		args << "-skip_tests";
+	}
     args << ".";
 
     emit findStarted();

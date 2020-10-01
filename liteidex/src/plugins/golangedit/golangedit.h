@@ -82,6 +82,7 @@ public slots:
     void editorFindUsages();
     void editorFindUsagesGlobal();
     void editorFindUsagesSkipGoroot();
+    void editorFindUsagesSkipTests();
     void editorRenameSymbol();
     void editorRenameSymbolGlobal();
     void editorRenameSymbolSkipGoroot();
@@ -139,6 +140,7 @@ protected:
     QAction *m_findUseAct;
     QAction *m_findAllUseWithGorootAct;
     QAction *m_findAllUseSkipGorootAct;
+	QAction *m_findAllUseSkipTestsAct;
     QAction *m_renameSymbolAct;
     QAction *m_renameAllSymbolWithGorootAct;
     QAction *m_renameAllSymbolSkipGorootAct;
