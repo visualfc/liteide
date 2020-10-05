@@ -92,7 +92,7 @@ public:
     virtual bool replaceMode() const;
     virtual bool canCancel() const { return false; }
     virtual void setSearchInfo(const QString &text, const QString &fitler, const QString &path);
-    void findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool skip_goroot, bool replace);
+    void findUsages(LiteApi::ITextEditor *editor, QTextCursor cursor, bool global, bool skip_goroot, bool skip_tests, bool replace);
 public slots:
     void findUsagesStarted();
     void findUsagesOutput(QByteArray,bool);
