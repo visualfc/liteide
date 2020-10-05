@@ -382,6 +382,8 @@ protected:
     NavigateManager *m_navigateManager;
     bool m_inBlockSelectionMode;
     TextEditor::BaseTextBlockSelection m_blockSelection;
+    void showTipText(const QPoint &pos, const QString &text, QWidget *widget);
+    void hideTipText();
 };
 
 inline bool isIdentifierChar(const QChar &ch)

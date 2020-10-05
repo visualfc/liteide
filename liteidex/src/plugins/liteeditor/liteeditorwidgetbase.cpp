@@ -1178,7 +1178,7 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
         if (isInNavigateHead(e->pos())) {
             tooltip = true;
             QPoint pos(1,1);
-            QToolTip::showText(m_navigateArea->mapToGlobal(pos),this->m_navigateManager->m_msg,this->m_navigateArea);
+            showTipText(m_navigateArea->mapToGlobal(pos),this->m_navigateManager->m_msg,this->m_navigateArea);
         } else {
             int offset = 0;
             NavigateMark *mark = findNavigateMarkByPos(e->pos(),&offset,0);
@@ -1187,12 +1187,12 @@ void LiteEditorWidgetBase::navigateAreaMouseEvent(QMouseEvent *e)
                 if (node) {
                     tooltip = true;
                     QPoint pos(1,offset);
-                    QToolTip::showText(m_navigateArea->mapToGlobal(pos),node->msg,this->m_navigateArea);
+                    showTipText(m_navigateArea->mapToGlobal(pos),node->msg,this->m_navigateArea);
                 }
             }
         }
         if (!tooltip) {
-            QToolTip::hideText();
+            hideTipText();
         }
     }
 }
@@ -2404,7 +2404,7 @@ void LiteEditorWidgetBase::keyPressEvent(QKeyEvent *e)
         QPlainTextEdit::keyPressEvent(e);
         return;
     }
-    QToolTip::hideText();
+    hideTipText();
     this->m_moveLineUndoHack = false;
     bool ro = isReadOnly();
 
@@ -2947,8 +2947,26 @@ static QString simpleInfo(const QString &info, int maxLine)
 
 void LiteEditorWidgetBase::showToolTipInfo(const QPoint &pos, const QString &text)
 {
-    QToolTip::showText(pos,simpleInfo(text,m_maxTipInfoLines),this);
+    showTipText(pos,simpleInfo(text,m_maxTipInfoLines),this);
 }
+
+void LiteEditorWidgetBase::showTipText(const QPoint &pos, const QString &text, QWidget *widget)
+{
+    static QString last;
+    static QPoint lastPos;
+    if (last == text && lastPos == pos) {
+        return;
+    }
+    last = text;
+    lastPos = pos;
+    QToolTip::showText(pos,text,widget);
+}
+
+void LiteEditorWidgetBase::hideTipText()
+{
+    QToolTip::hideText();
+}
+
 
 void LiteEditorWidgetBase::cleanWhitespace(bool wholeDocument)
 {
@@ -3194,7 +3212,7 @@ void LiteEditorWidgetBase::uplinkDeployTimeout()
 void LiteEditorWidgetBase::uplinkInfoTimeout()
 {
     if (m_lastUpToolTipPos != m_upToolTipPos) {
-        QToolTip::hideText();
+        hideTipText();
         return;
     }
     QTextCursor cursor = cursorForPosition(m_upToolTipPos);
@@ -3209,20 +3227,20 @@ void LiteEditorWidgetBase::uplinkInfoTimeout()
             if (rc.contains(m_upToolTipPos)) {
                 findLink = true;
                 m_showLinkInfomation = true;
-                QToolTip::hideText();
+                hideTipText();
                 emit updateLink(cursor,m_upToolTipPos,false);
             }
         }
     }
     if (!findLink) {
-        QToolTip::hideText();
+        hideTipText();
     }
 }
 
 void LiteEditorWidgetBase::stopUplinkTimer()
 {
     m_showLinkInfomation = false;
-    QToolTip::hideText();
+    hideTipText();
     m_upToolTipTimer->stop();
     m_upToolTipDeployTimer->stop();
 }
@@ -3289,7 +3307,7 @@ void LiteEditorWidgetBase::clearLink()
     setExtraSelections(LiteApi::LinkSelection, QList<QTextEdit::ExtraSelection>());
     viewport()->setCursor(Qt::IBeamCursor);
     m_currentLink = LiteApi::Link();
-    QToolTip::hideText();
+    hideTipText();
 }
 
 bool LiteEditorWidgetBase::openLink(const LiteApi::Link &link)
