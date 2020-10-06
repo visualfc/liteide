@@ -43,6 +43,11 @@ WelcomePlugin::WelcomePlugin() : m_welcome(0)
 {
 }
 
+WelcomePlugin::~WelcomePlugin()
+{
+    m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,m_welcomeAct->isChecked());
+}
+
 void WelcomePlugin::home()
 {
     m_liteApp->editorManager()->activeBrowser(m_welcome);

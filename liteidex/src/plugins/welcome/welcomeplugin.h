@@ -35,6 +35,7 @@ class WelcomePlugin : public LiteApi::IPlugin
     Q_OBJECT
 public:
     WelcomePlugin();
+    ~WelcomePlugin();
     virtual bool load(LiteApi::IApplication *app);
 protected slots:
     void home();
