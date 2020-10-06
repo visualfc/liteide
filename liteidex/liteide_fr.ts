@@ -120,12 +120,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>Remerciements à...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="575"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="577"/>
         <source>License</source>
         <translation>Licence</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="617"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="619"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -1059,10 +1059,13 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <source>Move lines into themselves.</source>
         <translation>Déplacement des lignes dans elles-mêmes.</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="5860"/>
         <source>%n lines moved.</source>
-        <translation>%n lignes déplacées.</translation>
+        <translation type="unfinished">
+            <numerusform>%n lignes déplacées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="5920"/>
@@ -1089,10 +1092,13 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <source>&quot;%1&quot; %2L, %3C</source>
         <translation>&quot;%1&quot; %2L, %3C</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="6005"/>
         <source>%n lines filtered.</source>
-        <translation>%n lignes filtrées.</translation>
+        <translation type="unfinished">
+            <numerusform>%n lignes filtrées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="6093"/>
@@ -1129,20 +1135,29 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <source>Search hit TOP without match for: %1</source>
         <translation>Début atteint sans correspondance avec : %1</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="6413"/>
         <source>%n lines indented.</source>
-        <translation>%n lignes indentées.</translation>
+        <translation type="unfinished">
+            <numerusform>%n lignes indentées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="6470"/>
         <source>%n lines %1ed %2 time.</source>
-        <translation>%n lignes %1 %2 fois.</translation>
+        <translation type="unfinished">
+            <numerusform>%n lignes %1 %2 fois.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="7043"/>
         <source>%n lines yanked.</source>
-        <translation>%n lignes mémorisées.</translation>
+        <translation type="unfinished">
+            <numerusform>%n lignes mémorisées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="src/3rdparty/fakevim/fakevim/fakevimhandler.cpp" line="7748"/>
@@ -1862,15 +1877,21 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
         <source>Revert all occurrences</source>
         <translation>Revenir pour toutes les occurences</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="592"/>
         <source>%n matches replaced.</source>
-        <translation>%n correspondances remplacées.</translation>
+        <translation type="unfinished">
+            <numerusform>%n correspondances remplacées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="594"/>
         <source>searching... %n matches found.</source>
-        <translation>recherche... %n correspondances trouvées.</translation>
+        <translation type="unfinished">
+            <numerusform>recherche... %n correspondances trouvées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="600"/>
@@ -1882,10 +1903,13 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
         <source>No matches found.</source>
         <translation>Pas de correspondance trouvée.</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="src/3rdparty/qtc_searchresult/searchresultwidget.cpp" line="608"/>
         <source>%n matches found.</source>
-        <translation>%n correspondances trouvées.</translation>
+        <translation type="unfinished">
+            <numerusform>%n correspondances trouvées.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -2074,34 +2098,34 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="248"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
         <source>Delete File</source>
         <translation>Supprimer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Êtes-vous certain de supprimer ce fichier définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="260"/>
         <source>Failed to delete the file!</source>
         <translation>Impossible de supprimer ce fichier !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="271"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="281"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
         <source>Delete Folder</source>
         <translation>Supprimer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Êtes-vous certain de supprimer ce répertoire et son contenu définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="283"/>
         <source>Failed to delete the folder!</source>
         <translation>Impossible de supprimer ce répertoire !</translation>
     </message>
@@ -2471,122 +2495,123 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
         <location filename="src/plugins/golangedit/golangedit.cpp" line="99"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="105"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="108"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
         <source>Find Usages</source>
         <translation>Trouver les utilisations</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="108"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="114"/>
         <source>%1 (Module/GOPATH) with GOROOT</source>
         <translation>%1 (Module/GOPATH) avec GOROOT</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="102"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="114"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="117"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>Renommer le symbole sous le curseur</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
         <source>Stop</source>
         <translation>Arrêter</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="171"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
         <source>Go Source Query</source>
         <translation>Go Source Query</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="176"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="180"/>
         <source>SourceQuery What</source>
         <translation>Go Source Query What</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="180"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="184"/>
         <source>Callees</source>
         <translation>Appelées</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="184"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="188"/>
         <source>Callers</source>
         <translation>Appelants</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="188"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="192"/>
         <source>Callstack</source>
         <translation>Pile d&apos;appel</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="192"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="196"/>
         <source>Definition</source>
         <translation>Définition</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="196"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="200"/>
         <source>Describe</source>
         <translation>Description</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="200"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="204"/>
         <source>Freevars</source>
         <translation>Variables libres</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="204"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="208"/>
         <source>Implements</source>
         <translation>Implémentation</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="208"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="212"/>
         <source>Implements(GOPATH)</source>
         <translation>Implémentation(GOPATH)</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="212"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="216"/>
         <source>Peers</source>
         <translation>Pairs</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="216"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="220"/>
         <source>Referrers</source>
         <translation>Référenceurs</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="220"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="224"/>
         <source>Pointsto</source>
         <translation>Pointe vers</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="224"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="228"/>
         <source>Whicherrs</source>
         <translation>Lesquels</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="228"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="232"/>
         <source>Add Tags To Struct Field</source>
         <translation>Ajouter des Tags aux champs de la structure</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="232"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="236"/>
         <source>Remove Tags From Struct Field</source>
         <translation>Supprimer des Tags des champs de la structure</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="349"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="385"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="354"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="391"/>
         <source>Refactor</source>
         <translation>Réusinage de code</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="356"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="393"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="361"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="399"/>
         <source>SourceQuery</source>
         <translation>Source Query</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="800"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="981"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="812"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="993"/>
         <source>Below files in package %1</source>
         <translation>Ci-dessous les fichiers dans le package %1</translation>
     </message>
@@ -4734,34 +4759,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="288"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="295"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
         <source>Delete Folder</source>
         <translation>Supprimer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="290"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Êtes-vous certain de supprimer ce répertoire et son contenu définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="297"/>
         <source>Failed to delete the folder!</source>
         <translation>Impossible de supprimer le répertoire !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="309"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="316"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
         <source>Delete File</source>
         <translation>Supprimer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Êtes-vous certain de supprimer ce fichier définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="318"/>
         <source>Failed to delete the file!</source>
         <translation>Impossible de supprimer le fichier !</translation>
     </message>
@@ -5707,8 +5732,8 @@ Voulez-vous le remplacer ?</translation>
     <name>Terminal</name>
     <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="132"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="186"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="759"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="189"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="773"/>
         <source>New</source>
         <translation>Nouveau</translation>
     </message>
@@ -5728,43 +5753,53 @@ Voulez-vous le remplacer ?</translation>
         <translation>Fermer le terminal courant</translation>
     </message>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="138"/>
+        <source>CloseAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="139"/>
+        <source>Close all terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="142"/>
         <source>LoadEnv</source>
         <translation>Charge l&apos;environement</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="140"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="143"/>
         <source>Current terminal load environment from LiteIDE</source>
         <translation>Le terminal courant charge l&apos;environnement depuis LiteIDE</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="145"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="148"/>
         <source>Filter</source>
         <translation>Filtrer</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="181"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="184"/>
         <source>Dark Mode</source>
         <translation>Mode sombre</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="192"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="195"/>
         <source>Login Mode (shell --login)</source>
         <translation>Mode de Login (shell --login)</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="234"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="738"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="237"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="248"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="251"/>
         <source>Open in Integrated Terminal</source>
         <translation>Ouvrir dans le terminal intégré</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="738"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Rename Tab Title</source>
         <translation>Renommer l&apos;onglet</translation>
     </message>

@@ -2086,6 +2086,10 @@ Want to replace to all the search items to whitespace?</source>
         <source>Below files in package %1</source>
         <translation>Ниже приведены файлы пакета %1</translation>
     </message>
+    <message>
+        <source>%1 (Module/GOPATH) with GOROOT</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GolangEditOption</name>
@@ -4652,6 +4656,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>LoadEnv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CloseAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close all terminal</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

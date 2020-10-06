@@ -120,12 +120,12 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <translation>感谢...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="575"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="577"/>
         <source>License</source>
         <translation>许可协议</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="617"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="619"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -2087,34 +2087,34 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="248"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="260"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="271"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="281"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="283"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -2484,116 +2484,123 @@ Want to replace to all the search items to whitespace?</source>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="99"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="105"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="108"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
         <source>Find Usages</source>
         <translation>查找使用</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="102"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="114"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="117"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>重命名符号</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="114"/>
+        <source>%1 (Module/GOPATH) with GOROOT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="171"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
         <source>Go Source Query</source>
         <translation>Go源码查询</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="176"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="180"/>
         <source>SourceQuery What</source>
         <translation>Go源码查询What</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="180"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="184"/>
         <source>Callees</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="184"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="188"/>
         <source>Callers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="188"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="192"/>
         <source>Callstack</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="192"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="196"/>
         <source>Definition</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="196"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="200"/>
         <source>Describe</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="200"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="204"/>
         <source>Freevars</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="204"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="208"/>
         <source>Implements</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="208"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="212"/>
         <source>Implements(GOPATH)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="212"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="216"/>
         <source>Peers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="216"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="220"/>
         <source>Referrers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="220"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="224"/>
         <source>Pointsto</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="224"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="228"/>
         <source>Whicherrs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="228"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="232"/>
         <source>Add Tags To Struct Field</source>
         <translation>添加结构体字段 Tags</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="232"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="236"/>
         <source>Remove Tags From Struct Field</source>
         <translation>删除结构体字段 Tags</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="349"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="385"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="354"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="391"/>
         <source>Refactor</source>
         <translation>重构</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="356"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="393"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="361"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="399"/>
         <source>SourceQuery</source>
         <translation>Go源码查询</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="800"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="981"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="812"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="993"/>
         <source>Below files in package %1</source>
         <translation>下面的文件属于包 %1</translation>
     </message>
@@ -4740,34 +4747,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="288"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="295"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="290"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="297"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="309"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="316"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="318"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
@@ -5711,8 +5718,8 @@ Do you want to replace it?</source>
     <name>Terminal</name>
     <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="132"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="186"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="759"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="189"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="773"/>
         <source>New</source>
         <translation>新建</translation>
     </message>
@@ -5732,43 +5739,53 @@ Do you want to replace it?</source>
         <translation>关闭当前终端</translation>
     </message>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="138"/>
+        <source>CloseAll</source>
+        <translation>关闭所有</translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="139"/>
+        <source>Close all terminal</source>
+        <translation>关闭所有终端</translation>
+    </message>
+    <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="142"/>
         <source>LoadEnv</source>
         <translation>加载环境</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="140"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="143"/>
         <source>Current terminal load environment from LiteIDE</source>
         <translation>从 LiteIDE 加载环境到当前终端</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="145"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="148"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="181"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="184"/>
         <source>Dark Mode</source>
         <translation>暗黑模式</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="192"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="195"/>
         <source>Login Mode (shell --login)</source>
         <translation>登录模式 (shell --login)</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="234"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="738"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="237"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Terminal</source>
         <translation>终端</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="248"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="251"/>
         <source>Open in Integrated Terminal</source>
         <translation>打开集成终端</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="738"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Rename Tab Title</source>
         <translation>重命名标签</translation>
     </message>

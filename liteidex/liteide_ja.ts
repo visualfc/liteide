@@ -120,12 +120,12 @@ LiteIDE はシンプルでオープンソース、クロスプラットフォー
         <translation>謝辞...</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="575"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="577"/>
         <source>License</source>
         <translation>ライセンス</translation>
     </message>
     <message>
-        <location filename="src/liteapp/aboutdialog.ui" line="617"/>
+        <location filename="src/liteapp/aboutdialog.ui" line="619"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -2072,34 +2072,34 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="248"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="258"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
         <source>Delete File</source>
         <translation type="unfinished">ファイルを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">このファイルを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="260"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="271"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="281"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
         <source>Delete Folder</source>
         <translation type="unfinished">フォルダを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="283"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
@@ -2469,116 +2469,123 @@ Want to replace to all the search items to whitespace?</source>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="99"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="105"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="108"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
         <source>Find Usages</source>
         <translation>使用箇所を検索</translation>
     </message>
     <message>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="102"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
         <location filename="src/plugins/golangedit/golangedit.cpp" line="114"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="117"/>
         <source>Rename Symbol Under Cursor</source>
         <translation>カーソル下のシンボルをリネーム</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="166"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="111"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="114"/>
+        <source>%1 (Module/GOPATH) with GOROOT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="170"/>
         <source>Stop</source>
         <translation type="unfinished">停止</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="171"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="175"/>
         <source>Go Source Query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="176"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="180"/>
         <source>SourceQuery What</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="180"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="184"/>
         <source>Callees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="184"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="188"/>
         <source>Callers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="188"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="192"/>
         <source>Callstack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="192"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="196"/>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="196"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="200"/>
         <source>Describe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="200"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="204"/>
         <source>Freevars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="204"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="208"/>
         <source>Implements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="208"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="212"/>
         <source>Implements(GOPATH)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="212"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="216"/>
         <source>Peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="216"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="220"/>
         <source>Referrers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="220"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="224"/>
         <source>Pointsto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="224"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="228"/>
         <source>Whicherrs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="228"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="232"/>
         <source>Add Tags To Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="232"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="236"/>
         <source>Remove Tags From Struct Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="349"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="385"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="354"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="391"/>
         <source>Refactor</source>
         <translation type="unfinished">リファクタリング</translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="356"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="393"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="361"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="399"/>
         <source>SourceQuery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="800"/>
-        <location filename="src/plugins/golangedit/golangedit.cpp" line="981"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="812"/>
+        <location filename="src/plugins/golangedit/golangedit.cpp" line="993"/>
         <source>Below files in package %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4726,34 +4733,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="288"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="295"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
         <source>Delete Folder</source>
         <translation type="unfinished">フォルダを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="290"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="297"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="309"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="316"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
         <source>Delete File</source>
         <translation type="unfinished">ファイルを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="311"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">このファイルを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="318"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
@@ -5699,8 +5706,8 @@ Do you want to replace it?</source>
     <name>Terminal</name>
     <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="132"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="186"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="759"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="189"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="773"/>
         <source>New</source>
         <translation type="unfinished">新規</translation>
     </message>
@@ -5720,43 +5727,53 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="138"/>
+        <source>CloseAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="139"/>
+        <source>Close all terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/terminal/terminal.cpp" line="142"/>
         <source>LoadEnv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="140"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="143"/>
         <source>Current terminal load environment from LiteIDE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="145"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="148"/>
         <source>Filter</source>
         <translation type="unfinished">フィルタ</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="181"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="184"/>
         <source>Dark Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="192"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="195"/>
         <source>Login Mode (shell --login)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="234"/>
-        <location filename="src/plugins/terminal/terminal.cpp" line="738"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="237"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Terminal</source>
         <translation type="unfinished">ターミナル</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="248"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="251"/>
         <source>Open in Integrated Terminal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="738"/>
+        <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Rename Tab Title</source>
         <translation type="unfinished"></translation>
     </message>
