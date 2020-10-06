@@ -3,6 +3,31 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2020.10.06 Ver X37.3
+* LiteIDE
+    * fix dlv debug exit crash on window
+    * support mingw-64 build for window
+* LiteApp
+    * update icon for hight-dpi
+* LiteBuild:
+    * gosrc.xml add tool cover html command
+    * gosrc.xml add make command
+* LiteEditor:
+    * add dark-gray.xml color scheme, thanks for qAison
+    * fix showlink tooltip bug for Qt5.12
+* GolangEdit:
+    * add find usages skip tests action
+* Terminal:
+    * fix winpty load for Q_OS_WIN64
+    * add closeall action
+* DlvDebugger
+    * fix exit crash on window
+    * fix handle response regexp
+* gotools & gocode
+    * update fastmod for go1.14 GOMOD
+* gotools
+    * types add skip tests flag
+    
 ### 2020.04.24 Ver X37.1
 * LiteIDE
     * add new integrated terminal plugin
