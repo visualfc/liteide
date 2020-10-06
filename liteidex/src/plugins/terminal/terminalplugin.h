@@ -44,7 +44,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<TerminalPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/Terminal");
-        m_info->setVer("X37.1");
+        m_info->setVer("X37.3");
         m_info->setName("Terminal");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Terminal");

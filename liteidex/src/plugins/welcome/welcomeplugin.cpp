@@ -28,6 +28,7 @@
 #include <QMenu>
 #include <QToolBar>
 #include <QUrl>
+#include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -45,7 +46,6 @@ WelcomePlugin::WelcomePlugin() : m_welcome(0)
 
 WelcomePlugin::~WelcomePlugin()
 {
-    m_liteApp->settings()->setValue(LITEAPP_WELCOMEPAGEVISIBLE,m_welcomeAct->isChecked());
 }
 
 void WelcomePlugin::home()
