@@ -34,7 +34,7 @@
 
 #define OPTION_LITEDEBUG "option/litedebug"
 #define LITEDEBUG_REBUILD   "litedebug/rebuild"
-#define LITEDEBUG_DEBUGGER  "litedebug/debugger"
+#define LITEDEBUG_CURDEBUGGER  "litedebug/curdebugger"
 #define LITEDEBUG_AUTOBREAKMAIN "litedebug/autobreakmain"
 
 #endif // LITEDEBUG_GLOBAL_H
