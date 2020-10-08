@@ -217,7 +217,7 @@ void LiteDebug::appLoaded()
     }
     //QMenu *menu = new QMenu(tr("Select Debug"));
     QActionGroup *group = new QActionGroup(this);
-    QString mimeType = m_liteApp->settings()->value(LITEDEBUG_DEBUGGER,"debugger/gdb").toString();
+    QString mimeType = m_liteApp->settings()->value(LITEDEBUG_DEBUGGER,"debugger/delve").toString();
     foreach (LiteApi::IDebugger *debug, m_manager->debuggerList()) {
         QAction *act = new QAction(debug->mimeType(),this);
         act->setObjectName(debug->mimeType());

@@ -216,10 +216,12 @@ bool GdbDebugger::start(const QString &program, const QString &arguments)
     QString gdb = env.value("LITEIDE_GDB","");
     if (gdb.isEmpty()) {
 #ifdef Q_OS_WIN
-        if (env.value("GOARCH") == "386") {
-            gdb = "gdb";
+        if (env.value("GOARCH") != "386") {
+            if (FileUtil::lookPath("gdb64",env,true).isEmpty()) {
+                gdb = "gdb";
+            }
         } else {
-            gdb = "gdb64";
+            gdb = "gdb";
         }
 #else
         gdb = "gdb";
