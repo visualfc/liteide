@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2020.10.06 Ver X37.3
+### 2020.10.10 Ver X37.3
 * LiteIDE
     * fix dlv debug exit crash on window
     * support mingw-64 build for window
