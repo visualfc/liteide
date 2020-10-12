@@ -25,6 +25,7 @@
 #include "fileutil/fileutil.h"
 #include "processex/processex.h"
 #include "dlvdebuggeroption.h"
+#include "dlvdebugger_global.h"
 #include "../litedebug/litedebug_global.h"
 
 #include <QStandardItemModel>
@@ -251,6 +252,14 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
 
     QStringList argsList;
     argsList << "--headless" << "--api-version=2" << "--accept-multiclient";
+    QStringList flags = m_liteApp->settings()->value(DLVDEBUGGER_EXTFLAGS).toString().split(" ",QString::SkipEmptyParts);
+    if (!flags.isEmpty()) {
+        foreach(QString flag, flags) {
+            if (flag.startsWith("--")) {
+                argsList << flag;
+            }
+        }
+    }
     //argsList << "--log";
     argsList << "exec" << cmd;
     if (!arguments.isEmpty()) {

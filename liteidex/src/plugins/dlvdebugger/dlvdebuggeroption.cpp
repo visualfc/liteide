@@ -66,10 +66,10 @@ QString DlvDebuggerOption::mimeType() const
 
 void DlvDebuggerOption::load()
 {
-
+    ui->flagsLineEdit->setText(m_liteApp->settings()->value(DLVDEBUGGER_EXTFLAGS,"").toString());
 }
 
 void DlvDebuggerOption::save()
 {
-
+    m_liteApp->settings()->setValue(DLVDEBUGGER_EXTFLAGS,ui->flagsLineEdit->text());
 }

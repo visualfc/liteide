@@ -33,5 +33,6 @@
 #endif
 
 #define OPTION_DLVDEBUGGER "option/dlvdebugger"
+#define DLVDEBUGGER_EXTFLAGS "dlvdebugger/extflags"
 
 #endif // DLVDEBUGGER_GLOBAL_H

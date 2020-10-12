@@ -58,7 +58,7 @@ bool DlvDebuggerPlugin::load(LiteApi::IApplication *app)
 #endif
     manager->addDebugger(debug);
     manager->setCurrentDebugger(debug);
-    //app->optionManager()->addFactory(new DlvDebuggerOptionFactory(app,this));
+    app->optionManager()->addFactory(new DlvDebuggerOptionFactory(app,this));
     return true;
 }
 
