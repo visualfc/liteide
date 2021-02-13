@@ -129,6 +129,7 @@ strings
 sync
 sync/atomic
 syscall
+syscall/js
 testing
 testing/iotest
 testing/quick
