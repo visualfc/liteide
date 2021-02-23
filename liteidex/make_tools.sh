@@ -7,6 +7,6 @@ else
 fi
 
 
-go install -ldflags "-s" -v github.com/visualfc/gotools
-go install -ldflags "-s" -v github.com/visualfc/gocode
-go install -ldflags "-s" -v github.com/fatih/gomodifytags
+(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
+(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
+(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
