@@ -14,6 +14,7 @@
       <item> require </item>
       <item> replace </item>
       <item> exclude </item>
+      <item> retract </item>
     </list>
   <contexts>
       <context name="Normal"        attribute="Normal Text" lineEndContext="#stay">
