@@ -53,22 +53,9 @@ else
 	export GOPATH=$PWD:$GOPATH
 fi
 
-
-go install -ldflags "-s" -v github.com/visualfc/gotools
-
-if [ $? -ge 1 ]; then
-	echo 'error, go install fail'
-	exit 1
-fi
-
-go install -ldflags "-s" -v github.com/visualfc/gocode
-
-if [ $? -ge 1 ]; then
-	echo 'error, go install fail'
-	exit 1
-fi
-
-go install -ldflags "-s" -v github.com/fatih/gomodifytags
+(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
+(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
+(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'
