@@ -58,6 +58,7 @@ public slots:
     virtual void copyFile();
     virtual void pasteFile();
     virtual bool canPasteFile();
+    virtual void copyFullPathToClipboard();
     virtual void moveToTrash();
     virtual QMenu *openWithMenu();
     void openWithEditor();
@@ -90,6 +91,7 @@ protected:
     QAction *m_openBundleAct;
     QAction *m_copyFileAct;
     QAction *m_pasteFileAct;
+    QAction *m_copyFullPathToClipboardAct;
     QAction *m_moveToTrashAct;
     QMenu *m_openWithMenu;
     bool copy_dir(const QString &src, const QString &dest_root, const QString &newName);

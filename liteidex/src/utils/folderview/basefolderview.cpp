@@ -107,6 +107,9 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 
     m_copyFileAct = new QAction(tr("Copy"),this);
     m_pasteFileAct = new QAction(tr("Paste"),this);
+
+    m_copyFullPathToClipboardAct = new QAction(tr("Copy Path"),this);
+
     m_moveToTrashAct = new QAction(tr("Move To Trash"),this);
 
     connect(m_openBundleAct,SIGNAL(triggered()),this,SLOT(openBundle()));
@@ -127,6 +130,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_closeAllFoldersAct,SIGNAL(triggered()),this,SLOT(closeAllFolders()));
     connect(m_copyFileAct,SIGNAL(triggered()),this,SLOT(copyFile()));
     connect(m_pasteFileAct,SIGNAL(triggered()),this,SLOT(pasteFile()));
+    connect(m_copyFullPathToClipboardAct,SIGNAL(triggered()),this,SLOT(copyFullPathToClipboard()));
     connect(m_moveToTrashAct,SIGNAL(triggered()),this,SLOT(moveToTrash()));
 
     m_openWithMenu = 0;
@@ -560,6 +564,21 @@ bool BaseFolderView::canPasteFile()
         }
     }
     return false;
+}
+
+void BaseFolderView::copyFullPathToClipboard()
+{
+    QModelIndexList indexs = this->selectionCopyOrRemoveList();
+    QStringList fileList;
+    foreach (QModelIndex index, indexs) {
+        QFileInfo info = this->fileInfo(index);
+        fileList << info.filePath();
+    }
+    if (fileList.isEmpty()) {
+        return;
+    }
+    QClipboard *clip = qApp->clipboard();
+    clip->setText(fileList.join("\n"));
 }
 
 void BaseFolderView::moveToTrash()

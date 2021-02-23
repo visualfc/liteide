@@ -209,6 +209,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_copyFileAct);
         m_contextMenu->addAction(m_pasteFileAct);
         m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_copyFullPathToClipboardAct);
+        m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
@@ -235,6 +237,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addAction(m_copyFileAct);
         m_contextMenu->addAction(m_pasteFileAct);
         m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_copyFullPathToClipboardAct);
+        m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
@@ -254,6 +258,8 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
 
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFileAct);
+        m_contextMenu->addSeparator();
+        m_contextMenu->addAction(m_copyFullPathToClipboardAct);
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
