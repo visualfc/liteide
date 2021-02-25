@@ -753,6 +753,7 @@ public:
 #endif
 };
 
+#ifndef Q_OS_DARWIN
 static Trash* getTrash()
 {
     static Trash trash;
@@ -768,4 +769,5 @@ bool FileUtil::moveToTrash(const QString &fileName)
 {
     return getTrash()->moveToTrash(fileName);
 }
+#endif
 

@@ -9,4 +9,5 @@ HEADERS += fileutil.h \
     findfilesthread.h
 
 SOURCES += fileutil.cpp \
+    fileutil_mac.mm \
     findfilesthread.cpp
