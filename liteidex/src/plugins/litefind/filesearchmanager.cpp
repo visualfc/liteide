@@ -299,7 +299,15 @@ void FileSearchManager::doReplace(const QString &text, const QList<Find::SearchR
         m_searchResultWidget->addResults(items,Find::AddOrdered,true);
     }
     m_liteApp->editorManager()->saveAllEditors(false);
+    LiteApi::IEditor *edit = m_liteApp->editorManager()->currentEditor();
+    if (edit) {
+        QPlainTextEdit *ed = LiteApi::getPlainTextEdit(edit);
+        if (ed) {
+            ed->repaint();
+        }
+    }
     m_searchResultWidget->setRevertMode(text,m_currentSearch->searchText());
+    m_searchResultWidget->repaint();
 }
 
 void FileSearchManager::searchTextChanged(const QString &text)
