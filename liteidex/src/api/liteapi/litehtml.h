@@ -52,7 +52,7 @@ public:
     virtual int scrollBarMinimum(Qt::Orientation orientation) const = 0;
     virtual int scrollBarMaximum(Qt::Orientation orientation) const = 0;
     virtual QString selectedText() const = 0;
-    virtual bool findText(const QString & exp, QTextDocument::FindFlags options = 0 ) = 0;
+    virtual bool findText(const QString & exp, QTextDocument::FindFlags options) = 0;
 public slots:
 #ifndef QT_NO_PRINTER
     virtual void print(QPrinter *printer) = 0;

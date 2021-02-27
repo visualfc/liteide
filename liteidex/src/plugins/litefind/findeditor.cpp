@@ -205,6 +205,7 @@ void FindEditor::findHelper(FindOption *opt)
             find = findEditor(ed->document(),ed->textCursor(),opt);
             if (!find.isNull()) {
                 ed->setTextCursor(find);
+                ed->repaint();
             }
         }
     } else {
@@ -395,6 +396,7 @@ void FindEditor::replaceHelper(LiteApi::ITextEditor *editor, FindOption *opt, in
         }
     } while(!find.isNull());
     ed->textCursor().endEditBlock();
+    ed->repaint();
     if (replaceCount == -1) {
         m_status->setText(QString("Replace:%1").arg(number));
     }
