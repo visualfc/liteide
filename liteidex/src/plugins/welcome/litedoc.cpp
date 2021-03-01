@@ -24,7 +24,6 @@
 #include "litedoc.h"
 #include "documentbrowser/documentbrowser.h"
 #include "htmlutil/htmlutil.h"
-//#include "sundown/mdtohtml.h"
 #include "cmark/libcmark.h"
 
 #include <QAction>
