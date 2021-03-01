@@ -85,8 +85,11 @@ bool LiteFindPlugin::load(LiteApi::IApplication *app)
     actionContext->regAction(m_replaceAct,"Replace",QKeySequence::Replace);
 #endif
     m_fileSearchAct = new QAction(tr("File Search"),this);
+#ifdef Q_OS_WIN
+    actionContext->regAction(m_fileSearchAct,"FileSearch","Ctrl+Shift+F;Ctrl+Alt+F");
+#else
     actionContext->regAction(m_fileSearchAct,"FileSearch","Ctrl+Shift+F");
-
+#endif
     menu->addAction(m_findAct);
     menu->addAction(m_findNextAct);
     menu->addAction(m_findPrevAct);
