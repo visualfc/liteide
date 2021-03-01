@@ -9,5 +9,8 @@ HEADERS += fileutil.h \
     findfilesthread.h
 
 SOURCES += fileutil.cpp \
-    fileutil_mac.mm \
     findfilesthread.cpp
+
+macx {
+    OBJECTIVE_SOURCES += fileutil_mac.mm.mm
+}
