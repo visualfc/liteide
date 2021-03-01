@@ -12,5 +12,5 @@ SOURCES += fileutil.cpp \
     findfilesthread.cpp
 
 macx {
-    OBJECTIVE_SOURCES += fileutil_mac.mm.mm
+    OBJECTIVE_SOURCES += fileutil_mac.mm
 }
