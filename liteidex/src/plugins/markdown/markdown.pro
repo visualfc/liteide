@@ -2,7 +2,6 @@ TARGET = markdown
 TEMPLATE = lib
 
 include (../../liteideplugin.pri)
-#include (../../3rdparty/sundown/sundown.pri)
 include (../../3rdparty/cmark/cmark.pri)
 
 DEFINES += MARKDOWN_LIBRARY

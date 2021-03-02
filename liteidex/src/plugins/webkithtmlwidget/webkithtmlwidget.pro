@@ -2,7 +2,6 @@ TARGET = webkithtmlwidget
 TEMPLATE = lib
 
 include(../../liteideplugin.pri)
-#include (../../3rdparty/sundown/sundown.pri)
 include (../../3rdparty/cmark/cmark.pri)
 
 greaterThan(QT_MAJOR_VERSION, 4) {

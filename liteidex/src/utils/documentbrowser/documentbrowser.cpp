@@ -23,7 +23,6 @@
 
 #include "documentbrowser.h"
 #include "extension/extension.h"
-//#include "sundown/mdtohtml.h"
 #include "cmark/libcmark.h"
 
 #include <QTextBrowser>

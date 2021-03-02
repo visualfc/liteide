@@ -13,7 +13,6 @@ SUBDIRS = \
     qt_browser \
     qjson \
     elidedlabel \
-    sundown \
     cplusplus \
     fakevim \
     diff_match_patch \

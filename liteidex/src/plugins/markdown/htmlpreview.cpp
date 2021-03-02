@@ -23,7 +23,6 @@
 
 #include "markdown_global.h"
 #include "htmlpreview.h"
-//#include "sundown/mdtohtml.h"
 #include "cmark/libcmark.h"
 #include <QScrollBar>
 #include <QMenu>
