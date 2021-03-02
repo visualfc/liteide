@@ -260,6 +260,7 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
 
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFileAct);
+        m_contextMenu->addAction(m_pasteFileAct);
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_copyFullPathToClipboardAct);
         m_contextMenu->addSeparator();

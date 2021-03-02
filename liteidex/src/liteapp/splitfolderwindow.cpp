@@ -380,6 +380,8 @@ void SplitFolderView::customContextMenuRequested(const QPoint &pos)
     m_contextMenu->addAction(m_reloadFolderAct);
     m_contextMenu->addAction(m_closeFolderAct);
     m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_copyFullPathToClipboardAct);
+    m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_openExplorerAct);
     m_contextMenu->addAction(m_openShellAct);
     m_contextMenu->addAction(m_openTerminalAct);
