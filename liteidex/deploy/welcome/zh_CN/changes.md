@@ -3,6 +3,27 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2021.03.02 Ver X37.4
+* LiteIDE
+    * move to trash use api on macos
+    * fix find&replace repaint
+    * update terminal action
+* LiteApp
+    * editor context menu add integrated terminal action
+    * folder view update integrated terminal action
+    * folder view add copy full path action
+    * move to trash use api on macos
+* LiteFind
+    * fix find&replace editor repaint
+    * fix file search replace repaint
+    * windows fileserach shortcuts add ctrl+atl+f
+* LiteEditor:
+    * gomod.xml add retract
+* Terminal:
+    * move to core plugin
+* DlvDebugger:
+    * add pass flags options
+
 ### 2020.10.10 Ver X37.3
 * LiteIDE
     * fix dlv debug exit crash on window

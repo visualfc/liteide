@@ -224,250 +224,260 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>BaseFolderView</name>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
         <source>Open In New Window</source>
         <translation>在新窗口打开</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
         <source>New File...</source>
         <translation>新建文件...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
         <source>New File Wizard...</source>
         <translation>新建文件向导...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
         <source>Rename File...</source>
         <translation>重命名文件...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="84"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
         <source>New Folder...</source>
         <translation>新建目录...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="86"/>
         <source>Rename Folder...</source>
         <translation>重命名目录...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="86"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="328"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="335"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="342"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="99"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="100"/>
         <source>Open Terminal Here</source>
         <translation>在此打开终端</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="90"/>
         <source>Show in Explorer</source>
         <oldsource>Open Explorer Here</oldsource>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
         <source>Open Application</source>
         <translation>运行应用程序</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="91"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="92"/>
         <source>Show in Finder</source>
         <translation>在Finder中显示</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="93"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="94"/>
         <source>Show Containing Folder</source>
         <translation>显示包含文件夹</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="97"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="98"/>
         <source>Open Command Prompt Here</source>
         <translation>在此打开命令提示符</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="102"/>
+        <source>Open in Integrated Terminal</source>
+        <translation>打开集成终端</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="104"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
         <translation>打开目录...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="103"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="105"/>
         <source>Reload Folder</source>
         <translation>重新读取目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="104"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="106"/>
         <source>Close Folder</source>
         <translation>关闭目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="106"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="108"/>
         <source>Close All Folders</source>
         <translation>关闭所有目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="108"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="110"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="111"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="110"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="113"/>
+        <source>Copy Path</source>
+        <translation>复制路径</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="115"/>
         <source>Move To Trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="191"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="201"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="198"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="208"/>
         <source>Create File</source>
         <translation>建立文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="192"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
         <source>A file with that name already exists!</source>
         <translation>文件已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="202"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="209"/>
         <source>Failed to create the file!</source>
         <translation>建立文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="232"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="243"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="245"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="250"/>
         <source>Rename File</source>
         <translation>文件更名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="232"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
         <source>New Name:</source>
         <translation>新名称:</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="246"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <source>Failed to rename the file!</source>
         <translation>重命名文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="489"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="504"/>
         <source>An item &quot;%1&quot; already exists in this location. Do you want to replace it and move old item to trash?</source>
         <translation>项目 &quot;%1&quot; 本地已存在，确定替换并将旧项目移到到回收站?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="490"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="505"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="491"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="506"/>
         <source>Keep Both</source>
         <translation>保持两者</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="492"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="507"/>
         <source>Keep Both All</source>
         <translation>全部保留两者</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="493"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="508"/>
         <source>Replace</source>
         <translation>替换</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="494"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="509"/>
         <source>Replace All</source>
         <translation>替换所有</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="579"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="609"/>
         <source>Are you sure that you want move to trash this item?</source>
         <translation>确定移动项目到回收站?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="582"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="585"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="612"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="615"/>
         <source>Are you sure that you want move to trash %1 items?</source>
         <translation>确定移动 %1 个项目到回收站?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="588"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="618"/>
         <source>Move to Trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="632"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="662"/>
         <source>Open With</source>
         <translation>用...打开</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="639"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="669"/>
         <source>System Editor</source>
         <translation>系统编辑器</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="283"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="286"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="290"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="293"/>
         <source>Create Folder</source>
         <translation>建立目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="284"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="291"/>
         <source>A folder with that name already exists!</source>
         <translation>目录名已存在!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="294"/>
         <source>Failed to create the folder!</source>
         <translation>建立目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="309"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="314"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="316"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="321"/>
         <source>Rename Folder</source>
         <translation>目录更名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
         <source>Folder Name</source>
         <translation>目录名</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="310"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="315"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="322"/>
         <source>Failed to rename the folder!</source>
         <translation>重命名目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="329"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="336"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="336"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="343"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -774,37 +784,42 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <source>Form</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="src/plugins/dlvdebugger/dlvdebuggeroption.ui" line="20"/>
+        <source>delve debug pass flags: (example --check-go-version=false)</source>
+        <translation>delve debug pass flags:（示例 --check go version=false）</translation>
+    </message>
 </context>
 <context>
     <name>DocumentBrowser</name>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="67"/>
         <source>Back</source>
         <oldsource>Backward</oldsource>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
         <source>Forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="70"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
         <source>Reload</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="76"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="75"/>
         <source>Increase Font Size</source>
         <translation>增大字号</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="79"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="78"/>
         <source>Decrease Font Size</source>
         <translation>减小字号</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="82"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
         <source>Reset Font Size</source>
         <translation>重置字号</translation>
     </message>
@@ -820,115 +835,120 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="138"/>
+        <location filename="src/liteapp/editormanager.cpp" line="139"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="163"/>
+        <location filename="src/liteapp/editormanager.cpp" line="165"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>移动到新窗口</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="229"/>
+        <location filename="src/liteapp/editormanager.cpp" line="233"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="140"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="110"/>
+        <location filename="src/liteapp/editormanager.cpp" line="111"/>
         <source>Open Editor</source>
         <translation>打开文档</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Left Tabs</source>
         <translation>关闭左侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Right Tabs</source>
         <translation>关闭右侧所有标签</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>关闭相同目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="145"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>关闭其他目录文件</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>复制完整路径到剪贴板</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="149"/>
+        <location filename="src/liteapp/editormanager.cpp" line="150"/>
         <source>Show in Explorer</source>
         <translation>在资源管理器中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="151"/>
+        <location filename="src/liteapp/editormanager.cpp" line="152"/>
         <source>Show in Finder</source>
         <translation>在Finder中显示</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="153"/>
+        <location filename="src/liteapp/editormanager.cpp" line="154"/>
         <source>Show Containing Folder</source>
         <translation>显示包含文件夹</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="157"/>
+        <location filename="src/liteapp/editormanager.cpp" line="158"/>
         <source>Open Command Prompt Here</source>
         <translation>在此打开命令提示符</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="159"/>
+        <location filename="src/liteapp/editormanager.cpp" line="160"/>
         <source>Open Terminal Here</source>
         <translation>在此打开终端</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="220"/>
+        <location filename="src/liteapp/editormanager.cpp" line="162"/>
+        <source>Open in Integrated Terminal</source>
+        <translation>打开集成终端</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="224"/>
         <source>Navigate Backward</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="422"/>
+        <location filename="src/liteapp/editormanager.cpp" line="426"/>
         <source>Save changes to %1?</source>
         <translation>保存修改到 %1 ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="423"/>
+        <location filename="src/liteapp/editormanager.cpp" line="427"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>未保存修改</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="520"/>
+        <location filename="src/liteapp/editormanager.cpp" line="524"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="522"/>
+        <location filename="src/liteapp/editormanager.cpp" line="526"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
@@ -2051,8 +2071,8 @@ Want to replace to all the search items to whitespace?</source>
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="249"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="470"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="250"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="472"/>
         <source>Ready</source>
         <translation>准备</translation>
     </message>
@@ -2078,8 +2098,8 @@ Want to replace to all the search items to whitespace?</source>
         <translation>选项:</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="220"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="392"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="221"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="393"/>
         <source>Not found</source>
         <translation>没有找到</translation>
     </message>
@@ -2087,34 +2107,34 @@ Want to replace to all the search items to whitespace?</source>
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="252"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="262"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="253"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="260"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="263"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="275"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="285"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="276"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="283"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="286"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
@@ -2941,66 +2961,66 @@ Success: %2.</oldsource>
 <context>
     <name>HtmlPreview</name>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="72"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="71"/>
         <source>Page Style</source>
         <translation>页面样式</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
         <source>Reload</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="382"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
         <source>Export Html</source>
         <translation>输出Html文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="414"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="413"/>
         <source>Export PDF</source>
         <translation>输出PDF文档</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="80"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
         <source>Print Preview</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="83"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="82"/>
         <source>Synchronize preview and code scrollbars</source>
         <translation>同步预览和代码窗口滚动</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="89"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
         <source>Config</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="169"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="168"/>
         <source>Plain HTML</source>
         <translation>纯HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
         <source>Export Failed</source>
         <translation>导出失败</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="86"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="85"/>
         <source>Automatically display preview</source>
         <oldsource>Automatically Display Preview</oldsource>
         <translation>自动显示预览窗口</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="100"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="99"/>
         <source>HTML Preview</source>
         <oldsource>Html Preview</oldsource>
         <translation>HTML预览</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="391"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation>无法写入文件 %1!</translation>
@@ -3778,7 +3798,7 @@ Success: %2.</oldsource>
 <context>
     <name>LiteDoc</name>
     <message>
-        <location filename="src/plugins/welcome/litedoc.cpp" line="64"/>
+        <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
         <translation>LiteIDE文档</translation>
@@ -4489,40 +4509,40 @@ Success: %2.</oldsource>
 <context>
     <name>MarkdownBatchBrowser</name>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="143"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="142"/>
         <source>Markdown Exporter</source>
         <oldsource>Markdown Batch</oldsource>
         <translation>Markdown导出</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="163"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="162"/>
         <source>All Files (*)</source>
         <translation>所有文件(*)</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="232"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="231"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
         <translation>选择Markdown文件所在目录:</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="243"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="242"/>
         <source>Select Markdown Files</source>
         <translation>选择Markdown文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="291"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="290"/>
         <source>Select the folder to contain separated markdown exports:</source>
         <translation>选择处理markdown文件导出目录:</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="304"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="303"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
         <translation>导出合并HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="379"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="378"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
         <translation>导出合并PDF</translation>
@@ -4747,34 +4767,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="298"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="305"/>
         <source>Delete Folder</source>
         <translation>删除目录</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="290"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="299"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>您确定要删除此文件夹及所有内容?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="297"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="306"/>
         <source>Failed to delete the folder!</source>
         <translation>删除目录失败!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="319"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="326"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="311"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="320"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>您确定要永久删除这个文件?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="318"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="327"/>
         <source>Failed to delete the file!</source>
         <translation>删除文件失败!</translation>
     </message>
@@ -5780,11 +5800,6 @@ Do you want to replace it?</source>
         <translation>终端</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="251"/>
-        <source>Open in Integrated Terminal</source>
-        <translation>打开集成终端</translation>
-    </message>
-    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Rename Tab Title</source>
         <translation>重命名标签</translation>
@@ -5842,28 +5857,28 @@ Do you want to replace it?</source>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="70"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="69"/>
         <source>Navigation</source>
         <translation>导航</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="73"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="72"/>
         <source>Open Html File</source>
         <oldsource>Open Html</oldsource>
         <translation>打开Html文件</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="120"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="119"/>
         <source>WebKitBrowser</source>
         <translation>WebKit浏览器</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="170"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="169"/>
         <source>False load %1 !</source>
         <translation>加载失败 %1 !</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="257"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
         <translation>打开HTML或者Markdown文件</translation>
@@ -5910,7 +5925,7 @@ Do you want to replace it?</source>
 <context>
     <name>WelcomePlugin</name>
     <message>
-        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="72"/>
+        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="77"/>
         <source>Welcome</source>
         <oldsource>Home</oldsource>
         <translation>欢迎</translation>

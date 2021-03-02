@@ -72,7 +72,7 @@
 #endif
 //lite_memory_check_end
 
-#define LITEIDE_VERSION "X37.3"
+#define LITEIDE_VERSION "X37.4"
 
 
 QString LiteApp::getRootPath()
@@ -647,7 +647,7 @@ QString LiteApp::ideName() const
 QString LiteApp::ideCopyright() const
 {
     static QString s_info =
-    "2011-2020(c)\n"
+    "2011-2021(c)\n"
     "visualfc@gmail.com\n"
     "\n"
     "https://github.com/visualfc/liteide\n";

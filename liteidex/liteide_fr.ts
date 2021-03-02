@@ -224,250 +224,260 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>BaseFolderView</name>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
         <source>Open In New Window</source>
         <translation>Ouvrir dans une nouvelle fenêtre</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="78"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
         <source>Open File</source>
         <translation>Ouvrir un fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="79"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
         <source>New File...</source>
         <translation>Nouveau fichier...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="80"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
         <source>New File Wizard...</source>
         <translation>Nouveau fichier guidé...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="81"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
         <source>Rename File...</source>
         <translation>Renommer le fichier...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="82"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="83"/>
         <source>Delete File</source>
         <translation>Supprimer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="84"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
         <source>New Folder...</source>
         <translation>Nouveau répertoire...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="85"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="86"/>
         <source>Rename Folder...</source>
         <translation>Renommer le répertoire...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="86"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="328"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="87"/>
         <location filename="src/utils/folderview/basefolderview.cpp" line="335"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="342"/>
         <source>Delete Folder</source>
         <translation>Supprimer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="99"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="100"/>
         <source>Open Terminal Here</source>
         <translation>Ouvrir un terminal ici</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="89"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="90"/>
         <source>Show in Explorer</source>
         <oldsource>Open Explorer Here</oldsource>
         <translation>Ouvrir un explorateur ici</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="76"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="77"/>
         <source>Open Application</source>
         <translation>Ouvrir une application</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="91"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="92"/>
         <source>Show in Finder</source>
         <translation>Montrer dans la recherche</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="93"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="94"/>
         <source>Show Containing Folder</source>
         <translation>Afficher les répertoires contenus</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="97"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="98"/>
         <source>Open Command Prompt Here</source>
         <translation>Ouvrir une ligne de commande ici</translation>
     </message>
     <message>
         <location filename="src/utils/folderview/basefolderview.cpp" line="102"/>
+        <source>Open in Integrated Terminal</source>
+        <translation type="unfinished">Ouvrir dans le terminal intégré</translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="104"/>
         <source>Open Folder...</source>
         <oldsource>Add Folder...</oldsource>
         <translation>Ouvrir un répertoire...</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="103"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="105"/>
         <source>Reload Folder</source>
         <translation>Recharger le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="104"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="106"/>
         <source>Close Folder</source>
         <translation>Fermer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="106"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="108"/>
         <source>Close All Folders</source>
         <translation>Fermer tous les répertoires</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="108"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="110"/>
         <source>Copy</source>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="109"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="111"/>
         <source>Paste</source>
         <translation>Coller</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="110"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="113"/>
+        <source>Copy Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="115"/>
         <source>Move To Trash</source>
         <translation>Mettre à la corbeille</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="191"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="201"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="198"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="208"/>
         <source>Create File</source>
         <translation>Créer un fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="192"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="199"/>
         <source>A file with that name already exists!</source>
         <translation>Un fichier avec ce nom existe déjà !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="202"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="209"/>
         <source>Failed to create the file!</source>
         <translation>Création du fichier echouée !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="232"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="238"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="243"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="245"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="250"/>
         <source>Rename File</source>
         <translation>Renommer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="232"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
         <source>New Name:</source>
         <translation>Nouveau nom :</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="239"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="244"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="246"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="251"/>
         <source>Failed to rename the file!</source>
         <translation>Renommage du fichier échouée !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="489"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="504"/>
         <source>An item &quot;%1&quot; already exists in this location. Do you want to replace it and move old item to trash?</source>
         <translation>Un éléments &quot;%1&quot; existe déjà à cet endroit. Voulez-vous le remplacer et mettre l&apos;ancien dans la corbeille ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="490"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="505"/>
         <source>Stop</source>
         <translation>Arrêter</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="491"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="506"/>
         <source>Keep Both</source>
         <translation>Garder les deux</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="492"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="507"/>
         <source>Keep Both All</source>
         <translation>Conserver les deux pour tous</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="493"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="508"/>
         <source>Replace</source>
         <translation>Remplacer</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="494"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="509"/>
         <source>Replace All</source>
         <translation>Tout remplacer</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="579"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="609"/>
         <source>Are you sure that you want move to trash this item?</source>
         <translation>Êtes-vous certain de vouloir mettre cet élément à la corbeille ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="582"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="585"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="612"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="615"/>
         <source>Are you sure that you want move to trash %1 items?</source>
         <translation>Êtes-vous certain de vouloir mettre %1 éléments à la corbeille ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="588"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="618"/>
         <source>Move to Trash</source>
         <translation>Mettre à la corbeille</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="632"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="662"/>
         <source>Open With</source>
         <translation>Ouvrir avec</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="639"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="669"/>
         <source>System Editor</source>
         <translation>Éditeur système</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="283"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="286"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="290"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="293"/>
         <source>Create Folder</source>
         <translation>Créer un répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="284"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="291"/>
         <source>A folder with that name already exists!</source>
         <translation>Un répertoire avec ce nom existe déjà !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="287"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="294"/>
         <source>Failed to create the folder!</source>
         <translation>Création du répertoire échouée !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="309"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="314"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="316"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="321"/>
         <source>Rename Folder</source>
         <translation>Renommer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="300"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="307"/>
         <source>Folder Name</source>
         <translation>Nom du répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="310"/>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="315"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="322"/>
         <source>Failed to rename the folder!</source>
         <translation>Renommage du répertoire échouée !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="329"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="336"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Etes vous certain de vouloir supprimer ce répertoire et son contenu ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/basefolderview.cpp" line="336"/>
+        <location filename="src/utils/folderview/basefolderview.cpp" line="343"/>
         <source>Failed to delete the folder!</source>
         <translation>Supression du répertoire échouée !</translation>
     </message>
@@ -774,37 +784,42 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
         <source>Form</source>
         <translation>Formulaire</translation>
     </message>
+    <message>
+        <location filename="src/plugins/dlvdebugger/dlvdebuggeroption.ui" line="20"/>
+        <source>delve debug pass flags: (example --check-go-version=false)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DocumentBrowser</name>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="67"/>
         <source>Back</source>
         <oldsource>Backward</oldsource>
         <translation>Précédent</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="68"/>
         <source>Forward</source>
         <translation>Suivant</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="70"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="69"/>
         <source>Reload</source>
         <translation>Recharger</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="76"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="75"/>
         <source>Increase Font Size</source>
         <translation>Agrandir la police</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="79"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="78"/>
         <source>Decrease Font Size</source>
         <translation>Réduire la police</translation>
     </message>
     <message>
-        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="82"/>
+        <location filename="src/utils/documentbrowser/documentbrowser.cpp" line="81"/>
         <source>Reset Font Size</source>
         <translation>Réinitialiser la taille police</translation>
     </message>
@@ -820,115 +835,120 @@ LiteIDE is a simple, open source, cross-platform IDE.</oldsource>
 <context>
     <name>EditorManager</name>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="138"/>
+        <location filename="src/liteapp/editormanager.cpp" line="139"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="163"/>
+        <location filename="src/liteapp/editormanager.cpp" line="165"/>
         <source>Move to New Window</source>
         <oldsource>Move To New Window</oldsource>
         <translation>Déplacer vers une nouvelle fenêtre</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="229"/>
+        <location filename="src/liteapp/editormanager.cpp" line="233"/>
         <source>Navigate Forward</source>
         <oldsource>GoForward</oldsource>
         <translation>Suivant</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="140"/>
+        <location filename="src/liteapp/editormanager.cpp" line="141"/>
         <source>Close Others</source>
         <oldsource>Close Others Tabs</oldsource>
         <translation>Fermer les autres</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="110"/>
+        <location filename="src/liteapp/editormanager.cpp" line="111"/>
         <source>Open Editor</source>
         <translation>Ouvrir l&apos;éditeur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="141"/>
+        <location filename="src/liteapp/editormanager.cpp" line="142"/>
         <source>Close All</source>
         <oldsource>Close All Tabs</oldsource>
         <translation>Tout fermer</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="142"/>
+        <location filename="src/liteapp/editormanager.cpp" line="143"/>
         <source>Close Left Tabs</source>
         <translation>Fermer les onglets à gauche</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="143"/>
+        <location filename="src/liteapp/editormanager.cpp" line="144"/>
         <source>Close Right Tabs</source>
         <translation>Fermer les onglets à droite</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="144"/>
+        <location filename="src/liteapp/editormanager.cpp" line="145"/>
         <source>Close Files in Same Folder</source>
         <oldsource>Close Same Folder Files</oldsource>
         <translation>Fermer les fichiers du même répertoire</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="145"/>
+        <location filename="src/liteapp/editormanager.cpp" line="146"/>
         <source>Close Files in Other Folders</source>
         <oldsource>Close Other Folder Files</oldsource>
         <translation>Fermer les fichiers d&apos;autres répertoires</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="146"/>
+        <location filename="src/liteapp/editormanager.cpp" line="147"/>
         <source>Copy Full Path to Clipboard</source>
         <oldsource>Copy Path to Clipboard</oldsource>
         <translation>Copier le chemin complet dans le presse-papier</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="149"/>
+        <location filename="src/liteapp/editormanager.cpp" line="150"/>
         <source>Show in Explorer</source>
         <translation>Montrer dans l&apos;explorateur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="151"/>
+        <location filename="src/liteapp/editormanager.cpp" line="152"/>
         <source>Show in Finder</source>
         <translation>Montrer dans la recherche</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="153"/>
+        <location filename="src/liteapp/editormanager.cpp" line="154"/>
         <source>Show Containing Folder</source>
         <translation>Montrer son répertoire parent</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="157"/>
+        <location filename="src/liteapp/editormanager.cpp" line="158"/>
         <source>Open Command Prompt Here</source>
         <translation>Ouvrir une ligne de commande ici</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="159"/>
+        <location filename="src/liteapp/editormanager.cpp" line="160"/>
         <source>Open Terminal Here</source>
         <translation>Ouvrir un terminal ici</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="220"/>
+        <location filename="src/liteapp/editormanager.cpp" line="162"/>
+        <source>Open in Integrated Terminal</source>
+        <translation type="unfinished">Ouvrir dans le terminal intégré</translation>
+    </message>
+    <message>
+        <location filename="src/liteapp/editormanager.cpp" line="224"/>
         <source>Navigate Backward</source>
         <translation>Reculer vers la position précédente</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="422"/>
+        <location filename="src/liteapp/editormanager.cpp" line="426"/>
         <source>Save changes to %1?</source>
         <translation>Enregistrer les changement vers %1 ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="423"/>
+        <location filename="src/liteapp/editormanager.cpp" line="427"/>
         <source>Unsaved Modifications</source>
         <oldsource>Save Modify</oldsource>
         <translation>Modifications non en registrées</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="520"/>
+        <location filename="src/liteapp/editormanager.cpp" line="524"/>
         <source>All Files (*)</source>
         <translation>Tous fichiers (*)</translation>
     </message>
     <message>
-        <location filename="src/liteapp/editormanager.cpp" line="522"/>
+        <location filename="src/liteapp/editormanager.cpp" line="526"/>
         <source>Save As</source>
         <translation>Enregistrer sous</translation>
     </message>
@@ -2062,8 +2082,8 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
     </message>
     <message>
         <location filename="src/plugins/litefind/findeditor.cpp" line="72"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="249"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="470"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="250"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="472"/>
         <source>Ready</source>
         <translation>Prêt</translation>
     </message>
@@ -2089,8 +2109,8 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
         <translation>Options :</translation>
     </message>
     <message>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="220"/>
-        <location filename="src/plugins/litefind/findeditor.cpp" line="392"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="221"/>
+        <location filename="src/plugins/litefind/findeditor.cpp" line="393"/>
         <source>Not found</source>
         <translation>Aucune occurrence</translation>
     </message>
@@ -2098,34 +2118,34 @@ Souhaitez-vous supprimer toutes les correspondances par des espaces ?</translati
 <context>
     <name>FolderListView</name>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="249"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="259"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="252"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="262"/>
         <source>Delete File</source>
         <translation>Supprimer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="250"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="253"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Êtes-vous certain de supprimer ce fichier définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="260"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="263"/>
         <source>Failed to delete the file!</source>
         <translation>Impossible de supprimer ce fichier !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="272"/>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="282"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="275"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="285"/>
         <source>Delete Folder</source>
         <translation>Supprimer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="273"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="276"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Êtes-vous certain de supprimer ce répertoire et son contenu définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/folderlistview.cpp" line="283"/>
+        <location filename="src/utils/folderview/folderlistview.cpp" line="286"/>
         <source>Failed to delete the folder!</source>
         <translation>Impossible de supprimer ce répertoire !</translation>
     </message>
@@ -2952,66 +2972,66 @@ Success: %2.</oldsource>
 <context>
     <name>HtmlPreview</name>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="72"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="71"/>
         <source>Page Style</source>
         <translation>Style de la page</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="76"/>
         <source>Reload</source>
         <translation>Recharger</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="382"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="77"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="381"/>
         <source>Export Html</source>
         <translation>Exporter en HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="414"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="78"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="413"/>
         <source>Export PDF</source>
         <translation>Exporter en PDF</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="80"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="79"/>
         <source>Print Preview</source>
         <translation>Prévisualiser l&apos;impression</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="83"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="82"/>
         <source>Synchronize preview and code scrollbars</source>
         <translation>Synchroniser le défilement entre l&apos;aperçu et le code</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="89"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="88"/>
         <source>Config</source>
         <translation>Configuration</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="169"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="168"/>
         <source>Plain HTML</source>
         <translation>Plain HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="389"/>
         <source>Export Failed</source>
         <translation>Exportation échouée</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="86"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="85"/>
         <source>Automatically display preview</source>
         <oldsource>Automatically Display Preview</oldsource>
         <translation>Affichage de l&apos;aperçu automatiquement</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="100"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="99"/>
         <source>HTML Preview</source>
         <oldsource>Html Preview</oldsource>
         <translation>Aperçu HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/htmlpreview.cpp" line="391"/>
+        <location filename="src/plugins/markdown/htmlpreview.cpp" line="390"/>
         <source>Could not open %1 for writing!</source>
         <oldsource>Can not write file %1</oldsource>
         <translation>Impossible d&apos;ouvrir le fichier %1 en écriture !</translation>
@@ -3790,7 +3810,7 @@ Success: %2.</oldsource>
 <context>
     <name>LiteDoc</name>
     <message>
-        <location filename="src/plugins/welcome/litedoc.cpp" line="64"/>
+        <location filename="src/plugins/welcome/litedoc.cpp" line="63"/>
         <source>LiteIDE Documentation</source>
         <oldsource>LiteIDE Document Browser</oldsource>
         <translation>Explorateur de documents LiteIDE</translation>
@@ -4501,40 +4521,40 @@ Success: %2.</oldsource>
 <context>
     <name>MarkdownBatchBrowser</name>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="143"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="142"/>
         <source>Markdown Exporter</source>
         <oldsource>Markdown Batch</oldsource>
         <translation>Exporteur de Markdown</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="163"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="162"/>
         <source>All Files (*)</source>
         <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="232"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="231"/>
         <source>Select the folder containing your markdown files:</source>
         <oldsource>Select Markdown Folder</oldsource>
         <translation>Sélectionner le répertoire de vos fichiers Markdown :</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="243"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="242"/>
         <source>Select Markdown Files</source>
         <translation>Sélectionner les fichiers Markdown</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="291"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="290"/>
         <source>Select the folder to contain separated markdown exports:</source>
         <translation>Sélectionner le répertoire pour contenir vos fichiers Markdown séparés :</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="304"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="303"/>
         <source>Export Merged HTML</source>
         <oldsource>Export Html</oldsource>
         <translation>Exporter en HTML fusionné</translation>
     </message>
     <message>
-        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="379"/>
+        <location filename="src/plugins/markdown/markdownbatchbrowser.cpp" line="378"/>
         <source>Export Merged PDF</source>
         <oldsource>Export PDF</oldsource>
         <translation>Exporter en PDF fusionné</translation>
@@ -4759,34 +4779,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="289"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="296"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="298"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="305"/>
         <source>Delete Folder</source>
         <translation>Supprimer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="290"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="299"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Êtes-vous certain de supprimer ce répertoire et son contenu définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="297"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="306"/>
         <source>Failed to delete the folder!</source>
         <translation>Impossible de supprimer le répertoire !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="310"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="317"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="319"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="326"/>
         <source>Delete File</source>
         <translation>Supprimer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="311"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="320"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Êtes-vous certain de supprimer ce fichier définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="318"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="327"/>
         <source>Failed to delete the file!</source>
         <translation>Impossible de supprimer le fichier !</translation>
     </message>
@@ -5794,11 +5814,6 @@ Voulez-vous le remplacer ?</translation>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="src/plugins/terminal/terminal.cpp" line="251"/>
-        <source>Open in Integrated Terminal</source>
-        <translation>Ouvrir dans le terminal intégré</translation>
-    </message>
-    <message>
         <location filename="src/plugins/terminal/terminal.cpp" line="741"/>
         <source>Rename Tab Title</source>
         <translation>Renommer l&apos;onglet</translation>
@@ -5856,28 +5871,28 @@ Voulez-vous le remplacer ?</translation>
 <context>
     <name>WebKitBrowser</name>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="70"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="69"/>
         <source>Navigation</source>
         <translation>Navigation</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="73"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="72"/>
         <source>Open Html File</source>
         <oldsource>Open Html</oldsource>
         <translation>Ouvrir un fichier HTML</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="120"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="119"/>
         <source>WebKitBrowser</source>
         <translation>WebKitBrowser</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="170"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="169"/>
         <source>False load %1 !</source>
         <translation>Chargement erroné de %1 !</translation>
     </message>
     <message>
-        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="257"/>
+        <location filename="src/plugins/webkithtmlwidget/webkitbrowser.cpp" line="256"/>
         <source>Open Html or Markdown File</source>
         <oldsource>Open Html or Markdown Files</oldsource>
         <translation>Ouvrir des fichiers HTML ou Markdown</translation>
@@ -5924,7 +5939,7 @@ Voulez-vous le remplacer ?</translation>
 <context>
     <name>WelcomePlugin</name>
     <message>
-        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="72"/>
+        <location filename="src/plugins/welcome/welcomeplugin.cpp" line="77"/>
         <source>Welcome</source>
         <oldsource>Home</oldsource>
         <translation>Bienvenue</translation>

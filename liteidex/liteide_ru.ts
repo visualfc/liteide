@@ -373,6 +373,14 @@ LiteIDE это простая кросплатформенная среда ра
         <source>System Editor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open in Integrated Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Path</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BookmarkManager</name>
@@ -617,6 +625,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Form</source>
         <translation></translation>
     </message>
+    <message>
+        <source>delve debug pass flags: (example --check-go-version=false)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DocumentBrowser</name>
@@ -746,6 +758,10 @@ LiteIDE это простая кросплатформенная среда ра
     <message>
         <source>Open Editor</source>
         <translation>Открыть редактор</translation>
+    </message>
+    <message>
+        <source>Open in Integrated Terminal</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4637,10 +4653,6 @@ Do you want to replace it?</source>
     <message>
         <source>Terminal</source>
         <translation type="unfinished">Командная строка</translation>
-    </message>
-    <message>
-        <source>Open in Integrated Terminal</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename Tab Title</source>
