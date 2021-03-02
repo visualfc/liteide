@@ -95,6 +95,7 @@ public slots:
     void tabContextCopyPathToClipboard();
     void tabContextShowInExplorer();
     void tabContextOpenInShell();
+    void tabContextOpenInTerminal();
     void goBack();
     void goForward();
     void updateNavigatorActions();

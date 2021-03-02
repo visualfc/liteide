@@ -25,6 +25,7 @@
 #include "liteapp_global.h"
 #include "liteapi/liteids.h"
 #include "liteenvapi/liteenvapi.h"
+#include "terminalapi/terminalapi.h"
 #include <QFileInfo>
 #include <QTabWidget>
 #include <QMessageBox>
@@ -158,6 +159,7 @@ bool EditorManager::initWithApp(IApplication *app)
 #else
     QAction *openInShell = new QAction(tr("Open Terminal Here"),this);
 #endif
+    QAction *openTerminal = new QAction(tr("Open in Integrated Terminal"),this);
 
 
     QAction *moveToAct = new QAction(tr("Move to New Window"),this);
@@ -174,6 +176,7 @@ bool EditorManager::initWithApp(IApplication *app)
     m_tabContextFileMenu->addAction(copyPathToClipboard);
     m_tabContextFileMenu->addAction(showInExplorer);
     m_tabContextFileMenu->addAction(openInShell);
+    m_tabContextFileMenu->addAction(openTerminal);
     m_tabContextFileMenu->addSeparator();
     m_tabContextFileMenu->addAction(moveToAct);
 
@@ -193,6 +196,7 @@ bool EditorManager::initWithApp(IApplication *app)
     connect(copyPathToClipboard,SIGNAL(triggered()),this,SLOT(tabContextCopyPathToClipboard()));
     connect(showInExplorer,SIGNAL(triggered()),this,SLOT(tabContextShowInExplorer()));
     connect(openInShell,SIGNAL(triggered()),this,SLOT(tabContextOpenInShell()));
+    connect(openTerminal,SIGNAL(triggered()),this,SLOT(tabContextOpenInTerminal()));
     connect(moveToAct,SIGNAL(triggered()),this,SLOT(moveToNewWindow()));
     connect(qApp,SIGNAL(focusChanged(QWidget*,QWidget*)),this,SLOT(focusChanged(QWidget*,QWidget*)));
 
@@ -1005,6 +1009,19 @@ void EditorManager::tabContextOpenInShell()
     }
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
     FileUtil::openInShell(env,filePath);
+}
+
+void EditorManager::tabContextOpenInTerminal()
+{
+    QString filePath = tabContextFilePath();
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QFileInfo info(filePath);
+    LiteApi::ITerminal *terminal = LiteApi::getTerminalManager(m_liteApp);
+    if (terminal) {
+        terminal->openDefaultTerminal(info.path());
+    }
 }
 
 void EditorManager::tabContextCloseOtherFolderFiles()
