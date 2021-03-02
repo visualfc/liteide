@@ -8,6 +8,7 @@
     * move to trash use api on macos
     * fix find&replace repaint
     * update terminal action
+    * add copy fullpath action
 * LiteApp
     * editor context menu add integrated terminal action
     * folder view update integrated terminal action
