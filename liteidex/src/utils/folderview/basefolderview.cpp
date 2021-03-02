@@ -23,6 +23,7 @@
 
 #include "basefoldeview.h"
 #include "liteenvapi/liteenvapi.h"
+#include "terminalapi/terminalapi.h"
 #include "fileutil/fileutil.h"
 #include "folderdialog.h"
 
@@ -98,6 +99,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
 #else
     m_openShellAct = new QAction(tr("Open Terminal Here"),this);
 #endif
+    m_openTerminalAct = new QAction(tr("Open in Integrated Terminal"),this);
 
     m_openFolderAct = new QAction(tr("Open Folder..."),this);
     m_reloadFolderAct = new QAction(tr("Reload Folder"),this);
@@ -123,6 +125,7 @@ BaseFolderView::BaseFolderView(LiteApi::IApplication *app, QWidget *parent) :
     connect(m_renameFolderAct,SIGNAL(triggered()),this,SLOT(renameFolder()));
     connect(m_removeFolderAct,SIGNAL(triggered()),this,SLOT(removeFolder()));
     connect(m_openShellAct,SIGNAL(triggered()),this,SLOT(openShell()));
+    connect(m_openTerminalAct,SIGNAL(triggered()),this,SLOT(openTerminal()));
     connect(m_openExplorerAct,SIGNAL(triggered()),this,SLOT(openExplorer()));
     connect(m_openFolderAct,SIGNAL(triggered()),this,SLOT(openFolder()));
     connect(m_closeFolderAct,SIGNAL(triggered()),this,SLOT(closeFolder()));
@@ -345,6 +348,14 @@ void BaseFolderView::removeFolder()
 void BaseFolderView::openExplorer()
 {
     FileUtil::openInExplorer(contextFileInfo().filePath());
+}
+
+void BaseFolderView::openTerminal()
+{
+    LiteApi::ITerminal *term = LiteApi::getTerminalManager(m_liteApp);
+    if (term) {
+        term->openDefaultTerminal(contextDir().path());
+    }
 }
 
 void BaseFolderView::openFolder()

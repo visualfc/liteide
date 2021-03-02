@@ -213,6 +213,7 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
+        m_contextMenu->addAction(m_openTerminalAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
 #ifdef Q_OS_MAC
         if (m_contextInfo.isBundle()) {
@@ -241,6 +242,7 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
+        m_contextMenu->addAction(m_openTerminalAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
         m_contextMenu->addAction(m_openEditorAct);
         m_contextMenu->addMenu(this->openWithMenu());
@@ -263,6 +265,7 @@ void MultiFolderView::customContextMenuRequested(const QPoint &pos)
         m_contextMenu->addSeparator();
         m_contextMenu->addAction(m_openExplorerAct);
         m_contextMenu->addAction(m_openShellAct);
+        m_contextMenu->addAction(m_openTerminalAct);
     }
     m_pasteFileAct->setEnabled(this->canPasteFile());
 

@@ -43,7 +43,6 @@ inline ITerminal* getTerminalManager(LiteApi::IApplication *app)
     return LiteApi::findExtensionObject<ITerminal*>(app,"LiteApi.ITerminal");
 }
 
-
 } //namespace LiteApi
 
 

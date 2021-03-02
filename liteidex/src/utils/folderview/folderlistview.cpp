@@ -213,6 +213,7 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addSeparator();
         menu.addAction(m_openExplorerAct);
         menu.addAction(m_openShellAct);
+        menu.addAction(m_openTerminalAct);
     } else if (flag == LiteApi::FILESYSTEM_FOLDER) {
         menu.addAction(m_newFileAct);
         menu.addAction(m_newFileWizardAct);
@@ -222,6 +223,7 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addSeparator();
         menu.addAction(m_openExplorerAct);
         menu.addAction(m_openShellAct);
+        menu.addAction(m_openTerminalAct);
     } else if (flag == LiteApi::FILESYSTEM_FILES) {
         menu.addAction(m_openEditorAct);
         menu.addMenu(this->openWithMenu());
@@ -234,6 +236,7 @@ void FolderListView::customContextMenuRequested(const QPoint &pos)
         menu.addSeparator();
         menu.addAction(m_openExplorerAct);
         menu.addAction(m_openShellAct);
+        menu.addAction(m_openTerminalAct);
     }
     emit aboutToShowContextMenu(&menu,flag,m_contextInfo);
     menu.exec(this->mapToGlobal(pos));

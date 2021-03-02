@@ -248,9 +248,9 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
 
     m_liteApp->extension()->addObject("LiteApi.ITerminal",this);
 
-    m_fmctxOpenTerminalAct = new QAction(tr("Open in Integrated Terminal"),this);
-    connect(m_fmctxOpenTerminalAct,SIGNAL(triggered()),this,SLOT(fmctxOpenTerminal()));
-    connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)));
+    //m_fmctxOpenTerminalAct = new QAction(tr("Open in Integrated Terminal"),this);
+    //connect(m_fmctxOpenTerminalAct,SIGNAL(triggered()),this,SLOT(fmctxOpenTerminal()));
+    //connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)));
 
     qApp->installEventFilter(this);
 }
@@ -456,9 +456,9 @@ void Terminal::triggeredListAction(QAction *act)
 
 void Terminal::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info,const QString &context)
 {
-    menu->addSeparator();
-    menu->addAction(m_fmctxOpenTerminalAct);
-    m_fmctxFileInfo = info;
+//    menu->addSeparator();
+//    menu->addAction(m_fmctxOpenTerminalAct);
+//    m_fmctxFileInfo = info;
 }
 
 void Terminal::fmctxOpenTerminal()

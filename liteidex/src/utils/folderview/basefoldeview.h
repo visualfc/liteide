@@ -51,6 +51,7 @@ public slots:
     virtual void removeFolder();
     virtual void openShell();
     virtual void openExplorer();
+    virtual void openTerminal();
     virtual void openFolder();
     virtual void closeFolder();
     virtual void reloadFolder();
@@ -83,6 +84,7 @@ protected:
     QAction *m_removeFolderAct;
     QAction *m_renameFolderAct;
     QAction *m_openShellAct;
+    QAction *m_openTerminalAct;
     QAction *m_openExplorerAct;
     QAction *m_openFolderAct;
     QAction *m_closeFolderAct;

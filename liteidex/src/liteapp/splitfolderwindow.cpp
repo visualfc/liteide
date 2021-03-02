@@ -382,6 +382,7 @@ void SplitFolderView::customContextMenuRequested(const QPoint &pos)
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_openExplorerAct);
     m_contextMenu->addAction(m_openShellAct);
+    m_contextMenu->addAction(m_openTerminalAct);
     emit aboutToShowContextMenu(m_contextMenu,flag,m_contextInfo);
     m_contextMenu->exec(this->mapToGlobal(pos));
 }

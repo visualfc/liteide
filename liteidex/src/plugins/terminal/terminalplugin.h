@@ -48,6 +48,7 @@ public:
         m_info->setName("Terminal");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Terminal");
+        m_info->setMustLoad(true);
         m_info->appendDepend("plugin/liteenv");
     }
 };

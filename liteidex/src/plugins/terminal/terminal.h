@@ -126,7 +126,7 @@ protected:
     QList<Command> m_cmdList;
     QString  m_curName;
     QFileInfo m_fmctxFileInfo;
-    QAction *m_fmctxOpenTerminalAct;
+    //QAction *m_fmctxOpenTerminalAct;
     bool m_darkMode;
     bool m_loginMode;
     int m_indexId;
