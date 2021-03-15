@@ -22,6 +22,7 @@ SUBDIRS = \
     golangplay \
     golangpackage \
     golangpresent \
+    golangpls \
     gdbdebugger \
     markdown \
     jsonedit \

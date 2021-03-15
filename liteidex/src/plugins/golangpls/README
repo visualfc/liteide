@@ -1,0 +1,1 @@
+To regenerate gopls types, clone the repo https://github.com/go-language-server/protocol/ in the folder tools/goplsToCpp/protocol and then run the file main.go in tools/goplsToCp
