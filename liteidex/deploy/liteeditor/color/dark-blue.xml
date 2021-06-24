@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="dark">
+<!--
+Dark blue color scheme by qAison
+Public Domain, 2021
+-->
+	<style name="Text" foreground="#dedcee" background="#24292E"/>
+	<style name="Extra" foreground="#3B9A9C" background="#1F2428"/>
+	<style name="Selection" background="#214283"/>
+	<style name="CurrentLine" background="#3F3F3F"/>
+	<style name="MatchBrackets" background="#808080"/>
+	<style name="IndentLine" foreground="#008B8B"/>
+	<style name="VisualWhitespace" foreground="#F92672"/>
+	<style name="Keyword" foreground="#F8D267" />
+	<style name="DataType" foreground="#FD971F" bold="true" />
+	<style name="Decimal" foreground="#D5A4CF" />
+	<style name="BaseN" foreground="#0000FF"/>
+	<style name="Float" foreground="#ff55ff"/>
+	<style name="Char" foreground="#CE7DDB"/>
+	<style name="String" foreground="#7EBC59"/>
+	<style name="Comment" foreground="#7F848E"/>
+	<style name="Alert" foreground="#ff0000"/>
+	<style name="Error" foreground="#ff0000"/>
+	<style name="Function" foreground="#41B6E6"/>
+	<style name="RegionMarker" foreground="#F92672"/>
+	<style name="Symbol" foreground="#F92672"/>
+	<style name="BuiltinFunc" foreground="#AE81FF" bold="true"/>
+	<style name="Predeclared" foreground="#FF5F0E" bold="true" />
+	<style name="FuncDecl" foreground="#60C5BA" />
+	<style name="Placeholder" foreground="#CC2E05"/>
+	<style name="ToDo" foreground="#C7C7FF" bold="true"/>
+</style-scheme>
