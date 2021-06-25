@@ -38,6 +38,7 @@
 		<action id="Run" img="run.png" key="Ctrl+Alt+R;Ctrl+F5" cmd="$(TARGETNAME)" args="$(TARGETARGS)" output="true" codec="utf-8" readline="true" work="$(TARGTWORKDIR)"/>
 		<action id="RunTerm" img="runterm.png" key="Ctrl+Shift+F5" cmd="$(LITEIDE_EXEC)" args="$(LITEIDE_EXECOPT) $(GOTOOLS) runcmd $(TARGETNAME) $(TARGETARGS)" output="false" readline="true" work="$(TARGTWORKDIR)"/>
 		<action id="RunTerm" os="macosx" img="runterm.png" key="Ctrl+Shift+F5" cmd="/usr/bin/open" args="$(TARGETNAME)" output="false" readline="true" work="$(TARGTWORKDIR)"/>
+		<action id="FileBuild" img="filebuild.png" key="Shift+Alt+B;Alt+F7" cmd="$(GO)" args="build $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" readline="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="FileRun" img="filerun.png" key="Shift+Alt+R;Alt+F6" cmd="$(GO)" args="run $(EDITOR_FILE_NAME)" save="editor" output="true" codec="utf-8" readline="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="Build" img="build.png" key="Ctrl+B;F7" cmd="$(GO)" args="build $(BUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
 		<action id="ForceBuild" img="rebuild.png" menu="Build" key="Ctrl+Alt+B" cmd="$(GO)" args="build $(FORCEBUILDARGS)" save="all" output="true" codec="utf-8" regex="$(ERRREGEX)" navigate="true"/>
