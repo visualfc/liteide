@@ -117,6 +117,7 @@ VTermWidgetBase::VTermWidgetBase(int rows, int cols, QWidget *parent)
     m_sbListCapacity = 10000;
     m_rows = rows;
     m_cols = cols;
+    m_lineBuf.resize(m_cols);
 
     m_cursor.row = -1;
     m_cursor.col = -1;
@@ -258,57 +259,40 @@ int VTermWidgetBase::endRow() const
     return  m_rows;
 }
 
+QString VTermWidgetBase::getLineText(int row, int start_col, int end_col) const
+{
+    VTermRect rc;
+    rc.start_row = row;
+    rc.end_row = row+1;
+    rc.start_col = start_col;
+    rc.end_col = end_col;
+    size_t len = end_col-start_col;
+    size_t n = _get_chars(m_screen,0, (void*)(&m_lineBuf[0]),len,rc);
+    return  QString::fromUcs4(&m_lineBuf[0],n);
+}
+
 QString VTermWidgetBase::selectedText() const
 {
     if (m_selection.isNull()) {
         return QString();
     }
-
-    int start_row = m_selection.top();//+this->verticalScrollBar()->value()-m_sbList.size();
-    QString text;
-    VTermScreenCell cell;
     if (m_selection.height() == 1) {
-        for (int col = m_selection.left(); col < m_selection.right() ; ++col) {
-            bool b = fetchCell(start_row,col,&cell);
-            if (!b || !cell.chars[0]) {
-                break;
-            }
-            text += QString::fromUcs4(cell.chars);
-            if (cell.width > 1) {
-                col += cell.width-1;
-            }
-        }
-    } else {
-        int end_row = start_row+m_selection.height();
-        for (int row = start_row; row < end_row; ++row) {
-            int start_col = 0;
-            int end_col = m_cols;
-            if (row == start_row) {
-                start_col = m_selection.left();
-            } else {
-#ifdef Q_OS_WIN
-                text += "\r\n";
-#else
-                text += "\n";
-#endif
-                if (row == end_row-1) {
-                    end_col = m_selection.right();
-                }
-            }
-            for (int col = start_col; col < end_col; ++col) {
-                bool b = fetchCell(row,col,&cell);
-                if (!b || !cell.chars[0]) {
-                    break;
-                }
-                text += QString::fromUcs4(cell.chars);
-                if (cell.width > 1) {
-                    col += cell.width-1;
-                }
-            }
-        }
+        return getLineText(m_selection.top(),m_selection.left(),m_selection.right());
     }
-
-    return  text;
+    int start_row = m_selection.top();
+    int end_row = m_selection.bottom();
+    QStringList lines;
+    lines.append(getLineText(start_row,m_selection.left(),m_cols));
+    for (int row = start_row+1; row < end_row; row++) {
+        lines.append(getLineText(row,0,m_cols));
+    }
+    lines.append(getLineText(end_row,0,m_selection.right()));
+#ifdef Q_OS_WIN
+    QString sep = "\r\n";
+#else
+    QString sep = "\n";
+#endif
+    return lines.join(sep);
 }
 
 QRect VTermWidgetBase::selectedRect() const
@@ -399,6 +383,7 @@ int VTermWidgetBase::vterm_resize(int rows, int cols)
 {
     m_rows = rows;
     m_cols = cols;
+    m_lineBuf.resize(m_cols);
     //qDebug() << "vterm_resize" << rows << cols << m_cellWidth << m_cellHeight;
     emit sizeChanged(m_rows,m_cols);
     return 1;
@@ -509,6 +494,7 @@ void VTermWidgetBase::inputWrite(const QByteArray &data)
     vterm_input_write(m_vt,data.data(),size_t(data.length()));
     vterm_screen_flush_damage(m_screen);
     //this->viewport()->update();
+
 }
 
 void VTermWidgetBase::inputKey(Qt::Key _key, Qt::KeyboardModifier _mod)
@@ -1059,4 +1045,94 @@ VTermKey qt_to_vtermKey(int key, bool keypad)
         default:
             return VTERM_KEY_NONE;
     }    
+}
+
+#define UNICODE_TAB '\t'
+#define UNICODE_SPACE 0x20
+#define UNICODE_LINEFEED 0x0a
+
+static inline unsigned int utf8_seqlen(long codepoint)
+{
+  if(codepoint < 0x0000080) return 1;
+  if(codepoint < 0x0000800) return 2;
+  if(codepoint < 0x0010000) return 3;
+  if(codepoint < 0x0200000) return 4;
+  if(codepoint < 0x4000000) return 5;
+  return 6;
+}
+
+/* Does NOT NUL-terminate the buffer */
+static int fill_utf8(long codepoint, char *str)
+{
+  int nbytes = utf8_seqlen(codepoint);
+
+  // This is easier done backwards
+  int b = nbytes;
+  while(b > 1) {
+    b--;
+    str[b] = 0x80 | (codepoint & 0x3f);
+    codepoint >>= 6;
+  }
+
+  switch(nbytes) {
+    case 1: str[0] =        (codepoint & 0x7f); break;
+    case 2: str[0] = 0xc0 | (codepoint & 0x1f); break;
+    case 3: str[0] = 0xe0 | (codepoint & 0x0f); break;
+    case 4: str[0] = 0xf0 | (codepoint & 0x07); break;
+    case 5: str[0] = 0xf8 | (codepoint & 0x03); break;
+    case 6: str[0] = 0xfc | (codepoint & 0x01); break;
+  }
+
+  return nbytes;
+}
+
+size_t VTermWidgetBase::_get_chars(const VTermScreen *screen, const int utf8, void *buffer, size_t len, const VTermRect rect) const
+{
+  size_t outpos = 0;
+  int padding = 0;
+
+#define PUT(c)                                             \
+  if(utf8) {                                               \
+    size_t thislen = utf8_seqlen(c);                       \
+    if(buffer && outpos + thislen <= len)                  \
+      outpos += fill_utf8((c), (char *)buffer + outpos);   \
+    else                                                   \
+      outpos += thislen;                                   \
+  }                                                        \
+  else {                                                   \
+    if(buffer && outpos + 1 <= len)                        \
+      ((uint32_t*)buffer)[outpos++] = (c);                 \
+    else                                                   \
+      outpos++;                                            \
+  }
+  int row,col,i;
+  for(row = rect.start_row; row < rect.end_row; row++) {
+    for(col = rect.start_col; col < rect.end_col; col++) {
+        VTermScreenCell cell;
+        fetchCell(row, col,&cell);
+
+      if(cell.chars[0] == 0)
+        // Erased cell, might need a space
+        padding++;
+      else if(cell.chars[0] == (uint32_t)-1)
+        // Gap behind a double-width char, do nothing
+        ;
+      else {
+        while(padding > 0) {
+          PUT(UNICODE_TAB);
+          padding-=8;
+        }
+        padding = 0;
+        for(i = 0; i < VTERM_MAX_CHARS_PER_CELL && cell.chars[i]; i++) {
+          PUT(cell.chars[i]);
+        }
+      }
+    }
+
+    if(row < rect.end_row - 1) {
+      PUT(UNICODE_LINEFEED);
+      padding = 0;
+    }
+  }
+  return outpos;
 }

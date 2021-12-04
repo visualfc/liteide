@@ -91,6 +91,8 @@ public:
     bool hasSelection() const;
     bool isSelection(int row, int col) const;
     bool adjustFetchCell(int row, int *col, VTermScreenCell *cell);
+    QString getLineText(int row, int start_col, int end_col) const;
+    size_t _get_chars(const VTermScreen *screen, const int utf8, void *buffer, size_t len, const VTermRect rect) const;
 protected:
     void updateSelection(QPoint scenePos);
 protected:
@@ -125,6 +127,7 @@ protected:
     bool m_ignoreScroll;
     bool m_darkMode;
     char textbuf[0x1fff];
+    std::vector<uint32_t> m_lineBuf;
     VTerm       *m_vt;
     VTermScreen *m_screen;
     VTermState  *m_state;
