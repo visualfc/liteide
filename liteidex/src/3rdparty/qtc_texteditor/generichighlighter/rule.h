@@ -36,6 +36,7 @@
 
 #include <QtCore/QString>
 #include <QtCore/QList>
+#include <QtCore/QStringList>
 #include <QtCore/QSharedPointer>
 
 namespace TextEditor {

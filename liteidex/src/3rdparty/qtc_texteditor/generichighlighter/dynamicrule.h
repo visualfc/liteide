@@ -36,10 +36,6 @@
 
 #include "rule.h"
 
-QT_BEGIN_NAMESPACE
-class QStringList;
-QT_END_NAMESPACE
-
 namespace TextEditor {
 namespace Internal {
 

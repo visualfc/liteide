@@ -39,7 +39,11 @@
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStack>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtXml/QXmlDefaultHandler>
+#else
+#include <QtCore5Compat/QXmlDefaultHandler>
+#endif
 
 namespace TextEditor {
 namespace Internal {

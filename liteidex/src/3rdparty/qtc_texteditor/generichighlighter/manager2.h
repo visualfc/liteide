@@ -42,12 +42,12 @@
 #include <QtCore/QSet>
 #include <QtCore/QUrl>
 #include <QtCore/QList>
+#include <QtCore/QStringList>
 #include <QtCore/QSharedPointer>
 #include <QtCore/QFutureWatcher>
 
 QT_BEGIN_NAMESPACE
 class QFileInfo;
-class QStringList;
 class QIODevice;
 template <class> class QFutureInterface;
 template <class> class QSharedPointer;

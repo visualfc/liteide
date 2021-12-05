@@ -77,10 +77,10 @@ QSharedPointer<HighlightDefinitionMetaData> Manager2::parseMetadata(const QFileI
             metaData->setPriority(atts.value(HighlightDefinitionMetaData::kPriority).toString()
                                   .toInt());
             metaData->setPatterns(atts.value(HighlightDefinitionMetaData::kExtensions)
-                                  .toString().split(kSemiColon, QString::SkipEmptyParts));
+                                  .toString().split(kSemiColon, skipEmptyParts));
 
             QStringList mimeTypes = atts.value(HighlightDefinitionMetaData::kMimeType).
-                                    toString().split(kSemiColon, QString::SkipEmptyParts);
+                                    toString().split(kSemiColon, skipEmptyParts);
             if (mimeTypes.isEmpty()) {
                 // There are definitions which do not specify a MIME type, but specify file
                 // patterns. Creating an artificial MIME type is a workaround.
@@ -126,7 +126,7 @@ void Manager2::loadPath(const QStringList &definitionsPaths)
         }
 
         // Consider definitions with higher priority first.
-        qSort(allMetaData.begin(), allMetaData.end(), PriorityComp());
+        std::sort(allMetaData.begin(), allMetaData.end(), PriorityComp());
 
         foreach (const QSharedPointer<HighlightDefinitionMetaData> &metaData, allMetaData) {
             if (m_idByName.contains(metaData->name()))

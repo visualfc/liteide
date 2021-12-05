@@ -49,7 +49,7 @@ void SearchResultTreeItemDelegate::paint(QPainter *painter, const QStyleOptionVi
 
     painter->save();
 
-    QStyleOptionViewItemV3 opt = setOptions(index, option);
+    QStyleOptionViewItem opt = setOptions(index, option);
     painter->setFont(opt.font);
 
     QItemDelegate::drawBackground(painter, opt, index);

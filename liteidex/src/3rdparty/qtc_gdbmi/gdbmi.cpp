@@ -278,9 +278,9 @@ inline ST escapeCStringTpl(const ST &ba)
             default:
                 if (c < 32 || c == 127) {
                     ret += '\\';
-                    ret += '0' + (c >> 6);
-                    ret += '0' + ((c >> 3) & 7);
-                    ret += '0' + (c & 7);
+                    ret += CT('0' + (c >> 6));
+                    ret += CT('0' + ((c >> 3) & 7));
+                    ret += CT('0' + (c & 7));
                 } else {
                     ret += c;
                 }

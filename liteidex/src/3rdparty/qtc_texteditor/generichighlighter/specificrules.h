@@ -39,7 +39,7 @@
 
 #include <QtCore/QChar>
 #include <QtCore/QStringList>
-#include <QtCore/QRegExp>
+#include <QRegExp>
 #include <QtCore/QSharedPointer>
 
 namespace TextEditor {
