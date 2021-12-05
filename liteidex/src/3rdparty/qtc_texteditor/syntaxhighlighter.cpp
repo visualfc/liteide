@@ -112,17 +112,17 @@ void SyntaxHighlighterPrivate::applyFormatChanges(int from, int charsRemoved, in
     QTextLayout *layout = currentBlock.layout();
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
-    QList<QTextLayout::FormatRange> ranges = layout->additionalFormats();
+    FormatRangeVector ranges = layout->additionalFormats();
 #else
-    QList<QTextLayout::FormatRange> ranges = layout->formats();
+    FormatRangeVector ranges = layout->formats();
 #endif
 
     bool doAdjustRange = currentBlock.contains(from);
 
-    QList<QTextLayout::FormatRange> old_ranges;
+    FormatRangeVector old_ranges;
 
     if (!ranges.isEmpty()) {
-        QList<QTextLayout::FormatRange>::Iterator it = ranges.begin();
+        FormatRangeVector::Iterator it = ranges.begin();
         while (it != ranges.end()) {
             if (it->format.property(QTextFormat::UserProperty).toBool()) {
                 if (doAdjustRange)
@@ -141,7 +141,7 @@ void SyntaxHighlighterPrivate::applyFormatChanges(int from, int charsRemoved, in
     QTextLayout::FormatRange r;
     r.start = -1;
 
-    QList<QTextLayout::FormatRange> new_ranges;
+    FormatRangeVector new_ranges;
     int i = 0;
     while (i < formatChanges.count()) {
 
@@ -772,7 +772,7 @@ static bool byStartOfRange(const QTextLayout::FormatRange &range, const QTextLay
 }
 
 void SyntaxHighlighter::setExtraAdditionalFormats(const QTextBlock& block,
-                                                  const QList<QTextLayout::FormatRange> &fmts)
+                                                  const FormatRangeVector &fmts)
 {
 
 //    qDebug() << "setAdditionalFormats() on block" << block.blockNumber();
@@ -785,7 +785,7 @@ void SyntaxHighlighter::setExtraAdditionalFormats(const QTextBlock& block,
     if (block.layout() == 0)
         return;
 
-    QList<QTextLayout::FormatRange> formats;
+    FormatRangeVector formats;
     formats.reserve(fmts.size());
     foreach (QTextLayout::FormatRange r, fmts) {
         r.format.setProperty(QTextFormat::UserProperty, true);
@@ -793,13 +793,13 @@ void SyntaxHighlighter::setExtraAdditionalFormats(const QTextBlock& block,
     }
     std::sort(formats.begin(), formats.end(), byStartOfRange);
 
-    QList<QTextLayout::FormatRange> previousSemanticFormats;
-    QList<QTextLayout::FormatRange> formatsToApply;
+    FormatRangeVector previousSemanticFormats;
+    FormatRangeVector formatsToApply;
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
-    const QList<QTextLayout::FormatRange> all = block.layout()->additionalFormats();
+    const FormatRangeVector all = block.layout()->additionalFormats();
 #else
-    const QList<QTextLayout::FormatRange> all = block.layout()->formats();
+    const FormatRangeVector all = block.layout()->formats();
 #endif
     foreach (const QTextLayout::FormatRange &r, all) {
         if (r.format.hasProperty(QTextFormat::UserProperty))

@@ -46,7 +46,7 @@
 #include <QtCore5Compat>
 #endif
 
-#if QT_VERSION >= 0x051500
+#if (QT_VERSION >= QT_VERSION_CHECK(5,14,0))
 #define  skipEmptyParts Qt::SkipEmptyParts
 #else
 #define  skipEmptyParts QString::SkipEmptyParts

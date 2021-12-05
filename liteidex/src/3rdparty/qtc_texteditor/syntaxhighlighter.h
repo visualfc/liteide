@@ -57,6 +57,13 @@ class QTextBlockUserData;
 class QTextEdit;
 QT_END_NAMESPACE
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
+typedef FormatRangeVector FormatRangeVector;
+#else
+typedef QVector<QTextLayout::FormatRange> FormatRangeVector;
+#endif
+
+
 namespace TextEditor {
 
 class SyntaxHighlighterPrivate;
@@ -122,7 +129,7 @@ public:
         return m_contextMap[id];
     }
 
-    void setExtraAdditionalFormats(const QTextBlock& block, const QList<QTextLayout::FormatRange> &formats);
+    void setExtraAdditionalFormats(const QTextBlock& block, const FormatRangeVector &formats);
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
     virtual void setTabSize(int tabSize);
 public:
