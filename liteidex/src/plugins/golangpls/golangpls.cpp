@@ -244,21 +244,8 @@ void GolangPls::onHoverResult(const QList<HoverResult> &result)
     for(auto &res : result) {
         m_lastLink.showTip = true;
         m_lastLink.targetInfo = res.info;
-        int line = 0;
-        int pos = 0;
-        for(auto ch : m_plainText) {
-            if(line == res.startLine){
-                break;
-            }
-            if(ch == '\n'){
-                line++;
-            }
-            pos++;
-        }
-        pos += res.startColumn;
-        m_lastLink.linkTextStart = pos;
-        m_lastLink.linkTextEnd = pos + (res.endColumn-res.startColumn);
-        qDebug() << "EDITOR" << m_lastLink.linkTextStart << m_lastLink.linkTextEnd;
+        fromLineAndColumnToPos(m_plainText, res.startLine, res.startColumn, m_lastLink.linkTextStart);
+        fromLineAndColumnToPos(m_plainText, res.endLine, res.endColumn, m_lastLink.linkTextEnd);
 
         auto editor = LiteApi::getLiteEditor(m_editor);
         if(editor)
@@ -306,37 +293,12 @@ void GolangPls::editText(LiteApi::IEditor *liteEditor, const QList<TextEditResul
     QList<TextEditResult> edits;
     for(auto it = list.crbegin(); it != list.crend(); ++it) {
         auto changes = *it;
-        int startPos = changes.startColumn;
-        if(changes.startLine > 0) {
-            startPos = text.indexOf("\n")+1;
-            for(unsigned int i = 1; i < changes.startLine; i++) {
-                startPos = text.indexOf("\n", startPos)+1;
-                if(startPos <= 0) {
-                    break;
-                }
-            }
-            if(startPos <= 0) {
-                startPos = text.length()-1;
-            }else{
-                startPos += changes.startColumn;
-            }
-        }
+        int startPos;
+        fromLineAndColumnToPos(text, changes.startLine, changes.startColumn, startPos);
 
-        int endPos = changes.endColumn;
-        if(changes.endLine > 0) {
-            endPos = text.indexOf("\n")+1;
-            for(unsigned int i = 1; i < changes.endLine; i++) {
-                endPos = text.indexOf("\n", endPos)+1;
-                if(endPos <= 0) {
-                    break;
-                }
-            }
-            if(endPos <= 0) {
-                endPos = text.length()-1;
-            }else{
-                endPos += changes.endColumn;
-            }
-        }
+        int endPos;
+        fromLineAndColumnToPos(text, changes.endLine, changes.endColumn, endPos);
+
         cursor.setPosition(startPos);
         cursor.setPosition(endPos, QTextCursor::KeepAnchor);
         cursor.insertText(changes.text);
@@ -355,18 +317,7 @@ void GolangPls::onUpdateLink(const QTextCursor &cursor, const QPoint &curPos, bo
     const QString text = LiteApi::getPlainTextEdit(editor)->toPlainText();
     int line = 0;
     int column = 0;
-    int i = 0;
-    for(auto &c : text){
-        column++;
-        if(c == '\n') {
-            column = 0;
-            line++;
-        }
-        i++;
-        if(i == pos){
-            break;
-        }
-    }
+    fromPosToLineAndColumn(text, pos, line, column);
     m_lastLink.clear();
     m_lastLink.cursorPos = curPos;
     m_server->hover(editor->filePath(), line, column);
@@ -407,6 +358,43 @@ void GolangPls::computeModifications(const QString &original, const QString &cur
     startPos = start-startString.lastIndexOf("\n")-1;
     endLine = endString.count("\n");
     endPos = end-endString.lastIndexOf("\n")-1;
+}
+
+void GolangPls::fromLineAndColumnToPos(const QString &text, int line, int column, int &pos)
+{
+    int l = 0;
+    pos = 0;
+    for(auto ch : text) {
+        if(l == line) {
+            pos = pos+column;
+            return;
+        }
+        if(ch == '\n') {
+            l++;
+        }
+        pos++;
+    }
+
+    pos = -1;
+}
+
+void GolangPls::fromPosToLineAndColumn(const QString &text, int pos, int &line, int &column)
+{
+    line = 0;
+    column = 0;
+    for(auto ch : text) {
+        pos--;
+        column++;
+        if(ch == '\n') {
+            line++;
+            column = 0;
+        }
+        if(pos==0) {
+            return;
+        }
+    }
+    line = -1;
+    column = -1;
 }
 
 QPoint GolangPls::cursorPosition(QTextCursor cur) const
