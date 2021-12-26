@@ -1490,6 +1490,16 @@ bool LiteEditor::enableSyntax() const
     return true;
 }
 
+void LiteEditor::addAnnotation(int line, const LiteApi::Annotation &annotation)
+{
+    m_editorWidget->addAnnotation(line-1, annotation);
+}
+
+void LiteEditor::clearAnnotations(const QString &from)
+{
+    m_editorWidget->clearAnnotations(from);
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();

@@ -44,6 +44,7 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
     publishCapabilities->setCodeDescriptionSupport(new bool(true));
     publishCapabilities->setDataSupport(new bool(true));
     publishCapabilities->setRelatedInformation(new bool(true));
+    publishCapabilities->setVersionSupport(new bool(true));
     documentCapabilities->setPublishDiagnostics(publishCapabilities);
     DocumentFormattingClientCapabilities *formattingCapabilities = new DocumentFormattingClientCapabilities;
     formattingCapabilities->setDynamicRegistration(new bool(true));
@@ -64,6 +65,8 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
     TextDocumentSyncClientCapabilities *documentClientCapabilities = new TextDocumentSyncClientCapabilities();
     documentClientCapabilities->setDynamicRegistration(new bool(true));
     documentClientCapabilities->setWillSave(new bool(true));
+    documentClientCapabilities->setWillSaveWaitUntil(new bool(true));
+    documentClientCapabilities->setDidSave(new bool(true));
     documentCapabilities->setSynchronization(documentClientCapabilities);
     clientCapabilites->setTextDocument(documentCapabilities);
     params->setCapabilities(clientCapabilites);
@@ -93,13 +96,15 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
         const QString value = var.mid(pos+1);
         env.insert(name, value);
     }
+    env.insert("PATH", "$GOPATH/bin:$PATH");
+    env.insert("GOBIN", "$GOPATH/bin");
 
     QJsonObject settings;
     settings.insert("env", env);
     settings.insert("experimentalWorkspaceModule", true);
     settings.insert("allowModfileModifications", true);
     settings.insert("allowImplicitNetworkAccess", true);
-    settings.insert("staticcheck", false);
+    settings.insert("staticcheck", true);
     settings.insert("linksInHover", false);
     settings.insert("completeUnimported", true);
     QJsonObject analyses;
@@ -107,6 +112,10 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
     analyses.insert("shadow", true);
     settings.insert("analyses", analyses);
     params->setInitializationOptions(new QJsonValue(settings));
+    clientCapabilites->setExperimental(new QJsonValue(settings));
+    CodeLensClientCapabilities *codeLens = new CodeLensClientCapabilities;
+    codeLens->setDynamicRegistration(new bool(true));
+    documentCapabilities->setCodeLens(codeLens);
 
     CodeActionClientCapabilities *codeAction = new CodeActionClientCapabilities;
     CodeActionClientCapabilitiesLiteralSupport *codeActionLiteral = new CodeActionClientCapabilitiesLiteralSupport;
@@ -235,7 +244,6 @@ void GoPlsServer::decodeInitialize(const QJsonObject &)
 
 QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const QJsonObject &jsonObject)
 {
-    qDebug().noquote() << "DEFINITION" << jsonObject;
     QJsonArray locations = jsonObject.value("result").toArray();
     QList<DefinitionResult> list;
     for(const QJsonValue &value : locations) {
@@ -368,6 +376,51 @@ void GoPlsServer::decodeHover(const QJsonObject &response)
     }
 }
 
+void GoPlsServer::decodeDiagnostics(const QJsonObject &response)
+{
+    PublishDiagnosticsParams result;
+    result.fromJson(response.value("params").toObject());
+    QList<DiagnosticResult> list;
+    auto diags = *result.getDiagnostics();
+    for(auto it : diags) {
+        DiagnosticResult diag;
+        diag.message = *it->getMessage();
+        if(it->getCode()) {
+            diag.code = it->getCode()->toString();
+        }
+        diag.line = *it->getRange()->getStart()->getLine()+1;
+
+        /*
+        DiagnosticSeverityError DiagnosticSeverity = 1
+
+        // DiagnosticSeverityWarning reports a warning.
+        DiagnosticSeverityWarning DiagnosticSeverity = 2
+
+        // DiagnosticSeverityInformation reports an information.
+        DiagnosticSeverityInformation DiagnosticSeverity = 3
+
+        // DiagnosticSeverityHint reports a hint.
+        DiagnosticSeverityHint DiagnosticSeverity = 4
+         */
+        switch (int(*it->getSeverity())) {
+        case 1:
+            diag.level = "error";
+            break;
+        case 2:
+            diag.level = "warning";
+            break;
+        case 3:
+            diag.level = "info";
+            break;
+        case 4:
+            diag.level = "hint";
+            break;
+        }
+        list << diag;
+    }
+    emit diagnosticsInfo(result.getUri()->mid(7), list);
+}
+
 void GoPlsServer::fileSaved(const QString &file, const QString &content)
 {
     QSharedPointer<DidSaveTextDocumentParams> params(new DidSaveTextDocumentParams());
@@ -424,6 +477,10 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
                 bool isError = message.getType() && *message.getType() == MessageTypeError;
                 emit logMessage(*message.getMessage(), isError);
             }
+        }else if(method == MethodTextDocumentPublishDiagnostics) {
+            decodeDiagnostics(QJsonDocument::fromJson(payload).object());
+        }else{
+            qDebug().noquote() << payload;
         }
     }else{
         const QString requested = m_idToCommands.take(commandID);
@@ -496,12 +553,15 @@ void GoPlsServer::currentEnvChanged(LiteApi::IEnv *env)
     if(env) {
         auto list = env->environment().toStringList();
         QJsonObject obj;
+
         for(const QString &var : list) {
             auto pos = var.indexOf("=");
             const QString name = var.left(pos);
             const QString value = var.mid(pos+1);
             obj.insert(name, value);
         }
+        obj.insert("PATH", "$GOPATH/bin:$PATH");
+        obj.insert("GOBIN", "$GOPATH/bin");
 
         QSharedPointer<DidChangeConfigurationParams> params(new DidChangeConfigurationParams());
         QJsonObject settings;

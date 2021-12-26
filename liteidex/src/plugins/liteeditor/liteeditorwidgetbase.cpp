@@ -1325,6 +1325,33 @@ void LiteEditorWidgetBase::setAllowVscrollLastLine(bool b) {
     m_allowVscrollLastLine = b;
 }
 
+void LiteEditorWidgetBase::addAnnotation(int line, const LiteApi::Annotation &annotation)
+{
+    auto list = m_annotations[line];
+    list << annotation;
+    m_annotations[line] = list;
+    repaint();
+}
+
+void LiteEditorWidgetBase::clearAnnotations(const QString &from)
+{
+    for(auto &key : m_annotations.keys()) {
+        auto list = m_annotations[key];
+        QList<LiteApi::Annotation> result;
+        for(auto &it : list) {
+            if(it.from != from) {
+                result << it;
+            }
+        }
+        if(result.isEmpty()) {
+            m_annotations.remove(key);
+        }else{
+            m_annotations[key] = result;
+        }
+    }
+    repaint();
+}
+
 bool LiteEditorWidgetBase::restoreState(const QByteArray &state)
 {
     if (state.isEmpty()) {
@@ -3779,6 +3806,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         context.selections[blockSelectionIndex].format.clearBackground();
     }
 
+    QList<int> lineToY;
     while (block.isValid()) {
         QRectF r = blockBoundingRect(block).translated(offset);
 
@@ -4191,6 +4219,49 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 painter.restore();
         }
 
+        if(m_annotations.contains(block.blockNumber())){
+            painter.save();
+            auto annotations = m_annotations[block.blockNumber()];
+            if(annotations.length() == 0) {
+                continue;
+            }
+
+            auto annotation = annotations.first();
+
+            QRectF blockRect = blockBoundingRect(block).translated(offset);
+
+            auto line = block.layout()->lineAt(block.layout()->lineCount()-1);
+            if(!line.isValid()) {
+                continue;
+            }
+
+            auto trailing = line.cursorToX(line.textLength(), QTextLine::Trailing);
+            auto left = trailing+20.5;
+            QRectF lineRect = line.naturalTextRect().translated(offset.x()+left,blockRect.top());
+            lineRect.setWidth(width()-lineRect.x());
+            QColor brush(232,204,204);
+            QColor penColor(153,25,20);
+
+            if(annotation.level == "info") {
+                brush = QColor(QColor(232,224,199));
+                penColor = QColor(165,130,0);
+            }
+
+            QTextOption opts;
+            opts.setAlignment(Qt::AlignVCenter);
+            painter.setPen(Qt::transparent);
+            painter.setBrush(brush);
+            painter.drawRect(lineRect);
+            painter.setPen(penColor);
+            painter.setBrush(QBrush());
+            lineRect.setLeft(lineRect.left()+5);
+            QString text = annotation.from + ": "+annotation.content;
+            if(annotations.length() > 1) {
+                text = QString("%1| %2: %3").arg(annotations.length()).arg(annotation.from).arg(annotation.content);
+            }
+            painter.drawText(lineRect, text, opts);
+            painter.restore();
+        }
         offset.ry() += r.height();
 
         if (offset.y() > viewportRect.height())
@@ -4210,6 +4281,54 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
         painter.drawLine(xoff,0,xoff,rect().height());
         painter.restore();
     }
+
+    auto font = painter.font();
+    font.setWeight(400);
+    font.setStyleStrategy(QFont::PreferQuality);
+    painter.setFont(font);
+
+    /*
+    for(auto &annotation : m_annotations) {
+        if(verticalScrollBar()->value() > annotation.line) {
+            continue;
+        }
+        auto block = document()->findBlockByNumber(annotation.line);
+        if(!block.isValid()) {
+            continue;
+        }
+        if(!block.isVisible()) {
+            continue;
+        }
+
+        QRectF blockRect = blockBoundingRect(block).translated(offset);
+
+        auto line = block.layout()->lineAt(0);
+        if(!line.isValid()) {
+            continue;
+        }
+
+        auto trailing = line.cursorToX(line.textLength(), QTextLine::Trailing);
+        auto left = trailing+20.5;
+        QRectF lineRect = line.naturalTextRect().translated(offset.x()+left, lineToY[annotation.line-verticalScrollBar()->value()]);
+        lineRect.setWidth(width()-lineRect.x());
+        QColor brush(232,204,204);
+        QColor penColor(153,25,20);
+
+        if(annotation.type == "info") {
+            brush = QColor(QColor(232,224,199));
+            penColor = QColor(165,130,0);
+        }
+
+        QTextOption opts;
+        opts.setAlignment(Qt::AlignVCenter);
+        painter.setPen(Qt::transparent);
+        painter.setBrush(brush);
+        painter.drawRect(lineRect);
+        painter.setPen(penColor);
+        painter.setBrush(QBrush());
+        lineRect.setLeft(lineRect.left()+5);
+        painter.drawText(lineRect, annotation.content, opts);
+    }*/
 }
 
 bool LiteEditorWidgetBase::hasBlockSelection() const

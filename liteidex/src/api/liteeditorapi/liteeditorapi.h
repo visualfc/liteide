@@ -246,6 +246,13 @@ struct Link
     QString text;
 };
 
+struct Annotation {
+    int line;
+    QString level;
+    QString content;
+    QString from;
+};
+
 class ITextLexer : public QObject
 {
 public:
@@ -292,6 +299,9 @@ public:
     virtual void showToolTipInfo(const QPoint & pos, const QString & text) = 0;
     virtual void loadDiff(const QString &diff) = 0;
     virtual void loadTextUseDiff(const QString &text) = 0;
+    virtual void addAnnotation(int line, const LiteApi::Annotation &annotation) = 0;
+    virtual void clearAnnotations(const QString &from) = 0;
+
 signals:
     void updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
 };

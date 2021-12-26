@@ -66,4 +66,11 @@ struct HoverResult {
     QString info;
 };
 
+struct DiagnosticResult {
+    unsigned int line;
+    QString level;
+    QString message;
+    QString code;
+};
+
 #endif // GOPLSTYPES_H

@@ -24,6 +24,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_server, &GoPlsServer::updateFile, this, &GolangPls::onUpdateFile);
     connect(m_server, &GoPlsServer::hoverResult, this, &GolangPls::onHoverResult);
     connect(m_server, &GoPlsServer::hoverDefinitionResult, this, &GolangPls::onHoverDefinitionResult);
+    connect(m_server, &GoPlsServer::diagnosticsInfo, this, &GolangPls::onDiagnosticsInfo);
 
     connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::currentEditorChanged,this, &GolangPls::currentEditorChanged);
     connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::editorCreated,this, &GolangPls::editorCreated);
@@ -41,7 +42,6 @@ GolangPls::~GolangPls()
 
 void GolangPls::setCompleter(LiteApi::ICompleter *completer)
 {
-    qDebug() << "SET COMPLETER";
     if (m_completer) {
         disconnect(m_completer,0,this,0);
     }
@@ -133,10 +133,6 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     }
     connect(editor, &LiteApi::IEditor::contentsChanged, this, &GolangPls::editorChanged);
     connect(editor, SIGNAL(updateLink(QTextCursor,QPoint,bool)), this, SLOT(onUpdateLink(QTextCursor,QPoint,bool)));
-
-    //LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
-    //m_server->fileOpened(currentEditor->filePath(), LiteApi::getPlainTextEdit(currentEditor)->toPlainText());
-    //qDebug() << "OPEN" << currentEditor->filePath();
 }
 
 void GolangPls::editorClosed(LiteApi::IEditor *editor)
@@ -161,17 +157,18 @@ void GolangPls::editorChanged()
 {
     QObject *source = QObject::sender();
     LiteApi::IEditor *editor = dynamic_cast<LiteApi::IEditor *>(source);
-    if(source) {
+    if(editor) {
         LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
         if(currentEditor) {
             //m_server->fileChanged(currentEditor->filePath(), LiteApi::getPlainTextEdit(currentEditor)->toPlainText());
         }
+        auto liteEditor = LiteApi::getLiteEditor(editor);
+        liteEditor->clearAnnotations("staticcheck");
     }
 }
 
 void GolangPls::prefixChanged(QTextCursor cur, QString pre, bool force)
 {
-    qDebug() << "PREFIX CHANGED" << pre;
     m_preWord.clear();
     if (pre.endsWith('.')) {
         m_preWord = pre;
@@ -187,7 +184,6 @@ void GolangPls::prefixChanged(QTextCursor cur, QString pre, bool force)
 
 void GolangPls::wordCompleted(QString, QString, QString)
 {
-    qDebug() << "wordCompleted";
     m_preWord.clear();
 }
 
@@ -266,6 +262,23 @@ void GolangPls::onHoverDefinitionResult(const QList<DefinitionResult> &definitio
         if(editor)
             editor->showLink(m_lastLink);
         break;
+    }
+}
+
+void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics)
+{
+    auto editor = m_liteApp->editorManager()->findEditor(filename, false);
+    if(editor) {
+        auto liteEditor = LiteApi::getLiteEditor(editor);
+        if(liteEditor) {
+            for(auto diag : diagnostics) {
+                LiteApi::Annotation annotation;
+                annotation.content = diag.message;
+                annotation.level = diag.level;
+                annotation.from = "staticcheck";
+                liteEditor->addAnnotation(diag.line, annotation);
+            }
+        }
     }
 }
 

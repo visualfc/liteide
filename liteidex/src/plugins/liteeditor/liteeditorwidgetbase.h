@@ -253,6 +253,10 @@ public:
     bool allowVscrollLastLine() const {
         return m_allowVscrollLastLine;
     }
+
+    void addAnnotation(int line, const LiteApi::Annotation &annotation);
+    void clearAnnotations(const QString &from);
+
     bool isLineWrap() const;
     void setLineWrap(bool wrap);
     void maybeSelectLine();
@@ -381,6 +385,7 @@ protected:
     bool m_visualizeWhitespace;
     NavigateManager *m_navigateManager;
     bool m_inBlockSelectionMode;
+    QHash<int, QList<LiteApi::Annotation>> m_annotations;
     TextEditor::BaseTextBlockSelection m_blockSelection;
     void showTipText(const QPoint &pos, const QString &text, QWidget *widget);
     void hideTipText();

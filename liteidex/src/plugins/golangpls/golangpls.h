@@ -41,6 +41,7 @@ public slots:
     void onUpdateFile(const QString &filename, const QList<TextEditResult> &list);
     void onHoverResult(const QList<HoverResult> &result);
     void onHoverDefinitionResult(const QList<DefinitionResult> &definitions);
+    void onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
 
     void editorJumpToDecl();
     void editorFindUsages();

@@ -384,6 +384,20 @@ LiteBuild::~LiteBuild()
 
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
 {
+
+    qDebug() << "EDITOR LIST" <<  m_liteApp->editorManager()->editorList();
+    for(auto editor : m_liteApp->editorManager()->editorList()){
+        qDebug() << "clear editor" << editor->filePath();
+        qDebug() << m_workDir;
+        if(editor->filePath().startsWith(workDir)) {
+            auto liteEditor= LiteApi::getLiteEditor(editor);
+            qDebug() << "LITE EDITOR=" << liteEditor;
+            if(liteEditor) {
+                liteEditor->clearAnnotations("compil");
+            }
+        }
+    }
+
     m_process->stopAndWait(100,2000);
     m_process->setWorkingDirectory(workDir);
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
@@ -1405,7 +1419,6 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
     if (m_process->userData(ID_ACTIVATEOUTPUT_CHECK).toBool()) {
         m_outputAct->setChecked(true);
     }
-
     QString codecName = m_process->userData(2).toString();
     QTextCodec *codec = QTextCodec::codecForLocale();
     if (!codecName.isEmpty()) {
@@ -1413,6 +1426,27 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
     }
     QString msg = codec->toUnicode(data);
     m_output->append(msg);
+    for(auto &line : msg.split("\n")) {
+        QStringList capList = line.split(":");
+        if (capList.count() < 3)
+            continue;
+        QString fileName = capList[0];
+        QString fileLine = capList[1];
+        QString text = capList.mid(3).join(":");
+        QDir dir(m_workDir);
+        QString filePath = dir.filePath(fileName);
+        auto editor = m_liteApp->editorManager()->findEditor(filePath, true);
+        if(editor) {
+            auto liteEditor= LiteApi::getLiteEditor(editor);
+            if(liteEditor) {
+                LiteApi::Annotation annotation;
+                annotation.content = text.trimmed();
+                annotation.from = "build";
+                annotation.level = "error";
+                liteEditor->addAnnotation(fileLine.toInt(), annotation);
+            }
+        }
+    }
 
     if (!m_process->userData(ID_NAVIGATE).toBool()) {
         return;
@@ -1488,6 +1522,20 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
         }
     }
 
+    if(false) {
+        qDebug() << "EDITOR LIST" <<  m_liteApp->editorManager()->editorList();
+        for(auto editor : m_liteApp->editorManager()->editorList()){
+            qDebug() << "clear editor" << editor->filePath();
+            qDebug() << m_workDir;
+            if(editor->filePath().startsWith(m_workDir)) {
+                auto liteEditor= LiteApi::getLiteEditor(editor);
+                qDebug() << "LITE EDITOR=" << liteEditor;
+                if(liteEditor) {
+                    liteEditor->clearAnnotations("build");
+                }
+            }
+        }
+    }
     if (!error) {
         QStringList task = m_process->userData(ID_TASKLIST).toStringList();
         if (!task.isEmpty()) {
@@ -1562,7 +1610,13 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
 }
 
 void LiteBuild::execBuildAction(LiteApi::IBuild* build,LiteApi::BuildAction* ba)
-{  
+{
+    for(auto editor : m_liteApp->editorManager()->editorList()){
+        auto liteEditor= LiteApi::getLiteEditor(editor);
+        if(liteEditor) {
+            liteEditor->clearAnnotations("compil");
+        }
+    }
     if (m_bOutputAutoClear) {
         m_output->clear();
     } else {

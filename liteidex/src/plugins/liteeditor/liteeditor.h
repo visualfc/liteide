@@ -127,6 +127,8 @@ public:
     virtual void loadTextUseDiff(const QString &text);
     virtual QMenu *editorMenu() const;
     virtual bool enableSyntax() const;
+    virtual void addAnnotation(int line, const LiteApi::Annotation &annotation);
+    virtual void clearAnnotations(const QString &from);
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);

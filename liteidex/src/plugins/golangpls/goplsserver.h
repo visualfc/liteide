@@ -35,6 +35,7 @@ signals:
     void updateFile(const QString &filename, const QList<TextEditResult> &list);
     void hoverResult(const QList<HoverResult> &result);
     void hoverDefinitionResult(const QList<DefinitionResult> &definitions);
+    void diagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
 
 protected slots:
     void onReadyRead();
@@ -70,6 +71,7 @@ protected:
     void decodeDocumentFormatting(const QJsonObject &response);
     void decodeOrganizeImport(const QJsonObject &response);
     void decodeHover(const QJsonObject &response);
+    void decodeDiagnostics(const QJsonObject &response);
 
 private:
     GoPlsTypes::TextDocumentIdentifier *documentIdentifier(const QString &path) const;
