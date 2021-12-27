@@ -96,8 +96,6 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
         const QString value = var.mid(pos+1);
         env.insert(name, value);
     }
-    env.insert("PATH", "$GOPATH/bin:$PATH");
-    env.insert("GOBIN", "$GOPATH/bin");
 
     QJsonObject settings;
     settings.insert("env", env);
@@ -560,8 +558,6 @@ void GoPlsServer::currentEnvChanged(LiteApi::IEnv *env)
             const QString value = var.mid(pos+1);
             obj.insert(name, value);
         }
-        obj.insert("PATH", "$GOPATH/bin:$PATH");
-        obj.insert("GOBIN", "$GOPATH/bin");
 
         QSharedPointer<DidChangeConfigurationParams> params(new DidChangeConfigurationParams());
         QJsonObject settings;
