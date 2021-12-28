@@ -22,7 +22,7 @@ export PATH=$QTDIR/bin:$PATH
 
 echo qmake liteide ...
 echo .
-qmake $LITEIDE_ROOT -spec openbsd-g++ "CONFIG+=release"
+qmake $LITEIDE_ROOT -spec netbsd-g++ "CONFIG+=release"
 
 if [ $? -ge 1 ]; then
 	echo 'error, qmake fail'
@@ -54,9 +54,10 @@ else
 	export GOPATH=$PWD:$GOPATH
 fi
 
-(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
-(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
-(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
+# disabled for now, paths are different
+#(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
+#(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
+#(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'

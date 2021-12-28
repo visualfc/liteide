@@ -29,7 +29,8 @@ fi
 echo get gocode ...
 go get -v -u "github.com/visualfc/gocode"
 echo get gotools ...
-go get -v -u "github.com/visualfc/gotools"
+#go get -v -u "github.com/visualfc/gotools"
+go get -v -u "github.com/visualfc/gotools@bfa6d94"
 echo get gomodifytags ...
 go get -v -u "github.com/fatih/gomodifytags"
 
