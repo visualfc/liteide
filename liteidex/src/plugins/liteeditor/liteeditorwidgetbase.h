@@ -255,6 +255,15 @@ public:
     bool annotationsVisible() const {
         return m_annotationsVisible;
     }
+
+    bool hideAnnotationsCurrentLine() const{
+        return m_hideAnnotationsCurrentLine;
+    }
+
+    void setHideAnnotationsCurrentLine(bool hideAnnotationsCurrentLine){
+        m_hideAnnotationsCurrentLine = hideAnnotationsCurrentLine;
+    }
+
     void setAllowVscrollLastLine(bool b);
     bool allowVscrollLastLine() const {
         return m_allowVscrollLastLine;
@@ -286,6 +295,7 @@ public:
     void transformBlockSelection(TransformationMethod method);
     int verticalBlockSelectionFirstColumn() const;
     int verticalBlockSelectionLastColumn() const;
+
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -363,6 +373,7 @@ protected:
     int  m_inputCursorOffset;
     bool m_indentLineVisible;
     bool m_annotationsVisible;
+    bool m_hideAnnotationsCurrentLine;
     bool m_autoIndent;
     bool m_autoBraces0; //{
     bool m_autoBraces1; //(

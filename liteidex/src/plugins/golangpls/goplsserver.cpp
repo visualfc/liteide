@@ -412,11 +412,12 @@ void GoPlsServer::decodeDiagnostics(const QJsonObject &response)
     result.fromJson(response.value("params").toObject());
     QList<DiagnosticResult> list;
     auto diags = *result.getDiagnostics();
+    qDebug().noquote() << response;
     for(auto it : diags) {
         DiagnosticResult diag;
         diag.message = *it->getMessage();
-        if(it->getCode()) {
-            diag.code = it->getCode()->toString();
+        if(it->getSource()) {
+            diag.code = *it->getSource();
         }
         diag.line = *it->getRange()->getStart()->getLine()+1;
 

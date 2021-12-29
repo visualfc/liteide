@@ -32,3 +32,6 @@ HEADERS += \
     golanplsplugin.h \
     goplsserver.h \
     goplstypes.h
+
+FORMS += \
+    golangplsoption.ui

@@ -4265,35 +4265,37 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
 
             auto annotation = annotations.first();
 
-            QRectF blockRect = blockBoundingRect(block).translated(offset);
+            if(textCursor().block() != block || (textCursor().block() == block && !m_hideAnnotationsCurrentLine)){
+                QRectF blockRect = blockBoundingRect(block).translated(offset);
 
-            auto line = block.layout()->lineAt(block.layout()->lineCount()-1);
-            if(!line.isValid()) {
-                continue;
+                auto line = block.layout()->lineAt(block.layout()->lineCount()-1);
+                if(!line.isValid()) {
+                    continue;
+                }
+
+                QRectF lineRect = computeAnnotationBoundingRect(block);
+                QColor brush(232,204,204);
+                QColor penColor(153,25,20);
+
+                if(annotation.level == "info") {
+                    brush = QColor(QColor(232,224,199));
+                    penColor = QColor(165,130,0);
+                }
+
+                QTextOption opts;
+                opts.setAlignment(Qt::AlignVCenter);
+                painter.setPen(Qt::transparent);
+                painter.setBrush(brush);
+                painter.drawRect(lineRect);
+                painter.setPen(penColor);
+                painter.setBrush(QBrush());
+                lineRect.adjust(5,0,-5,0);
+                QString text = annotation.from + ": "+annotation.content;
+                if(annotations.length() > 1) {
+                    text = QString("%1| %2: %3").arg(annotations.length()).arg(annotation.from).arg(annotation.content);
+                }
+                painter.drawText(lineRect, fontMetrics().elidedText(text, Qt::ElideRight, lineRect.width()), opts);
             }
-
-            QRectF lineRect = computeAnnotationBoundingRect(block);
-            QColor brush(232,204,204);
-            QColor penColor(153,25,20);
-
-            if(annotation.level == "info") {
-                brush = QColor(QColor(232,224,199));
-                penColor = QColor(165,130,0);
-            }
-
-            QTextOption opts;
-            opts.setAlignment(Qt::AlignVCenter);
-            painter.setPen(Qt::transparent);
-            painter.setBrush(brush);
-            painter.drawRect(lineRect);
-            painter.setPen(penColor);
-            painter.setBrush(QBrush());
-            lineRect.adjust(5,0,-5,0);
-            QString text = annotation.from + ": "+annotation.content;
-            if(annotations.length() > 1) {
-                text = QString("%1| %2: %3").arg(annotations.length()).arg(annotation.from).arg(annotation.content);
-            }
-            painter.drawText(lineRect, fontMetrics().elidedText(text, Qt::ElideRight, lineRect.width()), opts);
             painter.restore();
         }
         offset.ry() += r.height();

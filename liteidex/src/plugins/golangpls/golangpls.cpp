@@ -33,6 +33,10 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::editorCreated,this, &GolangPls::editorCreated);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToClose, this, &GolangPls::editorClosed);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToSave, this, &GolangPls::editorSaved);
+
+
+    qDebug() << "CONNECT OPTIONS" << connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    m_liteApp->optionManager()->emitApplyOption(OPTION_GOLANGPLS);
     //connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorModifyChanged, this, &GolangPls::editorChanged);
 
     //connect(m_liteApp->optionManager(),&LiteApi::IOptionManager::applyOption,this, &GolangPls::applyOption);
@@ -283,6 +287,16 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
         if(liteEditor) {
             liteEditor->clearAnnotations("staticcheck");
             for(auto diag : diagnostics) {
+                bool disabled = true;
+                for(auto check : m_staticcheckEnables) {
+                    if(diag.code.startsWith(check)) {
+                        disabled = false;
+                        break;
+                    }
+                }
+                if(disabled) {
+                    continue;
+                }
                 LiteApi::Annotation annotation;
                 annotation.content = diag.message;
                 annotation.level = diag.level;
@@ -414,6 +428,57 @@ void GolangPls::fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &l
         line = block.blockNumber();
         column = pos-block.position();
     }
+}
+
+void GolangPls::applyOption(QString id)
+{
+    if (id != OPTION_GOLANGPLS) {
+        return;
+    }
+
+    bool sa1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA1,true).toBool();
+    bool sa2 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA2,true).toBool();
+    bool sa3 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA3,true).toBool();
+    bool sa4 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA4,true).toBool();
+    bool sa5 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA5,true).toBool();
+    bool sa6 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA6,true).toBool();
+    bool sa9 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA9,true).toBool();
+    bool s1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_S1,true).toBool();
+    bool st1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_ST1,true).toBool();
+    bool qf1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_QF1,true).toBool();
+
+    m_staticcheckEnables.clear();
+    if(sa1) {
+        m_staticcheckEnables << "SA1";
+    }
+    if(sa2) {
+        m_staticcheckEnables << "SA2";
+    }
+    if(sa3) {
+        m_staticcheckEnables << "SA3";
+    }
+    if(sa4) {
+        m_staticcheckEnables << "SA4";
+    }
+    if(sa5) {
+        m_staticcheckEnables << "SA5";
+    }
+    if(sa6) {
+        m_staticcheckEnables << "SA6";
+    }
+    if(sa9) {
+        m_staticcheckEnables << "SA9";
+    }
+    if(s1) {
+        m_staticcheckEnables << "S1";
+    }
+    if(st1) {
+        m_staticcheckEnables << "ST1";
+    }
+    if(qf1) {
+        m_staticcheckEnables << "QF1";
+    }
+    qDebug() << "LIST =>" << m_staticcheckEnables;
 }
 
 QPoint GolangPls::cursorPosition(QTextCursor cur) const

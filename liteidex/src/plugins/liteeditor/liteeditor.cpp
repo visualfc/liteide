@@ -1103,6 +1103,7 @@ void LiteEditor::applyOption(QString id)
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     bool annotationsVisible = m_liteApp->settings()->value(EDITOR_ANNOTATIONVISIBLE,true).toBool();
+    bool hideAnnotationsCurrent = m_liteApp->settings()->value(EDITOR_HIDEANNOTATIONCURRENTLINE,true).toBool();
     bool wheelZooming = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
@@ -1126,6 +1127,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setEofVisible(eofVisible);
     m_editorWidget->setIndentLineVisible(indentLineVisible);
     m_editorWidget->setAnnotationsVisible(annotationsVisible);
+    m_editorWidget->setHideAnnotationsCurrentLine(hideAnnotationsCurrent );
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
     m_editorWidget->setScrollWheelZooming(wheelZooming);
@@ -1635,17 +1637,20 @@ void LiteEditor::updateSymbolListItem()
 {
     QSignalBlocker blocker(m_symbolsList);
     int lineNumber =  line();
+    int idx = 0;
+    int max = 0;
     for(int i = 1; i < m_symbolsList->count(); i++){
         auto list = m_symbolsList->itemData(i).toList();
 
         int from = list.first().toInt();
-        int to = list.last().toInt();
-        if(from <= lineNumber && lineNumber <= to) {
-            m_symbolsList->setCurrentIndex(i);
-            return;
+        if(from <= lineNumber) {
+            if(from > max) {
+                max = from;
+                idx = i;
+            }
         }
     }
-    m_symbolsList->setCurrentIndex(0);
+    m_symbolsList->setCurrentIndex(idx);
 }
 
 void LiteEditor::updateFont()

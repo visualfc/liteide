@@ -52,6 +52,7 @@ public slots:
     static void computeModifications(const QString &original, const QString &current, int &startLine, int &startPos, int &endLine, int &endPos, QString &content);
     void fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos) const;
     void fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column) const;
+    void applyOption(QString id);
 signals:
 
 private:
@@ -73,6 +74,7 @@ private:
 
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
+    QStringList m_staticcheckEnables;
 };
 
 #endif // GOLANGPLS_H

@@ -2,6 +2,7 @@
 #include "golangplsoptionfactory.h"
 #include "golanplsplugin.h"
 #include "golangpls_global.h"
+#include "golangplsoptionfactory.h"
 
 GolanPlsPlugin::GolanPlsPlugin()
 {
@@ -12,17 +13,17 @@ bool GolanPlsPlugin::load(LiteApi::IApplication *app)
     m_liteApp = app;
     m_pls= new GolangPls(app,this);
 
-    app->optionManager()->addFactory(new GolangPlsOptionFactory(app,this));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     //connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    app->optionManager()->addFactory(new GolangPlsOptionFactory(app,this));
 
     return true;
 }
 
 QStringList GolanPlsPlugin::dependPluginList() const
 {
-    return {};
+    return {"liteditor"};
 }
 
 void GolanPlsPlugin::appLoaded()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>412</height>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -517,6 +517,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="hideAnnotationsCurrentCheckBox">
+            <property name="text">
+             <string>Hide inline annotations on current line</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -550,5 +557,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>annotationsCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>hideAnnotationsCurrentCheckBox</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>314</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>314</x>
+     <y>365</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

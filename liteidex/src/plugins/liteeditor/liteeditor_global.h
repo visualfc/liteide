@@ -69,6 +69,7 @@
 #define EDITOR_CODEFOLDVISIBLE "editor/codefoldvisible"
 #define EDITOR_OFFSETVISIBLE "editor/offsetvisible"
 #define EDITOR_ANNOTATIONVISIBLE "editor/annotationvisible"
+#define EDITOR_HIDEANNOTATIONCURRENTLINE "editor/hideannotationcurrentline"
 #define EDITOR_DEFAULTWORDWRAP "editor/defaultwordwrap"
 #define EDITOR_INDENTLINEVISIBLE "editor/indentlinevisible"
 #define EDITOR_WHEEL_SCROLL "editor/whellscroll"
