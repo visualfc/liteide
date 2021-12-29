@@ -44,6 +44,7 @@ void GolangPlsOption::save()
     m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_S1, ui->s1CheckBox->isChecked());
     m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_ST1, ui->st1CheckBox->isChecked());
     m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_QF1, ui->qf1CheckBox->isChecked());
+    m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_UNREACHABLE, ui->unreachableCheckBox->isChecked());
 }
 
 void GolangPlsOption::load()
@@ -58,4 +59,5 @@ void GolangPlsOption::load()
     ui->s1CheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_S1, true).toBool());
     ui->st1CheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_ST1, true).toBool());
     ui->qf1CheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_QF1, true).toBool());
+    ui->unreachableCheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_UNREACHABLE, true).toBool());
 }

@@ -15,5 +15,6 @@
 #define GOLANGPLS_STATICCHECK_S1 "golangpls/staticcheck_s1"
 #define GOLANGPLS_STATICCHECK_ST1 "golangpls/staticcheck_st1"
 #define GOLANGPLS_STATICCHECK_QF1 "golangpls/staticcheck_qf1"
+#define GOLANGPLS_STATICCHECK_UNREACHABLE "golangpls/staticcheck_unreachable"
 
 #endif // GOLANGPLS_GLOBAL_H

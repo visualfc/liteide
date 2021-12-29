@@ -446,6 +446,7 @@ void GolangPls::applyOption(QString id)
     bool s1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_S1,true).toBool();
     bool st1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_ST1,true).toBool();
     bool qf1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_QF1,true).toBool();
+    bool unreachable = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_UNREACHABLE,true).toBool();
 
     m_staticcheckEnables.clear();
     if(sa1) {
@@ -477,6 +478,9 @@ void GolangPls::applyOption(QString id)
     }
     if(qf1) {
         m_staticcheckEnables << "QF1";
+    }
+    if(unreachable) {
+        m_staticcheckEnables << "unreachable";
     }
     qDebug() << "LIST =>" << m_staticcheckEnables;
 }

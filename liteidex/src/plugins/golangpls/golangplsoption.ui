@@ -136,7 +136,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="unreachableCheckBox">
             <property name="text">
              <string>Unreachable</string>
             </property>
