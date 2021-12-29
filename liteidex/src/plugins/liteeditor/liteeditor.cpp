@@ -96,7 +96,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->setCursorWidth(2);
     //m_editorWidget->setAcceptDrops(false);
     m_defEditorPalette = m_editorWidget->palette();
-
+    m_symbolsList = new QComboBox;
+    connect(m_symbolsList, SIGNAL(currentIndexChanged(int)), this, SLOT(onSymbolIndexChanged(int)));
     createActions();
     createToolBars();
     createMenu();
@@ -118,6 +119,8 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     toolLayout->addWidget(m_editToolBar);
     //toolLayout->addWidget(m_editNavBar);
     toolLayout->addWidget(m_navBar->toolBar());
+    toolLayout->addSpacing(0);
+    toolLayout->addWidget(m_symbolsList);
     toolLayout->addSpacing(0);
 //    //toolLayout->addWidget(m_infoToolBar);
     layout->addLayout(toolLayout);
@@ -1307,6 +1310,7 @@ void LiteEditor::editPositionChanged()
          infos << "CRLF";
      }
      m_liteApp->editorManager()->updateEditInfo(infos.join(" | "));
+     updateSymbolListItem();
 }
 
 void LiteEditor::gotoLine()
@@ -1500,6 +1504,21 @@ void LiteEditor::clearAnnotations(const QString &from)
     m_editorWidget->clearAnnotations(from);
 }
 
+void LiteEditor::loadSymbols(const QList<LiteApi::Symbol> &symbols)
+{
+    QSignalBlocker blocker(m_symbolsList);
+    m_symbolsList->clear();
+    m_symbolsList->addItem("", QVariantList({-1, -1}));
+    auto cpy = symbols;
+    qSort(cpy.begin(), cpy.end(), [](const LiteApi::Symbol &a, const LiteApi::Symbol &b){
+        return a.comparable().compare(b.comparable(), Qt::CaseInsensitive) < 0;
+    });
+    for(auto it : cpy) {
+        m_symbolsList->addItem(it.name, QVariantList({it.startLine, it.endLine}));
+    }
+    updateSymbolListItem();
+}
+
 void LiteEditor::selectNextParam()
 {
     QTextCursor cur = m_editorWidget->textCursor();
@@ -1597,7 +1616,34 @@ void LiteEditor::broadcast(const QString &module, const QString &id, const QVari
         m_navBar->toolBar()->setVisible(param.toBool());
     } else if (module == "liteeditor" && id == EDITOR_TOOLBAR_VISIBLE) {
         m_editToolBar->setVisible(param.toBool());
+    } else if (module == "liteeditor" && id == EDITOR_SYMBOLS_VISIBLE) {
+        m_symbolsList->setVisible(param.toBool());
     }
+}
+
+void LiteEditor::onSymbolIndexChanged(int idx)
+{
+    auto line = m_symbolsList->itemData(idx).toList().first().toInt();
+    if(line != -1) {
+        gotoLine(line, 0, true);
+    }
+}
+
+void LiteEditor::updateSymbolListItem()
+{
+    QSignalBlocker blocker(m_symbolsList);
+    int lineNumber =  line();
+    for(int i = 1; i < m_symbolsList->count(); i++){
+        auto list = m_symbolsList->itemData(i).toList();
+
+        int from = list.first().toInt();
+        int to = list.last().toInt();
+        if(from <= lineNumber && lineNumber <= to) {
+            m_symbolsList->setCurrentIndex(i);
+            return;
+        }
+    }
+    m_symbolsList->setCurrentIndex(0);
 }
 
 void LiteEditor::updateFont()

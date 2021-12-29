@@ -384,14 +384,9 @@ LiteBuild::~LiteBuild()
 
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
 {
-
-    qDebug() << "EDITOR LIST" <<  m_liteApp->editorManager()->editorList();
     for(auto editor : m_liteApp->editorManager()->editorList()){
-        qDebug() << "clear editor" << editor->filePath();
-        qDebug() << m_workDir;
         if(editor->filePath().startsWith(workDir)) {
             auto liteEditor= LiteApi::getLiteEditor(editor);
-            qDebug() << "LITE EDITOR=" << liteEditor;
             if(liteEditor) {
                 liteEditor->clearAnnotations("compil");
             }

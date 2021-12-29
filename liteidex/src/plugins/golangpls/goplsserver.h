@@ -6,6 +6,7 @@
 #include <QProcess>
 #include <goplstypes.h>
 #include "liteapi/liteapi.h"
+#include "liteeditorapi/liteeditorapi.h"
 
 namespace GoPlsTypes {
 class TextDocumentIdentifier;
@@ -36,6 +37,8 @@ signals:
     void hoverResult(const QList<HoverResult> &result);
     void hoverDefinitionResult(const QList<DefinitionResult> &definitions);
     void diagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
+    void documentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
+    void exited();
 
 protected slots:
     void onReadyRead();
@@ -61,6 +64,10 @@ public:
     void fileSaved(const QString &file, const QString &content);
     void fileClosed(const QString &file);
     void hover(const QString &filename, int line, int column);
+    void documentSymbols(const QString &filename);
+
+    void shutdown();
+    void exit();
 
 protected:
     void decodeInitialize(const QJsonObject &);
@@ -72,6 +79,13 @@ protected:
     void decodeOrganizeImport(const QJsonObject &response);
     void decodeHover(const QJsonObject &response);
     void decodeDiagnostics(const QJsonObject &response);
+    void decodeDocumentSymbols(const QJsonObject &response);
+    void decodeDidOpened(const QJsonObject &response);
+    void decodeDidClosed(const QJsonObject &response);
+    void decodeDidChanged(const QJsonObject &response);
+    void decodeDidSaved(const QJsonObject &response);
+    void decodeShutdown(const QJsonObject &response);
+    void decodeExit(const QJsonObject &response);
 
 private:
     GoPlsTypes::TextDocumentIdentifier *documentIdentifier(const QString &path) const;

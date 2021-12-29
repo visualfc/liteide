@@ -29,6 +29,7 @@
 #include <QTextBlock>
 #include <QCompleter>
 #include <QStandardItem>
+#include <QRegularExpression>
 
 namespace TextEditor {
 class SyntaxHighlighter;
@@ -246,11 +247,24 @@ struct Link
     QString text;
 };
 
-struct Annotation {
+struct Annotation
+{
     int line;
     QString level;
     QString content;
     QString from;
+};
+
+struct Symbol{
+    QString king;
+    QString name;
+    int startLine;
+    int endLine;
+
+    QString comparable() const {
+        QRegularExpression toRemove("[(*)]");
+        return QString(name).remove(toRemove);
+    }
 };
 
 class ITextLexer : public QObject
@@ -301,6 +315,7 @@ public:
     virtual void loadTextUseDiff(const QString &text) = 0;
     virtual void addAnnotation(int line, const LiteApi::Annotation &annotation) = 0;
     virtual void clearAnnotations(const QString &from) = 0;
+    virtual void loadSymbols(const QList<LiteApi::Symbol> &symbols) = 0;
 
 signals:
     void updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);

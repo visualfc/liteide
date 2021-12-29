@@ -3188,44 +3188,44 @@ void LiteEditorWidgetBase::unfoldAll()
 
 QTextBlock LiteEditorWidgetBase::foldedBlockAt(const QPoint &pos, QRect *box) const
 {
-    QPointF offset(contentOffset());
-    QTextBlock block = firstVisibleBlock();
-    qreal top = blockBoundingGeometry(block).translated(offset).top();
-    qreal bottom = top + blockBoundingRect(block).height();
+    QPointF offset;
+    auto block = findBlockAt(pos, offset);
+    if(!block.isValid()) {
+        return QTextBlock();
+    }
 
-    int viewportHeight = viewport()->height();
+    auto nextBlock = block.next();
+    if(nextBlock.isValid() && nextBlock.isVisible()) {
+        return QTextBlock();
+    }
 
-    while (block.isValid() && top <= viewportHeight) {
-        QTextBlock nextBlock = block.next();
-        if (block.isVisible() && bottom >= 0) {
-            if (nextBlock.isValid() && !nextBlock.isVisible()) {
-                QTextLayout *layout = block.layout();
-                QTextLine line = layout->lineAt(layout->lineCount()-1);
-                QRectF lineRect = line.naturalTextRect().translated(offset.x(), top);
-                lineRect.adjust(0, 0, -1, -1);
+    QTextLayout *layout = block.layout();
+    QTextLine line = layout->lineAt(layout->lineCount()-1);
+    auto lineRect = line.naturalTextRect().translated(blockBoundingGeometry(block).topLeft());
+    QRectF collapseRect(lineRect.right() + 12,
+                        lineRect.top(),
+                        fontMetrics().width(QLatin1String(" {...}; ")),
+                        lineRect.height());
+    if(collapseRect.contains(pos)) {
+        if (box)
+            *box = collapseRect.toAlignedRect();
+        return block;
+    }
+    return QTextBlock();
+}
 
-                QRectF collapseRect(lineRect.right() + 12,
-                                    lineRect.top(),
-                                    fontMetrics().width(QLatin1String(" {...}; ")),
-                                    lineRect.height());
-                if (collapseRect.contains(pos)) {
-                    QTextBlock result = block;
-                    if (box)
-                        *box = collapseRect.toAlignedRect();
-                    return result;
-                } else {
-                    block = nextBlock;
-                    while (nextBlock.isValid() && !nextBlock.isVisible()) {
-                        block = nextBlock;
-                        nextBlock = block.next();
-                    }
-                }
+QTextBlock LiteEditorWidgetBase::findBlockAt(const QPoint &pos, QPointF &offset) const
+{
+    auto block = firstVisibleBlock();
+    while (block.isValid()) {
+        if (block.isVisible()) {
+            QRectF lineRect = blockBoundingGeometry(block);
+            if (lineRect.contains(pos)) {
+                return block;
             }
         }
 
-        block = nextBlock;
-        top = bottom;
-        bottom = top + blockBoundingRect(block).height();
+        block = block.next();
     }
     return QTextBlock();
 }
@@ -3603,6 +3603,22 @@ void LiteEditorWidgetBase::handleBlockSelection(int diff_row, int diff_col)
     viewport()->update();
 }
 
+QRectF LiteEditorWidgetBase::computeAnnotationBoundingRect(QTextBlock block) const
+{
+    auto line = block.layout()->lineAt(block.layout()->lineCount()-1);
+    if(!line.isValid()) {
+        return QRectF();
+    }
+
+    auto blockRect = blockBoundingGeometry(block);
+
+    QRectF lineRect = line.naturalTextRect();
+    lineRect.translate(lineRect.right()+20,blockRect.top());
+    lineRect.setWidth(frameGeometry().width()-lineRect.x());
+
+    return lineRect;
+}
+
 void LiteEditorWidgetBase::copy()
 {
     if (!textCursor().hasSelection())
@@ -3650,6 +3666,27 @@ void LiteEditorWidgetBase::mouseMoveEvent(QMouseEvent *e)
         } else if (!collapsedBlock.isValid() && m_mouseOnFoldedMarker) {
             m_mouseOnFoldedMarker = false;
             viewport()->setCursor(Qt::IBeamCursor);
+        }
+        QPointF offset;
+        auto blockHovered = findBlockAt(e->pos(), offset);
+
+        if(m_annotations.contains(blockHovered.blockNumber())) {
+            auto line = blockHovered.layout()->lineAt(blockHovered.layout()->lineCount()-1);
+            if(line.isValid()) {
+                QRectF lineRect = line.naturalTextRect();
+                const auto blockRect = computeAnnotationBoundingRect(blockHovered);
+                if(blockRect.contains(e->pos())){
+                    auto annotations = m_annotations[blockHovered.blockNumber()];
+                    QString text;
+                    QString sep="";
+                    int i = 1;
+                    for(auto annotation : annotations) {
+                        text += QString("%1| %2%3").arg(i++).arg(annotation.content).arg(sep);
+                        sep ="\n\n";
+                    }
+                    showToolTipInfo(mapToGlobal(blockRect.bottomLeft().toPoint()), text);
+                }
+            }
         }
     } else {
         QPlainTextEdit::mouseMoveEvent(e);
@@ -4235,10 +4272,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 continue;
             }
 
-            auto trailing = line.cursorToX(line.textLength(), QTextLine::Trailing);
-            auto left = trailing+20.5;
-            QRectF lineRect = line.naturalTextRect().translated(offset.x()+left,blockRect.top());
-            lineRect.setWidth(width()-lineRect.x());
+            QRectF lineRect = computeAnnotationBoundingRect(block);
             QColor brush(232,204,204);
             QColor penColor(153,25,20);
 
@@ -4254,12 +4288,12 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
             painter.drawRect(lineRect);
             painter.setPen(penColor);
             painter.setBrush(QBrush());
-            lineRect.setLeft(lineRect.left()+5);
+            lineRect.adjust(5,0,-5,0);
             QString text = annotation.from + ": "+annotation.content;
             if(annotations.length() > 1) {
                 text = QString("%1| %2: %3").arg(annotations.length()).arg(annotation.from).arg(annotation.content);
             }
-            painter.drawText(lineRect, text, opts);
+            painter.drawText(lineRect, fontMetrics().elidedText(text, Qt::ElideRight, lineRect.width()), opts);
             painter.restore();
         }
         offset.ry() += r.height();

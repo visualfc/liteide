@@ -1,11 +1,10 @@
 #include "golangpls.h"
 #include "golangplsoptionfactory.h"
 #include "golanplsplugin.h"
-
+#include "golangpls_global.h"
 
 GolanPlsPlugin::GolanPlsPlugin()
 {
-
 }
 
 bool GolanPlsPlugin::load(LiteApi::IApplication *app)
@@ -17,6 +16,7 @@ bool GolanPlsPlugin::load(LiteApi::IApplication *app)
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     //connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+
     return true;
 }
 

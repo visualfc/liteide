@@ -300,6 +300,7 @@ protected:
     void indentEnter(QTextCursor cur);
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
+    QTextBlock findBlockAt(const QPoint &pos, QPointF &offset) const;
     void moveLineUpDown(bool up);
     void copyLineUpDown(bool up);
     const TextEditor::TabSettings &tabSettings() const;
@@ -308,6 +309,7 @@ protected:
     void removeBlockSelection(const QString &text = QString());
     bool selectionVisible(int blockNumber) const;
     void handleBlockSelection(int diff_row, int diff_col);
+    QRectF computeAnnotationBoundingRect(QTextBlock block) const;
 public slots:
     virtual void copy();
     virtual void paste();

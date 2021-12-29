@@ -64,6 +64,7 @@ void PluginManager::loadPlugins(const QString &dir)
     QMap<QString,IPluginFactory*> idPlguinMap;
     foreach (QFileInfo info, pluginsDir.entryInfoList()) {
         QPluginLoader loader(info.filePath());
+        qDebug() << loader.fileName() << loader.load() << loader.errorString();
         if (IPluginFactory *factory = qobject_cast<IPluginFactory*>(loader.instance())) {
             if (factory) {
                 factory->setFilePath(info.filePath());

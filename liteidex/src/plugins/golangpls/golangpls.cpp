@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "goplsserver.h"
 #include "quickopenapi/quickopenapi.h"
+#include "golangpls_global.h"
 
 GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     : QObject(parent)
@@ -10,6 +11,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     , m_completer(nullptr)
     , m_server(new GoPlsServer(app))
 {
+    qDebug() << "LOADED?!";
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangPls");
 
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
@@ -25,6 +27,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_server, &GoPlsServer::hoverResult, this, &GolangPls::onHoverResult);
     connect(m_server, &GoPlsServer::hoverDefinitionResult, this, &GolangPls::onHoverDefinitionResult);
     connect(m_server, &GoPlsServer::diagnosticsInfo, this, &GolangPls::onDiagnosticsInfo);
+    connect(m_server, &GoPlsServer::documentSymbolsResult, this, &GolangPls::onDocumentSymbolsResult);
 
     connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::currentEditorChanged,this, &GolangPls::currentEditorChanged);
     connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::editorCreated,this, &GolangPls::editorCreated);
@@ -37,6 +40,10 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
 
 GolangPls::~GolangPls()
 {
+    QEventLoop loop;
+    connect(m_server, &GoPlsServer::exited, &loop, &QEventLoop::quit);
+    m_server->shutdown();
+    loop.exec();
     m_server->quit();
 }
 
@@ -60,6 +67,9 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
         this->setCompleter(0);
         return;
     }
+
+    auto liteEditor = LiteApi::getLiteEditor(editor);
+    liteEditor->clearAnnotations("staticcheck");
 
     if (editor->mimeType() == "text/x-gosrc") {
         LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
@@ -97,6 +107,7 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
         m_plainText = plainTextEditor->toPlainText();
         //m_server->documentHighlight(m_currentFile);
     });
+    m_server->documentSymbols(editor->filePath());
 }
 
 void GolangPls::editorCreated(LiteApi::IEditor *editor)
@@ -125,7 +136,7 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
         if(QFile::exists(workspaceDirectory+"/go.mod")) {
             break;
         }
-        workspaceDirectory = QFileInfo(workspaceDirectory+"/..").absolutePath();
+        workspaceDirectory = QFileInfo(workspaceDirectory).absoluteDir().absolutePath();
     }
     if(!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
         m_server->addWorkspaceFolder(workspaceDirectory);
@@ -158,12 +169,11 @@ void GolangPls::editorChanged()
     QObject *source = QObject::sender();
     LiteApi::IEditor *editor = dynamic_cast<LiteApi::IEditor *>(source);
     if(editor) {
+        m_server->documentSymbols(editor->filePath());
         LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
         if(currentEditor) {
             //m_server->fileChanged(currentEditor->filePath(), LiteApi::getPlainTextEdit(currentEditor)->toPlainText());
         }
-        auto liteEditor = LiteApi::getLiteEditor(editor);
-        liteEditor->clearAnnotations("staticcheck");
     }
 }
 
@@ -240,8 +250,8 @@ void GolangPls::onHoverResult(const QList<HoverResult> &result)
     for(auto &res : result) {
         m_lastLink.showTip = true;
         m_lastLink.targetInfo = res.info;
-        fromLineAndColumnToPos(m_plainText, res.startLine, res.startColumn, m_lastLink.linkTextStart);
-        fromLineAndColumnToPos(m_plainText, res.endLine, res.endColumn, m_lastLink.linkTextEnd);
+        fromLineAndColumnToPos(m_editor, res.startLine, res.startColumn, m_lastLink.linkTextStart);
+        fromLineAndColumnToPos(m_editor, res.endLine, res.endColumn, m_lastLink.linkTextEnd);
 
         auto editor = LiteApi::getLiteEditor(m_editor);
         if(editor)
@@ -271,6 +281,7 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
     if(editor) {
         auto liteEditor = LiteApi::getLiteEditor(editor);
         if(liteEditor) {
+            liteEditor->clearAnnotations("staticcheck");
             for(auto diag : diagnostics) {
                 LiteApi::Annotation annotation;
                 annotation.content = diag.message;
@@ -278,6 +289,17 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
                 annotation.from = "staticcheck";
                 liteEditor->addAnnotation(diag.line, annotation);
             }
+        }
+    }
+}
+
+void GolangPls::onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols)
+{
+    auto editor = m_liteApp->editorManager()->findEditor(filename, false);
+    if(editor) {
+        auto liteEditor = LiteApi::getLiteEditor(editor);
+        if(liteEditor) {
+            liteEditor->loadSymbols(symbols);
         }
     }
 }
@@ -307,10 +329,10 @@ void GolangPls::editText(LiteApi::IEditor *liteEditor, const QList<TextEditResul
     for(auto it = list.crbegin(); it != list.crend(); ++it) {
         auto changes = *it;
         int startPos;
-        fromLineAndColumnToPos(text, changes.startLine, changes.startColumn, startPos);
+        fromLineAndColumnToPos(liteEditor, changes.startLine, changes.startColumn, startPos);
 
         int endPos;
-        fromLineAndColumnToPos(text, changes.endLine, changes.endColumn, endPos);
+        fromLineAndColumnToPos(liteEditor, changes.endLine, changes.endColumn, endPos);
 
         cursor.setPosition(startPos);
         cursor.setPosition(endPos, QTextCursor::KeepAnchor);
@@ -330,7 +352,7 @@ void GolangPls::onUpdateLink(const QTextCursor &cursor, const QPoint &curPos, bo
     const QString text = LiteApi::getPlainTextEdit(editor)->toPlainText();
     int line = 0;
     int column = 0;
-    fromPosToLineAndColumn(text, pos, line, column);
+    fromPosToLineAndColumn(editor, pos, line, column);
     m_lastLink.clear();
     m_lastLink.cursorPos = curPos;
     m_server->hover(editor->filePath(), line, column);
@@ -373,41 +395,25 @@ void GolangPls::computeModifications(const QString &original, const QString &cur
     endPos = end-endString.lastIndexOf("\n")-1;
 }
 
-void GolangPls::fromLineAndColumnToPos(const QString &text, int line, int column, int &pos)
+void GolangPls::fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos) const
 {
-    int l = 0;
-    pos = 0;
-    for(auto ch : text) {
-        if(l == line) {
-            pos = pos+column;
-            return;
-        }
-        if(ch == '\n') {
-            l++;
-        }
-        pos++;
+    auto liteEditor = LiteApi::getLiteEditor(editor);
+    if(liteEditor) {
+        auto doc = liteEditor->document();
+        auto block = doc->findBlockByLineNumber(line);
+        pos = block.position()+column;
     }
-
-    pos = -1;
 }
 
-void GolangPls::fromPosToLineAndColumn(const QString &text, int pos, int &line, int &column)
+void GolangPls::fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column) const
 {
-    line = 0;
-    column = 0;
-    for(auto ch : text) {
-        pos--;
-        column++;
-        if(ch == '\n') {
-            line++;
-            column = 0;
-        }
-        if(pos==0) {
-            return;
-        }
+    auto liteEditor = LiteApi::getLiteEditor(editor);
+    if(liteEditor) {
+        auto doc = liteEditor->document();
+        auto block = doc->findBlock(pos);
+        line = block.blockNumber();
+        column = pos-block.position();
     }
-    line = -1;
-    column = -1;
 }
 
 QPoint GolangPls::cursorPosition(QTextCursor cur) const

@@ -42,6 +42,7 @@ public slots:
     void onHoverResult(const QList<HoverResult> &result);
     void onHoverDefinitionResult(const QList<DefinitionResult> &definitions);
     void onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
+    void onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
 
     void editorJumpToDecl();
     void editorFindUsages();
@@ -49,8 +50,8 @@ public slots:
     void onUpdateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
 
     static void computeModifications(const QString &original, const QString &current, int &startLine, int &startPos, int &endLine, int &endPos, QString &content);
-    static void fromLineAndColumnToPos(const QString &text, int line, int column, int &pos);
-    static void fromPosToLineAndColumn(const QString &text, int pos, int &line, int &column);
+    void fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos) const;
+    void fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column) const;
 signals:
 
 private:

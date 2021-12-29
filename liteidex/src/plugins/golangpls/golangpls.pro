@@ -25,6 +25,7 @@ SOURCES += \
 HEADERS += \
     generated.h \
     golangpls.h \
+    golangpls_global.h \
     golangplsoption.h \
     golangplsoptionfactory.h \
     ../liteeditor/faketooltip.h \

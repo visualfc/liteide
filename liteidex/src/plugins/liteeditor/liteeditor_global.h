@@ -34,6 +34,7 @@
 
 #define EDITOR_TOOLBAR_VISIBLE "editor/toolbar_visible"
 #define EDITOR_NAVBAR_VISIBLE "editor/navbar_visible"
+#define EDITOR_SYMBOLS_VISIBLE "editor/symbols_visible"
 
 #define MIMETYPE_TABWIDTH "mimetype/tabwidth/"
 #define MIMETYPE_TABTOSPACE "mimetype/tabtospace/"

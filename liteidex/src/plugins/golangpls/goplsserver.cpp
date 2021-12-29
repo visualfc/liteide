@@ -2,6 +2,7 @@
 
 #include "generated.h"
 #include <QFileInfo>
+#include <QTimer>
 #include "liteenvapi/liteenvapi.h"
 
 #define DECODE_CALLBACK(fn) std::bind(fn, this, _1)
@@ -74,6 +75,9 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
     documentClientCapabilities->setWillSave(new bool(true));
     WorkspaceClientCapabilities *workspaceCapabilities = new WorkspaceClientCapabilities();
     workspaceCapabilities->setWorkspaceFolders(new bool(true));
+    DidChangeConfigurationWorkspaceClientCapabilities *changeWorkspaceCapabilites = new DidChangeConfigurationWorkspaceClientCapabilities;
+    changeWorkspaceCapabilites->setDynamicRegistration(new bool(true));
+    workspaceCapabilities->setDidChangeConfiguration(changeWorkspaceCapabilites);
     clientCapabilites->setWorkspace(workspaceCapabilities);
     PublishDiagnosticsClientCapabilities *diagnostics = new PublishDiagnosticsClientCapabilities();
     diagnostics->setCodeDescriptionSupport(new bool(true));
@@ -100,6 +104,7 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
     QJsonObject settings;
     settings.insert("env", env);
     settings.insert("experimentalWorkspaceModule", true);
+    settings.insert("experimentalUseInvalidMetadata", true);
     settings.insert("allowModfileModifications", true);
     settings.insert("allowImplicitNetworkAccess", true);
     settings.insert("staticcheck", true);
@@ -146,6 +151,7 @@ void GoPlsServer::askAutocomplete(const QString &path, unsigned int line, unsign
 
 void GoPlsServer::addWorkspaceFolder(const QString &folder)
 {
+    qDebug() << m_init << "ADD FOLDER" << folder;
     if(!m_init) {
         initWorkspace(folder);
     }else{
@@ -153,7 +159,7 @@ void GoPlsServer::addWorkspaceFolder(const QString &folder)
         QList<WorkspaceFolder*> *folders = new QList<WorkspaceFolder*>();
         WorkspaceFolder *wFolder = new WorkspaceFolder();
         wFolder->setName(new QString(QFileInfo(folder).baseName()));
-        wFolder->setUri(new QString(folder));
+        wFolder->setUri(new QString("file://"+folder));
         folders->append(wFolder);
         params->setAdded(folders);
         sendCommand(MethodWorkspaceDidChangeWorkspaceFolders, params, nullptr);
@@ -210,7 +216,7 @@ void GoPlsServer::fileOpened(const QString &file, const QString &content)
     item->setLanguageId(new LanguageIdentifier(GoLanguage));
     item->setText(new QString(content));
     params->setTextDocument(item);
-    sendCommand(MethodTextDocumentDidOpen, params, nullptr);
+    sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened));
 }
 
 void GoPlsServer::fileClosed(const QString &file)
@@ -220,7 +226,7 @@ void GoPlsServer::fileClosed(const QString &file)
 
     QSharedPointer<DidCloseTextDocumentParams> params(new DidCloseTextDocumentParams());
     params->setTextDocument(documentIdentifier(file));
-    sendCommand(MethodTextDocumentDidClose, params, nullptr);
+    sendCommand(MethodTextDocumentDidClose, params, DECODE_CALLBACK(&GoPlsServer::decodeDidClosed));
 }
 
 void GoPlsServer::hover(const QString &filename, int line, int column)
@@ -234,10 +240,29 @@ void GoPlsServer::hover(const QString &filename, int line, int column)
     sendCommand(MethodTextDocumentHover, params, DECODE_CALLBACK(&GoPlsServer::decodeHover));
 }
 
+void GoPlsServer::documentSymbols(const QString &filename)
+{
+    QSharedPointer<DocumentSymbolParams> params(new DocumentSymbolParams);
+    params->setTextDocument(documentIdentifier(filename));
+    sendCommand(MethodTextDocumentDocumentSymbol, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentSymbols));
+}
+
+void GoPlsServer::shutdown()
+{
+    sendCommand(MethodShutdown, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeShutdown));
+}
+
+void GoPlsServer::exit()
+{
+    sendCommand(MethodExit, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeExit));
+}
+
 void GoPlsServer::decodeInitialize(const QJsonObject &)
 {
     QSharedPointer<InitializedParams> params(new InitializedParams());
     sendCommand(MethodInitialized, params, nullptr);
+    qDebug() << "INITIALIZED!";
+    m_init = true;
 }
 
 QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const QJsonObject &jsonObject)
@@ -419,12 +444,60 @@ void GoPlsServer::decodeDiagnostics(const QJsonObject &response)
     emit diagnosticsInfo(result.getUri()->mid(7), list);
 }
 
+void GoPlsServer::decodeDocumentSymbols(const QJsonObject &response)
+{
+    const auto symbols = response.value("result").toArray();
+    QHash<QString, QList<LiteApi::Symbol>> result;
+    for(auto it : symbols) {
+        SymbolInformation symbol;
+        symbol.fromJson(it.toObject());
+        LiteApi::Symbol res;
+        res.startLine = *symbol.getLocation()->getRange()->getStart()->getLine();
+        res.endLine = *symbol.getLocation()->getRange()->getEnd()->getLine();
+        res.name = *symbol.getName();
+
+        const QString filename = symbol.getLocation()->getUri()->mid(7);
+        auto list = result[filename];
+        list << res;
+        result[filename] = list;
+    }
+    for(auto it = result.cbegin(); it != result.cend(); ++it){
+        emit documentSymbolsResult(it.key(), it.value());
+    }
+}
+
+void GoPlsServer::decodeDidChanged(const QJsonObject &response)
+{
+}
+
+void GoPlsServer::decodeDidSaved(const QJsonObject &response)
+{
+}
+
+void GoPlsServer::decodeShutdown(const QJsonObject &response)
+{
+    exit();
+}
+
+void GoPlsServer::decodeExit(const QJsonObject &response)
+{
+
+}
+
+void GoPlsServer::decodeDidOpened(const QJsonObject &response)
+{
+}
+
+void GoPlsServer::decodeDidClosed(const QJsonObject &response)
+{
+}
+
 void GoPlsServer::fileSaved(const QString &file, const QString &content)
 {
     QSharedPointer<DidSaveTextDocumentParams> params(new DidSaveTextDocumentParams());
     params->setTextDocument(documentIdentifier(file));
     params->setText(new QString(content));
-    sendCommand(MethodTextDocumentDidSave, params, nullptr);
+    sendCommand(MethodTextDocumentDidSave, params, DECODE_CALLBACK(&GoPlsServer::decodeDidSaved));
 }
 
 void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, int endLine, int endPos, const QString &content)
@@ -451,7 +524,7 @@ void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, 
     text->setText(new QString(content));
     list->append(text);
     params->setContentChanges(list);
-    sendCommand(MethodTextDocumentDidChange, params, nullptr);
+    sendCommand(MethodTextDocumentDidChange, params, DECODE_CALLBACK(&GoPlsServer::decodeDidChanged));
 }
 
 TextDocumentIdentifier *GoPlsServer::documentIdentifier(const QString &path) const
@@ -506,8 +579,13 @@ void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPls
 
 void GoPlsServer::executeCommand(const GoPlsCommand &cmd)
 {
-    m_idToCommands.insert(cmd.commandID(), cmd.method());
-    m_idToDecodeFunc.insert(cmd.commandID(), cmd.decodeFunc());
+    auto cmdID = cmd.commandID();
+    m_idToCommands.insert(cmdID, cmd.method());
+    m_idToDecodeFunc.insert(cmdID, cmd.decodeFunc());
+    QTimer::singleShot(1000, [this, cmdID]{
+        m_idToCommands.take(cmdID);
+        m_idToDecodeFunc.take(cmdID);
+    });
     const QByteArray raw = cmd.toJson();
     const QString payload = QString("Content-Length: %1\r\n\r\n%2").arg(raw.length()).arg(QString::fromUtf8(raw));
     m_process->write(payload.toUtf8());
@@ -518,12 +596,15 @@ void GoPlsServer::onReadyRead()
     const QByteArray payload = m_process->readAll();
     int contentLength = 0;
     int offset = 0;
+    if(payload.length() == 0) {
+        return;
+    }
     if(payload.indexOf("\r\n") < 0) {
         decodeResponse(payload);
         return;
     }
     while(true) {
-        int next = payload.indexOf("\r\n", offset);
+        const int next = payload.indexOf("\r\n", offset);
         if (next != offset) {
             QString header = payload.mid(offset, next-offset);
             if(header.startsWith("Content-Length:", Qt::CaseInsensitive)) {
@@ -532,7 +613,7 @@ void GoPlsServer::onReadyRead()
             }
             offset = next+2;
         }else{
-            QByteArray body = payload.mid(offset+2, contentLength);
+            const QByteArray body = payload.mid(offset+2, contentLength);
             decodeResponse(body);
             offset += contentLength+2;
         }
