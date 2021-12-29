@@ -4256,7 +4256,7 @@ void LiteEditorWidgetBase::paintEvent(QPaintEvent *e)
                 painter.restore();
         }
 
-        if(m_annotations.contains(block.blockNumber())){
+        if(m_annotationsVisible && m_annotations.contains(block.blockNumber())){
             painter.save();
             auto annotations = m_annotations[block.blockNumber()];
             if(annotations.length() == 0) {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>390</height>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -507,6 +507,13 @@
            <widget class="QCheckBox" name="offsetCheckBox">
             <property name="text">
              <string>Display offset position</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="annotationsCheckBox">
+            <property name="text">
+             <string>Display inline annotations</string>
             </property>
            </widget>
           </item>

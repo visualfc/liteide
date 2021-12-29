@@ -1102,6 +1102,7 @@ void LiteEditor::applyOption(QString id)
     bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
     bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
+    bool annotationsVisible = m_liteApp->settings()->value(EDITOR_ANNOTATIONVISIBLE,true).toBool();
     bool wheelZooming = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
@@ -1124,6 +1125,7 @@ void LiteEditor::applyOption(QString id)
     m_editorWidget->setCodeFoldVisible(codeFoldVisible);
     m_editorWidget->setEofVisible(eofVisible);
     m_editorWidget->setIndentLineVisible(indentLineVisible);
+    m_editorWidget->setAnnotationsVisible(annotationsVisible);
     m_editorWidget->setRightLineVisible(rightLineVisible);
     m_editorWidget->setRightLineWidth(rightLineWidth);
     m_editorWidget->setScrollWheelZooming(wheelZooming);

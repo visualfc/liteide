@@ -249,6 +249,12 @@ public:
     bool indentLineVisible() const {
         return m_indentLineVisible;
     }
+    void setAnnotationsVisible(bool b) {
+        m_annotationsVisible = b;
+    }
+    bool annotationsVisible() const {
+        return m_annotationsVisible;
+    }
     void setAllowVscrollLastLine(bool b);
     bool allowVscrollLastLine() const {
         return m_allowVscrollLastLine;
@@ -356,6 +362,7 @@ protected:
     int  m_maxTipInfoLines;
     int  m_inputCursorOffset;
     bool m_indentLineVisible;
+    bool m_annotationsVisible;
     bool m_autoIndent;
     bool m_autoBraces0; //{
     bool m_autoBraces1; //(

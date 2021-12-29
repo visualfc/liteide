@@ -157,6 +157,7 @@ void LiteEditorOption::save()
         min = 1;
     }
     bool offsetVisible = ui->offsetCheckBox->isChecked();
+    bool annotationVisible = ui->annotationsCheckBox->isChecked();
     bool allowVscrollLastLine = ui->allowVscrollLastLineCheckBox->isChecked();
 
     m_liteApp->settings()->setValue(EDITOR_NOPRINTCHECK,noprintCheck);
@@ -182,6 +183,7 @@ void LiteEditorOption::save()
     m_liteApp->settings()->setValue(EDITOR_RIGHTLINEVISIBLE,rightLineVisible);
     m_liteApp->settings()->setValue(EDITOR_WHEEL_SCROLL,wheelZoom);
     m_liteApp->settings()->setValue(EDITOR_OFFSETVISIBLE,offsetVisible);
+    m_liteApp->settings()->setValue(EDITOR_ANNOTATIONVISIBLE,annotationVisible);
     m_liteApp->settings()->setValue(EDITOR_VISUALIZEWHITESPACE,visualizeWhitespace);
     m_liteApp->settings()->setValue(EDITOR_CLEAN_COMPLETERCACHE_SAVE,cleanCompleterCache);
     m_liteApp->settings()->setValue(EDITOR_ENABLE_COPYTOHTML,copyToHtml);
@@ -265,6 +267,7 @@ void LiteEditorOption::load()
     bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
     bool wheelZoom = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
     bool offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
+    bool annotationVisible = m_liteApp->settings()->value(EDITOR_ANNOTATIONVISIBLE,false).toBool();
     bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
     int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
     bool cleanComplerCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
@@ -295,6 +298,7 @@ void LiteEditorOption::load()
     ui->indentLineCheckBox->setChecked(indentLineVisible);
     ui->wheelZoomingCheckBox->setChecked(wheelZoom);
     ui->offsetCheckBox->setChecked(offsetVisible);
+    ui->annotationsCheckBox->setChecked(annotationVisible);
     ui->cleanCompleterCacheCheckBox->setChecked(cleanComplerCache);
     ui->enableCopyToHtmlCheckBox->setChecked(copyToHtml);
     ui->allowVscrollLastLineCheckBox->setChecked(allowVscrollLastLine);

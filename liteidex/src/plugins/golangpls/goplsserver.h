@@ -24,7 +24,7 @@ class GoPlsServer: public QObject
     QProcess *m_process;
 
 protected:
-    void sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc);
+    void sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, bool force = false);
     void executeCommand(const GoPlsCommand &cmd);
 
 signals:
@@ -71,6 +71,7 @@ public:
 
 protected:
     void decodeInitialize(const QJsonObject &);
+    void decodeInitialized(const QJsonObject &);
     QList<DefinitionResult> decodeDocumentDefinition(const QJsonObject &response);
     void decodeDocumentDefinitionHover(const QJsonObject &response);
     void decodeDocumentDefinitionGoTo(const QJsonObject &response);
@@ -86,6 +87,8 @@ protected:
     void decodeDidSaved(const QJsonObject &response);
     void decodeShutdown(const QJsonObject &response);
     void decodeExit(const QJsonObject &response);
+    void decodeAddWorkspaceFolder(const QJsonObject &response);
+    void decodeCurrentEnvChanged(const QJsonObject &response);
 
 private:
     GoPlsTypes::TextDocumentIdentifier *documentIdentifier(const QString &path) const;
@@ -97,8 +100,8 @@ private:
     QHash<QString, bool> m_openedFiles;
     QHash<QString, int> m_filesVersions;
     bool m_init;
-    QList<GoPlsCommand> m_commands;
     LiteApi::IEnvManager *m_envManager;
+    QList<GoPlsCommand> m_waitingCommands;
 };
 
 #endif // GOPLSSERVER_H

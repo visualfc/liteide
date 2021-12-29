@@ -131,7 +131,7 @@ void GoPlsServer::initWorkspace(const QString &wFolder)
     codeAction->setCodeActionLiteralSupport(codeActionLiteral);
     documentCapabilities->setCodeAction(codeAction);
 
-    sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize));
+    sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize), true);
 }
 
 void GoPlsServer::askAutocomplete(const QString &path, unsigned int line, unsigned int column)
@@ -155,6 +155,7 @@ void GoPlsServer::addWorkspaceFolder(const QString &folder)
     if(!m_init) {
         initWorkspace(folder);
     }else{
+        m_init = false;
         QSharedPointer<WorkspaceFoldersChangeEvent> params(new WorkspaceFoldersChangeEvent());
         QList<WorkspaceFolder*> *folders = new QList<WorkspaceFolder*>();
         WorkspaceFolder *wFolder = new WorkspaceFolder();
@@ -162,7 +163,7 @@ void GoPlsServer::addWorkspaceFolder(const QString &folder)
         wFolder->setUri(new QString("file://"+folder));
         folders->append(wFolder);
         params->setAdded(folders);
-        sendCommand(MethodWorkspaceDidChangeWorkspaceFolders, params, nullptr);
+        sendCommand(MethodWorkspaceDidChangeWorkspaceFolders, params, DECODE_CALLBACK(&GoPlsServer::decodeAddWorkspaceFolder), true);
     }
 }
 
@@ -209,14 +210,14 @@ void GoPlsServer::documentHighlight(const QString &file, int startLine, int star
 
 void GoPlsServer::fileOpened(const QString &file, const QString &content)
 {
-    m_openedFiles.insert(file, true);
-    QSharedPointer<DidOpenTextDocumentParams> params(new DidOpenTextDocumentParams());
-    TextDocumentItem *item = new TextDocumentItem();
-    item->setUri(new DocumentURI("file://"+file));
-    item->setLanguageId(new LanguageIdentifier(GoLanguage));
-    item->setText(new QString(content));
-    params->setTextDocument(item);
-    sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened));
+        m_openedFiles.insert(file, true);
+        QSharedPointer<DidOpenTextDocumentParams> params(new DidOpenTextDocumentParams());
+        TextDocumentItem *item = new TextDocumentItem();
+        item->setUri(new DocumentURI("file://"+file));
+        item->setLanguageId(new LanguageIdentifier(GoLanguage));
+        item->setText(new QString(content));
+        params->setTextDocument(item);
+        sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened));
 }
 
 void GoPlsServer::fileClosed(const QString &file)
@@ -260,9 +261,15 @@ void GoPlsServer::exit()
 void GoPlsServer::decodeInitialize(const QJsonObject &)
 {
     QSharedPointer<InitializedParams> params(new InitializedParams());
-    sendCommand(MethodInitialized, params, nullptr);
-    qDebug() << "INITIALIZED!";
+    sendCommand(MethodInitialized, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialized), true);
+}
+
+void GoPlsServer::decodeInitialized(const QJsonObject &)
+{
     m_init = true;
+    if(!m_waitingCommands.isEmpty()) {
+        executeCommand(m_waitingCommands.takeFirst());
+    }
 }
 
 QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const QJsonObject &jsonObject)
@@ -484,6 +491,19 @@ void GoPlsServer::decodeExit(const QJsonObject &response)
 
 }
 
+void GoPlsServer::decodeAddWorkspaceFolder(const QJsonObject &response)
+{
+    m_init = true;
+    if(!m_waitingCommands.isEmpty()) {
+        executeCommand(m_waitingCommands.takeFirst());
+    }
+}
+
+void GoPlsServer::decodeCurrentEnvChanged(const QJsonObject &response)
+{
+
+}
+
 void GoPlsServer::decodeDidOpened(const QJsonObject &response)
 {
 }
@@ -562,23 +582,24 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
             qDebug().noquote() << requested << payload;
         }
     }
-    if(!m_commands.isEmpty()) {
-        executeCommand(m_commands.first());
+    if(!m_waitingCommands.empty() && m_init) {
+        executeCommand(m_waitingCommands.takeFirst());
     }
 }
 
-void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc)
+void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, bool force)
 {
-    if(!m_commands.isEmpty()) {
-        return;
-    }
-
     GoPlsCommand cmd(command, params, responseFunc);
-    executeCommand(cmd);
+    if(!m_init && !force) {
+        m_waitingCommands << cmd;
+    }else{
+        executeCommand(cmd);
+    }
 }
 
 void GoPlsServer::executeCommand(const GoPlsCommand &cmd)
 {
+    qDebug() << "execute command" << cmd.method();
     auto cmdID = cmd.commandID();
     m_idToCommands.insert(cmdID, cmd.method());
     m_idToDecodeFunc.insert(cmdID, cmd.decodeFunc());
@@ -644,6 +665,6 @@ void GoPlsServer::currentEnvChanged(LiteApi::IEnv *env)
         QJsonObject settings;
         settings.insert("env", obj);
         params->setSettings(new QJsonValue(settings));
-        sendCommand(MethodWorkspaceDidChangeConfiguration, params, nullptr);
+        sendCommand(MethodWorkspaceDidChangeConfiguration, params, DECODE_CALLBACK(&GoPlsServer::decodeCurrentEnvChanged));
     }
 }
