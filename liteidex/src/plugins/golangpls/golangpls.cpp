@@ -100,17 +100,8 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
     m_currentFile = m_editor->filePath();
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(m_editor);
     m_server->fileOpened(m_currentFile, plainTextEditor->toPlainText());
-    const QString filepath = m_editor->filePath();
-    m_plainText = plainTextEditor->toPlainText();
-    connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, filepath, plainTextEditor]() {
-        int startLine, startPos, endLine, endPos;
-        QString content;
-        computeModifications(m_plainText, plainTextEditor->toPlainText(), startLine, startPos, endLine, endPos, content);
-        m_server->fileChanged(filepath, startLine, startPos, endLine, endPos, content);
-        m_plainText = plainTextEditor->toPlainText();
-        //m_server->documentHighlight(m_currentFile);
-    });
     m_server->documentSymbols(editor->filePath());
+    m_plainText = plainTextEditor->toPlainText();
 }
 
 void GolangPls::editorCreated(LiteApi::IEditor *editor)
@@ -141,6 +132,18 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     }
     connect(editor, &LiteApi::IEditor::contentsChanged, this, &GolangPls::editorChanged);
     connect(editor, SIGNAL(updateLink(QTextCursor,QPoint,bool)), this, SLOT(onUpdateLink(QTextCursor,QPoint,bool)));
+
+    QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(editor);
+    const QString filepath = editor->filePath();
+    m_plainText = plainTextEditor->toPlainText();
+    connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, filepath, plainTextEditor]() {
+        int startLine, startPos, endLine, endPos;
+        QString content;
+        computeModifications(m_plainText, plainTextEditor->toPlainText(), startLine, startPos, endLine, endPos, content);
+        m_server->fileChanged(filepath, startLine, startPos, endLine, endPos, content);
+        m_plainText = plainTextEditor->toPlainText();
+        //m_server->documentHighlight(m_currentFile);
+    });
 }
 
 void GolangPls::editorClosed(LiteApi::IEditor *editor)
@@ -155,7 +158,7 @@ void GolangPls::editorClosed(LiteApi::IEditor *editor)
 void GolangPls::editorSaved(LiteApi::IEditor *editor)
 {
     LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
-//    m_server->organizeImports(currentEditor->filePath());
+    //    m_server->organizeImports(currentEditor->filePath());
     m_server->formatDocument(currentEditor->filePath());
     m_server->fileSaved(currentEditor->filePath(), LiteApi::getPlainTextEdit(currentEditor)->toPlainText());
     m_liteApp->editorManager()->saveEditor(editor,false);
@@ -167,10 +170,6 @@ void GolangPls::editorChanged()
     LiteApi::IEditor *editor = dynamic_cast<LiteApi::IEditor *>(source);
     if(editor) {
         m_server->documentSymbols(editor->filePath());
-        LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
-        if(currentEditor) {
-            //m_server->fileChanged(currentEditor->filePath(), LiteApi::getPlainTextEdit(currentEditor)->toPlainText());
-        }
     }
 }
 
@@ -185,7 +184,6 @@ void GolangPls::prefixChanged(QTextCursor cur, QString pre, bool force)
     }
 
     const QPoint pos = cursorPosition(cur);
-
     m_server->askAutocomplete(m_editor->filePath(), pos.y(), pos.x());
 }
 

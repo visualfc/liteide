@@ -53,6 +53,7 @@ public:
 
     void initWorkspace(const QStringList &folders);
     void askAutocomplete(const QString &path, unsigned int line, unsigned int column);
+    void askSignatureHelp(const QString &path, unsigned int line, unsigned int column, const QString &trigger);
     void addWorkspaceFolder(const QString &folder);
     void askDefinitions(const QString &file, bool hover, unsigned int line, unsigned int column);
 
@@ -91,6 +92,7 @@ protected:
     void decodeExit(const QJsonObject &response);
     void decodeAddWorkspaceFolder(const QJsonObject &response);
     void decodeCurrentEnvChanged(const QJsonObject &response);
+    void decodeSignatureHelp(const QJsonObject &response);
     void printResponse(const QJsonObject &response);
 
 private:

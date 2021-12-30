@@ -151,6 +151,21 @@ void GoPlsServer::askAutocomplete(const QString &path, unsigned int line, unsign
     sendCommand(MethodTextDocumentCompletion, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentCompletion));
 }
 
+void GoPlsServer::askSignatureHelp(const QString &path, unsigned int line, unsigned int column, const QString &trigger)
+{
+    QSharedPointer<SignatureHelpParams> params(new SignatureHelpParams);
+    SignatureHelpContext *context = new SignatureHelpContext;
+    context->setTriggerKind(new SignatureHelpTriggerKind(SignatureHelpTriggerKindTriggerCharacter));
+    context->setTriggerCharacter(new QString(trigger));
+    params->setContext(context);
+    params->setTextDocument(documentIdentifier(path));
+    Position *position = new Position;
+    position->setLine(new unsigned int(line));
+    position->setCharacter(new unsigned int(column));
+    params->setPosition(position);
+    sendCommand(MethodTextDocumentSignatureHelp, params, DECODE_CALLBACK(&GoPlsServer::decodeSignatureHelp));
+}
+
 void GoPlsServer::addWorkspaceFolder(const QString &folder)
 {
     m_init = false;
@@ -511,6 +526,11 @@ void GoPlsServer::decodeAddWorkspaceFolder(const QJsonObject &response)
 void GoPlsServer::decodeCurrentEnvChanged(const QJsonObject &response)
 {
 
+}
+
+void GoPlsServer::decodeSignatureHelp(const QJsonObject &response)
+{
+    printResponse(response);
 }
 
 void GoPlsServer::printResponse(const QJsonObject &response)
