@@ -13,7 +13,6 @@ public:
     virtual bool load(LiteApi::IApplication *app);
     virtual QStringList dependPluginList() const;
 protected slots:
-    void appLoaded();
     void editorCreated(LiteApi::IEditor*editor);
     void currentEditorChanged(LiteApi::IEditor*editor);
 protected:

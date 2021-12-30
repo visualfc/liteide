@@ -11,7 +11,6 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     , m_completer(nullptr)
     , m_server(new GoPlsServer(app))
 {
-    qDebug() << "LOADED?!";
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangPls");
 
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
@@ -19,6 +18,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
 
     connect(m_jumpDeclAct, &QAction::triggered, this, &GolangPls::editorJumpToDecl);
 
+    connect(m_liteApp, &LiteApi::IApplication::sessionListChanged, this, &GolangPls::appLoaded);
     connect(m_server, &GoPlsServer::logMessage, this, &GolangPls::onLogMessage);
     connect(m_server, &GoPlsServer::autocompleteResult, this, &GolangPls::onAutoCompletion);
     connect(m_server, &GoPlsServer::definitionsResult, this, &GolangPls::onDefinitionResult);
@@ -34,8 +34,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToClose, this, &GolangPls::editorClosed);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToSave, this, &GolangPls::editorSaved);
 
-
-    qDebug() << "CONNECT OPTIONS" << connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     m_liteApp->optionManager()->emitApplyOption(OPTION_GOLANGPLS);
     //connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorModifyChanged, this, &GolangPls::editorChanged);
 
@@ -135,13 +134,7 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     if (filePath.isEmpty()) {
         return;
     }
-    QString workspaceDirectory = QFileInfo(filePath).absoluteDir().absolutePath();
-    while(workspaceDirectory != "/") {
-        if(QFile::exists(workspaceDirectory+"/go.mod")) {
-            break;
-        }
-        workspaceDirectory = QFileInfo(workspaceDirectory).absoluteDir().absolutePath();
-    }
+    auto workspaceDirectory = findModulePath(filePath);
     if(!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
         m_server->addWorkspaceFolder(workspaceDirectory);
         m_opendWorkspace.insert(workspaceDirectory, true);
@@ -482,7 +475,31 @@ void GolangPls::applyOption(QString id)
     if(unreachable) {
         m_staticcheckEnables << "unreachable";
     }
-    qDebug() << "LIST =>" << m_staticcheckEnables;
+}
+
+void GolangPls::appLoaded()
+{
+    for(auto editor: m_liteApp->editorManager()->editorList()) {
+        auto path = findModulePath(editor->filePath());
+        if(path == "/") {
+            continue;
+        }
+        m_opendWorkspace[path] = true;
+    }
+
+    m_server->initWorkspace(m_opendWorkspace.keys());
+}
+
+QString GolangPls::findModulePath(const QString &filepath) const
+{
+    QString workspaceDirectory = QFileInfo(filepath).absoluteDir().absolutePath();
+    while(workspaceDirectory != "/") {
+        if(QFile::exists(workspaceDirectory+"/go.mod")) {
+            break;
+        }
+        workspaceDirectory = QFileInfo(workspaceDirectory).absoluteDir().absolutePath();
+    }
+    return workspaceDirectory;
 }
 
 QPoint GolangPls::cursorPosition(QTextCursor cur) const

@@ -51,7 +51,7 @@ public:
 
     void quit();
 
-    void initWorkspace(const QString &folder);
+    void initWorkspace(const QStringList &folders);
     void askAutocomplete(const QString &path, unsigned int line, unsigned int column);
     void addWorkspaceFolder(const QString &folder);
     void askDefinitions(const QString &file, bool hover, unsigned int line, unsigned int column);
@@ -65,6 +65,8 @@ public:
     void fileClosed(const QString &file);
     void hover(const QString &filename, int line, int column);
     void documentSymbols(const QString &filename);
+    void enableStaticcheck(bool v);
+
 
     void shutdown();
     void exit();
@@ -89,6 +91,7 @@ protected:
     void decodeExit(const QJsonObject &response);
     void decodeAddWorkspaceFolder(const QJsonObject &response);
     void decodeCurrentEnvChanged(const QJsonObject &response);
+    void printResponse(const QJsonObject &response);
 
 private:
     GoPlsTypes::TextDocumentIdentifier *documentIdentifier(const QString &path) const;

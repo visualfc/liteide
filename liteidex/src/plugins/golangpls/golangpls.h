@@ -9,11 +9,6 @@
 #include "processex/processex.h"
 #include "goplstypes.h"
 
-/**
- * init pls on first editor changed if go.mod found
- * wait for initialized before doing anything
- */
-
 class GoPlsServer;
 class GolangPls : public QObject
 {
@@ -53,6 +48,8 @@ public slots:
     void fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos) const;
     void fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column) const;
     void applyOption(QString id);
+    void appLoaded();
+    QString findModulePath(const QString &filepath) const;
 signals:
 
 private:

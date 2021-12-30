@@ -15,7 +15,6 @@ bool GolanPlsPlugin::load(LiteApi::IApplication *app)
 
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     //connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
-    connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     app->optionManager()->addFactory(new GolangPlsOptionFactory(app,this));
 
     return true;
@@ -23,12 +22,7 @@ bool GolanPlsPlugin::load(LiteApi::IApplication *app)
 
 QStringList GolanPlsPlugin::dependPluginList() const
 {
-    return {"liteditor"};
-}
-
-void GolanPlsPlugin::appLoaded()
-{
-
+    return {"liteditor", "filebrowser"};
 }
 
 void GolanPlsPlugin::editorCreated(LiteApi::IEditor *editor)
