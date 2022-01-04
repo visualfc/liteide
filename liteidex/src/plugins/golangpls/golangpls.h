@@ -8,8 +8,10 @@
 #include "liteeditorapi/liteeditorapi.h"
 #include "processex/processex.h"
 #include "goplstypes.h"
+#include "golangplsusage.h"
 
 class GoPlsServer;
+
 class GolangPls : public QObject
 {
     Q_OBJECT
@@ -40,6 +42,8 @@ public slots:
     void onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
 
     void editorJumpToDecl();
+    void renameSymbol();
+    void findUsage();
     void editorFindUsages();
     void editText(LiteApi::IEditor *editor, const QList<TextEditResult> &list, bool reverse = false);
     void onUpdateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
@@ -50,6 +54,7 @@ public slots:
     void applyOption(QString id);
     void appLoaded();
     QString findModulePath(const QString &filepath) const;
+    QStringList activeWorkspaces() const;
 signals:
 
 private:
@@ -66,12 +71,16 @@ private:
     QString m_preWord;
 
     QAction *m_jumpDeclAct;
+    QAction *m_refactorAct;
+    QAction *m_usageAct;
     QString m_plainText;
     QString m_currentFile;
 
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
     QStringList m_staticcheckEnables;
+
+    GolangPlsUsage *m_fileSearch;
 };
 
 #endif // GOLANGPLS_H

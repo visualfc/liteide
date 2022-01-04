@@ -73,4 +73,12 @@ struct DiagnosticResult {
     QString code;
 };
 
+struct UsageResult {
+    QString filepath;
+    unsigned int startLine;
+    unsigned int startColumn;
+    unsigned int endLine;
+    unsigned int endColumn;
+};
+
 #endif // GOPLSTYPES_H

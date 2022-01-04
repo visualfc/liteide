@@ -15,8 +15,15 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
 
     m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
     actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration!","CTRL+SHIFT+J;F2");
-
     connect(m_jumpDeclAct, &QAction::triggered, this, &GolangPls::editorJumpToDecl);
+
+    m_refactorAct = new QAction(tr("Rename symbol"),this);
+    actionContext->regAction(m_refactorAct,"RenameSymbol!","CTRL+SHIFT+R");
+    connect(m_refactorAct, &QAction::triggered, this, &GolangPls::renameSymbol);
+
+    m_usageAct = new QAction(tr("Find usages"),this);
+    actionContext->regAction(m_usageAct,"FindUsages!","CTRL+SHIFT+U");
+    connect(m_usageAct, &QAction::triggered, this, &GolangPls::findUsage);
 
     connect(m_liteApp, &LiteApi::IApplication::sessionListChanged, this, &GolangPls::appLoaded);
     connect(m_server, &GoPlsServer::logMessage, this, &GolangPls::onLogMessage);
@@ -29,8 +36,8 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_server, &GoPlsServer::diagnosticsInfo, this, &GolangPls::onDiagnosticsInfo);
     connect(m_server, &GoPlsServer::documentSymbolsResult, this, &GolangPls::onDocumentSymbolsResult);
 
-    connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::currentEditorChanged,this, &GolangPls::currentEditorChanged);
-    connect(m_liteApp->editorManager(),&LiteApi::IEditorManager::editorCreated,this, &GolangPls::editorCreated);
+    connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::currentEditorChanged,this, &GolangPls::currentEditorChanged);
+    connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorCreated,this, &GolangPls::editorCreated);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToClose, this, &GolangPls::editorClosed);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToSave, this, &GolangPls::editorSaved);
 
@@ -39,6 +46,12 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     //connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorModifyChanged, this, &GolangPls::editorChanged);
 
     //connect(m_liteApp->optionManager(),&LiteApi::IOptionManager::applyOption,this, &GolangPls::applyOption);
+    m_fileSearch = new GolangPlsUsage(m_liteApp);
+    LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
+    if (manager) {
+        manager->addFileSearch(m_fileSearch);
+        connect(m_server, &GoPlsServer::findUsageResult, m_fileSearch, &GolangPlsUsage::loadResults);
+    }
 }
 
 GolangPls::~GolangPls()
@@ -72,7 +85,9 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
     }
 
     auto liteEditor = LiteApi::getLiteEditor(editor);
-    liteEditor->clearAnnotations("staticcheck");
+    if(liteEditor){
+        liteEditor->clearAnnotations("staticcheck");
+    }
 
     if (editor->mimeType() == "text/x-gosrc") {
         LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
@@ -114,11 +129,15 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     QMenu *menu = LiteApi::getEditMenu(editor);
     if (menu) {
         menu->addAction(m_jumpDeclAct);
+        menu->addAction(m_refactorAct);
+        menu->addAction(m_usageAct);
     }
 
     menu = LiteApi::getContextMenu(editor);
     if (menu) {
         menu->addAction(m_jumpDeclAct);
+        menu->addAction(m_refactorAct);
+        menu->addAction(m_usageAct);
     }
 
     QString filePath = editor->filePath();
@@ -127,7 +146,7 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     }
     auto workspaceDirectory = findModulePath(filePath);
     if(!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
-        m_server->addWorkspaceFolder(workspaceDirectory);
+        m_server->updateWorkspaceFolders({workspaceDirectory}, {});
         m_opendWorkspace.insert(workspaceDirectory, true);
     }
     connect(editor, &LiteApi::IEditor::contentsChanged, this, &GolangPls::editorChanged);
@@ -148,6 +167,15 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
 
 void GolangPls::editorClosed(LiteApi::IEditor *editor)
 {
+    auto folders = activeWorkspaces();
+    QStringList remove;
+    for(auto folder : m_opendWorkspace.keys()) {
+        if(!folders.contains(folder)){
+            remove << folder;
+            m_opendWorkspace.remove(folder);
+        }
+    }
+    m_server->updateWorkspaceFolders({}, remove);
     // editor is the new one, get the last one
     LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
     if(currentEditor) {
@@ -319,6 +347,42 @@ void GolangPls::editorJumpToDecl()
     m_server->askDefinitions(m_editor->filePath(), false, pos.y(), pos.x());
 }
 
+void GolangPls::renameSymbol()
+{
+    int line, column;
+    auto cursor = m_editor->textCursor();
+    int start = cursor.position();
+    for(; start > 0; start--) {
+        auto txt = m_editor->textAt(start-1, 1);
+        if(txt.isEmpty()) {
+            continue;
+        }
+        if(!txt.at(0).isLetterOrNumber() || txt == "\n") {
+            break;
+        }
+    }
+    int end = cursor.position();
+    for(;;end++) {
+       auto txt = m_editor->textAt(end, 1);
+        if(txt.isEmpty()) {
+            continue;
+        }
+        if(!txt.at(0).isLetterOrNumber() || txt == "\n") {
+            break;
+        }
+    }
+    auto block = cursor.block();
+    fromPosToLineAndColumn(m_editor, m_editor->textCursor().position(), line, column);
+    m_server->refactorExtract(m_editor->filePath(), line, start-block.position(), end-block.position());
+}
+
+void GolangPls::findUsage()
+{
+    m_fileSearch->start();
+    auto cursor = m_editor->textCursor();
+    m_server->askFindUsage(m_editor->filePath(), cursor.blockNumber(), cursor.position()-cursor.block().position());
+}
+
 void GolangPls::editorFindUsages()
 {
 
@@ -477,12 +541,8 @@ void GolangPls::applyOption(QString id)
 
 void GolangPls::appLoaded()
 {
-    for(auto editor: m_liteApp->editorManager()->editorList()) {
-        auto path = findModulePath(editor->filePath());
-        if(path == "/") {
-            continue;
-        }
-        m_opendWorkspace[path] = true;
+    for(auto folder : activeWorkspaces()) {
+        m_opendWorkspace[folder] = true;
     }
 
     m_server->initWorkspace(m_opendWorkspace.keys());
@@ -498,6 +558,20 @@ QString GolangPls::findModulePath(const QString &filepath) const
         workspaceDirectory = QFileInfo(workspaceDirectory).absoluteDir().absolutePath();
     }
     return workspaceDirectory;
+}
+
+QStringList GolangPls::activeWorkspaces() const
+{
+    QHash<QString, bool> folders;
+    for(auto editor: m_liteApp->editorManager()->editorList()) {
+        auto path = findModulePath(editor->filePath());
+        if(path == "/") {
+            continue;
+        }
+        folders[path] = true;
+    }
+
+    return folders.keys();
 }
 
 QPoint GolangPls::cursorPosition(QTextCursor cur) const

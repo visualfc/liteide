@@ -128,6 +128,7 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     QList<CodeActionKind*> *actions = new QList<CodeActionKind*>();
     *actions << new CodeActionKind(SourceOrganizeImports);
     *actions << new CodeActionKind(RefactorRewrite);
+    *actions << new CodeActionKind(RefactorExtract);
     codeActionLiteralKind->setValueSet(actions);
     codeActionLiteral->setCodeActionKind(codeActionLiteralKind);
     codeAction->setCodeActionLiteralSupport(codeActionLiteral);
@@ -136,14 +137,36 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize), true);
 }
 
+void GoPlsServer::refactorExtract(const QString &path, unsigned int line, unsigned int startColumn, unsigned int endColumn)
+{
+    QSharedPointer<CodeActionParams> params(new CodeActionParams);
+    params->setTextDocument(documentIdentifier(path));
+    params->setRange(range(position(line, startColumn), position(line, endColumn)));
+    CodeActionContext *context = new CodeActionContext;
+    QList<CodeActionKind*> *actions = new QList<CodeActionKind*>();
+    *actions << new CodeActionKind(RefactorRewrite);
+    context->setOnly(actions);
+    params->setContext(context);
+    qDebug().noquote() << params->toJson();
+    sendCommand(MethodTextDocumentCodeAction, params, DECODE_CALLBACK(&GoPlsServer::printResponse));
+}
+
+void GoPlsServer::askFindUsage(const QString &path, unsigned int line, unsigned int column)
+{
+    QSharedPointer<ReferenceParams> params(new ReferenceParams);
+    ReferenceContext *ctx = new ReferenceContext;
+    ctx->setIncludeDeclaration(new bool(true));
+    params->setTextDocument(documentIdentifier(path));
+    params->setPosition(position(line, column));
+    params->setContext(ctx);
+    sendCommand(MethodTextDocumentReferences, params, DECODE_CALLBACK(&GoPlsServer::decodeFindUsage));
+}
+
 void GoPlsServer::askAutocomplete(const QString &path, unsigned int line, unsigned int column)
 {
     QSharedPointer<CompletionParams> params(new CompletionParams());
     params->setTextDocument(documentIdentifier(path));
-    Position *position = new Position();
-    position->setLine(new unsigned int(line));
-    position->setCharacter(new unsigned int(column));
-    params->setPosition(position);
+    params->setPosition(position(line, column));
     CompletionContext *context = new CompletionContext();
     context->setTriggerCharacter(new QString("."));
     context->setTriggerKind(new CompletionTriggerKind(CompletionTriggerKindTriggerCharacter));
@@ -159,24 +182,32 @@ void GoPlsServer::askSignatureHelp(const QString &path, unsigned int line, unsig
     context->setTriggerCharacter(new QString(trigger));
     params->setContext(context);
     params->setTextDocument(documentIdentifier(path));
-    Position *position = new Position;
-    position->setLine(new unsigned int(line));
-    position->setCharacter(new unsigned int(column));
-    params->setPosition(position);
+    params->setPosition(position(line, column));
     sendCommand(MethodTextDocumentSignatureHelp, params, DECODE_CALLBACK(&GoPlsServer::decodeSignatureHelp));
 }
 
-void GoPlsServer::addWorkspaceFolder(const QString &folder)
+void GoPlsServer::updateWorkspaceFolders(const QStringList &add, const QStringList &remove)
 {
     m_init = false;
     QSharedPointer<DidChangeWorkspaceFoldersParams> params(new DidChangeWorkspaceFoldersParams);
     WorkspaceFoldersChangeEvent *event = new WorkspaceFoldersChangeEvent();
-    QList<WorkspaceFolder*> *folders = new QList<WorkspaceFolder*>();
-    WorkspaceFolder *wFolder = new WorkspaceFolder();
-    wFolder->setName(new QString(QFileInfo(folder).baseName()));
-    wFolder->setUri(new QString("file://"+folder));
-    folders->append(wFolder);
-    event->setAdded(folders);
+    QList<WorkspaceFolder*> *adds = new QList<WorkspaceFolder*>();
+    for(auto &folder : add) {
+        WorkspaceFolder *wFolder = new WorkspaceFolder();
+        wFolder->setName(new QString(QFileInfo(folder).baseName()));
+        wFolder->setUri(new QString("file://"+folder));
+        adds->append(wFolder);
+    }
+    event->setAdded(adds);
+
+    QList<WorkspaceFolder*> *removes = new QList<WorkspaceFolder*>();
+    for(auto &folder : remove) {
+        WorkspaceFolder *wFolder = new WorkspaceFolder();
+        wFolder->setName(new QString(QFileInfo(folder).baseName()));
+        wFolder->setUri(new QString("file://"+folder));
+        removes->append(wFolder);
+    }
+    event->setRemoved(removes);
     params->setEvent(event);
     sendCommand(MethodWorkspaceDidChangeWorkspaceFolders, params, DECODE_CALLBACK(&GoPlsServer::decodeAddWorkspaceFolder), true);
 }
@@ -185,10 +216,7 @@ void GoPlsServer::askDefinitions(const QString &file, bool hover, unsigned int l
 {
     QSharedPointer<DefinitionParams> params(new DefinitionParams());
     params->setTextDocument(documentIdentifier(file));
-    Position *position = new Position();
-    position->setLine(new unsigned int(line));
-    position->setCharacter(new unsigned int(column));
-    params->setPosition(position);
+    params->setPosition(position(line, column));
     if(hover) {
         sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionHover));
     }else{
@@ -224,14 +252,14 @@ void GoPlsServer::documentHighlight(const QString &file, int startLine, int star
 
 void GoPlsServer::fileOpened(const QString &file, const QString &content)
 {
-        m_openedFiles.insert(file, true);
-        QSharedPointer<DidOpenTextDocumentParams> params(new DidOpenTextDocumentParams());
-        TextDocumentItem *item = new TextDocumentItem();
-        item->setUri(new DocumentURI("file://"+file));
-        item->setLanguageId(new LanguageIdentifier(GoLanguage));
-        item->setText(new QString(content));
-        params->setTextDocument(item);
-        sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened));
+    m_openedFiles.insert(file, true);
+    QSharedPointer<DidOpenTextDocumentParams> params(new DidOpenTextDocumentParams());
+    TextDocumentItem *item = new TextDocumentItem();
+    item->setUri(new DocumentURI("file://"+file));
+    item->setLanguageId(new LanguageIdentifier(GoLanguage));
+    item->setText(new QString(content));
+    params->setTextDocument(item);
+    sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened));
 }
 
 void GoPlsServer::fileClosed(const QString &file)
@@ -248,10 +276,7 @@ void GoPlsServer::hover(const QString &filename, int line, int column)
 {
     QSharedPointer<HoverParams> params(new HoverParams);
     params->setTextDocument(documentIdentifier(filename));
-    Position *pos = new Position;
-    pos->setCharacter(new unsigned int(column));
-    pos->setLine(new unsigned int(line));
-    params->setPosition(pos);
+    params->setPosition(position(line, column));
     sendCommand(MethodTextDocumentHover, params, DECODE_CALLBACK(&GoPlsServer::decodeHover));
 }
 
@@ -284,12 +309,14 @@ void GoPlsServer::exit()
 
 void GoPlsServer::decodeInitialize(const QJsonObject &resp)
 {
+    printResponse(resp);
     QSharedPointer<InitializedParams> params(new InitializedParams());
     sendCommand(MethodInitialized, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialized), true);
 }
 
 void GoPlsServer::decodeInitialized(const QJsonObject &resp)
 {
+    printResponse(resp);
     m_init = true;
     if(!m_waitingCommands.isEmpty()) {
         executeCommand(m_waitingCommands.takeFirst());
@@ -525,11 +552,29 @@ void GoPlsServer::decodeAddWorkspaceFolder(const QJsonObject &response)
 
 void GoPlsServer::decodeCurrentEnvChanged(const QJsonObject &response)
 {
-
 }
 
 void GoPlsServer::decodeSignatureHelp(const QJsonObject &response)
 {
+    printResponse(response);
+}
+
+void GoPlsServer::decodeFindUsage(const QJsonObject &response)
+{
+    QList<UsageResult> result;
+    for(auto it : response.value("result").toArray()) {
+        Location item;
+        item.fromJson(it.toObject());
+        UsageResult res;
+        res.filepath = item.getUri()->mid(7);
+        res.startLine = *item.getRange()->getStart()->getLine();
+        res.startColumn = *item.getRange()->getStart()->getCharacter();
+        res.endLine = *item.getRange()->getEnd()->getLine();
+        res.endColumn = *item.getRange()->getEnd()->getCharacter();
+        qDebug() << res.filepath << res.startLine;
+        result << res;
+    }
+    emit findUsageResult(result);
     printResponse(response);
 }
 
@@ -565,16 +610,7 @@ void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, 
     params->setTextDocument(item);
     QList<TextDocumentContentChangeEvent *> *list = new QList<TextDocumentContentChangeEvent *>();
     TextDocumentContentChangeEvent *text = new TextDocumentContentChangeEvent();
-    Range *range = new Range();
-    Position *start = new Position();
-    start->setCharacter(new unsigned int(startPos));
-    start->setLine(new unsigned int(startLine));
-    range->setStart(start);
-    Position *end = new Position();
-    end->setCharacter(new unsigned int(endPos));
-    end->setLine(new unsigned int(endLine));
-    range->setEnd(end);
-    text->setRange(range);
+    text->setRange(range(position(startLine, startPos), position(endLine, endPos)));
     text->setText(new QString(content));
     list->append(text);
     params->setContentChanges(list);
@@ -586,6 +622,22 @@ TextDocumentIdentifier *GoPlsServer::documentIdentifier(const QString &path) con
     TextDocumentIdentifier *identifier = new TextDocumentIdentifier();
     identifier->setUri(new DocumentURI("file://"+path));
     return identifier;
+}
+
+GoPlsTypes::Position *GoPlsServer::position(unsigned int line, unsigned int column) const
+{
+    Position *pos = new Position;
+    pos->setLine(new unsigned int(line));
+    pos->setCharacter(new unsigned int(column));
+    return pos;
+}
+
+GoPlsTypes::Range *GoPlsServer::range(GoPlsTypes::Position *start, GoPlsTypes::Position *end) const
+{
+    Range *range = new Range;
+    range->setStart(start);
+    range->setEnd(end);
+    return range;
 }
 
 void GoPlsServer::decodeResponse(const QByteArray &payload)

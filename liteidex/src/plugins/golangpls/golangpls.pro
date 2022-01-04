@@ -9,6 +9,9 @@ include(../../liteideplugin.pri)
 include (../../api/liteenvapi/liteenvapi.pri)
 include(../../api/golangastapi/golangastapi.pri)
 include(../../utils/fileutil/fileutil.pri)
+include (../../api/litefindapi/litefindapi.pri)
+include (../../api/liteeditorapi/liteeditorapi.pri)
+include (../../api/litebuildapi/litebuildapi.pri)
 include(../../utils/processex/processex.pri)
 # Directories
 DEFINES += GOLANGPLS_LIBRARY
@@ -18,6 +21,7 @@ SOURCES += \
     golangplsoption.cpp \
     golangplsoptionfactory.cpp \
     ../liteeditor/faketooltip.cpp \
+    golangplsusage.cpp \
     golanplsplugin.cpp \
     goplsserver.cpp \
     goplstypes.cpp
@@ -29,6 +33,7 @@ HEADERS += \
     golangplsoption.h \
     golangplsoptionfactory.h \
     ../liteeditor/faketooltip.h \
+    golangplsusage.h \
     golanplsplugin.h \
     goplsserver.h \
     goplstypes.h

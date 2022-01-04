@@ -10,6 +10,8 @@
 
 namespace GoPlsTypes {
 class TextDocumentIdentifier;
+class Range;
+class Position;
 }
 
 namespace LiteApi {
@@ -38,6 +40,7 @@ signals:
     void hoverDefinitionResult(const QList<DefinitionResult> &definitions);
     void diagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
     void documentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
+    void findUsageResult(const QList<UsageResult> &list);
     void exited();
 
 protected slots:
@@ -52,9 +55,11 @@ public:
     void quit();
 
     void initWorkspace(const QStringList &folders);
+    void refactorExtract(const QString &path, unsigned int line, unsigned int startColumn, unsigned int endColumn);
+    void askFindUsage(const QString &path, unsigned int line, unsigned int column);
     void askAutocomplete(const QString &path, unsigned int line, unsigned int column);
     void askSignatureHelp(const QString &path, unsigned int line, unsigned int column, const QString &trigger);
-    void addWorkspaceFolder(const QString &folder);
+    void updateWorkspaceFolders(const QStringList &add, const QStringList &remove);
     void askDefinitions(const QString &file, bool hover, unsigned int line, unsigned int column);
 
     void formatDocument(const QString &file);
@@ -93,10 +98,13 @@ protected:
     void decodeAddWorkspaceFolder(const QJsonObject &response);
     void decodeCurrentEnvChanged(const QJsonObject &response);
     void decodeSignatureHelp(const QJsonObject &response);
+    void decodeFindUsage(const QJsonObject &response);
     void printResponse(const QJsonObject &response);
 
 private:
     GoPlsTypes::TextDocumentIdentifier *documentIdentifier(const QString &path) const;
+    GoPlsTypes::Position *position(unsigned int line, unsigned int column) const;
+    GoPlsTypes::Range *range(GoPlsTypes::Position *start, GoPlsTypes::Position *end) const;
 
     void decodeResponse(const QByteArray &payload);
 
