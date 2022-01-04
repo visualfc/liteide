@@ -73,8 +73,7 @@ void GolangPlsUsage::loadResults(const QList<UsageResult> &list)
                 line = QString::fromLatin1(buf);
             }
         }
-        qDebug() << "***" << it.filepath << it.startLine;
-        emit findResult(LiteApi::FileSearchResult(it.filepath,line,it.startLine,it.startColumn,it.endColumn-it.startColumn));
+        emit findResult(LiteApi::FileSearchResult(it.filepath,line,it.startLine+1,it.startColumn,it.endColumn-it.startColumn));
         file.close();
     }
 }

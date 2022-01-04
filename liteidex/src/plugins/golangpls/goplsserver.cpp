@@ -571,11 +571,9 @@ void GoPlsServer::decodeFindUsage(const QJsonObject &response)
         res.startColumn = *item.getRange()->getStart()->getCharacter();
         res.endLine = *item.getRange()->getEnd()->getLine();
         res.endColumn = *item.getRange()->getEnd()->getCharacter();
-        qDebug() << res.filepath << res.startLine;
         result << res;
     }
     emit findUsageResult(result);
-    printResponse(response);
 }
 
 void GoPlsServer::printResponse(const QJsonObject &response)
