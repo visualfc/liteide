@@ -49,13 +49,13 @@ protected slots:
     void currentEnvChanged(LiteApi::IEnv*);
 
 public:
-    GoPlsServer(LiteApi::IApplication *app, QObject *parent = nullptr);
+    explicit GoPlsServer(LiteApi::IApplication *app, QObject *parent = nullptr);
     virtual ~GoPlsServer();
 
     void quit();
 
     void initWorkspace(const QStringList &folders);
-    void refactorExtract(const QString &path, unsigned int line, unsigned int startColumn, unsigned int endColumn);
+    void prepareRenameSymbol(const QString &path, unsigned int line, unsigned int startColumn);
     void askFindUsage(const QString &path, unsigned int line, unsigned int column);
     void askAutocomplete(const QString &path, unsigned int line, unsigned int column);
     void askSignatureHelp(const QString &path, unsigned int line, unsigned int column, const QString &trigger);

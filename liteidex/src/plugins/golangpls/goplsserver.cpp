@@ -137,18 +137,12 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize), true);
 }
 
-void GoPlsServer::refactorExtract(const QString &path, unsigned int line, unsigned int startColumn, unsigned int endColumn)
+void GoPlsServer::prepareRenameSymbol(const QString &path, unsigned int line, unsigned int column)
 {
-    QSharedPointer<CodeActionParams> params(new CodeActionParams);
+    QSharedPointer<PrepareRenameParams> params(new PrepareRenameParams);
     params->setTextDocument(documentIdentifier(path));
-    params->setRange(range(position(line, startColumn), position(line, endColumn)));
-    CodeActionContext *context = new CodeActionContext;
-    QList<CodeActionKind*> *actions = new QList<CodeActionKind*>();
-    *actions << new CodeActionKind(RefactorRewrite);
-    context->setOnly(actions);
-    params->setContext(context);
-    qDebug().noquote() << params->toJson();
-    sendCommand(MethodTextDocumentCodeAction, params, DECODE_CALLBACK(&GoPlsServer::printResponse));
+    params->setPosition(position(line, column));
+    sendCommand(MethodTextDocumentPrepareRename, params, DECODE_CALLBACK(&GoPlsServer::printResponse));
 }
 
 void GoPlsServer::askFindUsage(const QString &path, unsigned int line, unsigned int column)

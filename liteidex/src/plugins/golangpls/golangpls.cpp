@@ -349,31 +349,12 @@ void GolangPls::editorJumpToDecl()
 
 void GolangPls::renameSymbol()
 {
-    int line, column;
     auto cursor = m_editor->textCursor();
     int start = cursor.position();
-    for(; start > 0; start--) {
-        auto txt = m_editor->textAt(start-1, 1);
-        if(txt.isEmpty()) {
-            continue;
-        }
-        if(!txt.at(0).isLetterOrNumber() || txt == "\n") {
-            break;
-        }
-    }
-    int end = cursor.position();
-    for(;;end++) {
-       auto txt = m_editor->textAt(end, 1);
-        if(txt.isEmpty()) {
-            continue;
-        }
-        if(!txt.at(0).isLetterOrNumber() || txt == "\n") {
-            break;
-        }
-    }
+    int line, column;
     auto block = cursor.block();
     fromPosToLineAndColumn(m_editor, m_editor->textCursor().position(), line, column);
-    m_server->refactorExtract(m_editor->filePath(), line, start-block.position(), end-block.position());
+    m_server->prepareRenameSymbol(m_editor->filePath(), line, column);
 }
 
 void GolangPls::findUsage()

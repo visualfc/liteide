@@ -16,7 +16,6 @@ bool GolanPlsPlugin::load(LiteApi::IApplication *app)
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     //connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     app->optionManager()->addFactory(new GolangPlsOptionFactory(app,this));
-
     return true;
 }
 

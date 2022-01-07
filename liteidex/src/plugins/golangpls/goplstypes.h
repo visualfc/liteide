@@ -32,6 +32,7 @@ class GoPlsCommand
 
 public:
     GoPlsCommand(const QString &method, const  QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc);
+    virtual ~GoPlsCommand(){}
     virtual QByteArray toJson() const;
     int commandID() const;
     QString method() const;
