@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Detroit Future">
+  <!-- 
+  
+    Detroit Future
+    github.com/donuts-are-good
+    (MIT License)
+  
+  -->
+  <style name="Text" foreground="#5d31ed" background="#000000"/>
+  <style name="Extra" foreground="#2A0F52" background="#000000"/>
+  <style name="Selection" foreground="#ffee52" background="#2A0F52"/>
+  <style name="CurrentLine" background="#2A0F52"/>
+  <style name="MatchBrackets" background="#2A0F52"/>
+  <style name="IndentLine" foreground="#2A0F52"/>
+  <style name="VisualWhitespace" foreground="#2A0F52"/>
+  <style name="Keyword" foreground="#14CBD9" />
+  <style name="DataType" foreground="#70ffaa" /> 
+  <style name="Decimal" foreground="#00ffff"/>
+  <style name="BaseN" foreground="#ff55ff"/>
+  <style name="Float" foreground="#ff55ff"/>
+  <style name="Char" foreground="#55ff55"/>
+  <style name="String" foreground="#23F4AE"/>
+  <style name="Comment" foreground="#421882"/>
+  <style name="Alert" foreground="#ff0040"/>
+  <style name="Error" foreground="#ffff55"/>
+  <style name="Function" foreground="#8871f7"/>
+  <style name="RegionMarker" foreground="#bb33ee"/>
+  <style name="Symbol" foreground="#DCCBF6"/>
+  <style name="BuiltinFunc" foreground="#aa00aa"/>
+  <style name="Predeclared" foreground="#ff0040"/>
+  <style name="FuncDecl" foreground="#8871f7"/>
+  <style name="Placeholder" foreground="#421882"/>
+  <style name="ToDo" foreground="#ff5500" bold="true"/>
+</style-scheme>
