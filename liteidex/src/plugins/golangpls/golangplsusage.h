@@ -26,7 +26,7 @@ public:
     bool canCancel() const;
     void setSearchInfo(const QString &text, const QString &filter, const QString &path);
 public slots:
-    void loadResults(const QList<UsageResult> &list);
+    void loadResults(const QString &filename, const QList<UsageResult> &list);
 
 protected:
     QString m_searchText;

@@ -16,10 +16,16 @@ DecodeFunc GoPlsCommand::decodeFunc() const
     return m_decodeFunc;
 }
 
-GoPlsCommand::GoPlsCommand(const QString &method, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc)
+QString GoPlsCommand::filepath() const
+{
+    return m_filepath;
+}
+
+GoPlsCommand::GoPlsCommand(const QString &method, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, const QString &filepath)
     : m_method(method)
     , m_params(params)
     , m_decodeFunc(responseFunc)
+    , m_filepath(filepath)
 {
     m_commandID = s_commandID++;
 }

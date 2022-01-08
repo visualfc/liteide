@@ -7,6 +7,11 @@
 #include <QVariant>
 #include <QPoint>
 
+namespace LiteApi {
+class IEnv;
+class IEnvManager;
+}
+
 class GoPlsParams
 {
 public:
@@ -20,7 +25,12 @@ public:
     virtual void fromJson(const QJsonObject &) {}
 };
 
-typedef std::function<void(const QJsonObject &result)> DecodeFunc;
+struct CommandData {
+    QString command;
+    QString filepath;
+};
+
+typedef std::function<void(const CommandData data, const QJsonObject &result)> DecodeFunc;
 
 class GoPlsCommand
 {
@@ -29,14 +39,16 @@ class GoPlsCommand
     static int s_commandID;
     int m_commandID;
     DecodeFunc m_decodeFunc;
+    QString m_filepath;
 
 public:
-    GoPlsCommand(const QString &method, const  QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc);
+    GoPlsCommand(const QString &method, const  QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, const QString &filepath);
     virtual ~GoPlsCommand(){}
     virtual QByteArray toJson() const;
     int commandID() const;
     QString method() const;
     DecodeFunc decodeFunc() const;
+    QString filepath() const;
 };
 
 struct AutoCompletionResult {

@@ -14,33 +14,27 @@ class Range;
 class Position;
 }
 
-namespace LiteApi {
-class IEnv;
-class IEnvManager;
-}
-
-
 class GoPlsServer: public QObject
 {
     Q_OBJECT
     QProcess *m_process;
 
 protected:
-    void sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, bool force = false);
+    void sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, const QString &filepath, bool force = false);
     void executeCommand(const GoPlsCommand &cmd);
 
 signals:
     void responseReceived(int commandID, const QByteArray &response);
-    void autocompleteResult(const QList<AutoCompletionResult> &);
-    void definitionsResult(const QList<DefinitionResult> &definitions);
+    void autocompleteResult(const QString &file, const QList<AutoCompletionResult> &);
+    void definitionsResult(const QString &file, const QList<DefinitionResult> &definitions);
     void logMessage(const QString &message, bool isError);
-    void formattingResults(const QList<TextEditResult> &list);
+    void formattingResults(const QString &file, const QList<TextEditResult> &list);
     void updateFile(const QString &filename, const QList<TextEditResult> &list);
-    void hoverResult(const QList<HoverResult> &result);
-    void hoverDefinitionResult(const QList<DefinitionResult> &definitions);
+    void hoverResult(const QString &file, const QList<HoverResult> &result);
+    void hoverDefinitionResult(const QString &file, const QList<DefinitionResult> &definitions);
     void diagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
     void documentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
-    void findUsageResult(const QList<UsageResult> &list);
+    void findUsageResult(const QString &file, const QList<UsageResult> &list);
     void exited();
 
 protected slots:
@@ -78,28 +72,28 @@ public:
     void exit();
 
 protected:
-    void decodeInitialize(const QJsonObject &);
-    void decodeInitialized(const QJsonObject &);
-    QList<DefinitionResult> decodeDocumentDefinition(const QJsonObject &response);
-    void decodeDocumentDefinitionHover(const QJsonObject &response);
-    void decodeDocumentDefinitionGoTo(const QJsonObject &response);
-    void decodeDocumentCompletion(const QJsonObject &response);
-    void decodeDocumentFormatting(const QJsonObject &response);
-    void decodeOrganizeImport(const QJsonObject &response);
-    void decodeHover(const QJsonObject &response);
-    void decodeDiagnostics(const QJsonObject &response);
-    void decodeDocumentSymbols(const QJsonObject &response);
-    void decodeDidOpened(const QJsonObject &response);
-    void decodeDidClosed(const QJsonObject &response);
-    void decodeDidChanged(const QJsonObject &response);
-    void decodeDidSaved(const QJsonObject &response);
-    void decodeShutdown(const QJsonObject &response);
-    void decodeExit(const QJsonObject &response);
-    void decodeAddWorkspaceFolder(const QJsonObject &response);
-    void decodeCurrentEnvChanged(const QJsonObject &response);
-    void decodeSignatureHelp(const QJsonObject &response);
-    void decodeFindUsage(const QJsonObject &response);
-    void printResponse(const QJsonObject &response);
+    void decodeInitialize(const CommandData &data, const QJsonObject &);
+    void decodeInitialized(const CommandData &data, const QJsonObject &);
+    QList<DefinitionResult> decodeDocumentDefinition(const CommandData &data, const QJsonObject &response);
+    void decodeDocumentDefinitionHover(const CommandData &data, const QJsonObject &response);
+    void decodeDocumentDefinitionGoTo(const CommandData &data, const QJsonObject &response);
+    void decodeDocumentCompletion(const CommandData &data, const QJsonObject &response);
+    void decodeDocumentFormatting(const CommandData &data, const QJsonObject &response);
+    void decodeOrganizeImport(const CommandData &data, const QJsonObject &response);
+    void decodeHover(const CommandData &data, const QJsonObject &response);
+    void decodeDiagnostics(const CommandData &data, const QJsonObject &response);
+    void decodeDocumentSymbols(const CommandData &data, const QJsonObject &response);
+    void decodeDidOpened(const CommandData &data, const QJsonObject &response);
+    void decodeDidClosed(const CommandData &data, const QJsonObject &response);
+    void decodeDidChanged(const CommandData &data, const QJsonObject &response);
+    void decodeDidSaved(const CommandData &data, const QJsonObject &response);
+    void decodeShutdown(const CommandData &data, const QJsonObject &response);
+    void decodeExit(const CommandData &data, const QJsonObject &response);
+    void decodeAddWorkspaceFolder(const CommandData &data, const QJsonObject &response);
+    void decodeCurrentEnvChanged(const CommandData &data, const QJsonObject &response);
+    void decodeSignatureHelp(const CommandData &data, const QJsonObject &response);
+    void decodeFindUsage(const CommandData &data, const QJsonObject &response);
+    void printResponse(const CommandData &data, const QJsonObject &response);
 
 private:
     GoPlsTypes::TextDocumentIdentifier *documentIdentifier(const QString &path) const;
@@ -108,8 +102,8 @@ private:
 
     void decodeResponse(const QByteArray &payload);
 
-    QHash<int, QString> m_idToCommands;
-    QHash<int, DecodeFunc> m_idToDecodeFunc;
+    QHash<int, CommandData> m_idToData;
+    QHash<int, DecodeFunc> m_idToCallback;
     QHash<QString, bool> m_openedFiles;
     QHash<QString, int> m_filesVersions;
     bool m_init;

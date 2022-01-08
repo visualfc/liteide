@@ -102,19 +102,19 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
     } else {
         this->setCompleter(0);
         return;
+        if(m_currentFile != "") {
+            m_server->fileClosed(m_currentFile);
+        }
     }
-
 
     m_editor = LiteApi::getTextEditor(editor);
     if (!m_editor) {
         return;
     }
-    if(m_currentFile != "") {
-        m_server->fileClosed(m_currentFile);
-    }
+
     m_currentFile = m_editor->filePath();
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(m_editor);
-    m_server->fileOpened(m_currentFile, plainTextEditor->toPlainText());
+    m_server->fileOpened(editor->filePath(), plainTextEditor->toPlainText());
     m_server->documentSymbols(editor->filePath());
     m_plainText = plainTextEditor->toPlainText();
 }
@@ -155,13 +155,13 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(editor);
     const QString filepath = editor->filePath();
     m_plainText = plainTextEditor->toPlainText();
-    connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, filepath, plainTextEditor]() {
+    connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, editor, filepath, plainTextEditor]() {
         int startLine, startPos, endLine, endPos;
         QString content;
         computeModifications(m_plainText, plainTextEditor->toPlainText(), startLine, startPos, endLine, endPos, content);
         m_server->fileChanged(filepath, startLine, startPos, endLine, endPos, content);
         m_plainText = plainTextEditor->toPlainText();
-        //m_server->documentHighlight(m_currentFile);
+        m_server->documentHighlight(m_currentFile, 0, 0, 0,0);
     });
 }
 
@@ -225,7 +225,7 @@ void GolangPls::onLogMessage(const QString &message, bool isError)
     m_liteApp->appendLog("GolangPls", message, isError);
 }
 
-void GolangPls::onAutoCompletion(const QList<AutoCompletionResult> &result)
+void GolangPls::onAutoCompletion(const QString &filename, const QList<AutoCompletionResult> &result)
 {
     QStandardItem *root= m_completer->findRoot(m_preWord);
     for(const auto &item: result) {
@@ -235,7 +235,7 @@ void GolangPls::onAutoCompletion(const QList<AutoCompletionResult> &result)
     m_completer->showPopup();
 }
 
-void GolangPls::onDefinitionResult(const QList<DefinitionResult> &definitions)
+void GolangPls::onDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions)
 {
     if(definitions.isEmpty()){
         return;
@@ -246,9 +246,10 @@ void GolangPls::onDefinitionResult(const QList<DefinitionResult> &definitions)
     LiteApi::gotoLine(m_liteApp,fileName,result.line, result.column,true,true);
 }
 
-void GolangPls::onFormattingResults(const QList<TextEditResult> &list)
+void GolangPls::onFormattingResults(const QString &filename, const QList<TextEditResult> &list)
 {
-    editText(m_editor, list);
+    auto editor = m_liteApp->editorManager()->findEditor(filename, false);
+    editText(editor, list);
 
     m_server->organizeImports(m_currentFile);
 }
@@ -268,33 +269,39 @@ void GolangPls::onUpdateFile(const QString &filename, const QList<TextEditResult
     editText(editor, list);
 }
 
-void GolangPls::onHoverResult(const QList<HoverResult> &result)
+void GolangPls::onHoverResult(const QString &filename, const QList<HoverResult> &result)
 {
-    for(auto &res : result) {
-        m_lastLink.showTip = true;
-        m_lastLink.targetInfo = res.info;
-        fromLineAndColumnToPos(m_editor, res.startLine, res.startColumn, m_lastLink.linkTextStart);
-        fromLineAndColumnToPos(m_editor, res.endLine, res.endColumn, m_lastLink.linkTextEnd);
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename,true);
+    if(editor) {
+        for(auto &res : result) {
+            m_lastLink.showTip = true;
+            m_lastLink.targetInfo = res.info;
+            fromLineAndColumnToPos(editor, res.startLine, res.startColumn, m_lastLink.linkTextStart);
+            fromLineAndColumnToPos(editor, res.endLine, res.endColumn, m_lastLink.linkTextEnd);
 
-        auto editor = LiteApi::getLiteEditor(m_editor);
-        if(editor)
-            editor->showLink(m_lastLink);
-        break;
+            auto liteEditor = LiteApi::getLiteEditor(editor);
+            if(liteEditor)
+                liteEditor->showLink(m_lastLink);
+            break;
+        }
     }
 }
 
-void GolangPls::onHoverDefinitionResult(const QList<DefinitionResult> &definitions)
+void GolangPls::onHoverDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions)
 {
-    for(auto def : definitions) {
-        m_lastLink.targetFileName = def.path;
-        m_lastLink.targetLine = def.line;
-        m_lastLink.targetColumn = def.column;
-        m_lastLink.showNav = true;
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename,true);
+    if(editor) {
+        for(auto def : definitions) {
+            m_lastLink.targetFileName = def.path;
+            m_lastLink.targetLine = def.line;
+            m_lastLink.targetColumn = def.column;
+            m_lastLink.showNav = true;
 
-        auto editor = LiteApi::getLiteEditor(m_editor);
-        if(editor)
-            editor->showLink(m_lastLink);
-        break;
+            auto liteEditor = LiteApi::getLiteEditor(editor);
+            if(liteEditor)
+                liteEditor->showLink(m_lastLink);
+            break;
+        }
     }
 }
 

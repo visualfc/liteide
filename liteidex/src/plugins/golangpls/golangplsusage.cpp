@@ -58,7 +58,7 @@ void GolangPlsUsage::setSearchInfo(const QString &text, const QString &filter, c
 {
 }
 
-void GolangPlsUsage::loadResults(const QList<UsageResult> &list)
+void GolangPlsUsage::loadResults(const QString &filename, const QList<UsageResult> &list)
 {
     emit findFinished(false);
     int previousLine = 0;

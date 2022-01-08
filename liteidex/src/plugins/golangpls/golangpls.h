@@ -32,14 +32,14 @@ public slots:
     void wordCompleted(QString,QString,QString);
 
     void onLogMessage(const QString &message, bool isError);
-    void onAutoCompletion(const QList<AutoCompletionResult> &result);
-    void onDefinitionResult(const QList<DefinitionResult> &definitions);
-    void onFormattingResults(const QList<TextEditResult> &list);
+    void onAutoCompletion(const QString &filename, const QList<AutoCompletionResult> &result);
+    void onDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions);
+    void onFormattingResults(const QString &filename, const QList<TextEditResult> &list);
     void onUpdateFile(const QString &filename, const QList<TextEditResult> &list);
-    void onHoverResult(const QList<HoverResult> &result);
-    void onHoverDefinitionResult(const QList<DefinitionResult> &definitions);
+    void onHoverResult(const QString &filename, const QList<HoverResult> &result);
+    void onHoverDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions);
     void onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
-    void onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
+    void onDocumentSymbolsRfesult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
 
     void editorJumpToDecl();
     void renameSymbol();

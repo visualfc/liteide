@@ -5,7 +5,7 @@
 #include <QTimer>
 #include "liteenvapi/liteenvapi.h"
 
-#define DECODE_CALLBACK(fn) std::bind(fn, this, _1)
+#define DECODE_CALLBACK(fn) std::bind(fn, this, _1, _2)
 using namespace GoPlsTypes;
 using namespace std::placeholders;
 
@@ -134,7 +134,7 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     codeAction->setCodeActionLiteralSupport(codeActionLiteral);
     documentCapabilities->setCodeAction(codeAction);
 
-    sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize), true);
+    sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize), "", true);
 }
 
 void GoPlsServer::prepareRenameSymbol(const QString &path, unsigned int line, unsigned int column)
@@ -142,7 +142,7 @@ void GoPlsServer::prepareRenameSymbol(const QString &path, unsigned int line, un
     QSharedPointer<PrepareRenameParams> params(new PrepareRenameParams);
     params->setTextDocument(documentIdentifier(path));
     params->setPosition(position(line, column));
-    sendCommand(MethodTextDocumentPrepareRename, params, DECODE_CALLBACK(&GoPlsServer::printResponse));
+    sendCommand(MethodTextDocumentPrepareRename, params, DECODE_CALLBACK(&GoPlsServer::printResponse), path);
 }
 
 void GoPlsServer::askFindUsage(const QString &path, unsigned int line, unsigned int column)
@@ -153,7 +153,7 @@ void GoPlsServer::askFindUsage(const QString &path, unsigned int line, unsigned 
     params->setTextDocument(documentIdentifier(path));
     params->setPosition(position(line, column));
     params->setContext(ctx);
-    sendCommand(MethodTextDocumentReferences, params, DECODE_CALLBACK(&GoPlsServer::decodeFindUsage));
+    sendCommand(MethodTextDocumentReferences, params, DECODE_CALLBACK(&GoPlsServer::decodeFindUsage), path);
 }
 
 void GoPlsServer::askAutocomplete(const QString &path, unsigned int line, unsigned int column)
@@ -165,7 +165,7 @@ void GoPlsServer::askAutocomplete(const QString &path, unsigned int line, unsign
     context->setTriggerCharacter(new QString("."));
     context->setTriggerKind(new CompletionTriggerKind(CompletionTriggerKindTriggerCharacter));
     params->setContext(context);
-    sendCommand(MethodTextDocumentCompletion, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentCompletion));
+    sendCommand(MethodTextDocumentCompletion, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentCompletion), path);
 }
 
 void GoPlsServer::askSignatureHelp(const QString &path, unsigned int line, unsigned int column, const QString &trigger)
@@ -177,7 +177,7 @@ void GoPlsServer::askSignatureHelp(const QString &path, unsigned int line, unsig
     params->setContext(context);
     params->setTextDocument(documentIdentifier(path));
     params->setPosition(position(line, column));
-    sendCommand(MethodTextDocumentSignatureHelp, params, DECODE_CALLBACK(&GoPlsServer::decodeSignatureHelp));
+    sendCommand(MethodTextDocumentSignatureHelp, params, DECODE_CALLBACK(&GoPlsServer::decodeSignatureHelp), path);
 }
 
 void GoPlsServer::updateWorkspaceFolders(const QStringList &add, const QStringList &remove)
@@ -203,7 +203,7 @@ void GoPlsServer::updateWorkspaceFolders(const QStringList &add, const QStringLi
     }
     event->setRemoved(removes);
     params->setEvent(event);
-    sendCommand(MethodWorkspaceDidChangeWorkspaceFolders, params, DECODE_CALLBACK(&GoPlsServer::decodeAddWorkspaceFolder), true);
+    sendCommand(MethodWorkspaceDidChangeWorkspaceFolders, params, DECODE_CALLBACK(&GoPlsServer::decodeAddWorkspaceFolder), "", true);
 }
 
 void GoPlsServer::askDefinitions(const QString &file, bool hover, unsigned int line, unsigned int column)
@@ -212,9 +212,9 @@ void GoPlsServer::askDefinitions(const QString &file, bool hover, unsigned int l
     params->setTextDocument(documentIdentifier(file));
     params->setPosition(position(line, column));
     if(hover) {
-        sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionHover));
+        sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionHover), file);
     }else{
-        sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionGoTo));
+        sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionGoTo), file);
     }
 }
 
@@ -222,7 +222,7 @@ void GoPlsServer::formatDocument(const QString &file)
 {
     QSharedPointer<DocumentFormattingParams> params(new DocumentFormattingParams());
     params->setTextDocument(documentIdentifier(file));
-    sendCommand(MethodTextDocumentFormatting, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentFormatting));
+    sendCommand(MethodTextDocumentFormatting, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentFormatting), file);
 }
 
 void GoPlsServer::organizeImports(const QString &file)
@@ -235,13 +235,14 @@ void GoPlsServer::organizeImports(const QString &file)
     *actions << new CodeActionKind(RefactorRewrite);
     context->setOnly(actions);
     params->setContext(context);
-    sendCommand(MethodTextDocumentCodeAction, params, DECODE_CALLBACK(&GoPlsServer::decodeOrganizeImport));
+    sendCommand(MethodTextDocumentCodeAction, params, DECODE_CALLBACK(&GoPlsServer::decodeOrganizeImport), file);
 }
 
 void GoPlsServer::documentHighlight(const QString &file, int startLine, int startColumn, int endLine, int endColumn)
 {
     QSharedPointer<DocumentHighlightParams> params(new DocumentHighlightParams);
-    sendCommand(MethodTextDocumentDocumentHighlight, params, nullptr);
+    params->setTextDocument(documentIdentifier(file));
+    sendCommand(MethodTextDocumentDocumentHighlight, params, nullptr, file);
 }
 
 void GoPlsServer::fileOpened(const QString &file, const QString &content)
@@ -253,7 +254,7 @@ void GoPlsServer::fileOpened(const QString &file, const QString &content)
     item->setLanguageId(new LanguageIdentifier(GoLanguage));
     item->setText(new QString(content));
     params->setTextDocument(item);
-    sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened));
+    sendCommand(MethodTextDocumentDidOpen, params, DECODE_CALLBACK(&GoPlsServer::decodeDidOpened), file);
 }
 
 void GoPlsServer::fileClosed(const QString &file)
@@ -263,7 +264,7 @@ void GoPlsServer::fileClosed(const QString &file)
 
     QSharedPointer<DidCloseTextDocumentParams> params(new DidCloseTextDocumentParams());
     params->setTextDocument(documentIdentifier(file));
-    sendCommand(MethodTextDocumentDidClose, params, DECODE_CALLBACK(&GoPlsServer::decodeDidClosed));
+    sendCommand(MethodTextDocumentDidClose, params, DECODE_CALLBACK(&GoPlsServer::decodeDidClosed), file);
 }
 
 void GoPlsServer::hover(const QString &filename, int line, int column)
@@ -271,14 +272,14 @@ void GoPlsServer::hover(const QString &filename, int line, int column)
     QSharedPointer<HoverParams> params(new HoverParams);
     params->setTextDocument(documentIdentifier(filename));
     params->setPosition(position(line, column));
-    sendCommand(MethodTextDocumentHover, params, DECODE_CALLBACK(&GoPlsServer::decodeHover));
+    sendCommand(MethodTextDocumentHover, params, DECODE_CALLBACK(&GoPlsServer::decodeHover), filename);
 }
 
 void GoPlsServer::documentSymbols(const QString &filename)
 {
     QSharedPointer<DocumentSymbolParams> params(new DocumentSymbolParams);
     params->setTextDocument(documentIdentifier(filename));
-    sendCommand(MethodTextDocumentDocumentSymbol, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentSymbols));
+    sendCommand(MethodTextDocumentDocumentSymbol, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentSymbols), filename);
 }
 
 void GoPlsServer::enableStaticcheck(bool v)
@@ -288,36 +289,36 @@ void GoPlsServer::enableStaticcheck(bool v)
     QJsonObject settings;
     settings.insert("staticcheck", v);
     params->setSettings(new QJsonValue(settings));
-    sendCommand(MethodWorkspaceDidChangeConfiguration, params, DECODE_CALLBACK(&GoPlsServer::decodeCurrentEnvChanged));
+    sendCommand(MethodWorkspaceDidChangeConfiguration, params, DECODE_CALLBACK(&GoPlsServer::decodeCurrentEnvChanged), "");
 }
 
 void GoPlsServer::shutdown()
 {
-    sendCommand(MethodShutdown, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeShutdown));
+    sendCommand(MethodShutdown, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeShutdown), "");
 }
 
 void GoPlsServer::exit()
 {
-    sendCommand(MethodExit, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeExit));
+    sendCommand(MethodExit, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeExit), "");
 }
 
-void GoPlsServer::decodeInitialize(const QJsonObject &resp)
+void GoPlsServer::decodeInitialize(const CommandData &data, const QJsonObject &resp)
 {
-    printResponse(resp);
+    printResponse(data, resp);
     QSharedPointer<InitializedParams> params(new InitializedParams());
-    sendCommand(MethodInitialized, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialized), true);
+    sendCommand(MethodInitialized, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialized), "", true);
 }
 
-void GoPlsServer::decodeInitialized(const QJsonObject &resp)
+void GoPlsServer::decodeInitialized(const CommandData &data, const QJsonObject &resp)
 {
-    printResponse(resp);
+    printResponse(data, resp);
     m_init = true;
     if(!m_waitingCommands.isEmpty()) {
         executeCommand(m_waitingCommands.takeFirst());
     }
 }
 
-QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const QJsonObject &jsonObject)
+QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const CommandData &data, const QJsonObject &jsonObject)
 {
     QJsonArray locations = jsonObject.value("result").toArray();
     QList<DefinitionResult> list;
@@ -334,19 +335,19 @@ QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const QJsonObject 
     return list;
 }
 
-void GoPlsServer::decodeDocumentDefinitionHover(const QJsonObject &response)
+void GoPlsServer::decodeDocumentDefinitionHover(const CommandData &data, const QJsonObject &response)
 {
-    auto list = decodeDocumentDefinition(response);
-    emit hoverDefinitionResult(list);
+    auto list = decodeDocumentDefinition(data, response);
+    emit hoverDefinitionResult(data.filepath, list);
 }
 
-void GoPlsServer::decodeDocumentDefinitionGoTo(const QJsonObject &response)
+void GoPlsServer::decodeDocumentDefinitionGoTo(const CommandData &data, const QJsonObject &response)
 {
-    auto list = decodeDocumentDefinition(response);
-    emit definitionsResult(list);
+    auto list = decodeDocumentDefinition(data, response);
+    emit definitionsResult(data.filepath, list);
 }
 
-void GoPlsServer::decodeDocumentCompletion(const QJsonObject &jsonObject)
+void GoPlsServer::decodeDocumentCompletion(const CommandData &data, const QJsonObject &jsonObject)
 {
     CompletionList list;
     list.fromJson(jsonObject.value("result").toObject());
@@ -390,7 +391,7 @@ void GoPlsServer::decodeDocumentCompletion(const QJsonObject &jsonObject)
             completions << result;
         }
     }
-    emit autocompleteResult(completions);
+    emit autocompleteResult(data.filepath, completions);
 }
 
 QList<TextEditResult> convertTextEditResult(QJsonArray array) {
@@ -409,13 +410,13 @@ QList<TextEditResult> convertTextEditResult(QJsonArray array) {
     return list;
 }
 
-void GoPlsServer::decodeDocumentFormatting(const QJsonObject &jsonObject)
+void GoPlsServer::decodeDocumentFormatting(const CommandData &data, const QJsonObject &jsonObject)
 {
     const QJsonArray array = jsonObject.value("result").toArray();
-    emit formattingResults(convertTextEditResult(array));
+    emit formattingResults(data.filepath, convertTextEditResult(array));
 }
 
-void GoPlsServer::decodeOrganizeImport(const QJsonObject &jsonObject)
+void GoPlsServer::decodeOrganizeImport(const CommandData &data, const QJsonObject &jsonObject)
 {
     QJsonArray results = jsonObject.value("result").toArray();
     for(const auto &result : results) {
@@ -429,7 +430,7 @@ void GoPlsServer::decodeOrganizeImport(const QJsonObject &jsonObject)
     }
 }
 
-void GoPlsServer::decodeHover(const QJsonObject &response)
+void GoPlsServer::decodeHover(const CommandData &data, const QJsonObject &response)
 {
     if(response.value("result").isNull()){
         return;
@@ -447,11 +448,11 @@ void GoPlsServer::decodeHover(const QJsonObject &response)
         result.endLine = *range->getEnd()->getLine();
         result.endColumn = *range->getEnd()->getCharacter();
         result.info = *hover.getContents()->getValue();
-        emit hoverResult({result});
+        emit hoverResult(data.filepath, {result});
     }
 }
 
-void GoPlsServer::decodeDiagnostics(const QJsonObject &response)
+void GoPlsServer::decodeDiagnostics(const CommandData &data, const QJsonObject &response)
 {
     PublishDiagnosticsParams result;
     result.fromJson(response.value("params").toObject());
@@ -496,7 +497,7 @@ void GoPlsServer::decodeDiagnostics(const QJsonObject &response)
     emit diagnosticsInfo(result.getUri()->mid(7), list);
 }
 
-void GoPlsServer::decodeDocumentSymbols(const QJsonObject &response)
+void GoPlsServer::decodeDocumentSymbols(const CommandData &data, const QJsonObject &response)
 {
     const auto symbols = response.value("result").toArray();
     QHash<QString, QList<LiteApi::Symbol>> result;
@@ -518,25 +519,25 @@ void GoPlsServer::decodeDocumentSymbols(const QJsonObject &response)
     }
 }
 
-void GoPlsServer::decodeDidChanged(const QJsonObject &response)
+void GoPlsServer::decodeDidChanged(const CommandData &data, const QJsonObject &response)
 {
 }
 
-void GoPlsServer::decodeDidSaved(const QJsonObject &response)
+void GoPlsServer::decodeDidSaved(const CommandData &data, const QJsonObject &response)
 {
 }
 
-void GoPlsServer::decodeShutdown(const QJsonObject &response)
+void GoPlsServer::decodeShutdown(const CommandData &data, const QJsonObject &response)
 {
     exit();
 }
 
-void GoPlsServer::decodeExit(const QJsonObject &response)
+void GoPlsServer::decodeExit(const CommandData &data, const QJsonObject &response)
 {
 
 }
 
-void GoPlsServer::decodeAddWorkspaceFolder(const QJsonObject &response)
+void GoPlsServer::decodeAddWorkspaceFolder(const CommandData &data, const QJsonObject &response)
 {
     m_init = true;
     if(!m_waitingCommands.isEmpty()) {
@@ -544,16 +545,16 @@ void GoPlsServer::decodeAddWorkspaceFolder(const QJsonObject &response)
     }
 }
 
-void GoPlsServer::decodeCurrentEnvChanged(const QJsonObject &response)
+void GoPlsServer::decodeCurrentEnvChanged(const CommandData &data, const QJsonObject &response)
 {
 }
 
-void GoPlsServer::decodeSignatureHelp(const QJsonObject &response)
+void GoPlsServer::decodeSignatureHelp(const CommandData &data, const QJsonObject &response)
 {
-    printResponse(response);
+    printResponse(data, response);
 }
 
-void GoPlsServer::decodeFindUsage(const QJsonObject &response)
+void GoPlsServer::decodeFindUsage(const CommandData &data, const QJsonObject &response)
 {
     QList<UsageResult> result;
     for(auto it : response.value("result").toArray()) {
@@ -567,19 +568,19 @@ void GoPlsServer::decodeFindUsage(const QJsonObject &response)
         res.endColumn = *item.getRange()->getEnd()->getCharacter();
         result << res;
     }
-    emit findUsageResult(result);
+    emit findUsageResult(data.filepath, result);
 }
 
-void GoPlsServer::printResponse(const QJsonObject &response)
+void GoPlsServer::printResponse(const CommandData &data, const QJsonObject &response)
 {
     qDebug().noquote() << response;
 }
 
-void GoPlsServer::decodeDidOpened(const QJsonObject &response)
+void GoPlsServer::decodeDidOpened(const CommandData &data, const QJsonObject &response)
 {
 }
 
-void GoPlsServer::decodeDidClosed(const QJsonObject &response)
+void GoPlsServer::decodeDidClosed(const CommandData &data, const QJsonObject &response)
 {
 }
 
@@ -588,7 +589,7 @@ void GoPlsServer::fileSaved(const QString &file, const QString &content)
     QSharedPointer<DidSaveTextDocumentParams> params(new DidSaveTextDocumentParams());
     params->setTextDocument(documentIdentifier(file));
     params->setText(new QString(content));
-    sendCommand(MethodTextDocumentDidSave, params, DECODE_CALLBACK(&GoPlsServer::decodeDidSaved));
+    sendCommand(MethodTextDocumentDidSave, params, DECODE_CALLBACK(&GoPlsServer::decodeDidSaved), file);
 }
 
 void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, int endLine, int endPos, const QString &content)
@@ -606,7 +607,7 @@ void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, 
     text->setText(new QString(content));
     list->append(text);
     params->setContentChanges(list);
-    sendCommand(MethodTextDocumentDidChange, params, DECODE_CALLBACK(&GoPlsServer::decodeDidChanged));
+    sendCommand(MethodTextDocumentDidChange, params, DECODE_CALLBACK(&GoPlsServer::decodeDidChanged), file);
 }
 
 TextDocumentIdentifier *GoPlsServer::documentIdentifier(const QString &path) const
@@ -640,6 +641,9 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
     QJsonObject jsonObject = QJsonDocument::fromJson(payload).object();
     const int commandID = jsonObject.value("id").toInt();
 
+    auto data = m_idToData.take(commandID);
+    auto callback = m_idToCallback.take(commandID);
+
     if (commandID == 0 ){
         const QString method = jsonObject.value("method").toString();
         if(method == MethodWindowLogMessage || method == MethodWindowShowMessage){
@@ -650,15 +654,14 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
                 emit logMessage(*message.getMessage(), isError);
             }
         }else if(method == MethodTextDocumentPublishDiagnostics) {
-            decodeDiagnostics(QJsonDocument::fromJson(payload).object());
+            decodeDiagnostics(data, QJsonDocument::fromJson(payload).object());
         }else if(!payload.isEmpty()){
             qDebug().noquote() << payload;
         }
     }else{
-        const QString requested = m_idToCommands.take(commandID);
-        DecodeFunc decodeFunc = m_idToDecodeFunc.take(commandID);
-        if(decodeFunc) {
-            decodeFunc(jsonObject);
+        const QString requested = data.command;
+        if(callback) {
+            callback(data, jsonObject);
         }else{
             qDebug().noquote() << requested << payload;
         }
@@ -668,9 +671,9 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
     }
 }
 
-void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, bool force)
+void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, const QString &filepath, bool force)
 {
-    GoPlsCommand cmd(command, params, responseFunc);
+    GoPlsCommand cmd(command, params, responseFunc, filepath);
     if(!m_init && !force) {
         m_waitingCommands << cmd;
     }else{
@@ -681,11 +684,14 @@ void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPls
 void GoPlsServer::executeCommand(const GoPlsCommand &cmd)
 {
     auto cmdID = cmd.commandID();
-    m_idToCommands.insert(cmdID, cmd.method());
-    m_idToDecodeFunc.insert(cmdID, cmd.decodeFunc());
+    CommandData data;
+    data.command = cmd.method();
+    data.filepath = cmd.filepath();
+    m_idToData.insert(cmdID, data);
+    m_idToCallback.insert(cmdID, cmd.decodeFunc());
     QTimer::singleShot(1000, [this, cmdID]{
-        m_idToCommands.take(cmdID);
-        m_idToDecodeFunc.take(cmdID);
+        m_idToData.take(cmdID);
+        m_idToCallback.take(cmdID);
     });
     const QByteArray raw = cmd.toJson();
     const QString payload = QString("Content-Length: %1\r\n\r\n%2").arg(raw.length()).arg(QString::fromUtf8(raw));
@@ -748,6 +754,6 @@ void GoPlsServer::currentEnvChanged(LiteApi::IEnv *env)
         QJsonObject settings;
         settings.insert("env", obj);
         params->setSettings(new QJsonValue(settings));
-        sendCommand(MethodWorkspaceDidChangeConfiguration, params, DECODE_CALLBACK(&GoPlsServer::decodeCurrentEnvChanged));
+        sendCommand(MethodWorkspaceDidChangeConfiguration, params, DECODE_CALLBACK(&GoPlsServer::decodeCurrentEnvChanged), "");
     }
 }
